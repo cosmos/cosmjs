@@ -93,12 +93,17 @@ export class CosmosConnection implements BlockchainConnection {
   private constructor(restClient: RestClient, chainData: ChainData) {
     this.restClient = restClient;
     this.chainData = chainData;
+    // TODO: this is an argument
     this.primaryToken = {
       fractionalDigits: 6,
-      tokenName: "Atom",
-      tokenTicker: "ATOM" as TokenTicker,
+      tokenName: "Cosm",
+      tokenTicker: "cosm" as TokenTicker,
     };
-    this.supportedTokens = [this.primaryToken];
+    this.supportedTokens = [this.primaryToken, {
+      fractionalDigits: 6,
+      tokenName: "Stake",
+      tokenTicker: "stake" as TokenTicker,
+    }];
   }
 
   public disconnect(): void {
@@ -128,6 +133,7 @@ export class CosmosConnection implements BlockchainConnection {
     const account = result.value;
     const supportedCoins = account.coins.filter(({ denom }) =>
       this.supportedTokens.find(
+        // TODO: ugly special case - fix this
         ({ tokenTicker }) => (tokenTicker === "ATOM" && denom === "uatom") || tokenTicker === denom,
       ),
     );

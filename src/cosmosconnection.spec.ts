@@ -73,11 +73,11 @@ describe("CosmosConnection", () => {
     it("displays a given token", async () => {
       pendingWithoutCosmos();
       const connection = await CosmosConnection.establish(httpUrl);
-      const token = await connection.getToken("ATOM" as TokenTicker);
+      const token = await connection.getToken("cosm" as TokenTicker);
       expect(token).toEqual({
         fractionalDigits: 6,
-        tokenName: "Atom",
-        tokenTicker: "ATOM" as TokenTicker,
+        tokenName: "Cosm",
+        tokenTicker: "cosm" as TokenTicker,
       });
       connection.disconnect();
     });
@@ -96,12 +96,18 @@ describe("CosmosConnection", () => {
       pendingWithoutCosmos();
       const connection = await CosmosConnection.establish(httpUrl);
       const tokens = await connection.getAllTokens();
+      // TODO: make this more flexible
       expect(tokens).toEqual([
         {
           fractionalDigits: 6,
-          tokenName: "Atom",
-          tokenTicker: "ATOM" as TokenTicker,
+          tokenName: "Cosm",
+          tokenTicker: "cosm" as TokenTicker,
         },
+        {
+          fractionalDigits: 6,
+          tokenName: "Stake",
+          tokenTicker: "stake" as TokenTicker,
+        }
       ]);
       connection.disconnect();
     });

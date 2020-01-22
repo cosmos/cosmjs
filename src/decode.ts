@@ -46,6 +46,7 @@ export function decodeFullSignature(signature: amino.StdSignature, nonce: number
 }
 
 export function decodeAmount(amount: amino.Coin): Amount {
+  // TODO: more uglyness here (breaks unit tests)
   if (amount.denom !== "uatom") {
     throw new Error("Only ATOM amounts are supported");
   }
@@ -53,6 +54,7 @@ export function decodeAmount(amount: amino.Coin): Amount {
     fractionalDigits: 6,
     quantity: amount.amount,
     tokenTicker: atom,
+    // tokenTicker: amount.denom as TokenTicker,
   };
 }
 
