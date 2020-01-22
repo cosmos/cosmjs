@@ -107,7 +107,7 @@ describe("CosmosConnection", () => {
           fractionalDigits: 6,
           tokenName: "Stake",
           tokenTicker: "stake" as TokenTicker,
-        }
+        },
       ]);
       connection.disconnect();
     });

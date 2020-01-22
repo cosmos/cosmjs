@@ -1,6 +1,5 @@
+import { Amount, Token } from "@iov/bcp";
 import amino from "@tendermint/amino-js";
-import {Amount, Token} from "@iov/bcp";
-
 
 export type AminoTx = amino.Tx & { readonly value: amino.StdTx };
 
@@ -17,7 +16,7 @@ export interface TokenInfo extends Token {
 
 // TODO: alias amino types
 export function amountToCoin(lookup: ReadonlyArray<TokenInfo>, amount: Amount): amino.Coin {
-  const match = lookup.find(({tokenTicker}) => tokenTicker === amount.tokenTicker);
+  const match = lookup.find(({ tokenTicker }) => tokenTicker === amount.tokenTicker);
   if (!match) {
     throw Error(`unknown ticker: ${amount.tokenTicker}`);
   }
@@ -28,7 +27,7 @@ export function amountToCoin(lookup: ReadonlyArray<TokenInfo>, amount: Amount): 
 }
 
 export function coinToAmount(lookup: ReadonlyArray<TokenInfo>, coin: amino.Coin): Amount {
-  const match = lookup.find(({denom}) => denom === coin.denom);
+  const match = lookup.find(({ denom }) => denom === coin.denom);
   if (!match) {
     throw Error(`unknown denom: ${coin.denom}`);
   }

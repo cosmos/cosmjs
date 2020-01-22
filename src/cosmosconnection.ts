@@ -99,11 +99,14 @@ export class CosmosConnection implements BlockchainConnection {
       tokenName: "Cosm",
       tokenTicker: "cosm" as TokenTicker,
     };
-    this.supportedTokens = [this.primaryToken, {
-      fractionalDigits: 6,
-      tokenName: "Stake",
-      tokenTicker: "stake" as TokenTicker,
-    }];
+    this.supportedTokens = [
+      this.primaryToken,
+      {
+        fractionalDigits: 6,
+        tokenName: "Stake",
+        tokenTicker: "stake" as TokenTicker,
+      },
+    ];
   }
 
   public disconnect(): void {
