@@ -56,7 +56,7 @@ export class CosmosCodec implements TxCodec {
   public bytesToSign(unsigned: UnsignedTransaction, nonce: Nonce): SigningJob {
     const accountNumber = 0;
     const memo = (unsigned as any).memo;
-    const built = buildUnsignedTx(unsigned);
+    const built = buildUnsignedTx(unsigned, this.tokens);
 
     const signMsg = sortJson({
       account_number: accountNumber.toString(),
@@ -75,7 +75,7 @@ export class CosmosCodec implements TxCodec {
   }
 
   public bytesToPost(signed: SignedTransaction): PostableBytes {
-    const built = buildSignedTx(signed);
+    const built = buildSignedTx(signed, this.tokens);
     const bytes = marshalTx(built, true);
     return bytes as PostableBytes;
   }

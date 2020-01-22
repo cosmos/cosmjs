@@ -214,6 +214,7 @@ export class CosmosConnection implements BlockchainConnection {
   }
 
   public async postTx(tx: PostableBytes): Promise<PostTxResponse> {
+    // TODO: we need to check errors here... bad chain-id breaks this
     const { txhash, raw_log } = await this.restClient.postTx(tx);
     const transactionId = txhash as TransactionId;
     const firstEvent: BlockInfo = { state: TransactionState.Pending };

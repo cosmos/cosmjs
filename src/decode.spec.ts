@@ -19,15 +19,6 @@ import { TokenInfos } from "./types";
 
 const { fromBase64 } = Encoding;
 
-const defaultTokens: TokenInfos = [
-  {
-    fractionalDigits: 6,
-    tokenName: "Atom (Cosmos Hub)",
-    tokenTicker: "ATOM" as TokenTicker,
-    denom: "uatom",
-  },
-];
-
 describe("decode", () => {
   const defaultPubkey = {
     algo: Algorithm.Secp256k1,
@@ -61,6 +52,14 @@ describe("decode", () => {
     },
     gasLimit: "200000",
   };
+  const defaultTokens: TokenInfos = [
+    {
+      fractionalDigits: 6,
+      tokenName: "Atom (Cosmos Hub)",
+      tokenTicker: "ATOM" as TokenTicker,
+      denom: "uatom",
+    },
+  ];
 
   describe("decodePubkey", () => {
     it("works", () => {
