@@ -1,8 +1,8 @@
 {
-  "name": "@iov/cosmos",
+  "name": "cosm-js",
   "version": "2.0.0-alpha.7",
-  "description": "Transaction codec and client to communicate with the Cosmos Hub blockchain",
-  "author": "IOV SAS <admin@iov.one>",
+  "description": "Transaction codec and client to communicate with any wasmd blockchain",
+  "author": "Ethan Frey <ethanfrey@users.noreply.github.com>",
   "license": "Apache-2.0",
   "main": "build/index.js",
   "types": "types/index.d.ts",
@@ -15,7 +15,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/iov-one/iov-core/tree/master/packages/iov-cosmos"
+    "url": "https://github.com/confio/cosm-js"
   },
   "publishConfig": {
     "access": "public"
@@ -48,6 +48,36 @@
     "xstream": "^11.11.0"
   },
   "devDependencies": {
-    "@iov/keycontrol": "^2.0.0-alpha.7"
+    "@iov/keycontrol": "^2.0.0-alpha.7",
+    "@types/jasmine": "^3.3.7",
+    "@types/memdown": "^3.0.0",
+    "@typescript-eslint/eslint-plugin": "^2.10.0",
+    "@typescript-eslint/parser": "^2.10.0",
+    "eslint": "^6.7.2",
+    "eslint-config-prettier": "^6.2.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-simple-import-sort": "^4.0.0",
+    "jasmine": "^3.3.1",
+    "jasmine-spec-reporter": "^4.2.1",
+    "karma": "^4.1.0",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-edge-launcher": "^0.4.2",
+    "karma-firefox-launcher": "^1.1.0",
+    "karma-jasmine": "^2",
+    "karma-jasmine-html-reporter": "^1.4",
+    "karma-safari-launcher": "^1.0.0",
+    "lerna": "^3.14.1",
+    "memdown": "^4.0.0",
+    "prettier": "^1.19.1",
+    "shx": "^0.3.2",
+    "source-map-support": "^0.5.6",
+    "tslint": "^5.19.0",
+    "tslint-config-prettier": "^1.13.0",
+    "tslint-immutable": "^5.5.2",
+    "typescript": "~3.7",
+    "webpack": "^4.12.0",
+    "webpack-cli": "^3.3.8"
+
   }
 }

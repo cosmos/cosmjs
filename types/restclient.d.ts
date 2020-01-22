@@ -69,7 +69,10 @@ export declare class RestClient {
   nodeInfo(): Promise<NodeInfoResponse>;
   blocksLatest(): Promise<BlocksResponse>;
   blocks(height: number): Promise<BlocksResponse>;
-  authAccounts(address: Address, height?: string): Promise<AuthAccountsResponse>;
+  authAccounts(
+    address: Address,
+    height?: string
+  ): Promise<AuthAccountsResponse>;
   txs(query: string): Promise<SearchTxsResponse>;
   txsById(id: TransactionId): Promise<TxsResponse>;
   postTx(tx: PostableBytes): Promise<PostTxsResponse>;

@@ -5,5 +5,5 @@ import { CosmosConnection } from "./cosmosconnection";
  */
 export declare function createCosmosConnector(
   url: string,
-  expectedChainId?: ChainId,
+  expectedChainId?: ChainId
 ): ChainConnector<CosmosConnection>;
