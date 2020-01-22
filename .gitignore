@@ -1,0 +1,19 @@
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency directories
+node_modules/
+
+# Output of 'npm pack'
+*.tgz
+
+# OS-specific files
+.DS_Store
+
+# IDE-specific
+.vscode/
+
+# Release dir
+tmp/
