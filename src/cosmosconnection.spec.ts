@@ -44,12 +44,19 @@ describe("CosmosConnection", () => {
 
   const defaultPrefix = "cosmos" as CosmosBech32Prefix;
 
+  // this is for wasmd blockchain
   const defaultTokens: TokenInfos = [
     {
       fractionalDigits: 6,
-      tokenName: "Atom (Cosmos Hub)",
-      tokenTicker: "ATOM" as TokenTicker,
-      denom: "uatom",
+      tokenName: "Fee Token",
+      tokenTicker: "COSM" as TokenTicker,
+      denom: "cosm",
+    },
+    {
+      fractionalDigits: 6,
+      tokenName: "Staking Token",
+      tokenTicker: "STAKE" as TokenTicker,
+      denom: "stake",
     },
   ];
 
@@ -86,11 +93,11 @@ describe("CosmosConnection", () => {
     it("displays a given token", async () => {
       pendingWithoutCosmos();
       const connection = await CosmosConnection.establish(httpUrl, defaultPrefix, defaultTokens);
-      const token = await connection.getToken("cosm" as TokenTicker);
+      const token = await connection.getToken("COSM" as TokenTicker);
       expect(token).toEqual({
-        fractionalDigits: 6,
-        tokenName: "Cosm",
-        tokenTicker: "cosm" as TokenTicker,
+          fractionalDigits: 6,
+          tokenName: "Fee Token",
+          tokenTicker: "COSM" as TokenTicker,
       });
       connection.disconnect();
     });
@@ -113,13 +120,13 @@ describe("CosmosConnection", () => {
       expect(tokens).toEqual([
         {
           fractionalDigits: 6,
-          tokenName: "Cosm",
-          tokenTicker: "cosm" as TokenTicker,
+          tokenName: "Fee Token",
+          tokenTicker: "COSM" as TokenTicker,
         },
         {
           fractionalDigits: 6,
-          tokenName: "Stake",
-          tokenTicker: "stake" as TokenTicker,
+          tokenName: "Staking Token",
+          tokenTicker: "STAKE" as TokenTicker,
         },
       ]);
       connection.disconnect();
