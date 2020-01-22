@@ -38,6 +38,7 @@ import { CosmosBech32Prefix, pubkeyToAddress } from "./address";
 import { Caip5 } from "./caip5";
 import { decodeAmount, parseTxsResponse } from "./decode";
 import { RestClient, TxsResponse } from "./restclient";
+import { TokenInfos } from "./types";
 
 const { fromBase64 } = Encoding;
 
@@ -70,10 +71,15 @@ function buildQueryString({
 }
 
 export class CosmosConnection implements BlockchainConnection {
-  public static async establish(url: string): Promise<CosmosConnection> {
+  // we must know prefix and tokens a priori to understand the chain
+  public static async establish(
+    url: string,
+    prefix: CosmosBech32Prefix,
+    tokenInfo: TokenInfos,
+  ): Promise<CosmosConnection> {
     const restClient = new RestClient(url);
     const chainData = await this.initialize(restClient);
-    return new CosmosConnection(restClient, chainData);
+    return new CosmosConnection(restClient, chainData, prefix, tokenInfo);
   }
 
   private static async initialize(restClient: RestClient): Promise<ChainData> {
@@ -84,29 +90,34 @@ export class CosmosConnection implements BlockchainConnection {
   private readonly restClient: RestClient;
   private readonly chainData: ChainData;
   private readonly primaryToken: Token;
+
+  // TODO: deprecate this???
   private readonly supportedTokens: readonly Token[];
 
+  private readonly _prefix: CosmosBech32Prefix;
+  private readonly tokenInfo: TokenInfos;
+
   private get prefix(): CosmosBech32Prefix {
-    return "cosmos";
+    return this._prefix;
   }
 
-  private constructor(restClient: RestClient, chainData: ChainData) {
+  private constructor(
+    restClient: RestClient,
+    chainData: ChainData,
+    prefix: CosmosBech32Prefix,
+    tokenInfo: TokenInfos,
+  ) {
     this.restClient = restClient;
     this.chainData = chainData;
-    // TODO: this is an argument
-    this.primaryToken = {
-      fractionalDigits: 6,
-      tokenName: "Cosm",
-      tokenTicker: "cosm" as TokenTicker,
-    };
-    this.supportedTokens = [
-      this.primaryToken,
-      {
-        fractionalDigits: 6,
-        tokenName: "Stake",
-        tokenTicker: "stake" as TokenTicker,
-      },
-    ];
+    this._prefix = prefix;
+    this.tokenInfo = tokenInfo;
+
+    this.supportedTokens = this.tokenInfo.map(info => ({
+      tokenTicker: info.tokenTicker,
+      tokenName: info.tokenName,
+      fractionalDigits: info.fractionalDigits,
+    }));
+    this.primaryToken = this.supportedTokens[0];
   }
 
   public disconnect(): void {
@@ -135,16 +146,13 @@ export class CosmosConnection implements BlockchainConnection {
     const { result } = await this.restClient.authAccounts(address);
     const account = result.value;
     const supportedCoins = account.coins.filter(({ denom }) =>
-      this.supportedTokens.find(
-        // TODO: ugly special case - fix this
-        ({ tokenTicker }) => (tokenTicker === "ATOM" && denom === "uatom") || tokenTicker === denom,
-      ),
+      this.tokenInfo.find(token => token.denom === denom),
     );
     return account.public_key === null
       ? undefined
       : {
           address: address,
-          balance: supportedCoins.map(decodeAmount),
+          balance: supportedCoins.map(decodeAmount(this.tokenInfo)),
           pubkey: {
             algo: Algorithm.Secp256k1,
             data: fromBase64(account.public_key.value) as PubkeyBytes,
@@ -289,6 +297,6 @@ export class CosmosConnection implements BlockchainConnection {
     const sender = (response.tx.value as any).msg[0].value.from_address;
     const accountForHeight = await this.restClient.authAccounts(sender, response.height);
     const nonce = (parseInt(accountForHeight.result.value.sequence, 10) - 1) as Nonce;
-    return parseTxsResponse(chainId, parseInt(response.height, 10), nonce, response);
+    return parseTxsResponse(chainId, parseInt(response.height, 10), nonce, response, this.tokenInfo);
   }
 }

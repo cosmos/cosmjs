@@ -92,7 +92,7 @@ export class CosmosCodec implements TxCodec {
     }
     const parsed = unmarshalTx(bytes);
     // TODO: this needs access to token list
-    return parseTx(parsed, chainId, nonce);
+    return parseTx(parsed, chainId, nonce, this.tokens);
   }
 
   public identityToAddress(identity: Identity): Address {

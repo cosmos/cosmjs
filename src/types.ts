@@ -28,8 +28,8 @@ export function amountToCoin(lookup: ReadonlyArray<TokenInfo>, amount: Amount): 
   };
 }
 
-export function coinToAmount(lookup: ReadonlyArray<TokenInfo>, coin: amino.Coin): Amount {
-  const match = lookup.find(({ denom }) => denom === coin.denom);
+export function coinToAmount(tokens: TokenInfos, coin: amino.Coin): Amount {
+  const match = tokens.find(({ denom }) => denom === coin.denom);
   if (!match) {
     throw Error(`unknown denom: ${coin.denom}`);
   }

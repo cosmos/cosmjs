@@ -15,8 +15,18 @@ import {
 } from "./decode";
 import { chainId, nonce, signedTxJson, txId } from "./testdata.spec";
 import data from "./testdata/cosmoshub.json";
+import { TokenInfos } from "./types";
 
 const { fromBase64 } = Encoding;
+
+const defaultTokens: TokenInfos = [
+  {
+    fractionalDigits: 6,
+    tokenName: "Atom (Cosmos Hub)",
+    tokenTicker: "ATOM" as TokenTicker,
+    denom: "uatom",
+  },
+];
 
 describe("decode", () => {
   const defaultPubkey = {
@@ -89,7 +99,7 @@ describe("decode", () => {
         denom: "uatom",
         amount: "11657995",
       };
-      expect(decodeAmount(amount)).toEqual(defaultAmount);
+      expect(decodeAmount(defaultTokens)(amount)).toEqual(defaultAmount);
     });
   });
 
@@ -108,7 +118,7 @@ describe("decode", () => {
           ],
         },
       };
-      expect(parseMsg(msg, chainId)).toEqual(defaultSendTransaction);
+      expect(parseMsg(msg, chainId, defaultTokens)).toEqual(defaultSendTransaction);
     });
   });
 
@@ -123,13 +133,13 @@ describe("decode", () => {
         ],
         gas: "200000",
       };
-      expect(parseFee(fee)).toEqual(defaultFee);
+      expect(parseFee(fee, defaultTokens)).toEqual(defaultFee);
     });
   });
 
   describe("parseTx", () => {
     it("works", () => {
-      expect(parseTx(data.tx, chainId, nonce)).toEqual(signedTxJson);
+      expect(parseTx(data.tx, chainId, nonce, defaultTokens)).toEqual(signedTxJson);
     });
   });
 
@@ -149,7 +159,7 @@ describe("decode", () => {
         transactionId: txId,
         log: '[{"msg_index":0,"success":true,"log":""}]',
       };
-      expect(parseTxsResponse(chainId, currentHeight, nonce, txsResponse)).toEqual(expected);
+      expect(parseTxsResponse(chainId, currentHeight, nonce, txsResponse, defaultTokens)).toEqual(expected);
     });
   });
 });
