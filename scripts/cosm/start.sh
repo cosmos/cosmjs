@@ -21,7 +21,7 @@ docker run --rm \
     -p 26656:26656 \
     --mount type=bind,source="$(pwd)/template",target=/template \
     --mount type=volume,source=wasmd_data,target=/root \
-    "$CONTAINER_NAME:$VERSION" \
+    "cosmwasm/$CONTAINER_NAME:$VERSION" \
     ./run_wasmd.sh /template \
     > "$WASMD_LOGFILE" &
 
