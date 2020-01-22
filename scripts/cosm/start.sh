@@ -2,45 +2,36 @@
 set -o errexit -o nounset -o pipefail
 command -v shellcheck > /dev/null && shellcheck "$0"
 
-# Choose from https://hub.docker.com/r/tendermint/gaia/tags
-VERSION="v2.0.4"
+# Choose from https://hub.docker.com/r/cosmwasm/wasmd/tags
+VERSION="manual"
+CONTAINER_NAME="wasmd"
 
 TMP_DIR=$(mktemp -d "${TMPDIR:-/tmp}/gaia.XXXXXXXXX")
 chmod 777 "$TMP_DIR"
 echo "Using temporary dir $TMP_DIR"
-GAIAD_LOGFILE="$TMP_DIR/gaiad.log"
+WASMD_LOGFILE="$TMP_DIR/wasmd.log"
 REST_SERVER_LOGFILE="$TMP_DIR/rest-server.log"
-CURRENT_DIR="$(realpath "$(dirname "$0")")"
-HOME_DIR="/home"
-CONTAINER_NAME="gaiad"
 
-rm -rf "$CURRENT_DIR/.gaiad/data"
-mkdir -p "$CURRENT_DIR/.gaiad/data"
-cp "$CURRENT_DIR/priv_validator_state.template.json" "$CURRENT_DIR/.gaiad/data/priv_validator_state.json"
+HOME_DIR="/root"
 
-docker run \
-  --rm \
-  --user="$UID" \
-  -t \
-  --name "$CONTAINER_NAME" \
-  -v "$CURRENT_DIR/.gaiad:$HOME_DIR/.gaiad" \
-  -v "$CURRENT_DIR/.gaiacli:$HOME_DIR/.gaiacli" \
-  -w "$HOME_DIR" \
-  --env "HOME=$HOME_DIR" \
-  -p 46656:46656 \
-  -p 46657:46657 \
-  -p 1317:1317 \
-  "tendermint/gaia:${VERSION}" \
-  gaiad start \
-  --rpc.laddr tcp://0.0.0.0:46657 \
-  > "$GAIAD_LOGFILE" &
+# This starts up wasmd
+docker volume rm -f wasmd_data
+docker run --rm \
+    --name "$CONTAINER_NAME" \
+    -p 26657:26657 \
+    -p 26656:26656 \
+    --mount type=bind,source=$(pwd)/template,target=/template \
+    --mount type=volume,source=wasmd_data,target=/root \
+    "$CONTAINER_NAME:$VERSION" \
+    ./run_wasmd.sh /template \
+    > "$WASMD_LOGFILE" &
 
-echo "gaiad running and logging into $GAIAD_LOGFILE"
+echo "wasmd running and logging into $WASMD_LOGFILE"
 
 sleep 10
 
 docker exec "$CONTAINER_NAME" \
-  gaiacli rest-server \
+  wasmcli rest-server \
   --node tcp://localhost:46657 \
   --trust-node \
   --laddr tcp://0.0.0.0:1317 \
