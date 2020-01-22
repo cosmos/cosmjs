@@ -45,9 +45,9 @@ export function decodeFullSignature(signature: amino.StdSignature, nonce: number
   };
 }
 
-  // TODO: this needs access to token list - we need something more like amountToCoin and coinToAmount here
-  // and wire that info all the way from both connection and codec.
-  export function decodeAmount(amount: amino.Coin): Amount {
+// TODO: this needs access to token list - we need something more like amountToCoin and coinToAmount here
+// and wire that info all the way from both connection and codec.
+export function decodeAmount(amount: amino.Coin): Amount {
   // TODO: more uglyness here (breaks unit tests)
   if (amount.denom !== "uatom") {
     throw new Error("Only ATOM amounts are supported");

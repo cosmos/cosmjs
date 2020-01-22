@@ -14,6 +14,8 @@ export interface TokenInfo extends Token {
   readonly denom: string;
 }
 
+export type TokenInfos = ReadonlyArray<TokenInfo>;
+
 // TODO: alias amino types
 export function amountToCoin(lookup: ReadonlyArray<TokenInfo>, amount: Amount): amino.Coin {
   const match = lookup.find(({ tokenTicker }) => tokenTicker === amount.tokenTicker);
