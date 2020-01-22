@@ -45,7 +45,9 @@ export function decodeFullSignature(signature: amino.StdSignature, nonce: number
   };
 }
 
-export function decodeAmount(amount: amino.Coin): Amount {
+  // TODO: this needs access to token list - we need something more like amountToCoin and coinToAmount here
+  // and wire that info all the way from both connection and codec.
+  export function decodeAmount(amount: amino.Coin): Amount {
   // TODO: more uglyness here (breaks unit tests)
   if (amount.denom !== "uatom") {
     throw new Error("Only ATOM amounts are supported");
@@ -74,6 +76,7 @@ export function parseMsg(msg: amino.Msg, chainId: ChainId): SendTransaction {
     chainId: chainId,
     sender: msgValue.from_address as Address,
     recipient: msgValue.to_address as Address,
+    // TODO: this needs access to token list
     amount: decodeAmount(msgValue.amount[0]),
   };
 }
@@ -98,7 +101,9 @@ export function parseTx(tx: amino.Tx, chainId: ChainId, nonce: Nonce): SignedTra
   }
 
   const [primarySignature] = txValue.signatures.map(signature => decodeFullSignature(signature, nonce));
+  // TODO: this needs access to token list
   const msg = parseMsg(txValue.msg[0], chainId);
+  // TODO: this needs access to token list
   const fee = parseFee(txValue.fee);
 
   const transaction = {
