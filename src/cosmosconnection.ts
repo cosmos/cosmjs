@@ -145,19 +145,23 @@ export class CosmosConnection implements BlockchainConnection {
     const address = isPubkeyQuery(query) ? pubkeyToAddress(query.pubkey, this.prefix) : query.address;
     const { result } = await this.restClient.authAccounts(address);
     const account = result.value;
+    if (!account.address) {
+      return undefined;
+    }
     const supportedCoins = account.coins.filter(({ denom }) =>
       this.tokenInfo.find(token => token.denom === denom),
     );
-    return account.public_key === null
+    const pubkey = !account.public_key
       ? undefined
       : {
-          address: address,
-          balance: supportedCoins.map(decodeAmount(this.tokenInfo)),
-          pubkey: {
-            algo: Algorithm.Secp256k1,
-            data: fromBase64(account.public_key.value) as PubkeyBytes,
-          },
+          algo: Algorithm.Secp256k1,
+          data: fromBase64(account.public_key.value) as PubkeyBytes,
         };
+    return {
+      address: address,
+      balance: supportedCoins.map(decodeAmount(this.tokenInfo)),
+      pubkey: pubkey,
+    };
   }
 
   public watchAccount(_account: AccountQuery): Stream<Account | undefined> {

@@ -95,9 +95,9 @@ describe("CosmosConnection", () => {
       const connection = await CosmosConnection.establish(httpUrl, defaultPrefix, defaultTokens);
       const token = await connection.getToken("COSM" as TokenTicker);
       expect(token).toEqual({
-          fractionalDigits: 6,
-          tokenName: "Fee Token",
-          tokenTicker: "COSM" as TokenTicker,
+        fractionalDigits: 6,
+        tokenName: "Fee Token",
+        tokenTicker: "COSM" as TokenTicker,
       });
       connection.disconnect();
     });
@@ -150,9 +150,10 @@ describe("CosmosConnection", () => {
         throw new Error("Expected account not to be undefined");
       }
       expect(account.address).toEqual(defaultAddress);
-      expect(account.pubkey).toEqual(defaultPubkey);
-      // Unsupported coins are filtered out
-      expect(account.balance.length).toEqual(1);
+      // Undefined until we sign a transaction
+      expect(account.pubkey).toEqual(undefined);
+      // Starts with two tokens
+      expect(account.balance.length).toEqual(2);
       connection.disconnect();
     });
 
@@ -164,12 +165,10 @@ describe("CosmosConnection", () => {
         throw new Error("Expected account not to be undefined");
       }
       expect(account.address).toEqual(defaultAddress);
-      expect(account.pubkey).toEqual({
-        algo: Algorithm.Secp256k1,
-        data: fromBase64("A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ"),
-      });
-      // Unsupported coins are filtered out
-      expect(account.balance.length).toEqual(1);
+      // Undefined until we sign a transaction
+      expect(account.pubkey).toEqual(undefined);
+      // Starts with two tokens
+      expect(account.balance.length).toEqual(2);
       connection.disconnect();
     });
   });
