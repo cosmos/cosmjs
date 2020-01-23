@@ -20,7 +20,7 @@ import { Encoding } from "@iov/encoding";
 import amino from "@tendermint/amino-js";
 
 import { TxsResponse } from "./restclient";
-import { isAminoStdTx } from "./types";
+import { isAminoStdTx, TokenInfos, coinToAmount } from "./types";
 
 const { fromBase64 } = Encoding;
 
@@ -45,20 +45,15 @@ export function decodeFullSignature(signature: amino.StdSignature, nonce: number
   };
 }
 
-export function decodeAmount(amount: amino.Coin): Amount {
-  // TODO: more uglyness here (breaks unit tests)
-  if (amount.denom !== "uatom") {
-    throw new Error("Only ATOM amounts are supported");
-  }
-  return {
-    fractionalDigits: 6,
-    quantity: amount.amount,
-    tokenTicker: atom,
-    // tokenTicker: amount.denom as TokenTicker,
-  };
-}
+// TODO: this needs access to token list - we need something more like amountToCoin and coinToAmount here
+// and wire that info all the way from both connection and codec.
 
-export function parseMsg(msg: amino.Msg, chainId: ChainId): SendTransaction {
+// TODO: return null vs throw exception for undefined???
+export const decodeAmount = (tokens: TokenInfos) => (coin: amino.Coin): Amount => {
+  return coinToAmount(tokens, coin);
+};
+
+export function parseMsg(msg: amino.Msg, chainId: ChainId, tokens: TokenInfos): SendTransaction {
   if (msg.type !== "cosmos-sdk/MsgSend") {
     throw new Error("Unknown message type in transaction");
   }
@@ -74,21 +69,22 @@ export function parseMsg(msg: amino.Msg, chainId: ChainId): SendTransaction {
     chainId: chainId,
     sender: msgValue.from_address as Address,
     recipient: msgValue.to_address as Address,
-    amount: decodeAmount(msgValue.amount[0]),
+    // TODO: this needs access to token list
+    amount: decodeAmount(tokens)(msgValue.amount[0]),
   };
 }
 
-export function parseFee(fee: amino.StdFee): Fee {
+export function parseFee(fee: amino.StdFee, tokens: TokenInfos): Fee {
   if (fee.amount.length !== 1) {
     throw new Error("Only fee with one amount is supported");
   }
   return {
-    tokens: decodeAmount(fee.amount[0]),
+    tokens: decodeAmount(tokens)(fee.amount[0]),
     gasLimit: fee.gas,
   };
 }
 
-export function parseTx(tx: amino.Tx, chainId: ChainId, nonce: Nonce): SignedTransaction {
+export function parseTx(tx: amino.Tx, chainId: ChainId, nonce: Nonce, tokens: TokenInfos): SignedTransaction {
   const txValue = tx.value;
   if (!isAminoStdTx(txValue)) {
     throw new Error("Only Amino StdTx is supported");
@@ -98,8 +94,10 @@ export function parseTx(tx: amino.Tx, chainId: ChainId, nonce: Nonce): SignedTra
   }
 
   const [primarySignature] = txValue.signatures.map(signature => decodeFullSignature(signature, nonce));
-  const msg = parseMsg(txValue.msg[0], chainId);
-  const fee = parseFee(txValue.fee);
+  // TODO: this needs access to token list
+  const msg = parseMsg(txValue.msg[0], chainId, tokens);
+  // TODO: this needs access to token list
+  const fee = parseFee(txValue.fee, tokens);
 
   const transaction = {
     ...msg,
@@ -119,10 +117,11 @@ export function parseTxsResponse(
   currentHeight: number,
   nonce: Nonce,
   response: TxsResponse,
+  tokens: TokenInfos,
 ): ConfirmedAndSignedTransaction<UnsignedTransaction> {
   const height = parseInt(response.height, 10);
   return {
-    ...parseTx(response.tx, chainId, nonce),
+    ...parseTx(response.tx, chainId, nonce, tokens),
     height: height,
     confirmations: currentHeight - height + 1,
     transactionId: response.txhash as TransactionId,

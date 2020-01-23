@@ -21,6 +21,7 @@ import {
   encodeFullSignature,
   encodePubkey,
 } from "./encode";
+import { TokenInfos } from "./types";
 
 const { fromBase64 } = Encoding;
 
@@ -40,6 +41,14 @@ describe("encode", () => {
     tokenTicker: atom,
   };
   const defaultMemo = "hello cosmos hub";
+  const defaultTokens: TokenInfos = [
+    {
+      fractionalDigits: 6,
+      tokenName: "Atom (Cosmos Hub)",
+      tokenTicker: "ATOM" as TokenTicker,
+      denom: "uatom",
+    },
+  ];
 
   describe("encodePubKey", () => {
     it("encodes a Secp256k1 pubkey", () => {
@@ -52,7 +61,7 @@ describe("encode", () => {
 
   describe("encodeAmount", () => {
     it("encodes an amount", () => {
-      expect(encodeAmount(defaultAmount)).toEqual({
+      expect(encodeAmount(defaultAmount, defaultTokens)).toEqual({
         denom: "uatom",
         amount: "11657995",
       });
@@ -64,7 +73,7 @@ describe("encode", () => {
       const fee = {
         gasLimit: "200000",
       };
-      expect(() => encodeFee(fee)).toThrowError(/cannot encode fee without tokens/i);
+      expect(() => encodeFee(fee, defaultTokens)).toThrowError(/cannot encode fee without tokens/i);
     });
 
     it("throws without gas limit", () => {
@@ -75,7 +84,7 @@ describe("encode", () => {
           tokenTicker: atom,
         },
       };
-      expect(() => encodeFee(fee)).toThrowError(/cannot encode fee without gas limit/i);
+      expect(() => encodeFee(fee, defaultTokens)).toThrowError(/cannot encode fee without gas limit/i);
     });
 
     it("encodes a fee", () => {
@@ -87,7 +96,7 @@ describe("encode", () => {
         },
         gasLimit: "200000",
       };
-      expect(encodeFee(fee)).toEqual({
+      expect(encodeFee(fee, defaultTokens)).toEqual({
         amount: [{ denom: "uatom", amount: "5000" }],
         gas: "200000",
       });
@@ -168,7 +177,9 @@ describe("encode", () => {
         chainId: defaultChainId,
         escrowId: "defg",
       };
-      expect(() => buildUnsignedTx(tx)).toThrowError(/received transaction of unsupported kind/i);
+      expect(() => buildUnsignedTx(tx, defaultTokens)).toThrowError(
+        /received transaction of unsupported kind/i,
+      );
     });
 
     it("builds a send transaction without fee", () => {
@@ -180,7 +191,7 @@ describe("encode", () => {
         recipient: defaultRecipient,
         memo: defaultMemo,
       };
-      expect(buildUnsignedTx(tx)).toEqual({
+      expect(buildUnsignedTx(tx, defaultTokens)).toEqual({
         type: "cosmos-sdk/StdTx",
         value: {
           msg: [
@@ -225,7 +236,7 @@ describe("encode", () => {
           gasLimit: "200000",
         },
       };
-      expect(buildUnsignedTx(tx)).toEqual({
+      expect(buildUnsignedTx(tx, defaultTokens)).toEqual({
         type: "cosmos-sdk/StdTx",
         value: {
           msg: [
@@ -286,7 +297,7 @@ describe("encode", () => {
           },
         ],
       };
-      expect(buildSignedTx(tx)).toEqual({
+      expect(buildSignedTx(tx, defaultTokens)).toEqual({
         type: "cosmos-sdk/StdTx",
         value: {
           msg: [

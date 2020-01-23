@@ -14,8 +14,10 @@ import { Secp256k1 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
 import { HdPaths, Secp256k1HdWallet, UserProfile } from "@iov/keycontrol";
 
-import { cosmosCodec } from "./cosmoscodec";
+import { cosmosCodec, CosmosCodec } from "./cosmoscodec";
 import { CosmosConnection } from "./cosmosconnection";
+import { CosmosBech32Prefix } from "./address";
+import { TokenInfos } from "./types";
 
 const { fromBase64, toHex } = Encoding;
 
@@ -26,7 +28,7 @@ function pendingWithoutCosmos(): void {
 }
 
 describe("CosmosConnection", () => {
-  const atom = "ATOM" as TokenTicker;
+  const cosm = "COSM" as TokenTicker;
   const httpUrl = "http://localhost:1317";
   const defaultChainId = "cosmos:testing" as ChainId;
   const defaultEmptyAddress = "cosmos1h806c7khnvmjlywdrkdgk2vrayy2mmvf9rxk2r" as Address;
@@ -40,10 +42,28 @@ describe("CosmosConnection", () => {
   const faucetPath = HdPaths.cosmos(0);
   const defaultRecipient = "cosmos1t70qnpr0az8tf7py83m4ue5y89w58lkjmx0yq2" as Address;
 
+  const defaultPrefix = "cosmos" as CosmosBech32Prefix;
+
+  // this is for wasmd blockchain
+  const defaultTokens: TokenInfos = [
+    {
+      fractionalDigits: 6,
+      tokenName: "Fee Token",
+      tokenTicker: "COSM" as TokenTicker,
+      denom: "cosm",
+    },
+    {
+      fractionalDigits: 6,
+      tokenName: "Staking Token",
+      tokenTicker: "STAKE" as TokenTicker,
+      denom: "stake",
+    },
+  ];
+
   describe("establish", () => {
     it("can connect to Cosmos via http", async () => {
       pendingWithoutCosmos();
-      const connection = await CosmosConnection.establish(httpUrl);
+      const connection = await CosmosConnection.establish(httpUrl, defaultPrefix, defaultTokens);
       expect(connection).toBeTruthy();
       connection.disconnect();
     });
@@ -52,7 +72,7 @@ describe("CosmosConnection", () => {
   describe("chainId", () => {
     it("displays the chain ID", async () => {
       pendingWithoutCosmos();
-      const connection = await CosmosConnection.establish(httpUrl);
+      const connection = await CosmosConnection.establish(httpUrl, defaultPrefix, defaultTokens);
       const chainId = connection.chainId();
       expect(chainId).toEqual(defaultChainId);
       connection.disconnect();
@@ -62,7 +82,7 @@ describe("CosmosConnection", () => {
   describe("height", () => {
     it("displays the current height", async () => {
       pendingWithoutCosmos();
-      const connection = await CosmosConnection.establish(httpUrl);
+      const connection = await CosmosConnection.establish(httpUrl, defaultPrefix, defaultTokens);
       const height = await connection.height();
       expect(height).toBeGreaterThan(0);
       connection.disconnect();
@@ -72,19 +92,19 @@ describe("CosmosConnection", () => {
   describe("getToken", () => {
     it("displays a given token", async () => {
       pendingWithoutCosmos();
-      const connection = await CosmosConnection.establish(httpUrl);
-      const token = await connection.getToken("cosm" as TokenTicker);
+      const connection = await CosmosConnection.establish(httpUrl, defaultPrefix, defaultTokens);
+      const token = await connection.getToken("COSM" as TokenTicker);
       expect(token).toEqual({
         fractionalDigits: 6,
-        tokenName: "Cosm",
-        tokenTicker: "cosm" as TokenTicker,
+        tokenName: "Fee Token",
+        tokenTicker: "COSM" as TokenTicker,
       });
       connection.disconnect();
     });
 
     it("resolves to undefined if the token is not supported", async () => {
       pendingWithoutCosmos();
-      const connection = await CosmosConnection.establish(httpUrl);
+      const connection = await CosmosConnection.establish(httpUrl, defaultPrefix, defaultTokens);
       const token = await connection.getToken("whatever" as TokenTicker);
       expect(token).toBeUndefined();
       connection.disconnect();
@@ -94,20 +114,20 @@ describe("CosmosConnection", () => {
   describe("getAllTokens", () => {
     it("resolves to a list of all supported tokens", async () => {
       pendingWithoutCosmos();
-      const connection = await CosmosConnection.establish(httpUrl);
+      const connection = await CosmosConnection.establish(httpUrl, defaultPrefix, defaultTokens);
       const tokens = await connection.getAllTokens();
       // TODO: make this more flexible
       expect(tokens).toEqual([
         {
           fractionalDigits: 6,
-          tokenName: "Cosm",
-          tokenTicker: "cosm" as TokenTicker,
+          tokenName: "Fee Token",
+          tokenTicker: "COSM" as TokenTicker,
         },
         {
           fractionalDigits: 6,
-          tokenName: "Stake",
-          tokenTicker: "stake" as TokenTicker,
-        }
+          tokenName: "Staking Token",
+          tokenTicker: "STAKE" as TokenTicker,
+        },
       ]);
       connection.disconnect();
     });
@@ -116,7 +136,7 @@ describe("CosmosConnection", () => {
   describe("getAccount", () => {
     it("gets an empty account by address", async () => {
       pendingWithoutCosmos();
-      const connection = await CosmosConnection.establish(httpUrl);
+      const connection = await CosmosConnection.establish(httpUrl, defaultPrefix, defaultTokens);
       const account = await connection.getAccount({ address: defaultEmptyAddress });
       expect(account).toBeUndefined();
       connection.disconnect();
@@ -124,32 +144,31 @@ describe("CosmosConnection", () => {
 
     it("gets an account by address", async () => {
       pendingWithoutCosmos();
-      const connection = await CosmosConnection.establish(httpUrl);
+      const connection = await CosmosConnection.establish(httpUrl, defaultPrefix, defaultTokens);
       const account = await connection.getAccount({ address: defaultAddress });
       if (account === undefined) {
         throw new Error("Expected account not to be undefined");
       }
       expect(account.address).toEqual(defaultAddress);
-      expect(account.pubkey).toEqual(defaultPubkey);
-      // Unsupported coins are filtered out
-      expect(account.balance.length).toEqual(1);
+      // Undefined until we sign a transaction
+      expect(account.pubkey).toEqual(undefined);
+      // Starts with two tokens
+      expect(account.balance.length).toEqual(2);
       connection.disconnect();
     });
 
     it("gets an account by pubkey", async () => {
       pendingWithoutCosmos();
-      const connection = await CosmosConnection.establish(httpUrl);
+      const connection = await CosmosConnection.establish(httpUrl, defaultPrefix, defaultTokens);
       const account = await connection.getAccount({ pubkey: defaultPubkey });
       if (account === undefined) {
         throw new Error("Expected account not to be undefined");
       }
       expect(account.address).toEqual(defaultAddress);
-      expect(account.pubkey).toEqual({
-        algo: Algorithm.Secp256k1,
-        data: fromBase64("A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ"),
-      });
-      // Unsupported coins are filtered out
-      expect(account.balance.length).toEqual(1);
+      // Undefined until we sign a transaction
+      expect(account.pubkey).toEqual(undefined);
+      // Starts with two tokens
+      expect(account.balance.length).toEqual(2);
       connection.disconnect();
     });
   });
@@ -157,7 +176,7 @@ describe("CosmosConnection", () => {
   describe("integration tests", () => {
     it("can post and get a transaction", async () => {
       pendingWithoutCosmos();
-      const connection = await CosmosConnection.establish(httpUrl);
+      const connection = await CosmosConnection.establish(httpUrl, defaultPrefix, defaultTokens);
       const profile = new UserProfile();
       const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(faucetMnemonic));
       const faucet = await profile.createIdentity(wallet.id, defaultChainId, faucetPath);
@@ -172,13 +191,17 @@ describe("CosmosConnection", () => {
         amount: {
           quantity: "75000",
           fractionalDigits: 6,
-          tokenTicker: atom,
+          tokenTicker: cosm,
         },
       });
       const nonce = await connection.getNonce({ address: faucetAddress });
-      const signed = await profile.signTransaction(faucet, unsigned, cosmosCodec, nonce);
-      const postableBytes = cosmosCodec.bytesToPost(signed);
+      // TODO: we need to use custom codecs everywhere
+      const codec = new CosmosCodec(defaultPrefix, defaultTokens);
+      console.log("nonce:", nonce);
+      const signed = await profile.signTransaction(faucet, unsigned, codec, nonce);
+      const postableBytes = codec.bytesToPost(signed);
       const response = await connection.postTx(postableBytes);
+      console.log(response);
       const { transactionId } = response;
       const blockInfo = await response.blockInfo.waitFor(info => !isBlockInfoPending(info));
       expect(blockInfo.state).toEqual(TransactionState.Succeeded);
@@ -216,7 +239,7 @@ describe("CosmosConnection", () => {
 
     it("can post and search for a transaction", async () => {
       pendingWithoutCosmos();
-      const connection = await CosmosConnection.establish(httpUrl);
+      const connection = await CosmosConnection.establish(httpUrl, defaultPrefix, defaultTokens);
       const profile = new UserProfile();
       const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(faucetMnemonic));
       const faucet = await profile.createIdentity(wallet.id, defaultChainId, faucetPath);
@@ -231,13 +254,16 @@ describe("CosmosConnection", () => {
         amount: {
           quantity: "75000",
           fractionalDigits: 6,
-          tokenTicker: atom,
+          tokenTicker: cosm,
         },
       });
       const nonce = await connection.getNonce({ address: faucetAddress });
-      const signed = await profile.signTransaction(faucet, unsigned, cosmosCodec, nonce);
-      const postableBytes = cosmosCodec.bytesToPost(signed);
+      // TODO: we need to use custom codecs everywhere
+      const codec = new CosmosCodec(defaultPrefix, defaultTokens);
+      const signed = await profile.signTransaction(faucet, unsigned, codec, nonce);
+      const postableBytes = codec.bytesToPost(signed);
       const response = await connection.postTx(postableBytes);
+      console.log(response);
       const { transactionId } = response;
       const blockInfo = await response.blockInfo.waitFor(info => !isBlockInfoPending(info));
       expect(blockInfo.state).toEqual(TransactionState.Succeeded);

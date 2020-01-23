@@ -13,7 +13,7 @@ import { Secp256k1 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
 import amino from "@tendermint/amino-js";
 
-import { AminoTx } from "./types";
+import { AminoTx, TokenInfos, amountToCoin } from "./types";
 
 const { toBase64 } = Encoding;
 
@@ -34,17 +34,11 @@ export function encodePubkey(pubkey: PubkeyBundle): amino.PubKey {
   }
 }
 
-export function encodeAmount(amount: Amount): amino.Coin {
-  if (amount.tokenTicker !== "ATOM") {
-    throw new Error("Only ATOM amounts are supported");
-  }
-  return {
-    denom: "uatom",
-    amount: amount.quantity,
-  };
+export function encodeAmount(amount: Amount, tokens: TokenInfos): amino.Coin {
+  return amountToCoin(tokens, amount);
 }
 
-export function encodeFee(fee: Fee): amino.StdFee {
+export function encodeFee(fee: Fee, tokens: TokenInfos): amino.StdFee {
   if (fee.tokens === undefined) {
     throw new Error("Cannot encode fee without tokens");
   }
@@ -52,7 +46,7 @@ export function encodeFee(fee: Fee): amino.StdFee {
     throw new Error("Cannot encode fee without gas limit");
   }
   return {
-    amount: [encodeAmount(fee.tokens)],
+    amount: [encodeAmount(fee.tokens, tokens)],
     gas: fee.gasLimit,
   };
 }
@@ -68,7 +62,7 @@ export function encodeFullSignature(fullSignature: FullSignature): amino.StdSign
   };
 }
 
-export function buildUnsignedTx(tx: UnsignedTransaction): AminoTx {
+export function buildUnsignedTx(tx: UnsignedTransaction, tokens: TokenInfos): AminoTx {
   if (!isSendTransaction(tx)) {
     throw new Error("Received transaction of unsupported kind");
   }
@@ -81,14 +75,14 @@ export function buildUnsignedTx(tx: UnsignedTransaction): AminoTx {
           value: {
             from_address: tx.sender,
             to_address: tx.recipient,
-            amount: [encodeAmount(tx.amount)],
+            amount: [encodeAmount(tx.amount, tokens)],
           },
         },
       ],
       memo: tx.memo || "",
       signatures: [],
       fee: tx.fee
-        ? encodeFee(tx.fee)
+        ? encodeFee(tx.fee, tokens)
         : {
             amount: [],
             gas: "",
@@ -97,8 +91,8 @@ export function buildUnsignedTx(tx: UnsignedTransaction): AminoTx {
   };
 }
 
-export function buildSignedTx(tx: SignedTransaction): AminoTx {
-  const built = buildUnsignedTx(tx.transaction);
+export function buildSignedTx(tx: SignedTransaction, tokens: TokenInfos): AminoTx {
+  const built = buildUnsignedTx(tx.transaction, tokens);
   return {
     ...built,
     value: {

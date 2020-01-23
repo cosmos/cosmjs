@@ -17,16 +17,20 @@ import {
   TokenTicker,
   TransactionId,
   TransactionQuery,
-  UnsignedTransaction
+  UnsignedTransaction,
 } from "@iov/bcp";
 import { Stream } from "xstream";
+import { CosmosBech32Prefix } from "./address";
+import { TokenInfos } from "./types";
 export declare class CosmosConnection implements BlockchainConnection {
-  static establish(url: string): Promise<CosmosConnection>;
+  static establish(url: string, prefix: CosmosBech32Prefix, tokenInfo: TokenInfos): Promise<CosmosConnection>;
   private static initialize;
   private readonly restClient;
   private readonly chainData;
   private readonly primaryToken;
   private readonly supportedTokens;
+  private readonly _prefix;
+  private readonly tokenInfo;
   private get prefix();
   private constructor();
   disconnect(): void;
@@ -37,29 +41,16 @@ export declare class CosmosConnection implements BlockchainConnection {
   getAccount(query: AccountQuery): Promise<Account | undefined>;
   watchAccount(_account: AccountQuery): Stream<Account | undefined>;
   getNonce(query: AddressQuery | PubkeyQuery): Promise<Nonce>;
-  getNonces(
-    query: AddressQuery | PubkeyQuery,
-    count: number
-  ): Promise<readonly Nonce[]>;
+  getNonces(query: AddressQuery | PubkeyQuery, count: number): Promise<readonly Nonce[]>;
   getBlockHeader(height: number): Promise<BlockHeader>;
   watchBlockHeaders(): Stream<BlockHeader>;
-  getTx(
-    id: TransactionId
-  ): Promise<
-    ConfirmedAndSignedTransaction<UnsignedTransaction> | FailedTransaction
-  >;
+  getTx(id: TransactionId): Promise<ConfirmedAndSignedTransaction<UnsignedTransaction> | FailedTransaction>;
   postTx(tx: PostableBytes): Promise<PostTxResponse>;
   searchTx(
-    query: TransactionQuery
-  ): Promise<
-    readonly (ConfirmedTransaction<UnsignedTransaction> | FailedTransaction)[]
-  >;
-  listenTx(
-    _query: TransactionQuery
-  ): Stream<ConfirmedTransaction<UnsignedTransaction> | FailedTransaction>;
-  liveTx(
-    _query: TransactionQuery
-  ): Stream<ConfirmedTransaction<UnsignedTransaction> | FailedTransaction>;
+    query: TransactionQuery,
+  ): Promise<readonly (ConfirmedTransaction<UnsignedTransaction> | FailedTransaction)[]>;
+  listenTx(_query: TransactionQuery): Stream<ConfirmedTransaction<UnsignedTransaction> | FailedTransaction>;
+  liveTx(_query: TransactionQuery): Stream<ConfirmedTransaction<UnsignedTransaction> | FailedTransaction>;
   getFeeQuote(tx: UnsignedTransaction): Promise<Fee>;
   withDefaultFee<T extends UnsignedTransaction>(tx: T): Promise<T>;
   private parseAndPopulateTxResponse;
