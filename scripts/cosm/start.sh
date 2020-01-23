@@ -15,15 +15,15 @@ REST_SERVER_LOGFILE="$TMP_DIR/rest-server.log"
 # This starts up wasmd
 docker volume rm -f wasmd_data
 docker run --rm \
-    --name "$CONTAINER_NAME" \
-    -p 1317:1317 \
-    -p 26657:26657 \
-    -p 26656:26656 \
-    --mount type=bind,source="$(pwd)/template",target=/template \
-    --mount type=volume,source=wasmd_data,target=/root \
-    "cosmwasm/$CONTAINER_NAME:$VERSION" \
-    ./run_wasmd.sh /template \
-    > "$WASMD_LOGFILE" &
+  --name "$CONTAINER_NAME" \
+  -p 1317:1317 \
+  -p 26657:26657 \
+  -p 26656:26656 \
+  --mount type=bind,source="$(pwd)/template",target=/template \
+  --mount type=volume,source=wasmd_data,target=/root \
+  "cosmwasm/$CONTAINER_NAME:$VERSION" \
+  ./run_wasmd.sh /template \
+  > "$WASMD_LOGFILE" &
 
 echo "wasmd running and logging into $WASMD_LOGFILE"
 
