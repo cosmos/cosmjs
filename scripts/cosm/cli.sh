@@ -2,10 +2,12 @@
 set -o errexit -o nounset -o pipefail
 command -v shellcheck > /dev/null && shellcheck "$0"
 
-# Choose from https://hub.docker.com/r/tendermint/gaia/tags
-VERSION="v2.0.0"
+# Choose from https://hub.docker.com/r/cosmwasm/wasmd/tags
+REPOSITORY="cosmwasm/wasmd"
+VERSION="manual"
+
 CURRENT_DIR="$(realpath "$(dirname "$0")")"
-GAIAD_CONTAINER_NAME="gaiad"
+BLOCKCHAIN_CONTAINER_NAME="wasmd"
 HOME_DIR="/home"
 
 docker run \
@@ -16,6 +18,6 @@ docker run \
   -v "$CURRENT_DIR/.gaiacli:$HOME_DIR/.gaiacli" \
   -w "$HOME_DIR" \
   --env "HOME=$HOME_DIR" \
-  --net "container:$GAIAD_CONTAINER_NAME" \
-  "tendermint/gaia:${VERSION}" \
-  gaiacli "$@"
+  --net "container:$BLOCKCHAIN_CONTAINER_NAME" \
+  "$REPOSITORY:$VERSION" \
+  wasmcli "$@"

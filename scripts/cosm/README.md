@@ -10,7 +10,7 @@ Run the following:
 
 ## CLI
 
-Docker-friendly access to `gaiacli` is provided. Just use the `./cli.sh` script.
+Docker-friendly access to `wasmcli` is provided. Just use the `./cli.sh` script.
 For example:
 
 ```
