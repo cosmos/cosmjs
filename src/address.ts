@@ -1,13 +1,21 @@
 import { Address, Algorithm, PubkeyBundle } from "@iov/bcp";
 import { Ripemd160, Secp256k1, Sha256 } from "@iov/crypto";
-import { Bech32 } from "@iov/encoding";
+import { Bech32, Encoding } from "@iov/encoding";
+import equal from "fast-deep-equal";
 
 export type CosmosAddressBech32Prefix = "cosmos" | "cosmosvalcons" | "cosmosvaloper";
 export type CosmosPubkeyBech32Prefix = "cosmospub" | "cosmosvalconspub" | "cosmosvaloperpub";
 export type CosmosBech32Prefix = CosmosAddressBech32Prefix | CosmosPubkeyBech32Prefix;
 
+// As discussed in https://github.com/binance-chain/javascript-sdk/issues/163
+const pubkeyAminoPrefix = Encoding.fromHex("eb5ae98721");
+
 function isCosmosAddressBech32Prefix(prefix: string): prefix is CosmosAddressBech32Prefix {
   return ["cosmos", "cosmosvalcons", "cosmosvaloper"].includes(prefix);
+}
+
+function isCosmosPubkeyBech32Prefix(prefix: string): prefix is CosmosPubkeyBech32Prefix {
+  return ["cosmospub", "cosmosvalconspub", "cosmosvaloperpub"].includes(prefix);
 }
 
 export function decodeCosmosAddress(
@@ -21,6 +29,26 @@ export function decodeCosmosAddress(
     throw new Error("Invalid data length. Expected 20 bytes.");
   }
   return { prefix: prefix, data: data };
+}
+
+export function decodeCosmosPubkey(
+  encodedPubkey: string,
+): { readonly prefix: CosmosPubkeyBech32Prefix; readonly data: Uint8Array } {
+  const { prefix, data } = Bech32.decode(encodedPubkey);
+  if (!isCosmosPubkeyBech32Prefix(prefix)) {
+    throw new Error(`Invalid bech32 prefix. Must be one of cosmos, cosmosvalcons, or cosmosvaloper.`);
+  }
+
+  if (!equal(data.slice(0, pubkeyAminoPrefix.length), pubkeyAminoPrefix)) {
+    throw new Error("Pubkey does not have the expected amino prefix " + Encoding.toHex(pubkeyAminoPrefix));
+  }
+
+  const rest = data.slice(pubkeyAminoPrefix.length);
+  if (rest.length !== 33) {
+    throw new Error("Invalid rest data length. Expected 33 bytes (compressed secp256k1 pubkey).");
+  }
+
+  return { prefix: prefix, data: rest };
 }
 
 export function isValidAddress(address: string): boolean {

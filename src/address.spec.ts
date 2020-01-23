@@ -1,7 +1,7 @@
 import { Address, Algorithm, PubkeyBytes } from "@iov/bcp";
 import { Encoding } from "@iov/encoding";
 
-import { decodeCosmosAddress, isValidAddress, pubkeyToAddress } from "./address";
+import { decodeCosmosAddress, decodeCosmosPubkey, isValidAddress, pubkeyToAddress } from "./address";
 
 const { fromBase64, fromHex } = Encoding;
 
@@ -24,6 +24,17 @@ describe("address", () => {
       expect(decodeCosmosAddress("cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6" as Address)).toEqual({
         prefix: "cosmos",
         data: fromHex("0d82b1e7c96dbfa42462fe612932e6bff111d51b"),
+      });
+    });
+  });
+
+  describe("decodeCosmosPubkey", () => {
+    it("works", () => {
+      expect(
+        decodeCosmosPubkey("cosmospub1addwnpepqd8sgxq7aw348ydctp3n5ajufgxp395hksxjzc6565yfp56scupfqhlgyg5"),
+      ).toEqual({
+        prefix: "cosmospub",
+        data: fromBase64("A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ"),
       });
     });
   });
