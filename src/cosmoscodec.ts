@@ -54,6 +54,8 @@ export class CosmosCodec implements TxCodec {
   }
 
   public bytesToSign(unsigned: UnsignedTransaction, nonce: Nonce): SigningJob {
+    console.log("nonce:", nonce);
+    // ohhh... this is a bug!!!
     const accountNumber = 0;
     const memo = (unsigned as any).memo;
     const built = buildUnsignedTx(unsigned, this.tokens);

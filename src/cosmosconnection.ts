@@ -171,6 +171,7 @@ export class CosmosConnection implements BlockchainConnection {
     const address = isPubkeyQuery(query) ? pubkeyToAddress(query.pubkey, this.prefix) : query.address;
     const { result } = await this.restClient.authAccounts(address);
     const account = result.value;
+    console.log(`account: number = ${account.account_number}, sequence = ${account.sequence}`);
     return parseInt(account.sequence, 10) as Nonce;
   }
 
