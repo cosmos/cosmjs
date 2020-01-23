@@ -6,16 +6,15 @@ command -v shellcheck > /dev/null && shellcheck "$0"
 REPOSITORY="cosmwasm/wasmd"
 VERSION="manual"
 
-CURRENT_DIR="$(realpath "$(dirname "$0")")"
 BLOCKCHAIN_CONTAINER_NAME="wasmd"
-HOME_DIR="/home"
+
+# TODO: make this run as UID? Does this matter?
+HOME_DIR="/root"
 
 docker run \
   --rm \
-  --user="$UID" \
   -it \
-  -v "$CURRENT_DIR/.gaiad:$HOME_DIR/.gaiad" \
-  -v "$CURRENT_DIR/.gaiacli:$HOME_DIR/.gaiacli" \
+  --mount type=volume,source=wasmcli_data,target=/root/.wasmcli \
   -w "$HOME_DIR" \
   --env "HOME=$HOME_DIR" \
   --net "container:$BLOCKCHAIN_CONTAINER_NAME" \
