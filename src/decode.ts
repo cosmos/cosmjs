@@ -12,7 +12,6 @@ import {
   SendTransaction,
   SignatureBytes,
   SignedTransaction,
-  TokenTicker,
   TransactionId,
   UnsignedTransaction,
 } from "@iov/bcp";
@@ -20,11 +19,9 @@ import { Encoding } from "@iov/encoding";
 import amino from "@tendermint/amino-js";
 
 import { TxsResponse } from "./restclient";
-import { isAminoStdTx, TokenInfos, coinToAmount } from "./types";
+import { coinToAmount, isAminoStdTx, TokenInfos } from "./types";
 
 const { fromBase64 } = Encoding;
-
-const atom = "ATOM" as TokenTicker;
 
 export function decodePubkey(pubkey: amino.PubKey): PubkeyBundle {
   return {

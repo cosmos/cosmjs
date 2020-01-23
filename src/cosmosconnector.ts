@@ -1,8 +1,8 @@
 import { ChainConnector, ChainId } from "@iov/bcp";
 
+import { CosmosBech32Prefix } from "./address";
 import { cosmosCodec } from "./cosmoscodec";
 import { CosmosConnection } from "./cosmosconnection";
-import { CosmosBech32Prefix } from "./address";
 import { TokenInfos } from "./types";
 
 /**

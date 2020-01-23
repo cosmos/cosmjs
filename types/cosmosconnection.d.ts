@@ -27,10 +27,10 @@ export declare class CosmosConnection implements BlockchainConnection {
   private static initialize;
   private readonly restClient;
   private readonly chainData;
-  private readonly primaryToken;
-  private readonly supportedTokens;
   private readonly _prefix;
   private readonly tokenInfo;
+  private readonly primaryToken;
+  private readonly supportedTokens;
   private get prefix();
   private constructor();
   disconnect(): void;
