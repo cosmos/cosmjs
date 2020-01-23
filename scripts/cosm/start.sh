@@ -29,6 +29,13 @@ echo "wasmd running and logging into $WASMD_LOGFILE"
 
 sleep 10
 
+if [ "$(docker inspect -f '{{.State.Running}}' "$CONTAINER_NAME")" != "true" ]; then
+  echo "Container named '$CONTAINER_NAME' not running. We cannot continue." \
+    "This can happen when 'docker run' needs too long to download and start." \
+    "It might be worth retrying this step once the image is in the local docker cache."
+  exit 1
+fi
+
 docker exec "$CONTAINER_NAME" \
   wasmcli rest-server \
   --node tcp://localhost:26657 \
