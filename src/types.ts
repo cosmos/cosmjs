@@ -46,9 +46,16 @@ const maxAcct = 1 << 23;
 // tslint:disable-next-line:no-bitwise
 const maxSeq = 1 << 20;
 
+// NonceInfo is the data we need from account to create a nonce
+// Use this so no confusion about order of arguments
+export interface NonceInfo {
+  readonly accountNumber: string;
+  readonly sequence: string;
+}
+
 // this (lossily) encodes the two pieces of info (uint64) needed to sign into
 // one (53-bit) number. Cross your fingers.
-export function accountToNonce(accountNumber: string, sequence: string): Nonce {
+export function accountToNonce({ accountNumber, sequence }: NonceInfo): Nonce {
   const acct = parseInt(accountNumber, 10);
   const seq = parseInt(sequence, 10);
 
