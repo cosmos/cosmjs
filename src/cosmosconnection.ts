@@ -35,7 +35,7 @@ import equal from "fast-deep-equal";
 import { ReadonlyDate } from "readonly-date";
 import { Stream } from "xstream";
 
-import { CosmosBech32Prefix, decodeCosmosAddress, pubkeyToAddress } from "./address";
+import { CosmosBech32Prefix, decodeCosmosPubkey, pubkeyToAddress } from "./address";
 import { Caip5 } from "./caip5";
 import { decodeAmount, parseTxsResponse } from "./decode";
 import { RestClient, TxsResponse } from "./restclient";
@@ -158,8 +158,7 @@ export class CosmosConnection implements BlockchainConnection {
       : {
           algo: Algorithm.Secp256k1,
           // amino-js has wrong (outdated) types
-          data: Bech32.decode(account.public_key as any).data as PubkeyBytes,
-          // data: decodeCosmosAddress(account.public_key).data as PubkeyBytes,
+          data: decodeCosmosPubkey(account.public_key as any).data as PubkeyBytes,
         };
     return {
       address: address,
