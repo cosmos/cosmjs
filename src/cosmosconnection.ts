@@ -19,6 +19,7 @@ import {
   Nonce,
   PostableBytes,
   PostTxResponse,
+  PubkeyBundle,
   PubkeyBytes,
   PubkeyQuery,
   Token,
@@ -27,19 +28,18 @@ import {
   TransactionQuery,
   TransactionState,
   UnsignedTransaction,
-  PubkeyBundle,
 } from "@iov/bcp";
-import { Encoding, Uint53, Bech32 } from "@iov/encoding";
+import { Bech32, Encoding, Uint53 } from "@iov/encoding";
 import { DefaultValueProducer, ValueAndUpdates } from "@iov/stream";
 import equal from "fast-deep-equal";
 import { ReadonlyDate } from "readonly-date";
 import { Stream } from "xstream";
 
-import { CosmosBech32Prefix, decodeCosmosAddress, pubkeyToAddress } from "./address";
+import { CosmosBech32Prefix, decodeCosmosPubkey, pubkeyToAddress } from "./address";
 import { Caip5 } from "./caip5";
 import { decodeAmount, parseTxsResponse } from "./decode";
 import { RestClient, TxsResponse } from "./restclient";
-import { TokenInfos, accountToNonce } from "./types";
+import { accountToNonce, TokenInfos } from "./types";
 
 const { fromBase64 } = Encoding;
 
@@ -158,8 +158,7 @@ export class CosmosConnection implements BlockchainConnection {
       : {
           algo: Algorithm.Secp256k1,
           // amino-js has wrong (outdated) types
-          data: Bech32.decode(account.public_key as any).data as PubkeyBytes,
-          // data: decodeCosmosAddress(account.public_key).data as PubkeyBytes,
+          data: decodeCosmosPubkey(account.public_key as any).data as PubkeyBytes,
         };
     return {
       address: address,

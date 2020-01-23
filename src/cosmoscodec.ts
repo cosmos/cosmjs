@@ -22,7 +22,7 @@ import { CosmosBech32Prefix, isValidAddress, pubkeyToAddress } from "./address";
 import { Caip5 } from "./caip5";
 import { parseTx } from "./decode";
 import { buildSignedTx, buildUnsignedTx } from "./encode";
-import { TokenInfos, nonceToAccountNumber, nonceToSequence } from "./types";
+import { nonceToAccountNumber, nonceToSequence, TokenInfos } from "./types";
 
 const { toHex, toUtf8 } = Encoding;
 
