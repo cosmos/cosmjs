@@ -89,13 +89,12 @@ export class CosmosConnection implements BlockchainConnection {
 
   private readonly restClient: RestClient;
   private readonly chainData: ChainData;
-  private readonly primaryToken: Token;
-
-  // TODO: deprecate this???
-  private readonly supportedTokens: readonly Token[];
-
   private readonly _prefix: CosmosBech32Prefix;
   private readonly tokenInfo: TokenInfos;
+
+  // these are derived from arguments (cached for use in multiple functions)
+  private readonly primaryToken: Token;
+  private readonly supportedTokens: readonly Token[];
 
   private get prefix(): CosmosBech32Prefix {
     return this._prefix;

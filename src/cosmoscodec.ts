@@ -91,7 +91,6 @@ export class CosmosCodec implements TxCodec {
       throw new Error("Nonce is required");
     }
     const parsed = unmarshalTx(bytes);
-    // TODO: this needs access to token list
     return parseTx(parsed, chainId, nonce, this.tokens);
   }
 
