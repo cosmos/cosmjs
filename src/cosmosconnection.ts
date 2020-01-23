@@ -19,6 +19,7 @@ import {
   Nonce,
   PostableBytes,
   PostTxResponse,
+  PubkeyBundle,
   PubkeyBytes,
   PubkeyQuery,
   Token,
@@ -27,9 +28,8 @@ import {
   TransactionQuery,
   TransactionState,
   UnsignedTransaction,
-  PubkeyBundle,
 } from "@iov/bcp";
-import { Encoding, Uint53, Bech32 } from "@iov/encoding";
+import { Bech32, Encoding, Uint53 } from "@iov/encoding";
 import { DefaultValueProducer, ValueAndUpdates } from "@iov/stream";
 import equal from "fast-deep-equal";
 import { ReadonlyDate } from "readonly-date";
@@ -39,7 +39,7 @@ import { CosmosBech32Prefix, decodeCosmosAddress, pubkeyToAddress } from "./addr
 import { Caip5 } from "./caip5";
 import { decodeAmount, parseTxsResponse } from "./decode";
 import { RestClient, TxsResponse } from "./restclient";
-import { TokenInfos, accountToNonce } from "./types";
+import { accountToNonce, TokenInfos } from "./types";
 
 const { fromBase64 } = Encoding;
 

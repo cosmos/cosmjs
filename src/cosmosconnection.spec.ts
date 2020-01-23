@@ -17,7 +17,7 @@ import { HdPaths, Secp256k1HdWallet, UserProfile } from "@iov/keycontrol";
 import { CosmosBech32Prefix } from "./address";
 import { CosmosCodec, cosmosCodec } from "./cosmoscodec";
 import { CosmosConnection } from "./cosmosconnection";
-import { TokenInfos, nonceToSequence } from "./types";
+import { nonceToSequence, TokenInfos } from "./types";
 
 const { fromBase64, toHex } = Encoding;
 
