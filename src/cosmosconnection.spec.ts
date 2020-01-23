@@ -14,9 +14,9 @@ import { Secp256k1 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
 import { HdPaths, Secp256k1HdWallet, UserProfile } from "@iov/keycontrol";
 
-import { cosmosCodec, CosmosCodec } from "./cosmoscodec";
-import { CosmosConnection } from "./cosmosconnection";
 import { CosmosBech32Prefix } from "./address";
+import { CosmosCodec, cosmosCodec } from "./cosmoscodec";
+import { CosmosConnection } from "./cosmosconnection";
 import { TokenInfos } from "./types";
 
 const { fromBase64, toHex } = Encoding;
@@ -197,11 +197,9 @@ describe("CosmosConnection", () => {
       const nonce = await connection.getNonce({ address: faucetAddress });
       // TODO: we need to use custom codecs everywhere
       const codec = new CosmosCodec(defaultPrefix, defaultTokens);
-      console.log("nonce:", nonce);
       const signed = await profile.signTransaction(faucet, unsigned, codec, nonce);
       const postableBytes = codec.bytesToPost(signed);
       const response = await connection.postTx(postableBytes);
-      console.log(response);
       const { transactionId } = response;
       const blockInfo = await response.blockInfo.waitFor(info => !isBlockInfoPending(info));
       expect(blockInfo.state).toEqual(TransactionState.Succeeded);
@@ -263,7 +261,6 @@ describe("CosmosConnection", () => {
       const signed = await profile.signTransaction(faucet, unsigned, codec, nonce);
       const postableBytes = codec.bytesToPost(signed);
       const response = await connection.postTx(postableBytes);
-      console.log(response);
       const { transactionId } = response;
       const blockInfo = await response.blockInfo.waitFor(info => !isBlockInfoPending(info));
       expect(blockInfo.state).toEqual(TransactionState.Succeeded);

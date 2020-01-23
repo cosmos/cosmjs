@@ -18,7 +18,7 @@ import { Sha256 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
 import { marshalTx, unmarshalTx } from "@tendermint/amino-js";
 
-import { isValidAddress, pubkeyToAddress, CosmosBech32Prefix } from "./address";
+import { CosmosBech32Prefix, isValidAddress, pubkeyToAddress } from "./address";
 import { Caip5 } from "./caip5";
 import { parseTx } from "./decode";
 import { buildSignedTx, buildUnsignedTx } from "./encode";
@@ -91,7 +91,6 @@ export class CosmosCodec implements TxCodec {
       throw new Error("Nonce is required");
     }
     const parsed = unmarshalTx(bytes);
-    // TODO: this needs access to token list
     return parseTx(parsed, chainId, nonce, this.tokens);
   }
 

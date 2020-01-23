@@ -12,7 +12,6 @@ import {
   SendTransaction,
   SignatureBytes,
   SignedTransaction,
-  TokenTicker,
   TransactionId,
   UnsignedTransaction,
 } from "@iov/bcp";
@@ -20,11 +19,9 @@ import { Encoding } from "@iov/encoding";
 import amino from "@tendermint/amino-js";
 
 import { TxsResponse } from "./restclient";
-import { isAminoStdTx, TokenInfos, coinToAmount } from "./types";
+import { coinToAmount, isAminoStdTx, TokenInfos } from "./types";
 
 const { fromBase64 } = Encoding;
-
-const atom = "ATOM" as TokenTicker;
 
 export function decodePubkey(pubkey: amino.PubKey): PubkeyBundle {
   return {
@@ -44,9 +41,6 @@ export function decodeFullSignature(signature: amino.StdSignature, nonce: number
     signature: decodeSignature(signature.signature),
   };
 }
-
-// TODO: this needs access to token list - we need something more like amountToCoin and coinToAmount here
-// and wire that info all the way from both connection and codec.
 
 // TODO: return null vs throw exception for undefined???
 export const decodeAmount = (tokens: TokenInfos) => (coin: amino.Coin): Amount => {
@@ -69,7 +63,6 @@ export function parseMsg(msg: amino.Msg, chainId: ChainId, tokens: TokenInfos): 
     chainId: chainId,
     sender: msgValue.from_address as Address,
     recipient: msgValue.to_address as Address,
-    // TODO: this needs access to token list
     amount: decodeAmount(tokens)(msgValue.amount[0]),
   };
 }
@@ -94,9 +87,7 @@ export function parseTx(tx: amino.Tx, chainId: ChainId, nonce: Nonce, tokens: To
   }
 
   const [primarySignature] = txValue.signatures.map(signature => decodeFullSignature(signature, nonce));
-  // TODO: this needs access to token list
   const msg = parseMsg(txValue.msg[0], chainId, tokens);
-  // TODO: this needs access to token list
   const fee = parseFee(txValue.fee, tokens);
 
   const transaction = {

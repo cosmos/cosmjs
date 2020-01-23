@@ -16,7 +16,7 @@ export interface TokenInfo extends Token {
 
 export type TokenInfos = ReadonlyArray<TokenInfo>;
 
-// TODO: alias amino types
+// TODO: return null vs throw exception for undefined???
 export function amountToCoin(lookup: ReadonlyArray<TokenInfo>, amount: Amount): amino.Coin {
   const match = lookup.find(({ tokenTicker }) => tokenTicker === amount.tokenTicker);
   if (!match) {
@@ -28,6 +28,7 @@ export function amountToCoin(lookup: ReadonlyArray<TokenInfo>, amount: Amount): 
   };
 }
 
+// TODO: return null vs throw exception for undefined???
 export function coinToAmount(tokens: TokenInfos, coin: amino.Coin): Amount {
   const match = tokens.find(({ denom }) => denom === coin.denom);
   if (!match) {

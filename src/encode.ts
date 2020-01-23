@@ -13,7 +13,7 @@ import { Secp256k1 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
 import amino from "@tendermint/amino-js";
 
-import { AminoTx, TokenInfos, amountToCoin } from "./types";
+import { AminoTx, amountToCoin, TokenInfos } from "./types";
 
 const { toBase64 } = Encoding;
 

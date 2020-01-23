@@ -89,13 +89,12 @@ export class CosmosConnection implements BlockchainConnection {
 
   private readonly restClient: RestClient;
   private readonly chainData: ChainData;
-  private readonly primaryToken: Token;
-
-  // TODO: deprecate this???
-  private readonly supportedTokens: readonly Token[];
-
   private readonly _prefix: CosmosBech32Prefix;
   private readonly tokenInfo: TokenInfos;
+
+  // these are derived from arguments (cached for use in multiple functions)
+  private readonly primaryToken: Token;
+  private readonly supportedTokens: readonly Token[];
 
   private get prefix(): CosmosBech32Prefix {
     return this._prefix;
@@ -214,8 +213,10 @@ export class CosmosConnection implements BlockchainConnection {
   }
 
   public async postTx(tx: PostableBytes): Promise<PostTxResponse> {
-    // TODO: we need to check errors here... bad chain-id breaks this
-    const { txhash, raw_log } = await this.restClient.postTx(tx);
+    const { code, txhash, raw_log } = await this.restClient.postTx(tx);
+    if (code !== 0) {
+      throw new Error(raw_log);
+    }
     const transactionId = txhash as TransactionId;
     const firstEvent: BlockInfo = { state: TransactionState.Pending };
     let blockInfoInterval: NodeJS.Timeout;
