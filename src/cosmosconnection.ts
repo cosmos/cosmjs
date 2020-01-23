@@ -19,7 +19,6 @@ import {
   Nonce,
   PostableBytes,
   PostTxResponse,
-  PubkeyBundle,
   PubkeyBytes,
   PubkeyQuery,
   Token,
@@ -29,7 +28,7 @@ import {
   TransactionState,
   UnsignedTransaction,
 } from "@iov/bcp";
-import { Bech32, Encoding, Uint53 } from "@iov/encoding";
+import { Uint53 } from "@iov/encoding";
 import { DefaultValueProducer, ValueAndUpdates } from "@iov/stream";
 import equal from "fast-deep-equal";
 import { ReadonlyDate } from "readonly-date";
@@ -40,8 +39,6 @@ import { Caip5 } from "./caip5";
 import { decodeAmount, parseTxsResponse } from "./decode";
 import { RestClient, TxsResponse } from "./restclient";
 import { accountToNonce, TokenInfos } from "./types";
-
-const { fromBase64 } = Encoding;
 
 interface ChainData {
   readonly chainId: ChainId;
@@ -152,7 +149,6 @@ export class CosmosConnection implements BlockchainConnection {
       this.tokenInfo.find(token => token.denom === denom),
     );
 
-    console.log(account.public_key);
     const pubkey = !account.public_key
       ? undefined
       : {

@@ -169,8 +169,6 @@ describe("CosmosConnection", () => {
       expect(account.address).toEqual(defaultAddress);
       // Undefined until we sign a transaction (on multiple runs against one server this will be set), allow both
       if (account.pubkey !== undefined) {
-        console.log(`account: ${account.pubkey.data.length}`, account.pubkey);
-        console.log(`default: ${defaultPubkey.data.length}`, defaultPubkey);
         expect(account.pubkey).toEqual(defaultPubkey);
       }
       // Starts with two tokens

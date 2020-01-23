@@ -55,6 +55,7 @@ export interface NonceInfo {
 
 // this (lossily) encodes the two pieces of info (uint64) needed to sign into
 // one (53-bit) number. Cross your fingers.
+/* eslint-disable-next-line @typescript-eslint/camelcase */
 export function accountToNonce({ account_number, sequence }: NonceInfo): Nonce {
   const acct = parseInt(account_number, 10);
   const seq = parseInt(sequence, 10);
