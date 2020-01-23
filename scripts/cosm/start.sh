@@ -11,6 +11,7 @@ chmod 777 "$TMP_DIR"
 echo "Using temporary dir $TMP_DIR"
 WASMD_LOGFILE="$TMP_DIR/wasmd.log"
 REST_SERVER_LOGFILE="$TMP_DIR/rest-server.log"
+SCRIPT_DIR="$(realpath "$(dirname "$0")")"
 CONTAINER_NAME="wasmd"
 
 # This starts up wasmd
@@ -20,7 +21,7 @@ docker run --rm \
   -p 1317:1317 \
   -p 26657:26657 \
   -p 26656:26656 \
-  --mount type=bind,source="$(pwd)/template",target=/template \
+  --mount type=bind,source="$SCRIPT_DIR/template",target=/template \
   --mount type=volume,source=wasmd_data,target=/root \
   "$REPOSITORY:$VERSION" \
   ./run_wasmd.sh /template \
