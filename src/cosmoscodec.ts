@@ -22,7 +22,7 @@ import { CosmosBech32Prefix, isValidAddress, pubkeyToAddress } from "./address";
 import { Caip5 } from "./caip5";
 import { parseTx } from "./decode";
 import { buildSignedTx, buildUnsignedTx } from "./encode";
-import { TokenInfos } from "./types";
+import { TokenInfos, nonceToAccountNumber, nonceToSequence } from "./types";
 
 const { toHex, toUtf8 } = Encoding;
 
@@ -54,17 +54,16 @@ export class CosmosCodec implements TxCodec {
   }
 
   public bytesToSign(unsigned: UnsignedTransaction, nonce: Nonce): SigningJob {
-    const accountNumber = 0;
     const memo = (unsigned as any).memo;
     const built = buildUnsignedTx(unsigned, this.tokens);
 
     const signMsg = sortJson({
-      account_number: accountNumber.toString(),
+      account_number: nonceToAccountNumber(nonce),
       chain_id: Caip5.decode(unsigned.chainId),
       fee: (built.value as any).fee,
       memo: memo,
       msgs: (built.value as any).msg,
-      sequence: nonce.toString(),
+      sequence: nonceToSequence(nonce),
     });
     const signBytes = toUtf8(JSON.stringify(signMsg));
 
