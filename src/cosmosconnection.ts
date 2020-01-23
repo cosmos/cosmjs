@@ -28,19 +28,17 @@ import {
   TransactionState,
   UnsignedTransaction,
 } from "@iov/bcp";
-import { Encoding, Uint53 } from "@iov/encoding";
+import { Uint53 } from "@iov/encoding";
 import { DefaultValueProducer, ValueAndUpdates } from "@iov/stream";
 import equal from "fast-deep-equal";
 import { ReadonlyDate } from "readonly-date";
 import { Stream } from "xstream";
 
-import { CosmosBech32Prefix, pubkeyToAddress } from "./address";
+import { CosmosBech32Prefix, decodeCosmosPubkey, pubkeyToAddress } from "./address";
 import { Caip5 } from "./caip5";
 import { decodeAmount, parseTxsResponse } from "./decode";
 import { RestClient, TxsResponse } from "./restclient";
-import { TokenInfos } from "./types";
-
-const { fromBase64 } = Encoding;
+import { accountToNonce, TokenInfos } from "./types";
 
 interface ChainData {
   readonly chainId: ChainId;
@@ -150,11 +148,13 @@ export class CosmosConnection implements BlockchainConnection {
     const supportedCoins = account.coins.filter(({ denom }) =>
       this.tokenInfo.find(token => token.denom === denom),
     );
+
     const pubkey = !account.public_key
       ? undefined
       : {
           algo: Algorithm.Secp256k1,
-          data: fromBase64(account.public_key.value) as PubkeyBytes,
+          // amino-js has wrong (outdated) types
+          data: decodeCosmosPubkey(account.public_key as any).data as PubkeyBytes,
         };
     return {
       address: address,
@@ -171,7 +171,7 @@ export class CosmosConnection implements BlockchainConnection {
     const address = isPubkeyQuery(query) ? pubkeyToAddress(query.pubkey, this.prefix) : query.address;
     const { result } = await this.restClient.authAccounts(address);
     const account = result.value;
-    return parseInt(account.sequence, 10) as Nonce;
+    return accountToNonce(account);
   }
 
   public async getNonces(query: AddressQuery | PubkeyQuery, count: number): Promise<readonly Nonce[]> {
@@ -180,6 +180,7 @@ export class CosmosConnection implements BlockchainConnection {
       return [];
     }
     const firstNonce = await this.getNonce(query);
+    // Note: this still works with the encoded format (see types/accountToNonce) as least-significant digits are sequence
     return [...new Array(checkedCount)].map((_, i) => (firstNonce + i) as Nonce);
   }
 
@@ -214,7 +215,7 @@ export class CosmosConnection implements BlockchainConnection {
 
   public async postTx(tx: PostableBytes): Promise<PostTxResponse> {
     const { code, txhash, raw_log } = await this.restClient.postTx(tx);
-    if (code !== 0) {
+    if (code) {
       throw new Error(raw_log);
     }
     const transactionId = txhash as TransactionId;
@@ -302,7 +303,9 @@ export class CosmosConnection implements BlockchainConnection {
   ): Promise<ConfirmedAndSignedTransaction<UnsignedTransaction> | FailedTransaction> {
     const sender = (response.tx.value as any).msg[0].value.from_address;
     const accountForHeight = await this.restClient.authAccounts(sender, response.height);
-    const nonce = (parseInt(accountForHeight.result.value.sequence, 10) - 1) as Nonce;
-    return parseTxsResponse(chainId, parseInt(response.height, 10), nonce, response, this.tokenInfo);
+    // this is technically not the proper nonce. maybe this causes issues for sig validation?
+    // leaving for now unless it causes issues
+    const sequence = (parseInt(accountForHeight.result.value.sequence, 10) - 1) as Nonce;
+    return parseTxsResponse(chainId, parseInt(response.height, 10), sequence, response, this.tokenInfo);
   }
 }

@@ -17,7 +17,7 @@ import { HdPaths, Secp256k1HdWallet, UserProfile } from "@iov/keycontrol";
 import { CosmosBech32Prefix } from "./address";
 import { CosmosCodec, cosmosCodec } from "./cosmoscodec";
 import { CosmosConnection } from "./cosmosconnection";
-import { TokenInfos } from "./types";
+import { nonceToSequence, TokenInfos } from "./types";
 
 const { fromBase64, toHex } = Encoding;
 
@@ -150,8 +150,10 @@ describe("CosmosConnection", () => {
         throw new Error("Expected account not to be undefined");
       }
       expect(account.address).toEqual(defaultAddress);
-      // Undefined until we sign a transaction
-      expect(account.pubkey).toEqual(undefined);
+      // Undefined until we sign a transaction (on multiple runs against one server this will be set), allow both
+      if (account.pubkey !== undefined) {
+        expect(account.pubkey).toEqual(defaultPubkey);
+      }
       // Starts with two tokens
       expect(account.balance.length).toEqual(2);
       connection.disconnect();
@@ -165,8 +167,10 @@ describe("CosmosConnection", () => {
         throw new Error("Expected account not to be undefined");
       }
       expect(account.address).toEqual(defaultAddress);
-      // Undefined until we sign a transaction
-      expect(account.pubkey).toEqual(undefined);
+      // Undefined until we sign a transaction (on multiple runs against one server this will be set), allow both
+      if (account.pubkey !== undefined) {
+        expect(account.pubkey).toEqual(defaultPubkey);
+      }
       // Starts with two tokens
       expect(account.balance.length).toEqual(2);
       connection.disconnect();
@@ -223,7 +227,9 @@ describe("CosmosConnection", () => {
       expect(transaction.chainId).toEqual(unsigned.chainId);
 
       expect(signatures.length).toEqual(1);
-      expect(signatures[0].nonce).toEqual(signed.signatures[0].nonce);
+      // TODO: the nonce we recover in response doesn't have accountNumber, only sequence
+      const signedSequence = parseInt(nonceToSequence(signed.signatures[0].nonce), 10);
+      expect(signatures[0].nonce).toEqual(signedSequence);
       expect(signatures[0].pubkey.algo).toEqual(signed.signatures[0].pubkey.algo);
       expect(toHex(signatures[0].pubkey.data)).toEqual(
         toHex(Secp256k1.compressPubkey(signed.signatures[0].pubkey.data)),
