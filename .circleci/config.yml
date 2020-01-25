@@ -1,0 +1,29 @@
+version: 2
+workflows:
+  version: 2
+  workflow:
+    jobs:
+      - build
+
+jobs:
+  build:
+    docker:
+      - image: circleci/node:10
+    steps:
+      - checkout
+      - run:
+          name: Version information
+          command: echo "node $(node --version)"; echo "yarn $(yarn --version)"
+      - restore_cache:
+          keys:
+            - node-deps-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - node-deps-v1-{{ .Branch }}
+            - node-deps-v1
+      - run:
+          command: yarn install
+      - save_cache:
+          key: node-deps-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/project/node_modules
+      - run:
+          command: yarn build
