@@ -27,3 +27,5 @@ jobs:
             - ~/project/node_modules
       - run:
           command: yarn build
+      - run:
+          command: yarn test
