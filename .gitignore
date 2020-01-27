@@ -15,14 +15,5 @@ node_modules/
 # IDE-specific
 .vscode/
 
-# Release dir
-tmp/
-
 # Build artifacts
 build/
-dist/
-docs/
-
-# Lock file?
-yarn.lock
-npm.lock
