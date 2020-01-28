@@ -68,7 +68,7 @@
     "karma-jasmine": "^2",
     "karma-jasmine-html-reporter": "^1.4",
     "karma-safari-launcher": "^1.0.0",
-    "lerna": "^3.14.1",
+    "lerna": "^3.20.2",
     "memdown": "^4.0.0",
     "prettier": "^1.19.1",
     "shx": "^0.3.2",
