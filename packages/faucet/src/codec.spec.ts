@@ -1,16 +1,14 @@
-import { expect } from "chai";
-
 import { Codec, codecFromString } from "./codec";
 
 describe("Codec", () => {
   it("can convert string to codec", () => {
-    expect(codecFromString("bns")).to.equal(Codec.Bns);
-    expect(codecFromString("lisk")).to.equal(Codec.Lisk);
-    expect(codecFromString("ethereum")).to.equal(Codec.Ethereum);
+    expect(codecFromString("bns")).toEqual(Codec.Bns);
+    expect(codecFromString("lisk")).toEqual(Codec.Lisk);
+    expect(codecFromString("ethereum")).toEqual(Codec.Ethereum);
 
-    expect(() => codecFromString("")).to.throw(/not supported/i);
-    expect(() => codecFromString("abc")).to.throw(/not supported/i);
-    expect(() => codecFromString("LISK")).to.throw(/not supported/i);
-    expect(() => codecFromString("ETHEREUM")).to.throw(/not supported/i);
+    expect(() => codecFromString("")).toThrowError(/not supported/i);
+    expect(() => codecFromString("abc")).toThrowError(/not supported/i);
+    expect(() => codecFromString("LISK")).toThrowError(/not supported/i);
+    expect(() => codecFromString("ETHEREUM")).toThrowError(/not supported/i);
   });
 });

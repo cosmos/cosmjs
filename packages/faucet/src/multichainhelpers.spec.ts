@@ -1,5 +1,4 @@
 import { Address, Algorithm, PubkeyBundle, PubkeyBytes, TokenTicker } from "@iov/bcp";
-import { expect } from "chai";
 
 import { availableTokensFromHolder } from "./multichainhelpers";
 
@@ -16,7 +15,7 @@ describe("multichainhelpers", () => {
         pubkey: defaultPubkey,
         balance: [],
       });
-      expect(tickers).to.be.empty;
+      expect(tickers).toEqual([]);
     });
 
     it("works for one token", () => {
@@ -31,7 +30,7 @@ describe("multichainhelpers", () => {
           },
         ],
       });
-      expect(tickers).to.eql(["CASH"]);
+      expect(tickers).toEqual(["CASH"]);
     });
 
     it("works for two tokens", () => {
@@ -51,7 +50,7 @@ describe("multichainhelpers", () => {
           },
         ],
       });
-      expect(tickers).to.eql(["CASH", "TRASH"]);
+      expect(tickers).toEqual(["CASH", "TRASH"]);
     });
   });
 });
