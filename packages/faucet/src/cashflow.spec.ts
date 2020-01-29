@@ -1,15 +1,7 @@
 // tslint:disable: no-object-mutation
 import { TokenTicker } from "@iov/bcp";
 
-import {
-  creditAmount,
-  gasLimit,
-  gasPrice,
-  refillAmount,
-  refillThreshold,
-  setFractionalDigits,
-} from "./cashflow";
-import { Codec } from "./codec";
+import { creditAmount, refillAmount, refillThreshold, setFractionalDigits } from "./cashflow";
 
 describe("Cashflow", () => {
   beforeAll(() => {
@@ -127,36 +119,6 @@ describe("Cashflow", () => {
         quantity: "110000",
         fractionalDigits: 3,
         tokenTicker: "WTF",
-      });
-    });
-  });
-
-  describe("gasPrice", () => {
-    it("returns undefined for non-Ethereum codecs", () => {
-      expect(gasPrice(Codec.Lisk)).toBeUndefined();
-      expect(gasPrice(Codec.Bns)).toBeUndefined();
-    });
-
-    it("returns amount for Ethereum codec", () => {
-      expect(gasPrice(Codec.Ethereum)).toEqual({
-        quantity: "20000000000",
-        fractionalDigits: 18,
-        tokenTicker: "ETH",
-      });
-    });
-  });
-
-  describe("gasLimit", () => {
-    it("returns undefined for non-Ethereum codecs", () => {
-      expect(gasLimit(Codec.Lisk)).toBeUndefined();
-      expect(gasLimit(Codec.Bns)).toBeUndefined();
-    });
-
-    it("returns amount for Ethereum codec", () => {
-      expect(gasLimit(Codec.Ethereum)).toEqual({
-        quantity: "2100000",
-        fractionalDigits: 18,
-        tokenTicker: "ETH",
       });
     });
   });

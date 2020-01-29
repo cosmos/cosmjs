@@ -9,8 +9,7 @@ import {
 import { UserProfile } from "@iov/keycontrol";
 import { MultiChainSigner } from "@iov/multichain";
 
-import { gasLimit, gasPrice, needsRefill, refillAmount } from "./cashflow";
-import { Codec } from "./codec";
+import { needsRefill, refillAmount } from "./cashflow";
 import { debugAccount, logAccountsState, logSendJob } from "./debugging";
 import { SendJob } from "./types";
 
@@ -89,11 +88,7 @@ export function availableTokensFromHolder(holderAccount: Account): ReadonlyArray
   return holderAccount.balance.map(coin => coin.tokenTicker);
 }
 
-export async function refillFirstChain(
-  profile: UserProfile,
-  signer: MultiChainSigner,
-  codec: Codec,
-): Promise<void> {
+export async function refillFirstChain(profile: UserProfile, signer: MultiChainSigner): Promise<void> {
   const chainId = signer.chainIds()[0];
 
   console.info(`Connected to network: ${chainId}`);
@@ -124,8 +119,6 @@ export async function refillFirstChain(
         recipient: refillDistibutor.address,
         tokenTicker: token,
         amount: refillAmount(token),
-        gasPrice: gasPrice(codec),
-        gasLimit: gasLimit(codec),
       });
     }
   }

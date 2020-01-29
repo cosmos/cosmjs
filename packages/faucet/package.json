@@ -37,7 +37,6 @@
     "@iov/bns": "^2.0.0-alpha.7",
     "@iov/crypto": "^2.0.0-alpha.7",
     "@iov/encoding": "^2.0.0-alpha.7",
-    "@iov/ethereum": "^2.0.0-alpha.7",
     "@iov/lisk": "^2.0.0-alpha.7",
     "@iov/multichain": "^2.0.0-alpha.7",
     "@koa/cors": "^3.0.0",

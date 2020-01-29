@@ -2,14 +2,12 @@ import { createCosmWasmConnector, TokenInfo } from "@cosmwasm/bcp";
 import { ChainConnector, TokenTicker, TxCodec } from "@iov/bcp";
 import { createBnsConnector } from "@iov/bns";
 import { Slip10RawIndex } from "@iov/crypto";
-import { createEthereumConnector } from "@iov/ethereum";
 import { HdPaths } from "@iov/keycontrol";
 import { createLiskConnector } from "@iov/lisk";
 
 export const enum Codec {
   Bns,
   Lisk,
-  Ethereum,
   CosmWasm,
 }
 
@@ -19,8 +17,6 @@ export function codecFromString(input: string): Codec {
       return Codec.Bns;
     case "lisk":
       return Codec.Lisk;
-    case "ethereum":
-      return Codec.Ethereum;
     case "cosmwasm":
       return Codec.CosmWasm;
     default:
@@ -35,8 +31,6 @@ export function createPathBuilderForCodec(codec: Codec): (derivation: number) =>
         return HdPaths.iov(accountIndex);
       case Codec.Lisk:
         return HdPaths.bip44Like(134, accountIndex);
-      case Codec.Ethereum:
-        return HdPaths.ethereum(accountIndex);
       case Codec.CosmWasm:
         return HdPaths.cosmos(accountIndex);
       default:
@@ -52,8 +46,6 @@ export function createChainConnector(codec: Codec, url: string): ChainConnector 
       return createBnsConnector(url);
     case Codec.Lisk:
       return createLiskConnector(url);
-    case Codec.Ethereum:
-      return createEthereumConnector(url, {});
     case Codec.CosmWasm: {
       const tokens: readonly TokenInfo[] = [
         {
@@ -86,8 +78,6 @@ export function codecDefaultFractionalDigits(codec: Codec): number {
       return 9; // fixed for all weave tokens
     case Codec.Lisk:
       return 8;
-    case Codec.Ethereum:
-      return 18;
     case Codec.CosmWasm:
       return 6;
     default:

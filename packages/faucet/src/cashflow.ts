@@ -3,9 +3,6 @@ import BN = require("bn.js");
 import { Account, Amount, TokenTicker } from "@iov/bcp";
 import { Int53 } from "@iov/encoding";
 
-import { Codec } from "./codec";
-import * as constants from "./constants";
-
 /** Send `factor` times credit amount on refilling */
 const defaultRefillFactor = 20;
 
@@ -60,38 +57,4 @@ export function needsRefill(account: Account, token: TokenTicker): boolean {
   const tokenBalance = coin ? coin.quantity : "0";
   const refillQty = new BN(refillThreshold(token).quantity);
   return new BN(tokenBalance).lt(refillQty);
-}
-
-export function gasPrice(codec: Codec): Amount | undefined {
-  switch (codec) {
-    case Codec.Bns:
-    case Codec.Lisk:
-    case Codec.CosmWasm:
-      return undefined;
-    case Codec.Ethereum:
-      return {
-        quantity: constants.ethereum.gasPrice,
-        fractionalDigits: 18,
-        tokenTicker: "ETH" as TokenTicker,
-      };
-    default:
-      throw new Error("No gasPrice imlementation found for this codec");
-  }
-}
-
-export function gasLimit(codec: Codec): Amount | undefined {
-  switch (codec) {
-    case Codec.Bns:
-    case Codec.Lisk:
-    case Codec.CosmWasm:
-      return undefined;
-    case Codec.Ethereum:
-      return {
-        quantity: constants.ethereum.gasLimit,
-        fractionalDigits: 18,
-        tokenTicker: "ETH" as TokenTicker,
-      };
-    default:
-      throw new Error("No gasLimit imlementation found for this codec");
-  }
 }

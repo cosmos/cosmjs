@@ -149,28 +149,6 @@
     bn.js "^4.11.8"
     readonly-date "^1.0.0"
 
-"@iov/ethereum@^2.0.0-alpha.7":
-  version "2.0.0-alpha.7"
-  resolved "https://registry.yarnpkg.com/@iov/ethereum/-/ethereum-2.0.0-alpha.7.tgz#f1a72947e5ce62a7afc56f0320866f08b2bf01b9"
-  integrity sha512-q+AJsIuwbBbrEMpztgGQIsApFJQ/n7t9Uq/pi3OGqUdcXCG6JYJH+XjClv0yIVcMB8pxfNwQ9RvYy75Zpn0icw==
-  dependencies:
-    "@iov/bcp" "^2.0.0-alpha.7"
-    "@iov/crypto" "^2.0.0-alpha.7"
-    "@iov/encoding" "^2.0.0-alpha.7"
-    "@iov/jsonrpc" "^2.0.0-alpha.7"
-    "@iov/keycontrol" "^2.0.0-alpha.7"
-    "@iov/socket" "^2.0.0-alpha.7"
-    "@iov/stream" "^2.0.0-alpha.7"
-    "@iov/utils" "^2.0.0-alpha.7"
-    "@types/long" "^4.0.0"
-    axios "^0.19.0"
-    bn.js "^4.11.8"
-    fast-deep-equal "^3.1.1"
-    long "^4.0.0"
-    readonly-date "^1.0.0"
-    rlp "^2.2.3"
-    xstream "^11.10.0"
-
 "@iov/jsonrpc@^2.0.0-alpha.7":
   version "2.0.0-alpha.7"
   resolved "https://registry.yarnpkg.com/@iov/jsonrpc/-/jsonrpc-2.0.0-alpha.7.tgz#7bff8e1f21d52ff07482212ded8cc00e01dda964"
@@ -259,11 +237,6 @@
     readonly-date "^1.0.0"
     type-tagger "^1.0.0"
     xstream "^11.10.0"
-
-"@iov/utils@^2.0.0-alpha.7":
-  version "2.0.0-alpha.7"
-  resolved "https://registry.yarnpkg.com/@iov/utils/-/utils-2.0.0-alpha.7.tgz#af9aebcb9e221e53cf62c5511f007c65d95f5c0c"
-  integrity sha512-myWATqmlCFZ/jSrsBQlyn+6D2ViAscZVAqBAw38kbIfv3TiKTjWb2RqhlNDnlVgt3uD0ZtQFyY9hkRMCwfIk+w==
 
 "@koa/cors@^3.0.0":
   version "3.0.0"
@@ -1977,7 +1950,7 @@ bluebird@^3.3.0, bluebird@^3.5.1, bluebird@^3.5.3, bluebird@^3.5.5:
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.7.2.tgz#9f229c15be272454ffa973ace0dbee79a1b0c36f"
   integrity sha512-XpNj6GDQzdfW+r2Wnn7xiSAd7TM3jzkxGXBGTtWKuSXv1xUV+azxAm8jdWZN06QTQk+2N2XB9jRDkvbmQmcRtg==
 
-bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.1.1, bn.js@^4.11.1, bn.js@^4.11.8, bn.js@^4.4.0:
+bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.1.1, bn.js@^4.11.8, bn.js@^4.4.0:
   version "4.11.8"
   resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-4.11.8.tgz#2cde09eb5ee341f484746bb0309b3253b1b1442f"
   integrity sha512-ItfYfPLkWHUjckQCk8xC+LwxgK8NYcXywGigJgSwOP8Y2iyWT4f2vsZnoOXTTbo+o5yXmIUJ4gn5538SO5S3gA==
@@ -6927,13 +6900,6 @@ ripemd160@^2.0.0, ripemd160@^2.0.1, ripemd160@^2.0.2:
   dependencies:
     hash-base "^3.0.0"
     inherits "^2.0.1"
-
-rlp@^2.2.3:
-  version "2.2.4"
-  resolved "https://registry.yarnpkg.com/rlp/-/rlp-2.2.4.tgz#d6b0e1659e9285fc509a5d169a9bd06f704951c1"
-  integrity sha512-fdq2yYCWpAQBhwkZv+Z8o/Z4sPmYm1CUq6P7n6lVTOdb949CnqA0sndXal5C1NleSVSZm6q5F3iEbauyVln/iw==
-  dependencies:
-    bn.js "^4.11.1"
 
 run-async@^2.2.0:
   version "2.3.0"

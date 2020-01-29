@@ -5,6 +5,4 @@ export interface SendJob {
   readonly recipient: Address;
   readonly tokenTicker: TokenTicker;
   readonly amount: Amount;
-  readonly gasPrice?: Amount;
-  readonly gasLimit?: Amount;
 }
