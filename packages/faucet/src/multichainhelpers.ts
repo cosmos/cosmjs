@@ -30,6 +30,7 @@ export async function accountsOfFirstChain(
   const addresses = identitiesOfFirstWallet(profile).map(identity => signer.identityToAddress(identity));
   const chainId = signer.chainIds()[0];
 
+  // tslint:disable-next-line: readonly-array
   const out: Account[] = [];
   for (const address of addresses) {
     const response = await signer.connection(chainId).getAccount({ address: address });
@@ -108,6 +109,7 @@ export async function refillFirstChain(
   const availableTokens = availableTokensFromHolder(holderAccount);
   console.info("Available tokens:", availableTokens);
 
+  // tslint:disable-next-line: readonly-array
   const jobs: SendJob[] = [];
 
   for (const token of availableTokens) {

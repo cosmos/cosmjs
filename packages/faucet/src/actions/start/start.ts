@@ -1,4 +1,4 @@
-/* eslint-disable require-atomic-updates */
+// tslint:disable: no-object-mutation
 import { UserProfile } from "@iov/keycontrol";
 import { MultiChainSigner } from "@iov/multichain";
 import cors = require("@koa/cors");
