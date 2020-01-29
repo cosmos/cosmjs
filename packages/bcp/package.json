@@ -1,6 +1,6 @@
 {
   "name": "@cosmwasm/bcp",
-  "version": "2.0.0-alpha.7",
+  "version": "0.0.1",
   "description": "Transaction codec and client to communicate with any wasmd blockchain",
   "author": "Ethan Frey <ethanfrey@users.noreply.github.com>",
   "license": "Apache-2.0",
