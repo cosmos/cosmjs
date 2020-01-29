@@ -1,9 +1,9 @@
 import { ChainConnector, ChainId } from "@iov/bcp";
 
 import { CosmosBech32Prefix } from "./address";
-import { cosmWasmCodec } from "./cosmwasmcodec";
+import { CosmWasmCodec } from "./cosmwasmcodec";
 import { CosmWasmConnection } from "./cosmwasmconnection";
-import { TokenInfos } from "./types";
+import { TokenInfo } from "./types";
 
 /**
  * A helper to connect to a cosmos-based chain at a given url
@@ -11,12 +11,13 @@ import { TokenInfos } from "./types";
 export function createCosmWasmConnector(
   url: string,
   prefix: CosmosBech32Prefix,
-  tokenInfo: TokenInfos,
+  tokenInfo: readonly TokenInfo[],
   expectedChainId?: ChainId,
 ): ChainConnector<CosmWasmConnection> {
+  const codec = new CosmWasmCodec(prefix, tokenInfo);
   return {
     establishConnection: async () => CosmWasmConnection.establish(url, prefix, tokenInfo),
-    codec: cosmWasmCodec,
+    codec: codec,
     expectedChainId: expectedChainId,
   };
 }

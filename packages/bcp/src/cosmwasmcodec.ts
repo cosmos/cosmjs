@@ -113,4 +113,5 @@ const defaultTokens: TokenInfos = [
   },
 ];
 
+/** Unconfigured codec is useful for testing only */
 export const cosmWasmCodec = new CosmWasmCodec(defaultPrefix, defaultTokens);
