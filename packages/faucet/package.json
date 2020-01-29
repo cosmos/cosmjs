@@ -1,0 +1,62 @@
+{
+  "name": "@cosmwasm/faucet",
+  "version": "0.0.1",
+  "description": "The faucet",
+  "author": "Ethan Frey <ethanfrey@users.noreply.github.com>",
+  "license": "Apache-2.0",
+  "main": "build/index.js",
+  "types": "types/index.d.ts",
+  "files": [
+    "build/",
+    "types/",
+    "*.md",
+    "!*.spec.*",
+    "!**/testdata/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/confio/cosm-js/tree/master/packages/faucet"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "docs": "shx rm -rf docs && typedoc --options typedoc.js",
+    "format": "prettier --write --loglevel warn \"./src/**/*.ts\"",
+    "lint": "eslint --max-warnings 0 \"**/*.{js,ts}\" && tslint -t verbose --project .",
+    "lint-fix": "eslint --max-warnings 0 \"**/*.{js,ts}\" --fix",
+    "move-types": "shx rm -rf ./types/* && shx mv build/types/* ./types && rm -rf ./types/testdata && shx rm -f ./types/*.spec.d.ts",
+    "format-types": "prettier --write --loglevel warn \"./types/**/*.d.ts\"",
+    "build": "shx rm -rf ./build && tsc && yarn move-types && yarn format-types",
+    "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build",
+    "test-node": "mocha \"./build/**/*.spec.js\"",
+    "test": "yarn build-or-skip && yarn test-node"
+  },
+  "dependencies": {
+    "@iov/bcp": "^2.0.0-alpha.7",
+    "@iov/bns": "^2.0.0-alpha.7",
+    "@iov/crypto": "^2.0.0-alpha.7",
+    "@iov/encoding": "^2.0.0-alpha.7",
+    "@iov/ethereum": "^2.0.0-alpha.7",
+    "@iov/lisk": "^2.0.0-alpha.7",
+    "@iov/multichain": "^2.0.0-alpha.7",
+    "@koa/cors": "^3.0.0",
+    "axios": "^0.19.0",
+    "bn.js": "^5.1.1",
+    "fast-deep-equal": "^3.1.1",
+    "koa": "^2.11.0",
+    "koa-bodyparser": "^4.2.1",
+    "readonly-date": "^1.0.0",
+    "xstream": "^11.11.0"
+  },
+  "devDependencies": {
+    "@types/bn.js": "^4.11.6",
+    "@types/chai": "^4.2.7",
+    "@types/koa": "^2.11.0",
+    "@types/koa-bodyparser": "^4.3.0",
+    "@types/koa__cors": "^3.0.1",
+    "@types/mocha": "^5.2.7",
+    "chai": "^4.2.0",
+    "mocha": "^7.0.1"
+  }
+}
