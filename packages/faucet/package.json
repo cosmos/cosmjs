@@ -34,7 +34,6 @@
   "dependencies": {
     "@cosmwasm/bcp": "^0.0.1",
     "@iov/bcp": "^2.0.0-alpha.7",
-    "@iov/bns": "^2.0.0-alpha.7",
     "@iov/crypto": "^2.0.0-alpha.7",
     "@iov/encoding": "^2.0.0-alpha.7",
     "@iov/lisk": "^2.0.0-alpha.7",

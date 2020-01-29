@@ -4,7 +4,6 @@ import { Codec } from "./codec";
 
 export function createWalletForCodec(input: Codec, mnemonic: string): Wallet {
   switch (input) {
-    case Codec.Bns:
     case Codec.Lisk:
       return Ed25519HdWallet.fromMnemonic(mnemonic);
     case Codec.CosmWasm:
