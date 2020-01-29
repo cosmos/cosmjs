@@ -12,7 +12,7 @@ import {
 } from "@iov/bcp";
 import { CosmosBech32Prefix } from "./address";
 import { TokenInfos } from "./types";
-export declare class CosmosCodec implements TxCodec {
+export declare class CosmWasmCodec implements TxCodec {
   private readonly prefix;
   private readonly tokens;
   constructor(prefix: CosmosBech32Prefix, tokens: TokenInfos);
@@ -23,4 +23,4 @@ export declare class CosmosCodec implements TxCodec {
   identityToAddress(identity: Identity): Address;
   isValidAddress(address: string): boolean;
 }
-export declare const cosmosCodec: CosmosCodec;
+export declare const cosmWasmCodec: CosmWasmCodec;

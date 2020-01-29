@@ -68,16 +68,16 @@ function buildQueryString({
   return components.filter(Boolean).join("&");
 }
 
-export class CosmosConnection implements BlockchainConnection {
+export class CosmWasmConnection implements BlockchainConnection {
   // we must know prefix and tokens a priori to understand the chain
   public static async establish(
     url: string,
     prefix: CosmosBech32Prefix,
     tokenInfo: TokenInfos,
-  ): Promise<CosmosConnection> {
+  ): Promise<CosmWasmConnection> {
     const restClient = new RestClient(url);
     const chainData = await this.initialize(restClient);
-    return new CosmosConnection(restClient, chainData, prefix, tokenInfo);
+    return new CosmWasmConnection(restClient, chainData, prefix, tokenInfo);
   }
 
   private static async initialize(restClient: RestClient): Promise<ChainData> {
