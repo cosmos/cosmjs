@@ -5,7 +5,6 @@ import {
   isBlockInfoPending,
   SendTransaction,
   TokenTicker,
-  WithCreator,
 } from "@iov/bcp";
 import { UserProfile } from "@iov/keycontrol";
 import { MultiChainSigner } from "@iov/multichain";
@@ -68,19 +67,17 @@ export async function sendOnFirstChain(
   const chainId = signer.chainIds()[0];
   const connection = signer.connection(chainId);
 
-  const sendWithFee = await connection.withDefaultFee<SendTransaction & WithCreator>({
+  const sendWithFee = await connection.withDefaultFee<SendTransaction>({
     kind: "bcp/send",
-    creator: {
-      chainId: chainId,
-      pubkey: job.sender.pubkey,
-    },
+    chainId: chainId,
     sender: signer.identityToAddress(job.sender),
+    senderPubkey: job.sender.pubkey,
     recipient: job.recipient,
     memo: "We ❤️ developers – iov.one",
     amount: job.amount,
   });
 
-  const post = await signer.signAndPost(sendWithFee);
+  const post = await signer.signAndPost(job.sender, sendWithFee);
   const blockInfo = await post.blockInfo.waitFor(info => !isBlockInfoPending(info));
   if (isBlockInfoFailed(blockInfo)) {
     throw new Error(`Sending tokens failed. Code: ${blockInfo.code}, message: ${blockInfo.message}`);
