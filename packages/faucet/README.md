@@ -74,6 +74,34 @@ the same mnemonic is used. Accessing the distributor accounts will be possible
 as soon as there is
 [multi account support](https://github.com/iov-one/ponferrada/milestone/3).
 
+### Working with docker
+
+- Build an artifact ()
+
+```sh
+docker build -t cosmwasm/faucet:manual --file faucet.Dockerfile .
+```
+
+- Version and help
+
+```sh
+docker run --read-only --rm cosmwasm/faucet:manual version
+docker run --read-only --rm cosmwasm/faucet:manual help
+```
+
+- Run faucet locally
+
+```sh
+DOCKER_HOST_IP=$(docker run --read-only --rm alpine ip route | awk 'NR==1 {print $3}') \
+  FAUCET_CONCURRENCY=3 FAUCET_MNEMONIC="economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone" \
+  docker run --read-only --rm \
+  -e FAUCET_MNEMONIC \
+  -e FAUCET_CONCURRENCY \
+  -p 8000:8000 \
+  cosmwasm/faucet:manual \
+  start cosmwasm "http://$DOCKER_HOST_IP:1317"
+```
+
 ### Using the faucet
 
 Now that the faucet has been started up, you can send credit requests to it.
