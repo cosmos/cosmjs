@@ -16,16 +16,17 @@ jobs:
           name: Version information
           command: echo "node $(node --version)"; echo "yarn $(yarn --version)"
       - restore_cache:
+          name: Restore Yarn Package Cache
           keys:
-            - node-deps-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
-            - node-deps-v1-{{ .Branch }}
-            - node-deps-v1
+            - yarn-packages-{{ checksum "yarn.lock" }}
       - run:
-          command: yarn install
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile
       - save_cache:
-          key: node-deps-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
-            - ~/project/node_modules
+            - ~/.cache/yarn
       - run:
           command: yarn build
       - run:
@@ -39,15 +40,16 @@ jobs:
           name: Version information
           command: echo "node $(node --version)"; echo "yarn $(yarn --version)"
       - restore_cache:
+          name: Restore Yarn Package Cache
           keys:
-            - node-deps-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
-            - node-deps-v1-{{ .Branch }}
-            - node-deps-v1
+            - yarn-packages-{{ checksum "yarn.lock" }}
       - run:
-          command: yarn install
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile
       - save_cache:
-          key: node-deps-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
-            - ~/project/node_modules
+            - ~/.cache/yarn
       - run:
           command: yarn lint
