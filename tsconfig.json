@@ -17,7 +17,6 @@
     "pretty": true,
     "removeComments": false,
     "resolveJsonModule": true,
-    "rootDir": "src",
     "sourceMap": true,
     "strict": true,
     "target": "es6",
@@ -26,6 +25,5 @@
       "./custom_types",
       "./node_modules/@types"
     ]
-  },
-  "include": ["src/**/*"]
+  }
 }
