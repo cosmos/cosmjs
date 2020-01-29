@@ -66,6 +66,7 @@ export function gasPrice(codec: Codec): Amount | undefined {
   switch (codec) {
     case Codec.Bns:
     case Codec.Lisk:
+    case Codec.CosmWasm:
       return undefined;
     case Codec.Ethereum:
       return {
@@ -74,7 +75,7 @@ export function gasPrice(codec: Codec): Amount | undefined {
         tokenTicker: "ETH" as TokenTicker,
       };
     default:
-      throw new Error("No codec imlementation for this codec found");
+      throw new Error("No gasPrice imlementation found for this codec");
   }
 }
 
@@ -82,6 +83,7 @@ export function gasLimit(codec: Codec): Amount | undefined {
   switch (codec) {
     case Codec.Bns:
     case Codec.Lisk:
+    case Codec.CosmWasm:
       return undefined;
     case Codec.Ethereum:
       return {
@@ -90,6 +92,6 @@ export function gasLimit(codec: Codec): Amount | undefined {
         tokenTicker: "ETH" as TokenTicker,
       };
     default:
-      throw new Error("Codec not supported");
+      throw new Error("No gasLimit imlementation found for this codec");
   }
 }

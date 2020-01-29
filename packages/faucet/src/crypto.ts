@@ -8,6 +8,7 @@ export function createWalletForCodec(input: Codec, mnemonic: string): Wallet {
     case Codec.Lisk:
       return Ed25519HdWallet.fromMnemonic(mnemonic);
     case Codec.Ethereum:
+    case Codec.CosmWasm:
       return Secp256k1HdWallet.fromMnemonic(mnemonic);
     default:
       throw new Error(`Codec '${input}' not supported`);
