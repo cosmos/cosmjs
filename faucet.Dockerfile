@@ -19,5 +19,5 @@ WORKDIR /run_repo_root
 RUN yarn install --frozen-lockfile --production
 
 EXPOSE 8000
-ENTRYPOINT ["/run_repo_root/packages/faucet/bin/cosm-faucet"]
+ENTRYPOINT ["/run_repo_root/packages/faucet/bin/cosmwasm-faucet"]
 CMD [""]

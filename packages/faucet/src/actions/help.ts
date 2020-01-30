@@ -1,4 +1,4 @@
-const binaryName = "cosmwasm-faucet";
+import { binaryName } from "../constants";
 
 export function help(): void {
   const out = `
