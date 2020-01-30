@@ -1,5 +1,5 @@
 {
-  "genesis_time": "2020-01-22T14:34:19.752819623Z",
+  "genesis_time": "2020-01-30T18:33:49.087079926Z",
   "chain_id": "testing",
   "consensus_params": {
     "block": {
@@ -8,7 +8,8 @@
       "time_iota_ms": "1000"
     },
     "evidence": {
-      "max_age": "100000"
+      "max_age_num_blocks": "100000",
+      "max_age_duration": "172800000000000"
     },
     "validator": {
       "pub_key_types": [
@@ -18,16 +19,6 @@
   },
   "app_hash": "",
   "app_state": {
-    "bank": {
-      "send_enabled": true
-    },
-    "supply": {
-      "supply": []
-    },
-    "wasm": {
-      "codes": null,
-      "contracts": null
-    },
     "gov": {
       "starting_proposal_id": "1",
       "deposits": null,
@@ -51,6 +42,103 @@
         "veto": "0.334000000000000000"
       }
     },
+    "genutil": {
+      "gentxs": [
+        {
+          "type": "cosmos-sdk/StdTx",
+          "value": {
+            "msg": [
+              {
+                "type": "cosmos-sdk/MsgCreateValidator",
+                "value": {
+                  "description": {
+                    "moniker": "testing",
+                    "identity": "",
+                    "website": "",
+                    "security_contact": "",
+                    "details": ""
+                  },
+                  "commission": {
+                    "rate": "0.100000000000000000",
+                    "max_rate": "0.200000000000000000",
+                    "max_change_rate": "0.010000000000000000"
+                  },
+                  "min_self_delegation": "1",
+                  "delegator_address": "cosmos1g82dyygst88uuerzr6qead8vc257r5enjf6sg5",
+                  "validator_address": "cosmosvaloper1g82dyygst88uuerzr6qead8vc257r5enhaw9y8",
+                  "pubkey": "cosmosvalconspub1zcjduepqvfqm2l967wz6pz7glu0lha8lk2fpsm0nvwxcv35uud9agytu3y7sc07npy",
+                  "value": {
+                    "denom": "stake",
+                    "amount": "100000000"
+                  }
+                }
+              }
+            ],
+            "fee": {
+              "amount": [],
+              "gas": "200000"
+            },
+            "signatures": [
+              {
+                "pub_key": {
+                  "type": "tendermint/PubKeySecp256k1",
+                  "value": "AxJ55UXug7d9rFB8rqn4wJo3EVFXasKENjq4DzQlZ0En"
+                },
+                "signature": "WO7uXni7s9Ol9F4WG/74zxFaS8O5lG3GYivrvBBw4Z9KrDnMIeYhKoJ8zLg2cGamTm/1N5K8eICTLz0Fn5FhBA=="
+              }
+            ],
+            "memo": "ab46a170f7dd4c6ba69520371e6f29c23e035c67@172.17.0.2:26656"
+          }
+        }
+      ]
+    },
+    "params": null,
+    "mint": {
+      "minter": {
+        "inflation": "0.130000000000000000",
+        "annual_provisions": "0.000000000000000000"
+      },
+      "params": {
+        "mint_denom": "stake",
+        "inflation_rate_change": "0.130000000000000000",
+        "inflation_max": "0.200000000000000000",
+        "inflation_min": "0.070000000000000000",
+        "goal_bonded": "0.670000000000000000",
+        "blocks_per_year": "6311520"
+      }
+    },
+    "evidence": {
+      "params": {
+        "max_evidence_age": "120000000000"
+      },
+      "evidence": []
+    },
+    "staking": {
+      "params": {
+        "unbonding_time": "1814400000000000",
+        "max_validators": 100,
+        "max_entries": 7,
+        "historical_entries": 0,
+        "bond_denom": "stake"
+      },
+      "last_total_power": "0",
+      "last_validator_powers": null,
+      "validators": null,
+      "delegations": null,
+      "unbonding_delegations": null,
+      "redelegations": null,
+      "exported": false
+    },
+    "crisis": {
+      "constant_fee": {
+        "denom": "stake",
+        "amount": "1000"
+      }
+    },
+    "wasm": {
+      "codes": null,
+      "contracts": null
+    },
     "auth": {
       "params": {
         "max_memo_characters": "256",
@@ -63,7 +151,7 @@
         {
           "type": "cosmos-sdk/Account",
           "value": {
-            "address": "cosmos1u5gjye252r5k5ksg2d5kplphcqfyftw0lt39q2",
+            "address": "cosmos1g82dyygst88uuerzr6qead8vc257r5enjf6sg5",
             "coins": [
               {
                 "denom": "cosm",
@@ -100,15 +188,11 @@
         }
       ]
     },
-    "crisis": {
-      "constant_fee": {
-        "denom": "stake",
-        "amount": "1000"
-      }
+    "supply": {
+      "supply": []
     },
     "slashing": {
       "params": {
-        "max_evidence_age": "120000000000",
         "signed_blocks_window": "100",
         "min_signed_per_window": "0.500000000000000000",
         "downtime_jail_duration": "600000000000",
@@ -118,14 +202,17 @@
       "signing_infos": {},
       "missed_blocks": {}
     },
+    "upgrade": {},
     "distribution": {
+      "params": {
+        "community_tax": "0.020000000000000000",
+        "base_proposer_reward": "0.010000000000000000",
+        "bonus_proposer_reward": "0.040000000000000000",
+        "withdraw_addr_enabled": true
+      },
       "fee_pool": {
         "community_pool": []
       },
-      "community_tax": "0.020000000000000000",
-      "base_proposer_reward": "0.010000000000000000",
-      "bonus_proposer_reward": "0.040000000000000000",
-      "withdraw_addr_enabled": true,
       "delegator_withdraw_infos": [],
       "previous_proposer": "",
       "outstanding_rewards": [],
@@ -135,88 +222,8 @@
       "delegator_starting_infos": [],
       "validator_slash_events": []
     },
-    "evidence": {
-      "evidence": []
-    },
-    "mint": {
-      "minter": {
-        "inflation": "0.130000000000000000",
-        "annual_provisions": "0.000000000000000000"
-      },
-      "params": {
-        "mint_denom": "stake",
-        "inflation_rate_change": "0.130000000000000000",
-        "inflation_max": "0.200000000000000000",
-        "inflation_min": "0.070000000000000000",
-        "goal_bonded": "0.670000000000000000",
-        "blocks_per_year": "6311520"
-      }
-    },
-    "params": null,
-    "genutil": {
-      "gentxs": [
-        {
-          "type": "cosmos-sdk/StdTx",
-          "value": {
-            "msg": [
-              {
-                "type": "cosmos-sdk/MsgCreateValidator",
-                "value": {
-                  "description": {
-                    "moniker": "testing",
-                    "identity": "",
-                    "website": "",
-                    "security_contact": "",
-                    "details": ""
-                  },
-                  "commission": {
-                    "rate": "0.100000000000000000",
-                    "max_rate": "0.200000000000000000",
-                    "max_change_rate": "0.010000000000000000"
-                  },
-                  "min_self_delegation": "1",
-                  "delegator_address": "cosmos1u5gjye252r5k5ksg2d5kplphcqfyftw0lt39q2",
-                  "validator_address": "cosmosvaloper1u5gjye252r5k5ksg2d5kplphcqfyftw06l9sve",
-                  "pubkey": "cosmosvalconspub1zcjduepqsvkt5rtf2rk0tx4vzctnfkv6a8y0c7je6am6z52497s5uxzuugrqum62t8",
-                  "value": {
-                    "denom": "stake",
-                    "amount": "100000000"
-                  }
-                }
-              }
-            ],
-            "fee": {
-              "amount": [],
-              "gas": "200000"
-            },
-            "signatures": [
-              {
-                "pub_key": {
-                  "type": "tendermint/PubKeySecp256k1",
-                  "value": "A/X/klKxfadxwxra0nOVjcuHdkSsdKoPnZB2bxzbJmnK"
-                },
-                "signature": "t9FoiLYQJX3/cRpPjAO3l7kjpAMq4wix0aPo+X7kmxILxeTITgbPyyN67XwgG2Jr9G5LRs4vEBPHOlvXY4roxg=="
-              }
-            ],
-            "memo": "69a6eaf3ccacb29d1bf8a3260eae307138bdba39@172.17.0.2:26656"
-          }
-        }
-      ]
-    },
-    "staking": {
-      "params": {
-        "unbonding_time": "1814400000000000",
-        "max_validators": 100,
-        "max_entries": 7,
-        "bond_denom": "stake"
-      },
-      "last_total_power": "0",
-      "last_validator_powers": null,
-      "validators": null,
-      "delegations": null,
-      "unbonding_delegations": null,
-      "redelegations": null,
-      "exported": false
+    "bank": {
+      "send_enabled": true
     }
   }
 }
