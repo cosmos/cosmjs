@@ -21,7 +21,7 @@
     "access": "public"
   },
   "scripts": {
-    "dev-start": "FAUCET_CREDIT_AMOUNT_COSM=10 FAUCET_CREDIT_AMOUNT_STAKE=5 FAUCET_CONCURRENCY=3 FAUCET_MNEMONIC=\"economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone\" ./bin/cosmwasm-faucet start cosmwasm \"http://localhost:1317\"",
+    "dev-start": "FAUCET_CREDIT_AMOUNT_COSM=10 FAUCET_CREDIT_AMOUNT_STAKE=5 FAUCET_CONCURRENCY=3 FAUCET_MNEMONIC=\"economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone\" ./bin/cosmwasm-faucet start \"http://localhost:1317\"",
     "docs": "shx rm -rf docs && typedoc --options typedoc.js",
     "format": "prettier --write --loglevel warn \"./src/**/*.ts\"",
     "lint": "eslint --max-warnings 0 \"**/*.{js,ts}\" && tslint -t verbose --project .",
@@ -36,8 +36,7 @@
     "@iov/bcp": "^2.0.0-alpha.7",
     "@iov/crypto": "^2.0.0-alpha.7",
     "@iov/encoding": "^2.0.0-alpha.7",
-    "@iov/lisk": "^2.0.0-alpha.7",
-    "@iov/multichain": "^2.0.0-alpha.7",
+    "@iov/keycontrol": "^2.0.0-alpha.7",
     "@koa/cors": "^3.0.0",
     "axios": "^0.19.0",
     "fast-deep-equal": "^3.1.1",

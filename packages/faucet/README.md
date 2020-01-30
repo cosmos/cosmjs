@@ -21,7 +21,7 @@ FAUCET_CREDIT_AMOUNT_COSM=10 \
   FAUCET_CREDIT_AMOUNT_STAKE=5 \
   FAUCET_CONCURRENCY=3 \
   FAUCET_MNEMONIC="economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone" \
-  ./bin/cosmwasm-faucet start cosmwasm "http://localhost:1317"
+  ./bin/cosmwasm-faucet start "http://localhost:1317"
 ```
 
 ## Usage
@@ -36,12 +36,10 @@ help      Shows a help text and exits
 version   Prints the version and exits
 
 generate  Generates a random mnemonic, shows derived faucet addresses and exits
-           1  Codec
-           2  Chain ID
+           1  Chain ID
 
 start     Starts the faucet
-           1  Codec
-           2  Node base URL, e.g. wss://bov.friendnet-fast.iov.one
+           1  Node base URL, e.g. http://localhost:1317
 
 Environment variables
 
@@ -99,7 +97,7 @@ DOCKER_HOST_IP=$(docker run --read-only --rm alpine ip route | awk 'NR==1 {print
   -e FAUCET_CONCURRENCY \
   -p 8000:8000 \
   cosmwasm/faucet:manual \
-  start cosmwasm "http://$DOCKER_HOST_IP:1317"
+  start "http://$DOCKER_HOST_IP:1317"
 ```
 
 ### Using the faucet

@@ -130,15 +130,6 @@
     bn.js "^4.11.8"
     readonly-date "^1.0.0"
 
-"@iov/jsonrpc@^2.0.0-alpha.7":
-  version "2.0.0-alpha.7"
-  resolved "https://registry.yarnpkg.com/@iov/jsonrpc/-/jsonrpc-2.0.0-alpha.7.tgz#7bff8e1f21d52ff07482212ded8cc00e01dda964"
-  integrity sha512-eVCfNi3Zg4ZUEXOxhzRb3kcoBupBGQWmU4pYu7OYBi3uvuUz8KP6kcIdsy+51+y/nqrnk3H2Ur7MWCzwsu215w==
-  dependencies:
-    "@iov/encoding" "^2.0.0-alpha.7"
-    "@iov/stream" "^2.0.0-alpha.7"
-    xstream "^11.10.0"
-
 "@iov/keycontrol@^2.0.0-alpha.7":
   version "2.0.0-alpha.7"
   resolved "https://registry.yarnpkg.com/@iov/keycontrol/-/keycontrol-2.0.0-alpha.7.tgz#d115a1b536664afb64b40a6db87aaf19f8d07afd"
@@ -158,35 +149,6 @@
     readonly-date "^1.0.0"
     type-tagger "^1.0.0"
     xstream "^11.10.0"
-
-"@iov/lisk@^2.0.0-alpha.7":
-  version "2.0.0-alpha.7"
-  resolved "https://registry.yarnpkg.com/@iov/lisk/-/lisk-2.0.0-alpha.7.tgz#5ff6c617ac00e6be736ada34ad68dce0efd64637"
-  integrity sha512-m5mr2NDU7pxuS8d6SBXCZ1WBtCSXtV+EWqMEIuPSCJwZxnwmWotowX+WhSYn+dGyuvgTd7DpfQ5C6pliAyhcyQ==
-  dependencies:
-    "@iov/bcp" "^2.0.0-alpha.7"
-    "@iov/crypto" "^2.0.0-alpha.7"
-    "@iov/encoding" "^2.0.0-alpha.7"
-    "@iov/keycontrol" "^2.0.0-alpha.7"
-    "@iov/stream" "^2.0.0-alpha.7"
-    "@types/long" "^4.0.0"
-    axios "^0.19.0"
-    fast-deep-equal "^3.1.1"
-    long "^4.0.0"
-    readonly-date "^1.0.0"
-    xstream "^11.10.0"
-
-"@iov/multichain@^2.0.0-alpha.7":
-  version "2.0.0-alpha.7"
-  resolved "https://registry.yarnpkg.com/@iov/multichain/-/multichain-2.0.0-alpha.7.tgz#29ec9f61ec2fa60c17d462c9be48feb7196c28ba"
-  integrity sha512-hhEyqalADrQa4JS99JqawM7jWLYGqb52Ipq/49Zz5eDG9/nj9QyLn5nayWLTbm60ZXzHvvGr5oJpZx8Xb2PzfA==
-  dependencies:
-    "@iov/bcp" "^2.0.0-alpha.7"
-    "@iov/encoding" "^2.0.0-alpha.7"
-    "@iov/jsonrpc" "^2.0.0-alpha.7"
-    "@iov/keycontrol" "^2.0.0-alpha.7"
-    "@types/long" "^4.0.0"
-    long "^4.0.0"
 
 "@iov/stream@^2.0.0-alpha.7":
   version "2.0.0-alpha.7"
@@ -1123,11 +1085,6 @@
   dependencies:
     "@types/abstract-leveldown" "*"
     "@types/node" "*"
-
-"@types/long@^4.0.0":
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/@types/long/-/long-4.0.1.tgz#459c65fa1867dafe6a8f322c4c51695663cc55e9"
-  integrity sha512-5tXH6Bx/kNGd3MgffdmP4dy2Z+G4eaXw0SE81Tq3BNadtnMR5/ySMzX4SLEzHJzSmPNn4HIdpQsBvXMUykr58w==
 
 "@types/memdown@^3.0.0":
   version "3.0.0"

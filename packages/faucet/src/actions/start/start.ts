@@ -1,26 +1,20 @@
 // tslint:disable: no-object-mutation
 import { UserProfile } from "@iov/keycontrol";
-import { MultiChainSigner } from "@iov/multichain";
 import cors = require("@koa/cors");
 import Koa from "koa";
 import bodyParser from "koa-bodyparser";
 
 import { creditAmount, setFractionalDigits } from "../../cashflow";
-import {
-  codecDefaultFractionalDigits,
-  codecFromString,
-  codecImplementation,
-  createChainConnector,
-} from "../../codec";
+import { codecDefaultFractionalDigits, codecImplementation, establishConnection } from "../../codec";
 import * as constants from "../../constants";
 import { logAccountsState, logSendJob } from "../../debugging";
 import {
-  accountsOfFirstChain,
   availableTokensFromHolder,
   identitiesOfFirstWallet,
-  refillFirstChain,
-  sendOnFirstChain,
-  tokenTickersOfFirstChain,
+  loadAccounts,
+  loadTokenTickers,
+  refill,
+  send,
 } from "../../multichainhelpers";
 import { setSecretAndCreateIdentities } from "../../profile";
 import { SendJob } from "../../types";
@@ -35,13 +29,13 @@ function getCount(): number {
 }
 
 export async function start(args: ReadonlyArray<string>): Promise<void> {
-  if (args.length < 2) {
+  if (args.length < 1) {
     throw Error(
       `Not enough arguments for action 'start'. See '${constants.binaryName} help' or README for arguments.`,
     );
   }
-  const codec = codecFromString(args[0]);
-  const blockchainBaseUrl: string = args[1];
+
+  const blockchainBaseUrl = args[0];
 
   const port = constants.port;
 
@@ -49,34 +43,33 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
   if (!constants.mnemonic) {
     throw new Error("The FAUCET_MNEMONIC environment variable is not set");
   }
-  const signer = new MultiChainSigner(profile);
   console.info(`Connecting to blockchain ${blockchainBaseUrl} ...`);
-  const connection = (await signer.addChain(createChainConnector(codec, blockchainBaseUrl))).connection;
+  const connection = await establishConnection(blockchainBaseUrl);
 
   const connectedChainId = connection.chainId();
   console.info(`Connected to network: ${connectedChainId}`);
 
-  setFractionalDigits(codecDefaultFractionalDigits(codec));
-  await setSecretAndCreateIdentities(profile, constants.mnemonic, connectedChainId, codec);
+  setFractionalDigits(codecDefaultFractionalDigits());
+  await setSecretAndCreateIdentities(profile, constants.mnemonic, connectedChainId);
 
-  const chainTokens = await tokenTickersOfFirstChain(signer);
+  const chainTokens = await loadTokenTickers(connection);
   console.info("Chain tokens:", chainTokens);
 
-  const accounts = await accountsOfFirstChain(profile, signer);
+  const accounts = await loadAccounts(profile, connection);
   logAccountsState(accounts);
 
   let availableTokens = availableTokensFromHolder(accounts[0]);
   console.info("Available tokens:", availableTokens);
   setInterval(async () => {
-    const updatedAccounts = await accountsOfFirstChain(profile, signer);
+    const updatedAccounts = await loadAccounts(profile, connection);
     availableTokens = availableTokensFromHolder(updatedAccounts[0]);
     console.info("Available tokens:", availableTokens);
   }, 60_000);
 
   const distibutorIdentities = identitiesOfFirstWallet(profile).slice(1);
 
-  await refillFirstChain(profile, signer);
-  setInterval(async () => refillFirstChain(profile, signer), 60_000); // ever 60 seconds
+  await refill(profile, connection);
+  setInterval(async () => refill(profile, connection), 60_000); // ever 60 seconds
 
   console.info("Creating webserver ...");
   const api = new Koa();
@@ -95,7 +88,7 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
           "See https://github.com/iov-one/iov-faucet for all further information.\n";
         break;
       case "/status": {
-        const updatedAccounts = await accountsOfFirstChain(profile, signer);
+        const updatedAccounts = await loadAccounts(profile, connection);
         context.response.body = {
           status: "ok",
           nodeUrl: blockchainBaseUrl,
@@ -120,7 +113,7 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
         const requestBody = (context.request as any).body;
         const { address, ticker } = RequestParser.parseCreditBody(requestBody);
 
-        if (!codecImplementation(codec).isValidAddress(address)) {
+        if (!codecImplementation().isValidAddress(address)) {
           throw new HttpError(400, "Address is not in the expected format for this chain.");
         }
 
@@ -138,8 +131,8 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
             amount: creditAmount(ticker),
             tokenTicker: ticker,
           };
-          logSendJob(signer, job);
-          await sendOnFirstChain(profile, signer, job);
+          logSendJob(job);
+          await send(profile, connection, job);
         } catch (e) {
           console.error(e);
           throw new HttpError(500, "Sending tokens failed");

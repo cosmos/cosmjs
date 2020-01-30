@@ -1,5 +1,6 @@
 import {
   Account,
+  BlockchainConnection,
   Identity,
   isBlockInfoFailed,
   isBlockInfoPending,
@@ -7,9 +8,9 @@ import {
   TokenTicker,
 } from "@iov/bcp";
 import { UserProfile } from "@iov/keycontrol";
-import { MultiChainSigner } from "@iov/multichain";
 
 import { needsRefill, refillAmount } from "./cashflow";
+import { codecImplementation } from "./codec";
 import { debugAccount, logAccountsState, logSendJob } from "./debugging";
 import { SendJob } from "./types";
 
@@ -22,17 +23,17 @@ export function identitiesOfFirstWallet(profile: UserProfile): ReadonlyArray<Ide
   return profile.getIdentities(wallet.id);
 }
 
-export async function accountsOfFirstChain(
+export async function loadAccounts(
   profile: UserProfile,
-  signer: MultiChainSigner,
+  connection: BlockchainConnection,
 ): Promise<ReadonlyArray<Account>> {
-  const addresses = identitiesOfFirstWallet(profile).map(identity => signer.identityToAddress(identity));
-  const chainId = signer.chainIds()[0];
+  const codec = codecImplementation();
+  const addresses = identitiesOfFirstWallet(profile).map(identity => codec.identityToAddress(identity));
 
   // tslint:disable-next-line: readonly-array
   const out: Account[] = [];
   for (const address of addresses) {
-    const response = await signer.connection(chainId).getAccount({ address: address });
+    const response = await connection.getAccount({ address: address });
     if (response) {
       out.push({
         address: response.address,
@@ -49,35 +50,36 @@ export async function accountsOfFirstChain(
   return out;
 }
 
-export async function tokenTickersOfFirstChain(
-  signer: MultiChainSigner,
+export async function loadTokenTickers(
+  connection: BlockchainConnection,
 ): Promise<ReadonlyArray<TokenTicker>> {
-  const chainId = signer.chainIds()[0];
-  return (await signer.connection(chainId).getAllTokens()).map(token => token.tokenTicker);
+  return (await connection.getAllTokens()).map(token => token.tokenTicker);
 }
 
 /**
  * Creates and posts a send transaction. Then waits until the transaction is in a block.
  */
-export async function sendOnFirstChain(
+export async function send(
   profile: UserProfile,
-  signer: MultiChainSigner,
+  connection: BlockchainConnection,
   job: SendJob,
 ): Promise<void> {
-  const chainId = signer.chainIds()[0];
-  const connection = signer.connection(chainId);
+  const codec = codecImplementation();
 
   const sendWithFee = await connection.withDefaultFee<SendTransaction>({
     kind: "bcp/send",
-    chainId: chainId,
-    sender: signer.identityToAddress(job.sender),
+    chainId: connection.chainId(),
+    sender: codec.identityToAddress(job.sender),
     senderPubkey: job.sender.pubkey,
     recipient: job.recipient,
     memo: "We ❤️ developers – iov.one",
     amount: job.amount,
   });
 
-  const post = await signer.signAndPost(job.sender, sendWithFee);
+  const nonce = await connection.getNonce({ pubkey: job.sender.pubkey });
+  const signed = await profile.signTransaction(job.sender, sendWithFee, codec, nonce);
+
+  const post = await connection.postTx(codec.bytesToPost(signed));
   const blockInfo = await post.blockInfo.waitFor(info => !isBlockInfoPending(info));
   if (isBlockInfoFailed(blockInfo)) {
     throw new Error(`Sending tokens failed. Code: ${blockInfo.code}, message: ${blockInfo.message}`);
@@ -88,15 +90,13 @@ export function availableTokensFromHolder(holderAccount: Account): ReadonlyArray
   return holderAccount.balance.map(coin => coin.tokenTicker);
 }
 
-export async function refillFirstChain(profile: UserProfile, signer: MultiChainSigner): Promise<void> {
-  const chainId = signer.chainIds()[0];
-
-  console.info(`Connected to network: ${chainId}`);
-  console.info(`Tokens on network: ${(await tokenTickersOfFirstChain(signer)).join(", ")}`);
+export async function refill(profile: UserProfile, connection: BlockchainConnection): Promise<void> {
+  console.info(`Connected to network: ${connection.chainId()}`);
+  console.info(`Tokens on network: ${(await loadTokenTickers(connection)).join(", ")}`);
 
   const holderIdentity = identitiesOfFirstWallet(profile)[0];
 
-  const accounts = await accountsOfFirstChain(profile, signer);
+  const accounts = await loadAccounts(profile, connection);
   logAccountsState(accounts);
   const holderAccount = accounts[0];
   const distributorAccounts = accounts.slice(1);
@@ -124,13 +124,13 @@ export async function refillFirstChain(profile: UserProfile, signer: MultiChainS
   }
   if (jobs.length > 0) {
     for (const job of jobs) {
-      logSendJob(signer, job);
-      await sendOnFirstChain(profile, signer, job);
+      logSendJob(job);
+      await send(profile, connection, job);
       await sleep(50);
     }
 
     console.info("Done refilling accounts.");
-    logAccountsState(await accountsOfFirstChain(profile, signer));
+    logAccountsState(await loadAccounts(profile, connection));
   } else {
     console.info("Nothing to be done. Anyways, thanks for checking.");
   }
