@@ -57,13 +57,13 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
   const chainTokens = await tokenTickersOfFirstChain(signer);
   console.info("Chain tokens:", chainTokens);
 
-  const accounts = await accountsOfFirstChain(profile, signer);
+  const accounts = await accountsOfFirstChain(profile, connection);
   logAccountsState(accounts);
 
   let availableTokens = availableTokensFromHolder(accounts[0]);
   console.info("Available tokens:", availableTokens);
   setInterval(async () => {
-    const updatedAccounts = await accountsOfFirstChain(profile, signer);
+    const updatedAccounts = await accountsOfFirstChain(profile, connection);
     availableTokens = availableTokensFromHolder(updatedAccounts[0]);
     console.info("Available tokens:", availableTokens);
   }, 60_000);
@@ -90,7 +90,7 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
           "See https://github.com/iov-one/iov-faucet for all further information.\n";
         break;
       case "/status": {
-        const updatedAccounts = await accountsOfFirstChain(profile, signer);
+        const updatedAccounts = await accountsOfFirstChain(profile, connection);
         context.response.body = {
           status: "ok",
           nodeUrl: blockchainBaseUrl,

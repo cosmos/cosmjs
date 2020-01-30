@@ -26,15 +26,15 @@ export function identitiesOfFirstWallet(profile: UserProfile): ReadonlyArray<Ide
 
 export async function accountsOfFirstChain(
   profile: UserProfile,
-  signer: MultiChainSigner,
+  connection: BlockchainConnection,
 ): Promise<ReadonlyArray<Account>> {
-  const addresses = identitiesOfFirstWallet(profile).map(identity => signer.identityToAddress(identity));
-  const chainId = signer.chainIds()[0];
+  const codec = codecImplementation();
+  const addresses = identitiesOfFirstWallet(profile).map(identity => codec.identityToAddress(identity));
 
   // tslint:disable-next-line: readonly-array
   const out: Account[] = [];
   for (const address of addresses) {
-    const response = await signer.connection(chainId).getAccount({ address: address });
+    const response = await connection.getAccount({ address: address });
     if (response) {
       out.push({
         address: response.address,
@@ -101,7 +101,7 @@ export async function refillFirstChain(profile: UserProfile, signer: MultiChainS
 
   const holderIdentity = identitiesOfFirstWallet(profile)[0];
 
-  const accounts = await accountsOfFirstChain(profile, signer);
+  const accounts = await accountsOfFirstChain(profile, connection);
   logAccountsState(accounts);
   const holderAccount = accounts[0];
   const distributorAccounts = accounts.slice(1);
@@ -135,7 +135,7 @@ export async function refillFirstChain(profile: UserProfile, signer: MultiChainS
     }
 
     console.info("Done refilling accounts.");
-    logAccountsState(await accountsOfFirstChain(profile, signer));
+    logAccountsState(await accountsOfFirstChain(profile, connection));
   } else {
     console.info("Nothing to be done. Anyways, thanks for checking.");
   }
