@@ -40,7 +40,6 @@
     "@iov/multichain": "^2.0.0-alpha.7",
     "@koa/cors": "^3.0.0",
     "axios": "^0.19.0",
-    "bn.js": "^5.1.1",
     "fast-deep-equal": "^3.1.1",
     "koa": "^2.11.0",
     "koa-bodyparser": "^4.2.1",
@@ -48,7 +47,6 @@
     "xstream": "^11.11.0"
   },
   "devDependencies": {
-    "@types/bn.js": "^4.11.6",
     "@types/koa": "^2.11.0",
     "@types/koa-bodyparser": "^4.3.0",
     "@types/koa__cors": "^3.0.1"

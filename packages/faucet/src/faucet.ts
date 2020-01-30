@@ -4,7 +4,6 @@ export function main(args: ReadonlyArray<string>): void {
   if (args.length < 1) {
     help();
     process.exit(1);
-    return;
   }
 
   const action = args[0];

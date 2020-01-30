@@ -15,7 +15,7 @@ export async function generate(args: ReadonlyArray<string>): Promise<void> {
   const codecName = codecFromString(args[0]);
   const chainId = args[1] as ChainId;
 
-  const mnemonic = Bip39.encode(await Random.getBytes(16)).toString();
+  const mnemonic = Bip39.encode(Random.getBytes(16)).toString();
   console.info(`FAUCET_MNEMONIC="${mnemonic}"`);
 
   const profile = new UserProfile();
