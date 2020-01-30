@@ -21,13 +21,13 @@ FAUCET_CREDIT_AMOUNT_COSM=10 \
   FAUCET_CREDIT_AMOUNT_STAKE=5 \
   FAUCET_CONCURRENCY=3 \
   FAUCET_MNEMONIC="economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone" \
-  ./bin/cosm-faucet start cosmwasm "http://localhost:1317"
+  ./bin/cosmwasm-faucet start cosmwasm "http://localhost:1317"
 ```
 
 ## Usage
 
 ```
-sage: cosmwasm-faucet action [arguments...]
+Usage: cosmwasm-faucet action [arguments...]
 
 Positional arguments per action are listed below. Arguments in parentheses are optional.
 

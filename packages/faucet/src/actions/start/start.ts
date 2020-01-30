@@ -36,7 +36,9 @@ function getCount(): number {
 
 export async function start(args: ReadonlyArray<string>): Promise<void> {
   if (args.length < 2) {
-    throw Error(`Not enough arguments for action 'start'. See 'iov-faucet help' or README for arguments.`);
+    throw Error(
+      `Not enough arguments for action 'start'. See '${constants.binaryName} help' or README for arguments.`,
+    );
   }
   const codec = codecFromString(args[0]);
   const blockchainBaseUrl: string = args[1];
