@@ -54,7 +54,7 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
   setFractionalDigits(codecDefaultFractionalDigits());
   await setSecretAndCreateIdentities(profile, constants.mnemonic, connectedChainId);
 
-  const chainTokens = await tokenTickersOfFirstChain(signer);
+  const chainTokens = await tokenTickersOfFirstChain(connection);
   console.info("Chain tokens:", chainTokens);
 
   const accounts = await accountsOfFirstChain(profile, connection);

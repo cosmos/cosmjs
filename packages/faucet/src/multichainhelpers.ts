@@ -52,10 +52,9 @@ export async function accountsOfFirstChain(
 }
 
 export async function tokenTickersOfFirstChain(
-  signer: MultiChainSigner,
+  connection: BlockchainConnection,
 ): Promise<ReadonlyArray<TokenTicker>> {
-  const chainId = signer.chainIds()[0];
-  return (await signer.connection(chainId).getAllTokens()).map(token => token.tokenTicker);
+  return (await connection.getAllTokens()).map(token => token.tokenTicker);
 }
 
 /**
@@ -97,7 +96,7 @@ export async function refillFirstChain(profile: UserProfile, signer: MultiChainS
   const connection = signer.connection(chainId);
 
   console.info(`Connected to network: ${chainId}`);
-  console.info(`Tokens on network: ${(await tokenTickersOfFirstChain(signer)).join(", ")}`);
+  console.info(`Tokens on network: ${(await tokenTickersOfFirstChain(connection)).join(", ")}`);
 
   const holderIdentity = identitiesOfFirstWallet(profile)[0];
 
