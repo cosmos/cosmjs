@@ -2,4 +2,4 @@
 REPOSITORY="cosmwasm/wasmd-demo"
 VERSION="latest"
 
-BLOCKCHAIN_CONTAINER_NAME="wasmd"
+CONTAINER_NAME="wasmd"
