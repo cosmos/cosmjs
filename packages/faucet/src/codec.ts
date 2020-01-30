@@ -2,17 +2,13 @@ import { createCosmWasmConnector, TokenInfo } from "@cosmwasm/bcp";
 import { ChainConnector, TokenTicker, TxCodec } from "@iov/bcp";
 import { Slip10RawIndex } from "@iov/crypto";
 import { HdPaths } from "@iov/keycontrol";
-import { createLiskConnector } from "@iov/lisk";
 
 export const enum Codec {
-  Lisk,
   CosmWasm,
 }
 
 export function codecFromString(input: string): Codec {
   switch (input) {
-    case "lisk":
-      return Codec.Lisk;
     case "cosmwasm":
       return Codec.CosmWasm;
     default:
@@ -23,8 +19,6 @@ export function codecFromString(input: string): Codec {
 export function createPathBuilderForCodec(codec: Codec): (derivation: number) => readonly Slip10RawIndex[] {
   const pathBuilder = (accountIndex: number): readonly Slip10RawIndex[] => {
     switch (codec) {
-      case Codec.Lisk:
-        return HdPaths.bip44Like(134, accountIndex);
       case Codec.CosmWasm:
         return HdPaths.cosmos(accountIndex);
       default:
@@ -36,8 +30,6 @@ export function createPathBuilderForCodec(codec: Codec): (derivation: number) =>
 
 export function createChainConnector(codec: Codec, url: string): ChainConnector {
   switch (codec) {
-    case Codec.Lisk:
-      return createLiskConnector(url);
     case Codec.CosmWasm: {
       const tokens: readonly TokenInfo[] = [
         {
@@ -66,8 +58,6 @@ export function codecImplementation(codec: Codec): TxCodec {
 
 export function codecDefaultFractionalDigits(codec: Codec): number {
   switch (codec) {
-    case Codec.Lisk:
-      return 8;
     case Codec.CosmWasm:
       return 6;
     default:
