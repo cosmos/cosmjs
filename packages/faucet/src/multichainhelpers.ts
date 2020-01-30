@@ -23,7 +23,7 @@ export function identitiesOfFirstWallet(profile: UserProfile): ReadonlyArray<Ide
   return profile.getIdentities(wallet.id);
 }
 
-export async function accountsOfFirstChain(
+export async function loadAccounts(
   profile: UserProfile,
   connection: BlockchainConnection,
 ): Promise<ReadonlyArray<Account>> {
@@ -50,7 +50,7 @@ export async function accountsOfFirstChain(
   return out;
 }
 
-export async function tokenTickersOfFirstChain(
+export async function loadTokenTickers(
   connection: BlockchainConnection,
 ): Promise<ReadonlyArray<TokenTicker>> {
   return (await connection.getAllTokens()).map(token => token.tokenTicker);
@@ -59,7 +59,7 @@ export async function tokenTickersOfFirstChain(
 /**
  * Creates and posts a send transaction. Then waits until the transaction is in a block.
  */
-export async function sendOnFirstChain(
+export async function send(
   profile: UserProfile,
   connection: BlockchainConnection,
   job: SendJob,
@@ -90,16 +90,13 @@ export function availableTokensFromHolder(holderAccount: Account): ReadonlyArray
   return holderAccount.balance.map(coin => coin.tokenTicker);
 }
 
-export async function refillFirstChain(
-  profile: UserProfile,
-  connection: BlockchainConnection,
-): Promise<void> {
+export async function refill(profile: UserProfile, connection: BlockchainConnection): Promise<void> {
   console.info(`Connected to network: ${connection.chainId()}`);
-  console.info(`Tokens on network: ${(await tokenTickersOfFirstChain(connection)).join(", ")}`);
+  console.info(`Tokens on network: ${(await loadTokenTickers(connection)).join(", ")}`);
 
   const holderIdentity = identitiesOfFirstWallet(profile)[0];
 
-  const accounts = await accountsOfFirstChain(profile, connection);
+  const accounts = await loadAccounts(profile, connection);
   logAccountsState(accounts);
   const holderAccount = accounts[0];
   const distributorAccounts = accounts.slice(1);
@@ -128,12 +125,12 @@ export async function refillFirstChain(
   if (jobs.length > 0) {
     for (const job of jobs) {
       logSendJob(job);
-      await sendOnFirstChain(profile, connection, job);
+      await send(profile, connection, job);
       await sleep(50);
     }
 
     console.info("Done refilling accounts.");
-    logAccountsState(await accountsOfFirstChain(profile, connection));
+    logAccountsState(await loadAccounts(profile, connection));
   } else {
     console.info("Nothing to be done. Anyways, thanks for checking.");
   }

@@ -9,12 +9,12 @@ import { codecDefaultFractionalDigits, codecImplementation, createChainConnector
 import * as constants from "../../constants";
 import { logAccountsState, logSendJob } from "../../debugging";
 import {
-  accountsOfFirstChain,
   availableTokensFromHolder,
   identitiesOfFirstWallet,
-  refillFirstChain,
-  sendOnFirstChain,
-  tokenTickersOfFirstChain,
+  loadAccounts,
+  loadTokenTickers,
+  refill,
+  send,
 } from "../../multichainhelpers";
 import { setSecretAndCreateIdentities } from "../../profile";
 import { SendJob } from "../../types";
@@ -52,24 +52,24 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
   setFractionalDigits(codecDefaultFractionalDigits());
   await setSecretAndCreateIdentities(profile, constants.mnemonic, connectedChainId);
 
-  const chainTokens = await tokenTickersOfFirstChain(connection);
+  const chainTokens = await loadTokenTickers(connection);
   console.info("Chain tokens:", chainTokens);
 
-  const accounts = await accountsOfFirstChain(profile, connection);
+  const accounts = await loadAccounts(profile, connection);
   logAccountsState(accounts);
 
   let availableTokens = availableTokensFromHolder(accounts[0]);
   console.info("Available tokens:", availableTokens);
   setInterval(async () => {
-    const updatedAccounts = await accountsOfFirstChain(profile, connection);
+    const updatedAccounts = await loadAccounts(profile, connection);
     availableTokens = availableTokensFromHolder(updatedAccounts[0]);
     console.info("Available tokens:", availableTokens);
   }, 60_000);
 
   const distibutorIdentities = identitiesOfFirstWallet(profile).slice(1);
 
-  await refillFirstChain(profile, connection);
-  setInterval(async () => refillFirstChain(profile, connection), 60_000); // ever 60 seconds
+  await refill(profile, connection);
+  setInterval(async () => refill(profile, connection), 60_000); // ever 60 seconds
 
   console.info("Creating webserver ...");
   const api = new Koa();
@@ -88,7 +88,7 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
           "See https://github.com/iov-one/iov-faucet for all further information.\n";
         break;
       case "/status": {
-        const updatedAccounts = await accountsOfFirstChain(profile, connection);
+        const updatedAccounts = await loadAccounts(profile, connection);
         context.response.body = {
           status: "ok",
           nodeUrl: blockchainBaseUrl,
@@ -132,7 +132,7 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
             tokenTicker: ticker,
           };
           logSendJob(job);
-          await sendOnFirstChain(profile, connection, job);
+          await send(profile, connection, job);
         } catch (e) {
           console.error(e);
           throw new HttpError(500, "Sending tokens failed");
