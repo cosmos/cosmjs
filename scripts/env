@@ -1,0 +1,5 @@
+# Choose from https://hub.docker.com/r/cosmwasm/wasmd/tags
+REPOSITORY="cosmwasm/wasmd-demo"
+VERSION="latest"
+
+BLOCKCHAIN_CONTAINER_NAME="wasmd"

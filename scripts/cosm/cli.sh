@@ -2,11 +2,9 @@
 set -o errexit -o nounset -o pipefail
 command -v shellcheck > /dev/null && shellcheck "$0"
 
-# Choose from https://hub.docker.com/r/cosmwasm/wasmd/tags
-REPOSITORY="cosmwasm/wasmd"
-VERSION="manual"
 
-BLOCKCHAIN_CONTAINER_NAME="wasmd"
+SCRIPT_DIR="$(realpath "$(dirname "$0")")"
+source "$SCRIPT_DIR"/env
 
 # TODO: make this run as UID? Does this matter?
 HOME_DIR="/root"

@@ -2,17 +2,14 @@
 set -o errexit -o nounset -o pipefail
 command -v shellcheck > /dev/null && shellcheck "$0"
 
-# Choose from https://hub.docker.com/r/cosmwasm/wasmd/tags
-REPOSITORY="cosmwasm/wasmd"
-VERSION="manual"
+SCRIPT_DIR="$(realpath "$(dirname "$0")")"
+source "$SCRIPT_DIR"/env
 
 TMP_DIR=$(mktemp -d "${TMPDIR:-/tmp}/gaia.XXXXXXXXX")
 chmod 777 "$TMP_DIR"
 echo "Using temporary dir $TMP_DIR"
 WASMD_LOGFILE="$TMP_DIR/wasmd.log"
 REST_SERVER_LOGFILE="$TMP_DIR/rest-server.log"
-SCRIPT_DIR="$(realpath "$(dirname "$0")")"
-CONTAINER_NAME="wasmd"
 
 # This starts up wasmd
 docker volume rm -f wasmd_data
