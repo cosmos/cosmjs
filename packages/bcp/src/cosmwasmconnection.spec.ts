@@ -50,13 +50,13 @@ describe("CosmWasmConnection", () => {
       fractionalDigits: 6,
       tokenName: "Fee Token",
       tokenTicker: "COSM" as TokenTicker,
-      denom: "cosm",
+      denom: "ucosm",
     },
     {
       fractionalDigits: 6,
       tokenName: "Staking Token",
       tokenTicker: "STAKE" as TokenTicker,
-      denom: "stake",
+      denom: "ustake",
     },
   ];
 
