@@ -22,8 +22,12 @@ import {
 import { Stream } from "xstream";
 import { CosmosBech32Prefix } from "./address";
 import { TokenInfos } from "./types";
-export declare class CosmosConnection implements BlockchainConnection {
-  static establish(url: string, prefix: CosmosBech32Prefix, tokenInfo: TokenInfos): Promise<CosmosConnection>;
+export declare class CosmWasmConnection implements BlockchainConnection {
+  static establish(
+    url: string,
+    prefix: CosmosBech32Prefix,
+    tokenInfo: TokenInfos,
+  ): Promise<CosmWasmConnection>;
   private static initialize;
   private readonly restClient;
   private readonly chainData;

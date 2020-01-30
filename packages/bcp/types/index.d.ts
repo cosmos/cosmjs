@@ -1,3 +1,4 @@
-export { cosmosCodec, CosmosCodec } from "./cosmoscodec";
-export { CosmosConnection } from "./cosmosconnection";
-export { createCosmosConnector } from "./cosmosconnector";
+export { CosmWasmCodec } from "./cosmwasmcodec";
+export { CosmWasmConnection } from "./cosmwasmconnection";
+export { createCosmWasmConnector } from "./cosmwasmconnector";
+export { TokenInfo } from "./types";

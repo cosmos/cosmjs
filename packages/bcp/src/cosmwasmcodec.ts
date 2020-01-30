@@ -44,7 +44,7 @@ function sortJson(json: any): any {
   return result;
 }
 
-export class CosmosCodec implements TxCodec {
+export class CosmWasmCodec implements TxCodec {
   private readonly prefix: CosmosBech32Prefix;
   private readonly tokens: TokenInfos;
 
@@ -113,4 +113,5 @@ const defaultTokens: TokenInfos = [
   },
 ];
 
-export const cosmosCodec = new CosmosCodec(defaultPrefix, defaultTokens);
+/** Unconfigured codec is useful for testing only */
+export const cosmWasmCodec = new CosmWasmCodec(defaultPrefix, defaultTokens);

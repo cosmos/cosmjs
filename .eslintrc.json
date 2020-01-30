@@ -50,12 +50,6 @@
       "rules": {
         "@typescript-eslint/camelcase": ["error", { "properties": "never" }]
       }
-    },
-    {
-      "files": "packages/{iov-bns,iov-tendermint-rpc}/**/*.ts",
-      "rules": {
-        "@typescript-eslint/camelcase": ["error", { "allow": ["v0_[0-9]+"] }]
-      }
     }
   ]
 }

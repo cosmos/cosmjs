@@ -1,0 +1,12 @@
+{
+  "suite": {
+    "displayNumber": true
+  },
+  "spec": {
+    "displayDuration": true
+  },
+  "summary": {
+    "displayPending": false,
+    "displayStacktrace": true
+  }
+}

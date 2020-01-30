@@ -2,6 +2,9 @@ This repository was forked from the folders packages/iov-cosmos and scripts/cosm
 of https://github.com/iov-one/iov-core at tag v2.0.0-alpha.7. It was repurposed
 and heavily modified from there on.
 
+The code in packages/faucet was forked from https://github.com/iov-one/iov-faucet on
+2020-01-29 at commit 33e2d707e7.
+
 Copyright 2018-2020 IOV SAS
 Copyright 2020 Confio UO
 Copyright 2020 Simon Warta
