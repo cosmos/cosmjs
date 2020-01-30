@@ -5,7 +5,7 @@ import Koa from "koa";
 import bodyParser from "koa-bodyparser";
 
 import { creditAmount, setFractionalDigits } from "../../cashflow";
-import { codecDefaultFractionalDigits, codecImplementation, createChainConnector } from "../../codec";
+import { codecDefaultFractionalDigits, codecImplementation, establishConnection } from "../../codec";
 import * as constants from "../../constants";
 import { logAccountsState, logSendJob } from "../../debugging";
 import {
@@ -44,7 +44,7 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
     throw new Error("The FAUCET_MNEMONIC environment variable is not set");
   }
   console.info(`Connecting to blockchain ${blockchainBaseUrl} ...`);
-  const connection = await createChainConnector(blockchainBaseUrl).establishConnection();
+  const connection = await establishConnection(blockchainBaseUrl);
 
   const connectedChainId = connection.chainId();
   console.info(`Connected to network: ${connectedChainId}`);
