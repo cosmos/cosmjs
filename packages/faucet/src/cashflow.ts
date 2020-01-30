@@ -1,7 +1,5 @@
-import BN = require("bn.js");
-
 import { Account, Amount, TokenTicker } from "@iov/bcp";
-import { Uint53 } from "@iov/encoding";
+import { Decimal, Uint53 } from "@iov/encoding";
 
 /** Send `factor` times credit amount on refilling */
 const defaultRefillFactor = 20;
@@ -51,9 +49,16 @@ export function refillThreshold(token: TokenTicker): Amount {
 
 /** true iff the distributor account needs a refill */
 export function needsRefill(account: Account, token: TokenTicker): boolean {
-  const coin = account.balance.find(balance => balance.tokenTicker === token);
+  const balanceAmount = account.balance.find(b => b.tokenTicker === token);
 
-  const tokenBalance = coin ? coin.quantity : "0";
-  const refillQty = new BN(refillThreshold(token).quantity);
-  return new BN(tokenBalance).lt(refillQty);
+  const balance = balanceAmount
+    ? Decimal.fromAtomics(balanceAmount.quantity, balanceAmount.fractionalDigits)
+    : Decimal.fromAtomics("0", 0);
+
+  const thresholdAmount = refillThreshold(token);
+  const threshold = Decimal.fromAtomics(thresholdAmount.quantity, thresholdAmount.fractionalDigits);
+
+  // TODO: perform < operation on Decimal type directly
+  // https://github.com/iov-one/iov-core/issues/1375
+  return balance.toFloatApproximation() < threshold.toFloatApproximation();
 }
