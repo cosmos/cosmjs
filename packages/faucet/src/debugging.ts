@@ -1,7 +1,7 @@
 import { Account, Amount } from "@iov/bcp";
 import { Decimal } from "@iov/encoding";
-import { MultiChainSigner } from "@iov/multichain";
 
+import { codecImplementation } from "./codec";
 import { SendJob } from "./types";
 
 /** A string representation of a coin in a human-readable format that can change at any time */
@@ -30,8 +30,8 @@ export function logAccountsState(accounts: ReadonlyArray<Account>): void {
   console.info("Distributors:\n" + distributors.map(r => `  ${debugAccount(r)}`).join("\n"));
 }
 
-export function logSendJob(signer: MultiChainSigner, job: SendJob): void {
-  const from = signer.identityToAddress(job.sender);
+export function logSendJob(job: SendJob): void {
+  const from = codecImplementation().identityToAddress(job.sender);
   const to = job.recipient;
   const amount = debugAmount(job.amount);
   console.info(`Sending ${amount} from ${from} to ${to} ...`);

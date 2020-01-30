@@ -133,8 +133,8 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
             amount: creditAmount(ticker),
             tokenTicker: ticker,
           };
-          logSendJob(signer, job);
-          await sendOnFirstChain(profile, signer, job);
+          logSendJob(job);
+          await sendOnFirstChain(profile, connection, job);
         } catch (e) {
           console.error(e);
           throw new HttpError(500, "Sending tokens failed");
