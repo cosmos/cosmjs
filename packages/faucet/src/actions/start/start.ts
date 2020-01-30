@@ -6,12 +6,7 @@ import Koa from "koa";
 import bodyParser from "koa-bodyparser";
 
 import { creditAmount, setFractionalDigits } from "../../cashflow";
-import {
-  codecDefaultFractionalDigits,
-  codecFromString,
-  codecImplementation,
-  createChainConnector,
-} from "../../codec";
+import { codecDefaultFractionalDigits, codecImplementation, createChainConnector } from "../../codec";
 import * as constants from "../../constants";
 import { logAccountsState, logSendJob } from "../../debugging";
 import {
@@ -35,13 +30,13 @@ function getCount(): number {
 }
 
 export async function start(args: ReadonlyArray<string>): Promise<void> {
-  if (args.length < 2) {
+  if (args.length < 1) {
     throw Error(
       `Not enough arguments for action 'start'. See '${constants.binaryName} help' or README for arguments.`,
     );
   }
-  const codec = codecFromString(args[0]);
-  const blockchainBaseUrl: string = args[1];
+
+  const blockchainBaseUrl = args[0];
 
   const port = constants.port;
 
@@ -51,13 +46,13 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
   }
   const signer = new MultiChainSigner(profile);
   console.info(`Connecting to blockchain ${blockchainBaseUrl} ...`);
-  const connection = (await signer.addChain(createChainConnector(codec, blockchainBaseUrl))).connection;
+  const connection = (await signer.addChain(createChainConnector(blockchainBaseUrl))).connection;
 
   const connectedChainId = connection.chainId();
   console.info(`Connected to network: ${connectedChainId}`);
 
-  setFractionalDigits(codecDefaultFractionalDigits(codec));
-  await setSecretAndCreateIdentities(profile, constants.mnemonic, connectedChainId, codec);
+  setFractionalDigits(codecDefaultFractionalDigits());
+  await setSecretAndCreateIdentities(profile, constants.mnemonic, connectedChainId);
 
   const chainTokens = await tokenTickersOfFirstChain(signer);
   console.info("Chain tokens:", chainTokens);
@@ -120,7 +115,7 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
         const requestBody = (context.request as any).body;
         const { address, ticker } = RequestParser.parseCreditBody(requestBody);
 
-        if (!codecImplementation(codec).isValidAddress(address)) {
+        if (!codecImplementation().isValidAddress(address)) {
           throw new HttpError(400, "Address is not in the expected format for this chain.");
         }
 

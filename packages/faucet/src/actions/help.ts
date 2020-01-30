@@ -11,12 +11,10 @@ help      Shows a help text and exits
 version   Prints the version and exits
 
 generate  Generates a random mnemonic, shows derived faucet addresses and exits
-           1  Codec
-           2  Chain ID
+           1  Chain ID
 
 start     Starts the faucet
-           1  Codec
-           2  Node base URL, e.g. wss://bov.friendnet-fast.iov.one
+           1  Node base URL, e.g. http://localhost:1317
 
 Environment variables
 
