@@ -1,6 +1,5 @@
 // tslint:disable: no-object-mutation
 import { UserProfile } from "@iov/keycontrol";
-import { MultiChainSigner } from "@iov/multichain";
 import cors = require("@koa/cors");
 import Koa from "koa";
 import bodyParser from "koa-bodyparser";
@@ -44,9 +43,8 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
   if (!constants.mnemonic) {
     throw new Error("The FAUCET_MNEMONIC environment variable is not set");
   }
-  const signer = new MultiChainSigner(profile);
   console.info(`Connecting to blockchain ${blockchainBaseUrl} ...`);
-  const connection = (await signer.addChain(createChainConnector(blockchainBaseUrl))).connection;
+  const connection = await createChainConnector(blockchainBaseUrl).establishConnection();
 
   const connectedChainId = connection.chainId();
   console.info(`Connected to network: ${connectedChainId}`);
@@ -70,8 +68,8 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
 
   const distibutorIdentities = identitiesOfFirstWallet(profile).slice(1);
 
-  await refillFirstChain(profile, signer);
-  setInterval(async () => refillFirstChain(profile, signer), 60_000); // ever 60 seconds
+  await refillFirstChain(profile, connection);
+  setInterval(async () => refillFirstChain(profile, connection), 60_000); // ever 60 seconds
 
   console.info("Creating webserver ...");
   const api = new Koa();

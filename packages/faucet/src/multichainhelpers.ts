@@ -8,7 +8,6 @@ import {
   TokenTicker,
 } from "@iov/bcp";
 import { UserProfile } from "@iov/keycontrol";
-import { MultiChainSigner } from "@iov/multichain";
 
 import { needsRefill, refillAmount } from "./cashflow";
 import { codecImplementation } from "./codec";
@@ -91,11 +90,11 @@ export function availableTokensFromHolder(holderAccount: Account): ReadonlyArray
   return holderAccount.balance.map(coin => coin.tokenTicker);
 }
 
-export async function refillFirstChain(profile: UserProfile, signer: MultiChainSigner): Promise<void> {
-  const chainId = signer.chainIds()[0];
-  const connection = signer.connection(chainId);
-
-  console.info(`Connected to network: ${chainId}`);
+export async function refillFirstChain(
+  profile: UserProfile,
+  connection: BlockchainConnection,
+): Promise<void> {
+  console.info(`Connected to network: ${connection.chainId()}`);
   console.info(`Tokens on network: ${(await tokenTickersOfFirstChain(connection)).join(", ")}`);
 
   const holderIdentity = identitiesOfFirstWallet(profile)[0];
