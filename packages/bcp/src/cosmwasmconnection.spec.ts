@@ -50,13 +50,13 @@ describe("CosmWasmConnection", () => {
       fractionalDigits: 6,
       tokenName: "Fee Token",
       tokenTicker: "COSM" as TokenTicker,
-      denom: "cosm",
+      denom: "ucosm",
     },
     {
       fractionalDigits: 6,
       tokenName: "Staking Token",
       tokenTicker: "STAKE" as TokenTicker,
-      denom: "stake",
+      denom: "ustake",
     },
   ];
 
@@ -214,7 +214,9 @@ describe("CosmWasmConnection", () => {
       if (isFailedTransaction(getResponse)) {
         throw new Error("Expected transaction to succeed");
       }
-      expect(getResponse.log).toMatch(/success/i);
+      // we get a json response in the log for each msg, multiple events is good (transfer succeeded)
+      const log = JSON.parse(getResponse.log!)[0];
+      expect(log.events.length).toBe(2);
       const { transaction, signatures } = getResponse;
       if (!isSendTransaction(transaction)) {
         throw new Error("Expected send transaction");
@@ -282,7 +284,9 @@ describe("CosmWasmConnection", () => {
       if (isFailedTransaction(idResult)) {
         throw new Error("Expected transaction to succeed");
       }
-      expect(idResult.log).toMatch(/success/i);
+      const idlog = JSON.parse(idResult.log!)[0];
+      expect(idlog.events.length).toBe(2);
+
       const { transaction: idTransaction } = idResult;
       if (!isSendTransaction(idTransaction)) {
         throw new Error("Expected send transaction");
@@ -304,7 +308,9 @@ describe("CosmWasmConnection", () => {
       if (isFailedTransaction(senderAddressResult)) {
         throw new Error("Expected transaction to succeed");
       }
-      expect(senderAddressResult.log).toMatch(/success/i);
+      const senderLog = JSON.parse(senderAddressResult.log!)[0];
+      expect(senderLog.events.length).toBe(2);
+
       const { transaction: senderAddressTransaction } = senderAddressResult;
       if (!isSendTransaction(senderAddressTransaction)) {
         throw new Error("Expected send transaction");
@@ -350,7 +356,9 @@ describe("CosmWasmConnection", () => {
       if (isFailedTransaction(heightResult)) {
         throw new Error("Expected transaction to succeed");
       }
-      expect(heightResult.log).toMatch(/success/i);
+      const heightLog = JSON.parse(heightResult.log!)[0];
+      expect(heightLog.events.length).toBe(2);
+
       const { transaction: heightTransaction } = heightResult;
       if (!isSendTransaction(heightTransaction)) {
         throw new Error("Expected send transaction");
