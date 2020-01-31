@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
+import { AminoTx } from "@cosmwasm/sdk";
 import {
   Algorithm,
   Amount,
@@ -13,7 +14,7 @@ import { Secp256k1 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
 import amino from "@tendermint/amino-js";
 
-import { AminoTx, amountToCoin, TokenInfos } from "./types";
+import { amountToCoin, TokenInfos } from "./types";
 
 const { toBase64 } = Encoding;
 

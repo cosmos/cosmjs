@@ -1,4 +1,3 @@
-import { Address, PostableBytes, TransactionId } from "@iov/bcp";
 import amino, { unmarshalTx } from "@tendermint/amino-js";
 import axios, { AxiosInstance } from "axios";
 
@@ -132,7 +131,7 @@ export class RestClient {
     return responseData as BlocksResponse;
   }
 
-  public async authAccounts(address: Address, height?: string): Promise<AuthAccountsResponse> {
+  public async authAccounts(address: string, height?: string): Promise<AuthAccountsResponse> {
     const path =
       height === undefined ? `/auth/accounts/${address}` : `/auth/accounts/${address}?tx.height=${height}`;
     const responseData = await this.get(path);
@@ -150,7 +149,7 @@ export class RestClient {
     return responseData as SearchTxsResponse;
   }
 
-  public async txsById(id: TransactionId): Promise<TxsResponse> {
+  public async txsById(id: string): Promise<TxsResponse> {
     const responseData = await this.get(`/txs/${id}`);
     if (!(responseData as any).tx) {
       throw new Error("Unexpected response data format");
@@ -158,7 +157,7 @@ export class RestClient {
     return responseData as TxsResponse;
   }
 
-  public async postTx(tx: PostableBytes): Promise<PostTxsResponse> {
+  public async postTx(tx: Uint8Array): Promise<PostTxsResponse> {
     const unmarshalled = unmarshalTx(tx, true);
     const params = {
       tx: unmarshalled.value,

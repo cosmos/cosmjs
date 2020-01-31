@@ -1,3 +1,4 @@
+import { TxsResponse } from "@cosmwasm/sdk";
 import {
   Amount,
   ChainId,
@@ -12,7 +13,6 @@ import {
   UnsignedTransaction,
 } from "@iov/bcp";
 import amino from "@tendermint/amino-js";
-import { TxsResponse } from "./restclient";
 import { TokenInfos } from "./types";
 export declare function decodePubkey(pubkey: amino.PubKey): PubkeyBundle;
 export declare function decodeSignature(signature: string): SignatureBytes;

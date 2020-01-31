@@ -1,4 +1,3 @@
-import { Address, PostableBytes, TransactionId } from "@iov/bcp";
 import amino from "@tendermint/amino-js";
 import { AminoTx } from "./types";
 interface NodeInfo {
@@ -69,9 +68,9 @@ export declare class RestClient {
   nodeInfo(): Promise<NodeInfoResponse>;
   blocksLatest(): Promise<BlocksResponse>;
   blocks(height: number): Promise<BlocksResponse>;
-  authAccounts(address: Address, height?: string): Promise<AuthAccountsResponse>;
+  authAccounts(address: string, height?: string): Promise<AuthAccountsResponse>;
   txs(query: string): Promise<SearchTxsResponse>;
-  txsById(id: TransactionId): Promise<TxsResponse>;
-  postTx(tx: PostableBytes): Promise<PostTxsResponse>;
+  txsById(id: string): Promise<TxsResponse>;
+  postTx(tx: Uint8Array): Promise<PostTxsResponse>;
 }
 export {};

@@ -1,6 +1,7 @@
+import { AminoTx } from "@cosmwasm/sdk";
 import { Amount, Fee, FullSignature, PubkeyBundle, SignedTransaction, UnsignedTransaction } from "@iov/bcp";
 import amino from "@tendermint/amino-js";
-import { AminoTx, TokenInfos } from "./types";
+import { TokenInfos } from "./types";
 export declare function encodePubkey(pubkey: PubkeyBundle): amino.PubKey;
 export declare function encodeAmount(amount: Amount, tokens: TokenInfos): amino.Coin;
 export declare function encodeFee(fee: Fee, tokens: TokenInfos): amino.StdFee;
