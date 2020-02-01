@@ -17,7 +17,7 @@ import { chainId, nonce, signedTxJson, txId } from "./testdata.spec";
 import data from "./testdata/cosmoshub.json";
 import { TokenInfos } from "./types";
 
-const { fromBase64 } = Encoding;
+const { fromBase64, fromHex } = Encoding;
 
 describe("decode", () => {
   const defaultPubkey = {
@@ -62,12 +62,32 @@ describe("decode", () => {
   ];
 
   describe("decodePubkey", () => {
-    it("works", () => {
+    it("works for secp256k1", () => {
       const pubkey = {
         type: "tendermint/PubKeySecp256k1",
         value: "AtQaCqFnshaZQp6rIkvAPyzThvCvXSDO+9AzbxVErqJP",
       };
       expect(decodePubkey(pubkey)).toEqual(defaultPubkey);
+    });
+
+    it("works for ed25519", () => {
+      const pubkey = {
+        type: "tendermint/PubKeyEd25519",
+        value: "s69CnMgLTpuRyEfecjws3mWssBrOICUx8C2O1DkKSto=",
+      };
+      expect(decodePubkey(pubkey)).toEqual({
+        algo: Algorithm.Ed25519,
+        data: fromHex("b3af429cc80b4e9b91c847de723c2cde65acb01ace202531f02d8ed4390a4ada"),
+      });
+    });
+
+    it("throws for unsupported types", () => {
+      // https://github.com/tendermint/tendermint/blob/v0.33.0/crypto/sr25519/codec.go#L12
+      const pubkey = {
+        type: "tendermint/PubKeySr25519",
+        value: "N4FJNPE5r/Twz55kO1QEIxyaGF5/HTXH6WgLQJWsy1o=",
+      };
+      expect(() => decodePubkey(pubkey)).toThrowError(/unsupported pubkey type/i);
     });
   });
 

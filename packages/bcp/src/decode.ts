@@ -24,10 +24,22 @@ import { coinToAmount, isAminoStdTx, TokenInfos } from "./types";
 const { fromBase64 } = Encoding;
 
 export function decodePubkey(pubkey: amino.PubKey): PubkeyBundle {
-  return {
-    algo: Algorithm.Secp256k1,
-    data: fromBase64(pubkey.value) as PubkeyBytes,
-  };
+  switch (pubkey.type) {
+    // https://github.com/tendermint/tendermint/blob/v0.33.0/crypto/secp256k1/secp256k1.go#L23
+    case "tendermint/PubKeySecp256k1":
+      return {
+        algo: Algorithm.Secp256k1,
+        data: fromBase64(pubkey.value) as PubkeyBytes,
+      };
+    // https://github.com/tendermint/tendermint/blob/v0.33.0/crypto/ed25519/ed25519.go#L22
+    case "tendermint/PubKeyEd25519":
+      return {
+        algo: Algorithm.Ed25519,
+        data: fromBase64(pubkey.value) as PubkeyBytes,
+      };
+    default:
+      throw new Error("Unsupported pubkey type");
+  }
 }
 
 export function decodeSignature(signature: string): SignatureBytes {
