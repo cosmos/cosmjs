@@ -55,8 +55,7 @@ describe("decode", () => {
   const defaultTokens: TokenInfos = [
     {
       fractionalDigits: 6,
-      tokenName: "Atom (Cosmos Hub)",
-      tokenTicker: "ATOM" as TokenTicker,
+      ticker: "ATOM",
       denom: "uatom",
     },
   ];

@@ -21,12 +21,15 @@ import {
 } from "@iov/bcp";
 import { Stream } from "xstream";
 import { CosmosBech32Prefix } from "./address";
-import { TokenInfos } from "./types";
+import { TokenInfo } from "./types";
+export declare type TokenConfiguration = readonly (TokenInfo & {
+  readonly name: string;
+})[];
 export declare class CosmWasmConnection implements BlockchainConnection {
   static establish(
     url: string,
     prefix: CosmosBech32Prefix,
-    tokenInfo: TokenInfos,
+    tokens: TokenConfiguration,
   ): Promise<CosmWasmConnection>;
   private static initialize;
   private readonly restClient;

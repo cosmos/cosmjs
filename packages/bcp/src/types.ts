@@ -1,15 +1,26 @@
-import { Amount, Nonce, Token } from "@iov/bcp";
+import { Amount, Nonce, TokenTicker } from "@iov/bcp";
 import amino from "@tendermint/amino-js";
 
-export interface TokenInfo extends Token {
+export interface TokenInfo {
   readonly denom: string;
+  readonly ticker: string;
+  /**
+   * The number of fractional digits the token supports.
+   *
+   * A quantity is expressed as atomic units. 10^fractionalDigits of those
+   * atomic units make up 1 token.
+   *
+   * E.g. in Ethereum 10^18 wei are 1 ETH and from the quantity 123000000000000000000
+   * the last 18 digits are the fractional part and the rest the wole part.
+   */
+  readonly fractionalDigits: number;
 }
 
 export type TokenInfos = ReadonlyArray<TokenInfo>;
 
 // TODO: return null vs throw exception for undefined???
 export function amountToCoin(lookup: ReadonlyArray<TokenInfo>, amount: Amount): amino.Coin {
-  const match = lookup.find(({ tokenTicker }) => tokenTicker === amount.tokenTicker);
+  const match = lookup.find(({ ticker }) => ticker === amount.tokenTicker);
   if (!match) {
     throw Error(`unknown ticker: ${amount.tokenTicker}`);
   }
@@ -26,7 +37,7 @@ export function coinToAmount(tokens: TokenInfos, coin: amino.Coin): Amount {
     throw Error(`unknown denom: ${coin.denom}`);
   }
   return {
-    tokenTicker: match.tokenTicker,
+    tokenTicker: match.ticker as TokenTicker,
     fractionalDigits: match.fractionalDigits,
     quantity: coin.amount,
   };
