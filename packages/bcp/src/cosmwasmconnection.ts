@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { RestClient, TxsResponse } from "@cosmwasm/sdk";
+import { RestClient, TokenInfo, TxsResponse } from "@cosmwasm/sdk";
 import {
   Account,
   AccountQuery,
@@ -38,7 +38,7 @@ import { Stream } from "xstream";
 import { CosmosBech32Prefix, decodeCosmosPubkey, pubkeyToAddress } from "./address";
 import { Caip5 } from "./caip5";
 import { decodeAmount, parseTxsResponse } from "./decode";
-import { accountToNonce, TokenInfo, TokenInfos } from "./types";
+import { accountToNonce } from "./types";
 
 interface ChainData {
   readonly chainId: ChainId;
@@ -90,7 +90,7 @@ export class CosmWasmConnection implements BlockchainConnection {
   private readonly restClient: RestClient;
   private readonly chainData: ChainData;
   private readonly _prefix: CosmosBech32Prefix;
-  private readonly tokenInfo: TokenInfos;
+  private readonly tokenInfo: readonly TokenInfo[];
 
   // these are derived from arguments (cached for use in multiple functions)
   private readonly primaryToken: Token;

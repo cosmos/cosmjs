@@ -1,2 +1,2 @@
 export { RestClient, TxsResponse } from "./restclient";
-export { AminoTx, isAminoStdTx } from "./types";
+export { AminoTx, isAminoStdTx, TokenInfo } from "./types";

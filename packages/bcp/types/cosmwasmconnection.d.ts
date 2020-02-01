@@ -1,3 +1,4 @@
+import { TokenInfo } from "@cosmwasm/sdk";
 import {
   Account,
   AccountQuery,
@@ -21,7 +22,6 @@ import {
 } from "@iov/bcp";
 import { Stream } from "xstream";
 import { CosmosBech32Prefix } from "./address";
-import { TokenInfo } from "./types";
 export declare type TokenConfiguration = readonly (TokenInfo & {
   readonly name: string;
 })[];
