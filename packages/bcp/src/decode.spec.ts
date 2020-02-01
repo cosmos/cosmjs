@@ -97,7 +97,7 @@ describe("decode", () => {
         denom: "uatom",
         amount: "11657995",
       };
-      expect(decodeAmount(defaultTokens)(amount)).toEqual(defaultAmount);
+      expect(decodeAmount(defaultTokens, amount)).toEqual(defaultAmount);
     });
   });
 

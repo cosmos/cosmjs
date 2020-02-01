@@ -160,7 +160,7 @@ export class CosmWasmConnection implements BlockchainConnection {
         };
     return {
       address: address,
-      balance: supportedCoins.map(decodeAmount(this.tokenInfo)),
+      balance: supportedCoins.map(coin => decodeAmount(this.tokenInfo, coin)),
       pubkey: pubkey,
     };
   }

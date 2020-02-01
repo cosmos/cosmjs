@@ -16,7 +16,6 @@ export function amountToCoin(lookup: ReadonlyArray<TokenInfo>, amount: Amount): 
   };
 }
 
-// TODO: return null vs throw exception for undefined???
 export function coinToAmount(tokens: TokenInfos, coin: amino.Coin): Amount {
   const match = tokens.find(({ denom }) => denom === coin.denom);
   if (!match) {
