@@ -1,31 +1,33 @@
 import { TokenInfo } from "@cosmwasm/sdk";
-import { Amount, Nonce, TokenTicker } from "@iov/bcp";
+import { Nonce } from "@iov/bcp";
+import { Decimal } from "@iov/encoding";
 import amino from "@tendermint/amino-js";
 
 export type TokenInfos = ReadonlyArray<TokenInfo>;
 
-// TODO: return null vs throw exception for undefined???
-export function amountToCoin(lookup: ReadonlyArray<TokenInfo>, amount: Amount): amino.Coin {
-  const match = lookup.find(({ ticker }) => ticker === amount.tokenTicker);
+export function decimalToCoin(lookup: readonly TokenInfo[], value: Decimal, ticker: string): amino.Coin {
+  const match = lookup.find(token => token.ticker === ticker);
   if (!match) {
-    throw Error(`unknown ticker: ${amount.tokenTicker}`);
+    throw Error(`unknown ticker: ${ticker}`);
+  }
+  if (match.fractionalDigits !== value.fractionalDigits) {
+    throw new Error(
+      "Mismatch in fractional digits between token and value. If you really want, implement a conversion here. However, this indicates a bug in the caller code.",
+    );
   }
   return {
     denom: match.denom,
-    amount: amount.quantity,
+    amount: value.atomics,
   };
 }
 
-export function coinToAmount(tokens: TokenInfos, coin: amino.Coin): Amount {
+export function coinToDecimal(tokens: readonly TokenInfo[], coin: amino.Coin): readonly [Decimal, string] {
   const match = tokens.find(({ denom }) => denom === coin.denom);
   if (!match) {
     throw Error(`unknown denom: ${coin.denom}`);
   }
-  return {
-    tokenTicker: match.ticker as TokenTicker,
-    fractionalDigits: match.fractionalDigits,
-    quantity: coin.amount,
-  };
+  const value = Decimal.fromAtomics(coin.amount, match.fractionalDigits);
+  return [value, match.ticker];
 }
 
 // tslint:disable-next-line:no-bitwise

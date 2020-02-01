@@ -1,9 +1,17 @@
 import { TokenInfo } from "@cosmwasm/sdk";
-import { Amount, Nonce } from "@iov/bcp";
+import { Nonce } from "@iov/bcp";
+import { Decimal } from "@iov/encoding";
 import amino from "@tendermint/amino-js";
 export declare type TokenInfos = ReadonlyArray<TokenInfo>;
-export declare function amountToCoin(lookup: ReadonlyArray<TokenInfo>, amount: Amount): amino.Coin;
-export declare function coinToAmount(tokens: TokenInfos, coin: amino.Coin): Amount;
+export declare function decimalToCoin(
+  lookup: readonly TokenInfo[],
+  value: Decimal,
+  ticker: string,
+): amino.Coin;
+export declare function coinToDecimal(
+  tokens: readonly TokenInfo[],
+  coin: amino.Coin,
+): readonly [Decimal, string];
 export interface NonceInfo {
   readonly account_number: string;
   readonly sequence: string;

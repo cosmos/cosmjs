@@ -13,13 +13,14 @@ import {
   SendTransaction,
   SignatureBytes,
   SignedTransaction,
+  TokenTicker,
   TransactionId,
   UnsignedTransaction,
 } from "@iov/bcp";
 import { Encoding } from "@iov/encoding";
 import amino from "@tendermint/amino-js";
 
-import { coinToAmount, TokenInfos } from "./types";
+import { coinToDecimal, TokenInfos } from "./types";
 
 const { fromBase64 } = Encoding;
 
@@ -43,7 +44,12 @@ export function decodeFullSignature(signature: amino.StdSignature, nonce: number
 }
 
 export function decodeAmount(tokens: TokenInfos, coin: amino.Coin): Amount {
-  return coinToAmount(tokens, coin);
+  const [value, ticker] = coinToDecimal(tokens, coin);
+  return {
+    quantity: value.atomics,
+    fractionalDigits: value.fractionalDigits,
+    tokenTicker: ticker as TokenTicker,
+  };
 }
 
 export function parseMsg(msg: amino.Msg, chainId: ChainId, tokens: TokenInfos): SendTransaction {
