@@ -1,4 +1,4 @@
-import { TxsResponse } from "@cosmwasm/sdk";
+import { isAminoStdTx, TxsResponse } from "@cosmwasm/sdk";
 import {
   Address,
   Algorithm,
@@ -19,7 +19,7 @@ import {
 import { Encoding } from "@iov/encoding";
 import amino from "@tendermint/amino-js";
 
-import { coinToAmount, isAminoStdTx, TokenInfos } from "./types";
+import { coinToAmount, TokenInfos } from "./types";
 
 const { fromBase64 } = Encoding;
 

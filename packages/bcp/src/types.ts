@@ -1,13 +1,6 @@
 import { Amount, Nonce, Token } from "@iov/bcp";
 import amino from "@tendermint/amino-js";
 
-export function isAminoStdTx(txValue: amino.TxValue): txValue is amino.StdTx {
-  const { memo, msg, fee, signatures } = txValue as amino.StdTx;
-  return (
-    typeof memo === "string" && Array.isArray(msg) && typeof fee === "object" && Array.isArray(signatures)
-  );
-}
-
 export interface TokenInfo extends Token {
   readonly denom: string;
 }
