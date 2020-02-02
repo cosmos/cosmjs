@@ -55,8 +55,7 @@ describe("decode", () => {
   const defaultTokens: TokenInfos = [
     {
       fractionalDigits: 6,
-      tokenName: "Atom (Cosmos Hub)",
-      tokenTicker: "ATOM" as TokenTicker,
+      ticker: "ATOM",
       denom: "uatom",
     },
   ];
@@ -118,7 +117,7 @@ describe("decode", () => {
         denom: "uatom",
         amount: "11657995",
       };
-      expect(decodeAmount(defaultTokens)(amount)).toEqual(defaultAmount);
+      expect(decodeAmount(defaultTokens, amount)).toEqual(defaultAmount);
     });
   });
 

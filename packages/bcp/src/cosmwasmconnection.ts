@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
+import { RestClient, TokenInfo, TxsResponse } from "@cosmwasm/sdk";
 import {
   Account,
   AccountQuery,
@@ -37,8 +38,7 @@ import { Stream } from "xstream";
 import { CosmosBech32Prefix, decodeCosmosPubkey, pubkeyToAddress } from "./address";
 import { Caip5 } from "./caip5";
 import { decodeAmount, parseTxsResponse } from "./decode";
-import { RestClient, TxsResponse } from "./restclient";
-import { accountToNonce, TokenInfos } from "./types";
+import { accountToNonce } from "./types";
 
 interface ChainData {
   readonly chainId: ChainId;
@@ -68,16 +68,18 @@ function buildQueryString({
   return components.filter(Boolean).join("&");
 }
 
+export type TokenConfiguration = readonly (TokenInfo & { readonly name: string })[];
+
 export class CosmWasmConnection implements BlockchainConnection {
   // we must know prefix and tokens a priori to understand the chain
   public static async establish(
     url: string,
     prefix: CosmosBech32Prefix,
-    tokenInfo: TokenInfos,
+    tokens: TokenConfiguration,
   ): Promise<CosmWasmConnection> {
     const restClient = new RestClient(url);
     const chainData = await this.initialize(restClient);
-    return new CosmWasmConnection(restClient, chainData, prefix, tokenInfo);
+    return new CosmWasmConnection(restClient, chainData, prefix, tokens);
   }
 
   private static async initialize(restClient: RestClient): Promise<ChainData> {
@@ -88,7 +90,7 @@ export class CosmWasmConnection implements BlockchainConnection {
   private readonly restClient: RestClient;
   private readonly chainData: ChainData;
   private readonly _prefix: CosmosBech32Prefix;
-  private readonly tokenInfo: TokenInfos;
+  private readonly tokenInfo: readonly TokenInfo[];
 
   // these are derived from arguments (cached for use in multiple functions)
   private readonly primaryToken: Token;
@@ -102,16 +104,16 @@ export class CosmWasmConnection implements BlockchainConnection {
     restClient: RestClient,
     chainData: ChainData,
     prefix: CosmosBech32Prefix,
-    tokenInfo: TokenInfos,
+    tokens: TokenConfiguration,
   ) {
     this.restClient = restClient;
     this.chainData = chainData;
     this._prefix = prefix;
-    this.tokenInfo = tokenInfo;
+    this.tokenInfo = tokens;
 
-    this.supportedTokens = this.tokenInfo.map(info => ({
-      tokenTicker: info.tokenTicker,
-      tokenName: info.tokenName,
+    this.supportedTokens = tokens.map(info => ({
+      tokenTicker: info.ticker as TokenTicker,
+      tokenName: info.name,
       fractionalDigits: info.fractionalDigits,
     }));
     this.primaryToken = this.supportedTokens[0];
@@ -158,7 +160,7 @@ export class CosmWasmConnection implements BlockchainConnection {
         };
     return {
       address: address,
-      balance: supportedCoins.map(decodeAmount(this.tokenInfo)),
+      balance: supportedCoins.map(coin => decodeAmount(this.tokenInfo, coin)),
       pubkey: pubkey,
     };
   }

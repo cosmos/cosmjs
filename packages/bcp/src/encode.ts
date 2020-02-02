@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
+import { AminoTx, decimalToCoin } from "@cosmwasm/sdk";
 import {
   Algorithm,
   Amount,
@@ -10,10 +11,10 @@ import {
   UnsignedTransaction,
 } from "@iov/bcp";
 import { Secp256k1 } from "@iov/crypto";
-import { Encoding } from "@iov/encoding";
+import { Decimal, Encoding } from "@iov/encoding";
 import amino from "@tendermint/amino-js";
 
-import { AminoTx, amountToCoin, TokenInfos } from "./types";
+import { TokenInfos } from "./types";
 
 const { toBase64 } = Encoding;
 
@@ -35,7 +36,11 @@ export function encodePubkey(pubkey: PubkeyBundle): amino.PubKey {
 }
 
 export function encodeAmount(amount: Amount, tokens: TokenInfos): amino.Coin {
-  return amountToCoin(tokens, amount);
+  return decimalToCoin(
+    tokens,
+    Decimal.fromAtomics(amount.quantity, amount.fractionalDigits),
+    amount.tokenTicker,
+  );
 }
 
 export function encodeFee(fee: Fee, tokens: TokenInfos): amino.StdFee {

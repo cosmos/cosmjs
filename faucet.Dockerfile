@@ -5,6 +5,7 @@ FROM node:12.14-alpine AS build-env
 ADD package.json yarn.lock tsconfig.json lerna.json /build_repo_root/
 ADD packages/bcp /build_repo_root/packages/bcp
 ADD packages/faucet /build_repo_root/packages/faucet
+ADD packages/sdk /build_repo_root/packages/sdk
 
 WORKDIR /build_repo_root
 RUN yarn install --frozen-lockfile

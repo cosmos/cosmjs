@@ -9,7 +9,6 @@ import {
   SignableBytes,
   SignedTransaction,
   SigningJob,
-  TokenTicker,
   TransactionId,
   TxCodec,
   UnsignedTransaction,
@@ -107,8 +106,7 @@ const defaultPrefix = "cosmos" as CosmosBech32Prefix;
 const defaultTokens: TokenInfos = [
   {
     fractionalDigits: 6,
-    tokenName: "Atom (Cosmos Hub)",
-    tokenTicker: "ATOM" as TokenTicker,
+    ticker: "ATOM",
     denom: "uatom",
   },
 ];

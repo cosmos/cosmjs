@@ -1,18 +1,18 @@
-import { CosmWasmCodec, CosmWasmConnection, TokenInfo } from "@cosmwasm/bcp";
-import { TokenTicker, TxCodec } from "@iov/bcp";
+import { CosmWasmCodec, CosmWasmConnection, TokenConfiguration } from "@cosmwasm/bcp";
+import { TxCodec } from "@iov/bcp";
 
 const prefix = "cosmos";
-const tokens: readonly TokenInfo[] = [
+const tokens: TokenConfiguration = [
   {
     fractionalDigits: 6,
-    tokenName: "Fee Token",
-    tokenTicker: "COSM" as TokenTicker,
+    name: "Fee Token",
+    ticker: "COSM",
     denom: "cosm",
   },
   {
     fractionalDigits: 6,
-    tokenName: "Staking Token",
-    tokenTicker: "STAKE" as TokenTicker,
+    name: "Staking Token",
+    ticker: "STAKE",
     denom: "stake",
   },
 ];

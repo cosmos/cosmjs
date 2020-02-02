@@ -1,3 +1,4 @@
+import { coinToDecimal, isAminoStdTx, TxsResponse } from "@cosmwasm/sdk";
 import {
   Address,
   Algorithm,
@@ -12,14 +13,14 @@ import {
   SendTransaction,
   SignatureBytes,
   SignedTransaction,
+  TokenTicker,
   TransactionId,
   UnsignedTransaction,
 } from "@iov/bcp";
 import { Encoding } from "@iov/encoding";
 import amino from "@tendermint/amino-js";
 
-import { TxsResponse } from "./restclient";
-import { coinToAmount, isAminoStdTx, TokenInfos } from "./types";
+import { TokenInfos } from "./types";
 
 const { fromBase64 } = Encoding;
 
@@ -54,10 +55,14 @@ export function decodeFullSignature(signature: amino.StdSignature, nonce: number
   };
 }
 
-// TODO: return null vs throw exception for undefined???
-export const decodeAmount = (tokens: TokenInfos) => (coin: amino.Coin): Amount => {
-  return coinToAmount(tokens, coin);
-};
+export function decodeAmount(tokens: TokenInfos, coin: amino.Coin): Amount {
+  const [value, ticker] = coinToDecimal(tokens, coin);
+  return {
+    quantity: value.atomics,
+    fractionalDigits: value.fractionalDigits,
+    tokenTicker: ticker as TokenTicker,
+  };
+}
 
 export function parseMsg(msg: amino.Msg, chainId: ChainId, tokens: TokenInfos): SendTransaction {
   if (msg.type !== "cosmos-sdk/MsgSend") {
@@ -75,7 +80,7 @@ export function parseMsg(msg: amino.Msg, chainId: ChainId, tokens: TokenInfos): 
     chainId: chainId,
     sender: msgValue.from_address as Address,
     recipient: msgValue.to_address as Address,
-    amount: decodeAmount(tokens)(msgValue.amount[0]),
+    amount: decodeAmount(tokens, msgValue.amount[0]),
   };
 }
 
@@ -84,7 +89,7 @@ export function parseFee(fee: amino.StdFee, tokens: TokenInfos): Fee {
     throw new Error("Only fee with one amount is supported");
   }
   return {
-    tokens: decodeAmount(tokens)(fee.amount[0]),
+    tokens: decodeAmount(tokens, fee.amount[0]),
     gasLimit: fee.gas,
   };
 }

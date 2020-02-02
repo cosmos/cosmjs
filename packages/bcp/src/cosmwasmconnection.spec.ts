@@ -16,8 +16,8 @@ import { HdPaths, Secp256k1HdWallet, UserProfile } from "@iov/keycontrol";
 
 import { CosmosBech32Prefix } from "./address";
 import { CosmWasmCodec, cosmWasmCodec } from "./cosmwasmcodec";
-import { CosmWasmConnection } from "./cosmwasmconnection";
-import { nonceToSequence, TokenInfos } from "./types";
+import { CosmWasmConnection, TokenConfiguration } from "./cosmwasmconnection";
+import { nonceToSequence } from "./types";
 
 const { fromBase64, toHex } = Encoding;
 
@@ -45,17 +45,17 @@ describe("CosmWasmConnection", () => {
   const defaultPrefix = "cosmos" as CosmosBech32Prefix;
 
   // this is for wasmd blockchain
-  const defaultTokens: TokenInfos = [
+  const defaultTokens: TokenConfiguration = [
     {
       fractionalDigits: 6,
-      tokenName: "Fee Token",
-      tokenTicker: "COSM" as TokenTicker,
+      name: "Fee Token",
+      ticker: "COSM",
       denom: "ucosm",
     },
     {
       fractionalDigits: 6,
-      tokenName: "Staking Token",
-      tokenTicker: "STAKE" as TokenTicker,
+      name: "Staking Token",
+      ticker: "STAKE",
       denom: "ustake",
     },
   ];
