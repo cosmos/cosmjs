@@ -15,6 +15,10 @@ echo "Using temporary dir $TMP_DIR"
 WASMD_LOGFILE="$TMP_DIR/wasmd.log"
 REST_SERVER_LOGFILE="$TMP_DIR/rest-server.log"
 
+# pull the newest copy of the docker image
+# this is important as the sleep timeout below will fail on first run (downloading entire docker stack usually > 10s)
+docker pull "$REPOSITORY:$VERSION"
+
 # This starts up wasmd
 docker volume rm -f wasmd_data
 docker run --rm \
@@ -36,6 +40,7 @@ if [ "$(docker inspect -f '{{.State.Running}}' "$CONTAINER_NAME")" != "true" ]; 
   echo "Container named '$CONTAINER_NAME' not running. We cannot continue." \
     "This can happen when 'docker run' needs too long to download and start." \
     "It might be worth retrying this step once the image is in the local docker cache."
+  docker kill "$CONTAINER_NAME"
   exit 1
 fi
 

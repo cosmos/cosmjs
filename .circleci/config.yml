@@ -6,6 +6,7 @@ workflows:
       - build
       - lint
       - faucet_docker
+      - test
 
 jobs:
   build:
@@ -38,6 +39,9 @@ jobs:
       - run:
           name: Version information
           command: echo "node $(node --version)"; echo "yarn $(yarn --version)"
+      - run: # start early for less wait time below
+          command: ./projects/scripts/cosm/start.sh
+          background: true
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
@@ -50,13 +54,8 @@ jobs:
           key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
-      - run:
-          command: docker pull cosmwasm/wasmd:latest
-      - run:
-          command: ./projects/scripts/cosm/start.sh
-          background: true
-      - run:
-          command: sleep 15
+      - run: # wait until cosm scripts have fully started
+          command: timeout 15 bash -c "until curl -s http://localhost:1317/node_info > /dev/null; do sleep 1; done
       - run:
           environment: COSMOS_ENABLED=1
           command: yarn test
