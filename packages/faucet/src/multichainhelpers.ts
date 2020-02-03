@@ -30,7 +30,6 @@ export async function loadAccounts(
   const codec = codecImplementation();
   const addresses = identitiesOfFirstWallet(profile).map(identity => codec.identityToAddress(identity));
 
-  // tslint:disable-next-line: readonly-array
   const out: Account[] = [];
   for (const address of addresses) {
     const response = await connection.getAccount({ address: address });
@@ -104,7 +103,6 @@ export async function refill(profile: UserProfile, connection: BlockchainConnect
   const availableTokens = availableTokensFromHolder(holderAccount);
   console.info("Available tokens:", availableTokens);
 
-  // tslint:disable-next-line: readonly-array
   const jobs: SendJob[] = [];
 
   for (const token of availableTokens) {

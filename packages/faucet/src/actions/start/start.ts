@@ -1,4 +1,3 @@
-// tslint:disable: no-object-mutation
 import { UserProfile } from "@iov/keycontrol";
 import cors = require("@koa/cors");
 import Koa from "koa";
