@@ -41,6 +41,9 @@ jobs:
       image: ubuntu-1604:201903-01
     steps:
       - checkout
+      - run: # start early for less wait time below
+          command: ./scripts/cosm/start.sh
+          background: true
       - run:
           # The images ubuntu-1604:201903-01 comes with preinstalled nvm, which does not work well with non-login shells
           name: Uninstall nvm
@@ -55,9 +58,6 @@ jobs:
       - run:
           name: Version information
           command: echo "node $(node --version)"; echo "yarn $(yarn --version)"
-      - run: # start early for less wait time below
-          command: ./scripts/cosm/start.sh
-          background: true
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
