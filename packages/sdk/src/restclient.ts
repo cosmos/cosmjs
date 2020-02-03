@@ -1,7 +1,7 @@
 import { Encoding } from "@iov/encoding";
 import axios, { AxiosInstance } from "axios";
 
-import { AminoTx, BaseAccount, isAminoStdTx } from "./types";
+import { AminoTx, BaseAccount, isAminoStdTx, StdTx } from "./types";
 
 const { fromUtf8 } = Encoding;
 
@@ -66,13 +66,19 @@ interface PostTxsResponse {
   readonly raw_log?: string;
 }
 
+interface EncodeTxResponse {
+  // base64-encoded amino-binary encoded representation
+  readonly tx: string;
+}
+
 type RestClientResponse =
   | NodeInfoResponse
   | BlocksResponse
   | AuthAccountsResponse
   | TxsResponse
   | SearchTxsResponse
-  | PostTxsResponse;
+  | PostTxsResponse
+  | EncodeTxResponse;
 
 type BroadcastMode = "block" | "sync" | "async";
 
@@ -131,6 +137,15 @@ export class RestClient {
       throw new Error("Unexpected response data format");
     }
     return responseData as BlocksResponse;
+  }
+
+  // encodeTx returns the amino-encoding of the transaction
+  public async encodeTx(tx: StdTx): Promise<Uint8Array> {
+    const responseData = await this.post("/txs/encode", tx);
+    if (!(responseData as any).tx) {
+      throw new Error("Unexpected response data format");
+    }
+    return Encoding.fromBase64((responseData as EncodeTxResponse).tx);
   }
 
   public async authAccounts(address: string, height?: string): Promise<AuthAccountsResponse> {

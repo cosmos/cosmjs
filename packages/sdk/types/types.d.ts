@@ -8,6 +8,10 @@ export interface StdTx {
   readonly signatures: ReadonlyArray<StdSignature>;
   readonly memo: string | undefined;
 }
+export declare type AminoTx = Tx & {
+  readonly value: StdTx;
+};
+export declare function isAminoStdTx(txValue: unknown): txValue is StdTx;
 export interface Msg {
   readonly type: string;
   readonly value: MsgSend | unknown;
@@ -44,7 +48,3 @@ export interface BaseAccount {
   readonly account_number: string;
   readonly sequence: string;
 }
-export declare type AminoTx = Tx & {
-  readonly value: StdTx;
-};
-export declare function isAminoStdTx(txValue: unknown): txValue is StdTx;

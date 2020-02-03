@@ -1,4 +1,4 @@
-import { AminoTx, BaseAccount } from "./types";
+import { AminoTx, BaseAccount, StdTx } from "./types";
 interface NodeInfo {
   readonly network: string;
 }
@@ -50,13 +50,17 @@ interface PostTxsResponse {
   readonly code?: number;
   readonly raw_log?: string;
 }
+interface EncodeTxResponse {
+  readonly tx: string;
+}
 declare type RestClientResponse =
   | NodeInfoResponse
   | BlocksResponse
   | AuthAccountsResponse
   | TxsResponse
   | SearchTxsResponse
-  | PostTxsResponse;
+  | PostTxsResponse
+  | EncodeTxResponse;
 declare type BroadcastMode = "block" | "sync" | "async";
 export declare class RestClient {
   private readonly client;
@@ -67,6 +71,7 @@ export declare class RestClient {
   nodeInfo(): Promise<NodeInfoResponse>;
   blocksLatest(): Promise<BlocksResponse>;
   blocks(height: number): Promise<BlocksResponse>;
+  encodeTx(tx: StdTx): Promise<Uint8Array>;
   authAccounts(address: string, height?: string): Promise<AuthAccountsResponse>;
   txs(query: string): Promise<SearchTxsResponse>;
   txsById(id: string): Promise<TxsResponse>;
