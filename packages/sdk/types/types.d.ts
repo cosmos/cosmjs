@@ -1,8 +1,47 @@
 import amino from "@tendermint/amino-js";
-export declare type AminoTx = amino.Tx & {
-  readonly value: amino.StdTx;
+export interface Tx {
+  type: string;
+  value: any;
+}
+export interface StdTx {
+  readonly msg: ReadonlyArray<Msg>;
+  readonly fee: StdFee;
+  readonly signatures: ReadonlyArray<StdSignature>;
+  readonly memo: string | undefined;
+}
+export interface Msg {
+  type: string;
+  readonly value: MsgSend;
+}
+export interface MsgSend {
+  /** Bech32 account address */
+  readonly from_address: string;
+  /** Bech32 account address */
+  readonly to_address: string;
+  readonly amount: ReadonlyArray<Coin>;
+}
+export interface StdFee {
+  readonly amount: ReadonlyArray<Coin>;
+  readonly gas: string;
+}
+export interface Coin {
+  denom: string;
+  amount: string;
+}
+export interface StdSignature {
+  pub_key: PubKey;
+  signature: string;
+}
+export interface PubKey {
+  /** Amino registered name, e.g. `"tendermint/PubKeySecp256k1"` */
+  type: string;
+  /** Base64-encoded key bytes */
+  value: string;
+}
+export declare type AminoTx = Tx & {
+  readonly value: StdTx;
 };
-export declare function isAminoStdTx(txValue: amino.TxValue): txValue is amino.StdTx;
+export declare function isAminoStdTx(txValue: unknown): txValue is amino.StdTx;
 export interface TokenInfo {
   readonly denom: string;
   readonly ticker: string;
