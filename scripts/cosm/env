@@ -1,4 +1,4 @@
-# Choose from https://hub.docker.com/r/cosmwasm/wasmd/tags
+# Choose from https://hub.docker.com/r/cosmwasm/wasmd-demo/tags
 REPOSITORY="cosmwasm/wasmd-demo"
 VERSION="latest"
 
