@@ -36,11 +36,13 @@ jobs:
       - image: circleci/node:10
     steps:
       - checkout
+      - setup_remote_docker:
+          docker_layer_caching: false
       - run:
           name: Version information
           command: echo "node $(node --version)"; echo "yarn $(yarn --version)"
       - run: # start early for less wait time below
-          command: ./projects/scripts/cosm/start.sh
+          command: ./project/scripts/cosm/start.sh
           background: true
       - restore_cache:
           name: Restore Yarn Package Cache
@@ -55,13 +57,13 @@ jobs:
           paths:
             - ~/.cache/yarn
       - run: # wait until cosm scripts have fully started
-          command: timeout 15 bash -c "until curl -s http://localhost:1317/node_info > /dev/null; do sleep 1; done
+          command: timeout 15 bash -c "until curl -s http://localhost:1317/node_info > /dev/null; do sleep 1; done"
       - run:
           environment:
             COSMOS_ENABLED: 1
           command: yarn test
       - run:
-          command: ./projects/scripts/cosm/stop.sh
+          command: ./project/scripts/cosm/stop.sh
   lint:
     docker:
       - image: circleci/node:10
