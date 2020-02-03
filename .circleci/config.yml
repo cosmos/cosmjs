@@ -57,7 +57,8 @@ jobs:
       - run: # wait until cosm scripts have fully started
           command: timeout 15 bash -c "until curl -s http://localhost:1317/node_info > /dev/null; do sleep 1; done
       - run:
-          environment: COSMOS_ENABLED=1
+          environment:
+            COSMOS_ENABLED: 1
           command: yarn test
       - run:
           command: ./projects/scripts/cosm/stop.sh
