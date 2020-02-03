@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
+import { marshalTx, unmarshalTx } from "@cosmwasm/sdk";
 import {
   Address,
   ChainId,
@@ -13,9 +14,7 @@ import {
   TxCodec,
   UnsignedTransaction,
 } from "@iov/bcp";
-import { Sha256 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
-import { unmarshalTx, marshalTx } from "@cosmwasm/sdk";
 
 import { CosmosBech32Prefix, isValidAddress, pubkeyToAddress } from "./address";
 import { Caip5 } from "./caip5";
@@ -23,7 +22,7 @@ import { parseTx } from "./decode";
 import { buildSignedTx, buildUnsignedTx } from "./encode";
 import { nonceToAccountNumber, nonceToSequence, TokenInfos } from "./types";
 
-const { toHex, toUtf8 } = Encoding;
+const { toUtf8 } = Encoding;
 
 function sortJson(json: any): any {
   if (typeof json !== "object" || json === null) {

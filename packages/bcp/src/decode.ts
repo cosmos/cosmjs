@@ -102,7 +102,12 @@ export function parseFee(fee: types.StdFee, tokens: TokenInfos): Fee {
   };
 }
 
-export function parseTx(txValue: types.StdTx, chainId: ChainId, nonce: Nonce, tokens: TokenInfos): SignedTransaction {
+export function parseTx(
+  txValue: types.StdTx,
+  chainId: ChainId,
+  nonce: Nonce,
+  tokens: TokenInfos,
+): SignedTransaction {
   if (!types.isAminoStdTx(txValue)) {
     throw new Error("Only Amino StdTx is supported");
   }
