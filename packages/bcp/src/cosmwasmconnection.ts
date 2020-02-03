@@ -205,7 +205,7 @@ export class CosmWasmConnection implements BlockchainConnection {
   ): Promise<ConfirmedAndSignedTransaction<UnsignedTransaction> | FailedTransaction> {
     try {
       const response = await this.restClient.txsById(id);
-      const chainId = await this.chainId();
+      const chainId = this.chainId();
       return this.parseAndPopulateTxResponse(response, chainId);
     } catch (error) {
       if (error.response.status === 404) {
