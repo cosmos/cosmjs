@@ -1,4 +1,4 @@
-import { coinToDecimal, TxsResponse, types } from "@cosmwasm/sdk";
+import { TxsResponse, types } from "@cosmwasm/sdk";
 import {
   Address,
   Algorithm,
@@ -17,7 +17,7 @@ import {
   TransactionId,
   UnsignedTransaction,
 } from "@iov/bcp";
-import { Encoding } from "@iov/encoding";
+import { Decimal, Encoding } from "@iov/encoding";
 
 import { TokenInfos } from "./types";
 
@@ -52,6 +52,15 @@ export function decodeFullSignature(signature: types.StdSignature, nonce: number
     pubkey: decodePubkey(signature.pub_key),
     signature: decodeSignature(signature.signature),
   };
+}
+
+export function coinToDecimal(tokens: TokenInfos, coin: types.Coin): readonly [Decimal, string] {
+  const match = tokens.find(({ denom }) => denom === coin.denom);
+  if (!match) {
+    throw Error(`unknown denom: ${coin.denom}`);
+  }
+  const value = Decimal.fromAtomics(coin.amount, match.fractionalDigits);
+  return [value, match.ticker];
 }
 
 export function decodeAmount(tokens: TokenInfos, coin: types.Coin): Amount {

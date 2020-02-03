@@ -1,4 +1,3 @@
-import { types } from "@cosmwasm/sdk";
 import {
   Account,
   AccountQuery,
@@ -22,7 +21,8 @@ import {
 } from "@iov/bcp";
 import { Stream } from "xstream";
 import { CosmosBech32Prefix } from "./address";
-export declare type TokenConfiguration = readonly (types.TokenInfo & {
+import { TokenInfo } from "./types";
+export declare type TokenConfiguration = (TokenInfo & {
   readonly name: string;
 })[];
 export declare class CosmWasmConnection implements BlockchainConnection {

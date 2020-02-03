@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { RestClient, TxsResponse, types } from "@cosmwasm/sdk";
+import { RestClient, TxsResponse } from "@cosmwasm/sdk";
 import {
   Account,
   AccountQuery,
@@ -36,7 +36,7 @@ import { Stream } from "xstream";
 import { CosmosBech32Prefix, decodeCosmosPubkey, pubkeyToAddress } from "./address";
 import { Caip5 } from "./caip5";
 import { decodeAmount, parseTxsResponse } from "./decode";
-import { accountToNonce } from "./types";
+import { accountToNonce, TokenInfo } from "./types";
 
 interface ChainData {
   readonly chainId: ChainId;
@@ -66,7 +66,7 @@ function buildQueryString({
   return components.filter(Boolean).join("&");
 }
 
-export type TokenConfiguration = readonly (types.TokenInfo & { readonly name: string })[];
+export type TokenConfiguration = (TokenInfo & { readonly name: string })[];
 
 export class CosmWasmConnection implements BlockchainConnection {
   // we must know prefix and tokens a priori to understand the chain
@@ -88,7 +88,7 @@ export class CosmWasmConnection implements BlockchainConnection {
   private readonly restClient: RestClient;
   private readonly chainData: ChainData;
   private readonly _prefix: CosmosBech32Prefix;
-  private readonly tokenInfo: readonly types.TokenInfo[];
+  private readonly tokenInfo: readonly TokenInfo[];
 
   // these are derived from arguments (cached for use in multiple functions)
   private readonly primaryToken: Token;

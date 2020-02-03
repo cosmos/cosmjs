@@ -1,7 +1,9 @@
 import { types } from "@cosmwasm/sdk";
 import { Amount, Fee, FullSignature, PubkeyBundle, SignedTransaction, UnsignedTransaction } from "@iov/bcp";
+import { Decimal } from "@iov/encoding";
 import { TokenInfos } from "./types";
 export declare function encodePubkey(pubkey: PubkeyBundle): types.PubKey;
+export declare function decimalToCoin(lookup: TokenInfos, value: Decimal, ticker: string): types.Coin;
 export declare function encodeAmount(amount: Amount, tokens: TokenInfos): types.Coin;
 export declare function encodeFee(fee: Fee, tokens: TokenInfos): types.StdFee;
 export declare function encodeFullSignature(fullSignature: FullSignature): types.StdSignature;
