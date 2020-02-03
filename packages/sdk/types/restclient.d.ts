@@ -71,7 +71,7 @@ export declare class RestClient {
   nodeInfo(): Promise<NodeInfoResponse>;
   blocksLatest(): Promise<BlocksResponse>;
   blocks(height: number): Promise<BlocksResponse>;
-  encodeTx(tx: StdTx): Promise<Uint8Array>;
+  encodeTx(stdTx: StdTx): Promise<Uint8Array>;
   authAccounts(address: string, height?: string): Promise<AuthAccountsResponse>;
   txs(query: string): Promise<SearchTxsResponse>;
   txsById(id: string): Promise<TxsResponse>;
