@@ -102,8 +102,7 @@ export function parseFee(fee: types.StdFee, tokens: TokenInfos): Fee {
   };
 }
 
-export function parseTx(tx: types.Tx, chainId: ChainId, nonce: Nonce, tokens: TokenInfos): SignedTransaction {
-  const txValue = tx.value;
+export function parseTx(txValue: types.StdTx, chainId: ChainId, nonce: Nonce, tokens: TokenInfos): SignedTransaction {
   if (!types.isAminoStdTx(txValue)) {
     throw new Error("Only Amino StdTx is supported");
   }
@@ -137,7 +136,7 @@ export function parseTxsResponse(
 ): ConfirmedAndSignedTransaction<UnsignedTransaction> {
   const height = parseInt(response.height, 10);
   return {
-    ...parseTx(response.tx, chainId, nonce, tokens),
+    ...parseTx(response.tx.value, chainId, nonce, tokens),
     height: height,
     confirmations: currentHeight - height + 1,
     transactionId: response.txhash as TransactionId,

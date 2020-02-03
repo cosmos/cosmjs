@@ -157,7 +157,7 @@ describe("decode", () => {
 
   describe("parseTx", () => {
     it("works", () => {
-      expect(parseTx(data.tx, chainId, nonce, defaultTokens)).toEqual(signedTxJson);
+      expect(parseTx(data.tx.value, chainId, nonce, defaultTokens)).toEqual(signedTxJson);
     });
   });
 

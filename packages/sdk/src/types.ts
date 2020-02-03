@@ -13,6 +13,15 @@ export interface StdTx {
   readonly memo: string | undefined;
 }
 
+export type AminoTx = Tx & { readonly value: StdTx };
+
+export function isAminoStdTx(txValue: unknown): txValue is StdTx {
+  const { memo, msg, fee, signatures } = txValue as StdTx;
+  return (
+    typeof memo === "string" && Array.isArray(msg) && typeof fee === "object" && Array.isArray(signatures)
+  );
+}
+
 export interface Msg {
   readonly type: string;
   // TODO: make better union type
@@ -57,13 +66,4 @@ export interface BaseAccount {
   readonly public_key: AccountPubKey;
   readonly account_number: string;
   readonly sequence: string;
-}
-
-export type AminoTx = Tx & { readonly value: StdTx };
-
-export function isAminoStdTx(txValue: unknown): txValue is StdTx {
-  const { memo, msg, fee, signatures } = txValue as StdTx;
-  return (
-    typeof memo === "string" && Array.isArray(msg) && typeof fee === "object" && Array.isArray(signatures)
-  );
 }

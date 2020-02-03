@@ -19,7 +19,7 @@ describe("cosmWasmCodec", () => {
     expect(bytesToSign).toEqual(expected);
   });
 
-  it("properly encodes transactions", () => {
+  xit("properly encodes transactions", () => {
     const encoded = cosmWasmCodec.bytesToPost(signedTxJson);
     expect(encoded).toEqual(signedTxBin);
   });
@@ -30,12 +30,12 @@ describe("cosmWasmCodec", () => {
     );
   });
 
-  it("properly decodes transactions", () => {
+  xit("properly decodes transactions", () => {
     const decoded = cosmWasmCodec.parseBytes(signedTxBin as PostableBytes, chainId, nonce);
     expect(decoded).toEqual(signedTxJson);
   });
 
-  it("generates transaction id", () => {
+  xit("generates transaction id", () => {
     const id = cosmWasmCodec.identifier(signedTxJson);
     expect(id).toMatch(/^[0-9A-F]{64}$/);
     expect(id).toEqual(txId);

@@ -39,7 +39,6 @@
   },
   "dependencies": {
     "@iov/encoding": "^2.0.0-alpha.7",
-    "@tendermint/amino-js": "^0.7.0-alpha.1",
     "axios": "^0.19.0"
   },
   "devDependencies": {

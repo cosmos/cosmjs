@@ -22,7 +22,7 @@ export declare function decodeAmount(tokens: TokenInfos, coin: types.Coin): Amou
 export declare function parseMsg(msg: types.Msg, chainId: ChainId, tokens: TokenInfos): SendTransaction;
 export declare function parseFee(fee: types.StdFee, tokens: TokenInfos): Fee;
 export declare function parseTx(
-  tx: types.Tx,
+  txValue: types.StdTx,
   chainId: ChainId,
   nonce: Nonce,
   tokens: TokenInfos,
