@@ -1,20 +1,23 @@
-export interface Tx {
-  readonly type: string;
-  readonly value: unknown;
+export interface AminoTx {
+  readonly type: "cosmos-sdk/StdTx";
+  readonly value: StdTx;
 }
 export interface StdTx {
   readonly msg: ReadonlyArray<Msg>;
   readonly fee: StdFee;
   readonly signatures: ReadonlyArray<StdSignature>;
-  readonly memo: string | undefined;
+  readonly memo: string;
 }
-export declare type AminoTx = Tx & {
-  readonly value: StdTx;
-};
+export declare function isAminoTx(tx: unknown): tx is AminoTx;
 export declare function isAminoStdTx(txValue: unknown): txValue is StdTx;
-export interface Msg {
+export declare type Msg = MsgSendTyped | MsgUnknownTyped;
+export interface MsgUnknownTyped {
   readonly type: string;
-  readonly value: MsgSend | unknown;
+  readonly value: unknown;
+}
+export interface MsgSendTyped {
+  readonly type: "cosmos-sdk/MsgSend";
+  readonly value: MsgSend;
 }
 export interface MsgSend {
   /** Bech32 account address */

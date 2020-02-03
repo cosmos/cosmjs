@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { types } from "@cosmwasm/sdk";
+import { AminoTx } from "@cosmwasm/sdk/types/types";
 import { Address, Algorithm, TokenTicker } from "@iov/bcp";
 import { Encoding } from "@iov/encoding";
 
@@ -168,7 +169,7 @@ describe("decode", () => {
         height: "2823",
         txhash: txId,
         raw_log: '[{"msg_index":0,"success":true,"log":""}]',
-        tx: data.tx,
+        tx: data.tx as AminoTx,
       };
       const expected = {
         ...signedTxJson,
