@@ -54,6 +54,7 @@ jobs:
           command: docker pull cosmwasm/wasmd:latest
       - run:
           command: ./projects/scripts/cosm/start.sh
+          background: true
       - run:
           command: sleep 15
       - run:
