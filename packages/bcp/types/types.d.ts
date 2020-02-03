@@ -1,6 +1,6 @@
-import { TokenInfo } from "@cosmwasm/sdk";
+import { types } from "@cosmwasm/sdk";
 import { Nonce } from "@iov/bcp";
-export declare type TokenInfos = ReadonlyArray<TokenInfo>;
+export declare type TokenInfos = ReadonlyArray<types.TokenInfo>;
 export interface NonceInfo {
   readonly account_number: string;
   readonly sequence: string;

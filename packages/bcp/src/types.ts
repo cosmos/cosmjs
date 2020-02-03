@@ -1,7 +1,7 @@
-import { TokenInfo } from "@cosmwasm/sdk";
+import { types } from "@cosmwasm/sdk";
 import { Nonce } from "@iov/bcp";
 
-export type TokenInfos = ReadonlyArray<TokenInfo>;
+export type TokenInfos = ReadonlyArray<types.TokenInfo>;
 
 // tslint:disable-next-line:no-bitwise
 const maxAcct = 1 << 23;

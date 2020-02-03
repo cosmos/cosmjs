@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { AminoTx, decimalToCoin } from "@cosmwasm/sdk";
+import { decimalToCoin, types } from "@cosmwasm/sdk";
 import {
   Algorithm,
   Amount,
@@ -67,7 +67,7 @@ export function encodeFullSignature(fullSignature: FullSignature): amino.StdSign
   };
 }
 
-export function buildUnsignedTx(tx: UnsignedTransaction, tokens: TokenInfos): AminoTx {
+export function buildUnsignedTx(tx: UnsignedTransaction, tokens: TokenInfos): types.AminoTx {
   if (!isSendTransaction(tx)) {
     throw new Error("Received transaction of unsupported kind");
   }
@@ -96,7 +96,7 @@ export function buildUnsignedTx(tx: UnsignedTransaction, tokens: TokenInfos): Am
   };
 }
 
-export function buildSignedTx(tx: SignedTransaction, tokens: TokenInfos): AminoTx {
+export function buildSignedTx(tx: SignedTransaction, tokens: TokenInfos): types.AminoTx {
   const built = buildUnsignedTx(tx.transaction, tokens);
   return {
     ...built,
