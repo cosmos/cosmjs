@@ -32,12 +32,15 @@ jobs:
       - run:
           command: yarn build
   test:
-    docker:
-      - image: circleci/node:10
+    machine:
+      # We can't use a containerized environment since it requires remote docker to start custom containers.
+      # However, we can't access the remote docker's network from the primary container. This is a
+      # feature, as documented in https://circleci.com/docs/2.0/building-docker-images/#separation-of-environments
+      # As a consequence, we cannot use the circleci CLI for this job because "You cannot use the machine
+      # executor in local jobs." (https://circleci.com/docs/2.0/local-cli/#limitations-of-running-jobs-locally)
+      image: ubuntu-1604:201903-01
     steps:
       - checkout
-      - setup_remote_docker:
-          docker_layer_caching: false
       - run:
           name: Version information
           command: echo "node $(node --version)"; echo "yarn $(yarn --version)"
