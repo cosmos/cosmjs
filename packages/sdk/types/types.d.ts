@@ -1,6 +1,6 @@
 export interface Tx {
-  type: string;
-  value: any;
+  readonly type: string;
+  readonly value: any;
 }
 export interface StdTx {
   readonly msg: ReadonlyArray<Msg>;
@@ -9,7 +9,7 @@ export interface StdTx {
   readonly memo: string | undefined;
 }
 export interface Msg {
-  type: string;
+  readonly type: string;
   readonly value: MsgSend;
 }
 export interface MsgSend {
@@ -24,18 +24,25 @@ export interface StdFee {
   readonly gas: string;
 }
 export interface Coin {
-  denom: string;
-  amount: string;
+  readonly denom: string;
+  readonly amount: string;
 }
 export interface StdSignature {
-  pub_key: PubKey;
-  signature: string;
+  readonly pub_key: PubKey;
+  readonly signature: string;
 }
 export interface PubKey {
-  /** Amino registered name, e.g. `"tendermint/PubKeySecp256k1"` */
-  type: string;
-  /** Base64-encoded key bytes */
-  value: string;
+  readonly type: string;
+  readonly value: string;
+}
+export declare type AccountPubKey = string;
+export interface BaseAccount {
+  /** Bech32 account address */
+  readonly address: string;
+  readonly coins: ReadonlyArray<Coin>;
+  readonly public_key: AccountPubKey;
+  readonly account_number: string;
+  readonly sequence: string;
 }
 export declare type AminoTx = Tx & {
   readonly value: StdTx;

@@ -1,5 +1,4 @@
-import amino from "@tendermint/amino-js";
-import { AminoTx } from "./types";
+import { AminoTx, BaseAccount } from "./types";
 interface NodeInfo {
   readonly network: string;
 }
@@ -27,7 +26,7 @@ interface BlocksResponse {
 }
 interface AuthAccountsResponse {
   readonly result: {
-    readonly value: amino.BaseAccount;
+    readonly value: BaseAccount;
   };
 }
 export interface TxsResponse {

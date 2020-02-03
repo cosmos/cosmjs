@@ -151,13 +151,7 @@ export class CosmWasmConnection implements BlockchainConnection {
       this.tokenInfo.find(token => token.denom === denom),
     );
 
-    const pubkey = !account.public_key
-      ? undefined
-      : {
-          algo: Algorithm.Secp256k1,
-          // amino-js has wrong (outdated) types
-          data: decodeCosmosPubkey(account.public_key as any).data as PubkeyBytes,
-        };
+    const pubkey = !account.public_key ? undefined : decodeCosmosPubkey(account.public_key);
     return {
       address: address,
       balance: supportedCoins.map(coin => decodeAmount(this.tokenInfo, coin)),

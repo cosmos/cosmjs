@@ -1,8 +1,9 @@
 // We will move all needed *interfaces* from amino-js here
 // This means bcp can just import them from here (if needed at all)
 export interface Tx {
-  type: string;
-  value: any;
+  readonly type: string;
+  // TODO
+  readonly value: any;
 }
 
 export interface StdTx {
@@ -13,7 +14,7 @@ export interface StdTx {
 }
 
 export interface Msg {
-  type: string;
+  readonly type: string;
   // TODO: make better union type
   readonly value: MsgSend;
 }
@@ -32,20 +33,30 @@ export interface StdFee {
 }
 
 export interface Coin {
-  denom: string;
-  amount: string;
+  readonly denom: string;
+  readonly amount: string;
 }
 
 export interface StdSignature {
-  pub_key: PubKey;
-  signature: string;
+  readonly pub_key: PubKey;
+  readonly signature: string;
 }
 
 export interface PubKey {
-  /** Amino registered name, e.g. `"tendermint/PubKeySecp256k1"` */
-  type: string;
-  /** Base64-encoded key bytes */
-  value: string;
+  readonly type: string;
+  readonly value: string;
+}
+
+// AccountPubKey is bech32-encoded amino-binary encoded PubKey interface. oof.
+export type AccountPubKey = string;
+
+export interface BaseAccount {
+  /** Bech32 account address */
+  readonly address: string;
+  readonly coins: ReadonlyArray<Coin>;
+  readonly public_key: AccountPubKey;
+  readonly account_number: string;
+  readonly sequence: string;
 }
 
 export type AminoTx = Tx & { readonly value: StdTx };

@@ -33,8 +33,8 @@ describe("address", () => {
       expect(
         decodeCosmosPubkey("cosmospub1addwnpepqd8sgxq7aw348ydctp3n5ajufgxp395hksxjzc6565yfp56scupfqhlgyg5"),
       ).toEqual({
-        prefix: "cosmospub",
         data: fromBase64("A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ"),
+        algo: Algorithm.Secp256k1,
       });
     });
   });
