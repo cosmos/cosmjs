@@ -42,7 +42,7 @@ jobs:
           name: Version information
           command: echo "node $(node --version)"; echo "yarn $(yarn --version)"
       - run: # start early for less wait time below
-          command: ./project/scripts/cosm/start.sh
+          command: ./scripts/cosm/start.sh
           background: true
       - restore_cache:
           name: Restore Yarn Package Cache
@@ -63,7 +63,7 @@ jobs:
             COSMOS_ENABLED: 1
           command: yarn test
       - run:
-          command: ./project/scripts/cosm/stop.sh
+          command: ./scripts/cosm/stop.sh
   lint:
     docker:
       - image: circleci/node:10
