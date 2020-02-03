@@ -18,13 +18,12 @@ import {
   UnsignedTransaction,
 } from "@iov/bcp";
 import { Encoding } from "@iov/encoding";
-import amino from "@tendermint/amino-js";
 
 import { TokenInfos } from "./types";
 
 const { fromBase64 } = Encoding;
 
-export function decodePubkey(pubkey: amino.PubKey): PubkeyBundle {
+export function decodePubkey(pubkey: types.PubKey): PubkeyBundle {
   switch (pubkey.type) {
     // https://github.com/tendermint/tendermint/blob/v0.33.0/crypto/secp256k1/secp256k1.go#L23
     case "tendermint/PubKeySecp256k1":
@@ -47,7 +46,7 @@ export function decodeSignature(signature: string): SignatureBytes {
   return fromBase64(signature) as SignatureBytes;
 }
 
-export function decodeFullSignature(signature: amino.StdSignature, nonce: number): FullSignature {
+export function decodeFullSignature(signature: types.StdSignature, nonce: number): FullSignature {
   return {
     nonce: nonce as Nonce,
     pubkey: decodePubkey(signature.pub_key),
@@ -55,7 +54,7 @@ export function decodeFullSignature(signature: amino.StdSignature, nonce: number
   };
 }
 
-export function decodeAmount(tokens: TokenInfos, coin: amino.Coin): Amount {
+export function decodeAmount(tokens: TokenInfos, coin: types.Coin): Amount {
   const [value, ticker] = coinToDecimal(tokens, coin);
   return {
     quantity: value.atomics,
@@ -64,14 +63,14 @@ export function decodeAmount(tokens: TokenInfos, coin: amino.Coin): Amount {
   };
 }
 
-export function parseMsg(msg: amino.Msg, chainId: ChainId, tokens: TokenInfos): SendTransaction {
+export function parseMsg(msg: types.Msg, chainId: ChainId, tokens: TokenInfos): SendTransaction {
   if (msg.type !== "cosmos-sdk/MsgSend") {
     throw new Error("Unknown message type in transaction");
   }
-  if (!(msg.value as amino.MsgSend).from_address) {
+  if (!(msg.value as types.MsgSend).from_address) {
     throw new Error("Only MsgSend is supported");
   }
-  const msgValue = msg.value as amino.MsgSend;
+  const msgValue = msg.value as types.MsgSend;
   if (msgValue.amount.length !== 1) {
     throw new Error("Only MsgSend with one amount is supported");
   }
@@ -84,7 +83,7 @@ export function parseMsg(msg: amino.Msg, chainId: ChainId, tokens: TokenInfos): 
   };
 }
 
-export function parseFee(fee: amino.StdFee, tokens: TokenInfos): Fee {
+export function parseFee(fee: types.StdFee, tokens: TokenInfos): Fee {
   if (fee.amount.length !== 1) {
     throw new Error("Only fee with one amount is supported");
   }
@@ -94,7 +93,7 @@ export function parseFee(fee: amino.StdFee, tokens: TokenInfos): Fee {
   };
 }
 
-export function parseTx(tx: amino.Tx, chainId: ChainId, nonce: Nonce, tokens: TokenInfos): SignedTransaction {
+export function parseTx(tx: types.Tx, chainId: ChainId, nonce: Nonce, tokens: TokenInfos): SignedTransaction {
   const txValue = tx.value;
   if (!types.isAminoStdTx(txValue)) {
     throw new Error("Only Amino StdTx is supported");

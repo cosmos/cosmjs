@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { Address, Algorithm, TokenTicker } from "@iov/bcp";
 import { Encoding } from "@iov/encoding";
-import amino from "@tendermint/amino-js";
+import { types } from "@cosmwasm/sdk";
 
 import {
   decodeAmount,
@@ -113,7 +113,7 @@ describe("decode", () => {
 
   describe("decodeAmount", () => {
     it("works", () => {
-      const amount: amino.Coin = {
+      const amount: types.Coin = {
         denom: "uatom",
         amount: "11657995",
       };
@@ -123,7 +123,7 @@ describe("decode", () => {
 
   describe("parseMsg", () => {
     it("works", () => {
-      const msg: amino.Msg = {
+      const msg: types.Msg = {
         type: "cosmos-sdk/MsgSend",
         value: {
           from_address: "cosmos1h806c7khnvmjlywdrkdgk2vrayy2mmvf9rxk2r",

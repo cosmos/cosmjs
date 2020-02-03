@@ -1,5 +1,3 @@
-import amino from "@tendermint/amino-js";
-
 // We will move all needed *interfaces* from amino-js here
 // This means bcp can just import them from here (if needed at all)
 export interface Tx {
@@ -28,7 +26,6 @@ export interface MsgSend {
   readonly amount: ReadonlyArray<Coin>;
 }
 
-
 export interface StdFee {
   readonly amount: ReadonlyArray<Coin>;
   readonly gas: string;
@@ -53,8 +50,8 @@ export interface PubKey {
 
 export type AminoTx = Tx & { readonly value: StdTx };
 
-export function isAminoStdTx(txValue: unknown): txValue is amino.StdTx {
-  const { memo, msg, fee, signatures } = txValue as amino.StdTx;
+export function isAminoStdTx(txValue: unknown): txValue is StdTx {
+  const { memo, msg, fee, signatures } = txValue as StdTx;
   return (
     typeof memo === "string" && Array.isArray(msg) && typeof fee === "object" && Array.isArray(signatures)
   );

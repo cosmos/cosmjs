@@ -1,4 +1,3 @@
-import amino from "@tendermint/amino-js";
 export interface Tx {
   type: string;
   value: any;
@@ -41,7 +40,7 @@ export interface PubKey {
 export declare type AminoTx = Tx & {
   readonly value: StdTx;
 };
-export declare function isAminoStdTx(txValue: unknown): txValue is amino.StdTx;
+export declare function isAminoStdTx(txValue: unknown): txValue is StdTx;
 export interface TokenInfo {
   readonly denom: string;
   readonly ticker: string;
