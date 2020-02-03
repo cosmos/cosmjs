@@ -1,4 +1,3 @@
-// tslint:disable: no-object-mutation
 import { TokenTicker } from "@iov/bcp";
 
 import { creditAmount, refillAmount, refillThreshold, setFractionalDigits } from "./cashflow";
