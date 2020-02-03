@@ -18,7 +18,7 @@ export declare class CosmWasmCodec implements TxCodec {
   constructor(prefix: CosmosBech32Prefix, tokens: TokenInfos);
   bytesToSign(unsigned: UnsignedTransaction, nonce: Nonce): SigningJob;
   bytesToPost(signed: SignedTransaction): PostableBytes;
-  identifier(signed: SignedTransaction): TransactionId;
+  identifier(_signed: SignedTransaction): TransactionId;
   parseBytes(bytes: PostableBytes, chainId: ChainId, nonce?: Nonce): SignedTransaction;
   identityToAddress(identity: Identity): Address;
   isValidAddress(address: string): boolean;

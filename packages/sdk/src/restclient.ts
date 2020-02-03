@@ -1,7 +1,9 @@
-import amino, { unmarshalTx } from "@tendermint/amino-js";
+import { Encoding } from "@iov/encoding";
 import axios, { AxiosInstance } from "axios";
 
-import { AminoTx } from "./types";
+import { AminoTx, BaseAccount, isAminoStdTx, StdTx } from "./types";
+
+const { fromUtf8 } = Encoding;
 
 interface NodeInfo {
   readonly network: string;
@@ -35,7 +37,7 @@ interface BlocksResponse {
 
 interface AuthAccountsResponse {
   readonly result: {
-    readonly value: amino.BaseAccount;
+    readonly value: BaseAccount;
   };
 }
 
@@ -64,13 +66,19 @@ interface PostTxsResponse {
   readonly raw_log?: string;
 }
 
+interface EncodeTxResponse {
+  // base64-encoded amino-binary encoded representation
+  readonly tx: string;
+}
+
 type RestClientResponse =
   | NodeInfoResponse
   | BlocksResponse
   | AuthAccountsResponse
   | TxsResponse
   | SearchTxsResponse
-  | PostTxsResponse;
+  | PostTxsResponse
+  | EncodeTxResponse;
 
 type BroadcastMode = "block" | "sync" | "async";
 
@@ -131,6 +139,16 @@ export class RestClient {
     return responseData as BlocksResponse;
   }
 
+  // encodeTx returns the amino-encoding of the transaction
+  public async encodeTx(stdTx: StdTx): Promise<Uint8Array> {
+    const tx = { type: "cosmos-sdk/StdTx", value: stdTx };
+    const responseData = await this.post("/txs/encode", tx);
+    if (!(responseData as any).tx) {
+      throw new Error("Unexpected response data format");
+    }
+    return Encoding.fromBase64((responseData as EncodeTxResponse).tx);
+  }
+
   public async authAccounts(address: string, height?: string): Promise<AuthAccountsResponse> {
     const path =
       height === undefined ? `/auth/accounts/${address}` : `/auth/accounts/${address}?tx.height=${height}`;
@@ -157,10 +175,15 @@ export class RestClient {
     return responseData as TxsResponse;
   }
 
+  // tx must be JSON encoded StdTx (no wrapper)
   public async postTx(tx: Uint8Array): Promise<PostTxsResponse> {
-    const unmarshalled = unmarshalTx(tx, true);
+    // TODO: check this is StdTx
+    const decoded = JSON.parse(fromUtf8(tx));
+    if (!isAminoStdTx(decoded)) {
+      throw new Error("Must be json encoded StdTx");
+    }
     const params = {
-      tx: unmarshalled.value,
+      tx: decoded,
       mode: this.mode,
     };
     const responseData = await this.post("/txs", params);

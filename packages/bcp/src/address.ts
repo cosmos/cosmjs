@@ -1,4 +1,4 @@
-import { Address, Algorithm, PubkeyBundle } from "@iov/bcp";
+import { Address, Algorithm, PubkeyBundle, PubkeyBytes } from "@iov/bcp";
 import { Ripemd160, Secp256k1, Sha256 } from "@iov/crypto";
 import { Bech32, Encoding } from "@iov/encoding";
 import equal from "fast-deep-equal";
@@ -8,7 +8,10 @@ export type CosmosPubkeyBech32Prefix = "cosmospub" | "cosmosvalconspub" | "cosmo
 export type CosmosBech32Prefix = CosmosAddressBech32Prefix | CosmosPubkeyBech32Prefix;
 
 // As discussed in https://github.com/binance-chain/javascript-sdk/issues/163
-const pubkeyAminoPrefix = Encoding.fromHex("eb5ae98721");
+// Prefixes listed here: https://github.com/tendermint/tendermint/blob/d419fffe18531317c28c29a292ad7d253f6cafdf/docs/spec/blockchain/encoding.md#public-key-cryptography
+const pubkeyAminoPrefixSecp256k1 = Encoding.fromHex("eb5ae98721");
+const pubkeyAminoPrefixEd25519 = Encoding.fromHex("1624de64");
+const pubkeyAminoPrefixLength = pubkeyAminoPrefixSecp256k1.length;
 
 function isCosmosAddressBech32Prefix(prefix: string): prefix is CosmosAddressBech32Prefix {
   return ["cosmos", "cosmosvalcons", "cosmosvaloper"].includes(prefix);
@@ -33,22 +36,27 @@ export function decodeCosmosAddress(
 
 export function decodeCosmosPubkey(
   encodedPubkey: string,
-): { readonly prefix: CosmosPubkeyBech32Prefix; readonly data: Uint8Array } {
+): { readonly algo: Algorithm; readonly data: PubkeyBytes } {
   const { prefix, data } = Bech32.decode(encodedPubkey);
   if (!isCosmosPubkeyBech32Prefix(prefix)) {
     throw new Error(`Invalid bech32 prefix. Must be one of cosmos, cosmosvalcons, or cosmosvaloper.`);
   }
 
-  if (!equal(data.slice(0, pubkeyAminoPrefix.length), pubkeyAminoPrefix)) {
-    throw new Error("Pubkey does not have the expected amino prefix " + Encoding.toHex(pubkeyAminoPrefix));
+  const aminoPrefix = data.slice(0, pubkeyAminoPrefixLength);
+  const rest = data.slice(pubkeyAminoPrefixLength);
+  if (equal(aminoPrefix, pubkeyAminoPrefixSecp256k1)) {
+    if (rest.length !== 33) {
+      throw new Error("Invalid rest data length. Expected 33 bytes (compressed secp256k1 pubkey).");
+    }
+    return { algo: Algorithm.Secp256k1, data: rest as PubkeyBytes };
+  } else if (equal(aminoPrefix, pubkeyAminoPrefixEd25519)) {
+    if (rest.length !== 32) {
+      throw new Error("Invalid rest data length. Expected 32 bytes (ed25519 pubkey).");
+    }
+    return { algo: Algorithm.Ed25519, data: rest as PubkeyBytes };
+  } else {
+    throw new Error("Unsupported Pubkey type. Amino prefix: " + Encoding.toHex(aminoPrefix));
   }
-
-  const rest = data.slice(pubkeyAminoPrefix.length);
-  if (rest.length !== 33) {
-    throw new Error("Invalid rest data length. Expected 33 bytes (compressed secp256k1 pubkey).");
-  }
-
-  return { prefix: prefix, data: rest };
 }
 
 export function isValidAddress(address: string): boolean {

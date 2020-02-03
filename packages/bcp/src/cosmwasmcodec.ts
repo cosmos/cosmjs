@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
+import { marshalTx, unmarshalTx } from "@cosmwasm/sdk";
 import {
   Address,
   ChainId,
@@ -13,9 +14,7 @@ import {
   TxCodec,
   UnsignedTransaction,
 } from "@iov/bcp";
-import { Sha256 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
-import { marshalTx, unmarshalTx } from "@tendermint/amino-js";
 
 import { CosmosBech32Prefix, isValidAddress, pubkeyToAddress } from "./address";
 import { Caip5 } from "./caip5";
@@ -23,7 +22,7 @@ import { parseTx } from "./decode";
 import { buildSignedTx, buildUnsignedTx } from "./encode";
 import { nonceToAccountNumber, nonceToSequence, TokenInfos } from "./types";
 
-const { toHex, toUtf8 } = Encoding;
+const { toUtf8 } = Encoding;
 
 function sortJson(json: any): any {
   if (typeof json !== "object" || json === null) {
@@ -72,16 +71,20 @@ export class CosmWasmCodec implements TxCodec {
     };
   }
 
+  // PostableBytes are JSON-encoded StdTx
   public bytesToPost(signed: SignedTransaction): PostableBytes {
+    // TODO: change this as well (return StdTx, not AminoTx)?
     const built = buildSignedTx(signed, this.tokens);
-    const bytes = marshalTx(built, true);
-    return bytes as PostableBytes;
+    return marshalTx(built.value) as PostableBytes;
   }
 
-  public identifier(signed: SignedTransaction): TransactionId {
-    const bytes = this.bytesToPost(signed);
-    const hash = new Sha256(bytes).digest();
-    return toHex(hash).toUpperCase() as TransactionId;
+  // TODO: this needs some marshalling going on...
+  // Do we need to support this??
+  public identifier(_signed: SignedTransaction): TransactionId {
+    throw new Error("Not yet implemented, requires amino encoding- talk to Ethan");
+    // const bytes = this.bytesToPost(signed);
+    // const hash = new Sha256(bytes).digest();
+    // return toHex(hash).toUpperCase() as TransactionId;
   }
 
   public parseBytes(bytes: PostableBytes, chainId: ChainId, nonce?: Nonce): SignedTransaction {

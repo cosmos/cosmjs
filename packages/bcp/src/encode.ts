@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { AminoTx } from "@cosmwasm/sdk";
+import { types } from "@cosmwasm/sdk";
 import {
   Algorithm,
   Amount,
@@ -12,13 +12,12 @@ import {
 } from "@iov/bcp";
 import { Secp256k1 } from "@iov/crypto";
 import { Decimal, Encoding } from "@iov/encoding";
-import amino from "@tendermint/amino-js";
 
 import { TokenInfos } from "./types";
 
 const { toBase64 } = Encoding;
 
-export function encodePubkey(pubkey: PubkeyBundle): amino.PubKey {
+export function encodePubkey(pubkey: PubkeyBundle): types.PubKey {
   switch (pubkey.algo) {
     case Algorithm.Secp256k1:
       return {
@@ -35,7 +34,7 @@ export function encodePubkey(pubkey: PubkeyBundle): amino.PubKey {
   }
 }
 
-export function decimalToCoin(lookup: TokenInfos, value: Decimal, ticker: string): amino.Coin {
+export function decimalToCoin(lookup: TokenInfos, value: Decimal, ticker: string): types.Coin {
   const match = lookup.find(token => token.ticker === ticker);
   if (!match) {
     throw Error(`unknown ticker: ${ticker}`);
@@ -51,7 +50,7 @@ export function decimalToCoin(lookup: TokenInfos, value: Decimal, ticker: string
   };
 }
 
-export function encodeAmount(amount: Amount, tokens: TokenInfos): amino.Coin {
+export function encodeAmount(amount: Amount, tokens: TokenInfos): types.Coin {
   return decimalToCoin(
     tokens,
     Decimal.fromAtomics(amount.quantity, amount.fractionalDigits),
@@ -59,7 +58,7 @@ export function encodeAmount(amount: Amount, tokens: TokenInfos): amino.Coin {
   );
 }
 
-export function encodeFee(fee: Fee, tokens: TokenInfos): amino.StdFee {
+export function encodeFee(fee: Fee, tokens: TokenInfos): types.StdFee {
   if (fee.tokens === undefined) {
     throw new Error("Cannot encode fee without tokens");
   }
@@ -72,7 +71,7 @@ export function encodeFee(fee: Fee, tokens: TokenInfos): amino.StdFee {
   };
 }
 
-export function encodeFullSignature(fullSignature: FullSignature): amino.StdSignature {
+export function encodeFullSignature(fullSignature: FullSignature): types.StdSignature {
   return {
     pub_key: {
       type: "tendermint/PubKeySecp256k1",
@@ -83,7 +82,7 @@ export function encodeFullSignature(fullSignature: FullSignature): amino.StdSign
   };
 }
 
-export function buildUnsignedTx(tx: UnsignedTransaction, tokens: TokenInfos): AminoTx {
+export function buildUnsignedTx(tx: UnsignedTransaction, tokens: TokenInfos): types.AminoTx {
   if (!isSendTransaction(tx)) {
     throw new Error("Received transaction of unsupported kind");
   }
@@ -112,7 +111,7 @@ export function buildUnsignedTx(tx: UnsignedTransaction, tokens: TokenInfos): Am
   };
 }
 
-export function buildSignedTx(tx: SignedTransaction, tokens: TokenInfos): AminoTx {
+export function buildSignedTx(tx: SignedTransaction, tokens: TokenInfos): types.AminoTx {
   const built = buildUnsignedTx(tx.transaction, tokens);
   return {
     ...built,

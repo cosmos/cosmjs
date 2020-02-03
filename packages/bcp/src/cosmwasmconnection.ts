@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { RestClient, TxsResponse } from "@cosmwasm/sdk";
+import { RestClient, TxsResponse, unmarshalTx } from "@cosmwasm/sdk";
 import {
   Account,
   AccountQuery,
   AddressQuery,
-  Algorithm,
   BlockchainConnection,
   BlockHeader,
   BlockId,
@@ -20,7 +19,6 @@ import {
   Nonce,
   PostableBytes,
   PostTxResponse,
-  PubkeyBytes,
   PubkeyQuery,
   Token,
   TokenTicker,
@@ -29,7 +27,8 @@ import {
   TransactionState,
   UnsignedTransaction,
 } from "@iov/bcp";
-import { Uint53 } from "@iov/encoding";
+import { Sha256 } from "@iov/crypto";
+import { Encoding, Uint53 } from "@iov/encoding";
 import { DefaultValueProducer, ValueAndUpdates } from "@iov/stream";
 import equal from "fast-deep-equal";
 import { ReadonlyDate } from "readonly-date";
@@ -39,6 +38,8 @@ import { CosmosBech32Prefix, decodeCosmosPubkey, pubkeyToAddress } from "./addre
 import { Caip5 } from "./caip5";
 import { decodeAmount, parseTxsResponse } from "./decode";
 import { accountToNonce, TokenInfo } from "./types";
+
+const { toHex } = Encoding;
 
 interface ChainData {
   readonly chainId: ChainId;
@@ -68,7 +69,7 @@ function buildQueryString({
   return components.filter(Boolean).join("&");
 }
 
-export type TokenConfiguration = readonly (TokenInfo & { readonly name: string })[];
+export type TokenConfiguration = ReadonlyArray<TokenInfo & { readonly name: string }>;
 
 export class CosmWasmConnection implements BlockchainConnection {
   // we must know prefix and tokens a priori to understand the chain
@@ -140,6 +141,13 @@ export class CosmWasmConnection implements BlockchainConnection {
     return this.supportedTokens;
   }
 
+  public async identifier(signed: PostableBytes): Promise<TransactionId> {
+    const tx = unmarshalTx(signed);
+    const bytes = await this.restClient.encodeTx(tx);
+    const hash = new Sha256(bytes).digest();
+    return toHex(hash).toUpperCase() as TransactionId;
+  }
+
   public async getAccount(query: AccountQuery): Promise<Account | undefined> {
     const address = isPubkeyQuery(query) ? pubkeyToAddress(query.pubkey, this.prefix) : query.address;
     const { result } = await this.restClient.authAccounts(address);
@@ -151,13 +159,7 @@ export class CosmWasmConnection implements BlockchainConnection {
       this.tokenInfo.find(token => token.denom === denom),
     );
 
-    const pubkey = !account.public_key
-      ? undefined
-      : {
-          algo: Algorithm.Secp256k1,
-          // amino-js has wrong (outdated) types
-          data: decodeCosmosPubkey(account.public_key as any).data as PubkeyBytes,
-        };
+    const pubkey = !account.public_key ? undefined : decodeCosmosPubkey(account.public_key);
     return {
       address: address,
       balance: supportedCoins.map(coin => decodeAmount(this.tokenInfo, coin)),

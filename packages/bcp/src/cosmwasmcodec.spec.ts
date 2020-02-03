@@ -2,7 +2,7 @@ import { PostableBytes, PrehashType } from "@iov/bcp";
 import { Encoding } from "@iov/encoding";
 
 import { cosmWasmCodec } from "./cosmwasmcodec";
-import { chainId, nonce, sendTxJson, signedTxBin, signedTxJson, txId } from "./testdata.spec";
+import { chainId, nonce, sendTxJson, signedTxBin, signedTxEncodedJson, signedTxJson } from "./testdata.spec";
 
 const { toUtf8 } = Encoding;
 
@@ -21,7 +21,7 @@ describe("cosmWasmCodec", () => {
 
   it("properly encodes transactions", () => {
     const encoded = cosmWasmCodec.bytesToPost(signedTxJson);
-    expect(encoded).toEqual(signedTxBin);
+    expect(encoded).toEqual(signedTxEncodedJson);
   });
 
   it("throws when trying to decode a transaction without a nonce", () => {
@@ -31,14 +31,8 @@ describe("cosmWasmCodec", () => {
   });
 
   it("properly decodes transactions", () => {
-    const decoded = cosmWasmCodec.parseBytes(signedTxBin as PostableBytes, chainId, nonce);
+    const decoded = cosmWasmCodec.parseBytes(signedTxEncodedJson as PostableBytes, chainId, nonce);
     expect(decoded).toEqual(signedTxJson);
-  });
-
-  it("generates transaction id", () => {
-    const id = cosmWasmCodec.identifier(signedTxJson);
-    expect(id).toMatch(/^[0-9A-F]{64}$/);
-    expect(id).toEqual(txId);
   });
 
   it("round trip works", () => {
