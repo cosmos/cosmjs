@@ -22,9 +22,11 @@ import {
 import { Stream } from "xstream";
 import { CosmosBech32Prefix } from "./address";
 import { TokenInfo } from "./types";
-export declare type TokenConfiguration = (TokenInfo & {
-  readonly name: string;
-})[];
+export declare type TokenConfiguration = ReadonlyArray<
+  TokenInfo & {
+    readonly name: string;
+  }
+>;
 export declare class CosmWasmConnection implements BlockchainConnection {
   static establish(
     url: string,

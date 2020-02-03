@@ -69,7 +69,7 @@ function buildQueryString({
   return components.filter(Boolean).join("&");
 }
 
-export type TokenConfiguration = (TokenInfo & { readonly name: string })[];
+export type TokenConfiguration = ReadonlyArray<TokenInfo & { readonly name: string }>;
 
 export class CosmWasmConnection implements BlockchainConnection {
   // we must know prefix and tokens a priori to understand the chain

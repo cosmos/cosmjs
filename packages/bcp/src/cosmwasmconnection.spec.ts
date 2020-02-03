@@ -134,8 +134,8 @@ describe("CosmWasmConnection", () => {
     });
   });
 
-  describe("encodeTx", () => {
-    it("properly calculates tx hash", async () => {
+  describe("identifier", () => {
+    it("calculates tx hash from PostableBytes", async () => {
       pendingWithoutCosmos();
       const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultTokens);
       const postable = cosmWasmCodec.bytesToPost(signedTxJson);
