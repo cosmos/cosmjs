@@ -6,6 +6,7 @@ workflows:
       - build
       - lint
       - faucet_docker
+      - test
 
 jobs:
   build:
@@ -30,8 +31,53 @@ jobs:
             - ~/.cache/yarn
       - run:
           command: yarn build
+  test:
+    machine:
+      # We can't use a containerized environment since it requires remote docker to start custom containers.
+      # However, we can't access the remote docker's network from the primary container. This is a
+      # feature, as documented in https://circleci.com/docs/2.0/building-docker-images/#separation-of-environments
+      # As a consequence, we cannot use the circleci CLI for this job because "You cannot use the machine
+      # executor in local jobs." (https://circleci.com/docs/2.0/local-cli/#limitations-of-running-jobs-locally)
+      image: ubuntu-1604:201903-01
+    steps:
+      - checkout
+      - run: # start early for less wait time below
+          command: ./scripts/cosm/start.sh
+          background: true
       - run:
+          # The images ubuntu-1604:201903-01 comes with preinstalled nvm, which does not work well with non-login shells
+          name: Uninstall nvm
+          command: rm -rf "$NVM_DIR" ~/.npm ~/.bower
+      - run:
+          name: Install nodejs and yarn
+          command: |
+            curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+            curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+            echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+            sudo apt update && sudo apt install nodejs yarn
+      - run:
+          name: Version information
+          command: echo "node $(node --version)"; echo "yarn $(yarn --version)"
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - run: # wait until cosm scripts have fully started (this includes time for docker pull)
+          command: timeout 60 bash -c "until curl -s http://localhost:1317/node_info > /dev/null; do sleep 1; done"
+      - run:
+          environment:
+            COSMOS_ENABLED: 1
           command: yarn test
+      - run:
+          command: ./scripts/cosm/stop.sh
   lint:
     docker:
       - image: circleci/node:10
