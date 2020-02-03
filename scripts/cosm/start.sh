@@ -34,6 +34,10 @@ docker run --rm \
 
 echo "wasmd running and logging into $WASMD_LOGFILE"
 
+# Debug chain start
+sleep 3
+cat "$WASMD_LOGFILE"
+
 sleep 10
 
 if [ "$(docker inspect -f '{{.State.Running}}' "$CONTAINER_NAME")" != "true" ]; then
@@ -52,3 +56,7 @@ docker exec "$CONTAINER_NAME" \
   > "$REST_SERVER_LOGFILE" &
 
 echo "rest server running on http://localhost:1317 and logging into $REST_SERVER_LOGFILE"
+
+# Debug rest server start
+sleep 3
+cat "$REST_SERVER_LOGFILE"
