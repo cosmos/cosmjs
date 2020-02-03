@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
+import { types } from "@cosmwasm/sdk";
 import { Address, Algorithm, TokenTicker } from "@iov/bcp";
 import { Encoding } from "@iov/encoding";
-import { types } from "@cosmwasm/sdk";
 
 import {
   decodeAmount,

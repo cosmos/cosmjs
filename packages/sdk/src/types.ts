@@ -3,7 +3,7 @@
 export interface Tx {
   readonly type: string;
   // TODO
-  readonly value: any;
+  readonly value: unknown;
 }
 
 export interface StdTx {
@@ -16,7 +16,7 @@ export interface StdTx {
 export interface Msg {
   readonly type: string;
   // TODO: make better union type
-  readonly value: MsgSend;
+  readonly value: MsgSend | unknown;
 }
 
 export interface MsgSend {

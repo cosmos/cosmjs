@@ -1,6 +1,6 @@
 export interface Tx {
   readonly type: string;
-  readonly value: any;
+  readonly value: unknown;
 }
 export interface StdTx {
   readonly msg: ReadonlyArray<Msg>;
@@ -10,7 +10,7 @@ export interface StdTx {
 }
 export interface Msg {
   readonly type: string;
-  readonly value: MsgSend;
+  readonly value: MsgSend | unknown;
 }
 export interface MsgSend {
   /** Bech32 account address */
