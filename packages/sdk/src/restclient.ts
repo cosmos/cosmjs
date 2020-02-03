@@ -141,7 +141,7 @@ export class RestClient {
 
   // encodeTx returns the amino-encoding of the transaction
   public async encodeTx(stdTx: StdTx): Promise<Uint8Array> {
-    const tx = {"type": "cosmos-sdk/StdTx", "value": stdTx};
+    const tx = { type: "cosmos-sdk/StdTx", value: stdTx };
     const responseData = await this.post("/txs/encode", tx);
     if (!(responseData as any).tx) {
       throw new Error("Unexpected response data format");
