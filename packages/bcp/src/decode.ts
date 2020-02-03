@@ -1,4 +1,4 @@
-import { coinToDecimal, isAminoStdTx, TxsResponse, types } from "@cosmwasm/sdk";
+import { coinToDecimal, TxsResponse, types } from "@cosmwasm/sdk";
 import {
   Address,
   Algorithm,
@@ -95,7 +95,7 @@ export function parseFee(fee: types.StdFee, tokens: TokenInfos): Fee {
 
 export function parseTx(tx: types.Tx, chainId: ChainId, nonce: Nonce, tokens: TokenInfos): SignedTransaction {
   const txValue = tx.value;
-  if (!isAminoStdTx(txValue)) {
+  if (!types.isAminoStdTx(txValue)) {
     throw new Error("Only Amino StdTx is supported");
   }
   if (txValue.msg.length !== 1) {
