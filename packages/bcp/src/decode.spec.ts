@@ -181,3 +181,179 @@ describe("decode", () => {
     });
   });
 });
+
+/*
+
+Some output from sample rest queries:
+
+$ wasmcli tx send $(wasmcli keys show validator -a) $(wasmcli keys show fred -a) 98765stake -y
+{
+  "height": "4",
+  "txhash": "8A4613D62884EF8BB9BCCDDA3833D560701908BF17FE82A570EECCBACEF94A91",
+  "raw_log": "[{\"msg_index\":0,\"log\":\"\",\"events\":[{\"type\":\"message\",\"attributes\":[{\"key\":\"action\",\"value\":\"send\"},{\"key\":\"sender\",\"value\":\"cosmos16qu479grzwanyzav6xvtzncgdjkwhqw7vy2pje\"},{\"key\":\"module\",\"value\":\"bank\"}]},{\"type\":\"transfer\",\"attributes\":[{\"key\":\"recipient\",\"value\":\"cosmos1ltkhnmdcqemmd2tkhnx7qx66tq7e0wykw2j85k\"},{\"key\":\"amount\",\"value\":\"98765stake\"}]}]}]",
+  "logs": [
+    {
+      "msg_index": 0,
+      "log": "",
+      "events": [
+        {
+          "type": "message",
+          "attributes": [
+            {
+              "key": "action",
+              "value": "send"
+            },
+            {
+              "key": "sender",
+              "value": "cosmos16qu479grzwanyzav6xvtzncgdjkwhqw7vy2pje"
+            },
+            {
+              "key": "module",
+              "value": "bank"
+            }
+          ]
+        },
+        {
+          "type": "transfer",
+          "attributes": [
+            {
+              "key": "recipient",
+              "value": "cosmos1ltkhnmdcqemmd2tkhnx7qx66tq7e0wykw2j85k"
+            },
+            {
+              "key": "amount",
+              "value": "98765stake"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "gas_wanted": "200000",
+  "gas_used": "53254"
+}
+
+
+$ wasmcli query tx 8A4613D62884EF8BB9BCCDDA3833D560701908BF17FE82A570EECCBACEF94A91
+{
+  "height": "4",
+  "txhash": "8A4613D62884EF8BB9BCCDDA3833D560701908BF17FE82A570EECCBACEF94A91",
+  "raw_log": "[{\"msg_index\":0,\"log\":\"\",\"events\":[{\"type\":\"message\",\"attributes\":[{\"key\":\"action\",\"value\":\"send\"},{\"key\":\"sender\",\"value\":\"cosmos16qu479grzwanyzav6xvtzncgdjkwhqw7vy2pje\"},{\"key\":\"module\",\"value\":\"bank\"}]},{\"type\":\"transfer\",\"attributes\":[{\"key\":\"recipient\",\"value\":\"cosmos1ltkhnmdcqemmd2tkhnx7qx66tq7e0wykw2j85k\"},{\"key\":\"amount\",\"value\":\"98765stake\"}]}]}]",
+  "logs": [
+    {
+      "msg_index": 0,
+      "log": "",
+      "events": [
+        {
+          "type": "message",
+          "attributes": [
+            {
+              "key": "action",
+              "value": "send"
+            },
+            {
+              "key": "sender",
+              "value": "cosmos16qu479grzwanyzav6xvtzncgdjkwhqw7vy2pje"
+            },
+            {
+              "key": "module",
+              "value": "bank"
+            }
+          ]
+        },
+        {
+          "type": "transfer",
+          "attributes": [
+            {
+              "key": "recipient",
+              "value": "cosmos1ltkhnmdcqemmd2tkhnx7qx66tq7e0wykw2j85k"
+            },
+            {
+              "key": "amount",
+              "value": "98765stake"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "gas_wanted": "200000",
+  "gas_used": "53254",
+  "tx": {
+    "type": "cosmos-sdk/StdTx",
+    "value": {
+      "msg": [
+        {
+          "type": "cosmos-sdk/MsgSend",
+          "value": {
+            "from_address": "cosmos16qu479grzwanyzav6xvtzncgdjkwhqw7vy2pje",
+            "to_address": "cosmos1ltkhnmdcqemmd2tkhnx7qx66tq7e0wykw2j85k",
+            "amount": [
+              {
+                "denom": "stake",
+                "amount": "98765"
+              }
+            ]
+          }
+        }
+      ],
+      "fee": {
+        "amount": [],
+        "gas": "200000"
+      },
+      "signatures": [
+        {
+          "pub_key": {
+            "type": "tendermint/PubKeySecp256k1",
+            "value": "A11L8EitFnA6YsZ2QSnbMNmK+qI2kxyevDtSfhPqOwcp"
+          },
+          "signature": "qCeKoqZeaL0LThKrUXHLgu72jwTiF+DseSBjcKHtcONE0kIdybwYJpuYg3Jj71hmfync+daHNdqgJlPRma0pPA=="
+        }
+      ],
+      "memo": ""
+    }
+  },
+  "timestamp": "2020-02-03T17:06:58Z"
+}
+
+
+$ wasmcli query account $(wasmcli keys show fred -a)
+{
+  "type": "cosmos-sdk/Account",
+  "value": {
+    "address": "cosmos1ltkhnmdcqemmd2tkhnx7qx66tq7e0wykw2j85k",
+    "coins": [
+      {
+        "denom": "stake",
+        "amount": "98765"
+      }
+    ],
+    "public_key": "",
+    "account_number": 7,
+    "sequence": 0
+  }
+}
+
+
+$ wasmcli query account $(wasmcli keys show validator -a)
+{
+  "type": "cosmos-sdk/Account",
+  "value": {
+    "address": "cosmos16qu479grzwanyzav6xvtzncgdjkwhqw7vy2pje",
+    "coins": [
+      {
+        "denom": "stake",
+        "amount": "899901235"
+      },
+      {
+        "denom": "validatortoken",
+        "amount": "1000000000"
+      }
+    ],
+    "public_key": "cosmospub1addwnpepqdw5huzg45t8qwnzcemyz2wmxrvc474zx6f3e84u8df8uyl28vrjjnp9v4p",
+    "account_number": 3,
+    "sequence": 2
+  }
+}
+
+ */
