@@ -109,7 +109,7 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
         }
 
         // context.request.body is set by the bodyParser() plugin
-        const requestBody = (context.request as any).body;
+        const requestBody = context.request.body;
         const { address, ticker } = RequestParser.parseCreditBody(requestBody);
 
         if (!codecImplementation().isValidAddress(address)) {
