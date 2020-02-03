@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { RestClient, TokenInfo, TxsResponse } from "@cosmwasm/sdk";
+import { RestClient, TxsResponse } from "@cosmwasm/sdk";
 import {
   Account,
   AccountQuery,
@@ -38,7 +38,7 @@ import { Stream } from "xstream";
 import { CosmosBech32Prefix, decodeCosmosPubkey, pubkeyToAddress } from "./address";
 import { Caip5 } from "./caip5";
 import { decodeAmount, parseTxsResponse } from "./decode";
-import { accountToNonce } from "./types";
+import { accountToNonce, TokenInfo } from "./types";
 
 interface ChainData {
   readonly chainId: ChainId;

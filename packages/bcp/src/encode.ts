@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { AminoTx, decimalToCoin } from "@cosmwasm/sdk";
+import { AminoTx } from "@cosmwasm/sdk";
 import {
   Algorithm,
   Amount,
@@ -33,6 +33,22 @@ export function encodePubkey(pubkey: PubkeyBundle): amino.PubKey {
     default:
       throw new Error("Unsupported pubkey algo");
   }
+}
+
+export function decimalToCoin(lookup: TokenInfos, value: Decimal, ticker: string): amino.Coin {
+  const match = lookup.find(token => token.ticker === ticker);
+  if (!match) {
+    throw Error(`unknown ticker: ${ticker}`);
+  }
+  if (match.fractionalDigits !== value.fractionalDigits) {
+    throw new Error(
+      "Mismatch in fractional digits between token and value. If you really want, implement a conversion here. However, this indicates a bug in the caller code.",
+    );
+  }
+  return {
+    denom: match.denom,
+    amount: value.atomics,
+  };
 }
 
 export function encodeAmount(amount: Amount, tokens: TokenInfos): amino.Coin {
