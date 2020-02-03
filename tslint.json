@@ -23,7 +23,7 @@
     "object-literal-shorthand": [true, "never"],
     "object-literal-sort-keys": false,
     "ordered-imports": false,
-    "prefer-const": true,
+    "prefer-const": false,
     "promise-function-async": true,
     "typedef": [true, "call-signature"],
     "variable-name": [true, "check-format", "allow-leading-underscore"]
