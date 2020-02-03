@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { RestClient, TxsResponse } from "@cosmwasm/sdk";
+import { RestClient, TxsResponse, unmarshalTx } from "@cosmwasm/sdk";
 import {
   Account,
   AccountQuery,
@@ -27,7 +27,8 @@ import {
   TransactionState,
   UnsignedTransaction,
 } from "@iov/bcp";
-import { Uint53 } from "@iov/encoding";
+import { Sha256 } from "@iov/crypto";
+import { Encoding, Uint53 } from "@iov/encoding";
 import { DefaultValueProducer, ValueAndUpdates } from "@iov/stream";
 import equal from "fast-deep-equal";
 import { ReadonlyDate } from "readonly-date";
@@ -37,6 +38,8 @@ import { CosmosBech32Prefix, decodeCosmosPubkey, pubkeyToAddress } from "./addre
 import { Caip5 } from "./caip5";
 import { decodeAmount, parseTxsResponse } from "./decode";
 import { accountToNonce, TokenInfo } from "./types";
+
+const { toHex } = Encoding;
 
 interface ChainData {
   readonly chainId: ChainId;
@@ -136,6 +139,13 @@ export class CosmWasmConnection implements BlockchainConnection {
 
   public async getAllTokens(): Promise<readonly Token[]> {
     return this.supportedTokens;
+  }
+
+  public async identifier(signed: PostableBytes): Promise<TransactionId> {
+    const tx = unmarshalTx(signed);
+    const bytes = await this.restClient.encodeTx(tx);
+    const hash = new Sha256(bytes).digest();
+    return toHex(hash).toUpperCase() as TransactionId;
   }
 
   public async getAccount(query: AccountQuery): Promise<Account | undefined> {

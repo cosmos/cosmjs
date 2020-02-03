@@ -17,6 +17,7 @@ import { HdPaths, Secp256k1HdWallet, UserProfile } from "@iov/keycontrol";
 import { CosmosBech32Prefix } from "./address";
 import { CosmWasmCodec, cosmWasmCodec } from "./cosmwasmcodec";
 import { CosmWasmConnection, TokenConfiguration } from "./cosmwasmconnection";
+import { signedTxJson, txId } from "./testdata.spec";
 import { nonceToSequence } from "./types";
 
 const { fromBase64, toHex } = Encoding;
@@ -130,6 +131,17 @@ describe("CosmWasmConnection", () => {
         },
       ]);
       connection.disconnect();
+    });
+  });
+
+  describe("encodeTx", () => {
+    it("properly calculates tx hash", async () => {
+      pendingWithoutCosmos();
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultTokens);
+      const postable = cosmWasmCodec.bytesToPost(signedTxJson);
+      const id = await connection.identifier(postable);
+      expect(id).toMatch(/^[0-9A-F]{64}$/);
+      expect(id).toEqual(txId);
     });
   });
 

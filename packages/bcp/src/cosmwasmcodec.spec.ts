@@ -2,7 +2,7 @@ import { PostableBytes, PrehashType } from "@iov/bcp";
 import { Encoding } from "@iov/encoding";
 
 import { cosmWasmCodec } from "./cosmwasmcodec";
-import { chainId, nonce, sendTxJson, signedTxBin, signedTxJson, txId } from "./testdata.spec";
+import { chainId, nonce, sendTxJson, signedTxBin, signedTxJson } from "./testdata.spec";
 
 const { toUtf8 } = Encoding;
 
@@ -33,12 +33,6 @@ describe("cosmWasmCodec", () => {
   xit("properly decodes transactions", () => {
     const decoded = cosmWasmCodec.parseBytes(signedTxBin as PostableBytes, chainId, nonce);
     expect(decoded).toEqual(signedTxJson);
-  });
-
-  xit("generates transaction id", () => {
-    const id = cosmWasmCodec.identifier(signedTxJson);
-    expect(id).toMatch(/^[0-9A-F]{64}$/);
-    expect(id).toEqual(txId);
   });
 
   it("round trip works", () => {
