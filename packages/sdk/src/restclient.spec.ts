@@ -8,7 +8,7 @@ import { Log, parseLogs } from "./logs";
 import { RestClient } from "./restclient";
 import contract from "./testdata/contract.json";
 import data from "./testdata/cosmoshub.json";
-import { MsgInstantiateContract, MsgSend, MsgStoreCode, StdFee, StdTx } from "./types";
+import { Msg, MsgInstantiateContract, MsgSend, MsgStoreCode, StdFee, StdSignature, StdTx } from "./types";
 
 const { fromBase64 } = Encoding;
 
@@ -29,6 +29,15 @@ function pendingWithoutCosmos(): void {
 function parseSuccess(rawLog?: string): readonly Log[] {
   if (!rawLog) throw new Error("Log missing");
   return parseLogs(JSON.parse(rawLog));
+}
+
+function makeSignedTx(firstMsg: Msg, fee: StdFee, memo: string, firstSignature: StdSignature): StdTx {
+  return {
+    msg: [firstMsg],
+    fee: fee,
+    memo: memo,
+    signatures: [firstSignature],
+  };
 }
 
 describe("RestClient", () => {
@@ -103,16 +112,8 @@ describe("RestClient", () => {
       const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account) as SignableBytes;
       const rawSignature = await wallet.createTransactionSignature(signer, signBytes, PrehashType.Sha256);
       const signature = encodeSecp256k1Signature(signer.pubkey.data, rawSignature);
-
-      const signedTx: StdTx = {
-        msg: [theMsg],
-        fee: fee,
-        memo: memo,
-        signatures: [signature],
-      };
-
-      const postableBytes = marshalTx(signedTx);
-      const result = await client.postTx(postableBytes);
+      const signedTx = makeSignedTx(theMsg, fee, memo, signature);
+      const result = await client.postTx(marshalTx(signedTx));
       // console.log("Raw log:", result.raw_log);
       expect(result.code).toBeFalsy();
     });
@@ -149,16 +150,8 @@ describe("RestClient", () => {
         const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account) as SignableBytes;
         const rawSignature = await wallet.createTransactionSignature(signer, signBytes, PrehashType.Sha256);
         const signature = encodeSecp256k1Signature(signer.pubkey.data, rawSignature);
-
-        const signedTx: StdTx = {
-          msg: [theMsg],
-          fee: fee,
-          memo: memo,
-          signatures: [signature],
-        };
-
-        const postableBytes = marshalTx(signedTx);
-        const result = await client.postTx(postableBytes);
+        const signedTx = makeSignedTx(theMsg, fee, memo, signature);
+        const result = await client.postTx(marshalTx(signedTx));
         // console.log("Raw log:", result.raw_log);
         expect(result.code).toBeFalsy();
         const [firstLog] = parseSuccess(result.raw_log);
@@ -206,16 +199,8 @@ describe("RestClient", () => {
         const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account) as SignableBytes;
         const rawSignature = await wallet.createTransactionSignature(signer, signBytes, PrehashType.Sha256);
         const signature = encodeSecp256k1Signature(signer.pubkey.data, rawSignature);
-
-        const signedTx: StdTx = {
-          msg: [theMsg],
-          fee: fee,
-          memo: memo,
-          signatures: [signature],
-        };
-
-        const postableBytes = marshalTx(signedTx);
-        const result = await client.postTx(postableBytes);
+        const signedTx = makeSignedTx(theMsg, fee, memo, signature);
+        const result = await client.postTx(marshalTx(signedTx));
         expect(result.code).toBeFalsy();
         // console.log("Raw log:", result.raw_log);
         const [firstLog] = parseSuccess(result.raw_log);
