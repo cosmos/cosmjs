@@ -73,13 +73,10 @@ export function decodeAmount(tokens: TokenInfos, coin: types.Coin): Amount {
 }
 
 export function parseMsg(msg: types.Msg, chainId: ChainId, tokens: TokenInfos): SendTransaction {
-  if (msg.type !== "cosmos-sdk/MsgSend") {
+  if (!types.isMsgSend(msg)) {
     throw new Error("Unknown message type in transaction");
   }
-  if (!(msg.value as types.MsgSend).from_address) {
-    throw new Error("Only MsgSend is supported");
-  }
-  const msgValue = msg.value as types.MsgSend;
+  const msgValue = msg.value;
   if (msgValue.amount.length !== 1) {
     throw new Error("Only MsgSend with one amount is supported");
   }

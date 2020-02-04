@@ -7,7 +7,7 @@ import { encodeSecp256k1Signature, marshalTx, sortJson } from "./encoding";
 import { RestClient } from "./restclient";
 import contract from "./testdata/contract.json";
 import data from "./testdata/cosmoshub.json";
-import { MsgStoreCodeWrapped, StdTx } from "./types";
+import { MsgStoreCode, StdTx } from "./types";
 
 const { fromBase64, toUtf8 } = Encoding;
 
@@ -66,7 +66,7 @@ describe("RestClient", () => {
       const signer = await wallet.createIdentity("abc" as ChainId, faucetPath);
 
       const memo = "My first contract on chain";
-      const theMsg: MsgStoreCodeWrapped = {
+      const theMsg: MsgStoreCode = {
         type: "wasm/store-code",
         value: {
           sender: faucetAddress,

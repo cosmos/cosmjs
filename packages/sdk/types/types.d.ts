@@ -12,22 +12,22 @@ export declare type AminoTx = Tx & {
   readonly value: StdTx;
 };
 export declare function isAminoStdTx(txValue: unknown): txValue is StdTx;
-interface MsgUnknownWrapped {
+interface MsgTemplate {
   readonly type: string;
   readonly value: object;
 }
-export interface MsgSend {
+export interface ValueSend {
   /** Bech32 account address */
   readonly from_address: string;
   /** Bech32 account address */
   readonly to_address: string;
   readonly amount: ReadonlyArray<Coin>;
 }
-export interface MsgSendWrapped extends MsgUnknownWrapped {
-  readonly type: "cosmos-sdk/StdTx";
-  readonly value: MsgSend;
+export interface MsgSend extends MsgTemplate {
+  readonly type: "cosmos-sdk/MsgSend";
+  readonly value: ValueSend;
 }
-export interface MsgStoreCode {
+export interface ValueStoreCode {
   /** Bech32 account address */
   readonly sender: string;
   /** Base64 encoded Wasm */
@@ -37,11 +37,13 @@ export interface MsgStoreCode {
   /** A docker tag, optional */
   readonly builder?: string;
 }
-export interface MsgStoreCodeWrapped extends MsgUnknownWrapped {
+export interface MsgStoreCode extends MsgTemplate {
   readonly type: "wasm/store-code";
-  readonly value: MsgStoreCode;
+  readonly value: ValueStoreCode;
 }
-export declare type Msg = MsgSendWrapped | MsgStoreCodeWrapped | MsgUnknownWrapped;
+export declare type Msg = MsgSend | MsgStoreCode | MsgTemplate;
+export declare function isMsgSend(msg: Msg): msg is MsgSend;
+export declare function isMsgStoreCode(msg: Msg): msg is MsgStoreCode;
 export interface StdFee {
   readonly amount: ReadonlyArray<Coin>;
   readonly gas: string;
