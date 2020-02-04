@@ -163,6 +163,12 @@ describe("RestClient", () => {
         signatures: [signature],
       };
 
+      // make sure this is a valid encoding/decoding
+      const aminoBytes = await client.encodeTx(tx);
+      expect(aminoBytes).toBeTruthy();
+      expect(aminoBytes.length).toEqual(63084);
+
+      // now submit it
       const postableBytes = marshalTx(tx);
       const result = await client.postTx(postableBytes);
       // console.log("Raw log:", result.raw_log);
