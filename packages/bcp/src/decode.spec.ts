@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { types } from "@cosmwasm/sdk";
+import { StdTx } from "@cosmwasm/sdk/types/types";
 import { Address, Algorithm, TokenTicker } from "@iov/bcp";
 import { Encoding } from "@iov/encoding";
 
@@ -62,7 +63,7 @@ describe("decode", () => {
 
   describe("decodePubkey", () => {
     it("works for secp256k1", () => {
-      const pubkey = {
+      const pubkey: types.PubKey = {
         type: "tendermint/PubKeySecp256k1",
         value: "AtQaCqFnshaZQp6rIkvAPyzThvCvXSDO+9AzbxVErqJP",
       };
@@ -70,7 +71,7 @@ describe("decode", () => {
     });
 
     it("works for ed25519", () => {
-      const pubkey = {
+      const pubkey: types.PubKey = {
         type: "tendermint/PubKeyEd25519",
         value: "s69CnMgLTpuRyEfecjws3mWssBrOICUx8C2O1DkKSto=",
       };
@@ -82,7 +83,7 @@ describe("decode", () => {
 
     it("throws for unsupported types", () => {
       // https://github.com/tendermint/tendermint/blob/v0.33.0/crypto/sr25519/codec.go#L12
-      const pubkey = {
+      const pubkey: types.PubKey = {
         type: "tendermint/PubKeySr25519",
         value: "N4FJNPE5r/Twz55kO1QEIxyaGF5/HTXH6WgLQJWsy1o=",
       };
@@ -100,7 +101,7 @@ describe("decode", () => {
 
   describe("decodeFullSignature", () => {
     it("works", () => {
-      const fullSignature = {
+      const fullSignature: types.StdSignature = {
         pub_key: {
           type: "tendermint/PubKeySecp256k1",
           value: "AtQaCqFnshaZQp6rIkvAPyzThvCvXSDO+9AzbxVErqJP",
@@ -157,7 +158,7 @@ describe("decode", () => {
 
   describe("parseTx", () => {
     it("works", () => {
-      expect(parseTx(data.tx.value, chainId, nonce, defaultTokens)).toEqual(signedTxJson);
+      expect(parseTx(data.tx.value as StdTx, chainId, nonce, defaultTokens)).toEqual(signedTxJson);
     });
   });
 
@@ -168,7 +169,7 @@ describe("decode", () => {
         height: "2823",
         txhash: txId,
         raw_log: '[{"msg_index":0,"success":true,"log":""}]',
-        tx: data.tx,
+        tx: data.tx as types.AminoTx,
       };
       const expected = {
         ...signedTxJson,

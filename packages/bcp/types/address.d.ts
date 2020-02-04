@@ -1,18 +1,10 @@
+import { CosmosBech32Prefix, isValidAddress } from "@cosmwasm/sdk";
 import { Address, Algorithm, PubkeyBundle, PubkeyBytes } from "@iov/bcp";
-export declare type CosmosAddressBech32Prefix = "cosmos" | "cosmosvalcons" | "cosmosvaloper";
-export declare type CosmosPubkeyBech32Prefix = "cosmospub" | "cosmosvalconspub" | "cosmosvaloperpub";
-export declare type CosmosBech32Prefix = CosmosAddressBech32Prefix | CosmosPubkeyBech32Prefix;
-export declare function decodeCosmosAddress(
-  address: Address,
-): {
-  readonly prefix: CosmosAddressBech32Prefix;
-  readonly data: Uint8Array;
-};
+export { CosmosBech32Prefix, isValidAddress };
 export declare function decodeCosmosPubkey(
   encodedPubkey: string,
 ): {
   readonly algo: Algorithm;
   readonly data: PubkeyBytes;
 };
-export declare function isValidAddress(address: string): boolean;
 export declare function pubkeyToAddress(pubkey: PubkeyBundle, prefix: CosmosBech32Prefix): Address;

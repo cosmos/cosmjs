@@ -4,4 +4,4 @@ export declare type CosmosPubkeyBech32Prefix = "cosmospub" | "cosmosvalconspub" 
 export declare type CosmosBech32Prefix = CosmosAddressBech32Prefix | CosmosPubkeyBech32Prefix;
 export declare function decodeBech32Pubkey(bech: Bech32PubKey): PubKey;
 export declare function isValidAddress(address: string): boolean;
-export declare function pubkeyToAddress(pubkey: PubKey, prefix: string): string;
+export declare function encodeAddress(pubkey: PubKey, prefix: string): string;
