@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { marshalTx, unmarshalTx } from "@cosmwasm/sdk";
+import { marshalTx, sortJson, unmarshalTx } from "@cosmwasm/sdk";
 import {
   Address,
   ChainId,
@@ -23,24 +23,6 @@ import { buildSignedTx, buildUnsignedTx } from "./encode";
 import { nonceToAccountNumber, nonceToSequence, TokenInfos } from "./types";
 
 const { toUtf8 } = Encoding;
-
-function sortJson(json: any): any {
-  if (typeof json !== "object" || json === null) {
-    return json;
-  }
-  if (Array.isArray(json)) {
-    return json.map(sortJson);
-  }
-  const sortedKeys = Object.keys(json).sort();
-  const result = sortedKeys.reduce(
-    (accumulator, key) => ({
-      ...accumulator,
-      [key]: sortJson(json[key]),
-    }),
-    {},
-  );
-  return result;
-}
 
 export class CosmWasmCodec implements TxCodec {
   private readonly prefix: CosmosBech32Prefix;
