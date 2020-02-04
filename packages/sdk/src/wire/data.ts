@@ -1,3 +1,5 @@
+import { IntegerString, Base64String } from "./encodings";
+
 export interface AminoTx {
   readonly type: "cosmos-sdk/StdTx";
   readonly value: StdTx;
@@ -45,7 +47,7 @@ export interface MsgSend {
 export interface StdFee {
   readonly amount: ReadonlyArray<Coin>;
   // integer string
-  readonly gas: number;
+  readonly gas: IntegerString;
 }
 
 export interface Coin {
@@ -56,37 +58,24 @@ export interface Coin {
 
 export interface StdSignature {
   readonly pub_key: PubKey;
-  // Base64 encoded bytes
-  readonly signature: Uint8Array;
+  readonly signature: Base64String;
 }
 
-export type PubKey = PubKeyEd25519 | PubKeySecp256k1 | PubKeySr25519;
-
-export interface PubKeySecp256k1 {
-  readonly type: "tendermint/PubKeySecp256k1";
-  readonly value: Uint8Array;
+export interface PubKey {
+  readonly type: string;
+  readonly value: Base64String;
 }
 
-export interface PubKeyEd25519 {
-  readonly type: "tendermint/PubKeyEd25519";
-  readonly value: Uint8Array;
-}
-
-export interface PubKeySr25519 {
-  readonly type: "tendermint/PubKeySr25519";
-  readonly value: Uint8Array;
-}
+// AccountPubKey is bech32-encoded amino-binary encoded PubKey interface. oof.
+// TODO: let's translate
+export type AccountPubKey = string;
 
 export interface BaseAccount {
   /** Bech32 account address */
   readonly address: string;
   readonly coins: ReadonlyArray<Coin>;
-<<<<<<< HEAD
   readonly public_key: AccountPubKey;
-=======
-  readonly public_key: PubKey;
   // both integer strings
->>>>>>> Add decode logic for data types
-  readonly account_number: number;
-  readonly sequence: number;
+  readonly account_number: IntegerString;
+  readonly sequence: IntegerString;
 }

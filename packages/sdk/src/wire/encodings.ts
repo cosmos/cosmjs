@@ -38,6 +38,20 @@ export function assertBoolean(value: boolean): boolean {
 }
 
 /**
+ * A runtime checker that ensures a given value is a boolean
+ *
+ * This is used when you want to verify that data at runtime matches the expected type.
+ * This implies assertSet.
+ */
+export function assertString(value: string): string {
+  assertSet(value);
+  if (typeof (value as unknown) !== "string") {
+    throw new Error("Value must be a string");
+  }
+  return value;
+}
+
+/**
  * A runtime checker that ensures a given value is a number
  *
  * This is used when you want to verify that data at runtime matches the expected type.

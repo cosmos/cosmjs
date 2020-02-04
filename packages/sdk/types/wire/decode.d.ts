@@ -1,0 +1,10 @@
+import * as data from "./data";
+import * as types from "../types";
+export declare function decodeAminoTx(tx: data.AminoTx): types.AminoTx;
+export declare function decodeStdTx(tx: data.StdTx): types.StdTx;
+export declare function decodeFee(fee: data.StdFee): types.StdFee;
+export declare function decodeMsg(msg: data.Msg): types.Msg;
+export declare function decodeMsgSend(msg: data.MsgSend): types.MsgSend;
+export declare function decodeCoin(coin: data.Coin): types.Coin;
+export declare function decodeSignature(sig: data.StdSignature): types.StdSignature;
+export declare function decodePubKey(pub: data.PubKey): types.PubKey;
