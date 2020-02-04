@@ -1,23 +1,19 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import * as types from "../types";
 import * as data from "./data";
-import { assertArray, assertSet, assertString, Base64, Integer, optional, IntegerString } from "./encodings";
+import { Base64, Integer } from "./encodings";
 
-export function encodeAminoTx(tx: types.AminoTx): data.AminoTx {
-  if (tx.type !== "cosmos-sdk/StdTx") {
-    throw new Error(`Invalid Tx Type: ${tx.type}`);
-  }
+export function encodePubKey(pub: types.PubKey): data.PubKey {
   return {
-    type: tx.type,
-    value: encodeStdTx(tx.value),
+    type: pub.type,
+    value: Base64.encode(pub.value),
   };
 }
 
-export function encodeStdTx(tx: types.StdTx): data.StdTx {
+export function encodeSignature(sig: types.StdSignature): data.StdSignature {
   return {
-    msg: tx.msg.map(encodeMsg),
-    fee: encodeFee(tx.fee),
-    signatures: tx.signatures.map(encodeSignature),
-    memo: tx.memo || "",
+    pub_key: encodePubKey(sig.pub_key),
+    signature: Base64.encode(sig.signature),
   };
 }
 
@@ -27,6 +23,10 @@ export function encodeFee(fee: types.StdFee): data.StdFee {
     amount: fee.amount,
     gas: Integer.encode(fee.gas),
   };
+}
+
+export function encodeMsgSend(msg: types.MsgSend): data.MsgSend {
+  return msg;
 }
 
 export function encodeMsg(msg: types.Msg): data.Msg {
@@ -41,20 +41,21 @@ export function encodeMsg(msg: types.Msg): data.Msg {
   return msg;
 }
 
-export function encodeMsgSend(msg: types.MsgSend): data.MsgSend {
-  return msg;
-}
-
-export function encodeSignature(sig: types.StdSignature): data.StdSignature {
+export function encodeStdTx(tx: types.StdTx): data.StdTx {
   return {
-    pub_key: encodePubKey(sig.pub_key),
-    signature: Base64.encode(sig.signature),
+    msg: tx.msg.map(encodeMsg),
+    fee: encodeFee(tx.fee),
+    signatures: tx.signatures.map(encodeSignature),
+    memo: tx.memo || "",
   };
 }
 
-export function encodePubKey(pub: types.PubKey): data.PubKey {
+export function encodeAminoTx(tx: types.AminoTx): data.AminoTx {
+  if (tx.type !== "cosmos-sdk/StdTx") {
+    throw new Error(`Invalid Tx Type: ${tx.type}`);
+  }
   return {
-    type: pub.type,
-    value: Base64.encode(pub.value),
+    type: tx.type,
+    value: encodeStdTx(tx.value),
   };
 }

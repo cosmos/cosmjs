@@ -4,7 +4,7 @@ import { Encoding } from "@iov/encoding";
 import { RestClient } from "./restclient";
 import data from "./testdata/cosmoshub.json";
 import { StdTx } from "./types";
-import { StdTx as WireTx, decodeStdTx } from "./wire";
+import { decodeStdTx, StdTx as WireTx } from "./wire";
 
 const { fromBase64 } = Encoding;
 
@@ -47,7 +47,7 @@ describe("RestClient", () => {
   describe("encodeTx", () => {
     it("works for cosmoshub example", async () => {
       pendingWithoutCosmos();
-      const wireTx = data.tx.value as unknown as WireTx;
+      const wireTx = (data.tx.value as unknown) as WireTx;
       const tx: StdTx = decodeStdTx(wireTx);
       const client = new RestClient(httpUrl);
       expect(await client.encodeTx(tx)).toEqual(fromBase64(data.tx_data));

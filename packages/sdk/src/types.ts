@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/camelcase */
 export interface AminoTx {
   readonly type: "cosmos-sdk/StdTx";
   readonly value: StdTx;
