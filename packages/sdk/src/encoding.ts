@@ -28,23 +28,33 @@ export function marshalTx(tx: StdTx): Uint8Array {
   return Encoding.toUtf8(json);
 }
 
+interface SignJson {
+  readonly account_number: string;
+  readonly chain_id: string;
+  readonly fee: StdFee;
+  readonly memo: string;
+  readonly msgs: readonly Msg[];
+  readonly sequence: string;
+}
+
 export function makeSignBytes(
-  msg: Msg,
+  msgs: readonly Msg[],
   fee: StdFee,
   chainId: string,
   memo: string,
   account: NonceInfo,
 ): Uint8Array {
-  const signMsg = sortJson({
+  const signJson: SignJson = {
     // eslint-disable-next-line @typescript-eslint/camelcase
     account_number: account.account_number.toString(),
     // eslint-disable-next-line @typescript-eslint/camelcase
     chain_id: chainId,
     fee: fee,
     memo: memo,
-    msgs: msg,
+    msgs: msgs,
     sequence: account.sequence.toString(),
-  });
+  };
+  const signMsg = sortJson(signJson);
   return toUtf8(JSON.stringify(signMsg));
 }
 

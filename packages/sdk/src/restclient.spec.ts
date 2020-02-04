@@ -152,7 +152,7 @@ describe("RestClient", () => {
 
       const client = new RestClient(httpUrl);
       const account = (await client.authAccounts(faucetAddress)).result.value;
-      const signBytes = makeSignBytes(theMsg, fee, defaultNetworkId, memo, account) as SignableBytes;
+      const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account) as SignableBytes;
       const rawSignature = await wallet.createTransactionSignature(signer, signBytes, PrehashType.Sha256);
       const signature = encodeSecp256k1Signature(signer.pubkey.data, rawSignature);
 

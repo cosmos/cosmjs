@@ -38,7 +38,7 @@ export class CosmWasmCodec implements TxCodec {
       sequence: nonceToSequence(nonce),
     };
     const signBytes = makeSignBytes(
-      built.value.msg[0],
+      built.value.msg,
       built.value.fee,
       Caip5.decode(unsigned.chainId),
       built.value.memo || "",
