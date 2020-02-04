@@ -51,5 +51,10 @@ docker exec "$CONTAINER_NAME" \
 
 echo "rest server running on http://localhost:1317 and logging into $REST_SERVER_LOGFILE"
 
+# Give REST server some time to come alive. No idea why this helps. Needed for CI.
+if [ -n "${CI:-}" ]; then
+  sleep 0.5
+fi
+
 # Debug rest server start
 # sleep 3 && cat "$REST_SERVER_LOGFILE"
