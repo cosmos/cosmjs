@@ -1,4 +1,4 @@
-import { IntegerString, Base64String } from "./encodings";
+import { Base64String, IntegerString } from "./encodings";
 export interface AminoTx {
   readonly type: "cosmos-sdk/StdTx";
   readonly value: StdTx;

@@ -1,5 +1,5 @@
-import * as data from "./data";
 import * as types from "../types";
+import * as data from "./data";
 export declare function decodeAminoTx(tx: data.AminoTx): types.AminoTx;
 export declare function decodeStdTx(tx: data.StdTx): types.StdTx;
 export declare function decodeFee(fee: data.StdFee): types.StdFee;

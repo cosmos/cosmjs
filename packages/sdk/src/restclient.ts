@@ -2,6 +2,7 @@ import { Encoding } from "@iov/encoding";
 import axios, { AxiosInstance } from "axios";
 
 import { AminoTx, BaseAccount, isAminoStdTx, StdTx } from "./types";
+import { encodeStdTx } from "./wire";
 
 const { fromUtf8 } = Encoding;
 
@@ -141,7 +142,7 @@ export class RestClient {
 
   /** returns the amino-encoding of the transaction performed by the server */
   public async encodeTx(stdTx: StdTx): Promise<Uint8Array> {
-    const tx = { type: "cosmos-sdk/StdTx", value: stdTx };
+    const tx = { type: "cosmos-sdk/StdTx", value: encodeStdTx(stdTx) };
     const responseData = await this.post("/txs/encode", tx);
     if (!(responseData as any).tx) {
       throw new Error("Unexpected response data format");
