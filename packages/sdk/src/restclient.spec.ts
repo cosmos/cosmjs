@@ -3,13 +3,13 @@ import { ChainId, PrehashType, SignableBytes } from "@iov/bcp";
 import { Encoding } from "@iov/encoding";
 import { HdPaths, Secp256k1HdWallet } from "@iov/keycontrol";
 
-import { encodeSecp256k1Signature, makeSignBytes, marshalTx } from "./encoding";
+import { encodeSecp256k1Signature, makeSignBytes, marshalTx, sortJson } from "./encoding";
 import { RestClient } from "./restclient";
 import contract from "./testdata/contract.json";
 import data from "./testdata/cosmoshub.json";
-import { MsgStoreCode, StdFee, StdTx } from "./types";
+import { MsgSend, MsgStoreCode, StdFee, StdTx } from "./types";
 
-const { fromBase64 } = Encoding;
+const { fromBase64, toUtf8 } = Encoding;
 
 const httpUrl = "http://localhost:1317";
 const defaultNetworkId = "testing";
@@ -17,6 +17,7 @@ const faucetMnemonic =
   "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone";
 const faucetPath = HdPaths.cosmos(0);
 const faucetAddress = "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6";
+const emptyAddress = "cosmos1ltkhnmdcqemmd2tkhnx7qx66tq7e0wykw2j85k";
 
 function pendingWithoutCosmos(): void {
   if (!process.env.COSMOS_ENABLED) {
@@ -60,6 +61,70 @@ describe("RestClient", () => {
   });
 
   describe("post", () => {
+    it("can send tokens", async () => {
+      pendingWithoutCosmos();
+      const wallet = Secp256k1HdWallet.fromMnemonic(faucetMnemonic);
+      const signer = await wallet.createIdentity("abc" as ChainId, faucetPath);
+
+      const memo = "My first contract on chain";
+      const theMsg: MsgSend = {
+        type: "cosmos-sdk/MsgSend",
+        value: {
+          from_address: faucetAddress,
+          to_address: emptyAddress,
+          amount: [
+            {
+              denom: "ucosm",
+              amount: "1234567",
+            },
+          ],
+        },
+      };
+
+      const unsigned: StdTx = {
+        msg: [theMsg],
+        memo: memo,
+        signatures: [],
+        fee: {
+          amount: [
+            {
+              amount: "5000",
+              denom: "ucosm",
+            },
+          ],
+          gas: "890000",
+        },
+      };
+
+      const client = new RestClient(httpUrl);
+      const account = (await client.authAccounts(faucetAddress)).result.value;
+
+      const signMsg = sortJson({
+        account_number: account.account_number.toString(),
+        chain_id: defaultNetworkId,
+        fee: unsigned.fee,
+        memo: memo,
+        msgs: unsigned.msg,
+        sequence: account.sequence.toString(),
+      });
+
+      const signBytes = toUtf8(JSON.stringify(signMsg)) as SignableBytes;
+      const rawSignature = await wallet.createTransactionSignature(signer, signBytes, PrehashType.Sha256);
+      const signature = encodeSecp256k1Signature(signer.pubkey.data, rawSignature);
+
+      const tx: StdTx = {
+        msg: unsigned.msg,
+        fee: unsigned.fee,
+        memo: memo,
+        signatures: [signature],
+      };
+
+      const postableBytes = marshalTx(tx);
+      const result = await client.postTx(postableBytes);
+      // console.log("Raw log:", result.raw_log);
+      expect(result.code).toBeFalsy();
+    });
+
     it("can upload wasm", async () => {
       pendingWithoutCosmos();
       const wallet = Secp256k1HdWallet.fromMnemonic(faucetMnemonic);
