@@ -3,13 +3,12 @@ import { ChainId, PrehashType, SignableBytes } from "@iov/bcp";
 import { Secp256k1 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
 import { HdPaths, Secp256k1HdWallet } from "@iov/keycontrol";
-import { types } from "src";
 
 import { marshalTx, sortJson } from "./encoding";
 import { RestClient } from "./restclient";
 import contract from "./testdata/contract.json";
 import data from "./testdata/cosmoshub.json";
-import { StdSignature, StdTx } from "./types";
+import { MsgStoreCodeWrapped, StdSignature, StdTx } from "./types";
 
 const { fromBase64, toBase64, toUtf8 } = Encoding;
 
@@ -68,7 +67,7 @@ describe("RestClient", () => {
       const signer = await wallet.createIdentity("abc" as ChainId, faucetPath);
 
       const memo = "My first contract on chain";
-      const theMsg: types.Msg = {
+      const theMsg: MsgStoreCodeWrapped = {
         type: "wasm/store-code",
         value: {
           sender: faucetAddress,
