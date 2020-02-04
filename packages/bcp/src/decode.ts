@@ -72,24 +72,27 @@ export function decodeAmount(tokens: TokenInfos, coin: types.Coin): Amount {
   };
 }
 
-export function parseMsg(msg: types.Msg, chainId: ChainId, tokens: TokenInfos): SendTransaction {
-  if (msg.type !== "cosmos-sdk/MsgSend") {
-    throw new Error("Unknown message type in transaction");
+export function parseMsg(msg: types.Msg, chainId: ChainId, tokens: TokenInfos): UnsignedTransaction {
+  if (types.isMsgSend(msg)) {
+    if (msg.value.amount.length !== 1) {
+      throw new Error("Only MsgSend with one amount is supported");
+    }
+    const send: SendTransaction = {
+      kind: "bcp/send",
+      chainId: chainId,
+      sender: msg.value.from_address as Address,
+      recipient: msg.value.to_address as Address,
+      amount: decodeAmount(tokens, msg.value.amount[0]),
+    };
+    return send;
+  } else {
+    // Unknown transaction type
+    const unknown = {
+      chainId: chainId,
+      kind: "bcp/unknown",
+    };
+    return unknown;
   }
-  if (!(msg.value as types.MsgSend).from_address) {
-    throw new Error("Only MsgSend is supported");
-  }
-  const msgValue = msg.value as types.MsgSend;
-  if (msgValue.amount.length !== 1) {
-    throw new Error("Only MsgSend with one amount is supported");
-  }
-  return {
-    kind: "bcp/send",
-    chainId: chainId,
-    sender: msgValue.from_address as Address,
-    recipient: msgValue.to_address as Address,
-    amount: decodeAmount(tokens, msgValue.amount[0]),
-  };
 }
 
 export function parseFee(fee: types.StdFee, tokens: TokenInfos): Fee {

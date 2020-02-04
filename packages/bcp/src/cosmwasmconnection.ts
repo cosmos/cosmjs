@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { RestClient, TxsResponse, unmarshalTx } from "@cosmwasm/sdk";
+import { RestClient, TxsResponse, types, unmarshalTx } from "@cosmwasm/sdk";
 import {
   Account,
   AccountQuery,
@@ -305,8 +305,19 @@ export class CosmWasmConnection implements BlockchainConnection {
     response: TxsResponse,
     chainId: ChainId,
   ): Promise<ConfirmedAndSignedTransaction<UnsignedTransaction> | FailedTransaction> {
-    const sender = (response.tx.value as any).msg[0].value.from_address;
-    const accountForHeight = await this.restClient.authAccounts(sender, response.height);
+    const firstMsg = response.tx.value.msg.find(() => true);
+    if (!firstMsg) throw new Error("Got transaction without a first message. What is going on here?");
+
+    let senderAddress: string;
+    if (types.isMsgSend(firstMsg)) {
+      senderAddress = firstMsg.value.from_address;
+    } else if (types.isMsgStoreCode(firstMsg)) {
+      senderAddress = firstMsg.value.sender;
+    } else {
+      throw new Error(`Got unsupported type of message: ${firstMsg.type}`);
+    }
+
+    const accountForHeight = await this.restClient.authAccounts(senderAddress, response.height);
     // this is technically not the proper nonce. maybe this causes issues for sig validation?
     // leaving for now unless it causes issues
     const sequence = (accountForHeight.result.value.sequence - 1) as Nonce;

@@ -23,13 +23,9 @@ const maxAcct = 1 << 23;
 // tslint:disable-next-line:no-bitwise
 const maxSeq = 1 << 20;
 
-// NonceInfo is the data we need from account to create a nonce
-// Use this so no confusion about order of arguments
-export type NonceInfo = Pick<types.BaseAccount, "account_number" | "sequence">;
-
 // this (lossily) encodes the two pieces of info (uint64) needed to sign into
 // one (53-bit) number. Cross your fingers.
-export function accountToNonce({ account_number: account, sequence }: NonceInfo): Nonce {
+export function accountToNonce({ account_number: account, sequence }: types.NonceInfo): Nonce {
   // we allow 23 bits (8 million) for accounts, and 20 bits (1 million) for tx/account
   // let's fix this soon
   if (account > maxAcct) {

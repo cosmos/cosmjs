@@ -5,7 +5,7 @@ workflows:
     jobs:
       - build
       - lint
-      - faucet_docker
+      # - faucet_docker
       - test
 
 jobs:

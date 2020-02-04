@@ -7,7 +7,6 @@ import {
   FullSignature,
   Nonce,
   PubkeyBundle,
-  SendTransaction,
   SignatureBytes,
   SignedTransaction,
   UnsignedTransaction,
@@ -19,7 +18,7 @@ export declare function decodeSignature(signature: string): SignatureBytes;
 export declare function decodeFullSignature(signature: types.StdSignature, nonce: number): FullSignature;
 export declare function coinToDecimal(tokens: TokenInfos, coin: types.Coin): readonly [Decimal, string];
 export declare function decodeAmount(tokens: TokenInfos, coin: types.Coin): Amount;
-export declare function parseMsg(msg: types.Msg, chainId: ChainId, tokens: TokenInfos): SendTransaction;
+export declare function parseMsg(msg: types.Msg, chainId: ChainId, tokens: TokenInfos): UnsignedTransaction;
 export declare function parseFee(fee: types.StdFee, tokens: TokenInfos): Fee;
 export declare function parseTx(
   txValue: types.StdTx,

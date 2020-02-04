@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { marshalTx, unmarshalTx } from "@cosmwasm/sdk";
+import { makeSignBytes, marshalTx, types, unmarshalTx } from "@cosmwasm/sdk";
 import {
   Address,
   ChainId,
@@ -14,33 +14,12 @@ import {
   TxCodec,
   UnsignedTransaction,
 } from "@iov/bcp";
-import { Encoding } from "@iov/encoding";
 
 import { CosmosBech32Prefix, isValidAddress, pubkeyToAddress } from "./address";
 import { Caip5 } from "./caip5";
 import { parseTx } from "./decode";
 import { buildSignedTx, buildUnsignedTx } from "./encode";
 import { nonceToAccountNumber, nonceToSequence, TokenInfos } from "./types";
-
-const { toUtf8 } = Encoding;
-
-function sortJson(json: any): any {
-  if (typeof json !== "object" || json === null) {
-    return json;
-  }
-  if (Array.isArray(json)) {
-    return json.map(sortJson);
-  }
-  const sortedKeys = Object.keys(json).sort();
-  const result = sortedKeys.reduce(
-    (accumulator, key) => ({
-      ...accumulator,
-      [key]: sortJson(json[key]),
-    }),
-    {},
-  );
-  return result;
-}
 
 export class CosmWasmCodec implements TxCodec {
   private readonly prefix: CosmosBech32Prefix;
@@ -52,18 +31,19 @@ export class CosmWasmCodec implements TxCodec {
   }
 
   public bytesToSign(unsigned: UnsignedTransaction, nonce: Nonce): SigningJob {
-    const memo = (unsigned as any).memo;
     const built = buildUnsignedTx(unsigned, this.tokens);
 
-    const signMsg = sortJson({
-      account_number: nonceToAccountNumber(nonce).toString(),
-      chain_id: Caip5.decode(unsigned.chainId),
-      fee: (built.value as any).fee,
-      memo: memo,
-      msgs: (built.value as any).msg,
-      sequence: nonceToSequence(nonce).toString(),
-    });
-    const signBytes = toUtf8(JSON.stringify(signMsg));
+    const nonceInfo: types.NonceInfo = {
+      account_number: nonceToAccountNumber(nonce),
+      sequence: nonceToSequence(nonce),
+    };
+    const signBytes = makeSignBytes(
+      built.value.msg,
+      built.value.fee,
+      Caip5.decode(unsigned.chainId),
+      built.value.memo || "",
+      nonceInfo,
+    );
 
     return {
       bytes: signBytes as SignableBytes,
