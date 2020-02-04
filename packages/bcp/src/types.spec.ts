@@ -7,8 +7,8 @@ describe("nonceEncoding", () => {
       account_number: 1234,
       sequence: 7890,
     });
-    expect(nonceToAccountNumber(nonce)).toEqual("1234");
-    expect(nonceToSequence(nonce)).toEqual("7890");
+    expect(nonceToAccountNumber(nonce)).toEqual(1234);
+    expect(nonceToSequence(nonce)).toEqual(7890);
   });
 
   it("errors on input too large", () => {

@@ -242,7 +242,7 @@ describe("CosmWasmConnection", () => {
 
       expect(signatures.length).toEqual(1);
       // TODO: the nonce we recover in response doesn't have accountNumber, only sequence
-      const signedSequence = parseInt(nonceToSequence(signed.signatures[0].nonce), 10);
+      const signedSequence = nonceToSequence(signed.signatures[0].nonce);
       expect(signatures[0].nonce).toEqual(signedSequence);
       expect(signatures[0].pubkey.algo).toEqual(signed.signatures[0].pubkey.algo);
       expect(toHex(signatures[0].pubkey.data)).toEqual(

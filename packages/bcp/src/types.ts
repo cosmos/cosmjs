@@ -44,16 +44,16 @@ export function accountToNonce({ account_number: account, sequence }: NonceInfo)
 }
 
 // this extracts info from nonce for signing
-export function nonceToAccountNumber(nonce: Nonce): string {
+export function nonceToAccountNumber(nonce: Nonce): number {
   const acct = nonce / maxSeq;
   if (acct > maxAcct) {
     throw new Error("Invalid Nonce, account number is higher than can safely be encoded in Nonce");
   }
-  return Math.round(acct).toString();
+  return Math.round(acct);
 }
 
 // this extracts info from nonce for signing
-export function nonceToSequence(nonce: Nonce): string {
+export function nonceToSequence(nonce: Nonce): number {
   const seq = nonce % maxSeq;
-  return Math.round(seq).toString();
+  return Math.round(seq);
 }

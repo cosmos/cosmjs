@@ -56,12 +56,12 @@ export class CosmWasmCodec implements TxCodec {
     const built = buildUnsignedTx(unsigned, this.tokens);
 
     const signMsg = sortJson({
-      account_number: nonceToAccountNumber(nonce),
+      account_number: nonceToAccountNumber(nonce).toString(),
       chain_id: Caip5.decode(unsigned.chainId),
       fee: (built.value as any).fee,
       memo: memo,
       msgs: (built.value as any).msg,
-      sequence: nonceToSequence(nonce),
+      sequence: nonceToSequence(nonce).toString(),
     });
     const signBytes = toUtf8(JSON.stringify(signMsg));
 

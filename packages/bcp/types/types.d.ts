@@ -17,5 +17,5 @@ export interface TokenInfo {
 export declare type TokenInfos = ReadonlyArray<TokenInfo>;
 export declare type NonceInfo = Pick<types.BaseAccount, "account_number" | "sequence">;
 export declare function accountToNonce({ account_number: account, sequence }: NonceInfo): Nonce;
-export declare function nonceToAccountNumber(nonce: Nonce): string;
-export declare function nonceToSequence(nonce: Nonce): string;
+export declare function nonceToAccountNumber(nonce: Nonce): number;
+export declare function nonceToSequence(nonce: Nonce): number;
