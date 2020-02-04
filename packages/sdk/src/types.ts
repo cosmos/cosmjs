@@ -100,19 +100,33 @@ export interface StdSignature {
   readonly signature: string;
 }
 
-export interface PubKey {
-  readonly type: string;
+// value field is base64-encoded in all cases
+export type PubKey = PubKeyEd25519 | PubKeySecp256k1 | PubKeySr25519;
+
+export interface PubKeySecp256k1 {
+  readonly type: "tendermint/PubKeySecp256k1";
+  // Note: this contains a Secp256k1 COMPRESSED pubkey - to encode from bcp/keycontrol land, you must compress it first
   readonly value: string;
 }
 
-// AccountPubKey is bech32-encoded amino-binary encoded PubKey interface. oof.
-export type AccountPubKey = string;
+export interface PubKeyEd25519 {
+  readonly type: "tendermint/PubKeyEd25519";
+  readonly value: string;
+}
+
+export interface PubKeySr25519 {
+  readonly type: "tendermint/PubKeySr25519";
+  readonly value: string;
+}
+
+// Bech32PubKey is bech32-encoded amino-binary encoded PubKey interface. oof.
+export type Bech32PubKey = string;
 
 export interface BaseAccount {
   /** Bech32 account address */
   readonly address: string;
   readonly coins: ReadonlyArray<Coin>;
-  readonly public_key: AccountPubKey;
+  readonly public_key: Bech32PubKey;
   readonly account_number: number;
   readonly sequence: number;
 }

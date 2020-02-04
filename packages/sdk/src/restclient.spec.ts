@@ -78,7 +78,8 @@ describe("RestClient", () => {
   describe("encodeTx", () => {
     it("works for cosmoshub example", async () => {
       pendingWithoutCosmos();
-      const tx: StdTx = data.tx.value;
+      // need to convince the compiler we have a valid string for pubkey type
+      const tx: StdTx = data.tx.value as StdTx;
       const client = new RestClient(httpUrl);
       expect(await client.encodeTx(tx)).toEqual(fromBase64(data.tx_data));
     });

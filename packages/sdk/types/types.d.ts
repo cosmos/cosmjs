@@ -70,16 +70,25 @@ export interface StdSignature {
   readonly pub_key: PubKey;
   readonly signature: string;
 }
-export interface PubKey {
-  readonly type: string;
+export declare type PubKey = PubKeyEd25519 | PubKeySecp256k1 | PubKeySr25519;
+export interface PubKeySecp256k1 {
+  readonly type: "tendermint/PubKeySecp256k1";
   readonly value: string;
 }
-export declare type AccountPubKey = string;
+export interface PubKeyEd25519 {
+  readonly type: "tendermint/PubKeyEd25519";
+  readonly value: string;
+}
+export interface PubKeySr25519 {
+  readonly type: "tendermint/PubKeySr25519";
+  readonly value: string;
+}
+export declare type Bech32PubKey = string;
 export interface BaseAccount {
   /** Bech32 account address */
   readonly address: string;
   readonly coins: ReadonlyArray<Coin>;
-  readonly public_key: AccountPubKey;
+  readonly public_key: Bech32PubKey;
   readonly account_number: number;
   readonly sequence: number;
 }
