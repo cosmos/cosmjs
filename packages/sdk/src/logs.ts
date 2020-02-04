@@ -3,7 +3,7 @@ import { isNonNullObject } from "@iov/encoding";
 
 export interface Attribute {
   readonly key: string;
-  readonly value: string | undefined;
+  readonly value: string;
 }
 
 export interface Event {
@@ -27,7 +27,7 @@ export function parseAttribute(input: unknown): Attribute {
 
   return {
     key: key,
-    value: value,
+    value: value || "",
   };
 }
 

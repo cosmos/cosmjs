@@ -8,9 +8,14 @@ describe("logs", () => {
       expect(attr).toEqual({ key: "a", value: "b" });
     });
 
-    it("works for unset value", () => {
+    it("works for empty value", () => {
+      const attr = parseAttribute({ key: "foobar", value: "" });
+      expect(attr).toEqual({ key: "foobar", value: "" });
+    });
+
+    it("normalized unset value to empty string", () => {
       const attr = parseAttribute({ key: "amount" });
-      expect(attr).toEqual({ key: "amount", value: undefined });
+      expect(attr).toEqual({ key: "amount", value: "" });
     });
   });
 
@@ -68,7 +73,7 @@ describe("logs", () => {
           },
           {
             key: "amount",
-            value: undefined,
+            value: "",
           },
         ],
       } as const;
