@@ -1,5 +1,4 @@
 import { Msg, NonceInfo, StdFee, StdSignature, StdTx } from "./types";
-export declare function sortJson(json: any): any;
 export declare function marshalTx(tx: StdTx): Uint8Array;
 export declare function makeSignBytes(
   msgs: readonly Msg[],

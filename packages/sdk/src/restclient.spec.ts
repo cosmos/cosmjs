@@ -3,13 +3,13 @@ import { ChainId, PrehashType, SignableBytes } from "@iov/bcp";
 import { Encoding } from "@iov/encoding";
 import { HdPaths, Secp256k1HdWallet } from "@iov/keycontrol";
 
-import { encodeSecp256k1Signature, makeSignBytes, marshalTx, sortJson } from "./encoding";
+import { encodeSecp256k1Signature, makeSignBytes, marshalTx } from "./encoding";
 import { RestClient } from "./restclient";
 import contract from "./testdata/contract.json";
 import data from "./testdata/cosmoshub.json";
 import { MsgSend, MsgStoreCode, StdFee, StdTx } from "./types";
 
-const { fromBase64, toUtf8 } = Encoding;
+const { fromBase64 } = Encoding;
 
 const httpUrl = "http://localhost:1317";
 const defaultNetworkId = "testing";
@@ -81,45 +81,31 @@ describe("RestClient", () => {
         },
       };
 
-      const unsigned: StdTx = {
-        msg: [theMsg],
-        memo: memo,
-        signatures: [],
-        fee: {
-          amount: [
-            {
-              amount: "5000",
-              denom: "ucosm",
-            },
-          ],
-          gas: "890000",
-        },
+      const fee: StdFee = {
+        amount: [
+          {
+            amount: "5000",
+            denom: "ucosm",
+          },
+        ],
+        gas: "890000",
       };
 
       const client = new RestClient(httpUrl);
       const account = (await client.authAccounts(faucetAddress)).result.value;
 
-      const signMsg = sortJson({
-        account_number: account.account_number.toString(),
-        chain_id: defaultNetworkId,
-        fee: unsigned.fee,
-        memo: memo,
-        msgs: unsigned.msg,
-        sequence: account.sequence.toString(),
-      });
-
-      const signBytes = toUtf8(JSON.stringify(signMsg)) as SignableBytes;
+      const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account) as SignableBytes;
       const rawSignature = await wallet.createTransactionSignature(signer, signBytes, PrehashType.Sha256);
       const signature = encodeSecp256k1Signature(signer.pubkey.data, rawSignature);
 
-      const tx: StdTx = {
-        msg: unsigned.msg,
-        fee: unsigned.fee,
+      const signedTx: StdTx = {
+        msg: [theMsg],
+        fee: fee,
         memo: memo,
         signatures: [signature],
       };
 
-      const postableBytes = marshalTx(tx);
+      const postableBytes = marshalTx(signedTx);
       const result = await client.postTx(postableBytes);
       // console.log("Raw log:", result.raw_log);
       expect(result.code).toBeFalsy();
@@ -136,14 +122,14 @@ describe("RestClient", () => {
         value: {
           sender: faucetAddress,
           wasm_byte_code: contract.data,
-          source: "https://mycoderepo.example/134",
-          builder: "v0.0.1",
+          source: "https://github.com/confio/cosmwasm/raw/0.7/lib/vm/testdata/contract_0.6.wasm",
+          builder: "cosmwasm-opt:0.6.2",
         },
       };
       const fee: StdFee = {
         amount: [
           {
-            amount: "5000",
+            amount: "5000000",
             denom: "ucosm",
           },
         ],
@@ -156,20 +142,14 @@ describe("RestClient", () => {
       const rawSignature = await wallet.createTransactionSignature(signer, signBytes, PrehashType.Sha256);
       const signature = encodeSecp256k1Signature(signer.pubkey.data, rawSignature);
 
-      const tx: StdTx = {
+      const signedTx: StdTx = {
         msg: [theMsg],
         fee: fee,
         memo: memo,
         signatures: [signature],
       };
 
-      // make sure this is a valid encoding/decoding
-      const aminoBytes = await client.encodeTx(tx);
-      expect(aminoBytes).toBeTruthy();
-      expect(aminoBytes.length).toEqual(63084);
-
-      // now submit it
-      const postableBytes = marshalTx(tx);
+      const postableBytes = marshalTx(signedTx);
       const result = await client.postTx(postableBytes);
       // console.log("Raw log:", result.raw_log);
       expect(result.code).toBeFalsy();

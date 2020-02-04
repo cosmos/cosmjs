@@ -5,7 +5,7 @@ import { Msg, NonceInfo, StdFee, StdSignature, StdTx } from "./types";
 
 const { toBase64, toUtf8 } = Encoding;
 
-export function sortJson(json: any): any {
+function sortJson(json: any): any {
   if (typeof json !== "object" || json === null) {
     return json;
   }
