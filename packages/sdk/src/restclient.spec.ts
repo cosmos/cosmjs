@@ -7,7 +7,7 @@ import { encodeSecp256k1Signature, makeSignBytes, marshalTx } from "./encoding";
 import { Log, parseLogs } from "./logs";
 import { RestClient } from "./restclient";
 import contract from "./testdata/contract.json";
-import data from "./testdata/cosmoshub.json";
+import cosmoshub from "./testdata/cosmoshub.json";
 import {
   Coin,
   Msg,
@@ -78,9 +78,9 @@ describe("RestClient", () => {
   describe("encodeTx", () => {
     it("works for cosmoshub example", async () => {
       pendingWithoutCosmos();
-      const tx: StdTx = data.tx.value;
+      const tx: StdTx = cosmoshub.tx.value;
       const client = new RestClient(httpUrl);
-      expect(await client.encodeTx(tx)).toEqual(fromBase64(data.tx_data));
+      expect(await client.encodeTx(tx)).toEqual(fromBase64(cosmoshub.tx_data));
     });
   });
 
