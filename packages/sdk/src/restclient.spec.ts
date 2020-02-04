@@ -4,6 +4,7 @@ import { Encoding } from "@iov/encoding";
 import { HdPaths, Secp256k1HdWallet } from "@iov/keycontrol";
 
 import { encodeSecp256k1Signature, makeSignBytes, marshalTx } from "./encoding";
+import { Log, parseLogs } from "./logs";
 import { RestClient } from "./restclient";
 import contract from "./testdata/contract.json";
 import data from "./testdata/cosmoshub.json";
@@ -23,6 +24,11 @@ function pendingWithoutCosmos(): void {
   if (!process.env.COSMOS_ENABLED) {
     return pending("Set COSMOS_ENABLED to enable Cosmos node-based tests");
   }
+}
+
+function parseSuccess(rawLog?: string): readonly Log[] {
+  if (!rawLog) throw new Error("Log missing");
+  return parseLogs(JSON.parse(rawLog));
 }
 
 describe("RestClient", () => {
@@ -153,6 +159,9 @@ describe("RestClient", () => {
       const result = await client.postTx(postableBytes);
       // console.log("Raw log:", result.raw_log);
       expect(result.code).toBeFalsy();
+      const [firstLog] = parseSuccess(result.raw_log);
+      const codeIdAttr = firstLog.events[0].attributes.find(attr => attr.key === "code_id");
+      expect(codeIdAttr).toEqual({ key: "code_id", value: "1" });
     });
   });
 });
