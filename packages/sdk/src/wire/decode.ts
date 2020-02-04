@@ -1,6 +1,6 @@
-import { Integer, assertArray, assertSet, assertString, optional, Base64 } from "./encodings";
-import * as data from "./data";
 import * as types from "../types";
+import * as data from "./data";
+import { assertArray, assertSet, assertString, Base64, Integer, optional } from "./encodings";
 
 export function decodeAminoTx(tx: data.AminoTx): types.AminoTx {
   if (tx.type !== "cosmos-sdk/StdTx") {
@@ -30,6 +30,7 @@ export function decodeFee(fee: data.StdFee): types.StdFee {
 }
 
 export function decodeMsg(msg: data.Msg): types.Msg {
+  assertString(msg.type);
   if (msg.type === "cosmos-sdk/MsgSend") {
     return {
       type: msg.type,
@@ -46,31 +47,35 @@ export function decodeMsgSend(msg: data.MsgSend): types.MsgSend {
     from_address: assertString(msg.from_address),
     to_address: assertString(msg.to_address),
     amount: assertArray(msg.amount).map(decodeCoin),
-  }
+  };
 }
 
 export function decodeCoin(coin: data.Coin): types.Coin {
   return {
     denom: assertString(coin.denom),
-    amount: assertString(coin.amount),  // TODO: regexp? [0-9]+
-  }
+    amount: assertString(coin.amount), // TODO: regexp? [0-9]+
+  };
 }
 
 export function decodeSignature(sig: data.StdSignature): types.StdSignature {
   return {
     pub_key: decodePubKey(sig.pub_key),
     signature: Base64.decode(assertSet(sig.signature)),
-  }
+  };
 }
 
 export function decodePubKey(pub: data.PubKey): types.PubKey {
+  assertString(pub.type);
   const value = Base64.decode(assertSet(pub.value));
-  if (pub.type !== "tendermint/PubKeyEd25519" && pub.type !== "tendermint/PubKeySecp256k1" && pub.type !== "tendermint/PubKeySr25519") {
+  if (
+    pub.type !== "tendermint/PubKeyEd25519" &&
+    pub.type !== "tendermint/PubKeySecp256k1" &&
+    pub.type !== "tendermint/PubKeySr25519"
+  ) {
     throw new Error(`Unknown pubkey type: ${pub.type}`);
   }
   return {
     type: pub.type,
     value: value,
-  }
+  };
 }
-

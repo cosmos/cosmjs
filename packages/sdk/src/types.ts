@@ -81,12 +81,8 @@ export interface BaseAccount {
   /** Bech32 account address */
   readonly address: string;
   readonly coins: ReadonlyArray<Coin>;
-<<<<<<< HEAD
-  readonly public_key: AccountPubKey;
-=======
   readonly public_key: PubKey;
   // both integer strings
->>>>>>> Add decode logic for data types
   readonly account_number: number;
   readonly sequence: number;
 }
