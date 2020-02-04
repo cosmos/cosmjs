@@ -64,6 +64,6 @@ export interface BaseAccount {
   readonly address: string;
   readonly coins: ReadonlyArray<Coin>;
   readonly public_key: AccountPubKey;
-  readonly account_number: string;
-  readonly sequence: string;
+  readonly account_number: number;
+  readonly sequence: number;
 }

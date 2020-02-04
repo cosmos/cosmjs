@@ -9,6 +9,8 @@ const { fromBase64 } = Encoding;
 
 const httpUrl = "http://localhost:1317";
 const defaultNetworkId = "testing";
+const faucetAddress = "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6";
+
 function pendingWithoutCosmos(): void {
   if (!process.env.COSMOS_ENABLED) {
     return pending("Set COSMOS_ENABLED to enable Cosmos node-based tests");
@@ -27,6 +29,17 @@ describe("RestClient", () => {
       const client = new RestClient(httpUrl);
       const info = await client.nodeInfo();
       expect(info.node_info.network).toEqual(defaultNetworkId);
+    });
+  });
+
+  describe("authAccounts", () => {
+    it("works", async () => {
+      pendingWithoutCosmos();
+      const client = new RestClient(httpUrl);
+      const { result } = await client.authAccounts(faucetAddress);
+      const account = result.value;
+      expect(account.account_number).toEqual(4);
+      expect(account.sequence).toBeGreaterThanOrEqual(0);
     });
   });
 
