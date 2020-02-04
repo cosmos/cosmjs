@@ -3,11 +3,11 @@ import { isNonNullObject } from "@iov/encoding";
 
 export interface Attribute {
   readonly key: string;
-  readonly value: string;
+  readonly value: string | undefined;
 }
 
 export interface Event {
-  readonly type: "message";
+  readonly type: "message" | "transfer";
   readonly attributes: readonly Attribute[];
 }
 
@@ -20,9 +20,11 @@ export interface Log {
 export function parseAttribute(input: unknown): Attribute {
   if (!isNonNullObject(input)) throw new Error("Attribute must be a non-null object");
   const { key, value } = input as any;
-  if (typeof key !== "string" || typeof value !== "string") {
-    throw new Error("Attribute is not a key/value pair");
+  if (typeof key !== "string" || !key) throw new Error("Attribute's key must be a non-empty string");
+  if (typeof value !== "string" && typeof value !== "undefined") {
+    throw new Error("Attribute's value must be a string or unset");
   }
+
   return {
     key: key,
     value: value,
@@ -32,7 +34,7 @@ export function parseAttribute(input: unknown): Attribute {
 export function parseEvent(input: unknown): Event {
   if (!isNonNullObject(input)) throw new Error("Event must be a non-null object");
   const { type, attributes } = input as any;
-  if (type !== "message") throw new Error("Event must be of type message");
+  if (type !== "message" && type !== "transfer") throw new Error("Event must be of type message or transfer");
   if (!Array.isArray(attributes)) throw new Error("Event's attributes must be an array");
   return {
     type: type,
