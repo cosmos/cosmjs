@@ -8,7 +8,16 @@ import { Log, parseLogs } from "./logs";
 import { RestClient } from "./restclient";
 import contract from "./testdata/contract.json";
 import data from "./testdata/cosmoshub.json";
-import { Msg, MsgInstantiateContract, MsgSend, MsgStoreCode, StdFee, StdSignature, StdTx } from "./types";
+import {
+  Coin,
+  Msg,
+  MsgInstantiateContract,
+  MsgSend,
+  MsgStoreCode,
+  StdFee,
+  StdSignature,
+  StdTx,
+} from "./types";
 
 const { fromBase64 } = Encoding;
 
@@ -164,6 +173,16 @@ describe("RestClient", () => {
       // instantiate
       {
         const memo = "Create an escrow instance";
+        const transferAmount: readonly Coin[] = [
+          {
+            amount: "1234",
+            denom: "ucosm",
+          },
+          {
+            amount: "321",
+            denom: "ustake",
+          },
+        ];
         const theMsg: MsgInstantiateContract = {
           type: "wasm/instantiate",
           value: {
@@ -173,16 +192,7 @@ describe("RestClient", () => {
               verifier: "cosmos1ltkhnmdcqemmd2tkhnx7qx66tq7e0wykw2j85k",
               beneficiary: "cosmos1ltkhnmdcqemmd2tkhnx7qx66tq7e0wykw2j85k",
             },
-            init_funds: [
-              {
-                amount: "1234",
-                denom: "ucosm",
-              },
-              {
-                amount: "321",
-                denom: "ustake",
-              },
-            ],
+            init_funds: transferAmount,
           },
         };
         const fee: StdFee = {
@@ -211,16 +221,7 @@ describe("RestClient", () => {
         contractAddress = contractAddressAttr.value || "";
 
         const balance = (await client.authAccounts(contractAddress)).result.value.coins;
-        expect(balance).toEqual([
-          {
-            amount: "1234",
-            denom: "ucosm",
-          },
-          {
-            amount: "321",
-            denom: "ustake",
-          },
-        ]);
+        expect(balance).toEqual(transferAmount);
       }
     });
   });
