@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { types } from "@cosmwasm/sdk";
+import { encodeSecp256k1Signature, types } from "@cosmwasm/sdk";
 import {
   Algorithm,
   Amount,
@@ -10,7 +10,6 @@ import {
   SignedTransaction,
   UnsignedTransaction,
 } from "@iov/bcp";
-import { Secp256k1 } from "@iov/crypto";
 import { Decimal, Encoding } from "@iov/encoding";
 
 import { TokenInfos } from "./types";
@@ -72,14 +71,12 @@ export function encodeFee(fee: Fee, tokens: TokenInfos): types.StdFee {
 }
 
 export function encodeFullSignature(fullSignature: FullSignature): types.StdSignature {
-  return {
-    pub_key: {
-      type: "tendermint/PubKeySecp256k1",
-      value: toBase64(Secp256k1.compressPubkey(fullSignature.pubkey.data)),
-    },
-    // Recovery seems to be unused
-    signature: toBase64(Secp256k1.trimRecoveryByte(fullSignature.signature)),
-  };
+  switch (fullSignature.pubkey.algo) {
+    case Algorithm.Secp256k1:
+      return encodeSecp256k1Signature(fullSignature.pubkey.data, fullSignature.signature);
+    default:
+      throw new Error("Unsupported signing algorithm");
+  }
 }
 
 export function buildUnsignedTx(tx: UnsignedTransaction, tokens: TokenInfos): types.AminoTx {

@@ -1,16 +1,15 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { ChainId, PrehashType, SignableBytes } from "@iov/bcp";
-import { Secp256k1 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
 import { HdPaths, Secp256k1HdWallet } from "@iov/keycontrol";
 
-import { marshalTx, sortJson } from "./encoding";
+import { encodeSecp256k1Signature, marshalTx, sortJson } from "./encoding";
 import { RestClient } from "./restclient";
 import contract from "./testdata/contract.json";
 import data from "./testdata/cosmoshub.json";
-import { MsgStoreCodeWrapped, StdSignature, StdTx } from "./types";
+import { MsgStoreCodeWrapped, StdTx } from "./types";
 
-const { fromBase64, toBase64, toUtf8 } = Encoding;
+const { fromBase64, toUtf8 } = Encoding;
 
 const httpUrl = "http://localhost:1317";
 const defaultNetworkId = "testing";
@@ -105,21 +104,14 @@ describe("RestClient", () => {
       });
 
       const signBytes = toUtf8(JSON.stringify(signMsg)) as SignableBytes;
-      const signature = await wallet.createTransactionSignature(signer, signBytes, PrehashType.Sha256);
-      const fullSignature: StdSignature = {
-        pub_key: {
-          type: "tendermint/PubKeySecp256k1",
-          value: toBase64(Secp256k1.compressPubkey(signer.pubkey.data)),
-        },
-        // Recovery seems to be unused
-        signature: toBase64(Secp256k1.trimRecoveryByte(signature)),
-      };
+      const rawSignature = await wallet.createTransactionSignature(signer, signBytes, PrehashType.Sha256);
+      const signature = encodeSecp256k1Signature(signer.pubkey.data, rawSignature);
 
       const tx: StdTx = {
         msg: unsigned.msg,
         fee: unsigned.fee,
         memo: memo,
-        signatures: [fullSignature],
+        signatures: [signature],
       };
 
       const postableBytes = marshalTx(tx);
