@@ -3,13 +3,13 @@ import { ChainId, PrehashType, SignableBytes } from "@iov/bcp";
 import { Encoding } from "@iov/encoding";
 import { HdPaths, Secp256k1HdWallet } from "@iov/keycontrol";
 
-import { encodeSecp256k1Signature, marshalTx, sortJson } from "./encoding";
+import { encodeSecp256k1Signature, makeSignBytes, marshalTx } from "./encoding";
 import { RestClient } from "./restclient";
 import contract from "./testdata/contract.json";
 import data from "./testdata/cosmoshub.json";
-import { MsgStoreCode, StdTx } from "./types";
+import { MsgStoreCode, StdFee, StdTx } from "./types";
 
-const { fromBase64, toUtf8 } = Encoding;
+const { fromBase64 } = Encoding;
 
 const httpUrl = "http://localhost:1317";
 const defaultNetworkId = "testing";
@@ -75,41 +75,25 @@ describe("RestClient", () => {
           builder: "v0.0.1",
         },
       };
-
-      const unsigned: StdTx = {
-        msg: [theMsg],
-        memo: memo,
-        signatures: [],
-        fee: {
-          amount: [
-            {
-              amount: "5000",
-              denom: "ucosm",
-            },
-          ],
-          gas: "89000000",
-        },
+      const fee: StdFee = {
+        amount: [
+          {
+            amount: "5000",
+            denom: "ucosm",
+          },
+        ],
+        gas: "89000000",
       };
 
       const client = new RestClient(httpUrl);
       const account = (await client.authAccounts(faucetAddress)).result.value;
-
-      const signMsg = sortJson({
-        account_number: account.account_number.toString(),
-        chain_id: defaultNetworkId,
-        fee: unsigned.fee,
-        memo: memo,
-        msgs: unsigned.msg,
-        sequence: account.sequence.toString(),
-      });
-
-      const signBytes = toUtf8(JSON.stringify(signMsg)) as SignableBytes;
+      const signBytes = makeSignBytes(theMsg, fee, defaultNetworkId, memo, account) as SignableBytes;
       const rawSignature = await wallet.createTransactionSignature(signer, signBytes, PrehashType.Sha256);
       const signature = encodeSecp256k1Signature(signer.pubkey.data, rawSignature);
 
       const tx: StdTx = {
-        msg: unsigned.msg,
-        fee: unsigned.fee,
+        msg: [theMsg],
+        fee: fee,
         memo: memo,
         signatures: [signature],
       };

@@ -1,11 +1,11 @@
 import { Secp256k1 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
 
-import { StdSignature, StdTx } from "./types";
+import { Msg, NonceInfo, StdFee, StdSignature, StdTx } from "./types";
 
-const { toBase64 } = Encoding;
+const { toBase64, toUtf8 } = Encoding;
 
-export function sortJson(json: any): any {
+function sortJson(json: any): any {
   if (typeof json !== "object" || json === null) {
     return json;
   }
@@ -26,6 +26,26 @@ export function sortJson(json: any): any {
 export function marshalTx(tx: StdTx): Uint8Array {
   const json = JSON.stringify(tx);
   return Encoding.toUtf8(json);
+}
+
+export function makeSignBytes(
+  msg: Msg,
+  fee: StdFee,
+  chainId: string,
+  memo: string,
+  account: NonceInfo,
+): Uint8Array {
+  const signMsg = sortJson({
+    // eslint-disable-next-line @typescript-eslint/camelcase
+    account_number: account.account_number.toString(),
+    // eslint-disable-next-line @typescript-eslint/camelcase
+    chain_id: chainId,
+    fee: fee,
+    memo: memo,
+    msgs: msg,
+    sequence: account.sequence.toString(),
+  });
+  return toUtf8(JSON.stringify(signMsg));
 }
 
 export function encodeSecp256k1Signature(pubkey: Uint8Array, signature: Uint8Array): StdSignature {

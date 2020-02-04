@@ -97,3 +97,6 @@ export interface BaseAccount {
   readonly account_number: number;
   readonly sequence: number;
 }
+
+/** The data we need from BaseAccount to create a nonce */
+export type NonceInfo = Pick<BaseAccount, "account_number" | "sequence">;
