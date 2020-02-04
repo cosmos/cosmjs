@@ -225,7 +225,7 @@ describe("RestClient", () => {
           .find(event => event.type === "message")
           ?.attributes.find(attr => attr.key === "contract_address");
         if (!contractAddressAttr) throw new Error("Could not find contract_address attribute");
-        contractAddress = contractAddressAttr.value || "";
+        contractAddress = contractAddressAttr.value;
 
         const balance = (await client.authAccounts(contractAddress)).result.value.coins;
         expect(balance).toEqual(transferAmount);
