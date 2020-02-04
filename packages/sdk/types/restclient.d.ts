@@ -71,6 +71,7 @@ export declare class RestClient {
   nodeInfo(): Promise<NodeInfoResponse>;
   blocksLatest(): Promise<BlocksResponse>;
   blocks(height: number): Promise<BlocksResponse>;
+  /** returns the amino-encoding of the transaction performed by the server */
   encodeTx(stdTx: StdTx): Promise<Uint8Array>;
   authAccounts(address: string, height?: string): Promise<AuthAccountsResponse>;
   txs(query: string): Promise<SearchTxsResponse>;

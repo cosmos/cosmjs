@@ -309,7 +309,7 @@ export class CosmWasmConnection implements BlockchainConnection {
     const accountForHeight = await this.restClient.authAccounts(sender, response.height);
     // this is technically not the proper nonce. maybe this causes issues for sig validation?
     // leaving for now unless it causes issues
-    const sequence = (parseInt(accountForHeight.result.value.sequence, 10) - 1) as Nonce;
+    const sequence = (accountForHeight.result.value.sequence - 1) as Nonce;
     return parseTxsResponse(chainId, parseInt(response.height, 10), sequence, response, this.tokenInfo);
   }
 }

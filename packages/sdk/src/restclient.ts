@@ -139,7 +139,7 @@ export class RestClient {
     return responseData as BlocksResponse;
   }
 
-  // encodeTx returns the amino-encoding of the transaction
+  /** returns the amino-encoding of the transaction performed by the server */
   public async encodeTx(stdTx: StdTx): Promise<Uint8Array> {
     const tx = { type: "cosmos-sdk/StdTx", value: stdTx };
     const responseData = await this.post("/txs/encode", tx);
