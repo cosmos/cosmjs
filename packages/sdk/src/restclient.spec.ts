@@ -8,7 +8,16 @@ import { Log, parseLogs } from "./logs";
 import { RestClient } from "./restclient";
 import contract from "./testdata/contract.json";
 import data from "./testdata/cosmoshub.json";
-import { Msg, MsgInstantiateContract, MsgSend, MsgStoreCode, StdFee, StdSignature, StdTx } from "./types";
+import {
+  Coin,
+  Msg,
+  MsgInstantiateContract,
+  MsgSend,
+  MsgStoreCode,
+  StdFee,
+  StdSignature,
+  StdTx,
+} from "./types";
 
 const { fromBase64 } = Encoding;
 
@@ -164,6 +173,16 @@ describe("RestClient", () => {
       // instantiate
       {
         const memo = "Create an escrow instance";
+        const transferAmount: readonly Coin[] = [
+          {
+            amount: "1234",
+            denom: "ucosm",
+          },
+          {
+            amount: "321",
+            denom: "ustake",
+          },
+        ];
         const theMsg: MsgInstantiateContract = {
           type: "wasm/instantiate",
           value: {
@@ -173,16 +192,7 @@ describe("RestClient", () => {
               verifier: "cosmos1ltkhnmdcqemmd2tkhnx7qx66tq7e0wykw2j85k",
               beneficiary: "cosmos1ltkhnmdcqemmd2tkhnx7qx66tq7e0wykw2j85k",
             },
-            init_funds: [
-              {
-                amount: "1234",
-                denom: "ucosm",
-              },
-              {
-                amount: "321",
-                denom: "ustake",
-              },
-            ],
+            init_funds: transferAmount,
           },
         };
         const fee: StdFee = {
@@ -204,23 +214,21 @@ describe("RestClient", () => {
         expect(result.code).toBeFalsy();
         // console.log("Raw log:", result.raw_log);
         const [firstLog] = parseSuccess(result.raw_log);
-        const contractAddressAttr = firstLog.events[0].attributes.find(
-          attr => attr.key === "contract_address",
-        );
+
+        const amountAttr = firstLog.events
+          .find(event => event.type === "transfer")
+          ?.attributes.find(attr => attr.key === "amount");
+        if (!amountAttr) throw new Error("Could not find amount attribute");
+        expect(amountAttr.value).toEqual("1234ucosm,321ustake");
+
+        const contractAddressAttr = firstLog.events
+          .find(event => event.type === "message")
+          ?.attributes.find(attr => attr.key === "contract_address");
         if (!contractAddressAttr) throw new Error("Could not find contract_address attribute");
         contractAddress = contractAddressAttr.value || "";
 
         const balance = (await client.authAccounts(contractAddress)).result.value.coins;
-        expect(balance).toEqual([
-          {
-            amount: "1234",
-            denom: "ucosm",
-          },
-          {
-            amount: "321",
-            denom: "ustake",
-          },
-        ]);
+        expect(balance).toEqual(transferAmount);
       }
     });
   });
