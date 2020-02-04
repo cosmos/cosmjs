@@ -1,9 +1,9 @@
 export interface Attribute {
   readonly key: string;
-  readonly value: string;
+  readonly value: string | undefined;
 }
 export interface Event {
-  readonly type: "message";
+  readonly type: "message" | "transfer";
   readonly attributes: readonly Attribute[];
 }
 export interface Log {

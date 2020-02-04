@@ -311,7 +311,7 @@ export class CosmWasmConnection implements BlockchainConnection {
     let senderAddress: string;
     if (types.isMsgSend(firstMsg)) {
       senderAddress = firstMsg.value.from_address;
-    } else if (types.isMsgStoreCode(firstMsg)) {
+    } else if (types.isMsgStoreCode(firstMsg) || types.isMsgInstantiateContract(firstMsg)) {
       senderAddress = firstMsg.value.sender;
     } else {
       throw new Error(`Got unsupported type of message: ${firstMsg.type}`);

@@ -7,6 +7,11 @@ describe("logs", () => {
       const attr = parseAttribute({ key: "a", value: "b" });
       expect(attr).toEqual({ key: "a", value: "b" });
     });
+
+    it("works for unset value", () => {
+      const attr = parseAttribute({ key: "amount" });
+      expect(attr).toEqual({ key: "amount", value: undefined });
+    });
   });
 
   describe("parseEvent", () => {
@@ -39,6 +44,37 @@ describe("logs", () => {
 
       const event = parseEvent(original);
       expect(event).toEqual(original);
+    });
+
+    it("works for transfer event", () => {
+      const original = {
+        type: "transfer",
+        attributes: [
+          {
+            key: "recipient",
+            value: "cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
+          },
+          {
+            key: "amount",
+          },
+        ],
+      } as const;
+      const expected = {
+        type: "transfer",
+        attributes: [
+          {
+            key: "recipient",
+            value: "cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
+          },
+          {
+            key: "amount",
+            value: undefined,
+          },
+        ],
+      } as const;
+
+      const event = parseEvent(original);
+      expect(event).toEqual(expected);
     });
   });
 

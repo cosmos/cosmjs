@@ -56,7 +56,22 @@ export interface MsgStoreCode extends MsgTemplate {
   readonly value: ValueStoreCode;
 }
 
-export type Msg = MsgSend | MsgStoreCode | MsgTemplate;
+export interface ValueInstantiateContract {
+  /** Bech32 account address */
+  readonly sender: string;
+  /** ID of the Wasm code that was uploaded before */
+  readonly code_id: string;
+  /** Init message as JavaScript object */
+  readonly init_msg: object;
+  readonly init_funds: ReadonlyArray<Coin>;
+}
+
+export interface MsgInstantiateContract extends MsgTemplate {
+  readonly type: "wasm/instantiate";
+  readonly value: ValueInstantiateContract;
+}
+
+export type Msg = MsgSend | MsgStoreCode | MsgInstantiateContract | MsgTemplate;
 
 export function isMsgSend(msg: Msg): msg is MsgSend {
   return (msg as MsgSend).type === "cosmos-sdk/MsgSend";
@@ -64,6 +79,10 @@ export function isMsgSend(msg: Msg): msg is MsgSend {
 
 export function isMsgStoreCode(msg: Msg): msg is MsgStoreCode {
   return (msg as MsgStoreCode).type === "wasm/store-code";
+}
+
+export function isMsgInstantiateContract(msg: Msg): msg is MsgInstantiateContract {
+  return (msg as MsgInstantiateContract).type === "wasm/instantiate";
 }
 
 export interface StdFee {
