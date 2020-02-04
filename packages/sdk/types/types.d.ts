@@ -8,8 +8,8 @@ export interface StdTx {
   readonly signatures: ReadonlyArray<StdSignature>;
   readonly memo: string;
 }
-export declare function isAminoTx(tx: unknown): tx is AminoTx;
 export declare function isAminoStdTx(txValue: unknown): txValue is StdTx;
+export declare function isAminoTx(tx: unknown): tx is AminoTx;
 export declare type Msg = MsgSendTyped | MsgUnknownTyped;
 export interface MsgUnknownTyped {
   readonly type: string;
