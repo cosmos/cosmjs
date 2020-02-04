@@ -88,7 +88,7 @@ describe("RestClient", () => {
               denom: "ucosm",
             },
           ],
-          gas: "200000",
+          gas: "89000000",
         },
       };
 
