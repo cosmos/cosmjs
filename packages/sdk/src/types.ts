@@ -25,7 +25,7 @@ export function isAminoStdTx(txValue: unknown): txValue is StdTx {
 export interface Msg {
   readonly type: string;
   // TODO: make better union type
-  readonly value: MsgSend | unknown;
+  readonly value: MsgSend | MsgStoreCode | unknown;
 }
 
 export interface MsgSend {
@@ -34,6 +34,17 @@ export interface MsgSend {
   /** Bech32 account address */
   readonly to_address: string;
   readonly amount: ReadonlyArray<Coin>;
+}
+
+export interface MsgStoreCode {
+  /** Bech32 account address */
+  readonly sender: string;
+  /** Base64 encoded Wasm */
+  readonly wasm_byte_code: string;
+  /** A valid URI reference to the contract's source code, optional */
+  readonly source?: string;
+  /** A docker tag, optional */
+  readonly builder?: string;
 }
 
 export interface StdFee {

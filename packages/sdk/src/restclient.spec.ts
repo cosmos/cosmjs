@@ -1,14 +1,23 @@
 /* eslint-disable @typescript-eslint/camelcase */
+import { ChainId, PrehashType, SignableBytes } from "@iov/bcp";
+import { Secp256k1 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
+import { HdPaths, Secp256k1HdWallet } from "@iov/keycontrol";
+import { types } from "src";
 
+import { marshalTx, sortJson } from "./encoding";
 import { RestClient } from "./restclient";
+import contract from "./testdata/contract.json";
 import data from "./testdata/cosmoshub.json";
-import { StdTx } from "./types";
+import { StdSignature, StdTx } from "./types";
 
-const { fromBase64 } = Encoding;
+const { fromBase64, toBase64, toUtf8 } = Encoding;
 
 const httpUrl = "http://localhost:1317";
 const defaultNetworkId = "testing";
+const faucetMnemonic =
+  "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone";
+const faucetPath = HdPaths.cosmos(0);
 const faucetAddress = "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6";
 
 function pendingWithoutCosmos(): void {
@@ -49,6 +58,75 @@ describe("RestClient", () => {
       const tx: StdTx = data.tx.value;
       const client = new RestClient(httpUrl);
       expect(await client.encodeTx(tx)).toEqual(fromBase64(data.tx_data));
+    });
+  });
+
+  describe("post", () => {
+    it("can upload wasm", async () => {
+      pendingWithoutCosmos();
+      const wallet = Secp256k1HdWallet.fromMnemonic(faucetMnemonic);
+      const signer = await wallet.createIdentity("abc" as ChainId, faucetPath);
+
+      const memo = "My first contract on chain";
+      const theMsg: types.Msg = {
+        type: "wasm/store-code",
+        value: {
+          sender: faucetAddress,
+          wasm_byte_code: contract.data,
+          source: "https://mycoderepo.example/134",
+          builder: "v0.0.1",
+        },
+      };
+
+      const unsigned: StdTx = {
+        msg: [theMsg],
+        memo: memo,
+        signatures: [],
+        fee: {
+          amount: [
+            {
+              amount: "5000",
+              denom: "ucosm",
+            },
+          ],
+          gas: "200000",
+        },
+      };
+
+      const client = new RestClient(httpUrl);
+      const account = (await client.authAccounts(faucetAddress)).result.value;
+
+      const signMsg = sortJson({
+        account_number: account.account_number.toString(),
+        chain_id: defaultNetworkId,
+        fee: unsigned.fee,
+        memo: memo,
+        msgs: unsigned.msg,
+        sequence: account.sequence.toString(),
+      });
+
+      const signBytes = toUtf8(JSON.stringify(signMsg)) as SignableBytes;
+      const signature = await wallet.createTransactionSignature(signer, signBytes, PrehashType.Sha256);
+      const fullSignature: StdSignature = {
+        pub_key: {
+          type: "tendermint/PubKeySecp256k1",
+          value: toBase64(Secp256k1.compressPubkey(signer.pubkey.data)),
+        },
+        // Recovery seems to be unused
+        signature: toBase64(Secp256k1.trimRecoveryByte(signature)),
+      };
+
+      const tx: StdTx = {
+        msg: unsigned.msg,
+        fee: unsigned.fee,
+        memo: memo,
+        signatures: [fullSignature],
+      };
+
+      const postableBytes = marshalTx(tx);
+      const result = await client.postTx(postableBytes);
+      // console.log("Raw log:", result.raw_log);
+      expect(result.code).toBeFalsy();
     });
   });
 });
