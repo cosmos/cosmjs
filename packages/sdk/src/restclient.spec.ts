@@ -214,9 +214,16 @@ describe("RestClient", () => {
         expect(result.code).toBeFalsy();
         // console.log("Raw log:", result.raw_log);
         const [firstLog] = parseSuccess(result.raw_log);
-        const contractAddressAttr = firstLog.events[0].attributes.find(
-          attr => attr.key === "contract_address",
-        );
+
+        const amountAttr = firstLog.events
+          .find(event => event.type === "transfer")
+          ?.attributes.find(attr => attr.key === "amount");
+        if (!amountAttr) throw new Error("Could not find amount attribute");
+        expect(amountAttr.value).toEqual("1234ucosm,321ustake");
+
+        const contractAddressAttr = firstLog.events
+          .find(event => event.type === "message")
+          ?.attributes.find(attr => attr.key === "contract_address");
         if (!contractAddressAttr) throw new Error("Could not find contract_address attribute");
         contractAddress = contractAddressAttr.value || "";
 
