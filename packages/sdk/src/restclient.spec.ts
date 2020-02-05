@@ -350,7 +350,7 @@ describe("RestClient", () => {
         const contractBalance = (await client.authAccounts(contractAddress)).result.value.coins;
         expect(contractBalance).toEqual([]);
       }
-    }, 10_000);
+    });
   });
 
   describe("query", () => {
@@ -446,7 +446,7 @@ describe("RestClient", () => {
       client
         .getContractInfo(beneficiaryAddress)
         .then(() => fail("this shouldn't succeed"))
-        .catch(() => {});
+        .catch(error => expect(error).toMatch(`No contract with address ${beneficiaryAddress}`));
     });
 
     describe("contract state", () => {
@@ -462,8 +462,6 @@ describe("RestClient", () => {
         return contractInfos[0];
       };
 
-      let dataByState: unknown;
-
       it("can get all state", async () => {
         pendingWithoutCosmos();
         const contractAddress = await getContractAddress();
@@ -473,7 +471,8 @@ describe("RestClient", () => {
         expect(state.length).toEqual(1);
         const data = state[0];
         expect(data.key.toLowerCase()).toEqual(toHex(expectedKey));
-        dataByState = data.val;
+        expect((data.val as any).verifier).toBeDefined();
+        expect((data.val as any).beneficiary).toBeDefined();
 
         // bad address is empty array
         const noContractState = await client.getAllContractState(noContract);
@@ -487,7 +486,8 @@ describe("RestClient", () => {
         // query by one key
         const model = await client.queryContractRaw(contractAddress, expectedKey);
         expect(model).not.toBeNull();
-        expect(model).toEqual(dataByState);
+        expect((model as any).verifier).toBeDefined();
+        expect((model as any).beneficiary).toBeDefined();
 
         // missing key is null
         const missing = await client.queryContractRaw(contractAddress, fromHex("cafe0dad"));
@@ -507,16 +507,22 @@ describe("RestClient", () => {
         expect(verifier).toEqual(faucetAddress);
 
         // invalid query syntax throws an error
-        client
-          .queryContractSmart(contractAddress, { no_such_key: {} })
+        await client
+          .queryContractSmart(contractAddress, { nosuchkey: {} })
           .then(() => fail("shouldn't succeed"))
           .catch(() => {});
+        // TODO: debug rest server. Here I get:
+        // Expected Error: Request failed with status code 500 to match 'Parse Error:'
+        // .catch(error => expect(error).toMatch(`not found: contract`));
 
         // invalid address throws an error
-        client
+        await client
           .queryContractSmart(noContract, { verifier: {} })
           .then(() => fail("shouldn't succeed"))
           .catch(() => {});
+        // TODO: debug rest server. Here I get:
+        // Expected Error: Request failed with status code 500 to match 'Parse Error:'
+        // .catch(error => expect(error).toMatch(`not found: contract`));
       });
     });
   });
