@@ -76,7 +76,25 @@ export interface MsgInstantiateContract extends MsgTemplate {
   };
 }
 
-export type Msg = MsgSend | MsgStoreCode | MsgInstantiateContract | MsgTemplate;
+/**
+ * Creates an instance of contract that was uploaded before.
+ *
+ * @see https://github.com/cosmwasm/wasmd/blob/9842678d89/x/wasm/internal/types/msg.go#L103
+ */
+export interface MsgExecuteContract extends MsgTemplate {
+  readonly type: "wasm/execute";
+  readonly value: {
+    /** Bech32 account address */
+    readonly sender: string;
+    /** Bech32 account address */
+    readonly contract: string;
+    /** Handle message as JavaScript object */
+    readonly msg: object;
+    readonly sent_funds: ReadonlyArray<Coin>;
+  };
+}
+
+export type Msg = MsgSend | MsgStoreCode | MsgInstantiateContract | MsgExecuteContract | MsgTemplate;
 
 export function isMsgSend(msg: Msg): msg is MsgSend {
   return (msg as MsgSend).type === "cosmos-sdk/MsgSend";
@@ -88,6 +106,10 @@ export function isMsgStoreCode(msg: Msg): msg is MsgStoreCode {
 
 export function isMsgInstantiateContract(msg: Msg): msg is MsgInstantiateContract {
   return (msg as MsgInstantiateContract).type === "wasm/instantiate";
+}
+
+export function isMsgExecuteContract(msg: Msg): msg is MsgExecuteContract {
+  return (msg as MsgExecuteContract).type === "wasm/execute";
 }
 
 export interface StdFee {
