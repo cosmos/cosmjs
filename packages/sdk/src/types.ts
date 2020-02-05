@@ -164,16 +164,19 @@ export interface BaseAccount {
 export type NonceInfo = Pick<BaseAccount, "account_number" | "sequence">;
 
 export interface CodeInfo {
+  readonly id: number;
   /** Bech32 account address */
   readonly creator: string;
   /** Hex-encoded sha256 hash of the code stored here */
   readonly code_hash: string;
+  // TODO: these are not supported in current wasmd
   readonly source?: string;
   readonly builder?: string;
 }
 
-export interface CodeInfoWithId extends CodeInfo {
-  readonly id: number;
+export interface CodeDetails {
+  // TODO: this should be base64 encoded string with content - not in current stack
+  readonly code: string;
 }
 
 export interface ContractInfo {
@@ -182,4 +185,11 @@ export interface ContractInfo {
   readonly creator: string;
   /** Argument passed on initialization of the contract */
   readonly init_msg: object;
+}
+
+export interface WasmData {
+  // key is hex-encoded
+  readonly key: string;
+  // value can be any decoded json, often an object but can be anything
+  readonly val: unknown;
 }

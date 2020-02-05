@@ -1,9 +1,9 @@
 import { Encoding } from "@iov/encoding";
 import axios, { AxiosInstance } from "axios";
 
-import { AminoTx, BaseAccount, CodeInfo, CodeInfoWithId, ContractInfo, isAminoStdTx, StdTx } from "./types";
+import { AminoTx, BaseAccount, CodeInfo, ContractInfo, isAminoStdTx, StdTx, WasmData } from "./types";
 
-const { fromUtf8 } = Encoding;
+const { fromBase64, fromUtf8, toHex, toUtf8 } = Encoding;
 
 interface NodeInfo {
   readonly network: string;
@@ -42,31 +42,17 @@ interface AuthAccountsResponse {
 }
 
 // Currently all wasm query responses return json-encoded strings...
-// later deprecate this and use the specific types below
-interface WasmResponse {
+// later deprecate this and use the specific types for result
+// (assuming it is inlined, no second parse needed)
+type WasmResponse = WasmSuccess | WasmError;
+
+interface WasmSuccess {
+  readonly height: string;
   readonly result: string;
 }
 
-interface ListCodeResponse {
-  // TODO: this is returning json.encoded string now, parse on client or server?
-  readonly result: readonly CodeInfoWithId[];
-}
-
-interface GetCodeResponse {
-  // TODO: this is returning json.encoded string now, parse on client or server?
-  readonly result: CodeInfo;
-}
-
-interface ListContractResponse {
-  // TODO: this is returning json.encoded string now, parse on client or server?
-  // contains list of all contract addresses
-  readonly result: readonly string[];
-}
-
-interface GetContractResponse {
-  // TODO: this is returning json.encoded string now, parse on client or server?
-  // contains list of all contract addresses
-  readonly result: ContractInfo;
+interface WasmError {
+  readonly error: string;
 }
 
 export interface TxsResponse {
@@ -116,6 +102,17 @@ type RestClientResponse =
   | WasmResponse;
 
 type BroadcastMode = "block" | "sync" | "async";
+
+function isWasmError(resp: WasmResponse): resp is WasmError {
+  return (resp as WasmError).error !== undefined;
+}
+
+function parseWasmResponse(response: WasmResponse): any {
+  if (isWasmError(response)) {
+    throw new Error(response.error);
+  }
+  return JSON.parse(response.result);
+}
 
 export class RestClient {
   private readonly client: AxiosInstance;
@@ -229,31 +226,68 @@ export class RestClient {
   }
 
   // wasm rest queries are listed here: https://github.com/cosmwasm/wasmd/blob/master/x/wasm/client/rest/query.go#L19-L27
-  public async listCodeInfo(): Promise<readonly CodeInfoWithId[]> {
+  public async listCodeInfo(): Promise<readonly CodeInfo[]> {
     const path = `/wasm/code`;
     const responseData = await this.get(path);
-    const codes = JSON.parse((responseData as WasmResponse).result);
-    return codes as CodeInfoWithId[];
+    // answer may be null (empty array)
+    return parseWasmResponse(responseData as WasmResponse) || [];
   }
 
-  public async getCodeInfo(id: number): Promise<CodeInfo> {
+  // this will download the original wasm bytecode by code id
+  // throws error if no code with this id
+  public async getCode(id: number): Promise<Uint8Array> {
     const path = `/wasm/code/${id}`;
     const responseData = await this.get(path);
-    const code = JSON.parse((responseData as WasmResponse).result);
-    return code as CodeInfo;
+    const { code } = parseWasmResponse(responseData as WasmResponse);
+    return fromBase64(code);
   }
 
   public async listContractAddresses(): Promise<readonly string[]> {
     const path = `/wasm/contract`;
     const responseData = await this.get(path);
-    const codes = JSON.parse((responseData as WasmResponse).result);
-    return codes as string[];
+    // answer may be null (empty array)
+    return parseWasmResponse(responseData as WasmResponse) || [];
   }
 
+  // throws error if no contract at this address
   public async getContractInfo(address: string): Promise<ContractInfo> {
     const path = `/wasm/contract/${address}`;
     const responseData = await this.get(path);
-    const code = JSON.parse((responseData as WasmResponse).result);
-    return code as ContractInfo;
+    const info = parseWasmResponse(responseData as WasmResponse);
+    if (!info) {
+      throw new Error(`No contract with address ${address}`);
+    }
+    return info;
+  }
+
+  // Returns all contract state.
+  // This is an empty array if no such contract, or contract has no data.
+  public async getAllContractState(address: string): Promise<readonly WasmData[]> {
+    const path = `/wasm/contract/${address}/state`;
+    const responseData = await this.get(path);
+    return parseWasmResponse(responseData as WasmResponse);
+  }
+
+  // Returns the data at the key if present (unknown decoded json),
+  // or null if no data at this (contract address, key) pair
+  public async getContractKey(address: string, key: Uint8Array): Promise<unknown | null> {
+    const hexKey = toHex(key);
+    const path = `/wasm/contract/${address}/raw/${hexKey}?encoding=hex`;
+    const responseData = await this.get(path);
+    const data: readonly WasmData[] = parseWasmResponse(responseData as WasmResponse);
+    return data.length === 0 ? null : data[0].val;
+  }
+
+  // Makes a "smart query" on the contract, returns response verbatim (json.RawMessage)
+  // Throws error if no such contract or invalid query format
+  public async queryContract(address: string, query: object): Promise<unknown> {
+    const encoded = toHex(toUtf8(JSON.stringify(query)));
+    const path = `/wasm/contract/${address}/smart/${encoded}?encoding=hex`;
+    const responseData = (await this.get(path)) as WasmResponse;
+    if (isWasmError(responseData)) {
+      throw new Error(responseData.error);
+    }
+    // no extra parse here
+    return responseData.result;
   }
 }
