@@ -70,7 +70,8 @@ jobs:
           key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
-      - run: # wait until cosm scripts have fully started (this includes time for docker pull)
+      - run:
+          name: Wait for blockchain and REST server to be ready (started in background)
           command: timeout 60 bash -c "until curl -s http://localhost:1317/node_info > /dev/null; do sleep 1; done"
       - run:
           environment:
