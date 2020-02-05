@@ -4,10 +4,11 @@ import { Encoding } from "@iov/encoding";
 import { HdPaths, Secp256k1HdWallet } from "@iov/keycontrol";
 
 import { encodeSecp256k1Signature, makeSignBytes, marshalTx } from "./encoding";
+import { leb128Encode } from "./leb128.spec";
 import { Log, parseLogs } from "./logs";
 import { RestClient } from "./restclient";
 import contract from "./testdata/contract.json";
-import data from "./testdata/cosmoshub.json";
+import cosmoshub from "./testdata/cosmoshub.json";
 import {
   Coin,
   Msg,
@@ -19,7 +20,7 @@ import {
   StdTx,
 } from "./types";
 
-const { fromBase64 } = Encoding;
+const { fromBase64, toBase64 } = Encoding;
 
 const httpUrl = "http://localhost:1317";
 const defaultNetworkId = "testing";
@@ -47,6 +48,32 @@ function makeSignedTx(firstMsg: Msg, fee: StdFee, memo: string, firstSignature: 
     memo: memo,
     signatures: [firstSignature],
   };
+}
+
+function getRandomizedContract(): Uint8Array {
+  const data = fromBase64(contract.data);
+  // The return value of the export function cosmwasm_api_0_6 is unused and
+  // can be randomized for testing.
+  //
+  // Find position of mutable bytes as follows:
+  // $ wasm-objdump -d contract.wasm | grep -F "cosmwasm_api_0_6" -A 1
+  // 00e67c func[149] <cosmwasm_api_0_6>:
+  // 00e67d: 41 83 0c                   | i32.const 1539
+  //
+  // In the last line, the addresses 00e67d-00e67f hold a one byte instruction
+  // (https://github.com/WebAssembly/design/blob/master/BinaryEncoding.md#constants-described-here)
+  // and a two byte value (leb128 encoded 1539)
+
+  // Any unsigned integer from 128 to 16383 is encoded to two leb128 bytes
+  const min = 128;
+  const max = 16383;
+  const random = Math.floor(Math.random() * (max - min)) + min;
+  const bytes = leb128Encode(random);
+
+  data[0x00e67d + 1] = bytes[0];
+  data[0x00e67d + 2] = bytes[1];
+
+  return data;
 }
 
 describe("RestClient", () => {
@@ -78,10 +105,9 @@ describe("RestClient", () => {
   describe("encodeTx", () => {
     it("works for cosmoshub example", async () => {
       pendingWithoutCosmos();
-      // need to convince the compiler we have a valid string for pubkey type
-      const tx: StdTx = data.tx.value as StdTx;
+      const tx = cosmoshub.tx.value;
       const client = new RestClient(httpUrl);
-      expect(await client.encodeTx(tx)).toEqual(fromBase64(data.tx_data));
+      expect(await client.encodeTx(tx)).toEqual(fromBase64(cosmoshub.tx_data));
     });
   });
 
@@ -134,6 +160,8 @@ describe("RestClient", () => {
       const signer = await wallet.createIdentity("abc" as ChainId, faucetPath);
       const client = new RestClient(httpUrl);
 
+      let codeId: number;
+
       // upload
       {
         const memo = "My first contract on chain";
@@ -141,7 +169,7 @@ describe("RestClient", () => {
           type: "wasm/store-code",
           value: {
             sender: faucetAddress,
-            wasm_byte_code: contract.data,
+            wasm_byte_code: toBase64(getRandomizedContract()),
             source: "https://github.com/confio/cosmwasm/raw/0.7/lib/vm/testdata/contract_0.6.wasm",
             builder: "cosmwasm-opt:0.6.2",
           },
@@ -166,7 +194,10 @@ describe("RestClient", () => {
         expect(result.code).toBeFalsy();
         const [firstLog] = parseSuccess(result.raw_log);
         const codeIdAttr = firstLog.events[0].attributes.find(attr => attr.key === "code_id");
-        expect(codeIdAttr).toEqual({ key: "code_id", value: "1" });
+        if (!codeIdAttr) throw new Error("Could not find code_id attribute");
+        codeId = Number.parseInt(codeIdAttr.value, 10);
+        expect(codeId).toBeGreaterThanOrEqual(1);
+        expect(codeId).toBeLessThanOrEqual(200);
       }
 
       let contractAddress: string;
@@ -188,7 +219,7 @@ describe("RestClient", () => {
           type: "wasm/instantiate",
           value: {
             sender: faucetAddress,
-            code_id: "1",
+            code_id: codeId.toString(),
             init_msg: {
               verifier: "cosmos1ltkhnmdcqemmd2tkhnx7qx66tq7e0wykw2j85k",
               beneficiary: "cosmos1ltkhnmdcqemmd2tkhnx7qx66tq7e0wykw2j85k",
