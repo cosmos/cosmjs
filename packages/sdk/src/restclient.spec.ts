@@ -363,5 +363,30 @@ describe("RestClient", () => {
         expect(contractBalance).toEqual([]);
       }
     }, 10_000);
+
+    it("can list code and query details", async () => {
+      pendingWithoutCosmos();
+      const wallet = Secp256k1HdWallet.fromMnemonic(faucetMnemonic);
+      const signer = await wallet.createIdentity("abc" as ChainId, faucetPath);
+      const client = new RestClient(httpUrl);
+
+      const existingInfos = await client.listCodeInfo();
+      existingInfos.forEach((val, idx) => expect(val.id).toEqual(idx + 1));
+      const numExisting = existingInfos.length;
+
+      const result = await uploadContract(client, wallet, signer);
+      const codeId = getCodeId(result);
+
+      const newInfos = await client.listCodeInfo();
+      expect(newInfos.length).toEqual(numExisting + 1);
+      const lastInfo = newInfos[newInfos.length - 1];
+      expect(lastInfo.id).toEqual(codeId);
+      expect(lastInfo.creator).toEqual(faucetAddress);
+
+      // TODO: check code hash matches expectation
+      // expect(lastInfo.code_hash).toEqual(faucetAddress);
+
+      // TODO: download code and check against auto-gen
+    });
   });
 });
