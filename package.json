@@ -32,17 +32,6 @@
     "build": "lerna run build",
     "docs": "lerna run docs"
   },
-  "dependencies": {
-    "@iov/bcp": "^2.0.0-alpha.7",
-    "@iov/crypto": "^2.0.0-alpha.7",
-    "@iov/encoding": "^2.0.0-alpha.7",
-    "@iov/stream": "^2.0.0-alpha.7",
-    "@tendermint/amino-js": "^0.7.0-alpha.1",
-    "axios": "^0.19.0",
-    "fast-deep-equal": "^3.1.1",
-    "readonly-date": "^1.0.0",
-    "xstream": "^11.11.0"
-  },
   "devDependencies": {
     "@types/jasmine": "^3.3.7",
     "@types/memdown": "^3.0.0",
