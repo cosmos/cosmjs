@@ -388,5 +388,68 @@ describe("RestClient", () => {
 
       // TODO: download code and check against auto-gen
     });
+
+    it("can list contracts and query details", async () => {
+      pendingWithoutCosmos();
+      const wallet = Secp256k1HdWallet.fromMnemonic(faucetMnemonic);
+      const signer = await wallet.createIdentity("abc" as ChainId, faucetPath);
+      const client = new RestClient(httpUrl);
+      const beneficiaryAddress = makeRandomAddress();
+      const transferAmount: readonly Coin[] = [
+        {
+          amount: "707707",
+          denom: "ucosm",
+        },
+      ];
+
+      // reuse an existing contract, or upload if needed
+      let codeId: number;
+      const existingInfos = await client.listCodeInfo();
+      if (existingInfos.length > 0) {
+        codeId = existingInfos[existingInfos.length - 1].id;
+      } else {
+        const uploaded = await uploadContract(client, wallet, signer);
+        codeId = getCodeId(uploaded);
+      }
+
+      // create new instance and compare before and after
+      const existingContracts = await client.listContractAddresses();
+
+      const result = await instantiateContract(
+        client,
+        wallet,
+        signer,
+        codeId,
+        beneficiaryAddress,
+        transferAmount,
+      );
+      const myAddress = getContractAddress(result);
+
+      // ensure we were added to the list
+      const newContracts = await client.listContractAddresses();
+      expect(newContracts.length).toEqual(existingContracts.length + 1);
+      // note: we are NOT guaranteed to be added to the end
+      const diff = newContracts.filter(x => !existingContracts.includes(x));
+      expect(diff.length).toEqual(1);
+      const lastContract = diff[0];
+      expect(lastContract).toEqual(myAddress);
+
+      // check out info
+      const myInfo = await client.getContractInfo(myAddress);
+      expect(myInfo.code_id).toEqual(codeId);
+      expect(myInfo.creator).toEqual(faucetAddress);
+      expect((myInfo.init_msg as any).beneficiary).toEqual(beneficiaryAddress);
+
+      // make sure random addresses don't give useful info
+      client
+        .getContractInfo(beneficiaryAddress)
+        .then(() => fail("this shouldn't succeed"))
+        .catch(() => {});
+
+      // TODO: check code hash matches expectation
+      // expect(lastInfo.code_hash).toEqual(faucetAddress);
+
+      // TODO: download code and check against auto-gen
+    });
   });
 });
