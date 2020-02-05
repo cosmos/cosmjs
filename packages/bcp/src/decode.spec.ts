@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { types } from "@cosmwasm/sdk";
-import { StdTx } from "@cosmwasm/sdk/types/types";
 import { Address, Algorithm, TokenTicker } from "@iov/bcp";
 import { Encoding } from "@iov/encoding";
 
@@ -158,7 +157,7 @@ describe("decode", () => {
 
   describe("parseTx", () => {
     it("works", () => {
-      expect(parseTx(data.tx.value as StdTx, chainId, nonce, defaultTokens)).toEqual(signedTxJson);
+      expect(parseTx(data.tx.value as types.StdTx, chainId, nonce, defaultTokens)).toEqual(signedTxJson);
     });
   });
 

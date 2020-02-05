@@ -1,4 +1,4 @@
-import { Address, Algorithm, PubkeyBytes } from "@iov/bcp";
+import { Algorithm, PubkeyBytes } from "@iov/bcp";
 import { Encoding } from "@iov/encoding";
 
 import { decodeCosmosPubkey, isValidAddress, pubkeyToAddress } from "./address";

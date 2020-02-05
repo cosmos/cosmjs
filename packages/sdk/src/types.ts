@@ -119,7 +119,7 @@ export interface PubKeySr25519 {
   readonly value: string;
 }
 
-// Bech32PubKey is bech32-encoded amino-binary encoded PubKey interface. oof.
+// bech32-encoded amino-binary encoded PubKey interface. oof.
 export type Bech32PubKey = string;
 
 export interface BaseAccount {
