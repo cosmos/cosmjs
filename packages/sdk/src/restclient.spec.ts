@@ -479,5 +479,33 @@ describe("RestClient", () => {
       const noContractModel = await client.queryContractRaw(noContract, expectedKey);
       expect(noContractModel).toBeNull();
     });
+
+    it("can make smart queries", async () => {
+      pendingWithoutCosmos();
+      const client = new RestClient(httpUrl);
+      const noContract = makeRandomAddress();
+
+      // find an existing contract (created above)
+      // we assume all contracts on this chain are the same (created by these tests)
+      const contractInfos = await client.listContractAddresses();
+      expect(contractInfos.length).toBeGreaterThan(0);
+      const contractAddress = contractInfos[0];
+
+      // we can query the verifier properly
+      const verifier = await client.queryContractSmart(contractAddress, { verifier: {} });
+      expect(verifier).toEqual(faucetAddress);
+
+      // invalid query syntax throws an error
+      client
+        .queryContractSmart(contractAddress, { no_such_key: {} })
+        .then(() => fail("shouldn't succeed"))
+        .catch(() => {});
+
+      // invalid address throws an error
+      client
+        .queryContractSmart(noContract, { verifier: {} })
+        .then(() => fail("shouldn't succeed"))
+        .catch(() => {});
+    });
   });
 });
