@@ -74,7 +74,7 @@ export interface PubKey {
   readonly type: string;
   readonly value: string;
 }
-export declare const pubkeyTypes: string[];
+export declare const pubkeyTypes: readonly string[];
 export declare type Bech32PubKey = string;
 export interface BaseAccount {
   /** Bech32 account address */

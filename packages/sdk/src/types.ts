@@ -110,7 +110,7 @@ export interface PubKey {
   readonly value: string;
 }
 
-export const pubkeyTypes: string[] = [
+export const pubkeyTypes: readonly string[] = [
   "tendermint/PubKeySecp256k1",
   "tendermint/PubKeyEd25519",
   "tendermint/PubKeySr25519",
