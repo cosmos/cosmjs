@@ -6,7 +6,7 @@ import { HdPaths, Secp256k1HdWallet } from "@iov/keycontrol";
 
 import { encodeSecp256k1Signature, makeSignBytes, marshalTx } from "./encoding";
 import { leb128Encode } from "./leb128.spec";
-import { Log, parseLogs } from "./logs";
+import { Attribute, Log, parseLogs } from "./logs";
 import { RestClient } from "./restclient";
 import contract from "./testdata/contract.json";
 import cosmoshub from "./testdata/cosmoshub.json";
@@ -80,6 +80,20 @@ function getRandomizedContract(): Uint8Array {
 
 function makeRandomAddress(): string {
   return Bech32.encode("cosmos", Random.getBytes(20));
+}
+
+/** Throws if the attribute was not found */
+function findAttribute(logs: readonly Log[], eventType: "message" | "transfer", attrKey: string): Attribute {
+  const firstLogs = logs.find(() => true);
+  const out = firstLogs?.events
+    .find(event => event.type === eventType)
+    ?.attributes.find(attr => attr.key === attrKey);
+  if (!out) {
+    throw new Error(
+      `Could not find attribute '${attrKey}' in first event of type '${eventType}' in first log.`,
+    );
+  }
+  return out;
 }
 
 describe("RestClient", () => {
@@ -210,11 +224,8 @@ describe("RestClient", () => {
         const result = await client.postTx(marshalTx(signedTx));
         // console.log("Raw log:", result.raw_log);
         expect(result.code).toBeFalsy();
-        const [firstLog] = parseSuccess(result.raw_log);
-        const codeIdAttr = firstLog.events
-          .find(event => event.type === "message")
-          ?.attributes.find(attr => attr.key === "code_id");
-        if (!codeIdAttr) throw new Error("Could not find code_id attribute");
+        const logs = parseSuccess(result.raw_log);
+        const codeIdAttr = findAttribute(logs, "message", "code_id");
         codeId = Number.parseInt(codeIdAttr.value, 10);
         expect(codeId).toBeGreaterThanOrEqual(1);
         expect(codeId).toBeLessThanOrEqual(200);
@@ -255,18 +266,10 @@ describe("RestClient", () => {
         const result = await client.postTx(marshalTx(signedTx));
         expect(result.code).toBeFalsy();
         // console.log("Raw log:", result.raw_log);
-        const [firstLog] = parseSuccess(result.raw_log);
-
-        const amountAttr = firstLog.events
-          .find(event => event.type === "transfer")
-          ?.attributes.find(attr => attr.key === "amount");
-        if (!amountAttr) throw new Error("Could not find amount attribute");
+        const logs = parseSuccess(result.raw_log);
+        const amountAttr = findAttribute(logs, "transfer", "amount");
         expect(amountAttr.value).toEqual("1234ucosm,321ustake");
-
-        const contractAddressAttr = firstLog.events
-          .find(event => event.type === "message")
-          ?.attributes.find(attr => attr.key === "contract_address");
-        if (!contractAddressAttr) throw new Error("Could not find contract_address attribute");
+        const contractAddressAttr = findAttribute(logs, "message", "contract_address");
         contractAddress = contractAddressAttr.value;
 
         const balance = (await client.authAccounts(contractAddress)).result.value.coins;
