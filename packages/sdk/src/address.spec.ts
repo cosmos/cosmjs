@@ -1,7 +1,6 @@
 import { Encoding } from "@iov/encoding";
 
 import { decodeBech32Pubkey, encodeAddress, isValidAddress } from "./address";
-import { PubKeyEd25519, PubKeySecp256k1 } from "./types";
 
 const { toBase64, fromHex } = Encoding;
 
@@ -37,7 +36,7 @@ describe("address", () => {
   describe("encodeAddress", () => {
     it("works for Secp256k1 compressed", () => {
       const prefix = "cosmos";
-      const pubkey: PubKeySecp256k1 = {
+      const pubkey = {
         type: "tendermint/PubKeySecp256k1",
         value: "AtQaCqFnshaZQp6rIkvAPyzThvCvXSDO+9AzbxVErqJP",
       };
@@ -46,7 +45,7 @@ describe("address", () => {
 
     it("works for Ed25519", () => {
       const prefix = "cosmos";
-      const pubkey: PubKeyEd25519 = {
+      const pubkey = {
         type: "tendermint/PubKeyEd25519",
         value: toBase64(fromHex("12ee6f581fe55673a1e9e1382a0829e32075a0aa4763c968bc526e1852e78c95")),
       };

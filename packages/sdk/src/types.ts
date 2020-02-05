@@ -100,24 +100,21 @@ export interface StdSignature {
   readonly signature: string;
 }
 
-// value field is base64-encoded in all cases
-export type PubKey = PubKeyEd25519 | PubKeySecp256k1 | PubKeySr25519;
-
-export interface PubKeySecp256k1 {
-  readonly type: "tendermint/PubKeySecp256k1";
-  // Note: this contains a Secp256k1 COMPRESSED pubkey - to encode from bcp/keycontrol land, you must compress it first
+export interface PubKey {
+  // type is one of the strings defined in pubkeyTypes
+  // I don't use a string literal union here as that makes trouble with json test data:
+  // https://github.com/confio/cosm-js/pull/44#pullrequestreview-353280504
+  readonly type: string;
+  // Value field is base64-encoded in all cases
+  // Note: if type is Secp256k1, this must contain a COMPRESSED pubkey - to encode from bcp/keycontrol land, you must compress it first
   readonly value: string;
 }
 
-export interface PubKeyEd25519 {
-  readonly type: "tendermint/PubKeyEd25519";
-  readonly value: string;
-}
-
-export interface PubKeySr25519 {
-  readonly type: "tendermint/PubKeySr25519";
-  readonly value: string;
-}
+export const pubkeyTypes: string[] = [
+  "tendermint/PubKeySecp256k1",
+  "tendermint/PubKeyEd25519",
+  "tendermint/PubKeySr25519",
+];
 
 // bech32-encoded amino-binary encoded PubKey interface. oof.
 export type Bech32PubKey = string;

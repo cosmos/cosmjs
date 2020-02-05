@@ -157,7 +157,7 @@ describe("decode", () => {
 
   describe("parseTx", () => {
     it("works", () => {
-      expect(parseTx(data.tx.value as types.StdTx, chainId, nonce, defaultTokens)).toEqual(signedTxJson);
+      expect(parseTx(data.tx.value, chainId, nonce, defaultTokens)).toEqual(signedTxJson);
     });
   });
 
@@ -168,7 +168,7 @@ describe("decode", () => {
         height: "2823",
         txhash: txId,
         raw_log: '[{"msg_index":0,"success":true,"log":""}]',
-        tx: data.tx as types.AminoTx,
+        tx: data.tx,
       };
       const expected = {
         ...signedTxJson,
