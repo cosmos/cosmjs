@@ -207,14 +207,6 @@ describe("RestClient", () => {
       return client.postTx(marshalTx(signedTx));
     }
 
-    // getCodeId can be used with the result of uploadContract
-    function getCodeId(result: PostTxsResponse): number {
-      expect(result.code).toBeFalsy();
-      const logs = parseSuccess(result.raw_log);
-      const codeIdAttr = findAttribute(logs, "message", "code_id");
-      return Number.parseInt(codeIdAttr.value, 10);
-    }
-
     async function instantiateContract(
       client: RestClient,
       wallet: Secp256k1HdWallet,
@@ -252,15 +244,6 @@ describe("RestClient", () => {
       const signature = encodeSecp256k1Signature(signer.pubkey.data, rawSignature);
       const signedTx = makeSignedTx(theMsg, fee, memo, signature);
       return client.postTx(marshalTx(signedTx));
-    }
-
-    // getContractAddress can be used with the result of instantiateContract
-    function getContractAddress(result: PostTxsResponse): string {
-      expect(result.code).toBeFalsy();
-      // console.log("Raw log:", result.raw_log);
-      const logs = parseSuccess(result.raw_log);
-      const contractAddressAttr = findAttribute(logs, "message", "contract_address");
-      return contractAddressAttr.value;
     }
 
     async function executeContract(
@@ -321,7 +304,10 @@ describe("RestClient", () => {
       {
         // console.log("Raw log:", result.raw_log);
         const result = await uploadContract(client, wallet, signer);
-        codeId = getCodeId(result);
+        expect(result.code).toBeFalsy();
+        const logs = parseSuccess(result.raw_log);
+        const codeIdAttr = findAttribute(logs, "message", "code_id");
+        codeId = Number.parseInt(codeIdAttr.value, 10);
         expect(codeId).toBeGreaterThanOrEqual(1);
         expect(codeId).toBeLessThanOrEqual(200);
       }
@@ -338,9 +324,11 @@ describe("RestClient", () => {
           beneficiaryAddress,
           transferAmount,
         );
-        contractAddress = getContractAddress(result);
-
+        expect(result.code).toBeFalsy();
+        // console.log("Raw log:", result.raw_log);
         const logs = parseSuccess(result.raw_log);
+        const contractAddressAttr = findAttribute(logs, "message", "contract_address");
+        contractAddress = contractAddressAttr.value;
         const amountAttr = findAttribute(logs, "transfer", "amount");
         expect(amountAttr.value).toEqual("1234ucosm,321ustake");
 
@@ -375,7 +363,10 @@ describe("RestClient", () => {
       const numExisting = existingInfos.length;
 
       const result = await uploadContract(client, wallet, signer);
-      const codeId = getCodeId(result);
+      expect(result.code).toBeFalsy();
+      const logs = parseSuccess(result.raw_log);
+      const codeIdAttr = findAttribute(logs, "message", "code_id");
+      const codeId = Number.parseInt(codeIdAttr.value, 10);
 
       const newInfos = await client.listCodeInfo();
       expect(newInfos.length).toEqual(numExisting + 1);
@@ -409,7 +400,10 @@ describe("RestClient", () => {
         codeId = existingInfos[existingInfos.length - 1].id;
       } else {
         const uploaded = await uploadContract(client, wallet, signer);
-        codeId = getCodeId(uploaded);
+        expect(uploaded.code).toBeFalsy();
+        const logs = parseSuccess(uploaded.raw_log);
+        const codeIdAttr = findAttribute(logs, "message", "code_id");
+        codeId = Number.parseInt(codeIdAttr.value, 10);
       }
 
       // create new instance and compare before and after
@@ -423,7 +417,11 @@ describe("RestClient", () => {
         beneficiaryAddress,
         transferAmount,
       );
-      const myAddress = getContractAddress(result);
+      expect(result.code).toBeFalsy();
+      // console.log("Raw log:", result.raw_log);
+      const logs = parseSuccess(result.raw_log);
+      const contractAddressAttr = findAttribute(logs, "message", "contract_address");
+      const myAddress = contractAddressAttr.value;
 
       // ensure we were added to the list
       const newContracts = await client.listContractAddresses();
