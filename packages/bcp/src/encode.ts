@@ -20,12 +20,12 @@ export function encodePubkey(pubkey: PubkeyBundle): types.PubKey {
   switch (pubkey.algo) {
     case Algorithm.Secp256k1:
       return {
-        type: "tendermint/PubKeySecp256k1",
+        type: types.pubkeyType.secp256k1,
         value: toBase64(pubkey.data),
       };
     case Algorithm.Ed25519:
       return {
-        type: "tendermint/PubKeyEd25519",
+        type: types.pubkeyType.ed25519,
         value: toBase64(pubkey.data),
       };
     default:

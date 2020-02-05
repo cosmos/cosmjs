@@ -2,7 +2,7 @@ import { Ripemd160, Sha256 } from "@iov/crypto";
 import { Bech32, Encoding } from "@iov/encoding";
 import equal from "fast-deep-equal";
 
-import { Bech32PubKey, PubKey } from "./types";
+import { Bech32PubKey, PubKey, pubkeyType } from "./types";
 
 const { fromBase64, toBase64 } = Encoding;
 
@@ -40,7 +40,7 @@ export function decodeBech32Pubkey(bech: Bech32PubKey): PubKey {
       throw new Error("Invalid rest data length. Expected 33 bytes (compressed secp256k1 pubkey).");
     }
     return {
-      type: "tendermint/PubKeySecp256k1",
+      type: pubkeyType.secp256k1,
       value: toBase64(rest),
     };
   } else if (equal(aminoPrefix, pubkeyAminoPrefixEd25519)) {
@@ -48,7 +48,7 @@ export function decodeBech32Pubkey(bech: Bech32PubKey): PubKey {
       throw new Error("Invalid rest data length. Expected 32 bytes (Ed25519 pubkey).");
     }
     return {
-      type: "tendermint/PubKeyEd25519",
+      type: pubkeyType.ed25519,
       value: toBase64(rest),
     };
   } else if (equal(aminoPrefix, pubkeyAminoPrefixSr25519)) {
@@ -56,7 +56,7 @@ export function decodeBech32Pubkey(bech: Bech32PubKey): PubKey {
       throw new Error("Invalid rest data length. Expected 32 bytes (Sr25519 pubkey).");
     }
     return {
-      type: "tendermint/PubKeySr25519",
+      type: pubkeyType.sr25519,
       value: toBase64(rest),
     };
   } else {
@@ -81,7 +81,7 @@ export function isValidAddress(address: string): boolean {
 export function encodeAddress(pubkey: PubKey, prefix: string): string {
   const pubkeyBytes = fromBase64(pubkey.value);
   switch (pubkey.type) {
-    case "tendermint/PubKeySecp256k1": {
+    case pubkeyType.secp256k1: {
       if (pubkeyBytes.length !== 33) {
         throw new Error(`Invalid Secp256k1 pubkey length (compressed): ${pubkeyBytes.length}`);
       }
@@ -89,14 +89,14 @@ export function encodeAddress(pubkey: PubKey, prefix: string): string {
       const hash2 = new Ripemd160(hash1).digest();
       return Bech32.encode(prefix, hash2);
     }
-    case "tendermint/PubKeyEd25519": {
+    case pubkeyType.ed25519: {
       if (pubkeyBytes.length !== 32) {
         throw new Error(`Invalid Ed25519 pubkey length: ${pubkeyBytes.length}`);
       }
       const hash = new Sha256(pubkeyBytes).digest();
       return Bech32.encode(prefix, hash.slice(0, 20));
     }
-    case "tendermint/PubKeySr25519": {
+    case pubkeyType.sr25519: {
       if (pubkeyBytes.length !== 32) {
         throw new Error(`Invalid Sr25519 pubkey length: ${pubkeyBytes.length}`);
       }

@@ -110,11 +110,16 @@ export interface PubKey {
   readonly value: string;
 }
 
-export const pubkeyTypes: string[] = [
-  "tendermint/PubKeySecp256k1",
-  "tendermint/PubKeyEd25519",
-  "tendermint/PubKeySr25519",
-];
+export const pubkeyType = {
+  /** @see https://github.com/tendermint/tendermint/blob/v0.33.0/crypto/ed25519/ed25519.go#L22 */
+  secp256k1: "tendermint/PubKeySecp256k1" as const,
+  /** @see https://github.com/tendermint/tendermint/blob/v0.33.0/crypto/secp256k1/secp256k1.go#L23 */
+  ed25519: "tendermint/PubKeyEd25519" as const,
+  /** @see https://github.com/tendermint/tendermint/blob/v0.33.0/crypto/sr25519/codec.go#L12 */
+  sr25519: "tendermint/PubKeySr25519" as const,
+};
+
+export const pubkeyTypes: readonly string[] = [pubkeyType.secp256k1, pubkeyType.ed25519, pubkeyType.sr25519];
 
 // bech32-encoded amino-binary encoded PubKey interface. oof.
 export type Bech32PubKey = string;
