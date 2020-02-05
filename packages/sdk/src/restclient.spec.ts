@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { ChainId, PrehashType, SignableBytes } from "@iov/bcp";
+import { ChainId, Identity, PrehashType, SignableBytes } from "@iov/bcp";
 import { Random } from "@iov/crypto";
 import { Bech32, Encoding } from "@iov/encoding";
 import { HdPaths, Secp256k1HdWallet } from "@iov/keycontrol";
@@ -7,7 +7,7 @@ import { HdPaths, Secp256k1HdWallet } from "@iov/keycontrol";
 import { encodeSecp256k1Signature, makeSignBytes, marshalTx } from "./encoding";
 import { leb128Encode } from "./leb128.spec";
 import { Attribute, Log, parseLogs } from "./logs";
-import { RestClient } from "./restclient";
+import { PostTxsResponse, RestClient } from "./restclient";
 import contract from "./testdata/contract.json";
 import cosmoshub from "./testdata/cosmoshub.json";
 import {
@@ -174,6 +174,112 @@ describe("RestClient", () => {
       expect(result.code).toBeFalsy();
     });
 
+    async function uploadContract(
+      client: RestClient,
+      wallet: Secp256k1HdWallet,
+      signer: Identity,
+    ): Promise<PostTxsResponse> {
+      const memo = "My first contract on chain";
+      const theMsg: MsgStoreCode = {
+        type: "wasm/store-code",
+        value: {
+          sender: faucetAddress,
+          wasm_byte_code: toBase64(getRandomizedContract()),
+          source: "https://github.com/confio/cosmwasm/raw/0.7/lib/vm/testdata/contract_0.6.wasm",
+          builder: "cosmwasm-opt:0.6.2",
+        },
+      };
+      const fee: StdFee = {
+        amount: [
+          {
+            amount: "5000000",
+            denom: "ucosm",
+          },
+        ],
+        gas: "89000000",
+      };
+
+      const account = (await client.authAccounts(faucetAddress)).result.value;
+      const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account) as SignableBytes;
+      const rawSignature = await wallet.createTransactionSignature(signer, signBytes, PrehashType.Sha256);
+      const signature = encodeSecp256k1Signature(signer.pubkey.data, rawSignature);
+      const signedTx = makeSignedTx(theMsg, fee, memo, signature);
+      return client.postTx(marshalTx(signedTx));
+    }
+
+    async function instantiateContract(
+      client: RestClient,
+      wallet: Secp256k1HdWallet,
+      signer: Identity,
+      codeId: number,
+      beneficiaryAddress: string,
+      transferAmount: readonly Coin[],
+    ): Promise<PostTxsResponse> {
+      const memo = "Create an escrow instance";
+      const theMsg: MsgInstantiateContract = {
+        type: "wasm/instantiate",
+        value: {
+          sender: faucetAddress,
+          code_id: codeId.toString(),
+          init_msg: {
+            verifier: faucetAddress,
+            beneficiary: beneficiaryAddress,
+          },
+          init_funds: transferAmount,
+        },
+      };
+      const fee: StdFee = {
+        amount: [
+          {
+            amount: "5000000",
+            denom: "ucosm",
+          },
+        ],
+        gas: "89000000",
+      };
+
+      const account = (await client.authAccounts(faucetAddress)).result.value;
+      const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account) as SignableBytes;
+      const rawSignature = await wallet.createTransactionSignature(signer, signBytes, PrehashType.Sha256);
+      const signature = encodeSecp256k1Signature(signer.pubkey.data, rawSignature);
+      const signedTx = makeSignedTx(theMsg, fee, memo, signature);
+      return client.postTx(marshalTx(signedTx));
+    }
+
+    async function executeContract(
+      client: RestClient,
+      wallet: Secp256k1HdWallet,
+      signer: Identity,
+      contractAddress: string,
+    ): Promise<PostTxsResponse> {
+      const memo = "Time for action";
+      const theMsg: MsgExecuteContract = {
+        type: "wasm/execute",
+        value: {
+          sender: faucetAddress,
+          contract: contractAddress,
+          msg: {},
+          sent_funds: [],
+        },
+      };
+      const fee: StdFee = {
+        amount: [
+          {
+            amount: "5000000",
+            denom: "ucosm",
+          },
+        ],
+        gas: "89000000",
+      };
+
+      const account = (await client.authAccounts(faucetAddress)).result.value;
+      const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account) as SignableBytes;
+      const rawSignature = await wallet.createTransactionSignature(signer, signBytes, PrehashType.Sha256);
+      const signature = encodeSecp256k1Signature(signer.pubkey.data, rawSignature);
+      const signedTx = makeSignedTx(theMsg, fee, memo, signature);
+      return client.postTx(marshalTx(signedTx));
+    }
+
     it("can upload, instantiate and execute wasm", async () => {
       pendingWithoutCosmos();
       const wallet = Secp256k1HdWallet.fromMnemonic(faucetMnemonic);
@@ -196,33 +302,8 @@ describe("RestClient", () => {
 
       // upload
       {
-        const memo = "My first contract on chain";
-        const theMsg: MsgStoreCode = {
-          type: "wasm/store-code",
-          value: {
-            sender: faucetAddress,
-            wasm_byte_code: toBase64(getRandomizedContract()),
-            source: "https://github.com/confio/cosmwasm/raw/0.7/lib/vm/testdata/contract_0.6.wasm",
-            builder: "cosmwasm-opt:0.6.2",
-          },
-        };
-        const fee: StdFee = {
-          amount: [
-            {
-              amount: "5000000",
-              denom: "ucosm",
-            },
-          ],
-          gas: "89000000",
-        };
-
-        const account = (await client.authAccounts(faucetAddress)).result.value;
-        const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account) as SignableBytes;
-        const rawSignature = await wallet.createTransactionSignature(signer, signBytes, PrehashType.Sha256);
-        const signature = encodeSecp256k1Signature(signer.pubkey.data, rawSignature);
-        const signedTx = makeSignedTx(theMsg, fee, memo, signature);
-        const result = await client.postTx(marshalTx(signedTx));
         // console.log("Raw log:", result.raw_log);
+        const result = await uploadContract(client, wallet, signer);
         expect(result.code).toBeFalsy();
         const logs = parseSuccess(result.raw_log);
         const codeIdAttr = findAttribute(logs, "message", "code_id");
@@ -235,35 +316,14 @@ describe("RestClient", () => {
 
       // instantiate
       {
-        const memo = "Create an escrow instance";
-        const theMsg: MsgInstantiateContract = {
-          type: "wasm/instantiate",
-          value: {
-            sender: faucetAddress,
-            code_id: codeId.toString(),
-            init_msg: {
-              verifier: faucetAddress,
-              beneficiary: beneficiaryAddress,
-            },
-            init_funds: transferAmount,
-          },
-        };
-        const fee: StdFee = {
-          amount: [
-            {
-              amount: "5000000",
-              denom: "ucosm",
-            },
-          ],
-          gas: "89000000",
-        };
-
-        const account = (await client.authAccounts(faucetAddress)).result.value;
-        const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account) as SignableBytes;
-        const rawSignature = await wallet.createTransactionSignature(signer, signBytes, PrehashType.Sha256);
-        const signature = encodeSecp256k1Signature(signer.pubkey.data, rawSignature);
-        const signedTx = makeSignedTx(theMsg, fee, memo, signature);
-        const result = await client.postTx(marshalTx(signedTx));
+        const result = await instantiateContract(
+          client,
+          wallet,
+          signer,
+          codeId,
+          beneficiaryAddress,
+          transferAmount,
+        );
         expect(result.code).toBeFalsy();
         // console.log("Raw log:", result.raw_log);
         const logs = parseSuccess(result.raw_log);
@@ -278,32 +338,7 @@ describe("RestClient", () => {
 
       // execute
       {
-        const memo = "Time for action";
-        const theMsg: MsgExecuteContract = {
-          type: "wasm/execute",
-          value: {
-            sender: faucetAddress,
-            contract: contractAddress,
-            msg: {},
-            sent_funds: [],
-          },
-        };
-        const fee: StdFee = {
-          amount: [
-            {
-              amount: "5000000",
-              denom: "ucosm",
-            },
-          ],
-          gas: "89000000",
-        };
-
-        const account = (await client.authAccounts(faucetAddress)).result.value;
-        const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account) as SignableBytes;
-        const rawSignature = await wallet.createTransactionSignature(signer, signBytes, PrehashType.Sha256);
-        const signature = encodeSecp256k1Signature(signer.pubkey.data, rawSignature);
-        const signedTx = makeSignedTx(theMsg, fee, memo, signature);
-        const result = await client.postTx(marshalTx(signedTx));
+        const result = await executeContract(client, wallet, signer, contractAddress);
         expect(result.code).toBeFalsy();
         // console.log("Raw log:", result.raw_log);
         const [firstLog] = parseSuccess(result.raw_log);

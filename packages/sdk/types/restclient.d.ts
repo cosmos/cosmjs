@@ -1,4 +1,4 @@
-import { AminoTx, BaseAccount, CodeInfo, CodeInfoWithId, ContractInfo, StdTx } from "./types";
+import { AminoTx, BaseAccount, CodeInfo, ContractInfo, StdTx, WasmData } from "./types";
 interface NodeInfo {
   readonly network: string;
 }
@@ -29,8 +29,13 @@ interface AuthAccountsResponse {
     readonly value: BaseAccount;
   };
 }
-interface WasmResponse {
+declare type WasmResponse = WasmSuccess | WasmError;
+interface WasmSuccess {
+  readonly height: string;
   readonly result: string;
+}
+interface WasmError {
+  readonly error: string;
 }
 export interface TxsResponse {
   readonly height: string;
@@ -47,7 +52,7 @@ interface SearchTxsResponse {
   readonly txs: readonly TxsResponse[];
 }
 interface PostTxsParams {}
-interface PostTxsResponse {
+export interface PostTxsResponse {
   readonly height: string;
   readonly txhash: string;
   readonly code?: number;
@@ -87,9 +92,12 @@ export declare class RestClient {
   txs(query: string): Promise<SearchTxsResponse>;
   txsById(id: string): Promise<TxsResponse>;
   postTx(tx: Uint8Array): Promise<PostTxsResponse>;
-  listCodeInfo(): Promise<readonly CodeInfoWithId[]>;
-  getCodeInfo(id: number): Promise<CodeInfo>;
+  listCodeInfo(): Promise<readonly CodeInfo[]>;
+  getCode(id: number): Promise<Uint8Array>;
   listContractAddresses(): Promise<readonly string[]>;
   getContractInfo(address: string): Promise<ContractInfo>;
+  getAllContractState(address: string): Promise<readonly WasmData[]>;
+  getContractKey(address: string, key: Uint8Array): Promise<unknown | null>;
+  queryContract(address: string, query: object): Promise<unknown>;
 }
 export {};

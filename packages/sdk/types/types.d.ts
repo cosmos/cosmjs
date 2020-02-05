@@ -121,6 +121,7 @@ export interface BaseAccount {
 /** The data we need from BaseAccount to create a nonce */
 export declare type NonceInfo = Pick<BaseAccount, "account_number" | "sequence">;
 export interface CodeInfo {
+  readonly id: number;
   /** Bech32 account address */
   readonly creator: string;
   /** Hex-encoded sha256 hash of the code stored here */
@@ -128,8 +129,8 @@ export interface CodeInfo {
   readonly source?: string;
   readonly builder?: string;
 }
-export interface CodeInfoWithId extends CodeInfo {
-  readonly id: number;
+export interface CodeDetails {
+  readonly code: string;
 }
 export interface ContractInfo {
   readonly code_id: number;
@@ -137,5 +138,9 @@ export interface ContractInfo {
   readonly creator: string;
   /** Argument passed on initialization of the contract */
   readonly init_msg: object;
+}
+export interface WasmData {
+  readonly key: string;
+  readonly val: unknown;
 }
 export {};

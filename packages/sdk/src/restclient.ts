@@ -73,7 +73,7 @@ interface SearchTxsResponse {
 
 interface PostTxsParams {}
 
-interface PostTxsResponse {
+export interface PostTxsResponse {
   readonly height: string;
   readonly txhash: string;
   readonly code?: number;
@@ -236,6 +236,7 @@ export class RestClient {
   // this will download the original wasm bytecode by code id
   // throws error if no code with this id
   public async getCode(id: number): Promise<Uint8Array> {
+    // TODO: broken currently
     const path = `/wasm/code/${id}`;
     const responseData = await this.get(path);
     const { code } = parseWasmResponse(responseData as WasmResponse);
