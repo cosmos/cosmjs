@@ -193,7 +193,9 @@ describe("RestClient", () => {
         // console.log("Raw log:", result.raw_log);
         expect(result.code).toBeFalsy();
         const [firstLog] = parseSuccess(result.raw_log);
-        const codeIdAttr = firstLog.events[0].attributes.find(attr => attr.key === "code_id");
+        const codeIdAttr = firstLog.events
+          .find(event => event.type === "message")
+          ?.attributes.find(attr => attr.key === "code_id");
         if (!codeIdAttr) throw new Error("Could not find code_id attribute");
         codeId = Number.parseInt(codeIdAttr.value, 10);
         expect(codeId).toBeGreaterThanOrEqual(1);
