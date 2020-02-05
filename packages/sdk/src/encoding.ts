@@ -1,7 +1,7 @@
 import { Secp256k1 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
 
-import { Msg, NonceInfo, StdFee, StdSignature, StdTx } from "./types";
+import { Msg, NonceInfo, pubkeyType, StdFee, StdSignature, StdTx } from "./types";
 
 const { toBase64, toUtf8 } = Encoding;
 
@@ -62,7 +62,7 @@ export function encodeSecp256k1Signature(pubkey: Uint8Array, signature: Uint8Arr
   return {
     // eslint-disable-next-line @typescript-eslint/camelcase
     pub_key: {
-      type: "tendermint/PubKeySecp256k1",
+      type: pubkeyType.secp256k1,
       value: toBase64(Secp256k1.compressPubkey(pubkey)),
     },
     // Recovery seems to be unused
