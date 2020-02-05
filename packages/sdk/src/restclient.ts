@@ -1,7 +1,7 @@
 import { Encoding } from "@iov/encoding";
 import axios, { AxiosInstance } from "axios";
 
-import { AminoTx, BaseAccount, isAminoStdTx, StdTx } from "./types";
+import { AminoTx, BaseAccount, CodeInfo, CodeInfoWithId, ContractInfo, isAminoStdTx, StdTx } from "./types";
 
 const { fromUtf8 } = Encoding;
 
@@ -39,6 +39,34 @@ interface AuthAccountsResponse {
   readonly result: {
     readonly value: BaseAccount;
   };
+}
+
+// Currently all wasm query responses return json-encoded strings...
+// later deprecate this and use the specific types below
+interface WasmResponse {
+  readonly result: string;
+}
+
+interface ListCodeResponse {
+  // TODO: this is returning json.encoded string now, parse on client or server?
+  readonly result: readonly CodeInfoWithId[];
+}
+
+interface GetCodeResponse {
+  // TODO: this is returning json.encoded string now, parse on client or server?
+  readonly result: CodeInfo;
+}
+
+interface ListContractResponse {
+  // TODO: this is returning json.encoded string now, parse on client or server?
+  // contains list of all contract addresses
+  readonly result: readonly string[];
+}
+
+interface GetContractResponse {
+  // TODO: this is returning json.encoded string now, parse on client or server?
+  // contains list of all contract addresses
+  readonly result: ContractInfo;
 }
 
 export interface TxsResponse {
@@ -84,7 +112,8 @@ type RestClientResponse =
   | TxsResponse
   | SearchTxsResponse
   | PostTxsResponse
-  | EncodeTxResponse;
+  | EncodeTxResponse
+  | WasmResponse;
 
 type BroadcastMode = "block" | "sync" | "async";
 
@@ -197,5 +226,34 @@ export class RestClient {
       throw new Error("Unexpected response data format");
     }
     return responseData as PostTxsResponse;
+  }
+
+  // wasm rest queries are listed here: https://github.com/cosmwasm/wasmd/blob/master/x/wasm/client/rest/query.go#L19-L27
+  public async listCodeInfo(): Promise<readonly CodeInfoWithId[]> {
+    const path = `/wasm/code`;
+    const responseData = await this.get(path);
+    const codes = JSON.parse((responseData as WasmResponse).result);
+    return codes as CodeInfoWithId[];
+  }
+
+  public async getCodeInfo(id: number): Promise<CodeInfo> {
+    const path = `/wasm/code/${id}`;
+    const responseData = await this.get(path);
+    const code = JSON.parse((responseData as WasmResponse).result);
+    return code as CodeInfo;
+  }
+
+  public async listContractAddresses(): Promise<readonly string[]> {
+    const path = `/wasm/contract`;
+    const responseData = await this.get(path);
+    const codes = JSON.parse((responseData as WasmResponse).result);
+    return codes as string[];
+  }
+
+  public async getContractInfo(address: string): Promise<ContractInfo> {
+    const path = `/wasm/contract/${address}`;
+    const responseData = await this.get(path);
+    const code = JSON.parse((responseData as WasmResponse).result);
+    return code as ContractInfo;
   }
 }
