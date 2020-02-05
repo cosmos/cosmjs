@@ -1,17 +1,19 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { ChainId, PrehashType, SignableBytes } from "@iov/bcp";
-import { Encoding } from "@iov/encoding";
+import { Random } from "@iov/crypto";
+import { Bech32, Encoding } from "@iov/encoding";
 import { HdPaths, Secp256k1HdWallet } from "@iov/keycontrol";
 
 import { encodeSecp256k1Signature, makeSignBytes, marshalTx } from "./encoding";
 import { leb128Encode } from "./leb128.spec";
-import { Log, parseLogs } from "./logs";
+import { Attribute, Log, parseLogs } from "./logs";
 import { RestClient } from "./restclient";
 import contract from "./testdata/contract.json";
 import cosmoshub from "./testdata/cosmoshub.json";
 import {
   Coin,
   Msg,
+  MsgExecuteContract,
   MsgInstantiateContract,
   MsgSend,
   MsgStoreCode,
@@ -74,6 +76,24 @@ function getRandomizedContract(): Uint8Array {
   data[0x00e67d + 2] = bytes[1];
 
   return data;
+}
+
+function makeRandomAddress(): string {
+  return Bech32.encode("cosmos", Random.getBytes(20));
+}
+
+/** Throws if the attribute was not found */
+function findAttribute(logs: readonly Log[], eventType: "message" | "transfer", attrKey: string): Attribute {
+  const firstLogs = logs.find(() => true);
+  const out = firstLogs?.events
+    .find(event => event.type === eventType)
+    ?.attributes.find(attr => attr.key === attrKey);
+  if (!out) {
+    throw new Error(
+      `Could not find attribute '${attrKey}' in first event of type '${eventType}' in first log.`,
+    );
+  }
+  return out;
 }
 
 describe("RestClient", () => {
@@ -154,11 +174,23 @@ describe("RestClient", () => {
       expect(result.code).toBeFalsy();
     });
 
-    it("can upload and instantiate wasm", async () => {
+    it("can upload, instantiate and execute wasm", async () => {
       pendingWithoutCosmos();
       const wallet = Secp256k1HdWallet.fromMnemonic(faucetMnemonic);
       const signer = await wallet.createIdentity("abc" as ChainId, faucetPath);
       const client = new RestClient(httpUrl);
+
+      const transferAmount: readonly Coin[] = [
+        {
+          amount: "1234",
+          denom: "ucosm",
+        },
+        {
+          amount: "321",
+          denom: "ustake",
+        },
+      ];
+      const beneficiaryAddress = makeRandomAddress();
 
       let codeId: number;
 
@@ -192,9 +224,8 @@ describe("RestClient", () => {
         const result = await client.postTx(marshalTx(signedTx));
         // console.log("Raw log:", result.raw_log);
         expect(result.code).toBeFalsy();
-        const [firstLog] = parseSuccess(result.raw_log);
-        const codeIdAttr = firstLog.events[0].attributes.find(attr => attr.key === "code_id");
-        if (!codeIdAttr) throw new Error("Could not find code_id attribute");
+        const logs = parseSuccess(result.raw_log);
+        const codeIdAttr = findAttribute(logs, "message", "code_id");
         codeId = Number.parseInt(codeIdAttr.value, 10);
         expect(codeId).toBeGreaterThanOrEqual(1);
         expect(codeId).toBeLessThanOrEqual(200);
@@ -205,24 +236,14 @@ describe("RestClient", () => {
       // instantiate
       {
         const memo = "Create an escrow instance";
-        const transferAmount: readonly Coin[] = [
-          {
-            amount: "1234",
-            denom: "ucosm",
-          },
-          {
-            amount: "321",
-            denom: "ustake",
-          },
-        ];
         const theMsg: MsgInstantiateContract = {
           type: "wasm/instantiate",
           value: {
             sender: faucetAddress,
             code_id: codeId.toString(),
             init_msg: {
-              verifier: "cosmos1ltkhnmdcqemmd2tkhnx7qx66tq7e0wykw2j85k",
-              beneficiary: "cosmos1ltkhnmdcqemmd2tkhnx7qx66tq7e0wykw2j85k",
+              verifier: faucetAddress,
+              beneficiary: beneficiaryAddress,
             },
             init_funds: transferAmount,
           },
@@ -245,23 +266,55 @@ describe("RestClient", () => {
         const result = await client.postTx(marshalTx(signedTx));
         expect(result.code).toBeFalsy();
         // console.log("Raw log:", result.raw_log);
-        const [firstLog] = parseSuccess(result.raw_log);
-
-        const amountAttr = firstLog.events
-          .find(event => event.type === "transfer")
-          ?.attributes.find(attr => attr.key === "amount");
-        if (!amountAttr) throw new Error("Could not find amount attribute");
+        const logs = parseSuccess(result.raw_log);
+        const amountAttr = findAttribute(logs, "transfer", "amount");
         expect(amountAttr.value).toEqual("1234ucosm,321ustake");
-
-        const contractAddressAttr = firstLog.events
-          .find(event => event.type === "message")
-          ?.attributes.find(attr => attr.key === "contract_address");
-        if (!contractAddressAttr) throw new Error("Could not find contract_address attribute");
+        const contractAddressAttr = findAttribute(logs, "message", "contract_address");
         contractAddress = contractAddressAttr.value;
 
         const balance = (await client.authAccounts(contractAddress)).result.value.coins;
         expect(balance).toEqual(transferAmount);
       }
-    });
+
+      // execute
+      {
+        const memo = "Time for action";
+        const theMsg: MsgExecuteContract = {
+          type: "wasm/execute",
+          value: {
+            sender: faucetAddress,
+            contract: contractAddress,
+            msg: {},
+            sent_funds: [],
+          },
+        };
+        const fee: StdFee = {
+          amount: [
+            {
+              amount: "5000000",
+              denom: "ucosm",
+            },
+          ],
+          gas: "89000000",
+        };
+
+        const account = (await client.authAccounts(faucetAddress)).result.value;
+        const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account) as SignableBytes;
+        const rawSignature = await wallet.createTransactionSignature(signer, signBytes, PrehashType.Sha256);
+        const signature = encodeSecp256k1Signature(signer.pubkey.data, rawSignature);
+        const signedTx = makeSignedTx(theMsg, fee, memo, signature);
+        const result = await client.postTx(marshalTx(signedTx));
+        expect(result.code).toBeFalsy();
+        // console.log("Raw log:", result.raw_log);
+        const [firstLog] = parseSuccess(result.raw_log);
+        expect(firstLog.log).toEqual(`released funds to ${beneficiaryAddress}`);
+
+        // Verify token transfer from contract to beneficiary
+        const beneficiaryBalance = (await client.authAccounts(beneficiaryAddress)).result.value.coins;
+        expect(beneficiaryBalance).toEqual(transferAmount);
+        const contractBalance = (await client.authAccounts(contractAddress)).result.value.coins;
+        expect(contractBalance).toEqual([]);
+      }
+    }, 30_000);
   });
 });
