@@ -271,7 +271,7 @@ export class RestClient {
 
   // Returns the data at the key if present (unknown decoded json),
   // or null if no data at this (contract address, key) pair
-  public async getContractKey(address: string, key: Uint8Array): Promise<unknown | null> {
+  public async queryContractRaw(address: string, key: Uint8Array): Promise<unknown | null> {
     const hexKey = toHex(key);
     const path = `/wasm/contract/${address}/raw/${hexKey}?encoding=hex`;
     const responseData = await this.get(path);
@@ -281,7 +281,7 @@ export class RestClient {
 
   // Makes a "smart query" on the contract, returns response verbatim (json.RawMessage)
   // Throws error if no such contract or invalid query format
-  public async queryContract(address: string, query: object): Promise<unknown> {
+  public async queryContractSmart(address: string, query: object): Promise<unknown> {
     const encoded = toHex(toUtf8(JSON.stringify(query)));
     const path = `/wasm/contract/${address}/smart/${encoded}?encoding=hex`;
     const responseData = (await this.get(path)) as WasmResponse;

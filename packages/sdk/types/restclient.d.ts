@@ -97,7 +97,7 @@ export declare class RestClient {
   listContractAddresses(): Promise<readonly string[]>;
   getContractInfo(address: string): Promise<ContractInfo>;
   getAllContractState(address: string): Promise<readonly WasmData[]>;
-  getContractKey(address: string, key: Uint8Array): Promise<unknown | null>;
-  queryContract(address: string, query: object): Promise<unknown>;
+  queryContractRaw(address: string, key: Uint8Array): Promise<unknown | null>;
+  queryContractSmart(address: string, query: object): Promise<unknown>;
 }
 export {};

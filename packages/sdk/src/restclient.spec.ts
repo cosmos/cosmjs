@@ -22,7 +22,7 @@ import {
   StdTx,
 } from "./types";
 
-const { fromBase64, toBase64 } = Encoding;
+const { fromBase64, fromHex, toAscii, toBase64, toHex } = Encoding;
 
 const httpUrl = "http://localhost:1317";
 const defaultNetworkId = "testing";
@@ -380,7 +380,7 @@ describe("RestClient", () => {
       // TODO: download code and check against auto-gen
     });
 
-    it("can list contracts and query details", async () => {
+    it("can list contracts and get info", async () => {
       pendingWithoutCosmos();
       const wallet = Secp256k1HdWallet.fromMnemonic(faucetMnemonic);
       const signer = await wallet.createIdentity("abc" as ChainId, faucetPath);
@@ -401,8 +401,8 @@ describe("RestClient", () => {
       } else {
         const uploaded = await uploadContract(client, wallet, signer);
         expect(uploaded.code).toBeFalsy();
-        const logs = parseSuccess(uploaded.raw_log);
-        const codeIdAttr = findAttribute(logs, "message", "code_id");
+        const uploadLogs = parseSuccess(uploaded.raw_log);
+        const codeIdAttr = findAttribute(uploadLogs, "message", "code_id");
         codeId = Number.parseInt(codeIdAttr.value, 10);
       }
 
@@ -418,7 +418,6 @@ describe("RestClient", () => {
         transferAmount,
       );
       expect(result.code).toBeFalsy();
-      // console.log("Raw log:", result.raw_log);
       const logs = parseSuccess(result.raw_log);
       const contractAddressAttr = findAttribute(logs, "message", "contract_address");
       const myAddress = contractAddressAttr.value;
@@ -443,11 +442,42 @@ describe("RestClient", () => {
         .getContractInfo(beneficiaryAddress)
         .then(() => fail("this shouldn't succeed"))
         .catch(() => {});
+    });
 
-      // TODO: check code hash matches expectation
-      // expect(lastInfo.code_hash).toEqual(faucetAddress);
+    it("can list query contract state", async () => {
+      pendingWithoutCosmos();
+      const client = new RestClient(httpUrl);
+      const noContract = makeRandomAddress();
 
-      // TODO: download code and check against auto-gen
+      // find an existing contract (created above)
+      // we assume all contracts on this chain are the same (created by these tests)
+      const contractInfos = await client.listContractAddresses();
+      expect(contractInfos.length).toBeGreaterThan(0);
+      const contractAddress = contractInfos[0];
+
+      // get contract state
+      const expectedKey = toAscii("config");
+      const state = await client.getAllContractState(contractAddress);
+      expect(state.length).toEqual(1);
+      const data = state[0];
+      expect(data.key.toLowerCase()).toEqual(toHex(expectedKey));
+
+      // bad address is empty array
+      const noContractState = await client.getAllContractState(noContract);
+      expect(noContractState).toEqual([]);
+
+      // query by one key
+      const model = await client.queryContractRaw(contractAddress, expectedKey);
+      expect(model).not.toBeNull();
+      expect(model).toEqual(data.val);
+
+      // missing key is null
+      const missing = await client.queryContractRaw(contractAddress, fromHex("cafe0dad"));
+      expect(missing).toBeNull();
+
+      // bad address is null
+      const noContractModel = await client.queryContractRaw(noContract, expectedKey);
+      expect(noContractModel).toBeNull();
     });
   });
 });
