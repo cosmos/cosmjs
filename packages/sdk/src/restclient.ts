@@ -64,6 +64,12 @@ interface PostTxsResponse {
   readonly txhash: string;
   readonly code?: number;
   readonly raw_log?: string;
+  /** The same as `raw_log` but deserialized? */
+  readonly logs?: object;
+  /** The gas limit as set by the user */
+  readonly gas_wanted?: string;
+  /** The gas used by the execution */
+  readonly gas_used?: string;
 }
 
 interface EncodeTxResponse {
