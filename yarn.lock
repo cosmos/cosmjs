@@ -932,26 +932,6 @@
   dependencies:
     "@types/node" ">= 8"
 
-"@tendermint/amino-js@^0.7.0-alpha.1":
-  version "0.7.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/@tendermint/amino-js/-/amino-js-0.7.0-alpha.1.tgz#5d9f689fb601a0c0a6bb245a16d0b9a197f616e5"
-  integrity sha512-qe6DfOjIXtMnJIZJP6yVlakjfCbVBHOGGswAi8zbwKQFaF5SGySOgLAAmgfFIvh96aGZO9oRgpY8w2ZWPpXvuw==
-  dependencies:
-    "@tendermint/belt" "0.2.1"
-    "@tendermint/types" "0.1.1"
-
-"@tendermint/belt@0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@tendermint/belt/-/belt-0.2.1.tgz#f1f0df8f2c1847d175b5aa6968b3389de34f3f2b"
-  integrity sha512-Z3byTEpbSfrMaNx431pr8P4nrFshWz7WiFqxv/cTVgRENCVfndygOz0W15qC1pgqBhhnQPLEnmdP/GIyiS7JWg==
-  dependencies:
-    "@tendermint/types" "0.1.1"
-
-"@tendermint/types@0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@tendermint/types/-/types-0.1.1.tgz#7e50643a6e634d9a47aa746c50653811a83c72e2"
-  integrity sha512-jMEz5tJ3ncA8903N2DoPD6EJawSyORRSyWvQbmxyz8ONiugjOKvoesMzz/xIioe1Ekzf6YJnw/3RI+kT9qdNyg==
-
 "@types/abstract-leveldown@*", "@types/abstract-leveldown@^5.0.1":
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/@types/abstract-leveldown/-/abstract-leveldown-5.0.1.tgz#3c7750d0186b954c7f2d2f6acc8c3c7ba0c3412e"
