@@ -105,7 +105,7 @@ describe("RestClient", () => {
   describe("encodeTx", () => {
     it("works for cosmoshub example", async () => {
       pendingWithoutCosmos();
-      const tx: StdTx = cosmoshub.tx.value;
+      const tx = cosmoshub.tx.value;
       const client = new RestClient(httpUrl);
       expect(await client.encodeTx(tx)).toEqual(fromBase64(cosmoshub.tx_data));
     });

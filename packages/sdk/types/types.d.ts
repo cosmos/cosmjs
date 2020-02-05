@@ -74,12 +74,13 @@ export interface PubKey {
   readonly type: string;
   readonly value: string;
 }
-export declare type AccountPubKey = string;
+export declare const pubkeyTypes: string[];
+export declare type Bech32PubKey = string;
 export interface BaseAccount {
   /** Bech32 account address */
   readonly address: string;
   readonly coins: ReadonlyArray<Coin>;
-  readonly public_key: AccountPubKey;
+  readonly public_key: Bech32PubKey;
   readonly account_number: number;
   readonly sequence: number;
 }
