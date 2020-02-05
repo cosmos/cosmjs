@@ -443,7 +443,7 @@ describe("RestClient", () => {
       expect((myInfo.init_msg as any).beneficiary).toEqual(beneficiaryAddress);
 
       // make sure random addresses don't give useful info
-      client
+      await client
         .getContractInfo(beneficiaryAddress)
         .then(() => fail("this shouldn't succeed"))
         .catch(error => expect(error).toMatch(`No contract with address ${beneficiaryAddress}`));
@@ -507,22 +507,20 @@ describe("RestClient", () => {
         expect(verifier).toEqual(faucetAddress);
 
         // invalid query syntax throws an error
-        await client
-          .queryContractSmart(contractAddress, { nosuchkey: {} })
-          .then(() => fail("shouldn't succeed"))
-          .catch(() => {});
-        // TODO: debug rest server. Here I get:
-        // Expected Error: Request failed with status code 500 to match 'Parse Error:'
-        // .catch(error => expect(error).toMatch(`not found: contract`));
+        await client.queryContractSmart(contractAddress, { nosuchkey: {} }).then(
+          () => fail("shouldn't succeed"),
+          error => expect(error).toBeTruthy(),
+        );
+        // TODO: debug rest server. I expect a 'Parse Error', but get
+        // Request failed with status code 500 to match 'Parse Error:'
 
         // invalid address throws an error
-        await client
-          .queryContractSmart(noContract, { verifier: {} })
-          .then(() => fail("shouldn't succeed"))
-          .catch(() => {});
-        // TODO: debug rest server. Here I get:
-        // Expected Error: Request failed with status code 500 to match 'Parse Error:'
-        // .catch(error => expect(error).toMatch(`not found: contract`));
+        await client.queryContractSmart(noContract, { verifier: {} }).then(
+          () => fail("shouldn't succeed"),
+          error => expect(error).toBeTruthy(),
+        );
+        // TODO: debug rest server. I expect a 'not found', but get
+        // Request failed with status code 500 to match 'Parse Error:'
       });
     });
   });

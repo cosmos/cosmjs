@@ -246,15 +246,17 @@ export class RestClient {
   public async listContractAddresses(): Promise<readonly string[]> {
     const path = `/wasm/contract`;
     const responseData = await this.get(path);
-    // answer may be null (empty array)
-    return parseWasmResponse(responseData as WasmResponse) || [];
+    // answer may be null (go's encoding of empty array)
+    const addresses: string[] | null = parseWasmResponse(responseData as WasmResponse);
+    return addresses || [];
   }
 
   // throws error if no contract at this address
   public async getContractInfo(address: string): Promise<ContractInfo> {
     const path = `/wasm/contract/${address}`;
     const responseData = await this.get(path);
-    const info = parseWasmResponse(responseData as WasmResponse);
+    // rest server returns null if no data for the address
+    const info: ContractInfo | null = parseWasmResponse(responseData as WasmResponse);
     if (!info) {
       throw new Error(`No contract with address ${address}`);
     }
