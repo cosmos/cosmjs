@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { ChainId, PrehashType, SignableBytes } from "@iov/bcp";
+import { ChainId, Identity, PrehashType, SignableBytes } from "@iov/bcp";
 import { Random } from "@iov/crypto";
 import { Bech32, Encoding } from "@iov/encoding";
 import { HdPaths, Secp256k1HdWallet } from "@iov/keycontrol";
@@ -7,7 +7,7 @@ import { HdPaths, Secp256k1HdWallet } from "@iov/keycontrol";
 import { encodeSecp256k1Signature, makeSignBytes, marshalTx } from "./encoding";
 import { leb128Encode } from "./leb128.spec";
 import { Attribute, Log, parseLogs } from "./logs";
-import { RestClient } from "./restclient";
+import { PostTxsResponse, RestClient } from "./restclient";
 import contract from "./testdata/contract.json";
 import cosmoshub from "./testdata/cosmoshub.json";
 import {
@@ -22,7 +22,7 @@ import {
   StdTx,
 } from "./types";
 
-const { fromBase64, toBase64 } = Encoding;
+const { fromBase64, fromHex, toAscii, toBase64, toHex } = Encoding;
 
 const httpUrl = "http://localhost:1317";
 const defaultNetworkId = "testing";
@@ -94,6 +94,112 @@ function findAttribute(logs: readonly Log[], eventType: "message" | "transfer", 
     );
   }
   return out;
+}
+
+async function uploadContract(
+  client: RestClient,
+  wallet: Secp256k1HdWallet,
+  signer: Identity,
+): Promise<PostTxsResponse> {
+  const memo = "My first contract on chain";
+  const theMsg: MsgStoreCode = {
+    type: "wasm/store-code",
+    value: {
+      sender: faucetAddress,
+      wasm_byte_code: toBase64(getRandomizedContract()),
+      source: "https://github.com/confio/cosmwasm/raw/0.7/lib/vm/testdata/contract_0.6.wasm",
+      builder: "cosmwasm-opt:0.6.2",
+    },
+  };
+  const fee: StdFee = {
+    amount: [
+      {
+        amount: "5000000",
+        denom: "ucosm",
+      },
+    ],
+    gas: "89000000",
+  };
+
+  const account = (await client.authAccounts(faucetAddress)).result.value;
+  const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account) as SignableBytes;
+  const rawSignature = await wallet.createTransactionSignature(signer, signBytes, PrehashType.Sha256);
+  const signature = encodeSecp256k1Signature(signer.pubkey.data, rawSignature);
+  const signedTx = makeSignedTx(theMsg, fee, memo, signature);
+  return client.postTx(marshalTx(signedTx));
+}
+
+async function instantiateContract(
+  client: RestClient,
+  wallet: Secp256k1HdWallet,
+  signer: Identity,
+  codeId: number,
+  beneficiaryAddress: string,
+  transferAmount: readonly Coin[],
+): Promise<PostTxsResponse> {
+  const memo = "Create an escrow instance";
+  const theMsg: MsgInstantiateContract = {
+    type: "wasm/instantiate",
+    value: {
+      sender: faucetAddress,
+      code_id: codeId.toString(),
+      init_msg: {
+        verifier: faucetAddress,
+        beneficiary: beneficiaryAddress,
+      },
+      init_funds: transferAmount,
+    },
+  };
+  const fee: StdFee = {
+    amount: [
+      {
+        amount: "5000000",
+        denom: "ucosm",
+      },
+    ],
+    gas: "89000000",
+  };
+
+  const account = (await client.authAccounts(faucetAddress)).result.value;
+  const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account) as SignableBytes;
+  const rawSignature = await wallet.createTransactionSignature(signer, signBytes, PrehashType.Sha256);
+  const signature = encodeSecp256k1Signature(signer.pubkey.data, rawSignature);
+  const signedTx = makeSignedTx(theMsg, fee, memo, signature);
+  return client.postTx(marshalTx(signedTx));
+}
+
+async function executeContract(
+  client: RestClient,
+  wallet: Secp256k1HdWallet,
+  signer: Identity,
+  contractAddress: string,
+): Promise<PostTxsResponse> {
+  const memo = "Time for action";
+  const theMsg: MsgExecuteContract = {
+    type: "wasm/execute",
+    value: {
+      sender: faucetAddress,
+      contract: contractAddress,
+      msg: {},
+      sent_funds: [],
+    },
+  };
+  const fee: StdFee = {
+    amount: [
+      {
+        amount: "5000000",
+        denom: "ucosm",
+      },
+    ],
+    gas: "89000000",
+  };
+
+  const account = (await client.authAccounts(faucetAddress)).result.value;
+  const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account) as SignableBytes;
+  const rawSignature = await wallet.createTransactionSignature(signer, signBytes, PrehashType.Sha256);
+  const signature = encodeSecp256k1Signature(signer.pubkey.data, rawSignature);
+  const signedTx = makeSignedTx(theMsg, fee, memo, signature);
+  return client.postTx(marshalTx(signedTx));
 }
 
 describe("RestClient", () => {
@@ -196,33 +302,8 @@ describe("RestClient", () => {
 
       // upload
       {
-        const memo = "My first contract on chain";
-        const theMsg: MsgStoreCode = {
-          type: "wasm/store-code",
-          value: {
-            sender: faucetAddress,
-            wasm_byte_code: toBase64(getRandomizedContract()),
-            source: "https://github.com/confio/cosmwasm/raw/0.7/lib/vm/testdata/contract_0.6.wasm",
-            builder: "cosmwasm-opt:0.6.2",
-          },
-        };
-        const fee: StdFee = {
-          amount: [
-            {
-              amount: "5000000",
-              denom: "ucosm",
-            },
-          ],
-          gas: "89000000",
-        };
-
-        const account = (await client.authAccounts(faucetAddress)).result.value;
-        const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account) as SignableBytes;
-        const rawSignature = await wallet.createTransactionSignature(signer, signBytes, PrehashType.Sha256);
-        const signature = encodeSecp256k1Signature(signer.pubkey.data, rawSignature);
-        const signedTx = makeSignedTx(theMsg, fee, memo, signature);
-        const result = await client.postTx(marshalTx(signedTx));
         // console.log("Raw log:", result.raw_log);
+        const result = await uploadContract(client, wallet, signer);
         expect(result.code).toBeFalsy();
         const logs = parseSuccess(result.raw_log);
         const codeIdAttr = findAttribute(logs, "message", "code_id");
@@ -235,42 +316,21 @@ describe("RestClient", () => {
 
       // instantiate
       {
-        const memo = "Create an escrow instance";
-        const theMsg: MsgInstantiateContract = {
-          type: "wasm/instantiate",
-          value: {
-            sender: faucetAddress,
-            code_id: codeId.toString(),
-            init_msg: {
-              verifier: faucetAddress,
-              beneficiary: beneficiaryAddress,
-            },
-            init_funds: transferAmount,
-          },
-        };
-        const fee: StdFee = {
-          amount: [
-            {
-              amount: "5000000",
-              denom: "ucosm",
-            },
-          ],
-          gas: "89000000",
-        };
-
-        const account = (await client.authAccounts(faucetAddress)).result.value;
-        const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account) as SignableBytes;
-        const rawSignature = await wallet.createTransactionSignature(signer, signBytes, PrehashType.Sha256);
-        const signature = encodeSecp256k1Signature(signer.pubkey.data, rawSignature);
-        const signedTx = makeSignedTx(theMsg, fee, memo, signature);
-        const result = await client.postTx(marshalTx(signedTx));
+        const result = await instantiateContract(
+          client,
+          wallet,
+          signer,
+          codeId,
+          beneficiaryAddress,
+          transferAmount,
+        );
         expect(result.code).toBeFalsy();
         // console.log("Raw log:", result.raw_log);
         const logs = parseSuccess(result.raw_log);
-        const amountAttr = findAttribute(logs, "transfer", "amount");
-        expect(amountAttr.value).toEqual("1234ucosm,321ustake");
         const contractAddressAttr = findAttribute(logs, "message", "contract_address");
         contractAddress = contractAddressAttr.value;
+        const amountAttr = findAttribute(logs, "transfer", "amount");
+        expect(amountAttr.value).toEqual("1234ucosm,321ustake");
 
         const balance = (await client.authAccounts(contractAddress)).result.value.coins;
         expect(balance).toEqual(transferAmount);
@@ -278,32 +338,7 @@ describe("RestClient", () => {
 
       // execute
       {
-        const memo = "Time for action";
-        const theMsg: MsgExecuteContract = {
-          type: "wasm/execute",
-          value: {
-            sender: faucetAddress,
-            contract: contractAddress,
-            msg: {},
-            sent_funds: [],
-          },
-        };
-        const fee: StdFee = {
-          amount: [
-            {
-              amount: "5000000",
-              denom: "ucosm",
-            },
-          ],
-          gas: "89000000",
-        };
-
-        const account = (await client.authAccounts(faucetAddress)).result.value;
-        const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account) as SignableBytes;
-        const rawSignature = await wallet.createTransactionSignature(signer, signBytes, PrehashType.Sha256);
-        const signature = encodeSecp256k1Signature(signer.pubkey.data, rawSignature);
-        const signedTx = makeSignedTx(theMsg, fee, memo, signature);
-        const result = await client.postTx(marshalTx(signedTx));
+        const result = await executeContract(client, wallet, signer, contractAddress);
         expect(result.code).toBeFalsy();
         // console.log("Raw log:", result.raw_log);
         const [firstLog] = parseSuccess(result.raw_log);
@@ -315,6 +350,178 @@ describe("RestClient", () => {
         const contractBalance = (await client.authAccounts(contractAddress)).result.value.coins;
         expect(contractBalance).toEqual([]);
       }
-    }, 30_000);
+    });
+  });
+
+  describe("query", () => {
+    it("can list upload code", async () => {
+      pendingWithoutCosmos();
+      const wallet = Secp256k1HdWallet.fromMnemonic(faucetMnemonic);
+      const signer = await wallet.createIdentity("abc" as ChainId, faucetPath);
+      const client = new RestClient(httpUrl);
+
+      // check with contracts were here first to compare
+      const existingInfos = await client.listCodeInfo();
+      existingInfos.forEach((val, idx) => expect(val.id).toEqual(idx + 1));
+      const numExisting = existingInfos.length;
+
+      // upload data
+      const result = await uploadContract(client, wallet, signer);
+      expect(result.code).toBeFalsy();
+      const logs = parseSuccess(result.raw_log);
+      const codeIdAttr = findAttribute(logs, "message", "code_id");
+      const codeId = Number.parseInt(codeIdAttr.value, 10);
+
+      // ensure we were added to the end of the list
+      const newInfos = await client.listCodeInfo();
+      expect(newInfos.length).toEqual(numExisting + 1);
+      const lastInfo = newInfos[newInfos.length - 1];
+      expect(lastInfo.id).toEqual(codeId);
+      expect(lastInfo.creator).toEqual(faucetAddress);
+
+      // TODO: check code hash matches expectation
+      // expect(lastInfo.code_hash).toEqual(faucetAddress);
+
+      // TODO: download code and check against auto-gen
+    });
+
+    it("can list contracts and get info", async () => {
+      pendingWithoutCosmos();
+      const wallet = Secp256k1HdWallet.fromMnemonic(faucetMnemonic);
+      const signer = await wallet.createIdentity("abc" as ChainId, faucetPath);
+      const client = new RestClient(httpUrl);
+      const beneficiaryAddress = makeRandomAddress();
+      const transferAmount: readonly Coin[] = [
+        {
+          amount: "707707",
+          denom: "ucosm",
+        },
+      ];
+
+      // reuse an existing contract, or upload if needed
+      let codeId: number;
+      const existingInfos = await client.listCodeInfo();
+      if (existingInfos.length > 0) {
+        codeId = existingInfos[existingInfos.length - 1].id;
+      } else {
+        const uploaded = await uploadContract(client, wallet, signer);
+        expect(uploaded.code).toBeFalsy();
+        const uploadLogs = parseSuccess(uploaded.raw_log);
+        const codeIdAttr = findAttribute(uploadLogs, "message", "code_id");
+        codeId = Number.parseInt(codeIdAttr.value, 10);
+      }
+
+      // create new instance and compare before and after
+      const existingContracts = await client.listContractAddresses();
+
+      const result = await instantiateContract(
+        client,
+        wallet,
+        signer,
+        codeId,
+        beneficiaryAddress,
+        transferAmount,
+      );
+      expect(result.code).toBeFalsy();
+      const logs = parseSuccess(result.raw_log);
+      const contractAddressAttr = findAttribute(logs, "message", "contract_address");
+      const myAddress = contractAddressAttr.value;
+
+      // ensure we were added to the list
+      const newContracts = await client.listContractAddresses();
+      expect(newContracts.length).toEqual(existingContracts.length + 1);
+      // note: we are NOT guaranteed to be added to the end
+      const diff = newContracts.filter(x => !existingContracts.includes(x));
+      expect(diff.length).toEqual(1);
+      const lastContract = diff[0];
+      expect(lastContract).toEqual(myAddress);
+
+      // check out info
+      const myInfo = await client.getContractInfo(myAddress);
+      expect(myInfo.code_id).toEqual(codeId);
+      expect(myInfo.creator).toEqual(faucetAddress);
+      expect((myInfo.init_msg as any).beneficiary).toEqual(beneficiaryAddress);
+
+      // make sure random addresses don't give useful info
+      await client
+        .getContractInfo(beneficiaryAddress)
+        .then(() => fail("this shouldn't succeed"))
+        .catch(error => expect(error).toMatch(`No contract with address ${beneficiaryAddress}`));
+    });
+
+    describe("contract state", () => {
+      const client = new RestClient(httpUrl);
+      const noContract = makeRandomAddress();
+      const expectedKey = toAscii("config");
+
+      // find an existing contract (created above)
+      // we assume all contracts on this chain are the same (created by these tests)
+      const getContractAddress = async (): Promise<string> => {
+        const contractInfos = await client.listContractAddresses();
+        expect(contractInfos.length).toBeGreaterThan(0);
+        return contractInfos[0];
+      };
+
+      it("can get all state", async () => {
+        pendingWithoutCosmos();
+        const contractAddress = await getContractAddress();
+
+        // get contract state
+        const state = await client.getAllContractState(contractAddress);
+        expect(state.length).toEqual(1);
+        const data = state[0];
+        expect(data.key.toLowerCase()).toEqual(toHex(expectedKey));
+        expect((data.val as any).verifier).toBeDefined();
+        expect((data.val as any).beneficiary).toBeDefined();
+
+        // bad address is empty array
+        const noContractState = await client.getAllContractState(noContract);
+        expect(noContractState).toEqual([]);
+      });
+
+      it("can query by key", async () => {
+        pendingWithoutCosmos();
+        const contractAddress = await getContractAddress();
+
+        // query by one key
+        const model = await client.queryContractRaw(contractAddress, expectedKey);
+        expect(model).not.toBeNull();
+        expect((model as any).verifier).toBeDefined();
+        expect((model as any).beneficiary).toBeDefined();
+
+        // missing key is null
+        const missing = await client.queryContractRaw(contractAddress, fromHex("cafe0dad"));
+        expect(missing).toBeNull();
+
+        // bad address is null
+        const noContractModel = await client.queryContractRaw(noContract, expectedKey);
+        expect(noContractModel).toBeNull();
+      });
+
+      it("can make smart queries", async () => {
+        pendingWithoutCosmos();
+        const contractAddress = await getContractAddress();
+
+        // we can query the verifier properly
+        const verifier = await client.queryContractSmart(contractAddress, { verifier: {} });
+        expect(verifier).toEqual(faucetAddress);
+
+        // invalid query syntax throws an error
+        await client.queryContractSmart(contractAddress, { nosuchkey: {} }).then(
+          () => fail("shouldn't succeed"),
+          error => expect(error).toBeTruthy(),
+        );
+        // TODO: debug rest server. I expect a 'Parse Error', but get
+        // Request failed with status code 500 to match 'Parse Error:'
+
+        // invalid address throws an error
+        await client.queryContractSmart(noContract, { verifier: {} }).then(
+          () => fail("shouldn't succeed"),
+          error => expect(error).toBeTruthy(),
+        );
+        // TODO: debug rest server. I expect a 'not found', but get
+        // Request failed with status code 500 to match 'Parse Error:'
+      });
+    });
   });
 });
