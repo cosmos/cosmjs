@@ -1,5 +1,5 @@
 {
-  "name": "cosm-js-monorepo-root",
+  "name": "cosmwasm-js-monorepo-root",
   "description": "Transaction codec and client to communicate with any wasmd blockchain",
   "private": true,
   "author": "Ethan Frey <ethanfrey@users.noreply.github.com>",
@@ -15,7 +15,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/confio/cosm-js"
+    "url": "https://github.com/confio/cosmwasm-js"
   },
   "publishConfig": {
     "access": "public"

@@ -15,7 +15,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/confio/cosm-js/tree/master/packages/sdk"
+    "url": "https://github.com/confio/cosmwasm-js/tree/master/packages/sdk"
   },
   "publishConfig": {
     "access": "public"

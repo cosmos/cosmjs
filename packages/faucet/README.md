@@ -1,4 +1,6 @@
-# @cosmwasm/faucet
+# @cosmwasm/sdk
+
+[![npm version](https://img.shields.io/npm/v/@cosmwasm/faucet.svg)](https://www.npmjs.com/package/@cosmwasm/faucet)
 
 The faucet is built as part of the monorepo. In the repo root do:
 
