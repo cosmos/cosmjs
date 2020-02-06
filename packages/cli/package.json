@@ -1,0 +1,56 @@
+{
+  "name": "@iov/cli",
+  "version": "0.0.3",
+  "description": "Command line interface",
+  "contributors": ["IOV SAS <admin@iov.one>", "Simon Warta"],
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/confio/cosmwasm-js/tree/master/packages/cli"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "format": "prettier --write --loglevel warn \"./src/**/*.ts\"",
+    "format-text": "prettier --write --prose-wrap always --print-width 80 \"./*.md\"",
+    "lint": "eslint --max-warnings 0 \"**/*.{js,ts}\" && tslint -t verbose --project .",
+    "build": "tsc",
+    "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build",
+    "selftest": "yarn build-or-skip && ./bin/cosmwasm-cli --selftest",
+    "test-node": "node jasmine-testrunner.js",
+    "test": "yarn build-or-skip && yarn test-node"
+  },
+  "bin": {
+    "cosmwasm-cli": "bin/cosmwasm-cli"
+  },
+  "files": [
+    "build/",
+    "types/",
+    "tsconfig_repl.json",
+    "*.md",
+    "!*.spec.*",
+    "!**/testdata/"
+  ],
+  "dependencies": {
+    "@cosmwasm/sdk": "^0.0.3",
+    "@iov/bcp": "^2.0.0-alpha.7",
+    "@iov/crypto": "^2.0.0-alpha.7",
+    "@iov/encoding": "^2.0.0-alpha.7",
+    "@iov/keycontrol": "^2.0.0-alpha.7",
+    "@iov/utils": "^2.0.0-alpha.7",
+    "argparse": "^1.0.10",
+    "babylon": "^6.18.0",
+    "colors": "^1.3.3",
+    "diff": "^4",
+    "leveldown": "^5.0.0",
+    "recast": "^0.18.0",
+    "ts-node": "^8",
+    "typescript": "~3.7"
+  },
+  "devDependencies": {
+    "@types/argparse": "^1.0.34",
+    "@types/babylon": "^6.16.3",
+    "@types/diff": "^3.5.1"
+  }
+}

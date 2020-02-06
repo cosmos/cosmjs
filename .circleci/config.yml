@@ -89,6 +89,12 @@ jobs:
             SKIP_BUILD: 1
           command: yarn test
       - run:
+          name: Run CLI selftest
+          working_directory: packages/cli
+          environment:
+            SKIP_BUILD: 1
+          command: yarn selftest
+      - run:
           command: ./scripts/cosm/stop.sh
   lint:
     docker:

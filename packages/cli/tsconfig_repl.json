@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "es2017",
+    "noUnusedLocals": false,
+    "noImplicitAny": false
+  }
+}
