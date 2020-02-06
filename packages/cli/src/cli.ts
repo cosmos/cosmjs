@@ -76,6 +76,7 @@ export function main(originalArgs: readonly string[]): void {
         "WalletSerializationString",
       ],
     ],
+    ["@iov/utils", ["sleep"]],
   ]);
 
   console.info(colors.green("Initializing session for you. Have fun!"));
@@ -109,11 +110,15 @@ export function main(originalArgs: readonly string[]): void {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     init += `import { ${imports.get(moduleName)!.join(", ")} } from "${moduleName}";\n`;
   }
-  init += `const { toAscii, fromHex, toHex } = Encoding;\n`;
+  // helper functions
+  init += `
+    const { toAscii, fromHex, toHex } = Encoding;
+  `;
 
   if (args.selftest) {
     // execute some trival stuff and exit
     init += `
+      await sleep(123);
       const hash = new Sha512(new Uint8Array([])).digest();
       const hexHash = toHex(hash);
       export class NewDummyClass {};

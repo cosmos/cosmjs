@@ -157,6 +157,11 @@
   dependencies:
     xstream "^11.10.0"
 
+"@iov/utils@^2.0.0-alpha.7":
+  version "2.0.0-alpha.7"
+  resolved "https://registry.yarnpkg.com/@iov/utils/-/utils-2.0.0-alpha.7.tgz#af9aebcb9e221e53cf62c5511f007c65d95f5c0c"
+  integrity sha512-myWATqmlCFZ/jSrsBQlyn+6D2ViAscZVAqBAw38kbIfv3TiKTjWb2RqhlNDnlVgt3uD0ZtQFyY9hkRMCwfIk+w==
+
 "@koa/cors@^3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@koa/cors/-/cors-3.0.0.tgz#df021b4df2dadf1e2b04d7c8ddf93ba2d42519cb"
