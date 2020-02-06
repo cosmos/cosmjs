@@ -76,29 +76,33 @@ as soon as there is
 
 ### Working with docker
 
-- Build an artifact ()
+**Note:** The Dockerfile in this repo is for demonstration purposes only. If you chose to
+deploy the faucet via docker, make sure to copy the Dockerfile and keep it up-to-date.
+
+- Build an artifact (from monorepo root)
 
 ```sh
-docker build -t cosmwasm/faucet:manual --file faucet.Dockerfile .
+cd docs
+docker build -t local-cosmwasm-faucet:manual --file faucet.Dockerfile .
 ```
 
 - Version and help
 
 ```sh
-docker run --read-only --rm cosmwasm/faucet:manual version
-docker run --read-only --rm cosmwasm/faucet:manual help
+docker run --read-only --rm local-cosmwasm-faucet:manual version
+docker run --read-only --rm local-cosmwasm-faucet:manual help
 ```
 
 - Run faucet locally
 
 ```sh
-DOCKER_HOST_IP=$(docker run --read-only --rm alpine ip route | awk 'NR==1 {print $3}') \
+DOCKER_HOST_IP=$(docker run --read-only --rm alpine ip route | awk 'NR==1 {print $3}'); \
   FAUCET_CONCURRENCY=3 FAUCET_MNEMONIC="economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone" \
   docker run --read-only --rm \
   -e FAUCET_MNEMONIC \
   -e FAUCET_CONCURRENCY \
   -p 8000:8000 \
-  cosmwasm/faucet:manual \
+  local-cosmwasm-faucet:manual \
   start "http://$DOCKER_HOST_IP:1317"
 ```
 

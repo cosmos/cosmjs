@@ -5,7 +5,6 @@ workflows:
     jobs:
       - build
       - lint
-      # - faucet_docker
       - test
 
 jobs:
@@ -101,18 +100,3 @@ jobs:
             - ~/.cache/yarn
       - run:
           command: yarn lint
-  faucet_docker:
-    docker:
-      - image: circleci/node:10
-    steps:
-      - checkout
-      - setup_remote_docker:
-          docker_layer_caching: true
-      - run:
-          name: Build docker image
-          command: docker build -t cosmwasm/faucet:manual --file faucet.Dockerfile .
-      - run:
-          name: Test docker image
-          command: |
-            docker run --read-only --rm cosmwasm/faucet:manual help
-            docker run --read-only --rm cosmwasm/faucet:manual version
