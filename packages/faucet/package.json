@@ -6,6 +6,9 @@
   "license": "Apache-2.0",
   "main": "build/index.js",
   "types": "types/index.d.ts",
+  "bin": {
+    "cosmwasm-faucet": "bin/cosmwasm-faucet"
+  },
   "files": [
     "build/",
     "types/",
