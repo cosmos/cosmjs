@@ -1,11 +1,14 @@
 {
   "name": "@cosmwasm/faucet",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "The faucet",
   "author": "Ethan Frey <ethanfrey@users.noreply.github.com>",
   "license": "Apache-2.0",
   "main": "build/index.js",
   "types": "types/index.d.ts",
+  "bin": {
+    "cosmwasm-faucet": "bin/cosmwasm-faucet"
+  },
   "files": [
     "build/",
     "types/",
@@ -15,7 +18,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/confio/cosm-js/tree/master/packages/faucet"
+    "url": "https://github.com/confio/cosmwasm-js/tree/master/packages/faucet"
   },
   "publishConfig": {
     "access": "public"
@@ -32,7 +35,7 @@
     "test": "yarn build-or-skip && yarn test-node"
   },
   "dependencies": {
-    "@cosmwasm/bcp": "^0.0.2",
+    "@cosmwasm/bcp": "^0.0.3",
     "@iov/bcp": "^2.0.0-alpha.7",
     "@iov/crypto": "^2.0.0-alpha.7",
     "@iov/encoding": "^2.0.0-alpha.7",

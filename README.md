@@ -1,8 +1,6 @@
-# @iov/cosmos
+# CosmWasm JS
 
-[![npm version](https://img.shields.io/npm/v/cosm-js.svg)](https://www.npmjs.com/package/cosm-js)
-
-This is a Typescript client-side binding to [wasmd](https://github.com/cosmwasm/wasmd), a sample blockchain for the [cosmwasm](https://github.com/confio/cosmwasm) smart contracting platform. 
+This is a JavaScript/TypeScript client-side binding to [wasmd](https://github.com/cosmwasm/wasmd), a sample blockchain for the [cosmwasm](https://github.com/confio/cosmwasm) smart contracting platform.
 
 ## Development
 

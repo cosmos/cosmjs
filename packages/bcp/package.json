@@ -1,6 +1,6 @@
 {
   "name": "@cosmwasm/bcp",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Transaction codec and client to communicate with any wasmd blockchain",
   "author": "Ethan Frey <ethanfrey@users.noreply.github.com>",
   "license": "Apache-2.0",
@@ -15,7 +15,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/confio/cosm-js/tree/master/packages/bcp"
+    "url": "https://github.com/confio/cosmwasm-js/tree/master/packages/bcp"
   },
   "publishConfig": {
     "access": "public"
@@ -38,7 +38,7 @@
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
   },
   "dependencies": {
-    "@cosmwasm/sdk": "^0.0.2",
+    "@cosmwasm/sdk": "^0.0.3",
     "@iov/bcp": "^2.0.0-alpha.7",
     "@iov/crypto": "^2.0.0-alpha.7",
     "@iov/encoding": "^2.0.0-alpha.7",
