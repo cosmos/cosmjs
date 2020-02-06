@@ -5,7 +5,9 @@ workflows:
     jobs:
       - build
       - lint
-      - test
+      - test:
+          requires:
+            - build
 
 jobs:
   build:
@@ -30,6 +32,10 @@ jobs:
             - ~/.cache/yarn
       - run:
           command: yarn build
+      - persist_to_workspace:
+          root: .
+          paths:
+            - packages/*/build/*
   test:
     machine:
       # We can't use a containerized environment since it requires remote docker to start custom containers.
@@ -43,6 +49,11 @@ jobs:
       - run: # start early for less wait time below
           command: ./scripts/cosm/start.sh
           background: true
+      - attach_workspace:
+          at: /tmp/builds
+      - run:
+          name: Merge build folders into project (merge with hardlinks)
+          command: cp --recursive --link /tmp/builds/* .
       - run:
           # The images ubuntu-1604:201903-01 comes with preinstalled nvm, which does not work well with non-login shells
           name: Uninstall nvm
@@ -75,6 +86,7 @@ jobs:
       - run:
           environment:
             COSMOS_ENABLED: 1
+            SKIP_BUILD: 1
           command: yarn test
       - run:
           command: ./scripts/cosm/stop.sh
