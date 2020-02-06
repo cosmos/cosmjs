@@ -1,6 +1,7 @@
 import { ArgumentParser } from "argparse";
 // tslint:disable-next-line:no-submodule-imports
 import colors = require("colors/safe");
+import * as fs from "fs";
 import { join } from "path";
 
 import { TsRepl } from "./tsrepl";
@@ -10,6 +11,10 @@ export function main(originalArgs: readonly string[]): void {
   parser.addArgument("--version", {
     action: "storeTrue",
     help: "Print version and exit",
+  });
+  parser.addArgument("--init", {
+    metavar: "FILEPATH",
+    help: "Read initial TypeScript code from file",
   });
 
   const maintainerGroup = parser.addArgumentGroup({
@@ -33,7 +38,30 @@ export function main(originalArgs: readonly string[]): void {
   }
 
   const imports = new Map<string, readonly string[]>([
-    ["@cosmwasm/sdk", ["types", "RestClient"]],
+    ["@cosmwasm/sdk", ["encodeSecp256k1Signature", "makeSignBytes", "marshalTx", "types", "RestClient"]],
+    [
+      "@iov/bcp",
+      [
+        "Address",
+        "Algorithm",
+        "ChainId",
+        "Nonce",
+        "PrehashType",
+        "PubkeyBytes",
+        "SendTransaction",
+        "SignableBytes",
+        "TokenTicker",
+        "TransactionId",
+        // block info
+        "BlockInfoPending",
+        "BlockInfoSucceeded",
+        "BlockInfoFailed",
+        "BlockInfo",
+        "isBlockInfoPending",
+        "isBlockInfoSucceeded",
+        "isBlockInfoFailed",
+      ],
+    ],
     [
       "@iov/crypto",
       [
@@ -132,6 +160,10 @@ export function main(originalArgs: readonly string[]): void {
       console.info("Done testing, will exit now.");
       process.exit(0);
     `;
+  }
+
+  if (args.init) {
+    init += fs.readFileSync(args.init, "utf8") + "\n";
   }
 
   const tsconfigPath = join(__dirname, "..", "tsconfig_repl.json");
