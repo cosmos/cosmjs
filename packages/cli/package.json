@@ -17,8 +17,8 @@
     "lint": "eslint --max-warnings 0 \"**/*.{js,ts}\" && tslint -t verbose --project .",
     "build": "tsc",
     "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build",
+    "selftest": "yarn build-or-skip && ./bin/cosmwasm-cli --selftest",
     "test-node": "node jasmine-testrunner.js",
-    "test-bin": "yarn build-or-skip && ./bin/cosmwasm-cli --selftest",
     "test": "yarn build-or-skip && yarn test-node"
   },
   "bin": {
