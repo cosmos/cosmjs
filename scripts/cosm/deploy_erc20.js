@@ -34,8 +34,8 @@ async function uploadContract(client, pen, wasm) {
     value: {
       sender: faucetAddress,
       wasm_byte_code: Encoding.toBase64(wasm),
-      source: "https://github.com/confio/cosmwasm/raw/0.7/lib/vm/testdata/contract_0.6.wasm",
-      builder: "cosmwasm-opt:0.6.2",
+      source: "",
+      builder: "",
     },
   };
 
