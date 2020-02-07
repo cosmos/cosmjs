@@ -38,7 +38,18 @@ export function main(originalArgs: readonly string[]): void {
   }
 
   const imports = new Map<string, readonly string[]>([
-    ["@cosmwasm/sdk", ["encodeSecp256k1Signature", "makeSignBytes", "marshalTx", "types", "RestClient"]],
+    [
+      "@cosmwasm/sdk",
+      [
+        "encodeSecp256k1Signature",
+        "makeSignBytes",
+        "marshalTx",
+        "Pen",
+        "RestClient",
+        "Secp256k1Pen",
+        "types",
+      ],
+    ],
     [
       "@iov/bcp",
       [
@@ -150,6 +161,12 @@ export function main(originalArgs: readonly string[]): void {
       const hash = new Sha512(new Uint8Array([])).digest();
       const hexHash = toHex(hash);
       export class NewDummyClass {};
+
+      const pen = await Secp256k1Pen.fromMnemonic(
+        "zebra slush diet army arrest purpose hawk source west glimpse custom record",
+      );
+      const data = Encoding.toAscii("foo bar");
+      const signature = await pen.createSignature(data);
 
       const profile = new UserProfile();
       const wallet = profile.addWallet(Ed25519HdWallet.fromMnemonic("degree tackle suggest window test behind mesh extra cover prepare oak script"));
