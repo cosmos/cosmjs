@@ -22,7 +22,7 @@ export type PrehashType = "sha256" | "sha512" | null;
  * obfuscation of sensitive data.
  */
 export interface Pen {
-  readonly getPubkey: () => Promise<Uint8Array>;
+  readonly pubkey: Uint8Array;
   readonly createSignature: (signBytes: Uint8Array, prehashType?: PrehashType) => Promise<Uint8Array>;
 }
 
@@ -54,18 +54,22 @@ export function makeCosmoshubPath(a: number): readonly Slip10RawIndex[] {
 }
 
 export class Secp256k1Pen implements Pen {
-  private readonly mnemonic: EnglishMnemonic;
-  private readonly hdPath: readonly Slip10RawIndex[];
-
-  public constructor(mnemonic: string, hdPath: readonly Slip10RawIndex[] = makeCosmoshubPath(0)) {
-    this.mnemonic = new EnglishMnemonic(mnemonic);
-    this.hdPath = hdPath;
+  public static async fromMnemonic(
+    mnemonic: string,
+    hdPath: readonly Slip10RawIndex[] = makeCosmoshubPath(0),
+  ): Promise<Secp256k1Pen> {
+    const seed = await Bip39.mnemonicToSeed(new EnglishMnemonic(mnemonic));
+    const { privkey } = Slip10.derivePath(Slip10Curve.Secp256k1, seed, hdPath);
+    const uncompressed = (await Secp256k1.makeKeypair(privkey)).pubkey;
+    return new Secp256k1Pen(privkey, Secp256k1.compressPubkey(uncompressed));
   }
 
-  public async getPubkey(): Promise<Uint8Array> {
-    const privkey = await this.getPrivkey();
-    const uncompressed = (await Secp256k1.makeKeypair(privkey)).pubkey;
-    return Secp256k1.compressPubkey(uncompressed);
+  public readonly pubkey: Uint8Array;
+  private readonly privkey: Uint8Array;
+
+  private constructor(privkey: Uint8Array, pubkey: Uint8Array) {
+    this.privkey = privkey;
+    this.pubkey = pubkey;
   }
 
   /**
@@ -76,12 +80,7 @@ export class Secp256k1Pen implements Pen {
     prehashType: PrehashType = "sha256",
   ): Promise<Uint8Array> {
     const message = prehash(signBytes, prehashType);
-    const signature = await Secp256k1.createSignature(message, await this.getPrivkey());
+    const signature = await Secp256k1.createSignature(message, this.privkey);
     return new Uint8Array([...signature.r(32), ...signature.s(32)]);
-  }
-
-  private async getPrivkey(): Promise<Uint8Array> {
-    const seed = await Bip39.mnemonicToSeed(this.mnemonic);
-    return Slip10.derivePath(Slip10Curve.Secp256k1, seed, this.hdPath).privkey;
   }
 }

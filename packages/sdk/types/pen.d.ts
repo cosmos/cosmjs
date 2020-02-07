@@ -11,7 +11,7 @@ export declare type PrehashType = "sha256" | "sha512" | null;
  * obfuscation of sensitive data.
  */
 export interface Pen {
-  readonly getPubkey: () => Promise<Uint8Array>;
+  readonly pubkey: Uint8Array;
   readonly createSignature: (signBytes: Uint8Array, prehashType?: PrehashType) => Promise<Uint8Array>;
 }
 /**
@@ -20,13 +20,12 @@ export interface Pen {
  */
 export declare function makeCosmoshubPath(a: number): readonly Slip10RawIndex[];
 export declare class Secp256k1Pen implements Pen {
-  private readonly mnemonic;
-  private readonly hdPath;
-  constructor(mnemonic: string, hdPath?: readonly Slip10RawIndex[]);
-  getPubkey(): Promise<Uint8Array>;
+  static fromMnemonic(mnemonic: string, hdPath?: readonly Slip10RawIndex[]): Promise<Secp256k1Pen>;
+  readonly pubkey: Uint8Array;
+  private readonly privkey;
+  private constructor();
   /**
    * Creates a fixed length encoding of the signature parameters r (32 bytes) and s (32 bytes).
    */
   createSignature(signBytes: Uint8Array, prehashType?: PrehashType): Promise<Uint8Array>;
-  private getPrivkey;
 }

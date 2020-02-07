@@ -6,22 +6,22 @@ import { Secp256k1Pen } from "./pen";
 const { fromHex } = Encoding;
 
 describe("Sec256k1Pen", () => {
-  it("can be constructed", () => {
-    const pen = new Secp256k1Pen(
+  it("can be constructed", async () => {
+    const pen = await Secp256k1Pen.fromMnemonic(
       "zebra slush diet army arrest purpose hawk source west glimpse custom record",
     );
     expect(pen).toBeTruthy();
   });
 
-  describe("getPubkey", () => {
+  describe("pubkey", () => {
     it("returns compressed pubkey", async () => {
       // special sign fit simple patrol salute grocery chicken wheat radar tonight ceiling
       // m/44'/118'/0'/0/0
       // pubkey: 02baa4ef93f2ce84592a49b1d729c074eab640112522a7a89f7d03ebab21ded7b6
-      const pen = new Secp256k1Pen(
+      const pen = await Secp256k1Pen.fromMnemonic(
         "special sign fit simple patrol salute grocery chicken wheat radar tonight ceiling",
       );
-      expect(await pen.getPubkey()).toEqual(
+      expect(pen.pubkey).toEqual(
         fromHex("02baa4ef93f2ce84592a49b1d729c074eab640112522a7a89f7d03ebab21ded7b6"),
       );
     });
@@ -29,10 +29,7 @@ describe("Sec256k1Pen", () => {
 
   describe("createSignature", () => {
     it("creates correct signatures", async () => {
-      // special sign fit simple patrol salute grocery chicken wheat radar tonight ceiling
-      // m/44'/118'/0'/0/0
-      // pubkey: 02baa4ef93f2ce84592a49b1d729c074eab640112522a7a89f7d03ebab21ded7b6
-      const pen = new Secp256k1Pen(
+      const pen = await Secp256k1Pen.fromMnemonic(
         "special sign fit simple patrol salute grocery chicken wheat radar tonight ceiling",
       );
       const data = Encoding.toAscii("foo bar");
@@ -41,7 +38,7 @@ describe("Sec256k1Pen", () => {
       const valid = await Secp256k1.verifySignature(
         new Secp256k1Signature(signature.slice(0, 32), signature.slice(32, 64)),
         new Sha256(data).digest(),
-        fromHex("02baa4ef93f2ce84592a49b1d729c074eab640112522a7a89f7d03ebab21ded7b6"),
+        pen.pubkey,
       );
       expect(valid).toEqual(true);
     });

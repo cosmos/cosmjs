@@ -25,9 +25,8 @@ const { fromBase64, fromHex, toAscii, toBase64, toHex } = Encoding;
 
 const httpUrl = "http://localhost:1317";
 const defaultNetworkId = "testing";
-const faucetPen = new Secp256k1Pen(
-  "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone",
-);
+const faucetMnemonic =
+  "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone";
 const faucetAddress = "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6";
 const emptyAddress = "cosmos1ltkhnmdcqemmd2tkhnx7qx66tq7e0wykw2j85k";
 
@@ -118,7 +117,7 @@ async function uploadContract(client: RestClient, pen: Pen): Promise<PostTxsResp
 
   const account = (await client.authAccounts(faucetAddress)).result.value;
   const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account);
-  const signature = encodeSecp256k1Signature(await pen.getPubkey(), await pen.createSignature(signBytes));
+  const signature = encodeSecp256k1Signature(pen.pubkey, await pen.createSignature(signBytes));
   const signedTx = makeSignedTx(theMsg, fee, memo, signature);
   return client.postTx(marshalTx(signedTx));
 }
@@ -155,7 +154,7 @@ async function instantiateContract(
 
   const account = (await client.authAccounts(faucetAddress)).result.value;
   const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account);
-  const signature = encodeSecp256k1Signature(await pen.getPubkey(), await pen.createSignature(signBytes));
+  const signature = encodeSecp256k1Signature(pen.pubkey, await pen.createSignature(signBytes));
   const signedTx = makeSignedTx(theMsg, fee, memo, signature);
   return client.postTx(marshalTx(signedTx));
 }
@@ -187,7 +186,7 @@ async function executeContract(
 
   const account = (await client.authAccounts(faucetAddress)).result.value;
   const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account);
-  const signature = encodeSecp256k1Signature(await pen.getPubkey(), await pen.createSignature(signBytes));
+  const signature = encodeSecp256k1Signature(pen.pubkey, await pen.createSignature(signBytes));
   const signedTx = makeSignedTx(theMsg, fee, memo, signature);
   return client.postTx(marshalTx(signedTx));
 }
@@ -230,6 +229,7 @@ describe("RestClient", () => {
   describe("post", () => {
     it("can send tokens", async () => {
       pendingWithoutCosmos();
+      const pen = await Secp256k1Pen.fromMnemonic(faucetMnemonic);
 
       const memo = "My first contract on chain";
       const theMsg: MsgSend = {
@@ -260,10 +260,7 @@ describe("RestClient", () => {
       const account = (await client.authAccounts(faucetAddress)).result.value;
 
       const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account);
-      const signature = encodeSecp256k1Signature(
-        await faucetPen.getPubkey(),
-        await faucetPen.createSignature(signBytes),
-      );
+      const signature = encodeSecp256k1Signature(pen.pubkey, await pen.createSignature(signBytes));
       const signedTx = makeSignedTx(theMsg, fee, memo, signature);
       const result = await client.postTx(marshalTx(signedTx));
       // console.log("Raw log:", result.raw_log);
@@ -272,6 +269,7 @@ describe("RestClient", () => {
 
     it("can upload, instantiate and execute wasm", async () => {
       pendingWithoutCosmos();
+      const pen = await Secp256k1Pen.fromMnemonic(faucetMnemonic);
       const client = new RestClient(httpUrl);
 
       const transferAmount: readonly Coin[] = [
@@ -291,7 +289,7 @@ describe("RestClient", () => {
       // upload
       {
         // console.log("Raw log:", result.raw_log);
-        const result = await uploadContract(client, faucetPen);
+        const result = await uploadContract(client, pen);
         expect(result.code).toBeFalsy();
         const logs = parseSuccess(result.raw_log);
         const codeIdAttr = findAttribute(logs, "message", "code_id");
@@ -304,13 +302,7 @@ describe("RestClient", () => {
 
       // instantiate
       {
-        const result = await instantiateContract(
-          client,
-          faucetPen,
-          codeId,
-          beneficiaryAddress,
-          transferAmount,
-        );
+        const result = await instantiateContract(client, pen, codeId, beneficiaryAddress, transferAmount);
         expect(result.code).toBeFalsy();
         // console.log("Raw log:", result.raw_log);
         const logs = parseSuccess(result.raw_log);
@@ -325,7 +317,7 @@ describe("RestClient", () => {
 
       // execute
       {
-        const result = await executeContract(client, faucetPen, contractAddress);
+        const result = await executeContract(client, pen, contractAddress);
         expect(result.code).toBeFalsy();
         // console.log("Raw log:", result.raw_log);
         const [firstLog] = parseSuccess(result.raw_log);
@@ -343,6 +335,7 @@ describe("RestClient", () => {
   describe("query", () => {
     it("can list upload code", async () => {
       pendingWithoutCosmos();
+      const pen = await Secp256k1Pen.fromMnemonic(faucetMnemonic);
       const client = new RestClient(httpUrl);
 
       // check with contracts were here first to compare
@@ -351,7 +344,7 @@ describe("RestClient", () => {
       const numExisting = existingInfos.length;
 
       // upload data
-      const result = await uploadContract(client, faucetPen);
+      const result = await uploadContract(client, pen);
       expect(result.code).toBeFalsy();
       const logs = parseSuccess(result.raw_log);
       const codeIdAttr = findAttribute(logs, "message", "code_id");
@@ -372,6 +365,7 @@ describe("RestClient", () => {
 
     it("can list contracts and get info", async () => {
       pendingWithoutCosmos();
+      const pen = await Secp256k1Pen.fromMnemonic(faucetMnemonic);
       const client = new RestClient(httpUrl);
       const beneficiaryAddress = makeRandomAddress();
       const transferAmount: readonly Coin[] = [
@@ -387,7 +381,7 @@ describe("RestClient", () => {
       if (existingInfos.length > 0) {
         codeId = existingInfos[existingInfos.length - 1].id;
       } else {
-        const uploaded = await uploadContract(client, faucetPen);
+        const uploaded = await uploadContract(client, pen);
         expect(uploaded.code).toBeFalsy();
         const uploadLogs = parseSuccess(uploaded.raw_log);
         const codeIdAttr = findAttribute(uploadLogs, "message", "code_id");
@@ -397,7 +391,7 @@ describe("RestClient", () => {
       // create new instance and compare before and after
       const existingContracts = await client.listContractAddresses();
 
-      const result = await instantiateContract(client, faucetPen, codeId, beneficiaryAddress, transferAmount);
+      const result = await instantiateContract(client, pen, codeId, beneficiaryAddress, transferAmount);
       expect(result.code).toBeFalsy();
       const logs = parseSuccess(result.raw_log);
       const contractAddressAttr = findAttribute(logs, "message", "contract_address");
