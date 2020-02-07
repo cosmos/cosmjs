@@ -12,10 +12,7 @@ const defaultFee: types.StdFee = {
 
 const faucetMnemonic =
   "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone";
-const faucetPath = HdPaths.cosmos(0);
 const faucetAddress = "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6";
 
-const wallet = Secp256k1HdWallet.fromMnemonic(faucetMnemonic);
-const signer = await wallet.createIdentity("unused_value" as ChainId, faucetPath);
-
+const pen = await Secp256k1Pen.fromMnemonic(faucetMnemonic);
 const client = new RestClient(defaultHttpUrl);

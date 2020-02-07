@@ -34,10 +34,8 @@
   ],
   "dependencies": {
     "@cosmwasm/sdk": "^0.0.3",
-    "@iov/bcp": "^2.0.0-alpha.7",
     "@iov/crypto": "^2.0.0-alpha.7",
     "@iov/encoding": "^2.0.0-alpha.7",
-    "@iov/keycontrol": "^2.0.0-alpha.7",
     "@iov/utils": "^2.0.0-alpha.7",
     "argparse": "^1.0.10",
     "babylon": "^6.18.0",

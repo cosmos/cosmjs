@@ -51,29 +51,6 @@ export function main(originalArgs: readonly string[]): void {
       ],
     ],
     [
-      "@iov/bcp",
-      [
-        "Address",
-        "Algorithm",
-        "ChainId",
-        "Nonce",
-        "PrehashType",
-        "PubkeyBytes",
-        "SendTransaction",
-        "SignableBytes",
-        "TokenTicker",
-        "TransactionId",
-        // block info
-        "BlockInfoPending",
-        "BlockInfoSucceeded",
-        "BlockInfoFailed",
-        "BlockInfo",
-        "isBlockInfoPending",
-        "isBlockInfoSucceeded",
-        "isBlockInfoFailed",
-      ],
-    ],
-    [
       "@iov/crypto",
       [
         "Bip39",
@@ -99,20 +76,6 @@ export function main(originalArgs: readonly string[]): void {
         "Uint32",
         "Uint53",
         "Uint64",
-      ],
-    ],
-    [
-      "@iov/keycontrol",
-      [
-        "Ed25519HdWallet",
-        "HdPaths",
-        "Keyring",
-        "Secp256k1HdWallet",
-        "UserProfile",
-        "Wallet",
-        "WalletId",
-        "WalletImplementationIdString",
-        "WalletSerializationString",
       ],
     ],
     ["@iov/utils", ["sleep"]],
@@ -163,9 +126,6 @@ export function main(originalArgs: readonly string[]): void {
       );
       const data = Encoding.toAscii("foo bar");
       const signature = await pen.createSignature(data);
-
-      const profile = new UserProfile();
-      const wallet = profile.addWallet(Ed25519HdWallet.fromMnemonic("degree tackle suggest window test behind mesh extra cover prepare oak script"));
 
       console.info("Done testing, will exit now.");
       process.exit(0);
