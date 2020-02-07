@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 /* eslint-disable @typescript-eslint/camelcase */
 const { Encoding } = require("@iov/encoding");
 const {
