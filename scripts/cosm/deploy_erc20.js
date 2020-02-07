@@ -28,7 +28,7 @@ const faucetMnemonic =
 const faucetAddress = "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6";
 
 async function uploadContract(client, pen, wasm) {
-  const memo = "My first contract on chain";
+  const memo = "Upload ERC20 contract";
   const storeCodeMsg = {
     type: "wasm/store-code",
     value: {
