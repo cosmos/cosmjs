@@ -38,28 +38,16 @@ export function main(originalArgs: readonly string[]): void {
   }
 
   const imports = new Map<string, readonly string[]>([
-    ["@cosmwasm/sdk", ["encodeSecp256k1Signature", "makeSignBytes", "marshalTx", "types", "RestClient"]],
     [
-      "@iov/bcp",
+      "@cosmwasm/sdk",
       [
-        "Address",
-        "Algorithm",
-        "ChainId",
-        "Nonce",
-        "PrehashType",
-        "PubkeyBytes",
-        "SendTransaction",
-        "SignableBytes",
-        "TokenTicker",
-        "TransactionId",
-        // block info
-        "BlockInfoPending",
-        "BlockInfoSucceeded",
-        "BlockInfoFailed",
-        "BlockInfo",
-        "isBlockInfoPending",
-        "isBlockInfoSucceeded",
-        "isBlockInfoFailed",
+        "encodeSecp256k1Signature",
+        "makeSignBytes",
+        "marshalTx",
+        "Pen",
+        "RestClient",
+        "Secp256k1Pen",
+        "types",
       ],
     ],
     [
@@ -90,20 +78,6 @@ export function main(originalArgs: readonly string[]): void {
         "Uint64",
       ],
     ],
-    [
-      "@iov/keycontrol",
-      [
-        "Ed25519HdWallet",
-        "HdPaths",
-        "Keyring",
-        "Secp256k1HdWallet",
-        "UserProfile",
-        "Wallet",
-        "WalletId",
-        "WalletImplementationIdString",
-        "WalletSerializationString",
-      ],
-    ],
     ["@iov/utils", ["sleep"]],
   ]);
 
@@ -111,8 +85,6 @@ export function main(originalArgs: readonly string[]): void {
   console.info(colors.yellow("Available imports:"));
   console.info(colors.yellow("  * http"));
   console.info(colors.yellow("  * https"));
-  console.info(colors.yellow("  * leveldown"));
-  console.info(colors.yellow("  * levelup"));
   console.info(colors.yellow("  * from long"));
   console.info(colors.yellow("    - Long"));
   for (const moduleName of imports.keys()) {
@@ -128,8 +100,6 @@ export function main(originalArgs: readonly string[]): void {
   console.info(colors.yellow("    - toHex"));
 
   let init = `
-    import leveldown = require('leveldown');
-    import levelup from "levelup";
     import * as http from 'http';
     import * as https from 'https';
     import Long from "long";
@@ -151,11 +121,11 @@ export function main(originalArgs: readonly string[]): void {
       const hexHash = toHex(hash);
       export class NewDummyClass {};
 
-      const profile = new UserProfile();
-      const wallet = profile.addWallet(Ed25519HdWallet.fromMnemonic("degree tackle suggest window test behind mesh extra cover prepare oak script"));
-      const db = levelup(leveldown('./selftest_userprofile_db'));
-      await profile.storeIn(db, "secret passwd");
-      const profileFromDb = await UserProfile.loadFrom(db, "secret passwd");
+      const pen = await Secp256k1Pen.fromMnemonic(
+        "zebra slush diet army arrest purpose hawk source west glimpse custom record",
+      );
+      const data = Encoding.toAscii("foo bar");
+      const signature = await pen.createSignature(data);
 
       console.info("Done testing, will exit now.");
       process.exit(0);
