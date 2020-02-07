@@ -108,7 +108,7 @@ async function instantiateContract(
   pen: Pen,
   codeId: number,
   beneficiaryAddress: string,
-  transferAmount: readonly Coin[],
+  transferAmount?: readonly Coin[],
 ): Promise<PostTxsResponse> {
   const memo = "Create an escrow instance";
   const theMsg: MsgInstantiateContract = {
@@ -120,7 +120,7 @@ async function instantiateContract(
         verifier: faucetAddress,
         beneficiary: beneficiaryAddress,
       },
-      init_funds: transferAmount,
+      init_funds: transferAmount || [],
     },
   };
   const fee: StdFee = {
