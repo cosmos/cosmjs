@@ -4,7 +4,7 @@ import { Bech32, Encoding } from "@iov/encoding";
 
 import { encodeSecp256k1Signature, makeSignBytes, marshalTx } from "./encoding";
 import { leb128Encode } from "./leb128.spec";
-import { Attribute, Log, parseLogs } from "./logs";
+import { findAttribute, parseLogs } from "./logs";
 import { Pen, Secp256k1Pen } from "./pen";
 import { PostTxsResponse, RestClient } from "./restclient";
 import contract from "./testdata/contract.json";
@@ -73,20 +73,6 @@ function getRandomizedContract(): Uint8Array {
 
 function makeRandomAddress(): string {
   return Bech32.encode("cosmos", Random.getBytes(20));
-}
-
-/** Throws if the attribute was not found */
-function findAttribute(logs: readonly Log[], eventType: "message" | "transfer", attrKey: string): Attribute {
-  const firstLogs = logs.find(() => true);
-  const out = firstLogs?.events
-    .find(event => event.type === eventType)
-    ?.attributes.find(attr => attr.key === attrKey);
-  if (!out) {
-    throw new Error(
-      `Could not find attribute '${attrKey}' in first event of type '${eventType}' in first log.`,
-    );
-  }
-  return out;
 }
 
 async function uploadContract(client: RestClient, pen: Pen): Promise<PostTxsResponse> {
