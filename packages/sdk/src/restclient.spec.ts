@@ -36,11 +36,6 @@ function pendingWithoutCosmos(): void {
   }
 }
 
-function parseSuccess(rawLog?: string): readonly Log[] {
-  if (!rawLog) throw new Error("Log missing");
-  return parseLogs(JSON.parse(rawLog));
-}
-
 function makeSignedTx(firstMsg: Msg, fee: StdFee, memo: string, firstSignature: StdSignature): StdTx {
   return {
     msg: [firstMsg],
@@ -291,7 +286,7 @@ describe("RestClient", () => {
         // console.log("Raw log:", result.raw_log);
         const result = await uploadContract(client, pen);
         expect(result.code).toBeFalsy();
-        const logs = parseSuccess(result.raw_log);
+        const logs = parseLogs(result.logs);
         const codeIdAttr = findAttribute(logs, "message", "code_id");
         codeId = Number.parseInt(codeIdAttr.value, 10);
         expect(codeId).toBeGreaterThanOrEqual(1);
@@ -305,7 +300,7 @@ describe("RestClient", () => {
         const result = await instantiateContract(client, pen, codeId, beneficiaryAddress, transferAmount);
         expect(result.code).toBeFalsy();
         // console.log("Raw log:", result.raw_log);
-        const logs = parseSuccess(result.raw_log);
+        const logs = parseLogs(result.logs);
         const contractAddressAttr = findAttribute(logs, "message", "contract_address");
         contractAddress = contractAddressAttr.value;
         const amountAttr = findAttribute(logs, "transfer", "amount");
@@ -320,7 +315,7 @@ describe("RestClient", () => {
         const result = await executeContract(client, pen, contractAddress);
         expect(result.code).toBeFalsy();
         // console.log("Raw log:", result.raw_log);
-        const [firstLog] = parseSuccess(result.raw_log);
+        const [firstLog] = parseLogs(result.logs);
         expect(firstLog.log).toEqual(`released funds to ${beneficiaryAddress}`);
 
         // Verify token transfer from contract to beneficiary
@@ -346,7 +341,7 @@ describe("RestClient", () => {
       // upload data
       const result = await uploadContract(client, pen);
       expect(result.code).toBeFalsy();
-      const logs = parseSuccess(result.raw_log);
+      const logs = parseLogs(result.logs);
       const codeIdAttr = findAttribute(logs, "message", "code_id");
       const codeId = Number.parseInt(codeIdAttr.value, 10);
 
@@ -381,9 +376,9 @@ describe("RestClient", () => {
       if (existingInfos.length > 0) {
         codeId = existingInfos[existingInfos.length - 1].id;
       } else {
-        const uploaded = await uploadContract(client, pen);
-        expect(uploaded.code).toBeFalsy();
-        const uploadLogs = parseSuccess(uploaded.raw_log);
+        const uploadResult = await uploadContract(client, pen);
+        expect(uploadResult.code).toBeFalsy();
+        const uploadLogs = parseLogs(uploadResult.logs);
         const codeIdAttr = findAttribute(uploadLogs, "message", "code_id");
         codeId = Number.parseInt(codeIdAttr.value, 10);
       }
@@ -393,7 +388,7 @@ describe("RestClient", () => {
 
       const result = await instantiateContract(client, pen, codeId, beneficiaryAddress, transferAmount);
       expect(result.code).toBeFalsy();
-      const logs = parseSuccess(result.raw_log);
+      const logs = parseLogs(result.logs);
       const contractAddressAttr = findAttribute(logs, "message", "contract_address");
       const myAddress = contractAddressAttr.value;
 
