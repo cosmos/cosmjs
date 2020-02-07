@@ -122,8 +122,6 @@ export function main(originalArgs: readonly string[]): void {
   console.info(colors.yellow("Available imports:"));
   console.info(colors.yellow("  * http"));
   console.info(colors.yellow("  * https"));
-  console.info(colors.yellow("  * leveldown"));
-  console.info(colors.yellow("  * levelup"));
   console.info(colors.yellow("  * from long"));
   console.info(colors.yellow("    - Long"));
   for (const moduleName of imports.keys()) {
@@ -139,8 +137,6 @@ export function main(originalArgs: readonly string[]): void {
   console.info(colors.yellow("    - toHex"));
 
   let init = `
-    import leveldown = require('leveldown');
-    import levelup from "levelup";
     import * as http from 'http';
     import * as https from 'https';
     import Long from "long";
@@ -170,9 +166,6 @@ export function main(originalArgs: readonly string[]): void {
 
       const profile = new UserProfile();
       const wallet = profile.addWallet(Ed25519HdWallet.fromMnemonic("degree tackle suggest window test behind mesh extra cover prepare oak script"));
-      const db = levelup(leveldown('./selftest_userprofile_db'));
-      await profile.storeIn(db, "secret passwd");
-      const profileFromDb = await UserProfile.loadFrom(db, "secret passwd");
 
       console.info("Done testing, will exit now.");
       process.exit(0);
