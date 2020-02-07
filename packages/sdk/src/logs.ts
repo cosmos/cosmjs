@@ -59,3 +59,26 @@ export function parseLogs(input: unknown): readonly Log[] {
   if (!Array.isArray(input)) throw new Error("Logs must be an array");
   return input.map(parseLog);
 }
+
+/**
+ * Searches in logs for the first event of the given event type and in that event
+ * for the first first attribute with the given attribute key.
+ *
+ * Throws if the attribute was not found.
+ */
+export function findAttribute(
+  logs: readonly Log[],
+  eventType: "message" | "transfer",
+  attrKey: string,
+): Attribute {
+  const firstLogs = logs.find(() => true);
+  const out = firstLogs?.events
+    .find(event => event.type === eventType)
+    ?.attributes.find(attr => attr.key === attrKey);
+  if (!out) {
+    throw new Error(
+      `Could not find attribute '${attrKey}' in first event of type '${eventType}' in first log.`,
+    );
+  }
+  return out;
+}

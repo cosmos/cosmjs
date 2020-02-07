@@ -4,7 +4,7 @@ import { Bech32, Encoding } from "@iov/encoding";
 
 import { encodeSecp256k1Signature, makeSignBytes, marshalTx } from "./encoding";
 import { leb128Encode } from "./leb128.spec";
-import { Attribute, Log, parseLogs } from "./logs";
+import { findAttribute, parseLogs } from "./logs";
 import { Pen, Secp256k1Pen } from "./pen";
 import { PostTxsResponse, RestClient } from "./restclient";
 import contract from "./testdata/contract.json";
@@ -34,11 +34,6 @@ function pendingWithoutCosmos(): void {
   if (!process.env.COSMOS_ENABLED) {
     return pending("Set COSMOS_ENABLED to enable Cosmos node-based tests");
   }
-}
-
-function parseSuccess(rawLog?: string): readonly Log[] {
-  if (!rawLog) throw new Error("Log missing");
-  return parseLogs(JSON.parse(rawLog));
 }
 
 function makeSignedTx(firstMsg: Msg, fee: StdFee, memo: string, firstSignature: StdSignature): StdTx {
@@ -80,20 +75,6 @@ function makeRandomAddress(): string {
   return Bech32.encode("cosmos", Random.getBytes(20));
 }
 
-/** Throws if the attribute was not found */
-function findAttribute(logs: readonly Log[], eventType: "message" | "transfer", attrKey: string): Attribute {
-  const firstLogs = logs.find(() => true);
-  const out = firstLogs?.events
-    .find(event => event.type === eventType)
-    ?.attributes.find(attr => attr.key === attrKey);
-  if (!out) {
-    throw new Error(
-      `Could not find attribute '${attrKey}' in first event of type '${eventType}' in first log.`,
-    );
-  }
-  return out;
-}
-
 async function uploadContract(client: RestClient, pen: Pen): Promise<PostTxsResponse> {
   const memo = "My first contract on chain";
   const theMsg: MsgStoreCode = {
@@ -127,7 +108,7 @@ async function instantiateContract(
   pen: Pen,
   codeId: number,
   beneficiaryAddress: string,
-  transferAmount: readonly Coin[],
+  transferAmount?: readonly Coin[],
 ): Promise<PostTxsResponse> {
   const memo = "Create an escrow instance";
   const theMsg: MsgInstantiateContract = {
@@ -139,7 +120,7 @@ async function instantiateContract(
         verifier: faucetAddress,
         beneficiary: beneficiaryAddress,
       },
-      init_funds: transferAmount,
+      init_funds: transferAmount || [],
     },
   };
   const fee: StdFee = {
@@ -291,7 +272,7 @@ describe("RestClient", () => {
         // console.log("Raw log:", result.raw_log);
         const result = await uploadContract(client, pen);
         expect(result.code).toBeFalsy();
-        const logs = parseSuccess(result.raw_log);
+        const logs = parseLogs(result.logs);
         const codeIdAttr = findAttribute(logs, "message", "code_id");
         codeId = Number.parseInt(codeIdAttr.value, 10);
         expect(codeId).toBeGreaterThanOrEqual(1);
@@ -305,7 +286,7 @@ describe("RestClient", () => {
         const result = await instantiateContract(client, pen, codeId, beneficiaryAddress, transferAmount);
         expect(result.code).toBeFalsy();
         // console.log("Raw log:", result.raw_log);
-        const logs = parseSuccess(result.raw_log);
+        const logs = parseLogs(result.logs);
         const contractAddressAttr = findAttribute(logs, "message", "contract_address");
         contractAddress = contractAddressAttr.value;
         const amountAttr = findAttribute(logs, "transfer", "amount");
@@ -320,7 +301,7 @@ describe("RestClient", () => {
         const result = await executeContract(client, pen, contractAddress);
         expect(result.code).toBeFalsy();
         // console.log("Raw log:", result.raw_log);
-        const [firstLog] = parseSuccess(result.raw_log);
+        const [firstLog] = parseLogs(result.logs);
         expect(firstLog.log).toEqual(`released funds to ${beneficiaryAddress}`);
 
         // Verify token transfer from contract to beneficiary
@@ -346,7 +327,7 @@ describe("RestClient", () => {
       // upload data
       const result = await uploadContract(client, pen);
       expect(result.code).toBeFalsy();
-      const logs = parseSuccess(result.raw_log);
+      const logs = parseLogs(result.logs);
       const codeIdAttr = findAttribute(logs, "message", "code_id");
       const codeId = Number.parseInt(codeIdAttr.value, 10);
 
@@ -381,9 +362,9 @@ describe("RestClient", () => {
       if (existingInfos.length > 0) {
         codeId = existingInfos[existingInfos.length - 1].id;
       } else {
-        const uploaded = await uploadContract(client, pen);
-        expect(uploaded.code).toBeFalsy();
-        const uploadLogs = parseSuccess(uploaded.raw_log);
+        const uploadResult = await uploadContract(client, pen);
+        expect(uploadResult.code).toBeFalsy();
+        const uploadLogs = parseLogs(uploadResult.logs);
         const codeIdAttr = findAttribute(uploadLogs, "message", "code_id");
         codeId = Number.parseInt(codeIdAttr.value, 10);
       }
@@ -393,7 +374,7 @@ describe("RestClient", () => {
 
       const result = await instantiateContract(client, pen, codeId, beneficiaryAddress, transferAmount);
       expect(result.code).toBeFalsy();
-      const logs = parseSuccess(result.raw_log);
+      const logs = parseLogs(result.logs);
       const contractAddressAttr = findAttribute(logs, "message", "contract_address");
       const myAddress = contractAddressAttr.value;
 
@@ -424,13 +405,17 @@ describe("RestClient", () => {
       const noContract = makeRandomAddress();
       const expectedKey = toAscii("config");
 
-      // find an existing contract (created above)
-      // we assume all contracts on this chain are the same (created by these tests)
-      const getContractAddress = async (): Promise<string> => {
-        const contractInfos = await client.listContractAddresses();
-        expect(contractInfos.length).toBeGreaterThan(0);
-        return contractInfos[0];
-      };
+      /**
+       * Finds the most recent contract (created above)
+       *
+       * We assume the tests above ran, all instantiate the same contract and no other process squeezed in a different contract.
+       */
+      async function getContractAddress(): Promise<string> {
+        const contracts = Array.from(await client.listContractAddresses());
+        const last = contracts.reverse().find(() => true);
+        if (!last) throw new Error("No contract found");
+        return last;
+      }
 
       it("can get all state", async () => {
         pendingWithoutCosmos();

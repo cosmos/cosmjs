@@ -84,6 +84,9 @@ jobs:
           name: Wait for blockchain and REST server to be ready (started in background)
           command: timeout 60 bash -c "until curl -s http://localhost:1317/node_info > /dev/null; do sleep 1; done"
       - run:
+          name: Deploy ERC20 contract
+          command: ./scripts/cosm/deploy_erc20.js
+      - run:
           environment:
             COSMOS_ENABLED: 1
             SKIP_BUILD: 1
