@@ -405,13 +405,17 @@ describe("RestClient", () => {
       const noContract = makeRandomAddress();
       const expectedKey = toAscii("config");
 
-      // find an existing contract (created above)
-      // we assume all contracts on this chain are the same (created by these tests)
-      const getContractAddress = async (): Promise<string> => {
-        const contractInfos = await client.listContractAddresses();
-        expect(contractInfos.length).toBeGreaterThan(0);
-        return contractInfos[0];
-      };
+      /**
+       * Finds the most recent contract (created above)
+       *
+       * We assume the tests above ran, all instantiate the same contract and no other process squeezed in a different contract.
+       */
+      async function getContractAddress(): Promise<string> {
+        const contracts = Array.from(await client.listContractAddresses());
+        const last = contracts.reverse().find(() => true);
+        if (!last) throw new Error("No contract found");
+        return last;
+      }
 
       it("can get all state", async () => {
         pendingWithoutCosmos();
