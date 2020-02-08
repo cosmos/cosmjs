@@ -41,6 +41,7 @@ export function main(originalArgs: readonly string[]): void {
     [
       "@cosmwasm/sdk",
       [
+        "encodeAddress",
         "encodeSecp256k1Pubkey",
         "encodeSecp256k1Signature",
         "makeSignBytes",
@@ -130,9 +131,10 @@ export function main(originalArgs: readonly string[]): void {
       const encoded = toHex(toUtf8(toBase64(toAscii("hello world"))));
       const decoded = fromAscii(fromBase64(fromUtf8(fromHex(encoded))));
 
-      const pen = await Secp256k1Pen.fromMnemonic(
-        "zebra slush diet army arrest purpose hawk source west glimpse custom record",
-      );
+      const mnemonic = Bip39.encode(Random.getBytes(16)).toString();
+      const pen = await Secp256k1Pen.fromMnemonic(mnemonic);
+      const pubkey = encodeSecp256k1Pubkey(pen.pubkey);
+      const address = encodeAddress(pubkey, "cosmos");
       const data = Encoding.toAscii("foo bar");
       const signature = await pen.createSignature(data);
 
