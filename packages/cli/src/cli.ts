@@ -96,9 +96,14 @@ export function main(originalArgs: readonly string[]): void {
     }
   }
   console.info(colors.yellow("  * helper functions"));
-  console.info(colors.yellow("    - toAscii"));
+  console.info(colors.yellow("    - fromAscii"));
+  console.info(colors.yellow("    - fromBase64"));
   console.info(colors.yellow("    - fromHex"));
+  console.info(colors.yellow("    - fromUtf8"));
+  console.info(colors.yellow("    - toAscii"));
+  console.info(colors.yellow("    - toBase64"));
   console.info(colors.yellow("    - toHex"));
+  console.info(colors.yellow("    - toUtf8"));
 
   let init = `
     import * as http from 'http';
@@ -111,7 +116,7 @@ export function main(originalArgs: readonly string[]): void {
   }
   // helper functions
   init += `
-    const { toAscii, fromHex, toHex } = Encoding;
+    const { fromAscii, fromBase64, fromHex, fromUtf8, toAscii, toBase64, toHex, toUtf8 } = Encoding;
   `;
 
   if (args.selftest) {
@@ -121,6 +126,9 @@ export function main(originalArgs: readonly string[]): void {
       const hash = new Sha512(new Uint8Array([])).digest();
       const hexHash = toHex(hash);
       export class NewDummyClass {};
+
+      const encoded = toHex(toUtf8(toBase64(toAscii("hello world"))));
+      const decoded = fromAscii(fromBase64(fromUtf8(fromHex(encoded))));
 
       const pen = await Secp256k1Pen.fromMnemonic(
         "zebra slush diet army arrest purpose hawk source west glimpse custom record",
