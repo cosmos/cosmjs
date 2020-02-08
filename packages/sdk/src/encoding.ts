@@ -1,7 +1,8 @@
 import { Secp256k1 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
 
-import { Msg, NonceInfo, pubkeyType, StdFee, StdSignature, StdTx } from "./types";
+import { encodeSecp256k1Pubkey } from "./pubkey";
+import { Msg, NonceInfo, StdFee, StdSignature, StdTx } from "./types";
 
 const { toBase64, toUtf8 } = Encoding;
 
@@ -61,10 +62,7 @@ export function makeSignBytes(
 export function encodeSecp256k1Signature(pubkey: Uint8Array, signature: Uint8Array): StdSignature {
   return {
     // eslint-disable-next-line @typescript-eslint/camelcase
-    pub_key: {
-      type: pubkeyType.secp256k1,
-      value: toBase64(Secp256k1.compressPubkey(pubkey)),
-    },
+    pub_key: encodeSecp256k1Pubkey(pubkey),
     // Recovery seems to be unused
     signature: toBase64(Secp256k1.trimRecoveryByte(signature)),
   };

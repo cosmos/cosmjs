@@ -41,6 +41,7 @@ export function main(originalArgs: readonly string[]): void {
     [
       "@cosmwasm/sdk",
       [
+        "encodeSecp256k1Pubkey",
         "encodeSecp256k1Signature",
         "makeSignBytes",
         "marshalTx",
