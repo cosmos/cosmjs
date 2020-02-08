@@ -75,6 +75,17 @@ const signedTx: types.StdTx = {
 const postResult = await client.postTx(marshalTx(signedTx));
 ```
 
+## Other example codes
+
+### Create random mnemonic and Cosmos address
+
+```ts
+const mnemonic = Bip39.encode(Random.getBytes(16)).toString();
+const pen = await Secp256k1Pen.fromMnemonic(mnemonic);
+const pubkey = encodeSecp256k1Pubkey(pen.pubkey);
+const address = encodeAddress(pubkey, "cosmos");
+```
+
 ## License
 
 This package is part of the cosmwasm-js repository, licensed under the Apache
