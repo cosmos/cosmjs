@@ -29,6 +29,9 @@ const faucetMnemonic =
   "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone";
 const faucetAddress = "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6";
 const emptyAddress = "cosmos1ltkhnmdcqemmd2tkhnx7qx66tq7e0wykw2j85k";
+const unusedAccount = {
+  address: "cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u",
+};
 
 function pendingWithoutCosmos(): void {
   if (!process.env.COSMOS_ENABLED) {
@@ -188,13 +191,29 @@ describe("RestClient", () => {
   });
 
   describe("authAccounts", () => {
-    it("works", async () => {
+    it("works for unused account without pubkey", async () => {
       pendingWithoutCosmos();
       const client = new RestClient(httpUrl);
-      const { result } = await client.authAccounts(faucetAddress);
-      const account = result.value;
-      expect(account.account_number).toEqual(4);
-      expect(account.sequence).toBeGreaterThanOrEqual(0);
+      const { result } = await client.authAccounts(unusedAccount.address);
+      expect(result).toEqual({
+        type: "cosmos-sdk/Account",
+        value: {
+          address: unusedAccount.address,
+          public_key: "", // not known to the chain
+          coins: [
+            {
+              amount: "1000000000",
+              denom: "ucosm",
+            },
+            {
+              amount: "1000000000",
+              denom: "ustake",
+            },
+          ],
+          account_number: 5,
+          sequence: 0,
+        },
+      });
     });
   });
 

@@ -26,6 +26,7 @@ interface BlocksResponse {
 }
 interface AuthAccountsResponse {
   readonly result: {
+    readonly type: "cosmos-sdk/Account";
     readonly value: BaseAccount;
   };
 }
