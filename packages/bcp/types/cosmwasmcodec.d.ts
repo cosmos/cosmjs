@@ -1,3 +1,4 @@
+import { CosmosAddressBech32Prefix } from "@cosmwasm/sdk";
 import {
   Address,
   ChainId,
@@ -10,12 +11,11 @@ import {
   TxCodec,
   UnsignedTransaction,
 } from "@iov/bcp";
-import { CosmosBech32Prefix } from "./address";
 import { TokenInfos } from "./types";
 export declare class CosmWasmCodec implements TxCodec {
-  private readonly prefix;
+  private readonly addressPrefix;
   private readonly tokens;
-  constructor(prefix: CosmosBech32Prefix, tokens: TokenInfos);
+  constructor(addressPrefix: CosmosAddressBech32Prefix, tokens: TokenInfos);
   bytesToSign(unsigned: UnsignedTransaction, nonce: Nonce): SigningJob;
   bytesToPost(signed: SignedTransaction): PostableBytes;
   identifier(_signed: SignedTransaction): TransactionId;

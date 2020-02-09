@@ -1,7 +1,7 @@
 import { Algorithm, PubkeyBytes } from "@iov/bcp";
 import { Encoding } from "@iov/encoding";
 
-import { decodeCosmosPubkey, isValidAddress, pubkeyToAddress } from "./address";
+import { decodeCosmosPubkey, pubkeyToAddress } from "./address";
 
 const { fromBase64, fromHex } = Encoding;
 
@@ -14,23 +14,6 @@ describe("address", () => {
         data: fromBase64("A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ"),
         algo: Algorithm.Secp256k1,
       });
-    });
-  });
-
-  describe("isValidAddress", () => {
-    it("accepts valid addresses", () => {
-      expect(isValidAddress("cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6")).toEqual(true);
-      expect(isValidAddress("cosmosvalcons10q82zkzzmaku5lazhsvxv7hsg4ntpuhdwadmss")).toEqual(true);
-      expect(isValidAddress("cosmosvaloper17mggn4znyeyg25wd7498qxl7r2jhgue8u4qjcq")).toEqual(true);
-    });
-
-    it("rejects invalid addresses", () => {
-      // Bad size
-      expect(isValidAddress("cosmos10q82zkzzmaku5lazhsvxv7hsg4ntpuhh8289f")).toEqual(false);
-      // Bad checksum
-      expect(isValidAddress("cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs7")).toEqual(false);
-      // Bad prefix
-      expect(isValidAddress("cosmot10q82zkzzmaku5lazhsvxv7hsg4ntpuhd8j5266")).toEqual(false);
     });
   });
 

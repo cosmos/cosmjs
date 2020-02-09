@@ -151,7 +151,7 @@ export const pubkeyTypes: readonly string[] = [pubkeyType.secp256k1, pubkeyType.
 // bech32-encoded amino-binary encoded PubKey interface. oof.
 export type Bech32PubKey = string;
 
-export interface BaseAccount {
+export interface CosmosSdkAccount {
   /** Bech32 account address */
   readonly address: string;
   readonly coins: ReadonlyArray<Coin>;
@@ -160,8 +160,8 @@ export interface BaseAccount {
   readonly sequence: number;
 }
 
-/** The data we need from BaseAccount to create a nonce */
-export type NonceInfo = Pick<BaseAccount, "account_number" | "sequence">;
+/** The data we need from CosmosSdkAccount to create a nonce */
+export type NonceInfo = Pick<CosmosSdkAccount, "account_number" | "sequence">;
 
 export interface CodeInfo {
   readonly id: number;

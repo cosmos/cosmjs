@@ -1,21 +1,10 @@
 import { Encoding } from "@iov/encoding";
 
-import { decodeBech32Pubkey, encodeAddress, isValidAddress } from "./address";
+import { encodeAddress, isValidAddress } from "./address";
 
 const { toBase64, fromHex } = Encoding;
 
 describe("address", () => {
-  describe("decodeBech32Pubkey", () => {
-    it("works", () => {
-      expect(
-        decodeBech32Pubkey("cosmospub1addwnpepqd8sgxq7aw348ydctp3n5ajufgxp395hksxjzc6565yfp56scupfqhlgyg5"),
-      ).toEqual({
-        type: "tendermint/PubKeySecp256k1",
-        value: "A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ",
-      });
-    });
-  });
-
   describe("isValidAddress", () => {
     it("accepts valid addresses", () => {
       expect(isValidAddress("cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6")).toEqual(true);

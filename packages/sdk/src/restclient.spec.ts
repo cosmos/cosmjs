@@ -6,6 +6,7 @@ import { encodeSecp256k1Signature, makeSignBytes, marshalTx } from "./encoding";
 import { leb128Encode } from "./leb128.spec";
 import { findAttribute, parseLogs } from "./logs";
 import { Pen, Secp256k1Pen } from "./pen";
+import { encodeBech32Pubkey } from "./pubkey";
 import { PostTxsResponse, RestClient } from "./restclient";
 import contract from "./testdata/contract.json";
 import cosmoshub from "./testdata/cosmoshub.json";
@@ -25,10 +26,19 @@ const { fromBase64, fromHex, toAscii, toBase64, toHex } = Encoding;
 
 const httpUrl = "http://localhost:1317";
 const defaultNetworkId = "testing";
-const faucetMnemonic =
-  "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone";
-const faucetAddress = "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6";
+const faucet = {
+  mnemonic:
+    "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone",
+  pubkey: {
+    type: "tendermint/PubKeySecp256k1",
+    value: "A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ",
+  },
+  address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+};
 const emptyAddress = "cosmos1ltkhnmdcqemmd2tkhnx7qx66tq7e0wykw2j85k";
+const unusedAccount = {
+  address: "cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u",
+};
 
 function pendingWithoutCosmos(): void {
   if (!process.env.COSMOS_ENABLED) {
@@ -80,7 +90,7 @@ async function uploadContract(client: RestClient, pen: Pen): Promise<PostTxsResp
   const theMsg: MsgStoreCode = {
     type: "wasm/store-code",
     value: {
-      sender: faucetAddress,
+      sender: faucet.address,
       wasm_byte_code: toBase64(getRandomizedContract()),
       source: "https://github.com/confio/cosmwasm/raw/0.7/lib/vm/testdata/contract_0.6.wasm",
       builder: "cosmwasm-opt:0.6.2",
@@ -96,7 +106,7 @@ async function uploadContract(client: RestClient, pen: Pen): Promise<PostTxsResp
     gas: "89000000",
   };
 
-  const account = (await client.authAccounts(faucetAddress)).result.value;
+  const account = (await client.authAccounts(faucet.address)).result.value;
   const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account);
   const signature = encodeSecp256k1Signature(pen.pubkey, await pen.createSignature(signBytes));
   const signedTx = makeSignedTx(theMsg, fee, memo, signature);
@@ -114,10 +124,10 @@ async function instantiateContract(
   const theMsg: MsgInstantiateContract = {
     type: "wasm/instantiate",
     value: {
-      sender: faucetAddress,
+      sender: faucet.address,
       code_id: codeId.toString(),
       init_msg: {
-        verifier: faucetAddress,
+        verifier: faucet.address,
         beneficiary: beneficiaryAddress,
       },
       init_funds: transferAmount || [],
@@ -133,7 +143,7 @@ async function instantiateContract(
     gas: "89000000",
   };
 
-  const account = (await client.authAccounts(faucetAddress)).result.value;
+  const account = (await client.authAccounts(faucet.address)).result.value;
   const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account);
   const signature = encodeSecp256k1Signature(pen.pubkey, await pen.createSignature(signBytes));
   const signedTx = makeSignedTx(theMsg, fee, memo, signature);
@@ -149,7 +159,7 @@ async function executeContract(
   const theMsg: MsgExecuteContract = {
     type: "wasm/execute",
     value: {
-      sender: faucetAddress,
+      sender: faucet.address,
       contract: contractAddress,
       msg: {},
       sent_funds: [],
@@ -165,7 +175,7 @@ async function executeContract(
     gas: "89000000",
   };
 
-  const account = (await client.authAccounts(faucetAddress)).result.value;
+  const account = (await client.authAccounts(faucet.address)).result.value;
   const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account);
   const signature = encodeSecp256k1Signature(pen.pubkey, await pen.createSignature(signBytes));
   const signedTx = makeSignedTx(theMsg, fee, memo, signature);
@@ -188,13 +198,40 @@ describe("RestClient", () => {
   });
 
   describe("authAccounts", () => {
-    it("works", async () => {
+    it("works for unused account without pubkey", async () => {
       pendingWithoutCosmos();
       const client = new RestClient(httpUrl);
-      const { result } = await client.authAccounts(faucetAddress);
-      const account = result.value;
-      expect(account.account_number).toEqual(4);
-      expect(account.sequence).toBeGreaterThanOrEqual(0);
+      const { result } = await client.authAccounts(unusedAccount.address);
+      expect(result).toEqual({
+        type: "cosmos-sdk/Account",
+        value: {
+          address: unusedAccount.address,
+          public_key: "", // not known to the chain
+          coins: [
+            {
+              amount: "1000000000",
+              denom: "ucosm",
+            },
+            {
+              amount: "1000000000",
+              denom: "ustake",
+            },
+          ],
+          account_number: 5,
+          sequence: 0,
+        },
+      });
+    });
+
+    it("has correct pubkey for faucet", async () => {
+      pendingWithoutCosmos();
+      const client = new RestClient(httpUrl);
+      const { result } = await client.authAccounts(faucet.address);
+      expect(result.value).toEqual(
+        jasmine.objectContaining({
+          public_key: encodeBech32Pubkey(faucet.pubkey, "cosmospub"),
+        }),
+      );
     });
   });
 
@@ -210,13 +247,13 @@ describe("RestClient", () => {
   describe("post", () => {
     it("can send tokens", async () => {
       pendingWithoutCosmos();
-      const pen = await Secp256k1Pen.fromMnemonic(faucetMnemonic);
+      const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
 
       const memo = "My first contract on chain";
       const theMsg: MsgSend = {
         type: "cosmos-sdk/MsgSend",
         value: {
-          from_address: faucetAddress,
+          from_address: faucet.address,
           to_address: emptyAddress,
           amount: [
             {
@@ -238,7 +275,7 @@ describe("RestClient", () => {
       };
 
       const client = new RestClient(httpUrl);
-      const account = (await client.authAccounts(faucetAddress)).result.value;
+      const account = (await client.authAccounts(faucet.address)).result.value;
 
       const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account);
       const signature = encodeSecp256k1Signature(pen.pubkey, await pen.createSignature(signBytes));
@@ -250,7 +287,7 @@ describe("RestClient", () => {
 
     it("can upload, instantiate and execute wasm", async () => {
       pendingWithoutCosmos();
-      const pen = await Secp256k1Pen.fromMnemonic(faucetMnemonic);
+      const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
       const client = new RestClient(httpUrl);
 
       const transferAmount: readonly Coin[] = [
@@ -316,7 +353,7 @@ describe("RestClient", () => {
   describe("query", () => {
     it("can list upload code", async () => {
       pendingWithoutCosmos();
-      const pen = await Secp256k1Pen.fromMnemonic(faucetMnemonic);
+      const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
       const client = new RestClient(httpUrl);
 
       // check with contracts were here first to compare
@@ -336,17 +373,17 @@ describe("RestClient", () => {
       expect(newInfos.length).toEqual(numExisting + 1);
       const lastInfo = newInfos[newInfos.length - 1];
       expect(lastInfo.id).toEqual(codeId);
-      expect(lastInfo.creator).toEqual(faucetAddress);
+      expect(lastInfo.creator).toEqual(faucet.address);
 
       // TODO: check code hash matches expectation
-      // expect(lastInfo.code_hash).toEqual(faucetAddress);
+      // expect(lastInfo.code_hash).toEqual(faucet.address);
 
       // TODO: download code and check against auto-gen
     });
 
     it("can list contracts and get info", async () => {
       pendingWithoutCosmos();
-      const pen = await Secp256k1Pen.fromMnemonic(faucetMnemonic);
+      const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
       const client = new RestClient(httpUrl);
       const beneficiaryAddress = makeRandomAddress();
       const transferAmount: readonly Coin[] = [
@@ -390,7 +427,7 @@ describe("RestClient", () => {
       // check out info
       const myInfo = await client.getContractInfo(myAddress);
       expect(myInfo.code_id).toEqual(codeId);
-      expect(myInfo.creator).toEqual(faucetAddress);
+      expect(myInfo.creator).toEqual(faucet.address);
       expect((myInfo.init_msg as any).beneficiary).toEqual(beneficiaryAddress);
 
       // make sure random addresses don't give useful info
@@ -459,7 +496,7 @@ describe("RestClient", () => {
 
         // we can query the verifier properly
         const verifier = await client.queryContractSmart(contractAddress, { verifier: {} });
-        expect(verifier).toEqual(faucetAddress);
+        expect(verifier).toEqual(faucet.address);
 
         // invalid query syntax throws an error
         await client.queryContractSmart(contractAddress, { nosuchkey: {} }).then(

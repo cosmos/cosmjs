@@ -7,6 +7,27 @@ import { chainId, nonce, sendTxJson, signedTxBin, signedTxEncodedJson, signedTxJ
 const { toUtf8 } = Encoding;
 
 describe("cosmWasmCodec", () => {
+  describe("isValidAddress", () => {
+    it("accepts valid addresses", () => {
+      expect(cosmWasmCodec.isValidAddress("cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6")).toEqual(true);
+      expect(cosmWasmCodec.isValidAddress("cosmosvalcons10q82zkzzmaku5lazhsvxv7hsg4ntpuhdwadmss")).toEqual(
+        true,
+      );
+      expect(cosmWasmCodec.isValidAddress("cosmosvaloper17mggn4znyeyg25wd7498qxl7r2jhgue8u4qjcq")).toEqual(
+        true,
+      );
+    });
+
+    it("rejects invalid addresses", () => {
+      // Bad size
+      expect(cosmWasmCodec.isValidAddress("cosmos10q82zkzzmaku5lazhsvxv7hsg4ntpuhh8289f")).toEqual(false);
+      // Bad checksum
+      expect(cosmWasmCodec.isValidAddress("cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs7")).toEqual(false);
+      // Bad prefix
+      expect(cosmWasmCodec.isValidAddress("cosmot10q82zkzzmaku5lazhsvxv7hsg4ntpuhd8j5266")).toEqual(false);
+    });
+  });
+
   it("properly generates bytes to sign", () => {
     const expected = {
       bytes: toUtf8(

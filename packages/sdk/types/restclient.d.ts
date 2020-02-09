@@ -1,4 +1,4 @@
-import { AminoTx, BaseAccount, CodeInfo, ContractInfo, StdTx, WasmData } from "./types";
+import { AminoTx, CodeInfo, ContractInfo, CosmosSdkAccount, StdTx, WasmData } from "./types";
 interface NodeInfo {
   readonly network: string;
 }
@@ -26,7 +26,8 @@ interface BlocksResponse {
 }
 interface AuthAccountsResponse {
   readonly result: {
-    readonly value: BaseAccount;
+    readonly type: "cosmos-sdk/Account";
+    readonly value: CosmosSdkAccount;
   };
 }
 declare type WasmResponse = WasmSuccess | WasmError;

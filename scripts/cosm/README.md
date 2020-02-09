@@ -78,3 +78,12 @@ You should get output matching the following:
   threshold: 0
   pubkeys: []
 ```
+
+## Preset accounts
+
+1. Faucet<br>
+   economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone<br>
+   cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6
+2. Unused: for testing account state; this account never changes balances or nonces<br>
+   oyster design unusual machine spread century engine gravity focus cave carry slot<br>
+   cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u

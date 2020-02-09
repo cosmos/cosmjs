@@ -1,5 +1,12 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { makeSignBytes, marshalTx, types, unmarshalTx } from "@cosmwasm/sdk";
+import {
+  CosmosAddressBech32Prefix,
+  isValidAddress,
+  makeSignBytes,
+  marshalTx,
+  types,
+  unmarshalTx,
+} from "@cosmwasm/sdk";
 import {
   Address,
   ChainId,
@@ -15,18 +22,18 @@ import {
   UnsignedTransaction,
 } from "@iov/bcp";
 
-import { CosmosBech32Prefix, isValidAddress, pubkeyToAddress } from "./address";
+import { pubkeyToAddress } from "./address";
 import { Caip5 } from "./caip5";
 import { parseTx } from "./decode";
 import { buildSignedTx, buildUnsignedTx } from "./encode";
 import { nonceToAccountNumber, nonceToSequence, TokenInfos } from "./types";
 
 export class CosmWasmCodec implements TxCodec {
-  private readonly prefix: CosmosBech32Prefix;
+  private readonly addressPrefix: CosmosAddressBech32Prefix;
   private readonly tokens: TokenInfos;
 
-  public constructor(prefix: CosmosBech32Prefix, tokens: TokenInfos) {
-    this.prefix = prefix;
+  public constructor(addressPrefix: CosmosAddressBech32Prefix, tokens: TokenInfos) {
+    this.addressPrefix = addressPrefix;
     this.tokens = tokens;
   }
 
@@ -76,7 +83,7 @@ export class CosmWasmCodec implements TxCodec {
   }
 
   public identityToAddress(identity: Identity): Address {
-    return pubkeyToAddress(identity.pubkey, this.prefix);
+    return pubkeyToAddress(identity.pubkey, this.addressPrefix);
   }
 
   public isValidAddress(address: string): boolean {
@@ -84,7 +91,7 @@ export class CosmWasmCodec implements TxCodec {
   }
 }
 
-const defaultPrefix = "cosmos" as CosmosBech32Prefix;
+const defaultPrefix = "cosmos" as CosmosAddressBech32Prefix;
 
 const defaultTokens: TokenInfos = [
   {

@@ -1,5 +1,5 @@
 {
-  "genesis_time": "2020-01-30T20:58:17.838935022Z",
+  "genesis_time": "2020-02-09T11:05:31.7520515Z",
   "chain_id": "testing",
   "consensus_params": {
     "block": {
@@ -19,18 +19,25 @@
   },
   "app_hash": "",
   "app_state": {
-    "slashing": {
+    "distribution": {
       "params": {
-        "signed_blocks_window": "100",
-        "min_signed_per_window": "0.500000000000000000",
-        "downtime_jail_duration": "600000000000",
-        "slash_fraction_double_sign": "0.050000000000000000",
-        "slash_fraction_downtime": "0.010000000000000000"
+        "community_tax": "0.020000000000000000",
+        "base_proposer_reward": "0.010000000000000000",
+        "bonus_proposer_reward": "0.040000000000000000",
+        "withdraw_addr_enabled": true
       },
-      "signing_infos": {},
-      "missed_blocks": {}
+      "fee_pool": {
+        "community_pool": []
+      },
+      "delegator_withdraw_infos": [],
+      "previous_proposer": "",
+      "outstanding_rewards": [],
+      "validator_accumulated_commissions": [],
+      "validator_historical_rewards": [],
+      "validator_current_rewards": [],
+      "delegator_starting_infos": [],
+      "validator_slash_events": []
     },
-    "params": null,
     "gov": {
       "starting_proposal_id": "1",
       "deposits": null,
@@ -54,12 +61,96 @@
         "veto": "0.334000000000000000"
       }
     },
+    "slashing": {
+      "params": {
+        "signed_blocks_window": "100",
+        "min_signed_per_window": "0.500000000000000000",
+        "downtime_jail_duration": "600000000000",
+        "slash_fraction_double_sign": "0.050000000000000000",
+        "slash_fraction_downtime": "0.010000000000000000"
+      },
+      "signing_infos": {},
+      "missed_blocks": {}
+    },
+    "supply": {
+      "supply": []
+    },
+    "wasm": {
+      "codes": null,
+      "contracts": null
+    },
+    "mint": {
+      "minter": {
+        "inflation": "0.130000000000000000",
+        "annual_provisions": "0.000000000000000000"
+      },
+      "params": {
+        "mint_denom": "ustake",
+        "inflation_rate_change": "0.130000000000000000",
+        "inflation_max": "0.200000000000000000",
+        "inflation_min": "0.070000000000000000",
+        "goal_bonded": "0.670000000000000000",
+        "blocks_per_year": "6311520"
+      }
+    },
+    "genutil": {
+      "gentxs": [
+        {
+          "type": "cosmos-sdk/StdTx",
+          "value": {
+            "msg": [
+              {
+                "type": "cosmos-sdk/MsgCreateValidator",
+                "value": {
+                  "description": {
+                    "moniker": "testing",
+                    "identity": "",
+                    "website": "",
+                    "security_contact": "",
+                    "details": ""
+                  },
+                  "commission": {
+                    "rate": "0.100000000000000000",
+                    "max_rate": "0.200000000000000000",
+                    "max_change_rate": "0.010000000000000000"
+                  },
+                  "min_self_delegation": "1",
+                  "delegator_address": "cosmos1wreev8h6a75z9zdde7cmxv4fdz75appy7h5wvg",
+                  "validator_address": "cosmosvaloper1wreev8h6a75z9zdde7cmxv4fdz75appymrqmqm",
+                  "pubkey": "cosmosvalconspub1zcjduepq0hlq4z5lt56ly07u79w3v3m9g59ms0kk7lykn5qvn48267s899hsdtxe88",
+                  "value": {
+                    "denom": "ustake",
+                    "amount": "250000000"
+                  }
+                }
+              }
+            ],
+            "fee": {
+              "amount": [],
+              "gas": "200000"
+            },
+            "signatures": [
+              {
+                "pub_key": {
+                  "type": "tendermint/PubKeySecp256k1",
+                  "value": "AjiLD/neb68jAuQI6XAeGfHf9xWz0k05QxVCJtHh2JCQ"
+                },
+                "signature": "+jsUfDU6Ji7li432ryDyVA3GBh82FQN8ufGuX9As+PptSmY8twa2sRD683dglBdq7DBSfxYQ4wSHU7zdzWmp6A=="
+              }
+            ],
+            "memo": "67289558533ad6df13f96bfb7c8ae44b457a919a@172.17.0.3:26656"
+          }
+        }
+      ]
+    },
     "evidence": {
       "params": {
         "max_evidence_age": "120000000000"
       },
       "evidence": []
     },
+    "params": null,
+    "upgrade": {},
     "staking": {
       "params": {
         "unbonding_time": "1814400000000000",
@@ -76,35 +167,6 @@
       "redelegations": null,
       "exported": false
     },
-    "distribution": {
-      "params": {
-        "community_tax": "0.020000000000000000",
-        "base_proposer_reward": "0.010000000000000000",
-        "bonus_proposer_reward": "0.040000000000000000",
-        "withdraw_addr_enabled": true
-      },
-      "fee_pool": {
-        "community_pool": []
-      },
-      "delegator_withdraw_infos": [],
-      "previous_proposer": "",
-      "outstanding_rewards": [],
-      "validator_accumulated_commissions": [],
-      "validator_historical_rewards": [],
-      "validator_current_rewards": [],
-      "delegator_starting_infos": [],
-      "validator_slash_events": []
-    },
-    "bank": {
-      "send_enabled": true
-    },
-    "crisis": {
-      "constant_fee": {
-        "denom": "ustake",
-        "amount": "1000"
-      }
-    },
-    "upgrade": {},
     "auth": {
       "params": {
         "max_memo_characters": "256",
@@ -117,7 +179,7 @@
         {
           "type": "cosmos-sdk/Account",
           "value": {
-            "address": "cosmos1q7glt5peka2zgd8ucnfsxeqkwkffhccwx4ch6w",
+            "address": "cosmos1wreev8h6a75z9zdde7cmxv4fdz75appy7h5wvg",
             "coins": [
               {
                 "denom": "ucosm",
@@ -151,79 +213,36 @@
             "account_number": 0,
             "sequence": 0
           }
-        }
-      ]
-    },
-    "mint": {
-      "minter": {
-        "inflation": "0.130000000000000000",
-        "annual_provisions": "0.000000000000000000"
-      },
-      "params": {
-        "mint_denom": "ustake",
-        "inflation_rate_change": "0.130000000000000000",
-        "inflation_max": "0.200000000000000000",
-        "inflation_min": "0.070000000000000000",
-        "goal_bonded": "0.670000000000000000",
-        "blocks_per_year": "6311520"
-      }
-    },
-    "wasm": {
-      "codes": null,
-      "contracts": null
-    },
-    "supply": {
-      "supply": []
-    },
-    "genutil": {
-      "gentxs": [
+        },
         {
-          "type": "cosmos-sdk/StdTx",
+          "type": "cosmos-sdk/Account",
           "value": {
-            "msg": [
+            "address": "cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u",
+            "coins": [
               {
-                "type": "cosmos-sdk/MsgCreateValidator",
-                "value": {
-                  "description": {
-                    "moniker": "testing",
-                    "identity": "",
-                    "website": "",
-                    "security_contact": "",
-                    "details": ""
-                  },
-                  "commission": {
-                    "rate": "0.100000000000000000",
-                    "max_rate": "0.200000000000000000",
-                    "max_change_rate": "0.010000000000000000"
-                  },
-                  "min_self_delegation": "1",
-                  "delegator_address": "cosmos1q7glt5peka2zgd8ucnfsxeqkwkffhccwx4ch6w",
-                  "validator_address": "cosmosvaloper1q7glt5peka2zgd8ucnfsxeqkwkffhccwrpvzka",
-                  "pubkey": "cosmosvalconspub1zcjduepqkhus4g994x0fwrgxrrq963xqughksvk0s3wwjm5whze07cnnm0dqlqy6p9",
-                  "value": {
-                    "denom": "ustake",
-                    "amount": "250000000"
-                  }
-                }
+                "denom": "ucosm",
+                "amount": "1000000000"
+              },
+              {
+                "denom": "ustake",
+                "amount": "1000000000"
               }
             ],
-            "fee": {
-              "amount": [],
-              "gas": "200000"
-            },
-            "signatures": [
-              {
-                "pub_key": {
-                  "type": "tendermint/PubKeySecp256k1",
-                  "value": "AjOaR16Vw2ojZoNgD+D2/vteeFigwiWY0SgXeQVaPpKH"
-                },
-                "signature": "zUsE2Gx9zO8SmeUg2zTgPJMzqd7ie3DyR3MmOFJh3RtHEWfKPBG4ZNRUtcDPkD+2aAX/UDVYnzZv+J1z9FBUKA=="
-              }
-            ],
-            "memo": "c40ec95e305b18861b32f69c11e2d0236d01c9e8@172.17.0.3:26656"
+            "public_key": "",
+            "account_number": 0,
+            "sequence": 0
           }
         }
       ]
+    },
+    "crisis": {
+      "constant_fee": {
+        "denom": "ustake",
+        "amount": "1000"
+      }
+    },
+    "bank": {
+      "send_enabled": true
     }
   }
 }
