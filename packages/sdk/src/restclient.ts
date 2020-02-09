@@ -324,14 +324,14 @@ export class RestClient {
 
   // Makes a "smart query" on the contract, returns response verbatim (json.RawMessage)
   // Throws error if no such contract or invalid query format
-  public async queryContractSmart(address: string, query: object): Promise<unknown> {
+  public async queryContractSmart(address: string, query: object): Promise<string> {
     const encoded = toHex(toUtf8(JSON.stringify(query)));
     const path = `/wasm/contract/${address}/smart/${encoded}?encoding=hex`;
     const responseData = (await this.get(path)) as WasmResponse;
     if (isWasmError(responseData)) {
       throw new Error(responseData.error);
     }
-    // no extra parse here
+    // no extra parse here for now, see https://github.com/confio/cosmwasm/issues/144
     return responseData.result;
   }
 }
