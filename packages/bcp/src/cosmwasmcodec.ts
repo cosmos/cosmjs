@@ -32,8 +32,8 @@ export class CosmWasmCodec implements TxCodec {
   private readonly addressPrefix: CosmosAddressBech32Prefix;
   private readonly tokens: TokenInfos;
 
-  public constructor(prefix: CosmosAddressBech32Prefix, tokens: TokenInfos) {
-    this.addressPrefix = prefix;
+  public constructor(addressPrefix: CosmosAddressBech32Prefix, tokens: TokenInfos) {
+    this.addressPrefix = addressPrefix;
     this.tokens = tokens;
   }
 

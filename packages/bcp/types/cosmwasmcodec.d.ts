@@ -15,7 +15,7 @@ import { TokenInfos } from "./types";
 export declare class CosmWasmCodec implements TxCodec {
   private readonly addressPrefix;
   private readonly tokens;
-  constructor(prefix: CosmosAddressBech32Prefix, tokens: TokenInfos);
+  constructor(addressPrefix: CosmosAddressBech32Prefix, tokens: TokenInfos);
   bytesToSign(unsigned: UnsignedTransaction, nonce: Nonce): SigningJob;
   bytesToPost(signed: SignedTransaction): PostableBytes;
   identifier(_signed: SignedTransaction): TransactionId;
