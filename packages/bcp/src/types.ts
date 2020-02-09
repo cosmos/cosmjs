@@ -1,7 +1,7 @@
 import { types } from "@cosmwasm/sdk";
 import { Nonce } from "@iov/bcp";
 
-export interface TokenInfo {
+export interface BankToken {
   readonly denom: string;
   readonly ticker: string;
   /**
@@ -16,7 +16,7 @@ export interface TokenInfo {
   readonly fractionalDigits: number;
 }
 
-export type TokenInfos = ReadonlyArray<TokenInfo>;
+export type BankTokens = ReadonlyArray<BankToken>;
 
 // tslint:disable-next-line:no-bitwise
 const maxAcct = 1 << 23;

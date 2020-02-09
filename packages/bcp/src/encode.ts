@@ -12,7 +12,7 @@ import {
 } from "@iov/bcp";
 import { Decimal, Encoding } from "@iov/encoding";
 
-import { TokenInfos } from "./types";
+import { BankTokens } from "./types";
 
 const { toBase64 } = Encoding;
 
@@ -33,7 +33,7 @@ export function encodePubkey(pubkey: PubkeyBundle): types.PubKey {
   }
 }
 
-export function decimalToCoin(lookup: TokenInfos, value: Decimal, ticker: string): types.Coin {
+export function decimalToCoin(lookup: BankTokens, value: Decimal, ticker: string): types.Coin {
   const match = lookup.find(token => token.ticker === ticker);
   if (!match) {
     throw Error(`unknown ticker: ${ticker}`);
@@ -49,7 +49,7 @@ export function decimalToCoin(lookup: TokenInfos, value: Decimal, ticker: string
   };
 }
 
-export function encodeAmount(amount: Amount, tokens: TokenInfos): types.Coin {
+export function encodeAmount(amount: Amount, tokens: BankTokens): types.Coin {
   return decimalToCoin(
     tokens,
     Decimal.fromAtomics(amount.quantity, amount.fractionalDigits),
@@ -57,7 +57,7 @@ export function encodeAmount(amount: Amount, tokens: TokenInfos): types.Coin {
   );
 }
 
-export function encodeFee(fee: Fee, tokens: TokenInfos): types.StdFee {
+export function encodeFee(fee: Fee, tokens: BankTokens): types.StdFee {
   if (fee.tokens === undefined) {
     throw new Error("Cannot encode fee without tokens");
   }
@@ -79,7 +79,7 @@ export function encodeFullSignature(fullSignature: FullSignature): types.StdSign
   }
 }
 
-export function buildUnsignedTx(tx: UnsignedTransaction, tokens: TokenInfos): types.AminoTx {
+export function buildUnsignedTx(tx: UnsignedTransaction, tokens: BankTokens): types.AminoTx {
   if (!isSendTransaction(tx)) {
     throw new Error("Received transaction of unsupported kind");
   }
@@ -108,7 +108,7 @@ export function buildUnsignedTx(tx: UnsignedTransaction, tokens: TokenInfos): ty
   };
 }
 
-export function buildSignedTx(tx: SignedTransaction, tokens: TokenInfos): types.AminoTx {
+export function buildSignedTx(tx: SignedTransaction, tokens: BankTokens): types.AminoTx {
   const built = buildUnsignedTx(tx.transaction, tokens);
   return {
     ...built,

@@ -26,13 +26,13 @@ import { pubkeyToAddress } from "./address";
 import { Caip5 } from "./caip5";
 import { parseTx } from "./decode";
 import { buildSignedTx, buildUnsignedTx } from "./encode";
-import { nonceToAccountNumber, nonceToSequence, TokenInfos } from "./types";
+import { BankTokens, nonceToAccountNumber, nonceToSequence } from "./types";
 
 export class CosmWasmCodec implements TxCodec {
   private readonly addressPrefix: CosmosAddressBech32Prefix;
-  private readonly tokens: TokenInfos;
+  private readonly tokens: BankTokens;
 
-  public constructor(addressPrefix: CosmosAddressBech32Prefix, tokens: TokenInfos) {
+  public constructor(addressPrefix: CosmosAddressBech32Prefix, tokens: BankTokens) {
     this.addressPrefix = addressPrefix;
     this.tokens = tokens;
   }
@@ -93,7 +93,7 @@ export class CosmWasmCodec implements TxCodec {
 
 const defaultPrefix = "cosmos" as CosmosAddressBech32Prefix;
 
-const defaultTokens: TokenInfos = [
+const defaultTokens: BankTokens = [
   {
     fractionalDigits: 6,
     ticker: "ATOM",

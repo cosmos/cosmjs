@@ -46,20 +46,22 @@ describe("CosmWasmConnection", () => {
   const defaultPrefix = "cosmos" as CosmosAddressBech32Prefix;
 
   // this is for wasmd blockchain
-  const defaultTokens: TokenConfiguration = [
-    {
-      fractionalDigits: 6,
-      name: "Fee Token",
-      ticker: "COSM",
-      denom: "ucosm",
-    },
-    {
-      fractionalDigits: 6,
-      name: "Staking Token",
-      ticker: "STAKE",
-      denom: "ustake",
-    },
-  ];
+  const defaultTokens: TokenConfiguration = {
+    bank: [
+      {
+        fractionalDigits: 6,
+        name: "Fee Token",
+        ticker: "COSM",
+        denom: "ucosm",
+      },
+      {
+        fractionalDigits: 6,
+        name: "Staking Token",
+        ticker: "STAKE",
+        denom: "ustake",
+      },
+    ],
+  };
 
   describe("establish", () => {
     it("can connect to Cosmos via http", async () => {
@@ -212,7 +214,7 @@ describe("CosmWasmConnection", () => {
       });
       const nonce = await connection.getNonce({ address: faucetAddress });
       // TODO: we need to use custom codecs everywhere
-      const codec = new CosmWasmCodec(defaultPrefix, defaultTokens);
+      const codec = new CosmWasmCodec(defaultPrefix, defaultTokens.bank);
       const signed = await profile.signTransaction(faucet, unsigned, codec, nonce);
       const postableBytes = codec.bytesToPost(signed);
       const response = await connection.postTx(postableBytes);
@@ -277,7 +279,7 @@ describe("CosmWasmConnection", () => {
       });
       const nonce = await connection.getNonce({ address: faucetAddress });
       // TODO: we need to use custom codecs everywhere
-      const codec = new CosmWasmCodec(defaultPrefix, defaultTokens);
+      const codec = new CosmWasmCodec(defaultPrefix, defaultTokens.bank);
       const signed = await profile.signTransaction(faucet, unsigned, codec, nonce);
       const postableBytes = codec.bytesToPost(signed);
       const response = await connection.postTx(postableBytes);
