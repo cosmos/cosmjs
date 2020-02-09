@@ -1,7 +1,7 @@
 import { Encoding } from "@iov/encoding";
 import axios, { AxiosInstance } from "axios";
 
-import { AminoTx, BaseAccount, CodeInfo, ContractInfo, isAminoStdTx, StdTx, WasmData } from "./types";
+import { AminoTx, CodeInfo, ContractInfo, CosmosSdkAccount, isAminoStdTx, StdTx, WasmData } from "./types";
 
 const { fromBase64, fromUtf8, toHex, toUtf8 } = Encoding;
 
@@ -38,7 +38,7 @@ interface BlocksResponse {
 interface AuthAccountsResponse {
   readonly result: {
     readonly type: "cosmos-sdk/Account";
-    readonly value: BaseAccount;
+    readonly value: CosmosSdkAccount;
   };
 }
 

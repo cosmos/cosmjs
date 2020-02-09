@@ -110,7 +110,7 @@ export declare const pubkeyType: {
 };
 export declare const pubkeyTypes: readonly string[];
 export declare type Bech32PubKey = string;
-export interface BaseAccount {
+export interface CosmosSdkAccount {
   /** Bech32 account address */
   readonly address: string;
   readonly coins: ReadonlyArray<Coin>;
@@ -118,8 +118,8 @@ export interface BaseAccount {
   readonly account_number: number;
   readonly sequence: number;
 }
-/** The data we need from BaseAccount to create a nonce */
-export declare type NonceInfo = Pick<BaseAccount, "account_number" | "sequence">;
+/** The data we need from CosmosSdkAccount to create a nonce */
+export declare type NonceInfo = Pick<CosmosSdkAccount, "account_number" | "sequence">;
 export interface CodeInfo {
   readonly id: number;
   /** Bech32 account address */
