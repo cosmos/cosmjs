@@ -1,3 +1,4 @@
+import { CosmosAddressBech32Prefix } from "@cosmwasm/sdk";
 import {
   Address,
   Algorithm,
@@ -14,7 +15,6 @@ import { Secp256k1 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
 import { HdPaths, Secp256k1HdWallet, UserProfile } from "@iov/keycontrol";
 
-import { CosmosBech32Prefix } from "./address";
 import { CosmWasmCodec, cosmWasmCodec } from "./cosmwasmcodec";
 import { CosmWasmConnection, TokenConfiguration } from "./cosmwasmconnection";
 import { signedTxJson, txId } from "./testdata.spec";
@@ -43,7 +43,7 @@ describe("CosmWasmConnection", () => {
   const faucetPath = HdPaths.cosmos(0);
   const defaultRecipient = "cosmos1t70qnpr0az8tf7py83m4ue5y89w58lkjmx0yq2" as Address;
 
-  const defaultPrefix = "cosmos" as CosmosBech32Prefix;
+  const defaultPrefix = "cosmos" as CosmosAddressBech32Prefix;
 
   // this is for wasmd blockchain
   const defaultTokens: TokenConfiguration = [

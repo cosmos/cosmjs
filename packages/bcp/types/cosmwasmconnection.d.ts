@@ -1,3 +1,4 @@
+import { CosmosAddressBech32Prefix } from "@cosmwasm/sdk";
 import {
   Account,
   AccountQuery,
@@ -20,7 +21,6 @@ import {
   UnsignedTransaction,
 } from "@iov/bcp";
 import { Stream } from "xstream";
-import { CosmosBech32Prefix } from "./address";
 import { TokenInfo } from "./types";
 export declare type TokenConfiguration = ReadonlyArray<
   TokenInfo & {
@@ -30,17 +30,16 @@ export declare type TokenConfiguration = ReadonlyArray<
 export declare class CosmWasmConnection implements BlockchainConnection {
   static establish(
     url: string,
-    prefix: CosmosBech32Prefix,
+    addressPrefix: CosmosAddressBech32Prefix,
     tokens: TokenConfiguration,
   ): Promise<CosmWasmConnection>;
   private static initialize;
   private readonly restClient;
   private readonly chainData;
-  private readonly _prefix;
+  private readonly addressPrefix;
   private readonly tokenInfo;
   private readonly primaryToken;
   private readonly supportedTokens;
-  private get prefix();
   private constructor();
   disconnect(): void;
   chainId(): ChainId;
