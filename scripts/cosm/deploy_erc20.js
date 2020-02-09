@@ -26,6 +26,7 @@ const defaultFee = {
 const faucetMnemonic =
   "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone";
 const faucetAddress = "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6";
+const unusedAccount = "cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u";
 
 async function uploadContract(client, pen, wasm) {
   const memo = "Upload ERC20 contract";
@@ -95,6 +96,10 @@ async function main() {
       {
         address: faucetAddress,
         amount: "11",
+      },
+      {
+        address: unusedAccount,
+        amount: "12812345",
       },
     ],
   };
