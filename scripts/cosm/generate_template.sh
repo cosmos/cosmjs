@@ -2,11 +2,10 @@
 set -o errexit -o nounset -o pipefail
 command -v shellcheck > /dev/null && shellcheck "$0"
 
-# Choose from https://hub.docker.com/r/cosmwasm/wasmd/tags
-REPOSITORY="cosmwasm/wasmd"
-VERSION="manual"
-
 SCRIPT_DIR="$(realpath "$(dirname "$0")")"
+# shellcheck source=./env
+# shellcheck disable=SC1091
+source "$SCRIPT_DIR"/env
 
 rm -rf "$SCRIPT_DIR/template"
 mkdir "$SCRIPT_DIR/template"
