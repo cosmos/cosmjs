@@ -18,5 +18,8 @@ docker run --rm \
   ./setup.sh \
   cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6
 
-# this is created as root, let's make it ours
-sudo chown -R "$(id -u):$(id -g)" "$SCRIPT_DIR/template"
+# The ./template folder is created by the docker daemon's user (root on Linux, current user
+# when using Docker Desktop on macOS), let's make it ours if needed
+if [ ! -x "$SCRIPT_DIR/template/.wasmd/config/gentx" ]; then
+  sudo chown -R "$(id -u):$(id -g)" "$SCRIPT_DIR/template"
+fi
