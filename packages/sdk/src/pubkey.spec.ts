@@ -1,6 +1,7 @@
 import { Encoding } from "@iov/encoding";
 
-import { decodeBech32Pubkey, encodeSecp256k1Pubkey } from "./pubkey";
+import { decodeBech32Pubkey, encodeBech32Pubkey, encodeSecp256k1Pubkey } from "./pubkey";
+import { PubKey } from "./types";
 
 const { fromBase64 } = Encoding;
 
@@ -33,6 +34,18 @@ describe("pubkey", () => {
         type: "tendermint/PubKeySecp256k1",
         value: "A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ",
       });
+    });
+  });
+
+  describe("encodeBech32Pubkey", () => {
+    it("works for secp256k1", () => {
+      const pubkey: PubKey = {
+        type: "tendermint/PubKeySecp256k1",
+        value: "A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ",
+      };
+      expect(encodeBech32Pubkey(pubkey, "cosmospub")).toEqual(
+        "cosmospub1addwnpepqd8sgxq7aw348ydctp3n5ajufgxp395hksxjzc6565yfp56scupfqhlgyg5",
+      );
     });
   });
 });

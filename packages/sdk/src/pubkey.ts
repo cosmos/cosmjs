@@ -60,3 +60,18 @@ export function decodeBech32Pubkey(bech: Bech32PubKey): PubKey {
     throw new Error("Unsupported Pubkey type. Amino prefix: " + Encoding.toHex(aminoPrefix));
   }
 }
+
+export function encodeBech32Pubkey(pubkey: PubKey, prefix: CosmosPubkeyBech32Prefix): Bech32PubKey {
+  let aminoPrefix: Uint8Array;
+  switch (pubkey.type) {
+    // Note: please don't add cases here without writing additional unit tests
+    case pubkeyType.secp256k1:
+      aminoPrefix = pubkeyAminoPrefixSecp256k1;
+      break;
+    default:
+      throw new Error("Unsupported pubkey type");
+  }
+
+  const data = new Uint8Array([...aminoPrefix, ...Encoding.fromBase64(pubkey.value)]);
+  return Bech32.encode(prefix, data);
+}
