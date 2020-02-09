@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { Random, Sha256 } from "@iov/crypto";
 import { Bech32, Encoding } from "@iov/encoding";
+import { assert } from "@iov/utils";
 
 import { encodeSecp256k1Signature, makeSignBytes, marshalTx } from "./encoding";
 import { leb128Encode } from "./leb128.spec";
@@ -40,8 +41,12 @@ const unusedAccount = {
   address: "cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u",
 };
 
+function cosmosEnabled(): boolean {
+  return !!process.env.COSMOS_ENABLED;
+}
+
 function pendingWithoutCosmos(): void {
-  if (!process.env.COSMOS_ENABLED) {
+  if (!cosmosEnabled()) {
     return pending("Set COSMOS_ENABLED to enable Cosmos node-based tests");
   }
 }
@@ -467,25 +472,28 @@ describe("RestClient", () => {
       const client = new RestClient(httpUrl);
       const noContract = makeRandomAddress();
       const expectedKey = toAscii("config");
+      let contractAddress: string | undefined;
 
-      /**
-       * Finds the most recent contract (created above)
-       *
-       * We assume the tests above ran, all instantiate the same contract and no other process squeezed in a different contract.
-       */
-      async function getContractAddress(): Promise<string> {
-        const contracts = Array.from(await client.listContractAddresses());
-        const last = contracts.reverse().find(() => true);
-        if (!last) throw new Error("No contract found");
-        return last;
-      }
+      beforeAll(async () => {
+        if (cosmosEnabled()) {
+          const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
+          const uploadResult = await uploadContract(client, pen);
+          assert(!uploadResult.code);
+          const uploadLogs = parseLogs(uploadResult.logs);
+          const codeId = Number.parseInt(findAttribute(uploadLogs, "message", "code_id").value, 10);
+          const instantiateResult = await instantiateContract(client, pen, codeId, makeRandomAddress());
+          assert(!instantiateResult.code);
+          const instantiateLogs = parseLogs(instantiateResult.logs);
+          const contractAddressAttr = findAttribute(instantiateLogs, "message", "contract_address");
+          contractAddress = contractAddressAttr.value;
+        }
+      });
 
       it("can get all state", async () => {
         pendingWithoutCosmos();
-        const contractAddress = await getContractAddress();
 
         // get contract state
-        const state = await client.getAllContractState(contractAddress);
+        const state = await client.getAllContractState(contractAddress!);
         expect(state.length).toEqual(1);
         const data = state[0];
         expect(data.key.toLowerCase()).toEqual(toHex(expectedKey));
@@ -499,16 +507,15 @@ describe("RestClient", () => {
 
       it("can query by key", async () => {
         pendingWithoutCosmos();
-        const contractAddress = await getContractAddress();
 
         // query by one key
-        const model = await client.queryContractRaw(contractAddress, expectedKey);
+        const model = await client.queryContractRaw(contractAddress!, expectedKey);
         expect(model).not.toBeNull();
         expect((model as any).verifier).toBeDefined();
         expect((model as any).beneficiary).toBeDefined();
 
         // missing key is null
-        const missing = await client.queryContractRaw(contractAddress, fromHex("cafe0dad"));
+        const missing = await client.queryContractRaw(contractAddress!, fromHex("cafe0dad"));
         expect(missing).toBeNull();
 
         // bad address is null
@@ -518,14 +525,13 @@ describe("RestClient", () => {
 
       it("can make smart queries", async () => {
         pendingWithoutCosmos();
-        const contractAddress = await getContractAddress();
 
         // we can query the verifier properly
-        const verifier = await client.queryContractSmart(contractAddress, { verifier: {} });
+        const verifier = await client.queryContractSmart(contractAddress!, { verifier: {} });
         expect(verifier).toEqual(faucet.address);
 
         // invalid query syntax throws an error
-        await client.queryContractSmart(contractAddress, { nosuchkey: {} }).then(
+        await client.queryContractSmart(contractAddress!, { nosuchkey: {} }).then(
           () => fail("shouldn't succeed"),
           error => expect(error).toMatch("Error parsing QueryMsg"),
         );
