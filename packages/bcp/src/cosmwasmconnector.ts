@@ -13,7 +13,7 @@ export function createCosmWasmConnector(
   tokens: TokenConfiguration,
   expectedChainId?: ChainId,
 ): ChainConnector<CosmWasmConnection> {
-  const codec = new CosmWasmCodec(addressPrefix, tokens.bank);
+  const codec = new CosmWasmCodec(addressPrefix, tokens.bankTokens);
   return {
     establishConnection: async () => CosmWasmConnection.establish(url, addressPrefix, tokens),
     codec: codec,

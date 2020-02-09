@@ -21,11 +21,17 @@ import {
   UnsignedTransaction,
 } from "@iov/bcp";
 import { Stream } from "xstream";
-import { TokenInfo } from "./types";
+import { BankToken, Erc20Token } from "./types";
 export interface TokenConfiguration {
   /** Supported tokens of the Cosmos SDK bank module */
-  readonly bank: ReadonlyArray<
-    TokenInfo & {
+  readonly bankTokens: ReadonlyArray<
+    BankToken & {
+      readonly name: string;
+    }
+  >;
+  /** Smart contract based tokens (ERC20 compatible). Unset means empty array. */
+  readonly erc20Tokens?: ReadonlyArray<
+    Erc20Token & {
       readonly name: string;
     }
   >;
@@ -41,7 +47,8 @@ export declare class CosmWasmConnection implements BlockchainConnection {
   private readonly chainData;
   private readonly addressPrefix;
   private readonly bankTokens;
-  private readonly primaryToken;
+  private readonly erc20Tokens;
+  private readonly feeToken;
   private readonly supportedTokens;
   private constructor();
   disconnect(): void;

@@ -14,6 +14,7 @@ import {
 import { Secp256k1 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
 import { HdPaths, Secp256k1HdWallet, UserProfile } from "@iov/keycontrol";
+import { assert } from "@iov/utils";
 
 import { CosmWasmCodec, cosmWasmCodec } from "./cosmwasmcodec";
 import { CosmWasmConnection, TokenConfiguration } from "./cosmwasmconnection";
@@ -33,21 +34,30 @@ describe("CosmWasmConnection", () => {
   const httpUrl = "http://localhost:1317";
   const defaultChainId = "cosmos:testing" as ChainId;
   const defaultEmptyAddress = "cosmos1h806c7khnvmjlywdrkdgk2vrayy2mmvf9rxk2r" as Address;
-  const defaultAddress = "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6" as Address;
-  const defaultPubkey = {
-    algo: Algorithm.Secp256k1,
-    data: fromBase64("A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ") as PubkeyBytes,
-  };
   const faucetMnemonic =
     "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone";
   const faucetPath = HdPaths.cosmos(0);
   const defaultRecipient = "cosmos1t70qnpr0az8tf7py83m4ue5y89w58lkjmx0yq2" as Address;
+  const faucetAccount = {
+    pubkey: {
+      algo: Algorithm.Secp256k1,
+      data: fromBase64("A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ") as PubkeyBytes,
+    },
+    address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6" as Address,
+  };
+  const unusedAccount = {
+    pubkey: {
+      algo: Algorithm.Secp256k1,
+      data: fromBase64("ArkCaFUJ/IH+vKBmNRCdUVl3mCAhbopk9jjW4Ko4OfRQ") as PubkeyBytes,
+    },
+    address: "cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u" as Address,
+  };
 
   const defaultPrefix = "cosmos" as CosmosAddressBech32Prefix;
 
   // this is for wasmd blockchain
-  const defaultTokens: TokenConfiguration = {
-    bank: [
+  const defaultConfig: TokenConfiguration = {
+    bankTokens: [
       {
         fractionalDigits: 6,
         name: "Fee Token",
@@ -61,12 +71,26 @@ describe("CosmWasmConnection", () => {
         denom: "ustake",
       },
     ],
+    erc20Tokens: [
+      {
+        contractAddress: "cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
+        fractionalDigits: 5,
+        ticker: "ASH",
+        name: "Ash Token",
+      },
+      {
+        contractAddress: "cosmos1hqrdl6wstt8qzshwc6mrumpjk9338k0lr4dqxd",
+        fractionalDigits: 0,
+        ticker: "BASH",
+        name: "Bash Token",
+      },
+    ],
   };
 
   describe("establish", () => {
     it("can connect to Cosmos via http", async () => {
       pendingWithoutCosmos();
-      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultTokens);
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
       expect(connection).toBeTruthy();
       connection.disconnect();
     });
@@ -75,7 +99,7 @@ describe("CosmWasmConnection", () => {
   describe("chainId", () => {
     it("displays the chain ID", async () => {
       pendingWithoutCosmos();
-      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultTokens);
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
       const chainId = connection.chainId();
       expect(chainId).toEqual(defaultChainId);
       connection.disconnect();
@@ -85,7 +109,7 @@ describe("CosmWasmConnection", () => {
   describe("height", () => {
     it("displays the current height", async () => {
       pendingWithoutCosmos();
-      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultTokens);
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
       const height = await connection.height();
       expect(height).toBeGreaterThan(0);
       connection.disconnect();
@@ -95,7 +119,7 @@ describe("CosmWasmConnection", () => {
   describe("getToken", () => {
     it("displays a given token", async () => {
       pendingWithoutCosmos();
-      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultTokens);
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
       const token = await connection.getToken("COSM" as TokenTicker);
       expect(token).toEqual({
         fractionalDigits: 6,
@@ -107,7 +131,7 @@ describe("CosmWasmConnection", () => {
 
     it("resolves to undefined if the token is not supported", async () => {
       pendingWithoutCosmos();
-      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultTokens);
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
       const token = await connection.getToken("whatever" as TokenTicker);
       expect(token).toBeUndefined();
       connection.disconnect();
@@ -117,10 +141,19 @@ describe("CosmWasmConnection", () => {
   describe("getAllTokens", () => {
     it("resolves to a list of all supported tokens", async () => {
       pendingWithoutCosmos();
-      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultTokens);
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
       const tokens = await connection.getAllTokens();
-      // TODO: make this more flexible
       expect(tokens).toEqual([
+        {
+          fractionalDigits: 5,
+          tokenName: "Ash Token",
+          tokenTicker: "ASH" as TokenTicker,
+        },
+        {
+          fractionalDigits: 0,
+          tokenName: "Bash Token",
+          tokenTicker: "BASH" as TokenTicker,
+        },
         {
           fractionalDigits: 6,
           tokenName: "Fee Token",
@@ -139,7 +172,7 @@ describe("CosmWasmConnection", () => {
   describe("identifier", () => {
     it("calculates tx hash from PostableBytes", async () => {
       pendingWithoutCosmos();
-      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultTokens);
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
       const postable = cosmWasmCodec.bytesToPost(signedTxJson);
       const id = await connection.identifier(postable);
       expect(id).toMatch(/^[0-9A-F]{64}$/);
@@ -150,7 +183,7 @@ describe("CosmWasmConnection", () => {
   describe("getAccount", () => {
     it("gets an empty account by address", async () => {
       pendingWithoutCosmos();
-      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultTokens);
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
       const account = await connection.getAccount({ address: defaultEmptyAddress });
       expect(account).toBeUndefined();
       connection.disconnect();
@@ -158,35 +191,50 @@ describe("CosmWasmConnection", () => {
 
     it("gets an account by address", async () => {
       pendingWithoutCosmos();
-      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultTokens);
-      const account = await connection.getAccount({ address: defaultAddress });
-      if (account === undefined) {
-        throw new Error("Expected account not to be undefined");
-      }
-      expect(account.address).toEqual(defaultAddress);
-      // Undefined until we sign a transaction (on multiple runs against one server this will be set), allow both
-      if (account.pubkey !== undefined) {
-        expect(account.pubkey).toEqual(defaultPubkey);
-      }
-      // Starts with two tokens
-      expect(account.balance.length).toEqual(2);
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const account = await connection.getAccount({ address: unusedAccount.address });
+      assert(account, "Account must be defined");
+      expect(account.address).toEqual(unusedAccount.address);
+      expect(account.pubkey).toBeUndefined();
+      expect(account.balance).toEqual([
+        {
+          tokenTicker: "ASH" as TokenTicker,
+          quantity: "12812345",
+          fractionalDigits: 5,
+        },
+        {
+          tokenTicker: "BASH" as TokenTicker,
+          quantity: "42",
+          fractionalDigits: 0,
+        },
+        {
+          tokenTicker: "COSM" as TokenTicker,
+          quantity: "1000000000",
+          fractionalDigits: 6,
+        },
+        {
+          tokenTicker: "STAKE" as TokenTicker,
+          quantity: "1000000000",
+          fractionalDigits: 6,
+        },
+      ]);
       connection.disconnect();
     });
 
     it("gets an account by pubkey", async () => {
       pendingWithoutCosmos();
-      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultTokens);
-      const account = await connection.getAccount({ pubkey: defaultPubkey });
-      if (account === undefined) {
-        throw new Error("Expected account not to be undefined");
-      }
-      expect(account.address).toEqual(defaultAddress);
-      // Undefined until we sign a transaction (on multiple runs against one server this will be set), allow both
-      if (account.pubkey !== undefined) {
-        expect(account.pubkey).toEqual(defaultPubkey);
-      }
-      // Starts with two tokens
-      expect(account.balance.length).toEqual(2);
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const byAddress = await connection.getAccount({ address: unusedAccount.address });
+      const byPubkey = await connection.getAccount({ pubkey: unusedAccount.pubkey });
+      expect(byPubkey).toEqual(byAddress); // above we verified that by address works as expected
+      connection.disconnect();
+    });
+
+    it("has a pubkey when getting account with transactions", async () => {
+      pendingWithoutCosmos();
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const account = await connection.getAccount({ address: faucetAccount.address });
+      expect(account?.pubkey).toEqual(faucetAccount.pubkey);
       connection.disconnect();
     });
   });
@@ -194,7 +242,7 @@ describe("CosmWasmConnection", () => {
   describe("integration tests", () => {
     it("can post and get a transaction", async () => {
       pendingWithoutCosmos();
-      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultTokens);
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
       const profile = new UserProfile();
       const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(faucetMnemonic));
       const faucet = await profile.createIdentity(wallet.id, defaultChainId, faucetPath);
@@ -214,7 +262,7 @@ describe("CosmWasmConnection", () => {
       });
       const nonce = await connection.getNonce({ address: faucetAddress });
       // TODO: we need to use custom codecs everywhere
-      const codec = new CosmWasmCodec(defaultPrefix, defaultTokens.bank);
+      const codec = new CosmWasmCodec(defaultPrefix, defaultConfig.bankTokens);
       const signed = await profile.signTransaction(faucet, unsigned, codec, nonce);
       const postableBytes = codec.bytesToPost(signed);
       const response = await connection.postTx(postableBytes);
@@ -259,7 +307,7 @@ describe("CosmWasmConnection", () => {
 
     it("can post and search for a transaction", async () => {
       pendingWithoutCosmos();
-      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultTokens);
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
       const profile = new UserProfile();
       const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(faucetMnemonic));
       const faucet = await profile.createIdentity(wallet.id, defaultChainId, faucetPath);
@@ -279,7 +327,7 @@ describe("CosmWasmConnection", () => {
       });
       const nonce = await connection.getNonce({ address: faucetAddress });
       // TODO: we need to use custom codecs everywhere
-      const codec = new CosmWasmCodec(defaultPrefix, defaultTokens.bank);
+      const codec = new CosmWasmCodec(defaultPrefix, defaultConfig.bankTokens);
       const signed = await profile.signTransaction(faucet, unsigned, codec, nonce);
       const postableBytes = codec.bytesToPost(signed);
       const response = await connection.postTx(postableBytes);
