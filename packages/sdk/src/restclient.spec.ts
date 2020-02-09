@@ -6,6 +6,7 @@ import { encodeSecp256k1Signature, makeSignBytes, marshalTx } from "./encoding";
 import { leb128Encode } from "./leb128.spec";
 import { findAttribute, parseLogs } from "./logs";
 import { Pen, Secp256k1Pen } from "./pen";
+import { encodeBech32Pubkey } from "./pubkey";
 import { PostTxsResponse, RestClient } from "./restclient";
 import contract from "./testdata/contract.json";
 import cosmoshub from "./testdata/cosmoshub.json";
@@ -28,6 +29,10 @@ const defaultNetworkId = "testing";
 const faucet = {
   mnemonic:
     "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone",
+  pubkey: {
+    type: "tendermint/PubKeySecp256k1",
+    value: "A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ",
+  },
   address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
 };
 const emptyAddress = "cosmos1ltkhnmdcqemmd2tkhnx7qx66tq7e0wykw2j85k";
@@ -216,6 +221,17 @@ describe("RestClient", () => {
           sequence: 0,
         },
       });
+    });
+
+    it("has correct pubkey for faucet", async () => {
+      pendingWithoutCosmos();
+      const client = new RestClient(httpUrl);
+      const { result } = await client.authAccounts(faucet.address);
+      expect(result.value).toEqual(
+        jasmine.objectContaining({
+          public_key: encodeBech32Pubkey(faucet.pubkey, "cosmospub"),
+        }),
+      );
     });
   });
 
