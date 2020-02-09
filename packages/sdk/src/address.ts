@@ -7,7 +7,6 @@ const { fromBase64 } = Encoding;
 
 // TODO: make this much more configurable
 export type CosmosAddressBech32Prefix = "cosmos" | "cosmosvalcons" | "cosmosvaloper";
-export type CosmosPubkeyBech32Prefix = "cosmospub" | "cosmosvalconspub" | "cosmosvaloperpub";
 
 function isCosmosAddressBech32Prefix(prefix: string): prefix is CosmosAddressBech32Prefix {
   return ["cosmos", "cosmosvalcons", "cosmosvaloper"].includes(prefix);

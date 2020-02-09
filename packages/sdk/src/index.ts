@@ -7,4 +7,9 @@ export { unmarshalTx } from "./decoding";
 export { encodeSecp256k1Signature, makeSignBytes, marshalTx } from "./encoding";
 export { RestClient, TxsResponse } from "./restclient";
 export { makeCosmoshubPath, Pen, PrehashType, Secp256k1Pen } from "./pen";
-export { decodeBech32Pubkey, encodeBech32Pubkey, encodeSecp256k1Pubkey } from "./pubkey";
+export {
+  CosmosPubkeyBech32Prefix,
+  decodeBech32Pubkey,
+  encodeBech32Pubkey,
+  encodeSecp256k1Pubkey,
+} from "./pubkey";

@@ -2,7 +2,6 @@ import { Secp256k1 } from "@iov/crypto";
 import { Bech32, Encoding } from "@iov/encoding";
 import equal from "fast-deep-equal";
 
-import { CosmosPubkeyBech32Prefix } from "./address";
 import { Bech32PubKey, PubKey, pubkeyType } from "./types";
 
 export function encodeSecp256k1Pubkey(pubkey: Uint8Array): PubKey {
@@ -12,8 +11,11 @@ export function encodeSecp256k1Pubkey(pubkey: Uint8Array): PubKey {
   };
 }
 
+export type CosmosPubkeyBech32Prefix = "cosmospub" | "cosmosvalconspub" | "cosmosvaloperpub";
+const validPubkeyPrefixes = ["cosmospub", "cosmosvalconspub", "cosmosvaloperpub"];
+
 function isCosmosPubkeyBech32Prefix(prefix: string): prefix is CosmosPubkeyBech32Prefix {
-  return ["cosmospub", "cosmosvalconspub", "cosmosvaloperpub"].includes(prefix);
+  return validPubkeyPrefixes.includes(prefix);
 }
 
 // As discussed in https://github.com/binance-chain/javascript-sdk/issues/163
@@ -27,7 +29,7 @@ const pubkeyAminoPrefixLength = pubkeyAminoPrefixSecp256k1.length;
 export function decodeBech32Pubkey(bech: Bech32PubKey): PubKey {
   const { prefix, data } = Bech32.decode(bech);
   if (!isCosmosPubkeyBech32Prefix(prefix)) {
-    throw new Error(`Invalid bech32 prefix. Must be one of cosmos, cosmosvalcons, or cosmosvaloper.`);
+    throw new Error(`Invalid bech32 prefix. Must be one of ${validPubkeyPrefixes.join(", ")}.`);
   }
 
   const aminoPrefix = data.slice(0, pubkeyAminoPrefixLength);
