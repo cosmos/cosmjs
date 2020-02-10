@@ -86,3 +86,9 @@ const executeContract = async (execClient: RestClient, execPen: Secp256k1Pen, co
   return execLogs;
 }
 
+const randomAddress = async (): Promise<string> => {
+  const mnemonic = Bip39.encode(Random.getBytes(16)).toString();
+  const randomPen = await Secp256k1Pen.fromMnemonic(mnemonic);
+  const pubkey = encodeSecp256k1Pubkey(randomPen.pubkey);
+  return encodeAddress(pubkey, "cosmos");
+}
