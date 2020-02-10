@@ -12,7 +12,7 @@ import {
 } from "@iov/bcp";
 import { Decimal, Encoding } from "@iov/encoding";
 
-import { BankTokens } from "./types";
+import { BankTokens, Erc20Token } from "./types";
 
 const { toBase64 } = Encoding;
 
@@ -79,37 +79,83 @@ export function encodeFullSignature(fullSignature: FullSignature): types.StdSign
   }
 }
 
-export function buildUnsignedTx(tx: UnsignedTransaction, tokens: BankTokens): types.AminoTx {
+export function buildUnsignedTx(
+  tx: UnsignedTransaction,
+  bankTokens: BankTokens,
+  erc20Tokens: readonly Erc20Token[] = [],
+): types.AminoTx {
   if (!isSendTransaction(tx)) {
     throw new Error("Received transaction of unsupported kind");
   }
-  return {
-    type: "cosmos-sdk/StdTx",
-    value: {
-      msg: [
-        {
-          type: "cosmos-sdk/MsgSend",
-          value: {
-            from_address: tx.sender,
-            to_address: tx.recipient,
-            amount: [encodeAmount(tx.amount, tokens)],
+
+  const matchingBankToken = bankTokens.find(t => t.ticker === tx.amount.tokenTicker);
+  const matchingErc20Token = erc20Tokens.find(t => t.ticker === tx.amount.tokenTicker);
+
+  if (matchingBankToken) {
+    return {
+      type: "cosmos-sdk/StdTx",
+      value: {
+        msg: [
+          {
+            type: "cosmos-sdk/MsgSend",
+            value: {
+              from_address: tx.sender,
+              to_address: tx.recipient,
+              amount: [encodeAmount(tx.amount, bankTokens)],
+            },
           },
-        },
-      ],
-      memo: tx.memo || "",
-      signatures: [],
-      fee: tx.fee
-        ? encodeFee(tx.fee, tokens)
-        : {
-            amount: [],
-            gas: "",
+        ],
+        memo: tx.memo || "",
+        signatures: [],
+        fee: tx.fee
+          ? encodeFee(tx.fee, bankTokens)
+          : {
+              amount: [],
+              gas: "",
+            },
+      },
+    };
+  } else if (matchingErc20Token) {
+    return {
+      type: "cosmos-sdk/StdTx",
+      value: {
+        msg: [
+          {
+            type: "wasm/execute",
+            value: {
+              sender: tx.sender,
+              contract: matchingErc20Token.contractAddress,
+              msg: {
+                transfer: {
+                  amount: tx.amount.quantity,
+                  recipient: tx.recipient,
+                },
+              },
+              sent_funds: [],
+            },
           },
-    },
-  };
+        ],
+        memo: tx.memo || "",
+        signatures: [],
+        fee: tx.fee
+          ? encodeFee(tx.fee, bankTokens)
+          : {
+              amount: [],
+              gas: "",
+            },
+      },
+    };
+  } else {
+    throw new Error("Cannot encode this type of transaction");
+  }
 }
 
-export function buildSignedTx(tx: SignedTransaction, tokens: BankTokens): types.AminoTx {
-  const built = buildUnsignedTx(tx.transaction, tokens);
+export function buildSignedTx(
+  tx: SignedTransaction,
+  bankTokens: BankTokens,
+  erc20Tokens: readonly Erc20Token[] = [],
+): types.AminoTx {
+  const built = buildUnsignedTx(tx.transaction, bankTokens, erc20Tokens);
   return {
     ...built,
     value: {

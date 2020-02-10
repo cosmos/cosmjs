@@ -21,7 +21,7 @@ import {
   encodeFullSignature,
   encodePubkey,
 } from "./encode";
-import { BankTokens } from "./types";
+import { BankTokens, Erc20Token } from "./types";
 
 const { fromBase64 } = Encoding;
 
@@ -46,6 +46,23 @@ describe("encode", () => {
       fractionalDigits: 6,
       ticker: "ATOM",
       denom: "uatom",
+    },
+  ];
+  const defaultErc20Tokens: Erc20Token[] = [
+    {
+      contractAddress: "cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
+      fractionalDigits: 5,
+      ticker: "ASH",
+    },
+    {
+      contractAddress: "cosmos1hqrdl6wstt8qzshwc6mrumpjk9338k0lr4dqxd",
+      fractionalDigits: 0,
+      ticker: "BASH",
+    },
+    {
+      contractAddress: "cosmos18r5szma8hm93pvx6lwpjwyxruw27e0k5uw835c",
+      fractionalDigits: 18,
+      ticker: "CASH",
     },
   ];
 
@@ -256,6 +273,56 @@ describe("encode", () => {
           fee: {
             amount: [{ denom: "uatom", amount: "5000" }],
             gas: "200000",
+          },
+          signatures: [],
+          memo: defaultMemo,
+        },
+      });
+    });
+
+    it("works for ERC20 send", () => {
+      const bashSendTx: SendTransaction = {
+        kind: "bcp/send",
+        chainId: defaultChainId,
+        sender: "cosmos1txqfn5jmcts0x0q7krdxj8tgf98tj0965vqlmq" as Address,
+        recipient: "cosmos1dddd" as Address,
+        memo: defaultMemo,
+        amount: {
+          fractionalDigits: 6,
+          quantity: "345",
+          tokenTicker: "BASH" as TokenTicker,
+        },
+        fee: {
+          tokens: {
+            fractionalDigits: 6,
+            quantity: "3333",
+            tokenTicker: "ATOM" as TokenTicker,
+          },
+          gasLimit: "234000",
+        },
+      };
+      expect(buildUnsignedTx(bashSendTx, defaultTokens, defaultErc20Tokens)).toEqual({
+        type: "cosmos-sdk/StdTx",
+        value: {
+          msg: [
+            {
+              type: "wasm/execute",
+              value: {
+                sender: "cosmos1txqfn5jmcts0x0q7krdxj8tgf98tj0965vqlmq",
+                contract: "cosmos1hqrdl6wstt8qzshwc6mrumpjk9338k0lr4dqxd",
+                msg: {
+                  transfer: {
+                    recipient: "cosmos1dddd",
+                    amount: "345",
+                  },
+                },
+                sent_funds: [],
+              },
+            },
+          ],
+          fee: {
+            amount: [{ denom: "uatom", amount: "3333" }],
+            gas: "234000",
           },
           signatures: [],
           memo: defaultMemo,
