@@ -19,7 +19,7 @@ import {
 } from "@iov/bcp";
 import { Decimal, Encoding } from "@iov/encoding";
 
-import { TokenInfos } from "./types";
+import { BankTokens } from "./types";
 
 const { fromBase64 } = Encoding;
 
@@ -52,7 +52,7 @@ export function decodeFullSignature(signature: types.StdSignature, nonce: number
   };
 }
 
-export function coinToDecimal(tokens: TokenInfos, coin: types.Coin): readonly [Decimal, string] {
+export function coinToDecimal(tokens: BankTokens, coin: types.Coin): readonly [Decimal, string] {
   const match = tokens.find(({ denom }) => denom === coin.denom);
   if (!match) {
     throw Error(`unknown denom: ${coin.denom}`);
@@ -61,7 +61,7 @@ export function coinToDecimal(tokens: TokenInfos, coin: types.Coin): readonly [D
   return [value, match.ticker];
 }
 
-export function decodeAmount(tokens: TokenInfos, coin: types.Coin): Amount {
+export function decodeAmount(tokens: BankTokens, coin: types.Coin): Amount {
   const [value, ticker] = coinToDecimal(tokens, coin);
   return {
     quantity: value.atomics,
@@ -70,7 +70,7 @@ export function decodeAmount(tokens: TokenInfos, coin: types.Coin): Amount {
   };
 }
 
-export function parseMsg(msg: types.Msg, chainId: ChainId, tokens: TokenInfos): UnsignedTransaction {
+export function parseMsg(msg: types.Msg, chainId: ChainId, tokens: BankTokens): UnsignedTransaction {
   if (types.isMsgSend(msg)) {
     if (msg.value.amount.length !== 1) {
       throw new Error("Only MsgSend with one amount is supported");
@@ -93,7 +93,7 @@ export function parseMsg(msg: types.Msg, chainId: ChainId, tokens: TokenInfos): 
   }
 }
 
-export function parseFee(fee: types.StdFee, tokens: TokenInfos): Fee {
+export function parseFee(fee: types.StdFee, tokens: BankTokens): Fee {
   if (fee.amount.length !== 1) {
     throw new Error("Only fee with one amount is supported");
   }
@@ -107,7 +107,7 @@ export function parseTx(
   txValue: types.StdTx,
   chainId: ChainId,
   nonce: Nonce,
-  tokens: TokenInfos,
+  tokens: BankTokens,
 ): SignedTransaction {
   if (!types.isAminoStdTx(txValue)) {
     throw new Error("Only Amino StdTx is supported");
@@ -138,7 +138,7 @@ export function parseTxsResponse(
   currentHeight: number,
   nonce: Nonce,
   response: TxsResponse,
-  tokens: TokenInfos,
+  tokens: BankTokens,
 ): ConfirmedAndSignedTransaction<UnsignedTransaction> {
   const height = parseInt(response.height, 10);
   return {

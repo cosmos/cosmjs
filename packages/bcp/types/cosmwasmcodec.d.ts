@@ -11,11 +11,11 @@ import {
   TxCodec,
   UnsignedTransaction,
 } from "@iov/bcp";
-import { TokenInfos } from "./types";
+import { BankTokens } from "./types";
 export declare class CosmWasmCodec implements TxCodec {
   private readonly addressPrefix;
   private readonly tokens;
-  constructor(addressPrefix: CosmosAddressBech32Prefix, tokens: TokenInfos);
+  constructor(addressPrefix: CosmosAddressBech32Prefix, tokens: BankTokens);
   bytesToSign(unsigned: UnsignedTransaction, nonce: Nonce): SigningJob;
   bytesToPost(signed: SignedTransaction): PostableBytes;
   identifier(_signed: SignedTransaction): TransactionId;

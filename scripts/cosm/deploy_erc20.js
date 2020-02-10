@@ -88,7 +88,7 @@ async function main() {
   const codeId = Number.parseInt(codeIdAttr.value, 10);
   console.info(`Upload succeeded. Code ID is ${codeId}`);
 
-  const initMsg = {
+  const initMsgAsh = {
     decimals: 5,
     name: "Ash token",
     symbol: "ASH",
@@ -103,16 +103,30 @@ async function main() {
       },
     ],
   };
-  const instantiationResult = await instantiateContract(client, pen, codeId, initMsg);
-  if (instantiationResult.code) {
-    throw new Error(
-      `Instantiation failed with code: ${instantiationResult.code}; log: '${instantiationResult.raw_log}'`,
-    );
+  const initMsgBash = {
+    decimals: 0,
+    name: "Bash Token",
+    symbol: "BASH",
+    initial_balances: [
+      {
+        address: faucetAddress,
+        amount: "999999999",
+      },
+      {
+        address: unusedAccount,
+        amount: "42",
+      },
+    ],
+  };
+  for (const initMsg of [initMsgAsh, initMsgBash]) {
+    const initResult = await instantiateContract(client, pen, codeId, initMsg);
+    if (initResult.code) {
+      throw new Error(`Instantiation failed with code: ${initResult.code}; log: '${initResult.raw_log}'`);
+    }
+    const instantiationLogs = logs.parseLogs(initResult.logs);
+    const contractAddress = logs.findAttribute(instantiationLogs, "message", "contract_address").value;
+    console.info(`Contract instantiated for ${initMsg.symbol} at ${contractAddress}`);
   }
-  const instantiationLogs = logs.parseLogs(instantiationResult.logs);
-  const contractAddress = logs.findAttribute(instantiationLogs, "message", "contract_address").value;
-
-  console.info(`Contract instantiated at ${contractAddress}`);
 }
 
 main().then(

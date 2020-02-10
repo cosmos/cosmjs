@@ -15,7 +15,7 @@ import {
 } from "./decode";
 import { chainId, nonce, signedTxJson, txId } from "./testdata.spec";
 import data from "./testdata/cosmoshub.json";
-import { TokenInfos } from "./types";
+import { BankTokens } from "./types";
 
 const { fromBase64, fromHex } = Encoding;
 
@@ -52,7 +52,7 @@ describe("decode", () => {
     },
     gasLimit: "200000",
   };
-  const defaultTokens: TokenInfos = [
+  const defaultTokens: BankTokens = [
     {
       fractionalDigits: 6,
       ticker: "ATOM",

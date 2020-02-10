@@ -4,6 +4,7 @@ import {
   Account,
   AccountQuery,
   AddressQuery,
+  Amount,
   BlockchainConnection,
   BlockHeader,
   BlockId,
@@ -37,7 +38,7 @@ import { Stream } from "xstream";
 import { decodeCosmosPubkey, pubkeyToAddress } from "./address";
 import { Caip5 } from "./caip5";
 import { decodeAmount, parseTxsResponse } from "./decode";
-import { accountToNonce, TokenInfo } from "./types";
+import { accountToNonce, BankToken, Erc20Token } from "./types";
 
 const { toHex } = Encoding;
 
@@ -69,7 +70,12 @@ function buildQueryString({
   return components.filter(Boolean).join("&");
 }
 
-export type TokenConfiguration = ReadonlyArray<TokenInfo & { readonly name: string }>;
+export interface TokenConfiguration {
+  /** Supported tokens of the Cosmos SDK bank module */
+  readonly bankTokens: ReadonlyArray<BankToken & { readonly name: string }>;
+  /** Smart contract based tokens (ERC20 compatible). Unset means empty array. */
+  readonly erc20Tokens?: ReadonlyArray<Erc20Token & { readonly name: string }>;
+}
 
 export class CosmWasmConnection implements BlockchainConnection {
   // we must know prefix and tokens a priori to understand the chain
@@ -91,10 +97,11 @@ export class CosmWasmConnection implements BlockchainConnection {
   private readonly restClient: RestClient;
   private readonly chainData: ChainData;
   private readonly addressPrefix: CosmosAddressBech32Prefix;
-  private readonly tokenInfo: readonly TokenInfo[];
+  private readonly bankTokens: readonly BankToken[];
+  private readonly erc20Tokens: readonly Erc20Token[];
 
   // these are derived from arguments (cached for use in multiple functions)
-  private readonly primaryToken: Token;
+  private readonly feeToken: BankToken | undefined;
   private readonly supportedTokens: readonly Token[];
 
   private constructor(
@@ -106,14 +113,17 @@ export class CosmWasmConnection implements BlockchainConnection {
     this.restClient = restClient;
     this.chainData = chainData;
     this.addressPrefix = addressPrefix;
-    this.tokenInfo = tokens;
-
-    this.supportedTokens = tokens.map(info => ({
-      tokenTicker: info.ticker as TokenTicker,
-      tokenName: info.name,
-      fractionalDigits: info.fractionalDigits,
-    }));
-    this.primaryToken = this.supportedTokens[0];
+    this.bankTokens = tokens.bankTokens;
+    this.feeToken = this.bankTokens.find(() => true);
+    const erc20Tokens = tokens.erc20Tokens || [];
+    this.erc20Tokens = erc20Tokens;
+    this.supportedTokens = [...tokens.bankTokens, ...erc20Tokens]
+      .map(info => ({
+        tokenTicker: info.ticker as TokenTicker,
+        tokenName: info.name,
+        fractionalDigits: info.fractionalDigits,
+      }))
+      .sort((a, b) => a.tokenTicker.localeCompare(b.tokenTicker));
   }
 
   public disconnect(): void {
@@ -151,14 +161,35 @@ export class CosmWasmConnection implements BlockchainConnection {
     if (!account.address) {
       return undefined;
     }
-    const supportedCoins = account.coins.filter(({ denom }) =>
-      this.tokenInfo.find(token => token.denom === denom),
+
+    const supportedBankCoins = account.coins.filter(({ denom }) =>
+      this.bankTokens.find(token => token.denom === denom),
     );
+    const erc20Amounts = await Promise.all(
+      this.erc20Tokens.map(
+        async (erc20): Promise<Amount> => {
+          const queryMsg = { balance: { address: address } };
+          const response = JSON.parse(
+            await this.restClient.queryContractSmart(erc20.contractAddress, queryMsg),
+          );
+          return {
+            fractionalDigits: erc20.fractionalDigits,
+            quantity: response.balance,
+            tokenTicker: erc20.ticker as TokenTicker,
+          };
+        },
+      ),
+    );
+
+    const balance = [
+      ...supportedBankCoins.map(coin => decodeAmount(this.bankTokens, coin)),
+      ...erc20Amounts,
+    ].sort((a, b) => a.tokenTicker.localeCompare(b.tokenTicker));
 
     const pubkey = !account.public_key ? undefined : decodeCosmosPubkey(account.public_key);
     return {
       address: address,
-      balance: supportedCoins.map(coin => decodeAmount(this.tokenInfo, coin)),
+      balance: balance,
       pubkey: pubkey,
     };
   }
@@ -280,11 +311,12 @@ export class CosmWasmConnection implements BlockchainConnection {
     if (!isSendTransaction(tx)) {
       throw new Error("Received transaction of unsupported kind.");
     }
+    if (!this.feeToken) throw new Error("This connection has no fee token configured.");
     return {
       tokens: {
-        fractionalDigits: this.primaryToken.fractionalDigits,
+        fractionalDigits: this.feeToken.fractionalDigits,
         quantity: "5000",
-        tokenTicker: this.primaryToken.tokenTicker,
+        tokenTicker: this.feeToken.ticker as TokenTicker,
       },
       gasLimit: "200000",
     };
@@ -321,6 +353,6 @@ export class CosmWasmConnection implements BlockchainConnection {
     // this is technically not the proper nonce. maybe this causes issues for sig validation?
     // leaving for now unless it causes issues
     const sequence = (accountForHeight.result.value.sequence - 1) as Nonce;
-    return parseTxsResponse(chainId, parseInt(response.height, 10), sequence, response, this.tokenInfo);
+    return parseTxsResponse(chainId, parseInt(response.height, 10), sequence, response, this.bankTokens);
   }
 }

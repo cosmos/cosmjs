@@ -21,7 +21,7 @@ import {
   encodeFullSignature,
   encodePubkey,
 } from "./encode";
-import { TokenInfos } from "./types";
+import { BankTokens } from "./types";
 
 const { fromBase64 } = Encoding;
 
@@ -41,7 +41,7 @@ describe("encode", () => {
     tokenTicker: atom,
   };
   const defaultMemo = "hello cosmos hub";
-  const defaultTokens: TokenInfos = [
+  const defaultTokens: BankTokens = [
     {
       fractionalDigits: 6,
       ticker: "ATOM",
