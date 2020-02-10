@@ -45,11 +45,11 @@ interface AuthAccountsResponse {
 // Currently all wasm query responses return json-encoded strings...
 // later deprecate this and use the specific types for result
 // (assuming it is inlined, no second parse needed)
-type WasmResponse = WasmSuccess | WasmError;
+type WasmResponse<T = string> = WasmSuccess<T> | WasmError;
 
-interface WasmSuccess {
+interface WasmSuccess<T = string> {
   readonly height: string;
-  readonly result: string;
+  readonly result: T;
 }
 
 interface WasmError {
@@ -92,6 +92,11 @@ interface EncodeTxResponse {
   readonly tx: string;
 }
 
+interface GetCodeResult {
+  // base64 encoded wasm
+  readonly code: string;
+}
+
 type RestClientResponse =
   | NodeInfoResponse
   | BlocksResponse
@@ -100,15 +105,23 @@ type RestClientResponse =
   | SearchTxsResponse
   | PostTxsResponse
   | EncodeTxResponse
-  | WasmResponse;
+  | WasmResponse<string>
+  | WasmResponse<GetCodeResult>;
 
 type BroadcastMode = "block" | "sync" | "async";
 
-function isWasmError(resp: WasmResponse): resp is WasmError {
+function isWasmError<T>(resp: WasmResponse<T>): resp is WasmError {
   return (resp as WasmError).error !== undefined;
 }
 
-function parseWasmResponse(response: WasmResponse): any {
+function unwrapWasmResponse<T>(response: WasmResponse<T>): T {
+  if (isWasmError(response)) {
+    throw new Error(response.error);
+  }
+  return response.result;
+}
+
+function parseWasmResponse(response: WasmResponse<string>): any {
   if (isWasmError(response)) {
     throw new Error(response.error);
   }
@@ -237,10 +250,9 @@ export class RestClient {
   // this will download the original wasm bytecode by code id
   // throws error if no code with this id
   public async getCode(id: number): Promise<Uint8Array> {
-    // TODO: broken currently
     const path = `/wasm/code/${id}`;
-    const responseData = await this.get(path);
-    const { code } = parseWasmResponse(responseData as WasmResponse);
+    const responseData = (await this.get(path)) as WasmResponse<GetCodeResult>;
+    const { code } = unwrapWasmResponse(responseData);
     return fromBase64(code);
   }
 

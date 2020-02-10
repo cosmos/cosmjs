@@ -30,10 +30,10 @@ interface AuthAccountsResponse {
     readonly value: CosmosSdkAccount;
   };
 }
-declare type WasmResponse = WasmSuccess | WasmError;
-interface WasmSuccess {
+declare type WasmResponse<T = string> = WasmSuccess<T> | WasmError;
+interface WasmSuccess<T = string> {
   readonly height: string;
-  readonly result: string;
+  readonly result: T;
 }
 interface WasmError {
   readonly error: string;
@@ -68,6 +68,9 @@ export interface PostTxsResponse {
 interface EncodeTxResponse {
   readonly tx: string;
 }
+interface GetCodeResult {
+  readonly code: string;
+}
 declare type RestClientResponse =
   | NodeInfoResponse
   | BlocksResponse
@@ -76,7 +79,8 @@ declare type RestClientResponse =
   | SearchTxsResponse
   | PostTxsResponse
   | EncodeTxResponse
-  | WasmResponse;
+  | WasmResponse<string>
+  | WasmResponse<GetCodeResult>;
 declare type BroadcastMode = "block" | "sync" | "async";
 export declare class RestClient {
   private readonly client;

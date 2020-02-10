@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { Random } from "@iov/crypto";
+import { Random, Sha256 } from "@iov/crypto";
 import { Bech32, Encoding } from "@iov/encoding";
 
 import { encodeSecp256k1Signature, makeSignBytes, marshalTx } from "./encoding";
@@ -85,13 +85,17 @@ function makeRandomAddress(): string {
   return Bech32.encode("cosmos", Random.getBytes(20));
 }
 
-async function uploadContract(client: RestClient, pen: Pen): Promise<PostTxsResponse> {
+async function uploadCustomContract(
+  client: RestClient,
+  pen: Pen,
+  wasmCode: Uint8Array,
+): Promise<PostTxsResponse> {
   const memo = "My first contract on chain";
   const theMsg: MsgStoreCode = {
     type: "wasm/store-code",
     value: {
       sender: faucet.address,
-      wasm_byte_code: toBase64(getRandomizedContract()),
+      wasm_byte_code: toBase64(wasmCode),
       source: "https://github.com/confio/cosmwasm/raw/0.7/lib/vm/testdata/contract_0.6.wasm",
       builder: "cosmwasm-opt:0.6.2",
     },
@@ -111,6 +115,10 @@ async function uploadContract(client: RestClient, pen: Pen): Promise<PostTxsResp
   const signature = encodeSecp256k1Signature(pen.pubkey, await pen.createSignature(signBytes));
   const signedTx = makeSignedTx(theMsg, fee, memo, signature);
   return client.postTx(marshalTx(signedTx));
+}
+
+async function uploadContract(client: RestClient, pen: Pen): Promise<PostTxsResponse> {
+  return uploadCustomContract(client, pen, getRandomizedContract());
 }
 
 async function instantiateContract(
@@ -223,9 +231,8 @@ describe("RestClient", () => {
       });
     });
 
-    // TODO: re-enable when stable
     // this is failing for me on first run (faucet has not signed anything)
-    xit("has correct pubkey for faucet", async () => {
+    it("has correct pubkey for faucet", async () => {
       pendingWithoutCosmos();
       const client = new RestClient(httpUrl);
       const { result } = await client.authAccounts(faucet.address);
@@ -364,7 +371,8 @@ describe("RestClient", () => {
       const numExisting = existingInfos.length;
 
       // upload data
-      const result = await uploadContract(client, pen);
+      const wasmCode = getRandomizedContract();
+      const result = await uploadCustomContract(client, pen, wasmCode);
       expect(result.code).toBeFalsy();
       const logs = parseLogs(result.logs);
       const codeIdAttr = findAttribute(logs, "message", "code_id");
@@ -377,10 +385,13 @@ describe("RestClient", () => {
       expect(lastInfo.id).toEqual(codeId);
       expect(lastInfo.creator).toEqual(faucet.address);
 
-      // TODO: check code hash matches expectation
-      // expect(lastInfo.code_hash).toEqual(faucet.address);
+      // check code hash matches expectation
+      const wasmHash = new Sha256(wasmCode).digest();
+      expect(lastInfo.code_hash.toLowerCase()).toEqual(toHex(wasmHash));
 
-      // TODO: download code and check against auto-gen
+      // download code and check against auto-gen
+      const download = await client.getCode(codeId);
+      expect(download).toEqual(wasmCode);
     });
 
     it("can list contracts and get info", async () => {
