@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { Random } from "@iov/crypto";
+import { Random, Sha256 } from "@iov/crypto";
 import { Bech32, Encoding } from "@iov/encoding";
 
 import { encodeSecp256k1Signature, makeSignBytes, marshalTx } from "./encoding";
@@ -85,13 +85,17 @@ function makeRandomAddress(): string {
   return Bech32.encode("cosmos", Random.getBytes(20));
 }
 
-async function uploadContract(client: RestClient, pen: Pen): Promise<PostTxsResponse> {
+async function uploadCustomContract(
+  client: RestClient,
+  pen: Pen,
+  wasmCode: Uint8Array,
+): Promise<PostTxsResponse> {
   const memo = "My first contract on chain";
   const theMsg: MsgStoreCode = {
     type: "wasm/store-code",
     value: {
       sender: faucet.address,
-      wasm_byte_code: toBase64(getRandomizedContract()),
+      wasm_byte_code: toBase64(wasmCode),
       source: "https://github.com/confio/cosmwasm/raw/0.7/lib/vm/testdata/contract_0.6.wasm",
       builder: "cosmwasm-opt:0.6.2",
     },
@@ -111,6 +115,10 @@ async function uploadContract(client: RestClient, pen: Pen): Promise<PostTxsResp
   const signature = encodeSecp256k1Signature(pen.pubkey, await pen.createSignature(signBytes));
   const signedTx = makeSignedTx(theMsg, fee, memo, signature);
   return client.postTx(marshalTx(signedTx));
+}
+
+async function uploadContract(client: RestClient, pen: Pen): Promise<PostTxsResponse> {
+  return uploadCustomContract(client, pen, getRandomizedContract());
 }
 
 async function instantiateContract(
@@ -223,6 +231,7 @@ describe("RestClient", () => {
       });
     });
 
+    // this is failing for me on first run (faucet has not signed anything)
     it("has correct pubkey for faucet", async () => {
       pendingWithoutCosmos();
       const client = new RestClient(httpUrl);
@@ -362,7 +371,8 @@ describe("RestClient", () => {
       const numExisting = existingInfos.length;
 
       // upload data
-      const result = await uploadContract(client, pen);
+      const wasmCode = getRandomizedContract();
+      const result = await uploadCustomContract(client, pen, wasmCode);
       expect(result.code).toBeFalsy();
       const logs = parseLogs(result.logs);
       const codeIdAttr = findAttribute(logs, "message", "code_id");
@@ -375,10 +385,19 @@ describe("RestClient", () => {
       expect(lastInfo.id).toEqual(codeId);
       expect(lastInfo.creator).toEqual(faucet.address);
 
-      // TODO: check code hash matches expectation
-      // expect(lastInfo.code_hash).toEqual(faucet.address);
+      // ensure metadata is present
+      expect(lastInfo.source).toEqual(
+        "https://github.com/confio/cosmwasm/raw/0.7/lib/vm/testdata/contract_0.6.wasm",
+      );
+      expect(lastInfo.builder).toEqual("cosmwasm-opt:0.6.2");
 
-      // TODO: download code and check against auto-gen
+      // check code hash matches expectation
+      const wasmHash = new Sha256(wasmCode).digest();
+      expect(lastInfo.code_hash.toLowerCase()).toEqual(toHex(wasmHash));
+
+      // download code and check against auto-gen
+      const download = await client.getCode(codeId);
+      expect(download).toEqual(wasmCode);
     });
 
     it("can list contracts and get info", async () => {
@@ -408,6 +427,8 @@ describe("RestClient", () => {
 
       // create new instance and compare before and after
       const existingContracts = await client.listContractAddresses();
+      const existingContractsByCode = await client.listContractsByCodeId(codeId);
+      existingContractsByCode.forEach(ctc => expect(ctc.code_id).toEqual(codeId));
 
       const result = await instantiateContract(client, pen, codeId, beneficiaryAddress, transferAmount);
       expect(result.code).toBeFalsy();
@@ -423,6 +444,11 @@ describe("RestClient", () => {
       expect(diff.length).toEqual(1);
       const lastContract = diff[0];
       expect(lastContract).toEqual(myAddress);
+
+      // also by codeID list
+      const newContractsByCode = await client.listContractsByCodeId(codeId);
+      newContractsByCode.forEach(ctc => expect(ctc.code_id).toEqual(codeId));
+      expect(newContractsByCode.length).toEqual(existingContractsByCode.length + 1);
 
       // check out info
       const myInfo = await client.getContractInfo(myAddress);
@@ -501,18 +527,14 @@ describe("RestClient", () => {
         // invalid query syntax throws an error
         await client.queryContractSmart(contractAddress, { nosuchkey: {} }).then(
           () => fail("shouldn't succeed"),
-          error => expect(error).toBeTruthy(),
+          error => expect(error).toMatch("Error parsing QueryMsg"),
         );
-        // TODO: debug rest server. I expect a 'Parse Error', but get
-        // Request failed with status code 500 to match 'Parse Error:'
 
         // invalid address throws an error
         await client.queryContractSmart(noContract, { verifier: {} }).then(
           () => fail("shouldn't succeed"),
-          error => expect(error).toBeTruthy(),
+          error => expect(error).toMatch("not found"),
         );
-        // TODO: debug rest server. I expect a 'not found', but get
-        // Request failed with status code 500 to match 'Parse Error:'
       });
     });
   });

@@ -1,5 +1,5 @@
 import { Encoding } from "@iov/encoding";
-import axios, { AxiosInstance } from "axios";
+import axios, { AxiosError, AxiosInstance } from "axios";
 
 import { AminoTx, CodeInfo, ContractInfo, CosmosSdkAccount, isAminoStdTx, StdTx, WasmData } from "./types";
 
@@ -45,11 +45,11 @@ interface AuthAccountsResponse {
 // Currently all wasm query responses return json-encoded strings...
 // later deprecate this and use the specific types for result
 // (assuming it is inlined, no second parse needed)
-type WasmResponse = WasmSuccess | WasmError;
+type WasmResponse<T = string> = WasmSuccess<T> | WasmError;
 
-interface WasmSuccess {
+interface WasmSuccess<T = string> {
   readonly height: string;
-  readonly result: string;
+  readonly result: T;
 }
 
 interface WasmError {
@@ -92,6 +92,11 @@ interface EncodeTxResponse {
   readonly tx: string;
 }
 
+interface GetCodeResult {
+  // base64 encoded wasm
+  readonly code: string;
+}
+
 type RestClientResponse =
   | NodeInfoResponse
   | BlocksResponse
@@ -100,19 +105,47 @@ type RestClientResponse =
   | SearchTxsResponse
   | PostTxsResponse
   | EncodeTxResponse
-  | WasmResponse;
+  | WasmResponse<string>
+  | WasmResponse<GetCodeResult>;
 
 type BroadcastMode = "block" | "sync" | "async";
 
-function isWasmError(resp: WasmResponse): resp is WasmError {
+function isWasmError<T>(resp: WasmResponse<T>): resp is WasmError {
   return (resp as WasmError).error !== undefined;
 }
 
-function parseWasmResponse(response: WasmResponse): any {
+function unwrapWasmResponse<T>(response: WasmResponse<T>): T {
+  if (isWasmError(response)) {
+    throw new Error(response.error);
+  }
+  return response.result;
+}
+
+function parseWasmResponse(response: WasmResponse<string>): any {
   if (isWasmError(response)) {
     throw new Error(response.error);
   }
   return JSON.parse(response.result);
+}
+
+// We want to get message data from 500 errors
+// https://stackoverflow.com/questions/56577124/how-to-handle-500-error-message-with-axios
+// this should be chained to catch one error and throw a more informative one
+function parseAxios500error(err: AxiosError): never {
+  // use the error message sent from server, not default 500 msg
+  if (err.response?.data) {
+    const data = err.response.data;
+    // expect { error: string }, but otherwise dump
+    if (data.error) {
+      throw new Error(data.error);
+    } else if (typeof data === "string") {
+      throw new Error(data);
+    } else {
+      throw new Error(JSON.stringify(data));
+    }
+  } else {
+    throw err;
+  }
 }
 
 export class RestClient {
@@ -133,7 +166,7 @@ export class RestClient {
   }
 
   public async get(path: string): Promise<RestClientResponse> {
-    const { data } = await this.client.get(path);
+    const { data } = await this.client.get(path).catch(parseAxios500error);
     if (data === null) {
       throw new Error("Received null response from server");
     }
@@ -141,7 +174,7 @@ export class RestClient {
   }
 
   public async post(path: string, params: PostTxsParams): Promise<RestClientResponse> {
-    const { data } = await this.client.post(path, params);
+    const { data } = await this.client.post(path, params).catch(parseAxios500error);
     if (data === null) {
       throw new Error("Received null response from server");
     }
@@ -237,10 +270,9 @@ export class RestClient {
   // this will download the original wasm bytecode by code id
   // throws error if no code with this id
   public async getCode(id: number): Promise<Uint8Array> {
-    // TODO: broken currently
     const path = `/wasm/code/${id}`;
-    const responseData = await this.get(path);
-    const { code } = parseWasmResponse(responseData as WasmResponse);
+    const responseData = (await this.get(path)) as WasmResponse<GetCodeResult>;
+    const { code } = unwrapWasmResponse(responseData);
     return fromBase64(code);
   }
 
@@ -250,6 +282,14 @@ export class RestClient {
     // answer may be null (go's encoding of empty array)
     const addresses: string[] | null = parseWasmResponse(responseData as WasmResponse);
     return addresses || [];
+  }
+
+  public async listContractsByCodeId(id: number): Promise<readonly ContractInfo[]> {
+    const path = `/wasm/code/${id}/contracts`;
+    const responseData = await this.get(path);
+    // answer may be null (go's encoding of empty array)
+    const contracts: ContractInfo[] | null = parseWasmResponse(responseData as WasmResponse);
+    return contracts || [];
   }
 
   // throws error if no contract at this address
