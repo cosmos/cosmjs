@@ -96,20 +96,3 @@ export class CosmWasmCodec implements TxCodec {
     return isValidAddress(address);
   }
 }
-
-const defaultPrefix = "cosmos" as CosmosAddressBech32Prefix;
-
-const defaultTokens: BankTokens = [
-  {
-    fractionalDigits: 6,
-    ticker: "ATOM",
-    denom: "uatom",
-  },
-];
-
-/**
- * Unconfigured codec is useful for testing only
- *
- * @deprecated use CosmWasmCodec constructor
- */
-export const cosmWasmCodec = new CosmWasmCodec(defaultPrefix, defaultTokens);

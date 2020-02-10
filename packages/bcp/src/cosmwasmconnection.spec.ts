@@ -16,7 +16,7 @@ import { Bech32, Encoding } from "@iov/encoding";
 import { HdPaths, Secp256k1HdWallet, UserProfile } from "@iov/keycontrol";
 import { assert } from "@iov/utils";
 
-import { CosmWasmCodec, cosmWasmCodec } from "./cosmwasmcodec";
+import { CosmWasmCodec } from "./cosmwasmcodec";
 import { CosmWasmConnection, TokenConfiguration } from "./cosmwasmconnection";
 import { signedTxJson, txId } from "./testdata.spec";
 import { nonceToSequence } from "./types";
@@ -93,6 +93,17 @@ describe("CosmWasmConnection", () => {
         fractionalDigits: 18,
         ticker: "CASH",
         name: "Cash Token",
+      },
+    ],
+  };
+
+  const atomConfig: TokenConfiguration = {
+    bankTokens: [
+      {
+        fractionalDigits: 6,
+        name: "Atom",
+        ticker: "ATOM",
+        denom: "uatom",
       },
     ],
   };
@@ -187,9 +198,9 @@ describe("CosmWasmConnection", () => {
   describe("identifier", () => {
     it("calculates tx hash from PostableBytes", async () => {
       pendingWithoutCosmos();
-      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
-      // tslint:disable-next-line: deprecation
-      const postable = cosmWasmCodec.bytesToPost(signedTxJson);
+      const codec = new CosmWasmCodec(defaultPrefix, atomConfig.bankTokens);
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, atomConfig);
+      const postable = codec.bytesToPost(signedTxJson);
       const id = await connection.identifier(postable);
       expect(id).toMatch(/^[0-9A-F]{64}$/);
       expect(id).toEqual(txId);
@@ -258,12 +269,12 @@ describe("CosmWasmConnection", () => {
   describe("integration tests", () => {
     it("can post and get a transaction", async () => {
       pendingWithoutCosmos();
+      const codec = new CosmWasmCodec(defaultPrefix, defaultConfig.bankTokens);
       const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
       const profile = new UserProfile();
       const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(faucetMnemonic));
       const faucet = await profile.createIdentity(wallet.id, defaultChainId, faucetPath);
-      // tslint:disable-next-line: deprecation
-      const faucetAddress = cosmWasmCodec.identityToAddress(faucet);
+      const faucetAddress = codec.identityToAddress(faucet);
 
       const unsigned = await connection.withDefaultFee<SendTransaction>({
         kind: "bcp/send",
@@ -278,8 +289,6 @@ describe("CosmWasmConnection", () => {
         },
       });
       const nonce = await connection.getNonce({ address: faucetAddress });
-      // TODO: we need to use custom codecs everywhere
-      const codec = new CosmWasmCodec(defaultPrefix, defaultConfig.bankTokens);
       const signed = await profile.signTransaction(faucet, unsigned, codec, nonce);
       const postableBytes = codec.bytesToPost(signed);
       const response = await connection.postTx(postableBytes);
@@ -324,12 +333,12 @@ describe("CosmWasmConnection", () => {
 
     it("can post and search for a transaction", async () => {
       pendingWithoutCosmos();
+      const codec = new CosmWasmCodec(defaultPrefix, defaultConfig.bankTokens);
       const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
       const profile = new UserProfile();
       const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(faucetMnemonic));
       const faucet = await profile.createIdentity(wallet.id, defaultChainId, faucetPath);
-      // tslint:disable-next-line: deprecation
-      const faucetAddress = cosmWasmCodec.identityToAddress(faucet);
+      const faucetAddress = codec.identityToAddress(faucet);
 
       const unsigned = await connection.withDefaultFee<SendTransaction>({
         kind: "bcp/send",
@@ -344,8 +353,6 @@ describe("CosmWasmConnection", () => {
         },
       });
       const nonce = await connection.getNonce({ address: faucetAddress });
-      // TODO: we need to use custom codecs everywhere
-      const codec = new CosmWasmCodec(defaultPrefix, defaultConfig.bankTokens);
       const signed = await profile.signTransaction(faucet, unsigned, codec, nonce);
       const postableBytes = codec.bytesToPost(signed);
       const response = await connection.postTx(postableBytes);

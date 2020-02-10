@@ -28,9 +28,3 @@ export declare class CosmWasmCodec implements TxCodec {
   identityToAddress(identity: Identity): Address;
   isValidAddress(address: string): boolean;
 }
-/**
- * Unconfigured codec is useful for testing only
- *
- * @deprecated use CosmWasmCodec constructor
- */
-export declare const cosmWasmCodec: CosmWasmCodec;
