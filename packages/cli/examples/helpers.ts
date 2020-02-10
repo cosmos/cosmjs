@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import {
-  logs,
+  logs
 } from "@cosmwasm/sdk";
 
 const defaultHttpUrl = "http://localhost:1317";
@@ -26,9 +26,9 @@ const networkId = "testing";
 
 
 // helper functions
-async function instantiateContract(initClient: RestClient, initPen: Secp256k1Pen, codeId: number, msg: object, transferAmount?: types.Coin[]): Promise<string> {
+const instantiateContract = async (initClient: RestClient, initPen: Secp256k1Pen, codeId: number, msg: object, transferAmount?: types.Coin[]): Promise<string> => {
   const memo = "Create an ERC20 instance";
-  const sender = encodeAddress({ "type": "tendermint/Secp256k1PubKey", "value": toBase64(initPen.pubkey)}, "cosmos");
+  const sender = encodeAddress({ "type": types.pubkeyType.secp256k1, "value": toBase64(initPen.pubkey)}, "cosmos");
   const instantiateContractMsg = {
     type: "wasm/instantiate",
     value: {
@@ -57,7 +57,7 @@ async function instantiateContract(initClient: RestClient, initPen: Secp256k1Pen
 }
 
 // helper functions
-async function executeContract(execClient: RestClient, execPen: Secp256k1Pen, contractAddr: string, msg: object, transferAmount?: types.Coin[]): Promise<readonly logs.Log[]> {
+const executeContract = async (execClient: RestClient, execPen: Secp256k1Pen, contractAddr: string, msg: object, transferAmount?: types.Coin[]): Promise<readonly logs.Log[]> => {
   const memo = "Create an ERC20 instance";
   const sender = encodeAddress({ "type": "tendermint/Secp256k1PubKey", "value": toBase64(execPen.pubkey)}, "cosmos");
   const instantiateContractMsg = {
