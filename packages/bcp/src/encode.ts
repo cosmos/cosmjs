@@ -41,7 +41,7 @@ export function toErc20Amount(amount: Amount, erc20Token: Erc20Token): string {
   return amount.quantity;
 }
 
-export function amountToBankCoin(amount: Amount, tokens: BankTokens): types.Coin {
+export function toBankCoin(amount: Amount, tokens: BankTokens): types.Coin {
   const match = tokens.find(token => token.ticker === amount.tokenTicker);
   if (!match) throw Error(`unknown ticker: ${amount.tokenTicker}`);
   if (match.fractionalDigits !== amount.fractionalDigits) {
@@ -63,7 +63,7 @@ export function encodeFee(fee: Fee, tokens: BankTokens): types.StdFee {
     throw new Error("Cannot encode fee without gas limit");
   }
   return {
-    amount: [amountToBankCoin(fee.tokens, tokens)],
+    amount: [toBankCoin(fee.tokens, tokens)],
     gas: fee.gasLimit,
   };
 }
@@ -99,7 +99,7 @@ export function buildUnsignedTx(
             value: {
               from_address: tx.sender,
               to_address: tx.recipient,
-              amount: [amountToBankCoin(tx.amount, bankTokens)],
+              amount: [toBankCoin(tx.amount, bankTokens)],
             },
           },
         ],
