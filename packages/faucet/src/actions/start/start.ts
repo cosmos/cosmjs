@@ -72,10 +72,10 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
 
   const distibutorIdentities = identitiesOfFirstWallet(profile).slice(1);
 
-  const faucet = new Faucet(constants.tokenConfig);
+  const faucet = new Faucet(constants.tokenConfig, connection, connector.codec);
 
-  await faucet.refill(profile, connection, connector.codec);
-  setInterval(async () => faucet.refill(profile, connection, connector.codec), 60_000); // ever 60 seconds
+  await faucet.refill(profile);
+  setInterval(async () => faucet.refill(profile), 60_000); // ever 60 seconds
 
   console.info("Creating webserver ...");
   const api = new Koa();

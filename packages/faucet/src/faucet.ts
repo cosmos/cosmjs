@@ -18,17 +18,22 @@ export class Faucet {
   /** will be private soon */
   public readonly tokenManager: TokenManager;
 
-  public constructor(config: TokenConfiguration) {
+  private readonly connection: BlockchainConnection;
+  private readonly codec: TxCodec;
+
+  public constructor(config: TokenConfiguration, connection: BlockchainConnection, codec: TxCodec) {
     this.tokenManager = new TokenManager(config);
+    this.connection = connection;
+    this.codec = codec;
   }
 
-  public async refill(profile: UserProfile, connection: BlockchainConnection, codec: TxCodec): Promise<void> {
-    console.info(`Connected to network: ${connection.chainId()}`);
-    console.info(`Tokens on network: ${(await loadTokenTickers(connection)).join(", ")}`);
+  public async refill(profile: UserProfile): Promise<void> {
+    console.info(`Connected to network: ${this.connection.chainId()}`);
+    console.info(`Tokens on network: ${(await loadTokenTickers(this.connection)).join(", ")}`);
 
     const holderIdentity = identitiesOfFirstWallet(profile)[0];
 
-    const accounts = await loadAccounts(profile, connection);
+    const accounts = await loadAccounts(profile, this.connection);
     logAccountsState(accounts);
     const holderAccount = accounts[0];
     const distributorAccounts = accounts.slice(1);
@@ -58,12 +63,12 @@ export class Faucet {
     if (jobs.length > 0) {
       for (const job of jobs) {
         logSendJob(job);
-        await send(profile, connection, codec, job);
+        await send(profile, this.connection, this.codec, job);
         await sleep(50);
       }
 
       console.info("Done refilling accounts.");
-      logAccountsState(await loadAccounts(profile, connection));
+      logAccountsState(await loadAccounts(profile, this.connection));
     } else {
       console.info("Nothing to be done. Anyways, thanks for checking.");
     }
