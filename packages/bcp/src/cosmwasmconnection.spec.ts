@@ -477,7 +477,7 @@ describe("CosmWasmConnection", () => {
         memo: "My first payment",
         amount: {
           quantity: "75",
-          fractionalDigits: 3, // todo: BROKEN!
+          fractionalDigits: 0,
           tokenTicker: "BASH" as TokenTicker,
         },
       });

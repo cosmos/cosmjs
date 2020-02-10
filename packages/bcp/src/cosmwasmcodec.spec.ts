@@ -75,7 +75,7 @@ describe("CosmWasmCodec", () => {
         recipient: "cosmos1dddd" as Address,
         memo: "My first BASH payment",
         amount: {
-          fractionalDigits: 6,
+          fractionalDigits: 0,
           quantity: "345",
           tokenTicker: "BASH" as TokenTicker,
         },

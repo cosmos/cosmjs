@@ -33,6 +33,14 @@ export function encodePubkey(pubkey: PubkeyBundle): types.PubKey {
   }
 }
 
+export function toErc20Amount(amount: Amount, erc20Token: Erc20Token): string {
+  if (amount.tokenTicker !== erc20Token.ticker) throw new Error("Ticker mismatch between amount and token");
+  if (amount.fractionalDigits !== erc20Token.fractionalDigits) {
+    throw new Error("Fractional digits mismatch between amount and token");
+  }
+  return amount.quantity;
+}
+
 export function amountToBankCoin(amount: Amount, tokens: BankTokens): types.Coin {
   const match = tokens.find(token => token.ticker === amount.tokenTicker);
   if (!match) throw Error(`unknown ticker: ${amount.tokenTicker}`);
@@ -117,7 +125,7 @@ export function buildUnsignedTx(
               contract: matchingErc20Token.contractAddress,
               msg: {
                 transfer: {
-                  amount: tx.amount.quantity,
+                  amount: toErc20Amount(tx.amount, matchingErc20Token),
                   recipient: tx.recipient,
                 },
               },

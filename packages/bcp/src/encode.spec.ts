@@ -20,6 +20,7 @@ import {
   encodeFee,
   encodeFullSignature,
   encodePubkey,
+  toErc20Amount,
 } from "./encode";
 import { BankTokens, Erc20Token } from "./types";
 
@@ -72,6 +73,37 @@ describe("encode", () => {
         type: "tendermint/PubKeySecp256k1",
         value: "AtQaCqFnshaZQp6rIkvAPyzThvCvXSDO+9AzbxVErqJP",
       });
+    });
+  });
+
+  describe("toErc20Amount", () => {
+    const [ash, bash] = defaultErc20Tokens;
+
+    it("encodes an amount", () => {
+      const amount: Amount = {
+        quantity: "789",
+        fractionalDigits: 0,
+        tokenTicker: "BASH" as TokenTicker,
+      };
+      expect(toErc20Amount(amount, bash)).toEqual("789");
+    });
+
+    it("throws on ticker mismatch", () => {
+      const amount: Amount = {
+        quantity: "789",
+        fractionalDigits: 0,
+        tokenTicker: "BASH" as TokenTicker,
+      };
+      expect(() => toErc20Amount(amount, ash)).toThrowError(/ticker mismatch/i);
+    });
+
+    it("throws on ticker mismatch", () => {
+      const amount: Amount = {
+        quantity: "789",
+        fractionalDigits: 2,
+        tokenTicker: "BASH" as TokenTicker,
+      };
+      expect(() => toErc20Amount(amount, bash)).toThrowError(/fractional digits mismatch/i);
     });
   });
 
@@ -288,7 +320,7 @@ describe("encode", () => {
         recipient: "cosmos1dddd" as Address,
         memo: defaultMemo,
         amount: {
-          fractionalDigits: 6,
+          fractionalDigits: 0,
           quantity: "345",
           tokenTicker: "BASH" as TokenTicker,
         },
