@@ -109,8 +109,8 @@ export function parseTx(
   nonce: Nonce,
   tokens: BankTokens,
 ): SignedTransaction {
-  if (!types.isAminoStdTx(txValue)) {
-    throw new Error("Only Amino StdTx is supported");
+  if (!types.isStdTx(txValue)) {
+    throw new Error("Only StdTx is supported");
   }
   if (txValue.msg.length !== 1) {
     throw new Error("Only single-message transactions currently supported");

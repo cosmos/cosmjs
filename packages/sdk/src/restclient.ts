@@ -2,11 +2,11 @@ import { Encoding } from "@iov/encoding";
 import axios, { AxiosError, AxiosInstance } from "axios";
 
 import {
-  AminoTx,
   CodeInfo,
   ContractInfo,
   CosmosSdkAccount,
-  isAminoStdTx,
+  CosmosSdkTx,
+  isStdTx,
   Model,
   parseWasmData,
   StdTx,
@@ -70,7 +70,7 @@ export interface TxsResponse {
   readonly height: string;
   readonly txhash: string;
   readonly raw_log: string;
-  readonly tx: AminoTx;
+  readonly tx: CosmosSdkTx;
 }
 
 interface SearchTxsResponse {
@@ -260,7 +260,7 @@ export class RestClient {
   public async postTx(tx: Uint8Array): Promise<PostTxsResponse> {
     // TODO: check this is StdTx
     const decoded = JSON.parse(fromUtf8(tx));
-    if (!isAminoStdTx(decoded)) {
+    if (!isStdTx(decoded)) {
       throw new Error("Must be json encoded StdTx");
     }
     const params = {

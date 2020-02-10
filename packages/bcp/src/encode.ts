@@ -81,7 +81,7 @@ export function buildUnsignedTx(
   tx: UnsignedTransaction,
   bankTokens: BankTokens,
   erc20Tokens: readonly Erc20Token[] = [],
-): types.AminoTx {
+): types.CosmosSdkTx {
   if (!isSendTransaction(tx)) {
     throw new Error("Received transaction of unsupported kind");
   }
@@ -152,7 +152,7 @@ export function buildSignedTx(
   tx: SignedTransaction,
   bankTokens: BankTokens,
   erc20Tokens: readonly Erc20Token[] = [],
-): types.AminoTx {
+): types.CosmosSdkTx {
   const built = buildUnsignedTx(tx.transaction, bankTokens, erc20Tokens);
   return {
     ...built,

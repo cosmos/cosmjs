@@ -1,4 +1,4 @@
-import { AminoTx, CodeInfo, ContractInfo, CosmosSdkAccount, Model, StdTx } from "./types";
+import { CodeInfo, ContractInfo, CosmosSdkAccount, CosmosSdkTx, Model, StdTx } from "./types";
 interface NodeInfo {
   readonly network: string;
 }
@@ -42,7 +42,7 @@ export interface TxsResponse {
   readonly height: string;
   readonly txhash: string;
   readonly raw_log: string;
-  readonly tx: AminoTx;
+  readonly tx: CosmosSdkTx;
 }
 interface SearchTxsResponse {
   readonly total_count: string;
