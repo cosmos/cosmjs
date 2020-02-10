@@ -421,6 +421,8 @@ describe("RestClient", () => {
 
       // create new instance and compare before and after
       const existingContracts = await client.listContractAddresses();
+      const existingContractsByCode = await client.listContractsByCodeId(codeId);
+      existingContractsByCode.forEach(ctc => expect(ctc.code_id).toEqual(codeId));
 
       const result = await instantiateContract(client, pen, codeId, beneficiaryAddress, transferAmount);
       expect(result.code).toBeFalsy();
@@ -436,6 +438,11 @@ describe("RestClient", () => {
       expect(diff.length).toEqual(1);
       const lastContract = diff[0];
       expect(lastContract).toEqual(myAddress);
+
+      // also by codeID list
+      const newContractsByCode = await client.listContractsByCodeId(codeId);
+      newContractsByCode.forEach(ctc => expect(ctc.code_id).toEqual(codeId));
+      expect(newContractsByCode.length).toEqual(existingContractsByCode.length + 1);
 
       // check out info
       const myInfo = await client.getContractInfo(myAddress);
@@ -514,18 +521,14 @@ describe("RestClient", () => {
         // invalid query syntax throws an error
         await client.queryContractSmart(contractAddress, { nosuchkey: {} }).then(
           () => fail("shouldn't succeed"),
-          error => expect(error).toBeTruthy(),
+          error => expect(error).toMatch("Error parsing QueryMsg"),
         );
-        // TODO: debug rest server. I expect a 'Parse Error', but get
-        // Request failed with status code 500 to match 'Parse Error:'
 
         // invalid address throws an error
         await client.queryContractSmart(noContract, { verifier: {} }).then(
           () => fail("shouldn't succeed"),
-          error => expect(error).toBeTruthy(),
+          error => expect(error).toMatch("not found"),
         );
-        // TODO: debug rest server. I expect a 'not found', but get
-        // Request failed with status code 500 to match 'Parse Error:'
       });
     });
   });

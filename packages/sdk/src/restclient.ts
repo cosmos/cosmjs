@@ -1,5 +1,5 @@
 import { Encoding } from "@iov/encoding";
-import axios, { AxiosInstance } from "axios";
+import axios, { AxiosError, AxiosInstance } from "axios";
 
 import { AminoTx, CodeInfo, ContractInfo, CosmosSdkAccount, isAminoStdTx, StdTx, WasmData } from "./types";
 
@@ -128,6 +128,26 @@ function parseWasmResponse(response: WasmResponse<string>): any {
   return JSON.parse(response.result);
 }
 
+// We want to get message data from 500 errors
+// https://stackoverflow.com/questions/56577124/how-to-handle-500-error-message-with-axios
+// this should be chained to catch one error and throw a more informative one
+function parseAxios500error(err: AxiosError): never {
+  // use the error message sent from server, not default 500 msg
+  if (err.response?.data) {
+    const data = err.response.data;
+    // expect { error: string }, but otherwise dump
+    if (data.error) {
+      throw new Error(data.error);
+    } else if (typeof data === "string") {
+      throw new Error(data);
+    } else {
+      throw new Error(JSON.stringify(data));
+    }
+  } else {
+    throw err;
+  }
+}
+
 export class RestClient {
   private readonly client: AxiosInstance;
   // From https://cosmos.network/rpc/#/ICS0/post_txs
@@ -146,7 +166,7 @@ export class RestClient {
   }
 
   public async get(path: string): Promise<RestClientResponse> {
-    const { data } = await this.client.get(path);
+    const { data } = await this.client.get(path).catch(parseAxios500error);
     if (data === null) {
       throw new Error("Received null response from server");
     }
@@ -154,7 +174,7 @@ export class RestClient {
   }
 
   public async post(path: string, params: PostTxsParams): Promise<RestClientResponse> {
-    const { data } = await this.client.post(path, params);
+    const { data } = await this.client.post(path, params).catch(parseAxios500error);
     if (data === null) {
       throw new Error("Received null response from server");
     }
@@ -262,6 +282,14 @@ export class RestClient {
     // answer may be null (go's encoding of empty array)
     const addresses: string[] | null = parseWasmResponse(responseData as WasmResponse);
     return addresses || [];
+  }
+
+  public async listContractsByCodeId(id: number): Promise<readonly ContractInfo[]> {
+    const path = `/wasm/code/${id}/contracts`;
+    const responseData = await this.get(path);
+    // answer may be null (go's encoding of empty array)
+    const contracts: ContractInfo[] | null = parseWasmResponse(responseData as WasmResponse);
+    return contracts || [];
   }
 
   // throws error if no contract at this address
