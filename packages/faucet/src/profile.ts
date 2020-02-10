@@ -2,7 +2,6 @@ import { ChainId, Identity } from "@iov/bcp";
 import { HdPaths, Secp256k1HdWallet, UserProfile } from "@iov/keycontrol";
 
 import { identityToAddress } from "./addresses";
-import * as constants from "./constants";
 import { debugPath } from "./hdpaths";
 
 export async function createUserProfile(
@@ -28,8 +27,4 @@ export async function createUserProfile(
     identities.push(identity);
   }
   return [profile, identities];
-}
-
-export async function setSecretAndCreateIdentities(mnemonic: string, chainId: ChainId): Promise<UserProfile> {
-  return (await createUserProfile(mnemonic, chainId, constants.concurrency, true))[0];
 }

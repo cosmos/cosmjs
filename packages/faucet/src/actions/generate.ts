@@ -2,7 +2,7 @@ import { ChainId } from "@iov/bcp";
 import { Bip39, Random } from "@iov/crypto";
 
 import * as constants from "../constants";
-import { setSecretAndCreateIdentities } from "../profile";
+import { createUserProfile } from "../profile";
 
 export async function generate(args: ReadonlyArray<string>): Promise<void> {
   if (args.length < 1) {
@@ -17,5 +17,5 @@ export async function generate(args: ReadonlyArray<string>): Promise<void> {
   console.info(`FAUCET_MNEMONIC="${mnemonic}"`);
 
   // Log the addresses
-  await setSecretAndCreateIdentities(mnemonic, chainId);
+  await createUserProfile(mnemonic, chainId, constants.concurrency, true);
 }

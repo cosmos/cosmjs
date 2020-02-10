@@ -8,7 +8,7 @@ import * as constants from "../../constants";
 import { logAccountsState } from "../../debugging";
 import { Faucet } from "../../faucet";
 import { availableTokensFromHolder } from "../../multichainhelpers";
-import { setSecretAndCreateIdentities } from "../../profile";
+import { createUserProfile } from "../../profile";
 import { HttpError } from "./httperror";
 import { RequestParser } from "./requestparser";
 
@@ -32,7 +32,12 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
 
   // Profile
   if (!constants.mnemonic) throw new Error("The FAUCET_MNEMONIC environment variable is not set");
-  const profile = await setSecretAndCreateIdentities(constants.mnemonic, connection.chainId());
+  const [profile] = await createUserProfile(
+    constants.mnemonic,
+    connection.chainId(),
+    constants.concurrency,
+    true,
+  );
 
   // Faucet
   const faucet = new Faucet(constants.tokenConfig, connection, connector.codec, profile, true);
