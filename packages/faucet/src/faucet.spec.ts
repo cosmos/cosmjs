@@ -83,9 +83,9 @@ describe("Faucet", () => {
       const recipient = makeRandomAddress();
       await faucet.send({
         amount: {
-          quantity: "7",
-          fractionalDigits: 0,
-          tokenTicker: "BASH" as TokenTicker,
+          quantity: "23456",
+          fractionalDigits: 6,
+          tokenTicker: "COSM" as TokenTicker,
         },
         sender: holder,
         recipient: recipient,
@@ -94,9 +94,9 @@ describe("Faucet", () => {
       assert(account);
       expect(account.balance).toEqual([
         {
-          quantity: "7",
-          fractionalDigits: 0,
-          tokenTicker: "BASH" as TokenTicker,
+          quantity: "23456",
+          fractionalDigits: 6,
+          tokenTicker: "COSM" as TokenTicker,
         },
       ]);
       connection.disconnect();
@@ -110,9 +110,9 @@ describe("Faucet", () => {
       const recipient = makeRandomAddress();
       await faucet.send({
         amount: {
-          quantity: "23456",
-          fractionalDigits: 6,
-          tokenTicker: "COSM" as TokenTicker,
+          quantity: "7",
+          fractionalDigits: 0,
+          tokenTicker: "BASH" as TokenTicker,
         },
         sender: holder,
         recipient: recipient,
@@ -121,9 +121,9 @@ describe("Faucet", () => {
       assert(account);
       expect(account.balance).toEqual([
         {
-          quantity: "23456",
-          fractionalDigits: 6,
-          tokenTicker: "COSM" as TokenTicker,
+          quantity: "7",
+          fractionalDigits: 0,
+          tokenTicker: "BASH" as TokenTicker,
         },
       ]);
       connection.disconnect();
