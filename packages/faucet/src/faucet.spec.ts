@@ -1,0 +1,204 @@
+import { CosmWasmCodec, CosmWasmConnection, TokenConfiguration } from "@cosmwasm/bcp";
+import { CosmosAddressBech32Prefix } from "@cosmwasm/sdk";
+import { Address, ChainId, Identity, TokenTicker } from "@iov/bcp";
+import { Random } from "@iov/crypto";
+import { Bech32 } from "@iov/encoding";
+import { UserProfile } from "@iov/keycontrol";
+import { assert } from "@iov/utils";
+
+import { Faucet } from "./faucet";
+import { createUserProfile } from "./profile";
+
+function pendingWithoutCosmos(): void {
+  if (!process.env.COSMOS_ENABLED) {
+    return pending("Set COSMOS_ENABLED to enable Cosmos node-based tests");
+  }
+}
+
+const httpUrl = "http://localhost:1317";
+const defaultConfig: TokenConfiguration = {
+  bankTokens: [
+    {
+      fractionalDigits: 6,
+      name: "Fee Token",
+      ticker: "COSM",
+      denom: "ucosm",
+    },
+    {
+      fractionalDigits: 6,
+      name: "Staking Token",
+      ticker: "STAKE",
+      denom: "ustake",
+    },
+  ],
+  erc20Tokens: [
+    // {
+    //   contractAddress: "cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
+    //   fractionalDigits: 5,
+    //   ticker: "ASH",
+    //   name: "Ash Token",
+    // },
+    // {
+    //   contractAddress: "cosmos1hqrdl6wstt8qzshwc6mrumpjk9338k0lr4dqxd",
+    //   fractionalDigits: 0,
+    //   ticker: "BASH",
+    //   name: "Bash Token",
+    // },
+  ],
+};
+const defaultPrefix = "cosmos" as CosmosAddressBech32Prefix;
+const defaultChainId = "cosmos:testing" as ChainId;
+const codec = new CosmWasmCodec(defaultPrefix, defaultConfig.bankTokens);
+
+function makeRandomAddress(): Address {
+  return Bech32.encode(defaultPrefix, Random.getBytes(20)) as Address;
+}
+
+const faucetMnemonic =
+  "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone";
+
+async function makeProfile(
+  distributors = 0,
+): Promise<{ readonly profile: UserProfile; readonly holder: Identity; readonly distributors: Identity[] }> {
+  const [profile, identities] = await createUserProfile(faucetMnemonic, defaultChainId, distributors);
+  return {
+    profile: profile,
+    holder: identities[0],
+    distributors: identities.slice(1),
+  };
+}
+
+describe("Faucet", () => {
+  describe("constructor", () => {
+    it("can be constructed", async () => {
+      pendingWithoutCosmos();
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const { profile } = await makeProfile();
+      const faucet = new Faucet(defaultConfig, connection, codec, profile);
+      expect(faucet).toBeTruthy();
+      connection.disconnect();
+    });
+  });
+
+  describe("send", () => {
+    it("can send", async () => {
+      pendingWithoutCosmos();
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const { profile, holder } = await makeProfile();
+      const faucet = new Faucet(defaultConfig, connection, codec, profile);
+      const recipient = makeRandomAddress();
+      await faucet.send({
+        amount: {
+          quantity: "23456",
+          fractionalDigits: 6,
+          tokenTicker: "COSM" as TokenTicker,
+        },
+        sender: holder,
+        recipient: recipient,
+      });
+      const account = await connection.getAccount({ address: recipient });
+      assert(account);
+      expect(account.balance).toEqual([
+        {
+          quantity: "23456",
+          fractionalDigits: 6,
+          tokenTicker: "COSM" as TokenTicker,
+        },
+      ]);
+      connection.disconnect();
+    });
+  });
+
+  describe("refill", () => {
+    it("works", async () => {
+      pendingWithoutCosmos();
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const { profile, distributors } = await makeProfile(1);
+      const faucet = new Faucet(defaultConfig, connection, codec, profile);
+      await faucet.refill();
+      const distributorBalance = (await connection.getAccount({ pubkey: distributors[0].pubkey }))?.balance;
+      assert(distributorBalance);
+      expect(distributorBalance).toEqual([
+        jasmine.objectContaining({
+          tokenTicker: "COSM",
+          fractionalDigits: 6,
+        }),
+        jasmine.objectContaining({
+          tokenTicker: "STAKE",
+          fractionalDigits: 6,
+        }),
+      ]);
+      expect(Number.parseInt(distributorBalance[0].quantity, 10)).toBeGreaterThanOrEqual(80_000000);
+      expect(Number.parseInt(distributorBalance[1].quantity, 10)).toBeGreaterThanOrEqual(80_000000);
+      connection.disconnect();
+    });
+  });
+
+  describe("credit", () => {
+    it("works for fee token", async () => {
+      pendingWithoutCosmos();
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const { profile } = await makeProfile(1);
+      const faucet = new Faucet(defaultConfig, connection, codec, profile);
+      const recipient = makeRandomAddress();
+      await faucet.credit(recipient, "COSM" as TokenTicker);
+      const account = await connection.getAccount({ address: recipient });
+      assert(account);
+      expect(account.balance).toEqual([
+        {
+          quantity: "10000000",
+          fractionalDigits: 6,
+          tokenTicker: "COSM" as TokenTicker,
+        },
+      ]);
+      connection.disconnect();
+    });
+
+    it("works for stake token", async () => {
+      pendingWithoutCosmos();
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const { profile } = await makeProfile(1);
+      const faucet = new Faucet(defaultConfig, connection, codec, profile);
+      const recipient = makeRandomAddress();
+      await faucet.credit(recipient, "STAKE" as TokenTicker);
+      const account = await connection.getAccount({ address: recipient });
+      assert(account);
+      expect(account.balance).toEqual([
+        {
+          quantity: "10000000",
+          fractionalDigits: 6,
+          tokenTicker: "STAKE" as TokenTicker,
+        },
+      ]);
+      connection.disconnect();
+    });
+  });
+
+  describe("loadTokenTickers", () => {
+    it("works", async () => {
+      pendingWithoutCosmos();
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const { profile } = await makeProfile();
+      const faucet = new Faucet(defaultConfig, connection, codec, profile);
+      const tickers = await faucet.loadTokenTickers();
+      expect(tickers).toEqual(["COSM", "STAKE"]);
+      connection.disconnect();
+    });
+  });
+
+  describe("loadAccounts", () => {
+    it("works", async () => {
+      pendingWithoutCosmos();
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const { profile, holder } = await makeProfile();
+      const faucet = new Faucet(defaultConfig, connection, codec, profile);
+      const accounts = await faucet.loadAccounts();
+      const expectedHolderAccount = await connection.getAccount({ pubkey: holder.pubkey });
+      assert(expectedHolderAccount);
+      expect(accounts).toEqual([
+        { address: expectedHolderAccount.address, balance: expectedHolderAccount.balance },
+      ]);
+      connection.disconnect();
+    });
+  });
+});

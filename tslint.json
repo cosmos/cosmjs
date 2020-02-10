@@ -26,6 +26,7 @@
     "ordered-imports": false,
     "prefer-const": false,
     "promise-function-async": true,
+    "radix": false,
     "typedef": [true, "call-signature"],
     "variable-name": [true, "check-format", "allow-leading-underscore"]
   },

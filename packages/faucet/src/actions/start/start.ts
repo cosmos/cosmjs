@@ -1,31 +1,11 @@
-import { UserProfile } from "@iov/keycontrol";
-import cors = require("@koa/cors");
-import Koa from "koa";
-import bodyParser from "koa-bodyparser";
+import { createCosmWasmConnector } from "@cosmwasm/bcp";
 
-import { creditAmount, setFractionalDigits } from "../../cashflow";
-import { codecDefaultFractionalDigits, codecImplementation, establishConnection } from "../../codec";
+import { Webserver } from "../../api/webserver";
 import * as constants from "../../constants";
-import { logAccountsState, logSendJob } from "../../debugging";
-import {
-  availableTokensFromHolder,
-  identitiesOfFirstWallet,
-  loadAccounts,
-  loadTokenTickers,
-  refill,
-  send,
-} from "../../multichainhelpers";
-import { setSecretAndCreateIdentities } from "../../profile";
-import { SendJob } from "../../types";
-import { HttpError } from "./httperror";
-import { RequestParser } from "./requestparser";
-
-let count = 0;
-
-/** returns an integer >= 0 that increments and is unique in module scope */
-function getCount(): number {
-  return count++;
-}
+import { logAccountsState } from "../../debugging";
+import { Faucet } from "../../faucet";
+import { availableTokensFromHolder } from "../../multichainhelpers";
+import { createUserProfile } from "../../profile";
 
 export async function start(args: ReadonlyArray<string>): Promise<void> {
   if (args.length < 1) {
@@ -34,116 +14,44 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
     );
   }
 
+  // Connection
   const blockchainBaseUrl = args[0];
-
-  const port = constants.port;
-
-  const profile = new UserProfile();
-  if (!constants.mnemonic) {
-    throw new Error("The FAUCET_MNEMONIC environment variable is not set");
-  }
+  const connector = createCosmWasmConnector(
+    blockchainBaseUrl,
+    constants.addressPrefix,
+    constants.tokenConfig,
+  );
   console.info(`Connecting to blockchain ${blockchainBaseUrl} ...`);
-  const connection = await establishConnection(blockchainBaseUrl);
+  const connection = await connector.establishConnection();
+  console.info(`Connected to network: ${connection.chainId()}`);
 
-  const connectedChainId = connection.chainId();
-  console.info(`Connected to network: ${connectedChainId}`);
+  // Profile
+  if (!constants.mnemonic) throw new Error("The FAUCET_MNEMONIC environment variable is not set");
+  const [profile] = await createUserProfile(
+    constants.mnemonic,
+    connection.chainId(),
+    constants.concurrency,
+    true,
+  );
 
-  setFractionalDigits(codecDefaultFractionalDigits());
-  await setSecretAndCreateIdentities(profile, constants.mnemonic, connectedChainId);
-
-  const chainTokens = await loadTokenTickers(connection);
+  // Faucet
+  const faucet = new Faucet(constants.tokenConfig, connection, connector.codec, profile, true);
+  const chainTokens = await faucet.loadTokenTickers();
   console.info("Chain tokens:", chainTokens);
-
-  const accounts = await loadAccounts(profile, connection);
+  const accounts = await faucet.loadAccounts();
   logAccountsState(accounts);
-
   let availableTokens = availableTokensFromHolder(accounts[0]);
   console.info("Available tokens:", availableTokens);
   setInterval(async () => {
-    const updatedAccounts = await loadAccounts(profile, connection);
+    const updatedAccounts = await faucet.loadAccounts();
     availableTokens = availableTokensFromHolder(updatedAccounts[0]);
     console.info("Available tokens:", availableTokens);
   }, 60_000);
 
-  const distibutorIdentities = identitiesOfFirstWallet(profile).slice(1);
-
-  await refill(profile, connection);
-  setInterval(async () => refill(profile, connection), 60_000); // ever 60 seconds
+  await faucet.refill();
+  setInterval(async () => faucet.refill(), 60_000); // ever 60 seconds
 
   console.info("Creating webserver ...");
-  const api = new Koa();
-  api.use(cors());
-  api.use(bodyParser());
-
-  api.use(async context => {
-    switch (context.path) {
-      case "/":
-      case "/healthz":
-        context.response.body =
-          "Welcome to the faucet!\n" +
-          "\n" +
-          "Check the full status via the /status endpoint.\n" +
-          "You can get tokens from here by POSTing to /credit.\n" +
-          "See https://github.com/iov-one/iov-faucet for all further information.\n";
-        break;
-      case "/status": {
-        const updatedAccounts = await loadAccounts(profile, connection);
-        context.response.body = {
-          status: "ok",
-          nodeUrl: blockchainBaseUrl,
-          chainId: connectedChainId,
-          chainTokens: chainTokens,
-          availableTokens: availableTokens,
-          holder: updatedAccounts[0],
-          distributors: updatedAccounts.slice(1),
-        };
-        break;
-      }
-      case "/credit": {
-        if (context.request.method !== "POST") {
-          throw new HttpError(405, "This endpoint requires a POST request");
-        }
-
-        if (context.request.type !== "application/json") {
-          throw new HttpError(415, "Content-type application/json expected");
-        }
-
-        // context.request.body is set by the bodyParser() plugin
-        const requestBody = context.request.body;
-        const { address, ticker } = RequestParser.parseCreditBody(requestBody);
-
-        if (!codecImplementation().isValidAddress(address)) {
-          throw new HttpError(400, "Address is not in the expected format for this chain.");
-        }
-
-        if (availableTokens.indexOf(ticker) === -1) {
-          const tokens = JSON.stringify(availableTokens);
-          throw new HttpError(422, `Token is not available. Available tokens are: ${tokens}`);
-        }
-
-        const sender = distibutorIdentities[getCount() % distibutorIdentities.length];
-
-        try {
-          const job: SendJob = {
-            sender: sender,
-            recipient: address,
-            amount: creditAmount(ticker),
-            tokenTicker: ticker,
-          };
-          logSendJob(job);
-          await send(profile, connection, job);
-        } catch (e) {
-          console.error(e);
-          throw new HttpError(500, "Sending tokens failed");
-        }
-
-        context.response.body = "ok";
-        break;
-      }
-      default:
-      // koa sends 404 by default
-    }
-  });
-  console.info(`Starting webserver on port ${port} ...`);
-  api.listen(port);
+  const server = new Webserver(faucet, { nodeUrl: blockchainBaseUrl, chainId: connection.chainId() });
+  server.start(constants.port);
 }

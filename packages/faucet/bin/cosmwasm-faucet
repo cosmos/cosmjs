@@ -2,5 +2,5 @@
 const path = require("path");
 
 // attempt to call in main file....
-const faucet = require(path.join(__dirname, "..", "build", "faucet.js"));
+const faucet = require(path.join(__dirname, "..", "build", "cli.js"));
 faucet.main(process.argv.slice(2));
