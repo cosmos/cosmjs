@@ -1,7 +1,7 @@
 import { Account, Amount } from "@iov/bcp";
 import { Decimal } from "@iov/encoding";
 
-import { codecImplementation } from "./codec";
+import { identityToAddress } from "./addresses";
 import { SendJob } from "./types";
 
 /** A string representation of a coin in a human-readable format that can change at any time */
@@ -31,7 +31,7 @@ export function logAccountsState(accounts: ReadonlyArray<Account>): void {
 }
 
 export function logSendJob(job: SendJob): void {
-  const from = codecImplementation().identityToAddress(job.sender);
+  const from = identityToAddress(job.sender);
   const to = job.recipient;
   const amount = debugAmount(job.amount);
   console.info(`Sending ${amount} from ${from} to ${to} ...`);

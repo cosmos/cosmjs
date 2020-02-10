@@ -1,9 +1,10 @@
 import { UserProfile } from "@iov/keycontrol";
 import cors = require("@koa/cors");
+import { createCosmWasmConnector } from "@cosmwasm/bcp";
 import Koa from "koa";
 import bodyParser from "koa-bodyparser";
 
-import { codecImplementation, establishConnection } from "../../codec";
+import { isValidAddress } from "../../addresses";
 import * as constants from "../../constants";
 import { logAccountsState, logSendJob } from "../../debugging";
 import { Faucet } from "../../faucet";
@@ -41,8 +42,14 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
   if (!constants.mnemonic) {
     throw new Error("The FAUCET_MNEMONIC environment variable is not set");
   }
+
+  const connector = createCosmWasmConnector(
+    blockchainBaseUrl,
+    constants.addressPrefix,
+    constants.tokenConfig,
+  );
   console.info(`Connecting to blockchain ${blockchainBaseUrl} ...`);
-  const connection = await establishConnection(blockchainBaseUrl);
+  const connection = await connector.establishConnection();
 
   const connectedChainId = connection.chainId();
   console.info(`Connected to network: ${connectedChainId}`);
@@ -67,8 +74,8 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
 
   const faucet = new Faucet(constants.tokenConfig);
 
-  await faucet.refill(profile, connection);
-  setInterval(async () => faucet.refill(profile, connection), 60_000); // ever 60 seconds
+  await faucet.refill(profile, connection, connector.codec);
+  setInterval(async () => faucet.refill(profile, connection, connector.codec), 60_000); // ever 60 seconds
 
   console.info("Creating webserver ...");
   const api = new Koa();
@@ -112,7 +119,7 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
         const requestBody = context.request.body;
         const { address, ticker } = RequestParser.parseCreditBody(requestBody);
 
-        if (!codecImplementation().isValidAddress(address)) {
+        if (!isValidAddress(address)) {
           throw new HttpError(400, "Address is not in the expected format for this chain.");
         }
 
@@ -131,7 +138,7 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
             tokenTicker: ticker,
           };
           logSendJob(job);
-          await send(profile, connection, job);
+          await send(profile, connection, connector.codec, job);
         } catch (e) {
           console.error(e);
           throw new HttpError(500, "Sending tokens failed");

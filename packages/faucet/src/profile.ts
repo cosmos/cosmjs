@@ -1,7 +1,7 @@
 import { ChainId } from "@iov/bcp";
 import { HdPaths, Secp256k1HdWallet, UserProfile } from "@iov/keycontrol";
 
-import { codecImplementation } from "./codec";
+import { identityToAddress } from "./addresses";
 import * as constants from "./constants";
 import { debugPath } from "./hdpaths";
 
@@ -24,7 +24,7 @@ export async function setSecretAndCreateIdentities(
 
     // log
     const role = i === 0 ? "token holder " : `distributor ${i}`;
-    const address = codecImplementation().identityToAddress(identity);
+    const address = identityToAddress(identity);
     console.info(`Created ${role} (${debugPath(path)}): ${address}`);
   }
 }

@@ -6,10 +6,11 @@ import {
   isBlockInfoPending,
   SendTransaction,
   TokenTicker,
+  TxCodec,
 } from "@iov/bcp";
 import { UserProfile } from "@iov/keycontrol";
 
-import { codecImplementation } from "./codec";
+import { identityToAddress } from "./addresses";
 import { SendJob } from "./types";
 
 export function identitiesOfFirstWallet(profile: UserProfile): ReadonlyArray<Identity> {
@@ -21,8 +22,7 @@ export async function loadAccounts(
   profile: UserProfile,
   connection: BlockchainConnection,
 ): Promise<ReadonlyArray<Account>> {
-  const codec = codecImplementation();
-  const addresses = identitiesOfFirstWallet(profile).map(identity => codec.identityToAddress(identity));
+  const addresses = identitiesOfFirstWallet(profile).map(identity => identityToAddress(identity));
 
   const out: Account[] = [];
   for (const address of addresses) {
@@ -55,10 +55,9 @@ export async function loadTokenTickers(
 export async function send(
   profile: UserProfile,
   connection: BlockchainConnection,
+  codec: TxCodec,
   job: SendJob,
 ): Promise<void> {
-  const codec = codecImplementation();
-
   const sendWithFee = await connection.withDefaultFee<SendTransaction>({
     kind: "bcp/send",
     chainId: connection.chainId(),

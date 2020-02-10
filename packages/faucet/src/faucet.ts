@@ -1,5 +1,5 @@
 import { TokenConfiguration } from "@cosmwasm/bcp";
-import { Account, Amount, BlockchainConnection, TokenTicker } from "@iov/bcp";
+import { Account, Amount, BlockchainConnection, TokenTicker, TxCodec } from "@iov/bcp";
 import { Decimal, Uint53 } from "@iov/encoding";
 import { UserProfile } from "@iov/keycontrol";
 import { sleep } from "@iov/utils";
@@ -53,7 +53,7 @@ export class Faucet {
     return this.creditAmount(token, factor);
   }
 
-  public async refill(profile: UserProfile, connection: BlockchainConnection): Promise<void> {
+  public async refill(profile: UserProfile, connection: BlockchainConnection, codec: TxCodec): Promise<void> {
     console.info(`Connected to network: ${connection.chainId()}`);
     console.info(`Tokens on network: ${(await loadTokenTickers(connection)).join(", ")}`);
 
@@ -87,7 +87,7 @@ export class Faucet {
     if (jobs.length > 0) {
       for (const job of jobs) {
         logSendJob(job);
-        await send(profile, connection, job);
+        await send(profile, connection, codec, job);
         await sleep(50);
       }
 
