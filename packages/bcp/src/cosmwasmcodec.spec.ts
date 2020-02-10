@@ -1,16 +1,16 @@
 import { CosmosAddressBech32Prefix } from "@cosmwasm/sdk";
-import { PostableBytes, PrehashType } from "@iov/bcp";
+import { Address, PostableBytes, PrehashType, SendTransaction, TokenTicker } from "@iov/bcp";
 import { Encoding } from "@iov/encoding";
 
 import { CosmWasmCodec } from "./cosmwasmcodec";
 import { chainId, nonce, sendTxJson, signedTxBin, signedTxEncodedJson, signedTxJson } from "./testdata.spec";
-import { BankTokens } from "./types";
+import { BankToken, Erc20Token } from "./types";
 
 const { toUtf8 } = Encoding;
 
 const defaultPrefix = "cosmos" as CosmosAddressBech32Prefix;
 
-const defaultTokens: BankTokens = [
+const defaultBankTokens: readonly BankToken[] = [
   {
     fractionalDigits: 6,
     ticker: "ATOM",
@@ -18,8 +18,26 @@ const defaultTokens: BankTokens = [
   },
 ];
 
+const defaultErc20Tokens: readonly Erc20Token[] = [
+  {
+    contractAddress: "cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
+    fractionalDigits: 5,
+    ticker: "ASH",
+  },
+  {
+    contractAddress: "cosmos1hqrdl6wstt8qzshwc6mrumpjk9338k0lr4dqxd",
+    fractionalDigits: 0,
+    ticker: "BASH",
+  },
+  {
+    contractAddress: "cosmos18r5szma8hm93pvx6lwpjwyxruw27e0k5uw835c",
+    fractionalDigits: 18,
+    ticker: "CASH",
+  },
+];
+
 describe("CosmWasmCodec", () => {
-  const codec = new CosmWasmCodec(defaultPrefix, defaultTokens);
+  const codec = new CosmWasmCodec(defaultPrefix, defaultBankTokens, defaultErc20Tokens);
 
   describe("isValidAddress", () => {
     it("accepts valid addresses", () => {
@@ -47,6 +65,38 @@ describe("CosmWasmCodec", () => {
         prehashType: PrehashType.Sha256,
       };
       expect(codec.bytesToSign(sendTxJson, nonce)).toEqual(expected);
+    });
+
+    it("works for ERC20 send", () => {
+      const bashSendTx: SendTransaction = {
+        kind: "bcp/send",
+        chainId: chainId,
+        sender: "cosmos1txqfn5jmcts0x0q7krdxj8tgf98tj0965vqlmq" as Address,
+        recipient: "cosmos1dddd" as Address,
+        memo: "My first BASH payment",
+        amount: {
+          fractionalDigits: 6,
+          quantity: "345",
+          tokenTicker: "BASH" as TokenTicker,
+        },
+        fee: {
+          tokens: {
+            fractionalDigits: 6,
+            quantity: "2500",
+            tokenTicker: "ATOM" as TokenTicker,
+          },
+          gasLimit: "100000",
+        },
+      };
+
+      const expected = {
+        bytes: toUtf8(
+          '{"account_number":"0","chain_id":"cosmoshub-3","fee":{"amount":[{"amount":"2500","denom":"uatom"}],"gas":"100000"},"memo":"My first BASH payment","msgs":[{"type":"wasm/execute","value":{"contract":"cosmos1hqrdl6wstt8qzshwc6mrumpjk9338k0lr4dqxd","msg":{"transfer":{"amount":"345","recipient":"cosmos1dddd"}},"sender":"cosmos1txqfn5jmcts0x0q7krdxj8tgf98tj0965vqlmq","sent_funds":[]}}],"sequence":"99"}',
+        ),
+        prehashType: PrehashType.Sha256,
+      };
+
+      expect(codec.bytesToSign(bashSendTx, nonce)).toEqual(expected);
     });
   });
 
