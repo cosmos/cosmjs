@@ -385,6 +385,12 @@ describe("RestClient", () => {
       expect(lastInfo.id).toEqual(codeId);
       expect(lastInfo.creator).toEqual(faucet.address);
 
+      // ensure metadata is present
+      expect(lastInfo.source).toEqual(
+        "https://github.com/confio/cosmwasm/raw/0.7/lib/vm/testdata/contract_0.6.wasm",
+      );
+      expect(lastInfo.builder).toEqual("cosmwasm-opt:0.6.2");
+
       // check code hash matches expectation
       const wasmHash = new Sha256(wasmCode).digest();
       expect(lastInfo.code_hash.toLowerCase()).toEqual(toHex(wasmHash));
