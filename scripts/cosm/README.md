@@ -5,7 +5,7 @@
 Run the following:
 
 ```
-./start.sh
+./start.sh && ./init.sh
 ```
 
 ## CLI
