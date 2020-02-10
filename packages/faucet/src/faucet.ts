@@ -2,6 +2,7 @@ import { TokenConfiguration } from "@cosmwasm/bcp";
 import {
   Account,
   BlockchainConnection,
+  Identity,
   isBlockInfoFailed,
   isBlockInfoPending,
   SendTransaction,
@@ -20,6 +21,12 @@ import { SendJob } from "./types";
 export class Faucet {
   /** will be private soon */
   public readonly tokenManager: TokenManager;
+  public get holder(): Identity {
+    return identitiesOfFirstWallet(this.profile)[0];
+  }
+  public get distributors(): readonly Identity[] {
+    return identitiesOfFirstWallet(this.profile).slice(1);
+  }
 
   private readonly connection: BlockchainConnection;
   private readonly codec: TxCodec;
@@ -91,8 +98,6 @@ export class Faucet {
     console.info(`Connected to network: ${this.connection.chainId()}`);
     console.info(`Tokens on network: ${(await this.loadTokenTickers()).join(", ")}`);
 
-    const holderIdentity = identitiesOfFirstWallet(this.profile)[0];
-
     const accounts = await this.loadAccounts();
     logAccountsState(accounts);
     const holderAccount = accounts[0];
@@ -113,7 +118,7 @@ export class Faucet {
       );
       for (const refillDistibutor of refillDistibutors) {
         jobs.push({
-          sender: holderIdentity,
+          sender: this.holder,
           recipient: refillDistibutor.address,
           amount: this.tokenManager.refillAmount(token),
         });

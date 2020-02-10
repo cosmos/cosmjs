@@ -5,11 +5,8 @@ import { identityToAddress } from "./addresses";
 import * as constants from "./constants";
 import { debugPath } from "./hdpaths";
 
-export async function setSecretAndCreateIdentities(
-  profile: UserProfile,
-  mnemonic: string,
-  chainId: ChainId,
-): Promise<void> {
+export async function setSecretAndCreateIdentities(mnemonic: string, chainId: ChainId): Promise<UserProfile> {
+  const profile = new UserProfile();
   if (profile.wallets.value.length !== 0) {
     throw new Error("Profile already contains wallets");
   }
@@ -27,4 +24,5 @@ export async function setSecretAndCreateIdentities(
     const address = identityToAddress(identity);
     console.info(`Created ${role} (${debugPath(path)}): ${address}`);
   }
+  return profile;
 }

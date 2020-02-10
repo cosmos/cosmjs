@@ -1,4 +1,3 @@
-import { UserProfile } from "@iov/keycontrol";
 import cors = require("@koa/cors");
 import { createCosmWasmConnector } from "@cosmwasm/bcp";
 import Koa from "koa";
@@ -8,7 +7,7 @@ import { isValidAddress } from "../../addresses";
 import * as constants from "../../constants";
 import { logAccountsState, logSendJob } from "../../debugging";
 import { Faucet } from "../../faucet";
-import { availableTokensFromHolder, identitiesOfFirstWallet } from "../../multichainhelpers";
+import { availableTokensFromHolder } from "../../multichainhelpers";
 import { setSecretAndCreateIdentities } from "../../profile";
 import { SendJob } from "../../types";
 import { HttpError } from "./httperror";
@@ -28,15 +27,8 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
     );
   }
 
+  // Connection
   const blockchainBaseUrl = args[0];
-
-  const port = constants.port;
-
-  const profile = new UserProfile();
-  if (!constants.mnemonic) {
-    throw new Error("The FAUCET_MNEMONIC environment variable is not set");
-  }
-
   const connector = createCosmWasmConnector(
     blockchainBaseUrl,
     constants.addressPrefix,
@@ -44,20 +36,18 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
   );
   console.info(`Connecting to blockchain ${blockchainBaseUrl} ...`);
   const connection = await connector.establishConnection();
+  console.info(`Connected to network: ${connection.chainId()}`);
 
-  const connectedChainId = connection.chainId();
-  console.info(`Connected to network: ${connectedChainId}`);
+  // Profile
+  if (!constants.mnemonic) throw new Error("The FAUCET_MNEMONIC environment variable is not set");
+  const profile = await setSecretAndCreateIdentities(constants.mnemonic, connection.chainId());
 
-  await setSecretAndCreateIdentities(profile, constants.mnemonic, connectedChainId);
-
+  // Faucet
   const faucet = new Faucet(constants.tokenConfig, connection, connector.codec, profile);
-
   const chainTokens = await faucet.loadTokenTickers();
   console.info("Chain tokens:", chainTokens);
-
   const accounts = await faucet.loadAccounts();
   logAccountsState(accounts);
-
   let availableTokens = availableTokensFromHolder(accounts[0]);
   console.info("Available tokens:", availableTokens);
   setInterval(async () => {
@@ -65,8 +55,6 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
     availableTokens = availableTokensFromHolder(updatedAccounts[0]);
     console.info("Available tokens:", availableTokens);
   }, 60_000);
-
-  const distibutorIdentities = identitiesOfFirstWallet(profile).slice(1);
 
   await faucet.refill();
   setInterval(async () => faucet.refill(), 60_000); // ever 60 seconds
@@ -92,7 +80,7 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
         context.response.body = {
           status: "ok",
           nodeUrl: blockchainBaseUrl,
-          chainId: connectedChainId,
+          chainId: connection.chainId(),
           chainTokens: chainTokens,
           availableTokens: availableTokens,
           holder: updatedAccounts[0],
@@ -122,7 +110,7 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
           throw new HttpError(422, `Token is not available. Available tokens are: ${tokens}`);
         }
 
-        const sender = distibutorIdentities[getCount() % distibutorIdentities.length];
+        const sender = faucet.distributors[getCount() % faucet.distributors.length];
 
         try {
           const job: SendJob = {
@@ -144,6 +132,7 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
       // koa sends 404 by default
     }
   });
+  const port = constants.port;
   console.info(`Starting webserver on port ${port} ...`);
   api.listen(port);
 }
