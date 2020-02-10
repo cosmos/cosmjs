@@ -33,12 +33,6 @@ export async function loadAccounts(
   return out;
 }
 
-export async function loadTokenTickers(
-  connection: BlockchainConnection,
-): Promise<ReadonlyArray<TokenTicker>> {
-  return (await connection.getAllTokens()).map(token => token.tokenTicker);
-}
-
 export function availableTokensFromHolder(holderAccount: Account): ReadonlyArray<TokenTicker> {
   return holderAccount.balance.map(coin => coin.tokenTicker);
 }

@@ -8,12 +8,7 @@ import { isValidAddress } from "../../addresses";
 import * as constants from "../../constants";
 import { logAccountsState, logSendJob } from "../../debugging";
 import { Faucet } from "../../faucet";
-import {
-  availableTokensFromHolder,
-  identitiesOfFirstWallet,
-  loadAccounts,
-  loadTokenTickers,
-} from "../../multichainhelpers";
+import { availableTokensFromHolder, identitiesOfFirstWallet, loadAccounts } from "../../multichainhelpers";
 import { setSecretAndCreateIdentities } from "../../profile";
 import { SendJob } from "../../types";
 import { HttpError } from "./httperror";
@@ -55,7 +50,9 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
 
   await setSecretAndCreateIdentities(profile, constants.mnemonic, connectedChainId);
 
-  const chainTokens = await loadTokenTickers(connection);
+  const faucet = new Faucet(constants.tokenConfig, connection, connector.codec, profile);
+
+  const chainTokens = await faucet.loadTokenTickers();
   console.info("Chain tokens:", chainTokens);
 
   const accounts = await loadAccounts(profile, connection);
@@ -70,8 +67,6 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
   }, 60_000);
 
   const distibutorIdentities = identitiesOfFirstWallet(profile).slice(1);
-
-  const faucet = new Faucet(constants.tokenConfig, connection, connector.codec, profile);
 
   await faucet.refill();
   setInterval(async () => faucet.refill(), 60_000); // ever 60 seconds

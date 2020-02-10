@@ -107,4 +107,16 @@ describe("Faucet", () => {
       connection.disconnect();
     });
   });
+
+  describe("loadTokenTickers", () => {
+    it("works", async () => {
+      pendingWithoutCosmos();
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const { profile } = await makeProfile();
+      const faucet = new Faucet(defaultConfig, connection, codec, profile);
+      const tickers = await faucet.loadTokenTickers();
+      expect(tickers).toEqual(["COSM", "STAKE"]);
+      connection.disconnect();
+    });
+  });
 });

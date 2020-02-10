@@ -4,18 +4,14 @@ import {
   isBlockInfoFailed,
   isBlockInfoPending,
   SendTransaction,
+  TokenTicker,
   TxCodec,
 } from "@iov/bcp";
 import { UserProfile } from "@iov/keycontrol";
 import { sleep } from "@iov/utils";
 
 import { debugAccount, logAccountsState, logSendJob } from "./debugging";
-import {
-  availableTokensFromHolder,
-  identitiesOfFirstWallet,
-  loadAccounts,
-  loadTokenTickers,
-} from "./multichainhelpers";
+import { availableTokensFromHolder, identitiesOfFirstWallet, loadAccounts } from "./multichainhelpers";
 import { TokenManager } from "./tokenmanager";
 import { SendJob } from "./types";
 
@@ -63,9 +59,13 @@ export class Faucet {
     }
   }
 
+  public async loadTokenTickers(): Promise<ReadonlyArray<TokenTicker>> {
+    return (await this.connection.getAllTokens()).map(token => token.tokenTicker);
+  }
+
   public async refill(): Promise<void> {
     console.info(`Connected to network: ${this.connection.chainId()}`);
-    console.info(`Tokens on network: ${(await loadTokenTickers(this.connection)).join(", ")}`);
+    console.info(`Tokens on network: ${(await this.loadTokenTickers()).join(", ")}`);
 
     const holderIdentity = identitiesOfFirstWallet(this.profile)[0];
 
