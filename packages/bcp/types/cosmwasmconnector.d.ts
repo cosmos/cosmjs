@@ -7,6 +7,6 @@ import { CosmWasmConnection, TokenConfiguration } from "./cosmwasmconnection";
 export declare function createCosmWasmConnector(
   url: string,
   addressPrefix: CosmosAddressBech32Prefix,
-  tokens: TokenConfiguration,
+  tokenConfig: TokenConfiguration,
   expectedChainId?: ChainId,
 ): ChainConnector<CosmWasmConnection>;

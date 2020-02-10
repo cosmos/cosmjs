@@ -10,12 +10,12 @@ import { CosmWasmConnection, TokenConfiguration } from "./cosmwasmconnection";
 export function createCosmWasmConnector(
   url: string,
   addressPrefix: CosmosAddressBech32Prefix,
-  tokens: TokenConfiguration,
+  tokenConfig: TokenConfiguration,
   expectedChainId?: ChainId,
 ): ChainConnector<CosmWasmConnection> {
-  const codec = new CosmWasmCodec(addressPrefix, tokens.bankTokens);
+  const codec = new CosmWasmCodec(addressPrefix, tokenConfig.bankTokens, tokenConfig.erc20Tokens);
   return {
-    establishConnection: async () => CosmWasmConnection.establish(url, addressPrefix, tokens),
+    establishConnection: async () => CosmWasmConnection.establish(url, addressPrefix, tokenConfig),
     codec: codec,
     expectedChainId: expectedChainId,
   };

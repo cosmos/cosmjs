@@ -32,12 +32,6 @@ const defaultConfig: TokenConfiguration = {
     },
   ],
   erc20Tokens: [
-    // {
-    //   contractAddress: "cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
-    //   fractionalDigits: 5,
-    //   ticker: "ASH",
-    //   name: "Ash Token",
-    // },
     {
       contractAddress: "cosmos1hqrdl6wstt8qzshwc6mrumpjk9338k0lr4dqxd",
       fractionalDigits: 0,
