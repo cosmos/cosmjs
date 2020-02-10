@@ -25,17 +25,24 @@ export class Faucet {
 
   private readonly connection: BlockchainConnection;
   private readonly codec: TxCodec;
+  private readonly profile: UserProfile;
 
-  public constructor(config: TokenConfiguration, connection: BlockchainConnection, codec: TxCodec) {
+  public constructor(
+    config: TokenConfiguration,
+    connection: BlockchainConnection,
+    codec: TxCodec,
+    profile: UserProfile,
+  ) {
     this.tokenManager = new TokenManager(config);
     this.connection = connection;
     this.codec = codec;
+    this.profile = profile;
   }
 
   /**
    * Creates and posts a send transaction. Then waits until the transaction is in a block.
    */
-  public async send(profile: UserProfile, job: SendJob): Promise<void> {
+  public async send(job: SendJob): Promise<void> {
     const sendWithFee = await this.connection.withDefaultFee<SendTransaction>({
       kind: "bcp/send",
       chainId: this.connection.chainId(),
@@ -47,7 +54,7 @@ export class Faucet {
     });
 
     const nonce = await this.connection.getNonce({ pubkey: job.sender.pubkey });
-    const signed = await profile.signTransaction(job.sender, sendWithFee, this.codec, nonce);
+    const signed = await this.profile.signTransaction(job.sender, sendWithFee, this.codec, nonce);
 
     const post = await this.connection.postTx(this.codec.bytesToPost(signed));
     const blockInfo = await post.blockInfo.waitFor(info => !isBlockInfoPending(info));
@@ -56,13 +63,13 @@ export class Faucet {
     }
   }
 
-  public async refill(profile: UserProfile): Promise<void> {
+  public async refill(): Promise<void> {
     console.info(`Connected to network: ${this.connection.chainId()}`);
     console.info(`Tokens on network: ${(await loadTokenTickers(this.connection)).join(", ")}`);
 
-    const holderIdentity = identitiesOfFirstWallet(profile)[0];
+    const holderIdentity = identitiesOfFirstWallet(this.profile)[0];
 
-    const accounts = await loadAccounts(profile, this.connection);
+    const accounts = await loadAccounts(this.profile, this.connection);
     logAccountsState(accounts);
     const holderAccount = accounts[0];
     const distributorAccounts = accounts.slice(1);
@@ -91,12 +98,12 @@ export class Faucet {
     if (jobs.length > 0) {
       for (const job of jobs) {
         logSendJob(job);
-        await this.send(profile, job);
+        await this.send(job);
         await sleep(50);
       }
 
       console.info("Done refilling accounts.");
-      logAccountsState(await loadAccounts(profile, this.connection));
+      logAccountsState(await loadAccounts(this.profile, this.connection));
     } else {
       console.info("Nothing to be done. Anyways, thanks for checking.");
     }

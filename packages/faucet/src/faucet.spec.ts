@@ -72,7 +72,8 @@ describe("Faucet", () => {
     it("can be constructed", async () => {
       pendingWithoutCosmos();
       const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
-      const faucet = new Faucet(defaultConfig, connection, codec);
+      const { profile } = await makeProfile();
+      const faucet = new Faucet(defaultConfig, connection, codec, profile);
       expect(faucet).toBeTruthy();
       connection.disconnect();
     });
@@ -83,9 +84,9 @@ describe("Faucet", () => {
       pendingWithoutCosmos();
       const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
       const { profile, holder } = await makeProfile();
-      const faucet = new Faucet(defaultConfig, connection, codec);
+      const faucet = new Faucet(defaultConfig, connection, codec, profile);
       const recipient = makeRandomAddress();
-      await faucet.send(profile, {
+      await faucet.send({
         amount: {
           quantity: "23456",
           fractionalDigits: 6,

@@ -71,10 +71,10 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
 
   const distibutorIdentities = identitiesOfFirstWallet(profile).slice(1);
 
-  const faucet = new Faucet(constants.tokenConfig, connection, connector.codec);
+  const faucet = new Faucet(constants.tokenConfig, connection, connector.codec, profile);
 
-  await faucet.refill(profile);
-  setInterval(async () => faucet.refill(profile), 60_000); // ever 60 seconds
+  await faucet.refill();
+  setInterval(async () => faucet.refill(), 60_000); // ever 60 seconds
 
   console.info("Creating webserver ...");
   const api = new Koa();
@@ -136,7 +136,7 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
             amount: faucet.tokenManager.creditAmount(ticker),
           };
           logSendJob(job);
-          await faucet.send(profile, job);
+          await faucet.send(job);
         } catch (e) {
           console.error(e);
           throw new HttpError(500, "Sending tokens failed");
