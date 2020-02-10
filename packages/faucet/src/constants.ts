@@ -12,13 +12,13 @@ export const tokenConfig: TokenConfiguration = {
       fractionalDigits: 6,
       name: "Fee Token",
       ticker: "COSM",
-      denom: "cosm",
+      denom: "ucosm",
     },
     {
       fractionalDigits: 6,
       name: "Staking Token",
       ticker: "STAKE",
-      denom: "stake",
+      denom: "ustake",
     },
   ],
 };
