@@ -91,7 +91,6 @@ describe("Faucet", () => {
           fractionalDigits: 6,
           tokenTicker: "COSM" as TokenTicker,
         },
-        tokenTicker: "COSM" as TokenTicker,
         sender: holder,
         recipient: recipient,
       });

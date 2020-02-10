@@ -134,7 +134,6 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
             sender: sender,
             recipient: address,
             amount: faucet.tokenManager.creditAmount(ticker),
-            tokenTicker: ticker,
           };
           logSendJob(job);
           await faucet.send(profile, job);

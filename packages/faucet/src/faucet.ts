@@ -84,7 +84,6 @@ export class Faucet {
         jobs.push({
           sender: holderIdentity,
           recipient: refillDistibutor.address,
-          tokenTicker: token,
           amount: this.tokenManager.refillAmount(token),
         });
       }
