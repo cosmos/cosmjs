@@ -308,23 +308,23 @@ export class RestClient {
   // This is an empty array if no such contract, or contract has no data.
   public async getAllContractState(address: string): Promise<readonly WasmData[]> {
     const path = `/wasm/contract/${address}/state`;
-    const responseData = await this.get(path);
-    return parseWasmResponse(responseData as WasmResponse);
+    const responseData = (await this.get(path)) as WasmResponse<WasmData[]>;
+    return unwrapWasmResponse(responseData);
   }
 
   // Returns the data at the key if present (unknown decoded json),
   // or null if no data at this (contract address, key) pair
-  public async queryContractRaw(address: string, key: Uint8Array): Promise<unknown | null> {
+  public async queryContractRaw(address: string, key: Uint8Array): Promise<Uint8Array | null> {
     const hexKey = toHex(key);
     const path = `/wasm/contract/${address}/raw/${hexKey}?encoding=hex`;
-    const responseData = await this.get(path);
-    const data: readonly WasmData[] = parseWasmResponse(responseData as WasmResponse);
-    return data.length === 0 ? null : data[0].val;
+    const responseData = (await this.get(path)) as WasmResponse<WasmData[]>;
+    const data = unwrapWasmResponse(responseData);
+    return data.length === 0 ? null : fromBase64(data[0].val);
   }
 
   // Makes a "smart query" on the contract, returns response verbatim (json.RawMessage)
   // Throws error if no such contract or invalid query format
-  public async queryContractSmart(address: string, query: object): Promise<string> {
+  public async queryContractSmart(address: string, query: object): Promise<Uint8Array> {
     const encoded = toHex(toUtf8(JSON.stringify(query)));
     const path = `/wasm/contract/${address}/smart/${encoded}?encoding=hex`;
     const responseData = (await this.get(path)) as WasmResponse;
@@ -332,6 +332,6 @@ export class RestClient {
       throw new Error(responseData.error);
     }
     // no extra parse here for now, see https://github.com/confio/cosmwasm/issues/144
-    return responseData.result;
+    return fromBase64(responseData.result);
   }
 }

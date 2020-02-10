@@ -23,7 +23,7 @@ import {
   StdTx,
 } from "./types";
 
-const { fromBase64, fromHex, toAscii, toBase64, toHex } = Encoding;
+const { fromAscii, fromBase64, fromHex, toAscii, toBase64, toHex } = Encoding;
 
 const httpUrl = "http://localhost:1317";
 const defaultNetworkId = "testing";
@@ -528,7 +528,7 @@ describe("RestClient", () => {
 
         // we can query the verifier properly
         const verifier = await client.queryContractSmart(contractAddress!, { verifier: {} });
-        expect(verifier).toEqual(faucet.address);
+        expect(fromAscii(verifier)).toEqual(faucet.address);
 
         // invalid query syntax throws an error
         await client.queryContractSmart(contractAddress!, { nosuchkey: {} }).then(

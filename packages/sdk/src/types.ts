@@ -190,6 +190,6 @@ export interface ContractInfo {
 export interface WasmData {
   // key is hex-encoded
   readonly key: string;
-  // value can be any decoded json, often an object but can be anything
-  readonly val: unknown;
+  // value is base64 encoded
+  readonly val: string;
 }

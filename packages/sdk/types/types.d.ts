@@ -141,6 +141,6 @@ export interface ContractInfo {
 }
 export interface WasmData {
   readonly key: string;
-  readonly val: unknown;
+  readonly val: string;
 }
 export {};
