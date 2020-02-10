@@ -54,6 +54,9 @@ echo "rest server running on http://localhost:1317 and logging into $REST_SERVER
 # Give REST server some time to come alive. No idea why this helps. Needed for CI.
 if [ -n "${CI:-}" ]; then
   sleep 0.5
+
+  # Follow the logs in CI's background job
+  tail -f "$WASMD_LOGFILE"
 fi
 
 # Debug rest server start
