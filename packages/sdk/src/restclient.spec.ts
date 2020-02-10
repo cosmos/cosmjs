@@ -236,7 +236,7 @@ describe("RestClient", () => {
       });
     });
 
-    // this is failing for me on first run (faucet has not signed anything)
+    // This fails in the first test run if you forget to run `./scripts/cosm/init.sh`
     it("has correct pubkey for faucet", async () => {
       pendingWithoutCosmos();
       const client = new RestClient(httpUrl);
