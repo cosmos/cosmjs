@@ -119,4 +119,20 @@ describe("Faucet", () => {
       connection.disconnect();
     });
   });
+
+  describe("loadAccounts", () => {
+    it("works", async () => {
+      pendingWithoutCosmos();
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const { profile, holder } = await makeProfile();
+      const faucet = new Faucet(defaultConfig, connection, codec, profile);
+      const accounts = await faucet.loadAccounts();
+      const expectedHolderAccount = await connection.getAccount({ pubkey: holder.pubkey });
+      assert(expectedHolderAccount);
+      expect(accounts).toEqual([
+        { address: expectedHolderAccount.address, balance: expectedHolderAccount.balance },
+      ]);
+      connection.disconnect();
+    });
+  });
 });

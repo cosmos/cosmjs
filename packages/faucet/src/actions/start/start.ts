@@ -8,7 +8,7 @@ import { isValidAddress } from "../../addresses";
 import * as constants from "../../constants";
 import { logAccountsState, logSendJob } from "../../debugging";
 import { Faucet } from "../../faucet";
-import { availableTokensFromHolder, identitiesOfFirstWallet, loadAccounts } from "../../multichainhelpers";
+import { availableTokensFromHolder, identitiesOfFirstWallet } from "../../multichainhelpers";
 import { setSecretAndCreateIdentities } from "../../profile";
 import { SendJob } from "../../types";
 import { HttpError } from "./httperror";
@@ -55,13 +55,13 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
   const chainTokens = await faucet.loadTokenTickers();
   console.info("Chain tokens:", chainTokens);
 
-  const accounts = await loadAccounts(profile, connection);
+  const accounts = await faucet.loadAccounts();
   logAccountsState(accounts);
 
   let availableTokens = availableTokensFromHolder(accounts[0]);
   console.info("Available tokens:", availableTokens);
   setInterval(async () => {
-    const updatedAccounts = await loadAccounts(profile, connection);
+    const updatedAccounts = await faucet.loadAccounts();
     availableTokens = availableTokensFromHolder(updatedAccounts[0]);
     console.info("Available tokens:", availableTokens);
   }, 60_000);
@@ -88,7 +88,7 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
           "See https://github.com/iov-one/iov-faucet for all further information.\n";
         break;
       case "/status": {
-        const updatedAccounts = await loadAccounts(profile, connection);
+        const updatedAccounts = await faucet.loadAccounts();
         context.response.body = {
           status: "ok",
           nodeUrl: blockchainBaseUrl,

@@ -1,5 +1,6 @@
 import { TokenConfiguration } from "@cosmwasm/bcp";
 import {
+  Account,
   BlockchainConnection,
   isBlockInfoFailed,
   isBlockInfoPending,
@@ -10,8 +11,9 @@ import {
 import { UserProfile } from "@iov/keycontrol";
 import { sleep } from "@iov/utils";
 
+import { identityToAddress } from "./addresses";
 import { debugAccount, logAccountsState, logSendJob } from "./debugging";
-import { availableTokensFromHolder, identitiesOfFirstWallet, loadAccounts } from "./multichainhelpers";
+import { availableTokensFromHolder, identitiesOfFirstWallet } from "./multichainhelpers";
 import { TokenManager } from "./tokenmanager";
 import { SendJob } from "./types";
 
@@ -63,13 +65,35 @@ export class Faucet {
     return (await this.connection.getAllTokens()).map(token => token.tokenTicker);
   }
 
+  public async loadAccounts(): Promise<ReadonlyArray<Pick<Account, "address" | "balance">>> {
+    const addresses = identitiesOfFirstWallet(this.profile).map(identity => identityToAddress(identity));
+
+    const out: Account[] = [];
+    for (const address of addresses) {
+      const response = await this.connection.getAccount({ address: address });
+      if (response) {
+        out.push({
+          address: response.address,
+          balance: response.balance,
+        });
+      } else {
+        out.push({
+          address: address,
+          balance: [],
+        });
+      }
+    }
+
+    return out;
+  }
+
   public async refill(): Promise<void> {
     console.info(`Connected to network: ${this.connection.chainId()}`);
     console.info(`Tokens on network: ${(await this.loadTokenTickers()).join(", ")}`);
 
     const holderIdentity = identitiesOfFirstWallet(this.profile)[0];
 
-    const accounts = await loadAccounts(this.profile, this.connection);
+    const accounts = await this.loadAccounts();
     logAccountsState(accounts);
     const holderAccount = accounts[0];
     const distributorAccounts = accounts.slice(1);
@@ -103,7 +127,7 @@ export class Faucet {
       }
 
       console.info("Done refilling accounts.");
-      logAccountsState(await loadAccounts(this.profile, this.connection));
+      logAccountsState(await this.loadAccounts());
     } else {
       console.info("Nothing to be done. Anyways, thanks for checking.");
     }
