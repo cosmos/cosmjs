@@ -118,7 +118,18 @@ async function main() {
       },
     ],
   };
-  for (const initMsg of [initMsgAsh, initMsgBash]) {
+  const initMsgCash = {
+    decimals: 18,
+    name: "Cash Token",
+    symbol: "CASH",
+    initial_balances: [
+      {
+        address: faucetAddress,
+        amount: "189189189000000000000000000", // 189189189 CASH
+      },
+    ],
+  };
+  for (const initMsg of [initMsgAsh, initMsgBash, initMsgCash]) {
     const initResult = await instantiateContract(client, pen, codeId, initMsg);
     if (initResult.code) {
       throw new Error(`Instantiation failed with code: ${initResult.code}; log: '${initResult.raw_log}'`);

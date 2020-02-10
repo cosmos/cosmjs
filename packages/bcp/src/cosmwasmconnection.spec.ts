@@ -84,6 +84,12 @@ describe("CosmWasmConnection", () => {
         ticker: "BASH",
         name: "Bash Token",
       },
+      {
+        contractAddress: "cosmos18r5szma8hm93pvx6lwpjwyxruw27e0k5uw835c",
+        fractionalDigits: 18,
+        ticker: "CASH",
+        name: "Cash Token",
+      },
     ],
   };
 
@@ -153,6 +159,11 @@ describe("CosmWasmConnection", () => {
           fractionalDigits: 0,
           tokenName: "Bash Token",
           tokenTicker: "BASH" as TokenTicker,
+        },
+        {
+          fractionalDigits: 18,
+          tokenName: "Cash Token",
+          tokenTicker: "CASH" as TokenTicker,
         },
         {
           fractionalDigits: 6,

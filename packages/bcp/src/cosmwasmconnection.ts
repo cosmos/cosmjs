@@ -31,6 +31,7 @@ import {
 import { Sha256 } from "@iov/crypto";
 import { Encoding, Uint53 } from "@iov/encoding";
 import { DefaultValueProducer, ValueAndUpdates } from "@iov/stream";
+import BN from "bn.js";
 import equal from "fast-deep-equal";
 import { ReadonlyDate } from "readonly-date";
 import { Stream } from "xstream";
@@ -172,18 +173,20 @@ export class CosmWasmConnection implements BlockchainConnection {
           const response = JSON.parse(
             await this.restClient.queryContractSmart(erc20.contractAddress, queryMsg),
           );
+          const normalizedBalance = new BN(response.balance).toString();
           return {
             fractionalDigits: erc20.fractionalDigits,
-            quantity: response.balance,
+            quantity: normalizedBalance,
             tokenTicker: erc20.ticker as TokenTicker,
           };
         },
       ),
     );
+    const nonZeroErc20Amounts = erc20Amounts.filter(amount => amount.quantity !== "0");
 
     const balance = [
       ...supportedBankCoins.map(coin => decodeAmount(this.bankTokens, coin)),
-      ...erc20Amounts,
+      ...nonZeroErc20Amounts,
     ].sort((a, b) => a.tokenTicker.localeCompare(b.tokenTicker));
 
     const pubkey = !account.public_key ? undefined : decodeCosmosPubkey(account.public_key);
