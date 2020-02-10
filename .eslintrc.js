@@ -25,6 +25,7 @@ module.exports = {
     "no-param-reassign": "warn",
     "no-shadow": "warn",
     "prefer-const": "warn",
+    "radix": ["warn", "always"],
     "spaced-comment": ["warn", "always", { line: { markers: ["/ <reference"] } }],
     "import/no-cycle": "warn",
     "simple-import-sort/sort": "warn",
