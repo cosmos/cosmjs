@@ -3,16 +3,15 @@ import cors = require("@koa/cors");
 import Koa from "koa";
 import bodyParser from "koa-bodyparser";
 
-import { creditAmount, setFractionalDigits } from "../../cashflow";
-import { codecDefaultFractionalDigits, codecImplementation, establishConnection } from "../../codec";
+import { codecImplementation, establishConnection } from "../../codec";
 import * as constants from "../../constants";
 import { logAccountsState, logSendJob } from "../../debugging";
+import { Faucet } from "../../faucet";
 import {
   availableTokensFromHolder,
   identitiesOfFirstWallet,
   loadAccounts,
   loadTokenTickers,
-  refill,
   send,
 } from "../../multichainhelpers";
 import { setSecretAndCreateIdentities } from "../../profile";
@@ -48,7 +47,6 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
   const connectedChainId = connection.chainId();
   console.info(`Connected to network: ${connectedChainId}`);
 
-  setFractionalDigits(codecDefaultFractionalDigits());
   await setSecretAndCreateIdentities(profile, constants.mnemonic, connectedChainId);
 
   const chainTokens = await loadTokenTickers(connection);
@@ -67,8 +65,10 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
 
   const distibutorIdentities = identitiesOfFirstWallet(profile).slice(1);
 
-  await refill(profile, connection);
-  setInterval(async () => refill(profile, connection), 60_000); // ever 60 seconds
+  const faucet = new Faucet(constants.tokenConfig);
+
+  await faucet.refill(profile, connection);
+  setInterval(async () => faucet.refill(profile, connection), 60_000); // ever 60 seconds
 
   console.info("Creating webserver ...");
   const api = new Koa();
@@ -127,7 +127,7 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
           const job: SendJob = {
             sender: sender,
             recipient: address,
-            amount: creditAmount(ticker),
+            amount: faucet.creditAmount(ticker),
             tokenTicker: ticker,
           };
           logSendJob(job);

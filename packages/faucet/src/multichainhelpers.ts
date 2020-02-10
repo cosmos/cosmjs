@@ -9,14 +9,8 @@ import {
 } from "@iov/bcp";
 import { UserProfile } from "@iov/keycontrol";
 
-import { needsRefill, refillAmount } from "./cashflow";
 import { codecImplementation } from "./codec";
-import { debugAccount, logAccountsState, logSendJob } from "./debugging";
 import { SendJob } from "./types";
-
-async function sleep(ms: number): Promise<void> {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
 
 export function identitiesOfFirstWallet(profile: UserProfile): ReadonlyArray<Identity> {
   const wallet = profile.wallets.value[0];
@@ -87,49 +81,4 @@ export async function send(
 
 export function availableTokensFromHolder(holderAccount: Account): ReadonlyArray<TokenTicker> {
   return holderAccount.balance.map(coin => coin.tokenTicker);
-}
-
-export async function refill(profile: UserProfile, connection: BlockchainConnection): Promise<void> {
-  console.info(`Connected to network: ${connection.chainId()}`);
-  console.info(`Tokens on network: ${(await loadTokenTickers(connection)).join(", ")}`);
-
-  const holderIdentity = identitiesOfFirstWallet(profile)[0];
-
-  const accounts = await loadAccounts(profile, connection);
-  logAccountsState(accounts);
-  const holderAccount = accounts[0];
-  const distributorAccounts = accounts.slice(1);
-
-  const availableTokens = availableTokensFromHolder(holderAccount);
-  console.info("Available tokens:", availableTokens);
-
-  const jobs: SendJob[] = [];
-
-  for (const token of availableTokens) {
-    const refillDistibutors = distributorAccounts.filter(account => needsRefill(account, token));
-    console.info(`Refilling ${token} of:`);
-    console.info(
-      refillDistibutors.length ? refillDistibutors.map(r => `  ${debugAccount(r)}`).join("\n") : "  none",
-    );
-    for (const refillDistibutor of refillDistibutors) {
-      jobs.push({
-        sender: holderIdentity,
-        recipient: refillDistibutor.address,
-        tokenTicker: token,
-        amount: refillAmount(token),
-      });
-    }
-  }
-  if (jobs.length > 0) {
-    for (const job of jobs) {
-      logSendJob(job);
-      await send(profile, connection, job);
-      await sleep(50);
-    }
-
-    console.info("Done refilling accounts.");
-    logAccountsState(await loadAccounts(profile, connection));
-  } else {
-    console.info("Nothing to be done. Anyways, thanks for checking.");
-  }
 }
