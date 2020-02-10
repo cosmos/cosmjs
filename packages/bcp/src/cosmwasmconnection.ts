@@ -158,12 +158,10 @@ export class CosmWasmConnection implements BlockchainConnection {
   public async getAccount(query: AccountQuery): Promise<Account | undefined> {
     const address = isPubkeyQuery(query) ? pubkeyToAddress(query.pubkey, this.addressPrefix) : query.address;
     const { result } = await this.restClient.authAccounts(address);
-    const account = result.value;
-    if (!account.address) {
-      return undefined;
-    }
+    const bankAccount = result.value;
+    const hasBankAccount = !!bankAccount.address;
 
-    const supportedBankCoins = account.coins.filter(({ denom }) =>
+    const supportedBankCoins = bankAccount.coins.filter(({ denom }) =>
       this.bankTokens.find(token => token.denom === denom),
     );
     const erc20Amounts = await Promise.all(
@@ -184,17 +182,20 @@ export class CosmWasmConnection implements BlockchainConnection {
     );
     const nonZeroErc20Amounts = erc20Amounts.filter(amount => amount.quantity !== "0");
 
-    const balance = [
-      ...supportedBankCoins.map(coin => decodeAmount(this.bankTokens, coin)),
-      ...nonZeroErc20Amounts,
-    ].sort((a, b) => a.tokenTicker.localeCompare(b.tokenTicker));
-
-    const pubkey = !account.public_key ? undefined : decodeCosmosPubkey(account.public_key);
-    return {
-      address: address,
-      balance: balance,
-      pubkey: pubkey,
-    };
+    if (!hasBankAccount && nonZeroErc20Amounts.length === 0) {
+      return undefined;
+    } else {
+      const balance = [
+        ...supportedBankCoins.map(coin => decodeAmount(this.bankTokens, coin)),
+        ...nonZeroErc20Amounts,
+      ].sort((a, b) => a.tokenTicker.localeCompare(b.tokenTicker));
+      const pubkey = !bankAccount.public_key ? undefined : decodeCosmosPubkey(bankAccount.public_key);
+      return {
+        address: address,
+        balance: balance,
+        pubkey: pubkey,
+      };
+    }
   }
 
   public watchAccount(_account: AccountQuery): Stream<Account | undefined> {
