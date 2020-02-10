@@ -1,17 +1,7 @@
-import {
-  Account,
-  BlockchainConnection,
-  Identity,
-  isBlockInfoFailed,
-  isBlockInfoPending,
-  SendTransaction,
-  TokenTicker,
-  TxCodec,
-} from "@iov/bcp";
+import { Account, BlockchainConnection, Identity, TokenTicker } from "@iov/bcp";
 import { UserProfile } from "@iov/keycontrol";
 
 import { identityToAddress } from "./addresses";
-import { SendJob } from "./types";
 
 export function identitiesOfFirstWallet(profile: UserProfile): ReadonlyArray<Identity> {
   const wallet = profile.wallets.value[0];
@@ -47,35 +37,6 @@ export async function loadTokenTickers(
   connection: BlockchainConnection,
 ): Promise<ReadonlyArray<TokenTicker>> {
   return (await connection.getAllTokens()).map(token => token.tokenTicker);
-}
-
-/**
- * Creates and posts a send transaction. Then waits until the transaction is in a block.
- */
-export async function send(
-  profile: UserProfile,
-  connection: BlockchainConnection,
-  codec: TxCodec,
-  job: SendJob,
-): Promise<void> {
-  const sendWithFee = await connection.withDefaultFee<SendTransaction>({
-    kind: "bcp/send",
-    chainId: connection.chainId(),
-    sender: codec.identityToAddress(job.sender),
-    senderPubkey: job.sender.pubkey,
-    recipient: job.recipient,
-    memo: "We ❤️ developers – iov.one",
-    amount: job.amount,
-  });
-
-  const nonce = await connection.getNonce({ pubkey: job.sender.pubkey });
-  const signed = await profile.signTransaction(job.sender, sendWithFee, codec, nonce);
-
-  const post = await connection.postTx(codec.bytesToPost(signed));
-  const blockInfo = await post.blockInfo.waitFor(info => !isBlockInfoPending(info));
-  if (isBlockInfoFailed(blockInfo)) {
-    throw new Error(`Sending tokens failed. Code: ${blockInfo.code}, message: ${blockInfo.message}`);
-  }
 }
 
 export function availableTokensFromHolder(holderAccount: Account): ReadonlyArray<TokenTicker> {

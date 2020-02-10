@@ -13,7 +13,6 @@ import {
   identitiesOfFirstWallet,
   loadAccounts,
   loadTokenTickers,
-  send,
 } from "../../multichainhelpers";
 import { setSecretAndCreateIdentities } from "../../profile";
 import { SendJob } from "../../types";
@@ -138,7 +137,7 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
             tokenTicker: ticker,
           };
           logSendJob(job);
-          await send(profile, connection, connector.codec, job);
+          await faucet.send(profile, job);
         } catch (e) {
           console.error(e);
           throw new HttpError(500, "Sending tokens failed");
