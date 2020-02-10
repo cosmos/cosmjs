@@ -10,7 +10,7 @@ import {
   SignedTransaction,
   UnsignedTransaction,
 } from "@iov/bcp";
-import { Decimal, Encoding } from "@iov/encoding";
+import { Encoding } from "@iov/encoding";
 
 import { BankTokens, Erc20Token } from "./types";
 
@@ -33,28 +33,18 @@ export function encodePubkey(pubkey: PubkeyBundle): types.PubKey {
   }
 }
 
-export function decimalToCoin(lookup: BankTokens, value: Decimal, ticker: string): types.Coin {
-  const match = lookup.find(token => token.ticker === ticker);
-  if (!match) {
-    throw Error(`unknown ticker: ${ticker}`);
-  }
-  if (match.fractionalDigits !== value.fractionalDigits) {
+export function amountToBankCoin(amount: Amount, tokens: BankTokens): types.Coin {
+  const match = tokens.find(token => token.ticker === amount.tokenTicker);
+  if (!match) throw Error(`unknown ticker: ${amount.tokenTicker}`);
+  if (match.fractionalDigits !== amount.fractionalDigits) {
     throw new Error(
       "Mismatch in fractional digits between token and value. If you really want, implement a conversion here. However, this indicates a bug in the caller code.",
     );
   }
   return {
     denom: match.denom,
-    amount: value.atomics,
+    amount: amount.quantity,
   };
-}
-
-export function encodeAmount(amount: Amount, tokens: BankTokens): types.Coin {
-  return decimalToCoin(
-    tokens,
-    Decimal.fromAtomics(amount.quantity, amount.fractionalDigits),
-    amount.tokenTicker,
-  );
 }
 
 export function encodeFee(fee: Fee, tokens: BankTokens): types.StdFee {
@@ -65,7 +55,7 @@ export function encodeFee(fee: Fee, tokens: BankTokens): types.StdFee {
     throw new Error("Cannot encode fee without gas limit");
   }
   return {
-    amount: [encodeAmount(fee.tokens, tokens)],
+    amount: [amountToBankCoin(fee.tokens, tokens)],
     gas: fee.gasLimit,
   };
 }
@@ -101,7 +91,7 @@ export function buildUnsignedTx(
             value: {
               from_address: tx.sender,
               to_address: tx.recipient,
-              amount: [encodeAmount(tx.amount, bankTokens)],
+              amount: [amountToBankCoin(tx.amount, bankTokens)],
             },
           },
         ],

@@ -14,9 +14,9 @@ import {
 import { Encoding } from "@iov/encoding";
 
 import {
+  amountToBankCoin,
   buildSignedTx,
   buildUnsignedTx,
-  encodeAmount,
   encodeFee,
   encodeFullSignature,
   encodePubkey,
@@ -75,9 +75,9 @@ describe("encode", () => {
     });
   });
 
-  describe("encodeAmount", () => {
+  describe("amountToBankCoin", () => {
     it("encodes an amount", () => {
-      expect(encodeAmount(defaultAmount, defaultTokens)).toEqual({
+      expect(amountToBankCoin(defaultAmount, defaultTokens)).toEqual({
         denom: "uatom",
         amount: "11657995",
       });
