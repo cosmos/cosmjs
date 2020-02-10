@@ -1,6 +1,7 @@
 import { TokenConfiguration } from "@cosmwasm/bcp";
 import {
   Account,
+  Address,
   BlockchainConnection,
   Identity,
   isBlockInfoFailed,
@@ -19,8 +20,6 @@ import { TokenManager } from "./tokenmanager";
 import { SendJob } from "./types";
 
 export class Faucet {
-  /** will be private soon */
-  public readonly tokenManager: TokenManager;
   public get holder(): Identity {
     return identitiesOfFirstWallet(this.profile)[0];
   }
@@ -28,20 +27,25 @@ export class Faucet {
     return identitiesOfFirstWallet(this.profile).slice(1);
   }
 
+  private readonly tokenManager: TokenManager;
   private readonly connection: BlockchainConnection;
   private readonly codec: TxCodec;
   private readonly profile: UserProfile;
+  private readonly logging: boolean;
+  private creditCount = 0;
 
   public constructor(
     config: TokenConfiguration,
     connection: BlockchainConnection,
     codec: TxCodec,
     profile: UserProfile,
+    logging = false,
   ) {
     this.tokenManager = new TokenManager(config);
     this.connection = connection;
     this.codec = codec;
     this.profile = profile;
+    this.logging = logging;
   }
 
   /**
@@ -66,6 +70,19 @@ export class Faucet {
     if (isBlockInfoFailed(blockInfo)) {
       throw new Error(`Sending tokens failed. Code: ${blockInfo.code}, message: ${blockInfo.message}`);
     }
+  }
+
+  /** Use one of the distributor accounts to send tokend to user */
+  public async credit(recipient: Address, ticker: TokenTicker): Promise<void> {
+    if (this.distributors.length === 0) throw new Error("No distributor account available");
+    const sender = this.distributors[this.getCreditCount() % this.distributors.length];
+    const job: SendJob = {
+      sender: sender,
+      recipient: recipient,
+      amount: this.tokenManager.creditAmount(ticker),
+    };
+    if (this.logging) logSendJob(job);
+    await this.send(job);
   }
 
   public async loadTokenTickers(): Promise<ReadonlyArray<TokenTicker>> {
@@ -95,27 +112,30 @@ export class Faucet {
   }
 
   public async refill(): Promise<void> {
-    console.info(`Connected to network: ${this.connection.chainId()}`);
-    console.info(`Tokens on network: ${(await this.loadTokenTickers()).join(", ")}`);
+    if (this.logging) {
+      console.info(`Connected to network: ${this.connection.chainId()}`);
+      console.info(`Tokens on network: ${(await this.loadTokenTickers()).join(", ")}`);
+    }
 
     const accounts = await this.loadAccounts();
-    logAccountsState(accounts);
-    const holderAccount = accounts[0];
-    const distributorAccounts = accounts.slice(1);
+    if (this.logging) logAccountsState(accounts);
+    const [holderAccount, ...distributorAccounts] = accounts;
 
     const availableTokens = availableTokensFromHolder(holderAccount);
-    console.info("Available tokens:", availableTokens);
+    if (this.logging) console.info("Available tokens:", availableTokens);
 
     const jobs: SendJob[] = [];
-
     for (const token of availableTokens) {
       const refillDistibutors = distributorAccounts.filter(account =>
         this.tokenManager.needsRefill(account, token),
       );
-      console.info(`Refilling ${token} of:`);
-      console.info(
-        refillDistibutors.length ? refillDistibutors.map(r => `  ${debugAccount(r)}`).join("\n") : "  none",
-      );
+
+      if (this.logging) {
+        console.info(`Refilling ${token} of:`);
+        console.info(
+          refillDistibutors.length ? refillDistibutors.map(r => `  ${debugAccount(r)}`).join("\n") : "  none",
+        );
+      }
       for (const refillDistibutor of refillDistibutors) {
         jobs.push({
           sender: this.holder,
@@ -131,10 +151,19 @@ export class Faucet {
         await sleep(50);
       }
 
-      console.info("Done refilling accounts.");
-      logAccountsState(await this.loadAccounts());
+      if (this.logging) {
+        console.info("Done refilling accounts.");
+        logAccountsState(await this.loadAccounts());
+      }
     } else {
-      console.info("Nothing to be done. Anyways, thanks for checking.");
+      if (this.logging) {
+        console.info("Nothing to be done. Anyways, thanks for checking.");
+      }
     }
+  }
+
+  /** returns an integer >= 0 that increments and is unique for this instance */
+  private getCreditCount(): number {
+    return this.creditCount++;
   }
 }

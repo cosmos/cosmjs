@@ -5,20 +5,12 @@ import bodyParser from "koa-bodyparser";
 
 import { isValidAddress } from "../../addresses";
 import * as constants from "../../constants";
-import { logAccountsState, logSendJob } from "../../debugging";
+import { logAccountsState } from "../../debugging";
 import { Faucet } from "../../faucet";
 import { availableTokensFromHolder } from "../../multichainhelpers";
 import { setSecretAndCreateIdentities } from "../../profile";
-import { SendJob } from "../../types";
 import { HttpError } from "./httperror";
 import { RequestParser } from "./requestparser";
-
-let count = 0;
-
-/** returns an integer >= 0 that increments and is unique in module scope */
-function getCount(): number {
-  return count++;
-}
 
 export async function start(args: ReadonlyArray<string>): Promise<void> {
   if (args.length < 1) {
@@ -43,7 +35,7 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
   const profile = await setSecretAndCreateIdentities(constants.mnemonic, connection.chainId());
 
   // Faucet
-  const faucet = new Faucet(constants.tokenConfig, connection, connector.codec, profile);
+  const faucet = new Faucet(constants.tokenConfig, connection, connector.codec, profile, true);
   const chainTokens = await faucet.loadTokenTickers();
   console.info("Chain tokens:", chainTokens);
   const accounts = await faucet.loadAccounts();
@@ -110,16 +102,8 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
           throw new HttpError(422, `Token is not available. Available tokens are: ${tokens}`);
         }
 
-        const sender = faucet.distributors[getCount() % faucet.distributors.length];
-
         try {
-          const job: SendJob = {
-            sender: sender,
-            recipient: address,
-            amount: faucet.tokenManager.creditAmount(ticker),
-          };
-          logSendJob(job);
-          await faucet.send(job);
+          await faucet.credit(address, ticker);
         } catch (e) {
           console.error(e);
           throw new HttpError(500, "Sending tokens failed");

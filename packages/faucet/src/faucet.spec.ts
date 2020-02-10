@@ -3,10 +3,11 @@ import { CosmosAddressBech32Prefix } from "@cosmwasm/sdk";
 import { Address, ChainId, Identity, TokenTicker } from "@iov/bcp";
 import { Random } from "@iov/crypto";
 import { Bech32 } from "@iov/encoding";
-import { HdPaths, Secp256k1HdWallet, UserProfile } from "@iov/keycontrol";
+import { UserProfile } from "@iov/keycontrol";
 import { assert } from "@iov/utils";
 
 import { Faucet } from "./faucet";
+import { createUserProfile } from "./profile";
 
 function pendingWithoutCosmos(): void {
   if (!process.env.COSMOS_ENABLED) {
@@ -55,15 +56,15 @@ function makeRandomAddress(): Address {
 
 const faucetMnemonic =
   "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone";
-const faucetPath = HdPaths.cosmos(0);
 
-async function makeProfile(): Promise<{ readonly profile: UserProfile; readonly holder: Identity }> {
-  const profile = new UserProfile();
-  const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(faucetMnemonic));
-  const holder = await profile.createIdentity(wallet.id, defaultChainId, faucetPath);
+async function makeProfile(
+  distributors = 0,
+): Promise<{ readonly profile: UserProfile; readonly holder: Identity; readonly distributors: Identity[] }> {
+  const [profile, identities] = await createUserProfile(faucetMnemonic, defaultChainId, distributors);
   return {
     profile: profile,
-    holder: holder,
+    holder: identities[0],
+    distributors: identities.slice(1),
   };
 }
 
@@ -102,6 +103,71 @@ describe("Faucet", () => {
           quantity: "23456",
           fractionalDigits: 6,
           tokenTicker: "COSM" as TokenTicker,
+        },
+      ]);
+      connection.disconnect();
+    });
+  });
+
+  describe("refill", () => {
+    it("works", async () => {
+      pendingWithoutCosmos();
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const { profile, distributors } = await makeProfile(1);
+      const faucet = new Faucet(defaultConfig, connection, codec, profile);
+      await faucet.refill();
+      const distributorBalance = (await connection.getAccount({ pubkey: distributors[0].pubkey }))?.balance;
+      assert(distributorBalance);
+      expect(distributorBalance).toEqual([
+        jasmine.objectContaining({
+          tokenTicker: "COSM",
+          fractionalDigits: 6,
+        }),
+        jasmine.objectContaining({
+          tokenTicker: "STAKE",
+          fractionalDigits: 6,
+        }),
+      ]);
+      expect(Number.parseInt(distributorBalance[0].quantity, 10)).toBeGreaterThanOrEqual(80_000000);
+      expect(Number.parseInt(distributorBalance[1].quantity, 10)).toBeGreaterThanOrEqual(80_000000);
+      connection.disconnect();
+    });
+  });
+
+  describe("credit", () => {
+    it("works for fee token", async () => {
+      pendingWithoutCosmos();
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const { profile } = await makeProfile(1);
+      const faucet = new Faucet(defaultConfig, connection, codec, profile);
+      const recipient = makeRandomAddress();
+      await faucet.credit(recipient, "COSM" as TokenTicker);
+      const account = await connection.getAccount({ address: recipient });
+      assert(account);
+      expect(account.balance).toEqual([
+        {
+          quantity: "10000000",
+          fractionalDigits: 6,
+          tokenTicker: "COSM" as TokenTicker,
+        },
+      ]);
+      connection.disconnect();
+    });
+
+    it("works for stake token", async () => {
+      pendingWithoutCosmos();
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const { profile } = await makeProfile(1);
+      const faucet = new Faucet(defaultConfig, connection, codec, profile);
+      const recipient = makeRandomAddress();
+      await faucet.credit(recipient, "STAKE" as TokenTicker);
+      const account = await connection.getAccount({ address: recipient });
+      assert(account);
+      expect(account.balance).toEqual([
+        {
+          quantity: "10000000",
+          fractionalDigits: 6,
+          tokenTicker: "STAKE" as TokenTicker,
         },
       ]);
       connection.disconnect();
