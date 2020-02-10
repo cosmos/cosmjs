@@ -134,7 +134,7 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
           const job: SendJob = {
             sender: sender,
             recipient: address,
-            amount: faucet.creditAmount(ticker),
+            amount: faucet.tokenManager.creditAmount(ticker),
             tokenTicker: ticker,
           };
           logSendJob(job);
