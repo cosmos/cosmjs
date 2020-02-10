@@ -295,8 +295,10 @@ export class CosmWasmConnection implements BlockchainConnection {
   ): Promise<readonly (ConfirmedTransaction<UnsignedTransaction> | FailedTransaction)[]> {
     const queryString = buildQueryString(query);
     const chainId = this.chainId();
-    const { txs: responses } = await this.restClient.txs(queryString);
-    return Promise.all(responses.map(response => this.parseAndPopulateTxResponse(response, chainId)));
+    // TODO: we need pagination support
+    const response = await this.restClient.txs(queryString + "&limit=50");
+    const { txs } = response;
+    return Promise.all(txs.map(tx => this.parseAndPopulateTxResponse(tx, chainId)));
   }
 
   public listenTx(
