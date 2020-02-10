@@ -19,7 +19,7 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
   const connector = createCosmWasmConnector(
     blockchainBaseUrl,
     constants.addressPrefix,
-    constants.tokenConfig,
+    constants.developmentTokenConfig,
   );
   console.info(`Connecting to blockchain ${blockchainBaseUrl} ...`);
   const connection = await connector.establishConnection();
@@ -35,7 +35,7 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
   );
 
   // Faucet
-  const faucet = new Faucet(constants.tokenConfig, connection, connector.codec, profile, true);
+  const faucet = new Faucet(constants.developmentTokenConfig, connection, connector.codec, profile, true);
   const chainTokens = await faucet.loadTokenTickers();
   console.info("Chain tokens:", chainTokens);
   const accounts = await faucet.loadAccounts();

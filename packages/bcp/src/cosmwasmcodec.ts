@@ -26,19 +26,25 @@ import { pubkeyToAddress } from "./address";
 import { Caip5 } from "./caip5";
 import { parseTx } from "./decode";
 import { buildSignedTx, buildUnsignedTx } from "./encode";
-import { BankTokens, nonceToAccountNumber, nonceToSequence } from "./types";
+import { BankTokens, Erc20Token, nonceToAccountNumber, nonceToSequence } from "./types";
 
 export class CosmWasmCodec implements TxCodec {
   private readonly addressPrefix: CosmosAddressBech32Prefix;
-  private readonly tokens: BankTokens;
+  private readonly bankTokens: BankTokens;
+  private readonly erc20Tokens: readonly Erc20Token[];
 
-  public constructor(addressPrefix: CosmosAddressBech32Prefix, tokens: BankTokens) {
+  public constructor(
+    addressPrefix: CosmosAddressBech32Prefix,
+    bankTokens: BankTokens,
+    erc20Tokens: readonly Erc20Token[] = [],
+  ) {
     this.addressPrefix = addressPrefix;
-    this.tokens = tokens;
+    this.bankTokens = bankTokens;
+    this.erc20Tokens = erc20Tokens;
   }
 
   public bytesToSign(unsigned: UnsignedTransaction, nonce: Nonce): SigningJob {
-    const built = buildUnsignedTx(unsigned, this.tokens);
+    const built = buildUnsignedTx(unsigned, this.bankTokens, this.erc20Tokens);
 
     const nonceInfo: types.NonceInfo = {
       account_number: nonceToAccountNumber(nonce),
@@ -61,7 +67,7 @@ export class CosmWasmCodec implements TxCodec {
   // PostableBytes are JSON-encoded StdTx
   public bytesToPost(signed: SignedTransaction): PostableBytes {
     // TODO: change this as well (return StdTx, not AminoTx)?
-    const built = buildSignedTx(signed, this.tokens);
+    const built = buildSignedTx(signed, this.bankTokens, this.erc20Tokens);
     return marshalTx(built.value) as PostableBytes;
   }
 
@@ -79,7 +85,7 @@ export class CosmWasmCodec implements TxCodec {
       throw new Error("Nonce is required");
     }
     const parsed = unmarshalTx(bytes);
-    return parseTx(parsed, chainId, nonce, this.tokens);
+    return parseTx(parsed, chainId, nonce, this.bankTokens);
   }
 
   public identityToAddress(identity: Identity): Address {
@@ -90,16 +96,3 @@ export class CosmWasmCodec implements TxCodec {
     return isValidAddress(address);
   }
 }
-
-const defaultPrefix = "cosmos" as CosmosAddressBech32Prefix;
-
-const defaultTokens: BankTokens = [
-  {
-    fractionalDigits: 6,
-    ticker: "ATOM",
-    denom: "uatom",
-  },
-];
-
-/** Unconfigured codec is useful for testing only */
-export const cosmWasmCodec = new CosmWasmCodec(defaultPrefix, defaultTokens);

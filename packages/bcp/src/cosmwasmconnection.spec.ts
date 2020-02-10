@@ -11,12 +11,12 @@ import {
   TokenTicker,
   TransactionState,
 } from "@iov/bcp";
-import { Secp256k1 } from "@iov/crypto";
-import { Encoding } from "@iov/encoding";
+import { Random, Secp256k1 } from "@iov/crypto";
+import { Bech32, Encoding } from "@iov/encoding";
 import { HdPaths, Secp256k1HdWallet, UserProfile } from "@iov/keycontrol";
 import { assert } from "@iov/utils";
 
-import { CosmWasmCodec, cosmWasmCodec } from "./cosmwasmcodec";
+import { CosmWasmCodec } from "./cosmwasmcodec";
 import { CosmWasmConnection, TokenConfiguration } from "./cosmwasmconnection";
 import { signedTxJson, txId } from "./testdata.spec";
 import { nonceToSequence } from "./types";
@@ -27,6 +27,12 @@ function pendingWithoutCosmos(): void {
   if (!process.env.COSMOS_ENABLED) {
     return pending("Set COSMOS_ENABLED to enable Cosmos node-based tests");
   }
+}
+
+const defaultPrefix = "cosmos" as CosmosAddressBech32Prefix;
+
+function makeRandomAddress(): Address {
+  return Bech32.encode(defaultPrefix, Random.getBytes(20)) as Address;
 }
 
 describe("CosmWasmConnection", () => {
@@ -52,8 +58,6 @@ describe("CosmWasmConnection", () => {
     },
     address: "cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u" as Address,
   };
-
-  const defaultPrefix = "cosmos" as CosmosAddressBech32Prefix;
 
   // this is for wasmd blockchain
   const defaultConfig: TokenConfiguration = {
@@ -83,6 +87,23 @@ describe("CosmWasmConnection", () => {
         fractionalDigits: 0,
         ticker: "BASH",
         name: "Bash Token",
+      },
+      {
+        contractAddress: "cosmos18r5szma8hm93pvx6lwpjwyxruw27e0k5uw835c",
+        fractionalDigits: 18,
+        ticker: "CASH",
+        name: "Cash Token",
+      },
+    ],
+  };
+
+  const atomConfig: TokenConfiguration = {
+    bankTokens: [
+      {
+        fractionalDigits: 6,
+        name: "Atom",
+        ticker: "ATOM",
+        denom: "uatom",
       },
     ],
   };
@@ -155,6 +176,11 @@ describe("CosmWasmConnection", () => {
           tokenTicker: "BASH" as TokenTicker,
         },
         {
+          fractionalDigits: 18,
+          tokenName: "Cash Token",
+          tokenTicker: "CASH" as TokenTicker,
+        },
+        {
           fractionalDigits: 6,
           tokenName: "Fee Token",
           tokenTicker: "COSM" as TokenTicker,
@@ -172,8 +198,9 @@ describe("CosmWasmConnection", () => {
   describe("identifier", () => {
     it("calculates tx hash from PostableBytes", async () => {
       pendingWithoutCosmos();
-      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
-      const postable = cosmWasmCodec.bytesToPost(signedTxJson);
+      const codec = new CosmWasmCodec(defaultPrefix, atomConfig.bankTokens);
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, atomConfig);
+      const postable = codec.bytesToPost(signedTxJson);
       const id = await connection.identifier(postable);
       expect(id).toMatch(/^[0-9A-F]{64}$/);
       expect(id).toEqual(txId);
@@ -242,11 +269,12 @@ describe("CosmWasmConnection", () => {
   describe("integration tests", () => {
     it("can post and get a transaction", async () => {
       pendingWithoutCosmos();
+      const codec = new CosmWasmCodec(defaultPrefix, defaultConfig.bankTokens);
       const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
       const profile = new UserProfile();
       const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(faucetMnemonic));
       const faucet = await profile.createIdentity(wallet.id, defaultChainId, faucetPath);
-      const faucetAddress = cosmWasmCodec.identityToAddress(faucet);
+      const faucetAddress = codec.identityToAddress(faucet);
 
       const unsigned = await connection.withDefaultFee<SendTransaction>({
         kind: "bcp/send",
@@ -261,8 +289,6 @@ describe("CosmWasmConnection", () => {
         },
       });
       const nonce = await connection.getNonce({ address: faucetAddress });
-      // TODO: we need to use custom codecs everywhere
-      const codec = new CosmWasmCodec(defaultPrefix, defaultConfig.bankTokens);
       const signed = await profile.signTransaction(faucet, unsigned, codec, nonce);
       const postableBytes = codec.bytesToPost(signed);
       const response = await connection.postTx(postableBytes);
@@ -307,11 +333,12 @@ describe("CosmWasmConnection", () => {
 
     it("can post and search for a transaction", async () => {
       pendingWithoutCosmos();
+      const codec = new CosmWasmCodec(defaultPrefix, defaultConfig.bankTokens);
       const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
       const profile = new UserProfile();
       const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(faucetMnemonic));
       const faucet = await profile.createIdentity(wallet.id, defaultChainId, faucetPath);
-      const faucetAddress = cosmWasmCodec.identityToAddress(faucet);
+      const faucetAddress = codec.identityToAddress(faucet);
 
       const unsigned = await connection.withDefaultFee<SendTransaction>({
         kind: "bcp/send",
@@ -326,8 +353,6 @@ describe("CosmWasmConnection", () => {
         },
       });
       const nonce = await connection.getNonce({ address: faucetAddress });
-      // TODO: we need to use custom codecs everywhere
-      const codec = new CosmWasmCodec(defaultPrefix, defaultConfig.bankTokens);
       const signed = await profile.signTransaction(faucet, unsigned, codec, nonce);
       const postableBytes = codec.bytesToPost(signed);
       const response = await connection.postTx(postableBytes);
@@ -430,6 +455,48 @@ describe("CosmWasmConnection", () => {
       expect(heightTransaction.recipient).toEqual(unsigned.recipient);
       expect(heightTransaction.memo).toEqual(unsigned.memo);
       expect(heightTransaction.amount).toEqual(unsigned.amount);
+
+      connection.disconnect();
+    });
+
+    it("can send ERC20 tokens", async () => {
+      pendingWithoutCosmos();
+      const codec = new CosmWasmCodec(defaultPrefix, defaultConfig.bankTokens, defaultConfig.erc20Tokens);
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const profile = new UserProfile();
+      const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(faucetMnemonic));
+      const faucet = await profile.createIdentity(wallet.id, defaultChainId, faucetPath);
+      const faucetAddress = codec.identityToAddress(faucet);
+      const recipient = makeRandomAddress();
+
+      const unsigned = await connection.withDefaultFee<SendTransaction>({
+        kind: "bcp/send",
+        chainId: defaultChainId,
+        sender: faucetAddress,
+        recipient: recipient,
+        memo: "My first payment",
+        amount: {
+          quantity: "75",
+          fractionalDigits: 0,
+          tokenTicker: "BASH" as TokenTicker,
+        },
+      });
+      const nonce = await connection.getNonce({ address: faucetAddress });
+      const signed = await profile.signTransaction(faucet, unsigned, codec, nonce);
+      const postableBytes = codec.bytesToPost(signed);
+      const response = await connection.postTx(postableBytes);
+      const blockInfo = await response.blockInfo.waitFor(info => !isBlockInfoPending(info));
+      expect(blockInfo.state).toEqual(TransactionState.Succeeded);
+
+      const recipientAccount = await connection.getAccount({ address: recipient });
+      assert(recipientAccount, "Recipient account must have BASH tokens");
+      expect(recipientAccount.balance).toEqual([
+        {
+          tokenTicker: "BASH" as TokenTicker,
+          quantity: "75",
+          fractionalDigits: 0,
+        },
+      ]);
 
       connection.disconnect();
     });

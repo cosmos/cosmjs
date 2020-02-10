@@ -32,23 +32,17 @@ const defaultConfig: TokenConfiguration = {
     },
   ],
   erc20Tokens: [
-    // {
-    //   contractAddress: "cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
-    //   fractionalDigits: 5,
-    //   ticker: "ASH",
-    //   name: "Ash Token",
-    // },
-    // {
-    //   contractAddress: "cosmos1hqrdl6wstt8qzshwc6mrumpjk9338k0lr4dqxd",
-    //   fractionalDigits: 0,
-    //   ticker: "BASH",
-    //   name: "Bash Token",
-    // },
+    {
+      contractAddress: "cosmos1hqrdl6wstt8qzshwc6mrumpjk9338k0lr4dqxd",
+      fractionalDigits: 0,
+      ticker: "BASH",
+      name: "Bash Token",
+    },
   ],
 };
 const defaultPrefix = "cosmos" as CosmosAddressBech32Prefix;
 const defaultChainId = "cosmos:testing" as ChainId;
-const codec = new CosmWasmCodec(defaultPrefix, defaultConfig.bankTokens);
+const codec = new CosmWasmCodec(defaultPrefix, defaultConfig.bankTokens, defaultConfig.erc20Tokens);
 
 function makeRandomAddress(): Address {
   return Bech32.encode(defaultPrefix, Random.getBytes(20)) as Address;
@@ -81,7 +75,7 @@ describe("Faucet", () => {
   });
 
   describe("send", () => {
-    it("can send", async () => {
+    it("can send bank token", async () => {
       pendingWithoutCosmos();
       const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
       const { profile, holder } = await makeProfile();
@@ -107,6 +101,33 @@ describe("Faucet", () => {
       ]);
       connection.disconnect();
     });
+
+    it("can send ERC20 token", async () => {
+      pendingWithoutCosmos();
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const { profile, holder } = await makeProfile();
+      const faucet = new Faucet(defaultConfig, connection, codec, profile);
+      const recipient = makeRandomAddress();
+      await faucet.send({
+        amount: {
+          quantity: "7",
+          fractionalDigits: 0,
+          tokenTicker: "BASH" as TokenTicker,
+        },
+        sender: holder,
+        recipient: recipient,
+      });
+      const account = await connection.getAccount({ address: recipient });
+      assert(account);
+      expect(account.balance).toEqual([
+        {
+          quantity: "7",
+          fractionalDigits: 0,
+          tokenTicker: "BASH" as TokenTicker,
+        },
+      ]);
+      connection.disconnect();
+    });
   });
 
   describe("refill", () => {
@@ -120,6 +141,10 @@ describe("Faucet", () => {
       assert(distributorBalance);
       expect(distributorBalance).toEqual([
         jasmine.objectContaining({
+          tokenTicker: "BASH",
+          fractionalDigits: 0,
+        }),
+        jasmine.objectContaining({
           tokenTicker: "COSM",
           fractionalDigits: 6,
         }),
@@ -128,8 +153,9 @@ describe("Faucet", () => {
           fractionalDigits: 6,
         }),
       ]);
-      expect(Number.parseInt(distributorBalance[0].quantity, 10)).toBeGreaterThanOrEqual(80_000000);
+      expect(Number.parseInt(distributorBalance[0].quantity, 10)).toBeGreaterThanOrEqual(80);
       expect(Number.parseInt(distributorBalance[1].quantity, 10)).toBeGreaterThanOrEqual(80_000000);
+      expect(Number.parseInt(distributorBalance[2].quantity, 10)).toBeGreaterThanOrEqual(80_000000);
       connection.disconnect();
     });
   });
@@ -181,7 +207,7 @@ describe("Faucet", () => {
       const { profile } = await makeProfile();
       const faucet = new Faucet(defaultConfig, connection, codec, profile);
       const tickers = await faucet.loadTokenTickers();
-      expect(tickers).toEqual(["COSM", "STAKE"]);
+      expect(tickers).toEqual(["BASH", "COSM", "STAKE"]);
       connection.disconnect();
     });
   });

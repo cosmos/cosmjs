@@ -31,6 +31,7 @@ import {
 import { Sha256 } from "@iov/crypto";
 import { Encoding, Uint53 } from "@iov/encoding";
 import { DefaultValueProducer, ValueAndUpdates } from "@iov/stream";
+import BN from "bn.js";
 import equal from "fast-deep-equal";
 import { ReadonlyDate } from "readonly-date";
 import { Stream } from "xstream";
@@ -157,12 +158,10 @@ export class CosmWasmConnection implements BlockchainConnection {
   public async getAccount(query: AccountQuery): Promise<Account | undefined> {
     const address = isPubkeyQuery(query) ? pubkeyToAddress(query.pubkey, this.addressPrefix) : query.address;
     const { result } = await this.restClient.authAccounts(address);
-    const account = result.value;
-    if (!account.address) {
-      return undefined;
-    }
+    const bankAccount = result.value;
+    const hasBankAccount = !!bankAccount.address;
 
-    const supportedBankCoins = account.coins.filter(({ denom }) =>
+    const supportedBankCoins = bankAccount.coins.filter(({ denom }) =>
       this.bankTokens.find(token => token.denom === denom),
     );
     const erc20Amounts = await Promise.all(
@@ -172,26 +171,31 @@ export class CosmWasmConnection implements BlockchainConnection {
           const response = JSON.parse(
             await this.restClient.queryContractSmart(erc20.contractAddress, queryMsg),
           );
+          const normalizedBalance = new BN(response.balance).toString();
           return {
             fractionalDigits: erc20.fractionalDigits,
-            quantity: response.balance,
+            quantity: normalizedBalance,
             tokenTicker: erc20.ticker as TokenTicker,
           };
         },
       ),
     );
+    const nonZeroErc20Amounts = erc20Amounts.filter(amount => amount.quantity !== "0");
 
-    const balance = [
-      ...supportedBankCoins.map(coin => decodeAmount(this.bankTokens, coin)),
-      ...erc20Amounts,
-    ].sort((a, b) => a.tokenTicker.localeCompare(b.tokenTicker));
-
-    const pubkey = !account.public_key ? undefined : decodeCosmosPubkey(account.public_key);
-    return {
-      address: address,
-      balance: balance,
-      pubkey: pubkey,
-    };
+    if (!hasBankAccount && nonZeroErc20Amounts.length === 0) {
+      return undefined;
+    } else {
+      const balance = [
+        ...supportedBankCoins.map(coin => decodeAmount(this.bankTokens, coin)),
+        ...nonZeroErc20Amounts,
+      ].sort((a, b) => a.tokenTicker.localeCompare(b.tokenTicker));
+      const pubkey = !bankAccount.public_key ? undefined : decodeCosmosPubkey(bankAccount.public_key);
+      return {
+        address: address,
+        balance: balance,
+        pubkey: pubkey,
+      };
+    }
   }
 
   public watchAccount(_account: AccountQuery): Stream<Account | undefined> {
@@ -291,8 +295,10 @@ export class CosmWasmConnection implements BlockchainConnection {
   ): Promise<readonly (ConfirmedTransaction<UnsignedTransaction> | FailedTransaction)[]> {
     const queryString = buildQueryString(query);
     const chainId = this.chainId();
-    const { txs: responses } = await this.restClient.txs(queryString);
-    return Promise.all(responses.map(response => this.parseAndPopulateTxResponse(response, chainId)));
+    // TODO: we need pagination support
+    const response = await this.restClient.txs(queryString + "&limit=50");
+    const { txs } = response;
+    return Promise.all(txs.map(tx => this.parseAndPopulateTxResponse(tx, chainId)));
   }
 
   public listenTx(

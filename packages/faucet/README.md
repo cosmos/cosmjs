@@ -116,7 +116,7 @@ situation is different.
 ```
 curl --header "Content-Type: application/json" \
   --request POST \
-  --data '{"ticker":"CASH","address":"tiov1k898u78hgs36uqw68dg7va5nfkgstu5z0fhz3f"}' \
+  --data '{"ticker":"BASH","address":"cosmos1yre6ac7qfgyfgvh58ph0rgw627rhw766y430qq"}' \
   http://localhost:8000/credit
 ```
 
