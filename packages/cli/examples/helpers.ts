@@ -59,7 +59,7 @@ const instantiateContract = async (initClient: RestClient, initPen: Secp256k1Pen
 // helper functions
 const executeContract = async (execClient: RestClient, execPen: Secp256k1Pen, contractAddr: string, msg: object, transferAmount?: types.Coin[]): Promise<readonly logs.Log[]> => {
   const memo = "Create an ERC20 instance";
-  const sender = encodeAddress({ "type": "tendermint/Secp256k1PubKey", "value": toBase64(execPen.pubkey)}, "cosmos");
+  const sender = encodeAddress({ "type": types.pubkeyType.secp256k1, "value": toBase64(execPen.pubkey)}, "cosmos");
   const instantiateContractMsg = {
     type: "wasm/execute",
     value: {
