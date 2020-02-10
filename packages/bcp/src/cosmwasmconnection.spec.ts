@@ -184,6 +184,7 @@ describe("CosmWasmConnection", () => {
     it("calculates tx hash from PostableBytes", async () => {
       pendingWithoutCosmos();
       const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      // tslint:disable-next-line: deprecation
       const postable = cosmWasmCodec.bytesToPost(signedTxJson);
       const id = await connection.identifier(postable);
       expect(id).toMatch(/^[0-9A-F]{64}$/);
@@ -257,6 +258,7 @@ describe("CosmWasmConnection", () => {
       const profile = new UserProfile();
       const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(faucetMnemonic));
       const faucet = await profile.createIdentity(wallet.id, defaultChainId, faucetPath);
+      // tslint:disable-next-line: deprecation
       const faucetAddress = cosmWasmCodec.identityToAddress(faucet);
 
       const unsigned = await connection.withDefaultFee<SendTransaction>({
@@ -322,6 +324,7 @@ describe("CosmWasmConnection", () => {
       const profile = new UserProfile();
       const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(faucetMnemonic));
       const faucet = await profile.createIdentity(wallet.id, defaultChainId, faucetPath);
+      // tslint:disable-next-line: deprecation
       const faucetAddress = cosmWasmCodec.identityToAddress(faucet);
 
       const unsigned = await connection.withDefaultFee<SendTransaction>({

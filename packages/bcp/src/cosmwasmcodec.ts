@@ -101,5 +101,9 @@ const defaultTokens: BankTokens = [
   },
 ];
 
-/** Unconfigured codec is useful for testing only */
+/**
+ * Unconfigured codec is useful for testing only
+ *
+ * @deprecated use CosmWasmCodec constructor
+ */
 export const cosmWasmCodec = new CosmWasmCodec(defaultPrefix, defaultTokens);

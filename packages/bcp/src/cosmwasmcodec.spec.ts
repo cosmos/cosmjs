@@ -1,30 +1,40 @@
+import { CosmosAddressBech32Prefix } from "@cosmwasm/sdk";
 import { PostableBytes, PrehashType } from "@iov/bcp";
 import { Encoding } from "@iov/encoding";
 
-import { cosmWasmCodec } from "./cosmwasmcodec";
+import { CosmWasmCodec } from "./cosmwasmcodec";
 import { chainId, nonce, sendTxJson, signedTxBin, signedTxEncodedJson, signedTxJson } from "./testdata.spec";
+import { BankTokens } from "./types";
 
 const { toUtf8 } = Encoding;
 
-describe("cosmWasmCodec", () => {
+const defaultPrefix = "cosmos" as CosmosAddressBech32Prefix;
+
+const defaultTokens: BankTokens = [
+  {
+    fractionalDigits: 6,
+    ticker: "ATOM",
+    denom: "uatom",
+  },
+];
+
+describe("CosmWasmCodec", () => {
+  const codec = new CosmWasmCodec(defaultPrefix, defaultTokens);
+
   describe("isValidAddress", () => {
     it("accepts valid addresses", () => {
-      expect(cosmWasmCodec.isValidAddress("cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6")).toEqual(true);
-      expect(cosmWasmCodec.isValidAddress("cosmosvalcons10q82zkzzmaku5lazhsvxv7hsg4ntpuhdwadmss")).toEqual(
-        true,
-      );
-      expect(cosmWasmCodec.isValidAddress("cosmosvaloper17mggn4znyeyg25wd7498qxl7r2jhgue8u4qjcq")).toEqual(
-        true,
-      );
+      expect(codec.isValidAddress("cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6")).toEqual(true);
+      expect(codec.isValidAddress("cosmosvalcons10q82zkzzmaku5lazhsvxv7hsg4ntpuhdwadmss")).toEqual(true);
+      expect(codec.isValidAddress("cosmosvaloper17mggn4znyeyg25wd7498qxl7r2jhgue8u4qjcq")).toEqual(true);
     });
 
     it("rejects invalid addresses", () => {
       // Bad size
-      expect(cosmWasmCodec.isValidAddress("cosmos10q82zkzzmaku5lazhsvxv7hsg4ntpuhh8289f")).toEqual(false);
+      expect(codec.isValidAddress("cosmos10q82zkzzmaku5lazhsvxv7hsg4ntpuhh8289f")).toEqual(false);
       // Bad checksum
-      expect(cosmWasmCodec.isValidAddress("cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs7")).toEqual(false);
+      expect(codec.isValidAddress("cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs7")).toEqual(false);
       // Bad prefix
-      expect(cosmWasmCodec.isValidAddress("cosmot10q82zkzzmaku5lazhsvxv7hsg4ntpuhd8j5266")).toEqual(false);
+      expect(codec.isValidAddress("cosmot10q82zkzzmaku5lazhsvxv7hsg4ntpuhd8j5266")).toEqual(false);
     });
   });
 
@@ -36,32 +46,32 @@ describe("cosmWasmCodec", () => {
         ),
         prehashType: PrehashType.Sha256,
       };
-      expect(cosmWasmCodec.bytesToSign(sendTxJson, nonce)).toEqual(expected);
+      expect(codec.bytesToSign(sendTxJson, nonce)).toEqual(expected);
     });
   });
 
   describe("bytesToPost", () => {
     it("works for SendTransaction via bank module", () => {
-      const encoded = cosmWasmCodec.bytesToPost(signedTxJson);
+      const encoded = codec.bytesToPost(signedTxJson);
       expect(encoded).toEqual(signedTxEncodedJson);
     });
   });
 
   describe("parseBytes", () => {
     it("throws when trying to decode a transaction without a nonce", () => {
-      expect(() => cosmWasmCodec.parseBytes(signedTxBin as PostableBytes, chainId)).toThrowError(
+      expect(() => codec.parseBytes(signedTxBin as PostableBytes, chainId)).toThrowError(
         /nonce is required/i,
       );
     });
 
     it("properly decodes transactions", () => {
-      const decoded = cosmWasmCodec.parseBytes(signedTxEncodedJson as PostableBytes, chainId, nonce);
+      const decoded = codec.parseBytes(signedTxEncodedJson as PostableBytes, chainId, nonce);
       expect(decoded).toEqual(signedTxJson);
     });
 
     it("round trip works", () => {
-      const encoded = cosmWasmCodec.bytesToPost(signedTxJson);
-      const decoded = cosmWasmCodec.parseBytes(encoded, chainId, nonce);
+      const encoded = codec.bytesToPost(signedTxJson);
+      const decoded = codec.parseBytes(encoded, chainId, nonce);
       expect(decoded).toEqual(signedTxJson);
     });
   });
