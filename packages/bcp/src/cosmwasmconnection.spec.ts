@@ -19,7 +19,6 @@ import { assert } from "@iov/utils";
 import { CosmWasmCodec } from "./cosmwasmcodec";
 import { CosmWasmConnection, TokenConfiguration } from "./cosmwasmconnection";
 import { signedTxJson, txId } from "./testdata.spec";
-import { nonceToSequence } from "./types";
 
 const { fromBase64, toHex } = Encoding;
 
@@ -317,9 +316,7 @@ describe("CosmWasmConnection", () => {
       expect(transaction.chainId).toEqual(unsigned.chainId);
 
       expect(signatures.length).toEqual(1);
-      // TODO: the nonce we recover in response doesn't have accountNumber, only sequence
-      const signedSequence = nonceToSequence(signed.signatures[0].nonce);
-      expect(signatures[0].nonce).toEqual(signedSequence);
+      expect(signatures[0].nonce).toEqual(signed.signatures[0].nonce);
       expect(signatures[0].pubkey.algo).toEqual(signed.signatures[0].pubkey.algo);
       expect(toHex(signatures[0].pubkey.data)).toEqual(
         toHex(Secp256k1.compressPubkey(signed.signatures[0].pubkey.data)),
