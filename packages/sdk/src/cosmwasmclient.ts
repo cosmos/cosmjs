@@ -59,6 +59,7 @@ export interface GetNonceResult {
 export interface PostTxResult {
   readonly logs: readonly Log[];
   readonly rawLog: string;
+  /** Transaction hash (might be used as transaction ID). Guaranteed to be non-exmpty upper-case hex */
   readonly transactionHash: string;
 }
 
@@ -123,6 +124,11 @@ export class CosmWasmClient {
     if (result.code) {
       throw new Error(`Error when posting tx. Code: ${result.code}; Raw log: ${result.raw_log}`);
     }
+
+    if (!result.txhash.match(/^([0-9A-F][0-9A-F])+$/)) {
+      throw new Error("Received ill-formatted txhash. Must be non-empty upper-case hex");
+    }
+
     return {
       logs: parseLogs(result.logs) || [],
       rawLog: result.raw_log || "",

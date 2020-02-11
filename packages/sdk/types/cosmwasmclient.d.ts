@@ -10,6 +10,7 @@ export interface GetNonceResult {
 export interface PostTxResult {
   readonly logs: readonly Log[];
   readonly rawLog: string;
+  /** Transaction hash (might be used as transaction ID). Guaranteed to be non-exmpty upper-case hex */
   readonly transactionHash: string;
 }
 export interface ExecuteResult {

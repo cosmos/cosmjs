@@ -102,9 +102,10 @@ describe("CosmWasmClient", () => {
         memo: memo,
         signatures: [signature],
       };
-      const { logs } = await client.postTx(marshalTx(signedTx));
+      const { logs, transactionHash } = await client.postTx(marshalTx(signedTx));
       const amountAttr = findAttribute(logs, "transfer", "amount");
       expect(amountAttr.value).toEqual("1234567ucosm");
+      expect(transactionHash).toMatch(/^[0-9A-F]{64}$/);
     });
   });
 
