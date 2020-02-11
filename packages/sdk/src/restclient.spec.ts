@@ -468,7 +468,7 @@ describe("RestClient", () => {
         .catch(error => expect(error).toMatch(`No contract with address ${beneficiaryAddress}`));
     });
 
-    describe("contract state", () => {
+    fdescribe("contract state", () => {
       const client = new RestClient(httpUrl);
       const noContract = makeRandomAddress();
       const expectedKey = toAscii("config");
@@ -497,8 +497,10 @@ describe("RestClient", () => {
         expect(state.length).toEqual(1);
         const data = state[0];
         expect(data.key.toLowerCase()).toEqual(toHex(expectedKey));
-        expect((data.val as any).verifier).toBeDefined();
-        expect((data.val as any).beneficiary).toBeDefined();
+        const value = JSON.parse(fromAscii(fromBase64(data.val)));
+        console.log(value);
+        expect(value.verifier).toBeDefined();
+        expect(value.beneficiary).toBeDefined();
 
         // bad address is empty array
         const noContractState = await client.getAllContractState(noContract);
@@ -509,10 +511,11 @@ describe("RestClient", () => {
         pendingWithoutCosmos();
 
         // query by one key
-        const model = await client.queryContractRaw(contractAddress!, expectedKey);
-        expect(model).not.toBeNull();
-        expect((model as any).verifier).toBeDefined();
-        expect((model as any).beneficiary).toBeDefined();
+        const raw = await client.queryContractRaw(contractAddress!, expectedKey);
+        expect(raw).not.toBeNull();
+        const model = JSON.parse(fromAscii(raw!));
+        expect(model.verifier).toBeDefined();
+        expect(model.beneficiary).toBeDefined();
 
         // missing key is null
         const missing = await client.queryContractRaw(contractAddress!, fromHex("cafe0dad"));

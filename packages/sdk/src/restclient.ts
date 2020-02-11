@@ -97,6 +97,11 @@ interface GetCodeResult {
   readonly code: string;
 }
 
+interface SmartQueryResponse {
+  // base64 encoded response
+  readonly smart: string;
+}
+
 type RestClientResponse =
   | NodeInfoResponse
   | BlocksResponse
@@ -309,7 +314,12 @@ export class RestClient {
   public async getAllContractState(address: string): Promise<readonly WasmData[]> {
     const path = `/wasm/contract/${address}/state`;
     const responseData = (await this.get(path)) as WasmResponse<WasmData[]>;
-    return unwrapWasmResponse(responseData);
+    console.log("all state");
+    console.log(responseData);
+    console.log("***");
+    const r = unwrapWasmResponse(responseData);
+    console.log(r);
+    return r || [];
   }
 
   // Returns the data at the key if present (unknown decoded json),
@@ -327,11 +337,10 @@ export class RestClient {
   public async queryContractSmart(address: string, query: object): Promise<Uint8Array> {
     const encoded = toHex(toUtf8(JSON.stringify(query)));
     const path = `/wasm/contract/${address}/smart/${encoded}?encoding=hex`;
-    const responseData = (await this.get(path)) as WasmResponse;
-    if (isWasmError(responseData)) {
-      throw new Error(responseData.error);
-    }
+    const responseData = (await this.get(path)) as WasmResponse<SmartQueryResponse>;
+    const result = unwrapWasmResponse(responseData);
     // no extra parse here for now, see https://github.com/confio/cosmwasm/issues/144
-    return fromBase64(responseData.result);
+    console.log(result);
+    return fromBase64(result.smart);
   }
 }
