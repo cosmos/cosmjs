@@ -21,6 +21,11 @@ interface SigningData {
   readonly signCallback: SigningCallback;
 }
 
+export interface GetNonceResult {
+  readonly accountNumber: number;
+  readonly sequence: number;
+}
+
 export class CosmWasmClient {
   public static makeReadOnly(url: string): CosmWasmClient {
     return new CosmWasmClient(url);
@@ -60,6 +65,19 @@ export class CosmWasmClient {
     return response.node_info.network;
   }
 
+  /**
+   * Returns account number and sequence.
+   *
+   * @param address returns data for this address. When unset, the client's sender adddress is used.
+   */
+  public async getNonce(address?: string): Promise<GetNonceResult> {
+    const account = (await this.restClient.authAccounts(address || this.senderAddress)).result.value;
+    return {
+      accountNumber: account.account_number,
+      sequence: account.sequence,
+    };
+  }
+
   /** Uploads code and returns a code ID */
   public async upload(wasmCode: Uint8Array, memo = ""): Promise<number> {
     const storeCodeMsg: MsgStoreCode = {
@@ -82,12 +100,9 @@ export class CosmWasmClient {
       gas: "89000000",
     };
 
-    // eslint-disable-next-line @typescript-eslint/camelcase
-    const { account_number, sequence } = (
-      await this.restClient.authAccounts(this.senderAddress)
-    ).result.value;
+    const { accountNumber, sequence } = await this.getNonce();
     const chainId = await this.chainId();
-    const signBytes = makeSignBytes([storeCodeMsg], fee, chainId, memo, account_number, sequence);
+    const signBytes = makeSignBytes([storeCodeMsg], fee, chainId, memo, accountNumber, sequence);
     const signature = await this.signCallback(signBytes);
     const signedTx = {
       msg: [storeCodeMsg],
@@ -134,12 +149,9 @@ export class CosmWasmClient {
       gas: "89000000",
     };
 
-    // eslint-disable-next-line @typescript-eslint/camelcase
-    const { account_number, sequence } = (
-      await this.restClient.authAccounts(this.senderAddress)
-    ).result.value;
+    const { accountNumber, sequence } = await this.getNonce();
     const chainId = await this.chainId();
-    const signBytes = makeSignBytes([instantiateMsg], fee, chainId, memo, account_number, sequence);
+    const signBytes = makeSignBytes([instantiateMsg], fee, chainId, memo, accountNumber, sequence);
 
     const signature = await this.signCallback(signBytes);
     const signedTx = {
@@ -183,12 +195,9 @@ export class CosmWasmClient {
       gas: "89000000",
     };
 
-    // eslint-disable-next-line @typescript-eslint/camelcase
-    const { account_number, sequence } = (
-      await this.restClient.authAccounts(this.senderAddress)
-    ).result.value;
+    const { accountNumber, sequence } = await this.getNonce();
     const chainId = await this.chainId();
-    const signBytes = makeSignBytes([executeMsg], fee, chainId, memo, account_number, sequence);
+    const signBytes = makeSignBytes([executeMsg], fee, chainId, memo, accountNumber, sequence);
     const signature = await this.signCallback(signBytes);
     const signedTx = {
       msg: [executeMsg],

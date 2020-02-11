@@ -5,7 +5,7 @@ export { CosmosAddressBech32Prefix, encodeAddress, isValidAddress } from "./addr
 export { unmarshalTx } from "./decoding";
 export { encodeSecp256k1Signature, makeSignBytes, marshalTx } from "./encoding";
 export { RestClient, TxsResponse } from "./restclient";
-export { CosmWasmClient } from "./cosmwasmclient";
+export { CosmWasmClient, GetNonceResult } from "./cosmwasmclient";
 export { makeCosmoshubPath, Pen, PrehashType, Secp256k1Pen } from "./pen";
 export {
   CosmosPubkeyBech32Prefix,

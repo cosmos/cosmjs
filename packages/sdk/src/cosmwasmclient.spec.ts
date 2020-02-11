@@ -27,6 +27,10 @@ const faucet = {
   address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
 };
 
+const unusedAccount = {
+  address: "cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u",
+};
+
 describe("CosmWasmClient", () => {
   describe("makeReadOnly", () => {
     it("can be constructed", () => {
@@ -40,6 +44,17 @@ describe("CosmWasmClient", () => {
       pendingWithoutCosmos();
       const client = CosmWasmClient.makeReadOnly(httpUrl);
       expect(await client.chainId()).toEqual("testing");
+    });
+  });
+
+  describe("getNonce", () => {
+    it("works", async () => {
+      pendingWithoutCosmos();
+      const client = CosmWasmClient.makeReadOnly(httpUrl);
+      expect(await client.getNonce(unusedAccount.address)).toEqual({
+        accountNumber: 5,
+        sequence: 0,
+      });
     });
   });
 
