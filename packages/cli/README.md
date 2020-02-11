@@ -100,23 +100,23 @@ const info = await client.getContractInfo(addr)
 info.init_msg
 
 // see your balance here
-client.queryContractSmart(addr, { balance: { address: faucetAddress } })
+smartQuery(client, addr, { balance: { address: faucetAddress } })
 
 // make a new contract
 const initMsg = { name: "Foo Coin", symbol: "FOO", decimals: 2, initial_balances: [{address: faucetAddress, amount: "123456789"}]}
 const foo = await instantiateContract(client, pen, 1, initMsg);
 
-client.queryContractSmart(foo, { balance: { address: faucetAddress } })
+smartQuery(client, foo, { balance: { address: faucetAddress } })
 
 const rcpt = await randomAddress();
 rcpt
-client.queryContractSmart(foo, { balance: { address: rcpt } })
+smartQuery(client, foo, { balance: { address: rcpt } })
 
 const execMsg = { transfer: {recipient: rcpt, amount: "808"}}
 const exec = await executeContract(client, pen, foo, execMsg);
 exec
-client.queryContractSmart(foo, { balance: { address: rcpt } })
-
+exec[0].events[0]
+smartQuery(client, foo, { balance: { address: rcpt } })
 ```
 
 ## Other example codes

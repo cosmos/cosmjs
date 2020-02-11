@@ -86,6 +86,13 @@ const executeContract = async (execClient: RestClient, execPen: Secp256k1Pen, co
   return execLogs;
 }
 
+// smartQuery assumes the content is proper JSON data and parses before returning it
+const smartQuery = async (client: RestClient, addr: string, query: object): Promise<any> => {
+  const bin = await client.queryContractSmart(addr, query);
+  return JSON.parse(fromUtf8(bin));
+}
+
+
 const randomAddress = async (): Promise<string> => {
   const mnemonic = Bip39.encode(Random.getBytes(16)).toString();
   const randomPen = await Secp256k1Pen.fromMnemonic(mnemonic);
