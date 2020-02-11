@@ -23,7 +23,7 @@ import {
   StdTx,
 } from "./types";
 
-const { fromBase64, fromHex, toAscii, toBase64, toHex } = Encoding;
+const { fromAscii, fromBase64, fromHex, toAscii, toBase64, toHex } = Encoding;
 
 const httpUrl = "http://localhost:1317";
 const defaultNetworkId = "testing";
@@ -496,9 +496,10 @@ describe("RestClient", () => {
         const state = await client.getAllContractState(contractAddress!);
         expect(state.length).toEqual(1);
         const data = state[0];
-        expect(data.key.toLowerCase()).toEqual(toHex(expectedKey));
-        expect((data.val as any).verifier).toBeDefined();
-        expect((data.val as any).beneficiary).toBeDefined();
+        expect(data.key).toEqual(expectedKey);
+        const value = JSON.parse(fromAscii(data.val));
+        expect(value.verifier).toBeDefined();
+        expect(value.beneficiary).toBeDefined();
 
         // bad address is empty array
         const noContractState = await client.getAllContractState(noContract);
@@ -509,10 +510,11 @@ describe("RestClient", () => {
         pendingWithoutCosmos();
 
         // query by one key
-        const model = await client.queryContractRaw(contractAddress!, expectedKey);
-        expect(model).not.toBeNull();
-        expect((model as any).verifier).toBeDefined();
-        expect((model as any).beneficiary).toBeDefined();
+        const raw = await client.queryContractRaw(contractAddress!, expectedKey);
+        assert(raw, "must get result");
+        const model = JSON.parse(fromAscii(raw));
+        expect(model.verifier).toBeDefined();
+        expect(model.beneficiary).toBeDefined();
 
         // missing key is null
         const missing = await client.queryContractRaw(contractAddress!, fromHex("cafe0dad"));
@@ -528,7 +530,7 @@ describe("RestClient", () => {
 
         // we can query the verifier properly
         const verifier = await client.queryContractSmart(contractAddress!, { verifier: {} });
-        expect(verifier).toEqual(faucet.address);
+        expect(fromAscii(verifier)).toEqual(faucet.address);
 
         // invalid query syntax throws an error
         await client.queryContractSmart(contractAddress!, { nosuchkey: {} }).then(

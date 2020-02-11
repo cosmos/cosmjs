@@ -141,6 +141,11 @@ export interface ContractInfo {
 }
 export interface WasmData {
   readonly key: string;
-  readonly val: unknown;
+  readonly val: string;
 }
+export interface Model {
+  readonly key: Uint8Array;
+  readonly val: Uint8Array;
+}
+export declare function parseWasmData({ key, val }: WasmData): Model;
 export {};

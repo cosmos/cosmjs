@@ -1,3 +1,7 @@
+import { Encoding } from "@iov/encoding";
+
+const { fromBase64, fromHex } = Encoding;
+
 // We will move all needed *interfaces* from amino-js here
 // This means bcp can just import them from here (if needed at all)
 export interface Tx {
@@ -190,6 +194,19 @@ export interface ContractInfo {
 export interface WasmData {
   // key is hex-encoded
   readonly key: string;
-  // value can be any decoded json, often an object but can be anything
-  readonly val: unknown;
+  // value is base64 encoded
+  readonly val: string;
+}
+
+// Model is a parsed WasmData object
+export interface Model {
+  readonly key: Uint8Array;
+  readonly val: Uint8Array;
+}
+
+export function parseWasmData({ key, val }: WasmData): Model {
+  return {
+    key: fromHex(key),
+    val: fromBase64(val),
+  };
 }

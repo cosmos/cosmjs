@@ -41,7 +41,7 @@ import { Caip5 } from "./caip5";
 import { decodeAmount, parseTxsResponse } from "./decode";
 import { accountToNonce, BankToken, Erc20Token } from "./types";
 
-const { toHex } = Encoding;
+const { fromAscii, toHex } = Encoding;
 
 interface ChainData {
   readonly chainId: ChainId;
@@ -168,9 +168,8 @@ export class CosmWasmConnection implements BlockchainConnection {
       this.erc20Tokens.map(
         async (erc20): Promise<Amount> => {
           const queryMsg = { balance: { address: address } };
-          const response = JSON.parse(
-            await this.restClient.queryContractSmart(erc20.contractAddress, queryMsg),
-          );
+          const smart = await this.restClient.queryContractSmart(erc20.contractAddress, queryMsg);
+          const response = JSON.parse(fromAscii(smart));
           const normalizedBalance = new BN(response.balance).toString();
           return {
             fractionalDigits: erc20.fractionalDigits,
