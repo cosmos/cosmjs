@@ -142,7 +142,7 @@ describe("CosmWasmClient", () => {
       );
 
       // execute
-      const result = await client.execute(contractAddress, {});
+      const result = await client.execute(contractAddress, {}, undefined);
       const [firstLog] = result.logs;
       expect(firstLog.log).toEqual(`released funds to ${beneficiaryAddress}`);
 

@@ -61,7 +61,7 @@ export class CosmWasmClient {
   }
 
   /** Uploads code and returns a code ID */
-  public async upload(wasmCode: Uint8Array, memo?: string): Promise<number> {
+  public async upload(wasmCode: Uint8Array, memo = ""): Promise<number> {
     const storeCodeMsg: MsgStoreCode = {
       type: "wasm/store-code",
       value: {
@@ -84,12 +84,12 @@ export class CosmWasmClient {
 
     const account = (await this.restClient.authAccounts(this.senderAddress)).result.value;
     const chainId = await this.chainId();
-    const signBytes = makeSignBytes([storeCodeMsg], fee, chainId, memo || "", account);
+    const signBytes = makeSignBytes([storeCodeMsg], fee, chainId, memo, account);
     const signature = await this.signCallback(signBytes);
     const signedTx = {
       msg: [storeCodeMsg],
       fee: fee,
-      memo: memo || "",
+      memo: memo,
       signatures: [signature],
     };
 
@@ -106,10 +106,9 @@ export class CosmWasmClient {
   public async instantiate(
     codeId: number,
     initMsg: object,
-    memo?: string,
+    memo = "",
     transferAmount?: readonly Coin[],
   ): Promise<string> {
-    const normalizedMemo = memo || "";
     const instantiateMsg: MsgInstantiateContract = {
       type: "wasm/instantiate",
       value: {
@@ -134,13 +133,13 @@ export class CosmWasmClient {
 
     const account = (await this.restClient.authAccounts(this.senderAddress)).result.value;
     const chainId = await this.chainId();
-    const signBytes = makeSignBytes([instantiateMsg], fee, chainId, normalizedMemo, account);
+    const signBytes = makeSignBytes([instantiateMsg], fee, chainId, memo, account);
 
     const signature = await this.signCallback(signBytes);
     const signedTx = {
       msg: [instantiateMsg],
       fee: fee,
-      memo: normalizedMemo,
+      memo: memo,
       signatures: [signature],
     };
     const result = await this.restClient.postTx(marshalTx(signedTx));
@@ -155,10 +154,9 @@ export class CosmWasmClient {
   public async execute(
     contractAddress: string,
     handleMsg: object,
-    memo?: string,
+    memo = "",
     transferAmount?: readonly Coin[],
   ): Promise<{ readonly logs: readonly Log[] }> {
-    const normalizedMemo = memo || "";
     const executeMsg: MsgExecuteContract = {
       type: "wasm/execute",
       value: {
@@ -181,12 +179,12 @@ export class CosmWasmClient {
 
     const account = (await this.restClient.authAccounts(this.senderAddress)).result.value;
     const chainId = await this.chainId();
-    const signBytes = makeSignBytes([executeMsg], fee, chainId, normalizedMemo, account);
+    const signBytes = makeSignBytes([executeMsg], fee, chainId, memo, account);
     const signature = await this.signCallback(signBytes);
     const signedTx = {
       msg: [executeMsg],
       fee: fee,
-      memo: normalizedMemo,
+      memo: memo,
       signatures: [signature],
     };
     const result = await this.restClient.postTx(marshalTx(signedTx));
