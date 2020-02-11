@@ -7,7 +7,7 @@ const { fromBase64 } = Encoding;
 
 describe("pubkey", () => {
   describe("encodeSecp256k1Pubkey", () => {
-    it("encodes a full signature", () => {
+    it("encodes a compresed pubkey", () => {
       const pubkey = fromBase64("AtQaCqFnshaZQp6rIkvAPyzThvCvXSDO+9AzbxVErqJP");
       expect(encodeSecp256k1Pubkey(pubkey)).toEqual({
         type: "tendermint/PubKeySecp256k1",
