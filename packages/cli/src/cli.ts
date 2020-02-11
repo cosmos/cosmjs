@@ -136,7 +136,7 @@ export function main(originalArgs: readonly string[]): void {
       const pubkey = encodeSecp256k1Pubkey(pen.pubkey);
       const address = encodeAddress(pubkey, "cosmos");
       const data = Encoding.toAscii("foo bar");
-      const signature = await pen.createSignature(data);
+      const signature = await pen.sign(data);
 
       console.info("Done testing, will exit now.");
       process.exit(0);

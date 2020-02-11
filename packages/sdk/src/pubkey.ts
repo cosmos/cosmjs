@@ -1,13 +1,15 @@
-import { Secp256k1 } from "@iov/crypto";
 import { Bech32, Encoding } from "@iov/encoding";
 import equal from "fast-deep-equal";
 
 import { Bech32PubKey, PubKey, pubkeyType } from "./types";
 
 export function encodeSecp256k1Pubkey(pubkey: Uint8Array): PubKey {
+  if (pubkey.length !== 33 || (pubkey[0] !== 0x02 && pubkey[0] !== 0x03)) {
+    throw new Error("Public key must be compressed secp256k1, i.e. 33 bytes starting with 0x02 or 0x03");
+  }
   return {
     type: pubkeyType.secp256k1,
-    value: Encoding.toBase64(Secp256k1.compressPubkey(pubkey)),
+    value: Encoding.toBase64(pubkey),
   };
 }
 
