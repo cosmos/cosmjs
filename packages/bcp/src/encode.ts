@@ -10,6 +10,7 @@ import {
   SignedTransaction,
   UnsignedTransaction,
 } from "@iov/bcp";
+import { Secp256k1 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
 
 import { BankTokens, Erc20Token } from "./types";
@@ -70,8 +71,10 @@ export function encodeFee(fee: Fee, tokens: BankTokens): types.StdFee {
 
 export function encodeFullSignature(fullSignature: FullSignature): types.StdSignature {
   switch (fullSignature.pubkey.algo) {
-    case Algorithm.Secp256k1:
-      return encodeSecp256k1Signature(fullSignature.pubkey.data, fullSignature.signature);
+    case Algorithm.Secp256k1: {
+      const normalizedSignature = Secp256k1.trimRecoveryByte(fullSignature.signature);
+      return encodeSecp256k1Signature(fullSignature.pubkey.data, normalizedSignature);
+    }
     default:
       throw new Error("Unsupported signing algorithm");
   }
