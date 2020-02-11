@@ -1,5 +1,5 @@
 {
-  "name": "@iov/cli",
+  "name": "@cosmwasm/cli",
   "version": "0.0.3",
   "description": "Command line interface",
   "contributors": ["IOV SAS <admin@iov.one>", "Simon Warta"],
