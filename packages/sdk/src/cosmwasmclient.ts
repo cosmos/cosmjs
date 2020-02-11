@@ -26,6 +26,12 @@ export interface GetNonceResult {
   readonly sequence: number;
 }
 
+export interface PostTxResult {
+  readonly logs: readonly Log[];
+  readonly rawLog: string;
+  readonly transactionHash: string;
+}
+
 export class CosmWasmClient {
   public static makeReadOnly(url: string): CosmWasmClient {
     return new CosmWasmClient(url);
@@ -78,6 +84,18 @@ export class CosmWasmClient {
     };
   }
 
+  public async postTx(tx: Uint8Array): Promise<PostTxResult> {
+    const result = await this.restClient.postTx(tx);
+    if (result.code) {
+      throw new Error(`Error when posting tx. Code: ${result.code}; Raw log: ${result.raw_log}`);
+    }
+    return {
+      logs: parseLogs(result.logs) || [],
+      rawLog: result.raw_log || "",
+      transactionHash: result.txhash,
+    };
+  }
+
   /** Uploads code and returns a code ID */
   public async upload(wasmCode: Uint8Array, memo = ""): Promise<number> {
     const storeCodeMsg: MsgStoreCode = {
@@ -111,12 +129,8 @@ export class CosmWasmClient {
       signatures: [signature],
     };
 
-    const result = await this.restClient.postTx(marshalTx(signedTx));
-    if (result.code) {
-      throw new Error(`Error uploading contract. Code: ${result.code}; Raw log: ${result.raw_log}`);
-    }
-    const logs = parseLogs(result.logs);
-    const codeIdAttr = findAttribute(logs, "message", "code_id");
+    const result = await this.postTx(marshalTx(signedTx));
+    const codeIdAttr = findAttribute(result.logs, "message", "code_id");
     const codeId = Number.parseInt(codeIdAttr.value, 10);
     return codeId;
   }
@@ -160,12 +174,9 @@ export class CosmWasmClient {
       memo: memo,
       signatures: [signature],
     };
-    const result = await this.restClient.postTx(marshalTx(signedTx));
-    if (result.code) {
-      throw new Error(`Error instantiating contract. Code: ${result.code}; Raw log: ${result.raw_log}`);
-    }
-    const logs = parseLogs(result.logs);
-    const contractAddressAttr = findAttribute(logs, "message", "contract_address");
+
+    const result = await this.postTx(marshalTx(signedTx));
+    const contractAddressAttr = findAttribute(result.logs, "message", "contract_address");
     return contractAddressAttr.value;
   }
 
@@ -205,12 +216,10 @@ export class CosmWasmClient {
       memo: memo,
       signatures: [signature],
     };
-    const result = await this.restClient.postTx(marshalTx(signedTx));
-    if (result.code) {
-      throw new Error(`Error when posting tx. Code: ${result.code}; Raw log: ${result.raw_log}`);
-    }
+
+    const result = await this.postTx(marshalTx(signedTx));
     return {
-      logs: parseLogs(result.logs),
+      logs: result.logs,
     };
   }
 }

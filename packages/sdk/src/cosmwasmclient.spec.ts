@@ -1,9 +1,10 @@
 import { CosmWasmClient } from "./cosmwasmclient";
-import { encodeSecp256k1Signature } from "./encoding";
+import { encodeSecp256k1Signature, makeSignBytes, marshalTx } from "./encoding";
+import { findAttribute } from "./logs";
 import { Secp256k1Pen } from "./pen";
 import { RestClient } from "./restclient";
 import { getRandomizedHackatom, makeRandomAddress } from "./testutils.spec";
-import { Coin } from "./types";
+import { Coin, MsgSend, StdFee } from "./types";
 
 const httpUrl = "http://localhost:1317";
 
@@ -55,6 +56,55 @@ describe("CosmWasmClient", () => {
         accountNumber: 5,
         sequence: 0,
       });
+    });
+  });
+
+  describe("postTx", () => {
+    it("works", async () => {
+      pendingWithoutCosmos();
+      const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
+      const client = CosmWasmClient.makeReadOnly(httpUrl);
+
+      const memo = "My first contract on chain";
+      const sendMsg: MsgSend = {
+        type: "cosmos-sdk/MsgSend",
+        value: {
+          // eslint-disable-next-line @typescript-eslint/camelcase
+          from_address: faucet.address,
+          // eslint-disable-next-line @typescript-eslint/camelcase
+          to_address: makeRandomAddress(),
+          amount: [
+            {
+              denom: "ucosm",
+              amount: "1234567",
+            },
+          ],
+        },
+      };
+
+      const fee: StdFee = {
+        amount: [
+          {
+            amount: "5000",
+            denom: "ucosm",
+          },
+        ],
+        gas: "890000",
+      };
+
+      const chainId = await client.chainId();
+      const { accountNumber, sequence } = await client.getNonce(faucet.address);
+      const signBytes = makeSignBytes([sendMsg], fee, chainId, memo, accountNumber, sequence);
+      const signature = encodeSecp256k1Signature(pen.pubkey, await pen.createSignature(signBytes));
+      const signedTx = {
+        msg: [sendMsg],
+        fee: fee,
+        memo: memo,
+        signatures: [signature],
+      };
+      const { logs } = await client.postTx(marshalTx(signedTx));
+      const amountAttr = findAttribute(logs, "transfer", "amount");
+      expect(amountAttr.value).toEqual("1234567ucosm");
     });
   });
 

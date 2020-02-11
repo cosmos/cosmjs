@@ -7,6 +7,11 @@ export interface GetNonceResult {
   readonly accountNumber: number;
   readonly sequence: number;
 }
+export interface PostTxResult {
+  readonly logs: readonly Log[];
+  readonly rawLog: string;
+  readonly transactionHash: string;
+}
 export declare class CosmWasmClient {
   static makeReadOnly(url: string): CosmWasmClient;
   static makeWritable(url: string, senderAddress: string, signCallback: SigningCallback): CosmWasmClient;
@@ -22,6 +27,7 @@ export declare class CosmWasmClient {
    * @param address returns data for this address. When unset, the client's sender adddress is used.
    */
   getNonce(address?: string): Promise<GetNonceResult>;
+  postTx(tx: Uint8Array): Promise<PostTxResult>;
   /** Uploads code and returns a code ID */
   upload(wasmCode: Uint8Array, memo?: string): Promise<number>;
   instantiate(
