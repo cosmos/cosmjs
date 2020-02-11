@@ -75,6 +75,50 @@ const signedTx: types.StdTx = {
 const postResult = await client.postTx(marshalTx(signedTx));
 ```
 
+## Extended helpers
+
+The above code shows you the use of the API and various objects and is a great way to learn
+how to embed cosmwasm-js into your project. However, if you just want a cli to perform some
+quick queries on a chain, you can use an extended set of helpers:
+
+1. Start a local wasmd blockchain, for example running the setup from `../../scripts/cosm/start.sh`
+2. Start with `./bin/cosmwasm-cli --init examples/helpers.ts` (note the new init file)
+3. Deploy some erc20 contracts: `../../scripts/cosm/init.sh`
+4. Play around as in the following example code
+
+```ts
+const account = (await client.authAccounts(faucetAddress)).result.value;
+account
+
+// show all code and contracts
+client.listCodeInfo()
+client.listContractAddresses()
+
+// query the first contract
+const addr = (await client.listContractAddresses())[0]
+const info = await client.getContractInfo(addr)
+info.init_msg
+
+// see your balance here
+client.queryContractSmart(addr, { balance: { address: faucetAddress } })
+
+// make a new contract
+const initMsg = { name: "Foo Coin", symbol: "FOO", decimals: 2, initial_balances: [{address: faucetAddress, amount: "123456789"}]}
+const foo = await instantiateContract(client, pen, 1, initMsg);
+
+client.queryContractSmart(foo, { balance: { address: faucetAddress } })
+
+const rcpt = await randomAddress();
+rcpt
+client.queryContractSmart(foo, { balance: { address: rcpt } })
+
+const execMsg = { transfer: {recipient: rcpt, amount: "808"}}
+const exec = await executeContract(client, pen, foo, execMsg);
+exec
+client.queryContractSmart(foo, { balance: { address: rcpt } })
+
+```
+
 ## Other example codes
 
 ### Create random mnemonic and Cosmos address
