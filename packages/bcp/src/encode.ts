@@ -72,8 +72,9 @@ export function encodeFee(fee: Fee, tokens: BankTokens): types.StdFee {
 export function encodeFullSignature(fullSignature: FullSignature): types.StdSignature {
   switch (fullSignature.pubkey.algo) {
     case Algorithm.Secp256k1: {
+      const compressedPubkey = Secp256k1.compressPubkey(fullSignature.pubkey.data);
       const normalizedSignature = Secp256k1.trimRecoveryByte(fullSignature.signature);
-      return encodeSecp256k1Signature(fullSignature.pubkey.data, normalizedSignature);
+      return encodeSecp256k1Signature(compressedPubkey, normalizedSignature);
     }
     default:
       throw new Error("Unsupported signing algorithm");

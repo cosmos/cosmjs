@@ -22,21 +22,16 @@ describe("signature", () => {
       });
     });
 
-    it("compresses uncompressed public keys", () => {
+    it("throws when getting uncompressed public keys", () => {
       const pubkey = fromBase64(
         "BE8EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQE7WHpoHoNswYeoFkuYpYSKK4mzFzMV/dB0DVAy4lnNU=",
       );
       const signature = fromBase64(
         "1nUcIH0CLT0/nQ0mBTDrT6kMG20NY/PsH7P2gc4bpYNGLEYjBmdWevXUJouSE/9A/60QG9cYeqyTe5kFDeIPxQ==",
       );
-      expect(encodeSecp256k1Signature(pubkey, signature)).toEqual({
-        // eslint-disable-next-line @typescript-eslint/camelcase
-        pub_key: {
-          type: "tendermint/PubKeySecp256k1",
-          value: "A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ",
-        },
-        signature: "1nUcIH0CLT0/nQ0mBTDrT6kMG20NY/PsH7P2gc4bpYNGLEYjBmdWevXUJouSE/9A/60QG9cYeqyTe5kFDeIPxQ==",
-      });
+      expect(() => encodeSecp256k1Signature(pubkey, signature)).toThrowError(
+        /public key must be compressed secp256k1/i,
+      );
     });
 
     it("throws if signature contains recovery byte", () => {

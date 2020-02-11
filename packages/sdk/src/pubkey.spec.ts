@@ -15,14 +15,11 @@ describe("pubkey", () => {
       });
     });
 
-    it("compresses uncompressed public keys", () => {
+    it("throws for uncompressed public keys", () => {
       const pubkey = fromBase64(
         "BE8EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQE7WHpoHoNswYeoFkuYpYSKK4mzFzMV/dB0DVAy4lnNU=",
       );
-      expect(encodeSecp256k1Pubkey(pubkey)).toEqual({
-        type: "tendermint/PubKeySecp256k1",
-        value: "A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ",
-      });
+      expect(() => encodeSecp256k1Pubkey(pubkey)).toThrowError(/public key must be compressed secp256k1/i);
     });
   });
 
