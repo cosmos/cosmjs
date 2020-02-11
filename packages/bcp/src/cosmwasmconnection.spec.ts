@@ -301,9 +301,10 @@ describe("CosmWasmConnection", () => {
       if (isFailedTransaction(getResponse)) {
         throw new Error("Expected transaction to succeed");
       }
+      assert(getResponse.log, "Log must be available");
       // we get a json response in the log for each msg, multiple events is good (transfer succeeded)
-      const log = JSON.parse(getResponse.log!)[0];
-      expect(log.events.length).toBe(2);
+      const [firstLog] = JSON.parse(getResponse.log);
+      expect(firstLog.events.length).toEqual(2);
       const { transaction, signatures } = getResponse;
       if (!isSendTransaction(transaction)) {
         throw new Error("Expected send transaction");
@@ -360,7 +361,6 @@ describe("CosmWasmConnection", () => {
       // search by id
 
       const idSearchResponse = await connection.searchTx({ id: transactionId });
-      expect(idSearchResponse).toBeTruthy();
       expect(idSearchResponse.length).toEqual(1);
 
       const idResult = idSearchResponse[0];
@@ -368,8 +368,9 @@ describe("CosmWasmConnection", () => {
       if (isFailedTransaction(idResult)) {
         throw new Error("Expected transaction to succeed");
       }
-      const idlog = JSON.parse(idResult.log!)[0];
-      expect(idlog.events.length).toBe(2);
+      assert(idResult.log, "Log must be available");
+      const [firstIdlog] = JSON.parse(idResult.log);
+      expect(firstIdlog.events.length).toEqual(2);
 
       const { transaction: idTransaction } = idResult;
       if (!isSendTransaction(idTransaction)) {
@@ -392,8 +393,9 @@ describe("CosmWasmConnection", () => {
       if (isFailedTransaction(senderAddressResult)) {
         throw new Error("Expected transaction to succeed");
       }
-      const senderLog = JSON.parse(senderAddressResult.log!)[0];
-      expect(senderLog.events.length).toBe(2);
+      assert(senderAddressResult.log, "Log must be available");
+      const [firstSenderLog] = JSON.parse(senderAddressResult.log);
+      expect(firstSenderLog.events.length).toEqual(2);
 
       const { transaction: senderAddressTransaction } = senderAddressResult;
       if (!isSendTransaction(senderAddressTransaction)) {
@@ -440,8 +442,9 @@ describe("CosmWasmConnection", () => {
       if (isFailedTransaction(heightResult)) {
         throw new Error("Expected transaction to succeed");
       }
-      const heightLog = JSON.parse(heightResult.log!)[0];
-      expect(heightLog.events.length).toBe(2);
+      assert(heightResult.log, "Log must be available");
+      const [firstHeightLog] = JSON.parse(heightResult.log);
+      expect(firstHeightLog.events.length).toEqual(2);
 
       const { transaction: heightTransaction } = heightResult;
       if (!isSendTransaction(heightTransaction)) {
