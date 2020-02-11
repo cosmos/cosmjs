@@ -1,4 +1,3 @@
-import { types } from "@cosmwasm/sdk";
 import { Nonce } from "@iov/bcp";
 export interface BankToken {
   readonly denom: string;
@@ -29,6 +28,6 @@ export interface Erc20Token {
    */
   readonly fractionalDigits: number;
 }
-export declare function accountToNonce({ account_number: account, sequence }: types.NonceInfo): Nonce;
+export declare function accountToNonce(accountNumber: number, sequence: number): Nonce;
 export declare function nonceToAccountNumber(nonce: Nonce): number;
 export declare function nonceToSequence(nonce: Nonce): number;

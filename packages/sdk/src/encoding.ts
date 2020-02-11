@@ -2,7 +2,7 @@ import { Secp256k1 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
 
 import { encodeSecp256k1Pubkey } from "./pubkey";
-import { Msg, NonceInfo, StdFee, StdSignature, StdTx } from "./types";
+import { Msg, StdFee, StdSignature, StdTx } from "./types";
 
 const { toBase64, toUtf8 } = Encoding;
 
@@ -43,17 +43,18 @@ export function makeSignBytes(
   fee: StdFee,
   chainId: string,
   memo: string,
-  account: NonceInfo,
+  accountNumber: number,
+  sequence: number,
 ): Uint8Array {
   const signJson: SignJson = {
     // eslint-disable-next-line @typescript-eslint/camelcase
-    account_number: account.account_number.toString(),
+    account_number: accountNumber.toString(),
     // eslint-disable-next-line @typescript-eslint/camelcase
     chain_id: chainId,
     fee: fee,
     memo: memo,
     msgs: msgs,
-    sequence: account.sequence.toString(),
+    sequence: sequence.toString(),
   };
   const signMsg = sortJson(signJson);
   return toUtf8(JSON.stringify(signMsg));

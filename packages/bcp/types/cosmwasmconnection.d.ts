@@ -43,7 +43,9 @@ export declare class CosmWasmConnection implements BlockchainConnection {
     tokens: TokenConfiguration,
   ): Promise<CosmWasmConnection>;
   private static initialize;
+  /** @deprecated everything we use from RestClient should be available in CosmWasmClient */
   private readonly restClient;
+  private readonly cosmWasmClient;
   private readonly chainData;
   private readonly addressPrefix;
   private readonly bankTokens;

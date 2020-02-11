@@ -1,17 +1,15 @@
-export interface Tx {
-  readonly type: string;
-  readonly value: unknown;
-}
+/** An Amino/Cosmos SDK StdTx */
 export interface StdTx {
   readonly msg: ReadonlyArray<Msg>;
   readonly fee: StdFee;
   readonly signatures: ReadonlyArray<StdSignature>;
   readonly memo: string | undefined;
 }
-export declare type AminoTx = Tx & {
+export declare function isStdTx(txValue: unknown): txValue is StdTx;
+export interface CosmosSdkTx {
+  readonly type: string;
   readonly value: StdTx;
-};
-export declare function isAminoStdTx(txValue: unknown): txValue is StdTx;
+}
 interface MsgTemplate {
   readonly type: string;
   readonly value: object;
@@ -118,8 +116,6 @@ export interface CosmosSdkAccount {
   readonly account_number: number;
   readonly sequence: number;
 }
-/** The data we need from CosmosSdkAccount to create a nonce */
-export declare type NonceInfo = Pick<CosmosSdkAccount, "account_number" | "sequence">;
 export interface CodeInfo {
   readonly id: number;
   /** Bech32 account address */

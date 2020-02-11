@@ -10,9 +10,9 @@ export declare function buildUnsignedTx(
   tx: UnsignedTransaction,
   bankTokens: BankTokens,
   erc20Tokens?: readonly Erc20Token[],
-): types.AminoTx;
+): types.CosmosSdkTx;
 export declare function buildSignedTx(
   tx: SignedTransaction,
   bankTokens: BankTokens,
   erc20Tokens?: readonly Erc20Token[],
-): types.AminoTx;
+): types.CosmosSdkTx;

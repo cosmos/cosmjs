@@ -2,14 +2,7 @@ import { Encoding } from "@iov/encoding";
 
 const { fromBase64, fromHex } = Encoding;
 
-// We will move all needed *interfaces* from amino-js here
-// This means bcp can just import them from here (if needed at all)
-export interface Tx {
-  readonly type: string;
-  // TODO
-  readonly value: unknown;
-}
-
+/** An Amino/Cosmos SDK StdTx */
 export interface StdTx {
   readonly msg: ReadonlyArray<Msg>;
   readonly fee: StdFee;
@@ -17,13 +10,16 @@ export interface StdTx {
   readonly memo: string | undefined;
 }
 
-export type AminoTx = Tx & { readonly value: StdTx };
-
-export function isAminoStdTx(txValue: unknown): txValue is StdTx {
+export function isStdTx(txValue: unknown): txValue is StdTx {
   const { memo, msg, fee, signatures } = txValue as StdTx;
   return (
     typeof memo === "string" && Array.isArray(msg) && typeof fee === "object" && Array.isArray(signatures)
   );
+}
+
+export interface CosmosSdkTx {
+  readonly type: string;
+  readonly value: StdTx;
 }
 
 interface MsgTemplate {
@@ -163,9 +159,6 @@ export interface CosmosSdkAccount {
   readonly account_number: number;
   readonly sequence: number;
 }
-
-/** The data we need from CosmosSdkAccount to create a nonce */
-export type NonceInfo = Pick<CosmosSdkAccount, "account_number" | "sequence">;
 
 export interface CodeInfo {
   readonly id: number;

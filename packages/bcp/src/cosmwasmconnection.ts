@@ -1,5 +1,12 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { CosmosAddressBech32Prefix, RestClient, TxsResponse, types, unmarshalTx } from "@cosmwasm/sdk";
+import {
+  CosmosAddressBech32Prefix,
+  CosmWasmClient,
+  RestClient,
+  TxsResponse,
+  types,
+  unmarshalTx,
+} from "@cosmwasm/sdk";
 import {
   Account,
   AccountQuery,
@@ -86,16 +93,19 @@ export class CosmWasmConnection implements BlockchainConnection {
     tokens: TokenConfiguration,
   ): Promise<CosmWasmConnection> {
     const restClient = new RestClient(url);
-    const chainData = await this.initialize(restClient);
-    return new CosmWasmConnection(restClient, chainData, addressPrefix, tokens);
+    const cosmWasmClient = CosmWasmClient.makeReadOnly(url);
+    const chainData = await this.initialize(cosmWasmClient);
+    return new CosmWasmConnection(restClient, cosmWasmClient, chainData, addressPrefix, tokens);
   }
 
-  private static async initialize(restClient: RestClient): Promise<ChainData> {
-    const { node_info } = await restClient.nodeInfo();
-    return { chainId: Caip5.encode(node_info.network) };
+  private static async initialize(cosmWasmClient: CosmWasmClient): Promise<ChainData> {
+    const rawChainId = await cosmWasmClient.chainId();
+    return { chainId: Caip5.encode(rawChainId) };
   }
 
+  /** @deprecated everything we use from RestClient should be available in CosmWasmClient */
   private readonly restClient: RestClient;
+  private readonly cosmWasmClient: CosmWasmClient;
   private readonly chainData: ChainData;
   private readonly addressPrefix: CosmosAddressBech32Prefix;
   private readonly bankTokens: readonly BankToken[];
@@ -107,11 +117,14 @@ export class CosmWasmConnection implements BlockchainConnection {
 
   private constructor(
     restClient: RestClient,
+    cosmWasmClient: CosmWasmClient,
     chainData: ChainData,
     addressPrefix: CosmosAddressBech32Prefix,
     tokens: TokenConfiguration,
   ) {
+    // tslint:disable-next-line: deprecation
     this.restClient = restClient;
+    this.cosmWasmClient = cosmWasmClient;
     this.chainData = chainData;
     this.addressPrefix = addressPrefix;
     this.bankTokens = tokens.bankTokens;
@@ -136,6 +149,7 @@ export class CosmWasmConnection implements BlockchainConnection {
   }
 
   public async height(): Promise<number> {
+    // tslint:disable-next-line: deprecation
     const { block } = await this.restClient.blocksLatest();
     return block.header.height;
   }
@@ -150,6 +164,7 @@ export class CosmWasmConnection implements BlockchainConnection {
 
   public async identifier(signed: PostableBytes): Promise<TransactionId> {
     const tx = unmarshalTx(signed);
+    // tslint:disable-next-line: deprecation
     const bytes = await this.restClient.encodeTx(tx);
     const hash = new Sha256(bytes).digest();
     return toHex(hash).toUpperCase() as TransactionId;
@@ -157,6 +172,7 @@ export class CosmWasmConnection implements BlockchainConnection {
 
   public async getAccount(query: AccountQuery): Promise<Account | undefined> {
     const address = isPubkeyQuery(query) ? pubkeyToAddress(query.pubkey, this.addressPrefix) : query.address;
+    // tslint:disable-next-line: deprecation
     const { result } = await this.restClient.authAccounts(address);
     const bankAccount = result.value;
     const hasBankAccount = !!bankAccount.address;
@@ -168,6 +184,7 @@ export class CosmWasmConnection implements BlockchainConnection {
       this.erc20Tokens.map(
         async (erc20): Promise<Amount> => {
           const queryMsg = { balance: { address: address } };
+          // tslint:disable-next-line: deprecation
           const smart = await this.restClient.queryContractSmart(erc20.contractAddress, queryMsg);
           const response = JSON.parse(fromAscii(smart));
           const normalizedBalance = new BN(response.balance).toString();
@@ -203,9 +220,8 @@ export class CosmWasmConnection implements BlockchainConnection {
 
   public async getNonce(query: AddressQuery | PubkeyQuery): Promise<Nonce> {
     const address = isPubkeyQuery(query) ? pubkeyToAddress(query.pubkey, this.addressPrefix) : query.address;
-    const { result } = await this.restClient.authAccounts(address);
-    const account = result.value;
-    return accountToNonce(account);
+    const { accountNumber, sequence } = await this.cosmWasmClient.getNonce(address);
+    return accountToNonce(accountNumber, sequence);
   }
 
   public async getNonces(query: AddressQuery | PubkeyQuery, count: number): Promise<readonly Nonce[]> {
@@ -219,6 +235,7 @@ export class CosmWasmConnection implements BlockchainConnection {
   }
 
   public async getBlockHeader(height: number): Promise<BlockHeader> {
+    // tslint:disable-next-line: deprecation
     const { block_meta } = await this.restClient.blocks(height);
     return {
       id: block_meta.block_id.hash as BlockId,
@@ -236,6 +253,7 @@ export class CosmWasmConnection implements BlockchainConnection {
     id: TransactionId,
   ): Promise<ConfirmedAndSignedTransaction<UnsignedTransaction> | FailedTransaction> {
     try {
+      // tslint:disable-next-line: deprecation
       const response = await this.restClient.txsById(id);
       const chainId = this.chainId();
       return this.parseAndPopulateTxResponse(response, chainId);
@@ -248,11 +266,8 @@ export class CosmWasmConnection implements BlockchainConnection {
   }
 
   public async postTx(tx: PostableBytes): Promise<PostTxResponse> {
-    const { code, txhash, raw_log } = await this.restClient.postTx(tx);
-    if (code) {
-      throw new Error(raw_log);
-    }
-    const transactionId = txhash as TransactionId;
+    const { transactionHash, rawLog } = await this.cosmWasmClient.postTx(tx);
+    const transactionId = transactionHash as TransactionId;
     const firstEvent: BlockInfo = { state: TransactionState.Pending };
     let blockInfoInterval: NodeJS.Timeout;
     let lastEventSent: BlockInfo;
@@ -285,7 +300,7 @@ export class CosmWasmConnection implements BlockchainConnection {
     return {
       blockInfo: new ValueAndUpdates<BlockInfo>(producer),
       transactionId: transactionId,
-      log: raw_log,
+      log: rawLog,
     };
   }
 
@@ -295,6 +310,7 @@ export class CosmWasmConnection implements BlockchainConnection {
     const queryString = buildQueryString(query);
     const chainId = this.chainId();
     // TODO: we need pagination support
+    // tslint:disable-next-line: deprecation
     const response = await this.restClient.txs(queryString + "&limit=50");
     const { txs } = response;
     return Promise.all(txs.map(tx => this.parseAndPopulateTxResponse(tx, chainId)));
@@ -354,6 +370,7 @@ export class CosmWasmConnection implements BlockchainConnection {
       throw new Error(`Got unsupported type of message: ${firstMsg.type}`);
     }
 
+    // tslint:disable-next-line: deprecation
     const accountForHeight = await this.restClient.authAccounts(senderAddress, response.height);
     // this is technically not the proper nonce. maybe this causes issues for sig validation?
     // leaving for now unless it causes issues

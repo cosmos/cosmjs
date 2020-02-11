@@ -1,16 +1,15 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { Random, Sha256 } from "@iov/crypto";
-import { Bech32, Encoding } from "@iov/encoding";
+import { Sha256 } from "@iov/crypto";
+import { Encoding } from "@iov/encoding";
 import { assert } from "@iov/utils";
 
 import { encodeSecp256k1Signature, makeSignBytes, marshalTx } from "./encoding";
-import { leb128Encode } from "./leb128.spec";
 import { findAttribute, parseLogs } from "./logs";
 import { Pen, Secp256k1Pen } from "./pen";
 import { encodeBech32Pubkey } from "./pubkey";
 import { PostTxsResponse, RestClient } from "./restclient";
-import contract from "./testdata/contract.json";
 import cosmoshub from "./testdata/cosmoshub.json";
+import { getRandomizedHackatom, makeRandomAddress } from "./testutils.spec";
 import {
   Coin,
   Msg,
@@ -60,36 +59,6 @@ function makeSignedTx(firstMsg: Msg, fee: StdFee, memo: string, firstSignature: 
   };
 }
 
-function getRandomizedContract(): Uint8Array {
-  const data = fromBase64(contract.data);
-  // The return value of the export function cosmwasm_api_0_6 is unused and
-  // can be randomized for testing.
-  //
-  // Find position of mutable bytes as follows:
-  // $ wasm-objdump -d contract.wasm | grep -F "cosmwasm_api_0_6" -A 1
-  // 00e67c func[149] <cosmwasm_api_0_6>:
-  // 00e67d: 41 83 0c                   | i32.const 1539
-  //
-  // In the last line, the addresses 00e67d-00e67f hold a one byte instruction
-  // (https://github.com/WebAssembly/design/blob/master/BinaryEncoding.md#constants-described-here)
-  // and a two byte value (leb128 encoded 1539)
-
-  // Any unsigned integer from 128 to 16383 is encoded to two leb128 bytes
-  const min = 128;
-  const max = 16383;
-  const random = Math.floor(Math.random() * (max - min)) + min;
-  const bytes = leb128Encode(random);
-
-  data[0x00e67d + 1] = bytes[0];
-  data[0x00e67d + 2] = bytes[1];
-
-  return data;
-}
-
-function makeRandomAddress(): string {
-  return Bech32.encode("cosmos", Random.getBytes(20));
-}
-
 async function uploadCustomContract(
   client: RestClient,
   pen: Pen,
@@ -115,15 +84,15 @@ async function uploadCustomContract(
     gas: "89000000",
   };
 
-  const account = (await client.authAccounts(faucet.address)).result.value;
-  const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account);
+  const { account_number, sequence } = (await client.authAccounts(faucet.address)).result.value;
+  const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account_number, sequence);
   const signature = encodeSecp256k1Signature(pen.pubkey, await pen.createSignature(signBytes));
   const signedTx = makeSignedTx(theMsg, fee, memo, signature);
   return client.postTx(marshalTx(signedTx));
 }
 
 async function uploadContract(client: RestClient, pen: Pen): Promise<PostTxsResponse> {
-  return uploadCustomContract(client, pen, getRandomizedContract());
+  return uploadCustomContract(client, pen, getRandomizedHackatom());
 }
 
 async function instantiateContract(
@@ -156,8 +125,8 @@ async function instantiateContract(
     gas: "89000000",
   };
 
-  const account = (await client.authAccounts(faucet.address)).result.value;
-  const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account);
+  const { account_number, sequence } = (await client.authAccounts(faucet.address)).result.value;
+  const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account_number, sequence);
   const signature = encodeSecp256k1Signature(pen.pubkey, await pen.createSignature(signBytes));
   const signedTx = makeSignedTx(theMsg, fee, memo, signature);
   return client.postTx(marshalTx(signedTx));
@@ -188,8 +157,8 @@ async function executeContract(
     gas: "89000000",
   };
 
-  const account = (await client.authAccounts(faucet.address)).result.value;
-  const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account);
+  const { account_number, sequence } = (await client.authAccounts(faucet.address)).result.value;
+  const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account_number, sequence);
   const signature = encodeSecp256k1Signature(pen.pubkey, await pen.createSignature(signBytes));
   const signedTx = makeSignedTx(theMsg, fee, memo, signature);
   return client.postTx(marshalTx(signedTx));
@@ -289,9 +258,9 @@ describe("RestClient", () => {
       };
 
       const client = new RestClient(httpUrl);
-      const account = (await client.authAccounts(faucet.address)).result.value;
+      const { account_number, sequence } = (await client.authAccounts(faucet.address)).result.value;
 
-      const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account);
+      const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account_number, sequence);
       const signature = encodeSecp256k1Signature(pen.pubkey, await pen.createSignature(signBytes));
       const signedTx = makeSignedTx(theMsg, fee, memo, signature);
       const result = await client.postTx(marshalTx(signedTx));
@@ -376,7 +345,7 @@ describe("RestClient", () => {
       const numExisting = existingInfos.length;
 
       // upload data
-      const wasmCode = getRandomizedContract();
+      const wasmCode = getRandomizedHackatom();
       const result = await uploadCustomContract(client, pen, wasmCode);
       expect(result.code).toBeFalsy();
       const logs = parseLogs(result.logs);
