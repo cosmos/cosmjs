@@ -468,7 +468,7 @@ describe("RestClient", () => {
         .catch(error => expect(error).toMatch(`No contract with address ${beneficiaryAddress}`));
     });
 
-    fdescribe("contract state", () => {
+    describe("contract state", () => {
       const client = new RestClient(httpUrl);
       const noContract = makeRandomAddress();
       const expectedKey = toAscii("config");
@@ -496,9 +496,8 @@ describe("RestClient", () => {
         const state = await client.getAllContractState(contractAddress!);
         expect(state.length).toEqual(1);
         const data = state[0];
-        expect(data.key.toLowerCase()).toEqual(toHex(expectedKey));
-        const value = JSON.parse(fromAscii(fromBase64(data.val)));
-        console.log(value);
+        expect(data.key).toEqual(expectedKey);
+        const value = JSON.parse(fromAscii(data.val));
         expect(value.verifier).toBeDefined();
         expect(value.beneficiary).toBeDefined();
 

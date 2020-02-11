@@ -1,4 +1,4 @@
-import { AminoTx, CodeInfo, ContractInfo, CosmosSdkAccount, StdTx, WasmData } from "./types";
+import { AminoTx, CodeInfo, ContractInfo, CosmosSdkAccount, Model, StdTx } from "./types";
 interface NodeInfo {
   readonly network: string;
 }
@@ -102,7 +102,7 @@ export declare class RestClient {
   listContractAddresses(): Promise<readonly string[]>;
   listContractsByCodeId(id: number): Promise<readonly ContractInfo[]>;
   getContractInfo(address: string): Promise<ContractInfo>;
-  getAllContractState(address: string): Promise<readonly WasmData[]>;
+  getAllContractState(address: string): Promise<readonly Model[]>;
   queryContractRaw(address: string, key: Uint8Array): Promise<Uint8Array | null>;
   queryContractSmart(address: string, query: object): Promise<Uint8Array>;
 }

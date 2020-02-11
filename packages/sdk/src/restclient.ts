@@ -1,7 +1,17 @@
 import { Encoding } from "@iov/encoding";
 import axios, { AxiosError, AxiosInstance } from "axios";
 
-import { AminoTx, CodeInfo, ContractInfo, CosmosSdkAccount, isAminoStdTx, StdTx, WasmData } from "./types";
+import {
+  AminoTx,
+  CodeInfo,
+  ContractInfo,
+  CosmosSdkAccount,
+  isAminoStdTx,
+  Model,
+  parseWasmData,
+  StdTx,
+  WasmData,
+} from "./types";
 
 const { fromBase64, fromUtf8, toHex, toUtf8 } = Encoding;
 
@@ -311,15 +321,11 @@ export class RestClient {
 
   // Returns all contract state.
   // This is an empty array if no such contract, or contract has no data.
-  public async getAllContractState(address: string): Promise<readonly WasmData[]> {
+  public async getAllContractState(address: string): Promise<readonly Model[]> {
     const path = `/wasm/contract/${address}/state`;
     const responseData = (await this.get(path)) as WasmResponse<WasmData[]>;
-    console.log("all state");
-    console.log(responseData);
-    console.log("***");
     const r = unwrapWasmResponse(responseData);
-    console.log(r);
-    return r || [];
+    return r ? r.map(parseWasmData) : [];
   }
 
   // Returns the data at the key if present (unknown decoded json),
@@ -340,7 +346,6 @@ export class RestClient {
     const responseData = (await this.get(path)) as WasmResponse<SmartQueryResponse>;
     const result = unwrapWasmResponse(responseData);
     // no extra parse here for now, see https://github.com/confio/cosmwasm/issues/144
-    console.log(result);
     return fromBase64(result.smart);
   }
 }
