@@ -1,4 +1,5 @@
 import { Slip10RawIndex } from "@iov/crypto";
+import { StdSignature } from "./types";
 export declare type PrehashType = "sha256" | "sha512" | null;
 /**
  * A pen is the most basic tool you can think of for signing. It works
@@ -12,7 +13,7 @@ export declare type PrehashType = "sha256" | "sha512" | null;
  */
 export interface Pen {
   readonly pubkey: Uint8Array;
-  readonly createSignature: (signBytes: Uint8Array, prehashType?: PrehashType) => Promise<Uint8Array>;
+  readonly sign: (signBytes: Uint8Array, prehashType?: PrehashType) => Promise<StdSignature>;
 }
 /**
  * The Cosmoshub derivation path in the form `m/44'/118'/0'/0/a`
@@ -25,7 +26,7 @@ export declare class Secp256k1Pen implements Pen {
   private readonly privkey;
   private constructor();
   /**
-   * Creates a fixed length encoding of the signature parameters r (32 bytes) and s (32 bytes).
+   * Creates and returns a signature
    */
-  createSignature(signBytes: Uint8Array, prehashType?: PrehashType): Promise<Uint8Array>;
+  sign(signBytes: Uint8Array, prehashType?: PrehashType): Promise<StdSignature>;
 }

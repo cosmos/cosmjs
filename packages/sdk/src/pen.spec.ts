@@ -2,6 +2,7 @@ import { Secp256k1, Secp256k1Signature, Sha256 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
 
 import { Secp256k1Pen } from "./pen";
+import { decodeSignature } from "./signature";
 
 const { fromHex } = Encoding;
 
@@ -33,12 +34,12 @@ describe("Sec256k1Pen", () => {
         "special sign fit simple patrol salute grocery chicken wheat radar tonight ceiling",
       );
       const data = Encoding.toAscii("foo bar");
-      const signature = await pen.createSignature(data);
+      const { pubkey, signature } = decodeSignature(await pen.sign(data));
 
       const valid = await Secp256k1.verifySignature(
         new Secp256k1Signature(signature.slice(0, 32), signature.slice(32, 64)),
         new Sha256(data).digest(),
-        pen.pubkey,
+        pubkey,
       );
       expect(valid).toEqual(true);
     });

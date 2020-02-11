@@ -3,7 +3,7 @@ import { Sha256 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
 import { assert } from "@iov/utils";
 
-import { encodeSecp256k1Signature, makeSignBytes, marshalTx } from "./encoding";
+import { makeSignBytes, marshalTx } from "./encoding";
 import { findAttribute, parseLogs } from "./logs";
 import { Pen, Secp256k1Pen } from "./pen";
 import { encodeBech32Pubkey } from "./pubkey";
@@ -86,7 +86,7 @@ async function uploadCustomContract(
 
   const { account_number, sequence } = (await client.authAccounts(faucet.address)).result.value;
   const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account_number, sequence);
-  const signature = encodeSecp256k1Signature(pen.pubkey, await pen.createSignature(signBytes));
+  const signature = await pen.sign(signBytes);
   const signedTx = makeSignedTx(theMsg, fee, memo, signature);
   return client.postTx(marshalTx(signedTx));
 }
@@ -127,7 +127,7 @@ async function instantiateContract(
 
   const { account_number, sequence } = (await client.authAccounts(faucet.address)).result.value;
   const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account_number, sequence);
-  const signature = encodeSecp256k1Signature(pen.pubkey, await pen.createSignature(signBytes));
+  const signature = await pen.sign(signBytes);
   const signedTx = makeSignedTx(theMsg, fee, memo, signature);
   return client.postTx(marshalTx(signedTx));
 }
@@ -159,7 +159,7 @@ async function executeContract(
 
   const { account_number, sequence } = (await client.authAccounts(faucet.address)).result.value;
   const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account_number, sequence);
-  const signature = encodeSecp256k1Signature(pen.pubkey, await pen.createSignature(signBytes));
+  const signature = await pen.sign(signBytes);
   const signedTx = makeSignedTx(theMsg, fee, memo, signature);
   return client.postTx(marshalTx(signedTx));
 }
@@ -261,7 +261,7 @@ describe("RestClient", () => {
       const { account_number, sequence } = (await client.authAccounts(faucet.address)).result.value;
 
       const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account_number, sequence);
-      const signature = encodeSecp256k1Signature(pen.pubkey, await pen.createSignature(signBytes));
+      const signature = await pen.sign(signBytes);
       const signedTx = makeSignedTx(theMsg, fee, memo, signature);
       const result = await client.postTx(marshalTx(signedTx));
       // console.log("Raw log:", result.raw_log);

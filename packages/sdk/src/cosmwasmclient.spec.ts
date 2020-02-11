@@ -1,5 +1,5 @@
 import { CosmWasmClient } from "./cosmwasmclient";
-import { encodeSecp256k1Signature, makeSignBytes, marshalTx } from "./encoding";
+import { makeSignBytes, marshalTx } from "./encoding";
 import { findAttribute } from "./logs";
 import { Secp256k1Pen } from "./pen";
 import { RestClient } from "./restclient";
@@ -95,7 +95,7 @@ describe("CosmWasmClient", () => {
       const chainId = await client.chainId();
       const { accountNumber, sequence } = await client.getNonce(faucet.address);
       const signBytes = makeSignBytes([sendMsg], fee, chainId, memo, accountNumber, sequence);
-      const signature = encodeSecp256k1Signature(pen.pubkey, await pen.createSignature(signBytes));
+      const signature = await pen.sign(signBytes);
       const signedTx = {
         msg: [sendMsg],
         fee: fee,
@@ -113,9 +113,7 @@ describe("CosmWasmClient", () => {
     it("works", async () => {
       pendingWithoutCosmos();
       const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-      const client = CosmWasmClient.makeWritable(httpUrl, faucet.address, async signBytes => {
-        return encodeSecp256k1Signature(pen.pubkey, await pen.createSignature(signBytes));
-      });
+      const client = CosmWasmClient.makeWritable(httpUrl, faucet.address, signBytes => pen.sign(signBytes));
       const codeId = await client.upload(getRandomizedHackatom());
       expect(codeId).toBeGreaterThanOrEqual(1);
     });
@@ -125,9 +123,7 @@ describe("CosmWasmClient", () => {
     it("works with transfer amount", async () => {
       pendingWithoutCosmos();
       const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-      const client = CosmWasmClient.makeWritable(httpUrl, faucet.address, async signBytes => {
-        return encodeSecp256k1Signature(pen.pubkey, await pen.createSignature(signBytes));
-      });
+      const client = CosmWasmClient.makeWritable(httpUrl, faucet.address, signBytes => pen.sign(signBytes));
       const codeId = await client.upload(getRandomizedHackatom());
 
       const transferAmount: readonly Coin[] = [
@@ -159,9 +155,7 @@ describe("CosmWasmClient", () => {
     it("can instantiate one code multiple times", async () => {
       pendingWithoutCosmos();
       const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-      const client = CosmWasmClient.makeWritable(httpUrl, faucet.address, async signBytes => {
-        return encodeSecp256k1Signature(pen.pubkey, await pen.createSignature(signBytes));
-      });
+      const client = CosmWasmClient.makeWritable(httpUrl, faucet.address, signBytes => pen.sign(signBytes));
       const codeId = await client.upload(getRandomizedHackatom());
 
       const contractAddress1 = await client.instantiate(codeId, {
@@ -180,9 +174,7 @@ describe("CosmWasmClient", () => {
     it("works", async () => {
       pendingWithoutCosmos();
       const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-      const client = CosmWasmClient.makeWritable(httpUrl, faucet.address, async signBytes => {
-        return encodeSecp256k1Signature(pen.pubkey, await pen.createSignature(signBytes));
-      });
+      const client = CosmWasmClient.makeWritable(httpUrl, faucet.address, signBytes => pen.sign(signBytes));
       const codeId = await client.upload(getRandomizedHackatom());
 
       // instantiate

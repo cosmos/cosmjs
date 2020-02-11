@@ -9,6 +9,9 @@ import {
   Slip10RawIndex,
 } from "@iov/crypto";
 
+import { encodeSecp256k1Signature } from "./signature";
+import { StdSignature } from "./types";
+
 export type PrehashType = "sha256" | "sha512" | null;
 
 /**
@@ -23,7 +26,7 @@ export type PrehashType = "sha256" | "sha512" | null;
  */
 export interface Pen {
   readonly pubkey: Uint8Array;
-  readonly createSignature: (signBytes: Uint8Array, prehashType?: PrehashType) => Promise<Uint8Array>;
+  readonly sign: (signBytes: Uint8Array, prehashType?: PrehashType) => Promise<StdSignature>;
 }
 
 function prehash(bytes: Uint8Array, type: PrehashType): Uint8Array {
@@ -73,14 +76,12 @@ export class Secp256k1Pen implements Pen {
   }
 
   /**
-   * Creates a fixed length encoding of the signature parameters r (32 bytes) and s (32 bytes).
+   * Creates and returns a signature
    */
-  public async createSignature(
-    signBytes: Uint8Array,
-    prehashType: PrehashType = "sha256",
-  ): Promise<Uint8Array> {
+  public async sign(signBytes: Uint8Array, prehashType: PrehashType = "sha256"): Promise<StdSignature> {
     const message = prehash(signBytes, prehashType);
     const signature = await Secp256k1.createSignature(message, this.privkey);
-    return new Uint8Array([...signature.r(32), ...signature.s(32)]);
+    const fixedLengthSignature = new Uint8Array([...signature.r(32), ...signature.s(32)]);
+    return encodeSecp256k1Signature(this.pubkey, fixedLengthSignature);
   }
 }
