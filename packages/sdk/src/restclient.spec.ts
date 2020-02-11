@@ -511,8 +511,8 @@ describe("RestClient", () => {
 
         // query by one key
         const raw = await client.queryContractRaw(contractAddress!, expectedKey);
-        expect(raw).not.toBeNull();
-        const model = JSON.parse(fromAscii(raw!));
+        assert(raw, "must get result");
+        const model = JSON.parse(fromAscii(raw));
         expect(model.verifier).toBeDefined();
         expect(model.beneficiary).toBeDefined();
 
