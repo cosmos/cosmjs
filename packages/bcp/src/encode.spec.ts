@@ -67,8 +67,8 @@ describe("encode", () => {
     },
   ];
 
-  describe("encodePubKey", () => {
-    it("encodes a Secp256k1 pubkey", () => {
+  describe("encodePubkey", () => {
+    it("works for compressed public key", () => {
       expect(encodePubkey(defaultPubkey)).toEqual({
         type: "tendermint/PubKeySecp256k1",
         value: "AtQaCqFnshaZQp6rIkvAPyzThvCvXSDO+9AzbxVErqJP",

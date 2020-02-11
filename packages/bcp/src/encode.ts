@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { encodeSecp256k1Signature, types } from "@cosmwasm/sdk";
+import { encodeSecp256k1Pubkey, encodeSecp256k1Signature, types } from "@cosmwasm/sdk";
 import {
   Algorithm,
   Amount,
@@ -17,13 +17,11 @@ import { BankTokens, Erc20Token } from "./types";
 
 const { toBase64 } = Encoding;
 
+// TODO: This function seems to be unused and is not well tested (e.g. uncompressed secp256k1 or ed25519)
 export function encodePubkey(pubkey: PubkeyBundle): types.PubKey {
   switch (pubkey.algo) {
     case Algorithm.Secp256k1:
-      return {
-        type: types.pubkeyType.secp256k1,
-        value: toBase64(pubkey.data),
-      };
+      return encodeSecp256k1Pubkey(pubkey.data);
     case Algorithm.Ed25519:
       return {
         type: types.pubkeyType.ed25519,
