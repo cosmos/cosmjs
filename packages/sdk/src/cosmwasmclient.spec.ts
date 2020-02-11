@@ -109,4 +109,49 @@ describe("CosmWasmClient", () => {
       expect(contractAddress1).not.toEqual(contractAddress2);
     });
   });
+
+  describe("execute", () => {
+    it("works", async () => {
+      pendingWithoutCosmos();
+      const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
+      const client = CosmWasmClient.makeWritable(httpUrl, faucet.address, async signBytes => {
+        return encodeSecp256k1Signature(pen.pubkey, await pen.createSignature(signBytes));
+      });
+      const codeId = await client.upload(getRandomizedHackatom());
+
+      // instantiate
+      const transferAmount: readonly Coin[] = [
+        {
+          amount: "233444",
+          denom: "ucosm",
+        },
+        {
+          amount: "5454",
+          denom: "ustake",
+        },
+      ];
+      const beneficiaryAddress = makeRandomAddress();
+      const contractAddress = await client.instantiate(
+        codeId,
+        {
+          verifier: faucet.address,
+          beneficiary: beneficiaryAddress,
+        },
+        undefined,
+        transferAmount,
+      );
+
+      // execute
+      const result = await client.execute(contractAddress, {});
+      const [firstLog] = result.logs;
+      expect(firstLog.log).toEqual(`released funds to ${beneficiaryAddress}`);
+
+      // Verify token transfer from contract to beneficiary
+      const rest = new RestClient(httpUrl);
+      const beneficiaryBalance = (await rest.authAccounts(beneficiaryAddress)).result.value.coins;
+      expect(beneficiaryBalance).toEqual(transferAmount);
+      const contractBalance = (await rest.authAccounts(contractAddress)).result.value.coins;
+      expect(contractBalance).toEqual([]);
+    });
+  });
 });

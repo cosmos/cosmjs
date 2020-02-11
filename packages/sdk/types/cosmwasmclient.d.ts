@@ -1,3 +1,4 @@
+import { Log } from "./logs";
 import { Coin, StdSignature } from "./types";
 export interface SigningCallback {
   (signBytes: Uint8Array): Promise<StdSignature>;
@@ -19,4 +20,12 @@ export declare class CosmWasmClient {
     memo?: string,
     transferAmount?: readonly Coin[],
   ): Promise<string>;
+  execute(
+    contractAddress: string,
+    handleMsg: object,
+    memo?: string,
+    transferAmount?: readonly Coin[],
+  ): Promise<{
+    readonly logs: readonly Log[];
+  }>;
 }

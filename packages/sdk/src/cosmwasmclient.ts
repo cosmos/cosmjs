@@ -1,9 +1,16 @@
 import { Encoding } from "@iov/encoding";
 
 import { makeSignBytes, marshalTx } from "./encoding";
-import { findAttribute, parseLogs } from "./logs";
+import { findAttribute, Log, parseLogs } from "./logs";
 import { RestClient } from "./restclient";
-import { Coin, MsgInstantiateContract, MsgStoreCode, StdFee, StdSignature } from "./types";
+import {
+  Coin,
+  MsgExecuteContract,
+  MsgInstantiateContract,
+  MsgStoreCode,
+  StdFee,
+  StdSignature,
+} from "./types";
 
 export interface SigningCallback {
   (signBytes: Uint8Array): Promise<StdSignature>;
@@ -143,5 +150,51 @@ export class CosmWasmClient {
     const logs = parseLogs(result.logs);
     const contractAddressAttr = findAttribute(logs, "message", "contract_address");
     return contractAddressAttr.value;
+  }
+
+  public async execute(
+    contractAddress: string,
+    handleMsg: object,
+    memo?: string,
+    transferAmount?: readonly Coin[],
+  ): Promise<{ readonly logs: readonly Log[] }> {
+    const normalizedMemo = memo || "";
+    const executeMsg: MsgExecuteContract = {
+      type: "wasm/execute",
+      value: {
+        sender: this.senderAddress,
+        contract: contractAddress,
+        msg: handleMsg,
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        sent_funds: transferAmount || [],
+      },
+    };
+    const fee: StdFee = {
+      amount: [
+        {
+          amount: "5000000",
+          denom: "ucosm",
+        },
+      ],
+      gas: "89000000",
+    };
+
+    const account = (await this.restClient.authAccounts(this.senderAddress)).result.value;
+    const chainId = await this.chainId();
+    const signBytes = makeSignBytes([executeMsg], fee, chainId, normalizedMemo, account);
+    const signature = await this.signCallback(signBytes);
+    const signedTx = {
+      msg: [executeMsg],
+      fee: fee,
+      memo: normalizedMemo,
+      signatures: [signature],
+    };
+    const result = await this.restClient.postTx(marshalTx(signedTx));
+    if (result.code) {
+      throw new Error(`Error when posting tx. Code: ${result.code}; Raw log: ${result.raw_log}`);
+    }
+    return {
+      logs: parseLogs(result.logs),
+    };
   }
 }
