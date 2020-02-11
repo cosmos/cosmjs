@@ -82,9 +82,12 @@ export class CosmWasmClient {
       gas: "89000000",
     };
 
-    const account = (await this.restClient.authAccounts(this.senderAddress)).result.value;
+    // eslint-disable-next-line @typescript-eslint/camelcase
+    const { account_number, sequence } = (
+      await this.restClient.authAccounts(this.senderAddress)
+    ).result.value;
     const chainId = await this.chainId();
-    const signBytes = makeSignBytes([storeCodeMsg], fee, chainId, memo, account);
+    const signBytes = makeSignBytes([storeCodeMsg], fee, chainId, memo, account_number, sequence);
     const signature = await this.signCallback(signBytes);
     const signedTx = {
       msg: [storeCodeMsg],
@@ -131,9 +134,12 @@ export class CosmWasmClient {
       gas: "89000000",
     };
 
-    const account = (await this.restClient.authAccounts(this.senderAddress)).result.value;
+    // eslint-disable-next-line @typescript-eslint/camelcase
+    const { account_number, sequence } = (
+      await this.restClient.authAccounts(this.senderAddress)
+    ).result.value;
     const chainId = await this.chainId();
-    const signBytes = makeSignBytes([instantiateMsg], fee, chainId, memo, account);
+    const signBytes = makeSignBytes([instantiateMsg], fee, chainId, memo, account_number, sequence);
 
     const signature = await this.signCallback(signBytes);
     const signedTx = {
@@ -177,9 +183,12 @@ export class CosmWasmClient {
       gas: "89000000",
     };
 
-    const account = (await this.restClient.authAccounts(this.senderAddress)).result.value;
+    // eslint-disable-next-line @typescript-eslint/camelcase
+    const { account_number, sequence } = (
+      await this.restClient.authAccounts(this.senderAddress)
+    ).result.value;
     const chainId = await this.chainId();
-    const signBytes = makeSignBytes([executeMsg], fee, chainId, memo, account);
+    const signBytes = makeSignBytes([executeMsg], fee, chainId, memo, account_number, sequence);
     const signature = await this.signCallback(signBytes);
     const signedTx = {
       msg: [executeMsg],

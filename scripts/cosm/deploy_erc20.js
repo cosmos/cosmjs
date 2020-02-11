@@ -40,8 +40,8 @@ async function uploadContract(client, pen, wasm) {
     },
   };
 
-  const account = (await client.authAccounts(faucetAddress)).result.value;
-  const signBytes = makeSignBytes([storeCodeMsg], defaultFee, networkId, memo, account);
+  const { account_number, sequence } = (await client.authAccounts(faucetAddress)).result.value;
+  const signBytes = makeSignBytes([storeCodeMsg], defaultFee, networkId, memo, account_number, sequence);
   const signature = encodeSecp256k1Signature(pen.pubkey, await pen.createSignature(signBytes));
   const signedTx = {
     msg: [storeCodeMsg],
@@ -63,8 +63,15 @@ async function instantiateContract(client, pen, codeId, msg, transferAmount) {
       init_funds: transferAmount || [],
     },
   };
-  const account = (await client.authAccounts(faucetAddress)).result.value;
-  const signBytes = makeSignBytes([instantiateContractMsg], defaultFee, networkId, memo, account);
+  const { account_number, sequence } = (await client.authAccounts(faucetAddress)).result.value;
+  const signBytes = makeSignBytes(
+    [instantiateContractMsg],
+    defaultFee,
+    networkId,
+    memo,
+    account_number,
+    sequence,
+  );
   const signature = encodeSecp256k1Signature(pen.pubkey, await pen.createSignature(signBytes));
   const signedTx = {
     msg: [instantiateContractMsg],

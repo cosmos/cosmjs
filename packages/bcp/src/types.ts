@@ -1,4 +1,3 @@
-import { types } from "@cosmwasm/sdk";
 import { Nonce } from "@iov/bcp";
 
 export interface BankToken {
@@ -40,17 +39,17 @@ const maxSeq = 1 << 20;
 
 // this (lossily) encodes the two pieces of info (uint64) needed to sign into
 // one (53-bit) number. Cross your fingers.
-export function accountToNonce({ account_number: account, sequence }: types.NonceInfo): Nonce {
+export function accountToNonce(accountNumber: number, sequence: number): Nonce {
   // we allow 23 bits (8 million) for accounts, and 20 bits (1 million) for tx/account
   // let's fix this soon
-  if (account > maxAcct) {
+  if (accountNumber > maxAcct) {
     throw new Error("Account number is greater than 2^23, must update Nonce handler");
   }
   if (sequence > maxSeq) {
     throw new Error("Sequence is greater than 2^20, must update Nonce handler");
   }
 
-  const val = account * maxSeq + sequence;
+  const val = accountNumber * maxSeq + sequence;
   return val as Nonce;
 }
 

@@ -45,7 +45,7 @@ $ cosmwasm-cli
 
 ```ts
 // Get account information
-const account = (await client.authAccounts(faucetAddress)).result.value;
+const { account_number, sequence } = (await client.authAccounts(faucetAddress)).result.value;
 
 // Craft a send transaction
 const emptyAddress = Bech32.encode("cosmos", Random.getBytes(20));
@@ -64,7 +64,7 @@ const sendTokensMsg: types.MsgSend = {
   },
 };
 
-const signBytes = makeSignBytes([sendTokensMsg], defaultFee, defaultNetworkId, memo, account);
+const signBytes = makeSignBytes([sendTokensMsg], defaultFee, defaultNetworkId, memo, account_number, sequence);
 const signature = encodeSecp256k1Signature(pen.pubkey, await pen.createSignature(signBytes));
 const signedTx: types.StdTx = {
     msg: [sendTokensMsg],

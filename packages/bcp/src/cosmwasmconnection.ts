@@ -204,8 +204,8 @@ export class CosmWasmConnection implements BlockchainConnection {
   public async getNonce(query: AddressQuery | PubkeyQuery): Promise<Nonce> {
     const address = isPubkeyQuery(query) ? pubkeyToAddress(query.pubkey, this.addressPrefix) : query.address;
     const { result } = await this.restClient.authAccounts(address);
-    const account = result.value;
-    return accountToNonce(account);
+    const { account_number, sequence } = result.value;
+    return accountToNonce(account_number, sequence);
   }
 
   public async getNonces(query: AddressQuery | PubkeyQuery, count: number): Promise<readonly Nonce[]> {

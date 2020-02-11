@@ -160,9 +160,6 @@ export interface CosmosSdkAccount {
   readonly sequence: number;
 }
 
-/** The data we need from CosmosSdkAccount to create a nonce */
-export type NonceInfo = Pick<CosmosSdkAccount, "account_number" | "sequence">;
-
 export interface CodeInfo {
   readonly id: number;
   /** Bech32 account address */

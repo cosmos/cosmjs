@@ -84,8 +84,8 @@ async function uploadCustomContract(
     gas: "89000000",
   };
 
-  const account = (await client.authAccounts(faucet.address)).result.value;
-  const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account);
+  const { account_number, sequence } = (await client.authAccounts(faucet.address)).result.value;
+  const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account_number, sequence);
   const signature = encodeSecp256k1Signature(pen.pubkey, await pen.createSignature(signBytes));
   const signedTx = makeSignedTx(theMsg, fee, memo, signature);
   return client.postTx(marshalTx(signedTx));
@@ -125,8 +125,8 @@ async function instantiateContract(
     gas: "89000000",
   };
 
-  const account = (await client.authAccounts(faucet.address)).result.value;
-  const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account);
+  const { account_number, sequence } = (await client.authAccounts(faucet.address)).result.value;
+  const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account_number, sequence);
   const signature = encodeSecp256k1Signature(pen.pubkey, await pen.createSignature(signBytes));
   const signedTx = makeSignedTx(theMsg, fee, memo, signature);
   return client.postTx(marshalTx(signedTx));
@@ -157,8 +157,8 @@ async function executeContract(
     gas: "89000000",
   };
 
-  const account = (await client.authAccounts(faucet.address)).result.value;
-  const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account);
+  const { account_number, sequence } = (await client.authAccounts(faucet.address)).result.value;
+  const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account_number, sequence);
   const signature = encodeSecp256k1Signature(pen.pubkey, await pen.createSignature(signBytes));
   const signedTx = makeSignedTx(theMsg, fee, memo, signature);
   return client.postTx(marshalTx(signedTx));
@@ -258,9 +258,9 @@ describe("RestClient", () => {
       };
 
       const client = new RestClient(httpUrl);
-      const account = (await client.authAccounts(faucet.address)).result.value;
+      const { account_number, sequence } = (await client.authAccounts(faucet.address)).result.value;
 
-      const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account);
+      const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account_number, sequence);
       const signature = encodeSecp256k1Signature(pen.pubkey, await pen.createSignature(signBytes));
       const signedTx = makeSignedTx(theMsg, fee, memo, signature);
       const result = await client.postTx(marshalTx(signedTx));

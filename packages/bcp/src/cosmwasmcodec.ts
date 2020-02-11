@@ -4,7 +4,6 @@ import {
   isValidAddress,
   makeSignBytes,
   marshalTx,
-  types,
   unmarshalTx,
 } from "@cosmwasm/sdk";
 import {
@@ -46,16 +45,13 @@ export class CosmWasmCodec implements TxCodec {
   public bytesToSign(unsigned: UnsignedTransaction, nonce: Nonce): SigningJob {
     const built = buildUnsignedTx(unsigned, this.bankTokens, this.erc20Tokens);
 
-    const nonceInfo: types.NonceInfo = {
-      account_number: nonceToAccountNumber(nonce),
-      sequence: nonceToSequence(nonce),
-    };
     const signBytes = makeSignBytes(
       built.value.msg,
       built.value.fee,
       Caip5.decode(unsigned.chainId),
       built.value.memo || "",
-      nonceInfo,
+      nonceToAccountNumber(nonce),
+      nonceToSequence(nonce),
     );
 
     return {
