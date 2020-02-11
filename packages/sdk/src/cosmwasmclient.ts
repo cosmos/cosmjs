@@ -12,6 +12,36 @@ import {
   StdSignature,
 } from "./types";
 
+const defaultUploadFee: StdFee = {
+  amount: [
+    {
+      amount: "5000",
+      denom: "ucosm",
+    },
+  ],
+  gas: "1000000", // one million
+};
+
+const defaultInitFee: StdFee = {
+  amount: [
+    {
+      amount: "5000",
+      denom: "ucosm",
+    },
+  ],
+  gas: "500000", // 500k
+};
+
+const defaultExecFee: StdFee = {
+  amount: [
+    {
+      amount: "5000",
+      denom: "ucosm",
+    },
+  ],
+  gas: "200000", // 200k
+};
+
 export interface SigningCallback {
   (signBytes: Uint8Array): Promise<StdSignature>;
 }
@@ -108,16 +138,7 @@ export class CosmWasmClient {
         builder: "",
       },
     };
-    const fee: StdFee = {
-      amount: [
-        {
-          amount: "5000000",
-          denom: "ucosm",
-        },
-      ],
-      gas: "89000000",
-    };
-
+    const fee = defaultUploadFee;
     const { accountNumber, sequence } = await this.getNonce();
     const chainId = await this.chainId();
     const signBytes = makeSignBytes([storeCodeMsg], fee, chainId, memo, accountNumber, sequence);
@@ -153,16 +174,7 @@ export class CosmWasmClient {
         init_funds: transferAmount || [],
       },
     };
-    const fee: StdFee = {
-      amount: [
-        {
-          amount: "5000000",
-          denom: "ucosm",
-        },
-      ],
-      gas: "89000000",
-    };
-
+    const fee = defaultInitFee;
     const { accountNumber, sequence } = await this.getNonce();
     const chainId = await this.chainId();
     const signBytes = makeSignBytes([instantiateMsg], fee, chainId, memo, accountNumber, sequence);
@@ -196,16 +208,7 @@ export class CosmWasmClient {
         sent_funds: transferAmount || [],
       },
     };
-    const fee: StdFee = {
-      amount: [
-        {
-          amount: "5000000",
-          denom: "ucosm",
-        },
-      ],
-      gas: "89000000",
-    };
-
+    const fee = defaultExecFee;
     const { accountNumber, sequence } = await this.getNonce();
     const chainId = await this.chainId();
     const signBytes = makeSignBytes([executeMsg], fee, chainId, memo, accountNumber, sequence);
