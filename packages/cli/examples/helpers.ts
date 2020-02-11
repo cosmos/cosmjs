@@ -40,7 +40,7 @@ const instantiateContract = async (initClient: RestClient, initPen: Secp256k1Pen
   };
   const account = (await initClient.authAccounts(faucetAddress)).result.value;
   const signBytes = makeSignBytes([instantiateContractMsg], defaultFee, networkId, memo, account);
-  const signature = encodeSecp256k1Signature(initPen.pubkey, await initPen.createSignature(signBytes));
+  const signature = await initPen.sign(signBytes);
   const signedTx = {
     msg: [instantiateContractMsg],
     fee: defaultFee,
@@ -71,7 +71,7 @@ const executeContract = async (execClient: RestClient, execPen: Secp256k1Pen, co
   };
   const account = (await execClient.authAccounts(faucetAddress)).result.value;
   const signBytes = makeSignBytes([instantiateContractMsg], defaultFee, networkId, memo, account);
-  const signature = encodeSecp256k1Signature(execPen.pubkey, await execPen.createSignature(signBytes));
+  const signature = await execPen.sign(signBytes);
   const signedTx = {
     msg: [instantiateContractMsg],
     fee: defaultFee,

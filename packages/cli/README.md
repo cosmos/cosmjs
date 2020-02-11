@@ -65,7 +65,7 @@ const sendTokensMsg: types.MsgSend = {
 };
 
 const signBytes = makeSignBytes([sendTokensMsg], defaultFee, defaultNetworkId, memo, account_number, sequence);
-const signature = encodeSecp256k1Signature(pen.pubkey, await pen.createSignature(signBytes));
+const signature = await pen.sign(signBytes);
 const signedTx: types.StdTx = {
     msg: [sendTokensMsg],
     fee: defaultFee,
