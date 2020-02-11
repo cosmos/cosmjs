@@ -62,6 +62,10 @@ export interface PostTxResult {
   readonly transactionHash: string;
 }
 
+export interface ExecuteResult {
+  readonly logs: readonly Log[];
+}
+
 export class CosmWasmClient {
   public static makeReadOnly(url: string): CosmWasmClient {
     return new CosmWasmClient(url);
@@ -197,7 +201,7 @@ export class CosmWasmClient {
     handleMsg: object,
     memo = "",
     transferAmount?: readonly Coin[],
-  ): Promise<{ readonly logs: readonly Log[] }> {
+  ): Promise<ExecuteResult> {
     const executeMsg: MsgExecuteContract = {
       type: "wasm/execute",
       value: {

@@ -12,6 +12,9 @@ export interface PostTxResult {
   readonly rawLog: string;
   readonly transactionHash: string;
 }
+export interface ExecuteResult {
+  readonly logs: readonly Log[];
+}
 export declare class CosmWasmClient {
   static makeReadOnly(url: string): CosmWasmClient;
   static makeWritable(url: string, senderAddress: string, signCallback: SigningCallback): CosmWasmClient;
@@ -41,7 +44,5 @@ export declare class CosmWasmClient {
     handleMsg: object,
     memo?: string,
     transferAmount?: readonly Coin[],
-  ): Promise<{
-    readonly logs: readonly Log[];
-  }>;
+  ): Promise<ExecuteResult>;
 }
