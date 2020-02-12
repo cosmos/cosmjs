@@ -234,8 +234,7 @@ export class CosmWasmConnection implements BlockchainConnection {
     try {
       // tslint:disable-next-line: deprecation
       const response = await this.restClient.txsById(id);
-      const chainId = this.chainId();
-      return this.parseAndPopulateTxResponseSigned(response, chainId);
+      return this.parseAndPopulateTxResponseSigned(response);
     } catch (error) {
       if (error.response.status === 404) {
         throw new Error("Transaction does not exist");
@@ -319,8 +318,7 @@ export class CosmWasmConnection implements BlockchainConnection {
       throw new Error("Unsupported query");
     }
 
-    const chainId = this.chainId();
-    return txs.map(tx => this.parseAndPopulateTxResponseUnsigned(tx, chainId));
+    return txs.map(tx => this.parseAndPopulateTxResponseUnsigned(tx));
   }
 
   public listenTx(
@@ -359,14 +357,13 @@ export class CosmWasmConnection implements BlockchainConnection {
 
   private parseAndPopulateTxResponseUnsigned(
     response: TxsResponse,
-    chainId: ChainId,
   ): ConfirmedTransaction<UnsignedTransaction> | FailedTransaction {
+    const chainId = this.chainId();
     return parseTxsResponseUnsigned(chainId, parseInt(response.height, 10), response, this.bankTokens);
   }
 
   private async parseAndPopulateTxResponseSigned(
     response: TxsResponse,
-    chainId: ChainId,
   ): Promise<ConfirmedAndSignedTransaction<UnsignedTransaction> | FailedTransaction> {
     const firstMsg = response.tx.value.msg.find(() => true);
     if (!firstMsg) throw new Error("Got transaction without a first message. What is going on here?");
@@ -392,6 +389,7 @@ export class CosmWasmConnection implements BlockchainConnection {
     const sequence = accountForHeight.result.value.sequence - 1;
     const nonce = accountToNonce(accountNumber, sequence);
 
+    const chainId = this.chainId();
     return parseTxsResponseSigned(chainId, parseInt(response.height, 10), nonce, response, this.bankTokens);
   }
 }
