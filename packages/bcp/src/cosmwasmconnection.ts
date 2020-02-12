@@ -368,21 +368,22 @@ export class CosmWasmConnection implements BlockchainConnection {
     const firstMsg = response.tx.value.msg.find(() => true);
     if (!firstMsg) throw new Error("Got transaction without a first message. What is going on here?");
 
-    let senderAddress: string;
+    // needed to get the (account_number, sequence) for the primary signature
+    let primarySignerAddress: string;
     if (types.isMsgSend(firstMsg)) {
-      senderAddress = firstMsg.value.from_address;
+      primarySignerAddress = firstMsg.value.from_address;
     } else if (
       types.isMsgStoreCode(firstMsg) ||
       types.isMsgInstantiateContract(firstMsg) ||
       types.isMsgExecuteContract(firstMsg)
     ) {
-      senderAddress = firstMsg.value.sender;
+      primarySignerAddress = firstMsg.value.sender;
     } else {
       throw new Error(`Got unsupported type of message: ${firstMsg.type}`);
     }
 
     // tslint:disable-next-line: deprecation
-    const accountForHeight = await this.restClient.authAccounts(senderAddress, response.height);
+    const accountForHeight = await this.restClient.authAccounts(primarySignerAddress, response.height);
     const accountNumber = accountForHeight.result.value.account_number;
     // this is technically not the proper sequence. maybe this causes issues for sig validation?
     // leaving for now unless it causes issues
