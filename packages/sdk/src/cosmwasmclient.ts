@@ -1,3 +1,4 @@
+import { Sha256 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
 
 import { makeSignBytes, marshalTx } from "./encoding";
@@ -5,6 +6,7 @@ import { findAttribute, Log, parseLogs } from "./logs";
 import { RestClient } from "./restclient";
 import {
   Coin,
+  CosmosSdkTx,
   MsgExecuteContract,
   MsgInstantiateContract,
   MsgStoreCode,
@@ -104,6 +106,16 @@ export class CosmWasmClient {
   public async chainId(): Promise<string> {
     const response = await this.restClient.nodeInfo();
     return response.node_info.network;
+  }
+
+  /**
+   * Returns a 32 byte upper-case hex transaction hash (typically used as the transaction ID)
+   */
+  public async getIdentifier(tx: CosmosSdkTx): Promise<string> {
+    // We consult the REST API because we don't have a local amino encoder
+    const bytes = await this.restClient.encodeTx(tx);
+    const hash = new Sha256(bytes).digest();
+    return Encoding.toHex(hash).toUpperCase();
   }
 
   /**
