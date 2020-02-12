@@ -13,8 +13,8 @@ import {
   parseSignedTx,
   parseTxsResponse,
 } from "./decode";
-import { chainId, nonce, signedTxJson, txId } from "./testdata.spec";
-import data from "./testdata/cosmoshub.json";
+import * as testdata from "./testdata.spec";
+import cosmoshub from "./testdata/cosmoshub.json";
 import { BankTokens } from "./types";
 
 const { fromBase64, fromHex } = Encoding;
@@ -28,7 +28,7 @@ describe("decode", () => {
     "1nUcIH0CLT0/nQ0mBTDrT6kMG20NY/PsH7P2gc4bpYNGLEYjBmdWevXUJouSE/9A/60QG9cYeqyTe5kFDeIPxQ==",
   );
   const defaultFullSignature = {
-    nonce: nonce,
+    nonce: testdata.nonce,
     pubkey: defaultPubkey,
     signature: defaultSignature,
   };
@@ -39,7 +39,7 @@ describe("decode", () => {
   };
   const defaultSendTransaction = {
     kind: "bcp/send" as const,
-    chainId: chainId,
+    chainId: testdata.chainId,
     sender: "cosmos1h806c7khnvmjlywdrkdgk2vrayy2mmvf9rxk2r" as Address,
     recipient: "cosmos1z7g5w84ynmjyg0kqpahdjqpj7yq34v3suckp0e" as Address,
     amount: defaultAmount,
@@ -107,7 +107,7 @@ describe("decode", () => {
         },
         signature: "1nUcIH0CLT0/nQ0mBTDrT6kMG20NY/PsH7P2gc4bpYNGLEYjBmdWevXUJouSE/9A/60QG9cYeqyTe5kFDeIPxQ==",
       };
-      expect(decodeFullSignature(fullSignature, nonce)).toEqual(defaultFullSignature);
+      expect(decodeFullSignature(fullSignature, testdata.nonce)).toEqual(defaultFullSignature);
     });
   });
 
@@ -136,7 +136,7 @@ describe("decode", () => {
           ],
         },
       };
-      expect(parseMsg(msg, chainId, defaultTokens)).toEqual(defaultSendTransaction);
+      expect(parseMsg(msg, testdata.chainId, defaultTokens)).toEqual(defaultSendTransaction);
     });
   });
 
@@ -155,9 +155,12 @@ describe("decode", () => {
     });
   });
 
+
   describe("parseSignedTx", () => {
     it("works", () => {
-      expect(parseSignedTx(data.tx.value, chainId, nonce, defaultTokens)).toEqual(signedTxJson);
+      expect(parseSignedTx(cosmoshub.tx.value, testdata.chainId, testdata.nonce, defaultTokens)).toEqual(
+        testdata.signedTxJson,
+      );
     });
   });
 
@@ -166,18 +169,20 @@ describe("decode", () => {
       const currentHeight = 2923;
       const txsResponse = {
         height: "2823",
-        txhash: txId,
+        txhash: testdata.txId,
         raw_log: '[{"msg_index":0,"success":true,"log":""}]',
-        tx: data.tx,
+        tx: cosmoshub.tx,
       };
       const expected = {
-        ...signedTxJson,
+        ...testdata.signedTxJson,
         height: 2823,
         confirmations: 101,
-        transactionId: txId,
+        transactionId: testdata.txId,
         log: '[{"msg_index":0,"success":true,"log":""}]',
       };
-      expect(parseTxsResponse(chainId, currentHeight, nonce, txsResponse, defaultTokens)).toEqual(expected);
+      expect(
+        parseTxsResponse(testdata.chainId, currentHeight, testdata.nonce, txsResponse, defaultTokens),
+      ).toEqual(expected);
     });
   });
 });
