@@ -20,7 +20,7 @@ export declare function coinToDecimal(tokens: BankTokens, coin: types.Coin): rea
 export declare function decodeAmount(tokens: BankTokens, coin: types.Coin): Amount;
 export declare function parseMsg(msg: types.Msg, chainId: ChainId, tokens: BankTokens): UnsignedTransaction;
 export declare function parseFee(fee: types.StdFee, tokens: BankTokens): Fee;
-export declare function parseTx(
+export declare function parseSignedTx(
   txValue: types.StdTx,
   chainId: ChainId,
   nonce: Nonce,

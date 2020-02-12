@@ -10,7 +10,7 @@ import {
   decodeSignature,
   parseFee,
   parseMsg,
-  parseTx,
+  parseSignedTx,
   parseTxsResponse,
 } from "./decode";
 import { chainId, nonce, signedTxJson, txId } from "./testdata.spec";
@@ -155,9 +155,9 @@ describe("decode", () => {
     });
   });
 
-  describe("parseTx", () => {
+  describe("parseSignedTx", () => {
     it("works", () => {
-      expect(parseTx(data.tx.value, chainId, nonce, defaultTokens)).toEqual(signedTxJson);
+      expect(parseSignedTx(data.tx.value, chainId, nonce, defaultTokens)).toEqual(signedTxJson);
     });
   });
 

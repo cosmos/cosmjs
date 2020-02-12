@@ -103,7 +103,7 @@ export function parseFee(fee: types.StdFee, tokens: BankTokens): Fee {
   };
 }
 
-export function parseTx(
+export function parseSignedTx(
   txValue: types.StdTx,
   chainId: ChainId,
   nonce: Nonce,
@@ -142,7 +142,7 @@ export function parseTxsResponse(
 ): ConfirmedAndSignedTransaction<UnsignedTransaction> {
   const height = parseInt(response.height, 10);
   return {
-    ...parseTx(response.tx.value, chainId, nonce, tokens),
+    ...parseSignedTx(response.tx.value, chainId, nonce, tokens),
     height: height,
     confirmations: currentHeight - height + 1,
     transactionId: response.txhash as TransactionId,
