@@ -51,32 +51,15 @@ interface ChainData {
 // poll every 0.5 seconds (block time 1s)
 const defaultPollInterval = 500;
 
-function buildQueryString({
-  height,
-  id,
-  maxHeight,
-  minHeight,
-  sentFromOrTo,
-  signedBy,
-  tags,
-}: TransactionQuery): string {
-  if ([maxHeight, minHeight, signedBy, tags].some(component => component !== undefined)) {
-    throw new Error("Transaction query by maxHeight, minHeight, signedBy or tags not yet supported");
-  }
-  const heightComponent = height !== undefined ? `tx.height=${height}` : null;
-  const hashComponent = id !== undefined ? `tx.hash=${id}` : null;
-  const sentFromOrToComponent = sentFromOrTo !== undefined ? `message.sender=${sentFromOrTo}` : null;
-  // TODO: Support senders and recipients
-  // const sentFromOrToComponent = sentFromOrTo !== undefined ? `transfer.recipient=${sentFromOrTo}` : null;
-  const components: readonly (string | null)[] = [heightComponent, hashComponent, sentFromOrToComponent];
-  return components.filter(Boolean).join("&");
-}
-
 export interface TokenConfiguration {
   /** Supported tokens of the Cosmos SDK bank module */
   readonly bankTokens: ReadonlyArray<BankToken & { readonly name: string }>;
   /** Smart contract based tokens (ERC20 compatible). Unset means empty array. */
   readonly erc20Tokens?: ReadonlyArray<Erc20Token & { readonly name: string }>;
+}
+
+function isDefined<X>(value: X | undefined): value is X {
+  return value !== undefined;
 }
 
 export class CosmWasmConnection implements BlockchainConnection {
@@ -300,15 +283,43 @@ export class CosmWasmConnection implements BlockchainConnection {
     };
   }
 
-  public async searchTx(
-    query: TransactionQuery,
-  ): Promise<readonly (ConfirmedTransaction<UnsignedTransaction> | FailedTransaction)[]> {
-    const queryString = buildQueryString(query);
+  public async searchTx({
+    height,
+    id,
+    maxHeight,
+    minHeight,
+    sentFromOrTo,
+    signedBy,
+    tags,
+  }: TransactionQuery): Promise<readonly (ConfirmedTransaction<UnsignedTransaction> | FailedTransaction)[]> {
+    if ([signedBy, tags].some(isDefined)) {
+      throw new Error("Transaction query by signedBy or tags not yet supported");
+    }
+
+    if ([maxHeight, minHeight].some(isDefined)) {
+      throw new Error(
+        "Transaction query by minHeight/maxHeight not yet supported. This is due to missing flexibility of the Gaia REST API, see https://github.com/cosmos/gaia/issues/75",
+      );
+    }
+
+    if ([id, height, sentFromOrTo].filter(isDefined).length !== 1) {
+      throw new Error(
+        "Transaction query by id, height and sentFromOrTo is mutually exclusive. Exactly one must be set.",
+      );
+    }
+
+    let txs: readonly TxsResponse[];
+    if (id) {
+      txs = await this.cosmWasmClient.searchTx({ id: id });
+    } else if (height) {
+      txs = await this.cosmWasmClient.searchTx({ height: height });
+    } else if (sentFromOrTo) {
+      txs = await this.cosmWasmClient.searchTx({ sentFromOrTo: sentFromOrTo });
+    } else {
+      throw new Error("Unsupported query");
+    }
+
     const chainId = this.chainId();
-    // TODO: we need pagination support
-    // tslint:disable-next-line: deprecation
-    const response = await this.restClient.txs(queryString + "&limit=50");
-    const { txs } = response;
     return Promise.all(txs.map(tx => this.parseAndPopulateTxResponse(tx, chainId)));
   }
 

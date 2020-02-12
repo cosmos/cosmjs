@@ -3,7 +3,7 @@ import { Encoding } from "@iov/encoding";
 
 import { makeSignBytes, marshalTx } from "./encoding";
 import { findAttribute, Log, parseLogs } from "./logs";
-import { RestClient } from "./restclient";
+import { RestClient, TxsResponse } from "./restclient";
 import {
   Coin,
   CosmosSdkTx,
@@ -63,6 +63,32 @@ export interface PostTxResult {
   readonly rawLog: string;
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-exmpty upper-case hex */
   readonly transactionHash: string;
+}
+
+export interface SearchByIdQuery {
+  readonly id: string;
+}
+
+export interface SearchByHeightQuery {
+  readonly height: number;
+}
+
+export interface SearchBySentFromOrToQuery {
+  readonly sentFromOrTo: string;
+}
+
+export type SearchTxQuery = SearchByIdQuery | SearchByHeightQuery | SearchBySentFromOrToQuery;
+
+function isSearchByIdQuery(query: SearchTxQuery): query is SearchByIdQuery {
+  return (query as SearchByIdQuery).id !== undefined;
+}
+
+function isSearchByHeightQuery(query: SearchTxQuery): query is SearchByHeightQuery {
+  return (query as SearchByHeightQuery).height !== undefined;
+}
+
+function isSearchBySentFromOrToQuery(query: SearchTxQuery): query is SearchBySentFromOrToQuery {
+  return (query as SearchBySentFromOrToQuery).sentFromOrTo !== undefined;
 }
 
 export interface ExecuteResult {
@@ -129,6 +155,27 @@ export class CosmWasmClient {
       accountNumber: account.account_number,
       sequence: account.sequence,
     };
+  }
+
+  public async searchTx(query: SearchTxQuery): Promise<readonly TxsResponse[]> {
+    // TODO: we need proper pagination support
+    function limited(originalQuery: string): string {
+      return `${originalQuery}&limit=75`;
+    }
+
+    if (isSearchByIdQuery(query)) {
+      return [await this.restClient.txsById(query.id)];
+    } else if (isSearchByHeightQuery(query)) {
+      return (await this.restClient.txs(`tx.height=${query.height}`)).txs;
+    } else if (isSearchBySentFromOrToQuery(query)) {
+      // We cannot get both in one request (see https://github.com/cosmos/gaia/issues/75)
+      const sent = (await this.restClient.txs(limited(`message.sender=${query.sentFromOrTo}`))).txs;
+      const received = (await this.restClient.txs(limited(`transfer.recipient=${query.sentFromOrTo}`))).txs;
+      const sentHashes = sent.map(t => t.txhash);
+      return [...sent, ...received.filter(t => !sentHashes.includes(t.txhash))];
+    } else {
+      throw new Error("Unknown query type");
+    }
   }
 
   public async postTx(tx: Uint8Array): Promise<PostTxResult> {

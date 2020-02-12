@@ -6,7 +6,16 @@ export { unmarshalTx } from "./decoding";
 export { makeSignBytes, marshalTx } from "./encoding";
 export { RestClient, TxsResponse } from "./restclient";
 export { encodeSecp256k1Signature } from "./signature";
-export { CosmWasmClient, ExecuteResult, GetNonceResult, PostTxResult } from "./cosmwasmclient";
+export {
+  CosmWasmClient,
+  ExecuteResult,
+  GetNonceResult,
+  PostTxResult,
+  SearchByHeightQuery,
+  SearchByIdQuery,
+  SearchBySentFromOrToQuery,
+  SearchTxQuery,
+} from "./cosmwasmclient";
 export { makeCosmoshubPath, Pen, PrehashType, Secp256k1Pen } from "./pen";
 export {
   CosmosPubkeyBech32Prefix,
