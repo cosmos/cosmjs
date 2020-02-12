@@ -23,7 +23,7 @@ import {
 
 import { pubkeyToAddress } from "./address";
 import { Caip5 } from "./caip5";
-import { parseTx } from "./decode";
+import { parseSignedTx } from "./decode";
 import { buildSignedTx, buildUnsignedTx } from "./encode";
 import { BankTokens, Erc20Token, nonceToAccountNumber, nonceToSequence } from "./types";
 
@@ -81,7 +81,7 @@ export class CosmWasmCodec implements TxCodec {
       throw new Error("Nonce is required");
     }
     const parsed = unmarshalTx(bytes);
-    return parseTx(parsed, chainId, nonce, this.bankTokens);
+    return parseSignedTx(parsed, chainId, nonce, this.bankTokens);
   }
 
   public identityToAddress(identity: Identity): Address {

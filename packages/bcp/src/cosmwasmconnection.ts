@@ -38,7 +38,7 @@ import { Stream } from "xstream";
 
 import { decodeCosmosPubkey, pubkeyToAddress } from "./address";
 import { Caip5 } from "./caip5";
-import { decodeAmount, parseTxsResponse } from "./decode";
+import { decodeAmount, parseTxsResponseSigned, parseTxsResponseUnsigned } from "./decode";
 import { buildSignedTx } from "./encode";
 import { accountToNonce, BankToken, Erc20Token } from "./types";
 
@@ -234,8 +234,7 @@ export class CosmWasmConnection implements BlockchainConnection {
     try {
       // tslint:disable-next-line: deprecation
       const response = await this.restClient.txsById(id);
-      const chainId = this.chainId();
-      return this.parseAndPopulateTxResponse(response, chainId);
+      return this.parseAndPopulateTxResponseSigned(response);
     } catch (error) {
       if (error.response.status === 404) {
         throw new Error("Transaction does not exist");
@@ -319,8 +318,7 @@ export class CosmWasmConnection implements BlockchainConnection {
       throw new Error("Unsupported query");
     }
 
-    const chainId = this.chainId();
-    return Promise.all(txs.map(tx => this.parseAndPopulateTxResponse(tx, chainId)));
+    return txs.map(tx => this.parseAndPopulateTxResponseUnsigned(tx));
   }
 
   public listenTx(
@@ -357,34 +355,42 @@ export class CosmWasmConnection implements BlockchainConnection {
     };
   }
 
-  private async parseAndPopulateTxResponse(
+  private parseAndPopulateTxResponseUnsigned(
     response: TxsResponse,
-    chainId: ChainId,
+  ): ConfirmedTransaction<UnsignedTransaction> | FailedTransaction {
+    const chainId = this.chainId();
+    return parseTxsResponseUnsigned(chainId, parseInt(response.height, 10), response, this.bankTokens);
+  }
+
+  private async parseAndPopulateTxResponseSigned(
+    response: TxsResponse,
   ): Promise<ConfirmedAndSignedTransaction<UnsignedTransaction> | FailedTransaction> {
     const firstMsg = response.tx.value.msg.find(() => true);
     if (!firstMsg) throw new Error("Got transaction without a first message. What is going on here?");
 
-    let senderAddress: string;
+    // needed to get the (account_number, sequence) for the primary signature
+    let primarySignerAddress: string;
     if (types.isMsgSend(firstMsg)) {
-      senderAddress = firstMsg.value.from_address;
+      primarySignerAddress = firstMsg.value.from_address;
     } else if (
       types.isMsgStoreCode(firstMsg) ||
       types.isMsgInstantiateContract(firstMsg) ||
       types.isMsgExecuteContract(firstMsg)
     ) {
-      senderAddress = firstMsg.value.sender;
+      primarySignerAddress = firstMsg.value.sender;
     } else {
       throw new Error(`Got unsupported type of message: ${firstMsg.type}`);
     }
 
     // tslint:disable-next-line: deprecation
-    const accountForHeight = await this.restClient.authAccounts(senderAddress, response.height);
+    const accountForHeight = await this.restClient.authAccounts(primarySignerAddress, response.height);
     const accountNumber = accountForHeight.result.value.account_number;
     // this is technically not the proper sequence. maybe this causes issues for sig validation?
     // leaving for now unless it causes issues
     const sequence = accountForHeight.result.value.sequence - 1;
     const nonce = accountToNonce(accountNumber, sequence);
 
-    return parseTxsResponse(chainId, parseInt(response.height, 10), nonce, response, this.bankTokens);
+    const chainId = this.chainId();
+    return parseTxsResponseSigned(chainId, parseInt(response.height, 10), nonce, response, this.bankTokens);
   }
 }

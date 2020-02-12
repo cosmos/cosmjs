@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { types } from "@cosmwasm/sdk";
-import { Address, Algorithm, TokenTicker } from "@iov/bcp";
+import { Address, Algorithm, SendTransaction, TokenTicker } from "@iov/bcp";
 import { Encoding } from "@iov/encoding";
 
 import {
@@ -10,11 +10,13 @@ import {
   decodeSignature,
   parseFee,
   parseMsg,
-  parseTx,
-  parseTxsResponse,
+  parseSignedTx,
+  parseTxsResponseSigned,
+  parseTxsResponseUnsigned,
+  parseUnsignedTx,
 } from "./decode";
-import { chainId, nonce, signedTxJson, txId } from "./testdata.spec";
-import data from "./testdata/cosmoshub.json";
+import * as testdata from "./testdata.spec";
+import cosmoshub from "./testdata/cosmoshub.json";
 import { BankTokens } from "./types";
 
 const { fromBase64, fromHex } = Encoding;
@@ -28,7 +30,7 @@ describe("decode", () => {
     "1nUcIH0CLT0/nQ0mBTDrT6kMG20NY/PsH7P2gc4bpYNGLEYjBmdWevXUJouSE/9A/60QG9cYeqyTe5kFDeIPxQ==",
   );
   const defaultFullSignature = {
-    nonce: nonce,
+    nonce: testdata.nonce,
     pubkey: defaultPubkey,
     signature: defaultSignature,
   };
@@ -37,12 +39,14 @@ describe("decode", () => {
     quantity: "11657995",
     tokenTicker: "ATOM" as TokenTicker,
   };
-  const defaultSendTransaction = {
-    kind: "bcp/send" as const,
-    chainId: chainId,
+  const defaultMemo = "Best greetings";
+  const defaultSendTransaction: SendTransaction = {
+    kind: "bcp/send",
+    chainId: testdata.chainId,
     sender: "cosmos1h806c7khnvmjlywdrkdgk2vrayy2mmvf9rxk2r" as Address,
     recipient: "cosmos1z7g5w84ynmjyg0kqpahdjqpj7yq34v3suckp0e" as Address,
     amount: defaultAmount,
+    memo: defaultMemo,
   };
   const defaultFee = {
     tokens: {
@@ -107,7 +111,7 @@ describe("decode", () => {
         },
         signature: "1nUcIH0CLT0/nQ0mBTDrT6kMG20NY/PsH7P2gc4bpYNGLEYjBmdWevXUJouSE/9A/60QG9cYeqyTe5kFDeIPxQ==",
       };
-      expect(decodeFullSignature(fullSignature, nonce)).toEqual(defaultFullSignature);
+      expect(decodeFullSignature(fullSignature, testdata.nonce)).toEqual(defaultFullSignature);
     });
   });
 
@@ -136,7 +140,7 @@ describe("decode", () => {
           ],
         },
       };
-      expect(parseMsg(msg, chainId, defaultTokens)).toEqual(defaultSendTransaction);
+      expect(parseMsg(msg, defaultMemo, testdata.chainId, defaultTokens)).toEqual(defaultSendTransaction);
     });
   });
 
@@ -155,29 +159,63 @@ describe("decode", () => {
     });
   });
 
-  describe("parseTx", () => {
+  describe("parseUnsignedTx", () => {
     it("works", () => {
-      expect(parseTx(data.tx.value, chainId, nonce, defaultTokens)).toEqual(signedTxJson);
+      expect(parseUnsignedTx(cosmoshub.tx.value, testdata.chainId, defaultTokens)).toEqual(
+        testdata.sendTxJson,
+      );
     });
   });
 
-  describe("parseTxsResponse", () => {
+  describe("parseSignedTx", () => {
+    it("works", () => {
+      expect(parseSignedTx(cosmoshub.tx.value, testdata.chainId, testdata.nonce, defaultTokens)).toEqual(
+        testdata.signedTxJson,
+      );
+    });
+  });
+
+  describe("parseTxsResponseUnsigned", () => {
     it("works", () => {
       const currentHeight = 2923;
       const txsResponse = {
         height: "2823",
-        txhash: txId,
+        txhash: testdata.txId,
         raw_log: '[{"msg_index":0,"success":true,"log":""}]',
-        tx: data.tx,
+        tx: cosmoshub.tx,
       };
       const expected = {
-        ...signedTxJson,
+        transaction: testdata.sendTxJson,
         height: 2823,
         confirmations: 101,
-        transactionId: txId,
+        transactionId: testdata.txId,
         log: '[{"msg_index":0,"success":true,"log":""}]',
       };
-      expect(parseTxsResponse(chainId, currentHeight, nonce, txsResponse, defaultTokens)).toEqual(expected);
+      expect(parseTxsResponseUnsigned(testdata.chainId, currentHeight, txsResponse, defaultTokens)).toEqual(
+        expected,
+      );
+    });
+  });
+
+  describe("parseTxsResponseSigned", () => {
+    it("works", () => {
+      const currentHeight = 2923;
+      const txsResponse = {
+        height: "2823",
+        txhash: testdata.txId,
+        raw_log: '[{"msg_index":0,"success":true,"log":""}]',
+        tx: cosmoshub.tx,
+      };
+      const expected = {
+        ...testdata.signedTxJson,
+        height: 2823,
+        confirmations: 101,
+        transactionId: testdata.txId,
+        log: '[{"msg_index":0,"success":true,"log":""}]',
+      };
+      expect(
+        parseTxsResponseSigned(testdata.chainId, currentHeight, testdata.nonce, txsResponse, defaultTokens),
+      ).toEqual(expected);
     });
   });
 });

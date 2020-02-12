@@ -5,6 +5,7 @@ import {
   Amount,
   ChainId,
   ConfirmedAndSignedTransaction,
+  ConfirmedTransaction,
   Fee,
   FullSignature,
   Nonce,
@@ -70,7 +71,12 @@ export function decodeAmount(tokens: BankTokens, coin: types.Coin): Amount {
   };
 }
 
-export function parseMsg(msg: types.Msg, chainId: ChainId, tokens: BankTokens): UnsignedTransaction {
+export function parseMsg(
+  msg: types.Msg,
+  memo: string | undefined,
+  chainId: ChainId,
+  tokens: BankTokens,
+): UnsignedTransaction {
   if (types.isMsgSend(msg)) {
     if (msg.value.amount.length !== 1) {
       throw new Error("Only MsgSend with one amount is supported");
@@ -81,6 +87,7 @@ export function parseMsg(msg: types.Msg, chainId: ChainId, tokens: BankTokens): 
       sender: msg.value.from_address as Address,
       recipient: msg.value.to_address as Address,
       amount: decodeAmount(tokens, msg.value.amount[0]),
+      memo: memo,
     };
     return send;
   } else {
@@ -103,12 +110,11 @@ export function parseFee(fee: types.StdFee, tokens: BankTokens): Fee {
   };
 }
 
-export function parseTx(
+export function parseUnsignedTx(
   txValue: types.StdTx,
   chainId: ChainId,
-  nonce: Nonce,
   tokens: BankTokens,
-): SignedTransaction {
+): UnsignedTransaction {
   if (!types.isStdTx(txValue)) {
     throw new Error("Only StdTx is supported");
   }
@@ -116,24 +122,46 @@ export function parseTx(
     throw new Error("Only single-message transactions currently supported");
   }
 
-  const [primarySignature] = txValue.signatures.map(signature => decodeFullSignature(signature, nonce));
-  const msg = parseMsg(txValue.msg[0], chainId, tokens);
+  const msg = parseMsg(txValue.msg[0], txValue.memo, chainId, tokens);
   const fee = parseFee(txValue.fee, tokens);
 
-  const transaction = {
+  return {
     ...msg,
     chainId: chainId,
-    memo: txValue.memo,
     fee: fee,
   };
+}
 
+export function parseSignedTx(
+  txValue: types.StdTx,
+  chainId: ChainId,
+  nonce: Nonce,
+  tokens: BankTokens,
+): SignedTransaction {
+  const [primarySignature] = txValue.signatures.map(signature => decodeFullSignature(signature, nonce));
   return {
-    transaction: transaction,
+    transaction: parseUnsignedTx(txValue, chainId, tokens),
     signatures: [primarySignature],
   };
 }
 
-export function parseTxsResponse(
+export function parseTxsResponseUnsigned(
+  chainId: ChainId,
+  currentHeight: number,
+  response: TxsResponse,
+  tokens: BankTokens,
+): ConfirmedTransaction<UnsignedTransaction> {
+  const height = parseInt(response.height, 10);
+  return {
+    transaction: parseUnsignedTx(response.tx.value, chainId, tokens),
+    height: height,
+    confirmations: currentHeight - height + 1,
+    transactionId: response.txhash as TransactionId,
+    log: response.raw_log,
+  };
+}
+
+export function parseTxsResponseSigned(
   chainId: ChainId,
   currentHeight: number,
   nonce: Nonce,
@@ -142,7 +170,7 @@ export function parseTxsResponse(
 ): ConfirmedAndSignedTransaction<UnsignedTransaction> {
   const height = parseInt(response.height, 10);
   return {
-    ...parseTx(response.tx.value, chainId, nonce, tokens),
+    ...parseSignedTx(response.tx.value, chainId, nonce, tokens),
     height: height,
     confirmations: currentHeight - height + 1,
     transactionId: response.txhash as TransactionId,

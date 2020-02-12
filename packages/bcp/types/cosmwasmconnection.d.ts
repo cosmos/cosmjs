@@ -85,5 +85,6 @@ export declare class CosmWasmConnection implements BlockchainConnection {
   liveTx(_query: TransactionQuery): Stream<ConfirmedTransaction<UnsignedTransaction> | FailedTransaction>;
   getFeeQuote(tx: UnsignedTransaction): Promise<Fee>;
   withDefaultFee<T extends UnsignedTransaction>(tx: T): Promise<T>;
-  private parseAndPopulateTxResponse;
+  private parseAndPopulateTxResponseUnsigned;
+  private parseAndPopulateTxResponseSigned;
 }
