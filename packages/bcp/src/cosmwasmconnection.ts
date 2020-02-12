@@ -29,7 +29,6 @@ import {
   TransactionState,
   UnsignedTransaction,
 } from "@iov/bcp";
-import { Sha256 } from "@iov/crypto";
 import { Encoding, Uint53 } from "@iov/encoding";
 import { DefaultValueProducer, ValueAndUpdates } from "@iov/stream";
 import BN from "bn.js";
@@ -43,7 +42,7 @@ import { decodeAmount, parseTxsResponse } from "./decode";
 import { buildSignedTx } from "./encode";
 import { accountToNonce, BankToken, Erc20Token } from "./types";
 
-const { fromAscii, toHex } = Encoding;
+const { fromAscii } = Encoding;
 
 interface ChainData {
   readonly chainId: ChainId;
@@ -163,10 +162,8 @@ export class CosmWasmConnection implements BlockchainConnection {
    */
   public async identifier(signed: SignedTransaction): Promise<TransactionId> {
     const tx = buildSignedTx(signed, this.bankTokens, this.erc20Tokens);
-    // tslint:disable-next-line: deprecation
-    const bytes = await this.restClient.encodeTx(tx);
-    const hash = new Sha256(bytes).digest();
-    return toHex(hash).toUpperCase() as TransactionId;
+    const id = await this.cosmWasmClient.getIdentifier(tx);
+    return id as TransactionId;
   }
 
   public async getAccount(query: AccountQuery): Promise<Account | undefined> {
