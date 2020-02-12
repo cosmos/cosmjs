@@ -231,15 +231,14 @@ export class CosmWasmConnection implements BlockchainConnection {
   public async getTx(
     id: TransactionId,
   ): Promise<ConfirmedAndSignedTransaction<UnsignedTransaction> | FailedTransaction> {
-    try {
-      // tslint:disable-next-line: deprecation
-      const response = await this.restClient.txsById(id);
-      return this.parseAndPopulateTxResponseSigned(response);
-    } catch (error) {
-      if (error.response.status === 404) {
+    const results = await this.cosmWasmClient.searchTx({ id: id });
+    switch (results.length) {
+      case 0:
         throw new Error("Transaction does not exist");
-      }
-      throw error;
+      case 1:
+        return this.parseAndPopulateTxResponseSigned(results[0]);
+      default:
+        throw new Error("Got unexpected amount of search results");
     }
   }
 

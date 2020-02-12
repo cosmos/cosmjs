@@ -10,6 +10,7 @@ import {
   PubkeyBytes,
   SendTransaction,
   TokenTicker,
+  TransactionId,
   TransactionState,
 } from "@iov/bcp";
 import { Random, Secp256k1 } from "@iov/crypto";
@@ -260,6 +261,21 @@ describe("CosmWasmConnection", () => {
       const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
       const account = await connection.getAccount({ address: faucetAccount.address });
       expect(account?.pubkey).toEqual(faucetAccount.pubkey);
+      connection.disconnect();
+    });
+  });
+
+  describe("getTx", () => {
+    it("throws for non-existent transaction", async () => {
+      pendingWithoutCosmos();
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+
+      const nonExistentId = "0000000000000000000000000000000000000000000000000000000000000000" as TransactionId;
+      await connection.getTx(nonExistentId).then(
+        () => fail("this must not succeed"),
+        error => expect(error).toMatch(/transaction does not exist/i),
+      );
+
       connection.disconnect();
     });
   });
