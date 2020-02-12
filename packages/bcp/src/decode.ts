@@ -5,6 +5,7 @@ import {
   Amount,
   ChainId,
   ConfirmedAndSignedTransaction,
+  ConfirmedTransaction,
   Fee,
   FullSignature,
   Nonce,
@@ -144,7 +145,23 @@ export function parseSignedTx(
   };
 }
 
-export function parseTxsResponse(
+export function parseTxsResponseUnsigned(
+  chainId: ChainId,
+  currentHeight: number,
+  response: TxsResponse,
+  tokens: BankTokens,
+): ConfirmedTransaction<UnsignedTransaction> {
+  const height = parseInt(response.height, 10);
+  return {
+    transaction: parseUnsignedTx(response.tx.value, chainId, tokens),
+    height: height,
+    confirmations: currentHeight - height + 1,
+    transactionId: response.txhash as TransactionId,
+    log: response.raw_log,
+  };
+}
+
+export function parseTxsResponseSigned(
   chainId: ChainId,
   currentHeight: number,
   nonce: Nonce,

@@ -11,7 +11,8 @@ import {
   parseFee,
   parseMsg,
   parseSignedTx,
-  parseTxsResponse,
+  parseTxsResponseSigned,
+  parseTxsResponseUnsigned,
   parseUnsignedTx,
 } from "./decode";
 import * as testdata from "./testdata.spec";
@@ -174,7 +175,29 @@ describe("decode", () => {
     });
   });
 
-  describe("parseTxsResponse", () => {
+  describe("parseTxsResponseUnsigned", () => {
+    it("works", () => {
+      const currentHeight = 2923;
+      const txsResponse = {
+        height: "2823",
+        txhash: testdata.txId,
+        raw_log: '[{"msg_index":0,"success":true,"log":""}]',
+        tx: cosmoshub.tx,
+      };
+      const expected = {
+        transaction: testdata.sendTxJson,
+        height: 2823,
+        confirmations: 101,
+        transactionId: testdata.txId,
+        log: '[{"msg_index":0,"success":true,"log":""}]',
+      };
+      expect(parseTxsResponseUnsigned(testdata.chainId, currentHeight, txsResponse, defaultTokens)).toEqual(
+        expected,
+      );
+    });
+  });
+
+  describe("parseTxsResponseSigned", () => {
     it("works", () => {
       const currentHeight = 2923;
       const txsResponse = {
@@ -191,7 +214,7 @@ describe("decode", () => {
         log: '[{"msg_index":0,"success":true,"log":""}]',
       };
       expect(
-        parseTxsResponse(testdata.chainId, currentHeight, testdata.nonce, txsResponse, defaultTokens),
+        parseTxsResponseSigned(testdata.chainId, currentHeight, testdata.nonce, txsResponse, defaultTokens),
       ).toEqual(expected);
     });
   });

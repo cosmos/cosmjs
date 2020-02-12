@@ -3,6 +3,7 @@ import {
   Amount,
   ChainId,
   ConfirmedAndSignedTransaction,
+  ConfirmedTransaction,
   Fee,
   FullSignature,
   Nonce,
@@ -36,7 +37,13 @@ export declare function parseSignedTx(
   nonce: Nonce,
   tokens: BankTokens,
 ): SignedTransaction;
-export declare function parseTxsResponse(
+export declare function parseTxsResponseUnsigned(
+  chainId: ChainId,
+  currentHeight: number,
+  response: TxsResponse,
+  tokens: BankTokens,
+): ConfirmedTransaction<UnsignedTransaction>;
+export declare function parseTxsResponseSigned(
   chainId: ChainId,
   currentHeight: number,
   nonce: Nonce,

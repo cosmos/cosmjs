@@ -38,7 +38,7 @@ import { Stream } from "xstream";
 
 import { decodeCosmosPubkey, pubkeyToAddress } from "./address";
 import { Caip5 } from "./caip5";
-import { decodeAmount, parseTxsResponse } from "./decode";
+import { decodeAmount, parseTxsResponseSigned } from "./decode";
 import { buildSignedTx } from "./encode";
 import { accountToNonce, BankToken, Erc20Token } from "./types";
 
@@ -385,6 +385,6 @@ export class CosmWasmConnection implements BlockchainConnection {
     const sequence = accountForHeight.result.value.sequence - 1;
     const nonce = accountToNonce(accountNumber, sequence);
 
-    return parseTxsResponse(chainId, parseInt(response.height, 10), nonce, response, this.bankTokens);
+    return parseTxsResponseSigned(chainId, parseInt(response.height, 10), nonce, response, this.bankTokens);
   }
 }
