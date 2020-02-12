@@ -38,7 +38,7 @@ import { Stream } from "xstream";
 
 import { decodeCosmosPubkey, pubkeyToAddress } from "./address";
 import { Caip5 } from "./caip5";
-import { decodeAmount, parseTxsResponseSigned } from "./decode";
+import { decodeAmount, parseTxsResponseSigned, parseTxsResponseUnsigned } from "./decode";
 import { buildSignedTx } from "./encode";
 import { accountToNonce, BankToken, Erc20Token } from "./types";
 
@@ -235,7 +235,7 @@ export class CosmWasmConnection implements BlockchainConnection {
       // tslint:disable-next-line: deprecation
       const response = await this.restClient.txsById(id);
       const chainId = this.chainId();
-      return this.parseAndPopulateTxResponse(response, chainId);
+      return this.parseAndPopulateTxResponseSigned(response, chainId);
     } catch (error) {
       if (error.response.status === 404) {
         throw new Error("Transaction does not exist");
@@ -320,7 +320,7 @@ export class CosmWasmConnection implements BlockchainConnection {
     }
 
     const chainId = this.chainId();
-    return Promise.all(txs.map(tx => this.parseAndPopulateTxResponse(tx, chainId)));
+    return txs.map(tx => this.parseAndPopulateTxResponseUnsigned(tx, chainId));
   }
 
   public listenTx(
@@ -357,7 +357,14 @@ export class CosmWasmConnection implements BlockchainConnection {
     };
   }
 
-  private async parseAndPopulateTxResponse(
+  private parseAndPopulateTxResponseUnsigned(
+    response: TxsResponse,
+    chainId: ChainId,
+  ): ConfirmedTransaction<UnsignedTransaction> | FailedTransaction {
+    return parseTxsResponseUnsigned(chainId, parseInt(response.height, 10), response, this.bankTokens);
+  }
+
+  private async parseAndPopulateTxResponseSigned(
     response: TxsResponse,
     chainId: ChainId,
   ): Promise<ConfirmedAndSignedTransaction<UnsignedTransaction> | FailedTransaction> {
