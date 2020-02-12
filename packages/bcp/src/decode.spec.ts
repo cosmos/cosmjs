@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { types } from "@cosmwasm/sdk";
-import { Address, Algorithm, TokenTicker } from "@iov/bcp";
+import { Address, Algorithm, SendTransaction, TokenTicker } from "@iov/bcp";
 import { Encoding } from "@iov/encoding";
 
 import {
@@ -37,12 +37,14 @@ describe("decode", () => {
     quantity: "11657995",
     tokenTicker: "ATOM" as TokenTicker,
   };
-  const defaultSendTransaction = {
-    kind: "bcp/send" as const,
+  const defaultMemo = "Best greetings";
+  const defaultSendTransaction: SendTransaction = {
+    kind: "bcp/send",
     chainId: testdata.chainId,
     sender: "cosmos1h806c7khnvmjlywdrkdgk2vrayy2mmvf9rxk2r" as Address,
     recipient: "cosmos1z7g5w84ynmjyg0kqpahdjqpj7yq34v3suckp0e" as Address,
     amount: defaultAmount,
+    memo: defaultMemo,
   };
   const defaultFee = {
     tokens: {
@@ -136,7 +138,7 @@ describe("decode", () => {
           ],
         },
       };
-      expect(parseMsg(msg, testdata.chainId, defaultTokens)).toEqual(defaultSendTransaction);
+      expect(parseMsg(msg, defaultMemo, testdata.chainId, defaultTokens)).toEqual(defaultSendTransaction);
     });
   });
 
@@ -154,7 +156,6 @@ describe("decode", () => {
       expect(parseFee(fee, defaultTokens)).toEqual(defaultFee);
     });
   });
-
 
   describe("parseSignedTx", () => {
     it("works", () => {

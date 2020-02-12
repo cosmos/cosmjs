@@ -70,7 +70,12 @@ export function decodeAmount(tokens: BankTokens, coin: types.Coin): Amount {
   };
 }
 
-export function parseMsg(msg: types.Msg, chainId: ChainId, tokens: BankTokens): UnsignedTransaction {
+export function parseMsg(
+  msg: types.Msg,
+  memo: string | undefined,
+  chainId: ChainId,
+  tokens: BankTokens,
+): UnsignedTransaction {
   if (types.isMsgSend(msg)) {
     if (msg.value.amount.length !== 1) {
       throw new Error("Only MsgSend with one amount is supported");
@@ -81,6 +86,7 @@ export function parseMsg(msg: types.Msg, chainId: ChainId, tokens: BankTokens): 
       sender: msg.value.from_address as Address,
       recipient: msg.value.to_address as Address,
       amount: decodeAmount(tokens, msg.value.amount[0]),
+      memo: memo,
     };
     return send;
   } else {
@@ -117,13 +123,12 @@ export function parseSignedTx(
   }
 
   const [primarySignature] = txValue.signatures.map(signature => decodeFullSignature(signature, nonce));
-  const msg = parseMsg(txValue.msg[0], chainId, tokens);
+  const msg = parseMsg(txValue.msg[0], txValue.memo, chainId, tokens);
   const fee = parseFee(txValue.fee, tokens);
 
-  const transaction = {
+  const transaction: UnsignedTransaction = {
     ...msg,
     chainId: chainId,
-    memo: txValue.memo,
     fee: fee,
   };
 
