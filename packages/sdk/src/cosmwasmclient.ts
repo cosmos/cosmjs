@@ -164,7 +164,7 @@ export class CosmWasmClient {
     }
 
     if (isSearchByIdQuery(query)) {
-      return [await this.restClient.txsById(query.id)];
+      return (await this.restClient.txs(`tx.hash=${query.id}`)).txs;
     } else if (isSearchByHeightQuery(query)) {
       return (await this.restClient.txs(`tx.height=${query.height}`)).txs;
     } else if (isSearchBySentFromOrToQuery(query)) {

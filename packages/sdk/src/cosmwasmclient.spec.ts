@@ -202,6 +202,14 @@ describe("CosmWasmClient", () => {
       );
     });
 
+    it("can search by ID (non existent)", async () => {
+      pendingWithoutCosmos();
+      const client = CosmWasmClient.makeReadOnly(httpUrl);
+      const nonExistentId = "0000000000000000000000000000000000000000000000000000000000000000";
+      const result = await client.searchTx({ id: nonExistentId });
+      expect(result.length).toEqual(0);
+    });
+
     it("can search by height", async () => {
       pendingWithoutCosmos();
       assert(posted, "value must be set in beforeAll()");
