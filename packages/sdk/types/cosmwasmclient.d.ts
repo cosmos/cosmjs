@@ -1,4 +1,5 @@
 import { Log } from "./logs";
+import { TxsResponse } from "./restclient";
 import { Coin, CosmosSdkTx, StdSignature } from "./types";
 export interface SigningCallback {
   (signBytes: Uint8Array): Promise<StdSignature>;
@@ -13,6 +14,16 @@ export interface PostTxResult {
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-exmpty upper-case hex */
   readonly transactionHash: string;
 }
+export interface SearchByIdQuery {
+  readonly id: string;
+}
+export interface SearchByHeightQuery {
+  readonly height: number;
+}
+export interface SearchBySentFromOrToQuery {
+  readonly sentFromOrTo: string;
+}
+export declare type SearchTxQuery = SearchByIdQuery | SearchByHeightQuery | SearchBySentFromOrToQuery;
 export interface ExecuteResult {
   readonly logs: readonly Log[];
 }
@@ -35,6 +46,7 @@ export declare class CosmWasmClient {
    * @param address returns data for this address. When unset, the client's sender adddress is used.
    */
   getNonce(address?: string): Promise<GetNonceResult>;
+  searchTx(query: SearchTxQuery): Promise<readonly TxsResponse[]>;
   postTx(tx: Uint8Array): Promise<PostTxResult>;
   /** Uploads code and returns a code ID */
   upload(wasmCode: Uint8Array, memo?: string): Promise<number>;

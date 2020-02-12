@@ -1,3 +1,5 @@
+import { assert } from "@iov/utils";
+
 import { CosmWasmClient } from "./cosmwasmclient";
 import { makeSignBytes, marshalTx } from "./encoding";
 import { findAttribute } from "./logs";
@@ -5,7 +7,7 @@ import { Secp256k1Pen } from "./pen";
 import { RestClient } from "./restclient";
 import cosmoshub from "./testdata/cosmoshub.json";
 import { getRandomizedHackatom, makeRandomAddress } from "./testutils.spec";
-import { Coin, MsgSend, StdFee } from "./types";
+import { Coin, CosmosSdkTx, MsgSend, StdFee } from "./types";
 
 const httpUrl = "http://localhost:1317";
 
@@ -115,6 +117,134 @@ describe("CosmWasmClient", () => {
       const amountAttr = findAttribute(logs, "transfer", "amount");
       expect(amountAttr.value).toEqual("1234567ucosm");
       expect(transactionHash).toMatch(/^[0-9A-F]{64}$/);
+    });
+  });
+
+  describe("searchTx", () => {
+    let posted:
+      | {
+          readonly sender: string;
+          readonly recipient: string;
+          readonly hash: string;
+          readonly height: number;
+          readonly tx: CosmosSdkTx;
+        }
+      | undefined;
+
+    beforeAll(async () => {
+      if (cosmosEnabled()) {
+        pendingWithoutCosmos();
+        const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
+        const client = CosmWasmClient.makeReadOnly(httpUrl);
+
+        const memo = "My first contract on chain";
+        const sendMsg: MsgSend = {
+          type: "cosmos-sdk/MsgSend",
+          value: {
+            // eslint-disable-next-line @typescript-eslint/camelcase
+            from_address: faucet.address,
+            // eslint-disable-next-line @typescript-eslint/camelcase
+            to_address: makeRandomAddress(),
+            amount: [
+              {
+                denom: "ucosm",
+                amount: "1234567",
+              },
+            ],
+          },
+        };
+
+        const fee: StdFee = {
+          amount: [
+            {
+              amount: "5000",
+              denom: "ucosm",
+            },
+          ],
+          gas: "890000",
+        };
+
+        const chainId = await client.chainId();
+        const { accountNumber, sequence } = await client.getNonce(faucet.address);
+        const signBytes = makeSignBytes([sendMsg], fee, chainId, memo, accountNumber, sequence);
+        const signature = await pen.sign(signBytes);
+        const signedTx = {
+          msg: [sendMsg],
+          fee: fee,
+          memo: memo,
+          signatures: [signature],
+        };
+
+        const result = await client.postTx(marshalTx(signedTx));
+        const txDetails = await new RestClient(httpUrl).txsById(result.transactionHash);
+        posted = {
+          sender: sendMsg.value.from_address,
+          recipient: sendMsg.value.to_address,
+          hash: result.transactionHash,
+          height: Number.parseInt(txDetails.height, 10),
+          tx: txDetails.tx,
+        };
+      }
+    });
+
+    it("can search by ID", async () => {
+      pendingWithoutCosmos();
+      assert(posted, "value must be set in beforeAll()");
+      const client = CosmWasmClient.makeReadOnly(httpUrl);
+      const result = await client.searchTx({ id: posted.hash });
+      expect(result.length).toEqual(1);
+      expect(result[0]).toEqual(
+        jasmine.objectContaining({
+          height: posted.height.toString(),
+          txhash: posted.hash,
+          tx: posted.tx,
+        }),
+      );
+    });
+
+    it("can search by height", async () => {
+      pendingWithoutCosmos();
+      assert(posted, "value must be set in beforeAll()");
+      const client = CosmWasmClient.makeReadOnly(httpUrl);
+      const result = await client.searchTx({ height: posted.height });
+      expect(result.length).toEqual(1);
+      expect(result[0]).toEqual(
+        jasmine.objectContaining({
+          height: posted.height.toString(),
+          txhash: posted.hash,
+          tx: posted.tx,
+        }),
+      );
+    });
+
+    it("can search by sender", async () => {
+      pendingWithoutCosmos();
+      assert(posted, "value must be set in beforeAll()");
+      const client = CosmWasmClient.makeReadOnly(httpUrl);
+      const result = await client.searchTx({ sentFromOrTo: posted.sender });
+      expect(result.length).toBeGreaterThanOrEqual(1);
+      expect(result[result.length - 1]).toEqual(
+        jasmine.objectContaining({
+          height: posted.height.toString(),
+          txhash: posted.hash,
+          tx: posted.tx,
+        }),
+      );
+    });
+
+    it("can search by recipient", async () => {
+      pendingWithoutCosmos();
+      assert(posted, "value must be set in beforeAll()");
+      const client = CosmWasmClient.makeReadOnly(httpUrl);
+      const result = await client.searchTx({ sentFromOrTo: posted.recipient });
+      expect(result.length).toBeGreaterThanOrEqual(1);
+      expect(result[result.length - 1]).toEqual(
+        jasmine.objectContaining({
+          height: posted.height.toString(),
+          txhash: posted.hash,
+          tx: posted.tx,
+        }),
+      );
     });
   });
 
