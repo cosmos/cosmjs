@@ -4,6 +4,7 @@ import {
   Algorithm,
   ChainId,
   isBlockInfoPending,
+  isConfirmedTransaction,
   isFailedTransaction,
   isSendTransaction,
   PubkeyBytes,
@@ -357,102 +358,63 @@ describe("CosmWasmConnection", () => {
       expect(blockInfo.state).toEqual(TransactionState.Succeeded);
 
       // search by id
-
-      const idSearchResponse = await connection.searchTx({ id: transactionId });
-      expect(idSearchResponse.length).toEqual(1);
-
-      const idResult = idSearchResponse[0];
-      expect(idResult.transactionId).toEqual(transactionId);
-      if (isFailedTransaction(idResult)) {
-        throw new Error("Expected transaction to succeed");
-      }
-      assert(idResult.log, "Log must be available");
-      const [firstIdlog] = JSON.parse(idResult.log);
-      expect(firstIdlog.events.length).toEqual(2);
-
-      const { transaction: idTransaction } = idResult;
-      if (!isSendTransaction(idTransaction)) {
-        throw new Error("Expected send transaction");
-      }
-      expect(idTransaction.kind).toEqual(unsigned.kind);
-      expect(idTransaction.sender).toEqual(unsigned.sender);
-      expect(idTransaction.recipient).toEqual(unsigned.recipient);
-      expect(idTransaction.memo).toEqual(unsigned.memo);
-      expect(idTransaction.amount).toEqual(unsigned.amount);
+      const byIdResults = await connection.searchTx({ id: transactionId });
+      expect(byIdResults.length).toEqual(1);
+      const byIdResult = byIdResults[0];
+      expect(byIdResult.transactionId).toEqual(transactionId);
+      assert(isConfirmedTransaction(byIdResult), "Expected transaction to succeed");
+      assert(byIdResult.log, "Log must be available");
+      const [firstByIdlog] = JSON.parse(byIdResult.log);
+      expect(firstByIdlog.events.length).toEqual(2);
+      expect(firstByIdlog.events[0].type).toEqual("message");
+      expect(firstByIdlog.events[1].type).toEqual("transfer");
+      const byIdTransaction = byIdResult.transaction;
+      assert(isSendTransaction(byIdTransaction), "Expected send transaction");
+      expect(byIdTransaction).toEqual(unsigned);
 
       // search by sender address
-
-      const senderAddressSearchResponse = await connection.searchTx({ sentFromOrTo: faucetAddress });
-      expect(senderAddressSearchResponse).toBeTruthy();
-      expect(senderAddressSearchResponse.length).toBeGreaterThanOrEqual(1);
-
-      const senderAddressResult = senderAddressSearchResponse[senderAddressSearchResponse.length - 1];
-      expect(senderAddressResult.transactionId).toEqual(transactionId);
-      if (isFailedTransaction(senderAddressResult)) {
-        throw new Error("Expected transaction to succeed");
-      }
-      assert(senderAddressResult.log, "Log must be available");
-      const [firstSenderLog] = JSON.parse(senderAddressResult.log);
-      expect(firstSenderLog.events.length).toEqual(2);
-
-      const { transaction: senderAddressTransaction } = senderAddressResult;
-      if (!isSendTransaction(senderAddressTransaction)) {
-        throw new Error("Expected send transaction");
-      }
-      expect(senderAddressTransaction.kind).toEqual(unsigned.kind);
-      expect(senderAddressTransaction.sender).toEqual(unsigned.sender);
-      expect(senderAddressTransaction.recipient).toEqual(unsigned.recipient);
-      expect(senderAddressTransaction.memo).toEqual(unsigned.memo);
-      expect(senderAddressTransaction.amount).toEqual(unsigned.amount);
+      const bySenderResults = await connection.searchTx({ sentFromOrTo: faucetAddress });
+      expect(bySenderResults).toBeTruthy();
+      expect(bySenderResults.length).toBeGreaterThanOrEqual(1);
+      const bySenderResult = bySenderResults[bySenderResults.length - 1];
+      expect(bySenderResult.transactionId).toEqual(transactionId);
+      assert(isConfirmedTransaction(bySenderResult), "Expected transaction to succeed");
+      assert(bySenderResult.log, "Log must be available");
+      const [firstBySenderLog] = JSON.parse(bySenderResult.log);
+      expect(firstBySenderLog.events.length).toEqual(2);
+      expect(firstBySenderLog.events[0].type).toEqual("message");
+      expect(firstBySenderLog.events[1].type).toEqual("transfer");
+      const bySenderTransaction = bySenderResult.transaction;
+      assert(isSendTransaction(bySenderTransaction), "Expected send transaction");
+      expect(bySenderTransaction).toEqual(unsigned);
 
       // search by recipient address
-      // TODO: Support searching by recipient
-
-      // const recipientAddressSearchResponse = await connection.searchTx({ sentFromOrTo: defaultRecipient });
-      // expect(recipientAddressSearchResponse).toBeTruthy();
-      // expect(recipientAddressSearchResponse.length).toBeGreaterThanOrEqual(1);
-
-      // const recipientAddressResult =
-      //   recipientAddressSearchResponse[recipientAddressSearchResponse.length - 1];
-      // expect(recipientAddressResult.transactionId).toEqual(transactionId);
-      // if (isFailedTransaction(recipientAddressResult)) {
-      //   throw new Error("Expected transaction to succeed");
-      // }
-      // expect(recipientAddressResult.log).toMatch(/success/i);
-      // const { transaction: recipientAddressTransaction } = recipientAddressResult;
-      // if (!isSendTransaction(recipientAddressTransaction)) {
-      //   throw new Error("Expected send transaction");
-      // }
-      // expect(recipientAddressTransaction.kind).toEqual(unsigned.kind);
-      // expect(recipientAddressTransaction.sender).toEqual(unsigned.sender);
-      // expect(recipientAddressTransaction.recipient).toEqual(unsigned.recipient);
-      // expect(recipientAddressTransaction.memo).toEqual(unsigned.memo);
-      // expect(recipientAddressTransaction.amount).toEqual(unsigned.amount);
+      const byRecipientResults = await connection.searchTx({ sentFromOrTo: defaultRecipient });
+      expect(byRecipientResults.length).toBeGreaterThanOrEqual(1);
+      const byRecipientResult = byRecipientResults[byRecipientResults.length - 1];
+      expect(byRecipientResult.transactionId).toEqual(transactionId);
+      assert(isConfirmedTransaction(byRecipientResult), "Expected transaction to succeed");
+      assert(byRecipientResult.log, "Log must be available");
+      const [firstByRecipientLog] = JSON.parse(bySenderResult.log);
+      expect(firstByRecipientLog.events.length).toEqual(2);
+      expect(firstByRecipientLog.events[0].type).toEqual("message");
+      expect(firstByRecipientLog.events[1].type).toEqual("transfer");
+      const byRecipeintTransaction = byRecipientResult.transaction;
+      assert(isSendTransaction(byRecipeintTransaction), "Expected send transaction");
+      expect(byRecipeintTransaction).toEqual(unsigned);
 
       // search by height
-
-      const heightSearchResponse = await connection.searchTx({ height: idResult.height });
-      expect(heightSearchResponse).toBeTruthy();
-      expect(heightSearchResponse.length).toEqual(1);
-
-      const heightResult = heightSearchResponse[0];
+      const heightResults = await connection.searchTx({ height: byIdResult.height });
+      expect(heightResults.length).toEqual(1);
+      const heightResult = heightResults[0];
       expect(heightResult.transactionId).toEqual(transactionId);
-      if (isFailedTransaction(heightResult)) {
-        throw new Error("Expected transaction to succeed");
-      }
+      assert(isConfirmedTransaction(heightResult), "Expected transaction to succeed");
       assert(heightResult.log, "Log must be available");
       const [firstHeightLog] = JSON.parse(heightResult.log);
       expect(firstHeightLog.events.length).toEqual(2);
-
-      const { transaction: heightTransaction } = heightResult;
-      if (!isSendTransaction(heightTransaction)) {
-        throw new Error("Expected send transaction");
-      }
-      expect(heightTransaction.kind).toEqual(unsigned.kind);
-      expect(heightTransaction.sender).toEqual(unsigned.sender);
-      expect(heightTransaction.recipient).toEqual(unsigned.recipient);
-      expect(heightTransaction.memo).toEqual(unsigned.memo);
-      expect(heightTransaction.amount).toEqual(unsigned.amount);
+      const heightTransaction = heightResult.transaction;
+      assert(isSendTransaction(heightTransaction), "Expected send transaction");
+      expect(heightTransaction).toEqual(unsigned);
 
       connection.disconnect();
     });
