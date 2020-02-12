@@ -58,6 +58,10 @@ export interface TokenConfiguration {
   readonly erc20Tokens?: ReadonlyArray<Erc20Token & { readonly name: string }>;
 }
 
+function isDefined<X>(value: X | undefined): value is X {
+  return value !== undefined;
+}
+
 export class CosmWasmConnection implements BlockchainConnection {
   // we must know prefix and tokens a priori to understand the chain
   public static async establish(
@@ -288,17 +292,17 @@ export class CosmWasmConnection implements BlockchainConnection {
     signedBy,
     tags,
   }: TransactionQuery): Promise<readonly (ConfirmedTransaction<UnsignedTransaction> | FailedTransaction)[]> {
-    if ([signedBy, tags].some(component => component !== undefined)) {
+    if ([signedBy, tags].some(isDefined)) {
       throw new Error("Transaction query by signedBy or tags not yet supported");
     }
 
-    if ([maxHeight, minHeight].some(component => component !== undefined)) {
+    if ([maxHeight, minHeight].some(isDefined)) {
       throw new Error(
         "Transaction query by minHeight/maxHeight not yet supported. This is due to missing flexibility of the Gaia REST API, see https://github.com/cosmos/gaia/issues/75",
       );
     }
 
-    if ([id, height, sentFromOrTo].filter(component => component !== undefined).length !== 1) {
+    if ([id, height, sentFromOrTo].filter(isDefined).length !== 1) {
       throw new Error(
         "Transaction query by id, height and sentFromOrTo is mutually exclusive. Exactly one must be set.",
       );
