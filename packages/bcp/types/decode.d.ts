@@ -25,6 +25,11 @@ export declare function parseMsg(
   tokens: BankTokens,
 ): UnsignedTransaction;
 export declare function parseFee(fee: types.StdFee, tokens: BankTokens): Fee;
+export declare function parseUnsignedTx(
+  txValue: types.StdTx,
+  chainId: ChainId,
+  tokens: BankTokens,
+): UnsignedTransaction;
 export declare function parseSignedTx(
   txValue: types.StdTx,
   chainId: ChainId,

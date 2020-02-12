@@ -109,12 +109,11 @@ export function parseFee(fee: types.StdFee, tokens: BankTokens): Fee {
   };
 }
 
-export function parseSignedTx(
+export function parseUnsignedTx(
   txValue: types.StdTx,
   chainId: ChainId,
-  nonce: Nonce,
   tokens: BankTokens,
-): SignedTransaction {
+): UnsignedTransaction {
   if (!types.isStdTx(txValue)) {
     throw new Error("Only StdTx is supported");
   }
@@ -122,18 +121,25 @@ export function parseSignedTx(
     throw new Error("Only single-message transactions currently supported");
   }
 
-  const [primarySignature] = txValue.signatures.map(signature => decodeFullSignature(signature, nonce));
   const msg = parseMsg(txValue.msg[0], txValue.memo, chainId, tokens);
   const fee = parseFee(txValue.fee, tokens);
 
-  const transaction: UnsignedTransaction = {
+  return {
     ...msg,
     chainId: chainId,
     fee: fee,
   };
+}
 
+export function parseSignedTx(
+  txValue: types.StdTx,
+  chainId: ChainId,
+  nonce: Nonce,
+  tokens: BankTokens,
+): SignedTransaction {
+  const [primarySignature] = txValue.signatures.map(signature => decodeFullSignature(signature, nonce));
   return {
-    transaction: transaction,
+    transaction: parseUnsignedTx(txValue, chainId, tokens),
     signatures: [primarySignature],
   };
 }

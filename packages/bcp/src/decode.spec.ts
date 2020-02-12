@@ -12,6 +12,7 @@ import {
   parseMsg,
   parseSignedTx,
   parseTxsResponse,
+  parseUnsignedTx,
 } from "./decode";
 import * as testdata from "./testdata.spec";
 import cosmoshub from "./testdata/cosmoshub.json";
@@ -154,6 +155,14 @@ describe("decode", () => {
         gas: "200000",
       };
       expect(parseFee(fee, defaultTokens)).toEqual(defaultFee);
+    });
+  });
+
+  describe("parseUnsignedTx", () => {
+    it("works", () => {
+      expect(parseUnsignedTx(cosmoshub.tx.value, testdata.chainId, defaultTokens)).toEqual(
+        testdata.sendTxJson,
+      );
     });
   });
 
