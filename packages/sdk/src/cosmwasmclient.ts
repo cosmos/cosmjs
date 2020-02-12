@@ -168,9 +168,10 @@ export class CosmWasmClient {
     } else if (isSearchByHeightQuery(query)) {
       return (await this.restClient.txs(`tx.height=${query.height}`)).txs;
     } else if (isSearchBySentFromOrToQuery(query)) {
+      // We cannot get both in one request (see https://github.com/cosmos/gaia/issues/75)
       const sent = (await this.restClient.txs(limited(`message.sender=${query.sentFromOrTo}`))).txs;
-      const sentHashes = sent.map(t => t.txhash);
       const received = (await this.restClient.txs(limited(`transfer.recipient=${query.sentFromOrTo}`))).txs;
+      const sentHashes = sent.map(t => t.txhash);
       return [...sent, ...received.filter(t => !sentHashes.includes(t.txhash))];
     } else {
       throw new Error("Unknown query type");
