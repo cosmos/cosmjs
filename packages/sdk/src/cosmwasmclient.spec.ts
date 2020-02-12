@@ -3,6 +3,7 @@ import { makeSignBytes, marshalTx } from "./encoding";
 import { findAttribute } from "./logs";
 import { Secp256k1Pen } from "./pen";
 import { RestClient } from "./restclient";
+import cosmoshub from "./testdata/cosmoshub.json";
 import { getRandomizedHackatom, makeRandomAddress } from "./testutils.spec";
 import { Coin, MsgSend, StdFee } from "./types";
 
@@ -56,6 +57,14 @@ describe("CosmWasmClient", () => {
         accountNumber: 5,
         sequence: 0,
       });
+    });
+  });
+
+  describe("getIdentifier", () => {
+    it("works", async () => {
+      pendingWithoutCosmos();
+      const client = CosmWasmClient.makeReadOnly(httpUrl);
+      expect(await client.getIdentifier(cosmoshub.tx)).toEqual(cosmoshub.id);
     });
   });
 

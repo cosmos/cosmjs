@@ -1,5 +1,5 @@
 import { Log } from "./logs";
-import { Coin, StdSignature } from "./types";
+import { Coin, CosmosSdkTx, StdSignature } from "./types";
 export interface SigningCallback {
   (signBytes: Uint8Array): Promise<StdSignature>;
 }
@@ -25,6 +25,10 @@ export declare class CosmWasmClient {
   private get signCallback();
   private constructor();
   chainId(): Promise<string>;
+  /**
+   * Returns a 32 byte upper-case hex transaction hash (typically used as the transaction ID)
+   */
+  getIdentifier(tx: CosmosSdkTx): Promise<string>;
   /**
    * Returns account number and sequence.
    *

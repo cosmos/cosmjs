@@ -1,4 +1,4 @@
-import { CodeInfo, ContractInfo, CosmosSdkAccount, CosmosSdkTx, Model, StdTx } from "./types";
+import { CodeInfo, ContractInfo, CosmosSdkAccount, CosmosSdkTx, Model } from "./types";
 interface NodeInfo {
   readonly network: string;
 }
@@ -92,7 +92,7 @@ export declare class RestClient {
   blocksLatest(): Promise<BlocksResponse>;
   blocks(height: number): Promise<BlocksResponse>;
   /** returns the amino-encoding of the transaction performed by the server */
-  encodeTx(stdTx: StdTx): Promise<Uint8Array>;
+  encodeTx(tx: CosmosSdkTx): Promise<Uint8Array>;
   authAccounts(address: string, height?: string): Promise<AuthAccountsResponse>;
   txs(query: string): Promise<SearchTxsResponse>;
   txsById(id: string): Promise<TxsResponse>;

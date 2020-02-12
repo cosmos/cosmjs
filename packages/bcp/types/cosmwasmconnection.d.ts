@@ -14,6 +14,7 @@ import {
   PostableBytes,
   PostTxResponse,
   PubkeyQuery,
+  SignedTransaction,
   Token,
   TokenTicker,
   TransactionId,
@@ -58,7 +59,11 @@ export declare class CosmWasmConnection implements BlockchainConnection {
   height(): Promise<number>;
   getToken(searchTicker: TokenTicker): Promise<Token | undefined>;
   getAllTokens(): Promise<readonly Token[]>;
-  identifier(signed: PostableBytes): Promise<TransactionId>;
+  /**
+   * This is a replacement for the unimplemented CosmWasmCodec.identifier. Here we have more
+   * context and network available, which we might use to implement the API in an async way.
+   */
+  identifier(signed: SignedTransaction): Promise<TransactionId>;
   getAccount(query: AccountQuery): Promise<Account | undefined>;
   watchAccount(_account: AccountQuery): Stream<Account | undefined>;
   getNonce(query: AddressQuery | PubkeyQuery): Promise<Nonce>;
