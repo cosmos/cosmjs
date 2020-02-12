@@ -18,7 +18,7 @@ import { assert } from "@iov/utils";
 
 import { CosmWasmCodec } from "./cosmwasmcodec";
 import { CosmWasmConnection, TokenConfiguration } from "./cosmwasmconnection";
-import { signedTxJson, txId } from "./testdata.spec";
+import * as testdata from "./testdata.spec";
 
 const { fromBase64, toHex } = Encoding;
 
@@ -197,12 +197,10 @@ describe("CosmWasmConnection", () => {
   describe("identifier", () => {
     it("calculates tx hash from PostableBytes", async () => {
       pendingWithoutCosmos();
-      const codec = new CosmWasmCodec(defaultPrefix, atomConfig.bankTokens);
       const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, atomConfig);
-      const postable = codec.bytesToPost(signedTxJson);
-      const id = await connection.identifier(postable);
+      const id = await connection.identifier(testdata.signedTxJson);
       expect(id).toMatch(/^[0-9A-F]{64}$/);
-      expect(id).toEqual(txId);
+      expect(id).toEqual(testdata.txId);
     });
   });
 

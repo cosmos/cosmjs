@@ -1,12 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import {
-  CosmosAddressBech32Prefix,
-  CosmWasmClient,
-  RestClient,
-  TxsResponse,
-  types,
-  unmarshalTx,
-} from "@cosmwasm/sdk";
+import { CosmosAddressBech32Prefix, CosmWasmClient, RestClient, TxsResponse, types } from "@cosmwasm/sdk";
 import {
   Account,
   AccountQuery,
@@ -28,6 +21,7 @@ import {
   PostableBytes,
   PostTxResponse,
   PubkeyQuery,
+  SignedTransaction,
   Token,
   TokenTicker,
   TransactionId,
@@ -46,6 +40,7 @@ import { Stream } from "xstream";
 import { decodeCosmosPubkey, pubkeyToAddress } from "./address";
 import { Caip5 } from "./caip5";
 import { decodeAmount, parseTxsResponse } from "./decode";
+import { buildSignedTx } from "./encode";
 import { accountToNonce, BankToken, Erc20Token } from "./types";
 
 const { fromAscii, toHex } = Encoding;
@@ -162,8 +157,12 @@ export class CosmWasmConnection implements BlockchainConnection {
     return this.supportedTokens;
   }
 
-  public async identifier(signed: PostableBytes): Promise<TransactionId> {
-    const tx = unmarshalTx(signed);
+  /**
+   * This is a replacement for the unimplemented CosmWasmCodec.identifier. Here we have more
+   * context and network available, which we might use to implement the API in an async way.
+   */
+  public async identifier(signed: SignedTransaction): Promise<TransactionId> {
+    const tx = buildSignedTx(signed, this.bankTokens, this.erc20Tokens);
     // tslint:disable-next-line: deprecation
     const bytes = await this.restClient.encodeTx(tx);
     const hash = new Sha256(bytes).digest();

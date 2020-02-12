@@ -9,7 +9,6 @@ import {
   isStdTx,
   Model,
   parseWasmData,
-  StdTx,
   WasmData,
 } from "./types";
 
@@ -221,8 +220,7 @@ export class RestClient {
   }
 
   /** returns the amino-encoding of the transaction performed by the server */
-  public async encodeTx(stdTx: StdTx): Promise<Uint8Array> {
-    const tx = { type: "cosmos-sdk/StdTx", value: stdTx };
+  public async encodeTx(tx: CosmosSdkTx): Promise<Uint8Array> {
     const responseData = await this.post("/txs/encode", tx);
     if (!(responseData as any).tx) {
       throw new Error("Unexpected response data format");
