@@ -288,8 +288,14 @@ export class CosmWasmConnection implements BlockchainConnection {
     signedBy,
     tags,
   }: TransactionQuery): Promise<readonly (ConfirmedTransaction<UnsignedTransaction> | FailedTransaction)[]> {
-    if ([maxHeight, minHeight, signedBy, tags].some(component => component !== undefined)) {
-      throw new Error("Transaction query by maxHeight, minHeight, signedBy or tags not yet supported");
+    if ([signedBy, tags].some(component => component !== undefined)) {
+      throw new Error("Transaction query by signedBy or tags not yet supported");
+    }
+
+    if ([maxHeight, minHeight].some(component => component !== undefined)) {
+      throw new Error(
+        "Transaction query by minHeight/maxHeight not yet supported. This is due to missing flexibility of the Gaia REST API, see https://github.com/cosmos/gaia/issues/75",
+      );
     }
 
     if ([id, height, sentFromOrTo].filter(component => component !== undefined).length !== 1) {
