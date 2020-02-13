@@ -322,7 +322,7 @@ describe("CosmWasmConnection", () => {
       expect(transaction).toEqual(unsigned);
       expect(signatures.length).toEqual(1);
       expect(signatures[0]).toEqual({
-        nonce: signed.signatures[0].nonce, // This equality check works by pure luck. The implementation is broken. See https://github.com/iov-one/iov-core/pull/1390
+        nonce: -1, // Unfortunately this information is unavailable as previous implementation attempt is broken. See https://github.com/iov-one/iov-core/pull/1390
         pubkey: {
           algo: signed.signatures[0].pubkey.algo,
           data: Secp256k1.compressPubkey(signed.signatures[0].pubkey.data),
