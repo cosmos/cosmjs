@@ -307,4 +307,26 @@ export class CosmWasmClient {
 
     return this.restClient.queryContractRaw(address, key);
   }
+
+  /**
+   * Makes a "smart query" on the contract, returns raw data
+   *
+   * Promise is rejected when contract does not exist.
+   * Promise is rejected for invalid query format.
+   */
+  public async queryContractSmart(address: string, queryMsg: object): Promise<Uint8Array> {
+    try {
+      return await this.restClient.queryContractSmart(address, queryMsg);
+    } catch (error) {
+      if (error instanceof Error) {
+        if (error.message === "not found: contract") {
+          throw new Error(`No contract found at address "${address}"`);
+        } else {
+          throw error;
+        }
+      } else {
+        throw error;
+      }
+    }
+  }
 }

@@ -10,7 +10,7 @@ import cosmoshub from "./testdata/cosmoshub.json";
 import { getRandomizedHackatom, makeRandomAddress } from "./testutils.spec";
 import { Coin, CosmosSdkTx, MsgSend, StdFee } from "./types";
 
-const { fromUtf8, toAscii } = Encoding;
+const { fromAscii, fromUtf8, toAscii } = Encoding;
 
 const httpUrl = "http://localhost:1317";
 
@@ -418,6 +418,53 @@ describe("CosmWasmClient", () => {
       const nonExistentAddress = makeRandomAddress();
       const client = CosmWasmClient.makeReadOnly(httpUrl);
       await client.queryContractRaw(nonExistentAddress, configKey).then(
+        () => fail("must not succeed"),
+        error => expect(error).toMatch(`No contract found at address "${nonExistentAddress}"`),
+      );
+    });
+  });
+
+  describe("queryContractSmart", () => {
+    let contract: HackatomInstance | undefined;
+
+    beforeAll(async () => {
+      if (cosmosEnabled()) {
+        pendingWithoutCosmos();
+        const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
+        const client = CosmWasmClient.makeWritable(httpUrl, faucet.address, signBytes => pen.sign(signBytes));
+        const codeId = await client.upload(getRandomizedHackatom());
+        const initMsg = { verifier: makeRandomAddress(), beneficiary: makeRandomAddress() };
+        const contractAddress = await client.instantiate(codeId, initMsg);
+        contract = { initMsg: initMsg, address: contractAddress };
+      }
+    });
+
+    it("works", async () => {
+      pendingWithoutCosmos();
+      assert(contract);
+
+      const client = CosmWasmClient.makeReadOnly(httpUrl);
+      const verifier = await client.queryContractSmart(contract.address, { verifier: {} });
+      expect(fromAscii(verifier)).toEqual(contract.initMsg.verifier);
+    });
+
+    it("errors for malformed query message", async () => {
+      pendingWithoutCosmos();
+      assert(contract);
+
+      const client = CosmWasmClient.makeReadOnly(httpUrl);
+      await client.queryContractSmart(contract.address, { broken: {} }).then(
+        () => fail("must not succeed"),
+        error => expect(error).toMatch(/Error parsing QueryMsg/i),
+      );
+    });
+
+    it("errors for non-existent contract", async () => {
+      pendingWithoutCosmos();
+
+      const nonExistentAddress = makeRandomAddress();
+      const client = CosmWasmClient.makeReadOnly(httpUrl);
+      await client.queryContractSmart(nonExistentAddress, { verifier: {} }).then(
         () => fail("must not succeed"),
         error => expect(error).toMatch(`No contract found at address "${nonExistentAddress}"`),
       );
