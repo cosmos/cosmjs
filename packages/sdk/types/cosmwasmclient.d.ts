@@ -62,4 +62,11 @@ export declare class CosmWasmClient {
     memo?: string,
     transferAmount?: readonly Coin[],
   ): Promise<ExecuteResult>;
+  /**
+   * Returns the data at the key if present (raw contract dependent storage data)
+   * or null if no data at this key.
+   *
+   * Promise is rejected when contract does not exist.
+   */
+  queryContractRaw(address: string, key: Uint8Array): Promise<Uint8Array | null>;
 }

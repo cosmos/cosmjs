@@ -1,3 +1,4 @@
+import { Bech32, Encoding } from "@iov/encoding";
 import { assert } from "@iov/utils";
 
 import { CosmWasmClient } from "./cosmwasmclient";
@@ -8,6 +9,8 @@ import { RestClient } from "./restclient";
 import cosmoshub from "./testdata/cosmoshub.json";
 import { getRandomizedHackatom, makeRandomAddress } from "./testutils.spec";
 import { Coin, CosmosSdkTx, MsgSend, StdFee } from "./types";
+
+const { fromUtf8, toAscii } = Encoding;
 
 const httpUrl = "http://localhost:1317";
 
@@ -34,6 +37,14 @@ const faucet = {
 const unusedAccount = {
   address: "cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u",
 };
+
+interface HackatomInstance {
+  readonly initMsg: {
+    readonly verifier: string;
+    readonly beneficiary: string;
+  };
+  readonly address: string;
+}
 
 describe("CosmWasmClient", () => {
   describe("makeReadOnly", () => {
@@ -357,6 +368,59 @@ describe("CosmWasmClient", () => {
       expect(beneficiaryBalance).toEqual(transferAmount);
       const contractBalance = (await rest.authAccounts(contractAddress)).result.value.coins;
       expect(contractBalance).toEqual([]);
+    });
+  });
+
+  describe("queryContractRaw", () => {
+    const configKey = toAscii("config");
+    const otherKey = toAscii("this_does_not_exist");
+    let contract: HackatomInstance | undefined;
+
+    beforeAll(async () => {
+      if (cosmosEnabled()) {
+        pendingWithoutCosmos();
+        const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
+        const client = CosmWasmClient.makeWritable(httpUrl, faucet.address, signBytes => pen.sign(signBytes));
+        const codeId = await client.upload(getRandomizedHackatom());
+        const initMsg = { verifier: makeRandomAddress(), beneficiary: makeRandomAddress() };
+        const contractAddress = await client.instantiate(codeId, initMsg);
+        contract = { initMsg: initMsg, address: contractAddress };
+      }
+    });
+
+    it("can query existing key", async () => {
+      pendingWithoutCosmos();
+      assert(contract);
+
+      const client = CosmWasmClient.makeReadOnly(httpUrl);
+      const raw = await client.queryContractRaw(contract.address, configKey);
+      assert(raw, "must get result");
+      expect(JSON.parse(fromUtf8(raw))).toEqual({
+        verifier: Array.from(Bech32.decode(contract.initMsg.verifier).data),
+        beneficiary: Array.from(Bech32.decode(contract.initMsg.beneficiary).data),
+        funder: Array.from(Bech32.decode(faucet.address).data),
+      });
+    });
+
+    it("can query non-existent key", async () => {
+      pendingWithoutCosmos();
+      assert(contract);
+
+      const client = CosmWasmClient.makeReadOnly(httpUrl);
+      const raw = await client.queryContractRaw(contract.address, otherKey);
+      expect(raw).toBeNull();
+    });
+
+    it("errors for non-existent contract", async () => {
+      pendingWithoutCosmos();
+      assert(contract);
+
+      const nonExistentAddress = makeRandomAddress();
+      const client = CosmWasmClient.makeReadOnly(httpUrl);
+      await client.queryContractRaw(nonExistentAddress, configKey).then(
+        () => fail("must not succeed"),
+        error => expect(error).toMatch(`No contract with address ${nonExistentAddress}`),
+      );
     });
   });
 });
