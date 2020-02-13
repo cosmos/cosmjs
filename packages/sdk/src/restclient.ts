@@ -228,9 +228,8 @@ export class RestClient {
     return Encoding.fromBase64((responseData as EncodeTxResponse).tx);
   }
 
-  public async authAccounts(address: string, height?: string): Promise<AuthAccountsResponse> {
-    const path =
-      height === undefined ? `/auth/accounts/${address}` : `/auth/accounts/${address}?tx.height=${height}`;
+  public async authAccounts(address: string): Promise<AuthAccountsResponse> {
+    const path = `/auth/accounts/${address}`;
     const responseData = await this.get(path);
     if ((responseData as any).result.type !== "cosmos-sdk/Account") {
       throw new Error("Unexpected response data format");
