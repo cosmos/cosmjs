@@ -419,7 +419,7 @@ describe("CosmWasmClient", () => {
       const client = CosmWasmClient.makeReadOnly(httpUrl);
       await client.queryContractRaw(nonExistentAddress, configKey).then(
         () => fail("must not succeed"),
-        error => expect(error).toMatch(`No contract with address ${nonExistentAddress}`),
+        error => expect(error).toMatch(`No contract found at address "${nonExistentAddress}"`),
       );
     });
   });

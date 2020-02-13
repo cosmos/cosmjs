@@ -311,7 +311,7 @@ export class RestClient {
     // rest server returns null if no data for the address
     const info: ContractInfo | null = parseWasmResponse(responseData as WasmResponse);
     if (!info) {
-      throw new Error(`No contract with address ${address}`);
+      throw new Error(`No contract found at address "${address}"`);
     }
     return info;
   }
