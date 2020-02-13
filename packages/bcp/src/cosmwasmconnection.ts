@@ -160,8 +160,7 @@ export class CosmWasmConnection implements BlockchainConnection {
       this.erc20Tokens.map(
         async (erc20): Promise<Amount> => {
           const queryMsg = { balance: { address: address } };
-          // tslint:disable-next-line: deprecation
-          const smart = await this.restClient.queryContractSmart(erc20.contractAddress, queryMsg);
+          const smart = await this.cosmWasmClient.queryContractSmart(erc20.contractAddress, queryMsg);
           const response = JSON.parse(fromAscii(smart));
           const normalizedBalance = new BN(response.balance).toString();
           return {
