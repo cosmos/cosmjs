@@ -5,7 +5,6 @@ import {
   ChainId,
   isBlockInfoPending,
   isConfirmedTransaction,
-  isFailedTransaction,
   isSendTransaction,
   PubkeyBytes,
   SendTransaction,
@@ -22,7 +21,7 @@ import { CosmWasmCodec } from "./cosmwasmcodec";
 import { CosmWasmConnection, TokenConfiguration } from "./cosmwasmconnection";
 import * as testdata from "./testdata.spec";
 
-const { fromBase64, toHex } = Encoding;
+const { fromBase64 } = Encoding;
 
 function pendingWithoutCosmos(): void {
   if (!process.env.COSMOS_ENABLED) {
@@ -311,35 +310,25 @@ describe("CosmWasmConnection", () => {
       expect(blockInfo.state).toEqual(TransactionState.Succeeded);
 
       const getResponse = await connection.getTx(transactionId);
-      expect(getResponse).toBeTruthy();
       expect(getResponse.transactionId).toEqual(transactionId);
-      if (isFailedTransaction(getResponse)) {
-        throw new Error("Expected transaction to succeed");
-      }
+      assert(isConfirmedTransaction(getResponse), "Expected transaction to succeed");
       assert(getResponse.log, "Log must be available");
       // we get a json response in the log for each msg, multiple events is good (transfer succeeded)
       const [firstLog] = JSON.parse(getResponse.log);
       expect(firstLog.events.length).toEqual(2);
-      const { transaction, signatures } = getResponse;
-      if (!isSendTransaction(transaction)) {
-        throw new Error("Expected send transaction");
-      }
-      expect(transaction.kind).toEqual(unsigned.kind);
-      expect(transaction.sender).toEqual(unsigned.sender);
-      expect(transaction.recipient).toEqual(unsigned.recipient);
-      expect(transaction.memo).toEqual(unsigned.memo);
-      expect(transaction.amount).toEqual(unsigned.amount);
-      expect(transaction.chainId).toEqual(unsigned.chainId);
 
+      const { transaction, signatures } = getResponse;
+      assert(isSendTransaction(transaction), "Expected send transaction");
+      expect(transaction).toEqual(unsigned);
       expect(signatures.length).toEqual(1);
-      expect(signatures[0].nonce).toEqual(signed.signatures[0].nonce);
-      expect(signatures[0].pubkey.algo).toEqual(signed.signatures[0].pubkey.algo);
-      expect(toHex(signatures[0].pubkey.data)).toEqual(
-        toHex(Secp256k1.compressPubkey(signed.signatures[0].pubkey.data)),
-      );
-      expect(toHex(signatures[0].signature)).toEqual(
-        toHex(Secp256k1.trimRecoveryByte(signed.signatures[0].signature)),
-      );
+      expect(signatures[0]).toEqual({
+        nonce: signed.signatures[0].nonce, // This equality check works by pure luck. The implementation is broken. See https://github.com/iov-one/iov-core/pull/1390
+        pubkey: {
+          algo: signed.signatures[0].pubkey.algo,
+          data: Secp256k1.compressPubkey(signed.signatures[0].pubkey.data),
+        },
+        signature: Secp256k1.trimRecoveryByte(signed.signatures[0].signature),
+      });
 
       connection.disconnect();
     });
