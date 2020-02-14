@@ -34,22 +34,24 @@ function makeRandomAddress(): Address {
   return Bech32.encode(defaultPrefix, Random.getBytes(20)) as Address;
 }
 
+const faucet = {
+  mnemonic:
+    "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone",
+  path: HdPaths.cosmos(0),
+  pubkey: {
+    algo: Algorithm.Secp256k1,
+    data: fromBase64("A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ") as PubkeyBytes,
+  },
+  address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6" as Address,
+};
+
 describe("CosmWasmConnection", () => {
   const cosm = "COSM" as TokenTicker;
   const httpUrl = "http://localhost:1317";
   const defaultChainId = "cosmos:testing" as ChainId;
   const defaultEmptyAddress = "cosmos1h806c7khnvmjlywdrkdgk2vrayy2mmvf9rxk2r" as Address;
-  const faucetMnemonic =
-    "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone";
-  const faucetPath = HdPaths.cosmos(0);
   const defaultRecipient = "cosmos1t70qnpr0az8tf7py83m4ue5y89w58lkjmx0yq2" as Address;
-  const faucetAccount = {
-    pubkey: {
-      algo: Algorithm.Secp256k1,
-      data: fromBase64("A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ") as PubkeyBytes,
-    },
-    address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6" as Address,
-  };
+
   const unusedAccount = {
     pubkey: {
       algo: Algorithm.Secp256k1,
@@ -256,8 +258,8 @@ describe("CosmWasmConnection", () => {
     it("has a pubkey when getting account with transactions", async () => {
       pendingWithoutCosmos();
       const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
-      const account = await connection.getAccount({ address: faucetAccount.address });
-      expect(account?.pubkey).toEqual(faucetAccount.pubkey);
+      const account = await connection.getAccount({ address: faucet.address });
+      expect(account?.pubkey).toEqual(faucet.pubkey);
       connection.disconnect();
     });
   });
@@ -282,14 +284,14 @@ describe("CosmWasmConnection", () => {
       pendingWithoutCosmos();
       const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
       const profile = new UserProfile();
-      const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(faucetMnemonic));
-      const faucet = await profile.createIdentity(wallet.id, defaultChainId, faucetPath);
-      const faucetAddress = connection.codec.identityToAddress(faucet);
+      const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(faucet.mnemonic));
+      const senderIdentity = await profile.createIdentity(wallet.id, defaultChainId, faucet.path);
+      const senderAddress = connection.codec.identityToAddress(senderIdentity);
 
       const unsigned = await connection.withDefaultFee<SendTransaction>({
         kind: "bcp/send",
         chainId: defaultChainId,
-        sender: faucetAddress,
+        sender: senderAddress,
         recipient: defaultRecipient,
         memo: "My first payment",
         amount: {
@@ -298,8 +300,8 @@ describe("CosmWasmConnection", () => {
           tokenTicker: cosm,
         },
       });
-      const nonce = await connection.getNonce({ address: faucetAddress });
-      const signed = await profile.signTransaction(faucet, unsigned, connection.codec, nonce);
+      const nonce = await connection.getNonce({ address: senderAddress });
+      const signed = await profile.signTransaction(senderIdentity, unsigned, connection.codec, nonce);
       const postableBytes = connection.codec.bytesToPost(signed);
       const response = await connection.postTx(postableBytes);
       const { transactionId } = response;
@@ -334,14 +336,14 @@ describe("CosmWasmConnection", () => {
       pendingWithoutCosmos();
       const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
       const profile = new UserProfile();
-      const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(faucetMnemonic));
-      const faucet = await profile.createIdentity(wallet.id, defaultChainId, faucetPath);
-      const faucetAddress = connection.codec.identityToAddress(faucet);
+      const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(faucet.mnemonic));
+      const sender = await profile.createIdentity(wallet.id, defaultChainId, faucet.path);
+      const senderAddress = connection.codec.identityToAddress(sender);
 
       const unsigned = await connection.withDefaultFee<SendTransaction>({
         kind: "bcp/send",
         chainId: defaultChainId,
-        sender: faucetAddress,
+        sender: senderAddress,
         recipient: defaultRecipient,
         memo: "My first payment",
         amount: {
@@ -350,8 +352,8 @@ describe("CosmWasmConnection", () => {
           tokenTicker: cosm,
         },
       });
-      const nonce = await connection.getNonce({ address: faucetAddress });
-      const signed = await profile.signTransaction(faucet, unsigned, connection.codec, nonce);
+      const nonce = await connection.getNonce({ address: senderAddress });
+      const signed = await profile.signTransaction(sender, unsigned, connection.codec, nonce);
       const postableBytes = connection.codec.bytesToPost(signed);
       const response = await connection.postTx(postableBytes);
       const { transactionId } = response;
@@ -374,7 +376,7 @@ describe("CosmWasmConnection", () => {
       expect(byIdTransaction).toEqual(unsigned);
 
       // search by sender address
-      const bySenderResults = await connection.searchTx({ sentFromOrTo: faucetAddress });
+      const bySenderResults = await connection.searchTx({ sentFromOrTo: senderAddress });
       expect(bySenderResults).toBeTruthy();
       expect(bySenderResults.length).toBeGreaterThanOrEqual(1);
       const bySenderResult = bySenderResults[bySenderResults.length - 1];
@@ -424,15 +426,15 @@ describe("CosmWasmConnection", () => {
       pendingWithoutCosmos();
       const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
       const profile = new UserProfile();
-      const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(faucetMnemonic));
-      const faucet = await profile.createIdentity(wallet.id, defaultChainId, faucetPath);
-      const faucetAddress = connection.codec.identityToAddress(faucet);
+      const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(faucet.mnemonic));
+      const sender = await profile.createIdentity(wallet.id, defaultChainId, faucet.path);
+      const senderAddress = connection.codec.identityToAddress(sender);
       const recipient = makeRandomAddress();
 
       const unsigned = await connection.withDefaultFee<SendTransaction>({
         kind: "bcp/send",
         chainId: defaultChainId,
-        sender: faucetAddress,
+        sender: senderAddress,
         recipient: recipient,
         memo: "My first payment",
         amount: {
@@ -441,8 +443,8 @@ describe("CosmWasmConnection", () => {
           tokenTicker: "BASH" as TokenTicker,
         },
       });
-      const nonce = await connection.getNonce({ address: faucetAddress });
-      const signed = await profile.signTransaction(faucet, unsigned, connection.codec, nonce);
+      const nonce = await connection.getNonce({ address: senderAddress });
+      const signed = await profile.signTransaction(sender, unsigned, connection.codec, nonce);
       const postableBytes = connection.codec.bytesToPost(signed);
       const response = await connection.postTx(postableBytes);
       const blockInfo = await response.blockInfo.waitFor(info => !isBlockInfoPending(info));
