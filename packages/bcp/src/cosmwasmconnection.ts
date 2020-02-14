@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { CosmosAddressBech32Prefix, CosmWasmClient, RestClient, TxsResponse } from "@cosmwasm/sdk";
+import { CosmosAddressBech32Prefix, CosmWasmClient, RestClient, TxsResponse, types } from "@cosmwasm/sdk";
 import {
   Account,
   AccountQuery,
@@ -359,10 +359,25 @@ export class CosmWasmConnection implements BlockchainConnection {
   private async parseAndPopulateTxResponseSigned(
     response: TxsResponse,
   ): Promise<ConfirmedAndSignedTransaction<UnsignedTransaction> | FailedTransaction> {
-    // There is no known way to get the nonce that was used for signing a transaction.
-    // This information is nesessary for signature validation.
-    // TODO: fix
-    const nonce = -1 as Nonce;
+    const firstMsg = response.tx.value.msg.find(() => true);
+    if (!firstMsg) throw new Error("Got transaction without a first message. What is going on here?");
+
+    let senderAddress: string;
+    if (types.isMsgSend(firstMsg)) {
+      senderAddress = firstMsg.value.from_address;
+    } else if (
+      types.isMsgStoreCode(firstMsg) ||
+      types.isMsgInstantiateContract(firstMsg) ||
+      types.isMsgExecuteContract(firstMsg)
+    ) {
+      senderAddress = firstMsg.value.sender;
+    } else {
+      throw new Error(`Got unsupported type of message: ${firstMsg.type}`);
+    }
+
+    const { accountNumber, sequence: currentSequence } = await this.cosmWasmClient.getNonce(senderAddress);
+
+    const nonce = accountToNonce(accountNumber, currentSequence - 1);
 
     return parseTxsResponseSigned(
       this.chainId,
