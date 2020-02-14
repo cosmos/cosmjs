@@ -23,3 +23,4 @@ export {
   encodeBech32Pubkey,
   encodeSecp256k1Pubkey,
 } from "./pubkey";
+export { findSequenceForSignedTx } from "./sequence";

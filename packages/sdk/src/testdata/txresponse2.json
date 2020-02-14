@@ -1,0 +1,57 @@
+{
+  "height": "16456",
+  "txhash": "7BFE4B93AF190F60132C62D08FDF50BE462FBCE374EB13D3FD0C32461E771EC0",
+  "raw_log": "[{\"msg_index\":0,\"log\":\"\",\"events\":[{\"type\":\"message\",\"attributes\":[{\"key\":\"action\",\"value\":\"send\"},{\"key\":\"sender\",\"value\":\"cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6\"},{\"key\":\"module\",\"value\":\"bank\"}]},{\"type\":\"transfer\",\"attributes\":[{\"key\":\"recipient\",\"value\":\"cosmos1t70qnpr0az8tf7py83m4ue5y89w58lkjmx0yq2\"},{\"key\":\"amount\",\"value\":\"75000ucosm\"}]}]}]",
+  "logs": [
+    {
+      "msg_index": 0,
+      "log": "",
+      "events": [
+        {
+          "type": "message",
+          "attributes": [
+            { "key": "action", "value": "send" },
+            { "key": "sender", "value": "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6" },
+            { "key": "module", "value": "bank" }
+          ]
+        },
+        {
+          "type": "transfer",
+          "attributes": [
+            { "key": "recipient", "value": "cosmos1t70qnpr0az8tf7py83m4ue5y89w58lkjmx0yq2" },
+            { "key": "amount", "value": "75000ucosm" }
+          ]
+        }
+      ]
+    }
+  ],
+  "gas_wanted": "200000",
+  "gas_used": "65407",
+  "tx": {
+    "type": "cosmos-sdk/StdTx",
+    "value": {
+      "msg": [
+        {
+          "type": "cosmos-sdk/MsgSend",
+          "value": {
+            "from_address": "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+            "to_address": "cosmos1t70qnpr0az8tf7py83m4ue5y89w58lkjmx0yq2",
+            "amount": [{ "denom": "ucosm", "amount": "75000" }]
+          }
+        }
+      ],
+      "fee": { "amount": [{ "denom": "ucosm", "amount": "5000" }], "gas": "200000" },
+      "signatures": [
+        {
+          "pub_key": {
+            "type": "tendermint/PubKeySecp256k1",
+            "value": "A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ"
+          },
+          "signature": "ltvd9Rb3RF4zjbUVrpDpkok34g+py7XR8ZcM0tZUYRxxVdcMEin010x+ZFd/mOuutPj9fDmSENnienc/yi4msw=="
+        }
+      ],
+      "memo": "My first payment"
+    }
+  },
+  "timestamp": "2020-02-14T11:35:41Z"
+}
