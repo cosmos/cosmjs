@@ -23,13 +23,13 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
   );
   console.info(`Connecting to blockchain ${blockchainBaseUrl} ...`);
   const connection = await connector.establishConnection();
-  console.info(`Connected to network: ${connection.chainId()}`);
+  console.info(`Connected to network: ${connection.chainId}`);
 
   // Profile
   if (!constants.mnemonic) throw new Error("The FAUCET_MNEMONIC environment variable is not set");
   const [profile] = await createUserProfile(
     constants.mnemonic,
-    connection.chainId(),
+    connection.chainId,
     constants.concurrency,
     true,
   );
@@ -52,6 +52,6 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
   setInterval(async () => faucet.refill(), 60_000); // ever 60 seconds
 
   console.info("Creating webserver ...");
-  const server = new Webserver(faucet, { nodeUrl: blockchainBaseUrl, chainId: connection.chainId() });
+  const server = new Webserver(faucet, { nodeUrl: blockchainBaseUrl, chainId: connection.chainId });
   server.start(constants.port);
 }

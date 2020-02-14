@@ -19,6 +19,7 @@ import {
   TokenTicker,
   TransactionId,
   TransactionQuery,
+  TxCodec,
   UnsignedTransaction,
 } from "@iov/bcp";
 import { Stream } from "xstream";
@@ -44,10 +45,11 @@ export declare class CosmWasmConnection implements BlockchainConnection {
     tokens: TokenConfiguration,
   ): Promise<CosmWasmConnection>;
   private static initialize;
+  readonly chainId: ChainId;
+  readonly codec: TxCodec;
   /** @deprecated everything we use from RestClient should be available in CosmWasmClient */
   private readonly restClient;
   private readonly cosmWasmClient;
-  private readonly chainData;
   private readonly addressPrefix;
   private readonly bankTokens;
   private readonly erc20Tokens;
@@ -55,7 +57,6 @@ export declare class CosmWasmConnection implements BlockchainConnection {
   private readonly supportedTokens;
   private constructor();
   disconnect(): void;
-  chainId(): ChainId;
   height(): Promise<number>;
   getToken(searchTicker: TokenTicker): Promise<Token | undefined>;
   getAllTokens(): Promise<readonly Token[]>;

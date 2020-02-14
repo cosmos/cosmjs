@@ -27,6 +27,7 @@ import {
   TransactionId,
   TransactionQuery,
   TransactionState,
+  TxCodec,
   UnsignedTransaction,
 } from "@iov/bcp";
 import { Encoding, Uint53 } from "@iov/encoding";
@@ -38,15 +39,12 @@ import { Stream } from "xstream";
 
 import { decodeCosmosPubkey, pubkeyToAddress } from "./address";
 import { Caip5 } from "./caip5";
+import { CosmWasmCodec } from "./cosmwasmcodec";
 import { decodeAmount, parseTxsResponseSigned, parseTxsResponseUnsigned } from "./decode";
 import { buildSignedTx } from "./encode";
 import { accountToNonce, BankToken, Erc20Token } from "./types";
 
 const { fromAscii } = Encoding;
-
-interface ChainData {
-  readonly chainId: ChainId;
-}
 
 // poll every 0.5 seconds (block time 1s)
 const defaultPollInterval = 500;
@@ -75,15 +73,17 @@ export class CosmWasmConnection implements BlockchainConnection {
     return new CosmWasmConnection(restClient, cosmWasmClient, chainData, addressPrefix, tokens);
   }
 
-  private static async initialize(cosmWasmClient: CosmWasmClient): Promise<ChainData> {
+  private static async initialize(cosmWasmClient: CosmWasmClient): Promise<ChainId> {
     const rawChainId = await cosmWasmClient.chainId();
-    return { chainId: Caip5.encode(rawChainId) };
+    return Caip5.encode(rawChainId);
   }
+
+  public readonly chainId: ChainId;
+  public readonly codec: TxCodec;
 
   /** @deprecated everything we use from RestClient should be available in CosmWasmClient */
   private readonly restClient: RestClient;
   private readonly cosmWasmClient: CosmWasmClient;
-  private readonly chainData: ChainData;
   private readonly addressPrefix: CosmosAddressBech32Prefix;
   private readonly bankTokens: readonly BankToken[];
   private readonly erc20Tokens: readonly Erc20Token[];
@@ -95,14 +95,15 @@ export class CosmWasmConnection implements BlockchainConnection {
   private constructor(
     restClient: RestClient,
     cosmWasmClient: CosmWasmClient,
-    chainData: ChainData,
+    chainId: ChainId,
     addressPrefix: CosmosAddressBech32Prefix,
     tokens: TokenConfiguration,
   ) {
     // tslint:disable-next-line: deprecation
     this.restClient = restClient;
     this.cosmWasmClient = cosmWasmClient;
-    this.chainData = chainData;
+    this.chainId = chainId;
+    this.codec = new CosmWasmCodec(addressPrefix, tokens.bankTokens, tokens.erc20Tokens);
     this.addressPrefix = addressPrefix;
     this.bankTokens = tokens.bankTokens;
     this.feeToken = this.bankTokens.find(() => true);
@@ -119,10 +120,6 @@ export class CosmWasmConnection implements BlockchainConnection {
 
   public disconnect(): void {
     return;
-  }
-
-  public chainId(): ChainId {
-    return this.chainData.chainId;
   }
 
   public async height(): Promise<number> {
@@ -357,8 +354,7 @@ export class CosmWasmConnection implements BlockchainConnection {
   private parseAndPopulateTxResponseUnsigned(
     response: TxsResponse,
   ): ConfirmedTransaction<UnsignedTransaction> | FailedTransaction {
-    const chainId = this.chainId();
-    return parseTxsResponseUnsigned(chainId, parseInt(response.height, 10), response, this.bankTokens);
+    return parseTxsResponseUnsigned(this.chainId, parseInt(response.height, 10), response, this.bankTokens);
   }
 
   private async parseAndPopulateTxResponseSigned(
@@ -369,7 +365,12 @@ export class CosmWasmConnection implements BlockchainConnection {
     // TODO: fix
     const nonce = -1 as Nonce;
 
-    const chainId = this.chainId();
-    return parseTxsResponseSigned(chainId, parseInt(response.height, 10), nonce, response, this.bankTokens);
+    return parseTxsResponseSigned(
+      this.chainId,
+      parseInt(response.height, 10),
+      nonce,
+      response,
+      this.bankTokens,
+    );
   }
 }
