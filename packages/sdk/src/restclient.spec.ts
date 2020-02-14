@@ -430,10 +430,11 @@ describe("RestClient", () => {
       expect((myInfo.init_msg as any).beneficiary).toEqual(beneficiaryAddress);
 
       // make sure random addresses don't give useful info
+      const nonExistentAddress = makeRandomAddress();
       await client
-        .getContractInfo(beneficiaryAddress)
+        .getContractInfo(nonExistentAddress)
         .then(() => fail("this shouldn't succeed"))
-        .catch(error => expect(error).toMatch(`No contract with address ${beneficiaryAddress}`));
+        .catch(error => expect(error).toMatch(`No contract found at address "${nonExistentAddress}"`));
     });
 
     describe("contract state", () => {
