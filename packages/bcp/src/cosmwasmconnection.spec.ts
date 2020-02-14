@@ -4,6 +4,7 @@ import {
   Algorithm,
   ChainId,
   isBlockInfoPending,
+  isBlockInfoSucceeded,
   isConfirmedTransaction,
   isSendTransaction,
   PubkeyBytes,
@@ -265,22 +266,7 @@ describe("CosmWasmConnection", () => {
   });
 
   describe("getTx", () => {
-    it("throws for non-existent transaction", async () => {
-      pendingWithoutCosmos();
-      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
-
-      const nonExistentId = "0000000000000000000000000000000000000000000000000000000000000000" as TransactionId;
-      await connection.getTx(nonExistentId).then(
-        () => fail("this must not succeed"),
-        error => expect(error).toMatch(/transaction does not exist/i),
-      );
-
-      connection.disconnect();
-    });
-  });
-
-  describe("integration tests", () => {
-    it("can post and get a transaction", async () => {
+    it("can get a recently posted transaction", async () => {
       pendingWithoutCosmos();
       const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
       const profile = new UserProfile();
@@ -305,8 +291,7 @@ describe("CosmWasmConnection", () => {
       const postableBytes = connection.codec.bytesToPost(signed);
       const response = await connection.postTx(postableBytes);
       const { transactionId } = response;
-      const blockInfo = await response.blockInfo.waitFor(info => !isBlockInfoPending(info));
-      expect(blockInfo.state).toEqual(TransactionState.Succeeded);
+      await response.blockInfo.waitFor(info => isBlockInfoSucceeded(info));
 
       const getResponse = await connection.getTx(transactionId);
       expect(getResponse.transactionId).toEqual(transactionId);
@@ -332,6 +317,21 @@ describe("CosmWasmConnection", () => {
       connection.disconnect();
     });
 
+    it("throws for non-existent transaction", async () => {
+      pendingWithoutCosmos();
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+
+      const nonExistentId = "0000000000000000000000000000000000000000000000000000000000000000" as TransactionId;
+      await connection.getTx(nonExistentId).then(
+        () => fail("this must not succeed"),
+        error => expect(error).toMatch(/transaction does not exist/i),
+      );
+
+      connection.disconnect();
+    });
+  });
+
+  describe("integration tests", () => {
     it("can post and search for a transaction", async () => {
       pendingWithoutCosmos();
       const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
