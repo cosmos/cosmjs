@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { Bech32, Encoding } from "@iov/encoding";
-import { assert } from "@iov/utils";
+import { assert, sleep } from "@iov/utils";
 
 import { CosmWasmClient } from "./cosmwasmclient";
 import { makeSignBytes, marshalTx } from "./encoding";
@@ -143,7 +143,6 @@ describe("CosmWasmClient", () => {
 
     beforeAll(async () => {
       if (cosmosEnabled()) {
-        pendingWithoutCosmos();
         const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
         const client = CosmWasmClient.makeReadOnly(httpUrl);
 
@@ -184,6 +183,7 @@ describe("CosmWasmClient", () => {
         };
 
         const result = await client.postTx(marshalTx(signedTx));
+        await sleep(50); // wait until tx is indexed
         const txDetails = await new RestClient(httpUrl).txsById(result.transactionHash);
         posted = {
           sender: sendMsg.value.from_address,
