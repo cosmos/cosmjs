@@ -1,5 +1,12 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { CosmosAddressBech32Prefix, CosmWasmClient, RestClient, TxsResponse, types } from "@cosmwasm/sdk";
+import {
+  CosmosAddressBech32Prefix,
+  CosmWasmClient,
+  findSequenceForSignedTx,
+  RestClient,
+  TxsResponse,
+  types,
+} from "@cosmwasm/sdk";
 import {
   Account,
   AccountQuery,
@@ -376,8 +383,15 @@ export class CosmWasmConnection implements BlockchainConnection {
     }
 
     const { accountNumber, sequence: currentSequence } = await this.cosmWasmClient.getNonce(senderAddress);
+    const sequenceForTx = await findSequenceForSignedTx(
+      response.tx,
+      Caip5.decode(this.chainId),
+      accountNumber,
+      currentSequence,
+    );
+    if (!sequenceForTx) throw new Error("Cound not find matching sequence for this transaction");
 
-    const nonce = accountToNonce(accountNumber, currentSequence - 1);
+    const nonce = accountToNonce(accountNumber, sequenceForTx);
 
     return parseTxsResponseSigned(
       this.chainId,

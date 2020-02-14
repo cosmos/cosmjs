@@ -1,4 +1,4 @@
-import { CosmosAddressBech32Prefix } from "@cosmwasm/sdk";
+import { CosmosAddressBech32Prefix, decodeSignature } from "@cosmwasm/sdk";
 import {
   Address,
   Algorithm,
@@ -13,12 +13,13 @@ import {
   TransactionId,
   TransactionState,
 } from "@iov/bcp";
-import { Random, Secp256k1 } from "@iov/crypto";
+import { Random, Secp256k1, Secp256k1Signature, Sha256 } from "@iov/crypto";
 import { Bech32, Encoding } from "@iov/encoding";
 import { HdPaths, Secp256k1HdWallet, UserProfile } from "@iov/keycontrol";
 import { assert } from "@iov/utils";
 
 import { CosmWasmConnection, TokenConfiguration } from "./cosmwasmconnection";
+import { encodeFullSignature } from "./encode";
 import * as testdata from "./testdata.spec";
 
 const { fromBase64 } = Encoding;
@@ -313,6 +314,47 @@ describe("CosmWasmConnection", () => {
         },
         signature: Secp256k1.trimRecoveryByte(signed.signatures[0].signature),
       });
+
+      connection.disconnect();
+    });
+
+    it("can get an old transaction", async () => {
+      pendingWithoutCosmos();
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+
+      const results = await connection.searchTx({ sentFromOrTo: faucet.address });
+      const firstSearchResult = results.find(() => true);
+      assert(firstSearchResult, "At least one transaction sent by the faucet must be available.");
+      assert(isConfirmedTransaction(firstSearchResult), "Transaction must be confirmed.");
+      const {
+        transaction: searchedTransaction,
+        transactionId: searchedTransactionId,
+        height: searchedHeight,
+      } = firstSearchResult;
+
+      const getResponse = await connection.getTx(searchedTransactionId);
+      assert(isConfirmedTransaction(getResponse), "Expected transaction to succeed");
+      const { height, transactionId, log, transaction, signatures } = getResponse;
+
+      // Test properties of getTx result: height, transactionId, log, transaction
+      expect(height).toEqual(searchedHeight);
+      expect(transactionId).toEqual(searchedTransactionId);
+      assert(log, "Log must be available");
+      const [firstLog] = JSON.parse(log);
+      expect(firstLog.events.length).toEqual(2);
+      expect(transaction).toEqual(searchedTransaction);
+
+      // Signature test ensures the nonce is correct
+      expect(signatures.length).toEqual(1);
+      const signBytes = connection.codec.bytesToSign(getResponse.transaction, signatures[0].nonce).bytes;
+      const { pubkey, signature } = decodeSignature(encodeFullSignature(signatures[0]));
+      const prehashed = new Sha256(signBytes).digest();
+      const valid = await Secp256k1.verifySignature(
+        new Secp256k1Signature(signature.slice(0, 32), signature.slice(32, 64)),
+        prehashed,
+        pubkey,
+      );
+      expect(valid).toEqual(true);
 
       connection.disconnect();
     });
