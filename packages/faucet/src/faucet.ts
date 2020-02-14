@@ -54,7 +54,7 @@ export class Faucet {
   public async send(job: SendJob): Promise<void> {
     const sendWithFee = await this.connection.withDefaultFee<SendTransaction>({
       kind: "bcp/send",
-      chainId: this.connection.chainId(),
+      chainId: this.connection.chainId,
       sender: this.codec.identityToAddress(job.sender),
       senderPubkey: job.sender.pubkey,
       recipient: job.recipient,
@@ -113,7 +113,7 @@ export class Faucet {
 
   public async refill(): Promise<void> {
     if (this.logging) {
-      console.info(`Connected to network: ${this.connection.chainId()}`);
+      console.info(`Connected to network: ${this.connection.chainId}`);
       console.info(`Tokens on network: ${(await this.loadTokenTickers()).join(", ")}`);
     }
 
