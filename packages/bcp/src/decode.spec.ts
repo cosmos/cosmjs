@@ -183,6 +183,7 @@ describe("decode", () => {
         txhash: testdata.txId,
         raw_log: '[{"msg_index":0,"success":true,"log":""}]',
         tx: cosmoshub.tx,
+        timestamp: "2020-02-14T11:35:41Z",
       };
       const expected = {
         transaction: testdata.sendTxJson,
@@ -205,6 +206,7 @@ describe("decode", () => {
         txhash: testdata.txId,
         raw_log: '[{"msg_index":0,"success":true,"log":""}]',
         tx: cosmoshub.tx,
+        timestamp: "2020-02-14T11:35:41Z",
       };
       const expected = {
         ...testdata.signedTxJson,

@@ -69,7 +69,13 @@ export interface TxsResponse {
   readonly height: string;
   readonly txhash: string;
   readonly raw_log: string;
+  readonly logs?: object;
   readonly tx: CosmosSdkTx;
+  /** The gas limit as set by the user */
+  readonly gas_wanted?: string;
+  /** The gas used by the execution */
+  readonly gas_used?: string;
+  readonly timestamp: string;
 }
 
 interface SearchTxsResponse {
