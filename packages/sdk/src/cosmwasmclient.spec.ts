@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import { Bech32, Encoding } from "@iov/encoding";
 import { assert } from "@iov/utils";
 
@@ -91,9 +92,7 @@ describe("CosmWasmClient", () => {
       const sendMsg: MsgSend = {
         type: "cosmos-sdk/MsgSend",
         value: {
-          // eslint-disable-next-line @typescript-eslint/camelcase
           from_address: faucet.address,
-          // eslint-disable-next-line @typescript-eslint/camelcase
           to_address: makeRandomAddress(),
           amount: [
             {
@@ -152,9 +151,7 @@ describe("CosmWasmClient", () => {
         const sendMsg: MsgSend = {
           type: "cosmos-sdk/MsgSend",
           value: {
-            // eslint-disable-next-line @typescript-eslint/camelcase
             from_address: faucet.address,
-            // eslint-disable-next-line @typescript-eslint/camelcase
             to_address: makeRandomAddress(),
             amount: [
               {
