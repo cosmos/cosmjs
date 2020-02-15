@@ -130,8 +130,7 @@ export class CosmWasmConnection implements BlockchainConnection {
   }
 
   public async height(): Promise<number> {
-    // tslint:disable-next-line: deprecation
-    const { block } = await this.restClient.blocksLatest();
+    const { block } = await this.cosmWasmClient.getBlock();
     return parseInt(block.header.height, 10);
   }
 
@@ -217,8 +216,7 @@ export class CosmWasmConnection implements BlockchainConnection {
   }
 
   public async getBlockHeader(height: number): Promise<BlockHeader> {
-    // tslint:disable-next-line: deprecation
-    const { block_id, block } = await this.restClient.blocks(height);
+    const { block_id, block } = await this.cosmWasmClient.getBlock(height);
     return {
       id: block_id.hash as BlockId,
       height: parseInt(block.header.height, 10),
