@@ -5,7 +5,6 @@ export { CosmosAddressBech32Prefix, encodeAddress, isValidAddress } from "./addr
 export { unmarshalTx } from "./decoding";
 export { makeSignBytes, marshalTx } from "./encoding";
 export { RestClient, TxsResponse } from "./restclient";
-export { encodeSecp256k1Signature } from "./signature";
 export {
   CosmWasmClient,
   ExecuteResult,
@@ -23,3 +22,5 @@ export {
   encodeBech32Pubkey,
   encodeSecp256k1Pubkey,
 } from "./pubkey";
+export { findSequenceForSignedTx } from "./sequence";
+export { encodeSecp256k1Signature, decodeSignature } from "./signature";

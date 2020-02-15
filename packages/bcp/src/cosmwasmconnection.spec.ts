@@ -1,9 +1,10 @@
-import { CosmosAddressBech32Prefix } from "@cosmwasm/sdk";
+import { CosmosAddressBech32Prefix, decodeSignature } from "@cosmwasm/sdk";
 import {
   Address,
   Algorithm,
   ChainId,
   isBlockInfoPending,
+  isBlockInfoSucceeded,
   isConfirmedTransaction,
   isSendTransaction,
   PubkeyBytes,
@@ -12,12 +13,13 @@ import {
   TransactionId,
   TransactionState,
 } from "@iov/bcp";
-import { Random, Secp256k1 } from "@iov/crypto";
+import { Random, Secp256k1, Secp256k1Signature, Sha256 } from "@iov/crypto";
 import { Bech32, Encoding } from "@iov/encoding";
 import { HdPaths, Secp256k1HdWallet, UserProfile } from "@iov/keycontrol";
 import { assert } from "@iov/utils";
 
 import { CosmWasmConnection, TokenConfiguration } from "./cosmwasmconnection";
+import { encodeFullSignature } from "./encode";
 import * as testdata from "./testdata.spec";
 
 const { fromBase64 } = Encoding;
@@ -34,22 +36,24 @@ function makeRandomAddress(): Address {
   return Bech32.encode(defaultPrefix, Random.getBytes(20)) as Address;
 }
 
+const faucet = {
+  mnemonic:
+    "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone",
+  path: HdPaths.cosmos(0),
+  pubkey: {
+    algo: Algorithm.Secp256k1,
+    data: fromBase64("A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ") as PubkeyBytes,
+  },
+  address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6" as Address,
+};
+
 describe("CosmWasmConnection", () => {
   const cosm = "COSM" as TokenTicker;
   const httpUrl = "http://localhost:1317";
   const defaultChainId = "cosmos:testing" as ChainId;
   const defaultEmptyAddress = "cosmos1h806c7khnvmjlywdrkdgk2vrayy2mmvf9rxk2r" as Address;
-  const faucetMnemonic =
-    "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone";
-  const faucetPath = HdPaths.cosmos(0);
   const defaultRecipient = "cosmos1t70qnpr0az8tf7py83m4ue5y89w58lkjmx0yq2" as Address;
-  const faucetAccount = {
-    pubkey: {
-      algo: Algorithm.Secp256k1,
-      data: fromBase64("A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ") as PubkeyBytes,
-    },
-    address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6" as Address,
-  };
+
   const unusedAccount = {
     pubkey: {
       algo: Algorithm.Secp256k1,
@@ -256,13 +260,105 @@ describe("CosmWasmConnection", () => {
     it("has a pubkey when getting account with transactions", async () => {
       pendingWithoutCosmos();
       const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
-      const account = await connection.getAccount({ address: faucetAccount.address });
-      expect(account?.pubkey).toEqual(faucetAccount.pubkey);
+      const account = await connection.getAccount({ address: faucet.address });
+      expect(account?.pubkey).toEqual(faucet.pubkey);
       connection.disconnect();
     });
   });
 
   describe("getTx", () => {
+    it("can get a recently posted transaction", async () => {
+      pendingWithoutCosmos();
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const profile = new UserProfile();
+      const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(faucet.mnemonic));
+      const senderIdentity = await profile.createIdentity(wallet.id, defaultChainId, faucet.path);
+      const senderAddress = connection.codec.identityToAddress(senderIdentity);
+
+      const unsigned = await connection.withDefaultFee<SendTransaction>({
+        kind: "bcp/send",
+        chainId: defaultChainId,
+        sender: senderAddress,
+        recipient: defaultRecipient,
+        memo: "My first payment",
+        amount: {
+          quantity: "75000",
+          fractionalDigits: 6,
+          tokenTicker: cosm,
+        },
+      });
+      const nonce = await connection.getNonce({ address: senderAddress });
+      const signed = await profile.signTransaction(senderIdentity, unsigned, connection.codec, nonce);
+      const postableBytes = connection.codec.bytesToPost(signed);
+      const response = await connection.postTx(postableBytes);
+      const { transactionId } = response;
+      await response.blockInfo.waitFor(info => isBlockInfoSucceeded(info));
+
+      const getResponse = await connection.getTx(transactionId);
+      expect(getResponse.transactionId).toEqual(transactionId);
+      assert(isConfirmedTransaction(getResponse), "Expected transaction to succeed");
+      assert(getResponse.log, "Log must be available");
+      // we get a json response in the log for each msg, multiple events is good (transfer succeeded)
+      const [firstLog] = JSON.parse(getResponse.log);
+      expect(firstLog.events.length).toEqual(2);
+
+      const { transaction, signatures } = getResponse;
+      assert(isSendTransaction(transaction), "Expected send transaction");
+      expect(transaction).toEqual(unsigned);
+      expect(signatures.length).toEqual(1);
+      expect(signatures[0]).toEqual({
+        nonce: signed.signatures[0].nonce,
+        pubkey: {
+          algo: signed.signatures[0].pubkey.algo,
+          data: Secp256k1.compressPubkey(signed.signatures[0].pubkey.data),
+        },
+        signature: Secp256k1.trimRecoveryByte(signed.signatures[0].signature),
+      });
+
+      connection.disconnect();
+    });
+
+    it("can get an old transaction", async () => {
+      pendingWithoutCosmos();
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+
+      const results = await connection.searchTx({ sentFromOrTo: faucet.address });
+      const firstSearchResult = results.find(() => true);
+      assert(firstSearchResult, "At least one transaction sent by the faucet must be available.");
+      assert(isConfirmedTransaction(firstSearchResult), "Transaction must be confirmed.");
+      const {
+        transaction: searchedTransaction,
+        transactionId: searchedTransactionId,
+        height: searchedHeight,
+      } = firstSearchResult;
+
+      const getResponse = await connection.getTx(searchedTransactionId);
+      assert(isConfirmedTransaction(getResponse), "Expected transaction to succeed");
+      const { height, transactionId, log, transaction, signatures } = getResponse;
+
+      // Test properties of getTx result: height, transactionId, log, transaction
+      expect(height).toEqual(searchedHeight);
+      expect(transactionId).toEqual(searchedTransactionId);
+      assert(log, "Log must be available");
+      const [firstLog] = JSON.parse(log);
+      expect(firstLog.events.length).toEqual(2);
+      expect(transaction).toEqual(searchedTransaction);
+
+      // Signature test ensures the nonce is correct
+      expect(signatures.length).toEqual(1);
+      const signBytes = connection.codec.bytesToSign(getResponse.transaction, signatures[0].nonce).bytes;
+      const { pubkey, signature } = decodeSignature(encodeFullSignature(signatures[0]));
+      const prehashed = new Sha256(signBytes).digest();
+      const valid = await Secp256k1.verifySignature(
+        new Secp256k1Signature(signature.slice(0, 32), signature.slice(32, 64)),
+        prehashed,
+        pubkey,
+      );
+      expect(valid).toEqual(true);
+
+      connection.disconnect();
+    });
+
     it("throws for non-existent transaction", async () => {
       pendingWithoutCosmos();
       const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
@@ -278,70 +374,18 @@ describe("CosmWasmConnection", () => {
   });
 
   describe("integration tests", () => {
-    it("can post and get a transaction", async () => {
-      pendingWithoutCosmos();
-      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
-      const profile = new UserProfile();
-      const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(faucetMnemonic));
-      const faucet = await profile.createIdentity(wallet.id, defaultChainId, faucetPath);
-      const faucetAddress = connection.codec.identityToAddress(faucet);
-
-      const unsigned = await connection.withDefaultFee<SendTransaction>({
-        kind: "bcp/send",
-        chainId: defaultChainId,
-        sender: faucetAddress,
-        recipient: defaultRecipient,
-        memo: "My first payment",
-        amount: {
-          quantity: "75000",
-          fractionalDigits: 6,
-          tokenTicker: cosm,
-        },
-      });
-      const nonce = await connection.getNonce({ address: faucetAddress });
-      const signed = await profile.signTransaction(faucet, unsigned, connection.codec, nonce);
-      const postableBytes = connection.codec.bytesToPost(signed);
-      const response = await connection.postTx(postableBytes);
-      const { transactionId } = response;
-      const blockInfo = await response.blockInfo.waitFor(info => !isBlockInfoPending(info));
-      expect(blockInfo.state).toEqual(TransactionState.Succeeded);
-
-      const getResponse = await connection.getTx(transactionId);
-      expect(getResponse.transactionId).toEqual(transactionId);
-      assert(isConfirmedTransaction(getResponse), "Expected transaction to succeed");
-      assert(getResponse.log, "Log must be available");
-      // we get a json response in the log for each msg, multiple events is good (transfer succeeded)
-      const [firstLog] = JSON.parse(getResponse.log);
-      expect(firstLog.events.length).toEqual(2);
-
-      const { transaction, signatures } = getResponse;
-      assert(isSendTransaction(transaction), "Expected send transaction");
-      expect(transaction).toEqual(unsigned);
-      expect(signatures.length).toEqual(1);
-      expect(signatures[0]).toEqual({
-        nonce: -1, // Unfortunately this information is unavailable as previous implementation attempt is broken. See https://github.com/iov-one/iov-core/pull/1390
-        pubkey: {
-          algo: signed.signatures[0].pubkey.algo,
-          data: Secp256k1.compressPubkey(signed.signatures[0].pubkey.data),
-        },
-        signature: Secp256k1.trimRecoveryByte(signed.signatures[0].signature),
-      });
-
-      connection.disconnect();
-    });
-
     it("can post and search for a transaction", async () => {
       pendingWithoutCosmos();
       const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
       const profile = new UserProfile();
-      const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(faucetMnemonic));
-      const faucet = await profile.createIdentity(wallet.id, defaultChainId, faucetPath);
-      const faucetAddress = connection.codec.identityToAddress(faucet);
+      const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(faucet.mnemonic));
+      const sender = await profile.createIdentity(wallet.id, defaultChainId, faucet.path);
+      const senderAddress = connection.codec.identityToAddress(sender);
 
       const unsigned = await connection.withDefaultFee<SendTransaction>({
         kind: "bcp/send",
         chainId: defaultChainId,
-        sender: faucetAddress,
+        sender: senderAddress,
         recipient: defaultRecipient,
         memo: "My first payment",
         amount: {
@@ -350,8 +394,8 @@ describe("CosmWasmConnection", () => {
           tokenTicker: cosm,
         },
       });
-      const nonce = await connection.getNonce({ address: faucetAddress });
-      const signed = await profile.signTransaction(faucet, unsigned, connection.codec, nonce);
+      const nonce = await connection.getNonce({ address: senderAddress });
+      const signed = await profile.signTransaction(sender, unsigned, connection.codec, nonce);
       const postableBytes = connection.codec.bytesToPost(signed);
       const response = await connection.postTx(postableBytes);
       const { transactionId } = response;
@@ -374,7 +418,7 @@ describe("CosmWasmConnection", () => {
       expect(byIdTransaction).toEqual(unsigned);
 
       // search by sender address
-      const bySenderResults = await connection.searchTx({ sentFromOrTo: faucetAddress });
+      const bySenderResults = await connection.searchTx({ sentFromOrTo: senderAddress });
       expect(bySenderResults).toBeTruthy();
       expect(bySenderResults.length).toBeGreaterThanOrEqual(1);
       const bySenderResult = bySenderResults[bySenderResults.length - 1];
@@ -424,15 +468,15 @@ describe("CosmWasmConnection", () => {
       pendingWithoutCosmos();
       const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
       const profile = new UserProfile();
-      const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(faucetMnemonic));
-      const faucet = await profile.createIdentity(wallet.id, defaultChainId, faucetPath);
-      const faucetAddress = connection.codec.identityToAddress(faucet);
+      const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(faucet.mnemonic));
+      const sender = await profile.createIdentity(wallet.id, defaultChainId, faucet.path);
+      const senderAddress = connection.codec.identityToAddress(sender);
       const recipient = makeRandomAddress();
 
       const unsigned = await connection.withDefaultFee<SendTransaction>({
         kind: "bcp/send",
         chainId: defaultChainId,
-        sender: faucetAddress,
+        sender: senderAddress,
         recipient: recipient,
         memo: "My first payment",
         amount: {
@@ -441,8 +485,8 @@ describe("CosmWasmConnection", () => {
           tokenTicker: "BASH" as TokenTicker,
         },
       });
-      const nonce = await connection.getNonce({ address: faucetAddress });
-      const signed = await profile.signTransaction(faucet, unsigned, connection.codec, nonce);
+      const nonce = await connection.getNonce({ address: senderAddress });
+      const signed = await profile.signTransaction(sender, unsigned, connection.codec, nonce);
       const postableBytes = connection.codec.bytesToPost(signed);
       const response = await connection.postTx(postableBytes);
       const blockInfo = await response.blockInfo.waitFor(info => !isBlockInfoPending(info));
