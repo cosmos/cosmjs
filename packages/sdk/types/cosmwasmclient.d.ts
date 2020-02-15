@@ -1,5 +1,5 @@
 import { Log } from "./logs";
-import { TxsResponse } from "./restclient";
+import { BlockResponse, TxsResponse } from "./restclient";
 import { Coin, CosmosSdkTx, StdSignature } from "./types";
 export interface SigningCallback {
   (signBytes: Uint8Array): Promise<StdSignature>;
@@ -46,6 +46,12 @@ export declare class CosmWasmClient {
    * @param address returns data for this address. When unset, the client's sender adddress is used.
    */
   getNonce(address?: string): Promise<GetNonceResult>;
+  /**
+   * Gets block header and meta
+   *
+   * @param height The height of the block. If undefined, the latest height is used.
+   */
+  getBlock(height?: number): Promise<BlockResponse>;
   searchTx(query: SearchTxQuery): Promise<readonly TxsResponse[]>;
   postTx(tx: Uint8Array): Promise<PostTxResult>;
   /** Uploads code and returns a code ID */

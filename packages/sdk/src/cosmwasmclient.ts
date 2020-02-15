@@ -3,7 +3,7 @@ import { Encoding } from "@iov/encoding";
 
 import { makeSignBytes, marshalTx } from "./encoding";
 import { findAttribute, Log, parseLogs } from "./logs";
-import { RestClient, TxsResponse } from "./restclient";
+import { BlockResponse, RestClient, TxsResponse } from "./restclient";
 import {
   Coin,
   CosmosSdkTx,
@@ -155,6 +155,19 @@ export class CosmWasmClient {
       accountNumber: account.account_number,
       sequence: account.sequence,
     };
+  }
+
+  /**
+   * Gets block header and meta
+   *
+   * @param height The height of the block. If undefined, the latest height is used.
+   */
+  public async getBlock(height?: number): Promise<BlockResponse> {
+    if (height !== undefined) {
+      return this.restClient.blocks(height);
+    } else {
+      return this.restClient.blocksLatest();
+    }
   }
 
   public async searchTx(query: SearchTxQuery): Promise<readonly TxsResponse[]> {
