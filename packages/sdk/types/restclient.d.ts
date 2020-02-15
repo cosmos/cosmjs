@@ -5,25 +5,23 @@ interface NodeInfo {
 interface NodeInfoResponse {
   readonly node_info: NodeInfo;
 }
-export interface BlockMeta {
-  readonly header: {
-    readonly height: number;
-    readonly time: string;
-    readonly num_txs: number;
-  };
-  readonly block_id: {
-    readonly hash: string;
-  };
-}
 export interface BlockHeader {
   readonly height: string;
   readonly chain_id: string;
+  /** An RFC 3339 time string like e.g. '2020-02-15T10:39:10.4696305Z' */
+  readonly time: string;
 }
 export interface Block {
   readonly header: BlockHeader;
+  readonly data: {
+    /** Array of base64 encoded transactions */
+    readonly txs: ReadonlyArray<string> | null;
+  };
 }
 export interface BlockResponse {
-  readonly block_meta: BlockMeta;
+  readonly block_id: {
+    readonly hash: string;
+  };
   readonly block: Block;
 }
 interface AuthAccountsResponse {

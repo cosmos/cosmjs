@@ -22,20 +22,11 @@ interface NodeInfoResponse {
   readonly node_info: NodeInfo;
 }
 
-export interface BlockMeta {
-  readonly header: {
-    readonly height: number;
-    readonly time: string;
-    readonly num_txs: number;
-  };
-  readonly block_id: {
-    readonly hash: string;
-  };
-}
-
 export interface BlockHeader {
   readonly height: string;
   readonly chain_id: string;
+  /** An RFC 3339 time string like e.g. '2020-02-15T10:39:10.4696305Z' */
+  readonly time: string;
   // TODO: add all of those
   // header: {
   //   version: [Object],
@@ -57,10 +48,21 @@ export interface BlockHeader {
 
 export interface Block {
   readonly header: BlockHeader;
+  readonly data: {
+    /** Array of base64 encoded transactions */
+    readonly txs: ReadonlyArray<string> | null;
+  };
 }
 
 export interface BlockResponse {
-  readonly block_meta: BlockMeta;
+  readonly block_id: {
+    readonly hash: string;
+    // TODO: here we also have this
+    // parts: {
+    //   total: '1',
+    //   hash: '7AF200C78FBF9236944E1AB270F4045CD60972B7C265E3A9DA42973397572931'
+    // }
+  };
   readonly block: Block;
 }
 
