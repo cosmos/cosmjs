@@ -132,7 +132,7 @@ export class CosmWasmConnection implements BlockchainConnection {
   public async height(): Promise<number> {
     // tslint:disable-next-line: deprecation
     const { block } = await this.restClient.blocksLatest();
-    return block.header.height;
+    return parseInt(block.header.height, 10);
   }
 
   public async getToken(searchTicker: TokenTicker): Promise<Token | undefined> {

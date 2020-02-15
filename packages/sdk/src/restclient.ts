@@ -34,7 +34,7 @@ export interface BlockMeta {
 }
 
 export interface BlockHeader {
-  readonly height: number;
+  readonly height: string;
   readonly chain_id: string;
   // TODO: add all of those
   // header: {
