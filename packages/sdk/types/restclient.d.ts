@@ -5,11 +5,31 @@ interface NodeInfo {
 interface NodeInfoResponse {
   readonly node_info: NodeInfo;
 }
+export interface BlockId {
+  readonly hash: string;
+}
 export interface BlockHeader {
+  readonly version: {
+    readonly block: string;
+    readonly app: string;
+  };
   readonly height: string;
   readonly chain_id: string;
   /** An RFC 3339 time string like e.g. '2020-02-15T10:39:10.4696305Z' */
   readonly time: string;
+  readonly last_commit_hash: string;
+  readonly last_block_id: BlockId;
+  /** Can be empty */
+  readonly data_hash: string;
+  readonly validators_hash: string;
+  readonly next_validators_hash: string;
+  readonly consensus_hash: string;
+  readonly app_hash: string;
+  /** Can be empty */
+  readonly last_results_hash: string;
+  /** Can be empty */
+  readonly evidence_hash: string;
+  readonly proposer_address: string;
 }
 export interface Block {
   readonly header: BlockHeader;
@@ -19,9 +39,7 @@ export interface Block {
   };
 }
 export interface BlockResponse {
-  readonly block_id: {
-    readonly hash: string;
-  };
+  readonly block_id: BlockId;
   readonly block: Block;
 }
 interface AuthAccountsResponse {

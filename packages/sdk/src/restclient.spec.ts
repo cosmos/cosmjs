@@ -10,7 +10,13 @@ import { Pen, Secp256k1Pen } from "./pen";
 import { encodeBech32Pubkey } from "./pubkey";
 import { PostTxsResponse, RestClient } from "./restclient";
 import cosmoshub from "./testdata/cosmoshub.json";
-import { getRandomizedHackatom, makeRandomAddress, tendermintIdMatcher } from "./testutils.spec";
+import {
+  getRandomizedHackatom,
+  makeRandomAddress,
+  tendermintAddressMatcher,
+  tendermintIdMatcher,
+  tendermintOptionalIdMatcher,
+} from "./testutils.spec";
 import {
   Coin,
   Msg,
@@ -190,12 +196,23 @@ describe("RestClient", () => {
       expect(response.block_id.hash).toMatch(tendermintIdMatcher);
 
       // header
+      expect(response.block.header.version).toEqual({ block: "10", app: "0" });
       expect(parseInt(response.block.header.height, 10)).toBeGreaterThanOrEqual(1);
       expect(response.block.header.chain_id).toEqual(defaultNetworkId);
       expect(new ReadonlyDate(response.block.header.time).getTime()).toBeLessThan(ReadonlyDate.now());
       expect(new ReadonlyDate(response.block.header.time).getTime()).toBeGreaterThanOrEqual(
         ReadonlyDate.now() - 5_000,
       );
+      expect(response.block.header.last_commit_hash).toMatch(tendermintIdMatcher);
+      expect(response.block.header.last_block_id.hash).toMatch(tendermintIdMatcher);
+      expect(response.block.header.data_hash).toMatch(tendermintOptionalIdMatcher);
+      expect(response.block.header.validators_hash).toMatch(tendermintIdMatcher);
+      expect(response.block.header.next_validators_hash).toMatch(tendermintIdMatcher);
+      expect(response.block.header.consensus_hash).toMatch(tendermintIdMatcher);
+      expect(response.block.header.app_hash).toMatch(tendermintIdMatcher);
+      expect(response.block.header.last_results_hash).toMatch(tendermintOptionalIdMatcher);
+      expect(response.block.header.evidence_hash).toMatch(tendermintOptionalIdMatcher);
+      expect(response.block.header.proposer_address).toMatch(tendermintAddressMatcher);
 
       // data
       expect(response.block.data.txs === null || Array.isArray(response.block.data.txs)).toEqual(true);
@@ -213,12 +230,23 @@ describe("RestClient", () => {
       expect(response.block_id.hash).toMatch(tendermintIdMatcher);
 
       // header
+      expect(response.block.header.version).toEqual({ block: "10", app: "0" });
       expect(response.block.header.height).toEqual(`${height - 1}`);
       expect(response.block.header.chain_id).toEqual(defaultNetworkId);
       expect(new ReadonlyDate(response.block.header.time).getTime()).toBeLessThan(ReadonlyDate.now());
       expect(new ReadonlyDate(response.block.header.time).getTime()).toBeGreaterThanOrEqual(
         ReadonlyDate.now() - 5_000,
       );
+      expect(response.block.header.last_commit_hash).toMatch(tendermintIdMatcher);
+      expect(response.block.header.last_block_id.hash).toMatch(tendermintIdMatcher);
+      expect(response.block.header.data_hash).toMatch(tendermintOptionalIdMatcher);
+      expect(response.block.header.validators_hash).toMatch(tendermintIdMatcher);
+      expect(response.block.header.next_validators_hash).toMatch(tendermintIdMatcher);
+      expect(response.block.header.consensus_hash).toMatch(tendermintIdMatcher);
+      expect(response.block.header.app_hash).toMatch(tendermintIdMatcher);
+      expect(response.block.header.last_results_hash).toMatch(tendermintOptionalIdMatcher);
+      expect(response.block.header.evidence_hash).toMatch(tendermintOptionalIdMatcher);
+      expect(response.block.header.proposer_address).toMatch(tendermintAddressMatcher);
 
       // data
       expect(response.block.data.txs === null || Array.isArray(response.block.data.txs)).toEqual(true);

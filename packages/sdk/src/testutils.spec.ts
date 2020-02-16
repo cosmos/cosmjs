@@ -55,6 +55,8 @@ export function makeRandomAddress(): string {
 }
 
 export const tendermintIdMatcher = /^[0-9A-F]{64}$/;
+export const tendermintOptionalIdMatcher = /^([0-9A-F]{64}|)$/;
+export const tendermintAddressMatcher = /^[0-9A-F]{40}$/;
 
 describe("leb128", () => {
   describe("leb128Encode", () => {
