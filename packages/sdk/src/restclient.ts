@@ -22,25 +22,47 @@ interface NodeInfoResponse {
   readonly node_info: NodeInfo;
 }
 
-interface BlockMeta {
-  readonly header: {
-    readonly height: number;
-    readonly time: string;
-    readonly num_txs: number;
+export interface BlockHeader {
+  readonly height: string;
+  readonly chain_id: string;
+  /** An RFC 3339 time string like e.g. '2020-02-15T10:39:10.4696305Z' */
+  readonly time: string;
+  // TODO: add all of those
+  // header: {
+  //   version: [Object],
+  //   chain_id: 'testing',
+  //   height: '41121',
+  //   time: '2020-02-15T10:39:10.4696305Z',
+  //   last_block_id: [Object],
+  //   last_commit_hash: '9C68EDA02AEB5F6A76AA03F7F7E6834D73424A8906FE5A79B04D310C2DB5EFFC',
+  //   data_hash: '',
+  //   validators_hash: '4412A0B61BAC7D1EEDA531F3FBA8E90BBB3DDF6CCA85B28CA1D8300818F0E7EA',
+  //   next_validators_hash: '4412A0B61BAC7D1EEDA531F3FBA8E90BBB3DDF6CCA85B28CA1D8300818F0E7EA',
+  //   consensus_hash: '048091BC7DDC283F77BFBF91D73C44DA58C3DF8A9CBC867405D8B7F3DAADA22F',
+  //   app_hash: 'DD58B3B4AB1031ECB0CED45C017B57EE2E6E22FA7F0ECA355268CC205C6A1A64',
+  //   last_results_hash: '',
+  //   evidence_hash: '',
+  //   proposer_address: '3FBF50B72FE062495F150AEB78D1981E7DAEBE60'
+  // },
+}
+
+export interface Block {
+  readonly header: BlockHeader;
+  readonly data: {
+    /** Array of base64 encoded transactions */
+    readonly txs: ReadonlyArray<string> | null;
   };
+}
+
+export interface BlockResponse {
   readonly block_id: {
     readonly hash: string;
+    // TODO: here we also have this
+    // parts: {
+    //   total: '1',
+    //   hash: '7AF200C78FBF9236944E1AB270F4045CD60972B7C265E3A9DA42973397572931'
+    // }
   };
-}
-
-interface Block {
-  readonly header: {
-    readonly height: number;
-  };
-}
-
-interface BlocksResponse {
-  readonly block_meta: BlockMeta;
   readonly block: Block;
 }
 
@@ -119,7 +141,7 @@ interface SmartQueryResponse {
 
 type RestClientResponse =
   | NodeInfoResponse
-  | BlocksResponse
+  | BlockResponse
   | AuthAccountsResponse
   | TxsResponse
   | SearchTxsResponse
@@ -209,20 +231,20 @@ export class RestClient {
     return responseData as NodeInfoResponse;
   }
 
-  public async blocksLatest(): Promise<BlocksResponse> {
+  public async blocksLatest(): Promise<BlockResponse> {
     const responseData = await this.get("/blocks/latest");
     if (!(responseData as any).block) {
       throw new Error("Unexpected response data format");
     }
-    return responseData as BlocksResponse;
+    return responseData as BlockResponse;
   }
 
-  public async blocks(height: number): Promise<BlocksResponse> {
+  public async blocks(height: number): Promise<BlockResponse> {
     const responseData = await this.get(`/blocks/${height}`);
     if (!(responseData as any).block) {
       throw new Error("Unexpected response data format");
     }
-    return responseData as BlocksResponse;
+    return responseData as BlockResponse;
   }
 
   /** returns the amino-encoding of the transaction performed by the server */

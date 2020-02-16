@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { Bech32, Encoding } from "@iov/encoding";
 import { assert, sleep } from "@iov/utils";
+import { ReadonlyDate } from "readonly-date";
 
 import { CosmWasmClient } from "./cosmwasmclient";
 import { makeSignBytes, marshalTx } from "./encoding";
@@ -71,6 +72,49 @@ describe("CosmWasmClient", () => {
         accountNumber: 5,
         sequence: 0,
       });
+    });
+  });
+
+  describe("getBlock", () => {
+    it("works for latest block", async () => {
+      pendingWithoutCosmos();
+      const client = CosmWasmClient.makeReadOnly(httpUrl);
+      const response = await client.getBlock();
+
+      // id
+      expect(response.block_id.hash).toMatch(/^[0-9A-F]{64}$/);
+
+      // header
+      expect(parseInt(response.block.header.height, 10)).toBeGreaterThanOrEqual(1);
+      expect(response.block.header.chain_id).toEqual(await client.chainId());
+      expect(new ReadonlyDate(response.block.header.time).getTime()).toBeLessThan(ReadonlyDate.now());
+      expect(new ReadonlyDate(response.block.header.time).getTime()).toBeGreaterThanOrEqual(
+        ReadonlyDate.now() - 5_000,
+      );
+
+      // data
+      expect(response.block.data.txs === null || Array.isArray(response.block.data.txs)).toEqual(true);
+    });
+
+    it("works for block by height", async () => {
+      pendingWithoutCosmos();
+      const client = CosmWasmClient.makeReadOnly(httpUrl);
+      const height = parseInt((await client.getBlock()).block.header.height, 10);
+      const response = await client.getBlock(height - 1);
+
+      // id
+      expect(response.block_id.hash).toMatch(/^[0-9A-F]{64}$/);
+
+      // header
+      expect(response.block.header.height).toEqual(`${height - 1}`);
+      expect(response.block.header.chain_id).toEqual(await client.chainId());
+      expect(new ReadonlyDate(response.block.header.time).getTime()).toBeLessThan(ReadonlyDate.now());
+      expect(new ReadonlyDate(response.block.header.time).getTime()).toBeGreaterThanOrEqual(
+        ReadonlyDate.now() - 5_000,
+      );
+
+      // data
+      expect(response.block.data.txs === null || Array.isArray(response.block.data.txs)).toEqual(true);
     });
   });
 

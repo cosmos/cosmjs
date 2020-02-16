@@ -5,23 +5,23 @@ interface NodeInfo {
 interface NodeInfoResponse {
   readonly node_info: NodeInfo;
 }
-interface BlockMeta {
-  readonly header: {
-    readonly height: number;
-    readonly time: string;
-    readonly num_txs: number;
+export interface BlockHeader {
+  readonly height: string;
+  readonly chain_id: string;
+  /** An RFC 3339 time string like e.g. '2020-02-15T10:39:10.4696305Z' */
+  readonly time: string;
+}
+export interface Block {
+  readonly header: BlockHeader;
+  readonly data: {
+    /** Array of base64 encoded transactions */
+    readonly txs: ReadonlyArray<string> | null;
   };
+}
+export interface BlockResponse {
   readonly block_id: {
     readonly hash: string;
   };
-}
-interface Block {
-  readonly header: {
-    readonly height: number;
-  };
-}
-interface BlocksResponse {
-  readonly block_meta: BlockMeta;
   readonly block: Block;
 }
 interface AuthAccountsResponse {
@@ -79,7 +79,7 @@ interface GetCodeResult {
 }
 declare type RestClientResponse =
   | NodeInfoResponse
-  | BlocksResponse
+  | BlockResponse
   | AuthAccountsResponse
   | TxsResponse
   | SearchTxsResponse
@@ -95,8 +95,8 @@ export declare class RestClient {
   get(path: string): Promise<RestClientResponse>;
   post(path: string, params: PostTxsParams): Promise<RestClientResponse>;
   nodeInfo(): Promise<NodeInfoResponse>;
-  blocksLatest(): Promise<BlocksResponse>;
-  blocks(height: number): Promise<BlocksResponse>;
+  blocksLatest(): Promise<BlockResponse>;
+  blocks(height: number): Promise<BlockResponse>;
   /** returns the amino-encoding of the transaction performed by the server */
   encodeTx(tx: CosmosSdkTx): Promise<Uint8Array>;
   authAccounts(address: string): Promise<AuthAccountsResponse>;
