@@ -9,7 +9,7 @@ import { findAttribute } from "./logs";
 import { Secp256k1Pen } from "./pen";
 import { RestClient } from "./restclient";
 import cosmoshub from "./testdata/cosmoshub.json";
-import { getRandomizedHackatom, makeRandomAddress } from "./testutils.spec";
+import { getRandomizedHackatom, makeRandomAddress, tendermintIdMatcher } from "./testutils.spec";
 import { Coin, CosmosSdkTx, MsgSend, StdFee } from "./types";
 
 const { fromAscii, fromUtf8, toAscii } = Encoding;
@@ -82,7 +82,7 @@ describe("CosmWasmClient", () => {
       const response = await client.getBlock();
 
       // id
-      expect(response.block_id.hash).toMatch(/^[0-9A-F]{64}$/);
+      expect(response.block_id.hash).toMatch(tendermintIdMatcher);
 
       // header
       expect(parseInt(response.block.header.height, 10)).toBeGreaterThanOrEqual(1);
@@ -103,7 +103,7 @@ describe("CosmWasmClient", () => {
       const response = await client.getBlock(height - 1);
 
       // id
-      expect(response.block_id.hash).toMatch(/^[0-9A-F]{64}$/);
+      expect(response.block_id.hash).toMatch(tendermintIdMatcher);
 
       // header
       expect(response.block.header.height).toEqual(`${height - 1}`);
