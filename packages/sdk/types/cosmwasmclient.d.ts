@@ -83,7 +83,7 @@ export declare class CosmWasmClient {
     memo?: string,
     transferAmount?: readonly Coin[],
   ): Promise<ExecuteResult>;
-  sendToken(recipientAddress: string, transferAmount: readonly Coin[], memo?: string): Promise<ExecuteResult>;
+  sendToken(recipientAddress: string, transferAmount: readonly Coin[], memo?: string): Promise<PostTxResult>;
   /**
    * Returns the data at the key if present (raw contract dependent storage data)
    * or null if no data at this key.

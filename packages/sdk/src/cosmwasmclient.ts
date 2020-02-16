@@ -334,7 +334,7 @@ export class CosmWasmClient {
     recipientAddress: string,
     transferAmount: readonly Coin[],
     memo = "",
-  ): Promise<ExecuteResult> {
+  ): Promise<PostTxResult> {
     const sendMsg: MsgSend = {
       type: "cosmos-sdk/MsgSend",
       value: {
@@ -357,10 +357,7 @@ export class CosmWasmClient {
       signatures: [signature],
     };
 
-    const result = await this.postTx(marshalTx(signedTx));
-    return {
-      logs: result.logs,
-    };
+    return this.postTx(marshalTx(signedTx));
   }
 
   /**
