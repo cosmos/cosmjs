@@ -2,6 +2,7 @@
 import { Sha256 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
 import { assert } from "@iov/utils";
+import { ReadonlyDate } from "readonly-date";
 
 import { makeSignBytes, marshalTx } from "./encoding";
 import { findAttribute, parseLogs } from "./logs";
@@ -9,7 +10,7 @@ import { Pen, Secp256k1Pen } from "./pen";
 import { encodeBech32Pubkey } from "./pubkey";
 import { PostTxsResponse, RestClient } from "./restclient";
 import cosmoshub from "./testdata/cosmoshub.json";
-import { getRandomizedHackatom, makeRandomAddress } from "./testutils.spec";
+import { getRandomizedHackatom, makeRandomAddress, tendermintIdMatcher } from "./testutils.spec";
 import {
   Coin,
   Msg,
@@ -176,6 +177,51 @@ describe("RestClient", () => {
       const client = new RestClient(httpUrl);
       const info = await client.nodeInfo();
       expect(info.node_info.network).toEqual(defaultNetworkId);
+    });
+  });
+
+  describe("blocksLatest", () => {
+    it("works", async () => {
+      pendingWithoutCosmos();
+      const client = new RestClient(httpUrl);
+      const response = await client.blocksLatest();
+
+      // id
+      expect(response.block_id.hash).toMatch(tendermintIdMatcher);
+
+      // header
+      expect(parseInt(response.block.header.height, 10)).toBeGreaterThanOrEqual(1);
+      expect(response.block.header.chain_id).toEqual(defaultNetworkId);
+      expect(new ReadonlyDate(response.block.header.time).getTime()).toBeLessThan(ReadonlyDate.now());
+      expect(new ReadonlyDate(response.block.header.time).getTime()).toBeGreaterThanOrEqual(
+        ReadonlyDate.now() - 5_000,
+      );
+
+      // data
+      expect(response.block.data.txs === null || Array.isArray(response.block.data.txs)).toEqual(true);
+    });
+  });
+
+  describe("blocks", () => {
+    it("works for block by height", async () => {
+      pendingWithoutCosmos();
+      const client = new RestClient(httpUrl);
+      const height = parseInt((await client.blocksLatest()).block.header.height, 10);
+      const response = await client.blocks(height - 1);
+
+      // id
+      expect(response.block_id.hash).toMatch(tendermintIdMatcher);
+
+      // header
+      expect(response.block.header.height).toEqual(`${height - 1}`);
+      expect(response.block.header.chain_id).toEqual(defaultNetworkId);
+      expect(new ReadonlyDate(response.block.header.time).getTime()).toBeLessThan(ReadonlyDate.now());
+      expect(new ReadonlyDate(response.block.header.time).getTime()).toBeGreaterThanOrEqual(
+        ReadonlyDate.now() - 5_000,
+      );
+
+      // data
+      expect(response.block.data.txs === null || Array.isArray(response.block.data.txs)).toEqual(true);
     });
   });
 
