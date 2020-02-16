@@ -122,11 +122,6 @@ export class CosmWasmClient {
   private readonly signingData: SigningData | undefined;
   private readonly fees: FeeTable;
 
-  private get senderAddress(): string {
-    if (!this.signingData) throw new Error("Signing data not set in this client");
-    return this.signingData.senderAddress;
-  }
-
   private get signCallback(): SigningCallback {
     if (!this.signingData) throw new Error("Signing data not set in this client");
     return this.signingData.signCallback;
@@ -141,6 +136,11 @@ export class CosmWasmClient {
   public async chainId(): Promise<string> {
     const response = await this.restClient.nodeInfo();
     return response.node_info.network;
+  }
+
+  public get senderAddress(): string {
+    if (!this.signingData) throw new Error("Signing data not set in this client");
+    return this.signingData.senderAddress;
   }
 
   /**

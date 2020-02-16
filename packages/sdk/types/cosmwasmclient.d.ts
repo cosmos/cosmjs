@@ -10,6 +10,10 @@ export interface FeeTable {
 export interface SigningCallback {
   (signBytes: Uint8Array): Promise<StdSignature>;
 }
+export interface SigningData {
+  readonly senderAddress: string;
+  readonly signCallback: SigningCallback;
+}
 export interface GetNonceResult {
   readonly accountNumber: number;
   readonly sequence: number;
@@ -44,10 +48,10 @@ export declare class CosmWasmClient {
   private readonly restClient;
   private readonly signingData;
   private readonly fees;
-  private get senderAddress();
   private get signCallback();
   private constructor();
   chainId(): Promise<string>;
+  get senderAddress(): string;
   /**
    * Returns a 32 byte upper-case hex transaction hash (typically used as the transaction ID)
    */
