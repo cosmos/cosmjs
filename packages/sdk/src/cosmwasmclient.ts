@@ -153,14 +153,15 @@ export class CosmWasmClient {
   public async getNonce(address?: string): Promise<GetNonceResult> {
     const account = await this.getAccount(address);
     return {
-      accountNumber: account.account_number,
-      sequence: account.sequence,
+      accountNumber: account ? account.account_number : 0,
+      sequence: account ? account.sequence : 0,
     };
   }
 
-  public async getAccount(address?: string): Promise<CosmosSdkAccount> {
+  public async getAccount(address?: string): Promise<CosmosSdkAccount | undefined> {
     const account = await this.restClient.authAccounts(address || this.senderAddress);
-    return account.result.value;
+    const value = account.result.value;
+    return value.address === "" ? undefined : value;
   }
 
   /**

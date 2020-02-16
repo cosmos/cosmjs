@@ -74,7 +74,15 @@ describe("CosmWasmClient", () => {
       });
     });
 
-
+    it("returns zeros for missing accounts", async () => {
+      pendingWithoutCosmos();
+      const client = CosmWasmClient.makeReadOnly(httpUrl);
+      const missing = makeRandomAddress();
+      expect(await client.getNonce(missing)).toEqual({
+        accountNumber: 0,
+        sequence: 0,
+      });
+    });
   });
 
   describe("getAccount", () => {
@@ -87,10 +95,17 @@ describe("CosmWasmClient", () => {
         sequence: 0,
         public_key: "",
         coins: [
-          {denom: 'ucosm', amount: '1000000000'},
-          {denom: 'ustake', amount: '1000000000'},
+          { denom: "ucosm", amount: "1000000000" },
+          { denom: "ustake", amount: "1000000000" },
         ],
       });
+    });
+
+    it("returns undefined for missing accounts", async () => {
+      pendingWithoutCosmos();
+      const client = CosmWasmClient.makeReadOnly(httpUrl);
+      const missing = makeRandomAddress();
+      expect(await client.getAccount(missing)).toBeUndefined();
     });
   });
 

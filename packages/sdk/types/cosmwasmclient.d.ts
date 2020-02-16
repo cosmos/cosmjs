@@ -46,7 +46,7 @@ export declare class CosmWasmClient {
    * @param address returns data for this address. When unset, the client's sender adddress is used.
    */
   getNonce(address?: string): Promise<GetNonceResult>;
-  getAccount(address?: string): Promise<CosmosSdkAccount>;
+  getAccount(address?: string): Promise<CosmosSdkAccount | undefined>;
   /**
    * Gets block header and meta
    *
