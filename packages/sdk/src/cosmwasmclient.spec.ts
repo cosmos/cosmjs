@@ -446,6 +446,37 @@ describe("CosmWasmClient", () => {
     });
   });
 
+  describe("sendToken", () => {
+    it("works", async () => {
+      pendingWithoutCosmos();
+      const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
+      const client = CosmWasmClient.makeWritable(httpUrl, faucet.address, signBytes => pen.sign(signBytes));
+
+      // instantiate
+      const transferAmount: readonly Coin[] = [
+        {
+          amount: "7890",
+          denom: "ucosm",
+        },
+      ];
+      const beneficiaryAddress = makeRandomAddress();
+
+      // no tokens here
+      const before = await client.getAccount(beneficiaryAddress);
+      expect(before).toBeUndefined();
+
+      // send
+      const result = await client.sendToken(beneficiaryAddress, transferAmount, "for dinner");
+      const [firstLog] = result.logs;
+      expect(firstLog).toBeTruthy();
+
+      // got tokens
+      const after = await client.getAccount(beneficiaryAddress);
+      assert(after);
+      expect(after.coins).toEqual(transferAmount);
+    });
+  });
+
   describe("queryContractRaw", () => {
     const configKey = toAscii("config");
     const otherKey = toAscii("this_does_not_exist");

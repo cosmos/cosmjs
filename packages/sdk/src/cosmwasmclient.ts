@@ -10,6 +10,7 @@ import {
   CosmosSdkTx,
   MsgExecuteContract,
   MsgInstantiateContract,
+  MsgSend,
   MsgStoreCode,
   StdFee,
   StdSignature,
@@ -318,6 +319,39 @@ export class CosmWasmClient {
     const signature = await this.signCallback(signBytes);
     const signedTx = {
       msg: [executeMsg],
+      fee: fee,
+      memo: memo,
+      signatures: [signature],
+    };
+
+    const result = await this.postTx(marshalTx(signedTx));
+    return {
+      logs: result.logs,
+    };
+  }
+
+  public async sendToken(
+    recipientAddress: string,
+    transferAmount: readonly Coin[],
+    memo = "",
+  ): Promise<ExecuteResult> {
+    const sendMsg: MsgSend = {
+      type: "cosmos-sdk/MsgSend",
+      value: {
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        from_address: this.senderAddress,
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        to_address: recipientAddress,
+        amount: transferAmount,
+      },
+    };
+    const fee = this.feeTable.send;
+    const { accountNumber, sequence } = await this.getNonce();
+    const chainId = await this.chainId();
+    const signBytes = makeSignBytes([sendMsg], fee, chainId, memo, accountNumber, sequence);
+    const signature = await this.signCallback(signBytes);
+    const signedTx = {
+      msg: [sendMsg],
       fee: fee,
       memo: memo,
       signatures: [signature],
