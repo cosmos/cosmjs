@@ -15,6 +15,8 @@ export {
   SearchByIdQuery,
   SearchBySentFromOrToQuery,
   SearchTxQuery,
+  SigningCallback,
+  SigningData,
 } from "./cosmwasmclient";
 export { makeCosmoshubPath, Pen, PrehashType, Secp256k1Pen } from "./pen";
 export {

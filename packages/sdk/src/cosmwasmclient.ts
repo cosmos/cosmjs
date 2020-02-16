@@ -50,7 +50,7 @@ export interface SigningCallback {
   (signBytes: Uint8Array): Promise<StdSignature>;
 }
 
-interface SigningData {
+export interface SigningData {
   readonly senderAddress: string;
   readonly signCallback: SigningCallback;
 }
