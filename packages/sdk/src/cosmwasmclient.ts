@@ -6,13 +6,13 @@ import { findAttribute, Log, parseLogs } from "./logs";
 import { BlockResponse, RestClient, TxsResponse } from "./restclient";
 import {
   Coin,
+  CosmosSdkAccount,
   CosmosSdkTx,
   MsgExecuteContract,
   MsgInstantiateContract,
   MsgStoreCode,
   StdFee,
   StdSignature,
-  CosmosSdkAccount,
 } from "./types";
 
 const defaultUploadFee: StdFee = {
