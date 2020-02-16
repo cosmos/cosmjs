@@ -12,6 +12,7 @@ import {
   MsgStoreCode,
   StdFee,
   StdSignature,
+  CosmosSdkAccount,
 } from "./types";
 
 const defaultUploadFee: StdFee = {
@@ -150,11 +151,16 @@ export class CosmWasmClient {
    * @param address returns data for this address. When unset, the client's sender adddress is used.
    */
   public async getNonce(address?: string): Promise<GetNonceResult> {
-    const account = (await this.restClient.authAccounts(address || this.senderAddress)).result.value;
+    const account = await this.getAccount(address);
     return {
       accountNumber: account.account_number,
       sequence: account.sequence,
     };
+  }
+
+  public async getAccount(address?: string): Promise<CosmosSdkAccount> {
+    const account = await this.restClient.authAccounts(address || this.senderAddress);
+    return account.result.value;
   }
 
   /**

@@ -73,6 +73,25 @@ describe("CosmWasmClient", () => {
         sequence: 0,
       });
     });
+
+
+  });
+
+  describe("getAccount", () => {
+    it("works", async () => {
+      pendingWithoutCosmos();
+      const client = CosmWasmClient.makeReadOnly(httpUrl);
+      expect(await client.getAccount(unusedAccount.address)).toEqual({
+        address: unusedAccount.address,
+        account_number: 5,
+        sequence: 0,
+        public_key: "",
+        coins: [
+          {denom: 'ucosm', amount: '1000000000'},
+          {denom: 'ustake', amount: '1000000000'},
+        ],
+      });
+    });
   });
 
   describe("getBlock", () => {

@@ -1,6 +1,6 @@
 import { Log } from "./logs";
 import { BlockResponse, TxsResponse } from "./restclient";
-import { Coin, CosmosSdkTx, StdSignature } from "./types";
+import { Coin, CosmosSdkTx, StdSignature, CosmosSdkAccount } from "./types";
 export interface SigningCallback {
   (signBytes: Uint8Array): Promise<StdSignature>;
 }
@@ -46,6 +46,7 @@ export declare class CosmWasmClient {
    * @param address returns data for this address. When unset, the client's sender adddress is used.
    */
   getNonce(address?: string): Promise<GetNonceResult>;
+  getAccount(address?: string): Promise<CosmosSdkAccount>;
   /**
    * Gets block header and meta
    *
