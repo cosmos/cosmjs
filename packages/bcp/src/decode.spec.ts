@@ -158,7 +158,9 @@ describe("decode", () => {
           ],
         },
       };
-      expect(parseMsg(msg, defaultMemo, testdata.chainId, defaultTokens)).toEqual(defaultSendTransaction);
+      expect(parseMsg(msg, defaultMemo, testdata.chainId, defaultTokens, defaultErc20Tokens)).toEqual(
+        defaultSendTransaction,
+      );
     });
 
     it("works for ERC20 send transaction", () => {

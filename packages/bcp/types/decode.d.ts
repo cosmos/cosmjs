@@ -24,7 +24,7 @@ export declare function parseMsg(
   memo: string | undefined,
   chainId: ChainId,
   tokens: BankTokens,
-  erc20Tokens?: readonly Erc20Token[],
+  erc20Tokens: readonly Erc20Token[],
 ): UnsignedTransaction;
 export declare function parseFee(fee: types.StdFee, tokens: BankTokens): Fee;
 export declare function parseUnsignedTx(

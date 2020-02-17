@@ -77,7 +77,7 @@ export function parseMsg(
   memo: string | undefined,
   chainId: ChainId,
   tokens: BankTokens,
-  erc20Tokens: readonly Erc20Token[] = [],
+  erc20Tokens: readonly Erc20Token[],
 ): UnsignedTransaction {
   if (types.isMsgSend(msg)) {
     if (msg.value.amount.length !== 1) {
