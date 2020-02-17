@@ -22,28 +22,37 @@ interface NodeInfoResponse {
   readonly node_info: NodeInfo;
 }
 
+export interface BlockId {
+  readonly hash: string;
+  // TODO: here we also have this
+  // parts: {
+  //   total: '1',
+  //   hash: '7AF200C78FBF9236944E1AB270F4045CD60972B7C265E3A9DA42973397572931'
+  // }
+}
+
 export interface BlockHeader {
+  readonly version: {
+    readonly block: string;
+    readonly app: string;
+  };
   readonly height: string;
   readonly chain_id: string;
   /** An RFC 3339 time string like e.g. '2020-02-15T10:39:10.4696305Z' */
   readonly time: string;
-  // TODO: add all of those
-  // header: {
-  //   version: [Object],
-  //   chain_id: 'testing',
-  //   height: '41121',
-  //   time: '2020-02-15T10:39:10.4696305Z',
-  //   last_block_id: [Object],
-  //   last_commit_hash: '9C68EDA02AEB5F6A76AA03F7F7E6834D73424A8906FE5A79B04D310C2DB5EFFC',
-  //   data_hash: '',
-  //   validators_hash: '4412A0B61BAC7D1EEDA531F3FBA8E90BBB3DDF6CCA85B28CA1D8300818F0E7EA',
-  //   next_validators_hash: '4412A0B61BAC7D1EEDA531F3FBA8E90BBB3DDF6CCA85B28CA1D8300818F0E7EA',
-  //   consensus_hash: '048091BC7DDC283F77BFBF91D73C44DA58C3DF8A9CBC867405D8B7F3DAADA22F',
-  //   app_hash: 'DD58B3B4AB1031ECB0CED45C017B57EE2E6E22FA7F0ECA355268CC205C6A1A64',
-  //   last_results_hash: '',
-  //   evidence_hash: '',
-  //   proposer_address: '3FBF50B72FE062495F150AEB78D1981E7DAEBE60'
-  // },
+  readonly last_commit_hash: string;
+  readonly last_block_id: BlockId;
+  /** Can be empty */
+  readonly data_hash: string;
+  readonly validators_hash: string;
+  readonly next_validators_hash: string;
+  readonly consensus_hash: string;
+  readonly app_hash: string;
+  /** Can be empty */
+  readonly last_results_hash: string;
+  /** Can be empty */
+  readonly evidence_hash: string;
+  readonly proposer_address: string;
 }
 
 export interface Block {
@@ -55,14 +64,7 @@ export interface Block {
 }
 
 export interface BlockResponse {
-  readonly block_id: {
-    readonly hash: string;
-    // TODO: here we also have this
-    // parts: {
-    //   total: '1',
-    //   hash: '7AF200C78FBF9236944E1AB270F4045CD60972B7C265E3A9DA42973397572931'
-    // }
-  };
+  readonly block_id: BlockId;
   readonly block: Block;
 }
 
