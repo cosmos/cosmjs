@@ -1,7 +1,9 @@
 import { CosmosAddressBech32Prefix, decodeSignature } from "@cosmwasm/sdk";
 import {
+  Account,
   Address,
   Algorithm,
+  Amount,
   ChainId,
   isBlockInfoPending,
   isBlockInfoSucceeded,
@@ -17,6 +19,7 @@ import { Random, Secp256k1, Secp256k1Signature, Sha256 } from "@iov/crypto";
 import { Bech32, Encoding } from "@iov/encoding";
 import { HdPaths, Secp256k1HdWallet, UserProfile } from "@iov/keycontrol";
 import { assert } from "@iov/utils";
+import BN from "bn.js";
 
 import { CosmWasmConnection, TokenConfiguration } from "./cosmwasmconnection";
 import { encodeFullSignature } from "./encode";
@@ -54,6 +57,11 @@ describe("CosmWasmConnection", () => {
   const defaultChainId = "cosmos:testing" as ChainId;
   const defaultEmptyAddress = "cosmos1h806c7khnvmjlywdrkdgk2vrayy2mmvf9rxk2r" as Address;
   const defaultRecipient = "cosmos1t70qnpr0az8tf7py83m4ue5y89w58lkjmx0yq2" as Address;
+  const defaultAmount: Amount = {
+    quantity: "7744887",
+    fractionalDigits: 6,
+    tokenTicker: cosm,
+  };
 
   const unusedAccount = {
     pubkey: {
@@ -264,6 +272,70 @@ describe("CosmWasmConnection", () => {
       const account = await connection.getAccount({ address: faucet.address });
       expect(account?.pubkey).toEqual(faucet.pubkey);
       connection.disconnect();
+    });
+  });
+
+  describe("watchAccount", () => {
+    it("can watch account by address", done => {
+      pendingWithoutWasmd();
+      const recipient = makeRandomAddress();
+      const events = new Array<Account | undefined>();
+
+      (async () => {
+        const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+        const subscription = connection.watchAccount({ address: recipient }).subscribe({
+          next: event => {
+            events.push(event);
+
+            if (events.length === 3) {
+              const [event1, event2, event3] = events;
+
+              expect(event1).toBeUndefined();
+
+              assert(event2, "Second event must not be undefined");
+              expect(event2.address).toEqual(recipient);
+              expect(event2.pubkey).toBeUndefined();
+              expect(event2.balance.length).toEqual(1);
+              expect(event2.balance[0].quantity).toEqual(defaultAmount.quantity);
+              expect(event2.balance[0].tokenTicker).toEqual(defaultAmount.tokenTicker);
+
+              assert(event3, "Third event must not be undefined");
+              expect(event3.address).toEqual(recipient);
+              expect(event3.pubkey).toBeUndefined();
+              expect(event3.balance.length).toEqual(1);
+              expect(event3.balance[0].quantity).toEqual(new BN(defaultAmount.quantity).imuln(2).toString());
+              expect(event3.balance[0].tokenTicker).toEqual(defaultAmount.tokenTicker);
+
+              subscription.unsubscribe();
+              connection.disconnect();
+              done();
+            }
+          },
+          complete: done.fail,
+          error: done.fail,
+        });
+
+        const profile = new UserProfile();
+        const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(faucet.mnemonic));
+        const sender = await profile.createIdentity(wallet.id, defaultChainId, faucet.path);
+        const senderAddress = connection.codec.identityToAddress(sender);
+
+        for (const i of [0, 1]) {
+          const sendTx = await connection.withDefaultFee<SendTransaction>({
+            kind: "bcp/send",
+            chainId: defaultChainId,
+            senderPubkey: sender.pubkey,
+            sender: senderAddress,
+            recipient: recipient,
+            amount: defaultAmount,
+            memo: `Trigger for new event ${i}`,
+          });
+          const nonce = await connection.getNonce({ address: senderAddress });
+          const signedTransaction = await profile.signTransaction(sender, sendTx, connection.codec, nonce);
+          const result = await connection.postTx(connection.codec.bytesToPost(signedTransaction));
+          await result.blockInfo.waitFor(info => !isBlockInfoPending(info));
+        }
+      })().catch(done.fail);
     });
   });
 
