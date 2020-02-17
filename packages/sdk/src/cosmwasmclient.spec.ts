@@ -224,7 +224,6 @@ describe("CosmWasmClient", () => {
         const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
         const client = CosmWasmClient.makeWritable(httpUrl, faucet.address, signBytes => pen.sign(signBytes));
 
-        const memo = "My first contract on chain";
         const recipient = makeRandomAddress();
         const transferAmount = [
           {
@@ -232,7 +231,7 @@ describe("CosmWasmClient", () => {
             amount: "1234567",
           },
         ];
-        const result = await client.sendTokens(recipient, transferAmount, memo);
+        const result = await client.sendTokens(recipient, transferAmount);
 
         await sleep(50); // wait until tx is indexed
         const txDetails = await new RestClient(httpUrl).txsById(result.transactionHash);
