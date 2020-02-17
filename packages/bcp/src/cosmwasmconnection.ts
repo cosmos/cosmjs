@@ -154,12 +154,9 @@ export class CosmWasmConnection implements BlockchainConnection {
 
   public async getAccount(query: AccountQuery): Promise<Account | undefined> {
     const address = isPubkeyQuery(query) ? pubkeyToAddress(query.pubkey, this.addressPrefix) : query.address;
-    // tslint:disable-next-line: deprecation
-    const { result } = await this.restClient.authAccounts(address);
-    const bankAccount = result.value;
-    const hasBankAccount = !!bankAccount.address;
+    const bankAccount = await this.cosmWasmClient.getAccount(address);
 
-    const supportedBankCoins = bankAccount.coins.filter(({ denom }) =>
+    const supportedBankCoins = (bankAccount?.coins || []).filter(({ denom }) =>
       this.bankTokens.find(token => token.denom === denom),
     );
     const erc20Amounts = await Promise.all(
@@ -179,14 +176,14 @@ export class CosmWasmConnection implements BlockchainConnection {
     );
     const nonZeroErc20Amounts = erc20Amounts.filter(amount => amount.quantity !== "0");
 
-    if (!hasBankAccount && nonZeroErc20Amounts.length === 0) {
+    if (!bankAccount && nonZeroErc20Amounts.length === 0) {
       return undefined;
     } else {
       const balance = [
         ...supportedBankCoins.map(coin => decodeAmount(this.bankTokens, coin)),
         ...nonZeroErc20Amounts,
       ].sort((a, b) => a.tokenTicker.localeCompare(b.tokenTicker));
-      const pubkey = !bankAccount.public_key ? undefined : decodeCosmosPubkey(bankAccount.public_key);
+      const pubkey = bankAccount?.public_key ? decodeCosmosPubkey(bankAccount.public_key) : undefined;
       return {
         address: address,
         balance: balance,
