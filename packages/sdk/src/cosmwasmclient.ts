@@ -330,7 +330,7 @@ export class CosmWasmClient {
     };
   }
 
-  public async sendToken(
+  public async sendTokens(
     recipientAddress: string,
     transferAmount: readonly Coin[],
     memo = "",

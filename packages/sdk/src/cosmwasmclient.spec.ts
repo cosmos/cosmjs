@@ -232,7 +232,7 @@ describe("CosmWasmClient", () => {
             amount: "1234567",
           },
         ];
-        const result = await client.sendToken(recipient, transferAmount, memo);
+        const result = await client.sendTokens(recipient, transferAmount, memo);
 
         await sleep(50); // wait until tx is indexed
         const txDetails = await new RestClient(httpUrl).txsById(result.transactionHash);
@@ -419,7 +419,7 @@ describe("CosmWasmClient", () => {
     });
   });
 
-  describe("sendToken", () => {
+  describe("sendTokens", () => {
     it("works", async () => {
       pendingWithoutCosmos();
       const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
@@ -439,7 +439,7 @@ describe("CosmWasmClient", () => {
       expect(before).toBeUndefined();
 
       // send
-      const result = await client.sendToken(beneficiaryAddress, transferAmount, "for dinner");
+      const result = await client.sendTokens(beneficiaryAddress, transferAmount, "for dinner");
       const [firstLog] = result.logs;
       expect(firstLog).toBeTruthy();
 
