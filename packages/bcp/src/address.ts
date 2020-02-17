@@ -5,9 +5,7 @@ import { Encoding } from "@iov/encoding";
 
 const { fromBase64, toBase64 } = Encoding;
 
-export function decodeCosmosPubkey(
-  encodedPubkey: string,
-): { readonly algo: Algorithm; readonly data: PubkeyBytes } {
+export function decodeCosmosPubkey(encodedPubkey: string): PubkeyBundle {
   const sdkPubKey = decodeBech32Pubkey(encodedPubkey);
   switch (sdkPubKey.type) {
     case types.pubkeyType.secp256k1:

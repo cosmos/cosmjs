@@ -73,6 +73,40 @@ describe("CosmWasmClient", () => {
         sequence: 0,
       });
     });
+
+    it("throws for missing accounts", async () => {
+      pendingWithoutCosmos();
+      const client = CosmWasmClient.makeReadOnly(httpUrl);
+      const missing = makeRandomAddress();
+      await client.getNonce(missing).then(
+        () => fail("this must not succeed"),
+        error => expect(error).toMatch(/account does not exist on chain/i),
+      );
+    });
+  });
+
+  describe("getAccount", () => {
+    it("works", async () => {
+      pendingWithoutCosmos();
+      const client = CosmWasmClient.makeReadOnly(httpUrl);
+      expect(await client.getAccount(unusedAccount.address)).toEqual({
+        address: unusedAccount.address,
+        account_number: 5,
+        sequence: 0,
+        public_key: "",
+        coins: [
+          { denom: "ucosm", amount: "1000000000" },
+          { denom: "ustake", amount: "1000000000" },
+        ],
+      });
+    });
+
+    it("returns undefined for missing accounts", async () => {
+      pendingWithoutCosmos();
+      const client = CosmWasmClient.makeReadOnly(httpUrl);
+      const missing = makeRandomAddress();
+      expect(await client.getAccount(missing)).toBeUndefined();
+    });
   });
 
   describe("getBlock", () => {

@@ -6,6 +6,7 @@ import { findAttribute, Log, parseLogs } from "./logs";
 import { BlockResponse, RestClient, TxsResponse } from "./restclient";
 import {
   Coin,
+  CosmosSdkAccount,
   CosmosSdkTx,
   MsgExecuteContract,
   MsgInstantiateContract,
@@ -147,14 +148,27 @@ export class CosmWasmClient {
   /**
    * Returns account number and sequence.
    *
+   * Throws if the account does not exist on chain.
+   *
    * @param address returns data for this address. When unset, the client's sender adddress is used.
    */
   public async getNonce(address?: string): Promise<GetNonceResult> {
-    const account = (await this.restClient.authAccounts(address || this.senderAddress)).result.value;
+    const account = await this.getAccount(address);
+    if (!account) {
+      throw new Error(
+        "Account does not exist on chain. Send some tokens there before trying to query nonces.",
+      );
+    }
     return {
       accountNumber: account.account_number,
       sequence: account.sequence,
     };
+  }
+
+  public async getAccount(address?: string): Promise<CosmosSdkAccount | undefined> {
+    const account = await this.restClient.authAccounts(address || this.senderAddress);
+    const value = account.result.value;
+    return value.address === "" ? undefined : value;
   }
 
   /**

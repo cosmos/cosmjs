@@ -3,7 +3,6 @@ import {
   CosmosAddressBech32Prefix,
   CosmWasmClient,
   findSequenceForSignedTx,
-  RestClient,
   TxsResponse,
   types,
 } from "@cosmwasm/sdk";
@@ -74,10 +73,9 @@ export class CosmWasmConnection implements BlockchainConnection {
     addressPrefix: CosmosAddressBech32Prefix,
     tokens: TokenConfiguration,
   ): Promise<CosmWasmConnection> {
-    const restClient = new RestClient(url);
     const cosmWasmClient = CosmWasmClient.makeReadOnly(url);
     const chainData = await this.initialize(cosmWasmClient);
-    return new CosmWasmConnection(restClient, cosmWasmClient, chainData, addressPrefix, tokens);
+    return new CosmWasmConnection(cosmWasmClient, chainData, addressPrefix, tokens);
   }
 
   private static async initialize(cosmWasmClient: CosmWasmClient): Promise<ChainId> {
@@ -88,8 +86,6 @@ export class CosmWasmConnection implements BlockchainConnection {
   public readonly chainId: ChainId;
   public readonly codec: TxCodec;
 
-  /** @deprecated everything we use from RestClient should be available in CosmWasmClient */
-  private readonly restClient: RestClient;
   private readonly cosmWasmClient: CosmWasmClient;
   private readonly addressPrefix: CosmosAddressBech32Prefix;
   private readonly bankTokens: readonly BankToken[];
@@ -100,14 +96,11 @@ export class CosmWasmConnection implements BlockchainConnection {
   private readonly supportedTokens: readonly Token[];
 
   private constructor(
-    restClient: RestClient,
     cosmWasmClient: CosmWasmClient,
     chainId: ChainId,
     addressPrefix: CosmosAddressBech32Prefix,
     tokens: TokenConfiguration,
   ) {
-    // tslint:disable-next-line: deprecation
-    this.restClient = restClient;
     this.cosmWasmClient = cosmWasmClient;
     this.chainId = chainId;
     this.codec = new CosmWasmCodec(addressPrefix, tokens.bankTokens, tokens.erc20Tokens);
@@ -154,12 +147,9 @@ export class CosmWasmConnection implements BlockchainConnection {
 
   public async getAccount(query: AccountQuery): Promise<Account | undefined> {
     const address = isPubkeyQuery(query) ? pubkeyToAddress(query.pubkey, this.addressPrefix) : query.address;
-    // tslint:disable-next-line: deprecation
-    const { result } = await this.restClient.authAccounts(address);
-    const bankAccount = result.value;
-    const hasBankAccount = !!bankAccount.address;
+    const bankAccount = await this.cosmWasmClient.getAccount(address);
 
-    const supportedBankCoins = bankAccount.coins.filter(({ denom }) =>
+    const supportedBankCoins = (bankAccount?.coins || []).filter(({ denom }) =>
       this.bankTokens.find(token => token.denom === denom),
     );
     const erc20Amounts = await Promise.all(
@@ -179,14 +169,14 @@ export class CosmWasmConnection implements BlockchainConnection {
     );
     const nonZeroErc20Amounts = erc20Amounts.filter(amount => amount.quantity !== "0");
 
-    if (!hasBankAccount && nonZeroErc20Amounts.length === 0) {
+    if (!bankAccount && nonZeroErc20Amounts.length === 0) {
       return undefined;
     } else {
       const balance = [
         ...supportedBankCoins.map(coin => decodeAmount(this.bankTokens, coin)),
         ...nonZeroErc20Amounts,
       ].sort((a, b) => a.tokenTicker.localeCompare(b.tokenTicker));
-      const pubkey = !bankAccount.public_key ? undefined : decodeCosmosPubkey(bankAccount.public_key);
+      const pubkey = bankAccount?.public_key ? decodeCosmosPubkey(bankAccount.public_key) : undefined;
       return {
         address: address,
         balance: balance,
