@@ -73,7 +73,7 @@ export class CosmWasmConnection implements BlockchainConnection {
     addressPrefix: CosmosAddressBech32Prefix,
     tokens: TokenConfiguration,
   ): Promise<CosmWasmConnection> {
-    const cosmWasmClient = CosmWasmClient.makeReadOnly(url);
+    const cosmWasmClient = new CosmWasmClient(url);
     const chainData = await this.initialize(cosmWasmClient);
     return new CosmWasmConnection(cosmWasmClient, chainData, addressPrefix, tokens);
   }

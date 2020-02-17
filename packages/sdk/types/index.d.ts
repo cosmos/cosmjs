@@ -7,15 +7,12 @@ export { makeSignBytes, marshalTx } from "./encoding";
 export { RestClient, TxsResponse } from "./restclient";
 export {
   CosmWasmClient,
-  ExecuteResult,
   GetNonceResult,
   PostTxResult,
   SearchByHeightQuery,
   SearchByIdQuery,
   SearchBySentFromOrToQuery,
   SearchTxQuery,
-  SigningCallback,
-  SigningData,
 } from "./cosmwasmclient";
 export { makeCosmoshubPath, Pen, PrehashType, Secp256k1Pen } from "./pen";
 export {
@@ -26,3 +23,4 @@ export {
 } from "./pubkey";
 export { findSequenceForSignedTx } from "./sequence";
 export { encodeSecp256k1Signature, decodeSignature } from "./signature";
+export { SigningCallback, SigningCosmWasmClient, ExecuteResult } from "./signingcosmwasmclient";
