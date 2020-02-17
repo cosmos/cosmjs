@@ -3,7 +3,7 @@ import { assert } from "@iov/utils";
 import { Secp256k1Pen } from "./pen";
 import { RestClient } from "./restclient";
 import { SigningCosmWasmClient } from "./signingcosmwasmclient";
-import { getRandomizedHackatom, makeRandomAddress, pendingWithoutCosmos } from "./testutils.spec";
+import { getRandomizedHackatom, makeRandomAddress, pendingWithoutWasmd } from "./testutils.spec";
 import { Coin } from "./types";
 
 const httpUrl = "http://localhost:1317";
@@ -29,7 +29,7 @@ describe("SigningCosmWasmClient", () => {
 
   describe("upload", () => {
     it("works", async () => {
-      pendingWithoutCosmos();
+      pendingWithoutWasmd();
       const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
       const client = new SigningCosmWasmClient(httpUrl, faucet.address, signBytes => pen.sign(signBytes));
       const codeId = await client.upload(getRandomizedHackatom());
@@ -39,7 +39,7 @@ describe("SigningCosmWasmClient", () => {
 
   describe("instantiate", () => {
     it("works with transfer amount", async () => {
-      pendingWithoutCosmos();
+      pendingWithoutWasmd();
       const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
       const client = new SigningCosmWasmClient(httpUrl, faucet.address, signBytes => pen.sign(signBytes));
       const codeId = await client.upload(getRandomizedHackatom());
@@ -71,7 +71,7 @@ describe("SigningCosmWasmClient", () => {
     });
 
     it("can instantiate one code multiple times", async () => {
-      pendingWithoutCosmos();
+      pendingWithoutWasmd();
       const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
       const client = new SigningCosmWasmClient(httpUrl, faucet.address, signBytes => pen.sign(signBytes));
       const codeId = await client.upload(getRandomizedHackatom());
@@ -90,7 +90,7 @@ describe("SigningCosmWasmClient", () => {
 
   describe("execute", () => {
     it("works", async () => {
-      pendingWithoutCosmos();
+      pendingWithoutWasmd();
       const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
       const client = new SigningCosmWasmClient(httpUrl, faucet.address, signBytes => pen.sign(signBytes));
       const codeId = await client.upload(getRandomizedHackatom());
@@ -133,7 +133,7 @@ describe("SigningCosmWasmClient", () => {
 
   describe("sendTokens", () => {
     it("works", async () => {
-      pendingWithoutCosmos();
+      pendingWithoutWasmd();
       const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
       const client = new SigningCosmWasmClient(httpUrl, faucet.address, signBytes => pen.sign(signBytes));
 

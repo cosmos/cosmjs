@@ -13,9 +13,11 @@ import cosmoshub from "./testdata/cosmoshub.json";
 import {
   getRandomizedHackatom,
   makeRandomAddress,
+  pendingWithoutWasmd,
   tendermintAddressMatcher,
   tendermintIdMatcher,
   tendermintOptionalIdMatcher,
+  wasmdEnabled,
 } from "./testutils.spec";
 import {
   Coin,
@@ -46,16 +48,6 @@ const emptyAddress = "cosmos1ltkhnmdcqemmd2tkhnx7qx66tq7e0wykw2j85k";
 const unusedAccount = {
   address: "cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u",
 };
-
-function cosmosEnabled(): boolean {
-  return !!process.env.COSMOS_ENABLED;
-}
-
-function pendingWithoutCosmos(): void {
-  if (!cosmosEnabled()) {
-    return pending("Set COSMOS_ENABLED to enable Cosmos node-based tests");
-  }
-}
 
 function makeSignedTx(firstMsg: Msg, fee: StdFee, memo: string, firstSignature: StdSignature): StdTx {
   return {
@@ -179,7 +171,7 @@ describe("RestClient", () => {
 
   describe("nodeInfo", () => {
     it("works", async () => {
-      pendingWithoutCosmos();
+      pendingWithoutWasmd();
       const client = new RestClient(httpUrl);
       const info = await client.nodeInfo();
       expect(info.node_info.network).toEqual(defaultNetworkId);
@@ -188,7 +180,7 @@ describe("RestClient", () => {
 
   describe("blocksLatest", () => {
     it("works", async () => {
-      pendingWithoutCosmos();
+      pendingWithoutWasmd();
       const client = new RestClient(httpUrl);
       const response = await client.blocksLatest();
 
@@ -221,7 +213,7 @@ describe("RestClient", () => {
 
   describe("blocks", () => {
     it("works for block by height", async () => {
-      pendingWithoutCosmos();
+      pendingWithoutWasmd();
       const client = new RestClient(httpUrl);
       const height = parseInt((await client.blocksLatest()).block.header.height, 10);
       const response = await client.blocks(height - 1);
@@ -255,7 +247,7 @@ describe("RestClient", () => {
 
   describe("authAccounts", () => {
     it("works for unused account without pubkey", async () => {
-      pendingWithoutCosmos();
+      pendingWithoutWasmd();
       const client = new RestClient(httpUrl);
       const { result } = await client.authAccounts(unusedAccount.address);
       expect(result).toEqual({
@@ -281,7 +273,7 @@ describe("RestClient", () => {
 
     // This fails in the first test run if you forget to run `./scripts/wasmd/init.sh`
     it("has correct pubkey for faucet", async () => {
-      pendingWithoutCosmos();
+      pendingWithoutWasmd();
       const client = new RestClient(httpUrl);
       const { result } = await client.authAccounts(faucet.address);
       expect(result.value).toEqual(
@@ -293,7 +285,7 @@ describe("RestClient", () => {
 
     // This property is used by CosmWasmClient.getAccount
     it("returns empty address for non-existent account", async () => {
-      pendingWithoutCosmos();
+      pendingWithoutWasmd();
       const client = new RestClient(httpUrl);
       const nonExistentAccount = makeRandomAddress();
       const { result } = await client.authAccounts(nonExistentAccount);
@@ -306,7 +298,7 @@ describe("RestClient", () => {
 
   describe("encodeTx", () => {
     it("works for cosmoshub example", async () => {
-      pendingWithoutCosmos();
+      pendingWithoutWasmd();
       const client = new RestClient(httpUrl);
       expect(await client.encodeTx(cosmoshub.tx)).toEqual(fromBase64(cosmoshub.tx_data));
     });
@@ -314,7 +306,7 @@ describe("RestClient", () => {
 
   describe("post", () => {
     it("can send tokens", async () => {
-      pendingWithoutCosmos();
+      pendingWithoutWasmd();
       const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
 
       const memo = "My first contract on chain";
@@ -354,7 +346,7 @@ describe("RestClient", () => {
     });
 
     it("can upload, instantiate and execute wasm", async () => {
-      pendingWithoutCosmos();
+      pendingWithoutWasmd();
       const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
       const client = new RestClient(httpUrl);
 
@@ -420,7 +412,7 @@ describe("RestClient", () => {
 
   describe("query", () => {
     it("can list upload code", async () => {
-      pendingWithoutCosmos();
+      pendingWithoutWasmd();
       const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
       const client = new RestClient(httpUrl);
 
@@ -460,7 +452,7 @@ describe("RestClient", () => {
     });
 
     it("can list contracts and get info", async () => {
-      pendingWithoutCosmos();
+      pendingWithoutWasmd();
       const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
       const client = new RestClient(httpUrl);
       const beneficiaryAddress = makeRandomAddress();
@@ -530,7 +522,7 @@ describe("RestClient", () => {
       let contractAddress: string | undefined;
 
       beforeAll(async () => {
-        if (cosmosEnabled()) {
+        if (wasmdEnabled()) {
           const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
           const uploadResult = await uploadContract(client, pen);
           assert(!uploadResult.code);
@@ -545,7 +537,7 @@ describe("RestClient", () => {
       });
 
       it("can get all state", async () => {
-        pendingWithoutCosmos();
+        pendingWithoutWasmd();
 
         // get contract state
         const state = await client.getAllContractState(contractAddress!);
@@ -562,7 +554,7 @@ describe("RestClient", () => {
       });
 
       it("can query by key", async () => {
-        pendingWithoutCosmos();
+        pendingWithoutWasmd();
 
         // query by one key
         const raw = await client.queryContractRaw(contractAddress!, expectedKey);
@@ -581,7 +573,7 @@ describe("RestClient", () => {
       });
 
       it("can make smart queries", async () => {
-        pendingWithoutCosmos();
+        pendingWithoutWasmd();
 
         // we can query the verifier properly
         const verifier = await client.queryContractSmart(contractAddress!, { verifier: {} });

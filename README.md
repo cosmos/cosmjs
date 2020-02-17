@@ -23,6 +23,6 @@ To run the entire test suite, you need to run a local blockchain to test against
 ```sh
 ./scripts/wasmd/start.sh
 ./scripts/wasmd/init.sh
-COSMOS_ENABLED=1 yarn test
+WASMD_ENABLED=1 yarn test
 ./scripts/wasmd/stop.sh
 ```

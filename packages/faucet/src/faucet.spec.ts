@@ -9,9 +9,9 @@ import { assert } from "@iov/utils";
 import { Faucet } from "./faucet";
 import { createUserProfile } from "./profile";
 
-function pendingWithoutCosmos(): void {
-  if (!process.env.COSMOS_ENABLED) {
-    return pending("Set COSMOS_ENABLED to enable Cosmos node-based tests");
+function pendingWithoutWasmd(): void {
+  if (!process.env.WASMD_ENABLED) {
+    return pending("Set WASMD_ENABLED to enable Cosmos node-based tests");
   }
 }
 
@@ -65,7 +65,7 @@ async function makeProfile(
 describe("Faucet", () => {
   describe("constructor", () => {
     it("can be constructed", async () => {
-      pendingWithoutCosmos();
+      pendingWithoutWasmd();
       const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
       const { profile } = await makeProfile();
       const faucet = new Faucet(defaultConfig, connection, codec, profile);
@@ -76,7 +76,7 @@ describe("Faucet", () => {
 
   describe("send", () => {
     it("can send bank token", async () => {
-      pendingWithoutCosmos();
+      pendingWithoutWasmd();
       const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
       const { profile, holder } = await makeProfile();
       const faucet = new Faucet(defaultConfig, connection, codec, profile);
@@ -103,7 +103,7 @@ describe("Faucet", () => {
     });
 
     it("can send ERC20 token", async () => {
-      pendingWithoutCosmos();
+      pendingWithoutWasmd();
       const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
       const { profile, holder } = await makeProfile();
       const faucet = new Faucet(defaultConfig, connection, codec, profile);
@@ -132,7 +132,7 @@ describe("Faucet", () => {
 
   describe("refill", () => {
     it("works", async () => {
-      pendingWithoutCosmos();
+      pendingWithoutWasmd();
       const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
       const { profile, distributors } = await makeProfile(1);
       const faucet = new Faucet(defaultConfig, connection, codec, profile);
@@ -162,7 +162,7 @@ describe("Faucet", () => {
 
   describe("credit", () => {
     it("works for fee token", async () => {
-      pendingWithoutCosmos();
+      pendingWithoutWasmd();
       const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
       const { profile } = await makeProfile(1);
       const faucet = new Faucet(defaultConfig, connection, codec, profile);
@@ -181,7 +181,7 @@ describe("Faucet", () => {
     });
 
     it("works for stake token", async () => {
-      pendingWithoutCosmos();
+      pendingWithoutWasmd();
       const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
       const { profile } = await makeProfile(1);
       const faucet = new Faucet(defaultConfig, connection, codec, profile);
@@ -202,7 +202,7 @@ describe("Faucet", () => {
 
   describe("loadTokenTickers", () => {
     it("works", async () => {
-      pendingWithoutCosmos();
+      pendingWithoutWasmd();
       const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
       const { profile } = await makeProfile();
       const faucet = new Faucet(defaultConfig, connection, codec, profile);
@@ -214,7 +214,7 @@ describe("Faucet", () => {
 
   describe("loadAccounts", () => {
     it("works", async () => {
-      pendingWithoutCosmos();
+      pendingWithoutWasmd();
       const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
       const { profile, holder } = await makeProfile();
       const faucet = new Faucet(defaultConfig, connection, codec, profile);

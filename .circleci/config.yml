@@ -85,7 +85,7 @@ jobs:
           command: ./scripts/wasmd/init.sh
       - run:
           environment:
-            COSMOS_ENABLED: 1
+            WASMD_ENABLED: 1
             SKIP_BUILD: 1
           command: yarn test
       - run:
