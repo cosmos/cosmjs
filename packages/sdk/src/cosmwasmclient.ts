@@ -23,25 +23,25 @@ export interface FeeTable {
   readonly send: StdFee;
 }
 
-const feeAmount = (amount: number, denom: string): readonly Coin[] => [
-  { amount: amount.toString(), denom: denom },
-];
+function singleAmount(amount: number, denom: string): readonly Coin[] {
+  return [{ amount: amount.toString(), denom: denom }];
+}
 
 const defaultFeeTable: FeeTable = {
   upload: {
-    amount: feeAmount(25000, "ucosm"),
+    amount: singleAmount(25000, "ucosm"),
     gas: "1000000", // one million
   },
   init: {
-    amount: feeAmount(12500, "ucosm"),
+    amount: singleAmount(12500, "ucosm"),
     gas: "500000", // 500k
   },
   exec: {
-    amount: feeAmount(5000, "ucosm"),
+    amount: singleAmount(5000, "ucosm"),
     gas: "200000", // 200k
   },
   send: {
-    amount: feeAmount(2000, "ucosm"),
+    amount: singleAmount(2000, "ucosm"),
     gas: "80000", // 80k
   },
 };
