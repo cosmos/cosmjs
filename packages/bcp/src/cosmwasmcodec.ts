@@ -81,7 +81,7 @@ export class CosmWasmCodec implements TxCodec {
       throw new Error("Nonce is required");
     }
     const parsed = unmarshalTx(bytes);
-    return parseSignedTx(parsed, chainId, nonce, this.bankTokens);
+    return parseSignedTx(parsed, chainId, nonce, this.bankTokens, this.erc20Tokens);
   }
 
   public identityToAddress(identity: Identity): Address {

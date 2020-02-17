@@ -264,9 +264,15 @@ describe("decode", () => {
 
   describe("parseSignedTx", () => {
     it("works", () => {
-      expect(parseSignedTx(cosmoshub.tx.value, testdata.chainId, testdata.nonce, defaultTokens)).toEqual(
-        testdata.signedTxJson,
-      );
+      expect(
+        parseSignedTx(
+          cosmoshub.tx.value,
+          testdata.chainId,
+          testdata.nonce,
+          defaultTokens,
+          defaultErc20Tokens,
+        ),
+      ).toEqual(testdata.signedTxJson);
     });
   });
 
@@ -287,9 +293,15 @@ describe("decode", () => {
         transactionId: testdata.txId,
         log: '[{"msg_index":0,"success":true,"log":""}]',
       };
-      expect(parseTxsResponseUnsigned(testdata.chainId, currentHeight, txsResponse, defaultTokens)).toEqual(
-        expected,
-      );
+      expect(
+        parseTxsResponseUnsigned(
+          testdata.chainId,
+          currentHeight,
+          txsResponse,
+          defaultTokens,
+          defaultErc20Tokens,
+        ),
+      ).toEqual(expected);
     });
   });
 
@@ -311,7 +323,14 @@ describe("decode", () => {
         log: '[{"msg_index":0,"success":true,"log":""}]',
       };
       expect(
-        parseTxsResponseSigned(testdata.chainId, currentHeight, testdata.nonce, txsResponse, defaultTokens),
+        parseTxsResponseSigned(
+          testdata.chainId,
+          currentHeight,
+          testdata.nonce,
+          txsResponse,
+          defaultTokens,
+          defaultErc20Tokens,
+        ),
       ).toEqual(expected);
     });
   });

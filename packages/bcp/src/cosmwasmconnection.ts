@@ -348,7 +348,13 @@ export class CosmWasmConnection implements BlockchainConnection {
   private parseAndPopulateTxResponseUnsigned(
     response: TxsResponse,
   ): ConfirmedTransaction<UnsignedTransaction> | FailedTransaction {
-    return parseTxsResponseUnsigned(this.chainId, parseInt(response.height, 10), response, this.bankTokens);
+    return parseTxsResponseUnsigned(
+      this.chainId,
+      parseInt(response.height, 10),
+      response,
+      this.bankTokens,
+      this.erc20Tokens,
+    );
   }
 
   private async parseAndPopulateTxResponseSigned(
@@ -387,6 +393,7 @@ export class CosmWasmConnection implements BlockchainConnection {
       nonce,
       response,
       this.bankTokens,
+      this.erc20Tokens,
     );
   }
 }

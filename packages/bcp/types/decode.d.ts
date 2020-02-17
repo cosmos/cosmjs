@@ -38,12 +38,14 @@ export declare function parseSignedTx(
   chainId: ChainId,
   nonce: Nonce,
   tokens: BankTokens,
+  erc20Tokens: readonly Erc20Token[],
 ): SignedTransaction;
 export declare function parseTxsResponseUnsigned(
   chainId: ChainId,
   currentHeight: number,
   response: TxsResponse,
   tokens: BankTokens,
+  erc20Tokens: readonly Erc20Token[],
 ): ConfirmedTransaction<UnsignedTransaction>;
 export declare function parseTxsResponseSigned(
   chainId: ChainId,
@@ -51,4 +53,5 @@ export declare function parseTxsResponseSigned(
   nonce: Nonce,
   response: TxsResponse,
   tokens: BankTokens,
+  erc20Tokens: readonly Erc20Token[],
 ): ConfirmedAndSignedTransaction<UnsignedTransaction>;

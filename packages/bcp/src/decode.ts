@@ -168,10 +168,11 @@ export function parseSignedTx(
   chainId: ChainId,
   nonce: Nonce,
   tokens: BankTokens,
+  erc20Tokens: readonly Erc20Token[],
 ): SignedTransaction {
   const [primarySignature] = txValue.signatures.map(signature => decodeFullSignature(signature, nonce));
   return {
-    transaction: parseUnsignedTx(txValue, chainId, tokens, []),
+    transaction: parseUnsignedTx(txValue, chainId, tokens, erc20Tokens),
     signatures: [primarySignature],
   };
 }
@@ -181,10 +182,11 @@ export function parseTxsResponseUnsigned(
   currentHeight: number,
   response: TxsResponse,
   tokens: BankTokens,
+  erc20Tokens: readonly Erc20Token[],
 ): ConfirmedTransaction<UnsignedTransaction> {
   const height = parseInt(response.height, 10);
   return {
-    transaction: parseUnsignedTx(response.tx.value, chainId, tokens, []),
+    transaction: parseUnsignedTx(response.tx.value, chainId, tokens, erc20Tokens),
     height: height,
     confirmations: currentHeight - height + 1,
     transactionId: response.txhash as TransactionId,
@@ -198,10 +200,11 @@ export function parseTxsResponseSigned(
   nonce: Nonce,
   response: TxsResponse,
   tokens: BankTokens,
+  erc20Tokens: readonly Erc20Token[],
 ): ConfirmedAndSignedTransaction<UnsignedTransaction> {
   const height = parseInt(response.height, 10);
   return {
-    ...parseSignedTx(response.tx.value, chainId, nonce, tokens),
+    ...parseSignedTx(response.tx.value, chainId, nonce, tokens, erc20Tokens),
     height: height,
     confirmations: currentHeight - height + 1,
     transactionId: response.txhash as TransactionId,
