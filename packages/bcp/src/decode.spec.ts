@@ -209,10 +209,56 @@ describe("decode", () => {
   });
 
   describe("parseUnsignedTx", () => {
-    it("works", () => {
-      expect(parseUnsignedTx(cosmoshub.tx.value, testdata.chainId, defaultTokens)).toEqual(
-        testdata.sendTxJson,
-      );
+    it("works for bank send transaction", () => {
+      expect(
+        parseUnsignedTx(cosmoshub.tx.value, testdata.chainId, defaultTokens, defaultErc20Tokens),
+      ).toEqual(testdata.sendTxJson);
+    });
+
+    it("works for ERC20 send transaction", () => {
+      const msg: types.MsgExecuteContract = {
+        type: "wasm/execute",
+        value: {
+          sender: "cosmos1h806c7khnvmjlywdrkdgk2vrayy2mmvf9rxk2r",
+          contract: defaultErc20Tokens[0].contractAddress,
+          msg: {
+            transfer: {
+              amount: "887878484",
+              recipient: "cosmos1z7g5w84ynmjyg0kqpahdjqpj7yq34v3suckp0e",
+            },
+          },
+          sent_funds: [],
+        },
+      };
+      const tx: types.StdTx = {
+        msg: [msg],
+        memo: defaultMemo,
+        fee: {
+          amount: [
+            {
+              denom: "uatom",
+              amount: "5000",
+            },
+          ],
+          gas: "200000",
+        },
+        signatures: [],
+      };
+      const unsigned = parseUnsignedTx(tx, testdata.chainId, defaultTokens, defaultErc20Tokens);
+      assert(isSendTransaction(unsigned));
+      expect(unsigned).toEqual({
+        kind: "bcp/send",
+        chainId: testdata.chainId,
+        sender: "cosmos1h806c7khnvmjlywdrkdgk2vrayy2mmvf9rxk2r" as Address,
+        recipient: "cosmos1z7g5w84ynmjyg0kqpahdjqpj7yq34v3suckp0e" as Address,
+        amount: {
+          quantity: "887878484",
+          tokenTicker: "ASH" as TokenTicker,
+          fractionalDigits: 5,
+        },
+        memo: defaultMemo,
+        fee: defaultFee,
+      });
     });
   });
 

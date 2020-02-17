@@ -31,6 +31,7 @@ export declare function parseUnsignedTx(
   txValue: types.StdTx,
   chainId: ChainId,
   tokens: BankTokens,
+  erc20Tokens: readonly Erc20Token[],
 ): UnsignedTransaction;
 export declare function parseSignedTx(
   txValue: types.StdTx,

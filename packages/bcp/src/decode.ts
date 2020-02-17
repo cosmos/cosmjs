@@ -144,6 +144,7 @@ export function parseUnsignedTx(
   txValue: types.StdTx,
   chainId: ChainId,
   tokens: BankTokens,
+  erc20Tokens: readonly Erc20Token[],
 ): UnsignedTransaction {
   if (!types.isStdTx(txValue)) {
     throw new Error("Only StdTx is supported");
@@ -152,7 +153,7 @@ export function parseUnsignedTx(
     throw new Error("Only single-message transactions currently supported");
   }
 
-  const msg = parseMsg(txValue.msg[0], txValue.memo, chainId, tokens);
+  const msg = parseMsg(txValue.msg[0], txValue.memo, chainId, tokens, erc20Tokens);
   const fee = parseFee(txValue.fee, tokens);
 
   return {
@@ -170,7 +171,7 @@ export function parseSignedTx(
 ): SignedTransaction {
   const [primarySignature] = txValue.signatures.map(signature => decodeFullSignature(signature, nonce));
   return {
-    transaction: parseUnsignedTx(txValue, chainId, tokens),
+    transaction: parseUnsignedTx(txValue, chainId, tokens, []),
     signatures: [primarySignature],
   };
 }
@@ -183,7 +184,7 @@ export function parseTxsResponseUnsigned(
 ): ConfirmedTransaction<UnsignedTransaction> {
   const height = parseInt(response.height, 10);
   return {
-    transaction: parseUnsignedTx(response.tx.value, chainId, tokens),
+    transaction: parseUnsignedTx(response.tx.value, chainId, tokens, []),
     height: height,
     confirmations: currentHeight - height + 1,
     transactionId: response.txhash as TransactionId,
