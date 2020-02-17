@@ -1,10 +1,11 @@
-# Local Cosmos test network
+# Local Wasmd development network
 
 ## Starting the blockchain
 
 Run the following:
 
 ```
+cd scripts/wasmd
 ./start.sh && ./init.sh
 ```
 

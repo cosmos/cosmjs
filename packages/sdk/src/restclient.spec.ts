@@ -279,7 +279,7 @@ describe("RestClient", () => {
       });
     });
 
-    // This fails in the first test run if you forget to run `./scripts/cosm/init.sh`
+    // This fails in the first test run if you forget to run `./scripts/wasmd/init.sh`
     it("has correct pubkey for faucet", async () => {
       pendingWithoutCosmos();
       const client = new RestClient(httpUrl);

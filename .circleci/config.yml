@@ -47,7 +47,7 @@ jobs:
     steps:
       - checkout
       - run: # start early for less wait time below
-          command: ./scripts/cosm/start.sh
+          command: ./scripts/wasmd/start.sh
           background: true
       - attach_workspace:
           at: /tmp/builds
@@ -82,7 +82,7 @@ jobs:
             - ~/.cache/yarn
       - run:
           name: Initialize blockchain (deploy contracts and friends)
-          command: ./scripts/cosm/init.sh
+          command: ./scripts/wasmd/init.sh
       - run:
           environment:
             COSMOS_ENABLED: 1
@@ -95,7 +95,7 @@ jobs:
             SKIP_BUILD: 1
           command: yarn selftest
       - run:
-          command: ./scripts/cosm/stop.sh
+          command: ./scripts/wasmd/stop.sh
   lint:
     docker:
       - image: circleci/node:10

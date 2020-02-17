@@ -21,7 +21,8 @@ yarn format && yarn lint
 To run the entire test suite, you need to run a local blockchain to test against. This should work on any Linux/OSX system with docker installed.
 
 ```sh
-./scripts/cosm/start.sh
+./scripts/wasmd/start.sh
+./scripts/wasmd/init.sh
 COSMOS_ENABLED=1 yarn test
-./scripts/cosm/stop.sh
+./scripts/wasmd/stop.sh
 ```
