@@ -27,7 +27,7 @@ function singleAmount(amount: number, denom: string): readonly Coin[] {
   return [{ amount: amount.toString(), denom: denom }];
 }
 
-const defaultFeeTable: FeeTable = {
+const defaultFees: FeeTable = {
   upload: {
     amount: singleAmount(25000, "ucosm"),
     gas: "1000000", // one million
@@ -98,8 +98,8 @@ export interface ExecuteResult {
 }
 
 export class CosmWasmClient {
-  public static makeReadOnly(url: string, feeTable?: Partial<FeeTable>): CosmWasmClient {
-    return new CosmWasmClient(url, undefined, feeTable);
+  public static makeReadOnly(url: string): CosmWasmClient {
+    return new CosmWasmClient(url, undefined, {});
   }
 
   public static makeWritable(
@@ -114,13 +114,13 @@ export class CosmWasmClient {
         senderAddress: senderAddress,
         signCallback: signCallback,
       },
-      feeTable,
+      feeTable || {},
     );
   }
 
   private readonly restClient: RestClient;
   private readonly signingData: SigningData | undefined;
-  private readonly feeTable: FeeTable;
+  private readonly fees: FeeTable;
 
   private get senderAddress(): string {
     if (!this.signingData) throw new Error("Signing data not set in this client");
@@ -132,10 +132,10 @@ export class CosmWasmClient {
     return this.signingData.signCallback;
   }
 
-  private constructor(url: string, signingData?: SigningData, feeTable?: Partial<FeeTable>) {
+  private constructor(url: string, signingData: SigningData | undefined, customFees: Partial<FeeTable>) {
     this.restClient = new RestClient(url);
     this.signingData = signingData;
-    this.feeTable = { ...defaultFeeTable, ...(feeTable || {}) };
+    this.fees = { ...defaultFees, ...customFees };
   }
 
   public async chainId(): Promise<string> {
@@ -242,7 +242,7 @@ export class CosmWasmClient {
         builder: "",
       },
     };
-    const fee = this.feeTable.upload;
+    const fee = this.fees.upload;
     const { accountNumber, sequence } = await this.getNonce();
     const chainId = await this.chainId();
     const signBytes = makeSignBytes([storeCodeMsg], fee, chainId, memo, accountNumber, sequence);
@@ -278,7 +278,7 @@ export class CosmWasmClient {
         init_funds: transferAmount || [],
       },
     };
-    const fee = this.feeTable.init;
+    const fee = this.fees.init;
     const { accountNumber, sequence } = await this.getNonce();
     const chainId = await this.chainId();
     const signBytes = makeSignBytes([instantiateMsg], fee, chainId, memo, accountNumber, sequence);
@@ -312,7 +312,7 @@ export class CosmWasmClient {
         sent_funds: transferAmount || [],
       },
     };
-    const fee = this.feeTable.exec;
+    const fee = this.fees.exec;
     const { accountNumber, sequence } = await this.getNonce();
     const chainId = await this.chainId();
     const signBytes = makeSignBytes([executeMsg], fee, chainId, memo, accountNumber, sequence);
@@ -345,7 +345,7 @@ export class CosmWasmClient {
         amount: transferAmount,
       },
     };
-    const fee = this.feeTable.send;
+    const fee = this.fees.send;
     const { accountNumber, sequence } = await this.getNonce();
     const chainId = await this.chainId();
     const signBytes = makeSignBytes([sendMsg], fee, chainId, memo, accountNumber, sequence);

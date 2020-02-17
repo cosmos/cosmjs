@@ -34,7 +34,7 @@ export interface ExecuteResult {
   readonly logs: readonly Log[];
 }
 export declare class CosmWasmClient {
-  static makeReadOnly(url: string, feeTable?: Partial<FeeTable>): CosmWasmClient;
+  static makeReadOnly(url: string): CosmWasmClient;
   static makeWritable(
     url: string,
     senderAddress: string,
@@ -43,7 +43,7 @@ export declare class CosmWasmClient {
   ): CosmWasmClient;
   private readonly restClient;
   private readonly signingData;
-  private readonly feeTable;
+  private readonly fees;
   private get senderAddress();
   private get signCallback();
   private constructor();
