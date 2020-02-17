@@ -1,15 +1,6 @@
 import { Log } from "./logs";
-import { BlockResponse, TxsResponse } from "./restclient";
-import { Coin, CosmosSdkAccount, CosmosSdkTx, StdFee, StdSignature } from "./types";
-export interface FeeTable {
-  readonly upload: StdFee;
-  readonly init: StdFee;
-  readonly exec: StdFee;
-  readonly send: StdFee;
-}
-export interface SigningCallback {
-  (signBytes: Uint8Array): Promise<StdSignature>;
-}
+import { BlockResponse, RestClient, TxsResponse } from "./restclient";
+import { CosmosSdkAccount, CosmosSdkTx } from "./types";
 export interface GetNonceResult {
   readonly accountNumber: number;
   readonly sequence: number;
@@ -30,23 +21,9 @@ export interface SearchBySentFromOrToQuery {
   readonly sentFromOrTo: string;
 }
 export declare type SearchTxQuery = SearchByIdQuery | SearchByHeightQuery | SearchBySentFromOrToQuery;
-export interface ExecuteResult {
-  readonly logs: readonly Log[];
-}
 export declare class CosmWasmClient {
-  static makeReadOnly(url: string): CosmWasmClient;
-  static makeWritable(
-    url: string,
-    senderAddress: string,
-    signCallback: SigningCallback,
-    feeTable?: Partial<FeeTable>,
-  ): CosmWasmClient;
-  private readonly restClient;
-  private readonly signingData;
-  private readonly fees;
-  private get senderAddress();
-  private get signCallback();
-  private constructor();
+  protected readonly restClient: RestClient;
+  constructor(url: string);
   chainId(): Promise<string>;
   /**
    * Returns a 32 byte upper-case hex transaction hash (typically used as the transaction ID)
@@ -59,8 +36,8 @@ export declare class CosmWasmClient {
    *
    * @param address returns data for this address. When unset, the client's sender adddress is used.
    */
-  getNonce(address?: string): Promise<GetNonceResult>;
-  getAccount(address?: string): Promise<CosmosSdkAccount | undefined>;
+  getNonce(address: string): Promise<GetNonceResult>;
+  getAccount(address: string): Promise<CosmosSdkAccount | undefined>;
   /**
    * Gets block header and meta
    *
@@ -69,21 +46,6 @@ export declare class CosmWasmClient {
   getBlock(height?: number): Promise<BlockResponse>;
   searchTx(query: SearchTxQuery): Promise<readonly TxsResponse[]>;
   postTx(tx: Uint8Array): Promise<PostTxResult>;
-  /** Uploads code and returns a code ID */
-  upload(wasmCode: Uint8Array, memo?: string): Promise<number>;
-  instantiate(
-    codeId: number,
-    initMsg: object,
-    memo?: string,
-    transferAmount?: readonly Coin[],
-  ): Promise<string>;
-  execute(
-    contractAddress: string,
-    handleMsg: object,
-    memo?: string,
-    transferAmount?: readonly Coin[],
-  ): Promise<ExecuteResult>;
-  sendTokens(recipientAddress: string, transferAmount: readonly Coin[], memo?: string): Promise<PostTxResult>;
   /**
    * Returns the data at the key if present (raw contract dependent storage data)
    * or null if no data at this key.

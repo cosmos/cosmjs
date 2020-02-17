@@ -8,23 +8,20 @@ import { makeSignBytes, marshalTx } from "./encoding";
 import { findAttribute } from "./logs";
 import { Secp256k1Pen } from "./pen";
 import { RestClient } from "./restclient";
+import { SigningCosmWasmClient } from "./signingcosmwasmclient";
 import cosmoshub from "./testdata/cosmoshub.json";
-import { getRandomizedHackatom, makeRandomAddress, tendermintIdMatcher } from "./testutils.spec";
-import { Coin, CosmosSdkTx, MsgSend, StdFee } from "./types";
+import {
+  cosmosEnabled,
+  getRandomizedHackatom,
+  makeRandomAddress,
+  pendingWithoutCosmos,
+  tendermintIdMatcher,
+} from "./testutils.spec";
+import { CosmosSdkTx, MsgSend, StdFee } from "./types";
 
 const { fromAscii, fromUtf8, toAscii } = Encoding;
 
 const httpUrl = "http://localhost:1317";
-
-function cosmosEnabled(): boolean {
-  return !!process.env.COSMOS_ENABLED;
-}
-
-function pendingWithoutCosmos(): void {
-  if (!cosmosEnabled()) {
-    return pending("Set COSMOS_ENABLED to enable Cosmos node-based tests");
-  }
-}
 
 const faucet = {
   mnemonic:
@@ -51,7 +48,7 @@ interface HackatomInstance {
 describe("CosmWasmClient", () => {
   describe("makeReadOnly", () => {
     it("can be constructed", () => {
-      const client = CosmWasmClient.makeReadOnly(httpUrl);
+      const client = new CosmWasmClient(httpUrl);
       expect(client).toBeTruthy();
     });
   });
@@ -59,7 +56,7 @@ describe("CosmWasmClient", () => {
   describe("chainId", () => {
     it("works", async () => {
       pendingWithoutCosmos();
-      const client = CosmWasmClient.makeReadOnly(httpUrl);
+      const client = new CosmWasmClient(httpUrl);
       expect(await client.chainId()).toEqual("testing");
     });
   });
@@ -67,7 +64,7 @@ describe("CosmWasmClient", () => {
   describe("getNonce", () => {
     it("works", async () => {
       pendingWithoutCosmos();
-      const client = CosmWasmClient.makeReadOnly(httpUrl);
+      const client = new CosmWasmClient(httpUrl);
       expect(await client.getNonce(unusedAccount.address)).toEqual({
         accountNumber: 5,
         sequence: 0,
@@ -76,7 +73,7 @@ describe("CosmWasmClient", () => {
 
     it("throws for missing accounts", async () => {
       pendingWithoutCosmos();
-      const client = CosmWasmClient.makeReadOnly(httpUrl);
+      const client = new CosmWasmClient(httpUrl);
       const missing = makeRandomAddress();
       await client.getNonce(missing).then(
         () => fail("this must not succeed"),
@@ -88,7 +85,7 @@ describe("CosmWasmClient", () => {
   describe("getAccount", () => {
     it("works", async () => {
       pendingWithoutCosmos();
-      const client = CosmWasmClient.makeReadOnly(httpUrl);
+      const client = new CosmWasmClient(httpUrl);
       expect(await client.getAccount(unusedAccount.address)).toEqual({
         address: unusedAccount.address,
         account_number: 5,
@@ -103,7 +100,7 @@ describe("CosmWasmClient", () => {
 
     it("returns undefined for missing accounts", async () => {
       pendingWithoutCosmos();
-      const client = CosmWasmClient.makeReadOnly(httpUrl);
+      const client = new CosmWasmClient(httpUrl);
       const missing = makeRandomAddress();
       expect(await client.getAccount(missing)).toBeUndefined();
     });
@@ -112,7 +109,7 @@ describe("CosmWasmClient", () => {
   describe("getBlock", () => {
     it("works for latest block", async () => {
       pendingWithoutCosmos();
-      const client = CosmWasmClient.makeReadOnly(httpUrl);
+      const client = new CosmWasmClient(httpUrl);
       const response = await client.getBlock();
 
       // id
@@ -132,7 +129,7 @@ describe("CosmWasmClient", () => {
 
     it("works for block by height", async () => {
       pendingWithoutCosmos();
-      const client = CosmWasmClient.makeReadOnly(httpUrl);
+      const client = new CosmWasmClient(httpUrl);
       const height = parseInt((await client.getBlock()).block.header.height, 10);
       const response = await client.getBlock(height - 1);
 
@@ -155,7 +152,7 @@ describe("CosmWasmClient", () => {
   describe("getIdentifier", () => {
     it("works", async () => {
       pendingWithoutCosmos();
-      const client = CosmWasmClient.makeReadOnly(httpUrl);
+      const client = new CosmWasmClient(httpUrl);
       expect(await client.getIdentifier(cosmoshub.tx)).toEqual(cosmoshub.id);
     });
   });
@@ -164,7 +161,7 @@ describe("CosmWasmClient", () => {
     it("works", async () => {
       pendingWithoutCosmos();
       const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-      const client = CosmWasmClient.makeReadOnly(httpUrl);
+      const client = new CosmWasmClient(httpUrl);
 
       const memo = "My first contract on chain";
       const sendMsg: MsgSend = {
@@ -222,7 +219,7 @@ describe("CosmWasmClient", () => {
     beforeAll(async () => {
       if (cosmosEnabled()) {
         const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-        const client = CosmWasmClient.makeWritable(httpUrl, faucet.address, signBytes => pen.sign(signBytes));
+        const client = new SigningCosmWasmClient(httpUrl, faucet.address, signBytes => pen.sign(signBytes));
 
         const recipient = makeRandomAddress();
         const transferAmount = [
@@ -248,7 +245,7 @@ describe("CosmWasmClient", () => {
     it("can search by ID", async () => {
       pendingWithoutCosmos();
       assert(posted, "value must be set in beforeAll()");
-      const client = CosmWasmClient.makeReadOnly(httpUrl);
+      const client = new CosmWasmClient(httpUrl);
       const result = await client.searchTx({ id: posted.hash });
       expect(result.length).toEqual(1);
       expect(result[0]).toEqual(
@@ -262,7 +259,7 @@ describe("CosmWasmClient", () => {
 
     it("can search by ID (non existent)", async () => {
       pendingWithoutCosmos();
-      const client = CosmWasmClient.makeReadOnly(httpUrl);
+      const client = new CosmWasmClient(httpUrl);
       const nonExistentId = "0000000000000000000000000000000000000000000000000000000000000000";
       const result = await client.searchTx({ id: nonExistentId });
       expect(result.length).toEqual(0);
@@ -271,7 +268,7 @@ describe("CosmWasmClient", () => {
     it("can search by height", async () => {
       pendingWithoutCosmos();
       assert(posted, "value must be set in beforeAll()");
-      const client = CosmWasmClient.makeReadOnly(httpUrl);
+      const client = new CosmWasmClient(httpUrl);
       const result = await client.searchTx({ height: posted.height });
       expect(result.length).toEqual(1);
       expect(result[0]).toEqual(
@@ -286,7 +283,7 @@ describe("CosmWasmClient", () => {
     it("can search by sender", async () => {
       pendingWithoutCosmos();
       assert(posted, "value must be set in beforeAll()");
-      const client = CosmWasmClient.makeReadOnly(httpUrl);
+      const client = new CosmWasmClient(httpUrl);
       const result = await client.searchTx({ sentFromOrTo: posted.sender });
       expect(result.length).toBeGreaterThanOrEqual(1);
       expect(result[result.length - 1]).toEqual(
@@ -301,7 +298,7 @@ describe("CosmWasmClient", () => {
     it("can search by recipient", async () => {
       pendingWithoutCosmos();
       assert(posted, "value must be set in beforeAll()");
-      const client = CosmWasmClient.makeReadOnly(httpUrl);
+      const client = new CosmWasmClient(httpUrl);
       const result = await client.searchTx({ sentFromOrTo: posted.recipient });
       expect(result.length).toBeGreaterThanOrEqual(1);
       expect(result[result.length - 1]).toEqual(
@@ -314,141 +311,6 @@ describe("CosmWasmClient", () => {
     });
   });
 
-  describe("upload", () => {
-    it("works", async () => {
-      pendingWithoutCosmos();
-      const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-      const client = CosmWasmClient.makeWritable(httpUrl, faucet.address, signBytes => pen.sign(signBytes));
-      const codeId = await client.upload(getRandomizedHackatom());
-      expect(codeId).toBeGreaterThanOrEqual(1);
-    });
-  });
-
-  describe("instantiate", () => {
-    it("works with transfer amount", async () => {
-      pendingWithoutCosmos();
-      const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-      const client = CosmWasmClient.makeWritable(httpUrl, faucet.address, signBytes => pen.sign(signBytes));
-      const codeId = await client.upload(getRandomizedHackatom());
-
-      const transferAmount: readonly Coin[] = [
-        {
-          amount: "1234",
-          denom: "ucosm",
-        },
-        {
-          amount: "321",
-          denom: "ustake",
-        },
-      ];
-      const beneficiaryAddress = makeRandomAddress();
-      const contractAddress = await client.instantiate(
-        codeId,
-        {
-          verifier: faucet.address,
-          beneficiary: beneficiaryAddress,
-        },
-        "Let's see",
-        transferAmount,
-      );
-
-      const rest = new RestClient(httpUrl);
-      const balance = (await rest.authAccounts(contractAddress)).result.value.coins;
-      expect(balance).toEqual(transferAmount);
-    });
-
-    it("can instantiate one code multiple times", async () => {
-      pendingWithoutCosmos();
-      const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-      const client = CosmWasmClient.makeWritable(httpUrl, faucet.address, signBytes => pen.sign(signBytes));
-      const codeId = await client.upload(getRandomizedHackatom());
-
-      const contractAddress1 = await client.instantiate(codeId, {
-        verifier: faucet.address,
-        beneficiary: makeRandomAddress(),
-      });
-      const contractAddress2 = await client.instantiate(codeId, {
-        verifier: faucet.address,
-        beneficiary: makeRandomAddress(),
-      });
-      expect(contractAddress1).not.toEqual(contractAddress2);
-    });
-  });
-
-  describe("execute", () => {
-    it("works", async () => {
-      pendingWithoutCosmos();
-      const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-      const client = CosmWasmClient.makeWritable(httpUrl, faucet.address, signBytes => pen.sign(signBytes));
-      const codeId = await client.upload(getRandomizedHackatom());
-
-      // instantiate
-      const transferAmount: readonly Coin[] = [
-        {
-          amount: "233444",
-          denom: "ucosm",
-        },
-        {
-          amount: "5454",
-          denom: "ustake",
-        },
-      ];
-      const beneficiaryAddress = makeRandomAddress();
-      const contractAddress = await client.instantiate(
-        codeId,
-        {
-          verifier: faucet.address,
-          beneficiary: beneficiaryAddress,
-        },
-        undefined,
-        transferAmount,
-      );
-
-      // execute
-      const result = await client.execute(contractAddress, {}, undefined);
-      const [firstLog] = result.logs;
-      expect(firstLog.log).toEqual(`released funds to ${beneficiaryAddress}`);
-
-      // Verify token transfer from contract to beneficiary
-      const rest = new RestClient(httpUrl);
-      const beneficiaryBalance = (await rest.authAccounts(beneficiaryAddress)).result.value.coins;
-      expect(beneficiaryBalance).toEqual(transferAmount);
-      const contractBalance = (await rest.authAccounts(contractAddress)).result.value.coins;
-      expect(contractBalance).toEqual([]);
-    });
-  });
-
-  describe("sendTokens", () => {
-    it("works", async () => {
-      pendingWithoutCosmos();
-      const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-      const client = CosmWasmClient.makeWritable(httpUrl, faucet.address, signBytes => pen.sign(signBytes));
-
-      // instantiate
-      const transferAmount: readonly Coin[] = [
-        {
-          amount: "7890",
-          denom: "ucosm",
-        },
-      ];
-      const beneficiaryAddress = makeRandomAddress();
-
-      // no tokens here
-      const before = await client.getAccount(beneficiaryAddress);
-      expect(before).toBeUndefined();
-
-      // send
-      const result = await client.sendTokens(beneficiaryAddress, transferAmount, "for dinner");
-      const [firstLog] = result.logs;
-      expect(firstLog).toBeTruthy();
-
-      // got tokens
-      const after = await client.getAccount(beneficiaryAddress);
-      assert(after);
-      expect(after.coins).toEqual(transferAmount);
-    });
-  });
-
   describe("queryContractRaw", () => {
     const configKey = toAscii("config");
     const otherKey = toAscii("this_does_not_exist");
@@ -458,7 +320,7 @@ describe("CosmWasmClient", () => {
       if (cosmosEnabled()) {
         pendingWithoutCosmos();
         const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-        const client = CosmWasmClient.makeWritable(httpUrl, faucet.address, signBytes => pen.sign(signBytes));
+        const client = new SigningCosmWasmClient(httpUrl, faucet.address, signBytes => pen.sign(signBytes));
         const codeId = await client.upload(getRandomizedHackatom());
         const initMsg = { verifier: makeRandomAddress(), beneficiary: makeRandomAddress() };
         const contractAddress = await client.instantiate(codeId, initMsg);
@@ -470,7 +332,7 @@ describe("CosmWasmClient", () => {
       pendingWithoutCosmos();
       assert(contract);
 
-      const client = CosmWasmClient.makeReadOnly(httpUrl);
+      const client = new CosmWasmClient(httpUrl);
       const raw = await client.queryContractRaw(contract.address, configKey);
       assert(raw, "must get result");
       expect(JSON.parse(fromUtf8(raw))).toEqual({
@@ -484,7 +346,7 @@ describe("CosmWasmClient", () => {
       pendingWithoutCosmos();
       assert(contract);
 
-      const client = CosmWasmClient.makeReadOnly(httpUrl);
+      const client = new CosmWasmClient(httpUrl);
       const raw = await client.queryContractRaw(contract.address, otherKey);
       expect(raw).toBeNull();
     });
@@ -494,7 +356,7 @@ describe("CosmWasmClient", () => {
       assert(contract);
 
       const nonExistentAddress = makeRandomAddress();
-      const client = CosmWasmClient.makeReadOnly(httpUrl);
+      const client = new CosmWasmClient(httpUrl);
       await client.queryContractRaw(nonExistentAddress, configKey).then(
         () => fail("must not succeed"),
         error => expect(error).toMatch(`No contract found at address "${nonExistentAddress}"`),
@@ -509,7 +371,7 @@ describe("CosmWasmClient", () => {
       if (cosmosEnabled()) {
         pendingWithoutCosmos();
         const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-        const client = CosmWasmClient.makeWritable(httpUrl, faucet.address, signBytes => pen.sign(signBytes));
+        const client = new SigningCosmWasmClient(httpUrl, faucet.address, signBytes => pen.sign(signBytes));
         const codeId = await client.upload(getRandomizedHackatom());
         const initMsg = { verifier: makeRandomAddress(), beneficiary: makeRandomAddress() };
         const contractAddress = await client.instantiate(codeId, initMsg);
@@ -521,7 +383,7 @@ describe("CosmWasmClient", () => {
       pendingWithoutCosmos();
       assert(contract);
 
-      const client = CosmWasmClient.makeReadOnly(httpUrl);
+      const client = new CosmWasmClient(httpUrl);
       const verifier = await client.queryContractSmart(contract.address, { verifier: {} });
       expect(fromAscii(verifier)).toEqual(contract.initMsg.verifier);
     });
@@ -530,7 +392,7 @@ describe("CosmWasmClient", () => {
       pendingWithoutCosmos();
       assert(contract);
 
-      const client = CosmWasmClient.makeReadOnly(httpUrl);
+      const client = new CosmWasmClient(httpUrl);
       await client.queryContractSmart(contract.address, { broken: {} }).then(
         () => fail("must not succeed"),
         error => expect(error).toMatch(/Error parsing QueryMsg/i),
@@ -541,7 +403,7 @@ describe("CosmWasmClient", () => {
       pendingWithoutCosmos();
 
       const nonExistentAddress = makeRandomAddress();
-      const client = CosmWasmClient.makeReadOnly(httpUrl);
+      const client = new CosmWasmClient(httpUrl);
       await client.queryContractSmart(nonExistentAddress, { verifier: {} }).then(
         () => fail("must not succeed"),
         error => expect(error).toMatch(`No contract found at address "${nonExistentAddress}"`),

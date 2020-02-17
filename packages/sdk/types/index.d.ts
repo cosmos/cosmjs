@@ -7,7 +7,6 @@ export { makeSignBytes, marshalTx } from "./encoding";
 export { RestClient, TxsResponse } from "./restclient";
 export {
   CosmWasmClient,
-  ExecuteResult,
   GetNonceResult,
   PostTxResult,
   SearchByHeightQuery,
@@ -24,3 +23,4 @@ export {
 } from "./pubkey";
 export { findSequenceForSignedTx } from "./sequence";
 export { encodeSecp256k1Signature, decodeSignature } from "./signature";
+export { SigningCallback, SigningCosmWasmClient, ExecuteResult } from "./signingcosmwasmclient";

@@ -58,6 +58,16 @@ export const tendermintIdMatcher = /^[0-9A-F]{64}$/;
 export const tendermintOptionalIdMatcher = /^([0-9A-F]{64}|)$/;
 export const tendermintAddressMatcher = /^[0-9A-F]{40}$/;
 
+export function cosmosEnabled(): boolean {
+  return !!process.env.COSMOS_ENABLED;
+}
+
+export function pendingWithoutCosmos(): void {
+  if (!cosmosEnabled()) {
+    return pending("Set COSMOS_ENABLED to enable Cosmos node-based tests");
+  }
+}
+
 describe("leb128", () => {
   describe("leb128Encode", () => {
     it("works for single byte values", () => {

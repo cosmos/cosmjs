@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /* eslint-disable @typescript-eslint/camelcase */
-const { CosmWasmClient, Secp256k1Pen } = require("@cosmwasm/sdk");
+const { SigningCosmWasmClient, Secp256k1Pen } = require("@cosmwasm/sdk");
 const fs = require("fs");
 
 const httpUrl = "http://localhost:1317";
@@ -56,7 +56,7 @@ const initMsgCash = {
 
 async function main() {
   const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-  const client = CosmWasmClient.makeWritable(httpUrl, faucet.address, signBytes => pen.sign(signBytes));
+  const client = new SigningCosmWasmClient(httpUrl, faucet.address, signBytes => pen.sign(signBytes));
 
   const wasm = fs.readFileSync(__dirname + "/contracts/cw-erc20.wasm");
   const codeId = await client.upload(wasm, "Upload ERC20 contract");
