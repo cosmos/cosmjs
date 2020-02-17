@@ -1,6 +1,12 @@
 import { Log } from "./logs";
 import { BlockResponse, TxsResponse } from "./restclient";
-import { Coin, CosmosSdkAccount, CosmosSdkTx, StdSignature } from "./types";
+import { Coin, CosmosSdkAccount, CosmosSdkTx, StdFee, StdSignature } from "./types";
+export interface FeeTable {
+  readonly upload: StdFee;
+  readonly init: StdFee;
+  readonly exec: StdFee;
+  readonly send: StdFee;
+}
 export interface SigningCallback {
   (signBytes: Uint8Array): Promise<StdSignature>;
 }
@@ -28,10 +34,16 @@ export interface ExecuteResult {
   readonly logs: readonly Log[];
 }
 export declare class CosmWasmClient {
-  static makeReadOnly(url: string): CosmWasmClient;
-  static makeWritable(url: string, senderAddress: string, signCallback: SigningCallback): CosmWasmClient;
+  static makeReadOnly(url: string, feeTable?: Partial<FeeTable>): CosmWasmClient;
+  static makeWritable(
+    url: string,
+    senderAddress: string,
+    signCallback: SigningCallback,
+    feeTable?: Partial<FeeTable>,
+  ): CosmWasmClient;
   private readonly restClient;
   private readonly signingData;
+  private readonly feeTable;
   private get senderAddress();
   private get signCallback();
   private constructor();

@@ -15,34 +15,34 @@ import {
   StdSignature,
 } from "./types";
 
-const defaultUploadFee: StdFee = {
-  amount: [
-    {
-      amount: "5000",
-      denom: "ucosm",
-    },
-  ],
-  gas: "1000000", // one million
-};
+export interface FeeTable {
+  readonly upload: StdFee;
+  readonly init: StdFee;
+  readonly exec: StdFee;
+  readonly send: StdFee;
+}
 
-const defaultInitFee: StdFee = {
-  amount: [
-    {
-      amount: "5000",
-      denom: "ucosm",
-    },
-  ],
-  gas: "500000", // 500k
-};
+const feeAmount = (amount: number, denom: string): readonly Coin[] => [
+  { amount: amount.toString(), denom: denom },
+];
 
-const defaultExecFee: StdFee = {
-  amount: [
-    {
-      amount: "5000",
-      denom: "ucosm",
-    },
-  ],
-  gas: "200000", // 200k
+const defaultFeeTable: FeeTable = {
+  upload: {
+    amount: feeAmount(25000, "ucosm"),
+    gas: "1000000", // one million
+  },
+  init: {
+    amount: feeAmount(12500, "ucosm"),
+    gas: "500000", // 500k
+  },
+  exec: {
+    amount: feeAmount(5000, "ucosm"),
+    gas: "200000", // 200k
+  },
+  send: {
+    amount: feeAmount(2000, "ucosm"),
+    gas: "80000", // 80k
+  },
 };
 
 export interface SigningCallback {
@@ -97,23 +97,29 @@ export interface ExecuteResult {
 }
 
 export class CosmWasmClient {
-  public static makeReadOnly(url: string): CosmWasmClient {
-    return new CosmWasmClient(url);
+  public static makeReadOnly(url: string, feeTable?: Partial<FeeTable>): CosmWasmClient {
+    return new CosmWasmClient(url, undefined, feeTable);
   }
 
   public static makeWritable(
     url: string,
     senderAddress: string,
     signCallback: SigningCallback,
+    feeTable?: Partial<FeeTable>,
   ): CosmWasmClient {
-    return new CosmWasmClient(url, {
-      senderAddress: senderAddress,
-      signCallback: signCallback,
-    });
+    return new CosmWasmClient(
+      url,
+      {
+        senderAddress: senderAddress,
+        signCallback: signCallback,
+      },
+      feeTable,
+    );
   }
 
   private readonly restClient: RestClient;
   private readonly signingData: SigningData | undefined;
+  private readonly feeTable: FeeTable;
 
   private get senderAddress(): string {
     if (!this.signingData) throw new Error("Signing data not set in this client");
@@ -125,9 +131,10 @@ export class CosmWasmClient {
     return this.signingData.signCallback;
   }
 
-  private constructor(url: string, signingData?: SigningData) {
+  private constructor(url: string, signingData?: SigningData, feeTable?: Partial<FeeTable>) {
     this.restClient = new RestClient(url);
     this.signingData = signingData;
+    this.feeTable = { ...defaultFeeTable, ...(feeTable || {}) };
   }
 
   public async chainId(): Promise<string> {
@@ -234,7 +241,7 @@ export class CosmWasmClient {
         builder: "",
       },
     };
-    const fee = defaultUploadFee;
+    const fee = this.feeTable.upload;
     const { accountNumber, sequence } = await this.getNonce();
     const chainId = await this.chainId();
     const signBytes = makeSignBytes([storeCodeMsg], fee, chainId, memo, accountNumber, sequence);
@@ -270,7 +277,7 @@ export class CosmWasmClient {
         init_funds: transferAmount || [],
       },
     };
-    const fee = defaultInitFee;
+    const fee = this.feeTable.init;
     const { accountNumber, sequence } = await this.getNonce();
     const chainId = await this.chainId();
     const signBytes = makeSignBytes([instantiateMsg], fee, chainId, memo, accountNumber, sequence);
@@ -304,7 +311,7 @@ export class CosmWasmClient {
         sent_funds: transferAmount || [],
       },
     };
-    const fee = defaultExecFee;
+    const fee = this.feeTable.exec;
     const { accountNumber, sequence } = await this.getNonce();
     const chainId = await this.chainId();
     const signBytes = makeSignBytes([executeMsg], fee, chainId, memo, accountNumber, sequence);
