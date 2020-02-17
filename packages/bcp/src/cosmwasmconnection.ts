@@ -41,7 +41,7 @@ import { DefaultValueProducer, ValueAndUpdates } from "@iov/stream";
 import BN from "bn.js";
 import equal from "fast-deep-equal";
 import { ReadonlyDate } from "readonly-date";
-import { Stream } from "xstream";
+import { Producer, Stream } from "xstream";
 
 import { decodeCosmosPubkey, pubkeyToAddress } from "./address";
 import { Caip5 } from "./caip5";
@@ -65,6 +65,9 @@ export interface TokenConfiguration {
 function isDefined<X>(value: X | undefined): value is X {
   return value !== undefined;
 }
+
+/** Account and undefined are valid events. The third option means no event fired yet */
+type LastWatchAccountEvent = Account | undefined | "no_event_fired_yet";
 
 export class CosmWasmConnection implements BlockchainConnection {
   // we must know prefix and tokens a priori to understand the chain
@@ -185,8 +188,34 @@ export class CosmWasmConnection implements BlockchainConnection {
     }
   }
 
-  public watchAccount(_account: AccountQuery): Stream<Account | undefined> {
-    throw new Error("not implemented");
+  public watchAccount(query: AccountQuery): Stream<Account | undefined> {
+    let lastEvent: LastWatchAccountEvent = "no_event_fired_yet";
+    let pollInternal: NodeJS.Timeout | undefined;
+    const producer: Producer<Account | undefined> = {
+      start: async listener => {
+        const poll = async (): Promise<void> => {
+          try {
+            const event = await this.getAccount(query);
+            if (!equal(event, lastEvent)) {
+              listener.next(event);
+              lastEvent = event;
+            }
+          } catch (error) {
+            listener.error(error);
+          }
+        };
+
+        pollInternal = setInterval(poll, defaultPollInterval);
+        await poll();
+      },
+      stop: () => {
+        if (pollInternal) {
+          clearInterval(pollInternal);
+          pollInternal = undefined;
+        }
+      },
+    };
+    return Stream.create(producer);
   }
 
   public async getNonce(query: AddressQuery | PubkeyQuery): Promise<Nonce> {

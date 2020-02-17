@@ -64,7 +64,7 @@ export declare class CosmWasmConnection implements BlockchainConnection {
    */
   identifier(signed: SignedTransaction): Promise<TransactionId>;
   getAccount(query: AccountQuery): Promise<Account | undefined>;
-  watchAccount(_account: AccountQuery): Stream<Account | undefined>;
+  watchAccount(query: AccountQuery): Stream<Account | undefined>;
   getNonce(query: AddressQuery | PubkeyQuery): Promise<Nonce>;
   getNonces(query: AddressQuery | PubkeyQuery, count: number): Promise<readonly Nonce[]>;
   getBlockHeader(height: number): Promise<BlockHeader>;
