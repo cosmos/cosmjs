@@ -222,50 +222,22 @@ describe("CosmWasmClient", () => {
     beforeAll(async () => {
       if (cosmosEnabled()) {
         const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-        const client = CosmWasmClient.makeReadOnly(httpUrl);
+        const client = CosmWasmClient.makeWritable(httpUrl, faucet.address, signBytes => pen.sign(signBytes));
 
-        const memo = "My first contract on chain";
-        const sendMsg: MsgSend = {
-          type: "cosmos-sdk/MsgSend",
-          value: {
-            from_address: faucet.address,
-            to_address: makeRandomAddress(),
-            amount: [
-              {
-                denom: "ucosm",
-                amount: "1234567",
-              },
-            ],
+        const recipient = makeRandomAddress();
+        const transferAmount = [
+          {
+            denom: "ucosm",
+            amount: "1234567",
           },
-        };
+        ];
+        const result = await client.sendTokens(recipient, transferAmount);
 
-        const fee: StdFee = {
-          amount: [
-            {
-              amount: "5000",
-              denom: "ucosm",
-            },
-          ],
-          gas: "890000",
-        };
-
-        const chainId = await client.chainId();
-        const { accountNumber, sequence } = await client.getNonce(faucet.address);
-        const signBytes = makeSignBytes([sendMsg], fee, chainId, memo, accountNumber, sequence);
-        const signature = await pen.sign(signBytes);
-        const signedTx = {
-          msg: [sendMsg],
-          fee: fee,
-          memo: memo,
-          signatures: [signature],
-        };
-
-        const result = await client.postTx(marshalTx(signedTx));
         await sleep(50); // wait until tx is indexed
         const txDetails = await new RestClient(httpUrl).txsById(result.transactionHash);
         posted = {
-          sender: sendMsg.value.from_address,
-          recipient: sendMsg.value.to_address,
+          sender: faucet.address,
+          recipient: recipient,
           hash: result.transactionHash,
           height: Number.parseInt(txDetails.height, 10),
           tx: txDetails.tx,
@@ -443,6 +415,37 @@ describe("CosmWasmClient", () => {
       expect(beneficiaryBalance).toEqual(transferAmount);
       const contractBalance = (await rest.authAccounts(contractAddress)).result.value.coins;
       expect(contractBalance).toEqual([]);
+    });
+  });
+
+  describe("sendTokens", () => {
+    it("works", async () => {
+      pendingWithoutCosmos();
+      const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
+      const client = CosmWasmClient.makeWritable(httpUrl, faucet.address, signBytes => pen.sign(signBytes));
+
+      // instantiate
+      const transferAmount: readonly Coin[] = [
+        {
+          amount: "7890",
+          denom: "ucosm",
+        },
+      ];
+      const beneficiaryAddress = makeRandomAddress();
+
+      // no tokens here
+      const before = await client.getAccount(beneficiaryAddress);
+      expect(before).toBeUndefined();
+
+      // send
+      const result = await client.sendTokens(beneficiaryAddress, transferAmount, "for dinner");
+      const [firstLog] = result.logs;
+      expect(firstLog).toBeTruthy();
+
+      // got tokens
+      const after = await client.getAccount(beneficiaryAddress);
+      assert(after);
+      expect(after.coins).toEqual(transferAmount);
     });
   });
 

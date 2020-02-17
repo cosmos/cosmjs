@@ -10,39 +10,40 @@ import {
   CosmosSdkTx,
   MsgExecuteContract,
   MsgInstantiateContract,
+  MsgSend,
   MsgStoreCode,
   StdFee,
   StdSignature,
 } from "./types";
 
-const defaultUploadFee: StdFee = {
-  amount: [
-    {
-      amount: "5000",
-      denom: "ucosm",
-    },
-  ],
-  gas: "1000000", // one million
-};
+export interface FeeTable {
+  readonly upload: StdFee;
+  readonly init: StdFee;
+  readonly exec: StdFee;
+  readonly send: StdFee;
+}
 
-const defaultInitFee: StdFee = {
-  amount: [
-    {
-      amount: "5000",
-      denom: "ucosm",
-    },
-  ],
-  gas: "500000", // 500k
-};
+function singleAmount(amount: number, denom: string): readonly Coin[] {
+  return [{ amount: amount.toString(), denom: denom }];
+}
 
-const defaultExecFee: StdFee = {
-  amount: [
-    {
-      amount: "5000",
-      denom: "ucosm",
-    },
-  ],
-  gas: "200000", // 200k
+const defaultFees: FeeTable = {
+  upload: {
+    amount: singleAmount(25000, "ucosm"),
+    gas: "1000000", // one million
+  },
+  init: {
+    amount: singleAmount(12500, "ucosm"),
+    gas: "500000", // 500k
+  },
+  exec: {
+    amount: singleAmount(5000, "ucosm"),
+    gas: "200000", // 200k
+  },
+  send: {
+    amount: singleAmount(2000, "ucosm"),
+    gas: "80000", // 80k
+  },
 };
 
 export interface SigningCallback {
@@ -98,22 +99,28 @@ export interface ExecuteResult {
 
 export class CosmWasmClient {
   public static makeReadOnly(url: string): CosmWasmClient {
-    return new CosmWasmClient(url);
+    return new CosmWasmClient(url, undefined, {});
   }
 
   public static makeWritable(
     url: string,
     senderAddress: string,
     signCallback: SigningCallback,
+    feeTable?: Partial<FeeTable>,
   ): CosmWasmClient {
-    return new CosmWasmClient(url, {
-      senderAddress: senderAddress,
-      signCallback: signCallback,
-    });
+    return new CosmWasmClient(
+      url,
+      {
+        senderAddress: senderAddress,
+        signCallback: signCallback,
+      },
+      feeTable || {},
+    );
   }
 
   private readonly restClient: RestClient;
   private readonly signingData: SigningData | undefined;
+  private readonly fees: FeeTable;
 
   private get senderAddress(): string {
     if (!this.signingData) throw new Error("Signing data not set in this client");
@@ -125,9 +132,10 @@ export class CosmWasmClient {
     return this.signingData.signCallback;
   }
 
-  private constructor(url: string, signingData?: SigningData) {
+  private constructor(url: string, signingData: SigningData | undefined, customFees: Partial<FeeTable>) {
     this.restClient = new RestClient(url);
     this.signingData = signingData;
+    this.fees = { ...defaultFees, ...customFees };
   }
 
   public async chainId(): Promise<string> {
@@ -234,7 +242,7 @@ export class CosmWasmClient {
         builder: "",
       },
     };
-    const fee = defaultUploadFee;
+    const fee = this.fees.upload;
     const { accountNumber, sequence } = await this.getNonce();
     const chainId = await this.chainId();
     const signBytes = makeSignBytes([storeCodeMsg], fee, chainId, memo, accountNumber, sequence);
@@ -270,7 +278,7 @@ export class CosmWasmClient {
         init_funds: transferAmount || [],
       },
     };
-    const fee = defaultInitFee;
+    const fee = this.fees.init;
     const { accountNumber, sequence } = await this.getNonce();
     const chainId = await this.chainId();
     const signBytes = makeSignBytes([instantiateMsg], fee, chainId, memo, accountNumber, sequence);
@@ -304,7 +312,7 @@ export class CosmWasmClient {
         sent_funds: transferAmount || [],
       },
     };
-    const fee = defaultExecFee;
+    const fee = this.fees.exec;
     const { accountNumber, sequence } = await this.getNonce();
     const chainId = await this.chainId();
     const signBytes = makeSignBytes([executeMsg], fee, chainId, memo, accountNumber, sequence);
@@ -320,6 +328,36 @@ export class CosmWasmClient {
     return {
       logs: result.logs,
     };
+  }
+
+  public async sendTokens(
+    recipientAddress: string,
+    transferAmount: readonly Coin[],
+    memo = "",
+  ): Promise<PostTxResult> {
+    const sendMsg: MsgSend = {
+      type: "cosmos-sdk/MsgSend",
+      value: {
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        from_address: this.senderAddress,
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        to_address: recipientAddress,
+        amount: transferAmount,
+      },
+    };
+    const fee = this.fees.send;
+    const { accountNumber, sequence } = await this.getNonce();
+    const chainId = await this.chainId();
+    const signBytes = makeSignBytes([sendMsg], fee, chainId, memo, accountNumber, sequence);
+    const signature = await this.signCallback(signBytes);
+    const signedTx = {
+      msg: [sendMsg],
+      fee: fee,
+      memo: memo,
+      signatures: [signature],
+    };
+
+    return this.postTx(marshalTx(signedTx));
   }
 
   /**
