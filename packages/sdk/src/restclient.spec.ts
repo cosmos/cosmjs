@@ -290,6 +290,18 @@ describe("RestClient", () => {
         }),
       );
     });
+
+    // This property is used by CosmWasmClient.getAccount
+    it("returns empty address for non-existent account", async () => {
+      pendingWithoutCosmos();
+      const client = new RestClient(httpUrl);
+      const nonExistentAccount = makeRandomAddress();
+      const { result } = await client.authAccounts(nonExistentAccount);
+      expect(result).toEqual({
+        type: "cosmos-sdk/Account",
+        value: jasmine.objectContaining({ address: "" }),
+      });
+    });
   });
 
   describe("encodeTx", () => {
