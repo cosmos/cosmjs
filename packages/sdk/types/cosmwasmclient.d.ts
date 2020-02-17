@@ -1,6 +1,6 @@
 import { Log } from "./logs";
 import { BlockResponse, TxsResponse } from "./restclient";
-import { Coin, CosmosSdkTx, StdSignature, CosmosSdkAccount } from "./types";
+import { Coin, CosmosSdkAccount, CosmosSdkTx, StdSignature } from "./types";
 export interface SigningCallback {
   (signBytes: Uint8Array): Promise<StdSignature>;
 }
@@ -42,6 +42,8 @@ export declare class CosmWasmClient {
   getIdentifier(tx: CosmosSdkTx): Promise<string>;
   /**
    * Returns account number and sequence.
+   *
+   * Throws if the account does not exist on chain.
    *
    * @param address returns data for this address. When unset, the client's sender adddress is used.
    */

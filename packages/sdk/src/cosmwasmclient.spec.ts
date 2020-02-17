@@ -74,14 +74,14 @@ describe("CosmWasmClient", () => {
       });
     });
 
-    it("returns zeros for missing accounts", async () => {
+    it("throws for missing accounts", async () => {
       pendingWithoutCosmos();
       const client = CosmWasmClient.makeReadOnly(httpUrl);
       const missing = makeRandomAddress();
-      expect(await client.getNonce(missing)).toEqual({
-        accountNumber: 0,
-        sequence: 0,
-      });
+      await client.getNonce(missing).then(
+        () => fail("this must not succeed"),
+        error => expect(error).toMatch(/account does not exist on chain/i),
+      );
     });
   });
 

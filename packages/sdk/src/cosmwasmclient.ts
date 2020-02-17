@@ -148,13 +148,20 @@ export class CosmWasmClient {
   /**
    * Returns account number and sequence.
    *
+   * Throws if the account does not exist on chain.
+   *
    * @param address returns data for this address. When unset, the client's sender adddress is used.
    */
   public async getNonce(address?: string): Promise<GetNonceResult> {
     const account = await this.getAccount(address);
+    if (!account) {
+      throw new Error(
+        "Account does not exist on chain. Send some tokens there before trying to query nonces.",
+      );
+    }
     return {
-      accountNumber: account ? account.account_number : 0,
-      sequence: account ? account.sequence : 0,
+      accountNumber: account.account_number,
+      sequence: account.sequence,
     };
   }
 
