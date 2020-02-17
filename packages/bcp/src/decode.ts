@@ -19,8 +19,9 @@ import {
   UnsignedTransaction,
 } from "@iov/bcp";
 import { Decimal, Encoding } from "@iov/encoding";
+import BN from "bn.js";
 
-import { BankTokens } from "./types";
+import { BankTokens, Erc20Token } from "./types";
 
 const { fromBase64 } = Encoding;
 
@@ -76,6 +77,7 @@ export function parseMsg(
   memo: string | undefined,
   chainId: ChainId,
   tokens: BankTokens,
+  erc20Tokens: readonly Erc20Token[],
 ): UnsignedTransaction {
   if (types.isMsgSend(msg)) {
     if (msg.value.amount.length !== 1) {
@@ -87,6 +89,34 @@ export function parseMsg(
       sender: msg.value.from_address as Address,
       recipient: msg.value.to_address as Address,
       amount: decodeAmount(tokens, msg.value.amount[0]),
+      memo: memo,
+    };
+    return send;
+  } else if (types.isMsgExecuteContract(msg)) {
+    const matchingTokenContract = erc20Tokens.find(t => t.contractAddress === msg.value.contract);
+    if (!matchingTokenContract) {
+      return {
+        chainId: chainId,
+        kind: "bcp/unknown",
+      };
+    }
+
+    const recipient: string | undefined = (msg.value.msg as any).transfer?.recipient;
+    if (!recipient) throw new Error("Could not read recipient");
+
+    const amount: string | undefined = (msg.value.msg as any).transfer?.amount;
+    if (!amount) throw new Error("Could not read recipient");
+
+    const send: SendTransaction = {
+      kind: "bcp/send",
+      chainId: chainId,
+      sender: msg.value.sender as Address,
+      recipient: recipient as Address,
+      amount: {
+        quantity: new BN(amount).toString(),
+        fractionalDigits: matchingTokenContract.fractionalDigits,
+        tokenTicker: matchingTokenContract.ticker as TokenTicker,
+      },
       memo: memo,
     };
     return send;
@@ -114,6 +144,7 @@ export function parseUnsignedTx(
   txValue: types.StdTx,
   chainId: ChainId,
   tokens: BankTokens,
+  erc20Tokens: readonly Erc20Token[],
 ): UnsignedTransaction {
   if (!types.isStdTx(txValue)) {
     throw new Error("Only StdTx is supported");
@@ -122,7 +153,7 @@ export function parseUnsignedTx(
     throw new Error("Only single-message transactions currently supported");
   }
 
-  const msg = parseMsg(txValue.msg[0], txValue.memo, chainId, tokens);
+  const msg = parseMsg(txValue.msg[0], txValue.memo, chainId, tokens, erc20Tokens);
   const fee = parseFee(txValue.fee, tokens);
 
   return {
@@ -137,10 +168,11 @@ export function parseSignedTx(
   chainId: ChainId,
   nonce: Nonce,
   tokens: BankTokens,
+  erc20Tokens: readonly Erc20Token[],
 ): SignedTransaction {
   const [primarySignature] = txValue.signatures.map(signature => decodeFullSignature(signature, nonce));
   return {
-    transaction: parseUnsignedTx(txValue, chainId, tokens),
+    transaction: parseUnsignedTx(txValue, chainId, tokens, erc20Tokens),
     signatures: [primarySignature],
   };
 }
@@ -150,10 +182,11 @@ export function parseTxsResponseUnsigned(
   currentHeight: number,
   response: TxsResponse,
   tokens: BankTokens,
+  erc20Tokens: readonly Erc20Token[],
 ): ConfirmedTransaction<UnsignedTransaction> {
   const height = parseInt(response.height, 10);
   return {
-    transaction: parseUnsignedTx(response.tx.value, chainId, tokens),
+    transaction: parseUnsignedTx(response.tx.value, chainId, tokens, erc20Tokens),
     height: height,
     confirmations: currentHeight - height + 1,
     transactionId: response.txhash as TransactionId,
@@ -167,10 +200,11 @@ export function parseTxsResponseSigned(
   nonce: Nonce,
   response: TxsResponse,
   tokens: BankTokens,
+  erc20Tokens: readonly Erc20Token[],
 ): ConfirmedAndSignedTransaction<UnsignedTransaction> {
   const height = parseInt(response.height, 10);
   return {
-    ...parseSignedTx(response.tx.value, chainId, nonce, tokens),
+    ...parseSignedTx(response.tx.value, chainId, nonce, tokens, erc20Tokens),
     height: height,
     confirmations: currentHeight - height + 1,
     transactionId: response.txhash as TransactionId,

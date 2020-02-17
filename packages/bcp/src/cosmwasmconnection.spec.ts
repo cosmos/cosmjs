@@ -49,6 +49,7 @@ const faucet = {
 
 describe("CosmWasmConnection", () => {
   const cosm = "COSM" as TokenTicker;
+  const bash = "BASH" as TokenTicker;
   const httpUrl = "http://localhost:1317";
   const defaultChainId = "cosmos:testing" as ChainId;
   const defaultEmptyAddress = "cosmos1h806c7khnvmjlywdrkdgk2vrayy2mmvf9rxk2r" as Address;
@@ -267,7 +268,7 @@ describe("CosmWasmConnection", () => {
   });
 
   describe("getTx", () => {
-    it("can get a recently posted transaction", async () => {
+    it("can get a recently posted bank send transaction", async () => {
       pendingWithoutWasmd();
       const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
       const profile = new UserProfile();
@@ -301,6 +302,56 @@ describe("CosmWasmConnection", () => {
       // we get a json response in the log for each msg, multiple events is good (transfer succeeded)
       const [firstLog] = JSON.parse(getResponse.log);
       expect(firstLog.events.length).toEqual(2);
+
+      const { transaction, signatures } = getResponse;
+      assert(isSendTransaction(transaction), "Expected send transaction");
+      expect(transaction).toEqual(unsigned);
+      expect(signatures.length).toEqual(1);
+      expect(signatures[0]).toEqual({
+        nonce: signed.signatures[0].nonce,
+        pubkey: {
+          algo: signed.signatures[0].pubkey.algo,
+          data: Secp256k1.compressPubkey(signed.signatures[0].pubkey.data),
+        },
+        signature: Secp256k1.trimRecoveryByte(signed.signatures[0].signature),
+      });
+
+      connection.disconnect();
+    });
+
+    it("can get a recently posted ERC20 send transaction", async () => {
+      pendingWithoutWasmd();
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const profile = new UserProfile();
+      const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(faucet.mnemonic));
+      const senderIdentity = await profile.createIdentity(wallet.id, defaultChainId, faucet.path);
+      const senderAddress = connection.codec.identityToAddress(senderIdentity);
+
+      const unsigned = await connection.withDefaultFee<SendTransaction>({
+        kind: "bcp/send",
+        chainId: defaultChainId,
+        sender: senderAddress,
+        recipient: defaultRecipient,
+        memo: "An ERC20 payment",
+        amount: {
+          quantity: "345",
+          fractionalDigits: 0,
+          tokenTicker: bash,
+        },
+      });
+      const nonce = await connection.getNonce({ address: senderAddress });
+      const signed = await profile.signTransaction(senderIdentity, unsigned, connection.codec, nonce);
+      const postableBytes = connection.codec.bytesToPost(signed);
+      const response = await connection.postTx(postableBytes);
+      const { transactionId } = response;
+      await response.blockInfo.waitFor(info => isBlockInfoSucceeded(info));
+
+      const getResponse = await connection.getTx(transactionId);
+      expect(getResponse.transactionId).toEqual(transactionId);
+      assert(isConfirmedTransaction(getResponse), "Expected transaction to succeed");
+      assert(getResponse.log, "Log must be available");
+      const [firstLog] = JSON.parse(getResponse.log);
+      expect(firstLog.events.length).toEqual(1);
 
       const { transaction, signatures } = getResponse;
       assert(isSendTransaction(transaction), "Expected send transaction");
