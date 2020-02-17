@@ -58,13 +58,13 @@ export const tendermintIdMatcher = /^[0-9A-F]{64}$/;
 export const tendermintOptionalIdMatcher = /^([0-9A-F]{64}|)$/;
 export const tendermintAddressMatcher = /^[0-9A-F]{40}$/;
 
-export function cosmosEnabled(): boolean {
-  return !!process.env.COSMOS_ENABLED;
+export function wasmdEnabled(): boolean {
+  return !!process.env.WASMD_ENABLED;
 }
 
-export function pendingWithoutCosmos(): void {
-  if (!cosmosEnabled()) {
-    return pending("Set COSMOS_ENABLED to enable Cosmos node-based tests");
+export function pendingWithoutWasmd(): void {
+  if (!wasmdEnabled()) {
+    return pending("Set WASMD_ENABLED to enable Wasmd based tests");
   }
 }
 

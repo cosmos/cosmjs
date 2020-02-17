@@ -81,9 +81,9 @@ The above code shows you the use of the API and various objects and is a great w
 how to embed cosmwasm-js into your project. However, if you just want a cli to perform some
 quick queries on a chain, you can use an extended set of helpers:
 
-1. Start a local wasmd blockchain, for example running the setup from `../../scripts/cosm/start.sh`
+1. Start a local wasmd blockchain, for example running the setup from `../../scripts/wasmd/start.sh`
 2. Start with `./bin/cosmwasm-cli --init examples/helpers.ts` (note the new init file)
-3. Deploy some erc20 contracts: `../../scripts/cosm/init.sh`
+3. Deploy some erc20 contracts: `../../scripts/wasmd/init.sh`
 4. Play around as in the following example code
 
 ```ts
