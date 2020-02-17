@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { types } from "@cosmwasm/sdk";
-import { Address, Algorithm, SendTransaction, TokenTicker } from "@iov/bcp";
+import { Address, Algorithm, isSendTransaction, SendTransaction, TokenTicker } from "@iov/bcp";
 import { Encoding } from "@iov/encoding";
+import { assert } from "@iov/utils";
 
 import {
   decodeAmount,
@@ -17,7 +18,7 @@ import {
 } from "./decode";
 import * as testdata from "./testdata.spec";
 import cosmoshub from "./testdata/cosmoshub.json";
-import { BankTokens } from "./types";
+import { BankTokens, Erc20Token } from "./types";
 
 const { fromBase64, fromHex } = Encoding;
 
@@ -61,6 +62,23 @@ describe("decode", () => {
       fractionalDigits: 6,
       ticker: "ATOM",
       denom: "uatom",
+    },
+  ];
+  const defaultErc20Tokens: Erc20Token[] = [
+    {
+      contractAddress: "cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
+      fractionalDigits: 5,
+      ticker: "ASH",
+    },
+    {
+      contractAddress: "cosmos1hqrdl6wstt8qzshwc6mrumpjk9338k0lr4dqxd",
+      fractionalDigits: 0,
+      ticker: "BASH",
+    },
+    {
+      contractAddress: "cosmos18r5szma8hm93pvx6lwpjwyxruw27e0k5uw835c",
+      fractionalDigits: 18,
+      ticker: "CASH",
     },
   ];
 
@@ -126,7 +144,7 @@ describe("decode", () => {
   });
 
   describe("parseMsg", () => {
-    it("works", () => {
+    it("works for bank send transaction", () => {
       const msg: types.Msg = {
         type: "cosmos-sdk/MsgSend",
         value: {
@@ -141,6 +159,37 @@ describe("decode", () => {
         },
       };
       expect(parseMsg(msg, defaultMemo, testdata.chainId, defaultTokens)).toEqual(defaultSendTransaction);
+    });
+
+    it("works for ERC20 send transaction", () => {
+      const msg: types.MsgExecuteContract = {
+        type: "wasm/execute",
+        value: {
+          sender: "cosmos1h806c7khnvmjlywdrkdgk2vrayy2mmvf9rxk2r",
+          contract: defaultErc20Tokens[0].contractAddress,
+          msg: {
+            transfer: {
+              amount: "887878484",
+              recipient: "cosmos1z7g5w84ynmjyg0kqpahdjqpj7yq34v3suckp0e",
+            },
+          },
+          sent_funds: [],
+        },
+      };
+      const transaction = parseMsg(msg, defaultMemo, testdata.chainId, defaultTokens, defaultErc20Tokens);
+      assert(isSendTransaction(transaction));
+      expect(transaction).toEqual({
+        kind: "bcp/send",
+        chainId: testdata.chainId,
+        sender: "cosmos1h806c7khnvmjlywdrkdgk2vrayy2mmvf9rxk2r" as Address,
+        recipient: "cosmos1z7g5w84ynmjyg0kqpahdjqpj7yq34v3suckp0e" as Address,
+        amount: {
+          quantity: "887878484",
+          tokenTicker: "ASH" as TokenTicker,
+          fractionalDigits: 5,
+        },
+        memo: defaultMemo,
+      });
     });
   });
 

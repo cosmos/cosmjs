@@ -19,8 +19,9 @@ import {
   UnsignedTransaction,
 } from "@iov/bcp";
 import { Decimal, Encoding } from "@iov/encoding";
+import BN from "bn.js";
 
-import { BankTokens } from "./types";
+import { BankTokens, Erc20Token } from "./types";
 
 const { fromBase64 } = Encoding;
 
@@ -76,6 +77,7 @@ export function parseMsg(
   memo: string | undefined,
   chainId: ChainId,
   tokens: BankTokens,
+  erc20Tokens: readonly Erc20Token[] = [],
 ): UnsignedTransaction {
   if (types.isMsgSend(msg)) {
     if (msg.value.amount.length !== 1) {
@@ -87,6 +89,34 @@ export function parseMsg(
       sender: msg.value.from_address as Address,
       recipient: msg.value.to_address as Address,
       amount: decodeAmount(tokens, msg.value.amount[0]),
+      memo: memo,
+    };
+    return send;
+  } else if (types.isMsgExecuteContract(msg)) {
+    const matchingTokenContract = erc20Tokens.find(t => t.contractAddress === msg.value.contract);
+    if (!matchingTokenContract) {
+      return {
+        chainId: chainId,
+        kind: "bcp/unknown",
+      };
+    }
+
+    const recipient: string | undefined = (msg.value.msg as any).transfer?.recipient;
+    if (!recipient) throw new Error("Could not read recipient");
+
+    const amount: string | undefined = (msg.value.msg as any).transfer?.amount;
+    if (!amount) throw new Error("Could not read recipient");
+
+    const send: SendTransaction = {
+      kind: "bcp/send",
+      chainId: chainId,
+      sender: msg.value.sender as Address,
+      recipient: recipient as Address,
+      amount: {
+        quantity: new BN(amount).toString(),
+        fractionalDigits: matchingTokenContract.fractionalDigits,
+        tokenTicker: matchingTokenContract.ticker as TokenTicker,
+      },
       memo: memo,
     };
     return send;
