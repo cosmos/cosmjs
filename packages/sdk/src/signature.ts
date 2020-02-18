@@ -1,4 +1,6 @@
+import { Secp256k1Signature } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
+import BN from "bn.js";
 
 import { encodeSecp256k1Pubkey } from "./pubkey";
 import { pubkeyType, StdSignature } from "./types";
@@ -36,4 +38,11 @@ export function decodeSignature(
     default:
       throw new Error("Unsupported pubkey type");
   }
+}
+
+// TODO: use Secp256k1Signature.fromFixedLength once this is published https://github.com/iov-one/iov-core/pull/1401
+export function makeSecp256k1SignatureFromFixedLength(signature: Uint8Array): Secp256k1Signature {
+  const unpaddedR = Uint8Array.from(new BN(signature.slice(0, 32)).toArray());
+  const unpaddedS = Uint8Array.from(new BN(signature.slice(32, 64)).toArray());
+  return new Secp256k1Signature(unpaddedR, unpaddedS);
 }

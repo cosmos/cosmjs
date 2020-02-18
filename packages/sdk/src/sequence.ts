@@ -1,7 +1,7 @@
-import { Secp256k1, Secp256k1Signature, Sha256 } from "@iov/crypto";
+import { Secp256k1, Sha256 } from "@iov/crypto";
 
 import { makeSignBytes } from "./encoding";
-import { decodeSignature } from "./signature";
+import { decodeSignature, makeSecp256k1SignatureFromFixedLength } from "./signature";
 import { CosmosSdkTx } from "./types";
 
 /**
@@ -26,7 +26,7 @@ export async function findSequenceForSignedTx(
   if (!firstSignature) throw new Error("Signature missing in tx");
 
   const { pubkey, signature } = decodeSignature(firstSignature);
-  const secp256keSignature = new Secp256k1Signature(signature.slice(0, 32), signature.slice(32, 64));
+  const secp256keSignature = makeSecp256k1SignatureFromFixedLength(signature);
 
   for (let s = min; s < upperBound; s++) {
     // console.log(`Trying sequence ${s}`);
