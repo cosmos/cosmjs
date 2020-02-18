@@ -13,6 +13,9 @@ const faucet = {
 const unused = {
   address: "cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u",
 };
+const guest = {
+  address: "cosmos17d0jcz59jf68g52vq38tuuncmwwjk42u6mcxej",
+};
 
 const initMsgHash = {
   decimals: 5,
@@ -26,6 +29,10 @@ const initMsgHash = {
     {
       address: unused.address,
       amount: "12812345",
+    },
+    {
+      address: guest.address,
+      amount: "22004000000",
     },
   ],
 };
@@ -52,6 +59,10 @@ const initMsgJade = {
     {
       address: faucet.address,
       amount: "189189189000000000000000000", // 189189189 JADE
+    },
+    {
+      address: guest.address,
+      amount: "189500000000000000000", // 189.5 JADE
     },
   ],
 };
