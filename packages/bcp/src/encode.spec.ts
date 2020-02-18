@@ -230,7 +230,8 @@ describe("encode", () => {
       );
     });
 
-    it("builds a send transaction without fee", () => {
+    it("throws for a send transaction without fee", () => {
+      // This will be rejected by the REST server. Better throw early to avoid hard to debug errors.
       const tx = {
         kind: "bcp/send",
         chainId: defaultChainId,
@@ -239,32 +240,7 @@ describe("encode", () => {
         recipient: defaultRecipient,
         memo: defaultMemo,
       };
-      expect(buildUnsignedTx(tx, defaultTokens)).toEqual({
-        type: "cosmos-sdk/StdTx",
-        value: {
-          msg: [
-            {
-              type: "cosmos-sdk/MsgSend",
-              value: {
-                from_address: "cosmos1h806c7khnvmjlywdrkdgk2vrayy2mmvf9rxk2r",
-                to_address: "cosmos1z7g5w84ynmjyg0kqpahdjqpj7yq34v3suckp0e",
-                amount: [
-                  {
-                    denom: "uatom",
-                    amount: "11657995",
-                  },
-                ],
-              },
-            },
-          ],
-          signatures: [],
-          memo: defaultMemo,
-          fee: {
-            amount: [],
-            gas: "",
-          },
-        },
-      });
+      expect(() => buildUnsignedTx(tx, defaultTokens)).toThrowError(/transaction fee must be set/i);
     });
 
     it("builds a send transaction with fee", () => {
