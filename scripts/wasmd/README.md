@@ -90,3 +90,7 @@ You should get output matching the following:
    oyster design unusual machine spread century engine gravity focus cave carry slot<br>
    ArkCaFUJ/IH+vKBmNRCdUVl3mCAhbopk9jjW4Ko4OfRQ<br>
    cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u
+3. Guest: account for manual testing<br>
+   degree tackle suggest window test behind mesh extra cover prepare oak script<br>
+   Am/+YV0LaeqQPu7BDJuDHV7J8y68ptkGs10YS+9s71Nq<br>
+   cosmos17d0jcz59jf68g52vq38tuuncmwwjk42u6mcxej
