@@ -5,6 +5,7 @@ import {
   Algorithm,
   Amount,
   ChainId,
+  ConfirmedTransaction,
   isBlockInfoPending,
   isBlockInfoSucceeded,
   isConfirmedTransaction,
@@ -14,6 +15,7 @@ import {
   TokenTicker,
   TransactionId,
   TransactionState,
+  UnsignedTransaction,
 } from "@iov/bcp";
 import { Random, Secp256k1, Secp256k1Signature, Sha256 } from "@iov/crypto";
 import { Bech32, Encoding } from "@iov/encoding";
@@ -496,7 +498,7 @@ describe("CosmWasmConnection", () => {
     });
   });
 
-  describe("integration tests", () => {
+  describe("searchTx", () => {
     it("can post and search for a transaction", async () => {
       pendingWithoutWasmd();
       const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
@@ -587,6 +589,399 @@ describe("CosmWasmConnection", () => {
       connection.disconnect();
     });
 
+    it("can search by minHeight and maxHeight", async () => {
+      pendingWithoutWasmd();
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const profile = new UserProfile();
+      const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(faucet.mnemonic));
+      const sender = await profile.createIdentity(wallet.id, defaultChainId, faucet.path);
+      const senderAddress = connection.codec.identityToAddress(sender);
+
+      const recipient = makeRandomAddress();
+      const unsigned = await connection.withDefaultFee<SendTransaction>({
+        kind: "bcp/send",
+        chainId: defaultChainId,
+        sender: senderAddress,
+        recipient: recipient,
+        memo: "My first payment",
+        amount: {
+          quantity: "75000",
+          fractionalDigits: 6,
+          tokenTicker: cosm,
+        },
+      });
+      const nonce = await connection.getNonce({ address: senderAddress });
+      const signed = await profile.signTransaction(sender, unsigned, connection.codec, nonce);
+      const postableBytes = connection.codec.bytesToPost(signed);
+      const response = await connection.postTx(postableBytes);
+      const { transactionId } = response;
+      const blockInfo = await response.blockInfo.waitFor(info => !isBlockInfoPending(info));
+      assert(isBlockInfoSucceeded(blockInfo));
+      const { height } = blockInfo;
+
+      // search by ID
+      {
+        const results = await connection.searchTx({ id: transactionId });
+        expect(results.length).toEqual(1);
+      }
+      {
+        const results = await connection.searchTx({ id: transactionId, minHeight: height });
+        expect(results.length).toEqual(1);
+      }
+      {
+        const results = await connection.searchTx({ id: transactionId, minHeight: height - 2 });
+        expect(results.length).toEqual(1);
+      }
+      {
+        const results = await connection.searchTx({ id: transactionId, maxHeight: height });
+        expect(results.length).toEqual(1);
+      }
+      {
+        const results = await connection.searchTx({ id: transactionId, maxHeight: height + 2 });
+        expect(results.length).toEqual(1);
+      }
+      {
+        const results = await connection.searchTx({
+          id: transactionId,
+          minHeight: height,
+          maxHeight: height,
+        });
+        expect(results.length).toEqual(1);
+      }
+      {
+        const results = await connection.searchTx({ id: transactionId, minHeight: height + 1 });
+        expect(results.length).toEqual(0);
+      }
+      {
+        const results = await connection.searchTx({ id: transactionId, maxHeight: height - 1 });
+        expect(results.length).toEqual(0);
+      }
+      {
+        const results = await connection.searchTx({
+          id: transactionId,
+          minHeight: height + 1,
+          maxHeight: Number.MAX_SAFE_INTEGER,
+        });
+        expect(results.length).toEqual(0);
+      }
+      {
+        const results = await connection.searchTx({ id: transactionId, minHeight: 0, maxHeight: height - 1 });
+        expect(results.length).toEqual(0);
+      }
+
+      // search by recipient
+      {
+        const results = await connection.searchTx({ sentFromOrTo: recipient });
+        expect(results.length).toEqual(1);
+      }
+      {
+        const results = await connection.searchTx({ sentFromOrTo: recipient, minHeight: height });
+        expect(results.length).toEqual(1);
+      }
+      {
+        const results = await connection.searchTx({ sentFromOrTo: recipient, minHeight: height - 2 });
+        expect(results.length).toEqual(1);
+      }
+      {
+        const results = await connection.searchTx({ sentFromOrTo: recipient, maxHeight: height });
+        expect(results.length).toEqual(1);
+      }
+      {
+        const results = await connection.searchTx({ sentFromOrTo: recipient, maxHeight: height + 2 });
+        expect(results.length).toEqual(1);
+      }
+      {
+        const results = await connection.searchTx({ sentFromOrTo: recipient, minHeight: height + 1 });
+        expect(results.length).toEqual(0);
+      }
+      {
+        const results = await connection.searchTx({ sentFromOrTo: recipient, maxHeight: height - 1 });
+        expect(results.length).toEqual(0);
+      }
+      {
+        const results = await connection.searchTx({
+          sentFromOrTo: recipient,
+          minHeight: height,
+          maxHeight: height,
+        });
+        expect(results.length).toEqual(1);
+      }
+      {
+        const results = await connection.searchTx({ sentFromOrTo: recipient, minHeight: height + 1 });
+        expect(results.length).toEqual(0);
+      }
+      {
+        const results = await connection.searchTx({ sentFromOrTo: recipient, maxHeight: height - 1 });
+        expect(results.length).toEqual(0);
+      }
+      {
+        const results = await connection.searchTx({
+          sentFromOrTo: recipient,
+          minHeight: height + 1,
+          maxHeight: Number.MAX_SAFE_INTEGER,
+        });
+        expect(results.length).toEqual(0);
+      }
+      {
+        const results = await connection.searchTx({
+          sentFromOrTo: recipient,
+          minHeight: 0,
+          maxHeight: height - 1,
+        });
+        expect(results.length).toEqual(0);
+      }
+
+      // search by height
+      {
+        const results = await connection.searchTx({ height: height });
+        expect(results.length).toEqual(1);
+      }
+      {
+        const results = await connection.searchTx({ height: height, minHeight: height });
+        expect(results.length).toEqual(1);
+      }
+      {
+        const results = await connection.searchTx({ height: height, minHeight: height - 2 });
+        expect(results.length).toEqual(1);
+      }
+      {
+        const results = await connection.searchTx({ height: height, maxHeight: height });
+        expect(results.length).toEqual(1);
+      }
+      {
+        const results = await connection.searchTx({ height: height, maxHeight: height + 2 });
+        expect(results.length).toEqual(1);
+      }
+      {
+        const results = await connection.searchTx({ height: height, minHeight: height + 1 });
+        expect(results.length).toEqual(0);
+      }
+      {
+        const results = await connection.searchTx({ height: height, maxHeight: height - 1 });
+        expect(results.length).toEqual(0);
+      }
+      {
+        const results = await connection.searchTx({
+          height: height,
+          minHeight: height,
+          maxHeight: height,
+        });
+        expect(results.length).toEqual(1);
+      }
+      {
+        const results = await connection.searchTx({ height: height, minHeight: height + 1 });
+        expect(results.length).toEqual(0);
+      }
+      {
+        const results = await connection.searchTx({ height: height, maxHeight: height - 1 });
+        expect(results.length).toEqual(0);
+      }
+      {
+        const results = await connection.searchTx({
+          height: height,
+          minHeight: height + 1,
+          maxHeight: Number.MAX_SAFE_INTEGER,
+        });
+        expect(results.length).toEqual(0);
+      }
+      {
+        const results = await connection.searchTx({
+          height: height,
+          minHeight: 0,
+          maxHeight: height - 1,
+        });
+        expect(results.length).toEqual(0);
+      }
+
+      connection.disconnect();
+    });
+  });
+
+  describe("liveTx", () => {
+    it("can listen to transactions by recipient address (transactions in history and updates)", done => {
+      pendingWithoutWasmd();
+
+      (async () => {
+        const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+
+        const profile = new UserProfile();
+        const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(faucet.mnemonic));
+        const sender = await profile.createIdentity(wallet.id, defaultChainId, faucet.path);
+
+        // send transactions
+
+        const recipientAddress = makeRandomAddress();
+        const sendA = await connection.withDefaultFee<SendTransaction>({
+          kind: "bcp/send",
+          chainId: defaultChainId,
+          senderPubkey: sender.pubkey,
+          sender: connection.codec.identityToAddress(sender),
+          recipient: recipientAddress,
+          amount: defaultAmount,
+          memo: `liveTx() test A ${Math.random()}`,
+        });
+
+        const sendB = await connection.withDefaultFee<SendTransaction>({
+          kind: "bcp/send",
+          chainId: defaultChainId,
+          senderPubkey: sender.pubkey,
+          sender: connection.codec.identityToAddress(sender),
+          recipient: recipientAddress,
+          amount: defaultAmount,
+          memo: `liveTx() test B ${Math.random()}`,
+        });
+
+        const sendC = await connection.withDefaultFee<SendTransaction>({
+          kind: "bcp/send",
+          chainId: defaultChainId,
+          senderPubkey: sender.pubkey,
+          sender: connection.codec.identityToAddress(sender),
+          recipient: recipientAddress,
+          amount: defaultAmount,
+          memo: `liveTx() test C ${Math.random()}`,
+        });
+
+        const [nonceA, nonceB, nonceC] = await connection.getNonces({ pubkey: sender.pubkey }, 3);
+        const signedA = await profile.signTransaction(sender, sendA, connection.codec, nonceA);
+        const signedB = await profile.signTransaction(sender, sendB, connection.codec, nonceB);
+        const signedC = await profile.signTransaction(sender, sendC, connection.codec, nonceC);
+        const bytesToPostA = connection.codec.bytesToPost(signedA);
+        const bytesToPostB = connection.codec.bytesToPost(signedB);
+        const bytesToPostC = connection.codec.bytesToPost(signedC);
+
+        // Post A and B. Unfortunately the REST server API does not support sending them in parallel because the sequence check fails.
+        const postResultA = await connection.postTx(bytesToPostA);
+        await postResultA.blockInfo.waitFor(info => !isBlockInfoPending(info));
+        const postResultB = await connection.postTx(bytesToPostB);
+        await postResultB.blockInfo.waitFor(info => !isBlockInfoPending(info));
+
+        // setup listener after A and B are in block
+        const events = new Array<ConfirmedTransaction<UnsignedTransaction>>();
+        const subscription = connection.liveTx({ sentFromOrTo: recipientAddress }).subscribe({
+          next: event => {
+            assert(isConfirmedTransaction(event), "Confirmed transaction expected");
+            events.push(event);
+
+            assert(isSendTransaction(event.transaction), "Unexpected transaction type");
+            expect(event.transaction.recipient).toEqual(recipientAddress);
+
+            if (events.length === 3) {
+              expect(events[1].height).toEqual(events[0].height + 1);
+              expect(events[2].height).toBeGreaterThan(events[1].height);
+
+              subscription.unsubscribe();
+              connection.disconnect();
+              done();
+            }
+          },
+        });
+
+        // Post C
+        await connection.postTx(bytesToPostC);
+      })().catch(done.fail);
+    });
+
+    it("can listen to transactions by ID (transaction in history)", done => {
+      pendingWithoutWasmd();
+
+      (async () => {
+        const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+
+        const profile = new UserProfile();
+        const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(faucet.mnemonic));
+        const sender = await profile.createIdentity(wallet.id, defaultChainId, faucet.path);
+
+        const recipientAddress = makeRandomAddress();
+        const send = await connection.withDefaultFee<SendTransaction>({
+          kind: "bcp/send",
+          chainId: defaultChainId,
+          senderPubkey: sender.pubkey,
+          sender: connection.codec.identityToAddress(sender),
+          recipient: recipientAddress,
+          amount: defaultAmount,
+          memo: `liveTx() test ${Math.random()}`,
+        });
+
+        const nonce = await connection.getNonce({ pubkey: sender.pubkey });
+        const signed = await profile.signTransaction(sender, send, connection.codec, nonce);
+        const bytesToPost = connection.codec.bytesToPost(signed);
+
+        const postResult = await connection.postTx(bytesToPost);
+        const transactionId = postResult.transactionId;
+
+        // Wait for a block
+        await postResult.blockInfo.waitFor(info => !isBlockInfoPending(info));
+
+        // setup listener after transaction is in block
+        const events = new Array<ConfirmedTransaction<UnsignedTransaction>>();
+        const subscription = connection.liveTx({ id: transactionId }).subscribe({
+          next: event => {
+            assert(isConfirmedTransaction(event), "Confirmed transaction expected");
+            events.push(event);
+
+            assert(isSendTransaction(event.transaction), "Unexpected transaction type");
+            expect(event.transaction.recipient).toEqual(recipientAddress);
+            expect(event.transactionId).toEqual(transactionId);
+
+            subscription.unsubscribe();
+            connection.disconnect();
+            done();
+          },
+        });
+      })().catch(done.fail);
+    });
+
+    it("can listen to transactions by ID (transaction in updates)", done => {
+      pendingWithoutWasmd();
+
+      (async () => {
+        const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+
+        const profile = new UserProfile();
+        const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(faucet.mnemonic));
+        const sender = await profile.createIdentity(wallet.id, defaultChainId, faucet.path);
+
+        // send transactions
+
+        const recipientAddress = makeRandomAddress();
+        const send = await connection.withDefaultFee<SendTransaction>({
+          kind: "bcp/send",
+          chainId: defaultChainId,
+          senderPubkey: sender.pubkey,
+          sender: connection.codec.identityToAddress(sender),
+          recipient: recipientAddress,
+          amount: defaultAmount,
+          memo: `liveTx() test ${Math.random()}`,
+        });
+
+        const nonce = await connection.getNonce({ pubkey: sender.pubkey });
+        const signed = await profile.signTransaction(sender, send, connection.codec, nonce);
+        const bytesToPost = connection.codec.bytesToPost(signed);
+
+        const postResult = await connection.postTx(bytesToPost);
+        const transactionId = postResult.transactionId;
+
+        // setup listener before transaction is in block
+        const events = new Array<ConfirmedTransaction<UnsignedTransaction>>();
+        const subscription = connection.liveTx({ id: transactionId }).subscribe({
+          next: event => {
+            assert(isConfirmedTransaction(event), "Confirmed transaction expected");
+            events.push(event);
+
+            assert(isSendTransaction(event.transaction), "Unexpected transaction type");
+            expect(event.transaction.recipient).toEqual(recipientAddress);
+            expect(event.transactionId).toEqual(transactionId);
+
+            subscription.unsubscribe();
+            connection.disconnect();
+            done();
+          },
+        });
+      })().catch(done.fail);
+    });
+  });
+
+  describe("integration tests", () => {
     it("can send ERC20 tokens", async () => {
       pendingWithoutWasmd();
       const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);

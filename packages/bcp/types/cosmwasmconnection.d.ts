@@ -74,16 +74,17 @@ export declare class CosmWasmConnection implements BlockchainConnection {
   searchTx({
     height,
     id,
-    maxHeight,
-    minHeight,
+    maxHeight: maxHeightOptional,
+    minHeight: minHeightOptional,
     sentFromOrTo,
     signedBy,
     tags,
   }: TransactionQuery): Promise<readonly (ConfirmedTransaction<UnsignedTransaction> | FailedTransaction)[]>;
   listenTx(_query: TransactionQuery): Stream<ConfirmedTransaction<UnsignedTransaction> | FailedTransaction>;
-  liveTx(_query: TransactionQuery): Stream<ConfirmedTransaction<UnsignedTransaction> | FailedTransaction>;
+  liveTx(query: TransactionQuery): Stream<ConfirmedTransaction<UnsignedTransaction> | FailedTransaction>;
   getFeeQuote(tx: UnsignedTransaction): Promise<Fee>;
   withDefaultFee<T extends UnsignedTransaction>(tx: T): Promise<T>;
   private parseAndPopulateTxResponseUnsigned;
   private parseAndPopulateTxResponseSigned;
+  private waitForTransaction;
 }

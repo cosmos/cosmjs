@@ -1,5 +1,6 @@
 import { CosmWasmClient, GetNonceResult, PostTxResult } from "./cosmwasmclient";
 import { Log } from "./logs";
+import { BroadcastMode } from "./restclient";
 import { Coin, CosmosSdkAccount, StdFee, StdSignature } from "./types";
 export interface SigningCallback {
   (signBytes: Uint8Array): Promise<StdSignature>;
@@ -22,6 +23,7 @@ export declare class SigningCosmWasmClient extends CosmWasmClient {
     senderAddress: string,
     signCallback: SigningCallback,
     customFees?: Partial<FeeTable>,
+    broadcastMode?: BroadcastMode,
   );
   getNonce(address?: string): Promise<GetNonceResult>;
   getAccount(address?: string): Promise<CosmosSdkAccount | undefined>;

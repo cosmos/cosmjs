@@ -105,7 +105,19 @@ declare type RestClientResponse =
   | EncodeTxResponse
   | WasmResponse<string>
   | WasmResponse<GetCodeResult>;
-declare type BroadcastMode = "block" | "sync" | "async";
+/**
+ * The mode used to send transaction
+ *
+ * @see https://cosmos.network/rpc/#/Transactions/post_txs
+ */
+export declare enum BroadcastMode {
+  /** Return after tx commit */
+  Block = "block",
+  /** Return afer CheckTx */
+  Sync = "sync",
+  /** Return right away */
+  Async = "async",
+}
 export declare class RestClient {
   private readonly client;
   private readonly mode;

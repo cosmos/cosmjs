@@ -2,7 +2,7 @@ import { Sha256 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
 
 import { Log, parseLogs } from "./logs";
-import { BlockResponse, RestClient, TxsResponse } from "./restclient";
+import { BlockResponse, BroadcastMode, RestClient, TxsResponse } from "./restclient";
 import { CosmosSdkAccount, CosmosSdkTx } from "./types";
 
 export interface GetNonceResult {
@@ -46,8 +46,8 @@ function isSearchBySentFromOrToQuery(query: SearchTxQuery): query is SearchBySen
 export class CosmWasmClient {
   protected readonly restClient: RestClient;
 
-  public constructor(url: string) {
-    this.restClient = new RestClient(url);
+  public constructor(url: string, broadcastMode = BroadcastMode.Block) {
+    this.restClient = new RestClient(url, broadcastMode);
   }
 
   public async chainId(): Promise<string> {
@@ -136,7 +136,7 @@ export class CosmWasmClient {
     }
 
     return {
-      logs: parseLogs(result.logs) || [],
+      logs: result.logs ? parseLogs(result.logs) : [],
       rawLog: result.raw_log || "",
       transactionHash: result.txhash,
     };

@@ -91,6 +91,8 @@ export function buildUnsignedTx(
   const matchingBankToken = bankTokens.find(t => t.ticker === tx.amount.tokenTicker);
   const matchingErc20Token = erc20Tokens.find(t => t.ticker === tx.amount.tokenTicker);
 
+  if (!tx.fee) throw new Error("Transaction fee must be set");
+
   if (matchingBankToken) {
     return {
       type: "cosmos-sdk/StdTx",
@@ -107,12 +109,7 @@ export function buildUnsignedTx(
         ],
         memo: tx.memo || "",
         signatures: [],
-        fee: tx.fee
-          ? encodeFee(tx.fee, bankTokens)
-          : {
-              amount: [],
-              gas: "",
-            },
+        fee: encodeFee(tx.fee, bankTokens),
       },
     };
   } else if (matchingErc20Token) {
@@ -137,12 +134,7 @@ export function buildUnsignedTx(
         ],
         memo: tx.memo || "",
         signatures: [],
-        fee: tx.fee
-          ? encodeFee(tx.fee, bankTokens)
-          : {
-              amount: [],
-              gas: "",
-            },
+        fee: encodeFee(tx.fee, bankTokens),
       },
     };
   } else {

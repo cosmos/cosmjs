@@ -152,7 +152,19 @@ type RestClientResponse =
   | WasmResponse<string>
   | WasmResponse<GetCodeResult>;
 
-type BroadcastMode = "block" | "sync" | "async";
+/**
+ * The mode used to send transaction
+ *
+ * @see https://cosmos.network/rpc/#/Transactions/post_txs
+ */
+export enum BroadcastMode {
+  /** Return after tx commit */
+  Block = "block",
+  /** Return afer CheckTx */
+  Sync = "sync",
+  /** Return right away */
+  Async = "async",
+}
 
 function isWasmError<T>(resp: WasmResponse<T>): resp is WasmError {
   return (resp as WasmError).error !== undefined;
@@ -194,11 +206,9 @@ function parseAxios500error(err: AxiosError): never {
 
 export class RestClient {
   private readonly client: AxiosInstance;
-  // From https://cosmos.network/rpc/#/ICS0/post_txs
-  // The supported broadcast modes include "block"(return after tx commit), "sync"(return afer CheckTx) and "async"(return right away).
   private readonly mode: BroadcastMode;
 
-  public constructor(url: string, mode: BroadcastMode = "block") {
+  public constructor(url: string, mode = BroadcastMode.Block) {
     const headers = {
       post: { "Content-Type": "application/json" },
     };

@@ -1,5 +1,5 @@
 import { Log } from "./logs";
-import { BlockResponse, RestClient, TxsResponse } from "./restclient";
+import { BlockResponse, BroadcastMode, RestClient, TxsResponse } from "./restclient";
 import { CosmosSdkAccount, CosmosSdkTx } from "./types";
 export interface GetNonceResult {
   readonly accountNumber: number;
@@ -23,7 +23,7 @@ export interface SearchBySentFromOrToQuery {
 export declare type SearchTxQuery = SearchByIdQuery | SearchByHeightQuery | SearchBySentFromOrToQuery;
 export declare class CosmWasmClient {
   protected readonly restClient: RestClient;
-  constructor(url: string);
+  constructor(url: string, broadcastMode?: BroadcastMode);
   chainId(): Promise<string>;
   /**
    * Returns a 32 byte upper-case hex transaction hash (typically used as the transaction ID)

@@ -3,6 +3,7 @@ import { Encoding } from "@iov/encoding";
 import { CosmWasmClient, GetNonceResult, PostTxResult } from "./cosmwasmclient";
 import { makeSignBytes, marshalTx } from "./encoding";
 import { findAttribute, Log } from "./logs";
+import { BroadcastMode } from "./restclient";
 import {
   Coin,
   CosmosSdkAccount,
@@ -63,8 +64,9 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     senderAddress: string,
     signCallback: SigningCallback,
     customFees?: Partial<FeeTable>,
+    broadcastMode = BroadcastMode.Block,
   ) {
-    super(url);
+    super(url, broadcastMode);
     this.senderAddress = senderAddress;
     this.signCallback = signCallback;
     this.fees = { ...defaultFees, ...(customFees || {}) };
