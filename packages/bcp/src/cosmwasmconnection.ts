@@ -37,7 +37,7 @@ import {
   UnsignedTransaction,
 } from "@iov/bcp";
 import { Encoding, Uint53 } from "@iov/encoding";
-import { DefaultValueProducer, ValueAndUpdates } from "@iov/stream";
+import { concat, DefaultValueProducer, ValueAndUpdates } from "@iov/stream";
 import BN from "bn.js";
 import equal from "fast-deep-equal";
 import { ReadonlyDate } from "readonly-date";
@@ -355,9 +355,55 @@ export class CosmWasmConnection implements BlockchainConnection {
   }
 
   public liveTx(
-    _query: TransactionQuery,
+    query: TransactionQuery,
   ): Stream<ConfirmedTransaction<UnsignedTransaction> | FailedTransaction> {
-    throw new Error("not implemented");
+    if ([query.height, query.signedBy, query.tags].some(isDefined)) {
+      throw new Error("Transaction query by height, signedBy or tags not yet supported");
+    }
+
+    if (query.id) {
+      if (query.minHeight || query.maxHeight) {
+        throw new Error("Query by minHeight/maxHeight not supported together with ID");
+      }
+
+      // concat never() because we want non-completing streams consistently
+      return concat(this.waitForTransaction(query.id), Stream.never());
+    } else if (query.sentFromOrTo) {
+      let pollInternal: NodeJS.Timeout | undefined;
+      const producer: Producer<ConfirmedTransaction<UnsignedTransaction> | FailedTransaction> = {
+        start: async listener => {
+          let minHeight = query.minHeight || 0;
+          const maxHeight = query.maxHeight || Number.MAX_SAFE_INTEGER;
+
+          const poll = async (): Promise<void> => {
+            const result = await this.searchTx({
+              sentFromOrTo: query.sentFromOrTo,
+              minHeight: minHeight,
+              maxHeight: maxHeight,
+            });
+            for (const item of result) {
+              listener.next(item);
+              if (item.height >= minHeight) {
+                // we assume we got all matching transactions from block `item.height` now
+                minHeight = item.height + 1;
+              }
+            }
+          };
+
+          await poll();
+          pollInternal = setInterval(poll, defaultPollInterval);
+        },
+        stop: () => {
+          if (pollInternal) {
+            clearInterval(pollInternal);
+            pollInternal = undefined;
+          }
+        },
+      };
+      return Stream.create(producer);
+    } else {
+      throw new Error("Unsupported query.");
+    }
   }
 
   public async getFeeQuote(tx: UnsignedTransaction): Promise<Fee> {
@@ -432,5 +478,44 @@ export class CosmWasmConnection implements BlockchainConnection {
       this.bankTokens,
       this.erc20Tokens,
     );
+  }
+
+  private waitForTransaction(
+    id: TransactionId,
+  ): Stream<ConfirmedTransaction<UnsignedTransaction> | FailedTransaction> {
+    let pollInternal: NodeJS.Timeout | undefined;
+    const producer: Producer<ConfirmedTransaction<UnsignedTransaction> | FailedTransaction> = {
+      start: listener => {
+        setInterval(async () => {
+          try {
+            const results = await this.searchTx({ id: id });
+            switch (results.length) {
+              case 0:
+                // okay, we'll try again
+                break;
+              case 1:
+                listener.next(results[0]);
+                listener.complete();
+                break;
+              default:
+                throw new Error(`Got unexpected number of search results: ${results.length}`);
+            }
+          } catch (error) {
+            if (pollInternal) {
+              clearTimeout(pollInternal);
+              pollInternal = undefined;
+            }
+            listener.error(error);
+          }
+        }, defaultPollInterval);
+      },
+      stop: () => {
+        if (pollInternal) {
+          clearTimeout(pollInternal);
+          pollInternal = undefined;
+        }
+      },
+    };
+    return Stream.create(producer);
   }
 }
