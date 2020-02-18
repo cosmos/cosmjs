@@ -26,11 +26,11 @@ describe("multichainhelpers", () => {
           {
             quantity: "1",
             fractionalDigits: 9,
-            tokenTicker: "CASH" as TokenTicker,
+            tokenTicker: "JADE" as TokenTicker,
           },
         ],
       });
-      expect(tickers).toEqual(["CASH"]);
+      expect(tickers).toEqual(["JADE"]);
     });
 
     it("works for two tokens", () => {
@@ -41,7 +41,7 @@ describe("multichainhelpers", () => {
           {
             quantity: "1",
             fractionalDigits: 9,
-            tokenTicker: "CASH" as TokenTicker,
+            tokenTicker: "JADE" as TokenTicker,
           },
           {
             quantity: "1",
@@ -50,7 +50,7 @@ describe("multichainhelpers", () => {
           },
         ],
       });
-      expect(tickers).toEqual(["CASH", "TRASH"]);
+      expect(tickers).toEqual(["JADE", "TRASH"]);
     });
   });
 });

@@ -27,8 +27,8 @@ export const developmentTokenConfig: TokenConfiguration = {
     {
       contractAddress: "cosmos1hqrdl6wstt8qzshwc6mrumpjk9338k0lr4dqxd",
       fractionalDigits: 0,
-      ticker: "BASH",
-      name: "Bash Token",
+      ticker: "ISA",
+      name: "Isa Token",
     },
   ],
 };

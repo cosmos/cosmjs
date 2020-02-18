@@ -54,7 +54,7 @@ const faucet = {
 
 describe("CosmWasmConnection", () => {
   const cosm = "COSM" as TokenTicker;
-  const bash = "BASH" as TokenTicker;
+  const isa = "ISA" as TokenTicker;
   const httpUrl = "http://localhost:1317";
   const defaultChainId = "cosmos:testing" as ChainId;
   const defaultEmptyAddress = "cosmos1h806c7khnvmjlywdrkdgk2vrayy2mmvf9rxk2r" as Address;
@@ -93,20 +93,20 @@ describe("CosmWasmConnection", () => {
       {
         contractAddress: "cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
         fractionalDigits: 5,
-        ticker: "ASH",
-        name: "Ash Token",
+        ticker: "HASH",
+        name: "Hash Token",
       },
       {
         contractAddress: "cosmos1hqrdl6wstt8qzshwc6mrumpjk9338k0lr4dqxd",
         fractionalDigits: 0,
-        ticker: "BASH",
-        name: "Bash Token",
+        ticker: "ISA",
+        name: "Isa Token",
       },
       {
         contractAddress: "cosmos18r5szma8hm93pvx6lwpjwyxruw27e0k5uw835c",
         fractionalDigits: 18,
-        ticker: "CASH",
-        name: "Cash Token",
+        ticker: "JADE",
+        name: "Jade Token",
       },
     ],
   };
@@ -179,24 +179,24 @@ describe("CosmWasmConnection", () => {
       const tokens = await connection.getAllTokens();
       expect(tokens).toEqual([
         {
-          fractionalDigits: 5,
-          tokenName: "Ash Token",
-          tokenTicker: "ASH" as TokenTicker,
-        },
-        {
-          fractionalDigits: 0,
-          tokenName: "Bash Token",
-          tokenTicker: "BASH" as TokenTicker,
-        },
-        {
-          fractionalDigits: 18,
-          tokenName: "Cash Token",
-          tokenTicker: "CASH" as TokenTicker,
-        },
-        {
           fractionalDigits: 6,
           tokenName: "Fee Token",
           tokenTicker: "COSM" as TokenTicker,
+        },
+        {
+          fractionalDigits: 5,
+          tokenName: "Hash Token",
+          tokenTicker: "HASH" as TokenTicker,
+        },
+        {
+          fractionalDigits: 0,
+          tokenName: "Isa Token",
+          tokenTicker: "ISA" as TokenTicker,
+        },
+        {
+          fractionalDigits: 18,
+          tokenName: "Jade Token",
+          tokenTicker: "JADE" as TokenTicker,
         },
         {
           fractionalDigits: 6,
@@ -236,19 +236,19 @@ describe("CosmWasmConnection", () => {
       expect(account.pubkey).toBeUndefined();
       expect(account.balance).toEqual([
         {
-          tokenTicker: "ASH" as TokenTicker,
+          tokenTicker: "COSM" as TokenTicker,
+          quantity: "1000000000",
+          fractionalDigits: 6,
+        },
+        {
+          tokenTicker: "HASH" as TokenTicker,
           quantity: "12812345",
           fractionalDigits: 5,
         },
         {
-          tokenTicker: "BASH" as TokenTicker,
+          tokenTicker: "ISA" as TokenTicker,
           quantity: "42",
           fractionalDigits: 0,
-        },
-        {
-          tokenTicker: "COSM" as TokenTicker,
-          quantity: "1000000000",
-          fractionalDigits: 6,
         },
         {
           tokenTicker: "STAKE" as TokenTicker,
@@ -410,7 +410,7 @@ describe("CosmWasmConnection", () => {
         amount: {
           quantity: "345",
           fractionalDigits: 0,
-          tokenTicker: bash,
+          tokenTicker: isa,
         },
       });
       const nonce = await connection.getNonce({ address: senderAddress });
@@ -1000,7 +1000,7 @@ describe("CosmWasmConnection", () => {
         amount: {
           quantity: "75",
           fractionalDigits: 0,
-          tokenTicker: "BASH" as TokenTicker,
+          tokenTicker: "ISA" as TokenTicker,
         },
       });
       const nonce = await connection.getNonce({ address: senderAddress });
@@ -1011,10 +1011,10 @@ describe("CosmWasmConnection", () => {
       expect(blockInfo.state).toEqual(TransactionState.Succeeded);
 
       const recipientAccount = await connection.getAccount({ address: recipient });
-      assert(recipientAccount, "Recipient account must have BASH tokens");
+      assert(recipientAccount, "Recipient account must have ISA tokens");
       expect(recipientAccount.balance).toEqual([
         {
-          tokenTicker: "BASH" as TokenTicker,
+          tokenTicker: "ISA" as TokenTicker,
           quantity: "75",
           fractionalDigits: 0,
         },
