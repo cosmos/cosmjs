@@ -136,7 +136,7 @@ export class CosmWasmClient {
     }
 
     return {
-      logs: parseLogs(result.logs) || [],
+      logs: result.logs ? parseLogs(result.logs) : [],
       rawLog: result.raw_log || "",
       transactionHash: result.txhash,
     };
