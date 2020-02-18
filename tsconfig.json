@@ -17,7 +17,7 @@
     "resolveJsonModule": true,
     "sourceMap": true,
     "strict": true,
-    "target": "es6",
-    "lib": ["es6"]
+    "target": "es2017",
+    "lib": ["es2017"]
   }
 }
