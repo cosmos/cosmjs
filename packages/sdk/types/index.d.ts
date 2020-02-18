@@ -4,7 +4,7 @@ export { logs, types };
 export { CosmosAddressBech32Prefix, encodeAddress, isValidAddress } from "./address";
 export { unmarshalTx } from "./decoding";
 export { makeSignBytes, marshalTx } from "./encoding";
-export { RestClient, TxsResponse } from "./restclient";
+export { BroadcastMode, RestClient, TxsResponse } from "./restclient";
 export {
   CosmWasmClient,
   GetNonceResult,
