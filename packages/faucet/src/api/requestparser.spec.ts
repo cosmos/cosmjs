@@ -2,26 +2,26 @@ import { RequestParser } from "./requestparser";
 
 describe("RequestParser", () => {
   it("can process valid credit request", () => {
-    const body = { address: "abc", ticker: "CASH" };
-    expect(RequestParser.parseCreditBody(body)).toEqual({ address: "abc", ticker: "CASH" });
+    const body = { address: "abc", ticker: "TKN" };
+    expect(RequestParser.parseCreditBody(body)).toEqual({ address: "abc", ticker: "TKN" });
   });
 
   it("throws for invalid credit requests", () => {
     // address unset
     {
-      const body = { ticker: "CASH" };
+      const body = { ticker: "TKN" };
       expect(() => RequestParser.parseCreditBody(body)).toThrowError(/Property 'address' must be a string/i);
     }
 
     // address wrong type
     {
-      const body = { address: true, ticker: "CASH" };
+      const body = { address: true, ticker: "TKN" };
       expect(() => RequestParser.parseCreditBody(body)).toThrowError(/Property 'address' must be a string/i);
     }
 
     // address empty
     {
-      const body = { address: "", ticker: "CASH" };
+      const body = { address: "", ticker: "TKN" };
       expect(() => RequestParser.parseCreditBody(body)).toThrowError(/Property 'address' must not be empty/i);
     }
 

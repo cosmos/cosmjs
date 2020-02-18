@@ -53,17 +53,17 @@ describe("encode", () => {
     {
       contractAddress: "cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
       fractionalDigits: 5,
-      ticker: "ASH",
+      ticker: "HASH",
     },
     {
       contractAddress: "cosmos1hqrdl6wstt8qzshwc6mrumpjk9338k0lr4dqxd",
       fractionalDigits: 0,
-      ticker: "BASH",
+      ticker: "ISA",
     },
     {
       contractAddress: "cosmos18r5szma8hm93pvx6lwpjwyxruw27e0k5uw835c",
       fractionalDigits: 18,
-      ticker: "CASH",
+      ticker: "JADE",
     },
   ];
 
@@ -83,7 +83,7 @@ describe("encode", () => {
       const amount: Amount = {
         quantity: "789",
         fractionalDigits: 0,
-        tokenTicker: "BASH" as TokenTicker,
+        tokenTicker: "ISA" as TokenTicker,
       };
       expect(toErc20Amount(amount, bash)).toEqual("789");
     });
@@ -92,7 +92,7 @@ describe("encode", () => {
       const amount: Amount = {
         quantity: "789",
         fractionalDigits: 0,
-        tokenTicker: "BASH" as TokenTicker,
+        tokenTicker: "ISA" as TokenTicker,
       };
       expect(() => toErc20Amount(amount, ash)).toThrowError(/ticker mismatch/i);
     });
@@ -101,7 +101,7 @@ describe("encode", () => {
       const amount: Amount = {
         quantity: "789",
         fractionalDigits: 2,
-        tokenTicker: "BASH" as TokenTicker,
+        tokenTicker: "ISA" as TokenTicker,
       };
       expect(() => toErc20Amount(amount, bash)).toThrowError(/fractional digits mismatch/i);
     });
@@ -298,7 +298,7 @@ describe("encode", () => {
         amount: {
           fractionalDigits: 0,
           quantity: "345",
-          tokenTicker: "BASH" as TokenTicker,
+          tokenTicker: "ISA" as TokenTicker,
         },
         fee: {
           tokens: {

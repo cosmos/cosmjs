@@ -35,8 +35,8 @@ const defaultConfig: TokenConfiguration = {
     {
       contractAddress: "cosmos1hqrdl6wstt8qzshwc6mrumpjk9338k0lr4dqxd",
       fractionalDigits: 0,
-      ticker: "BASH",
-      name: "Bash Token",
+      ticker: "ISA",
+      name: "Isa Token",
     },
   ],
 };
@@ -112,7 +112,7 @@ describe("Faucet", () => {
         amount: {
           quantity: "7",
           fractionalDigits: 0,
-          tokenTicker: "BASH" as TokenTicker,
+          tokenTicker: "ISA" as TokenTicker,
         },
         sender: holder,
         recipient: recipient,
@@ -123,7 +123,7 @@ describe("Faucet", () => {
         {
           quantity: "7",
           fractionalDigits: 0,
-          tokenTicker: "BASH" as TokenTicker,
+          tokenTicker: "ISA" as TokenTicker,
         },
       ]);
       connection.disconnect();
@@ -141,7 +141,7 @@ describe("Faucet", () => {
       assert(distributorBalance);
       expect(distributorBalance).toEqual([
         jasmine.objectContaining({
-          tokenTicker: "BASH",
+          tokenTicker: "ISA",
           fractionalDigits: 0,
         }),
         jasmine.objectContaining({
@@ -207,7 +207,7 @@ describe("Faucet", () => {
       const { profile } = await makeProfile();
       const faucet = new Faucet(defaultConfig, connection, codec, profile);
       const tickers = await faucet.loadTokenTickers();
-      expect(tickers).toEqual(["BASH", "COSM", "STAKE"]);
+      expect(tickers).toEqual(["ISA", "COSM", "STAKE"]);
       connection.disconnect();
     });
   });
