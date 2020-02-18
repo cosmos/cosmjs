@@ -496,7 +496,7 @@ describe("CosmWasmConnection", () => {
     });
   });
 
-  describe("integration tests", () => {
+  describe("searchTx", () => {
     it("can post and search for a transaction", async () => {
       pendingWithoutWasmd();
       const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
@@ -587,6 +587,215 @@ describe("CosmWasmConnection", () => {
       connection.disconnect();
     });
 
+    it("can search by minHeight and maxHeight", async () => {
+      pendingWithoutWasmd();
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const profile = new UserProfile();
+      const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(faucet.mnemonic));
+      const sender = await profile.createIdentity(wallet.id, defaultChainId, faucet.path);
+      const senderAddress = connection.codec.identityToAddress(sender);
+
+      const recipient = makeRandomAddress();
+      const unsigned = await connection.withDefaultFee<SendTransaction>({
+        kind: "bcp/send",
+        chainId: defaultChainId,
+        sender: senderAddress,
+        recipient: recipient,
+        memo: "My first payment",
+        amount: {
+          quantity: "75000",
+          fractionalDigits: 6,
+          tokenTicker: cosm,
+        },
+      });
+      const nonce = await connection.getNonce({ address: senderAddress });
+      const signed = await profile.signTransaction(sender, unsigned, connection.codec, nonce);
+      const postableBytes = connection.codec.bytesToPost(signed);
+      const response = await connection.postTx(postableBytes);
+      const { transactionId } = response;
+      const blockInfo = await response.blockInfo.waitFor(info => !isBlockInfoPending(info));
+      assert(isBlockInfoSucceeded(blockInfo));
+      const { height } = blockInfo;
+
+      // search by ID
+      {
+        const results = await connection.searchTx({ id: transactionId });
+        expect(results.length).toEqual(1);
+      }
+      {
+        const results = await connection.searchTx({ id: transactionId, minHeight: height });
+        expect(results.length).toEqual(1);
+      }
+      {
+        const results = await connection.searchTx({ id: transactionId, minHeight: height - 2 });
+        expect(results.length).toEqual(1);
+      }
+      {
+        const results = await connection.searchTx({ id: transactionId, maxHeight: height });
+        expect(results.length).toEqual(1);
+      }
+      {
+        const results = await connection.searchTx({ id: transactionId, maxHeight: height + 2 });
+        expect(results.length).toEqual(1);
+      }
+      {
+        const results = await connection.searchTx({
+          id: transactionId,
+          minHeight: height,
+          maxHeight: height,
+        });
+        expect(results.length).toEqual(1);
+      }
+      {
+        const results = await connection.searchTx({ id: transactionId, minHeight: height + 1 });
+        expect(results.length).toEqual(0);
+      }
+      {
+        const results = await connection.searchTx({ id: transactionId, maxHeight: height - 1 });
+        expect(results.length).toEqual(0);
+      }
+      {
+        const results = await connection.searchTx({
+          id: transactionId,
+          minHeight: height + 1,
+          maxHeight: Number.MAX_SAFE_INTEGER,
+        });
+        expect(results.length).toEqual(0);
+      }
+      {
+        const results = await connection.searchTx({ id: transactionId, minHeight: 0, maxHeight: height - 1 });
+        expect(results.length).toEqual(0);
+      }
+
+      // search by recipient
+      {
+        const results = await connection.searchTx({ sentFromOrTo: recipient });
+        expect(results.length).toEqual(1);
+      }
+      {
+        const results = await connection.searchTx({ sentFromOrTo: recipient, minHeight: height });
+        expect(results.length).toEqual(1);
+      }
+      {
+        const results = await connection.searchTx({ sentFromOrTo: recipient, minHeight: height - 2 });
+        expect(results.length).toEqual(1);
+      }
+      {
+        const results = await connection.searchTx({ sentFromOrTo: recipient, maxHeight: height });
+        expect(results.length).toEqual(1);
+      }
+      {
+        const results = await connection.searchTx({ sentFromOrTo: recipient, maxHeight: height + 2 });
+        expect(results.length).toEqual(1);
+      }
+      {
+        const results = await connection.searchTx({ sentFromOrTo: recipient, minHeight: height + 1 });
+        expect(results.length).toEqual(0);
+      }
+      {
+        const results = await connection.searchTx({ sentFromOrTo: recipient, maxHeight: height - 1 });
+        expect(results.length).toEqual(0);
+      }
+      {
+        const results = await connection.searchTx({
+          sentFromOrTo: recipient,
+          minHeight: height,
+          maxHeight: height,
+        });
+        expect(results.length).toEqual(1);
+      }
+      {
+        const results = await connection.searchTx({ sentFromOrTo: recipient, minHeight: height + 1 });
+        expect(results.length).toEqual(0);
+      }
+      {
+        const results = await connection.searchTx({ sentFromOrTo: recipient, maxHeight: height - 1 });
+        expect(results.length).toEqual(0);
+      }
+      {
+        const results = await connection.searchTx({
+          sentFromOrTo: recipient,
+          minHeight: height + 1,
+          maxHeight: Number.MAX_SAFE_INTEGER,
+        });
+        expect(results.length).toEqual(0);
+      }
+      {
+        const results = await connection.searchTx({
+          sentFromOrTo: recipient,
+          minHeight: 0,
+          maxHeight: height - 1,
+        });
+        expect(results.length).toEqual(0);
+      }
+
+      // search by height
+      {
+        const results = await connection.searchTx({ height: height });
+        expect(results.length).toEqual(1);
+      }
+      {
+        const results = await connection.searchTx({ height: height, minHeight: height });
+        expect(results.length).toEqual(1);
+      }
+      {
+        const results = await connection.searchTx({ height: height, minHeight: height - 2 });
+        expect(results.length).toEqual(1);
+      }
+      {
+        const results = await connection.searchTx({ height: height, maxHeight: height });
+        expect(results.length).toEqual(1);
+      }
+      {
+        const results = await connection.searchTx({ height: height, maxHeight: height + 2 });
+        expect(results.length).toEqual(1);
+      }
+      {
+        const results = await connection.searchTx({ height: height, minHeight: height + 1 });
+        expect(results.length).toEqual(0);
+      }
+      {
+        const results = await connection.searchTx({ height: height, maxHeight: height - 1 });
+        expect(results.length).toEqual(0);
+      }
+      {
+        const results = await connection.searchTx({
+          height: height,
+          minHeight: height,
+          maxHeight: height,
+        });
+        expect(results.length).toEqual(1);
+      }
+      {
+        const results = await connection.searchTx({ height: height, minHeight: height + 1 });
+        expect(results.length).toEqual(0);
+      }
+      {
+        const results = await connection.searchTx({ height: height, maxHeight: height - 1 });
+        expect(results.length).toEqual(0);
+      }
+      {
+        const results = await connection.searchTx({
+          height: height,
+          minHeight: height + 1,
+          maxHeight: Number.MAX_SAFE_INTEGER,
+        });
+        expect(results.length).toEqual(0);
+      }
+      {
+        const results = await connection.searchTx({
+          height: height,
+          minHeight: 0,
+          maxHeight: height - 1,
+        });
+        expect(results.length).toEqual(0);
+      }
+
+      connection.disconnect();
+    });
+  });
+
+  describe("integration tests", () => {
     it("can send ERC20 tokens", async () => {
       pendingWithoutWasmd();
       const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);

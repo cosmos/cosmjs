@@ -304,8 +304,8 @@ export class CosmWasmConnection implements BlockchainConnection {
   public async searchTx({
     height,
     id,
-    maxHeight,
-    minHeight,
+    maxHeight: maxHeightOptional,
+    minHeight: minHeightOptional,
     sentFromOrTo,
     signedBy,
     tags,
@@ -314,30 +314,38 @@ export class CosmWasmConnection implements BlockchainConnection {
       throw new Error("Transaction query by signedBy or tags not yet supported");
     }
 
-    if ([maxHeight, minHeight].some(isDefined)) {
-      throw new Error(
-        "Transaction query by minHeight/maxHeight not yet supported. This is due to missing flexibility of the Gaia REST API, see https://github.com/cosmos/gaia/issues/75",
-      );
-    }
-
     if ([id, height, sentFromOrTo].filter(isDefined).length !== 1) {
       throw new Error(
         "Transaction query by id, height and sentFromOrTo is mutually exclusive. Exactly one must be set.",
       );
     }
 
+    const minHeight = minHeightOptional || 0;
+    const maxHeight = maxHeightOptional || Number.MAX_SAFE_INTEGER;
+
+    if (maxHeight < minHeight) return []; // optional optimization
+
     let txs: readonly TxsResponse[];
     if (id) {
       txs = await this.cosmWasmClient.searchTx({ id: id });
     } else if (height) {
+      if (height < minHeight) return []; // optional optimization
+      if (height > maxHeight) return []; // optional optimization
       txs = await this.cosmWasmClient.searchTx({ height: height });
     } else if (sentFromOrTo) {
+      // TODO: pass minHeight/maxHeight to server once we have
+      // https://github.com/cosmwasm/wasmd/issues/73
       txs = await this.cosmWasmClient.searchTx({ sentFromOrTo: sentFromOrTo });
     } else {
       throw new Error("Unsupported query");
     }
 
-    return txs.map(tx => this.parseAndPopulateTxResponseUnsigned(tx));
+    const filtered = txs.filter(tx => {
+      const txHeight = parseInt(tx.height, 10);
+      return txHeight >= minHeight && txHeight <= maxHeight;
+    });
+
+    return filtered.map(tx => this.parseAndPopulateTxResponseUnsigned(tx));
   }
 
   public listenTx(
