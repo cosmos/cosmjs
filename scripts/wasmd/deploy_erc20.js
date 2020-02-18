@@ -10,46 +10,59 @@ const faucet = {
     "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone",
   address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
 };
-const unusedAccount = "cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u";
+const unused = {
+  address: "cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u",
+};
+const guest = {
+  address: "cosmos17d0jcz59jf68g52vq38tuuncmwwjk42u6mcxej",
+};
 
-const initMsgAsh = {
+const initMsgHash = {
   decimals: 5,
-  name: "Ash token",
-  symbol: "ASH",
+  name: "Hash token",
+  symbol: "HASH",
   initial_balances: [
     {
       address: faucet.address,
       amount: "11",
     },
     {
-      address: unusedAccount,
+      address: unused.address,
       amount: "12812345",
+    },
+    {
+      address: guest.address,
+      amount: "22004000000",
     },
   ],
 };
-const initMsgBash = {
+const initMsgIsa = {
   decimals: 0,
-  name: "Bash Token",
-  symbol: "BASH",
+  name: "Isa Token",
+  symbol: "ISA",
   initial_balances: [
     {
       address: faucet.address,
       amount: "999999999",
     },
     {
-      address: unusedAccount,
+      address: unused.address,
       amount: "42",
     },
   ],
 };
-const initMsgCash = {
+const initMsgJade = {
   decimals: 18,
-  name: "Cash Token",
-  symbol: "CASH",
+  name: "Jade Token",
+  symbol: "JADE",
   initial_balances: [
     {
       address: faucet.address,
-      amount: "189189189000000000000000000", // 189189189 CASH
+      amount: "189189189000000000000000000", // 189189189 JADE
+    },
+    {
+      address: guest.address,
+      amount: "189500000000000000000", // 189.5 JADE
     },
   ],
 };
@@ -62,7 +75,7 @@ async function main() {
   const codeId = await client.upload(wasm, "Upload ERC20 contract");
   console.info(`Upload succeeded. Code ID is ${codeId}`);
 
-  for (const initMsg of [initMsgAsh, initMsgBash, initMsgCash]) {
+  for (const initMsg of [initMsgHash, initMsgIsa, initMsgJade]) {
     const memo = `Create an ERC20 instance for ${initMsg.symbol}`;
     const contractAddress = await client.instantiate(codeId, initMsg, memo);
     console.info(`Contract instantiated for ${initMsg.symbol} at ${contractAddress}`);

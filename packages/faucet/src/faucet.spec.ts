@@ -35,8 +35,8 @@ const defaultConfig: TokenConfiguration = {
     {
       contractAddress: "cosmos1hqrdl6wstt8qzshwc6mrumpjk9338k0lr4dqxd",
       fractionalDigits: 0,
-      ticker: "BASH",
-      name: "Bash Token",
+      ticker: "ISA",
+      name: "Isa Token",
     },
   ],
 };
@@ -112,7 +112,7 @@ describe("Faucet", () => {
         amount: {
           quantity: "7",
           fractionalDigits: 0,
-          tokenTicker: "BASH" as TokenTicker,
+          tokenTicker: "ISA" as TokenTicker,
         },
         sender: holder,
         recipient: recipient,
@@ -123,7 +123,7 @@ describe("Faucet", () => {
         {
           quantity: "7",
           fractionalDigits: 0,
-          tokenTicker: "BASH" as TokenTicker,
+          tokenTicker: "ISA" as TokenTicker,
         },
       ]);
       connection.disconnect();
@@ -141,20 +141,20 @@ describe("Faucet", () => {
       assert(distributorBalance);
       expect(distributorBalance).toEqual([
         jasmine.objectContaining({
-          tokenTicker: "BASH",
-          fractionalDigits: 0,
-        }),
-        jasmine.objectContaining({
           tokenTicker: "COSM",
           fractionalDigits: 6,
+        }),
+        jasmine.objectContaining({
+          tokenTicker: "ISA",
+          fractionalDigits: 0,
         }),
         jasmine.objectContaining({
           tokenTicker: "STAKE",
           fractionalDigits: 6,
         }),
       ]);
-      expect(Number.parseInt(distributorBalance[0].quantity, 10)).toBeGreaterThanOrEqual(80);
-      expect(Number.parseInt(distributorBalance[1].quantity, 10)).toBeGreaterThanOrEqual(80_000000);
+      expect(Number.parseInt(distributorBalance[0].quantity, 10)).toBeGreaterThanOrEqual(80_000000);
+      expect(Number.parseInt(distributorBalance[1].quantity, 10)).toBeGreaterThanOrEqual(80);
       expect(Number.parseInt(distributorBalance[2].quantity, 10)).toBeGreaterThanOrEqual(80_000000);
       connection.disconnect();
     });
@@ -207,7 +207,7 @@ describe("Faucet", () => {
       const { profile } = await makeProfile();
       const faucet = new Faucet(defaultConfig, connection, codec, profile);
       const tickers = await faucet.loadTokenTickers();
-      expect(tickers).toEqual(["BASH", "COSM", "STAKE"]);
+      expect(tickers).toEqual(["COSM", "ISA", "STAKE"]);
       connection.disconnect();
     });
   });

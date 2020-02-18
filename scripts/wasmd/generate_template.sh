@@ -16,7 +16,7 @@ docker run --rm \
   --mount type=bind,source="$SCRIPT_DIR/template",target=/root \
   "$REPOSITORY:$VERSION" \
   ./setup.sh \
-  cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6 cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u
+  cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6 cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u cosmos17d0jcz59jf68g52vq38tuuncmwwjk42u6mcxej
 
 # The ./template folder is created by the docker daemon's user (root on Linux, current user
 # when using Docker Desktop on macOS), let's make it ours if needed

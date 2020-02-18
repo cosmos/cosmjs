@@ -68,17 +68,17 @@ describe("decode", () => {
     {
       contractAddress: "cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
       fractionalDigits: 5,
-      ticker: "ASH",
+      ticker: "HASH",
     },
     {
       contractAddress: "cosmos1hqrdl6wstt8qzshwc6mrumpjk9338k0lr4dqxd",
       fractionalDigits: 0,
-      ticker: "BASH",
+      ticker: "ISA",
     },
     {
       contractAddress: "cosmos18r5szma8hm93pvx6lwpjwyxruw27e0k5uw835c",
       fractionalDigits: 18,
-      ticker: "CASH",
+      ticker: "JADE",
     },
   ];
 
@@ -187,7 +187,7 @@ describe("decode", () => {
         recipient: "cosmos1z7g5w84ynmjyg0kqpahdjqpj7yq34v3suckp0e" as Address,
         amount: {
           quantity: "887878484",
-          tokenTicker: "ASH" as TokenTicker,
+          tokenTicker: "HASH" as TokenTicker,
           fractionalDigits: 5,
         },
         memo: defaultMemo,
@@ -255,7 +255,7 @@ describe("decode", () => {
         recipient: "cosmos1z7g5w84ynmjyg0kqpahdjqpj7yq34v3suckp0e" as Address,
         amount: {
           quantity: "887878484",
-          tokenTicker: "ASH" as TokenTicker,
+          tokenTicker: "HASH" as TokenTicker,
           fractionalDigits: 5,
         },
         memo: defaultMemo,
