@@ -3,7 +3,7 @@ import { Encoding } from "@iov/encoding";
 
 import { Log, parseLogs } from "./logs";
 import { BlockResponse, BroadcastMode, RestClient, TxsResponse } from "./restclient";
-import { CosmosSdkAccount, CosmosSdkTx } from "./types";
+import { CodeInfo, CosmosSdkAccount, CosmosSdkTx } from "./types";
 
 export interface GetNonceResult {
   readonly accountNumber: number;
@@ -102,6 +102,14 @@ export class CosmWasmClient {
     } else {
       return this.restClient.blocksLatest();
     }
+  }
+
+  public async listCodeInfo(): Promise<readonly CodeInfo[]> {
+    return this.restClient.listCodeInfo();
+  }
+
+  public async listContractAddresses(): Promise<readonly string[]> {
+    return this.restClient.listContractAddresses();
   }
 
   public async searchTx(query: SearchTxQuery): Promise<readonly TxsResponse[]> {
