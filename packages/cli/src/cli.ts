@@ -41,12 +41,12 @@ export function main(originalArgs: readonly string[]): void {
     [
       "@cosmwasm/sdk",
       [
-        "encodeAddress",
         "encodeSecp256k1Pubkey",
         "encodeSecp256k1Signature",
         "makeSignBytes",
         "marshalTx",
         "Pen",
+        "pubkeyToAddress",
         "RestClient",
         "Secp256k1Pen",
         "types",
@@ -134,7 +134,7 @@ export function main(originalArgs: readonly string[]): void {
       const mnemonic = Bip39.encode(Random.getBytes(16)).toString();
       const pen = await Secp256k1Pen.fromMnemonic(mnemonic);
       const pubkey = encodeSecp256k1Pubkey(pen.pubkey);
-      const address = encodeAddress(pubkey, "cosmos");
+      const address = pubkeyToAddress(pubkey, "cosmos");
       const data = Encoding.toAscii("foo bar");
       const signature = await pen.sign(data);
 
