@@ -1,2 +1,2 @@
 import { PubKey } from "./types";
-export declare function encodeAddress(pubkey: PubKey, prefix: string): string;
+export declare function pubkeyToAddress(pubkey: PubKey, prefix: string): string;

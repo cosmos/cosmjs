@@ -2,7 +2,7 @@ import * as logs from "./logs";
 import * as types from "./types";
 export { logs, types };
 
-export { encodeAddress } from "./address";
+export { pubkeyToAddress } from "./address";
 export { unmarshalTx } from "./decoding";
 export { makeSignBytes, marshalTx } from "./encoding";
 export { BroadcastMode, RestClient, TxsResponse } from "./restclient";

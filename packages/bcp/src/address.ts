@@ -1,4 +1,4 @@
-import { decodeBech32Pubkey, encodeAddress, types } from "@cosmwasm/sdk";
+import { decodeBech32Pubkey, pubkeyToAddress as sdkPubkeyToAddress, types } from "@cosmwasm/sdk";
 import { Address, Algorithm, PubkeyBundle, PubkeyBytes } from "@iov/bcp";
 import { Secp256k1 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
@@ -34,5 +34,5 @@ export function pubkeyToAddress(pubkey: PubkeyBundle, prefix: string): Address {
     throw new Error(`Unsupported algorithm: ${pubkey.algo}`);
   }
 
-  return encodeAddress(sdkKey, prefix) as Address;
+  return sdkPubkeyToAddress(sdkKey, prefix) as Address;
 }
