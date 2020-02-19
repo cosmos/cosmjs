@@ -27,7 +27,7 @@
     "dev-start": "FAUCET_CREDIT_AMOUNT_COSM=10 FAUCET_CREDIT_AMOUNT_STAKE=5 FAUCET_CONCURRENCY=3 FAUCET_MNEMONIC=\"economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone\" ./bin/cosmwasm-faucet start \"http://localhost:1317\"",
     "docs": "shx rm -rf docs && typedoc --options typedoc.js",
     "format": "prettier --write --loglevel warn \"./src/**/*.ts\"",
-    "lint": "eslint --max-warnings 0 \"**/*.{js,ts}\" && tslint -t verbose --project .",
+    "lint": "eslint --max-warnings 0 \"**/*.{js,ts}\"",
     "lint-fix": "eslint --max-warnings 0 \"**/*.{js,ts}\" --fix",
     "build": "shx rm -rf ./build && tsc",
     "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build",
