@@ -71,7 +71,7 @@ async function main() {
   const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
   const client = new SigningCosmWasmClient(httpUrl, faucet.address, signBytes => pen.sign(signBytes));
 
-  const wasm = fs.readFileSync(__dirname + "/contracts/cw-erc20.wasm");
+  const wasm = fs.readFileSync(__dirname + "/contracts/cw-erc20.wasm.gz");
   const codeId = await client.upload(wasm, "Upload ERC20 contract");
   console.info(`Upload succeeded. Code ID is ${codeId}`);
 
