@@ -1,10 +1,10 @@
 import { ArgumentParser } from "argparse";
-// tslint:disable-next-line:no-submodule-imports
-import colors = require("colors/safe");
 import * as fs from "fs";
 import { join } from "path";
 
 import { TsRepl } from "./tsrepl";
+
+import colors = require("colors/safe");
 
 export function main(originalArgs: readonly string[]): void {
   const parser = new ArgumentParser({ description: "The CosmWasm REPL" });

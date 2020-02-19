@@ -52,7 +52,6 @@ describe("Helpers", () => {
       expect(executeJavaScript("module.exports.fooTest = 'bar'", "myfile.js", context)).toEqual("bar");
       expect(executeJavaScript("module.exports.fooTest", "myfile.js", context)).toEqual("bar");
       // roll back change to module.exports
-      // tslint:disable-next-line:no-object-mutation
       module.exports.fooTest = undefined;
     });
 

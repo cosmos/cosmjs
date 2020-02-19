@@ -11,7 +11,6 @@ export function leb128Encode(uint: number): Uint8Array {
   const out = new Array<number>();
   let value = uint;
   do {
-    // tslint:disable: no-bitwise
     let byte = value & 0b01111111;
     value >>= 7;
 
@@ -19,7 +18,6 @@ export function leb128Encode(uint: number): Uint8Array {
     if (value !== 0) byte ^= 0b10000000;
 
     out.push(byte);
-    // tslint:enable: no-bitwise
   } while (value !== 0);
   return new Uint8Array(out);
 }

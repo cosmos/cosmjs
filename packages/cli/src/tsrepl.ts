@@ -19,7 +19,6 @@ export class TsRepl {
   private readonly evalData = { input: "", output: "" };
   private readonly resetToZero: () => void; // Bookmark to empty TS input
   private readonly initialTypeScript: string;
-  // tslint:disable-next-line:readonly-keyword
   private context: Context | undefined;
 
   public constructor(
@@ -69,7 +68,6 @@ export class TsRepl {
     // to exist in `Object.defineProperty(exports, "__esModule", { value: true });`
     const unsafeReplContext = repl.context as any;
     if (!unsafeReplContext.exports) {
-      // tslint:disable-next-line:no-object-mutation
       unsafeReplContext.exports = unsafeReplContext.module.exports;
     }
 
@@ -85,10 +83,8 @@ export class TsRepl {
     // However, this does not include the installation path of @cosmwasm/cli because
     // REPL does not inherit module paths from the current process. Thus we override
     // the repl paths with the current process' paths
-    // tslint:disable-next-line:no-object-mutation
     unsafeReplContext.module.paths = module.paths;
 
-    // tslint:disable-next-line:no-object-mutation
     this.context = createContext(repl.context);
 
     const reset = async (): Promise<void> => {
@@ -153,7 +149,6 @@ export class TsRepl {
     if (isAutocompletionRequest) {
       undo();
     } else {
-      // tslint:disable-next-line:no-object-mutation
       this.evalData.output = output;
     }
 
@@ -220,17 +215,13 @@ export class TsRepl {
 
     // Handle ASI issues with TypeScript re-evaluation.
     if (oldInput.charAt(oldInput.length - 1) === "\n" && /^\s*[[(`]/.test(input) && !/;\s*$/.test(oldInput)) {
-      // tslint:disable-next-line:no-object-mutation
       this.evalData.input = `${this.evalData.input.slice(0, -1)};\n`;
     }
 
-    // tslint:disable-next-line:no-object-mutation
     this.evalData.input += input;
 
     const undoFunction = (): void => {
-      // tslint:disable-next-line:no-object-mutation
       this.evalData.input = oldInput;
-      // tslint:disable-next-line:no-object-mutation
       this.evalData.output = oldOutput;
     };
 
