@@ -127,7 +127,7 @@ smartQuery(client, foo, { balance: { address: rcpt } })
 const mnemonic = Bip39.encode(Random.getBytes(16)).toString();
 const pen = await Secp256k1Pen.fromMnemonic(mnemonic);
 const pubkey = encodeSecp256k1Pubkey(pen.pubkey);
-const address = encodeAddress(pubkey, "cosmos");
+const address = pubkeyToAddress(pubkey, "cosmos");
 ```
 
 ## License

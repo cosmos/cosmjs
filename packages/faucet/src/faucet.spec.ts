@@ -1,5 +1,4 @@
 import { CosmWasmCodec, CosmWasmConnection, TokenConfiguration } from "@cosmwasm/bcp";
-import { CosmosAddressBech32Prefix } from "@cosmwasm/sdk";
 import { Address, ChainId, Identity, TokenTicker } from "@iov/bcp";
 import { Random } from "@iov/crypto";
 import { Bech32 } from "@iov/encoding";
@@ -40,12 +39,12 @@ const defaultConfig: TokenConfiguration = {
     },
   ],
 };
-const defaultPrefix = "cosmos" as CosmosAddressBech32Prefix;
+const defaultAddressPrefix = "cosmos";
 const defaultChainId = "cosmos:testing" as ChainId;
-const codec = new CosmWasmCodec(defaultPrefix, defaultConfig.bankTokens, defaultConfig.erc20Tokens);
+const codec = new CosmWasmCodec(defaultAddressPrefix, defaultConfig.bankTokens, defaultConfig.erc20Tokens);
 
 function makeRandomAddress(): Address {
-  return Bech32.encode(defaultPrefix, Random.getBytes(20)) as Address;
+  return Bech32.encode(defaultAddressPrefix, Random.getBytes(20)) as Address;
 }
 
 const faucetMnemonic =
@@ -66,7 +65,7 @@ describe("Faucet", () => {
   describe("constructor", () => {
     it("can be constructed", async () => {
       pendingWithoutWasmd();
-      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultAddressPrefix, defaultConfig);
       const { profile } = await makeProfile();
       const faucet = new Faucet(defaultConfig, connection, codec, profile);
       expect(faucet).toBeTruthy();
@@ -77,7 +76,7 @@ describe("Faucet", () => {
   describe("send", () => {
     it("can send bank token", async () => {
       pendingWithoutWasmd();
-      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultAddressPrefix, defaultConfig);
       const { profile, holder } = await makeProfile();
       const faucet = new Faucet(defaultConfig, connection, codec, profile);
       const recipient = makeRandomAddress();
@@ -104,7 +103,7 @@ describe("Faucet", () => {
 
     it("can send ERC20 token", async () => {
       pendingWithoutWasmd();
-      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultAddressPrefix, defaultConfig);
       const { profile, holder } = await makeProfile();
       const faucet = new Faucet(defaultConfig, connection, codec, profile);
       const recipient = makeRandomAddress();
@@ -133,7 +132,7 @@ describe("Faucet", () => {
   describe("refill", () => {
     it("works", async () => {
       pendingWithoutWasmd();
-      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultAddressPrefix, defaultConfig);
       const { profile, distributors } = await makeProfile(1);
       const faucet = new Faucet(defaultConfig, connection, codec, profile);
       await faucet.refill();
@@ -163,7 +162,7 @@ describe("Faucet", () => {
   describe("credit", () => {
     it("works for fee token", async () => {
       pendingWithoutWasmd();
-      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultAddressPrefix, defaultConfig);
       const { profile } = await makeProfile(1);
       const faucet = new Faucet(defaultConfig, connection, codec, profile);
       const recipient = makeRandomAddress();
@@ -182,7 +181,7 @@ describe("Faucet", () => {
 
     it("works for stake token", async () => {
       pendingWithoutWasmd();
-      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultAddressPrefix, defaultConfig);
       const { profile } = await makeProfile(1);
       const faucet = new Faucet(defaultConfig, connection, codec, profile);
       const recipient = makeRandomAddress();
@@ -203,7 +202,7 @@ describe("Faucet", () => {
   describe("loadTokenTickers", () => {
     it("works", async () => {
       pendingWithoutWasmd();
-      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultAddressPrefix, defaultConfig);
       const { profile } = await makeProfile();
       const faucet = new Faucet(defaultConfig, connection, codec, profile);
       const tickers = await faucet.loadTokenTickers();
@@ -215,7 +214,7 @@ describe("Faucet", () => {
   describe("loadAccounts", () => {
     it("works", async () => {
       pendingWithoutWasmd();
-      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultAddressPrefix, defaultConfig);
       const { profile, holder } = await makeProfile();
       const faucet = new Faucet(defaultConfig, connection, codec, profile);
       const accounts = await faucet.loadAccounts();

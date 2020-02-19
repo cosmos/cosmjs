@@ -1,11 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import {
-  CosmosAddressBech32Prefix,
-  CosmWasmClient,
-  findSequenceForSignedTx,
-  TxsResponse,
-  types,
-} from "@cosmwasm/sdk";
+import { CosmWasmClient, findSequenceForSignedTx, TxsResponse, types } from "@cosmwasm/sdk";
 import {
   Account,
   AccountQuery,
@@ -73,7 +67,7 @@ export class CosmWasmConnection implements BlockchainConnection {
   // we must know prefix and tokens a priori to understand the chain
   public static async establish(
     url: string,
-    addressPrefix: CosmosAddressBech32Prefix,
+    addressPrefix: string,
     tokens: TokenConfiguration,
   ): Promise<CosmWasmConnection> {
     const cosmWasmClient = new CosmWasmClient(url);
@@ -90,7 +84,7 @@ export class CosmWasmConnection implements BlockchainConnection {
   public readonly codec: TxCodec;
 
   private readonly cosmWasmClient: CosmWasmClient;
-  private readonly addressPrefix: CosmosAddressBech32Prefix;
+  private readonly addressPrefix: string;
   private readonly bankTokens: readonly BankToken[];
   private readonly erc20Tokens: readonly Erc20Token[];
 
@@ -101,7 +95,7 @@ export class CosmWasmConnection implements BlockchainConnection {
   private constructor(
     cosmWasmClient: CosmWasmClient,
     chainId: ChainId,
-    addressPrefix: CosmosAddressBech32Prefix,
+    addressPrefix: string,
     tokens: TokenConfiguration,
   ) {
     this.cosmWasmClient = cosmWasmClient;

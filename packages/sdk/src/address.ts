@@ -5,28 +5,9 @@ import { PubKey, pubkeyType } from "./types";
 
 const { fromBase64 } = Encoding;
 
-// TODO: make this much more configurable
-export type CosmosAddressBech32Prefix = "cosmos" | "cosmosvalcons" | "cosmosvaloper";
-
-function isCosmosAddressBech32Prefix(prefix: string): prefix is CosmosAddressBech32Prefix {
-  return ["cosmos", "cosmosvalcons", "cosmosvaloper"].includes(prefix);
-}
-
-export function isValidAddress(address: string): boolean {
-  try {
-    const { prefix, data } = Bech32.decode(address);
-    if (!isCosmosAddressBech32Prefix(prefix)) {
-      return false;
-    }
-    return data.length === 20;
-  } catch {
-    return false;
-  }
-}
-
 // See https://github.com/tendermint/tendermint/blob/f2ada0a604b4c0763bda2f64fac53d506d3beca7/docs/spec/blockchain/encoding.md#public-key-cryptography
 // This assumes we already have a cosmos-compressed pubkey
-export function encodeAddress(pubkey: PubKey, prefix: string): string {
+export function pubkeyToAddress(pubkey: PubKey, prefix: string): string {
   const pubkeyBytes = fromBase64(pubkey.value);
   switch (pubkey.type) {
     case pubkeyType.secp256k1: {

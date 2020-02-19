@@ -1,4 +1,3 @@
-import { CosmosAddressBech32Prefix } from "@cosmwasm/sdk";
 import {
   Account,
   AccountQuery,
@@ -41,7 +40,7 @@ export interface TokenConfiguration {
 export declare class CosmWasmConnection implements BlockchainConnection {
   static establish(
     url: string,
-    addressPrefix: CosmosAddressBech32Prefix,
+    addressPrefix: string,
     tokens: TokenConfiguration,
   ): Promise<CosmWasmConnection>;
   private static initialize;

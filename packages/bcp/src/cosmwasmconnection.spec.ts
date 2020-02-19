@@ -1,8 +1,4 @@
-import {
-  CosmosAddressBech32Prefix,
-  decodeSignature,
-  makeSecp256k1SignatureFromFixedLength,
-} from "@cosmwasm/sdk";
+import { decodeSignature, makeSecp256k1SignatureFromFixedLength } from "@cosmwasm/sdk";
 import {
   Account,
   Address,
@@ -39,10 +35,10 @@ function pendingWithoutWasmd(): void {
   }
 }
 
-const defaultPrefix = "cosmos" as CosmosAddressBech32Prefix;
+const defaultAddressPrefix = "cosmos";
 
 function makeRandomAddress(): Address {
-  return Bech32.encode(defaultPrefix, Random.getBytes(20)) as Address;
+  return Bech32.encode(defaultAddressPrefix, Random.getBytes(20)) as Address;
 }
 
 const faucet = {
@@ -129,7 +125,7 @@ describe("CosmWasmConnection", () => {
   describe("establish", () => {
     it("can connect to Cosmos via http", async () => {
       pendingWithoutWasmd();
-      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultAddressPrefix, defaultConfig);
       expect(connection).toBeTruthy();
       connection.disconnect();
     });
@@ -138,7 +134,7 @@ describe("CosmWasmConnection", () => {
   describe("chainId", () => {
     it("displays the chain ID", async () => {
       pendingWithoutWasmd();
-      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultAddressPrefix, defaultConfig);
       expect(connection.chainId).toEqual(defaultChainId);
       connection.disconnect();
     });
@@ -147,7 +143,7 @@ describe("CosmWasmConnection", () => {
   describe("height", () => {
     it("displays the current height", async () => {
       pendingWithoutWasmd();
-      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultAddressPrefix, defaultConfig);
       const height = await connection.height();
       expect(height).toBeGreaterThan(0);
       connection.disconnect();
@@ -157,7 +153,7 @@ describe("CosmWasmConnection", () => {
   describe("getToken", () => {
     it("displays a given token", async () => {
       pendingWithoutWasmd();
-      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultAddressPrefix, defaultConfig);
       const token = await connection.getToken("COSM" as TokenTicker);
       expect(token).toEqual({
         fractionalDigits: 6,
@@ -169,7 +165,7 @@ describe("CosmWasmConnection", () => {
 
     it("resolves to undefined if the token is not supported", async () => {
       pendingWithoutWasmd();
-      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultAddressPrefix, defaultConfig);
       const token = await connection.getToken("whatever" as TokenTicker);
       expect(token).toBeUndefined();
       connection.disconnect();
@@ -179,7 +175,7 @@ describe("CosmWasmConnection", () => {
   describe("getAllTokens", () => {
     it("resolves to a list of all supported tokens", async () => {
       pendingWithoutWasmd();
-      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultAddressPrefix, defaultConfig);
       const tokens = await connection.getAllTokens();
       expect(tokens).toEqual([
         {
@@ -215,7 +211,7 @@ describe("CosmWasmConnection", () => {
   describe("identifier", () => {
     it("calculates tx hash from PostableBytes", async () => {
       pendingWithoutWasmd();
-      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, atomConfig);
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultAddressPrefix, atomConfig);
       const id = await connection.identifier(testdata.signedTxJson);
       expect(id).toMatch(/^[0-9A-F]{64}$/);
       expect(id).toEqual(testdata.txId);
@@ -225,7 +221,7 @@ describe("CosmWasmConnection", () => {
   describe("getAccount", () => {
     it("gets an empty account by address", async () => {
       pendingWithoutWasmd();
-      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultAddressPrefix, defaultConfig);
       const account = await connection.getAccount({ address: defaultEmptyAddress });
       expect(account).toBeUndefined();
       connection.disconnect();
@@ -233,7 +229,7 @@ describe("CosmWasmConnection", () => {
 
     it("gets an account by address", async () => {
       pendingWithoutWasmd();
-      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultAddressPrefix, defaultConfig);
       const account = await connection.getAccount({ address: unusedAccount.address });
       assert(account, "Account must be defined");
       expect(account.address).toEqual(unusedAccount.address);
@@ -265,7 +261,7 @@ describe("CosmWasmConnection", () => {
 
     it("gets an account by pubkey", async () => {
       pendingWithoutWasmd();
-      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultAddressPrefix, defaultConfig);
       const byAddress = await connection.getAccount({ address: unusedAccount.address });
       const byPubkey = await connection.getAccount({ pubkey: unusedAccount.pubkey });
       expect(byPubkey).toEqual(byAddress); // above we verified that by address works as expected
@@ -274,7 +270,7 @@ describe("CosmWasmConnection", () => {
 
     it("has a pubkey when getting account with transactions", async () => {
       pendingWithoutWasmd();
-      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultAddressPrefix, defaultConfig);
       const account = await connection.getAccount({ address: faucet.address });
       expect(account?.pubkey).toEqual(faucet.pubkey);
       connection.disconnect();
@@ -288,7 +284,7 @@ describe("CosmWasmConnection", () => {
       const events = new Array<Account | undefined>();
 
       (async () => {
-        const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+        const connection = await CosmWasmConnection.establish(httpUrl, defaultAddressPrefix, defaultConfig);
         const subscription = connection.watchAccount({ address: recipient }).subscribe({
           next: event => {
             events.push(event);
@@ -348,7 +344,7 @@ describe("CosmWasmConnection", () => {
   describe("getTx", () => {
     it("can get a recently posted bank send transaction", async () => {
       pendingWithoutWasmd();
-      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultAddressPrefix, defaultConfig);
       const profile = new UserProfile();
       const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(faucet.mnemonic));
       const senderIdentity = await profile.createIdentity(wallet.id, defaultChainId, faucet.path);
@@ -399,7 +395,7 @@ describe("CosmWasmConnection", () => {
 
     it("can get a recently posted ERC20 send transaction", async () => {
       pendingWithoutWasmd();
-      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultAddressPrefix, defaultConfig);
       const profile = new UserProfile();
       const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(faucet.mnemonic));
       const senderIdentity = await profile.createIdentity(wallet.id, defaultChainId, faucet.path);
@@ -449,7 +445,7 @@ describe("CosmWasmConnection", () => {
 
     it("can get an old transaction", async () => {
       pendingWithoutWasmd();
-      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultAddressPrefix, defaultConfig);
 
       const results = await connection.searchTx({ sentFromOrTo: faucet.address });
       const firstSearchResult = results.find(() => true);
@@ -490,7 +486,7 @@ describe("CosmWasmConnection", () => {
 
     it("throws for non-existent transaction", async () => {
       pendingWithoutWasmd();
-      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultAddressPrefix, defaultConfig);
 
       const nonExistentId = "0000000000000000000000000000000000000000000000000000000000000000" as TransactionId;
       await connection.getTx(nonExistentId).then(
@@ -505,7 +501,7 @@ describe("CosmWasmConnection", () => {
   describe("searchTx", () => {
     it("can post and search for a transaction", async () => {
       pendingWithoutWasmd();
-      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultAddressPrefix, defaultConfig);
       const profile = new UserProfile();
       const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(faucet.mnemonic));
       const sender = await profile.createIdentity(wallet.id, defaultChainId, faucet.path);
@@ -595,7 +591,7 @@ describe("CosmWasmConnection", () => {
 
     it("can search by minHeight and maxHeight", async () => {
       pendingWithoutWasmd();
-      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultAddressPrefix, defaultConfig);
       const profile = new UserProfile();
       const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(faucet.mnemonic));
       const sender = await profile.createIdentity(wallet.id, defaultChainId, faucet.path);
@@ -806,7 +802,7 @@ describe("CosmWasmConnection", () => {
       pendingWithoutWasmd();
 
       (async () => {
-        const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+        const connection = await CosmWasmConnection.establish(httpUrl, defaultAddressPrefix, defaultConfig);
 
         const profile = new UserProfile();
         const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(faucet.mnemonic));
@@ -889,7 +885,7 @@ describe("CosmWasmConnection", () => {
       pendingWithoutWasmd();
 
       (async () => {
-        const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+        const connection = await CosmWasmConnection.establish(httpUrl, defaultAddressPrefix, defaultConfig);
 
         const profile = new UserProfile();
         const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(faucet.mnemonic));
@@ -939,7 +935,7 @@ describe("CosmWasmConnection", () => {
       pendingWithoutWasmd();
 
       (async () => {
-        const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+        const connection = await CosmWasmConnection.establish(httpUrl, defaultAddressPrefix, defaultConfig);
 
         const profile = new UserProfile();
         const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(faucet.mnemonic));
@@ -988,7 +984,7 @@ describe("CosmWasmConnection", () => {
   describe("integration tests", () => {
     it("can send ERC20 tokens", async () => {
       pendingWithoutWasmd();
-      const connection = await CosmWasmConnection.establish(httpUrl, defaultPrefix, defaultConfig);
+      const connection = await CosmWasmConnection.establish(httpUrl, defaultAddressPrefix, defaultConfig);
       const profile = new UserProfile();
       const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(faucet.mnemonic));
       const sender = await profile.createIdentity(wallet.id, defaultChainId, faucet.path);

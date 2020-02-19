@@ -1,11 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import {
-  CosmosAddressBech32Prefix,
-  isValidAddress,
-  makeSignBytes,
-  marshalTx,
-  unmarshalTx,
-} from "@cosmwasm/sdk";
+import { makeSignBytes, marshalTx, unmarshalTx } from "@cosmwasm/sdk";
 import {
   Address,
   ChainId,
@@ -20,6 +14,7 @@ import {
   TxCodec,
   UnsignedTransaction,
 } from "@iov/bcp";
+import { Bech32 } from "@iov/encoding";
 
 import { pubkeyToAddress } from "./address";
 import { Caip5 } from "./caip5";
@@ -28,15 +23,11 @@ import { buildSignedTx, buildUnsignedTx } from "./encode";
 import { BankTokens, Erc20Token, nonceToAccountNumber, nonceToSequence } from "./types";
 
 export class CosmWasmCodec implements TxCodec {
-  private readonly addressPrefix: CosmosAddressBech32Prefix;
+  private readonly addressPrefix: string;
   private readonly bankTokens: BankTokens;
   private readonly erc20Tokens: readonly Erc20Token[];
 
-  public constructor(
-    addressPrefix: CosmosAddressBech32Prefix,
-    bankTokens: BankTokens,
-    erc20Tokens: readonly Erc20Token[] = [],
-  ) {
+  public constructor(addressPrefix: string, bankTokens: BankTokens, erc20Tokens: readonly Erc20Token[] = []) {
     this.addressPrefix = addressPrefix;
     this.bankTokens = bankTokens;
     this.erc20Tokens = erc20Tokens;
@@ -89,6 +80,14 @@ export class CosmWasmCodec implements TxCodec {
   }
 
   public isValidAddress(address: string): boolean {
-    return isValidAddress(address);
+    try {
+      const { prefix, data } = Bech32.decode(address);
+      if (prefix !== this.addressPrefix) {
+        return false;
+      }
+      return data.length === 20;
+    } catch {
+      return false;
+    }
   }
 }

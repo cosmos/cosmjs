@@ -1,4 +1,3 @@
-import { CosmosAddressBech32Prefix } from "@cosmwasm/sdk";
 import { ChainConnector, ChainId } from "@iov/bcp";
 
 import { CosmWasmCodec } from "./cosmwasmcodec";
@@ -9,7 +8,7 @@ import { CosmWasmConnection, TokenConfiguration } from "./cosmwasmconnection";
  */
 export function createCosmWasmConnector(
   url: string,
-  addressPrefix: CosmosAddressBech32Prefix,
+  addressPrefix: string,
   tokenConfig: TokenConfiguration,
   expectedChainId?: ChainId,
 ): ChainConnector<CosmWasmConnection> {
