@@ -21,6 +21,7 @@ module.exports = {
   ],
   rules: {
     curly: ["warn", "multi-line", "consistent"],
+    "no-bitwise": "warn",
     "no-console": ["warn", { allow: ["error", "info", "warn"] }],
     "no-param-reassign": "warn",
     "no-shadow": "warn",

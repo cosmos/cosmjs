@@ -11,10 +11,13 @@ export function leb128Encode(uint: number): Uint8Array {
   const out = new Array<number>();
   let value = uint;
   do {
+    // eslint-disable-next-line no-bitwise
     let byte = value & 0b01111111;
+    // eslint-disable-next-line no-bitwise
     value >>= 7;
 
     // more bytes to come: set high order bit of byte
+    // eslint-disable-next-line no-bitwise
     if (value !== 0) byte ^= 0b10000000;
 
     out.push(byte);

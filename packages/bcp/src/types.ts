@@ -32,7 +32,9 @@ export interface Erc20Token {
   readonly fractionalDigits: number;
 }
 
+// eslint-disable-next-line no-bitwise
 const maxAcct = 1 << 23;
+// eslint-disable-next-line no-bitwise
 const maxSeq = 1 << 20;
 
 // this (lossily) encodes the two pieces of info (uint64) needed to sign into
