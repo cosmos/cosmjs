@@ -11,6 +11,18 @@ export interface FeeTable {
   readonly exec: StdFee;
   readonly send: StdFee;
 }
+export interface UploadReceipt {
+  /** Size of the original wasm code in bytes */
+  readonly originalSize: number;
+  /** A hex encoded sha256 checksum of the original wasm code (that is stored on chain) */
+  readonly originalChecksum: string;
+  /** Size of the compressed wasm code in bytes */
+  readonly compressedSize: number;
+  /** A hex encoded sha256 checksum of the compressed wasm code (that stored in the transaction) */
+  readonly compressedChecksum: string;
+  /** The ID of the code asigned by the chain */
+  readonly codeId: number;
+}
 export interface ExecuteResult {
   readonly logs: readonly Log[];
 }
@@ -27,8 +39,8 @@ export declare class SigningCosmWasmClient extends CosmWasmClient {
   );
   getNonce(address?: string): Promise<GetNonceResult>;
   getAccount(address?: string): Promise<CosmosSdkAccount | undefined>;
-  /** Uploads code and returns a code ID */
-  upload(wasmCode: Uint8Array, memo?: string): Promise<number>;
+  /** Uploads code and returns a receipt, including the code ID */
+  upload(wasmCode: Uint8Array, memo?: string): Promise<UploadReceipt>;
   instantiate(
     codeId: number,
     initMsg: object,

@@ -1,4 +1,6 @@
+import { Sha256 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
+import pako from "pako";
 
 import { CosmWasmClient, GetNonceResult, PostTxResult } from "./cosmwasmclient";
 import { makeSignBytes, marshalTx } from "./encoding";
@@ -49,6 +51,19 @@ const defaultFees: FeeTable = {
   },
 };
 
+export interface UploadReceipt {
+  /** Size of the original wasm code in bytes */
+  readonly originalSize: number;
+  /** A hex encoded sha256 checksum of the original wasm code (that is stored on chain) */
+  readonly originalChecksum: string;
+  /** Size of the compressed wasm code in bytes */
+  readonly compressedSize: number;
+  /** A hex encoded sha256 checksum of the compressed wasm code (that stored in the transaction) */
+  readonly compressedChecksum: string;
+  /** The ID of the code asigned by the chain */
+  readonly codeId: number;
+}
+
 export interface ExecuteResult {
   readonly logs: readonly Log[];
 }
@@ -80,14 +95,15 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     return super.getAccount(address || this.senderAddress);
   }
 
-  /** Uploads code and returns a code ID */
-  public async upload(wasmCode: Uint8Array, memo = ""): Promise<number> {
+  /** Uploads code and returns a receipt, including the code ID */
+  public async upload(wasmCode: Uint8Array, memo = ""): Promise<UploadReceipt> {
+    const compressed = pako.gzip(wasmCode, { level: 9 });
     const storeCodeMsg: MsgStoreCode = {
       type: "wasm/store-code",
       value: {
         sender: this.senderAddress,
         // eslint-disable-next-line @typescript-eslint/camelcase
-        wasm_byte_code: Encoding.toBase64(wasmCode),
+        wasm_byte_code: Encoding.toBase64(compressed),
         source: "",
         builder: "",
       },
@@ -106,8 +122,13 @@ export class SigningCosmWasmClient extends CosmWasmClient {
 
     const result = await this.postTx(marshalTx(signedTx));
     const codeIdAttr = findAttribute(result.logs, "message", "code_id");
-    const codeId = Number.parseInt(codeIdAttr.value, 10);
-    return codeId;
+    return {
+      originalSize: wasmCode.length,
+      originalChecksum: Encoding.toHex(new Sha256(wasmCode).digest()),
+      compressedSize: compressed.length,
+      compressedChecksum: Encoding.toHex(new Sha256(compressed).digest()),
+      codeId: Number.parseInt(codeIdAttr.value, 10),
+    };
   }
 
   public async instantiate(
