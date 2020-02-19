@@ -28,4 +28,9 @@ export {
   decodeSignature,
   makeSecp256k1SignatureFromFixedLength,
 } from "./signature";
-export { SigningCallback, SigningCosmWasmClient, ExecuteResult } from "./signingcosmwasmclient";
+export {
+  SigningCallback,
+  SigningCosmWasmClient,
+  ExecuteResult,
+  UploadReceipt,
+} from "./signingcosmwasmclient";

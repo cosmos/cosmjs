@@ -321,7 +321,7 @@ describe("CosmWasmClient", () => {
         pendingWithoutWasmd();
         const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
         const client = new SigningCosmWasmClient(httpUrl, faucet.address, signBytes => pen.sign(signBytes));
-        const codeId = await client.upload(getRandomizedHackatom());
+        const { codeId } = await client.upload(getRandomizedHackatom());
         const initMsg = { verifier: makeRandomAddress(), beneficiary: makeRandomAddress() };
         const contractAddress = await client.instantiate(codeId, initMsg);
         contract = { initMsg: initMsg, address: contractAddress };
@@ -372,7 +372,7 @@ describe("CosmWasmClient", () => {
         pendingWithoutWasmd();
         const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
         const client = new SigningCosmWasmClient(httpUrl, faucet.address, signBytes => pen.sign(signBytes));
-        const codeId = await client.upload(getRandomizedHackatom());
+        const { codeId } = await client.upload(getRandomizedHackatom());
         const initMsg = { verifier: makeRandomAddress(), beneficiary: makeRandomAddress() };
         const contractAddress = await client.instantiate(codeId, initMsg);
         contract = { initMsg: initMsg, address: contractAddress };
