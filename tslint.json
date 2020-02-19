@@ -15,7 +15,7 @@
     "no-console": [true, "log"],
     "no-empty": false,
     "no-empty-interface": false,
-    "no-floating-promises": true,
+    "no-floating-promises": false,
     "no-implicit-dependencies": false,
     "no-parameter-reassignment": false,
     "no-unnecessary-class": [true, "allow-static-only"],
