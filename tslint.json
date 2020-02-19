@@ -4,7 +4,7 @@
   "jsRules": {},
   "rules": {
     "array-type": [true, "array"],
-    "await-promise": true,
+    "await-promise": false,
     "callable-types": false,
     "comment-format": [true, "check-space"],
     "curly": false,

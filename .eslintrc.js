@@ -29,6 +29,7 @@ module.exports = {
     "spaced-comment": ["warn", "always", { line: { markers: ["/ <reference"] } }],
     "import/no-cycle": "warn",
     "simple-import-sort/sort": "warn",
+    "@typescript-eslint/await-thenable": "warn",
     "@typescript-eslint/explicit-function-return-type": ["warn", { allowExpressions: true }],
     "@typescript-eslint/no-empty-function": "off",
     "@typescript-eslint/no-empty-interface": "off",
