@@ -1,4 +1,3 @@
-import { CosmosAddressBech32Prefix } from "@cosmwasm/sdk";
 import {
   Address,
   ChainId,
@@ -16,11 +15,7 @@ export declare class CosmWasmCodec implements TxCodec {
   private readonly addressPrefix;
   private readonly bankTokens;
   private readonly erc20Tokens;
-  constructor(
-    addressPrefix: CosmosAddressBech32Prefix,
-    bankTokens: BankTokens,
-    erc20Tokens?: readonly Erc20Token[],
-  );
+  constructor(addressPrefix: string, bankTokens: BankTokens, erc20Tokens?: readonly Erc20Token[]);
   bytesToSign(unsigned: UnsignedTransaction, nonce: Nonce): SigningJob;
   bytesToPost(signed: SignedTransaction): PostableBytes;
   identifier(_signed: SignedTransaction): TransactionId;

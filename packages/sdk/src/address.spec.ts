@@ -1,27 +1,10 @@
 import { Encoding } from "@iov/encoding";
 
-import { encodeAddress, isValidAddress } from "./address";
+import { encodeAddress } from "./address";
 
 const { toBase64, fromHex } = Encoding;
 
 describe("address", () => {
-  describe("isValidAddress", () => {
-    it("accepts valid addresses", () => {
-      expect(isValidAddress("cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6")).toEqual(true);
-      expect(isValidAddress("cosmosvalcons10q82zkzzmaku5lazhsvxv7hsg4ntpuhdwadmss")).toEqual(true);
-      expect(isValidAddress("cosmosvaloper17mggn4znyeyg25wd7498qxl7r2jhgue8u4qjcq")).toEqual(true);
-    });
-
-    it("rejects invalid addresses", () => {
-      // Bad size
-      expect(isValidAddress("cosmos10q82zkzzmaku5lazhsvxv7hsg4ntpuhh8289f")).toEqual(false);
-      // Bad checksum
-      expect(isValidAddress("cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs7")).toEqual(false);
-      // Bad prefix
-      expect(isValidAddress("cosmot10q82zkzzmaku5lazhsvxv7hsg4ntpuhd8j5266")).toEqual(false);
-    });
-  });
-
   describe("encodeAddress", () => {
     it("works for Secp256k1 compressed", () => {
       const prefix = "cosmos";

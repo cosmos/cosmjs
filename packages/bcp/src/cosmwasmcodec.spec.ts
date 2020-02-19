@@ -1,4 +1,3 @@
-import { CosmosAddressBech32Prefix } from "@cosmwasm/sdk";
 import { Address, PostableBytes, PrehashType, SendTransaction, TokenTicker } from "@iov/bcp";
 import { Encoding } from "@iov/encoding";
 
@@ -8,7 +7,7 @@ import { BankToken, Erc20Token } from "./types";
 
 const { toUtf8 } = Encoding;
 
-const defaultPrefix = "cosmos" as CosmosAddressBech32Prefix;
+const defaultPrefix = "cosmos";
 
 const defaultBankTokens: readonly BankToken[] = [
   {
@@ -42,8 +41,6 @@ describe("CosmWasmCodec", () => {
   describe("isValidAddress", () => {
     it("accepts valid addresses", () => {
       expect(codec.isValidAddress("cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6")).toEqual(true);
-      expect(codec.isValidAddress("cosmosvalcons10q82zkzzmaku5lazhsvxv7hsg4ntpuhdwadmss")).toEqual(true);
-      expect(codec.isValidAddress("cosmosvaloper17mggn4znyeyg25wd7498qxl7r2jhgue8u4qjcq")).toEqual(true);
     });
 
     it("rejects invalid addresses", () => {
@@ -53,6 +50,8 @@ describe("CosmWasmCodec", () => {
       expect(codec.isValidAddress("cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs7")).toEqual(false);
       // Bad prefix
       expect(codec.isValidAddress("cosmot10q82zkzzmaku5lazhsvxv7hsg4ntpuhd8j5266")).toEqual(false);
+      expect(codec.isValidAddress("cosmosvalcons10q82zkzzmaku5lazhsvxv7hsg4ntpuhdwadmss")).toEqual(false);
+      expect(codec.isValidAddress("cosmosvaloper17mggn4znyeyg25wd7498qxl7r2jhgue8u4qjcq")).toEqual(false);
     });
   });
 
