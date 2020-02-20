@@ -1,6 +1,6 @@
 {
   "name": "@cosmwasm/faucet",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "The faucet",
   "author": "Ethan Frey <ethanfrey@users.noreply.github.com>",
   "license": "Apache-2.0",
@@ -35,7 +35,7 @@
     "test": "yarn build-or-skip && yarn test-node"
   },
   "dependencies": {
-    "@cosmwasm/bcp": "^0.0.6",
+    "@cosmwasm/bcp": "^0.0.7",
     "@iov/bcp": "^2.0.2",
     "@iov/crypto": "^2.0.2",
     "@iov/encoding": "^2.0.2",
