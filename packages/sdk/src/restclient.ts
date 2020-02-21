@@ -276,16 +276,7 @@ export class RestClient {
 
   // The /txs endpoints
 
-  /** returns the amino-encoding of the transaction performed by the server */
-  public async encodeTx(tx: CosmosSdkTx): Promise<Uint8Array> {
-    const responseData = await this.post("/txs/encode", tx);
-    if (!(responseData as any).tx) {
-      throw new Error("Unexpected response data format");
-    }
-    return Encoding.fromBase64((responseData as EncodeTxResponse).tx);
-  }
-
-  public async txs(query: string): Promise<SearchTxsResponse> {
+  public async txsQuery(query: string): Promise<SearchTxsResponse> {
     const responseData = await this.get(`/txs?${query}`);
     if (!(responseData as any).txs) {
       throw new Error("Unexpected response data format");
@@ -299,6 +290,15 @@ export class RestClient {
       throw new Error("Unexpected response data format");
     }
     return responseData as TxsResponse;
+  }
+
+  /** returns the amino-encoding of the transaction performed by the server */
+  public async encodeTx(tx: CosmosSdkTx): Promise<Uint8Array> {
+    const responseData = await this.post("/txs/encode", tx);
+    if (!(responseData as any).tx) {
+      throw new Error("Unexpected response data format");
+    }
+    return Encoding.fromBase64((responseData as EncodeTxResponse).tx);
   }
 
   /**

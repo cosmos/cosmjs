@@ -111,13 +111,14 @@ export class CosmWasmClient {
     }
 
     if (isSearchByIdQuery(query)) {
-      return (await this.restClient.txs(`tx.hash=${query.id}`)).txs;
+      return (await this.restClient.txsQuery(`tx.hash=${query.id}`)).txs;
     } else if (isSearchByHeightQuery(query)) {
-      return (await this.restClient.txs(`tx.height=${query.height}`)).txs;
+      return (await this.restClient.txsQuery(`tx.height=${query.height}`)).txs;
     } else if (isSearchBySentFromOrToQuery(query)) {
       // We cannot get both in one request (see https://github.com/cosmos/gaia/issues/75)
-      const sent = (await this.restClient.txs(limited(`message.sender=${query.sentFromOrTo}`))).txs;
-      const received = (await this.restClient.txs(limited(`transfer.recipient=${query.sentFromOrTo}`))).txs;
+      const sent = (await this.restClient.txsQuery(limited(`message.sender=${query.sentFromOrTo}`))).txs;
+      const received = (await this.restClient.txsQuery(limited(`transfer.recipient=${query.sentFromOrTo}`)))
+        .txs;
       const sentHashes = sent.map(t => t.txhash);
       return [...sent, ...received.filter(t => !sentHashes.includes(t.txhash))];
     } else {

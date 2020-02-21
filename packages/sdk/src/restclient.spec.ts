@@ -1,14 +1,15 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { Sha256 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
-import { assert } from "@iov/utils";
+import { assert, sleep } from "@iov/utils";
 import { ReadonlyDate } from "readonly-date";
 
 import { makeSignBytes } from "./encoding";
 import { findAttribute, parseLogs } from "./logs";
 import { Pen, Secp256k1Pen } from "./pen";
 import { encodeBech32Pubkey } from "./pubkey";
-import { PostTxsResponse, RestClient } from "./restclient";
+import { PostTxsResponse, RestClient, TxsResponse } from "./restclient";
+import { SigningCosmWasmClient } from "./signingcosmwasmclient";
 import cosmoshub from "./testdata/cosmoshub.json";
 import {
   getRandomizedHackatom,
@@ -303,6 +304,180 @@ describe("RestClient", () => {
   });
 
   // The /txs endpoints
+
+  describe("txsQuery", () => {
+    let posted:
+      | {
+          readonly sender: string;
+          readonly recipient: string;
+          readonly hash: string;
+          readonly height: number;
+          readonly tx: TxsResponse;
+        }
+      | undefined;
+
+    beforeAll(async () => {
+      if (wasmdEnabled()) {
+        const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
+        const client = new SigningCosmWasmClient(httpUrl, faucet.address, signBytes => pen.sign(signBytes));
+
+        const recipient = makeRandomAddress();
+        const transferAmount = [
+          {
+            denom: "ucosm",
+            amount: "1234567",
+          },
+        ];
+        const result = await client.sendTokens(recipient, transferAmount);
+
+        await sleep(50); // wait until tx is indexed
+        const txDetails = await new RestClient(httpUrl).txsById(result.transactionHash);
+        posted = {
+          sender: faucet.address,
+          recipient: recipient,
+          hash: result.transactionHash,
+          height: Number.parseInt(txDetails.height, 10),
+          tx: txDetails,
+        };
+      }
+    });
+
+    it("can query transactions by height", async () => {
+      pendingWithoutWasmd();
+      assert(posted);
+      const client = new RestClient(httpUrl);
+      const result = await client.txsQuery(`tx.height=${posted.height}&limit=26`);
+      expect(parseInt(result.count, 10)).toEqual(1);
+      expect(parseInt(result.limit, 10)).toEqual(26);
+      expect(parseInt(result.page_number, 10)).toEqual(1);
+      expect(parseInt(result.page_total, 10)).toEqual(1);
+      expect(parseInt(result.total_count, 10)).toEqual(1);
+      expect(result.txs).toEqual([posted.tx]);
+    });
+
+    it("can query transactions by ID", async () => {
+      pendingWithoutWasmd();
+      assert(posted);
+      const client = new RestClient(httpUrl);
+      const result = await client.txsQuery(`tx.hash=${posted.hash}&limit=26`);
+      expect(parseInt(result.count, 10)).toEqual(1);
+      expect(parseInt(result.limit, 10)).toEqual(26);
+      expect(parseInt(result.page_number, 10)).toEqual(1);
+      expect(parseInt(result.page_total, 10)).toEqual(1);
+      expect(parseInt(result.total_count, 10)).toEqual(1);
+      expect(result.txs).toEqual([posted.tx]);
+    });
+
+    it("can query transactions by sender", async () => {
+      pendingWithoutWasmd();
+      assert(posted);
+      const client = new RestClient(httpUrl);
+      const result = await client.txsQuery(`message.sender=${posted.sender}&limit=200`);
+      expect(parseInt(result.count, 10)).toBeGreaterThanOrEqual(1);
+      expect(parseInt(result.limit, 10)).toEqual(200);
+      expect(parseInt(result.page_number, 10)).toEqual(1);
+      expect(parseInt(result.page_total, 10)).toEqual(1);
+      expect(parseInt(result.total_count, 10)).toBeGreaterThanOrEqual(1);
+      expect(result.txs.length).toBeGreaterThanOrEqual(1);
+      expect(result.txs[result.txs.length - 1]).toEqual(posted.tx);
+    });
+
+    it("can query transactions by recipient", async () => {
+      pendingWithoutWasmd();
+      assert(posted);
+      const client = new RestClient(httpUrl);
+      const result = await client.txsQuery(`transfer.recipient=${posted.recipient}&limit=200`);
+      expect(parseInt(result.count, 10)).toEqual(1);
+      expect(parseInt(result.limit, 10)).toEqual(200);
+      expect(parseInt(result.page_number, 10)).toEqual(1);
+      expect(parseInt(result.page_total, 10)).toEqual(1);
+      expect(parseInt(result.total_count, 10)).toEqual(1);
+      expect(result.txs.length).toBeGreaterThanOrEqual(1);
+      expect(result.txs[result.txs.length - 1]).toEqual(posted.tx);
+    });
+
+    it("can filter by tx.hash and tx.minheight", async () => {
+      pending("This combination is broken 🤷‍♂️. Handle client-side at higher level.");
+      pendingWithoutWasmd();
+      assert(posted);
+      const client = new RestClient(httpUrl);
+      const hashQuery = `tx.hash=${posted.hash}`;
+
+      {
+        const { count } = await client.txsQuery(`${hashQuery}&tx.minheight=0`);
+        expect(count).toEqual("1");
+      }
+
+      {
+        const { count } = await client.txsQuery(`${hashQuery}&tx.minheight=${posted.height - 1}`);
+        expect(count).toEqual("1");
+      }
+
+      {
+        const { count } = await client.txsQuery(`${hashQuery}&tx.minheight=${posted.height}`);
+        expect(count).toEqual("1");
+      }
+
+      {
+        const { count } = await client.txsQuery(`${hashQuery}&tx.minheight=${posted.height + 1}`);
+        expect(count).toEqual("0");
+      }
+    });
+
+    it("can filter by recipient and tx.minheight", async () => {
+      pendingWithoutWasmd();
+      assert(posted);
+      const client = new RestClient(httpUrl);
+      const recipientQuery = `transfer.recipient=${posted.recipient}`;
+
+      {
+        const { count } = await client.txsQuery(`${recipientQuery}&tx.minheight=0`);
+        expect(count).toEqual("1");
+      }
+
+      {
+        const { count } = await client.txsQuery(`${recipientQuery}&tx.minheight=${posted.height - 1}`);
+        expect(count).toEqual("1");
+      }
+
+      {
+        const { count } = await client.txsQuery(`${recipientQuery}&tx.minheight=${posted.height}`);
+        expect(count).toEqual("1");
+      }
+
+      {
+        const { count } = await client.txsQuery(`${recipientQuery}&tx.minheight=${posted.height + 1}`);
+        expect(count).toEqual("0");
+      }
+    });
+
+    it("can filter by recipient and tx.maxheight", async () => {
+      pendingWithoutWasmd();
+      assert(posted);
+      const client = new RestClient(httpUrl);
+      const recipientQuery = `transfer.recipient=${posted.recipient}`;
+
+      {
+        const { count } = await client.txsQuery(`${recipientQuery}&tx.maxheight=9999999999999`);
+        expect(count).toEqual("1");
+      }
+
+      {
+        const { count } = await client.txsQuery(`${recipientQuery}&tx.maxheight=${posted.height + 1}`);
+        expect(count).toEqual("1");
+      }
+
+      {
+        const { count } = await client.txsQuery(`${recipientQuery}&tx.maxheight=${posted.height}`);
+        expect(count).toEqual("1");
+      }
+
+      {
+        const { count } = await client.txsQuery(`${recipientQuery}&tx.maxheight=${posted.height - 1}`);
+        expect(count).toEqual("0");
+      }
+    });
+  });
 
   describe("encodeTx", () => {
     it("works for cosmoshub example", async () => {

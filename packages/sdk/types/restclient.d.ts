@@ -128,10 +128,10 @@ export declare class RestClient {
   blocksLatest(): Promise<BlockResponse>;
   blocks(height: number): Promise<BlockResponse>;
   nodeInfo(): Promise<NodeInfoResponse>;
+  txsQuery(query: string): Promise<SearchTxsResponse>;
+  txsById(id: string): Promise<TxsResponse>;
   /** returns the amino-encoding of the transaction performed by the server */
   encodeTx(tx: CosmosSdkTx): Promise<Uint8Array>;
-  txs(query: string): Promise<SearchTxsResponse>;
-  txsById(id: string): Promise<TxsResponse>;
   /**
    * Broadcasts a signed transaction to into the transaction pool.
    * Depending on the RestClient's broadcast mode, this might or might
