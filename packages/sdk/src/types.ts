@@ -160,30 +160,6 @@ export interface CosmosSdkAccount {
   readonly sequence: number;
 }
 
-export interface CodeInfo {
-  readonly id: number;
-  /** Bech32 account address */
-  readonly creator: string;
-  /** Hex-encoded sha256 hash of the code stored here */
-  readonly code_hash: string;
-  // TODO: these are not supported in current wasmd
-  readonly source?: string;
-  readonly builder?: string;
-}
-
-export interface CodeDetails {
-  // TODO: this should be base64 encoded string with content - not in current stack
-  readonly code: string;
-}
-
-export interface ContractInfo {
-  readonly code_id: number;
-  /** Bech32 account address */
-  readonly creator: string;
-  /** Argument passed on initialization of the contract */
-  readonly init_msg: object;
-}
-
 export interface WasmData {
   // key is hex-encoded
   readonly key: string;

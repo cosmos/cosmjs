@@ -48,6 +48,30 @@ export interface SearchTxFilter {
   readonly maxHeight?: number;
 }
 
+export interface Code {
+  readonly id: number;
+  /** Bech32 account address */
+  readonly creator: string;
+  /** Hex-encoded sha256 hash of the code stored here */
+  readonly checksum: string;
+  readonly source?: string;
+  readonly builder?: string;
+}
+
+export interface CodeDetails {
+  /** The original wasm bytes */
+  readonly wasm: Uint8Array;
+}
+
+export interface Contract {
+  // TODO: add contract address (https://github.com/cosmwasm/wasmd/issues/75)
+  readonly codeId: number;
+  /** Bech32 account address */
+  readonly creator: string;
+  /** Argument passed on initialization of the contract */
+  readonly initMsg: object;
+}
+
 export class CosmWasmClient {
   protected readonly restClient: RestClient;
 
@@ -163,6 +187,42 @@ export class CosmWasmClient {
       logs: result.logs ? parseLogs(result.logs) : [],
       rawLog: result.raw_log || "",
       transactionHash: result.txhash,
+    };
+  }
+
+  public async getCodes(): Promise<readonly Code[]> {
+    const result = await this.restClient.listCodeInfo();
+    return result.map(r => ({
+      id: r.id,
+      creator: r.creator,
+      checksum: Encoding.toHex(Encoding.fromHex(r.code_hash)),
+      source: r.source || undefined,
+      builder: r.builder || undefined,
+    }));
+  }
+
+  public async getCodeDetails(codeId: number): Promise<CodeDetails> {
+    const result = await this.restClient.getCode(codeId);
+    return {
+      wasm: result,
+    };
+  }
+
+  public async getContracts(codeId: number): Promise<readonly Contract[]> {
+    const result = await this.restClient.listContractsByCodeId(codeId);
+    return result.map(r => ({
+      codeId: r.code_id,
+      creator: r.creator,
+      initMsg: r.init_msg,
+    }));
+  }
+
+  public async getContract(address: string): Promise<Contract> {
+    const result = await this.restClient.getContractInfo(address);
+    return {
+      codeId: result.code_id,
+      creator: result.creator,
+      initMsg: result.init_msg,
     };
   }
 

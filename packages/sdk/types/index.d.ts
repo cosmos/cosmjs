@@ -6,6 +6,9 @@ export { unmarshalTx } from "./decoding";
 export { makeSignBytes, marshalTx } from "./encoding";
 export { BroadcastMode, RestClient, TxsResponse } from "./restclient";
 export {
+  Code,
+  CodeDetails,
+  Contract,
   CosmWasmClient,
   GetNonceResult,
   PostTxResult,

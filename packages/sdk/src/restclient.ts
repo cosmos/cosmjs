@@ -1,16 +1,7 @@
 import { Encoding } from "@iov/encoding";
 import axios, { AxiosError, AxiosInstance } from "axios";
 
-import {
-  CodeInfo,
-  ContractInfo,
-  CosmosSdkAccount,
-  CosmosSdkTx,
-  Model,
-  parseWasmData,
-  StdTx,
-  WasmData,
-} from "./types";
+import { CosmosSdkAccount, CosmosSdkTx, Model, parseWasmData, StdTx, WasmData } from "./types";
 
 const { fromBase64, toHex, toUtf8 } = Encoding;
 
@@ -129,6 +120,25 @@ export interface PostTxsResponse {
 interface EncodeTxResponse {
   // base64-encoded amino-binary encoded representation
   readonly tx: string;
+}
+
+export interface CodeInfo {
+  readonly id: number;
+  /** Bech32 account address */
+  readonly creator: string;
+  /** Hex-encoded sha256 hash of the code stored here */
+  readonly code_hash: string;
+  // TODO: these are not supported in current wasmd
+  readonly source?: string;
+  readonly builder?: string;
+}
+
+export interface ContractInfo {
+  readonly code_id: number;
+  /** Bech32 account address */
+  readonly creator: string;
+  /** Argument passed on initialization of the contract */
+  readonly init_msg: object;
 }
 
 interface GetCodeResult {

@@ -25,6 +25,26 @@ export interface SearchTxFilter {
   readonly minHeight?: number;
   readonly maxHeight?: number;
 }
+export interface Code {
+  readonly id: number;
+  /** Bech32 account address */
+  readonly creator: string;
+  /** Hex-encoded sha256 hash of the code stored here */
+  readonly checksum: string;
+  readonly source?: string;
+  readonly builder?: string;
+}
+export interface CodeDetails {
+  /** The original wasm bytes */
+  readonly wasm: Uint8Array;
+}
+export interface Contract {
+  readonly codeId: number;
+  /** Bech32 account address */
+  readonly creator: string;
+  /** Argument passed on initialization of the contract */
+  readonly initMsg: object;
+}
 export declare class CosmWasmClient {
   protected readonly restClient: RestClient;
   constructor(url: string, broadcastMode?: BroadcastMode);
@@ -50,6 +70,10 @@ export declare class CosmWasmClient {
   getBlock(height?: number): Promise<BlockResponse>;
   searchTx(query: SearchTxQuery, filter?: SearchTxFilter): Promise<readonly TxsResponse[]>;
   postTx(tx: StdTx): Promise<PostTxResult>;
+  getCodes(): Promise<readonly Code[]>;
+  getCodeDetails(codeId: number): Promise<CodeDetails>;
+  getContracts(codeId: number): Promise<readonly Contract[]>;
+  getContract(address: string): Promise<Contract>;
   /**
    * Returns the data at the key if present (raw contract dependent storage data)
    * or null if no data at this key.
