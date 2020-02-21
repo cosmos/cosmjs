@@ -115,31 +115,24 @@ export class CosmWasmClient {
 
     if (maxHeight < minHeight) return []; // optional optimization
 
-    function withFiltersAndLimits(originalQuery: string): string {
-      const components = [
-        "limit=75", // TODO: we need proper pagination support
-        `tx.minheight=${minHeight}`,
-        `tx.maxheight=${maxHeight}`,
-      ];
-      return `${originalQuery}&${components.join("&")}`;
+    function withFilters(originalQuery: string): string {
+      return `${originalQuery}&tx.minheight=${minHeight}&tx.maxheight=${maxHeight}`;
     }
 
     let txs: readonly TxsResponse[];
     if (isSearchByIdQuery(query)) {
-      txs = (await this.restClient.txsQuery(`tx.hash=${query.id}`)).txs;
+      txs = await this.txsQuery(`tx.hash=${query.id}`);
     } else if (isSearchByHeightQuery(query)) {
       // optional optimization to avoid network request
       if (query.height < minHeight || query.height > maxHeight) {
         txs = [];
       } else {
-        txs = (await this.restClient.txsQuery(`tx.height=${query.height}`)).txs;
+        txs = await this.txsQuery(`tx.height=${query.height}`);
       }
     } else if (isSearchBySentFromOrToQuery(query)) {
       // We cannot get both in one request (see https://github.com/cosmos/gaia/issues/75)
-      const sentQuery = withFiltersAndLimits(`message.sender=${query.sentFromOrTo}`);
-      const receivedQuery = withFiltersAndLimits(`transfer.recipient=${query.sentFromOrTo}`);
-      const sent = (await this.restClient.txsQuery(sentQuery)).txs;
-      const received = (await this.restClient.txsQuery(receivedQuery)).txs;
+      const sent = await this.txsQuery(withFilters(`message.sender=${query.sentFromOrTo}`));
+      const received = await this.txsQuery(withFilters(`transfer.recipient=${query.sentFromOrTo}`));
 
       const sentHashes = sent.map(t => t.txhash);
       txs = [...sent, ...received.filter(t => !sentHashes.includes(t.txhash))];
@@ -206,5 +199,18 @@ export class CosmWasmClient {
         throw error;
       }
     }
+  }
+
+  private async txsQuery(query: string): Promise<readonly TxsResponse[]> {
+    // TODO: we need proper pagination support
+    const limit = 100;
+    const result = await this.restClient.txsQuery(`${query}&limit=${limit}`);
+    const pages = parseInt(result.page_total, 10);
+    if (pages > 1) {
+      throw new Error(
+        `Found more results on the backend than we can process currently. Results: ${result.total_count}, supported: ${limit}`,
+      );
+    }
+    return result.txs;
   }
 }

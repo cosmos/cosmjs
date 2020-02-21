@@ -64,4 +64,5 @@ export declare class CosmWasmClient {
    * Promise is rejected for invalid query format.
    */
   queryContractSmart(address: string, queryMsg: object): Promise<Uint8Array>;
+  private txsQuery;
 }
