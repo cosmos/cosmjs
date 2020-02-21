@@ -257,7 +257,9 @@ export class CosmWasmConnection implements BlockchainConnection {
   }
 
   public async postTx(tx: PostableBytes): Promise<PostTxResponse> {
-    const { transactionHash, rawLog } = await this.cosmWasmClient.postTx(tx);
+    const txAsJson = JSON.parse(Encoding.fromUtf8(tx));
+    if (!types.isStdTx(txAsJson)) throw new Error("Postable bytes must contain a JSON encoded StdTx");
+    const { transactionHash, rawLog } = await this.cosmWasmClient.postTx(txAsJson);
     const transactionId = transactionHash as TransactionId;
     const firstEvent: BlockInfo = { state: TransactionState.Pending };
     let blockInfoInterval: NodeJS.Timeout;

@@ -1,4 +1,4 @@
-import { CodeInfo, ContractInfo, CosmosSdkAccount, CosmosSdkTx, Model } from "./types";
+import { CodeInfo, ContractInfo, CosmosSdkAccount, CosmosSdkTx, Model, StdTx } from "./types";
 interface NodeInfo {
   readonly network: string;
 }
@@ -137,9 +137,9 @@ export declare class RestClient {
    * Depending on the RestClient's broadcast mode, this might or might
    * wait for checkTx or deliverTx to be executed before returning.
    *
-   * @param tx must be JSON encoded StdTx (no wrapper)
+   * @param tx a signed transaction as StdTx (i.e. not wrapped in type/value container)
    */
-  postTx(tx: Uint8Array): Promise<PostTxsResponse>;
+  postTx(tx: StdTx): Promise<PostTxsResponse>;
   listCodeInfo(): Promise<readonly CodeInfo[]>;
   getCode(id: number): Promise<Uint8Array>;
   listContractAddresses(): Promise<readonly string[]>;

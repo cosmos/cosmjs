@@ -6,13 +6,13 @@ import {
   ContractInfo,
   CosmosSdkAccount,
   CosmosSdkTx,
-  isStdTx,
   Model,
   parseWasmData,
+  StdTx,
   WasmData,
 } from "./types";
 
-const { fromBase64, fromUtf8, toHex, toUtf8 } = Encoding;
+const { fromBase64, toHex, toUtf8 } = Encoding;
 
 interface NodeInfo {
   readonly network: string;
@@ -306,16 +306,11 @@ export class RestClient {
    * Depending on the RestClient's broadcast mode, this might or might
    * wait for checkTx or deliverTx to be executed before returning.
    *
-   * @param tx must be JSON encoded StdTx (no wrapper)
+   * @param tx a signed transaction as StdTx (i.e. not wrapped in type/value container)
    */
-  public async postTx(tx: Uint8Array): Promise<PostTxsResponse> {
-    // TODO: check this is StdTx
-    const decoded = JSON.parse(fromUtf8(tx));
-    if (!isStdTx(decoded)) {
-      throw new Error("Must be json encoded StdTx");
-    }
+  public async postTx(tx: StdTx): Promise<PostTxsResponse> {
     const params = {
-      tx: decoded,
+      tx: tx,
       mode: this.mode,
     };
     const responseData = await this.post("/txs", params);

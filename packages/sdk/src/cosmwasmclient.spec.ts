@@ -4,7 +4,7 @@ import { assert, sleep } from "@iov/utils";
 import { ReadonlyDate } from "readonly-date";
 
 import { CosmWasmClient } from "./cosmwasmclient";
-import { makeSignBytes, marshalTx } from "./encoding";
+import { makeSignBytes } from "./encoding";
 import { findAttribute } from "./logs";
 import { Secp256k1Pen } from "./pen";
 import { RestClient } from "./restclient";
@@ -198,7 +198,7 @@ describe("CosmWasmClient", () => {
         memo: memo,
         signatures: [signature],
       };
-      const { logs, transactionHash } = await client.postTx(marshalTx(signedTx));
+      const { logs, transactionHash } = await client.postTx(signedTx);
       const amountAttr = findAttribute(logs, "transfer", "amount");
       expect(amountAttr.value).toEqual("1234567ucosm");
       expect(transactionHash).toMatch(/^[0-9A-F]{64}$/);

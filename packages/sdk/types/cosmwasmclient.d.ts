@@ -1,6 +1,6 @@
 import { Log } from "./logs";
 import { BlockResponse, BroadcastMode, RestClient, TxsResponse } from "./restclient";
-import { CosmosSdkAccount, CosmosSdkTx } from "./types";
+import { CosmosSdkAccount, CosmosSdkTx, StdTx } from "./types";
 export interface GetNonceResult {
   readonly accountNumber: number;
   readonly sequence: number;
@@ -45,7 +45,7 @@ export declare class CosmWasmClient {
    */
   getBlock(height?: number): Promise<BlockResponse>;
   searchTx(query: SearchTxQuery): Promise<readonly TxsResponse[]>;
-  postTx(tx: Uint8Array): Promise<PostTxResult>;
+  postTx(tx: StdTx): Promise<PostTxResult>;
   /**
    * Returns the data at the key if present (raw contract dependent storage data)
    * or null if no data at this key.

@@ -3,7 +3,7 @@ import { Encoding } from "@iov/encoding";
 
 import { Log, parseLogs } from "./logs";
 import { BlockResponse, BroadcastMode, RestClient, TxsResponse } from "./restclient";
-import { CosmosSdkAccount, CosmosSdkTx } from "./types";
+import { CosmosSdkAccount, CosmosSdkTx, StdTx } from "./types";
 
 export interface GetNonceResult {
   readonly accountNumber: number;
@@ -125,7 +125,7 @@ export class CosmWasmClient {
     }
   }
 
-  public async postTx(tx: Uint8Array): Promise<PostTxResult> {
+  public async postTx(tx: StdTx): Promise<PostTxResult> {
     const result = await this.restClient.postTx(tx);
     if (result.code) {
       throw new Error(`Error when posting tx. Code: ${result.code}; Raw log: ${result.raw_log}`);

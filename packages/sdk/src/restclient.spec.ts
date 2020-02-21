@@ -4,7 +4,7 @@ import { Encoding } from "@iov/encoding";
 import { assert } from "@iov/utils";
 import { ReadonlyDate } from "readonly-date";
 
-import { makeSignBytes, marshalTx } from "./encoding";
+import { makeSignBytes } from "./encoding";
 import { findAttribute, parseLogs } from "./logs";
 import { Pen, Secp256k1Pen } from "./pen";
 import { encodeBech32Pubkey } from "./pubkey";
@@ -87,7 +87,7 @@ async function uploadCustomContract(
   const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account_number, sequence);
   const signature = await pen.sign(signBytes);
   const signedTx = makeSignedTx(theMsg, fee, memo, signature);
-  return client.postTx(marshalTx(signedTx));
+  return client.postTx(signedTx);
 }
 
 async function uploadContract(client: RestClient, pen: Pen): Promise<PostTxsResponse> {
@@ -128,7 +128,7 @@ async function instantiateContract(
   const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account_number, sequence);
   const signature = await pen.sign(signBytes);
   const signedTx = makeSignedTx(theMsg, fee, memo, signature);
-  return client.postTx(marshalTx(signedTx));
+  return client.postTx(signedTx);
 }
 
 async function executeContract(
@@ -160,7 +160,7 @@ async function executeContract(
   const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account_number, sequence);
   const signature = await pen.sign(signBytes);
   const signedTx = makeSignedTx(theMsg, fee, memo, signature);
-  return client.postTx(marshalTx(signedTx));
+  return client.postTx(signedTx);
 }
 
 describe("RestClient", () => {
@@ -348,7 +348,7 @@ describe("RestClient", () => {
       const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account_number, sequence);
       const signature = await pen.sign(signBytes);
       const signedTx = makeSignedTx(theMsg, fee, memo, signature);
-      const result = await client.postTx(marshalTx(signedTx));
+      const result = await client.postTx(signedTx);
       // console.log("Raw log:", result.raw_log);
       expect(result.code).toBeFalsy();
     });
