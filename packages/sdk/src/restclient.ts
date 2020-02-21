@@ -235,13 +235,18 @@ export class RestClient {
     return data;
   }
 
-  public async nodeInfo(): Promise<NodeInfoResponse> {
-    const responseData = await this.get("/node_info");
-    if (!(responseData as any).node_info) {
+  // The /auth endpoints
+
+  public async authAccounts(address: string): Promise<AuthAccountsResponse> {
+    const path = `/auth/accounts/${address}`;
+    const responseData = await this.get(path);
+    if ((responseData as any).result.type !== "cosmos-sdk/Account") {
       throw new Error("Unexpected response data format");
     }
-    return responseData as NodeInfoResponse;
+    return responseData as AuthAccountsResponse;
   }
+
+  // The /blocks endpoints
 
   public async blocksLatest(): Promise<BlockResponse> {
     const responseData = await this.get("/blocks/latest");
@@ -259,6 +264,18 @@ export class RestClient {
     return responseData as BlockResponse;
   }
 
+  // The /node_info endpoint
+
+  public async nodeInfo(): Promise<NodeInfoResponse> {
+    const responseData = await this.get("/node_info");
+    if (!(responseData as any).node_info) {
+      throw new Error("Unexpected response data format");
+    }
+    return responseData as NodeInfoResponse;
+  }
+
+  // The /txs endpoints
+
   /** returns the amino-encoding of the transaction performed by the server */
   public async encodeTx(tx: CosmosSdkTx): Promise<Uint8Array> {
     const responseData = await this.post("/txs/encode", tx);
@@ -266,15 +283,6 @@ export class RestClient {
       throw new Error("Unexpected response data format");
     }
     return Encoding.fromBase64((responseData as EncodeTxResponse).tx);
-  }
-
-  public async authAccounts(address: string): Promise<AuthAccountsResponse> {
-    const path = `/auth/accounts/${address}`;
-    const responseData = await this.get(path);
-    if ((responseData as any).result.type !== "cosmos-sdk/Account") {
-      throw new Error("Unexpected response data format");
-    }
-    return responseData as AuthAccountsResponse;
   }
 
   public async txs(query: string): Promise<SearchTxsResponse> {
@@ -293,7 +301,13 @@ export class RestClient {
     return responseData as TxsResponse;
   }
 
-  // tx must be JSON encoded StdTx (no wrapper)
+  /**
+   * Broadcasts a signed transaction to into the transaction pool.
+   * Depending on the RestClient's broadcast mode, this might or might
+   * wait for checkTx or deliverTx to be executed before returning.
+   *
+   * @param tx must be JSON encoded StdTx (no wrapper)
+   */
   public async postTx(tx: Uint8Array): Promise<PostTxsResponse> {
     // TODO: check this is StdTx
     const decoded = JSON.parse(fromUtf8(tx));
@@ -310,6 +324,8 @@ export class RestClient {
     }
     return responseData as PostTxsResponse;
   }
+
+  // The /wasm endpoints
 
   // wasm rest queries are listed here: https://github.com/cosmwasm/wasmd/blob/master/x/wasm/client/rest/query.go#L19-L27
   public async listCodeInfo(): Promise<readonly CodeInfo[]> {

@@ -124,14 +124,21 @@ export declare class RestClient {
   constructor(url: string, mode?: BroadcastMode);
   get(path: string): Promise<RestClientResponse>;
   post(path: string, params: PostTxsParams): Promise<RestClientResponse>;
-  nodeInfo(): Promise<NodeInfoResponse>;
+  authAccounts(address: string): Promise<AuthAccountsResponse>;
   blocksLatest(): Promise<BlockResponse>;
   blocks(height: number): Promise<BlockResponse>;
+  nodeInfo(): Promise<NodeInfoResponse>;
   /** returns the amino-encoding of the transaction performed by the server */
   encodeTx(tx: CosmosSdkTx): Promise<Uint8Array>;
-  authAccounts(address: string): Promise<AuthAccountsResponse>;
   txs(query: string): Promise<SearchTxsResponse>;
   txsById(id: string): Promise<TxsResponse>;
+  /**
+   * Broadcasts a signed transaction to into the transaction pool.
+   * Depending on the RestClient's broadcast mode, this might or might
+   * wait for checkTx or deliverTx to be executed before returning.
+   *
+   * @param tx must be JSON encoded StdTx (no wrapper)
+   */
   postTx(tx: Uint8Array): Promise<PostTxsResponse>;
   listCodeInfo(): Promise<readonly CodeInfo[]>;
   getCode(id: number): Promise<Uint8Array>;

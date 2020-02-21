@@ -169,14 +169,60 @@ describe("RestClient", () => {
     expect(client).toBeTruthy();
   });
 
-  describe("nodeInfo", () => {
-    it("works", async () => {
+  // The /auth endpoints
+
+  describe("authAccounts", () => {
+    it("works for unused account without pubkey", async () => {
       pendingWithoutWasmd();
       const client = new RestClient(httpUrl);
-      const info = await client.nodeInfo();
-      expect(info.node_info.network).toEqual(defaultNetworkId);
+      const { result } = await client.authAccounts(unusedAccount.address);
+      expect(result).toEqual({
+        type: "cosmos-sdk/Account",
+        value: {
+          address: unusedAccount.address,
+          public_key: "", // not known to the chain
+          coins: [
+            {
+              amount: "1000000000",
+              denom: "ucosm",
+            },
+            {
+              amount: "1000000000",
+              denom: "ustake",
+            },
+          ],
+          account_number: 5,
+          sequence: 0,
+        },
+      });
+    });
+
+    // This fails in the first test run if you forget to run `./scripts/wasmd/init.sh`
+    it("has correct pubkey for faucet", async () => {
+      pendingWithoutWasmd();
+      const client = new RestClient(httpUrl);
+      const { result } = await client.authAccounts(faucet.address);
+      expect(result.value).toEqual(
+        jasmine.objectContaining({
+          public_key: encodeBech32Pubkey(faucet.pubkey, "cosmospub"),
+        }),
+      );
+    });
+
+    // This property is used by CosmWasmClient.getAccount
+    it("returns empty address for non-existent account", async () => {
+      pendingWithoutWasmd();
+      const client = new RestClient(httpUrl);
+      const nonExistentAccount = makeRandomAddress();
+      const { result } = await client.authAccounts(nonExistentAccount);
+      expect(result).toEqual({
+        type: "cosmos-sdk/Account",
+        value: jasmine.objectContaining({ address: "" }),
+      });
     });
   });
+
+  // The /blocks endpoints
 
   describe("blocksLatest", () => {
     it("works", async () => {
@@ -245,56 +291,18 @@ describe("RestClient", () => {
     });
   });
 
-  describe("authAccounts", () => {
-    it("works for unused account without pubkey", async () => {
-      pendingWithoutWasmd();
-      const client = new RestClient(httpUrl);
-      const { result } = await client.authAccounts(unusedAccount.address);
-      expect(result).toEqual({
-        type: "cosmos-sdk/Account",
-        value: {
-          address: unusedAccount.address,
-          public_key: "", // not known to the chain
-          coins: [
-            {
-              amount: "1000000000",
-              denom: "ucosm",
-            },
-            {
-              amount: "1000000000",
-              denom: "ustake",
-            },
-          ],
-          account_number: 5,
-          sequence: 0,
-        },
-      });
-    });
+  // The /node_info endpoint
 
-    // This fails in the first test run if you forget to run `./scripts/wasmd/init.sh`
-    it("has correct pubkey for faucet", async () => {
+  describe("nodeInfo", () => {
+    it("works", async () => {
       pendingWithoutWasmd();
       const client = new RestClient(httpUrl);
-      const { result } = await client.authAccounts(faucet.address);
-      expect(result.value).toEqual(
-        jasmine.objectContaining({
-          public_key: encodeBech32Pubkey(faucet.pubkey, "cosmospub"),
-        }),
-      );
-    });
-
-    // This property is used by CosmWasmClient.getAccount
-    it("returns empty address for non-existent account", async () => {
-      pendingWithoutWasmd();
-      const client = new RestClient(httpUrl);
-      const nonExistentAccount = makeRandomAddress();
-      const { result } = await client.authAccounts(nonExistentAccount);
-      expect(result).toEqual({
-        type: "cosmos-sdk/Account",
-        value: jasmine.objectContaining({ address: "" }),
-      });
+      const info = await client.nodeInfo();
+      expect(info.node_info.network).toEqual(defaultNetworkId);
     });
   });
+
+  // The /txs endpoints
 
   describe("encodeTx", () => {
     it("works for cosmoshub example", async () => {
@@ -304,7 +312,7 @@ describe("RestClient", () => {
     });
   });
 
-  describe("post", () => {
+  describe("postTx", () => {
     it("can send tokens", async () => {
       pendingWithoutWasmd();
       const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
@@ -409,6 +417,8 @@ describe("RestClient", () => {
       }
     });
   });
+
+  // The /wasm endpoints
 
   describe("query", () => {
     it("can list upload code", async () => {
