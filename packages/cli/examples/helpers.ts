@@ -47,7 +47,7 @@ const instantiateContract = async (initClient: RestClient, initPen: Secp256k1Pen
     memo: memo,
     signatures: [signature],
   };
-  const result = await initClient.postTx(marshalTx(signedTx));
+  const result = await initClient.postTx(signedTx);
   if (result.code) {
     throw new Error(`Failed tx: (${result.code}): ${result.raw_log}`)
   }
@@ -78,7 +78,7 @@ const executeContract = async (execClient: RestClient, execPen: Secp256k1Pen, co
     memo: memo,
     signatures: [signature],
   };
-  const result = await execClient.postTx(marshalTx(signedTx));
+  const result = await execClient.postTx(signedTx);
   if (result.code) {
     throw new Error(`Failed tx: (${result.code}): ${result.raw_log}`)
   }

@@ -3,7 +3,7 @@ import { Encoding } from "@iov/encoding";
 
 import { Log, parseLogs } from "./logs";
 import { BlockResponse, BroadcastMode, RestClient, TxsResponse } from "./restclient";
-import { CosmosSdkAccount, CosmosSdkTx } from "./types";
+import { CosmosSdkAccount, CosmosSdkTx, StdTx } from "./types";
 
 export interface GetNonceResult {
   readonly accountNumber: number;
@@ -41,6 +41,11 @@ function isSearchByHeightQuery(query: SearchTxQuery): query is SearchByHeightQue
 
 function isSearchBySentFromOrToQuery(query: SearchTxQuery): query is SearchBySentFromOrToQuery {
   return (query as SearchBySentFromOrToQuery).sentFromOrTo !== undefined;
+}
+
+export interface SearchTxFilter {
+  readonly minHeight?: number;
+  readonly maxHeight?: number;
 }
 
 export class CosmWasmClient {
@@ -104,28 +109,47 @@ export class CosmWasmClient {
     }
   }
 
-  public async searchTx(query: SearchTxQuery): Promise<readonly TxsResponse[]> {
-    // TODO: we need proper pagination support
-    function limited(originalQuery: string): string {
-      return `${originalQuery}&limit=75`;
+  public async searchTx(query: SearchTxQuery, filter: SearchTxFilter = {}): Promise<readonly TxsResponse[]> {
+    const minHeight = filter.minHeight || 0;
+    const maxHeight = filter.maxHeight || Number.MAX_SAFE_INTEGER;
+
+    if (maxHeight < minHeight) return []; // optional optimization
+
+    function withFilters(originalQuery: string): string {
+      return `${originalQuery}&tx.minheight=${minHeight}&tx.maxheight=${maxHeight}`;
     }
 
+    let txs: readonly TxsResponse[];
     if (isSearchByIdQuery(query)) {
-      return (await this.restClient.txs(`tx.hash=${query.id}`)).txs;
+      txs = await this.txsQuery(`tx.hash=${query.id}`);
     } else if (isSearchByHeightQuery(query)) {
-      return (await this.restClient.txs(`tx.height=${query.height}`)).txs;
+      // optional optimization to avoid network request
+      if (query.height < minHeight || query.height > maxHeight) {
+        txs = [];
+      } else {
+        txs = await this.txsQuery(`tx.height=${query.height}`);
+      }
     } else if (isSearchBySentFromOrToQuery(query)) {
       // We cannot get both in one request (see https://github.com/cosmos/gaia/issues/75)
-      const sent = (await this.restClient.txs(limited(`message.sender=${query.sentFromOrTo}`))).txs;
-      const received = (await this.restClient.txs(limited(`transfer.recipient=${query.sentFromOrTo}`))).txs;
+      const sent = await this.txsQuery(withFilters(`message.sender=${query.sentFromOrTo}`));
+      const received = await this.txsQuery(withFilters(`transfer.recipient=${query.sentFromOrTo}`));
+
       const sentHashes = sent.map(t => t.txhash);
-      return [...sent, ...received.filter(t => !sentHashes.includes(t.txhash))];
+      txs = [...sent, ...received.filter(t => !sentHashes.includes(t.txhash))];
     } else {
       throw new Error("Unknown query type");
     }
+
+    // backend sometimes messes up with min/max height filtering
+    const filtered = txs.filter(tx => {
+      const txHeight = parseInt(tx.height, 10);
+      return txHeight >= minHeight && txHeight <= maxHeight;
+    });
+
+    return filtered;
   }
 
-  public async postTx(tx: Uint8Array): Promise<PostTxResult> {
+  public async postTx(tx: StdTx): Promise<PostTxResult> {
     const result = await this.restClient.postTx(tx);
     if (result.code) {
       throw new Error(`Error when posting tx. Code: ${result.code}; Raw log: ${result.raw_log}`);
@@ -175,5 +199,18 @@ export class CosmWasmClient {
         throw error;
       }
     }
+  }
+
+  private async txsQuery(query: string): Promise<readonly TxsResponse[]> {
+    // TODO: we need proper pagination support
+    const limit = 100;
+    const result = await this.restClient.txsQuery(`${query}&limit=${limit}`);
+    const pages = parseInt(result.page_total, 10);
+    if (pages > 1) {
+      throw new Error(
+        `Found more results on the backend than we can process currently. Results: ${result.total_count}, supported: ${limit}`,
+      );
+    }
+    return result.txs;
   }
 }

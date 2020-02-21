@@ -1,6 +1,6 @@
 import { Log } from "./logs";
 import { BlockResponse, BroadcastMode, RestClient, TxsResponse } from "./restclient";
-import { CosmosSdkAccount, CosmosSdkTx } from "./types";
+import { CosmosSdkAccount, CosmosSdkTx, StdTx } from "./types";
 export interface GetNonceResult {
   readonly accountNumber: number;
   readonly sequence: number;
@@ -21,6 +21,10 @@ export interface SearchBySentFromOrToQuery {
   readonly sentFromOrTo: string;
 }
 export declare type SearchTxQuery = SearchByIdQuery | SearchByHeightQuery | SearchBySentFromOrToQuery;
+export interface SearchTxFilter {
+  readonly minHeight?: number;
+  readonly maxHeight?: number;
+}
 export declare class CosmWasmClient {
   protected readonly restClient: RestClient;
   constructor(url: string, broadcastMode?: BroadcastMode);
@@ -44,8 +48,8 @@ export declare class CosmWasmClient {
    * @param height The height of the block. If undefined, the latest height is used.
    */
   getBlock(height?: number): Promise<BlockResponse>;
-  searchTx(query: SearchTxQuery): Promise<readonly TxsResponse[]>;
-  postTx(tx: Uint8Array): Promise<PostTxResult>;
+  searchTx(query: SearchTxQuery, filter?: SearchTxFilter): Promise<readonly TxsResponse[]>;
+  postTx(tx: StdTx): Promise<PostTxResult>;
   /**
    * Returns the data at the key if present (raw contract dependent storage data)
    * or null if no data at this key.
@@ -60,4 +64,5 @@ export declare class CosmWasmClient {
    * Promise is rejected for invalid query format.
    */
   queryContractSmart(address: string, queryMsg: object): Promise<Uint8Array>;
+  private txsQuery;
 }

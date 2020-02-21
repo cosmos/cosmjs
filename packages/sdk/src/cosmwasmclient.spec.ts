@@ -4,7 +4,7 @@ import { assert, sleep } from "@iov/utils";
 import { ReadonlyDate } from "readonly-date";
 
 import { CosmWasmClient } from "./cosmwasmclient";
-import { makeSignBytes, marshalTx } from "./encoding";
+import { makeSignBytes } from "./encoding";
 import { findAttribute } from "./logs";
 import { Secp256k1Pen } from "./pen";
 import { RestClient } from "./restclient";
@@ -198,7 +198,7 @@ describe("CosmWasmClient", () => {
         memo: memo,
         signatures: [signature],
       };
-      const { logs, transactionHash } = await client.postTx(marshalTx(signedTx));
+      const { logs, transactionHash } = await client.postTx(signedTx);
       const amountAttr = findAttribute(logs, "transfer", "amount");
       expect(amountAttr.value).toEqual("1234567ucosm");
       expect(transactionHash).toMatch(/^[0-9A-F]{64}$/);
@@ -308,6 +308,87 @@ describe("CosmWasmClient", () => {
           tx: posted.tx,
         }),
       );
+    });
+
+    it("can search by ID and filter by minHeight", async () => {
+      pendingWithoutWasmd();
+      assert(posted);
+      const client = new CosmWasmClient(httpUrl);
+      const query = { id: posted.hash };
+
+      {
+        const result = await client.searchTx(query, { minHeight: 0 });
+        expect(result.length).toEqual(1);
+      }
+
+      {
+        const result = await client.searchTx(query, { minHeight: posted.height - 1 });
+        expect(result.length).toEqual(1);
+      }
+
+      {
+        const result = await client.searchTx(query, { minHeight: posted.height });
+        expect(result.length).toEqual(1);
+      }
+
+      {
+        const result = await client.searchTx(query, { minHeight: posted.height + 1 });
+        expect(result.length).toEqual(0);
+      }
+    });
+
+    it("can search by recipient and filter by minHeight", async () => {
+      pendingWithoutWasmd();
+      assert(posted);
+      const client = new CosmWasmClient(httpUrl);
+      const query = { sentFromOrTo: posted.recipient };
+
+      {
+        const result = await client.searchTx(query, { minHeight: 0 });
+        expect(result.length).toEqual(1);
+      }
+
+      {
+        const result = await client.searchTx(query, { minHeight: posted.height - 1 });
+        expect(result.length).toEqual(1);
+      }
+
+      {
+        const result = await client.searchTx(query, { minHeight: posted.height });
+        expect(result.length).toEqual(1);
+      }
+
+      {
+        const result = await client.searchTx(query, { minHeight: posted.height + 1 });
+        expect(result.length).toEqual(0);
+      }
+    });
+
+    it("can search by recipient and filter by maxHeight", async () => {
+      pendingWithoutWasmd();
+      assert(posted);
+      const client = new CosmWasmClient(httpUrl);
+      const query = { sentFromOrTo: posted.recipient };
+
+      {
+        const result = await client.searchTx(query, { maxHeight: 9999999999999 });
+        expect(result.length).toEqual(1);
+      }
+
+      {
+        const result = await client.searchTx(query, { maxHeight: posted.height + 1 });
+        expect(result.length).toEqual(1);
+      }
+
+      {
+        const result = await client.searchTx(query, { maxHeight: posted.height });
+        expect(result.length).toEqual(1);
+      }
+
+      {
+        const result = await client.searchTx(query, { maxHeight: posted.height - 1 });
+        expect(result.length).toEqual(0);
+      }
     });
   });
 

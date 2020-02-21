@@ -72,7 +72,7 @@ const signedTx: types.StdTx = {
     memo: memo,
     signatures: [signature],
   }
-const postResult = await client.postTx(marshalTx(signedTx));
+const postResult = await client.postTx(signedTx);
 ```
 
 ## Extended helpers

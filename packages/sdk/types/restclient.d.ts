@@ -1,4 +1,4 @@
-import { CodeInfo, ContractInfo, CosmosSdkAccount, CosmosSdkTx, Model } from "./types";
+import { CodeInfo, ContractInfo, CosmosSdkAccount, CosmosSdkTx, Model, StdTx } from "./types";
 interface NodeInfo {
   readonly network: string;
 }
@@ -124,15 +124,22 @@ export declare class RestClient {
   constructor(url: string, mode?: BroadcastMode);
   get(path: string): Promise<RestClientResponse>;
   post(path: string, params: PostTxsParams): Promise<RestClientResponse>;
-  nodeInfo(): Promise<NodeInfoResponse>;
+  authAccounts(address: string): Promise<AuthAccountsResponse>;
   blocksLatest(): Promise<BlockResponse>;
   blocks(height: number): Promise<BlockResponse>;
+  nodeInfo(): Promise<NodeInfoResponse>;
+  txsQuery(query: string): Promise<SearchTxsResponse>;
+  txsById(id: string): Promise<TxsResponse>;
   /** returns the amino-encoding of the transaction performed by the server */
   encodeTx(tx: CosmosSdkTx): Promise<Uint8Array>;
-  authAccounts(address: string): Promise<AuthAccountsResponse>;
-  txs(query: string): Promise<SearchTxsResponse>;
-  txsById(id: string): Promise<TxsResponse>;
-  postTx(tx: Uint8Array): Promise<PostTxsResponse>;
+  /**
+   * Broadcasts a signed transaction to into the transaction pool.
+   * Depending on the RestClient's broadcast mode, this might or might
+   * wait for checkTx or deliverTx to be executed before returning.
+   *
+   * @param tx a signed transaction as StdTx (i.e. not wrapped in type/value container)
+   */
+  postTx(tx: StdTx): Promise<PostTxsResponse>;
   listCodeInfo(): Promise<readonly CodeInfo[]>;
   getCode(id: number): Promise<Uint8Array>;
   listContractAddresses(): Promise<readonly string[]>;

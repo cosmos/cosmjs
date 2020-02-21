@@ -73,8 +73,8 @@ export declare class CosmWasmConnection implements BlockchainConnection {
   searchTx({
     height,
     id,
-    maxHeight: maxHeightOptional,
-    minHeight: minHeightOptional,
+    maxHeight,
+    minHeight,
     sentFromOrTo,
     signedBy,
     tags,

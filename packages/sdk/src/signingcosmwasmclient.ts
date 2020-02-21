@@ -3,7 +3,7 @@ import { Encoding } from "@iov/encoding";
 import pako from "pako";
 
 import { CosmWasmClient, GetNonceResult, PostTxResult } from "./cosmwasmclient";
-import { makeSignBytes, marshalTx } from "./encoding";
+import { makeSignBytes } from "./encoding";
 import { findAttribute, Log } from "./logs";
 import { BroadcastMode } from "./restclient";
 import {
@@ -120,7 +120,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       signatures: [signature],
     };
 
-    const result = await this.postTx(marshalTx(signedTx));
+    const result = await this.postTx(signedTx);
     const codeIdAttr = findAttribute(result.logs, "message", "code_id");
     return {
       originalSize: wasmCode.length,
@@ -162,7 +162,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       signatures: [signature],
     };
 
-    const result = await this.postTx(marshalTx(signedTx));
+    const result = await this.postTx(signedTx);
     const contractAddressAttr = findAttribute(result.logs, "message", "contract_address");
     return contractAddressAttr.value;
   }
@@ -195,7 +195,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       signatures: [signature],
     };
 
-    const result = await this.postTx(marshalTx(signedTx));
+    const result = await this.postTx(signedTx);
     return {
       logs: result.logs,
     };
@@ -228,6 +228,6 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       signatures: [signature],
     };
 
-    return this.postTx(marshalTx(signedTx));
+    return this.postTx(signedTx);
   }
 }
