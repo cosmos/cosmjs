@@ -13,6 +13,7 @@ export {
   SearchByIdQuery,
   SearchBySentFromOrToQuery,
   SearchTxQuery,
+  SearchTxFilter,
 } from "./cosmwasmclient";
 export { makeCosmoshubPath, Pen, PrehashType, Secp256k1Pen } from "./pen";
 export {

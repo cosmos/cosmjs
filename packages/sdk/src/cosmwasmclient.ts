@@ -43,6 +43,11 @@ function isSearchBySentFromOrToQuery(query: SearchTxQuery): query is SearchBySen
   return (query as SearchBySentFromOrToQuery).sentFromOrTo !== undefined;
 }
 
+export interface SearchTxFilter {
+  readonly minHeight?: number;
+  readonly maxHeight?: number;
+}
+
 export class CosmWasmClient {
   protected readonly restClient: RestClient;
 
@@ -104,26 +109,51 @@ export class CosmWasmClient {
     }
   }
 
-  public async searchTx(query: SearchTxQuery): Promise<readonly TxsResponse[]> {
-    // TODO: we need proper pagination support
-    function limited(originalQuery: string): string {
-      return `${originalQuery}&limit=75`;
+  public async searchTx(query: SearchTxQuery, filter: SearchTxFilter = {}): Promise<readonly TxsResponse[]> {
+    const minHeight = filter.minHeight || 0;
+    const maxHeight = filter.maxHeight || Number.MAX_SAFE_INTEGER;
+
+    if (maxHeight < minHeight) return []; // optional optimization
+
+    function withFiltersAndLimits(originalQuery: string): string {
+      const components = [
+        "limit=75", // TODO: we need proper pagination support
+        `tx.minheight=${minHeight}`,
+        `tx.maxheight=${maxHeight}`,
+      ];
+      return `${originalQuery}&${components.join("&")}`;
     }
 
+    let txs: readonly TxsResponse[];
     if (isSearchByIdQuery(query)) {
-      return (await this.restClient.txsQuery(`tx.hash=${query.id}`)).txs;
+      txs = (await this.restClient.txsQuery(`tx.hash=${query.id}`)).txs;
     } else if (isSearchByHeightQuery(query)) {
-      return (await this.restClient.txsQuery(`tx.height=${query.height}`)).txs;
+      // optional optimization to avoid network request
+      if (query.height < minHeight || query.height > maxHeight) {
+        txs = [];
+      } else {
+        txs = (await this.restClient.txsQuery(`tx.height=${query.height}`)).txs;
+      }
     } else if (isSearchBySentFromOrToQuery(query)) {
       // We cannot get both in one request (see https://github.com/cosmos/gaia/issues/75)
-      const sent = (await this.restClient.txsQuery(limited(`message.sender=${query.sentFromOrTo}`))).txs;
-      const received = (await this.restClient.txsQuery(limited(`transfer.recipient=${query.sentFromOrTo}`)))
-        .txs;
+      const sentQuery = withFiltersAndLimits(`message.sender=${query.sentFromOrTo}`);
+      const receivedQuery = withFiltersAndLimits(`transfer.recipient=${query.sentFromOrTo}`);
+      const sent = (await this.restClient.txsQuery(sentQuery)).txs;
+      const received = (await this.restClient.txsQuery(receivedQuery)).txs;
+
       const sentHashes = sent.map(t => t.txhash);
-      return [...sent, ...received.filter(t => !sentHashes.includes(t.txhash))];
+      txs = [...sent, ...received.filter(t => !sentHashes.includes(t.txhash))];
     } else {
       throw new Error("Unknown query type");
     }
+
+    // backend sometimes messes up with min/max height filtering
+    const filtered = txs.filter(tx => {
+      const txHeight = parseInt(tx.height, 10);
+      return txHeight >= minHeight && txHeight <= maxHeight;
+    });
+
+    return filtered;
   }
 
   public async postTx(tx: StdTx): Promise<PostTxResult> {

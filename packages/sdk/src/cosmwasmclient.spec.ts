@@ -309,6 +309,87 @@ describe("CosmWasmClient", () => {
         }),
       );
     });
+
+    it("can search by ID and filter by minHeight", async () => {
+      pendingWithoutWasmd();
+      assert(posted);
+      const client = new CosmWasmClient(httpUrl);
+      const query = { id: posted.hash };
+
+      {
+        const result = await client.searchTx(query, { minHeight: 0 });
+        expect(result.length).toEqual(1);
+      }
+
+      {
+        const result = await client.searchTx(query, { minHeight: posted.height - 1 });
+        expect(result.length).toEqual(1);
+      }
+
+      {
+        const result = await client.searchTx(query, { minHeight: posted.height });
+        expect(result.length).toEqual(1);
+      }
+
+      {
+        const result = await client.searchTx(query, { minHeight: posted.height + 1 });
+        expect(result.length).toEqual(0);
+      }
+    });
+
+    it("can search by recipient and filter by minHeight", async () => {
+      pendingWithoutWasmd();
+      assert(posted);
+      const client = new CosmWasmClient(httpUrl);
+      const query = { sentFromOrTo: posted.recipient };
+
+      {
+        const result = await client.searchTx(query, { minHeight: 0 });
+        expect(result.length).toEqual(1);
+      }
+
+      {
+        const result = await client.searchTx(query, { minHeight: posted.height - 1 });
+        expect(result.length).toEqual(1);
+      }
+
+      {
+        const result = await client.searchTx(query, { minHeight: posted.height });
+        expect(result.length).toEqual(1);
+      }
+
+      {
+        const result = await client.searchTx(query, { minHeight: posted.height + 1 });
+        expect(result.length).toEqual(0);
+      }
+    });
+
+    it("can search by recipient and filter by maxHeight", async () => {
+      pendingWithoutWasmd();
+      assert(posted);
+      const client = new CosmWasmClient(httpUrl);
+      const query = { sentFromOrTo: posted.recipient };
+
+      {
+        const result = await client.searchTx(query, { maxHeight: 9999999999999 });
+        expect(result.length).toEqual(1);
+      }
+
+      {
+        const result = await client.searchTx(query, { maxHeight: posted.height + 1 });
+        expect(result.length).toEqual(1);
+      }
+
+      {
+        const result = await client.searchTx(query, { maxHeight: posted.height });
+        expect(result.length).toEqual(1);
+      }
+
+      {
+        const result = await client.searchTx(query, { maxHeight: posted.height - 1 });
+        expect(result.length).toEqual(0);
+      }
+    });
   });
 
   describe("queryContractRaw", () => {

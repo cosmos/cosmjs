@@ -21,6 +21,10 @@ export interface SearchBySentFromOrToQuery {
   readonly sentFromOrTo: string;
 }
 export declare type SearchTxQuery = SearchByIdQuery | SearchByHeightQuery | SearchBySentFromOrToQuery;
+export interface SearchTxFilter {
+  readonly minHeight?: number;
+  readonly maxHeight?: number;
+}
 export declare class CosmWasmClient {
   protected readonly restClient: RestClient;
   constructor(url: string, broadcastMode?: BroadcastMode);
@@ -44,7 +48,7 @@ export declare class CosmWasmClient {
    * @param height The height of the block. If undefined, the latest height is used.
    */
   getBlock(height?: number): Promise<BlockResponse>;
-  searchTx(query: SearchTxQuery): Promise<readonly TxsResponse[]>;
+  searchTx(query: SearchTxQuery, filter?: SearchTxFilter): Promise<readonly TxsResponse[]>;
   postTx(tx: StdTx): Promise<PostTxResult>;
   /**
    * Returns the data at the key if present (raw contract dependent storage data)

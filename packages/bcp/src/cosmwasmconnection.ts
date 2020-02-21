@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { CosmWasmClient, findSequenceForSignedTx, TxsResponse, types } from "@cosmwasm/sdk";
+import { CosmWasmClient, findSequenceForSignedTx, SearchTxFilter, TxsResponse, types } from "@cosmwasm/sdk";
 import {
   Account,
   AccountQuery,
@@ -300,8 +300,8 @@ export class CosmWasmConnection implements BlockchainConnection {
   public async searchTx({
     height,
     id,
-    maxHeight: maxHeightOptional,
-    minHeight: minHeightOptional,
+    maxHeight,
+    minHeight,
     sentFromOrTo,
     signedBy,
     tags,
@@ -316,32 +316,20 @@ export class CosmWasmConnection implements BlockchainConnection {
       );
     }
 
-    const minHeight = minHeightOptional || 0;
-    const maxHeight = maxHeightOptional || Number.MAX_SAFE_INTEGER;
-
-    if (maxHeight < minHeight) return []; // optional optimization
+    const filter: SearchTxFilter = { minHeight: minHeight, maxHeight: maxHeight };
 
     let txs: readonly TxsResponse[];
     if (id) {
-      txs = await this.cosmWasmClient.searchTx({ id: id });
+      txs = await this.cosmWasmClient.searchTx({ id: id }, filter);
     } else if (height) {
-      if (height < minHeight) return []; // optional optimization
-      if (height > maxHeight) return []; // optional optimization
-      txs = await this.cosmWasmClient.searchTx({ height: height });
+      txs = await this.cosmWasmClient.searchTx({ height: height }, filter);
     } else if (sentFromOrTo) {
-      // TODO: pass minHeight/maxHeight to server once we have
-      // https://github.com/cosmwasm/wasmd/issues/73
-      txs = await this.cosmWasmClient.searchTx({ sentFromOrTo: sentFromOrTo });
+      txs = await this.cosmWasmClient.searchTx({ sentFromOrTo: sentFromOrTo }, filter);
     } else {
       throw new Error("Unsupported query");
     }
 
-    const filtered = txs.filter(tx => {
-      const txHeight = parseInt(tx.height, 10);
-      return txHeight >= minHeight && txHeight <= maxHeight;
-    });
-
-    return filtered.map(tx => this.parseAndPopulateTxResponseUnsigned(tx));
+    return txs.map(tx => this.parseAndPopulateTxResponseUnsigned(tx));
   }
 
   public listenTx(
