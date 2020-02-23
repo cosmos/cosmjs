@@ -1,4 +1,4 @@
-import { decodeSignature, makeSecp256k1SignatureFromFixedLength } from "@cosmwasm/sdk";
+import { decodeSignature } from "@cosmwasm/sdk";
 import {
   Account,
   Address,
@@ -17,7 +17,7 @@ import {
   TransactionState,
   UnsignedTransaction,
 } from "@iov/bcp";
-import { Random, Secp256k1, Sha256 } from "@iov/crypto";
+import { Random, Secp256k1, Secp256k1Signature, Sha256 } from "@iov/crypto";
 import { Bech32, Encoding } from "@iov/encoding";
 import { HdPaths, Secp256k1HdWallet, UserProfile } from "@iov/keycontrol";
 import { assert } from "@iov/utils";
@@ -475,7 +475,7 @@ describe("CosmWasmConnection", () => {
       const { pubkey, signature } = decodeSignature(encodeFullSignature(signatures[0]));
       const prehashed = new Sha256(signBytes).digest();
       const valid = await Secp256k1.verifySignature(
-        makeSecp256k1SignatureFromFixedLength(signature),
+        Secp256k1Signature.fromFixedLength(signature),
         prehashed,
         pubkey,
       );
