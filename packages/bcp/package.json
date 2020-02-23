@@ -39,9 +39,9 @@
   },
   "dependencies": {
     "@cosmwasm/sdk": "^0.0.8",
-    "@iov/bcp": "^2.0.2",
-    "@iov/crypto": "^2.0.2",
-    "@iov/encoding": "^2.0.2",
+    "@iov/bcp": "^2.1.0",
+    "@iov/crypto": "^2.1.0",
+    "@iov/encoding": "^2.1.0",
     "@iov/stream": "^2.0.2",
     "@iov/utils": "^2.0.2",
     "bn.js": "^5.1.1",
@@ -50,7 +50,7 @@
     "xstream": "^11.11.0"
   },
   "devDependencies": {
-    "@iov/keycontrol": "^2.0.2",
+    "@iov/keycontrol": "^2.1.0",
     "@types/bn.js": "^4.11.6"
   }
 }
