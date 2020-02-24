@@ -1,4 +1,4 @@
-import { CodeInfo, ContractInfo, CosmosSdkAccount, CosmosSdkTx, Model, StdTx } from "./types";
+import { CosmosSdkAccount, CosmosSdkTx, Model, StdTx } from "./types";
 interface NodeInfo {
   readonly network: string;
 }
@@ -91,6 +91,22 @@ export interface PostTxsResponse {
 }
 interface EncodeTxResponse {
   readonly tx: string;
+}
+export interface CodeInfo {
+  readonly id: number;
+  /** Bech32 account address */
+  readonly creator: string;
+  /** Hex-encoded sha256 hash of the code stored here */
+  readonly code_hash: string;
+  readonly source?: string;
+  readonly builder?: string;
+}
+export interface ContractInfo {
+  readonly code_id: number;
+  /** Bech32 account address */
+  readonly creator: string;
+  /** Argument passed on initialization of the contract */
+  readonly init_msg: object;
 }
 interface GetCodeResult {
   readonly code: string;

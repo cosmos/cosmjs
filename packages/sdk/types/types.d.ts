@@ -116,25 +116,6 @@ export interface CosmosSdkAccount {
   readonly account_number: number;
   readonly sequence: number;
 }
-export interface CodeInfo {
-  readonly id: number;
-  /** Bech32 account address */
-  readonly creator: string;
-  /** Hex-encoded sha256 hash of the code stored here */
-  readonly code_hash: string;
-  readonly source?: string;
-  readonly builder?: string;
-}
-export interface CodeDetails {
-  readonly code: string;
-}
-export interface ContractInfo {
-  readonly code_id: number;
-  /** Bech32 account address */
-  readonly creator: string;
-  /** Argument passed on initialization of the contract */
-  readonly init_msg: object;
-}
 export interface WasmData {
   readonly key: string;
   readonly val: string;
