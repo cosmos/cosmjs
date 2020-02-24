@@ -1,8 +1,8 @@
-import { Secp256k1, Sha256 } from "@iov/crypto";
+import { Secp256k1, Secp256k1Signature, Sha256 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
 
 import { Secp256k1Pen } from "./pen";
-import { decodeSignature, makeSecp256k1SignatureFromFixedLength } from "./signature";
+import { decodeSignature } from "./signature";
 
 const { fromHex } = Encoding;
 
@@ -37,7 +37,7 @@ describe("Sec256k1Pen", () => {
       const { pubkey, signature } = decodeSignature(await pen.sign(data));
 
       const valid = await Secp256k1.verifySignature(
-        makeSecp256k1SignatureFromFixedLength(signature),
+        Secp256k1Signature.fromFixedLength(signature),
         new Sha256(data).digest(),
         pubkey,
       );

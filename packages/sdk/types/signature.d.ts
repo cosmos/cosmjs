@@ -1,4 +1,3 @@
-import { Secp256k1Signature } from "@iov/crypto";
 import { StdSignature } from "./types";
 /**
  * Takes a binary pubkey and signature to create a signature object
@@ -13,4 +12,3 @@ export declare function decodeSignature(
   readonly pubkey: Uint8Array;
   readonly signature: Uint8Array;
 };
-export declare function makeSecp256k1SignatureFromFixedLength(signature: Uint8Array): Secp256k1Signature;

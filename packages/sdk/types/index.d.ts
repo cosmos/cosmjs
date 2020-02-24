@@ -23,11 +23,7 @@ export {
   encodeSecp256k1Pubkey,
 } from "./pubkey";
 export { findSequenceForSignedTx } from "./sequence";
-export {
-  encodeSecp256k1Signature,
-  decodeSignature,
-  makeSecp256k1SignatureFromFixedLength,
-} from "./signature";
+export { encodeSecp256k1Signature, decodeSignature } from "./signature";
 export {
   SigningCallback,
   SigningCosmWasmClient,
