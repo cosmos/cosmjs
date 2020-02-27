@@ -134,6 +134,7 @@ export interface CodeInfo {
 }
 
 export interface ContractInfo {
+  readonly address: string;
   readonly code_id: number;
   /** Bech32 account address */
   readonly creator: string;

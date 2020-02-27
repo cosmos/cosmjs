@@ -406,7 +406,7 @@ describe("CosmWasmClient", () => {
       const [first] = result;
       expect(first).toEqual({
         id: 1,
-        checksum: "b26861a6aa9858585ed905a590272735bd4fe8177c708940236224e8c9ff73ca",
+        checksum: "aff8c8873d79d2153a8b9066a0683fec3c903669267eb806ffa831dcd4b3daae",
         source: undefined,
         builder: undefined,
         creator: faucet.address,
@@ -420,7 +420,7 @@ describe("CosmWasmClient", () => {
       const client = new CosmWasmClient(httpUrl);
       const result = await client.getCodeDetails(1);
       const checksum = new Sha256(result.wasm).digest();
-      expect(checksum).toEqual(fromHex("b26861a6aa9858585ed905a590272735bd4fe8177c708940236224e8c9ff73ca"));
+      expect(checksum).toEqual(fromHex("aff8c8873d79d2153a8b9066a0683fec3c903669267eb806ffa831dcd4b3daae"));
     });
   });
 
@@ -432,65 +432,19 @@ describe("CosmWasmClient", () => {
       expect(result.length).toBeGreaterThanOrEqual(3);
       const [jade, hash, isa] = result;
       expect(hash).toEqual({
+        address: "cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
         codeId: 1,
         creator: faucet.address,
-        initMsg: {
-          decimals: 5,
-          name: "Hash token",
-          symbol: "HASH",
-          initial_balances: [
-            {
-              address: faucet.address,
-              amount: "11",
-            },
-            {
-              address: unused.address,
-              amount: "12812345",
-            },
-            {
-              address: guest.address,
-              amount: "22004000000",
-            },
-          ],
-        },
       });
       expect(isa).toEqual({
+        address: "cosmos1hqrdl6wstt8qzshwc6mrumpjk9338k0lr4dqxd",
         codeId: 1,
         creator: faucet.address,
-        initMsg: {
-          decimals: 0,
-          name: "Isa Token",
-          symbol: "ISA",
-          initial_balances: [
-            {
-              address: faucet.address,
-              amount: "999999999",
-            },
-            {
-              address: unused.address,
-              amount: "42",
-            },
-          ],
-        },
       });
       expect(jade).toEqual({
+        address: "cosmos18r5szma8hm93pvx6lwpjwyxruw27e0k5uw835c",
         codeId: 1,
         creator: faucet.address,
-        initMsg: {
-          decimals: 18,
-          name: "Jade Token",
-          symbol: "JADE",
-          initial_balances: [
-            {
-              address: faucet.address,
-              amount: "189189189000000000000000000", // 189189189 JADE
-            },
-            {
-              address: guest.address,
-              amount: "189500000000000000000", // 189.5 JADE
-            },
-          ],
-        },
       });
     });
   });
@@ -501,6 +455,7 @@ describe("CosmWasmClient", () => {
       const client = new CosmWasmClient(httpUrl);
       const hash = await client.getContract("cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5");
       expect(hash).toEqual({
+        address: "cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
         codeId: 1,
         creator: faucet.address,
         initMsg: {
