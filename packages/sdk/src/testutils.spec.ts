@@ -27,6 +27,8 @@ export function leb128Encode(uint: number): Uint8Array {
 
 export function getRandomizedHackatom(): Uint8Array {
   const data = Encoding.fromBase64(hackatom.data);
+  // TODO: this needs to be redone!
+
   // The return value of the export function cosmwasm_api_0_6 is unused and
   // can be randomized for testing.
   //
