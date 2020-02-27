@@ -195,13 +195,6 @@ function unwrapWasmResponse<T>(response: WasmResponse<T>): T {
   return response.result;
 }
 
-function parseWasmResponse(response: WasmResponse<string>): any {
-  if (isWasmError(response)) {
-    throw new Error(response.error);
-  }
-  return JSON.parse(response.result);
-}
-
 // We want to get message data from 500 errors
 // https://stackoverflow.com/questions/56577124/how-to-handle-500-error-message-with-axios
 // this should be chained to catch one error and throw a more informative one

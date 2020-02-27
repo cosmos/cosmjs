@@ -143,7 +143,7 @@ describe("SigningCosmWasmClient", () => {
       );
 
       // execute
-      const result = await client.execute(contractAddress, {release:{}}, undefined);
+      const result = await client.execute(contractAddress, { release: {} }, undefined);
       const [firstLog] = result.logs;
       expect(firstLog.log).toEqual(`released funds to ${beneficiaryAddress}`);
 
