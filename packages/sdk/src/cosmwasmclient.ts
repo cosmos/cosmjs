@@ -64,10 +64,13 @@ export interface CodeDetails {
 }
 
 export interface Contract {
-  // TODO: add contract address (https://github.com/cosmwasm/wasmd/issues/75)
+  readonly address: string;
   readonly codeId: number;
   /** Bech32 account address */
   readonly creator: string;
+}
+
+export interface ContractDetails extends Contract {
   /** Argument passed on initialization of the contract */
   readonly initMsg: object;
 }
@@ -210,16 +213,17 @@ export class CosmWasmClient {
 
   public async getContracts(codeId: number): Promise<readonly Contract[]> {
     const result = await this.restClient.listContractsByCodeId(codeId);
-    return result.map(r => ({
-      codeId: r.code_id,
-      creator: r.creator,
-      initMsg: r.init_msg,
+    return result.map(entry => ({
+      address: entry.address,
+      codeId: entry.code_id,
+      creator: entry.creator,
     }));
   }
 
-  public async getContract(address: string): Promise<Contract> {
+  public async getContract(address: string): Promise<ContractDetails> {
     const result = await this.restClient.getContractInfo(address);
     return {
+      address: result.address,
       codeId: result.code_id,
       creator: result.creator,
       initMsg: result.init_msg,
