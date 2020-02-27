@@ -108,6 +108,7 @@ async function instantiateContract(
     value: {
       sender: faucet.address,
       code_id: codeId.toString(),
+      label: "my escrow",
       init_msg: {
         verifier: faucet.address,
         beneficiary: beneficiaryAddress,

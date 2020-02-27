@@ -55,6 +55,8 @@ export interface MsgInstantiateContract extends MsgTemplate {
     readonly sender: string;
     /** ID of the Wasm code that was uploaded before */
     readonly code_id: string;
+    /** Human-readable label for this contract */
+    readonly label: string;
     /** Init message as JavaScript object */
     readonly init_msg: object;
     readonly init_funds: ReadonlyArray<Coin>;

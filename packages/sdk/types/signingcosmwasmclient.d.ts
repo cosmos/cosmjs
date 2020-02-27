@@ -44,6 +44,7 @@ export declare class SigningCosmWasmClient extends CosmWasmClient {
   instantiate(
     codeId: number,
     initMsg: object,
+    label: string,
     memo?: string,
     transferAmount?: readonly Coin[],
   ): Promise<string>;

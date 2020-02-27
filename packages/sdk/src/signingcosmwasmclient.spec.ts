@@ -76,7 +76,8 @@ describe("SigningCosmWasmClient", () => {
           verifier: faucet.address,
           beneficiary: beneficiaryAddress,
         },
-        "Let's see",
+        "My cool label",
+        "Let's see if the memo is used",
         transferAmount,
       );
 
@@ -91,14 +92,22 @@ describe("SigningCosmWasmClient", () => {
       const client = new SigningCosmWasmClient(httpUrl, faucet.address, signBytes => pen.sign(signBytes));
       const { codeId } = await client.upload(getRandomizedHackatom());
 
-      const contractAddress1 = await client.instantiate(codeId, {
-        verifier: faucet.address,
-        beneficiary: makeRandomAddress(),
-      });
-      const contractAddress2 = await client.instantiate(codeId, {
-        verifier: faucet.address,
-        beneficiary: makeRandomAddress(),
-      });
+      const contractAddress1 = await client.instantiate(
+        codeId,
+        {
+          verifier: faucet.address,
+          beneficiary: makeRandomAddress(),
+        },
+        "contract 1",
+      );
+      const contractAddress2 = await client.instantiate(
+        codeId,
+        {
+          verifier: faucet.address,
+          beneficiary: makeRandomAddress(),
+        },
+        "contract 2",
+      );
       expect(contractAddress1).not.toEqual(contractAddress2);
     });
   });
@@ -128,6 +137,7 @@ describe("SigningCosmWasmClient", () => {
           verifier: faucet.address,
           beneficiary: beneficiaryAddress,
         },
+        "amazing random contract",
         undefined,
         transferAmount,
       );
