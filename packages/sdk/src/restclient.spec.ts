@@ -144,7 +144,7 @@ async function executeContract(
     value: {
       sender: faucet.address,
       contract: contractAddress,
-      msg: {},
+      msg: { release: {} },
       sent_funds: [],
     },
   };
