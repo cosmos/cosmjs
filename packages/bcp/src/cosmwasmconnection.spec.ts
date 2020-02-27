@@ -425,7 +425,7 @@ describe("CosmWasmConnection", () => {
       assert(isConfirmedTransaction(getResponse), "Expected transaction to succeed");
       assert(getResponse.log, "Log must be available");
       const [firstLog] = JSON.parse(getResponse.log);
-      expect(firstLog.events.length).toEqual(1);
+      expect(firstLog.events.length).toEqual(2);
 
       const { transaction, signatures } = getResponse;
       assert(isSendTransaction(transaction), "Expected send transaction");
