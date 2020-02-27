@@ -430,7 +430,7 @@ describe("CosmWasmClient", () => {
       const client = new CosmWasmClient(httpUrl);
       const result = await client.getContracts(1);
       expect(result.length).toBeGreaterThanOrEqual(3);
-      const [jade, hash, isa] = result;
+      const [hash, isa, jade] = result;
       expect(hash).toEqual({
         address: "cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
         codeId: 1,
