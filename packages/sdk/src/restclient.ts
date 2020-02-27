@@ -198,18 +198,20 @@ function unwrapWasmResponse<T>(response: WasmResponse<T>): T {
 // We want to get message data from 500 errors
 // https://stackoverflow.com/questions/56577124/how-to-handle-500-error-message-with-axios
 // this should be chained to catch one error and throw a more informative one
-function parseAxios500error(err: AxiosError): never {
+function parseAxiosError(err: AxiosError): never {
   // use the error message sent from server, not default 500 msg
   if (err.response?.data) {
+    let errorText: string;
     const data = err.response.data;
     // expect { error: string }, but otherwise dump
-    if (data.error) {
-      throw new Error(data.error);
+    if (data.error && typeof data.error === "string") {
+      errorText = data.error;
     } else if (typeof data === "string") {
-      throw new Error(data);
+      errorText = data;
     } else {
-      throw new Error(JSON.stringify(data));
+      errorText = JSON.stringify(data);
     }
+    throw new Error(`${errorText} (HTTP ${err.response.status})`);
   } else {
     throw err;
   }
@@ -231,7 +233,7 @@ export class RestClient {
   }
 
   public async get(path: string): Promise<RestClientResponse> {
-    const { data } = await this.client.get(path).catch(parseAxios500error);
+    const { data } = await this.client.get(path).catch(parseAxiosError);
     if (data === null) {
       throw new Error("Received null response from server");
     }
@@ -239,7 +241,7 @@ export class RestClient {
   }
 
   public async post(path: string, params: PostTxsParams): Promise<RestClientResponse> {
-    const { data } = await this.client.post(path, params).catch(parseAxios500error);
+    const { data } = await this.client.post(path, params).catch(parseAxiosError);
     if (data === null) {
       throw new Error("Received null response from server");
     }
@@ -355,11 +357,26 @@ export class RestClient {
     return unwrapWasmResponse(responseData) || [];
   }
 
-  // throws error if no contract at this address
-  public async getContractInfo(address: string): Promise<ContractDetails> {
+  /**
+   * Returns null when contract was not found at this address.
+   */
+  public async getContractInfo(address: string): Promise<ContractDetails | null> {
     const path = `/wasm/contract/${address}`;
-    const responseData = (await this.get(path)) as WasmResponse<ContractDetails>;
-    return unwrapWasmResponse(responseData);
+
+    try {
+      const response = (await this.get(path)) as WasmResponse<ContractDetails>;
+      return unwrapWasmResponse(response);
+    } catch (error) {
+      if (error instanceof Error) {
+        if (error.message.startsWith("unknown address:")) {
+          return null;
+        } else {
+          throw error;
+        }
+      } else {
+        throw error;
+      }
+    }
   }
 
   // Returns all contract state.

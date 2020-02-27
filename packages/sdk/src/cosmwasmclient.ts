@@ -220,8 +220,12 @@ export class CosmWasmClient {
     }));
   }
 
+  /**
+   * Throws an error if no contract was found at the address
+   */
   public async getContract(address: string): Promise<ContractDetails> {
     const result = await this.restClient.getContractInfo(address);
+    if (!result) throw new Error(`No contract found at address "${address}"`);
     return {
       address: result.address,
       codeId: result.code_id,
@@ -238,7 +242,7 @@ export class CosmWasmClient {
    */
   public async queryContractRaw(address: string, key: Uint8Array): Promise<Uint8Array | null> {
     // just test contract existence
-    const _info = await this.restClient.getContractInfo(address);
+    const _info = await this.getContract(address);
 
     return this.restClient.queryContractRaw(address, key);
   }
@@ -254,7 +258,7 @@ export class CosmWasmClient {
       return await this.restClient.queryContractSmart(address, queryMsg);
     } catch (error) {
       if (error instanceof Error) {
-        if (error.message === "not found: contract") {
+        if (error.message.startsWith("not found: contract")) {
           throw new Error(`No contract found at address "${address}"`);
         } else {
           throw error;

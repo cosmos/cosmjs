@@ -76,6 +76,9 @@ export declare class CosmWasmClient {
   getCodes(): Promise<readonly Code[]>;
   getCodeDetails(codeId: number): Promise<CodeDetails>;
   getContracts(codeId: number): Promise<readonly Contract[]>;
+  /**
+   * Throws an error if no contract was found at the address
+   */
   getContract(address: string): Promise<ContractDetails>;
   /**
    * Returns the data at the key if present (raw contract dependent storage data)

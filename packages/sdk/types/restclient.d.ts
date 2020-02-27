@@ -165,7 +165,10 @@ export declare class RestClient {
   listCodeInfo(): Promise<readonly CodeInfo[]>;
   getCode(id: number): Promise<Uint8Array>;
   listContractsByCodeId(id: number): Promise<readonly ContractInfo[]>;
-  getContractInfo(address: string): Promise<ContractDetails>;
+  /**
+   * Returns null when contract was not found at this address.
+   */
+  getContractInfo(address: string): Promise<ContractDetails | null>;
   getAllContractState(address: string): Promise<readonly Model[]>;
   queryContractRaw(address: string, key: Uint8Array): Promise<Uint8Array | null>;
   queryContractSmart(address: string, query: object): Promise<Uint8Array>;
