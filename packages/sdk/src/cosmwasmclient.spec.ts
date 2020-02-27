@@ -20,7 +20,7 @@ import {
 } from "./testutils.spec";
 import { CosmosSdkTx, MsgSend, StdFee } from "./types";
 
-const { fromAscii, fromHex, fromUtf8, toAscii } = Encoding;
+const { fromAscii, fromHex, fromUtf8, toAscii, toBase64 } = Encoding;
 
 const httpUrl = "http://localhost:1317";
 
@@ -506,9 +506,9 @@ describe("CosmWasmClient", () => {
       const raw = await client.queryContractRaw(contract.address, configKey);
       assert(raw, "must get result");
       expect(JSON.parse(fromUtf8(raw))).toEqual({
-        verifier: Array.from(Bech32.decode(contract.initMsg.verifier).data),
-        beneficiary: Array.from(Bech32.decode(contract.initMsg.beneficiary).data),
-        funder: Array.from(Bech32.decode(faucet.address).data),
+        verifier: toBase64(Bech32.decode(contract.initMsg.verifier).data),
+        beneficiary: toBase64(Bech32.decode(contract.initMsg.beneficiary).data),
+        funder: toBase64(Bech32.decode(faucet.address).data),
       });
     });
 
