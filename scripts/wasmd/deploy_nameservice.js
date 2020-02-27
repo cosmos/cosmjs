@@ -10,12 +10,6 @@ const faucet = {
     "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone",
   address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
 };
-const unused = {
-  address: "cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u",
-};
-const guest = {
-  address: "cosmos17d0jcz59jf68g52vq38tuuncmwwjk42u6mcxej",
-};
 
 const initFree = {
   name: "Free",
@@ -24,12 +18,12 @@ const initLuxury = {
   name: "Luxury",
   purchase_price: {
     denom: "ucosm",
-    amount: "2000000"
+    amount: "2000000",
   },
   transfer_price: {
     denom: "ucosm",
-    amount: "1000000"
-  }
+    amount: "1000000",
+  },
 };
 
 async function main() {
@@ -41,7 +35,7 @@ async function main() {
   console.info(`Upload succeeded. Receipt: ${JSON.stringify(uploadReceipt)}`);
 
   for (const initMsg of [initFree, initLuxury]) {
-    const memo = `Create an ERC20 instance for ${initMsg.name}`;
+    const memo = `Create an nameservice instance for ${initMsg.name}`;
     const contractAddress = await client.instantiate(uploadReceipt.codeId, initMsg, memo);
     console.info(`Contract instantiated for ${initMsg.name} at ${contractAddress}`);
   }
@@ -49,7 +43,7 @@ async function main() {
 
 main().then(
   () => {
-    console.info("All done, let the coins flow.");
+    console.info("Done deploying nameservice instances.");
     process.exit(0);
   },
   error => {
