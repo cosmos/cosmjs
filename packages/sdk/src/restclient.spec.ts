@@ -663,7 +663,6 @@ describe("RestClient", () => {
       }
 
       // create new instance and compare before and after
-      const existingContracts = await client.listContractAddresses();
       const existingContractsByCode = await client.listContractsByCodeId(codeId);
       existingContractsByCode.forEach(ctc => expect(ctc.code_id).toEqual(codeId));
 
@@ -673,16 +672,6 @@ describe("RestClient", () => {
       const contractAddressAttr = findAttribute(logs, "message", "contract_address");
       const myAddress = contractAddressAttr.value;
 
-      // ensure we were added to the list
-      const newContracts = await client.listContractAddresses();
-      expect(newContracts.length).toEqual(existingContracts.length + 1);
-      // note: we are NOT guaranteed to be added to the end
-      const diff = newContracts.filter(x => !existingContracts.includes(x));
-      expect(diff.length).toEqual(1);
-      const lastContract = diff[0];
-      expect(lastContract).toEqual(myAddress);
-
-      // also by codeID list
       const newContractsByCode = await client.listContractsByCodeId(codeId);
       newContractsByCode.forEach(ctc => expect(ctc.code_id).toEqual(codeId));
       expect(newContractsByCode.length).toEqual(existingContractsByCode.length + 1);

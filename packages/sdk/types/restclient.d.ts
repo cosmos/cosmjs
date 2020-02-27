@@ -106,6 +106,8 @@ export interface ContractInfo {
   readonly code_id: number;
   /** Bech32 account address */
   readonly creator: string;
+}
+export interface ContractDetails extends ContractInfo {
   /** Argument passed on initialization of the contract */
   readonly init_msg: object;
 }
@@ -121,6 +123,9 @@ declare type RestClientResponse =
   | PostTxsResponse
   | EncodeTxResponse
   | WasmResponse<string>
+  | WasmResponse<CodeInfo[]>
+  | WasmResponse<ContractInfo[] | null>
+  | WasmResponse<ContractDetails>
   | WasmResponse<GetCodeResult>;
 /**
  * The mode used to send transaction
@@ -159,9 +164,8 @@ export declare class RestClient {
   postTx(tx: StdTx): Promise<PostTxsResponse>;
   listCodeInfo(): Promise<readonly CodeInfo[]>;
   getCode(id: number): Promise<Uint8Array>;
-  listContractAddresses(): Promise<readonly string[]>;
   listContractsByCodeId(id: number): Promise<readonly ContractInfo[]>;
-  getContractInfo(address: string): Promise<ContractInfo>;
+  getContractInfo(address: string): Promise<ContractDetails>;
   getAllContractState(address: string): Promise<readonly Model[]>;
   queryContractRaw(address: string, key: Uint8Array): Promise<Uint8Array | null>;
   queryContractSmart(address: string, query: object): Promise<Uint8Array>;
