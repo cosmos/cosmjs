@@ -581,9 +581,15 @@ describe("RestClient", () => {
       {
         const result = await executeContract(client, pen, contractAddress);
         expect(result.code).toBeFalsy();
-        // console.log("Raw log:", result.raw_log);
-        const [firstLog] = parseLogs(result.logs);
-        expect(firstLog.log).toEqual(`released funds to ${beneficiaryAddress}`);
+        // console.log("Raw log:", result.logs);
+        const logs = parseLogs(result.logs);
+        const wasmEvent = logs.find(() => true)?.events.find(e => e.type === "wasm");
+        assert(wasmEvent, "Event of type wasm expected");
+        expect(wasmEvent.attributes).toContain({ key: "action", value: "release" });
+        expect(wasmEvent.attributes).toContain({
+          key: "destination",
+          value: beneficiaryAddress,
+        });
 
         // Verify token transfer from contract to beneficiary
         const beneficiaryBalance = (await client.authAccounts(beneficiaryAddress)).result.value.coins;
