@@ -5,7 +5,7 @@
 # Coose from https://hub.docker.com/_/node/
 FROM node:12.14.1-alpine
 
-RUN yarn global add @cosmwasm/faucet@0.0.3
+RUN yarn global add @cosmwasm/faucet@0.0.8
 
 # Check it exists
 RUN /usr/local/bin/cosmwasm-faucet version

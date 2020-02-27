@@ -10,3 +10,4 @@ echo "Okay, thank you for your patience."
 
 SCRIPT_DIR="$(realpath "$(dirname "$0")")"
 "$SCRIPT_DIR/deploy_erc20.js"
+"$SCRIPT_DIR/deploy_nameservice.js"
