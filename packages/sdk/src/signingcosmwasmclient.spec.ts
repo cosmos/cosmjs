@@ -4,7 +4,7 @@ import { assert } from "@iov/utils";
 
 import { Secp256k1Pen } from "./pen";
 import { RestClient } from "./restclient";
-import { SigningCosmWasmClient } from "./signingcosmwasmclient";
+import { SigningCosmWasmClient, UploadMeta } from "./signingcosmwasmclient";
 import { getRandomizedHackatom, makeRandomAddress, pendingWithoutWasmd } from "./testutils.spec";
 import { Coin } from "./types";
 
@@ -49,6 +49,23 @@ describe("SigningCosmWasmClient", () => {
       expect(compressedChecksum).toMatch(/^[0-9a-f]{64}$/);
       expect(compressedSize).toBeLessThan(wasm.length * 0.5);
       expect(codeId).toBeGreaterThanOrEqual(1);
+    });
+
+    it("can set builder and source", async () => {
+      pendingWithoutWasmd();
+      const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
+      const client = new SigningCosmWasmClient(httpUrl, faucet.address, signBytes => pen.sign(signBytes));
+      const wasm = getRandomizedHackatom();
+
+      const meta: UploadMeta = {
+        source: "https://crates.io/api/v1/crates/cw-nameservice/0.1.0/download",
+        builder: "confio/cosmwasm-opt:0.6.2",
+      };
+      const { codeId } = await client.upload(wasm, meta);
+
+      const codeDetails = await client.getCodeDetails(codeId);
+      expect(codeDetails.source).toEqual(meta.source);
+      expect(codeDetails.builder).toEqual(meta.builder);
     });
   });
 

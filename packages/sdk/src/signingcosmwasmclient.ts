@@ -51,6 +51,13 @@ const defaultFees: FeeTable = {
   },
 };
 
+export interface UploadMeta {
+  /** The source URL */
+  readonly source?: string;
+  /** The builder tag */
+  readonly builder?: string;
+}
+
 export interface UploadReceipt {
   /** Size of the original wasm code in bytes */
   readonly originalSize: number;
@@ -96,7 +103,10 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   }
 
   /** Uploads code and returns a receipt, including the code ID */
-  public async upload(wasmCode: Uint8Array, memo = ""): Promise<UploadReceipt> {
+  public async upload(wasmCode: Uint8Array, meta: UploadMeta = {}, memo = ""): Promise<UploadReceipt> {
+    const source = meta.source || "";
+    const builder = meta.builder || "";
+
     const compressed = pako.gzip(wasmCode, { level: 9 });
     const storeCodeMsg: MsgStoreCode = {
       type: "wasm/store-code",
@@ -104,8 +114,8 @@ export class SigningCosmWasmClient extends CosmWasmClient {
         sender: this.senderAddress,
         // eslint-disable-next-line @typescript-eslint/camelcase
         wasm_byte_code: Encoding.toBase64(compressed),
-        source: "",
-        builder: "",
+        source: source,
+        builder: builder,
       },
     };
     const fee = this.fees.upload;

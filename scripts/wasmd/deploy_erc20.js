@@ -72,7 +72,7 @@ async function main() {
   const client = new SigningCosmWasmClient(httpUrl, faucet.address, signBytes => pen.sign(signBytes));
 
   const wasm = fs.readFileSync(__dirname + "/contracts/cw-erc20.wasm");
-  const uploadReceipt = await client.upload(wasm, "Upload ERC20 contract");
+  const uploadReceipt = await client.upload(wasm, {}, "Upload ERC20 contract");
   console.info(`Upload succeeded. Receipt: ${JSON.stringify(uploadReceipt)}`);
 
   for (const initMsg of [initMsgHash, initMsgIsa, initMsgJade]) {
