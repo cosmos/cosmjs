@@ -12,6 +12,7 @@ import { PostTxsResponse, RestClient, TxsResponse } from "./restclient";
 import { SigningCosmWasmClient } from "./signingcosmwasmclient";
 import cosmoshub from "./testdata/cosmoshub.json";
 import {
+  bech32AddressMatcher,
   getRandomizedHackatom,
   makeRandomAddress,
   pendingWithoutWasmd,
@@ -670,7 +671,12 @@ describe("RestClient", () => {
 
       // create new instance and compare before and after
       const existingContractsByCode = await client.listContractsByCodeId(codeId);
-      existingContractsByCode.forEach(ctc => expect(ctc.code_id).toEqual(codeId));
+      for (const contract of existingContractsByCode) {
+        expect(contract.address).toMatch(bech32AddressMatcher);
+        expect(contract.code_id).toEqual(codeId);
+        expect(contract.creator).toMatch(bech32AddressMatcher);
+        expect(contract.label).toMatch(/^.+$/);
+      }
 
       const result = await instantiateContract(client, pen, codeId, beneficiaryAddress, transferAmount);
       expect(result.code).toBeFalsy();
@@ -679,8 +685,15 @@ describe("RestClient", () => {
       const myAddress = contractAddressAttr.value;
 
       const newContractsByCode = await client.listContractsByCodeId(codeId);
-      newContractsByCode.forEach(ctc => expect(ctc.code_id).toEqual(codeId));
       expect(newContractsByCode.length).toEqual(existingContractsByCode.length + 1);
+      const newContract = newContractsByCode[newContractsByCode.length - 1];
+      expect(newContract).toEqual(
+        jasmine.objectContaining({
+          code_id: codeId,
+          creator: faucet.address,
+          label: "my escrow",
+        }),
+      );
 
       // check out info
       const myInfo = await client.getContractInfo(myAddress);

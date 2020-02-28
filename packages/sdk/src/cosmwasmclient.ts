@@ -68,6 +68,7 @@ export interface Contract {
   readonly codeId: number;
   /** Bech32 account address */
   readonly creator: string;
+  readonly label: string;
 }
 
 export interface ContractDetails extends Contract {
@@ -220,6 +221,7 @@ export class CosmWasmClient {
         address: entry.address,
         codeId: entry.code_id,
         creator: entry.creator,
+        label: entry.label,
       }),
     );
   }
@@ -234,6 +236,7 @@ export class CosmWasmClient {
       address: result.address,
       codeId: result.code_id,
       creator: result.creator,
+      label: result.label,
       initMsg: result.init_msg,
     };
   }

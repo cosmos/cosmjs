@@ -435,16 +435,19 @@ describe("CosmWasmClient", () => {
         address: "cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
         codeId: 1,
         creator: faucet.address,
+        label: "HASH",
       });
       expect(isa).toEqual({
         address: "cosmos1hqrdl6wstt8qzshwc6mrumpjk9338k0lr4dqxd",
         codeId: 1,
         creator: faucet.address,
+        label: "ISA",
       });
       expect(jade).toEqual({
         address: "cosmos18r5szma8hm93pvx6lwpjwyxruw27e0k5uw835c",
         codeId: 1,
         creator: faucet.address,
+        label: "JADE",
       });
     });
   });
@@ -458,6 +461,7 @@ describe("CosmWasmClient", () => {
         address: "cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
         codeId: 1,
         creator: faucet.address,
+        label: "HASH",
         initMsg: {
           decimals: 5,
           name: "Hash token",

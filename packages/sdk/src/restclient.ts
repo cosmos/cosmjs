@@ -139,6 +139,7 @@ export interface ContractInfo {
   readonly code_id: number;
   /** Bech32 account address */
   readonly creator: string;
+  readonly label: string;
 }
 
 export interface ContractDetails extends ContractInfo {
