@@ -195,13 +195,15 @@ export class CosmWasmClient {
 
   public async getCodes(): Promise<readonly Code[]> {
     const result = await this.restClient.listCodeInfo();
-    return result.map(r => ({
-      id: r.id,
-      creator: r.creator,
-      checksum: Encoding.toHex(Encoding.fromHex(r.code_hash)),
-      source: r.source || undefined,
-      builder: r.builder || undefined,
-    }));
+    return result.map(
+      (entry): Code => ({
+        id: entry.id,
+        creator: entry.creator,
+        checksum: Encoding.toHex(Encoding.fromHex(entry.code_hash)),
+        source: entry.source || undefined,
+        builder: entry.builder || undefined,
+      }),
+    );
   }
 
   public async getCodeDetails(codeId: number): Promise<CodeDetails> {
@@ -213,11 +215,13 @@ export class CosmWasmClient {
 
   public async getContracts(codeId: number): Promise<readonly Contract[]> {
     const result = await this.restClient.listContractsByCodeId(codeId);
-    return result.map(entry => ({
-      address: entry.address,
-      codeId: entry.code_id,
-      creator: entry.creator,
-    }));
+    return result.map(
+      (entry): Contract => ({
+        address: entry.address,
+        codeId: entry.code_id,
+        creator: entry.creator,
+      }),
+    );
   }
 
   /**
