@@ -134,6 +134,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   public async instantiate(
     codeId: number,
     initMsg: object,
+    label: string,
     memo = "",
     transferAmount?: readonly Coin[],
   ): Promise<string> {
@@ -143,6 +144,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
         sender: this.senderAddress,
         // eslint-disable-next-line @typescript-eslint/camelcase
         code_id: codeId.toString(),
+        label: label,
         // eslint-disable-next-line @typescript-eslint/camelcase
         init_msg: initMsg,
         // eslint-disable-next-line @typescript-eslint/camelcase

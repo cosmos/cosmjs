@@ -27,17 +27,18 @@ export function leb128Encode(uint: number): Uint8Array {
 
 export function getRandomizedHackatom(): Uint8Array {
   const data = Encoding.fromBase64(hackatom.data);
+
   // The return value of the export function cosmwasm_api_0_6 is unused and
   // can be randomized for testing.
   //
   // Find position of mutable bytes as follows:
   // $ wasm-objdump -d contract.wasm | grep -F "cosmwasm_api_0_6" -A 1
-  // 00e67c func[149] <cosmwasm_api_0_6>:
-  // 00e67d: 41 83 0c                   | i32.const 1539
+  // 0136d2 func[198] <cosmwasm_api_0_6>:
+  //  0136d3: 41 83 0c                   | i32.const 1539
   //
-  // In the last line, the addresses 00e67d-00e67f hold a one byte instruction
-  // (https://github.com/WebAssembly/design/blob/master/BinaryEncoding.md#constants-described-here)
-  // and a two byte value (leb128 encoded 1539)
+  // In the last line, the addresses [0136d3, 0136d3+1, 0136d3+2] hold a one byte instruction
+  // and a two byte value (leb128 encoded 1539). See also
+  // https://github.com/WebAssembly/design/blob/master/BinaryEncoding.md#constants-described-here.
 
   // Any unsigned integer from 128 to 16383 is encoded to two leb128 bytes
   const min = 128;
@@ -45,8 +46,8 @@ export function getRandomizedHackatom(): Uint8Array {
   const random = Math.floor(Math.random() * (max - min)) + min;
   const bytes = leb128Encode(random);
 
-  data[0x00e67d + 1] = bytes[0];
-  data[0x00e67d + 2] = bytes[1];
+  data[0x0136d3 + 1] = bytes[0];
+  data[0x0136d3 + 2] = bytes[1];
 
   return data;
 }
@@ -58,6 +59,9 @@ export function makeRandomAddress(): string {
 export const tendermintIdMatcher = /^[0-9A-F]{64}$/;
 export const tendermintOptionalIdMatcher = /^([0-9A-F]{64}|)$/;
 export const tendermintAddressMatcher = /^[0-9A-F]{40}$/;
+
+// https://github.com/bitcoin/bips/blob/master/bip-0173.mediawiki#bech32
+export const bech32AddressMatcher = /^[\x21-\x7e]{1,83}1[02-9ac-hj-np-z]{38}$/;
 
 export function wasmdEnabled(): boolean {
   return !!process.env.WASMD_ENABLED;

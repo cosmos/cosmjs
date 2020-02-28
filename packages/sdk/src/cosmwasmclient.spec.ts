@@ -4,7 +4,7 @@ import { Bech32, Encoding } from "@iov/encoding";
 import { assert, sleep } from "@iov/utils";
 import { ReadonlyDate } from "readonly-date";
 
-import { CosmWasmClient } from "./cosmwasmclient";
+import { Code, CosmWasmClient } from "./cosmwasmclient";
 import { makeSignBytes } from "./encoding";
 import { findAttribute } from "./logs";
 import { Secp256k1Pen } from "./pen";
@@ -20,7 +20,7 @@ import {
 } from "./testutils.spec";
 import { CosmosSdkTx, MsgSend, StdFee } from "./types";
 
-const { fromAscii, fromHex, fromUtf8, toAscii } = Encoding;
+const { fromAscii, fromHex, fromUtf8, toAscii, toBase64 } = Encoding;
 
 const httpUrl = "http://localhost:1317";
 
@@ -406,7 +406,7 @@ describe("CosmWasmClient", () => {
       const [first] = result;
       expect(first).toEqual({
         id: 1,
-        checksum: "b26861a6aa9858585ed905a590272735bd4fe8177c708940236224e8c9ff73ca",
+        checksum: "aff8c8873d79d2153a8b9066a0683fec3c903669267eb806ffa831dcd4b3daae",
         source: undefined,
         builder: undefined,
         creator: faucet.address,
@@ -419,8 +419,19 @@ describe("CosmWasmClient", () => {
       pendingWithoutWasmd();
       const client = new CosmWasmClient(httpUrl);
       const result = await client.getCodeDetails(1);
-      const checksum = new Sha256(result.wasm).digest();
-      expect(checksum).toEqual(fromHex("b26861a6aa9858585ed905a590272735bd4fe8177c708940236224e8c9ff73ca"));
+
+      const expectedInfo: Code = {
+        id: 1,
+        checksum: "aff8c8873d79d2153a8b9066a0683fec3c903669267eb806ffa831dcd4b3daae",
+        source: undefined,
+        builder: undefined,
+        creator: faucet.address,
+      };
+
+      // check info
+      expect(result).toEqual(jasmine.objectContaining(expectedInfo));
+      // check data
+      expect(new Sha256(result.data).digest()).toEqual(fromHex(expectedInfo.checksum));
     });
   });
 
@@ -430,67 +441,24 @@ describe("CosmWasmClient", () => {
       const client = new CosmWasmClient(httpUrl);
       const result = await client.getContracts(1);
       expect(result.length).toBeGreaterThanOrEqual(3);
-      const [jade, hash, isa] = result;
+      const [hash, isa, jade] = result;
       expect(hash).toEqual({
+        address: "cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
         codeId: 1,
         creator: faucet.address,
-        initMsg: {
-          decimals: 5,
-          name: "Hash token",
-          symbol: "HASH",
-          initial_balances: [
-            {
-              address: faucet.address,
-              amount: "11",
-            },
-            {
-              address: unused.address,
-              amount: "12812345",
-            },
-            {
-              address: guest.address,
-              amount: "22004000000",
-            },
-          ],
-        },
+        label: "HASH",
       });
       expect(isa).toEqual({
+        address: "cosmos1hqrdl6wstt8qzshwc6mrumpjk9338k0lr4dqxd",
         codeId: 1,
         creator: faucet.address,
-        initMsg: {
-          decimals: 0,
-          name: "Isa Token",
-          symbol: "ISA",
-          initial_balances: [
-            {
-              address: faucet.address,
-              amount: "999999999",
-            },
-            {
-              address: unused.address,
-              amount: "42",
-            },
-          ],
-        },
+        label: "ISA",
       });
       expect(jade).toEqual({
+        address: "cosmos18r5szma8hm93pvx6lwpjwyxruw27e0k5uw835c",
         codeId: 1,
         creator: faucet.address,
-        initMsg: {
-          decimals: 18,
-          name: "Jade Token",
-          symbol: "JADE",
-          initial_balances: [
-            {
-              address: faucet.address,
-              amount: "189189189000000000000000000", // 189189189 JADE
-            },
-            {
-              address: guest.address,
-              amount: "189500000000000000000", // 189.5 JADE
-            },
-          ],
-        },
+        label: "JADE",
       });
     });
   });
@@ -501,8 +469,10 @@ describe("CosmWasmClient", () => {
       const client = new CosmWasmClient(httpUrl);
       const hash = await client.getContract("cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5");
       expect(hash).toEqual({
+        address: "cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
         codeId: 1,
         creator: faucet.address,
+        label: "HASH",
         initMsg: {
           decimals: 5,
           name: "Hash token",
@@ -538,7 +508,7 @@ describe("CosmWasmClient", () => {
         const client = new SigningCosmWasmClient(httpUrl, faucet.address, signBytes => pen.sign(signBytes));
         const { codeId } = await client.upload(getRandomizedHackatom());
         const initMsg = { verifier: makeRandomAddress(), beneficiary: makeRandomAddress() };
-        const contractAddress = await client.instantiate(codeId, initMsg);
+        const contractAddress = await client.instantiate(codeId, initMsg, "random hackatom");
         contract = { initMsg: initMsg, address: contractAddress };
       }
     });
@@ -551,9 +521,9 @@ describe("CosmWasmClient", () => {
       const raw = await client.queryContractRaw(contract.address, configKey);
       assert(raw, "must get result");
       expect(JSON.parse(fromUtf8(raw))).toEqual({
-        verifier: Array.from(Bech32.decode(contract.initMsg.verifier).data),
-        beneficiary: Array.from(Bech32.decode(contract.initMsg.beneficiary).data),
-        funder: Array.from(Bech32.decode(faucet.address).data),
+        verifier: toBase64(Bech32.decode(contract.initMsg.verifier).data),
+        beneficiary: toBase64(Bech32.decode(contract.initMsg.beneficiary).data),
+        funder: toBase64(Bech32.decode(faucet.address).data),
       });
     });
 
@@ -589,7 +559,7 @@ describe("CosmWasmClient", () => {
         const client = new SigningCosmWasmClient(httpUrl, faucet.address, signBytes => pen.sign(signBytes));
         const { codeId } = await client.upload(getRandomizedHackatom());
         const initMsg = { verifier: makeRandomAddress(), beneficiary: makeRandomAddress() };
-        const contractAddress = await client.instantiate(codeId, initMsg);
+        const contractAddress = await client.instantiate(codeId, initMsg, "a different hackatom");
         contract = { initMsg: initMsg, address: contractAddress };
       }
     });

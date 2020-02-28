@@ -77,7 +77,7 @@ async function main() {
 
   for (const initMsg of [initMsgHash, initMsgIsa, initMsgJade]) {
     const memo = `Create an ERC20 instance for ${initMsg.symbol}`;
-    const contractAddress = await client.instantiate(uploadReceipt.codeId, initMsg, memo);
+    const contractAddress = await client.instantiate(uploadReceipt.codeId, initMsg, initMsg.symbol, memo);
     console.info(`Contract instantiated for ${initMsg.symbol} at ${contractAddress}`);
   }
 }

@@ -34,14 +34,18 @@ export interface Code {
   readonly source?: string;
   readonly builder?: string;
 }
-export interface CodeDetails {
+export interface CodeDetails extends Code {
   /** The original wasm bytes */
-  readonly wasm: Uint8Array;
+  readonly data: Uint8Array;
 }
 export interface Contract {
+  readonly address: string;
   readonly codeId: number;
   /** Bech32 account address */
   readonly creator: string;
+  readonly label: string;
+}
+export interface ContractDetails extends Contract {
   /** Argument passed on initialization of the contract */
   readonly initMsg: object;
 }
@@ -73,7 +77,10 @@ export declare class CosmWasmClient {
   getCodes(): Promise<readonly Code[]>;
   getCodeDetails(codeId: number): Promise<CodeDetails>;
   getContracts(codeId: number): Promise<readonly Contract[]>;
-  getContract(address: string): Promise<Contract>;
+  /**
+   * Throws an error if no contract was found at the address
+   */
+  getContract(address: string): Promise<ContractDetails>;
   /**
    * Returns the data at the key if present (raw contract dependent storage data)
    * or null if no data at this key.

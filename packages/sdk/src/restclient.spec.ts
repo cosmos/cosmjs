@@ -12,6 +12,7 @@ import { PostTxsResponse, RestClient, TxsResponse } from "./restclient";
 import { SigningCosmWasmClient } from "./signingcosmwasmclient";
 import cosmoshub from "./testdata/cosmoshub.json";
 import {
+  bech32AddressMatcher,
   getRandomizedHackatom,
   makeRandomAddress,
   pendingWithoutWasmd,
@@ -108,6 +109,7 @@ async function instantiateContract(
     value: {
       sender: faucet.address,
       code_id: codeId.toString(),
+      label: "my escrow",
       init_msg: {
         verifier: faucet.address,
         beneficiary: beneficiaryAddress,
@@ -143,7 +145,7 @@ async function executeContract(
     value: {
       sender: faucet.address,
       contract: contractAddress,
-      msg: {},
+      msg: { release: {} },
       sent_funds: [],
     },
   };
@@ -580,9 +582,15 @@ describe("RestClient", () => {
       {
         const result = await executeContract(client, pen, contractAddress);
         expect(result.code).toBeFalsy();
-        // console.log("Raw log:", result.raw_log);
-        const [firstLog] = parseLogs(result.logs);
-        expect(firstLog.log).toEqual(`released funds to ${beneficiaryAddress}`);
+        // console.log("Raw log:", result.logs);
+        const logs = parseLogs(result.logs);
+        const wasmEvent = logs.find(() => true)?.events.find(e => e.type === "wasm");
+        assert(wasmEvent, "Event of type wasm expected");
+        expect(wasmEvent.attributes).toContain({ key: "action", value: "release" });
+        expect(wasmEvent.attributes).toContain({
+          key: "destination",
+          value: beneficiaryAddress,
+        });
 
         // Verify token transfer from contract to beneficiary
         const beneficiaryBalance = (await client.authAccounts(beneficiaryAddress)).result.value.coins;
@@ -662,9 +670,13 @@ describe("RestClient", () => {
       }
 
       // create new instance and compare before and after
-      const existingContracts = await client.listContractAddresses();
       const existingContractsByCode = await client.listContractsByCodeId(codeId);
-      existingContractsByCode.forEach(ctc => expect(ctc.code_id).toEqual(codeId));
+      for (const contract of existingContractsByCode) {
+        expect(contract.address).toMatch(bech32AddressMatcher);
+        expect(contract.code_id).toEqual(codeId);
+        expect(contract.creator).toMatch(bech32AddressMatcher);
+        expect(contract.label).toMatch(/^.+$/);
+      }
 
       const result = await instantiateContract(client, pen, codeId, beneficiaryAddress, transferAmount);
       expect(result.code).toBeFalsy();
@@ -672,32 +684,27 @@ describe("RestClient", () => {
       const contractAddressAttr = findAttribute(logs, "message", "contract_address");
       const myAddress = contractAddressAttr.value;
 
-      // ensure we were added to the list
-      const newContracts = await client.listContractAddresses();
-      expect(newContracts.length).toEqual(existingContracts.length + 1);
-      // note: we are NOT guaranteed to be added to the end
-      const diff = newContracts.filter(x => !existingContracts.includes(x));
-      expect(diff.length).toEqual(1);
-      const lastContract = diff[0];
-      expect(lastContract).toEqual(myAddress);
-
-      // also by codeID list
       const newContractsByCode = await client.listContractsByCodeId(codeId);
-      newContractsByCode.forEach(ctc => expect(ctc.code_id).toEqual(codeId));
       expect(newContractsByCode.length).toEqual(existingContractsByCode.length + 1);
+      const newContract = newContractsByCode[newContractsByCode.length - 1];
+      expect(newContract).toEqual(
+        jasmine.objectContaining({
+          code_id: codeId,
+          creator: faucet.address,
+          label: "my escrow",
+        }),
+      );
 
       // check out info
       const myInfo = await client.getContractInfo(myAddress);
+      assert(myInfo);
       expect(myInfo.code_id).toEqual(codeId);
       expect(myInfo.creator).toEqual(faucet.address);
       expect((myInfo.init_msg as any).beneficiary).toEqual(beneficiaryAddress);
 
       // make sure random addresses don't give useful info
       const nonExistentAddress = makeRandomAddress();
-      await client
-        .getContractInfo(nonExistentAddress)
-        .then(() => fail("this shouldn't succeed"))
-        .catch(error => expect(error).toMatch(`No contract found at address "${nonExistentAddress}"`));
+      expect(await client.getContractInfo(nonExistentAddress)).toBeNull();
     });
 
     describe("contract state", () => {
