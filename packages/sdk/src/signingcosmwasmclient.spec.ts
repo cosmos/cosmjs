@@ -143,9 +143,14 @@ describe("SigningCosmWasmClient", () => {
       );
 
       // execute
-      const result = await client.execute(contractAddress, {release:{}}, undefined);
-      const [firstLog] = result.logs;
-      expect(firstLog.log).toEqual(`released funds to ${beneficiaryAddress}`);
+      const result = await client.execute(contractAddress, { release: {} }, undefined);
+      const wasmEvent = result.logs.find(() => true)?.events.find(e => e.type === "wasm");
+      assert(wasmEvent, "Event of type wasm expected");
+      expect(wasmEvent.attributes).toContain({ key: "action", value: "release" });
+      expect(wasmEvent.attributes).toContain({
+        key: "destination",
+        value: beneficiaryAddress,
+      });
 
       // Verify token transfer from contract to beneficiary
       const rest = new RestClient(httpUrl);

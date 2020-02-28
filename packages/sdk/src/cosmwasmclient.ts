@@ -58,9 +58,9 @@ export interface Code {
   readonly builder?: string;
 }
 
-export interface CodeDetails {
+export interface CodeDetails extends Code {
   /** The original wasm bytes */
-  readonly wasm: Uint8Array;
+  readonly data: Uint8Array;
 }
 
 export interface Contract {
@@ -68,6 +68,7 @@ export interface Contract {
   readonly codeId: number;
   /** Bech32 account address */
   readonly creator: string;
+  readonly label: string;
 }
 
 export interface ContractDetails extends Contract {
@@ -195,37 +196,53 @@ export class CosmWasmClient {
 
   public async getCodes(): Promise<readonly Code[]> {
     const result = await this.restClient.listCodeInfo();
-    return result.map(r => ({
-      id: r.id,
-      creator: r.creator,
-      checksum: Encoding.toHex(Encoding.fromHex(r.code_hash)),
-      source: r.source || undefined,
-      builder: r.builder || undefined,
-    }));
+    return result.map(
+      (entry): Code => ({
+        id: entry.id,
+        creator: entry.creator,
+        checksum: Encoding.toHex(Encoding.fromHex(entry.code_hash)),
+        source: entry.source || undefined,
+        builder: entry.builder || undefined,
+      }),
+    );
   }
 
   public async getCodeDetails(codeId: number): Promise<CodeDetails> {
-    const result = await this.restClient.getCode(codeId);
+    // TODO: implement as one request when https://github.com/cosmwasm/wasmd/issues/90 is done
+    const [codeInfos, getCodeResult] = await Promise.all([this.getCodes(), this.restClient.getCode(codeId)]);
+
+    const codeInfo = codeInfos.find(code => code.id === codeId);
+    if (!codeInfo) throw new Error("No code info found");
+
     return {
-      wasm: result,
+      ...codeInfo,
+      data: getCodeResult,
     };
   }
 
   public async getContracts(codeId: number): Promise<readonly Contract[]> {
     const result = await this.restClient.listContractsByCodeId(codeId);
-    return result.map(entry => ({
-      address: entry.address,
-      codeId: entry.code_id,
-      creator: entry.creator,
-    }));
+    return result.map(
+      (entry): Contract => ({
+        address: entry.address,
+        codeId: entry.code_id,
+        creator: entry.creator,
+        label: entry.label,
+      }),
+    );
   }
 
+  /**
+   * Throws an error if no contract was found at the address
+   */
   public async getContract(address: string): Promise<ContractDetails> {
     const result = await this.restClient.getContractInfo(address);
+    if (!result) throw new Error(`No contract found at address "${address}"`);
     return {
       address: result.address,
       codeId: result.code_id,
       creator: result.creator,
+      label: result.label,
       initMsg: result.init_msg,
     };
   }
@@ -238,7 +255,7 @@ export class CosmWasmClient {
    */
   public async queryContractRaw(address: string, key: Uint8Array): Promise<Uint8Array | null> {
     // just test contract existence
-    const _info = await this.restClient.getContractInfo(address);
+    const _info = await this.getContract(address);
 
     return this.restClient.queryContractRaw(address, key);
   }
@@ -254,7 +271,7 @@ export class CosmWasmClient {
       return await this.restClient.queryContractSmart(address, queryMsg);
     } catch (error) {
       if (error instanceof Error) {
-        if (error.message === "not found: contract") {
+        if (error.message.startsWith("not found: contract")) {
           throw new Error(`No contract found at address "${address}"`);
         } else {
           throw error;
