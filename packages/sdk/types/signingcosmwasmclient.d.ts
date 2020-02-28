@@ -11,6 +11,12 @@ export interface FeeTable {
   readonly exec: StdFee;
   readonly send: StdFee;
 }
+export interface UploadMeta {
+  /** The source URL */
+  readonly source?: string;
+  /** The builder tag */
+  readonly builder?: string;
+}
 export interface UploadReceipt {
   /** Size of the original wasm code in bytes */
   readonly originalSize: number;
@@ -40,7 +46,7 @@ export declare class SigningCosmWasmClient extends CosmWasmClient {
   getNonce(address?: string): Promise<GetNonceResult>;
   getAccount(address?: string): Promise<CosmosSdkAccount | undefined>;
   /** Uploads code and returns a receipt, including the code ID */
-  upload(wasmCode: Uint8Array, memo?: string): Promise<UploadReceipt>;
+  upload(wasmCode: Uint8Array, meta?: UploadMeta, memo?: string): Promise<UploadReceipt>;
   instantiate(
     codeId: number,
     initMsg: object,

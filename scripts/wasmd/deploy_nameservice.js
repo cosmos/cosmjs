@@ -11,18 +11,27 @@ const faucet = {
   address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
 };
 
-const initFree = {
-  name: "Free",
+const codeMeta = {
+  source: "https://crates.io/api/v1/crates/cw-nameservice/0.2.0/download",
+  builder: "confio/cosmwasm-opt:0.7.0",
 };
-const initLuxury = {
-  name: "Luxury",
-  purchase_price: {
-    denom: "ucosm",
-    amount: "2000000",
-  },
-  transfer_price: {
-    denom: "ucosm",
-    amount: "1000000",
+
+const free = {
+  label: "Free",
+  initMsg: {},
+};
+
+const luxury = {
+  label: "Luxury",
+  initMsg: {
+    purchase_price: {
+      denom: "ucosm",
+      amount: "2000000",
+    },
+    transfer_price: {
+      denom: "ucosm",
+      amount: "1000000",
+    },
   },
 };
 
@@ -31,13 +40,13 @@ async function main() {
   const client = new SigningCosmWasmClient(httpUrl, faucet.address, signBytes => pen.sign(signBytes));
 
   const wasm = fs.readFileSync(__dirname + "/contracts/cw-nameservice.wasm");
-  const uploadReceipt = await client.upload(wasm, "Upload Name Service contract");
+  const uploadReceipt = await client.upload(wasm, codeMeta, "Upload Name Service code");
   console.info(`Upload succeeded. Receipt: ${JSON.stringify(uploadReceipt)}`);
 
-  for (const initMsg of [initFree, initLuxury]) {
-    const memo = `Create an nameservice instance for ${initMsg.name}`;
-    const contractAddress = await client.instantiate(uploadReceipt.codeId, initMsg, initMsg.name, memo);
-    console.info(`Contract instantiated for ${initMsg.name} at ${contractAddress}`);
+  for (const { label, initMsg } of [free, luxury]) {
+    const memo = `Create an nameservice instance "${label}"`;
+    const contractAddress = await client.instantiate(uploadReceipt.codeId, initMsg, label, memo);
+    console.info(`Contract "${label}" instantiated at ${contractAddress}`);
   }
 }
 

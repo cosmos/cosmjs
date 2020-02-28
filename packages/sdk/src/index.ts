@@ -32,5 +32,6 @@ export {
   SigningCallback,
   SigningCosmWasmClient,
   ExecuteResult,
+  UploadMeta,
   UploadReceipt,
 } from "./signingcosmwasmclient";
