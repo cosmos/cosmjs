@@ -4,7 +4,7 @@ import { Bech32, Encoding } from "@iov/encoding";
 import { assert, sleep } from "@iov/utils";
 import { ReadonlyDate } from "readonly-date";
 
-import { CosmWasmClient } from "./cosmwasmclient";
+import { Code, CosmWasmClient } from "./cosmwasmclient";
 import { makeSignBytes } from "./encoding";
 import { findAttribute } from "./logs";
 import { Secp256k1Pen } from "./pen";
@@ -419,8 +419,19 @@ describe("CosmWasmClient", () => {
       pendingWithoutWasmd();
       const client = new CosmWasmClient(httpUrl);
       const result = await client.getCodeDetails(1);
-      const checksum = new Sha256(result.wasm).digest();
-      expect(checksum).toEqual(fromHex("aff8c8873d79d2153a8b9066a0683fec3c903669267eb806ffa831dcd4b3daae"));
+
+      const expectedInfo: Code = {
+        id: 1,
+        checksum: "aff8c8873d79d2153a8b9066a0683fec3c903669267eb806ffa831dcd4b3daae",
+        source: undefined,
+        builder: undefined,
+        creator: faucet.address,
+      };
+
+      // check info
+      expect(result).toEqual(jasmine.objectContaining(expectedInfo));
+      // check data
+      expect(new Sha256(result.data).digest()).toEqual(fromHex(expectedInfo.checksum));
     });
   });
 

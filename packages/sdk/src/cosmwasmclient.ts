@@ -58,9 +58,9 @@ export interface Code {
   readonly builder?: string;
 }
 
-export interface CodeDetails {
+export interface CodeDetails extends Code {
   /** The original wasm bytes */
-  readonly wasm: Uint8Array;
+  readonly data: Uint8Array;
 }
 
 export interface Contract {
@@ -208,9 +208,15 @@ export class CosmWasmClient {
   }
 
   public async getCodeDetails(codeId: number): Promise<CodeDetails> {
-    const result = await this.restClient.getCode(codeId);
+    // TODO: implement as one request when https://github.com/cosmwasm/wasmd/issues/90 is done
+    const [codeInfos, getCodeResult] = await Promise.all([this.getCodes(), this.restClient.getCode(codeId)]);
+
+    const codeInfo = codeInfos.find(code => code.id === codeId);
+    if (!codeInfo) throw new Error("No code info found");
+
     return {
-      wasm: result,
+      ...codeInfo,
+      data: getCodeResult,
     };
   }
 

@@ -34,9 +34,9 @@ export interface Code {
   readonly source?: string;
   readonly builder?: string;
 }
-export interface CodeDetails {
+export interface CodeDetails extends Code {
   /** The original wasm bytes */
-  readonly wasm: Uint8Array;
+  readonly data: Uint8Array;
 }
 export interface Contract {
   readonly address: string;
