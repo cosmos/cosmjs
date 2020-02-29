@@ -126,7 +126,7 @@ declare type RestClientResponse =
   | WasmResponse<string>
   | WasmResponse<CodeInfo[]>
   | WasmResponse<ContractInfo[] | null>
-  | WasmResponse<ContractDetails>
+  | WasmResponse<ContractDetails | null>
   | WasmResponse<GetCodeResult>;
 /**
  * The mode used to send transaction

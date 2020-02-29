@@ -168,7 +168,7 @@ type RestClientResponse =
   | WasmResponse<string>
   | WasmResponse<CodeInfo[]>
   | WasmResponse<ContractInfo[] | null>
-  | WasmResponse<ContractDetails>
+  | WasmResponse<ContractDetails | null>
   | WasmResponse<GetCodeResult>;
 
 /**
@@ -363,21 +363,8 @@ export class RestClient {
    */
   public async getContractInfo(address: string): Promise<ContractDetails | null> {
     const path = `/wasm/contract/${address}`;
-
-    try {
-      const response = (await this.get(path)) as WasmResponse<ContractDetails>;
-      return unwrapWasmResponse(response);
-    } catch (error) {
-      if (error instanceof Error) {
-        if (error.message.startsWith("unknown address:")) {
-          return null;
-        } else {
-          throw error;
-        }
-      } else {
-        throw error;
-      }
-    }
+    const response = (await this.get(path)) as WasmResponse<ContractDetails | null>;
+    return unwrapWasmResponse(response);
   }
 
   // Returns all contract state.
