@@ -23,6 +23,8 @@ import {
 } from "./testutils.spec";
 import {
   Coin,
+  isMsgInstantiateContract,
+  isMsgStoreCode,
   Msg,
   MsgExecuteContract,
   MsgInstantiateContract,
@@ -49,6 +51,12 @@ const faucet = {
 const emptyAddress = "cosmos1ltkhnmdcqemmd2tkhnx7qx66tq7e0wykw2j85k";
 const unusedAccount = {
   address: "cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u",
+};
+
+const deployedErc20 = {
+  codeId: 1,
+  source: "",
+  builder: "",
 };
 
 function makeSignedTx(firstMsg: Msg, fee: StdFee, memo: string, firstSignature: StdSignature): StdTx {
@@ -477,6 +485,121 @@ describe("RestClient", () => {
       {
         const { count } = await client.txsQuery(`${recipientQuery}&tx.maxheight=${posted.height - 1}`);
         expect(count).toEqual("0");
+      }
+    });
+
+    it("can query by tags (module + code_id)", async () => {
+      pendingWithoutWasmd();
+      assert(posted);
+      const client = new RestClient(httpUrl);
+      const result = await client.txsQuery(`message.module=wasm&message.code_id=${deployedErc20.codeId}`);
+      expect(parseInt(result.count, 10)).toBeGreaterThanOrEqual(4);
+
+      // Check first 4 results
+      const [store, hash, isa, jade] = result.txs
+        .map(txResponse => txResponse.tx.value.msg)
+        .map(msgs => {
+          assert(msgs.length === 1, "Single message transactions expected");
+          return msgs[0];
+        });
+      assert(isMsgStoreCode(store));
+      assert(isMsgInstantiateContract(hash));
+      assert(isMsgInstantiateContract(isa));
+      assert(isMsgInstantiateContract(jade));
+
+      expect(store.value).toEqual(
+        jasmine.objectContaining({
+          sender: faucet.address,
+          source: deployedErc20.source,
+          builder: deployedErc20.builder,
+        }),
+      );
+      expect(hash.value).toEqual({
+        code_id: deployedErc20.codeId.toString(),
+        init_funds: [],
+        init_msg: jasmine.objectContaining({
+          symbol: "HASH",
+        }),
+        label: "HASH",
+        sender: faucet.address,
+      });
+      expect(isa.value).toEqual({
+        code_id: deployedErc20.codeId.toString(),
+        init_funds: [],
+        init_msg: jasmine.objectContaining({ symbol: "ISA" }),
+        label: "ISA",
+        sender: faucet.address,
+      });
+      expect(jade.value).toEqual({
+        code_id: deployedErc20.codeId.toString(),
+        init_funds: [],
+        init_msg: jasmine.objectContaining({ symbol: "JADE" }),
+        label: "JADE",
+        sender: faucet.address,
+      });
+    });
+
+    // Like previous test but filtered by message.action=store-code and message.action=instantiate
+    it("can query by tags (module + code_id + action)", async () => {
+      pendingWithoutWasmd();
+      assert(posted);
+      const client = new RestClient(httpUrl);
+
+      {
+        const uploads = await client.txsQuery(
+          `message.module=wasm&message.code_id=${deployedErc20.codeId}&message.action=store-code`,
+        );
+        expect(parseInt(uploads.count, 10)).toEqual(1);
+        const msgs = uploads.txs[0].tx.value.msg;
+        assert(msgs.length === 1, "Single message transactions expected");
+        const store = msgs[0];
+        assert(isMsgStoreCode(store));
+        expect(store.value).toEqual(
+          jasmine.objectContaining({
+            sender: faucet.address,
+            source: deployedErc20.source,
+            builder: deployedErc20.builder,
+          }),
+        );
+      }
+
+      {
+        const instantiations = await client.txsQuery(
+          `message.module=wasm&message.code_id=${deployedErc20.codeId}&message.action=instantiate`,
+        );
+        expect(parseInt(instantiations.count, 10)).toBeGreaterThanOrEqual(3);
+        const [hash, isa, jade] = instantiations.txs
+          .map(txResponse => txResponse.tx.value.msg)
+          .map(msgs => {
+            assert(msgs.length === 1, "Single message transactions expected");
+            return msgs[0];
+          });
+        assert(isMsgInstantiateContract(hash));
+        assert(isMsgInstantiateContract(isa));
+        assert(isMsgInstantiateContract(jade));
+        expect(hash.value).toEqual({
+          code_id: deployedErc20.codeId.toString(),
+          init_funds: [],
+          init_msg: jasmine.objectContaining({
+            symbol: "HASH",
+          }),
+          label: "HASH",
+          sender: faucet.address,
+        });
+        expect(isa.value).toEqual({
+          code_id: deployedErc20.codeId.toString(),
+          init_funds: [],
+          init_msg: jasmine.objectContaining({ symbol: "ISA" }),
+          label: "ISA",
+          sender: faucet.address,
+        });
+        expect(jade.value).toEqual({
+          code_id: deployedErc20.codeId.toString(),
+          init_funds: [],
+          init_msg: jasmine.objectContaining({ symbol: "JADE" }),
+          label: "JADE",
+          sender: faucet.address,
+        });
       }
     });
   });
