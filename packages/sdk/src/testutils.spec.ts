@@ -63,6 +63,14 @@ export const tendermintAddressMatcher = /^[0-9A-F]{40}$/;
 // https://github.com/bitcoin/bips/blob/master/bip-0173.mediawiki#bech32
 export const bech32AddressMatcher = /^[\x21-\x7e]{1,83}1[02-9ac-hj-np-z]{38}$/;
 
+/** Deployed as part of scripts/wasmd/init.sh */
+export const deployedErc20 = {
+  codeId: 1,
+  source: "https://crates.io/api/v1/crates/cw-erc20/0.2.0/download",
+  builder: "confio/cosmwasm-opt:0.7.0",
+  checksum: "aff8c8873d79d2153a8b9066a0683fec3c903669267eb806ffa831dcd4b3daae",
+};
+
 export function wasmdEnabled(): boolean {
   return !!process.env.WASMD_ENABLED;
 }

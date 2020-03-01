@@ -13,6 +13,7 @@ import { SigningCosmWasmClient } from "./signingcosmwasmclient";
 import cosmoshub from "./testdata/cosmoshub.json";
 import {
   bech32AddressMatcher,
+  deployedErc20,
   getRandomizedHackatom,
   makeRandomAddress,
   pendingWithoutWasmd,
@@ -51,12 +52,6 @@ const faucet = {
 const emptyAddress = "cosmos1ltkhnmdcqemmd2tkhnx7qx66tq7e0wykw2j85k";
 const unusedAccount = {
   address: "cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u",
-};
-
-const deployedErc20 = {
-  codeId: 1,
-  source: "",
-  builder: "",
 };
 
 function makeSignedTx(firstMsg: Msg, fee: StdFee, memo: string, firstSignature: StdSignature): StdTx {

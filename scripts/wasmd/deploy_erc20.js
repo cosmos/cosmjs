@@ -17,6 +17,11 @@ const guest = {
   address: "cosmos17d0jcz59jf68g52vq38tuuncmwwjk42u6mcxej",
 };
 
+const codeMeta = {
+  source: "https://crates.io/api/v1/crates/cw-erc20/0.2.0/download",
+  builder: "confio/cosmwasm-opt:0.7.0",
+};
+
 const initMsgHash = {
   decimals: 5,
   name: "Hash token",
@@ -72,7 +77,7 @@ async function main() {
   const client = new SigningCosmWasmClient(httpUrl, faucet.address, signBytes => pen.sign(signBytes));
 
   const wasm = fs.readFileSync(__dirname + "/contracts/cw-erc20.wasm");
-  const uploadReceipt = await client.upload(wasm, {}, "Upload ERC20 contract");
+  const uploadReceipt = await client.upload(wasm, codeMeta, "Upload ERC20 contract");
   console.info(`Upload succeeded. Receipt: ${JSON.stringify(uploadReceipt)}`);
 
   for (const initMsg of [initMsgHash, initMsgIsa, initMsgJade]) {

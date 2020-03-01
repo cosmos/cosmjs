@@ -12,6 +12,7 @@ import { RestClient } from "./restclient";
 import { SigningCosmWasmClient } from "./signingcosmwasmclient";
 import cosmoshub from "./testdata/cosmoshub.json";
 import {
+  deployedErc20,
   getRandomizedHackatom,
   makeRandomAddress,
   pendingWithoutWasmd,
@@ -405,10 +406,10 @@ describe("CosmWasmClient", () => {
       expect(result.length).toBeGreaterThanOrEqual(1);
       const [first] = result;
       expect(first).toEqual({
-        id: 1,
-        checksum: "aff8c8873d79d2153a8b9066a0683fec3c903669267eb806ffa831dcd4b3daae",
-        source: undefined,
-        builder: undefined,
+        id: deployedErc20.codeId,
+        source: deployedErc20.source,
+        builder: deployedErc20.builder,
+        checksum: deployedErc20.checksum,
         creator: faucet.address,
       });
     });
@@ -421,10 +422,10 @@ describe("CosmWasmClient", () => {
       const result = await client.getCodeDetails(1);
 
       const expectedInfo: Code = {
-        id: 1,
-        checksum: "aff8c8873d79d2153a8b9066a0683fec3c903669267eb806ffa831dcd4b3daae",
-        source: undefined,
-        builder: undefined,
+        id: deployedErc20.codeId,
+        source: deployedErc20.source,
+        builder: deployedErc20.builder,
+        checksum: deployedErc20.checksum,
         creator: faucet.address,
       };
 
