@@ -205,7 +205,7 @@ describe("SigningCosmWasmClient", () => {
       // got tokens
       const after = await client.getAccount(beneficiaryAddress);
       assert(after);
-      expect(after.coins).toEqual(transferAmount);
+      expect(after.balance).toEqual(transferAmount);
     });
   });
 });

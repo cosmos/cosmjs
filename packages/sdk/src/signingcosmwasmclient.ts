@@ -3,13 +3,12 @@ import { Encoding } from "@iov/encoding";
 import pako from "pako";
 
 import { isValidBuilder } from "./builder";
-import { CosmWasmClient, GetNonceResult, PostTxResult } from "./cosmwasmclient";
+import { Account, CosmWasmClient, GetNonceResult, PostTxResult } from "./cosmwasmclient";
 import { makeSignBytes } from "./encoding";
 import { findAttribute, Log } from "./logs";
 import { BroadcastMode } from "./restclient";
 import {
   Coin,
-  CosmosSdkAccount,
   MsgExecuteContract,
   MsgInstantiateContract,
   MsgSend,
@@ -121,7 +120,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     return super.getNonce(address || this.senderAddress);
   }
 
-  public async getAccount(address?: string): Promise<CosmosSdkAccount | undefined> {
+  public async getAccount(address?: string): Promise<Account | undefined> {
     return super.getAccount(address || this.senderAddress);
   }
 

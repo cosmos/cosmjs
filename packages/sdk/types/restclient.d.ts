@@ -1,4 +1,13 @@
-import { CosmosSdkAccount, CosmosSdkTx, Model, StdTx } from "./types";
+import { Coin, CosmosSdkTx, Model, StdTx } from "./types";
+export interface CosmosSdkAccount {
+  /** Bech32 account address */
+  readonly address: string;
+  readonly coins: ReadonlyArray<Coin>;
+  /** Bech32 encoded pubkey */
+  readonly public_key: string;
+  readonly account_number: number;
+  readonly sequence: number;
+}
 interface NodeInfo {
   readonly network: string;
 }

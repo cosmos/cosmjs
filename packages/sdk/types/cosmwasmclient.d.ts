@@ -1,7 +1,16 @@
 import { Log } from "./logs";
 import { BroadcastMode, RestClient } from "./restclient";
-import { CosmosSdkAccount, CosmosSdkTx, StdTx } from "./types";
+import { Coin, CosmosSdkTx, StdTx } from "./types";
 export interface GetNonceResult {
+  readonly accountNumber: number;
+  readonly sequence: number;
+}
+export interface Account {
+  /** Bech32 account address */
+  readonly address: string;
+  readonly balance: ReadonlyArray<Coin>;
+  /** Bech32 encoded pubkey */
+  readonly pubkey: string | undefined;
   readonly accountNumber: number;
   readonly sequence: number;
 }
@@ -109,7 +118,7 @@ export declare class CosmWasmClient {
    * @param address returns data for this address. When unset, the client's sender adddress is used.
    */
   getNonce(address: string): Promise<GetNonceResult>;
-  getAccount(address: string): Promise<CosmosSdkAccount | undefined>;
+  getAccount(address: string): Promise<Account | undefined>;
   /**
    * Gets block header and meta
    *

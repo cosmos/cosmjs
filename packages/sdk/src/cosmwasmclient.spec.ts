@@ -83,10 +83,10 @@ describe("CosmWasmClient", () => {
       const client = new CosmWasmClient(wasmdEndpoint);
       expect(await client.getAccount(unused.address)).toEqual({
         address: unused.address,
-        account_number: 5,
+        accountNumber: 5,
         sequence: 0,
-        public_key: "",
-        coins: [
+        pubkey: undefined,
+        balance: [
           { denom: "ucosm", amount: "1000000000" },
           { denom: "ustake", amount: "1000000000" },
         ],

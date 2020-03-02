@@ -164,7 +164,7 @@ export class CosmWasmConnection implements BlockchainConnection {
     const address = isPubkeyQuery(query) ? pubkeyToAddress(query.pubkey, this.addressPrefix) : query.address;
     const bankAccount = await this.cosmWasmClient.getAccount(address);
 
-    const supportedBankCoins = (bankAccount?.coins || []).filter(({ denom }) =>
+    const supportedBankCoins = (bankAccount?.balance || []).filter(({ denom }) =>
       this.bankTokens.find(token => token.denom === denom),
     );
     const erc20Amounts = await Promise.all(
@@ -191,7 +191,7 @@ export class CosmWasmConnection implements BlockchainConnection {
         ...supportedBankCoins.map(coin => decodeAmount(this.bankTokens, coin)),
         ...nonZeroErc20Amounts,
       ].sort((a, b) => a.tokenTicker.localeCompare(b.tokenTicker));
-      const pubkey = bankAccount?.public_key ? decodeCosmosPubkey(bankAccount.public_key) : undefined;
+      const pubkey = bankAccount?.pubkey ? decodeCosmosPubkey(bankAccount.pubkey) : undefined;
       return {
         address: address,
         balance: balance,

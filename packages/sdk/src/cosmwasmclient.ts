@@ -3,9 +3,19 @@ import { Encoding } from "@iov/encoding";
 
 import { Log, parseLogs } from "./logs";
 import { BroadcastMode, RestClient } from "./restclient";
-import { CosmosSdkAccount, CosmosSdkTx, StdTx } from "./types";
+import { Coin, CosmosSdkTx, StdTx } from "./types";
 
 export interface GetNonceResult {
+  readonly accountNumber: number;
+  readonly sequence: number;
+}
+
+export interface Account {
+  /** Bech32 account address */
+  readonly address: string;
+  readonly balance: ReadonlyArray<Coin>;
+  /** Bech32 encoded pubkey */
+  readonly pubkey: string | undefined;
   readonly accountNumber: number;
   readonly sequence: number;
 }
@@ -162,15 +172,23 @@ export class CosmWasmClient {
       );
     }
     return {
-      accountNumber: account.account_number,
+      accountNumber: account.accountNumber,
       sequence: account.sequence,
     };
   }
 
-  public async getAccount(address: string): Promise<CosmosSdkAccount | undefined> {
+  public async getAccount(address: string): Promise<Account | undefined> {
     const account = await this.restClient.authAccounts(address);
     const value = account.result.value;
-    return value.address === "" ? undefined : value;
+    return value.address === ""
+      ? undefined
+      : {
+          address: value.address,
+          balance: value.coins,
+          pubkey: value.public_key || undefined,
+          accountNumber: value.account_number,
+          sequence: value.sequence,
+        };
   }
 
   /**
