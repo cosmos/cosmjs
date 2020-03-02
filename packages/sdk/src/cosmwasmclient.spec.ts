@@ -13,13 +13,14 @@ import { SigningCosmWasmClient } from "./signingcosmwasmclient";
 import cosmoshub from "./testdata/cosmoshub.json";
 import {
   deployedErc20,
+  fromOneElementArray,
   getRandomizedHackatom,
   makeRandomAddress,
   pendingWithoutWasmd,
   tendermintIdMatcher,
   wasmdEnabled,
 } from "./testutils.spec";
-import { CosmosSdkTx, MsgSend, StdFee } from "./types";
+import { CosmosSdkTx, isMsgSend, MsgSend, StdFee } from "./types";
 
 const { fromAscii, fromHex, fromUtf8, toAscii, toBase64 } = Encoding;
 
@@ -290,9 +291,20 @@ describe("CosmWasmClient", () => {
       pendingWithoutWasmd();
       assert(posted, "value must be set in beforeAll()");
       const client = new CosmWasmClient(httpUrl);
-      const result = await client.searchTx({ sentFromOrTo: posted.sender });
-      expect(result.length).toBeGreaterThanOrEqual(1);
-      expect(result[result.length - 1]).toEqual(
+      const results = await client.searchTx({ sentFromOrTo: posted.sender });
+      expect(results.length).toBeGreaterThanOrEqual(1);
+
+      // Check basic structure of all results
+      for (const result of results) {
+        const msg = fromOneElementArray(result.tx.value.msg);
+        assert(isMsgSend(msg), `${result.txhash} (height ${result.height}) is not a bank send transaction`);
+        expect(msg.value.to_address === posted.sender || msg.value.from_address == posted.sender).toEqual(
+          true,
+        );
+      }
+
+      // Check details of most recent result
+      expect(results[results.length - 1]).toEqual(
         jasmine.objectContaining({
           height: posted.height.toString(),
           txhash: posted.hash,
@@ -305,9 +317,20 @@ describe("CosmWasmClient", () => {
       pendingWithoutWasmd();
       assert(posted, "value must be set in beforeAll()");
       const client = new CosmWasmClient(httpUrl);
-      const result = await client.searchTx({ sentFromOrTo: posted.recipient });
-      expect(result.length).toBeGreaterThanOrEqual(1);
-      expect(result[result.length - 1]).toEqual(
+      const results = await client.searchTx({ sentFromOrTo: posted.recipient });
+      expect(results.length).toBeGreaterThanOrEqual(1);
+
+      // Check basic structure of all results
+      for (const result of results) {
+        const msg = fromOneElementArray(result.tx.value.msg);
+        assert(isMsgSend(msg), `${result.txhash} (height ${result.height}) is not a bank send transaction`);
+        expect(
+          msg.value.to_address === posted.recipient || msg.value.from_address == posted.recipient,
+        ).toEqual(true);
+      }
+
+      // Check details of most recent result
+      expect(results[results.length - 1]).toEqual(
         jasmine.objectContaining({
           height: posted.height.toString(),
           txhash: posted.hash,
