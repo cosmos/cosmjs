@@ -76,6 +76,18 @@ export const deployedErc20 = {
   ],
 };
 
+export const wasmdEndpoint = "http://localhost:1317";
+
+export const faucet = {
+  mnemonic:
+    "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone",
+  pubkey: {
+    type: "tendermint/PubKeySecp256k1",
+    value: "A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ",
+  },
+  address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+};
+
 export function wasmdEnabled(): boolean {
   return !!process.env.WASMD_ENABLED;
 }
