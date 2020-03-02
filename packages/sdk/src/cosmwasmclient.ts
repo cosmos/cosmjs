@@ -279,7 +279,7 @@ export class CosmWasmClient {
       (entry): Code => ({
         id: entry.id,
         creator: entry.creator,
-        checksum: Encoding.toHex(Encoding.fromHex(entry.code_hash)),
+        checksum: Encoding.toHex(Encoding.fromHex(entry.data_hash)),
         source: entry.source || undefined,
         builder: entry.builder || undefined,
       }),
@@ -287,15 +287,15 @@ export class CosmWasmClient {
   }
 
   public async getCodeDetails(codeId: number): Promise<CodeDetails> {
-    // TODO: implement as one request when https://github.com/cosmwasm/wasmd/issues/90 is done
-    const [codeInfos, getCodeResult] = await Promise.all([this.getCodes(), this.restClient.getCode(codeId)]);
-
-    const codeInfo = codeInfos.find(code => code.id === codeId);
-    if (!codeInfo) throw new Error("No code info found");
+    const getCodeResult = await this.restClient.getCode(codeId);
 
     return {
-      ...codeInfo,
-      data: getCodeResult,
+      id: getCodeResult.id,
+      creator: getCodeResult.creator,
+      checksum: Encoding.toHex(Encoding.fromHex(getCodeResult.data_hash)),
+      source: getCodeResult.source || undefined,
+      builder: getCodeResult.builder || undefined,
+      data: Encoding.fromBase64(getCodeResult.data),
     };
   }
 

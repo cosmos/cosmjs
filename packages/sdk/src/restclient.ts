@@ -137,10 +137,15 @@ export interface CodeInfo {
   /** Bech32 account address */
   readonly creator: string;
   /** Hex-encoded sha256 hash of the code stored here */
-  readonly code_hash: string;
+  readonly data_hash: string;
   // TODO: these are not supported in current wasmd
   readonly source?: string;
   readonly builder?: string;
+}
+
+export interface CodeDetails extends CodeInfo {
+  /** Base64 encoded raw wasm data */
+  readonly data: string;
 }
 
 // This is list view, without contract info
@@ -155,11 +160,6 @@ export interface ContractInfo {
 export interface ContractDetails extends ContractInfo {
   /** Argument passed on initialization of the contract */
   readonly init_msg: object;
-}
-
-interface GetCodeResult {
-  // base64 encoded wasm
-  readonly code: string;
 }
 
 interface SmartQueryResponse {
@@ -177,9 +177,9 @@ type RestClientResponse =
   | EncodeTxResponse
   | WasmResponse<string>
   | WasmResponse<CodeInfo[]>
+  | WasmResponse<CodeDetails>
   | WasmResponse<ContractInfo[] | null>
-  | WasmResponse<ContractDetails | null>
-  | WasmResponse<GetCodeResult>;
+  | WasmResponse<ContractDetails | null>;
 
 /**
  * The mode used to send transaction
@@ -355,11 +355,10 @@ export class RestClient {
 
   // this will download the original wasm bytecode by code id
   // throws error if no code with this id
-  public async getCode(id: number): Promise<Uint8Array> {
+  public async getCode(id: number): Promise<CodeDetails> {
     const path = `/wasm/code/${id}`;
-    const responseData = (await this.get(path)) as WasmResponse<GetCodeResult>;
-    const { code } = unwrapWasmResponse(responseData);
-    return fromBase64(code);
+    const responseData = (await this.get(path)) as WasmResponse<CodeDetails>;
+    return unwrapWasmResponse(responseData);
   }
 
   public async listContractsByCodeId(id: number): Promise<readonly ContractInfo[]> {
