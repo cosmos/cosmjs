@@ -20,7 +20,21 @@ export interface SearchByHeightQuery {
 export interface SearchBySentFromOrToQuery {
   readonly sentFromOrTo: string;
 }
-export declare type SearchTxQuery = SearchByIdQuery | SearchByHeightQuery | SearchBySentFromOrToQuery;
+/**
+ * This query type allows you to pass arbitrary key/value pairs to the backend. It is
+ * more powerful and slightly lower level than the other search options.
+ */
+export interface SearchByTagsQuery {
+  readonly tags: readonly {
+    readonly key: string;
+    readonly value: string;
+  }[];
+}
+export declare type SearchTxQuery =
+  | SearchByIdQuery
+  | SearchByHeightQuery
+  | SearchBySentFromOrToQuery
+  | SearchByTagsQuery;
 export interface SearchTxFilter {
   readonly minHeight?: number;
   readonly maxHeight?: number;

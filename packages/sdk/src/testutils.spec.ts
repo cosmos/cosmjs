@@ -69,6 +69,11 @@ export const deployedErc20 = {
   source: "https://crates.io/api/v1/crates/cw-erc20/0.2.0/download",
   builder: "confio/cosmwasm-opt:0.7.0",
   checksum: "aff8c8873d79d2153a8b9066a0683fec3c903669267eb806ffa831dcd4b3daae",
+  instances: [
+    "cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5", // HASH
+    "cosmos1hqrdl6wstt8qzshwc6mrumpjk9338k0lr4dqxd", // ISA
+    "cosmos18r5szma8hm93pvx6lwpjwyxruw27e0k5uw835c", // JADE
+  ],
 };
 
 export function wasmdEnabled(): boolean {

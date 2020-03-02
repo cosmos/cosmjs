@@ -29,7 +29,19 @@ export interface SearchBySentFromOrToQuery {
   readonly sentFromOrTo: string;
 }
 
-export type SearchTxQuery = SearchByIdQuery | SearchByHeightQuery | SearchBySentFromOrToQuery;
+/**
+ * This query type allows you to pass arbitrary key/value pairs to the backend. It is
+ * more powerful and slightly lower level than the other search options.
+ */
+export interface SearchByTagsQuery {
+  readonly tags: readonly { readonly key: string; readonly value: string }[];
+}
+
+export type SearchTxQuery =
+  | SearchByIdQuery
+  | SearchByHeightQuery
+  | SearchBySentFromOrToQuery
+  | SearchByTagsQuery;
 
 function isSearchByIdQuery(query: SearchTxQuery): query is SearchByIdQuery {
   return (query as SearchByIdQuery).id !== undefined;
@@ -41,6 +53,10 @@ function isSearchByHeightQuery(query: SearchTxQuery): query is SearchByHeightQue
 
 function isSearchBySentFromOrToQuery(query: SearchTxQuery): query is SearchBySentFromOrToQuery {
   return (query as SearchBySentFromOrToQuery).sentFromOrTo !== undefined;
+}
+
+function isSearchByTagsQuery(query: SearchTxQuery): query is SearchByTagsQuery {
+  return (query as SearchByTagsQuery).tags !== undefined;
 }
 
 export interface SearchTxFilter {
@@ -166,6 +182,9 @@ export class CosmWasmClient {
 
       const sentHashes = sent.map(t => t.txhash);
       txs = [...sent, ...received.filter(t => !sentHashes.includes(t.txhash))];
+    } else if (isSearchByTagsQuery(query)) {
+      const rawQuery = withFilters(query.tags.map(t => `${t.key}=${t.value}`).join("&"));
+      txs = await this.txsQuery(rawQuery);
     } else {
       throw new Error("Unknown query type");
     }
