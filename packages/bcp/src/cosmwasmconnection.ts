@@ -60,7 +60,7 @@ function isDefined<X>(value: X | undefined): value is X {
   return value !== undefined;
 }
 
-function deduplicate<T>(input: ReadonlyArray<T>, comparator: (a: T, b: T) => number): ReadonlyArray<T> {
+function deduplicate<T>(input: ReadonlyArray<T>, comparator: (a: T, b: T) => number): Array<T> {
   const out = new Array<T>();
   for (const element of input) {
     if (!out.find(o => comparator(o, element) === 0)) {
@@ -68,6 +68,15 @@ function deduplicate<T>(input: ReadonlyArray<T>, comparator: (a: T, b: T) => num
     }
   }
   return out;
+}
+
+/** Compares transaxtion by height. If the height is equal, compare by hash to ensure deterministic order */
+function compareByHeightAndHash(a: TxsResponse, b: TxsResponse): number {
+  if (a.height === b.height) {
+    return a.txhash.localeCompare(b.txhash);
+  } else {
+    return parseInt(a.height, 10) - parseInt(b.height, 10);
+  }
 }
 
 /** Account and undefined are valid events. The third option means no event fired yet */
@@ -362,7 +371,7 @@ export class CosmWasmConnection implements BlockchainConnection {
       }
       const responses = await Promise.all(pendingRequests);
       const allResults = responses.reduce((accumulator, results) => accumulator.concat(results), []);
-      txs = deduplicate(allResults, (a, b) => a.txhash.localeCompare(b.txhash));
+      txs = deduplicate(allResults, (a, b) => a.txhash.localeCompare(b.txhash)).sort(compareByHeightAndHash);
     } else {
       throw new Error("Unsupported query");
     }
