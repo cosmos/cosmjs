@@ -26,7 +26,7 @@ const faucet = {
   address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
 };
 
-fdescribe("CosmWasmClient.searchTx", () => {
+describe("CosmWasmClient.searchTx", () => {
   let postedSend:
     | {
         readonly sender: string;
@@ -91,175 +91,181 @@ fdescribe("CosmWasmClient.searchTx", () => {
     }
   });
 
-  it("can search by ID", async () => {
-    pendingWithoutWasmd();
-    assert(postedSend, "value must be set in beforeAll()");
-    const client = new CosmWasmClient(httpUrl);
-    const result = await client.searchTx({ id: postedSend.hash });
-    expect(result.length).toEqual(1);
-    expect(result[0]).toEqual(
-      jasmine.objectContaining({
-        height: postedSend.height.toString(),
-        txhash: postedSend.hash,
-        tx: postedSend.tx,
-      }),
-    );
-  });
-
-  it("can search by ID (non existent)", async () => {
-    pendingWithoutWasmd();
-    const client = new CosmWasmClient(httpUrl);
-    const nonExistentId = "0000000000000000000000000000000000000000000000000000000000000000";
-    const result = await client.searchTx({ id: nonExistentId });
-    expect(result.length).toEqual(0);
-  });
-
-  it("can search by height", async () => {
-    pendingWithoutWasmd();
-    assert(postedSend, "value must be set in beforeAll()");
-    const client = new CosmWasmClient(httpUrl);
-    const result = await client.searchTx({ height: postedSend.height });
-    expect(result.length).toEqual(1);
-    expect(result[0]).toEqual(
-      jasmine.objectContaining({
-        height: postedSend.height.toString(),
-        txhash: postedSend.hash,
-        tx: postedSend.tx,
-      }),
-    );
-  });
-
-  it("can search by sender", async () => {
-    pendingWithoutWasmd();
-    assert(postedSend, "value must be set in beforeAll()");
-    const client = new CosmWasmClient(httpUrl);
-    const results = await client.searchTx({ sentFromOrTo: postedSend.sender });
-    expect(results.length).toBeGreaterThanOrEqual(1);
-
-    // Check basic structure of all results
-    for (const result of results) {
-      const msg = fromOneElementArray(result.tx.value.msg);
-      assert(isMsgSend(msg), `${result.txhash} (height ${result.height}) is not a bank send transaction`);
-      expect(
-        msg.value.to_address === postedSend.sender || msg.value.from_address == postedSend.sender,
-      ).toEqual(true);
-    }
-
-    // Check details of most recent result
-    expect(results[results.length - 1]).toEqual(
-      jasmine.objectContaining({
-        height: postedSend.height.toString(),
-        txhash: postedSend.hash,
-        tx: postedSend.tx,
-      }),
-    );
-  });
-
-  it("can search by recipient", async () => {
-    pendingWithoutWasmd();
-    assert(postedSend, "value must be set in beforeAll()");
-    const client = new CosmWasmClient(httpUrl);
-    const results = await client.searchTx({ sentFromOrTo: postedSend.recipient });
-    expect(results.length).toBeGreaterThanOrEqual(1);
-
-    // Check basic structure of all results
-    for (const result of results) {
-      const msg = fromOneElementArray(result.tx.value.msg);
-      assert(isMsgSend(msg), `${result.txhash} (height ${result.height}) is not a bank send transaction`);
-      expect(
-        msg.value.to_address === postedSend.recipient || msg.value.from_address == postedSend.recipient,
-      ).toEqual(true);
-    }
-
-    // Check details of most recent result
-    expect(results[results.length - 1]).toEqual(
-      jasmine.objectContaining({
-        height: postedSend.height.toString(),
-        txhash: postedSend.hash,
-        tx: postedSend.tx,
-      }),
-    );
-  });
-
-  it("can search by ID and filter by minHeight", async () => {
-    pendingWithoutWasmd();
-    assert(postedSend);
-    const client = new CosmWasmClient(httpUrl);
-    const query = { id: postedSend.hash };
-
-    {
-      const result = await client.searchTx(query, { minHeight: 0 });
+  describe("with SearchByIdQuery", () => {
+    it("can search by ID", async () => {
+      pendingWithoutWasmd();
+      assert(postedSend, "value must be set in beforeAll()");
+      const client = new CosmWasmClient(httpUrl);
+      const result = await client.searchTx({ id: postedSend.hash });
       expect(result.length).toEqual(1);
-    }
+      expect(result[0]).toEqual(
+        jasmine.objectContaining({
+          height: postedSend.height.toString(),
+          txhash: postedSend.hash,
+          tx: postedSend.tx,
+        }),
+      );
+    });
 
-    {
-      const result = await client.searchTx(query, { minHeight: postedSend.height - 1 });
-      expect(result.length).toEqual(1);
-    }
-
-    {
-      const result = await client.searchTx(query, { minHeight: postedSend.height });
-      expect(result.length).toEqual(1);
-    }
-
-    {
-      const result = await client.searchTx(query, { minHeight: postedSend.height + 1 });
+    it("can search by ID (non existent)", async () => {
+      pendingWithoutWasmd();
+      const client = new CosmWasmClient(httpUrl);
+      const nonExistentId = "0000000000000000000000000000000000000000000000000000000000000000";
+      const result = await client.searchTx({ id: nonExistentId });
       expect(result.length).toEqual(0);
-    }
+    });
+
+    it("can search by ID and filter by minHeight", async () => {
+      pendingWithoutWasmd();
+      assert(postedSend);
+      const client = new CosmWasmClient(httpUrl);
+      const query = { id: postedSend.hash };
+
+      {
+        const result = await client.searchTx(query, { minHeight: 0 });
+        expect(result.length).toEqual(1);
+      }
+
+      {
+        const result = await client.searchTx(query, { minHeight: postedSend.height - 1 });
+        expect(result.length).toEqual(1);
+      }
+
+      {
+        const result = await client.searchTx(query, { minHeight: postedSend.height });
+        expect(result.length).toEqual(1);
+      }
+
+      {
+        const result = await client.searchTx(query, { minHeight: postedSend.height + 1 });
+        expect(result.length).toEqual(0);
+      }
+    });
   });
 
-  it("can search by recipient and filter by minHeight", async () => {
-    pendingWithoutWasmd();
-    assert(postedSend);
-    const client = new CosmWasmClient(httpUrl);
-    const query = { sentFromOrTo: postedSend.recipient };
-
-    {
-      const result = await client.searchTx(query, { minHeight: 0 });
+  describe("with SearchByHeightQuery", () => {
+    it("can search by height", async () => {
+      pendingWithoutWasmd();
+      assert(postedSend, "value must be set in beforeAll()");
+      const client = new CosmWasmClient(httpUrl);
+      const result = await client.searchTx({ height: postedSend.height });
       expect(result.length).toEqual(1);
-    }
-
-    {
-      const result = await client.searchTx(query, { minHeight: postedSend.height - 1 });
-      expect(result.length).toEqual(1);
-    }
-
-    {
-      const result = await client.searchTx(query, { minHeight: postedSend.height });
-      expect(result.length).toEqual(1);
-    }
-
-    {
-      const result = await client.searchTx(query, { minHeight: postedSend.height + 1 });
-      expect(result.length).toEqual(0);
-    }
+      expect(result[0]).toEqual(
+        jasmine.objectContaining({
+          height: postedSend.height.toString(),
+          txhash: postedSend.hash,
+          tx: postedSend.tx,
+        }),
+      );
+    });
   });
 
-  it("can search by recipient and filter by maxHeight", async () => {
-    pendingWithoutWasmd();
-    assert(postedSend);
-    const client = new CosmWasmClient(httpUrl);
-    const query = { sentFromOrTo: postedSend.recipient };
+  describe("with SearchBySentFromOrToQuery", () => {
+    it("can search by sender", async () => {
+      pendingWithoutWasmd();
+      assert(postedSend, "value must be set in beforeAll()");
+      const client = new CosmWasmClient(httpUrl);
+      const results = await client.searchTx({ sentFromOrTo: postedSend.sender });
+      expect(results.length).toBeGreaterThanOrEqual(1);
 
-    {
-      const result = await client.searchTx(query, { maxHeight: 9999999999999 });
-      expect(result.length).toEqual(1);
-    }
+      // Check basic structure of all results
+      for (const result of results) {
+        const msg = fromOneElementArray(result.tx.value.msg);
+        assert(isMsgSend(msg), `${result.txhash} (height ${result.height}) is not a bank send transaction`);
+        expect(
+          msg.value.to_address === postedSend.sender || msg.value.from_address == postedSend.sender,
+        ).toEqual(true);
+      }
 
-    {
-      const result = await client.searchTx(query, { maxHeight: postedSend.height + 1 });
-      expect(result.length).toEqual(1);
-    }
+      // Check details of most recent result
+      expect(results[results.length - 1]).toEqual(
+        jasmine.objectContaining({
+          height: postedSend.height.toString(),
+          txhash: postedSend.hash,
+          tx: postedSend.tx,
+        }),
+      );
+    });
 
-    {
-      const result = await client.searchTx(query, { maxHeight: postedSend.height });
-      expect(result.length).toEqual(1);
-    }
+    it("can search by recipient", async () => {
+      pendingWithoutWasmd();
+      assert(postedSend, "value must be set in beforeAll()");
+      const client = new CosmWasmClient(httpUrl);
+      const results = await client.searchTx({ sentFromOrTo: postedSend.recipient });
+      expect(results.length).toBeGreaterThanOrEqual(1);
 
-    {
-      const result = await client.searchTx(query, { maxHeight: postedSend.height - 1 });
-      expect(result.length).toEqual(0);
-    }
+      // Check basic structure of all results
+      for (const result of results) {
+        const msg = fromOneElementArray(result.tx.value.msg);
+        assert(isMsgSend(msg), `${result.txhash} (height ${result.height}) is not a bank send transaction`);
+        expect(
+          msg.value.to_address === postedSend.recipient || msg.value.from_address == postedSend.recipient,
+        ).toEqual(true);
+      }
+
+      // Check details of most recent result
+      expect(results[results.length - 1]).toEqual(
+        jasmine.objectContaining({
+          height: postedSend.height.toString(),
+          txhash: postedSend.hash,
+          tx: postedSend.tx,
+        }),
+      );
+    });
+
+    it("can search by recipient and filter by minHeight", async () => {
+      pendingWithoutWasmd();
+      assert(postedSend);
+      const client = new CosmWasmClient(httpUrl);
+      const query = { sentFromOrTo: postedSend.recipient };
+
+      {
+        const result = await client.searchTx(query, { minHeight: 0 });
+        expect(result.length).toEqual(1);
+      }
+
+      {
+        const result = await client.searchTx(query, { minHeight: postedSend.height - 1 });
+        expect(result.length).toEqual(1);
+      }
+
+      {
+        const result = await client.searchTx(query, { minHeight: postedSend.height });
+        expect(result.length).toEqual(1);
+      }
+
+      {
+        const result = await client.searchTx(query, { minHeight: postedSend.height + 1 });
+        expect(result.length).toEqual(0);
+      }
+    });
+
+    it("can search by recipient and filter by maxHeight", async () => {
+      pendingWithoutWasmd();
+      assert(postedSend);
+      const client = new CosmWasmClient(httpUrl);
+      const query = { sentFromOrTo: postedSend.recipient };
+
+      {
+        const result = await client.searchTx(query, { maxHeight: 9999999999999 });
+        expect(result.length).toEqual(1);
+      }
+
+      {
+        const result = await client.searchTx(query, { maxHeight: postedSend.height + 1 });
+        expect(result.length).toEqual(1);
+      }
+
+      {
+        const result = await client.searchTx(query, { maxHeight: postedSend.height });
+        expect(result.length).toEqual(1);
+      }
+
+      {
+        const result = await client.searchTx(query, { maxHeight: postedSend.height - 1 });
+        expect(result.length).toEqual(0);
+      }
+    });
   });
 
   describe("with SearchByTagsQuery", () => {
