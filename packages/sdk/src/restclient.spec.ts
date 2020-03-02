@@ -14,6 +14,7 @@ import cosmoshub from "./testdata/cosmoshub.json";
 import {
   bech32AddressMatcher,
   deployedErc20,
+  fromOneElementArray,
   getRandomizedHackatom,
   makeRandomAddress,
   pendingWithoutWasmd,
@@ -491,17 +492,11 @@ describe("RestClient", () => {
       expect(parseInt(result.count, 10)).toBeGreaterThanOrEqual(4);
 
       // Check first 4 results
-      const [store, hash, isa, jade] = result.txs
-        .map(txResponse => txResponse.tx.value.msg)
-        .map(msgs => {
-          assert(msgs.length === 1, "Single message transactions expected");
-          return msgs[0];
-        });
+      const [store, hash, isa, jade] = result.txs.map(tx => fromOneElementArray(tx.tx.value.msg));
       assert(isMsgStoreCode(store));
       assert(isMsgInstantiateContract(hash));
       assert(isMsgInstantiateContract(isa));
       assert(isMsgInstantiateContract(jade));
-
       expect(store.value).toEqual(
         jasmine.objectContaining({
           sender: faucet.address,
@@ -545,9 +540,7 @@ describe("RestClient", () => {
           `message.module=wasm&message.code_id=${deployedErc20.codeId}&message.action=store-code`,
         );
         expect(parseInt(uploads.count, 10)).toEqual(1);
-        const msgs = uploads.txs[0].tx.value.msg;
-        assert(msgs.length === 1, "Single message transactions expected");
-        const store = msgs[0];
+        const store = fromOneElementArray(uploads.txs[0].tx.value.msg);
         assert(isMsgStoreCode(store));
         expect(store.value).toEqual(
           jasmine.objectContaining({
@@ -563,12 +556,7 @@ describe("RestClient", () => {
           `message.module=wasm&message.code_id=${deployedErc20.codeId}&message.action=instantiate`,
         );
         expect(parseInt(instantiations.count, 10)).toBeGreaterThanOrEqual(3);
-        const [hash, isa, jade] = instantiations.txs
-          .map(txResponse => txResponse.tx.value.msg)
-          .map(msgs => {
-            assert(msgs.length === 1, "Single message transactions expected");
-            return msgs[0];
-          });
+        const [hash, isa, jade] = instantiations.txs.map(tx => fromOneElementArray(tx.tx.value.msg));
         assert(isMsgInstantiateContract(hash));
         assert(isMsgInstantiateContract(isa));
         assert(isMsgInstantiateContract(jade));

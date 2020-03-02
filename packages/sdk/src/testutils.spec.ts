@@ -81,6 +81,12 @@ export function pendingWithoutWasmd(): void {
   }
 }
 
+/** Returns first element. Throws if array has a different length than 1. */
+export function fromOneElementArray<T>(elements: ArrayLike<T>): T {
+  if (elements.length !== 1) throw new Error(`Expected exactly one element but got ${elements.length}`);
+  return elements[0];
+}
+
 describe("leb128", () => {
   describe("leb128Encode", () => {
     it("works for single byte values", () => {
