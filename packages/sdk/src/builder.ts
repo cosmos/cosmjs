@@ -8,9 +8,13 @@
 // A tag name must be valid ASCII and may contain lowercase and uppercase letters, digits, underscores, periods and dashes.
 // A tag name may not start with a period or a dash and may contain a maximum of 128 characters.
 const dockerImagePattern = new RegExp(
-  "^[a-z0-9][a-z0-9._-]*[a-z0-9](/[a-z0-9][a-z0-9._-]*[a-z0-9])*:[a-zA-Z0-9_][a-zA-Z0-9_.-]{0,127}$",
+  "^[a-z0-9][a-z0-9._-]*[a-z0-9](/[a-z0-9][a-z0-9._-]*[a-z0-9])+:[a-zA-Z0-9_][a-zA-Z0-9_.-]{0,127}$",
 );
 
+/** Max length in bytes/characters (regexp enforces all ASCII, even if that is not required by the standard) */
+const builderMaxLength = 128;
+
 export function isValidBuilder(builder: string): boolean {
+  if (builder.length > builderMaxLength) return false;
   return !!builder.match(dockerImagePattern);
 }

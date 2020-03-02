@@ -9,13 +9,6 @@ describe("builder", () => {
       expect(isValidBuilder("myorg/super-optimizer:42")).toEqual(true);
     });
 
-    it("supports images with no organization", () => {
-      // from https://hub.docker.com/_/ubuntu
-      expect(isValidBuilder("ubuntu:xenial-20200212")).toEqual(true);
-      // from https://hub.docker.com/_/rust
-      expect(isValidBuilder("rust:1.40.0")).toEqual(true);
-    });
-
     it("supports images with multi level names", () => {
       expect(isValidBuilder("myorg/department-x/office-y/technology-z/super-optimizer:0.1.2")).toEqual(true);
     });
@@ -23,15 +16,6 @@ describe("builder", () => {
     it("returns true for tags with lower and upper chars", () => {
       expect(isValidBuilder("myorg/super-optimizer:0.1.2-alpha")).toEqual(true);
       expect(isValidBuilder("myorg/super-optimizer:0.1.2-Alpha")).toEqual(true);
-    });
-
-    it("allows very long images", () => {
-      // This is > 2 KiB of data
-      expect(
-        isValidBuilder(
-          "myorgisnicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenice/super-optimizer:42",
-        ),
-      ).toEqual(true);
     });
 
     // Invalid cases
@@ -59,6 +43,21 @@ describe("builder", () => {
     it("returns false for upper case character in name component", () => {
       expect(isValidBuilder("mYorg/super-optimizer:42")).toEqual(false);
       expect(isValidBuilder("myorg/super-Optimizer:42")).toEqual(false);
+    });
+
+    it("returns false for long images", () => {
+      expect(
+        isValidBuilder(
+          "myorgisnicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenicenice/super-optimizer:42",
+        ),
+      ).toEqual(false);
+    });
+
+    it("returns false for images with no organization", () => {
+      // Those are valid dockerhub images from https://hub.docker.com/_/ubuntu and https://hub.docker.com/_/rust
+      // but not valid in the context of CosmWasm Verify
+      expect(isValidBuilder("ubuntu:xenial-20200212")).toEqual(false);
+      expect(isValidBuilder("rust:1.40.0")).toEqual(false);
     });
   });
 });
