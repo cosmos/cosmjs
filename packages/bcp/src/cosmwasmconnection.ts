@@ -60,6 +60,16 @@ function isDefined<X>(value: X | undefined): value is X {
   return value !== undefined;
 }
 
+function deduplicate<T>(input: ReadonlyArray<T>, comparator: (a: T, b: T) => number): ReadonlyArray<T> {
+  const out = new Array<T>();
+  for (const element of input) {
+    if (!out.find(o => comparator(o, element) === 0)) {
+      out.push(element);
+    }
+  }
+  return out;
+}
+
 /** Account and undefined are valid events. The third option means no event fired yet */
 type LastWatchAccountEvent = Account | undefined | "no_event_fired_yet";
 
@@ -324,7 +334,35 @@ export class CosmWasmConnection implements BlockchainConnection {
     } else if (height) {
       txs = await this.cosmWasmClient.searchTx({ height: height }, filter);
     } else if (sentFromOrTo) {
-      txs = await this.cosmWasmClient.searchTx({ sentFromOrTo: sentFromOrTo }, filter);
+      const pendingRequests = new Array<Promise<readonly TxsResponse[]>>();
+      pendingRequests.push(this.cosmWasmClient.searchTx({ sentFromOrTo: sentFromOrTo }, filter));
+      for (const contract of this.erc20Tokens.map(token => token.contractAddress)) {
+        const searchBySender = [
+          {
+            key: "wasm.contract_address",
+            value: contract,
+          },
+          {
+            key: "wasm.sender",
+            value: sentFromOrTo,
+          },
+        ];
+        const searchByRecipient = [
+          {
+            key: "wasm.contract_address",
+            value: contract,
+          },
+          {
+            key: "wasm.recipient",
+            value: sentFromOrTo,
+          },
+        ];
+        pendingRequests.push(this.cosmWasmClient.searchTx({ tags: searchBySender }, filter));
+        pendingRequests.push(this.cosmWasmClient.searchTx({ tags: searchByRecipient }, filter));
+      }
+      const responses = await Promise.all(pendingRequests);
+      const allResults = responses.reduce((accumulator, results) => accumulator.concat(results), []);
+      txs = deduplicate(allResults, (a, b) => a.txhash.localeCompare(b.txhash));
     } else {
       throw new Error("Unsupported query");
     }
