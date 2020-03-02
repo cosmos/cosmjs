@@ -8,7 +8,7 @@ export interface GetNonceResult {
 export interface PostTxResult {
   readonly logs: readonly Log[];
   readonly rawLog: string;
-  /** Transaction hash (might be used as transaction ID). Guaranteed to be non-exmpty upper-case hex */
+  /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
 }
 export interface SearchByIdQuery {
@@ -20,7 +20,21 @@ export interface SearchByHeightQuery {
 export interface SearchBySentFromOrToQuery {
   readonly sentFromOrTo: string;
 }
-export declare type SearchTxQuery = SearchByIdQuery | SearchByHeightQuery | SearchBySentFromOrToQuery;
+/**
+ * This query type allows you to pass arbitrary key/value pairs to the backend. It is
+ * more powerful and slightly lower level than the other search options.
+ */
+export interface SearchByTagsQuery {
+  readonly tags: readonly {
+    readonly key: string;
+    readonly value: string;
+  }[];
+}
+export declare type SearchTxQuery =
+  | SearchByIdQuery
+  | SearchByHeightQuery
+  | SearchBySentFromOrToQuery
+  | SearchByTagsQuery;
 export interface SearchTxFilter {
   readonly minHeight?: number;
   readonly maxHeight?: number;

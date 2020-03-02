@@ -13,7 +13,7 @@ export interface GetNonceResult {
 export interface PostTxResult {
   readonly logs: readonly Log[];
   readonly rawLog: string;
-  /** Transaction hash (might be used as transaction ID). Guaranteed to be non-exmpty upper-case hex */
+  /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
 }
 
@@ -29,7 +29,19 @@ export interface SearchBySentFromOrToQuery {
   readonly sentFromOrTo: string;
 }
 
-export type SearchTxQuery = SearchByIdQuery | SearchByHeightQuery | SearchBySentFromOrToQuery;
+/**
+ * This query type allows you to pass arbitrary key/value pairs to the backend. It is
+ * more powerful and slightly lower level than the other search options.
+ */
+export interface SearchByTagsQuery {
+  readonly tags: readonly { readonly key: string; readonly value: string }[];
+}
+
+export type SearchTxQuery =
+  | SearchByIdQuery
+  | SearchByHeightQuery
+  | SearchBySentFromOrToQuery
+  | SearchByTagsQuery;
 
 function isSearchByIdQuery(query: SearchTxQuery): query is SearchByIdQuery {
   return (query as SearchByIdQuery).id !== undefined;
@@ -41,6 +53,10 @@ function isSearchByHeightQuery(query: SearchTxQuery): query is SearchByHeightQue
 
 function isSearchBySentFromOrToQuery(query: SearchTxQuery): query is SearchBySentFromOrToQuery {
   return (query as SearchBySentFromOrToQuery).sentFromOrTo !== undefined;
+}
+
+function isSearchByTagsQuery(query: SearchTxQuery): query is SearchByTagsQuery {
+  return (query as SearchByTagsQuery).tags !== undefined;
 }
 
 export interface SearchTxFilter {
@@ -159,11 +175,16 @@ export class CosmWasmClient {
       }
     } else if (isSearchBySentFromOrToQuery(query)) {
       // We cannot get both in one request (see https://github.com/cosmos/gaia/issues/75)
-      const sent = await this.txsQuery(withFilters(`message.sender=${query.sentFromOrTo}`));
-      const received = await this.txsQuery(withFilters(`transfer.recipient=${query.sentFromOrTo}`));
+      const sentQuery = withFilters(`message.module=bank&message.sender=${query.sentFromOrTo}`);
+      const receivedQuery = withFilters(`message.module=bank&transfer.recipient=${query.sentFromOrTo}`);
+      const sent = await this.txsQuery(sentQuery);
+      const received = await this.txsQuery(receivedQuery);
 
       const sentHashes = sent.map(t => t.txhash);
       txs = [...sent, ...received.filter(t => !sentHashes.includes(t.txhash))];
+    } else if (isSearchByTagsQuery(query)) {
+      const rawQuery = withFilters(query.tags.map(t => `${t.key}=${t.value}`).join("&"));
+      txs = await this.txsQuery(rawQuery);
     } else {
       throw new Error("Unknown query type");
     }

@@ -63,6 +63,31 @@ export const tendermintAddressMatcher = /^[0-9A-F]{40}$/;
 // https://github.com/bitcoin/bips/blob/master/bip-0173.mediawiki#bech32
 export const bech32AddressMatcher = /^[\x21-\x7e]{1,83}1[02-9ac-hj-np-z]{38}$/;
 
+/** Deployed as part of scripts/wasmd/init.sh */
+export const deployedErc20 = {
+  codeId: 1,
+  source: "https://crates.io/api/v1/crates/cw-erc20/0.2.0/download",
+  builder: "confio/cosmwasm-opt:0.7.0",
+  checksum: "aff8c8873d79d2153a8b9066a0683fec3c903669267eb806ffa831dcd4b3daae",
+  instances: [
+    "cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5", // HASH
+    "cosmos1hqrdl6wstt8qzshwc6mrumpjk9338k0lr4dqxd", // ISA
+    "cosmos18r5szma8hm93pvx6lwpjwyxruw27e0k5uw835c", // JADE
+  ],
+};
+
+export const wasmdEndpoint = "http://localhost:1317";
+
+export const faucet = {
+  mnemonic:
+    "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone",
+  pubkey: {
+    type: "tendermint/PubKeySecp256k1",
+    value: "A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ",
+  },
+  address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+};
+
 export function wasmdEnabled(): boolean {
   return !!process.env.WASMD_ENABLED;
 }
@@ -71,6 +96,12 @@ export function pendingWithoutWasmd(): void {
   if (!wasmdEnabled()) {
     return pending("Set WASMD_ENABLED to enable Wasmd based tests");
   }
+}
+
+/** Returns first element. Throws if array has a different length than 1. */
+export function fromOneElementArray<T>(elements: ArrayLike<T>): T {
+  if (elements.length !== 1) throw new Error(`Expected exactly one element but got ${elements.length}`);
+  return elements[0];
 }
 
 describe("leb128", () => {

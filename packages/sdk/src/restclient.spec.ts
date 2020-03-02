@@ -13,6 +13,9 @@ import { SigningCosmWasmClient } from "./signingcosmwasmclient";
 import cosmoshub from "./testdata/cosmoshub.json";
 import {
   bech32AddressMatcher,
+  deployedErc20,
+  faucet,
+  fromOneElementArray,
   getRandomizedHackatom,
   makeRandomAddress,
   pendingWithoutWasmd,
@@ -20,9 +23,12 @@ import {
   tendermintIdMatcher,
   tendermintOptionalIdMatcher,
   wasmdEnabled,
+  wasmdEndpoint,
 } from "./testutils.spec";
 import {
   Coin,
+  isMsgInstantiateContract,
+  isMsgStoreCode,
   Msg,
   MsgExecuteContract,
   MsgInstantiateContract,
@@ -35,17 +41,7 @@ import {
 
 const { fromAscii, fromBase64, fromHex, toAscii, toBase64, toHex } = Encoding;
 
-const httpUrl = "http://localhost:1317";
 const defaultNetworkId = "testing";
-const faucet = {
-  mnemonic:
-    "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone",
-  pubkey: {
-    type: "tendermint/PubKeySecp256k1",
-    value: "A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ",
-  },
-  address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
-};
 const emptyAddress = "cosmos1ltkhnmdcqemmd2tkhnx7qx66tq7e0wykw2j85k";
 const unusedAccount = {
   address: "cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u",
@@ -168,7 +164,7 @@ async function executeContract(
 
 describe("RestClient", () => {
   it("can be constructed", () => {
-    const client = new RestClient(httpUrl);
+    const client = new RestClient(wasmdEndpoint);
     expect(client).toBeTruthy();
   });
 
@@ -177,7 +173,7 @@ describe("RestClient", () => {
   describe("authAccounts", () => {
     it("works for unused account without pubkey", async () => {
       pendingWithoutWasmd();
-      const client = new RestClient(httpUrl);
+      const client = new RestClient(wasmdEndpoint);
       const { result } = await client.authAccounts(unusedAccount.address);
       expect(result).toEqual({
         type: "cosmos-sdk/Account",
@@ -203,7 +199,7 @@ describe("RestClient", () => {
     // This fails in the first test run if you forget to run `./scripts/wasmd/init.sh`
     it("has correct pubkey for faucet", async () => {
       pendingWithoutWasmd();
-      const client = new RestClient(httpUrl);
+      const client = new RestClient(wasmdEndpoint);
       const { result } = await client.authAccounts(faucet.address);
       expect(result.value).toEqual(
         jasmine.objectContaining({
@@ -215,7 +211,7 @@ describe("RestClient", () => {
     // This property is used by CosmWasmClient.getAccount
     it("returns empty address for non-existent account", async () => {
       pendingWithoutWasmd();
-      const client = new RestClient(httpUrl);
+      const client = new RestClient(wasmdEndpoint);
       const nonExistentAccount = makeRandomAddress();
       const { result } = await client.authAccounts(nonExistentAccount);
       expect(result).toEqual({
@@ -230,7 +226,7 @@ describe("RestClient", () => {
   describe("blocksLatest", () => {
     it("works", async () => {
       pendingWithoutWasmd();
-      const client = new RestClient(httpUrl);
+      const client = new RestClient(wasmdEndpoint);
       const response = await client.blocksLatest();
 
       // id
@@ -263,7 +259,7 @@ describe("RestClient", () => {
   describe("blocks", () => {
     it("works for block by height", async () => {
       pendingWithoutWasmd();
-      const client = new RestClient(httpUrl);
+      const client = new RestClient(wasmdEndpoint);
       const height = parseInt((await client.blocksLatest()).block.header.height, 10);
       const response = await client.blocks(height - 1);
 
@@ -299,7 +295,7 @@ describe("RestClient", () => {
   describe("nodeInfo", () => {
     it("works", async () => {
       pendingWithoutWasmd();
-      const client = new RestClient(httpUrl);
+      const client = new RestClient(wasmdEndpoint);
       const info = await client.nodeInfo();
       expect(info.node_info.network).toEqual(defaultNetworkId);
     });
@@ -321,7 +317,9 @@ describe("RestClient", () => {
     beforeAll(async () => {
       if (wasmdEnabled()) {
         const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-        const client = new SigningCosmWasmClient(httpUrl, faucet.address, signBytes => pen.sign(signBytes));
+        const client = new SigningCosmWasmClient(wasmdEndpoint, faucet.address, signBytes =>
+          pen.sign(signBytes),
+        );
 
         const recipient = makeRandomAddress();
         const transferAmount = [
@@ -333,7 +331,7 @@ describe("RestClient", () => {
         const result = await client.sendTokens(recipient, transferAmount);
 
         await sleep(50); // wait until tx is indexed
-        const txDetails = await new RestClient(httpUrl).txsById(result.transactionHash);
+        const txDetails = await new RestClient(wasmdEndpoint).txsById(result.transactionHash);
         posted = {
           sender: faucet.address,
           recipient: recipient,
@@ -347,7 +345,7 @@ describe("RestClient", () => {
     it("can query transactions by height", async () => {
       pendingWithoutWasmd();
       assert(posted);
-      const client = new RestClient(httpUrl);
+      const client = new RestClient(wasmdEndpoint);
       const result = await client.txsQuery(`tx.height=${posted.height}&limit=26`);
       expect(parseInt(result.count, 10)).toEqual(1);
       expect(parseInt(result.limit, 10)).toEqual(26);
@@ -360,7 +358,7 @@ describe("RestClient", () => {
     it("can query transactions by ID", async () => {
       pendingWithoutWasmd();
       assert(posted);
-      const client = new RestClient(httpUrl);
+      const client = new RestClient(wasmdEndpoint);
       const result = await client.txsQuery(`tx.hash=${posted.hash}&limit=26`);
       expect(parseInt(result.count, 10)).toEqual(1);
       expect(parseInt(result.limit, 10)).toEqual(26);
@@ -373,7 +371,7 @@ describe("RestClient", () => {
     it("can query transactions by sender", async () => {
       pendingWithoutWasmd();
       assert(posted);
-      const client = new RestClient(httpUrl);
+      const client = new RestClient(wasmdEndpoint);
       const result = await client.txsQuery(`message.sender=${posted.sender}&limit=200`);
       expect(parseInt(result.count, 10)).toBeGreaterThanOrEqual(1);
       expect(parseInt(result.limit, 10)).toEqual(200);
@@ -387,7 +385,7 @@ describe("RestClient", () => {
     it("can query transactions by recipient", async () => {
       pendingWithoutWasmd();
       assert(posted);
-      const client = new RestClient(httpUrl);
+      const client = new RestClient(wasmdEndpoint);
       const result = await client.txsQuery(`transfer.recipient=${posted.recipient}&limit=200`);
       expect(parseInt(result.count, 10)).toEqual(1);
       expect(parseInt(result.limit, 10)).toEqual(200);
@@ -402,7 +400,7 @@ describe("RestClient", () => {
       pending("This combination is broken 🤷‍♂️. Handle client-side at higher level.");
       pendingWithoutWasmd();
       assert(posted);
-      const client = new RestClient(httpUrl);
+      const client = new RestClient(wasmdEndpoint);
       const hashQuery = `tx.hash=${posted.hash}`;
 
       {
@@ -429,7 +427,7 @@ describe("RestClient", () => {
     it("can filter by recipient and tx.minheight", async () => {
       pendingWithoutWasmd();
       assert(posted);
-      const client = new RestClient(httpUrl);
+      const client = new RestClient(wasmdEndpoint);
       const recipientQuery = `transfer.recipient=${posted.recipient}`;
 
       {
@@ -456,7 +454,7 @@ describe("RestClient", () => {
     it("can filter by recipient and tx.maxheight", async () => {
       pendingWithoutWasmd();
       assert(posted);
-      const client = new RestClient(httpUrl);
+      const client = new RestClient(wasmdEndpoint);
       const recipientQuery = `transfer.recipient=${posted.recipient}`;
 
       {
@@ -479,12 +477,114 @@ describe("RestClient", () => {
         expect(count).toEqual("0");
       }
     });
+
+    it("can query by tags (module + code_id)", async () => {
+      pendingWithoutWasmd();
+      assert(posted);
+      const client = new RestClient(wasmdEndpoint);
+      const result = await client.txsQuery(`message.module=wasm&message.code_id=${deployedErc20.codeId}`);
+      expect(parseInt(result.count, 10)).toBeGreaterThanOrEqual(4);
+
+      // Check first 4 results
+      const [store, hash, isa, jade] = result.txs.map(tx => fromOneElementArray(tx.tx.value.msg));
+      assert(isMsgStoreCode(store));
+      assert(isMsgInstantiateContract(hash));
+      assert(isMsgInstantiateContract(isa));
+      assert(isMsgInstantiateContract(jade));
+      expect(store.value).toEqual(
+        jasmine.objectContaining({
+          sender: faucet.address,
+          source: deployedErc20.source,
+          builder: deployedErc20.builder,
+        }),
+      );
+      expect(hash.value).toEqual({
+        code_id: deployedErc20.codeId.toString(),
+        init_funds: [],
+        init_msg: jasmine.objectContaining({
+          symbol: "HASH",
+        }),
+        label: "HASH",
+        sender: faucet.address,
+      });
+      expect(isa.value).toEqual({
+        code_id: deployedErc20.codeId.toString(),
+        init_funds: [],
+        init_msg: jasmine.objectContaining({ symbol: "ISA" }),
+        label: "ISA",
+        sender: faucet.address,
+      });
+      expect(jade.value).toEqual({
+        code_id: deployedErc20.codeId.toString(),
+        init_funds: [],
+        init_msg: jasmine.objectContaining({ symbol: "JADE" }),
+        label: "JADE",
+        sender: faucet.address,
+      });
+    });
+
+    // Like previous test but filtered by message.action=store-code and message.action=instantiate
+    it("can query by tags (module + code_id + action)", async () => {
+      pendingWithoutWasmd();
+      assert(posted);
+      const client = new RestClient(wasmdEndpoint);
+
+      {
+        const uploads = await client.txsQuery(
+          `message.module=wasm&message.code_id=${deployedErc20.codeId}&message.action=store-code`,
+        );
+        expect(parseInt(uploads.count, 10)).toEqual(1);
+        const store = fromOneElementArray(uploads.txs[0].tx.value.msg);
+        assert(isMsgStoreCode(store));
+        expect(store.value).toEqual(
+          jasmine.objectContaining({
+            sender: faucet.address,
+            source: deployedErc20.source,
+            builder: deployedErc20.builder,
+          }),
+        );
+      }
+
+      {
+        const instantiations = await client.txsQuery(
+          `message.module=wasm&message.code_id=${deployedErc20.codeId}&message.action=instantiate`,
+        );
+        expect(parseInt(instantiations.count, 10)).toBeGreaterThanOrEqual(3);
+        const [hash, isa, jade] = instantiations.txs.map(tx => fromOneElementArray(tx.tx.value.msg));
+        assert(isMsgInstantiateContract(hash));
+        assert(isMsgInstantiateContract(isa));
+        assert(isMsgInstantiateContract(jade));
+        expect(hash.value).toEqual({
+          code_id: deployedErc20.codeId.toString(),
+          init_funds: [],
+          init_msg: jasmine.objectContaining({
+            symbol: "HASH",
+          }),
+          label: "HASH",
+          sender: faucet.address,
+        });
+        expect(isa.value).toEqual({
+          code_id: deployedErc20.codeId.toString(),
+          init_funds: [],
+          init_msg: jasmine.objectContaining({ symbol: "ISA" }),
+          label: "ISA",
+          sender: faucet.address,
+        });
+        expect(jade.value).toEqual({
+          code_id: deployedErc20.codeId.toString(),
+          init_funds: [],
+          init_msg: jasmine.objectContaining({ symbol: "JADE" }),
+          label: "JADE",
+          sender: faucet.address,
+        });
+      }
+    });
   });
 
   describe("encodeTx", () => {
     it("works for cosmoshub example", async () => {
       pendingWithoutWasmd();
-      const client = new RestClient(httpUrl);
+      const client = new RestClient(wasmdEndpoint);
       expect(await client.encodeTx(cosmoshub.tx)).toEqual(fromBase64(cosmoshub.tx_data));
     });
   });
@@ -519,7 +619,7 @@ describe("RestClient", () => {
         gas: "890000",
       };
 
-      const client = new RestClient(httpUrl);
+      const client = new RestClient(wasmdEndpoint);
       const { account_number, sequence } = (await client.authAccounts(faucet.address)).result.value;
 
       const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account_number, sequence);
@@ -533,7 +633,7 @@ describe("RestClient", () => {
     it("can upload, instantiate and execute wasm", async () => {
       pendingWithoutWasmd();
       const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-      const client = new RestClient(httpUrl);
+      const client = new RestClient(wasmdEndpoint);
 
       const transferAmount: readonly Coin[] = [
         {
@@ -607,7 +707,7 @@ describe("RestClient", () => {
     it("can list upload code", async () => {
       pendingWithoutWasmd();
       const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-      const client = new RestClient(httpUrl);
+      const client = new RestClient(wasmdEndpoint);
 
       // check with contracts were here first to compare
       const existingInfos = await client.listCodeInfo();
@@ -647,7 +747,7 @@ describe("RestClient", () => {
     it("can list contracts and get info", async () => {
       pendingWithoutWasmd();
       const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-      const client = new RestClient(httpUrl);
+      const client = new RestClient(wasmdEndpoint);
       const beneficiaryAddress = makeRandomAddress();
       const transferAmount: readonly Coin[] = [
         {
@@ -708,7 +808,7 @@ describe("RestClient", () => {
     });
 
     describe("contract state", () => {
-      const client = new RestClient(httpUrl);
+      const client = new RestClient(wasmdEndpoint);
       const noContract = makeRandomAddress();
       const expectedKey = toAscii("config");
       let contractAddress: string | undefined;
