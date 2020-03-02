@@ -7,6 +7,8 @@ export { unmarshalTx } from "./decoding";
 export { makeSignBytes, marshalTx } from "./encoding";
 export { BroadcastMode, RestClient, TxsResponse } from "./restclient";
 export {
+  Block,
+  BlockHeader,
   Code,
   CodeDetails,
   Contract,

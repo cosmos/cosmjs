@@ -2,7 +2,7 @@ import { Sha256 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
 
 import { Log, parseLogs } from "./logs";
-import { BlockResponse, BroadcastMode, RestClient } from "./restclient";
+import { BroadcastMode, RestClient } from "./restclient";
 import { CosmosSdkAccount, CosmosSdkTx, StdTx } from "./types";
 
 export interface GetNonceResult {
@@ -106,6 +106,25 @@ export interface IndexedTx {
   readonly timestamp: string;
 }
 
+export interface BlockHeader {
+  readonly version: {
+    readonly block: string;
+    readonly app: string;
+  };
+  readonly height: number;
+  readonly chainId: string;
+  /** An RFC 3339 time string like e.g. '2020-02-15T10:39:10.4696305Z' */
+  readonly time: string;
+}
+
+export interface Block {
+  /** The ID is a hash of the block header (uppercase hex) */
+  readonly id: string;
+  readonly header: BlockHeader;
+  /** Array of raw transactions */
+  readonly txs: ReadonlyArray<Uint8Array>;
+}
+
 export class CosmWasmClient {
   protected readonly restClient: RestClient;
 
@@ -159,12 +178,20 @@ export class CosmWasmClient {
    *
    * @param height The height of the block. If undefined, the latest height is used.
    */
-  public async getBlock(height?: number): Promise<BlockResponse> {
-    if (height !== undefined) {
-      return this.restClient.blocks(height);
-    } else {
-      return this.restClient.blocksLatest();
-    }
+  public async getBlock(height?: number): Promise<Block> {
+    const response =
+      height !== undefined ? await this.restClient.blocks(height) : await this.restClient.blocksLatest();
+
+    return {
+      id: response.block_id.hash,
+      header: {
+        version: response.block.header.version,
+        time: response.block.header.time,
+        height: parseInt(response.block.header.height, 10),
+        chainId: response.block.header.chain_id,
+      },
+      txs: (response.block.data.txs || []).map(encoded => Encoding.fromBase64(encoded)),
+    };
   }
 
   public async searchTx(query: SearchTxQuery, filter: SearchTxFilter = {}): Promise<readonly IndexedTx[]> {

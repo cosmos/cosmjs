@@ -138,8 +138,8 @@ export class CosmWasmConnection implements BlockchainConnection {
   }
 
   public async height(): Promise<number> {
-    const { block } = await this.cosmWasmClient.getBlock();
-    return parseInt(block.header.height, 10);
+    const { header } = await this.cosmWasmClient.getBlock();
+    return header.height;
   }
 
   public async getToken(searchTicker: TokenTicker): Promise<Token | undefined> {
@@ -247,13 +247,12 @@ export class CosmWasmConnection implements BlockchainConnection {
   }
 
   public async getBlockHeader(height: number): Promise<BlockHeader> {
-    // eslint-disable-next-line @typescript-eslint/camelcase
-    const { block_id: blockId, block } = await this.cosmWasmClient.getBlock(height);
+    const { id, header, txs } = await this.cosmWasmClient.getBlock(height);
     return {
-      id: blockId.hash as BlockId,
-      height: parseInt(block.header.height, 10),
-      time: new ReadonlyDate(block.header.time),
-      transactionCount: block.data.txs?.length || 0,
+      id: id as BlockId,
+      height: header.height,
+      time: new ReadonlyDate(header.time),
+      transactionCount: txs.length,
     };
   }
 

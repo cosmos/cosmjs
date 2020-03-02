@@ -108,39 +108,39 @@ describe("CosmWasmClient", () => {
       const response = await client.getBlock();
 
       // id
-      expect(response.block_id.hash).toMatch(tendermintIdMatcher);
+      expect(response.id).toMatch(tendermintIdMatcher);
 
       // header
-      expect(parseInt(response.block.header.height, 10)).toBeGreaterThanOrEqual(1);
-      expect(response.block.header.chain_id).toEqual(await client.chainId());
-      expect(new ReadonlyDate(response.block.header.time).getTime()).toBeLessThan(ReadonlyDate.now());
-      expect(new ReadonlyDate(response.block.header.time).getTime()).toBeGreaterThanOrEqual(
+      expect(response.header.height).toBeGreaterThanOrEqual(1);
+      expect(response.header.chainId).toEqual(await client.chainId());
+      expect(new ReadonlyDate(response.header.time).getTime()).toBeLessThan(ReadonlyDate.now());
+      expect(new ReadonlyDate(response.header.time).getTime()).toBeGreaterThanOrEqual(
         ReadonlyDate.now() - 5_000,
       );
 
-      // data
-      expect(response.block.data.txs === null || Array.isArray(response.block.data.txs)).toEqual(true);
+      // txs
+      expect(Array.isArray(response.txs)).toEqual(true);
     });
 
     it("works for block by height", async () => {
       pendingWithoutWasmd();
       const client = new CosmWasmClient(wasmdEndpoint);
-      const height = parseInt((await client.getBlock()).block.header.height, 10);
+      const height = (await client.getBlock()).header.height;
       const response = await client.getBlock(height - 1);
 
       // id
-      expect(response.block_id.hash).toMatch(tendermintIdMatcher);
+      expect(response.id).toMatch(tendermintIdMatcher);
 
       // header
-      expect(response.block.header.height).toEqual(`${height - 1}`);
-      expect(response.block.header.chain_id).toEqual(await client.chainId());
-      expect(new ReadonlyDate(response.block.header.time).getTime()).toBeLessThan(ReadonlyDate.now());
-      expect(new ReadonlyDate(response.block.header.time).getTime()).toBeGreaterThanOrEqual(
+      expect(response.header.height).toEqual(height - 1);
+      expect(response.header.chainId).toEqual(await client.chainId());
+      expect(new ReadonlyDate(response.header.time).getTime()).toBeLessThan(ReadonlyDate.now());
+      expect(new ReadonlyDate(response.header.time).getTime()).toBeGreaterThanOrEqual(
         ReadonlyDate.now() - 5_000,
       );
 
-      // data
-      expect(response.block.data.txs === null || Array.isArray(response.block.data.txs)).toEqual(true);
+      // txs
+      expect(Array.isArray(response.txs)).toEqual(true);
     });
   });
 
