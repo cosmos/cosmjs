@@ -2,6 +2,7 @@ import { Sha256 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
 import pako from "pako";
 
+import { isValidBuilder } from "./builder";
 import { CosmWasmClient, GetNonceResult, PostTxResult } from "./cosmwasmclient";
 import { makeSignBytes } from "./encoding";
 import { findAttribute, Log } from "./logs";
@@ -30,6 +31,15 @@ export interface FeeTable {
 
 function singleAmount(amount: number, denom: string): readonly Coin[] {
   return [{ amount: amount.toString(), denom: denom }];
+}
+
+function prepareBuilder(buider: string | undefined): string {
+  if (buider === undefined) {
+    return ""; // normalization needed by backend
+  } else {
+    if (!isValidBuilder(buider)) throw new Error("The builder (Docker Hub image with tag) is not valid");
+    return buider;
+  }
 }
 
 const defaultFees: FeeTable = {
@@ -105,7 +115,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   /** Uploads code and returns a receipt, including the code ID */
   public async upload(wasmCode: Uint8Array, meta: UploadMeta = {}, memo = ""): Promise<UploadReceipt> {
     const source = meta.source || "";
-    const builder = meta.builder || "";
+    const builder = prepareBuilder(meta.builder);
 
     const compressed = pako.gzip(wasmCode, { level: 9 });
     const storeCodeMsg: MsgStoreCode = {
