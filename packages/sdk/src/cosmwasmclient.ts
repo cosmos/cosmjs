@@ -159,8 +159,10 @@ export class CosmWasmClient {
       }
     } else if (isSearchBySentFromOrToQuery(query)) {
       // We cannot get both in one request (see https://github.com/cosmos/gaia/issues/75)
-      const sent = await this.txsQuery(withFilters(`message.sender=${query.sentFromOrTo}`));
-      const received = await this.txsQuery(withFilters(`transfer.recipient=${query.sentFromOrTo}`));
+      const sentQuery = withFilters(`message.module=bank&message.sender=${query.sentFromOrTo}`);
+      const receivedQuery = withFilters(`transfer.recipient=${query.sentFromOrTo}`);
+      const sent = await this.txsQuery(sentQuery);
+      const received = await this.txsQuery(receivedQuery);
 
       const sentHashes = sent.map(t => t.txhash);
       txs = [...sent, ...received.filter(t => !sentHashes.includes(t.txhash))];
