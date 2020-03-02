@@ -83,6 +83,7 @@ export interface IndexedTx {
   readonly gasWanted?: number;
   /** The gas used by the execution */
   readonly gasUsed?: number;
+  /** An RFC 3339 time string like e.g. '2020-02-15T10:39:10.4696305Z' */
   readonly timestamp: string;
 }
 export interface BlockHeader {
