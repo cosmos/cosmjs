@@ -17,7 +17,7 @@ export interface UploadMeta {
   /** The builder tag */
   readonly builder?: string;
 }
-export interface UploadReceipt {
+export interface UploadResult {
   /** Size of the original wasm code in bytes */
   readonly originalSize: number;
   /** A hex encoded sha256 checksum of the original wasm code (that is stored on chain) */
@@ -28,6 +28,16 @@ export interface UploadReceipt {
   readonly compressedChecksum: string;
   /** The ID of the code asigned by the chain */
   readonly codeId: number;
+  readonly logs: readonly Log[];
+  /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
+  readonly transactionHash: string;
+}
+export interface InstantiateResult {
+  /** The address of the newly instantiated contract */
+  readonly contractAddress: string;
+  readonly logs: readonly Log[];
+  /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
+  readonly transactionHash: string;
 }
 export interface ExecuteResult {
   readonly logs: readonly Log[];
@@ -48,14 +58,14 @@ export declare class SigningCosmWasmClient extends CosmWasmClient {
   getNonce(address?: string): Promise<GetNonceResult>;
   getAccount(address?: string): Promise<CosmosSdkAccount | undefined>;
   /** Uploads code and returns a receipt, including the code ID */
-  upload(wasmCode: Uint8Array, meta?: UploadMeta, memo?: string): Promise<UploadReceipt>;
+  upload(wasmCode: Uint8Array, meta?: UploadMeta, memo?: string): Promise<UploadResult>;
   instantiate(
     codeId: number,
     initMsg: object,
     label: string,
     memo?: string,
     transferAmount?: readonly Coin[],
-  ): Promise<string>;
+  ): Promise<InstantiateResult>;
   execute(
     contractAddress: string,
     handleMsg: object,

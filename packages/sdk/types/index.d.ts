@@ -28,9 +28,10 @@ export {
 export { findSequenceForSignedTx } from "./sequence";
 export { encodeSecp256k1Signature, decodeSignature } from "./signature";
 export {
+  ExecuteResult,
+  InstantiateResult,
   SigningCallback,
   SigningCosmWasmClient,
-  ExecuteResult,
   UploadMeta,
-  UploadReceipt,
+  UploadResult,
 } from "./signingcosmwasmclient";

@@ -68,7 +68,7 @@ export interface UploadMeta {
   readonly builder?: string;
 }
 
-export interface UploadReceipt {
+export interface UploadResult {
   /** Size of the original wasm code in bytes */
   readonly originalSize: number;
   /** A hex encoded sha256 checksum of the original wasm code (that is stored on chain) */
@@ -79,6 +79,17 @@ export interface UploadReceipt {
   readonly compressedChecksum: string;
   /** The ID of the code asigned by the chain */
   readonly codeId: number;
+  readonly logs: readonly Log[];
+  /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
+  readonly transactionHash: string;
+}
+
+export interface InstantiateResult {
+  /** The address of the newly instantiated contract */
+  readonly contractAddress: string;
+  readonly logs: readonly Log[];
+  /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
+  readonly transactionHash: string;
 }
 
 export interface ExecuteResult {
@@ -115,7 +126,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   }
 
   /** Uploads code and returns a receipt, including the code ID */
-  public async upload(wasmCode: Uint8Array, meta: UploadMeta = {}, memo = ""): Promise<UploadReceipt> {
+  public async upload(wasmCode: Uint8Array, meta: UploadMeta = {}, memo = ""): Promise<UploadResult> {
     const source = meta.source || "";
     const builder = prepareBuilder(meta.builder);
 
@@ -150,6 +161,8 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       compressedSize: compressed.length,
       compressedChecksum: Encoding.toHex(new Sha256(compressed).digest()),
       codeId: Number.parseInt(codeIdAttr.value, 10),
+      logs: result.logs,
+      transactionHash: result.transactionHash,
     };
   }
 
@@ -159,7 +172,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     label: string,
     memo = "",
     transferAmount?: readonly Coin[],
-  ): Promise<string> {
+  ): Promise<InstantiateResult> {
     const instantiateMsg: MsgInstantiateContract = {
       type: "wasm/instantiate",
       value: {
@@ -188,7 +201,11 @@ export class SigningCosmWasmClient extends CosmWasmClient {
 
     const result = await this.postTx(signedTx);
     const contractAddressAttr = findAttribute(result.logs, "message", "contract_address");
-    return contractAddressAttr.value;
+    return {
+      contractAddress: contractAddressAttr.value,
+      logs: result.logs,
+      transactionHash: result.transactionHash,
+    };
   }
 
   public async execute(

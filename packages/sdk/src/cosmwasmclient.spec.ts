@@ -313,7 +313,7 @@ describe("CosmWasmClient", () => {
         );
         const { codeId } = await client.upload(getRandomizedHackatom());
         const initMsg = { verifier: makeRandomAddress(), beneficiary: makeRandomAddress() };
-        const contractAddress = await client.instantiate(codeId, initMsg, "random hackatom");
+        const { contractAddress } = await client.instantiate(codeId, initMsg, "random hackatom");
         contract = { initMsg: initMsg, address: contractAddress };
       }
     });
@@ -366,7 +366,7 @@ describe("CosmWasmClient", () => {
         );
         const { codeId } = await client.upload(getRandomizedHackatom());
         const initMsg = { verifier: makeRandomAddress(), beneficiary: makeRandomAddress() };
-        const contractAddress = await client.instantiate(codeId, initMsg, "a different hackatom");
+        const { contractAddress } = await client.instantiate(codeId, initMsg, "a different hackatom");
         contract = { initMsg: initMsg, address: contractAddress };
       }
     });

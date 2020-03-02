@@ -87,7 +87,7 @@ describe("SigningCosmWasmClient", () => {
         },
       ];
       const beneficiaryAddress = makeRandomAddress();
-      const contractAddress = await client.instantiate(
+      const { contractAddress } = await client.instantiate(
         codeId,
         {
           verifier: faucet.address,
@@ -148,7 +148,7 @@ describe("SigningCosmWasmClient", () => {
         },
       ];
       const beneficiaryAddress = makeRandomAddress();
-      const contractAddress = await client.instantiate(
+      const { contractAddress } = await client.instantiate(
         codeId,
         {
           verifier: faucet.address,
