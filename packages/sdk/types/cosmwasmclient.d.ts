@@ -74,6 +74,7 @@ export interface ContractDetails extends Contract {
 /** A transaction that is indexed as part of the transaction history */
 export interface IndexedTx {
   readonly height: number;
+  /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly hash: string;
   readonly rawLog: string;
   readonly logs: readonly Log[];
