@@ -106,9 +106,13 @@ export interface CodeInfo {
   /** Bech32 account address */
   readonly creator: string;
   /** Hex-encoded sha256 hash of the code stored here */
-  readonly code_hash: string;
+  readonly data_hash: string;
   readonly source?: string;
   readonly builder?: string;
+}
+export interface CodeDetails extends CodeInfo {
+  /** Base64 encoded raw wasm data */
+  readonly data: string;
 }
 export interface ContractInfo {
   readonly address: string;
@@ -121,9 +125,6 @@ export interface ContractDetails extends ContractInfo {
   /** Argument passed on initialization of the contract */
   readonly init_msg: object;
 }
-interface GetCodeResult {
-  readonly code: string;
-}
 declare type RestClientResponse =
   | NodeInfoResponse
   | BlockResponse
@@ -134,9 +135,9 @@ declare type RestClientResponse =
   | EncodeTxResponse
   | WasmResponse<string>
   | WasmResponse<CodeInfo[]>
+  | WasmResponse<CodeDetails>
   | WasmResponse<ContractInfo[] | null>
-  | WasmResponse<ContractDetails | null>
-  | WasmResponse<GetCodeResult>;
+  | WasmResponse<ContractDetails | null>;
 /**
  * The mode used to send transaction
  *
@@ -173,7 +174,7 @@ export declare class RestClient {
    */
   postTx(tx: StdTx): Promise<PostTxsResponse>;
   listCodeInfo(): Promise<readonly CodeInfo[]>;
-  getCode(id: number): Promise<Uint8Array>;
+  getCode(id: number): Promise<CodeDetails>;
   listContractsByCodeId(id: number): Promise<readonly ContractInfo[]>;
   /**
    * Returns null when contract was not found at this address.
