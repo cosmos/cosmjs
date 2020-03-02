@@ -1,4 +1,4 @@
-import { TxsResponse, types } from "@cosmwasm/sdk";
+import { IndexedTx, types } from "@cosmwasm/sdk";
 import {
   Address,
   Algorithm,
@@ -180,17 +180,16 @@ export function parseSignedTx(
 export function parseTxsResponseUnsigned(
   chainId: ChainId,
   currentHeight: number,
-  response: TxsResponse,
+  response: IndexedTx,
   tokens: BankTokens,
   erc20Tokens: readonly Erc20Token[],
 ): ConfirmedTransaction<UnsignedTransaction> {
-  const height = parseInt(response.height, 10);
   return {
     transaction: parseUnsignedTx(response.tx.value, chainId, tokens, erc20Tokens),
-    height: height,
-    confirmations: currentHeight - height + 1,
-    transactionId: response.txhash as TransactionId,
-    log: response.raw_log,
+    height: response.height,
+    confirmations: currentHeight - response.height + 1,
+    transactionId: response.hash as TransactionId,
+    log: response.rawLog,
   };
 }
 
@@ -198,16 +197,15 @@ export function parseTxsResponseSigned(
   chainId: ChainId,
   currentHeight: number,
   nonce: Nonce,
-  response: TxsResponse,
+  response: IndexedTx,
   tokens: BankTokens,
   erc20Tokens: readonly Erc20Token[],
 ): ConfirmedAndSignedTransaction<UnsignedTransaction> {
-  const height = parseInt(response.height, 10);
   return {
     ...parseSignedTx(response.tx.value, chainId, nonce, tokens, erc20Tokens),
-    height: height,
-    confirmations: currentHeight - height + 1,
-    transactionId: response.txhash as TransactionId,
-    log: response.raw_log,
+    height: response.height,
+    confirmations: currentHeight - response.height + 1,
+    transactionId: response.hash as TransactionId,
+    log: response.rawLog,
   };
 }

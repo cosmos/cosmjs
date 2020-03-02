@@ -1,5 +1,5 @@
 import { Log } from "./logs";
-import { BlockResponse, BroadcastMode, RestClient, TxsResponse } from "./restclient";
+import { BlockResponse, BroadcastMode, RestClient } from "./restclient";
 import { CosmosSdkAccount, CosmosSdkTx, StdTx } from "./types";
 export interface GetNonceResult {
   readonly accountNumber: number;
@@ -63,6 +63,19 @@ export interface ContractDetails extends Contract {
   /** Argument passed on initialization of the contract */
   readonly initMsg: object;
 }
+/** A transaction that is indexed as part of the transaction history */
+export interface IndexedTx {
+  readonly height: number;
+  readonly hash: string;
+  readonly rawLog: string;
+  readonly logs: readonly Log[];
+  readonly tx: CosmosSdkTx;
+  /** The gas limit as set by the user */
+  readonly gasWanted?: number;
+  /** The gas used by the execution */
+  readonly gasUsed?: number;
+  readonly timestamp: string;
+}
 export declare class CosmWasmClient {
   protected readonly restClient: RestClient;
   constructor(url: string, broadcastMode?: BroadcastMode);
@@ -86,7 +99,7 @@ export declare class CosmWasmClient {
    * @param height The height of the block. If undefined, the latest height is used.
    */
   getBlock(height?: number): Promise<BlockResponse>;
-  searchTx(query: SearchTxQuery, filter?: SearchTxFilter): Promise<readonly TxsResponse[]>;
+  searchTx(query: SearchTxQuery, filter?: SearchTxFilter): Promise<readonly IndexedTx[]>;
   postTx(tx: StdTx): Promise<PostTxResult>;
   getCodes(): Promise<readonly Code[]>;
   getCodeDetails(codeId: number): Promise<CodeDetails>;

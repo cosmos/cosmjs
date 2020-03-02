@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/camelcase */
-import { CosmWasmClient, findSequenceForSignedTx, SearchTxFilter, TxsResponse, types } from "@cosmwasm/sdk";
+import { CosmWasmClient, findSequenceForSignedTx, IndexedTx, SearchTxFilter, types } from "@cosmwasm/sdk";
 import {
   Account,
   AccountQuery,
@@ -71,11 +70,11 @@ function deduplicate<T>(input: ReadonlyArray<T>, comparator: (a: T, b: T) => num
 }
 
 /** Compares transaxtion by height. If the height is equal, compare by hash to ensure deterministic order */
-function compareByHeightAndHash(a: TxsResponse, b: TxsResponse): number {
+function compareByHeightAndHash(a: IndexedTx, b: IndexedTx): number {
   if (a.height === b.height) {
-    return a.txhash.localeCompare(b.txhash);
+    return a.hash.localeCompare(b.hash);
   } else {
-    return parseInt(a.height, 10) - parseInt(b.height, 10);
+    return a.height - b.height;
   }
 }
 
@@ -248,9 +247,10 @@ export class CosmWasmConnection implements BlockchainConnection {
   }
 
   public async getBlockHeader(height: number): Promise<BlockHeader> {
-    const { block_id, block } = await this.cosmWasmClient.getBlock(height);
+    // eslint-disable-next-line @typescript-eslint/camelcase
+    const { block_id: blockId, block } = await this.cosmWasmClient.getBlock(height);
     return {
-      id: block_id.hash as BlockId,
+      id: blockId.hash as BlockId,
       height: parseInt(block.header.height, 10),
       time: new ReadonlyDate(block.header.time),
       transactionCount: block.data.txs?.length || 0,
@@ -337,13 +337,13 @@ export class CosmWasmConnection implements BlockchainConnection {
 
     const filter: SearchTxFilter = { minHeight: minHeight, maxHeight: maxHeight };
 
-    let txs: readonly TxsResponse[];
+    let txs: readonly IndexedTx[];
     if (id) {
       txs = await this.cosmWasmClient.searchTx({ id: id }, filter);
     } else if (height) {
       txs = await this.cosmWasmClient.searchTx({ height: height }, filter);
     } else if (sentFromOrTo) {
-      const pendingRequests = new Array<Promise<readonly TxsResponse[]>>();
+      const pendingRequests = new Array<Promise<readonly IndexedTx[]>>();
       pendingRequests.push(this.cosmWasmClient.searchTx({ sentFromOrTo: sentFromOrTo }, filter));
       for (const contract of this.erc20Tokens.map(token => token.contractAddress)) {
         const searchBySender = [
@@ -371,7 +371,7 @@ export class CosmWasmConnection implements BlockchainConnection {
       }
       const responses = await Promise.all(pendingRequests);
       const allResults = responses.reduce((accumulator, results) => accumulator.concat(results), []);
-      txs = deduplicate(allResults, (a, b) => a.txhash.localeCompare(b.txhash)).sort(compareByHeightAndHash);
+      txs = deduplicate(allResults, (a, b) => a.hash.localeCompare(b.hash)).sort(compareByHeightAndHash);
     } else {
       throw new Error("Unsupported query");
     }
@@ -460,11 +460,11 @@ export class CosmWasmConnection implements BlockchainConnection {
   }
 
   private parseAndPopulateTxResponseUnsigned(
-    response: TxsResponse,
+    response: IndexedTx,
   ): ConfirmedTransaction<UnsignedTransaction> | FailedTransaction {
     return parseTxsResponseUnsigned(
       this.chainId,
-      parseInt(response.height, 10),
+      response.height,
       response,
       this.bankTokens,
       this.erc20Tokens,
@@ -472,7 +472,7 @@ export class CosmWasmConnection implements BlockchainConnection {
   }
 
   private async parseAndPopulateTxResponseSigned(
-    response: TxsResponse,
+    response: IndexedTx,
   ): Promise<ConfirmedAndSignedTransaction<UnsignedTransaction> | FailedTransaction> {
     const firstMsg = response.tx.value.msg.find(() => true);
     if (!firstMsg) throw new Error("Got transaction without a first message. What is going on here?");
@@ -503,7 +503,7 @@ export class CosmWasmConnection implements BlockchainConnection {
 
     return parseTxsResponseSigned(
       this.chainId,
-      parseInt(response.height, 10),
+      response.height,
       nonce,
       response,
       this.bankTokens,

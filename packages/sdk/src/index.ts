@@ -12,6 +12,7 @@ export {
   Contract,
   CosmWasmClient,
   GetNonceResult,
+  IndexedTx,
   PostTxResult,
   SearchByHeightQuery,
   SearchByIdQuery,

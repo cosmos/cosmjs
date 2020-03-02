@@ -2,7 +2,7 @@ import { Sha256 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
 
 import { Log, parseLogs } from "./logs";
-import { BlockResponse, BroadcastMode, RestClient, TxsResponse } from "./restclient";
+import { BlockResponse, BroadcastMode, RestClient } from "./restclient";
 import { CosmosSdkAccount, CosmosSdkTx, StdTx } from "./types";
 
 export interface GetNonceResult {
@@ -92,6 +92,20 @@ export interface ContractDetails extends Contract {
   readonly initMsg: object;
 }
 
+/** A transaction that is indexed as part of the transaction history */
+export interface IndexedTx {
+  readonly height: number;
+  readonly hash: string;
+  readonly rawLog: string;
+  readonly logs: readonly Log[];
+  readonly tx: CosmosSdkTx;
+  /** The gas limit as set by the user */
+  readonly gasWanted?: number;
+  /** The gas used by the execution */
+  readonly gasUsed?: number;
+  readonly timestamp: string;
+}
+
 export class CosmWasmClient {
   protected readonly restClient: RestClient;
 
@@ -153,7 +167,7 @@ export class CosmWasmClient {
     }
   }
 
-  public async searchTx(query: SearchTxQuery, filter: SearchTxFilter = {}): Promise<readonly TxsResponse[]> {
+  public async searchTx(query: SearchTxQuery, filter: SearchTxFilter = {}): Promise<readonly IndexedTx[]> {
     const minHeight = filter.minHeight || 0;
     const maxHeight = filter.maxHeight || Number.MAX_SAFE_INTEGER;
 
@@ -163,7 +177,7 @@ export class CosmWasmClient {
       return `${originalQuery}&tx.minheight=${minHeight}&tx.maxheight=${maxHeight}`;
     }
 
-    let txs: readonly TxsResponse[];
+    let txs: readonly IndexedTx[];
     if (isSearchByIdQuery(query)) {
       txs = await this.txsQuery(`tx.hash=${query.id}`);
     } else if (isSearchByHeightQuery(query)) {
@@ -180,8 +194,8 @@ export class CosmWasmClient {
       const sent = await this.txsQuery(sentQuery);
       const received = await this.txsQuery(receivedQuery);
 
-      const sentHashes = sent.map(t => t.txhash);
-      txs = [...sent, ...received.filter(t => !sentHashes.includes(t.txhash))];
+      const sentHashes = sent.map(t => t.hash);
+      txs = [...sent, ...received.filter(t => !sentHashes.includes(t.hash))];
     } else if (isSearchByTagsQuery(query)) {
       const rawQuery = withFilters(query.tags.map(t => `${t.key}=${t.value}`).join("&"));
       txs = await this.txsQuery(rawQuery);
@@ -190,10 +204,7 @@ export class CosmWasmClient {
     }
 
     // backend sometimes messes up with min/max height filtering
-    const filtered = txs.filter(tx => {
-      const txHeight = parseInt(tx.height, 10);
-      return txHeight >= minHeight && txHeight <= maxHeight;
-    });
+    const filtered = txs.filter(tx => tx.height >= minHeight && tx.height <= maxHeight);
 
     return filtered;
   }
@@ -303,7 +314,7 @@ export class CosmWasmClient {
     }
   }
 
-  private async txsQuery(query: string): Promise<readonly TxsResponse[]> {
+  private async txsQuery(query: string): Promise<readonly IndexedTx[]> {
     // TODO: we need proper pagination support
     const limit = 100;
     const result = await this.restClient.txsQuery(`${query}&limit=${limit}`);
@@ -313,6 +324,15 @@ export class CosmWasmClient {
         `Found more results on the backend than we can process currently. Results: ${result.total_count}, supported: ${limit}`,
       );
     }
-    return result.txs;
+    return result.txs.map(
+      (restItem): IndexedTx => ({
+        height: parseInt(restItem.height, 10),
+        hash: restItem.txhash,
+        rawLog: restItem.raw_log,
+        logs: parseLogs(restItem.logs || []),
+        tx: restItem.tx,
+        timestamp: restItem.timestamp,
+      }),
+    );
   }
 }
