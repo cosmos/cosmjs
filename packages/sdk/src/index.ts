@@ -13,6 +13,7 @@ export {
   Code,
   CodeDetails,
   Contract,
+  ContractDetails,
   CosmWasmClient,
   GetNonceResult,
   IndexedTx,
