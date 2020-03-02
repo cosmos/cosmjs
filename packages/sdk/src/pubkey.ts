@@ -1,7 +1,7 @@
 import { Bech32, Encoding } from "@iov/encoding";
 import equal from "fast-deep-equal";
 
-import { Bech32PubKey, PubKey, pubkeyType } from "./types";
+import { PubKey, pubkeyType } from "./types";
 
 export function encodeSecp256k1Pubkey(pubkey: Uint8Array): PubKey {
   if (pubkey.length !== 33 || (pubkey[0] !== 0x02 && pubkey[0] !== 0x03)) {
@@ -28,8 +28,8 @@ const pubkeyAminoPrefixEd25519 = Encoding.fromHex("1624de6420");
 const pubkeyAminoPrefixSr25519 = Encoding.fromHex("0dfb1005");
 const pubkeyAminoPrefixLength = pubkeyAminoPrefixSecp256k1.length;
 
-export function decodeBech32Pubkey(bech: Bech32PubKey): PubKey {
-  const { prefix, data } = Bech32.decode(bech);
+export function decodeBech32Pubkey(bechEncoded: string): PubKey {
+  const { prefix, data } = Bech32.decode(bechEncoded);
   if (!isCosmosPubkeyBech32Prefix(prefix)) {
     throw new Error(`Invalid bech32 prefix. Must be one of ${validPubkeyPrefixes.join(", ")}.`);
   }
@@ -65,7 +65,7 @@ export function decodeBech32Pubkey(bech: Bech32PubKey): PubKey {
   }
 }
 
-export function encodeBech32Pubkey(pubkey: PubKey, prefix: CosmosPubkeyBech32Prefix): Bech32PubKey {
+export function encodeBech32Pubkey(pubkey: PubKey, prefix: CosmosPubkeyBech32Prefix): string {
   let aminoPrefix: Uint8Array;
   switch (pubkey.type) {
     // Note: please don't add cases here without writing additional unit tests

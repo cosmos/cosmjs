@@ -2,10 +2,20 @@ import { Sha256 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
 
 import { Log, parseLogs } from "./logs";
-import { BlockResponse, BroadcastMode, RestClient, TxsResponse } from "./restclient";
-import { CosmosSdkAccount, CosmosSdkTx, StdTx } from "./types";
+import { decodeBech32Pubkey } from "./pubkey";
+import { BroadcastMode, RestClient } from "./restclient";
+import { Coin, CosmosSdkTx, PubKey, StdTx } from "./types";
 
 export interface GetNonceResult {
+  readonly accountNumber: number;
+  readonly sequence: number;
+}
+
+export interface Account {
+  /** Bech32 account address */
+  readonly address: string;
+  readonly balance: ReadonlyArray<Coin>;
+  readonly pubkey: PubKey | undefined;
   readonly accountNumber: number;
   readonly sequence: number;
 }
@@ -92,6 +102,41 @@ export interface ContractDetails extends Contract {
   readonly initMsg: object;
 }
 
+/** A transaction that is indexed as part of the transaction history */
+export interface IndexedTx {
+  readonly height: number;
+  /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
+  readonly hash: string;
+  readonly rawLog: string;
+  readonly logs: readonly Log[];
+  readonly tx: CosmosSdkTx;
+  /** The gas limit as set by the user */
+  readonly gasWanted?: number;
+  /** The gas used by the execution */
+  readonly gasUsed?: number;
+  /** An RFC 3339 time string like e.g. '2020-02-15T10:39:10.4696305Z' */
+  readonly timestamp: string;
+}
+
+export interface BlockHeader {
+  readonly version: {
+    readonly block: string;
+    readonly app: string;
+  };
+  readonly height: number;
+  readonly chainId: string;
+  /** An RFC 3339 time string like e.g. '2020-02-15T10:39:10.4696305Z' */
+  readonly time: string;
+}
+
+export interface Block {
+  /** The ID is a hash of the block header (uppercase hex) */
+  readonly id: string;
+  readonly header: BlockHeader;
+  /** Array of raw transactions */
+  readonly txs: ReadonlyArray<Uint8Array>;
+}
+
 export class CosmWasmClient {
   protected readonly restClient: RestClient;
 
@@ -129,15 +174,23 @@ export class CosmWasmClient {
       );
     }
     return {
-      accountNumber: account.account_number,
+      accountNumber: account.accountNumber,
       sequence: account.sequence,
     };
   }
 
-  public async getAccount(address: string): Promise<CosmosSdkAccount | undefined> {
+  public async getAccount(address: string): Promise<Account | undefined> {
     const account = await this.restClient.authAccounts(address);
     const value = account.result.value;
-    return value.address === "" ? undefined : value;
+    return value.address === ""
+      ? undefined
+      : {
+          address: value.address,
+          balance: value.coins,
+          pubkey: value.public_key ? decodeBech32Pubkey(value.public_key) : undefined,
+          accountNumber: value.account_number,
+          sequence: value.sequence,
+        };
   }
 
   /**
@@ -145,15 +198,23 @@ export class CosmWasmClient {
    *
    * @param height The height of the block. If undefined, the latest height is used.
    */
-  public async getBlock(height?: number): Promise<BlockResponse> {
-    if (height !== undefined) {
-      return this.restClient.blocks(height);
-    } else {
-      return this.restClient.blocksLatest();
-    }
+  public async getBlock(height?: number): Promise<Block> {
+    const response =
+      height !== undefined ? await this.restClient.blocks(height) : await this.restClient.blocksLatest();
+
+    return {
+      id: response.block_id.hash,
+      header: {
+        version: response.block.header.version,
+        time: response.block.header.time,
+        height: parseInt(response.block.header.height, 10),
+        chainId: response.block.header.chain_id,
+      },
+      txs: (response.block.data.txs || []).map(encoded => Encoding.fromBase64(encoded)),
+    };
   }
 
-  public async searchTx(query: SearchTxQuery, filter: SearchTxFilter = {}): Promise<readonly TxsResponse[]> {
+  public async searchTx(query: SearchTxQuery, filter: SearchTxFilter = {}): Promise<readonly IndexedTx[]> {
     const minHeight = filter.minHeight || 0;
     const maxHeight = filter.maxHeight || Number.MAX_SAFE_INTEGER;
 
@@ -163,7 +224,7 @@ export class CosmWasmClient {
       return `${originalQuery}&tx.minheight=${minHeight}&tx.maxheight=${maxHeight}`;
     }
 
-    let txs: readonly TxsResponse[];
+    let txs: readonly IndexedTx[];
     if (isSearchByIdQuery(query)) {
       txs = await this.txsQuery(`tx.hash=${query.id}`);
     } else if (isSearchByHeightQuery(query)) {
@@ -180,8 +241,8 @@ export class CosmWasmClient {
       const sent = await this.txsQuery(sentQuery);
       const received = await this.txsQuery(receivedQuery);
 
-      const sentHashes = sent.map(t => t.txhash);
-      txs = [...sent, ...received.filter(t => !sentHashes.includes(t.txhash))];
+      const sentHashes = sent.map(t => t.hash);
+      txs = [...sent, ...received.filter(t => !sentHashes.includes(t.hash))];
     } else if (isSearchByTagsQuery(query)) {
       const rawQuery = withFilters(query.tags.map(t => `${t.key}=${t.value}`).join("&"));
       txs = await this.txsQuery(rawQuery);
@@ -190,10 +251,7 @@ export class CosmWasmClient {
     }
 
     // backend sometimes messes up with min/max height filtering
-    const filtered = txs.filter(tx => {
-      const txHeight = parseInt(tx.height, 10);
-      return txHeight >= minHeight && txHeight <= maxHeight;
-    });
+    const filtered = txs.filter(tx => tx.height >= minHeight && tx.height <= maxHeight);
 
     return filtered;
   }
@@ -303,7 +361,7 @@ export class CosmWasmClient {
     }
   }
 
-  private async txsQuery(query: string): Promise<readonly TxsResponse[]> {
+  private async txsQuery(query: string): Promise<readonly IndexedTx[]> {
     // TODO: we need proper pagination support
     const limit = 100;
     const result = await this.restClient.txsQuery(`${query}&limit=${limit}`);
@@ -313,6 +371,15 @@ export class CosmWasmClient {
         `Found more results on the backend than we can process currently. Results: ${result.total_count}, supported: ${limit}`,
       );
     }
-    return result.txs;
+    return result.txs.map(
+      (restItem): IndexedTx => ({
+        height: parseInt(restItem.height, 10),
+        hash: restItem.txhash,
+        rawLog: restItem.raw_log,
+        logs: parseLogs(restItem.logs || []),
+        tx: restItem.tx,
+        timestamp: restItem.timestamp,
+      }),
+    );
   }
 }

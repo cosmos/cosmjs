@@ -1,9 +1,19 @@
 import { Encoding } from "@iov/encoding";
 import axios, { AxiosError, AxiosInstance } from "axios";
 
-import { CosmosSdkAccount, CosmosSdkTx, Model, parseWasmData, StdTx, WasmData } from "./types";
+import { Coin, CosmosSdkTx, Model, parseWasmData, StdTx, WasmData } from "./types";
 
 const { fromBase64, toHex, toUtf8 } = Encoding;
+
+export interface CosmosSdkAccount {
+  /** Bech32 account address */
+  readonly address: string;
+  readonly coins: ReadonlyArray<Coin>;
+  /** Bech32 encoded pubkey */
+  readonly public_key: string;
+  readonly account_number: number;
+  readonly sequence: number;
+}
 
 interface NodeInfo {
   readonly network: string;

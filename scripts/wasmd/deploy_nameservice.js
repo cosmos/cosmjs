@@ -45,7 +45,7 @@ async function main() {
 
   for (const { label, initMsg } of [free, luxury]) {
     const memo = `Create an nameservice instance "${label}"`;
-    const contractAddress = await client.instantiate(uploadReceipt.codeId, initMsg, label, memo);
+    const { contractAddress } = await client.instantiate(uploadReceipt.codeId, initMsg, label, memo);
     console.info(`Contract "${label}" instantiated at ${contractAddress}`);
   }
 }

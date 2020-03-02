@@ -1,6 +1,6 @@
 {
   "name": "@cosmwasm/sdk",
-  "version": "0.7.0-alpha.2",
+  "version": "0.7.0-alpha.4",
   "description": "CosmWasm SDK",
   "author": "Ethan Frey <ethanfrey@users.noreply.github.com>",
   "license": "Apache-2.0",

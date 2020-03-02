@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { types } from "@cosmwasm/sdk";
+import { IndexedTx, types } from "@cosmwasm/sdk";
 import { Address, Algorithm, isSendTransaction, SendTransaction, TokenTicker } from "@iov/bcp";
 import { Encoding } from "@iov/encoding";
 import { assert } from "@iov/utils";
@@ -281,10 +281,11 @@ describe("decode", () => {
   describe("parseTxsResponseUnsigned", () => {
     it("works", () => {
       const currentHeight = 2923;
-      const txsResponse = {
-        height: "2823",
-        txhash: testdata.txId,
-        raw_log: '[{"msg_index":0,"success":true,"log":""}]',
+      const txsResponse: IndexedTx = {
+        height: 2823,
+        hash: testdata.txId,
+        rawLog: '[{"msg_index":0,"success":true,"log":""}]',
+        logs: [],
         tx: cosmoshub.tx,
         timestamp: "2020-02-14T11:35:41Z",
       };
@@ -310,10 +311,11 @@ describe("decode", () => {
   describe("parseTxsResponseSigned", () => {
     it("works", () => {
       const currentHeight = 2923;
-      const txsResponse = {
-        height: "2823",
-        txhash: testdata.txId,
-        raw_log: '[{"msg_index":0,"success":true,"log":""}]',
+      const txsResponse: IndexedTx = {
+        height: 2823,
+        hash: testdata.txId,
+        rawLog: '[{"msg_index":0,"success":true,"log":""}]',
+        logs: [],
         tx: cosmoshub.tx,
         timestamp: "2020-02-14T11:35:41Z",
       };

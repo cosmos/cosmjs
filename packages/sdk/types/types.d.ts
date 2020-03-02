@@ -109,15 +109,6 @@ export declare const pubkeyType: {
   sr25519: "tendermint/PubKeySr25519";
 };
 export declare const pubkeyTypes: readonly string[];
-export declare type Bech32PubKey = string;
-export interface CosmosSdkAccount {
-  /** Bech32 account address */
-  readonly address: string;
-  readonly coins: ReadonlyArray<Coin>;
-  readonly public_key: Bech32PubKey;
-  readonly account_number: number;
-  readonly sequence: number;
-}
 export interface WasmData {
   readonly key: string;
   readonly val: string;

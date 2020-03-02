@@ -1,4 +1,4 @@
-import { TxsResponse, types } from "@cosmwasm/sdk";
+import { IndexedTx, types } from "@cosmwasm/sdk";
 import {
   Amount,
   ChainId,
@@ -43,7 +43,7 @@ export declare function parseSignedTx(
 export declare function parseTxsResponseUnsigned(
   chainId: ChainId,
   currentHeight: number,
-  response: TxsResponse,
+  response: IndexedTx,
   tokens: BankTokens,
   erc20Tokens: readonly Erc20Token[],
 ): ConfirmedTransaction<UnsignedTransaction>;
@@ -51,7 +51,7 @@ export declare function parseTxsResponseSigned(
   chainId: ChainId,
   currentHeight: number,
   nonce: Nonce,
-  response: TxsResponse,
+  response: IndexedTx,
   tokens: BankTokens,
   erc20Tokens: readonly Erc20Token[],
 ): ConfirmedAndSignedTransaction<UnsignedTransaction>;

@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/camelcase */
-import { CosmWasmClient, findSequenceForSignedTx, SearchTxFilter, TxsResponse, types } from "@cosmwasm/sdk";
+import { CosmWasmClient, findSequenceForSignedTx, IndexedTx, SearchTxFilter, types } from "@cosmwasm/sdk";
 import {
   Account,
   AccountQuery,
@@ -37,10 +36,10 @@ import equal from "fast-deep-equal";
 import { ReadonlyDate } from "readonly-date";
 import { Producer, Stream } from "xstream";
 
-import { decodeCosmosPubkey, pubkeyToAddress } from "./address";
+import { pubkeyToAddress } from "./address";
 import { Caip5 } from "./caip5";
 import { CosmWasmCodec } from "./cosmwasmcodec";
-import { decodeAmount, parseTxsResponseSigned, parseTxsResponseUnsigned } from "./decode";
+import { decodeAmount, decodePubkey, parseTxsResponseSigned, parseTxsResponseUnsigned } from "./decode";
 import { buildSignedTx } from "./encode";
 import { accountToNonce, BankToken, Erc20Token } from "./types";
 
@@ -71,11 +70,11 @@ function deduplicate<T>(input: ReadonlyArray<T>, comparator: (a: T, b: T) => num
 }
 
 /** Compares transaxtion by height. If the height is equal, compare by hash to ensure deterministic order */
-function compareByHeightAndHash(a: TxsResponse, b: TxsResponse): number {
+function compareByHeightAndHash(a: IndexedTx, b: IndexedTx): number {
   if (a.height === b.height) {
-    return a.txhash.localeCompare(b.txhash);
+    return a.hash.localeCompare(b.hash);
   } else {
-    return parseInt(a.height, 10) - parseInt(b.height, 10);
+    return a.height - b.height;
   }
 }
 
@@ -139,8 +138,8 @@ export class CosmWasmConnection implements BlockchainConnection {
   }
 
   public async height(): Promise<number> {
-    const { block } = await this.cosmWasmClient.getBlock();
-    return parseInt(block.header.height, 10);
+    const { header } = await this.cosmWasmClient.getBlock();
+    return header.height;
   }
 
   public async getToken(searchTicker: TokenTicker): Promise<Token | undefined> {
@@ -165,7 +164,7 @@ export class CosmWasmConnection implements BlockchainConnection {
     const address = isPubkeyQuery(query) ? pubkeyToAddress(query.pubkey, this.addressPrefix) : query.address;
     const bankAccount = await this.cosmWasmClient.getAccount(address);
 
-    const supportedBankCoins = (bankAccount?.coins || []).filter(({ denom }) =>
+    const supportedBankCoins = (bankAccount?.balance || []).filter(({ denom }) =>
       this.bankTokens.find(token => token.denom === denom),
     );
     const erc20Amounts = await Promise.all(
@@ -192,7 +191,7 @@ export class CosmWasmConnection implements BlockchainConnection {
         ...supportedBankCoins.map(coin => decodeAmount(this.bankTokens, coin)),
         ...nonZeroErc20Amounts,
       ].sort((a, b) => a.tokenTicker.localeCompare(b.tokenTicker));
-      const pubkey = bankAccount?.public_key ? decodeCosmosPubkey(bankAccount.public_key) : undefined;
+      const pubkey = bankAccount?.pubkey ? decodePubkey(bankAccount.pubkey) : undefined;
       return {
         address: address,
         balance: balance,
@@ -248,12 +247,12 @@ export class CosmWasmConnection implements BlockchainConnection {
   }
 
   public async getBlockHeader(height: number): Promise<BlockHeader> {
-    const { block_id, block } = await this.cosmWasmClient.getBlock(height);
+    const { id, header, txs } = await this.cosmWasmClient.getBlock(height);
     return {
-      id: block_id.hash as BlockId,
-      height: parseInt(block.header.height, 10),
-      time: new ReadonlyDate(block.header.time),
-      transactionCount: block.data.txs?.length || 0,
+      id: id as BlockId,
+      height: header.height,
+      time: new ReadonlyDate(header.time),
+      transactionCount: txs.length,
     };
   }
 
@@ -337,13 +336,13 @@ export class CosmWasmConnection implements BlockchainConnection {
 
     const filter: SearchTxFilter = { minHeight: minHeight, maxHeight: maxHeight };
 
-    let txs: readonly TxsResponse[];
+    let txs: readonly IndexedTx[];
     if (id) {
       txs = await this.cosmWasmClient.searchTx({ id: id }, filter);
     } else if (height) {
       txs = await this.cosmWasmClient.searchTx({ height: height }, filter);
     } else if (sentFromOrTo) {
-      const pendingRequests = new Array<Promise<readonly TxsResponse[]>>();
+      const pendingRequests = new Array<Promise<readonly IndexedTx[]>>();
       pendingRequests.push(this.cosmWasmClient.searchTx({ sentFromOrTo: sentFromOrTo }, filter));
       for (const contract of this.erc20Tokens.map(token => token.contractAddress)) {
         const searchBySender = [
@@ -371,7 +370,7 @@ export class CosmWasmConnection implements BlockchainConnection {
       }
       const responses = await Promise.all(pendingRequests);
       const allResults = responses.reduce((accumulator, results) => accumulator.concat(results), []);
-      txs = deduplicate(allResults, (a, b) => a.txhash.localeCompare(b.txhash)).sort(compareByHeightAndHash);
+      txs = deduplicate(allResults, (a, b) => a.hash.localeCompare(b.hash)).sort(compareByHeightAndHash);
     } else {
       throw new Error("Unsupported query");
     }
@@ -460,11 +459,11 @@ export class CosmWasmConnection implements BlockchainConnection {
   }
 
   private parseAndPopulateTxResponseUnsigned(
-    response: TxsResponse,
+    response: IndexedTx,
   ): ConfirmedTransaction<UnsignedTransaction> | FailedTransaction {
     return parseTxsResponseUnsigned(
       this.chainId,
-      parseInt(response.height, 10),
+      response.height,
       response,
       this.bankTokens,
       this.erc20Tokens,
@@ -472,7 +471,7 @@ export class CosmWasmConnection implements BlockchainConnection {
   }
 
   private async parseAndPopulateTxResponseSigned(
-    response: TxsResponse,
+    response: IndexedTx,
   ): Promise<ConfirmedAndSignedTransaction<UnsignedTransaction> | FailedTransaction> {
     const firstMsg = response.tx.value.msg.find(() => true);
     if (!firstMsg) throw new Error("Got transaction without a first message. What is going on here?");
@@ -503,7 +502,7 @@ export class CosmWasmConnection implements BlockchainConnection {
 
     return parseTxsResponseSigned(
       this.chainId,
-      parseInt(response.height, 10),
+      response.height,
       nonce,
       response,
       this.bankTokens,

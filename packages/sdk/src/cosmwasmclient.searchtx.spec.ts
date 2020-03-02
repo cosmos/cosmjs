@@ -92,8 +92,8 @@ describe("CosmWasmClient.searchTx", () => {
       expect(result.length).toEqual(1);
       expect(result[0]).toEqual(
         jasmine.objectContaining({
-          height: postedSend.height.toString(),
-          txhash: postedSend.hash,
+          height: postedSend.height,
+          hash: postedSend.hash,
           tx: postedSend.tx,
         }),
       );
@@ -144,8 +144,8 @@ describe("CosmWasmClient.searchTx", () => {
       expect(result.length).toEqual(1);
       expect(result[0]).toEqual(
         jasmine.objectContaining({
-          height: postedSend.height.toString(),
-          txhash: postedSend.hash,
+          height: postedSend.height,
+          hash: postedSend.hash,
           tx: postedSend.tx,
         }),
       );
@@ -163,7 +163,7 @@ describe("CosmWasmClient.searchTx", () => {
       // Check basic structure of all results
       for (const result of results) {
         const msg = fromOneElementArray(result.tx.value.msg);
-        assert(isMsgSend(msg), `${result.txhash} (height ${result.height}) is not a bank send transaction`);
+        assert(isMsgSend(msg), `${result.hash} (height ${result.height}) is not a bank send transaction`);
         expect(
           msg.value.to_address === postedSend.sender || msg.value.from_address == postedSend.sender,
         ).toEqual(true);
@@ -172,8 +172,8 @@ describe("CosmWasmClient.searchTx", () => {
       // Check details of most recent result
       expect(results[results.length - 1]).toEqual(
         jasmine.objectContaining({
-          height: postedSend.height.toString(),
-          txhash: postedSend.hash,
+          height: postedSend.height,
+          hash: postedSend.hash,
           tx: postedSend.tx,
         }),
       );
@@ -189,7 +189,7 @@ describe("CosmWasmClient.searchTx", () => {
       // Check basic structure of all results
       for (const result of results) {
         const msg = fromOneElementArray(result.tx.value.msg);
-        assert(isMsgSend(msg), `${result.txhash} (height ${result.height}) is not a bank send transaction`);
+        assert(isMsgSend(msg), `${result.hash} (height ${result.height}) is not a bank send transaction`);
         expect(
           msg.value.to_address === postedSend.recipient || msg.value.from_address == postedSend.recipient,
         ).toEqual(true);
@@ -198,8 +198,8 @@ describe("CosmWasmClient.searchTx", () => {
       // Check details of most recent result
       expect(results[results.length - 1]).toEqual(
         jasmine.objectContaining({
-          height: postedSend.height.toString(),
-          txhash: postedSend.hash,
+          height: postedSend.height,
+          hash: postedSend.hash,
           tx: postedSend.tx,
         }),
       );
@@ -273,15 +273,15 @@ describe("CosmWasmClient.searchTx", () => {
       // Check basic structure of all results
       for (const result of results) {
         const msg = fromOneElementArray(result.tx.value.msg);
-        assert(isMsgSend(msg), `${result.txhash} (height ${result.height}) is not a bank send transaction`);
+        assert(isMsgSend(msg), `${result.hash} (height ${result.height}) is not a bank send transaction`);
         expect(msg.value.to_address).toEqual(postedSend.recipient);
       }
 
       // Check details of most recent result
       expect(results[results.length - 1]).toEqual(
         jasmine.objectContaining({
-          height: postedSend.height.toString(),
-          txhash: postedSend.hash,
+          height: postedSend.height,
+          hash: postedSend.hash,
           tx: postedSend.tx,
         }),
       );
@@ -301,7 +301,7 @@ describe("CosmWasmClient.searchTx", () => {
         const msg = fromOneElementArray(result.tx.value.msg);
         assert(
           isMsgExecuteContract(msg) || isMsgInstantiateContract(msg),
-          `${result.txhash} (at ${result.height}) not an execute or instantiate msg`,
+          `${result.hash} (at ${result.height}) not an execute or instantiate msg`,
         );
       }
 
@@ -322,8 +322,8 @@ describe("CosmWasmClient.searchTx", () => {
       // Check details of most recent result
       expect(results[results.length - 1]).toEqual(
         jasmine.objectContaining({
-          height: postedExecute.height.toString(),
-          txhash: postedExecute.hash,
+          height: postedExecute.height,
+          hash: postedExecute.hash,
           tx: postedExecute.tx,
         }),
       );
@@ -344,15 +344,15 @@ describe("CosmWasmClient.searchTx", () => {
       // Check basic structure of all results
       for (const result of results) {
         const msg = fromOneElementArray(result.tx.value.msg);
-        assert(isMsgExecuteContract(msg), `${result.txhash} (at ${result.height}) not an execute msg`);
+        assert(isMsgExecuteContract(msg), `${result.hash} (at ${result.height}) not an execute msg`);
         expect(msg.value.contract).toEqual(postedExecute.contract);
       }
 
       // Check details of most recent result
       expect(results[results.length - 1]).toEqual(
         jasmine.objectContaining({
-          height: postedExecute.height.toString(),
-          txhash: postedExecute.hash,
+          height: postedExecute.height,
+          hash: postedExecute.hash,
           tx: postedExecute.tx,
         }),
       );

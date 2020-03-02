@@ -150,18 +150,6 @@ export const pubkeyType = {
 
 export const pubkeyTypes: readonly string[] = [pubkeyType.secp256k1, pubkeyType.ed25519, pubkeyType.sr25519];
 
-// bech32-encoded amino-binary encoded PubKey interface. oof.
-export type Bech32PubKey = string;
-
-export interface CosmosSdkAccount {
-  /** Bech32 account address */
-  readonly address: string;
-  readonly coins: ReadonlyArray<Coin>;
-  readonly public_key: Bech32PubKey;
-  readonly account_number: number;
-  readonly sequence: number;
-}
-
 export interface WasmData {
   // key is hex-encoded
   readonly key: string;

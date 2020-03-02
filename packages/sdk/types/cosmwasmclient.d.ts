@@ -1,7 +1,15 @@
 import { Log } from "./logs";
-import { BlockResponse, BroadcastMode, RestClient, TxsResponse } from "./restclient";
-import { CosmosSdkAccount, CosmosSdkTx, StdTx } from "./types";
+import { BroadcastMode, RestClient } from "./restclient";
+import { Coin, CosmosSdkTx, PubKey, StdTx } from "./types";
 export interface GetNonceResult {
+  readonly accountNumber: number;
+  readonly sequence: number;
+}
+export interface Account {
+  /** Bech32 account address */
+  readonly address: string;
+  readonly balance: ReadonlyArray<Coin>;
+  readonly pubkey: PubKey | undefined;
   readonly accountNumber: number;
   readonly sequence: number;
 }
@@ -63,6 +71,38 @@ export interface ContractDetails extends Contract {
   /** Argument passed on initialization of the contract */
   readonly initMsg: object;
 }
+/** A transaction that is indexed as part of the transaction history */
+export interface IndexedTx {
+  readonly height: number;
+  /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
+  readonly hash: string;
+  readonly rawLog: string;
+  readonly logs: readonly Log[];
+  readonly tx: CosmosSdkTx;
+  /** The gas limit as set by the user */
+  readonly gasWanted?: number;
+  /** The gas used by the execution */
+  readonly gasUsed?: number;
+  /** An RFC 3339 time string like e.g. '2020-02-15T10:39:10.4696305Z' */
+  readonly timestamp: string;
+}
+export interface BlockHeader {
+  readonly version: {
+    readonly block: string;
+    readonly app: string;
+  };
+  readonly height: number;
+  readonly chainId: string;
+  /** An RFC 3339 time string like e.g. '2020-02-15T10:39:10.4696305Z' */
+  readonly time: string;
+}
+export interface Block {
+  /** The ID is a hash of the block header (uppercase hex) */
+  readonly id: string;
+  readonly header: BlockHeader;
+  /** Array of raw transactions */
+  readonly txs: ReadonlyArray<Uint8Array>;
+}
 export declare class CosmWasmClient {
   protected readonly restClient: RestClient;
   constructor(url: string, broadcastMode?: BroadcastMode);
@@ -79,14 +119,14 @@ export declare class CosmWasmClient {
    * @param address returns data for this address. When unset, the client's sender adddress is used.
    */
   getNonce(address: string): Promise<GetNonceResult>;
-  getAccount(address: string): Promise<CosmosSdkAccount | undefined>;
+  getAccount(address: string): Promise<Account | undefined>;
   /**
    * Gets block header and meta
    *
    * @param height The height of the block. If undefined, the latest height is used.
    */
-  getBlock(height?: number): Promise<BlockResponse>;
-  searchTx(query: SearchTxQuery, filter?: SearchTxFilter): Promise<readonly TxsResponse[]>;
+  getBlock(height?: number): Promise<Block>;
+  searchTx(query: SearchTxQuery, filter?: SearchTxFilter): Promise<readonly IndexedTx[]>;
   postTx(tx: StdTx): Promise<PostTxResult>;
   getCodes(): Promise<readonly Code[]>;
   getCodeDetails(codeId: number): Promise<CodeDetails>;
