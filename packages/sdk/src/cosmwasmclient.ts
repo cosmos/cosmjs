@@ -2,8 +2,9 @@ import { Sha256 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
 
 import { Log, parseLogs } from "./logs";
+import { decodeBech32Pubkey } from "./pubkey";
 import { BroadcastMode, RestClient } from "./restclient";
-import { Coin, CosmosSdkTx, StdTx } from "./types";
+import { Coin, CosmosSdkTx, PubKey, StdTx } from "./types";
 
 export interface GetNonceResult {
   readonly accountNumber: number;
@@ -14,8 +15,7 @@ export interface Account {
   /** Bech32 account address */
   readonly address: string;
   readonly balance: ReadonlyArray<Coin>;
-  /** Bech32 encoded pubkey */
-  readonly pubkey: string | undefined;
+  readonly pubkey: PubKey | undefined;
   readonly accountNumber: number;
   readonly sequence: number;
 }
@@ -185,7 +185,7 @@ export class CosmWasmClient {
       : {
           address: value.address,
           balance: value.coins,
-          pubkey: value.public_key || undefined,
+          pubkey: value.public_key ? decodeBech32Pubkey(value.public_key) : undefined,
           accountNumber: value.account_number,
           sequence: value.sequence,
         };

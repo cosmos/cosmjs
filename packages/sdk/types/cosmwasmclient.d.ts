@@ -1,6 +1,6 @@
 import { Log } from "./logs";
 import { BroadcastMode, RestClient } from "./restclient";
-import { Coin, CosmosSdkTx, StdTx } from "./types";
+import { Coin, CosmosSdkTx, PubKey, StdTx } from "./types";
 export interface GetNonceResult {
   readonly accountNumber: number;
   readonly sequence: number;
@@ -9,8 +9,7 @@ export interface Account {
   /** Bech32 account address */
   readonly address: string;
   readonly balance: ReadonlyArray<Coin>;
-  /** Bech32 encoded pubkey */
-  readonly pubkey: string | undefined;
+  readonly pubkey: PubKey | undefined;
   readonly accountNumber: number;
   readonly sequence: number;
 }

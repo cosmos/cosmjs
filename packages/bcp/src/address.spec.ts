@@ -1,22 +1,11 @@
 import { Algorithm, PubkeyBytes } from "@iov/bcp";
 import { Encoding } from "@iov/encoding";
 
-import { decodeCosmosPubkey, pubkeyToAddress } from "./address";
+import { pubkeyToAddress } from "./address";
 
 const { fromBase64, fromHex } = Encoding;
 
 describe("address", () => {
-  describe("decodeCosmosPubkey", () => {
-    it("works", () => {
-      expect(
-        decodeCosmosPubkey("cosmospub1addwnpepqd8sgxq7aw348ydctp3n5ajufgxp395hksxjzc6565yfp56scupfqhlgyg5"),
-      ).toEqual({
-        data: fromBase64("A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ"),
-        algo: Algorithm.Secp256k1,
-      });
-    });
-  });
-
   describe("pubkeyToAddress", () => {
     it("works for Secp256k1 compressed", () => {
       const prefix = "cosmos";

@@ -36,10 +36,10 @@ import equal from "fast-deep-equal";
 import { ReadonlyDate } from "readonly-date";
 import { Producer, Stream } from "xstream";
 
-import { decodeCosmosPubkey, pubkeyToAddress } from "./address";
+import { pubkeyToAddress } from "./address";
 import { Caip5 } from "./caip5";
 import { CosmWasmCodec } from "./cosmwasmcodec";
-import { decodeAmount, parseTxsResponseSigned, parseTxsResponseUnsigned } from "./decode";
+import { decodeAmount, decodePubkey, parseTxsResponseSigned, parseTxsResponseUnsigned } from "./decode";
 import { buildSignedTx } from "./encode";
 import { accountToNonce, BankToken, Erc20Token } from "./types";
 
@@ -191,7 +191,7 @@ export class CosmWasmConnection implements BlockchainConnection {
         ...supportedBankCoins.map(coin => decodeAmount(this.bankTokens, coin)),
         ...nonZeroErc20Amounts,
       ].sort((a, b) => a.tokenTicker.localeCompare(b.tokenTicker));
-      const pubkey = bankAccount?.pubkey ? decodeCosmosPubkey(bankAccount.pubkey) : undefined;
+      const pubkey = bankAccount?.pubkey ? decodePubkey(bankAccount.pubkey) : undefined;
       return {
         address: address,
         balance: balance,
