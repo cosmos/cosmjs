@@ -83,6 +83,8 @@ export interface UploadReceipt {
 
 export interface ExecuteResult {
   readonly logs: readonly Log[];
+  /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
+  readonly transactionHash: string;
 }
 
 export class SigningCosmWasmClient extends CosmWasmClient {
@@ -220,6 +222,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     const result = await this.postTx(signedTx);
     return {
       logs: result.logs,
+      transactionHash: result.transactionHash,
     };
   }
 
