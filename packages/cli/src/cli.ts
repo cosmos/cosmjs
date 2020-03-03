@@ -73,6 +73,7 @@ export function main(originalArgs: readonly string[]): void {
       [
         "Bech32",
         "Encoding",
+        "Decimal",
         // integers
         "Int53",
         "Uint32",
@@ -132,6 +133,8 @@ export function main(originalArgs: readonly string[]): void {
       const encoded = toHex(toUtf8(toBase64(toAscii(original))));
       const decoded = fromAscii(fromBase64(fromUtf8(fromHex(encoded))));
       assert(decoded === original);
+
+      assert(Decimal.fromAtomics("12870000", 6).toString() === "12.87");
 
       const mnemonic = Bip39.encode(Random.getBytes(16)).toString();
       const pen = await Secp256k1Pen.fromMnemonic(mnemonic);
