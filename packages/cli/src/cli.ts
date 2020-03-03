@@ -80,7 +80,7 @@ export function main(originalArgs: readonly string[]): void {
         "Uint64",
       ],
     ],
-    ["@iov/utils", ["sleep"]],
+    ["@iov/utils", ["assert", "sleep"]],
   ]);
 
   console.info(colors.green("Initializing session for you. Have fun!"));
@@ -128,8 +128,10 @@ export function main(originalArgs: readonly string[]): void {
       const hexHash = toHex(hash);
       export class NewDummyClass {};
 
-      const encoded = toHex(toUtf8(toBase64(toAscii("hello world"))));
+      const original = "hello world";
+      const encoded = toHex(toUtf8(toBase64(toAscii(original))));
       const decoded = fromAscii(fromBase64(fromUtf8(fromHex(encoded))));
+      assert(decoded === original);
 
       const mnemonic = Bip39.encode(Random.getBytes(16)).toString();
       const pen = await Secp256k1Pen.fromMnemonic(mnemonic);
