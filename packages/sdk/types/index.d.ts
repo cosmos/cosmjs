@@ -24,12 +24,7 @@ export {
   SearchTxFilter,
 } from "./cosmwasmclient";
 export { makeCosmoshubPath, Pen, PrehashType, Secp256k1Pen } from "./pen";
-export {
-  CosmosPubkeyBech32Prefix,
-  decodeBech32Pubkey,
-  encodeBech32Pubkey,
-  encodeSecp256k1Pubkey,
-} from "./pubkey";
+export { decodeBech32Pubkey, encodeBech32Pubkey, encodeSecp256k1Pubkey } from "./pubkey";
 export { findSequenceForSignedTx } from "./sequence";
 export { encodeSecp256k1Signature, decodeSignature } from "./signature";
 export {
