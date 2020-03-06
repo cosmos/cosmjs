@@ -88,8 +88,6 @@ export function main(originalArgs: readonly string[]): void {
   console.info(colors.yellow("Available imports:"));
   console.info(colors.yellow("  * http"));
   console.info(colors.yellow("  * https"));
-  console.info(colors.yellow("  * from long"));
-  console.info(colors.yellow("    - Long"));
   for (const moduleName of imports.keys()) {
     console.info(colors.yellow(`  * from ${moduleName}`));
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -110,7 +108,6 @@ export function main(originalArgs: readonly string[]): void {
   let init = `
     import * as http from 'http';
     import * as https from 'https';
-    import Long from "long";
   `;
   for (const moduleName of imports.keys()) {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
