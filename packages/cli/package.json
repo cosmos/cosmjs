@@ -20,6 +20,7 @@
     "lint": "eslint --max-warnings 0 \"**/*.{js,ts}\"",
     "build": "tsc",
     "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build",
+    "start": "yarn build-or-skip && ./bin/cosmwasm-cli",
     "selftest": "yarn build-or-skip && ./bin/cosmwasm-cli --selftest",
     "test-node": "node jasmine-testrunner.js",
     "test": "yarn build-or-skip && yarn test-node"
