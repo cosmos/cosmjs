@@ -32,6 +32,15 @@ describe("pubkey", () => {
         value: "A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ",
       });
     });
+
+    it("works for enigma pubkey", () => {
+      expect(
+        decodeBech32Pubkey("enigmapub1addwnpepqw5k9p439nw0zpg2aundx4umwx4nw233z5prpjqjv5anl5grmnchzp2xwvv"),
+      ).toEqual({
+        type: "tendermint/PubKeySecp256k1",
+        value: "A6lihrEs3PEFCu8m01ebcas3KjEVAjDIEmU7P9ED3PFx",
+      });
+    });
   });
 
   describe("encodeBech32Pubkey", () => {
