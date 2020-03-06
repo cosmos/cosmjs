@@ -24,7 +24,7 @@ export interface CosmosSdkTx {
 
 interface MsgTemplate {
   readonly type: string;
-  readonly value: object;
+  readonly value: any;
 }
 
 /** A Cosmos SDK token transfer message */
@@ -73,7 +73,7 @@ export interface MsgInstantiateContract extends MsgTemplate {
     /** Human-readable label for this contract */
     readonly label: string;
     /** Init message as JavaScript object */
-    readonly init_msg: object;
+    readonly init_msg: any;
     readonly init_funds: ReadonlyArray<Coin>;
   };
 }
@@ -91,7 +91,7 @@ export interface MsgExecuteContract extends MsgTemplate {
     /** Bech32 account address */
     readonly contract: string;
     /** Handle message as JavaScript object */
-    readonly msg: object;
+    readonly msg: any;
     readonly sent_funds: ReadonlyArray<Coin>;
   };
 }

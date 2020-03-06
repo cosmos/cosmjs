@@ -50,6 +50,30 @@ export function main(originalArgs: readonly string[]): void {
         "RestClient",
         "Secp256k1Pen",
         "types",
+        // cosmwasmclient
+        "Account",
+        "Block",
+        "BlockHeader",
+        "Code",
+        "CodeDetails",
+        "Contract",
+        "ContractDetails",
+        "CosmWasmClient",
+        "GetNonceResult",
+        "IndexedTx",
+        "PostTxResult",
+        "SearchByHeightQuery",
+        "SearchByIdQuery",
+        "SearchBySentFromOrToQuery",
+        "SearchTxQuery",
+        "SearchTxFilter",
+        // signingcosmwasmclient
+        "ExecuteResult",
+        "InstantiateResult",
+        "SigningCallback",
+        "SigningCosmWasmClient",
+        "UploadMeta",
+        "UploadResult",
       ],
     ],
     [
@@ -73,6 +97,7 @@ export function main(originalArgs: readonly string[]): void {
       [
         "Bech32",
         "Encoding",
+        "Decimal",
         // integers
         "Int53",
         "Uint32",
@@ -80,45 +105,37 @@ export function main(originalArgs: readonly string[]): void {
         "Uint64",
       ],
     ],
-    ["@iov/utils", ["sleep"]],
+    ["@iov/utils", ["assert", "sleep"]],
   ]);
 
   console.info(colors.green("Initializing session for you. Have fun!"));
   console.info(colors.yellow("Available imports:"));
   console.info(colors.yellow("  * http"));
   console.info(colors.yellow("  * https"));
-  console.info(colors.yellow("  * from long"));
-  console.info(colors.yellow("    - Long"));
-  for (const moduleName of imports.keys()) {
-    console.info(colors.yellow(`  * from ${moduleName}`));
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    for (const symbol of imports.get(moduleName)!) {
-      console.info(colors.yellow(`    - ${symbol}`));
-    }
+  for (const [moduleName, symbols] of imports.entries()) {
+    console.info(colors.yellow(`  * from ${moduleName}: ${symbols.join(", ")}`));
   }
-  console.info(colors.yellow("  * helper functions"));
-  console.info(colors.yellow("    - fromAscii"));
-  console.info(colors.yellow("    - fromBase64"));
-  console.info(colors.yellow("    - fromHex"));
-  console.info(colors.yellow("    - fromUtf8"));
-  console.info(colors.yellow("    - toAscii"));
-  console.info(colors.yellow("    - toBase64"));
-  console.info(colors.yellow("    - toHex"));
-  console.info(colors.yellow("    - toUtf8"));
+  const encodingHelpers = [
+    "fromAscii",
+    "fromBase64",
+    "fromHex",
+    "fromUtf8",
+    "toAscii",
+    "toBase64",
+    "toHex",
+    "toUtf8",
+  ];
+  console.info(colors.yellow(`  * helper functions: ${encodingHelpers.join(", ")}`));
 
   let init = `
     import * as http from 'http';
     import * as https from 'https';
-    import Long from "long";
   `;
-  for (const moduleName of imports.keys()) {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    init += `import { ${imports.get(moduleName)!.join(", ")} } from "${moduleName}";\n`;
+  for (const [moduleName, symbols] of imports.entries()) {
+    init += `import { ${symbols.join(", ")} } from "${moduleName}";\n`;
   }
   // helper functions
-  init += `
-    const { fromAscii, fromBase64, fromHex, fromUtf8, toAscii, toBase64, toHex, toUtf8 } = Encoding;
-  `;
+  init += `const { ${encodingHelpers.join(", ")} } = Encoding;\n`;
 
   if (args.selftest) {
     // execute some trival stuff and exit
@@ -128,8 +145,12 @@ export function main(originalArgs: readonly string[]): void {
       const hexHash = toHex(hash);
       export class NewDummyClass {};
 
-      const encoded = toHex(toUtf8(toBase64(toAscii("hello world"))));
+      const original = "hello world";
+      const encoded = toHex(toUtf8(toBase64(toAscii(original))));
       const decoded = fromAscii(fromBase64(fromUtf8(fromHex(encoded))));
+      assert(decoded === original);
+
+      assert(Decimal.fromAtomics("12870000", 6).toString() === "12.87");
 
       const mnemonic = Bip39.encode(Random.getBytes(16)).toString();
       const pen = await Secp256k1Pen.fromMnemonic(mnemonic);
