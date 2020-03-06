@@ -88,35 +88,30 @@ export function main(originalArgs: readonly string[]): void {
   console.info(colors.yellow("Available imports:"));
   console.info(colors.yellow("  * http"));
   console.info(colors.yellow("  * https"));
-  for (const moduleName of imports.keys()) {
-    console.info(colors.yellow(`  * from ${moduleName}`));
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    for (const symbol of imports.get(moduleName)!) {
-      console.info(colors.yellow(`    - ${symbol}`));
-    }
+  for (const [moduleName, symbols] of imports.entries()) {
+    console.info(colors.yellow(`  * from ${moduleName}: ${symbols.join(", ")}`));
   }
-  console.info(colors.yellow("  * helper functions"));
-  console.info(colors.yellow("    - fromAscii"));
-  console.info(colors.yellow("    - fromBase64"));
-  console.info(colors.yellow("    - fromHex"));
-  console.info(colors.yellow("    - fromUtf8"));
-  console.info(colors.yellow("    - toAscii"));
-  console.info(colors.yellow("    - toBase64"));
-  console.info(colors.yellow("    - toHex"));
-  console.info(colors.yellow("    - toUtf8"));
+  const encodingHelpers = [
+    "fromAscii",
+    "fromBase64",
+    "fromHex",
+    "fromUtf8",
+    "toAscii",
+    "toBase64",
+    "toHex",
+    "toUtf8",
+  ];
+  console.info(colors.yellow(`  * helper functions: ${encodingHelpers.join(", ")}`));
 
   let init = `
     import * as http from 'http';
     import * as https from 'https';
   `;
-  for (const moduleName of imports.keys()) {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    init += `import { ${imports.get(moduleName)!.join(", ")} } from "${moduleName}";\n`;
+  for (const [moduleName, symbols] of imports.entries()) {
+    init += `import { ${symbols.join(", ")} } from "${moduleName}";\n`;
   }
   // helper functions
-  init += `
-    const { fromAscii, fromBase64, fromHex, fromUtf8, toAscii, toBase64, toHex, toUtf8 } = Encoding;
-  `;
+  init += `const { ${encodingHelpers.join(", ")} } = Encoding;\n`;
 
   if (args.selftest) {
     // execute some trival stuff and exit
