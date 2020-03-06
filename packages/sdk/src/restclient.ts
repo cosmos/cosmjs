@@ -181,6 +181,13 @@ type RestClientResponse =
   | WasmResponse<ContractInfo[] | null>
   | WasmResponse<ContractDetails | null>;
 
+/** Unfortunately, Cosmos SDK encodes empty arrays as null */
+type CosmosSdkArray<T> = ReadonlyArray<T> | null;
+
+function normalizeArray<T>(backend: CosmosSdkArray<T>): ReadonlyArray<T> {
+  return backend || [];
+}
+
 /**
  * The mode used to send transaction
  *
@@ -349,8 +356,8 @@ export class RestClient {
   // wasm rest queries are listed here: https://github.com/cosmwasm/wasmd/blob/master/x/wasm/client/rest/query.go#L19-L27
   public async listCodeInfo(): Promise<readonly CodeInfo[]> {
     const path = `/wasm/code`;
-    const responseData = (await this.get(path)) as WasmResponse<CodeInfo[]>;
-    return unwrapWasmResponse(responseData);
+    const responseData = (await this.get(path)) as WasmResponse<CosmosSdkArray<CodeInfo>>;
+    return normalizeArray(unwrapWasmResponse(responseData));
   }
 
   // this will download the original wasm bytecode by code id
@@ -363,8 +370,8 @@ export class RestClient {
 
   public async listContractsByCodeId(id: number): Promise<readonly ContractInfo[]> {
     const path = `/wasm/code/${id}/contracts`;
-    const responseData = (await this.get(path)) as WasmResponse<ContractInfo[] | null>;
-    return unwrapWasmResponse(responseData) || [];
+    const responseData = (await this.get(path)) as WasmResponse<CosmosSdkArray<ContractInfo>>;
+    return normalizeArray(unwrapWasmResponse(responseData));
   }
 
   /**
@@ -380,9 +387,8 @@ export class RestClient {
   // This is an empty array if no such contract, or contract has no data.
   public async getAllContractState(address: string): Promise<readonly Model[]> {
     const path = `/wasm/contract/${address}/state`;
-    const responseData = (await this.get(path)) as WasmResponse<WasmData[]>;
-    const r = unwrapWasmResponse(responseData);
-    return r ? r.map(parseWasmData) : [];
+    const responseData = (await this.get(path)) as WasmResponse<CosmosSdkArray<WasmData>>;
+    return normalizeArray(unwrapWasmResponse(responseData)).map(parseWasmData);
   }
 
   // Returns the data at the key if present (unknown decoded json),
