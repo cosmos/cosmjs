@@ -101,10 +101,10 @@ export function parseMsg(
       };
     }
 
-    const recipient: string | undefined = (msg.value.msg as any).transfer?.recipient;
+    const recipient: string | undefined = msg.value.msg.transfer?.recipient;
     if (!recipient) throw new Error("Could not read recipient");
 
-    const amount: string | undefined = (msg.value.msg as any).transfer?.amount;
+    const amount: string | undefined = msg.value.msg.transfer?.amount;
     if (!amount) throw new Error("Could not read recipient");
 
     const send: SendTransaction = {
