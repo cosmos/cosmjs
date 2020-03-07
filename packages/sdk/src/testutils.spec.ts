@@ -56,6 +56,7 @@ export function makeRandomAddress(): string {
   return Bech32.encode("cosmos", Random.getBytes(20));
 }
 
+export const tendermintHeightMatcher = /^[0-9]+$/;
 export const tendermintIdMatcher = /^[0-9A-F]{64}$/;
 export const tendermintOptionalIdMatcher = /^([0-9A-F]{64}|)$/;
 export const tendermintAddressMatcher = /^[0-9A-F]{40}$/;
