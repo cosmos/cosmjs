@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { Sha256 } from "@iov/crypto";
 import { Bech32, Encoding } from "@iov/encoding";
-import { assert } from "@iov/utils";
+import { assert, sleep } from "@iov/utils";
 import { ReadonlyDate } from "readonly-date";
 
 import { Code, CosmWasmClient } from "./cosmwasmclient";
@@ -53,6 +53,18 @@ describe("CosmWasmClient", () => {
       pendingWithoutWasmd();
       const client = new CosmWasmClient(wasmdEndpoint);
       expect(await client.chainId()).toEqual("testing");
+    });
+  });
+
+  describe("getHeight", () => {
+    it("works", async () => {
+      pendingWithoutWasmd();
+      const client = new CosmWasmClient(wasmdEndpoint);
+      const height1 = await client.getHeight();
+      expect(height1).toBeGreaterThan(0);
+      await sleep(1_000);
+      const height2 = await client.getHeight();
+      expect(height2).toEqual(height1 + 1);
     });
   });
 

@@ -107,6 +107,7 @@ export declare class CosmWasmClient {
   protected readonly restClient: RestClient;
   constructor(url: string, broadcastMode?: BroadcastMode);
   chainId(): Promise<string>;
+  getHeight(): Promise<number>;
   /**
    * Returns a 32 byte upper-case hex transaction hash (typically used as the transaction ID)
    */

@@ -149,6 +149,13 @@ export class CosmWasmClient {
     return response.node_info.network;
   }
 
+  public async getHeight(): Promise<number> {
+    // Note: this gets inefficient when blocks contain a lot of transactions since it
+    // requires downloading and deserializing all transactions in the block.
+    const latest = await this.restClient.blocksLatest();
+    return parseInt(latest.block.header.height, 10);
+  }
+
   /**
    * Returns a 32 byte upper-case hex transaction hash (typically used as the transaction ID)
    */
