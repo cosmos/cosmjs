@@ -8,11 +8,35 @@ export interface CosmosSdkAccount {
   readonly account_number: number;
   readonly sequence: number;
 }
-interface NodeInfo {
+export interface NodeInfo {
+  readonly protocol_version: {
+    readonly p2p: string;
+    readonly block: string;
+    readonly app: string;
+  };
+  readonly id: string;
+  readonly listen_addr: string;
   readonly network: string;
+  readonly version: string;
+  readonly channels: string;
+  readonly moniker: string;
+  readonly other: {
+    readonly tx_index: string;
+    readonly rpc_address: string;
+  };
 }
-interface NodeInfoResponse {
+export interface ApplicationVersion {
+  readonly name: string;
+  readonly server_name: string;
+  readonly client_name: string;
+  readonly version: string;
+  readonly commit: string;
+  readonly build_tags: string;
+  readonly go: string;
+}
+export interface NodeInfoResponse {
   readonly node_info: NodeInfo;
+  readonly application_version: ApplicationVersion;
 }
 export interface BlockId {
   readonly hash: string;

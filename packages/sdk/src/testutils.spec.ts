@@ -59,6 +59,7 @@ export function makeRandomAddress(): string {
 export const tendermintIdMatcher = /^[0-9A-F]{64}$/;
 export const tendermintOptionalIdMatcher = /^([0-9A-F]{64}|)$/;
 export const tendermintAddressMatcher = /^[0-9A-F]{40}$/;
+export const tendermintShortHashMatcher = /^[0-9a-f]{40}$/;
 
 // https://github.com/bitcoin/bips/blob/master/bip-0173.mediawiki#bech32
 export const bech32AddressMatcher = /^[\x21-\x7e]{1,83}1[02-9ac-hj-np-z]{38}$/;
