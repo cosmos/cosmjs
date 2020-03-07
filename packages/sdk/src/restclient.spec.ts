@@ -299,30 +299,25 @@ describe("RestClient", () => {
       const client = new RestClient(wasmdEndpoint);
       const { node_info, application_version } = await client.nodeInfo();
 
-      expect(node_info).toEqual(
-        jasmine.objectContaining({
-          protocol_version: { p2p: "7", block: "10", app: "0" },
-          listen_addr: "tcp://0.0.0.0:26656",
-          network: defaultNetworkId,
-          version: "0.33.0",
-          channels: "4020212223303800",
-          moniker: defaultNetworkId,
-          other: { tx_index: "on", rpc_address: "tcp://0.0.0.0:26657" },
-        }),
-      );
-      expect(node_info.id).toMatch(tendermintShortHashMatcher);
-
-      expect(application_version).toEqual(
-        jasmine.objectContaining({
-          name: "wasm",
-          server_name: "wasmd",
-          client_name: "wasmcli",
-          build_tags: "netgo,ledger",
-        }),
-      );
-      expect(application_version.version).toMatch(/^0\.7\.[0-9]+(-[a-zA-Z0-9._]+)?$/);
-      expect(application_version.commit).toMatch(tendermintShortHashMatcher);
-      expect(application_version.go).toMatch(/^go version go1\.[0-9]+\.[0-9]+ linux\/amd64$/);
+      expect(node_info).toEqual({
+        protocol_version: { p2p: "7", block: "10", app: "0" },
+        id: jasmine.stringMatching(tendermintShortHashMatcher),
+        listen_addr: "tcp://0.0.0.0:26656",
+        network: defaultNetworkId,
+        version: "0.33.0",
+        channels: "4020212223303800",
+        moniker: defaultNetworkId,
+        other: { tx_index: "on", rpc_address: "tcp://0.0.0.0:26657" },
+      });
+      expect(application_version).toEqual({
+        name: "wasm",
+        server_name: "wasmd",
+        client_name: "wasmcli",
+        version: jasmine.stringMatching(/^0\.7\.[0-9]+(-[a-zA-Z0-9._]+)?$/),
+        commit: jasmine.stringMatching(tendermintShortHashMatcher),
+        build_tags: "netgo,ledger",
+        go: jasmine.stringMatching(/^go version go1\.[0-9]+\.[0-9]+ linux\/amd64$/),
+      });
     });
   });
 
