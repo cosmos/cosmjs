@@ -137,8 +137,15 @@ export interface Block {
   readonly txs: ReadonlyArray<Uint8Array>;
 }
 
+/** Use for testing only */
+export interface PrivateCosmWasmClient {
+  readonly restClient: RestClient;
+}
+
 export class CosmWasmClient {
   protected readonly restClient: RestClient;
+  /** Any address the chain considers valid (valid bech32 with proper prefix) */
+  protected anyValidAddress: string | undefined;
 
   public constructor(url: string, broadcastMode = BroadcastMode.Block) {
     this.restClient = new RestClient(url, broadcastMode);
@@ -150,10 +157,15 @@ export class CosmWasmClient {
   }
 
   public async getHeight(): Promise<number> {
-    // Note: this gets inefficient when blocks contain a lot of transactions since it
-    // requires downloading and deserializing all transactions in the block.
-    const latest = await this.restClient.blocksLatest();
-    return parseInt(latest.block.header.height, 10);
+    if (this.anyValidAddress) {
+      const { height } = await this.restClient.authAccounts(this.anyValidAddress);
+      return parseInt(height, 10);
+    } else {
+      // Note: this gets inefficient when blocks contain a lot of transactions since it
+      // requires downloading and deserializing all transactions in the block.
+      const latest = await this.restClient.blocksLatest();
+      return parseInt(latest.block.header.height, 10);
+    }
   }
 
   /**
@@ -189,15 +201,18 @@ export class CosmWasmClient {
   public async getAccount(address: string): Promise<Account | undefined> {
     const account = await this.restClient.authAccounts(address);
     const value = account.result.value;
-    return value.address === ""
-      ? undefined
-      : {
-          address: value.address,
-          balance: value.coins,
-          pubkey: value.public_key ? decodeBech32Pubkey(value.public_key) : undefined,
-          accountNumber: value.account_number,
-          sequence: value.sequence,
-        };
+    if (value.address === "") {
+      return undefined;
+    } else {
+      this.anyValidAddress = value.address;
+      return {
+        address: value.address,
+        balance: value.coins,
+        pubkey: value.public_key ? decodeBech32Pubkey(value.public_key) : undefined,
+        accountNumber: value.account_number,
+        sequence: value.sequence,
+      };
+    }
   }
 
   /**
@@ -283,13 +298,16 @@ export class CosmWasmClient {
   public async getCodes(): Promise<readonly Code[]> {
     const result = await this.restClient.listCodeInfo();
     return result.map(
-      (entry): Code => ({
-        id: entry.id,
-        creator: entry.creator,
-        checksum: Encoding.toHex(Encoding.fromHex(entry.data_hash)),
-        source: entry.source || undefined,
-        builder: entry.builder || undefined,
-      }),
+      (entry): Code => {
+        this.anyValidAddress = entry.creator;
+        return {
+          id: entry.id,
+          creator: entry.creator,
+          checksum: Encoding.toHex(Encoding.fromHex(entry.data_hash)),
+          source: entry.source || undefined,
+          builder: entry.builder || undefined,
+        };
+      },
     );
   }
 
