@@ -320,7 +320,7 @@ describe("RestClient", () => {
           build_tags: "netgo,ledger",
         }),
       );
-      expect(application_version.version).toMatch(/^0\.7\.[0-9]+$/);
+      expect(application_version.version).toMatch(/^0\.7\.[0-9]+(-[a-zA-Z0-9._]+)?$/);
       expect(application_version.commit).toMatch(tendermintShortHashMatcher);
       expect(application_version.go).toMatch(/^go version go1\.[0-9]+\.[0-9]+ linux\/amd64$/);
     });
