@@ -276,6 +276,19 @@ describe("CosmWasmClient", () => {
       // check data
       expect(new Sha256(result.data).digest()).toEqual(fromHex(expectedInfo.checksum));
     });
+
+    it("caches downloads", async () => {
+      pendingWithoutWasmd();
+      const client = new CosmWasmClient(wasmdEndpoint);
+      const openedClient = (client as unknown) as PrivateCosmWasmClient;
+      const getCodeSpy = spyOn(openedClient.restClient, "getCode").and.callThrough();
+
+      const result1 = await client.getCodeDetails(deployedErc20.codeId); // from network
+      const result2 = await client.getCodeDetails(deployedErc20.codeId); // from cache
+      expect(result2).toEqual(result1);
+
+      expect(getCodeSpy).toHaveBeenCalledTimes(1);
+    });
   });
 
   describe("getContracts", () => {

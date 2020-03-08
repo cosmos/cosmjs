@@ -111,6 +111,7 @@ export declare class CosmWasmClient {
   protected readonly restClient: RestClient;
   /** Any address the chain considers valid (valid bech32 with proper prefix) */
   protected anyValidAddress: string | undefined;
+  private readonly codesCache;
   constructor(url: string, broadcastMode?: BroadcastMode);
   chainId(): Promise<string>;
   getHeight(): Promise<number>;

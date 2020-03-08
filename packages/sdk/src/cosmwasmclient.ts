@@ -147,6 +147,8 @@ export class CosmWasmClient {
   /** Any address the chain considers valid (valid bech32 with proper prefix) */
   protected anyValidAddress: string | undefined;
 
+  private readonly codesCache = new Map<number, CodeDetails>();
+
   public constructor(url: string, broadcastMode = BroadcastMode.Block) {
     this.restClient = new RestClient(url, broadcastMode);
   }
@@ -312,9 +314,11 @@ export class CosmWasmClient {
   }
 
   public async getCodeDetails(codeId: number): Promise<CodeDetails> {
-    const getCodeResult = await this.restClient.getCode(codeId);
+    const cached = this.codesCache.get(codeId);
+    if (cached) return cached;
 
-    return {
+    const getCodeResult = await this.restClient.getCode(codeId);
+    const codeDetails: CodeDetails = {
       id: getCodeResult.id,
       creator: getCodeResult.creator,
       checksum: Encoding.toHex(Encoding.fromHex(getCodeResult.data_hash)),
@@ -322,6 +326,8 @@ export class CosmWasmClient {
       builder: getCodeResult.builder || undefined,
       data: Encoding.fromBase64(getCodeResult.data),
     };
+    this.codesCache.set(codeId, codeDetails);
+    return codeDetails;
   }
 
   public async getContracts(codeId: number): Promise<readonly Contract[]> {
