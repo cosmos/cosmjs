@@ -2,6 +2,7 @@ import { Sha256 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
 import { assert } from "@iov/utils";
 
+import { PrivateCosmWasmClient } from "./cosmwasmclient";
 import { Secp256k1Pen } from "./pen";
 import { RestClient } from "./restclient";
 import { SigningCosmWasmClient, UploadMeta } from "./signingcosmwasmclient";
@@ -28,6 +29,24 @@ describe("SigningCosmWasmClient", () => {
       const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
       const client = new SigningCosmWasmClient(httpUrl, faucet.address, signBytes => pen.sign(signBytes));
       expect(client).toBeTruthy();
+    });
+  });
+
+  describe("getHeight", () => {
+    it("always uses authAccount implementation", async () => {
+      pendingWithoutWasmd();
+      const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
+      const client = new SigningCosmWasmClient(httpUrl, faucet.address, signBytes => pen.sign(signBytes));
+
+      const openedClient = (client as unknown) as PrivateCosmWasmClient;
+      const blockLatestSpy = spyOn(openedClient.restClient, "blocksLatest").and.callThrough();
+      const authAccountsSpy = spyOn(openedClient.restClient, "authAccounts").and.callThrough();
+
+      const height = await client.getHeight();
+      expect(height).toBeGreaterThan(0);
+
+      expect(blockLatestSpy).toHaveBeenCalledTimes(0);
+      expect(authAccountsSpy).toHaveBeenCalledTimes(1);
     });
   });
 

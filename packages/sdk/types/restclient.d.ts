@@ -52,6 +52,7 @@ export interface BlockResponse {
   readonly block: Block;
 }
 interface AuthAccountsResponse {
+  readonly height: string;
   readonly result: {
     readonly type: "cosmos-sdk/Account";
     readonly value: CosmosSdkAccount;

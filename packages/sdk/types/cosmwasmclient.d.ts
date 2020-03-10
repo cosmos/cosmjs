@@ -103,10 +103,17 @@ export interface Block {
   /** Array of raw transactions */
   readonly txs: ReadonlyArray<Uint8Array>;
 }
+/** Use for testing only */
+export interface PrivateCosmWasmClient {
+  readonly restClient: RestClient;
+}
 export declare class CosmWasmClient {
   protected readonly restClient: RestClient;
+  /** Any address the chain considers valid (valid bech32 with proper prefix) */
+  protected anyValidAddress: string | undefined;
   constructor(url: string, broadcastMode?: BroadcastMode);
   chainId(): Promise<string>;
+  getHeight(): Promise<number>;
   /**
    * Returns a 32 byte upper-case hex transaction hash (typically used as the transaction ID)
    */

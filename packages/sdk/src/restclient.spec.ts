@@ -20,6 +20,7 @@ import {
   makeRandomAddress,
   pendingWithoutWasmd,
   tendermintAddressMatcher,
+  tendermintHeightMatcher,
   tendermintIdMatcher,
   tendermintOptionalIdMatcher,
   wasmdEnabled,
@@ -174,7 +175,8 @@ describe("RestClient", () => {
     it("works for unused account without pubkey", async () => {
       pendingWithoutWasmd();
       const client = new RestClient(wasmdEndpoint);
-      const { result } = await client.authAccounts(unusedAccount.address);
+      const { height, result } = await client.authAccounts(unusedAccount.address);
+      expect(height).toMatch(tendermintHeightMatcher);
       expect(result).toEqual({
         type: "cosmos-sdk/Account",
         value: {

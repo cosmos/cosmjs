@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { Sha256 } from "@iov/crypto";
 import { Bech32, Encoding } from "@iov/encoding";
-import { assert } from "@iov/utils";
+import { assert, sleep } from "@iov/utils";
 import { ReadonlyDate } from "readonly-date";
 
-import { Code, CosmWasmClient } from "./cosmwasmclient";
+import { Code, CosmWasmClient, PrivateCosmWasmClient } from "./cosmwasmclient";
 import { makeSignBytes } from "./encoding";
 import { findAttribute } from "./logs";
 import { Secp256k1Pen } from "./pen";
@@ -53,6 +53,46 @@ describe("CosmWasmClient", () => {
       pendingWithoutWasmd();
       const client = new CosmWasmClient(wasmdEndpoint);
       expect(await client.chainId()).toEqual("testing");
+    });
+  });
+
+  describe("getHeight", () => {
+    it("gets height via last block", async () => {
+      pendingWithoutWasmd();
+      const client = new CosmWasmClient(wasmdEndpoint);
+      const openedClient = (client as unknown) as PrivateCosmWasmClient;
+      const blockLatestSpy = spyOn(openedClient.restClient, "blocksLatest").and.callThrough();
+
+      const height1 = await client.getHeight();
+      expect(height1).toBeGreaterThan(0);
+      await sleep(1_000);
+      const height2 = await client.getHeight();
+      expect(height2).toEqual(height1 + 1);
+
+      expect(blockLatestSpy).toHaveBeenCalledTimes(2);
+    });
+
+    it("gets height via authAccount once an address is known", async () => {
+      pendingWithoutWasmd();
+      const client = new CosmWasmClient(wasmdEndpoint);
+
+      const openedClient = (client as unknown) as PrivateCosmWasmClient;
+      const blockLatestSpy = spyOn(openedClient.restClient, "blocksLatest").and.callThrough();
+      const authAccountsSpy = spyOn(openedClient.restClient, "authAccounts").and.callThrough();
+
+      const height1 = await client.getHeight();
+      expect(height1).toBeGreaterThan(0);
+
+      await client.getCodes(); // warm up the client
+
+      const height2 = await client.getHeight();
+      expect(height2).toBeGreaterThan(0);
+      await sleep(1_000);
+      const height3 = await client.getHeight();
+      expect(height3).toEqual(height2 + 1);
+
+      expect(blockLatestSpy).toHaveBeenCalledTimes(1);
+      expect(authAccountsSpy).toHaveBeenCalledTimes(2);
     });
   });
 
