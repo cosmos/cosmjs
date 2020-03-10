@@ -18,8 +18,8 @@ const guest = {
 };
 
 const codeMeta = {
-  source: "https://crates.io/api/v1/crates/cw-erc20/0.2.0/download",
-  builder: "confio/cosmwasm-opt:0.7.0",
+  source: "https://crates.io/api/v1/crates/cw-erc20/0.3.0/download",
+  builder: "confio/cosmwasm-opt:0.7.3",
 };
 
 const initMsgHash = {
