@@ -94,7 +94,7 @@ export class CosmWasmConnection implements BlockchainConnection {
   }
 
   private static async initialize(cosmWasmClient: CosmWasmClient): Promise<ChainId> {
-    const rawChainId = await cosmWasmClient.chainId();
+    const rawChainId = await cosmWasmClient.getChainId();
     return Caip5.encode(rawChainId);
   }
 

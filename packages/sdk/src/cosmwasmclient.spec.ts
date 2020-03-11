@@ -48,11 +48,11 @@ describe("CosmWasmClient", () => {
     });
   });
 
-  describe("chainId", () => {
+  describe("getChainId", () => {
     it("works", async () => {
       pendingWithoutWasmd();
       const client = new CosmWasmClient(wasmdEndpoint);
-      expect(await client.chainId()).toEqual("testing");
+      expect(await client.getChainId()).toEqual("testing");
     });
   });
 
@@ -152,7 +152,7 @@ describe("CosmWasmClient", () => {
 
       // header
       expect(response.header.height).toBeGreaterThanOrEqual(1);
-      expect(response.header.chainId).toEqual(await client.chainId());
+      expect(response.header.chainId).toEqual(await client.getChainId());
       expect(new ReadonlyDate(response.header.time).getTime()).toBeLessThan(ReadonlyDate.now());
       expect(new ReadonlyDate(response.header.time).getTime()).toBeGreaterThanOrEqual(
         ReadonlyDate.now() - 5_000,
@@ -173,7 +173,7 @@ describe("CosmWasmClient", () => {
 
       // header
       expect(response.header.height).toEqual(height - 1);
-      expect(response.header.chainId).toEqual(await client.chainId());
+      expect(response.header.chainId).toEqual(await client.getChainId());
       expect(new ReadonlyDate(response.header.time).getTime()).toBeLessThan(ReadonlyDate.now());
       expect(new ReadonlyDate(response.header.time).getTime()).toBeGreaterThanOrEqual(
         ReadonlyDate.now() - 5_000,
@@ -223,7 +223,7 @@ describe("CosmWasmClient", () => {
         gas: "890000",
       };
 
-      const chainId = await client.chainId();
+      const chainId = await client.getChainId();
       const { accountNumber, sequence } = await client.getNonce(faucet.address);
       const signBytes = makeSignBytes([sendMsg], fee, chainId, memo, accountNumber, sequence);
       const signature = await pen.sign(signBytes);

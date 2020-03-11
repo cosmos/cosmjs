@@ -113,7 +113,7 @@ export declare class CosmWasmClient {
   protected anyValidAddress: string | undefined;
   private readonly codesCache;
   constructor(url: string, broadcastMode?: BroadcastMode);
-  chainId(): Promise<string>;
+  getChainId(): Promise<string>;
   getHeight(): Promise<number>;
   /**
    * Returns a 32 byte upper-case hex transaction hash (typically used as the transaction ID)

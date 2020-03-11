@@ -153,7 +153,7 @@ export class CosmWasmClient {
     this.restClient = new RestClient(url, broadcastMode);
   }
 
-  public async chainId(): Promise<string> {
+  public async getChainId(): Promise<string> {
     const response = await this.restClient.nodeInfo();
     return response.node_info.network;
   }
