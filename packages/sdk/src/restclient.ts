@@ -263,17 +263,28 @@ function parseAxiosError(err: AxiosError): never {
 
 export class RestClient {
   private readonly client: AxiosInstance;
-  private readonly mode: BroadcastMode;
+  private readonly broadcastMode: BroadcastMode;
 
-  public constructor(url: string, mode = BroadcastMode.Block) {
+  /**
+   * Creates a new client to interact with a Cosmos SDK light client daemon.
+   * This class tries to be a direct mapping onto the API. Some basic decoding and normalizatin is done
+   * but things like caching are done at a higher level.
+   *
+   * When building apps, you should not need to use this class directly. If you do, this indicates a missing feature
+   * in higher level components. Feel free to raise an issue in this case.
+   *
+   * @param apiUrl The URL of a Cosmos SDK light client daemon API (sometimes called REST server or REST API)
+   * @param broadcastMode Defines at which point of the transaction processing the postTx method (i.e. transaction broadcasting) returns
+   */
+  public constructor(apiUrl: string, broadcastMode = BroadcastMode.Block) {
     const headers = {
       post: { "Content-Type": "application/json" },
     };
     this.client = axios.create({
-      baseURL: url,
+      baseURL: apiUrl,
       headers: headers,
     });
-    this.mode = mode;
+    this.broadcastMode = broadcastMode;
   }
 
   public async get(path: string): Promise<RestClientResponse> {
@@ -368,7 +379,7 @@ export class RestClient {
   public async postTx(tx: StdTx): Promise<PostTxsResponse> {
     const params = {
       tx: tx,
-      mode: this.mode,
+      mode: this.broadcastMode,
     };
     const responseData = await this.post("/txs", params);
     if (!(responseData as any).txhash) {

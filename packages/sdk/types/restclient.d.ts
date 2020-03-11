@@ -178,8 +178,19 @@ export declare enum BroadcastMode {
 }
 export declare class RestClient {
   private readonly client;
-  private readonly mode;
-  constructor(url: string, mode?: BroadcastMode);
+  private readonly broadcastMode;
+  /**
+   * Creates a new client to interact with a Cosmos SDK light client daemon.
+   * This class tries to be a direct mapping onto the API. Some basic decoding and normalizatin is done
+   * but things like caching are done at a higher level.
+   *
+   * When building apps, you should not need to use this class directly. If you do, this indicates a missing feature
+   * in higher level components. Feel free to raise an issue in this case.
+   *
+   * @param apiUrl The URL of a Cosmos SDK light client daemon API (sometimes called REST server or REST API)
+   * @param broadcastMode Defines at which point of the transaction processing the postTx method (i.e. transaction broadcasting) returns
+   */
+  constructor(apiUrl: string, broadcastMode?: BroadcastMode);
   get(path: string): Promise<RestClientResponse>;
   post(path: string, params: PostTxsParams): Promise<RestClientResponse>;
   authAccounts(address: string): Promise<AuthAccountsResponse>;

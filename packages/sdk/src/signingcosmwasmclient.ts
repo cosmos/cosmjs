@@ -103,14 +103,26 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   private readonly signCallback: SigningCallback;
   private readonly fees: FeeTable;
 
+  /**
+   * Creates a new client with signing capability to interact with a CosmWasm blockchain. This is the bigger brother of CosmWasmClient.
+   *
+   * This instance does a lot of caching. In order to benefit from that you should try to use one instance
+   * for the lifetime of your application. When switching backends, a new instance must be created.
+   *
+   * @param apiUrl The URL of a Cosmos SDK light client daemon API (sometimes called REST server or REST API)
+   * @param senderAddress The address that will sign and send transactions using this instance
+   * @param signCallback An asynchonous callback to create a signature for a given transaction. This can be implemented using secure key stores that require user interaction.
+   * @param customFees The fees that are paid for transactions
+   * @param broadcastMode Defines at which point of the transaction processing the postTx method (i.e. transaction broadcasting) returns
+   */
   public constructor(
-    url: string,
+    apiUrl: string,
     senderAddress: string,
     signCallback: SigningCallback,
     customFees?: Partial<FeeTable>,
     broadcastMode = BroadcastMode.Block,
   ) {
-    super(url, broadcastMode);
+    super(apiUrl, broadcastMode);
     this.anyValidAddress = senderAddress;
 
     this.senderAddress = senderAddress;
