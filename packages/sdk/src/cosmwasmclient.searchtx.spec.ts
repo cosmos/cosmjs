@@ -11,8 +11,8 @@ import {
   fromOneElementArray,
   makeRandomAddress,
   pendingWithoutWasmd,
+  wasmd,
   wasmdEnabled,
-  wasmdEndpoint,
 } from "./testutils.spec";
 import { Coin, CosmosSdkTx, isMsgExecuteContract, isMsgInstantiateContract, isMsgSend } from "./types";
 
@@ -39,7 +39,7 @@ describe("CosmWasmClient.searchTx", () => {
   beforeAll(async () => {
     if (wasmdEnabled()) {
       const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-      const client = new SigningCosmWasmClient(wasmdEndpoint, faucet.address, signBytes =>
+      const client = new SigningCosmWasmClient(wasmd.endpoint, faucet.address, signBytes =>
         pen.sign(signBytes),
       );
 
@@ -51,7 +51,7 @@ describe("CosmWasmClient.searchTx", () => {
         };
         const result = await client.sendTokens(recipient, [transferAmount]);
         await sleep(50); // wait until tx is indexed
-        const txDetails = await new RestClient(wasmdEndpoint).txsById(result.transactionHash);
+        const txDetails = await new RestClient(wasmd.endpoint).txsById(result.transactionHash);
         postedSend = {
           sender: faucet.address,
           recipient: recipient,
@@ -71,7 +71,7 @@ describe("CosmWasmClient.searchTx", () => {
         };
         const result = await client.execute(hashInstance, msg);
         await sleep(50); // wait until tx is indexed
-        const txDetails = await new RestClient(wasmdEndpoint).txsById(result.transactionHash);
+        const txDetails = await new RestClient(wasmd.endpoint).txsById(result.transactionHash);
         postedExecute = {
           sender: faucet.address,
           contract: hashInstance,
@@ -87,7 +87,7 @@ describe("CosmWasmClient.searchTx", () => {
     it("can search by ID", async () => {
       pendingWithoutWasmd();
       assert(postedSend, "value must be set in beforeAll()");
-      const client = new CosmWasmClient(wasmdEndpoint);
+      const client = new CosmWasmClient(wasmd.endpoint);
       const result = await client.searchTx({ id: postedSend.hash });
       expect(result.length).toEqual(1);
       expect(result[0]).toEqual(
@@ -101,7 +101,7 @@ describe("CosmWasmClient.searchTx", () => {
 
     it("can search by ID (non existent)", async () => {
       pendingWithoutWasmd();
-      const client = new CosmWasmClient(wasmdEndpoint);
+      const client = new CosmWasmClient(wasmd.endpoint);
       const nonExistentId = "0000000000000000000000000000000000000000000000000000000000000000";
       const result = await client.searchTx({ id: nonExistentId });
       expect(result.length).toEqual(0);
@@ -110,7 +110,7 @@ describe("CosmWasmClient.searchTx", () => {
     it("can search by ID and filter by minHeight", async () => {
       pendingWithoutWasmd();
       assert(postedSend);
-      const client = new CosmWasmClient(wasmdEndpoint);
+      const client = new CosmWasmClient(wasmd.endpoint);
       const query = { id: postedSend.hash };
 
       {
@@ -139,7 +139,7 @@ describe("CosmWasmClient.searchTx", () => {
     it("can search by height", async () => {
       pendingWithoutWasmd();
       assert(postedSend, "value must be set in beforeAll()");
-      const client = new CosmWasmClient(wasmdEndpoint);
+      const client = new CosmWasmClient(wasmd.endpoint);
       const result = await client.searchTx({ height: postedSend.height });
       expect(result.length).toEqual(1);
       expect(result[0]).toEqual(
@@ -156,7 +156,7 @@ describe("CosmWasmClient.searchTx", () => {
     it("can search by sender", async () => {
       pendingWithoutWasmd();
       assert(postedSend, "value must be set in beforeAll()");
-      const client = new CosmWasmClient(wasmdEndpoint);
+      const client = new CosmWasmClient(wasmd.endpoint);
       const results = await client.searchTx({ sentFromOrTo: postedSend.sender });
       expect(results.length).toBeGreaterThanOrEqual(1);
 
@@ -182,7 +182,7 @@ describe("CosmWasmClient.searchTx", () => {
     it("can search by recipient", async () => {
       pendingWithoutWasmd();
       assert(postedSend, "value must be set in beforeAll()");
-      const client = new CosmWasmClient(wasmdEndpoint);
+      const client = new CosmWasmClient(wasmd.endpoint);
       const results = await client.searchTx({ sentFromOrTo: postedSend.recipient });
       expect(results.length).toBeGreaterThanOrEqual(1);
 
@@ -208,7 +208,7 @@ describe("CosmWasmClient.searchTx", () => {
     it("can search by recipient and filter by minHeight", async () => {
       pendingWithoutWasmd();
       assert(postedSend);
-      const client = new CosmWasmClient(wasmdEndpoint);
+      const client = new CosmWasmClient(wasmd.endpoint);
       const query = { sentFromOrTo: postedSend.recipient };
 
       {
@@ -235,7 +235,7 @@ describe("CosmWasmClient.searchTx", () => {
     it("can search by recipient and filter by maxHeight", async () => {
       pendingWithoutWasmd();
       assert(postedSend);
-      const client = new CosmWasmClient(wasmdEndpoint);
+      const client = new CosmWasmClient(wasmd.endpoint);
       const query = { sentFromOrTo: postedSend.recipient };
 
       {
@@ -264,7 +264,7 @@ describe("CosmWasmClient.searchTx", () => {
     it("can search by transfer.recipient", async () => {
       pendingWithoutWasmd();
       assert(postedSend, "value must be set in beforeAll()");
-      const client = new CosmWasmClient(wasmdEndpoint);
+      const client = new CosmWasmClient(wasmd.endpoint);
       const results = await client.searchTx({
         tags: [{ key: "transfer.recipient", value: postedSend.recipient }],
       });
@@ -290,7 +290,7 @@ describe("CosmWasmClient.searchTx", () => {
     it("can search by message.contract_address", async () => {
       pendingWithoutWasmd();
       assert(postedExecute, "value must be set in beforeAll()");
-      const client = new CosmWasmClient(wasmdEndpoint);
+      const client = new CosmWasmClient(wasmd.endpoint);
       const results = await client.searchTx({
         tags: [{ key: "message.contract_address", value: postedExecute.contract }],
       });
@@ -332,7 +332,7 @@ describe("CosmWasmClient.searchTx", () => {
     it("can search by message.contract_address + message.action", async () => {
       pendingWithoutWasmd();
       assert(postedExecute, "value must be set in beforeAll()");
-      const client = new CosmWasmClient(wasmdEndpoint);
+      const client = new CosmWasmClient(wasmd.endpoint);
       const results = await client.searchTx({
         tags: [
           { key: "message.contract_address", value: postedExecute.contract },
