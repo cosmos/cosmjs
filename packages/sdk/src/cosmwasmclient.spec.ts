@@ -54,6 +54,18 @@ describe("CosmWasmClient", () => {
       const client = new CosmWasmClient(wasmdEndpoint);
       expect(await client.getChainId()).toEqual("testing");
     });
+
+    it("caches chain ID", async () => {
+      pendingWithoutWasmd();
+      const client = new CosmWasmClient(wasmdEndpoint);
+      const openedClient = (client as unknown) as PrivateCosmWasmClient;
+      const getCodeSpy = spyOn(openedClient.restClient, "nodeInfo").and.callThrough();
+
+      expect(await client.getChainId()).toEqual("testing"); // from network
+      expect(await client.getChainId()).toEqual("testing"); // from cache
+
+      expect(getCodeSpy).toHaveBeenCalledTimes(1);
+    });
   });
 
   describe("getHeight", () => {

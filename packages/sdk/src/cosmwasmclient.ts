@@ -148,14 +148,21 @@ export class CosmWasmClient {
   protected anyValidAddress: string | undefined;
 
   private readonly codesCache = new Map<number, CodeDetails>();
+  private chainId: string | undefined;
 
   public constructor(url: string, broadcastMode = BroadcastMode.Block) {
     this.restClient = new RestClient(url, broadcastMode);
   }
 
   public async getChainId(): Promise<string> {
-    const response = await this.restClient.nodeInfo();
-    return response.node_info.network;
+    if (!this.chainId) {
+      const response = await this.restClient.nodeInfo();
+      const chainId = response.node_info.network;
+      if (!chainId) throw new Error("Chain ID must not be empty");
+      this.chainId = chainId;
+    }
+
+    return this.chainId;
   }
 
   public async getHeight(): Promise<number> {
