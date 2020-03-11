@@ -112,8 +112,9 @@ export declare class CosmWasmClient {
   /** Any address the chain considers valid (valid bech32 with proper prefix) */
   protected anyValidAddress: string | undefined;
   private readonly codesCache;
+  private chainId;
   constructor(url: string, broadcastMode?: BroadcastMode);
-  chainId(): Promise<string>;
+  getChainId(): Promise<string>;
   getHeight(): Promise<number>;
   /**
    * Returns a 32 byte upper-case hex transaction hash (typically used as the transaction ID)

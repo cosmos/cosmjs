@@ -17,8 +17,8 @@ import {
   makeRandomAddress,
   pendingWithoutWasmd,
   tendermintIdMatcher,
+  wasmd,
   wasmdEnabled,
-  wasmdEndpoint,
 } from "./testutils.spec";
 import { MsgSend, StdFee } from "./types";
 
@@ -43,23 +43,35 @@ interface HackatomInstance {
 describe("CosmWasmClient", () => {
   describe("makeReadOnly", () => {
     it("can be constructed", () => {
-      const client = new CosmWasmClient(wasmdEndpoint);
+      const client = new CosmWasmClient(wasmd.endpoint);
       expect(client).toBeTruthy();
     });
   });
 
-  describe("chainId", () => {
+  describe("getChainId", () => {
     it("works", async () => {
       pendingWithoutWasmd();
-      const client = new CosmWasmClient(wasmdEndpoint);
-      expect(await client.chainId()).toEqual("testing");
+      const client = new CosmWasmClient(wasmd.endpoint);
+      expect(await client.getChainId()).toEqual(wasmd.expectedChainId);
+    });
+
+    it("caches chain ID", async () => {
+      pendingWithoutWasmd();
+      const client = new CosmWasmClient(wasmd.endpoint);
+      const openedClient = (client as unknown) as PrivateCosmWasmClient;
+      const getCodeSpy = spyOn(openedClient.restClient, "nodeInfo").and.callThrough();
+
+      expect(await client.getChainId()).toEqual(wasmd.expectedChainId); // from network
+      expect(await client.getChainId()).toEqual(wasmd.expectedChainId); // from cache
+
+      expect(getCodeSpy).toHaveBeenCalledTimes(1);
     });
   });
 
   describe("getHeight", () => {
     it("gets height via last block", async () => {
       pendingWithoutWasmd();
-      const client = new CosmWasmClient(wasmdEndpoint);
+      const client = new CosmWasmClient(wasmd.endpoint);
       const openedClient = (client as unknown) as PrivateCosmWasmClient;
       const blockLatestSpy = spyOn(openedClient.restClient, "blocksLatest").and.callThrough();
 
@@ -74,7 +86,7 @@ describe("CosmWasmClient", () => {
 
     it("gets height via authAccount once an address is known", async () => {
       pendingWithoutWasmd();
-      const client = new CosmWasmClient(wasmdEndpoint);
+      const client = new CosmWasmClient(wasmd.endpoint);
 
       const openedClient = (client as unknown) as PrivateCosmWasmClient;
       const blockLatestSpy = spyOn(openedClient.restClient, "blocksLatest").and.callThrough();
@@ -99,7 +111,7 @@ describe("CosmWasmClient", () => {
   describe("getNonce", () => {
     it("works", async () => {
       pendingWithoutWasmd();
-      const client = new CosmWasmClient(wasmdEndpoint);
+      const client = new CosmWasmClient(wasmd.endpoint);
       expect(await client.getNonce(unused.address)).toEqual({
         accountNumber: 5,
         sequence: 0,
@@ -108,7 +120,7 @@ describe("CosmWasmClient", () => {
 
     it("throws for missing accounts", async () => {
       pendingWithoutWasmd();
-      const client = new CosmWasmClient(wasmdEndpoint);
+      const client = new CosmWasmClient(wasmd.endpoint);
       const missing = makeRandomAddress();
       await client.getNonce(missing).then(
         () => fail("this must not succeed"),
@@ -120,7 +132,7 @@ describe("CosmWasmClient", () => {
   describe("getAccount", () => {
     it("works", async () => {
       pendingWithoutWasmd();
-      const client = new CosmWasmClient(wasmdEndpoint);
+      const client = new CosmWasmClient(wasmd.endpoint);
       expect(await client.getAccount(unused.address)).toEqual({
         address: unused.address,
         accountNumber: 5,
@@ -135,7 +147,7 @@ describe("CosmWasmClient", () => {
 
     it("returns undefined for missing accounts", async () => {
       pendingWithoutWasmd();
-      const client = new CosmWasmClient(wasmdEndpoint);
+      const client = new CosmWasmClient(wasmd.endpoint);
       const missing = makeRandomAddress();
       expect(await client.getAccount(missing)).toBeUndefined();
     });
@@ -144,7 +156,7 @@ describe("CosmWasmClient", () => {
   describe("getBlock", () => {
     it("works for latest block", async () => {
       pendingWithoutWasmd();
-      const client = new CosmWasmClient(wasmdEndpoint);
+      const client = new CosmWasmClient(wasmd.endpoint);
       const response = await client.getBlock();
 
       // id
@@ -152,7 +164,7 @@ describe("CosmWasmClient", () => {
 
       // header
       expect(response.header.height).toBeGreaterThanOrEqual(1);
-      expect(response.header.chainId).toEqual(await client.chainId());
+      expect(response.header.chainId).toEqual(await client.getChainId());
       expect(new ReadonlyDate(response.header.time).getTime()).toBeLessThan(ReadonlyDate.now());
       expect(new ReadonlyDate(response.header.time).getTime()).toBeGreaterThanOrEqual(
         ReadonlyDate.now() - 5_000,
@@ -164,7 +176,7 @@ describe("CosmWasmClient", () => {
 
     it("works for block by height", async () => {
       pendingWithoutWasmd();
-      const client = new CosmWasmClient(wasmdEndpoint);
+      const client = new CosmWasmClient(wasmd.endpoint);
       const height = (await client.getBlock()).header.height;
       const response = await client.getBlock(height - 1);
 
@@ -173,7 +185,7 @@ describe("CosmWasmClient", () => {
 
       // header
       expect(response.header.height).toEqual(height - 1);
-      expect(response.header.chainId).toEqual(await client.chainId());
+      expect(response.header.chainId).toEqual(await client.getChainId());
       expect(new ReadonlyDate(response.header.time).getTime()).toBeLessThan(ReadonlyDate.now());
       expect(new ReadonlyDate(response.header.time).getTime()).toBeGreaterThanOrEqual(
         ReadonlyDate.now() - 5_000,
@@ -187,7 +199,7 @@ describe("CosmWasmClient", () => {
   describe("getIdentifier", () => {
     it("works", async () => {
       pendingWithoutWasmd();
-      const client = new CosmWasmClient(wasmdEndpoint);
+      const client = new CosmWasmClient(wasmd.endpoint);
       expect(await client.getIdentifier(cosmoshub.tx)).toEqual(cosmoshub.id);
     });
   });
@@ -196,7 +208,7 @@ describe("CosmWasmClient", () => {
     it("works", async () => {
       pendingWithoutWasmd();
       const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-      const client = new CosmWasmClient(wasmdEndpoint);
+      const client = new CosmWasmClient(wasmd.endpoint);
 
       const memo = "My first contract on chain";
       const sendMsg: MsgSend = {
@@ -223,7 +235,7 @@ describe("CosmWasmClient", () => {
         gas: "890000",
       };
 
-      const chainId = await client.chainId();
+      const chainId = await client.getChainId();
       const { accountNumber, sequence } = await client.getNonce(faucet.address);
       const signBytes = makeSignBytes([sendMsg], fee, chainId, memo, accountNumber, sequence);
       const signature = await pen.sign(signBytes);
@@ -243,7 +255,7 @@ describe("CosmWasmClient", () => {
   describe("getCodes", () => {
     it("works", async () => {
       pendingWithoutWasmd();
-      const client = new CosmWasmClient(wasmdEndpoint);
+      const client = new CosmWasmClient(wasmd.endpoint);
       const result = await client.getCodes();
       expect(result.length).toBeGreaterThanOrEqual(1);
       const [first] = result;
@@ -260,7 +272,7 @@ describe("CosmWasmClient", () => {
   describe("getCodeDetails", () => {
     it("works", async () => {
       pendingWithoutWasmd();
-      const client = new CosmWasmClient(wasmdEndpoint);
+      const client = new CosmWasmClient(wasmd.endpoint);
       const result = await client.getCodeDetails(1);
 
       const expectedInfo: Code = {
@@ -279,7 +291,7 @@ describe("CosmWasmClient", () => {
 
     it("caches downloads", async () => {
       pendingWithoutWasmd();
-      const client = new CosmWasmClient(wasmdEndpoint);
+      const client = new CosmWasmClient(wasmd.endpoint);
       const openedClient = (client as unknown) as PrivateCosmWasmClient;
       const getCodeSpy = spyOn(openedClient.restClient, "getCode").and.callThrough();
 
@@ -294,7 +306,7 @@ describe("CosmWasmClient", () => {
   describe("getContracts", () => {
     it("works", async () => {
       pendingWithoutWasmd();
-      const client = new CosmWasmClient(wasmdEndpoint);
+      const client = new CosmWasmClient(wasmd.endpoint);
       const result = await client.getContracts(1);
       expect(result.length).toBeGreaterThanOrEqual(3);
       const [hash, isa, jade] = result;
@@ -322,7 +334,7 @@ describe("CosmWasmClient", () => {
   describe("getContract", () => {
     it("works for HASH instance", async () => {
       pendingWithoutWasmd();
-      const client = new CosmWasmClient(wasmdEndpoint);
+      const client = new CosmWasmClient(wasmd.endpoint);
       const hash = await client.getContract("cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5");
       expect(hash).toEqual({
         address: "cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
@@ -361,7 +373,7 @@ describe("CosmWasmClient", () => {
       if (wasmdEnabled()) {
         pendingWithoutWasmd();
         const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-        const client = new SigningCosmWasmClient(wasmdEndpoint, faucet.address, signBytes =>
+        const client = new SigningCosmWasmClient(wasmd.endpoint, faucet.address, signBytes =>
           pen.sign(signBytes),
         );
         const { codeId } = await client.upload(getRandomizedHackatom());
@@ -375,7 +387,7 @@ describe("CosmWasmClient", () => {
       pendingWithoutWasmd();
       assert(contract);
 
-      const client = new CosmWasmClient(wasmdEndpoint);
+      const client = new CosmWasmClient(wasmd.endpoint);
       const raw = await client.queryContractRaw(contract.address, configKey);
       assert(raw, "must get result");
       expect(JSON.parse(fromUtf8(raw))).toEqual({
@@ -389,7 +401,7 @@ describe("CosmWasmClient", () => {
       pendingWithoutWasmd();
       assert(contract);
 
-      const client = new CosmWasmClient(wasmdEndpoint);
+      const client = new CosmWasmClient(wasmd.endpoint);
       const raw = await client.queryContractRaw(contract.address, otherKey);
       expect(raw).toBeNull();
     });
@@ -399,7 +411,7 @@ describe("CosmWasmClient", () => {
       assert(contract);
 
       const nonExistentAddress = makeRandomAddress();
-      const client = new CosmWasmClient(wasmdEndpoint);
+      const client = new CosmWasmClient(wasmd.endpoint);
       await client.queryContractRaw(nonExistentAddress, configKey).then(
         () => fail("must not succeed"),
         error => expect(error).toMatch(`No contract found at address "${nonExistentAddress}"`),
@@ -414,7 +426,7 @@ describe("CosmWasmClient", () => {
       if (wasmdEnabled()) {
         pendingWithoutWasmd();
         const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-        const client = new SigningCosmWasmClient(wasmdEndpoint, faucet.address, signBytes =>
+        const client = new SigningCosmWasmClient(wasmd.endpoint, faucet.address, signBytes =>
           pen.sign(signBytes),
         );
         const { codeId } = await client.upload(getRandomizedHackatom());
@@ -428,7 +440,7 @@ describe("CosmWasmClient", () => {
       pendingWithoutWasmd();
       assert(contract);
 
-      const client = new CosmWasmClient(wasmdEndpoint);
+      const client = new CosmWasmClient(wasmd.endpoint);
       const verifier = await client.queryContractSmart(contract.address, { verifier: {} });
       expect(fromAscii(verifier)).toEqual(contract.initMsg.verifier);
     });
@@ -437,7 +449,7 @@ describe("CosmWasmClient", () => {
       pendingWithoutWasmd();
       assert(contract);
 
-      const client = new CosmWasmClient(wasmdEndpoint);
+      const client = new CosmWasmClient(wasmd.endpoint);
       await client.queryContractSmart(contract.address, { broken: {} }).then(
         () => fail("must not succeed"),
         error => expect(error).toMatch(/Error parsing QueryMsg/i),
@@ -448,7 +460,7 @@ describe("CosmWasmClient", () => {
       pendingWithoutWasmd();
 
       const nonExistentAddress = makeRandomAddress();
-      const client = new CosmWasmClient(wasmdEndpoint);
+      const client = new CosmWasmClient(wasmd.endpoint);
       await client.queryContractSmart(nonExistentAddress, { verifier: {} }).then(
         () => fail("must not succeed"),
         error => expect(error).toMatch(`No contract found at address "${nonExistentAddress}"`),
