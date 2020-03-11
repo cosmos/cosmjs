@@ -44,7 +44,6 @@ import {
 
 const { fromAscii, fromBase64, fromHex, toAscii, toBase64, toHex } = Encoding;
 
-const defaultNetworkId = "testing";
 const emptyAddress = "cosmos1ltkhnmdcqemmd2tkhnx7qx66tq7e0wykw2j85k";
 const unusedAccount = {
   address: "cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u",
@@ -85,7 +84,7 @@ async function uploadCustomContract(
   };
 
   const { account_number, sequence } = (await client.authAccounts(faucet.address)).result.value;
-  const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account_number, sequence);
+  const signBytes = makeSignBytes([theMsg], fee, wasmd.chainId, memo, account_number, sequence);
   const signature = await pen.sign(signBytes);
   const signedTx = makeSignedTx(theMsg, fee, memo, signature);
   return client.postTx(signedTx);
@@ -127,7 +126,7 @@ async function instantiateContract(
   };
 
   const { account_number, sequence } = (await client.authAccounts(faucet.address)).result.value;
-  const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account_number, sequence);
+  const signBytes = makeSignBytes([theMsg], fee, wasmd.chainId, memo, account_number, sequence);
   const signature = await pen.sign(signBytes);
   const signedTx = makeSignedTx(theMsg, fee, memo, signature);
   return client.postTx(signedTx);
@@ -159,7 +158,7 @@ async function executeContract(
   };
 
   const { account_number, sequence } = (await client.authAccounts(faucet.address)).result.value;
-  const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account_number, sequence);
+  const signBytes = makeSignBytes([theMsg], fee, wasmd.chainId, memo, account_number, sequence);
   const signature = await pen.sign(signBytes);
   const signedTx = makeSignedTx(theMsg, fee, memo, signature);
   return client.postTx(signedTx);
@@ -239,7 +238,7 @@ describe("RestClient", () => {
       // header
       expect(response.block.header.version).toEqual({ block: "10", app: "0" });
       expect(parseInt(response.block.header.height, 10)).toBeGreaterThanOrEqual(1);
-      expect(response.block.header.chain_id).toEqual(defaultNetworkId);
+      expect(response.block.header.chain_id).toEqual(wasmd.chainId);
       expect(new ReadonlyDate(response.block.header.time).getTime()).toBeLessThan(ReadonlyDate.now());
       expect(new ReadonlyDate(response.block.header.time).getTime()).toBeGreaterThanOrEqual(
         ReadonlyDate.now() - 5_000,
@@ -273,7 +272,7 @@ describe("RestClient", () => {
       // header
       expect(response.block.header.version).toEqual({ block: "10", app: "0" });
       expect(response.block.header.height).toEqual(`${height - 1}`);
-      expect(response.block.header.chain_id).toEqual(defaultNetworkId);
+      expect(response.block.header.chain_id).toEqual(wasmd.chainId);
       expect(new ReadonlyDate(response.block.header.time).getTime()).toBeLessThan(ReadonlyDate.now());
       expect(new ReadonlyDate(response.block.header.time).getTime()).toBeGreaterThanOrEqual(
         ReadonlyDate.now() - 5_000,
@@ -306,10 +305,10 @@ describe("RestClient", () => {
         protocol_version: { p2p: "7", block: "10", app: "0" },
         id: jasmine.stringMatching(tendermintShortHashMatcher),
         listen_addr: "tcp://0.0.0.0:26656",
-        network: defaultNetworkId,
+        network: wasmd.chainId,
         version: "0.33.0",
         channels: "4020212223303800",
-        moniker: defaultNetworkId,
+        moniker: wasmd.chainId,
         other: { tx_index: "on", rpc_address: "tcp://0.0.0.0:26657" },
       });
       expect(application_version).toEqual({
@@ -645,7 +644,7 @@ describe("RestClient", () => {
       const client = new RestClient(wasmd.endpoint);
       const { account_number, sequence } = (await client.authAccounts(faucet.address)).result.value;
 
-      const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account_number, sequence);
+      const signBytes = makeSignBytes([theMsg], fee, wasmd.chainId, memo, account_number, sequence);
       const signature = await pen.sign(signBytes);
       const signedTx = makeSignedTx(theMsg, fee, memo, signature);
       const result = await client.postTx(signedTx);

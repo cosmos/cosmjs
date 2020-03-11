@@ -36,7 +36,7 @@ export const deployedErc20 = {
 
 export const wasmd = {
   endpoint: "http://localhost:1317",
-  expectedChainId: "testing",
+  chainId: "testing",
 };
 
 export const faucet = {

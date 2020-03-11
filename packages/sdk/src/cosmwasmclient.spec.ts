@@ -52,7 +52,7 @@ describe("CosmWasmClient", () => {
     it("works", async () => {
       pendingWithoutWasmd();
       const client = new CosmWasmClient(wasmd.endpoint);
-      expect(await client.getChainId()).toEqual(wasmd.expectedChainId);
+      expect(await client.getChainId()).toEqual(wasmd.chainId);
     });
 
     it("caches chain ID", async () => {
@@ -61,8 +61,8 @@ describe("CosmWasmClient", () => {
       const openedClient = (client as unknown) as PrivateCosmWasmClient;
       const getCodeSpy = spyOn(openedClient.restClient, "nodeInfo").and.callThrough();
 
-      expect(await client.getChainId()).toEqual(wasmd.expectedChainId); // from network
-      expect(await client.getChainId()).toEqual(wasmd.expectedChainId); // from cache
+      expect(await client.getChainId()).toEqual(wasmd.chainId); // from network
+      expect(await client.getChainId()).toEqual(wasmd.chainId); // from cache
 
       expect(getCodeSpy).toHaveBeenCalledTimes(1);
     });
