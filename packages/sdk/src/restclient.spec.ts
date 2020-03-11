@@ -18,10 +18,10 @@ import {
   fromOneElementArray,
   getHackatom,
   makeRandomAddress,
+  nonNegativeIntegerMatcher,
   pendingWithoutWasmd,
   semverMatcher,
   tendermintAddressMatcher,
-  tendermintHeightMatcher,
   tendermintIdMatcher,
   tendermintOptionalIdMatcher,
   tendermintShortHashMatcher,
@@ -178,7 +178,7 @@ describe("RestClient", () => {
       pendingWithoutWasmd();
       const client = new RestClient(wasmd.endpoint);
       const { height, result } = await client.authAccounts(unusedAccount.address);
-      expect(height).toMatch(tendermintHeightMatcher);
+      expect(height).toMatch(nonNegativeIntegerMatcher);
       expect(result).toEqual({
         type: "cosmos-sdk/Account",
         value: {
@@ -649,8 +649,16 @@ describe("RestClient", () => {
       const signature = await pen.sign(signBytes);
       const signedTx = makeSignedTx(theMsg, fee, memo, signature);
       const result = await client.postTx(signedTx);
-      // console.log("Raw log:", result.raw_log);
-      expect(result.code).toBeFalsy();
+      expect(result.code).toBeUndefined();
+      expect(result).toEqual({
+        height: jasmine.stringMatching(nonNegativeIntegerMatcher),
+        txhash: jasmine.stringMatching(tendermintIdMatcher),
+        // code is not set
+        raw_log: jasmine.stringMatching(/^\[.+\]$/i),
+        logs: jasmine.any(Array),
+        gas_wanted: jasmine.stringMatching(nonNegativeIntegerMatcher),
+        gas_used: jasmine.stringMatching(nonNegativeIntegerMatcher),
+      });
     });
 
     it("can upload, instantiate and execute wasm", async () => {
