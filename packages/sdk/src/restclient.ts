@@ -1,4 +1,4 @@
-import { Encoding } from "@iov/encoding";
+import { Encoding, isNonNullObject } from "@iov/encoding";
 import axios, { AxiosError, AxiosInstance } from "axios";
 
 import { Coin, CosmosSdkTx, Model, parseWasmData, StdTx, WasmData } from "./types";
@@ -137,8 +137,6 @@ interface SearchTxsResponse {
   readonly limit: string;
   readonly txs: readonly TxsResponse[];
 }
-
-interface PostTxsParams {}
 
 export interface PostTxsResponse {
   readonly height: string;
@@ -295,7 +293,8 @@ export class RestClient {
     return data;
   }
 
-  public async post(path: string, params: PostTxsParams): Promise<RestClientResponse> {
+  public async post(path: string, params: any): Promise<RestClientResponse> {
+    if (!isNonNullObject(params)) throw new Error("Got unexpected type of params. Expected object.");
     const { data } = await this.client.post(path, params).catch(parseAxiosError);
     if (data === null) {
       throw new Error("Received null response from server");

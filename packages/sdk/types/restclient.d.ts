@@ -110,7 +110,6 @@ interface SearchTxsResponse {
   readonly limit: string;
   readonly txs: readonly TxsResponse[];
 }
-interface PostTxsParams {}
 export interface PostTxsResponse {
   readonly height: string;
   readonly txhash: string;
@@ -192,7 +191,7 @@ export declare class RestClient {
    */
   constructor(apiUrl: string, broadcastMode?: BroadcastMode);
   get(path: string): Promise<RestClientResponse>;
-  post(path: string, params: PostTxsParams): Promise<RestClientResponse>;
+  post(path: string, params: any): Promise<RestClientResponse>;
   authAccounts(address: string): Promise<AuthAccountsResponse>;
   blocksLatest(): Promise<BlockResponse>;
   blocks(height: number): Promise<BlockResponse>;
