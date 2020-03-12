@@ -16,9 +16,10 @@ import {
   deployedErc20,
   faucet,
   fromOneElementArray,
-  getRandomizedHackatom,
+  getHackatom,
   makeRandomAddress,
   pendingWithoutWasmd,
+  semverMatcher,
   tendermintAddressMatcher,
   tendermintHeightMatcher,
   tendermintIdMatcher,
@@ -91,7 +92,7 @@ async function uploadCustomContract(
 }
 
 async function uploadContract(client: RestClient, pen: Pen): Promise<PostTxsResponse> {
-  return uploadCustomContract(client, pen, getRandomizedHackatom());
+  return uploadCustomContract(client, pen, getHackatom());
 }
 
 async function instantiateContract(
@@ -315,7 +316,7 @@ describe("RestClient", () => {
         name: "wasm",
         server_name: "wasmd",
         client_name: "wasmcli",
-        version: jasmine.stringMatching(/^0\.7\.[0-9]+(-[a-zA-Z0-9._]+)?$/),
+        version: jasmine.stringMatching(semverMatcher),
         commit: jasmine.stringMatching(tendermintShortHashMatcher),
         build_tags: "netgo,ledger",
         go: jasmine.stringMatching(/^go version go1\.[0-9]+\.[0-9]+ linux\/amd64$/),
@@ -737,7 +738,7 @@ describe("RestClient", () => {
       const numExisting = existingInfos.length;
 
       // upload data
-      const wasmCode = getRandomizedHackatom();
+      const wasmCode = getHackatom();
       const result = await uploadCustomContract(client, pen, wasmCode);
       expect(result.code).toBeFalsy();
       const logs = parseLogs(result.logs);

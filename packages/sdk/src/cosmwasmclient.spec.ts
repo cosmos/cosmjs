@@ -13,7 +13,7 @@ import cosmoshub from "./testdata/cosmoshub.json";
 import {
   deployedErc20,
   faucet,
-  getRandomizedHackatom,
+  getHackatom,
   makeRandomAddress,
   pendingWithoutWasmd,
   tendermintIdMatcher,
@@ -376,7 +376,7 @@ describe("CosmWasmClient", () => {
         const client = new SigningCosmWasmClient(wasmd.endpoint, faucet.address, signBytes =>
           pen.sign(signBytes),
         );
-        const { codeId } = await client.upload(getRandomizedHackatom());
+        const { codeId } = await client.upload(getHackatom());
         const initMsg = { verifier: makeRandomAddress(), beneficiary: makeRandomAddress() };
         const { contractAddress } = await client.instantiate(codeId, initMsg, "random hackatom");
         contract = { initMsg: initMsg, address: contractAddress };
@@ -429,7 +429,7 @@ describe("CosmWasmClient", () => {
         const client = new SigningCosmWasmClient(wasmd.endpoint, faucet.address, signBytes =>
           pen.sign(signBytes),
         );
-        const { codeId } = await client.upload(getRandomizedHackatom());
+        const { codeId } = await client.upload(getHackatom());
         const initMsg = { verifier: makeRandomAddress(), beneficiary: makeRandomAddress() };
         const { contractAddress } = await client.instantiate(codeId, initMsg, "a different hackatom");
         contract = { initMsg: initMsg, address: contractAddress };
