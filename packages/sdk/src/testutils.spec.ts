@@ -3,28 +3,6 @@ import { Bech32, Encoding } from "@iov/encoding";
 
 import hackatom from "./testdata/contract.json";
 
-const { fromHex } = Encoding;
-
-export function leb128Encode(uint: number): Uint8Array {
-  if (uint < 0) throw new Error("Only non-negative values supported");
-  if (uint > 0x7fffffff) throw new Error("Only values in signed int32 range allowed");
-  const out = new Array<number>();
-  let value = uint;
-  do {
-    // eslint-disable-next-line no-bitwise
-    let byte = value & 0b01111111;
-    // eslint-disable-next-line no-bitwise
-    value >>= 7;
-
-    // more bytes to come: set high order bit of byte
-    // eslint-disable-next-line no-bitwise
-    if (value !== 0) byte ^= 0b10000000;
-
-    out.push(byte);
-  } while (value !== 0);
-  return new Uint8Array(out);
-}
-
 export function getHackatom(): Uint8Array {
   return Encoding.fromBase64(hackatom.data);
 }
@@ -86,20 +64,3 @@ export function fromOneElementArray<T>(elements: ArrayLike<T>): T {
   if (elements.length !== 1) throw new Error(`Expected exactly one element but got ${elements.length}`);
   return elements[0];
 }
-
-describe("leb128", () => {
-  describe("leb128Encode", () => {
-    it("works for single byte values", () => {
-      // Values in 7 bit range are encoded as one byte
-      expect(leb128Encode(0)).toEqual(fromHex("00"));
-      expect(leb128Encode(20)).toEqual(fromHex("14"));
-      expect(leb128Encode(127)).toEqual(fromHex("7f"));
-    });
-
-    it("works for multi byte values", () => {
-      // from external souce (wasm-objdump)
-      expect(leb128Encode(145)).toEqual(fromHex("9101"));
-      expect(leb128Encode(1539)).toEqual(fromHex("830c"));
-    });
-  });
-});
