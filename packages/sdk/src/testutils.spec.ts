@@ -25,31 +25,8 @@ export function leb128Encode(uint: number): Uint8Array {
   return new Uint8Array(out);
 }
 
-export function getRandomizedHackatom(): Uint8Array {
-  const data = Encoding.fromBase64(hackatom.data);
-
-  // The return value of the export function cosmwasm_api_0_6 is unused and
-  // can be randomized for testing.
-  //
-  // Find position of mutable bytes as follows:
-  // $ wasm-objdump -d contract.wasm | grep -F "cosmwasm_api_0_6" -A 1
-  // 0136d2 func[198] <cosmwasm_api_0_6>:
-  //  0136d3: 41 83 0c                   | i32.const 1539
-  //
-  // In the last line, the addresses [0136d3, 0136d3+1, 0136d3+2] hold a one byte instruction
-  // and a two byte value (leb128 encoded 1539). See also
-  // https://github.com/WebAssembly/design/blob/master/BinaryEncoding.md#constants-described-here.
-
-  // Any unsigned integer from 128 to 16383 is encoded to two leb128 bytes
-  const min = 128;
-  const max = 16383;
-  const random = Math.floor(Math.random() * (max - min)) + min;
-  const bytes = leb128Encode(random);
-
-  data[0x0136d3 + 1] = bytes[0];
-  data[0x0136d3 + 2] = bytes[1];
-
-  return data;
+export function getHackatom(): Uint8Array {
+  return Encoding.fromBase64(hackatom.data);
 }
 
 export function makeRandomAddress(): string {

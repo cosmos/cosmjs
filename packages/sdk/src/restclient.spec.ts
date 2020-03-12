@@ -16,7 +16,7 @@ import {
   deployedErc20,
   faucet,
   fromOneElementArray,
-  getRandomizedHackatom,
+  getHackatom,
   makeRandomAddress,
   pendingWithoutWasmd,
   semverMatcher,
@@ -92,7 +92,7 @@ async function uploadCustomContract(
 }
 
 async function uploadContract(client: RestClient, pen: Pen): Promise<PostTxsResponse> {
-  return uploadCustomContract(client, pen, getRandomizedHackatom());
+  return uploadCustomContract(client, pen, getHackatom());
 }
 
 async function instantiateContract(
@@ -738,7 +738,7 @@ describe("RestClient", () => {
       const numExisting = existingInfos.length;
 
       // upload data
-      const wasmCode = getRandomizedHackatom();
+      const wasmCode = getHackatom();
       const result = await uploadCustomContract(client, pen, wasmCode);
       expect(result.code).toBeFalsy();
       const logs = parseLogs(result.logs);
