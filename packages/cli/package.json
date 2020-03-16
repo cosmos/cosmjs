@@ -52,6 +52,6 @@
   "devDependencies": {
     "@types/argparse": "^1.0.34",
     "@types/babylon": "^6.16.3",
-    "@types/diff": "^3.5.1"
+    "@types/diff": "^4"
   }
 }
