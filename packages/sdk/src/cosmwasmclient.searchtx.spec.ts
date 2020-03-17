@@ -51,7 +51,7 @@ describe("CosmWasmClient.searchTx", () => {
         };
         const result = await client.sendTokens(recipient, [transferAmount]);
         await sleep(50); // wait until tx is indexed
-        const txDetails = await new RestClient(wasmd.endpoint).txsById(result.transactionHash);
+        const txDetails = await new RestClient(wasmd.endpoint).txById(result.transactionHash);
         postedSend = {
           sender: faucet.address,
           recipient: recipient,
@@ -71,7 +71,7 @@ describe("CosmWasmClient.searchTx", () => {
         };
         const result = await client.execute(hashInstance, msg);
         await sleep(50); // wait until tx is indexed
-        const txDetails = await new RestClient(wasmd.endpoint).txsById(result.transactionHash);
+        const txDetails = await new RestClient(wasmd.endpoint).txById(result.transactionHash);
         postedExecute = {
           sender: faucet.address,
           contract: hashInstance,

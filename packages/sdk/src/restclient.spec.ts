@@ -325,7 +325,7 @@ describe("RestClient", () => {
 
   // The /txs endpoints
 
-  describe("txsById", () => {
+  describe("txById", () => {
     let posted:
       | {
           readonly sender: string;
@@ -363,7 +363,7 @@ describe("RestClient", () => {
       pendingWithoutWasmd();
       assert(posted);
       const client = new RestClient(wasmd.endpoint);
-      const result = await client.txsById(posted.hash);
+      const result = await client.txById(posted.hash);
       expect(result.height).toBeGreaterThanOrEqual(1);
       expect(result.txhash).toEqual(posted.hash);
       const logs = parseLogs(result.logs);
@@ -422,7 +422,7 @@ describe("RestClient", () => {
         const result = await client.sendTokens(recipient, transferAmount);
 
         await sleep(50); // wait until tx is indexed
-        const txDetails = await new RestClient(wasmd.endpoint).txsById(result.transactionHash);
+        const txDetails = await new RestClient(wasmd.endpoint).txById(result.transactionHash);
         posted = {
           sender: faucet.address,
           recipient: recipient,

@@ -343,20 +343,20 @@ export class RestClient {
 
   // The /txs endpoints
 
+  public async txById(id: string): Promise<TxsResponse> {
+    const responseData = await this.get(`/txs/${id}`);
+    if (!(responseData as any).tx) {
+      throw new Error("Unexpected response data format");
+    }
+    return responseData as TxsResponse;
+  }
+
   public async txsQuery(query: string): Promise<SearchTxsResponse> {
     const responseData = await this.get(`/txs?${query}`);
     if (!(responseData as any).txs) {
       throw new Error("Unexpected response data format");
     }
     return responseData as SearchTxsResponse;
-  }
-
-  public async txsById(id: string): Promise<TxsResponse> {
-    const responseData = await this.get(`/txs/${id}`);
-    if (!(responseData as any).tx) {
-      throw new Error("Unexpected response data format");
-    }
-    return responseData as TxsResponse;
   }
 
   /** returns the amino-encoding of the transaction performed by the server */
