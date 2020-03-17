@@ -325,6 +325,75 @@ describe("RestClient", () => {
 
   // The /txs endpoints
 
+  describe("txsById", () => {
+    let posted:
+      | {
+          readonly sender: string;
+          readonly recipient: string;
+          readonly hash: string;
+        }
+      | undefined;
+
+    beforeAll(async () => {
+      if (wasmdEnabled()) {
+        const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
+        const client = new SigningCosmWasmClient(wasmd.endpoint, faucet.address, signBytes =>
+          pen.sign(signBytes),
+        );
+
+        const recipient = makeRandomAddress();
+        const transferAmount = [
+          {
+            denom: "ucosm",
+            amount: "1234567",
+          },
+        ];
+        const result = await client.sendTokens(recipient, transferAmount);
+
+        await sleep(50); // wait until tx is indexed
+        posted = {
+          sender: faucet.address,
+          recipient: recipient,
+          hash: result.transactionHash,
+        };
+      }
+    });
+
+    it("works", async () => {
+      pendingWithoutWasmd();
+      assert(posted);
+      const client = new RestClient(wasmd.endpoint);
+      const result = await client.txsById(posted.hash);
+      expect(result.height).toBeGreaterThanOrEqual(1);
+      expect(result.txhash).toEqual(posted.hash);
+      const logs = parseLogs(result.logs);
+      expect(logs).toEqual([
+        {
+          msg_index: 0,
+          log: "",
+          events: [
+            {
+              type: "message",
+              attributes: [
+                { key: "action", value: "send" },
+                { key: "sender", value: posted.sender },
+                { key: "module", value: "bank" },
+              ],
+            },
+            {
+              type: "transfer",
+              attributes: [
+                { key: "recipient", value: posted.recipient },
+                { key: "sender", value: posted.sender },
+                { key: "amount", value: "1234567ucosm" },
+              ],
+            },
+          ],
+        },
+      ]);
+    });
+  });
+
   describe("txsQuery", () => {
     let posted:
       | {
