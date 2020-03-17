@@ -369,12 +369,14 @@ describe("RestClient", () => {
       assert(posted);
       const client = new RestClient(wasmd.endpoint);
       const result = await client.txsQuery(`tx.height=${posted.height}&limit=26`);
-      expect(parseInt(result.count, 10)).toEqual(1);
-      expect(parseInt(result.limit, 10)).toEqual(26);
-      expect(parseInt(result.page_number, 10)).toEqual(1);
-      expect(parseInt(result.page_total, 10)).toEqual(1);
-      expect(parseInt(result.total_count, 10)).toEqual(1);
-      expect(result.txs).toEqual([posted.tx]);
+      expect(result).toEqual({
+        count: "1",
+        limit: "26",
+        page_number: "1",
+        page_total: "1",
+        total_count: "1",
+        txs: [posted.tx],
+      });
     });
 
     it("can query transactions by ID", async () => {
@@ -382,12 +384,14 @@ describe("RestClient", () => {
       assert(posted);
       const client = new RestClient(wasmd.endpoint);
       const result = await client.txsQuery(`tx.hash=${posted.hash}&limit=26`);
-      expect(parseInt(result.count, 10)).toEqual(1);
-      expect(parseInt(result.limit, 10)).toEqual(26);
-      expect(parseInt(result.page_number, 10)).toEqual(1);
-      expect(parseInt(result.page_total, 10)).toEqual(1);
-      expect(parseInt(result.total_count, 10)).toEqual(1);
-      expect(result.txs).toEqual([posted.tx]);
+      expect(result).toEqual({
+        count: "1",
+        limit: "26",
+        page_number: "1",
+        page_total: "1",
+        total_count: "1",
+        txs: [posted.tx],
+      });
     });
 
     it("can query transactions by sender", async () => {
