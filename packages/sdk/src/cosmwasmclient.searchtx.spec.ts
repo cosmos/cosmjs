@@ -2,6 +2,7 @@
 import { assert, sleep } from "@iov/utils";
 
 import { CosmWasmClient } from "./cosmwasmclient";
+import { makeSignBytes } from "./encoding";
 import { Secp256k1Pen } from "./pen";
 import { RestClient } from "./restclient";
 import { SigningCosmWasmClient } from "./signingcosmwasmclient";
@@ -14,10 +15,26 @@ import {
   wasmd,
   wasmdEnabled,
 } from "./testutils.spec";
-import { Coin, CosmosSdkTx, isMsgExecuteContract, isMsgInstantiateContract, isMsgSend } from "./types";
+import {
+  Coin,
+  CosmosSdkTx,
+  isMsgExecuteContract,
+  isMsgInstantiateContract,
+  isMsgSend,
+  MsgSend,
+} from "./types";
 
 describe("CosmWasmClient.searchTx", () => {
-  let postedSend:
+  let sendSuccessful:
+    | {
+        readonly sender: string;
+        readonly recipient: string;
+        readonly hash: string;
+        readonly height: number;
+        readonly tx: CosmosSdkTx;
+      }
+    | undefined;
+  let sendUnsuccessful:
     | {
         readonly sender: string;
         readonly recipient: string;
@@ -52,12 +69,70 @@ describe("CosmWasmClient.searchTx", () => {
         const result = await client.sendTokens(recipient, [transferAmount]);
         await sleep(50); // wait until tx is indexed
         const txDetails = await new RestClient(wasmd.endpoint).txById(result.transactionHash);
-        postedSend = {
+        sendSuccessful = {
           sender: faucet.address,
           recipient: recipient,
           hash: result.transactionHash,
           height: Number.parseInt(txDetails.height, 10),
           tx: txDetails.tx,
+        };
+      }
+
+      {
+        const memo = "Sending more than I can afford";
+        const recipient = makeRandomAddress();
+        const transferAmount = [
+          {
+            denom: "ucosm",
+            amount: "123456700000000",
+          },
+        ];
+        const sendMsg: MsgSend = {
+          type: "cosmos-sdk/MsgSend",
+          value: {
+            // eslint-disable-next-line @typescript-eslint/camelcase
+            from_address: faucet.address,
+            // eslint-disable-next-line @typescript-eslint/camelcase
+            to_address: recipient,
+            amount: transferAmount,
+          },
+        };
+        const fee = {
+          amount: [
+            {
+              denom: "ucosm",
+              amount: "2000",
+            },
+          ],
+          gas: "80000", // 80k
+        };
+        const { accountNumber, sequence } = await client.getNonce();
+        const chainId = await client.getChainId();
+        const signBytes = makeSignBytes([sendMsg], fee, chainId, memo, accountNumber, sequence);
+        const signature = await pen.sign(signBytes);
+        const tx: CosmosSdkTx = {
+          type: "cosmos-sdk/StdTx",
+          value: {
+            msg: [sendMsg],
+            fee: fee,
+            memo: memo,
+            signatures: [signature],
+          },
+        };
+        const transactionId = await client.getIdentifier(tx);
+        const heightBeforeThis = await client.getHeight();
+        try {
+          await client.postTx(tx.value);
+        } catch (error) {
+          // postTx() throws on execution failures, which is a questionable design. Ignore for now.
+          // console.log(error);
+        }
+        sendUnsuccessful = {
+          sender: faucet.address,
+          recipient: recipient,
+          hash: transactionId,
+          height: heightBeforeThis + 1,
+          tx: tx,
         };
       }
 
@@ -84,17 +159,34 @@ describe("CosmWasmClient.searchTx", () => {
   });
 
   describe("with SearchByIdQuery", () => {
-    it("can search by ID", async () => {
+    it("can search successful tx by ID", async () => {
       pendingWithoutWasmd();
-      assert(postedSend, "value must be set in beforeAll()");
+      assert(sendSuccessful, "value must be set in beforeAll()");
       const client = new CosmWasmClient(wasmd.endpoint);
-      const result = await client.searchTx({ id: postedSend.hash });
+      const result = await client.searchTx({ id: sendSuccessful.hash });
       expect(result.length).toEqual(1);
       expect(result[0]).toEqual(
         jasmine.objectContaining({
-          height: postedSend.height,
-          hash: postedSend.hash,
-          tx: postedSend.tx,
+          height: sendSuccessful.height,
+          hash: sendSuccessful.hash,
+          code: 0,
+          tx: sendSuccessful.tx,
+        }),
+      );
+    });
+
+    it("can search unsuccessful tx by ID", async () => {
+      pendingWithoutWasmd();
+      assert(sendUnsuccessful, "value must be set in beforeAll()");
+      const client = new CosmWasmClient(wasmd.endpoint);
+      const result = await client.searchTx({ id: sendUnsuccessful.hash });
+      expect(result.length).toEqual(1);
+      expect(result[0]).toEqual(
+        jasmine.objectContaining({
+          height: sendUnsuccessful.height,
+          hash: sendUnsuccessful.hash,
+          code: 5,
+          tx: sendUnsuccessful.tx,
         }),
       );
     });
@@ -109,9 +201,9 @@ describe("CosmWasmClient.searchTx", () => {
 
     it("can search by ID and filter by minHeight", async () => {
       pendingWithoutWasmd();
-      assert(postedSend);
+      assert(sendSuccessful);
       const client = new CosmWasmClient(wasmd.endpoint);
-      const query = { id: postedSend.hash };
+      const query = { id: sendSuccessful.hash };
 
       {
         const result = await client.searchTx(query, { minHeight: 0 });
@@ -119,34 +211,51 @@ describe("CosmWasmClient.searchTx", () => {
       }
 
       {
-        const result = await client.searchTx(query, { minHeight: postedSend.height - 1 });
+        const result = await client.searchTx(query, { minHeight: sendSuccessful.height - 1 });
         expect(result.length).toEqual(1);
       }
 
       {
-        const result = await client.searchTx(query, { minHeight: postedSend.height });
+        const result = await client.searchTx(query, { minHeight: sendSuccessful.height });
         expect(result.length).toEqual(1);
       }
 
       {
-        const result = await client.searchTx(query, { minHeight: postedSend.height + 1 });
+        const result = await client.searchTx(query, { minHeight: sendSuccessful.height + 1 });
         expect(result.length).toEqual(0);
       }
     });
   });
 
   describe("with SearchByHeightQuery", () => {
-    it("can search by height", async () => {
+    it("can search successful tx by height", async () => {
       pendingWithoutWasmd();
-      assert(postedSend, "value must be set in beforeAll()");
+      assert(sendSuccessful, "value must be set in beforeAll()");
       const client = new CosmWasmClient(wasmd.endpoint);
-      const result = await client.searchTx({ height: postedSend.height });
+      const result = await client.searchTx({ height: sendSuccessful.height });
       expect(result.length).toEqual(1);
       expect(result[0]).toEqual(
         jasmine.objectContaining({
-          height: postedSend.height,
-          hash: postedSend.hash,
-          tx: postedSend.tx,
+          height: sendSuccessful.height,
+          hash: sendSuccessful.hash,
+          code: 0,
+          tx: sendSuccessful.tx,
+        }),
+      );
+    });
+
+    it("can search unsuccessful tx by height", async () => {
+      pendingWithoutWasmd();
+      assert(sendUnsuccessful, "value must be set in beforeAll()");
+      const client = new CosmWasmClient(wasmd.endpoint);
+      const result = await client.searchTx({ height: sendUnsuccessful.height });
+      expect(result.length).toEqual(1);
+      expect(result[0]).toEqual(
+        jasmine.objectContaining({
+          height: sendUnsuccessful.height,
+          hash: sendUnsuccessful.hash,
+          code: 5,
+          tx: sendUnsuccessful.tx,
         }),
       );
     });
@@ -155,9 +264,9 @@ describe("CosmWasmClient.searchTx", () => {
   describe("with SearchBySentFromOrToQuery", () => {
     it("can search by sender", async () => {
       pendingWithoutWasmd();
-      assert(postedSend, "value must be set in beforeAll()");
+      assert(sendSuccessful, "value must be set in beforeAll()");
       const client = new CosmWasmClient(wasmd.endpoint);
-      const results = await client.searchTx({ sentFromOrTo: postedSend.sender });
+      const results = await client.searchTx({ sentFromOrTo: sendSuccessful.sender });
       expect(results.length).toBeGreaterThanOrEqual(1);
 
       // Check basic structure of all results
@@ -165,25 +274,25 @@ describe("CosmWasmClient.searchTx", () => {
         const msg = fromOneElementArray(result.tx.value.msg);
         assert(isMsgSend(msg), `${result.hash} (height ${result.height}) is not a bank send transaction`);
         expect(
-          msg.value.to_address === postedSend.sender || msg.value.from_address == postedSend.sender,
+          msg.value.to_address === sendSuccessful.sender || msg.value.from_address == sendSuccessful.sender,
         ).toEqual(true);
       }
 
       // Check details of most recent result
       expect(results[results.length - 1]).toEqual(
         jasmine.objectContaining({
-          height: postedSend.height,
-          hash: postedSend.hash,
-          tx: postedSend.tx,
+          height: sendSuccessful.height,
+          hash: sendSuccessful.hash,
+          tx: sendSuccessful.tx,
         }),
       );
     });
 
     it("can search by recipient", async () => {
       pendingWithoutWasmd();
-      assert(postedSend, "value must be set in beforeAll()");
+      assert(sendSuccessful, "value must be set in beforeAll()");
       const client = new CosmWasmClient(wasmd.endpoint);
-      const results = await client.searchTx({ sentFromOrTo: postedSend.recipient });
+      const results = await client.searchTx({ sentFromOrTo: sendSuccessful.recipient });
       expect(results.length).toBeGreaterThanOrEqual(1);
 
       // Check basic structure of all results
@@ -191,25 +300,26 @@ describe("CosmWasmClient.searchTx", () => {
         const msg = fromOneElementArray(result.tx.value.msg);
         assert(isMsgSend(msg), `${result.hash} (height ${result.height}) is not a bank send transaction`);
         expect(
-          msg.value.to_address === postedSend.recipient || msg.value.from_address == postedSend.recipient,
+          msg.value.to_address === sendSuccessful.recipient ||
+            msg.value.from_address == sendSuccessful.recipient,
         ).toEqual(true);
       }
 
       // Check details of most recent result
       expect(results[results.length - 1]).toEqual(
         jasmine.objectContaining({
-          height: postedSend.height,
-          hash: postedSend.hash,
-          tx: postedSend.tx,
+          height: sendSuccessful.height,
+          hash: sendSuccessful.hash,
+          tx: sendSuccessful.tx,
         }),
       );
     });
 
     it("can search by recipient and filter by minHeight", async () => {
       pendingWithoutWasmd();
-      assert(postedSend);
+      assert(sendSuccessful);
       const client = new CosmWasmClient(wasmd.endpoint);
-      const query = { sentFromOrTo: postedSend.recipient };
+      const query = { sentFromOrTo: sendSuccessful.recipient };
 
       {
         const result = await client.searchTx(query, { minHeight: 0 });
@@ -217,26 +327,26 @@ describe("CosmWasmClient.searchTx", () => {
       }
 
       {
-        const result = await client.searchTx(query, { minHeight: postedSend.height - 1 });
+        const result = await client.searchTx(query, { minHeight: sendSuccessful.height - 1 });
         expect(result.length).toEqual(1);
       }
 
       {
-        const result = await client.searchTx(query, { minHeight: postedSend.height });
+        const result = await client.searchTx(query, { minHeight: sendSuccessful.height });
         expect(result.length).toEqual(1);
       }
 
       {
-        const result = await client.searchTx(query, { minHeight: postedSend.height + 1 });
+        const result = await client.searchTx(query, { minHeight: sendSuccessful.height + 1 });
         expect(result.length).toEqual(0);
       }
     });
 
     it("can search by recipient and filter by maxHeight", async () => {
       pendingWithoutWasmd();
-      assert(postedSend);
+      assert(sendSuccessful);
       const client = new CosmWasmClient(wasmd.endpoint);
-      const query = { sentFromOrTo: postedSend.recipient };
+      const query = { sentFromOrTo: sendSuccessful.recipient };
 
       {
         const result = await client.searchTx(query, { maxHeight: 9999999999999 });
@@ -244,17 +354,17 @@ describe("CosmWasmClient.searchTx", () => {
       }
 
       {
-        const result = await client.searchTx(query, { maxHeight: postedSend.height + 1 });
+        const result = await client.searchTx(query, { maxHeight: sendSuccessful.height + 1 });
         expect(result.length).toEqual(1);
       }
 
       {
-        const result = await client.searchTx(query, { maxHeight: postedSend.height });
+        const result = await client.searchTx(query, { maxHeight: sendSuccessful.height });
         expect(result.length).toEqual(1);
       }
 
       {
-        const result = await client.searchTx(query, { maxHeight: postedSend.height - 1 });
+        const result = await client.searchTx(query, { maxHeight: sendSuccessful.height - 1 });
         expect(result.length).toEqual(0);
       }
     });
@@ -263,10 +373,10 @@ describe("CosmWasmClient.searchTx", () => {
   describe("with SearchByTagsQuery", () => {
     it("can search by transfer.recipient", async () => {
       pendingWithoutWasmd();
-      assert(postedSend, "value must be set in beforeAll()");
+      assert(sendSuccessful, "value must be set in beforeAll()");
       const client = new CosmWasmClient(wasmd.endpoint);
       const results = await client.searchTx({
-        tags: [{ key: "transfer.recipient", value: postedSend.recipient }],
+        tags: [{ key: "transfer.recipient", value: sendSuccessful.recipient }],
       });
       expect(results.length).toBeGreaterThanOrEqual(1);
 
@@ -274,15 +384,15 @@ describe("CosmWasmClient.searchTx", () => {
       for (const result of results) {
         const msg = fromOneElementArray(result.tx.value.msg);
         assert(isMsgSend(msg), `${result.hash} (height ${result.height}) is not a bank send transaction`);
-        expect(msg.value.to_address).toEqual(postedSend.recipient);
+        expect(msg.value.to_address).toEqual(sendSuccessful.recipient);
       }
 
       // Check details of most recent result
       expect(results[results.length - 1]).toEqual(
         jasmine.objectContaining({
-          height: postedSend.height,
-          hash: postedSend.hash,
-          tx: postedSend.tx,
+          height: sendSuccessful.height,
+          hash: sendSuccessful.hash,
+          tx: sendSuccessful.tx,
         }),
       );
     });

@@ -76,6 +76,8 @@ export interface IndexedTx {
   readonly height: number;
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly hash: string;
+  /** Transaction execution error code. 0 on success. */
+  readonly code: number;
   readonly rawLog: string;
   readonly logs: readonly Log[];
   readonly tx: CosmosSdkTx;

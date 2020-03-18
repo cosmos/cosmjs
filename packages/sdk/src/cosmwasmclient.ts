@@ -107,6 +107,8 @@ export interface IndexedTx {
   readonly height: number;
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly hash: string;
+  /** Transaction execution error code. 0 on success. */
+  readonly code: number;
   readonly rawLog: string;
   readonly logs: readonly Log[];
   readonly tx: CosmosSdkTx;
@@ -422,6 +424,7 @@ export class CosmWasmClient {
       (restItem): IndexedTx => ({
         height: parseInt(restItem.height, 10),
         hash: restItem.txhash,
+        code: restItem.code || 0,
         rawLog: restItem.raw_log,
         logs: parseLogs(restItem.logs || []),
         tx: restItem.tx,
