@@ -284,6 +284,7 @@ describe("decode", () => {
       const txsResponse: IndexedTx = {
         height: 2823,
         hash: testdata.txId,
+        code: 0,
         rawLog: '[{"msg_index":0,"success":true,"log":""}]',
         logs: [],
         tx: cosmoshub.tx,
@@ -314,6 +315,7 @@ describe("decode", () => {
       const txsResponse: IndexedTx = {
         height: 2823,
         hash: testdata.txId,
+        code: 0,
         rawLog: '[{"msg_index":0,"success":true,"log":""}]',
         logs: [],
         tx: cosmoshub.tx,
