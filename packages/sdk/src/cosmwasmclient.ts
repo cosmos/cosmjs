@@ -107,6 +107,8 @@ export interface IndexedTx {
   readonly height: number;
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly hash: string;
+  /** Transaction execution error code. 0 on success. */
+  readonly code: number;
   readonly rawLog: string;
   readonly logs: readonly Log[];
   readonly tx: CosmosSdkTx;
@@ -150,8 +152,17 @@ export class CosmWasmClient {
   private readonly codesCache = new Map<number, CodeDetails>();
   private chainId: string | undefined;
 
-  public constructor(url: string, broadcastMode = BroadcastMode.Block) {
-    this.restClient = new RestClient(url, broadcastMode);
+  /**
+   * Creates a new client to interact with a CosmWasm blockchain.
+   *
+   * This instance does a lot of caching. In order to benefit from that you should try to use one instance
+   * for the lifetime of your application. When switching backends, a new instance must be created.
+   *
+   * @param apiUrl The URL of a Cosmos SDK light client daemon API (sometimes called REST server or REST API)
+   * @param broadcastMode Defines at which point of the transaction processing the postTx method (i.e. transaction broadcasting) returns
+   */
+  public constructor(apiUrl: string, broadcastMode = BroadcastMode.Block) {
+    this.restClient = new RestClient(apiUrl, broadcastMode);
   }
 
   public async getChainId(): Promise<string> {
@@ -413,6 +424,7 @@ export class CosmWasmClient {
       (restItem): IndexedTx => ({
         height: parseInt(restItem.height, 10),
         hash: restItem.txhash,
+        code: restItem.code || 0,
         rawLog: restItem.raw_log,
         logs: parseLogs(restItem.logs || []),
         tx: restItem.tx,

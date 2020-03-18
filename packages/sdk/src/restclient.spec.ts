@@ -18,10 +18,10 @@ import {
   fromOneElementArray,
   getHackatom,
   makeRandomAddress,
+  nonNegativeIntegerMatcher,
   pendingWithoutWasmd,
   semverMatcher,
   tendermintAddressMatcher,
-  tendermintHeightMatcher,
   tendermintIdMatcher,
   tendermintOptionalIdMatcher,
   tendermintShortHashMatcher,
@@ -44,7 +44,6 @@ import {
 
 const { fromAscii, fromBase64, fromHex, toAscii, toBase64, toHex } = Encoding;
 
-const defaultNetworkId = "testing";
 const emptyAddress = "cosmos1ltkhnmdcqemmd2tkhnx7qx66tq7e0wykw2j85k";
 const unusedAccount = {
   address: "cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u",
@@ -85,7 +84,7 @@ async function uploadCustomContract(
   };
 
   const { account_number, sequence } = (await client.authAccounts(faucet.address)).result.value;
-  const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account_number, sequence);
+  const signBytes = makeSignBytes([theMsg], fee, wasmd.chainId, memo, account_number, sequence);
   const signature = await pen.sign(signBytes);
   const signedTx = makeSignedTx(theMsg, fee, memo, signature);
   return client.postTx(signedTx);
@@ -127,7 +126,7 @@ async function instantiateContract(
   };
 
   const { account_number, sequence } = (await client.authAccounts(faucet.address)).result.value;
-  const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account_number, sequence);
+  const signBytes = makeSignBytes([theMsg], fee, wasmd.chainId, memo, account_number, sequence);
   const signature = await pen.sign(signBytes);
   const signedTx = makeSignedTx(theMsg, fee, memo, signature);
   return client.postTx(signedTx);
@@ -159,7 +158,7 @@ async function executeContract(
   };
 
   const { account_number, sequence } = (await client.authAccounts(faucet.address)).result.value;
-  const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account_number, sequence);
+  const signBytes = makeSignBytes([theMsg], fee, wasmd.chainId, memo, account_number, sequence);
   const signature = await pen.sign(signBytes);
   const signedTx = makeSignedTx(theMsg, fee, memo, signature);
   return client.postTx(signedTx);
@@ -178,7 +177,7 @@ describe("RestClient", () => {
       pendingWithoutWasmd();
       const client = new RestClient(wasmd.endpoint);
       const { height, result } = await client.authAccounts(unusedAccount.address);
-      expect(height).toMatch(tendermintHeightMatcher);
+      expect(height).toMatch(nonNegativeIntegerMatcher);
       expect(result).toEqual({
         type: "cosmos-sdk/Account",
         value: {
@@ -239,7 +238,7 @@ describe("RestClient", () => {
       // header
       expect(response.block.header.version).toEqual({ block: "10", app: "0" });
       expect(parseInt(response.block.header.height, 10)).toBeGreaterThanOrEqual(1);
-      expect(response.block.header.chain_id).toEqual(defaultNetworkId);
+      expect(response.block.header.chain_id).toEqual(wasmd.chainId);
       expect(new ReadonlyDate(response.block.header.time).getTime()).toBeLessThan(ReadonlyDate.now());
       expect(new ReadonlyDate(response.block.header.time).getTime()).toBeGreaterThanOrEqual(
         ReadonlyDate.now() - 5_000,
@@ -273,7 +272,7 @@ describe("RestClient", () => {
       // header
       expect(response.block.header.version).toEqual({ block: "10", app: "0" });
       expect(response.block.header.height).toEqual(`${height - 1}`);
-      expect(response.block.header.chain_id).toEqual(defaultNetworkId);
+      expect(response.block.header.chain_id).toEqual(wasmd.chainId);
       expect(new ReadonlyDate(response.block.header.time).getTime()).toBeLessThan(ReadonlyDate.now());
       expect(new ReadonlyDate(response.block.header.time).getTime()).toBeGreaterThanOrEqual(
         ReadonlyDate.now() - 5_000,
@@ -306,10 +305,10 @@ describe("RestClient", () => {
         protocol_version: { p2p: "7", block: "10", app: "0" },
         id: jasmine.stringMatching(tendermintShortHashMatcher),
         listen_addr: "tcp://0.0.0.0:26656",
-        network: defaultNetworkId,
+        network: wasmd.chainId,
         version: "0.33.0",
         channels: "4020212223303800",
-        moniker: defaultNetworkId,
+        moniker: wasmd.chainId,
         other: { tx_index: "on", rpc_address: "tcp://0.0.0.0:26657" },
       });
       expect(application_version).toEqual({
@@ -325,6 +324,149 @@ describe("RestClient", () => {
   });
 
   // The /txs endpoints
+
+  describe("txById", () => {
+    let successful:
+      | {
+          readonly sender: string;
+          readonly recipient: string;
+          readonly hash: string;
+        }
+      | undefined;
+    let unsuccessful:
+      | {
+          readonly sender: string;
+          readonly recipient: string;
+          readonly hash: string;
+        }
+      | undefined;
+
+    beforeAll(async () => {
+      if (wasmdEnabled()) {
+        const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
+        const client = new SigningCosmWasmClient(wasmd.endpoint, faucet.address, signBytes =>
+          pen.sign(signBytes),
+        );
+
+        {
+          const recipient = makeRandomAddress();
+          const transferAmount = {
+            denom: "ucosm",
+            amount: "1234567",
+          };
+          const result = await client.sendTokens(recipient, [transferAmount]);
+          successful = {
+            sender: faucet.address,
+            recipient: recipient,
+            hash: result.transactionHash,
+          };
+        }
+
+        {
+          const memo = "Sending more than I can afford";
+          const recipient = makeRandomAddress();
+          const transferAmount = [
+            {
+              denom: "ucosm",
+              amount: "123456700000000",
+            },
+          ];
+          const sendMsg: MsgSend = {
+            type: "cosmos-sdk/MsgSend",
+            value: {
+              // eslint-disable-next-line @typescript-eslint/camelcase
+              from_address: faucet.address,
+              // eslint-disable-next-line @typescript-eslint/camelcase
+              to_address: recipient,
+              amount: transferAmount,
+            },
+          };
+          const fee = {
+            amount: [
+              {
+                denom: "ucosm",
+                amount: "2000",
+              },
+            ],
+            gas: "80000", // 80k
+          };
+          const { accountNumber, sequence } = await client.getNonce();
+          const chainId = await client.getChainId();
+          const signBytes = makeSignBytes([sendMsg], fee, chainId, memo, accountNumber, sequence);
+          const signature = await pen.sign(signBytes);
+          const signedTx = {
+            msg: [sendMsg],
+            fee: fee,
+            memo: memo,
+            signatures: [signature],
+          };
+          const transactionId = await client.getIdentifier({ type: "cosmos-sdk/StdTx", value: signedTx });
+          try {
+            await client.postTx(signedTx);
+          } catch (error) {
+            // postTx() throws on execution failures, which is a questionable design. Ignore for now.
+            // console.log(error);
+          }
+          unsuccessful = {
+            sender: faucet.address,
+            recipient: recipient,
+            hash: transactionId,
+          };
+        }
+
+        await sleep(50); // wait until transactions are indexed
+      }
+    });
+
+    it("works for successful transaction", async () => {
+      pendingWithoutWasmd();
+      assert(successful);
+      const client = new RestClient(wasmd.endpoint);
+      const result = await client.txById(successful.hash);
+      expect(result.height).toBeGreaterThanOrEqual(1);
+      expect(result.txhash).toEqual(successful.hash);
+      expect(result.codespace).toBeUndefined();
+      expect(result.code).toBeUndefined();
+      const logs = parseLogs(result.logs);
+      expect(logs).toEqual([
+        {
+          msg_index: 0,
+          log: "",
+          events: [
+            {
+              type: "message",
+              attributes: [
+                { key: "action", value: "send" },
+                { key: "sender", value: successful.sender },
+                { key: "module", value: "bank" },
+              ],
+            },
+            {
+              type: "transfer",
+              attributes: [
+                { key: "recipient", value: successful.recipient },
+                { key: "sender", value: successful.sender },
+                { key: "amount", value: "1234567ucosm" },
+              ],
+            },
+          ],
+        },
+      ]);
+    });
+
+    it("works for unsuccessful transaction", async () => {
+      pendingWithoutWasmd();
+      assert(unsuccessful);
+      const client = new RestClient(wasmd.endpoint);
+      const result = await client.txById(unsuccessful.hash);
+      expect(result.height).toBeGreaterThanOrEqual(1);
+      expect(result.txhash).toEqual(unsuccessful.hash);
+      expect(result.codespace).toEqual("sdk");
+      expect(result.code).toEqual(5);
+      expect(result.logs).toBeUndefined();
+      expect(result.raw_log).toContain("insufficient funds");
+    });
+  });
 
   describe("txsQuery", () => {
     let posted:
@@ -354,7 +496,7 @@ describe("RestClient", () => {
         const result = await client.sendTokens(recipient, transferAmount);
 
         await sleep(50); // wait until tx is indexed
-        const txDetails = await new RestClient(wasmd.endpoint).txsById(result.transactionHash);
+        const txDetails = await new RestClient(wasmd.endpoint).txById(result.transactionHash);
         posted = {
           sender: faucet.address,
           recipient: recipient,
@@ -370,12 +512,14 @@ describe("RestClient", () => {
       assert(posted);
       const client = new RestClient(wasmd.endpoint);
       const result = await client.txsQuery(`tx.height=${posted.height}&limit=26`);
-      expect(parseInt(result.count, 10)).toEqual(1);
-      expect(parseInt(result.limit, 10)).toEqual(26);
-      expect(parseInt(result.page_number, 10)).toEqual(1);
-      expect(parseInt(result.page_total, 10)).toEqual(1);
-      expect(parseInt(result.total_count, 10)).toEqual(1);
-      expect(result.txs).toEqual([posted.tx]);
+      expect(result).toEqual({
+        count: "1",
+        limit: "26",
+        page_number: "1",
+        page_total: "1",
+        total_count: "1",
+        txs: [posted.tx],
+      });
     });
 
     it("can query transactions by ID", async () => {
@@ -383,12 +527,14 @@ describe("RestClient", () => {
       assert(posted);
       const client = new RestClient(wasmd.endpoint);
       const result = await client.txsQuery(`tx.hash=${posted.hash}&limit=26`);
-      expect(parseInt(result.count, 10)).toEqual(1);
-      expect(parseInt(result.limit, 10)).toEqual(26);
-      expect(parseInt(result.page_number, 10)).toEqual(1);
-      expect(parseInt(result.page_total, 10)).toEqual(1);
-      expect(parseInt(result.total_count, 10)).toEqual(1);
-      expect(result.txs).toEqual([posted.tx]);
+      expect(result).toEqual({
+        count: "1",
+        limit: "26",
+        page_number: "1",
+        page_total: "1",
+        total_count: "1",
+        txs: [posted.tx],
+      });
     });
 
     it("can query transactions by sender", async () => {
@@ -645,12 +791,20 @@ describe("RestClient", () => {
       const client = new RestClient(wasmd.endpoint);
       const { account_number, sequence } = (await client.authAccounts(faucet.address)).result.value;
 
-      const signBytes = makeSignBytes([theMsg], fee, defaultNetworkId, memo, account_number, sequence);
+      const signBytes = makeSignBytes([theMsg], fee, wasmd.chainId, memo, account_number, sequence);
       const signature = await pen.sign(signBytes);
       const signedTx = makeSignedTx(theMsg, fee, memo, signature);
       const result = await client.postTx(signedTx);
-      // console.log("Raw log:", result.raw_log);
-      expect(result.code).toBeFalsy();
+      expect(result.code).toBeUndefined();
+      expect(result).toEqual({
+        height: jasmine.stringMatching(nonNegativeIntegerMatcher),
+        txhash: jasmine.stringMatching(tendermintIdMatcher),
+        // code is not set
+        raw_log: jasmine.stringMatching(/^\[.+\]$/i),
+        logs: jasmine.any(Array),
+        gas_wanted: jasmine.stringMatching(nonNegativeIntegerMatcher),
+        gas_used: jasmine.stringMatching(nonNegativeIntegerMatcher),
+      });
     });
 
     it("can upload, instantiate and execute wasm", async () => {

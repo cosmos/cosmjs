@@ -1,4 +1,4 @@
-import { Encoding } from "@iov/encoding";
+import { Encoding, isNonNullObject } from "@iov/encoding";
 import axios, { AxiosError, AxiosInstance } from "axios";
 
 import { Coin, CosmosSdkTx, Model, parseWasmData, StdTx, WasmData } from "./types";
@@ -119,6 +119,10 @@ interface WasmError {
 export interface TxsResponse {
   readonly height: string;
   readonly txhash: string;
+  /** 🤷‍♂️ */
+  readonly codespace?: string;
+  /** Falsy when transaction execution succeeded. Contains error code on error. */
+  readonly code?: number;
   readonly raw_log: string;
   readonly logs?: object;
   readonly tx: CosmosSdkTx;
@@ -137,8 +141,6 @@ interface SearchTxsResponse {
   readonly limit: string;
   readonly txs: readonly TxsResponse[];
 }
-
-interface PostTxsParams {}
 
 export interface PostTxsResponse {
   readonly height: string;
@@ -263,17 +265,28 @@ function parseAxiosError(err: AxiosError): never {
 
 export class RestClient {
   private readonly client: AxiosInstance;
-  private readonly mode: BroadcastMode;
+  private readonly broadcastMode: BroadcastMode;
 
-  public constructor(url: string, mode = BroadcastMode.Block) {
+  /**
+   * Creates a new client to interact with a Cosmos SDK light client daemon.
+   * This class tries to be a direct mapping onto the API. Some basic decoding and normalizatin is done
+   * but things like caching are done at a higher level.
+   *
+   * When building apps, you should not need to use this class directly. If you do, this indicates a missing feature
+   * in higher level components. Feel free to raise an issue in this case.
+   *
+   * @param apiUrl The URL of a Cosmos SDK light client daemon API (sometimes called REST server or REST API)
+   * @param broadcastMode Defines at which point of the transaction processing the postTx method (i.e. transaction broadcasting) returns
+   */
+  public constructor(apiUrl: string, broadcastMode = BroadcastMode.Block) {
     const headers = {
       post: { "Content-Type": "application/json" },
     };
     this.client = axios.create({
-      baseURL: url,
+      baseURL: apiUrl,
       headers: headers,
     });
-    this.mode = mode;
+    this.broadcastMode = broadcastMode;
   }
 
   public async get(path: string): Promise<RestClientResponse> {
@@ -284,7 +297,8 @@ export class RestClient {
     return data;
   }
 
-  public async post(path: string, params: PostTxsParams): Promise<RestClientResponse> {
+  public async post(path: string, params: any): Promise<RestClientResponse> {
+    if (!isNonNullObject(params)) throw new Error("Got unexpected type of params. Expected object.");
     const { data } = await this.client.post(path, params).catch(parseAxiosError);
     if (data === null) {
       throw new Error("Received null response from server");
@@ -333,20 +347,20 @@ export class RestClient {
 
   // The /txs endpoints
 
+  public async txById(id: string): Promise<TxsResponse> {
+    const responseData = await this.get(`/txs/${id}`);
+    if (!(responseData as any).tx) {
+      throw new Error("Unexpected response data format");
+    }
+    return responseData as TxsResponse;
+  }
+
   public async txsQuery(query: string): Promise<SearchTxsResponse> {
     const responseData = await this.get(`/txs?${query}`);
     if (!(responseData as any).txs) {
       throw new Error("Unexpected response data format");
     }
     return responseData as SearchTxsResponse;
-  }
-
-  public async txsById(id: string): Promise<TxsResponse> {
-    const responseData = await this.get(`/txs/${id}`);
-    if (!(responseData as any).tx) {
-      throw new Error("Unexpected response data format");
-    }
-    return responseData as TxsResponse;
   }
 
   /** returns the amino-encoding of the transaction performed by the server */
@@ -368,7 +382,7 @@ export class RestClient {
   public async postTx(tx: StdTx): Promise<PostTxsResponse> {
     const params = {
       tx: tx,
-      mode: this.mode,
+      mode: this.broadcastMode,
     };
     const responseData = await this.post("/txs", params);
     if (!(responseData as any).txhash) {
