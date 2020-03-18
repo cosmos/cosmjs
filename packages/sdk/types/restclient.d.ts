@@ -93,6 +93,8 @@ interface WasmError {
 export interface TxsResponse {
   readonly height: string;
   readonly txhash: string;
+  /** 🤷‍♂️ */
+  readonly codespace?: string;
   /** Falsy when transaction execution succeeded. Contains error code on error. */
   readonly code?: number;
   readonly raw_log: string;

@@ -425,6 +425,7 @@ describe("RestClient", () => {
       const result = await client.txById(successful.hash);
       expect(result.height).toBeGreaterThanOrEqual(1);
       expect(result.txhash).toEqual(successful.hash);
+      expect(result.codespace).toBeUndefined();
       expect(result.code).toBeUndefined();
       const logs = parseLogs(result.logs);
       expect(logs).toEqual([
@@ -460,6 +461,7 @@ describe("RestClient", () => {
       const result = await client.txById(unsuccessful.hash);
       expect(result.height).toBeGreaterThanOrEqual(1);
       expect(result.txhash).toEqual(unsuccessful.hash);
+      expect(result.codespace).toEqual("sdk");
       expect(result.code).toEqual(5);
       expect(result.logs).toBeUndefined();
       expect(result.raw_log).toContain("insufficient funds");
