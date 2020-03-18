@@ -326,7 +326,14 @@ describe("RestClient", () => {
   // The /txs endpoints
 
   describe("txById", () => {
-    let posted:
+    let successful:
+      | {
+          readonly sender: string;
+          readonly recipient: string;
+          readonly hash: string;
+        }
+      | undefined;
+    let unsuccessful:
       | {
           readonly sender: string;
           readonly recipient: string;
@@ -341,31 +348,84 @@ describe("RestClient", () => {
           pen.sign(signBytes),
         );
 
-        const recipient = makeRandomAddress();
-        const transferAmount = [
-          {
+        {
+          const recipient = makeRandomAddress();
+          const transferAmount = {
             denom: "ucosm",
             amount: "1234567",
-          },
-        ];
-        const result = await client.sendTokens(recipient, transferAmount);
+          };
+          const result = await client.sendTokens(recipient, [transferAmount]);
+          successful = {
+            sender: faucet.address,
+            recipient: recipient,
+            hash: result.transactionHash,
+          };
+        }
 
-        await sleep(50); // wait until tx is indexed
-        posted = {
-          sender: faucet.address,
-          recipient: recipient,
-          hash: result.transactionHash,
-        };
+        {
+          const memo = "Sending more than I can afford";
+          const recipient = makeRandomAddress();
+          const transferAmount = [
+            {
+              denom: "ucosm",
+              amount: "123456700000000",
+            },
+          ];
+          const sendMsg: MsgSend = {
+            type: "cosmos-sdk/MsgSend",
+            value: {
+              // eslint-disable-next-line @typescript-eslint/camelcase
+              from_address: faucet.address,
+              // eslint-disable-next-line @typescript-eslint/camelcase
+              to_address: recipient,
+              amount: transferAmount,
+            },
+          };
+          const fee = {
+            amount: [
+              {
+                denom: "ucosm",
+                amount: "2000",
+              },
+            ],
+            gas: "80000", // 80k
+          };
+          const { accountNumber, sequence } = await client.getNonce();
+          const chainId = await client.getChainId();
+          const signBytes = makeSignBytes([sendMsg], fee, chainId, memo, accountNumber, sequence);
+          const signature = await pen.sign(signBytes);
+          const signedTx = {
+            msg: [sendMsg],
+            fee: fee,
+            memo: memo,
+            signatures: [signature],
+          };
+          const transactionId = await client.getIdentifier({ type: "cosmos-sdk/StdTx", value: signedTx });
+          try {
+            await client.postTx(signedTx);
+          } catch (error) {
+            // postTx() throws on execution failures, which is a questionable design. Ignore for now.
+            // console.log(error);
+          }
+          unsuccessful = {
+            sender: faucet.address,
+            recipient: recipient,
+            hash: transactionId,
+          };
+        }
+
+        await sleep(50); // wait until transactions are indexed
       }
     });
 
-    it("works", async () => {
+    it("works for successful transaction", async () => {
       pendingWithoutWasmd();
-      assert(posted);
+      assert(successful);
       const client = new RestClient(wasmd.endpoint);
-      const result = await client.txById(posted.hash);
+      const result = await client.txById(successful.hash);
       expect(result.height).toBeGreaterThanOrEqual(1);
-      expect(result.txhash).toEqual(posted.hash);
+      expect(result.txhash).toEqual(successful.hash);
+      expect(result.code).toBeUndefined();
       const logs = parseLogs(result.logs);
       expect(logs).toEqual([
         {
@@ -376,21 +436,33 @@ describe("RestClient", () => {
               type: "message",
               attributes: [
                 { key: "action", value: "send" },
-                { key: "sender", value: posted.sender },
+                { key: "sender", value: successful.sender },
                 { key: "module", value: "bank" },
               ],
             },
             {
               type: "transfer",
               attributes: [
-                { key: "recipient", value: posted.recipient },
-                { key: "sender", value: posted.sender },
+                { key: "recipient", value: successful.recipient },
+                { key: "sender", value: successful.sender },
                 { key: "amount", value: "1234567ucosm" },
               ],
             },
           ],
         },
       ]);
+    });
+
+    it("works for unsuccessful transaction", async () => {
+      pendingWithoutWasmd();
+      assert(unsuccessful);
+      const client = new RestClient(wasmd.endpoint);
+      const result = await client.txById(unsuccessful.hash);
+      expect(result.height).toBeGreaterThanOrEqual(1);
+      expect(result.txhash).toEqual(unsuccessful.hash);
+      expect(result.code).toEqual(5);
+      expect(result.logs).toBeUndefined();
+      expect(result.raw_log).toContain("insufficient funds");
     });
   });
 
