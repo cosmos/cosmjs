@@ -81,10 +81,11 @@ The above code shows you the use of the API and various objects and is a great w
 how to embed cosmwasm-js into your project. However, if you just want a cli to perform some
 quick queries on a chain, you can use an extended set of helpers:
 
-1. Start a local wasmd blockchain, for example running the setup from `../../scripts/wasmd/start.sh`
-2. Start with `./bin/cosmwasm-cli --init examples/helpers.ts` (note the new init file)
-3. Deploy some erc20 contracts: `../../scripts/wasmd/init.sh`
-4. Play around as in the following example code
+Start with `./bin/cosmwasm-cli --init examples/helpers.ts`
+
+(This points to the Demo Net at https://lcd.demo-07.cosmwasm.com for ease of use. Other networks, look below)
+
+Setup Account:
 
 ```ts
 // you can hand-copy a mnemonic here, but this is easiest for reuse between sessions
@@ -94,10 +95,14 @@ const {address, client} = await connect(mnemonic, {});
 address
 
 client.getAccount();
-// if empty
+// if empty - this only works with CosmWasm
 hitFaucet(defaultFaucetUrl, address, "COSM")
 client.getAccount();
+```
 
+View contracts:
+
+```ts
 // show all code and contracts
 client.getCodes()
 
@@ -110,9 +115,13 @@ info.initMsg
 
 // see your balance here
 smartQuery(client, addr, { balance: { address } })
+```
 
+Instantiate and use ERC20 contract:
+
+```ts
 // no money? no problem.
-// let's make our own s**coin
+// let's make our own s**coin - replace "FOO" with something else to avoid duplicates
 const initMsg = { name: "Foo Coin", symbol: "FOO", decimals: 2, initial_balances: [{address, amount: "123456789"}]}
 const foo = await client.instantiate(1, initMsg, "FOO");
 foo
@@ -136,6 +145,104 @@ exec
 exec.logs[0].events[0]
 smartQuery(client, fooAddr, { balance: { address: rcpt } })
 ```
+
+Or just send tokens:
+
+```ts
+client.getAccount(rcpt)
+
+const sent = await client.sendTokens(rcpt, [{amount: "1234", denom: "ucosm"}])
+sent
+foo.logs[0].events[0]
+```
+
+### Use Custom Network
+
+All the network info can be configured inside the last argument to connect.
+To see how to connect to the Regen Testnet, try this. (Note you need to use `.editor`
+in the repl to allow multi-line commands. Alternative is to place entire `regenOptions`
+on one line.
+
+Run `./bin/cosmwasm-cli --init examples/helpers.ts`
+
+```ts
+.editor
+const regenOptions = {
+  httpUrl: "https://regen-lcd.vitwit.com/",
+  networkId: "kontraua",
+  feeToken: "utree",
+  gasPrice: 0.025,
+  bech32prefix: "xrn:",
+}
+^D
+
+const mnemonic = loadOrCreateMnemonic("regen.key");
+const {address, client} = await connect(mnemonic, regenOptions);
+address
+
+// check some random genesis account
+client.getAccount("xrn:1pdfr7xuckj6lhdphdde6peres9ufwgpsv87mag")
+
+// your own account is undefined unless you did this before
+client.getAccount()
+```
+
+Hit the faucet with your address (in browser): https://regen.vitwit.com/faucet then continue in node
+
+```ts
+// should have tokens now
+client.getAccount()
+```
+
+At this point you can continue all the other behaviors from above, looking at codes, etc.
+Do note that the ERC contract is code `5` on this network (instead of `1` above).
+
+### Importing keys from `wasmcli`
+
+If you are using the go commands and have tokens there, you may want to reuse the same account.
+(If you don't know what this is, just skip this section). You can reuse the mnemonic between the
+Go tooling and the Node.js tooling, but this violates all security protocols - only use this for
+testnets. In the future we will offer proper encrypted key management for CosmWasm-JS.
+
+(You can replace `wasmcli` with `xrncli` and use `regenOptions` if you wish to use that testnet)
+
+Create a new key - note mnemonic and address
+
+```sh
+$ wasmcli keys add demo2
+
+- name: demo2
+  type: local
+  address: cosmos1d4ut3z9c0kplgz5ma9t6ee637tagjqfyu4sxyl
+  pubkey: cosmospub1addwnpepqtagg2smk2zvj77xaslej2wevwz7jft0q5hj5yuwvek3r6z0ufjtxnde4rq
+  mnemonic: ""
+  threshold: 0
+  pubkeys: []
+
+
+**Important** write this mnemonic phrase in a safe place.
+It is the only way to recover your account if you ever forget your password.
+
+cousin nephew vintage label empty sunny cargo mushroom photo side clarify sleep solid entire deal tattoo vehicle record discover arrive sting staff salt uncle
+```
+
+Save mnemonic to a file
+
+```sh
+echo "cousin nephew vintage label empty sunny cargo mushroom photo side clarify sleep solid entire deal tattoo vehicle record discover arrive sting staff salt uncle" > wasmcli.key
+```
+
+Load it up in cosmwasm-js: `./bin/cosmwasm-cli --init examples/helpers.ts`
+
+```ts
+const mnemonic = loadOrCreateMnemonic("wasmcli.key");
+const {address, client} = await connect(mnemonic, regenOptions);
+
+// this should match what you got on the cli - showing compatibility
+address
+```
+
+Once you have access to the same key as in the cli, you can use those tokens to play with contracts
 
 ## License
 

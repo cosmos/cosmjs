@@ -78,7 +78,7 @@ const smartQuery = async (client: CosmWasmClient, addr: string, query: object): 
 const loadOrCreateMnemonic = (filename: string): string => {
   try {
     const mnemonic = fs.readFileSync(filename, "utf8");
-    return mnemonic;
+    return mnemonic.trim();
   } catch (err) {
     const mnemonic = Bip39.encode(Random.getBytes(16)).toString();
     fs.writeFileSync(filename, mnemonic, "utf8");
