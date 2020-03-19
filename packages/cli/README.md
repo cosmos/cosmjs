@@ -87,47 +87,54 @@ quick queries on a chain, you can use an extended set of helpers:
 4. Play around as in the following example code
 
 ```ts
-const account = (await client.authAccounts(faucetAddress)).result.value;
-account
+// you can hand-copy a mnemonic here, but this is easiest for reuse between sessions
+// it creates a random one first time, then reads it in the future
+const mnemonic = loadOrCreateMnemonic("foo.key");
+const {address, client} = await connect(mnemonic, {});
+address
+
+client.getAccount();
+// if empty
+hitFaucet(defaultFaucetUrl, address, "COSM")
+client.getAccount();
 
 // show all code and contracts
-client.listCodeInfo()
-client.listContractAddresses()
+client.getCodes()
 
-// query the first contract
-const addr = (await client.listContractAddresses())[0]
-const info = await client.getContractInfo(addr)
-info.init_msg
+// query the first contract for first code
+const contracts = await client.getContracts(1);
+contracts
+const info = await client.getContract(contracts[0].address)
+info
+info.initMsg
 
 // see your balance here
-smartQuery(client, addr, { balance: { address: faucetAddress } })
+smartQuery(client, addr, { balance: { address } })
 
-// make a new contract
-const initMsg = { name: "Foo Coin", symbol: "FOO", decimals: 2, initial_balances: [{address: faucetAddress, amount: "123456789"}]}
-const foo = await instantiateContract(client, pen, 1, initMsg);
+// no money? no problem.
+// let's make our own s**coin
+const initMsg = { name: "Foo Coin", symbol: "FOO", decimals: 2, initial_balances: [{address, amount: "123456789"}]}
+const foo = await client.instantiate(1, initMsg, "FOO");
+foo
+foo.logs[0].events[0]
+const fooAddr = foo.contractAddress;
 
-smartQuery(client, foo, { balance: { address: faucetAddress } })
+// we can also find this another way...
+const fooAddr2 = await client.getContracts(1).then(contracts => contracts.filter(x => x.label == "FOO").map(x => x.address)[0])
+[fooAddr, fooAddr2]
 
-const rcpt = await randomAddress();
+// now we have some cash
+smartQuery(client, fooAddr, { balance: { address } })
+
+const rcpt = await randomAddress("cosmos");
 rcpt
-smartQuery(client, foo, { balance: { address: rcpt } })
+smartQuery(client, fooAddr, { balance: { address: rcpt } })
 
 const execMsg = { transfer: {recipient: rcpt, amount: "808"}}
-const exec = await executeContract(client, pen, foo, execMsg);
+const exec = await client.execute(fooAddr, execMsg);
 exec
-exec[0].events[0]
-smartQuery(client, foo, { balance: { address: rcpt } })
-```
-
-## Other example codes
-
-### Create random mnemonic and Cosmos address
-
-```ts
-const mnemonic = Bip39.encode(Random.getBytes(16)).toString();
-const pen = await Secp256k1Pen.fromMnemonic(mnemonic);
-const pubkey = encodeSecp256k1Pubkey(pen.pubkey);
-const address = pubkeyToAddress(pubkey, "cosmos");
+exec.logs[0].events[0]
+smartQuery(client, fooAddr, { balance: { address: rcpt } })
 ```
 
 ## License

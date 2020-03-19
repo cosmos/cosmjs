@@ -1,101 +1,100 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import {
-  logs
-} from "@cosmwasm/sdk";
+import { FeeTable } from "@cosmwasm/sdk/types/signingcosmwasmclient";
+import axios from "axios";
+import * as fs from "fs";
 
-const defaultHttpUrl = "http://localhost:1317";
-const defaultNetworkId = "testing";
-const defaultFee: types.StdFee = {
-  amount: [
-    {
-      amount: "5000",
-      denom: "ucosm",
-    },
-  ],
-  gas: "890000",
+interface Options {
+  httpUrl: string;
+  networkId: string;
+  feeToken: string;
+  gasPrice: number;
+  bech32prefix: string;
 };
 
-const faucetMnemonic =
-  "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone";
-const faucetAddress = "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6";
-
-const pen = await Secp256k1Pen.fromMnemonic(faucetMnemonic);
-const client = new RestClient(defaultHttpUrl);
-
-const networkId = "testing";
-
-
-// helper functions
-const instantiateContract = async (initClient: RestClient, initPen: Secp256k1Pen, codeId: number, msg: object, transferAmount?: types.Coin[]): Promise<string> => {
-  const memo = "Create an ERC20 instance";
-  const sender = pubkeyToAddress({ "type": types.pubkeyType.secp256k1, "value": toBase64(initPen.pubkey)}, "cosmos");
-  const instantiateContractMsg = {
-    type: "wasm/instantiate",
-    value: {
-      sender: sender,
-      code_id: codeId.toString(),
-      init_msg: msg,
-      init_funds: transferAmount || [],
-    },
-  };
-  const account = (await initClient.authAccounts(faucetAddress)).result.value;
-  const signBytes = makeSignBytes([instantiateContractMsg], defaultFee, networkId, memo, account);
-  const signature = await initPen.sign(signBytes);
-  const signedTx = {
-    msg: [instantiateContractMsg],
-    fee: defaultFee,
-    memo: memo,
-    signatures: [signature],
-  };
-  const result = await initClient.postTx(signedTx);
-  if (result.code) {
-    throw new Error(`Failed tx: (${result.code}): ${result.raw_log}`)
-  }
-  const instantiationLogs = logs.parseLogs(result.logs);
-  const contractAddress = logs.findAttribute(instantiationLogs, "message", "contract_address").value;
-  return contractAddress;
+const defaultOptions: Options = {
+  httpUrl: "https://lcd.demo-07.cosmwasm.com",
+  networkId: "testing",
+  feeToken: "ucosm",
+  gasPrice: 0.025,
+  bech32prefix: "cosmos",
 }
 
-// helper functions
-const executeContract = async (execClient: RestClient, execPen: Secp256k1Pen, contractAddr: string, msg: object, transferAmount?: types.Coin[]): Promise<readonly logs.Log[]> => {
-  const memo = "Create an ERC20 instance";
-  const sender = pubkeyToAddress({ "type": types.pubkeyType.secp256k1, "value": toBase64(execPen.pubkey)}, "cosmos");
-  const instantiateContractMsg = {
-    type: "wasm/execute",
-    value: {
-      sender: sender,
-      contract: contractAddr,
-      msg: msg,
-      sent_funds: transferAmount || [],
-    },
+const defaultFaucetUrl = "https://faucet.demo-07.cosmwasm.com/credit";
+
+const buildFeeTable = (feeToken: string, gasPrice: number): FeeTable => {
+  const stdFee = (gas: number, denom: string, price: number) => {
+    const amount = Math.floor(gas * price);
+    return {
+      amount: [{ amount: amount.toString(), denom: denom }],
+      gas: gas.toString(),
+    }
   };
-  const account = (await execClient.authAccounts(faucetAddress)).result.value;
-  const signBytes = makeSignBytes([instantiateContractMsg], defaultFee, networkId, memo, account);
-  const signature = await execPen.sign(signBytes);
-  const signedTx = {
-    msg: [instantiateContractMsg],
-    fee: defaultFee,
-    memo: memo,
-    signatures: [signature],
-  };
-  const result = await execClient.postTx(signedTx);
-  if (result.code) {
-    throw new Error(`Failed tx: (${result.code}): ${result.raw_log}`)
+
+  return {
+    upload: stdFee(1000000, feeToken, gasPrice),
+    init: stdFee(500000, feeToken, gasPrice),
+    exec: stdFee(200000, feeToken, gasPrice),
+    send: stdFee(80000, feeToken, gasPrice),
   }
-  const execLogs = logs.parseLogs(result.logs);
-  return execLogs;
+};
+
+// TODO: hit faucet
+// if (config.faucetUrl) {
+//   const acct = await client.getAccount();
+//   if (!acct?.balance?.length) {
+//     await ky.post(config.faucetUrl, { json: { ticker: "COSM", address } });
+//   }
+// }
+
+const penAddress = (pen: Secp256k1Pen, prefix: string): string => {
+  const pubkey = encodeSecp256k1Pubkey(pen.pubkey);
+  return pubkeyToAddress(pubkey, prefix);
 }
+
+const connect = async (mnemonic: string, opts: Partial<Options>): Promise<{
+  client: SigningCosmWasmClient,
+  address: string,
+}> => {
+  const options: Options = {...defaultOptions, ...opts};
+  const feeTable = buildFeeTable(options.feeToken, options.gasPrice);
+  const pen = await Secp256k1Pen.fromMnemonic(mnemonic);
+  const address = penAddress(pen, options.bech32prefix);
+
+  const client = new SigningCosmWasmClient(options.httpUrl, address, signBytes => pen.sign(signBytes), feeTable);
+  return {client, address};
+};
 
 // smartQuery assumes the content is proper JSON data and parses before returning it
-const smartQuery = async (client: RestClient, addr: string, query: object): Promise<any> => {
+const smartQuery = async (client: CosmWasmClient, addr: string, query: object): Promise<any> => {
   const bin = await client.queryContractSmart(addr, query);
   return JSON.parse(fromUtf8(bin));
 }
 
+// loadOrCreateMnemonic will try to load a mnemonic from the file.
+// If missing, it will generate a random one and save to the file.
+//
+// This is not secure, but does allow simple developer access to persist a
+// mnemonic between sessions
+const loadOrCreateMnemonic = (filename: string): string => {
+  try {
+    const mnemonic = fs.readFileSync(filename, "utf8");
+    return mnemonic;
+  } catch (err) {
+    const mnemonic = Bip39.encode(Random.getBytes(16)).toString();
+    fs.writeFileSync(filename, mnemonic, "utf8");
+    return mnemonic;
+  }
+}
 
-const randomAddress = async (): Promise<string> => {
+const hitFaucet = async (faucetUrl: string, address: string, ticker: string): Promise<void> => {
+  const r = await axios.post(defaultFaucetUrl, { ticker, address });
+  console.log(r.status);
+  console.log(r.data);
+}
+
+const randomAddress = async (prefix: string): Promise<string> => {
   const mnemonic = Bip39.encode(Random.getBytes(16)).toString();
-  const randomPen = await Secp256k1Pen.fromMnemonic(mnemonic);
-  const pubkey = encodeSecp256k1Pubkey(randomPen.pubkey);
-  return pubkeyToAddress(pubkey, "cosmos");
+  const pen = await Secp256k1Pen.fromMnemonic(mnemonic);
+  const pubkey = encodeSecp256k1Pubkey(pen.pubkey);
+  return pubkeyToAddress(pubkey, prefix);
 }

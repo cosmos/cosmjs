@@ -14,3 +14,6 @@ node_modules/
 
 # IDE-specific
 .vscode/
+
+# demo mnemonics from cli
+*.key
