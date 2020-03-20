@@ -93,3 +93,14 @@ const randomAddress = async (prefix: string): Promise<string> => {
   const pubkey = encodeSecp256k1Pubkey(pen.pubkey);
   return pubkeyToAddress(pubkey, prefix);
 }
+
+const downloadWasm = async (url: string): Promise<Uint8Array> => {
+  const r = await axios.get(url, { responseType: "arraybuffer"});
+  if (r.status !== 200) {
+    throw new Error(`Download error: ${r.status}`);
+  }
+  return r.data;
+}
+
+const getAttibute = (logs: readonly logs.Log[], key: string): string|undefined =>
+  logs[0].events[0].attributes.find(x => x.key == key)?.value

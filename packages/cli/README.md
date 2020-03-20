@@ -242,7 +242,12 @@ const {address, client} = await connect(mnemonic, regenOptions);
 address
 ```
 
-Once you have access to the same key as in the cli, you can use those tokens to play with contracts
+Once you have access to the same key as in the cli, you can use those tokens to play with contracts.
+
+## Diving into Contracts
+
+Check out the [mask documentation](./MASK.md) to view how to use some custom helpers to upload code and use non-trivial contracts
+with proper types.
 
 ## License
 
