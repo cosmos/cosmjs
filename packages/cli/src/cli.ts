@@ -11,8 +11,8 @@ export function main(originalArgs: readonly string[]): void {
     .options({
       // User options (we get --help and --version for free)
       init: {
-        describe: "Read initial TypeScript code from file",
-        type: "string",
+        describe: "Read initial TypeScript code from files",
+        type: "array",
       },
       // Maintainer options
       debug: {
@@ -161,7 +161,10 @@ export function main(originalArgs: readonly string[]): void {
   }
 
   if (args.init) {
-    init += fs.readFileSync(args.init, "utf8") + "\n";
+    for (const path of args.init.map(arg => arg.toString())) {
+      if (args.debug) console.info(`Adding file: '${path}' ...`);
+      init += fs.readFileSync(path, "utf8") + "\n";
+    }
   }
 
   const tsconfigPath = join(__dirname, "..", "tsconfig_repl.json");
