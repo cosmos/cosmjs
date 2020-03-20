@@ -1,8 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
-import { FeeTable } from "@cosmwasm/sdk/types/signingcosmwasmclient";
-import axios from "axios";
-import * as fs from "fs";
-
 interface Options {
   httpUrl: string;
   networkId: string;
