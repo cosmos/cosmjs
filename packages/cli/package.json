@@ -48,11 +48,13 @@
     "diff": "^4",
     "recast": "^0.18.0",
     "ts-node": "^8",
-    "typescript": "~3.7"
+    "typescript": "~3.7",
+    "yargs": "^15.3.1"
   },
   "devDependencies": {
     "@types/argparse": "^1.0.34",
     "@types/babylon": "^6.16.3",
-    "@types/diff": "^4"
+    "@types/diff": "^4",
+    "@types/yargs": "^15.0.4"
   }
 }
