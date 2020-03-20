@@ -113,6 +113,7 @@ export function main(originalArgs: readonly string[]): void {
   console.info(colors.yellow("Available imports:"));
   console.info(colors.yellow("  * http"));
   console.info(colors.yellow("  * https"));
+  console.info(colors.yellow("  * fs"));
   for (const [moduleName, symbols] of imports.entries()) {
     console.info(colors.yellow(`  * from ${moduleName}: ${symbols.join(", ")}`));
   }
@@ -131,6 +132,7 @@ export function main(originalArgs: readonly string[]): void {
   let init = `
     import * as http from 'http';
     import * as https from 'https';
+    import * as fs from "fs";
   `;
   for (const [moduleName, symbols] of imports.entries()) {
     init += `import { ${symbols.join(", ")} } from "${moduleName}";\n`;
@@ -142,6 +144,10 @@ export function main(originalArgs: readonly string[]): void {
     // execute some trival stuff and exit
     init += `
       await sleep(123);
+
+      const readmeContent = fs.readFileSync(process.cwd() + "/README.md");
+      fs.writeFileSync(process.cwd() + "/README.md", readmeContent);
+
       const hash = new Sha512(new Uint8Array([])).digest();
       const hexHash = toHex(hash);
       export class NewDummyClass {};
