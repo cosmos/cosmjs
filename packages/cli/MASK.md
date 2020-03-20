@@ -134,3 +134,46 @@ Now validate this with the CLI tooling:
 ```sh
 TODO
 ```
+
+The opaqueMsg style is a bit more tricky as it places the burden of transaction construction upon the
+user (you). However, it does allow you to call into any native module in the blockchain.
+We plan to add custom types for some popular native messages to make this binding simpler,
+and also allow these to be triggered by internal contract logic (they cannot form opaque messages,
+but rather just relay opaque messages formed by the clients).
+
+Happy hacking using the mask contract. And to make this a bit more interesting, note that you can transfer
+control of this mask. By transfering ownership, we transfer control of our `ucosm` native , our `FOO` erc20 token,
+and our open staking position in one fell swoop, without the other modules/contracts being aware of the change.
+
+```ts
+const aliceMnem = loadOrCreateMnemonic("other.key");
+const {address: alice, client: aliceClient} = await connect(aliceMnem, {});
+alice
+
+client.getAccount()
+aliceClient.getAccount()
+
+// send some minimal tokens
+client.sendTokens(alice, [{amount: "500000", "denom": "ucosm"}])
+aliceClient.getAccount()
+
+// now, transfer ownership of the mask
+const query: QueryMsg = { owner: {} };
+smartQuery(client, mask, query);
+const transferMsg: HandleMsg = { changeowner: { owner: alice }}
+client.execute(mask, transferMsg)
+smartQuery(client, mask, query);
+```
+
+From now own, alice can control the mask, not me.... And she can extract the erc20 tokens or anything else the mask controls
+
+```ts
+smartQuery(client, foo, { balance: { address: alice } })
+
+const withdraw: HandleMsg = { reflectmsg: { msgs: [contractMsg(foo, {transfer: {"amount": "80000", "recipient": alice}})]}};
+// this will error (me)
+client.execute(mask, withdraw)
+// this will succeed (alice)
+aliceClient.execute(mask, withdraw)
+smartQuery(client, foo, { balance: { address: alice } })
+```
