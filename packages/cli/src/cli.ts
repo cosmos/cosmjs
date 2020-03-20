@@ -111,8 +111,7 @@ export function main(originalArgs: readonly string[]): void {
 
   console.info(colors.green("Initializing session for you. Have fun!"));
   console.info(colors.yellow("Available imports:"));
-  console.info(colors.yellow("  * http"));
-  console.info(colors.yellow("  * https"));
+  console.info(colors.yellow("  * axios"));
   console.info(colors.yellow("  * fs"));
   for (const [moduleName, symbols] of imports.entries()) {
     console.info(colors.yellow(`  * from ${moduleName}: ${symbols.join(", ")}`));
@@ -130,8 +129,7 @@ export function main(originalArgs: readonly string[]): void {
   console.info(colors.yellow(`  * helper functions: ${encodingHelpers.join(", ")}`));
 
   let init = `
-    import * as http from 'http';
-    import * as https from 'https';
+    import axios from "axios";
     import * as fs from "fs";
   `;
   for (const [moduleName, symbols] of imports.entries()) {
