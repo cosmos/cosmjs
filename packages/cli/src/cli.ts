@@ -56,6 +56,7 @@ export function main(originalArgs: readonly string[]): void {
         "SearchByHeightQuery",
         "SearchByIdQuery",
         "SearchBySentFromOrToQuery",
+        "SearchByTagsQuery",
         "SearchTxQuery",
         "SearchTxFilter",
         // signingcosmwasmclient

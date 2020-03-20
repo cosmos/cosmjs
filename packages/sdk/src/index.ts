@@ -21,6 +21,7 @@ export {
   SearchByHeightQuery,
   SearchByIdQuery,
   SearchBySentFromOrToQuery,
+  SearchByTagsQuery,
   SearchTxQuery,
   SearchTxFilter,
 } from "./cosmwasmclient";
