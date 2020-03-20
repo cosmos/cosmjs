@@ -69,6 +69,7 @@ export function main(originalArgs: readonly string[]): void {
         "SearchTxFilter",
         // signingcosmwasmclient
         "ExecuteResult",
+        "FeeTable",
         "InstantiateResult",
         "SigningCallback",
         "SigningCosmWasmClient",
