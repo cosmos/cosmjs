@@ -1,41 +1,32 @@
-import { ArgumentParser } from "argparse";
 import * as fs from "fs";
 import { join } from "path";
+import yargs from "yargs";
 
 import { TsRepl } from "./tsrepl";
 
 import colors = require("colors/safe");
 
 export function main(originalArgs: readonly string[]): void {
-  const parser = new ArgumentParser({ description: "The CosmWasm REPL" });
-  parser.addArgument("--version", {
-    action: "storeTrue",
-    help: "Print version and exit",
-  });
-  parser.addArgument("--init", {
-    metavar: "FILEPATH",
-    help: "Read initial TypeScript code from file",
-  });
-
-  const maintainerGroup = parser.addArgumentGroup({
-    title: "Maintainer options",
-    description: "Don't use those unless a maintainer tells you to.",
-  });
-  maintainerGroup.addArgument("--selftest", {
-    action: "storeTrue",
-    help: "Run a selftext and exit",
-  });
-  maintainerGroup.addArgument("--debug", {
-    action: "storeTrue",
-    help: "Enable debugging",
-  });
-  const args = parser.parseArgs([...originalArgs]);
-
-  if (args.version) {
-    const version = require(join(__dirname, "..", "package.json")).version;
-    console.info(version);
-    return;
-  }
+  const args = yargs
+    .options({
+      // User options (we get --help and --version for free)
+      init: {
+        describe: "Read initial TypeScript code from files",
+        type: "array",
+      },
+      // Maintainer options
+      debug: {
+        describe: "Enable debugging",
+        type: "boolean",
+      },
+      selftest: {
+        describe: "Run a selftext and exit",
+        type: "boolean",
+      },
+    })
+    .group(["init", "help", "version"], "User options")
+    .group(["debug", "selftest"], "Maintainer options")
+    .parse(originalArgs);
 
   const imports = new Map<string, readonly string[]>([
     [
@@ -170,7 +161,10 @@ export function main(originalArgs: readonly string[]): void {
   }
 
   if (args.init) {
-    init += fs.readFileSync(args.init, "utf8") + "\n";
+    for (const path of args.init.map(arg => arg.toString())) {
+      if (args.debug) console.info(`Adding file: '${path}' ...`);
+      init += fs.readFileSync(path, "utf8") + "\n";
+    }
   }
 
   const tsconfigPath = join(__dirname, "..", "tsconfig_repl.json");
