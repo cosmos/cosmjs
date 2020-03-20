@@ -12,10 +12,7 @@ export type HandleMsg =
         msgs: (
           | {
               send: {
-                amount: {
-                  amount: string;
-                  denom: string;
-                }[];
+                amount: types.Coin[];
                 from_address: string;
                 to_address: string;
               };
@@ -23,19 +20,14 @@ export type HandleMsg =
           | {
               contract: {
                 contract_addr: string;
-                // this must be changed - is Base64 encoded string
+                // this had to be changed - is Base64 encoded string
                 msg: string;
-                send:
-                  | {
-                      amount: string;
-                      denom: string;
-                    }[]
-                  | null;
+                send: types.Coin[] | null;
               };
             }
           | {
               opaque: {
-                // this must be changed - is Base64 encoded string
+                // this had to be changed - is Base64 encoded string
                 data: string;
               };
             }
@@ -65,3 +57,33 @@ export interface State {
 }
 
 /*** END auto-gen ****/
+
+const base64Msg = (msg: object): string => toBase64(toUtf8(JSON.stringify(msg)));
+
+const sendMsg = (from_address: string, to_address: string, amount: types.Coin[]) => {
+  return {
+    send: {
+      from_address,
+      to_address,
+      amount,
+    }
+  };
+}
+
+const contractMsg = (contract_addr: string, msg: object, amount?: types.Coin[]) => {
+  return {
+    contract: {
+      contract_addr,
+      msg: base64Msg(msg),
+      send: amount || null,
+    }
+  };
+}
+
+const opaqueMsg = (data: object) => {
+  return {
+    opaque: {
+      data: base64Msg(data),
+    }
+  };
+}

@@ -56,6 +56,81 @@ const codeId = codes.filter(x => x.checksum === hash).map(x => x.id)[0]
 // instantiate one contract
 const maskResp = await client.instantiate(codeId, {}, "My Mask");
 const mask = maskResp.contractAddress;
+
+// You can also find the contractAddress later (in a future session), like:
+const contracts = await client.getContracts(codeId);
+const mask = contracts.filter(x => x.label == "My Mask").map(x => x.address)[0];
 ```
 
-TODO: using it with proper types
+Now, let's use the mask. To do so, we need to load it up with some tokens
+(both native and ERC20 - from the contract you deployed last time).
+
+```ts
+client.sendTokens(mask, [{amount: "500000", "denom": "ucosm"}])
+client.getAccount(mask)
+
+// get the foo contract again...
+const ercId = 1; // from earlier example, change this if different on your network
+const ercs = await client.getContracts(ercId);
+const foo = ercs.filter(x => x.label == "FOO").map(x => x.address)[0];
+
+// send some erc tokens to the mask as before
+smartQuery(client, foo, { balance: { address: mask } })
+const ercMsg = { transfer: {recipient: mask, amount: "800000"}}
+client.execute(foo, ercMsg);
+smartQuery(client, foo, { balance: { address: mask } })
+```
+
+Now, let's send some tokens from it:
+
+```ts
+const rand = await randomAddress("cosmos");
+client.getAccount(rand)
+client.getAccount(mask)
+
+const callSend: HandleMsg = { reflectmsg: { msgs: [sendMsg(mask, rand, [{amount: "80000", denom: "ucosm"}])]}};
+client.execute(mask, callSend)
+client.getAccount(rand)
+client.getAccount(mask)
+```
+
+And call the ERC20 contract from it:
+
+```ts
+smartQuery(client, foo, { balance: { address: rand } })
+smartQuery(client, foo, { balance: { address: mask } })
+
+const callContract: HandleMsg = { reflectmsg: { msgs: [contractMsg(foo, {transfer: {"amount": "80000", "recipient": rand}})]}};
+client.execute(mask, callContract)
+smartQuery(client, foo, { balance: { address: rand } })
+smartQuery(client, foo, { balance: { address: mask } })
+```
+
+And now... let's use OpaqueMsg to call into native blockchain messages.
+Here we will trigger a staking command. This is an "opaque" command, so neither cosmwams-js
+nor the cosmwasm contract understands it. It is passed verbatim from the client to
+the wasmd blockchain (reflected by mask, so using the mask address).
+
+To view this properly, we will have to use the cli tooling:
+
+```sh
+TODO
+```
+
+To create such a message, we need to produce the amino json encoding of a staking message.
+That does involve a bit of investigation, but looks like:
+
+```json
+TODO
+```
+
+```ts
+const staking = {}
+const callOpaque: HandleMsg = { reflectmsg: { msgs: [opaqueMsg(staking)]}};
+client.execute(mask, callOpaque)
+```
+
+Now validate this with the CLI tooling:
+```sh
+TODO
+```
