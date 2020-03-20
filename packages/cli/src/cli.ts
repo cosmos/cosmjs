@@ -34,6 +34,7 @@ export function main(originalArgs: readonly string[]): void {
       [
         "encodeSecp256k1Pubkey",
         "encodeSecp256k1Signature",
+        "logs",
         "makeSignBytes",
         "marshalTx",
         "Pen",
