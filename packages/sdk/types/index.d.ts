@@ -29,6 +29,7 @@ export { findSequenceForSignedTx } from "./sequence";
 export { encodeSecp256k1Signature, decodeSignature } from "./signature";
 export {
   ExecuteResult,
+  FeeTable,
   InstantiateResult,
   SigningCallback,
   SigningCosmWasmClient,
