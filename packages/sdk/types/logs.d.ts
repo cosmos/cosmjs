@@ -1,11 +1,9 @@
-export declare type SupportedEventType = "message" | "transfer" | "wasm";
-export declare function isSupportedEventType(data: any): data is SupportedEventType;
 export interface Attribute {
   readonly key: string;
   readonly value: string;
 }
 export interface Event {
-  readonly type: SupportedEventType;
+  readonly type: string;
   readonly attributes: readonly Attribute[];
 }
 export interface Log {

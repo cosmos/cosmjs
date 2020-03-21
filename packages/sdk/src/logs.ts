@@ -1,22 +1,13 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { isNonNullObject } from "@iov/encoding";
 
-const supportedEventTypes: readonly string[] = ["message", "transfer", "wasm"];
-
-export type SupportedEventType = "message" | "transfer" | "wasm";
-
-export function isSupportedEventType(data: any): data is SupportedEventType {
-  if (typeof data !== "string") return false;
-  return supportedEventTypes.includes(data);
-}
-
 export interface Attribute {
   readonly key: string;
   readonly value: string;
 }
 
 export interface Event {
-  readonly type: SupportedEventType;
+  readonly type: string;
   readonly attributes: readonly Attribute[];
 }
 
@@ -43,8 +34,8 @@ export function parseAttribute(input: unknown): Attribute {
 export function parseEvent(input: unknown): Event {
   if (!isNonNullObject(input)) throw new Error("Event must be a non-null object");
   const { type, attributes } = input as any;
-  if (!isSupportedEventType(type)) {
-    throw new Error(`Event type must be one of ${supportedEventTypes.join(", ")}; got ${type}`);
+  if (typeof type !== "string" || type === "") {
+    throw new Error(`Event type must be a non-empty string`);
   }
   if (!Array.isArray(attributes)) throw new Error("Event's attributes must be an array");
   return {
