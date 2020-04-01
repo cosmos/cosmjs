@@ -3988,13 +3988,13 @@ graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.1.6
   integrity sha512-a30VEBm4PEdx1dRB7MFK7BejejvCvBronbLjht+sHuGYj8PHs7M/5Z+rt5lw551vZ7yfTCj4Vuyy3mSJytDWRQ==
 
 handlebars@^4.4.0:
-  version "4.7.3"
-  resolved "https://registry.yarnpkg.com/handlebars/-/handlebars-4.7.3.tgz#8ece2797826886cf8082d1726ff21d2a022550ee"
-  integrity sha512-SRGwSYuNfx8DwHD/6InAPzD6RgeruWLT+B8e8a7gGs8FWgHzlExpTFMEq2IA6QpAfOClpKHy6+8IqTjeBCu6Kg==
+  version "4.7.4"
+  resolved "https://registry.yarnpkg.com/handlebars/-/handlebars-4.7.4.tgz#902c579cc97b350bb4bc12e6cabd85b57dcd9975"
+  integrity sha512-Is8+SzHv8K9STNadlBVpVhxXrSXxVgTyIvhdg2Qjak1SfSZ7iEozLHdwiX1jJ9lLFkcFJxqGK5s/cI7ZX+qGkQ==
   dependencies:
     neo-async "^2.6.0"
-    optimist "^0.6.1"
     source-map "^0.6.1"
+    yargs "^15.3.1"
   optionalDependencies:
     uglify-js "^3.1.4"
 
