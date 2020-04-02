@@ -300,12 +300,14 @@ export class CosmWasmClient {
 
   public async postTx(tx: StdTx): Promise<PostTxResult> {
     const result = await this.restClient.postTx(tx);
-    if (result.code) {
-      throw new Error(`Error when posting tx. Code: ${result.code}; Raw log: ${result.raw_log}`);
-    }
-
     if (!result.txhash.match(/^([0-9A-F][0-9A-F])+$/)) {
       throw new Error("Received ill-formatted txhash. Must be non-empty upper-case hex");
+    }
+
+    if (result.code) {
+      throw new Error(
+        `Error when posting tx ${result.txhash}. Code: ${result.code}; Raw log: ${result.raw_log}`,
+      );
     }
 
     return {
