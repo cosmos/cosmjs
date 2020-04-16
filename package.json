@@ -44,7 +44,7 @@
     "eslint-plugin-simple-import-sort": "^5.0.1",
     "jasmine": "^3.3.1",
     "jasmine-spec-reporter": "^4.2.1",
-    "karma": "^4.1.0",
+    "karma": "^5",
     "karma-chrome-launcher": "^3",
     "karma-firefox-launcher": "^1.1.0",
     "karma-jasmine": "^3",
