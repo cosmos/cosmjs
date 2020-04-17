@@ -22,7 +22,7 @@ export class Webserver {
     this.api.use(cors());
     this.api.use(bodyParser());
 
-    this.api.use(async context => {
+    this.api.use(async (context) => {
       switch (context.path) {
         case "/":
         case "/healthz":

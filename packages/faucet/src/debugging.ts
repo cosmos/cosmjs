@@ -27,7 +27,7 @@ export function logAccountsState(accounts: ReadonlyArray<Account>): void {
   const holder = accounts[0];
   const distributors = accounts.slice(1);
   console.info("Holder:\n" + `  ${debugAccount(holder)}`);
-  console.info("Distributors:\n" + distributors.map(r => `  ${debugAccount(r)}`).join("\n"));
+  console.info("Distributors:\n" + distributors.map((r) => `  ${debugAccount(r)}`).join("\n"));
 }
 
 export function logSendJob(job: SendJob): void {

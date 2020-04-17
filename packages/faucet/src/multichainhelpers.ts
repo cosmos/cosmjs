@@ -7,5 +7,5 @@ export function identitiesOfFirstWallet(profile: UserProfile): ReadonlyArray<Ide
 }
 
 export function availableTokensFromHolder(holderAccount: Account): ReadonlyArray<TokenTicker> {
-  return holderAccount.balance.map(coin => coin.tokenTicker);
+  return holderAccount.balance.map((coin) => coin.tokenTicker);
 }

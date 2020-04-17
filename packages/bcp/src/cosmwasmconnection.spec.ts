@@ -278,7 +278,7 @@ describe("CosmWasmConnection", () => {
   });
 
   describe("watchAccount", () => {
-    it("can watch account by address", done => {
+    it("can watch account by address", (done) => {
       pendingWithoutWasmd();
       const recipient = makeRandomAddress();
       const events = new Array<Account | undefined>();
@@ -286,7 +286,7 @@ describe("CosmWasmConnection", () => {
       (async () => {
         const connection = await CosmWasmConnection.establish(httpUrl, defaultAddressPrefix, defaultConfig);
         const subscription = connection.watchAccount({ address: recipient }).subscribe({
-          next: event => {
+          next: (event) => {
             events.push(event);
 
             if (events.length === 3) {
@@ -335,7 +335,7 @@ describe("CosmWasmConnection", () => {
           const nonce = await connection.getNonce({ address: senderAddress });
           const signedTransaction = await profile.signTransaction(sender, sendTx, connection.codec, nonce);
           const result = await connection.postTx(connection.codec.bytesToPost(signedTransaction));
-          await result.blockInfo.waitFor(info => !isBlockInfoPending(info));
+          await result.blockInfo.waitFor((info) => !isBlockInfoPending(info));
         }
       })().catch(done.fail);
     });
@@ -367,7 +367,7 @@ describe("CosmWasmConnection", () => {
       const postableBytes = connection.codec.bytesToPost(signed);
       const response = await connection.postTx(postableBytes);
       const { transactionId } = response;
-      await response.blockInfo.waitFor(info => isBlockInfoSucceeded(info));
+      await response.blockInfo.waitFor((info) => isBlockInfoSucceeded(info));
 
       const getResponse = await connection.getTx(transactionId);
       expect(getResponse.transactionId).toEqual(transactionId);
@@ -418,7 +418,7 @@ describe("CosmWasmConnection", () => {
       const postableBytes = connection.codec.bytesToPost(signed);
       const response = await connection.postTx(postableBytes);
       const { transactionId } = response;
-      await response.blockInfo.waitFor(info => isBlockInfoSucceeded(info));
+      await response.blockInfo.waitFor((info) => isBlockInfoSucceeded(info));
 
       const getResponse = await connection.getTx(transactionId);
       expect(getResponse.transactionId).toEqual(transactionId);
@@ -491,7 +491,7 @@ describe("CosmWasmConnection", () => {
       const nonExistentId = "0000000000000000000000000000000000000000000000000000000000000000" as TransactionId;
       await connection.getTx(nonExistentId).then(
         () => fail("this must not succeed"),
-        error => expect(error).toMatch(/transaction does not exist/i),
+        (error) => expect(error).toMatch(/transaction does not exist/i),
       );
 
       connection.disconnect();
@@ -524,7 +524,7 @@ describe("CosmWasmConnection", () => {
       const postableBytes = connection.codec.bytesToPost(signed);
       const response = await connection.postTx(postableBytes);
       const { transactionId } = response;
-      const blockInfo = await response.blockInfo.waitFor(info => !isBlockInfoPending(info));
+      const blockInfo = await response.blockInfo.waitFor((info) => !isBlockInfoPending(info));
       expect(blockInfo.state).toEqual(TransactionState.Succeeded);
 
       // search by id
@@ -615,7 +615,7 @@ describe("CosmWasmConnection", () => {
       const postableBytes = connection.codec.bytesToPost(signed);
       const response = await connection.postTx(postableBytes);
       const { transactionId } = response;
-      const blockInfo = await response.blockInfo.waitFor(info => !isBlockInfoPending(info));
+      const blockInfo = await response.blockInfo.waitFor((info) => !isBlockInfoPending(info));
       expect(blockInfo.state).toEqual(TransactionState.Succeeded);
 
       // search by id
@@ -733,7 +733,7 @@ describe("CosmWasmConnection", () => {
       const postableBytes = connection.codec.bytesToPost(signed);
       const response = await connection.postTx(postableBytes);
       const { transactionId } = response;
-      const blockInfo = await response.blockInfo.waitFor(info => !isBlockInfoPending(info));
+      const blockInfo = await response.blockInfo.waitFor((info) => !isBlockInfoPending(info));
       assert(isBlockInfoSucceeded(blockInfo));
       const { height } = blockInfo;
 
@@ -916,7 +916,7 @@ describe("CosmWasmConnection", () => {
   });
 
   describe("liveTx", () => {
-    it("can listen to transactions by recipient address (transactions in history and updates)", done => {
+    it("can listen to transactions by recipient address (transactions in history and updates)", (done) => {
       pendingWithoutWasmd();
 
       (async () => {
@@ -969,14 +969,14 @@ describe("CosmWasmConnection", () => {
 
         // Post A and B. Unfortunately the REST server API does not support sending them in parallel because the sequence check fails.
         const postResultA = await connection.postTx(bytesToPostA);
-        await postResultA.blockInfo.waitFor(info => !isBlockInfoPending(info));
+        await postResultA.blockInfo.waitFor((info) => !isBlockInfoPending(info));
         const postResultB = await connection.postTx(bytesToPostB);
-        await postResultB.blockInfo.waitFor(info => !isBlockInfoPending(info));
+        await postResultB.blockInfo.waitFor((info) => !isBlockInfoPending(info));
 
         // setup listener after A and B are in block
         const events = new Array<ConfirmedTransaction<UnsignedTransaction>>();
         const subscription = connection.liveTx({ sentFromOrTo: recipientAddress }).subscribe({
-          next: event => {
+          next: (event) => {
             assert(isConfirmedTransaction(event), "Confirmed transaction expected");
             events.push(event);
 
@@ -999,7 +999,7 @@ describe("CosmWasmConnection", () => {
       })().catch(done.fail);
     });
 
-    it("can listen to transactions by ID (transaction in history)", done => {
+    it("can listen to transactions by ID (transaction in history)", (done) => {
       pendingWithoutWasmd();
 
       (async () => {
@@ -1028,12 +1028,12 @@ describe("CosmWasmConnection", () => {
         const transactionId = postResult.transactionId;
 
         // Wait for a block
-        await postResult.blockInfo.waitFor(info => !isBlockInfoPending(info));
+        await postResult.blockInfo.waitFor((info) => !isBlockInfoPending(info));
 
         // setup listener after transaction is in block
         const events = new Array<ConfirmedTransaction<UnsignedTransaction>>();
         const subscription = connection.liveTx({ id: transactionId }).subscribe({
-          next: event => {
+          next: (event) => {
             assert(isConfirmedTransaction(event), "Confirmed transaction expected");
             events.push(event);
 
@@ -1049,7 +1049,7 @@ describe("CosmWasmConnection", () => {
       })().catch(done.fail);
     });
 
-    it("can listen to transactions by ID (transaction in updates)", done => {
+    it("can listen to transactions by ID (transaction in updates)", (done) => {
       pendingWithoutWasmd();
 
       (async () => {
@@ -1082,7 +1082,7 @@ describe("CosmWasmConnection", () => {
         // setup listener before transaction is in block
         const events = new Array<ConfirmedTransaction<UnsignedTransaction>>();
         const subscription = connection.liveTx({ id: transactionId }).subscribe({
-          next: event => {
+          next: (event) => {
             assert(isConfirmedTransaction(event), "Confirmed transaction expected");
             events.push(event);
 

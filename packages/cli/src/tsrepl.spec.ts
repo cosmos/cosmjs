@@ -35,12 +35,12 @@ describe("TsRepl", () => {
     await new TsRepl(tsConfigPath, "const a: string = 123;")
       .start()
       .then(() => fail("must not resolve"))
-      .catch(e => expect(e).toMatch(/is not assignable to type 'string'/));
+      .catch((e) => expect(e).toMatch(/is not assignable to type 'string'/));
 
     await new TsRepl(tsConfigPath, "const const const;")
       .start()
       .then(() => fail("must not resolve"))
-      .catch(e => expect(e).toMatch(/Variable declaration expected./));
+      .catch((e) => expect(e).toMatch(/Variable declaration expected./));
   });
 
   it("can be started with top level await", async () => {

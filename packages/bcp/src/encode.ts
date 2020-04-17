@@ -41,7 +41,7 @@ export function toErc20Amount(amount: Amount, erc20Token: Erc20Token): string {
 }
 
 export function toBankCoin(amount: Amount, tokens: BankTokens): types.Coin {
-  const match = tokens.find(token => token.ticker === amount.tokenTicker);
+  const match = tokens.find((token) => token.ticker === amount.tokenTicker);
   if (!match) throw Error(`unknown ticker: ${amount.tokenTicker}`);
   if (match.fractionalDigits !== amount.fractionalDigits) {
     throw new Error(
@@ -88,8 +88,8 @@ export function buildUnsignedTx(
     throw new Error("Received transaction of unsupported kind");
   }
 
-  const matchingBankToken = bankTokens.find(t => t.ticker === tx.amount.tokenTicker);
-  const matchingErc20Token = erc20Tokens.find(t => t.ticker === tx.amount.tokenTicker);
+  const matchingBankToken = bankTokens.find((t) => t.ticker === tx.amount.tokenTicker);
+  const matchingErc20Token = erc20Tokens.find((t) => t.ticker === tx.amount.tokenTicker);
 
   if (!tx.fee) throw new Error("Transaction fee must be set");
 

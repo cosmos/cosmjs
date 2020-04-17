@@ -93,7 +93,7 @@ export function parseMsg(
     };
     return send;
   } else if (types.isMsgExecuteContract(msg)) {
-    const matchingTokenContract = erc20Tokens.find(t => t.contractAddress === msg.value.contract);
+    const matchingTokenContract = erc20Tokens.find((t) => t.contractAddress === msg.value.contract);
     if (!matchingTokenContract) {
       return {
         chainId: chainId,
@@ -170,7 +170,7 @@ export function parseSignedTx(
   tokens: BankTokens,
   erc20Tokens: readonly Erc20Token[],
 ): SignedTransaction {
-  const [primarySignature] = txValue.signatures.map(signature => decodeFullSignature(signature, nonce));
+  const [primarySignature] = txValue.signatures.map((signature) => decodeFullSignature(signature, nonce));
   return {
     transaction: parseUnsignedTx(txValue, chainId, tokens, erc20Tokens),
     signatures: [primarySignature],

@@ -75,8 +75,8 @@ export function findAttribute(
 ): Attribute {
   const firstLogs = logs.find(() => true);
   const out = firstLogs?.events
-    .find(event => event.type === eventType)
-    ?.attributes.find(attr => attr.key === attrKey);
+    .find((event) => event.type === eventType)
+    ?.attributes.find((attr) => attr.key === attrKey);
   if (!out) {
     throw new Error(
       `Could not find attribute '${attrKey}' in first event of type '${eventType}' in first log.`,

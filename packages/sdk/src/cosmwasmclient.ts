@@ -252,7 +252,7 @@ export class CosmWasmClient {
         height: parseInt(response.block.header.height, 10),
         chainId: response.block.header.chain_id,
       },
-      txs: (response.block.data.txs || []).map(encoded => Encoding.fromBase64(encoded)),
+      txs: (response.block.data.txs || []).map((encoded) => Encoding.fromBase64(encoded)),
     };
   }
 
@@ -283,17 +283,17 @@ export class CosmWasmClient {
       const sent = await this.txsQuery(sentQuery);
       const received = await this.txsQuery(receivedQuery);
 
-      const sentHashes = sent.map(t => t.hash);
-      txs = [...sent, ...received.filter(t => !sentHashes.includes(t.hash))];
+      const sentHashes = sent.map((t) => t.hash);
+      txs = [...sent, ...received.filter((t) => !sentHashes.includes(t.hash))];
     } else if (isSearchByTagsQuery(query)) {
-      const rawQuery = withFilters(query.tags.map(t => `${t.key}=${t.value}`).join("&"));
+      const rawQuery = withFilters(query.tags.map((t) => `${t.key}=${t.value}`).join("&"));
       txs = await this.txsQuery(rawQuery);
     } else {
       throw new Error("Unknown query type");
     }
 
     // backend sometimes messes up with min/max height filtering
-    const filtered = txs.filter(tx => tx.height >= minHeight && tx.height <= maxHeight);
+    const filtered = txs.filter((tx) => tx.height >= minHeight && tx.height <= maxHeight);
 
     return filtered;
   }

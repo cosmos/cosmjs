@@ -11,7 +11,7 @@ export function main(args: ReadonlyArray<string>): void {
 
   switch (action) {
     case "generate":
-      generate(restArgs).catch(error => {
+      generate(restArgs).catch((error) => {
         console.error(error);
         process.exit(1);
       });
@@ -20,13 +20,13 @@ export function main(args: ReadonlyArray<string>): void {
       help();
       break;
     case "version":
-      version().catch(error => {
+      version().catch((error) => {
         console.error(error);
         process.exit(1);
       });
       break;
     case "start":
-      start(restArgs).catch(error => {
+      start(restArgs).catch((error) => {
         console.error(error);
         process.exit(1);
       });
