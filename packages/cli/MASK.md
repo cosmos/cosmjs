@@ -124,7 +124,7 @@ the wasmd blockchain (reflected by mask, so using the mask address).
 To view this properly, we will have to use the cli tooling:
 
 ```sh
-wasmcli config node https://rpc.demo-07.cosmwasm.com:443
+wasmcli config node https://rpc.demo-071.cosmwasm.com:443
 wasmcli config trust-node true
 
 wasmcli query staking validators
