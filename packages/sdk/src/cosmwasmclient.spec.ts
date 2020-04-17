@@ -124,7 +124,7 @@ describe("CosmWasmClient", () => {
       const missing = makeRandomAddress();
       await client.getNonce(missing).then(
         () => fail("this must not succeed"),
-        error => expect(error).toMatch(/account does not exist on chain/i),
+        (error) => expect(error).toMatch(/account does not exist on chain/i),
       );
     });
   });
@@ -373,7 +373,7 @@ describe("CosmWasmClient", () => {
       if (wasmdEnabled()) {
         pendingWithoutWasmd();
         const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-        const client = new SigningCosmWasmClient(wasmd.endpoint, faucet.address, signBytes =>
+        const client = new SigningCosmWasmClient(wasmd.endpoint, faucet.address, (signBytes) =>
           pen.sign(signBytes),
         );
         const { codeId } = await client.upload(getHackatom());
@@ -414,7 +414,7 @@ describe("CosmWasmClient", () => {
       const client = new CosmWasmClient(wasmd.endpoint);
       await client.queryContractRaw(nonExistentAddress, configKey).then(
         () => fail("must not succeed"),
-        error => expect(error).toMatch(`No contract found at address "${nonExistentAddress}"`),
+        (error) => expect(error).toMatch(`No contract found at address "${nonExistentAddress}"`),
       );
     });
   });
@@ -426,7 +426,7 @@ describe("CosmWasmClient", () => {
       if (wasmdEnabled()) {
         pendingWithoutWasmd();
         const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-        const client = new SigningCosmWasmClient(wasmd.endpoint, faucet.address, signBytes =>
+        const client = new SigningCosmWasmClient(wasmd.endpoint, faucet.address, (signBytes) =>
           pen.sign(signBytes),
         );
         const { codeId } = await client.upload(getHackatom());
@@ -452,7 +452,7 @@ describe("CosmWasmClient", () => {
       const client = new CosmWasmClient(wasmd.endpoint);
       await client.queryContractSmart(contract.address, { broken: {} }).then(
         () => fail("must not succeed"),
-        error => expect(error).toMatch(/Error parsing QueryMsg/i),
+        (error) => expect(error).toMatch(/Error parsing QueryMsg/i),
       );
     });
 
@@ -463,7 +463,7 @@ describe("CosmWasmClient", () => {
       const client = new CosmWasmClient(wasmd.endpoint);
       await client.queryContractSmart(nonExistentAddress, { verifier: {} }).then(
         () => fail("must not succeed"),
-        error => expect(error).toMatch(`No contract found at address "${nonExistentAddress}"`),
+        (error) => expect(error).toMatch(`No contract found at address "${nonExistentAddress}"`),
       );
     });
   });

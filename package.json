@@ -50,7 +50,7 @@
     "karma-jasmine": "^3",
     "karma-jasmine-html-reporter": "^1.4",
     "lerna": "^3.20.2",
-    "prettier": "^1.19.1",
+    "prettier": "^2",
     "shx": "^0.3.2",
     "source-map-support": "^0.5.6",
     "typescript": "~3.7",

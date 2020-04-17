@@ -43,7 +43,7 @@ export class TokenManager {
 
   /** true iff the distributor account needs a refill */
   public needsRefill(account: Account, token: TokenTicker): boolean {
-    const balanceAmount = account.balance.find(b => b.tokenTicker === token);
+    const balanceAmount = account.balance.find((b) => b.tokenTicker === token);
 
     const balance = balanceAmount
       ? Decimal.fromAtomics(balanceAmount.quantity, balanceAmount.fractionalDigits)
@@ -59,7 +59,7 @@ export class TokenManager {
 
   private getFractionalDigits(ticker: TokenTicker): number {
     const match = [...this.config.bankTokens, ...(this.config.erc20Tokens || [])].find(
-      token => token.ticker === ticker,
+      (token) => token.ticker === ticker,
     );
     if (!match) throw new Error(`No token found for ticker symbol: ${ticker}`);
     return match.fractionalDigits;

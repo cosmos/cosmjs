@@ -56,7 +56,7 @@ describe("CosmWasmClient.searchTx", () => {
   beforeAll(async () => {
     if (wasmdEnabled()) {
       const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-      const client = new SigningCosmWasmClient(wasmd.endpoint, faucet.address, signBytes =>
+      const client = new SigningCosmWasmClient(wasmd.endpoint, faucet.address, (signBytes) =>
         pen.sign(signBytes),
       );
 

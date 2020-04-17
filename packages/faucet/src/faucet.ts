@@ -66,7 +66,7 @@ export class Faucet {
     const signed = await this.profile.signTransaction(job.sender, sendWithFee, this.codec, nonce);
 
     const post = await this.connection.postTx(this.codec.bytesToPost(signed));
-    const blockInfo = await post.blockInfo.waitFor(info => !isBlockInfoPending(info));
+    const blockInfo = await post.blockInfo.waitFor((info) => !isBlockInfoPending(info));
     if (isBlockInfoFailed(blockInfo)) {
       throw new Error(`Sending tokens failed. Code: ${blockInfo.code}, message: ${blockInfo.message}`);
     }
@@ -86,11 +86,11 @@ export class Faucet {
   }
 
   public async loadTokenTickers(): Promise<ReadonlyArray<TokenTicker>> {
-    return (await this.connection.getAllTokens()).map(token => token.tokenTicker);
+    return (await this.connection.getAllTokens()).map((token) => token.tokenTicker);
   }
 
   public async loadAccounts(): Promise<ReadonlyArray<Pick<Account, "address" | "balance">>> {
-    const addresses = identitiesOfFirstWallet(this.profile).map(identity => identityToAddress(identity));
+    const addresses = identitiesOfFirstWallet(this.profile).map((identity) => identityToAddress(identity));
 
     const out: Account[] = [];
     for (const address of addresses) {
@@ -126,14 +126,16 @@ export class Faucet {
 
     const jobs: SendJob[] = [];
     for (const token of availableTokens) {
-      const refillDistibutors = distributorAccounts.filter(account =>
+      const refillDistibutors = distributorAccounts.filter((account) =>
         this.tokenManager.needsRefill(account, token),
       );
 
       if (this.logging) {
         console.info(`Refilling ${token} of:`);
         console.info(
-          refillDistibutors.length ? refillDistibutors.map(r => `  ${debugAccount(r)}`).join("\n") : "  none",
+          refillDistibutors.length
+            ? refillDistibutors.map((r) => `  ${debugAccount(r)}`).join("\n")
+            : "  none",
         );
       }
       for (const refillDistibutor of refillDistibutors) {

@@ -62,7 +62,7 @@ function isDefined<X>(value: X | undefined): value is X {
 function deduplicate<T>(input: ReadonlyArray<T>, comparator: (a: T, b: T) => number): Array<T> {
   const out = new Array<T>();
   for (const element of input) {
-    if (!out.find(o => comparator(o, element) === 0)) {
+    if (!out.find((o) => comparator(o, element) === 0)) {
       out.push(element);
     }
   }
@@ -125,7 +125,7 @@ export class CosmWasmConnection implements BlockchainConnection {
     const erc20Tokens = tokens.erc20Tokens || [];
     this.erc20Tokens = erc20Tokens;
     this.supportedTokens = [...tokens.bankTokens, ...erc20Tokens]
-      .map(info => ({
+      .map((info) => ({
         tokenTicker: info.ticker as TokenTicker,
         tokenName: info.name,
         fractionalDigits: info.fractionalDigits,
@@ -164,7 +164,7 @@ export class CosmWasmConnection implements BlockchainConnection {
     const bankAccount = await this.cosmWasmClient.getAccount(address);
 
     const supportedBankCoins = (bankAccount?.balance || []).filter(({ denom }) =>
-      this.bankTokens.find(token => token.denom === denom),
+      this.bankTokens.find((token) => token.denom === denom),
     );
     const erc20Amounts = await Promise.all(
       this.erc20Tokens.map(
@@ -181,13 +181,13 @@ export class CosmWasmConnection implements BlockchainConnection {
         },
       ),
     );
-    const nonZeroErc20Amounts = erc20Amounts.filter(amount => amount.quantity !== "0");
+    const nonZeroErc20Amounts = erc20Amounts.filter((amount) => amount.quantity !== "0");
 
     if (!bankAccount && nonZeroErc20Amounts.length === 0) {
       return undefined;
     } else {
       const balance = [
-        ...supportedBankCoins.map(coin => decodeAmount(this.bankTokens, coin)),
+        ...supportedBankCoins.map((coin) => decodeAmount(this.bankTokens, coin)),
         ...nonZeroErc20Amounts,
       ].sort((a, b) => a.tokenTicker.localeCompare(b.tokenTicker));
       const pubkey = bankAccount?.pubkey ? decodePubkey(bankAccount.pubkey) : undefined;
@@ -203,7 +203,7 @@ export class CosmWasmConnection implements BlockchainConnection {
     let lastEvent: LastWatchAccountEvent = "no_event_fired_yet";
     let pollInternal: NodeJS.Timeout | undefined;
     const producer: Producer<Account | undefined> = {
-      start: async listener => {
+      start: async (listener) => {
         const poll = async (): Promise<void> => {
           try {
             const event = await this.getAccount(query);
@@ -343,7 +343,7 @@ export class CosmWasmConnection implements BlockchainConnection {
     } else if (sentFromOrTo) {
       const pendingRequests = new Array<Promise<readonly IndexedTx[]>>();
       pendingRequests.push(this.cosmWasmClient.searchTx({ sentFromOrTo: sentFromOrTo }, filter));
-      for (const contract of this.erc20Tokens.map(token => token.contractAddress)) {
+      for (const contract of this.erc20Tokens.map((token) => token.contractAddress)) {
         const searchBySender = [
           {
             key: "wasm.contract_address",
@@ -374,7 +374,7 @@ export class CosmWasmConnection implements BlockchainConnection {
       throw new Error("Unsupported query");
     }
 
-    return txs.map(tx => this.parseAndPopulateTxResponseUnsigned(tx));
+    return txs.map((tx) => this.parseAndPopulateTxResponseUnsigned(tx));
   }
 
   public listenTx(
@@ -400,7 +400,7 @@ export class CosmWasmConnection implements BlockchainConnection {
     } else if (query.sentFromOrTo) {
       let pollInternal: NodeJS.Timeout | undefined;
       const producer: Producer<ConfirmedTransaction<UnsignedTransaction> | FailedTransaction> = {
-        start: async listener => {
+        start: async (listener) => {
           let minHeight = query.minHeight || 0;
           const maxHeight = query.maxHeight || Number.MAX_SAFE_INTEGER;
 
@@ -514,7 +514,7 @@ export class CosmWasmConnection implements BlockchainConnection {
   ): Stream<ConfirmedTransaction<UnsignedTransaction> | FailedTransaction> {
     let pollInternal: NodeJS.Timeout | undefined;
     const producer: Producer<ConfirmedTransaction<UnsignedTransaction> | FailedTransaction> = {
-      start: listener => {
+      start: (listener) => {
         setInterval(async () => {
           try {
             const results = await this.searchTx({ id: id });

@@ -344,7 +344,7 @@ describe("RestClient", () => {
     beforeAll(async () => {
       if (wasmdEnabled()) {
         const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-        const client = new SigningCosmWasmClient(wasmd.endpoint, faucet.address, signBytes =>
+        const client = new SigningCosmWasmClient(wasmd.endpoint, faucet.address, (signBytes) =>
           pen.sign(signBytes),
         );
 
@@ -482,7 +482,7 @@ describe("RestClient", () => {
     beforeAll(async () => {
       if (wasmdEnabled()) {
         const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-        const client = new SigningCosmWasmClient(wasmd.endpoint, faucet.address, signBytes =>
+        const client = new SigningCosmWasmClient(wasmd.endpoint, faucet.address, (signBytes) =>
           pen.sign(signBytes),
         );
 
@@ -655,7 +655,7 @@ describe("RestClient", () => {
       expect(parseInt(result.count, 10)).toBeGreaterThanOrEqual(4);
 
       // Check first 4 results
-      const [store, hash, isa, jade] = result.txs.map(tx => fromOneElementArray(tx.tx.value.msg));
+      const [store, hash, isa, jade] = result.txs.map((tx) => fromOneElementArray(tx.tx.value.msg));
       assert(isMsgStoreCode(store));
       assert(isMsgInstantiateContract(hash));
       assert(isMsgInstantiateContract(isa));
@@ -719,7 +719,7 @@ describe("RestClient", () => {
           `message.module=wasm&message.code_id=${deployedErc20.codeId}&message.action=instantiate`,
         );
         expect(parseInt(instantiations.count, 10)).toBeGreaterThanOrEqual(3);
-        const [hash, isa, jade] = instantiations.txs.map(tx => fromOneElementArray(tx.tx.value.msg));
+        const [hash, isa, jade] = instantiations.txs.map((tx) => fromOneElementArray(tx.tx.value.msg));
         assert(isMsgInstantiateContract(hash));
         assert(isMsgInstantiateContract(isa));
         assert(isMsgInstantiateContract(jade));
@@ -861,7 +861,7 @@ describe("RestClient", () => {
         expect(result.code).toBeFalsy();
         // console.log("Raw log:", result.logs);
         const logs = parseLogs(result.logs);
-        const wasmEvent = logs.find(() => true)?.events.find(e => e.type === "wasm");
+        const wasmEvent = logs.find(() => true)?.events.find((e) => e.type === "wasm");
         assert(wasmEvent, "Event of type wasm expected");
         expect(wasmEvent.attributes).toContain({ key: "action", value: "release" });
         expect(wasmEvent.attributes).toContain({
@@ -1051,13 +1051,13 @@ describe("RestClient", () => {
         // invalid query syntax throws an error
         await client.queryContractSmart(contractAddress!, { nosuchkey: {} }).then(
           () => fail("shouldn't succeed"),
-          error => expect(error).toMatch("Error parsing QueryMsg"),
+          (error) => expect(error).toMatch("Error parsing QueryMsg"),
         );
 
         // invalid address throws an error
         await client.queryContractSmart(noContract, { verifier: {} }).then(
           () => fail("shouldn't succeed"),
-          error => expect(error).toMatch("not found"),
+          (error) => expect(error).toMatch("not found"),
         );
       });
     });
