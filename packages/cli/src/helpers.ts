@@ -29,5 +29,5 @@ export function isRecoverable(error: TSError): boolean {
     2355, // "A function whose declared type is neither 'void' nor 'any' must return a value."
   ]);
 
-  return error.diagnosticCodes.every(code => recoveryCodes.has(code));
+  return error.diagnosticCodes.every((code) => recoveryCodes.has(code));
 }

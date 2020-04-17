@@ -85,13 +85,13 @@ describe("Helpers", () => {
       const context = createContext({});
       await executeJavaScriptAsync("var a", "myfile.js", context)
         .then(() => fail("must not resolve"))
-        .catch(e => expect(e).toMatch(/SyntaxError:/));
+        .catch((e) => expect(e).toMatch(/SyntaxError:/));
       await executeJavaScriptAsync("let b", "myfile.js", context)
         .then(() => fail("must not resolve"))
-        .catch(e => expect(e).toMatch(/SyntaxError:/));
+        .catch((e) => expect(e).toMatch(/SyntaxError:/));
       await executeJavaScriptAsync("const c", "myfile.js", context)
         .then(() => fail("must not resolve"))
-        .catch(e => expect(e).toMatch(/SyntaxError:/));
+        .catch((e) => expect(e).toMatch(/SyntaxError:/));
     });
 
     it("can execute multiple commands in one context", async () => {

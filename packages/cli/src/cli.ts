@@ -163,7 +163,7 @@ export function main(originalArgs: readonly string[]): void {
   }
 
   if (args.init) {
-    for (const path of args.init.map(arg => arg.toString())) {
+    for (const path of args.init.map((arg) => arg.toString())) {
       if (args.debug) console.info(`Adding file: '${path}' ...`);
       init += fs.readFileSync(path, "utf8") + "\n";
     }
@@ -171,7 +171,7 @@ export function main(originalArgs: readonly string[]): void {
 
   const tsconfigPath = join(__dirname, "..", "tsconfig_repl.json");
   const installationDir = join(__dirname, "..");
-  new TsRepl(tsconfigPath, init, !!args.debug, installationDir).start().catch(error => {
+  new TsRepl(tsconfigPath, init, !!args.debug, installationDir).start().catch((error) => {
     console.error(error);
     process.exit(1);
   });
