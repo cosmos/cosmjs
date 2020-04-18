@@ -83,7 +83,7 @@ quick queries on a chain, you can use an extended set of helpers:
 
 Start with `./bin/cosmwasm-cli --init examples/helpers.ts`
 
-(This points to the Demo Net at https://lcd.demo-07.cosmwasm.com for ease of use. Other networks, look below)
+(This points to the Demonet at https://lcd.demo-071.cosmwasm.com for ease of use. Other networks, look below)
 
 Setup Account:
 
