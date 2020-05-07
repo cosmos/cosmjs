@@ -74,7 +74,7 @@ const initMsgJade = {
 
 async function main() {
   const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-  const client = new SigningCosmWasmClient(httpUrl, faucet.address, signBytes => pen.sign(signBytes));
+  const client = new SigningCosmWasmClient(httpUrl, faucet.address, (signBytes) => pen.sign(signBytes));
 
   const wasm = fs.readFileSync(__dirname + "/contracts/cw-erc20.wasm");
   const uploadReceipt = await client.upload(wasm, codeMeta, "Upload ERC20 contract");
@@ -92,7 +92,7 @@ main().then(
     console.info("All done, let the coins flow.");
     process.exit(0);
   },
-  error => {
+  (error) => {
     console.error(error);
     process.exit(1);
   },

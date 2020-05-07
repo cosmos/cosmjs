@@ -37,7 +37,7 @@ const luxury = {
 
 async function main() {
   const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-  const client = new SigningCosmWasmClient(httpUrl, faucet.address, signBytes => pen.sign(signBytes));
+  const client = new SigningCosmWasmClient(httpUrl, faucet.address, (signBytes) => pen.sign(signBytes));
 
   const wasm = fs.readFileSync(__dirname + "/contracts/cw-nameservice.wasm");
   const uploadReceipt = await client.upload(wasm, codeMeta, "Upload Name Service code");
@@ -55,7 +55,7 @@ main().then(
     console.info("Done deploying nameservice instances.");
     process.exit(0);
   },
-  error => {
+  (error) => {
     console.error(error);
     process.exit(1);
   },
