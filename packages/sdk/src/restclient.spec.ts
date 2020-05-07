@@ -25,6 +25,7 @@ import {
   tendermintIdMatcher,
   tendermintOptionalIdMatcher,
   tendermintShortHashMatcher,
+  unused,
   wasmd,
   wasmdEnabled,
 } from "./testutils.spec";
@@ -45,9 +46,6 @@ import {
 const { fromAscii, fromBase64, fromHex, toAscii, toBase64, toHex } = Encoding;
 
 const emptyAddress = "cosmos1ltkhnmdcqemmd2tkhnx7qx66tq7e0wykw2j85k";
-const unusedAccount = {
-  address: "cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u",
-};
 
 function makeSignedTx(firstMsg: Msg, fee: StdFee, memo: string, firstSignature: StdSignature): StdTx {
   return {
@@ -176,12 +174,12 @@ describe("RestClient", () => {
     it("works for unused account without pubkey", async () => {
       pendingWithoutWasmd();
       const client = new RestClient(wasmd.endpoint);
-      const { height, result } = await client.authAccounts(unusedAccount.address);
+      const { height, result } = await client.authAccounts(unused.address);
       expect(height).toMatch(nonNegativeIntegerMatcher);
       expect(result).toEqual({
         type: "cosmos-sdk/Account",
         value: {
-          address: unusedAccount.address,
+          address: unused.address,
           public_key: "", // not known to the chain
           coins: [
             {
@@ -193,7 +191,7 @@ describe("RestClient", () => {
               denom: "ustake",
             },
           ],
-          account_number: 5,
+          account_number: unused.accountNumber,
           sequence: 0,
         },
       });
