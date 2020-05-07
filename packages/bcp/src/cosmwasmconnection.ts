@@ -495,7 +495,7 @@ export class CosmWasmConnection implements BlockchainConnection {
       accountNumber,
       currentSequence,
     );
-    if (!sequenceForTx) throw new Error("Cound not find matching sequence for this transaction");
+    if (sequenceForTx === undefined) throw new Error("Cound not find matching sequence for this transaction");
 
     const nonce = accountToNonce(accountNumber, sequenceForTx);
 

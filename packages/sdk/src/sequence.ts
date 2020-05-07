@@ -20,7 +20,7 @@ export async function findSequenceForSignedTx(
   chainId: string,
   accountNumber: number,
   upperBound: number,
-  min = 1,
+  min = 0,
 ): Promise<number | undefined> {
   const firstSignature = tx.value.signatures.find(() => true);
   if (!firstSignature) throw new Error("Signature missing in tx");
