@@ -342,7 +342,7 @@ describe("CosmWasmClient", () => {
           decimals: 5,
           name: "Hash token",
           symbol: "HASH",
-          initial_balances: [
+          initial_balances: jasmine.arrayContaining([
             {
               address: faucet.address,
               amount: "11",
@@ -355,7 +355,7 @@ describe("CosmWasmClient", () => {
               address: guest.address,
               amount: "22004000000",
             },
-          ],
+          ]),
         },
       });
     });

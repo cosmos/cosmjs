@@ -8,7 +8,11 @@ const httpUrl = "http://localhost:1317";
 const faucet = {
   mnemonic:
     "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone",
-  address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+  address0: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+  address1: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
+  address2: "cosmos1xy4yqngt0nlkdcenxymg8tenrghmek4nmqm28k",
+  address3: "cosmos142u9fgcjdlycfcez3lw8x6x5h7rfjlnfhpw2lx",
+  address4: "cosmos1hsm76p4ahyhl5yh3ve9ur49r5kemhp2r0dcjvx",
 };
 const unused = {
   address: "cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u",
@@ -28,7 +32,23 @@ const initMsgHash = {
   symbol: "HASH",
   initial_balances: [
     {
-      address: faucet.address,
+      address: faucet.address0,
+      amount: "11",
+    },
+    {
+      address: faucet.address1,
+      amount: "11",
+    },
+    {
+      address: faucet.address2,
+      amount: "11",
+    },
+    {
+      address: faucet.address3,
+      amount: "11",
+    },
+    {
+      address: faucet.address4,
       amount: "11",
     },
     {
@@ -47,7 +67,23 @@ const initMsgIsa = {
   symbol: "ISA",
   initial_balances: [
     {
-      address: faucet.address,
+      address: faucet.address0,
+      amount: "999999999",
+    },
+    {
+      address: faucet.address1,
+      amount: "999999999",
+    },
+    {
+      address: faucet.address2,
+      amount: "999999999",
+    },
+    {
+      address: faucet.address3,
+      amount: "999999999",
+    },
+    {
+      address: faucet.address4,
       amount: "999999999",
     },
     {
@@ -62,7 +98,23 @@ const initMsgJade = {
   symbol: "JADE",
   initial_balances: [
     {
-      address: faucet.address,
+      address: faucet.address0,
+      amount: "189189189000000000000000000", // 189189189 JADE
+    },
+    {
+      address: faucet.address1,
+      amount: "189189189000000000000000000", // 189189189 JADE
+    },
+    {
+      address: faucet.address2,
+      amount: "189189189000000000000000000", // 189189189 JADE
+    },
+    {
+      address: faucet.address3,
+      amount: "189189189000000000000000000", // 189189189 JADE
+    },
+    {
+      address: faucet.address4,
       amount: "189189189000000000000000000", // 189189189 JADE
     },
     {
@@ -74,7 +126,7 @@ const initMsgJade = {
 
 async function main() {
   const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-  const client = new SigningCosmWasmClient(httpUrl, faucet.address, (signBytes) => pen.sign(signBytes));
+  const client = new SigningCosmWasmClient(httpUrl, faucet.address0, (signBytes) => pen.sign(signBytes));
 
   const wasm = fs.readFileSync(__dirname + "/contracts/cw-erc20.wasm");
   const uploadReceipt = await client.upload(wasm, codeMeta, "Upload ERC20 contract");
