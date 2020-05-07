@@ -35,6 +35,7 @@ export function main(originalArgs: readonly string[]): void {
         "encodeSecp256k1Pubkey",
         "encodeSecp256k1Signature",
         "logs",
+        "makeCosmoshubPath",
         "makeSignBytes",
         "marshalTx",
         "Pen",
@@ -151,7 +152,7 @@ export function main(originalArgs: readonly string[]): void {
       assert(Decimal.fromAtomics("12870000", 6).toString() === "12.87");
 
       const mnemonic = Bip39.encode(Random.getBytes(16)).toString();
-      const pen = await Secp256k1Pen.fromMnemonic(mnemonic);
+      const pen = await Secp256k1Pen.fromMnemonic(mnemonic, makeCosmoshubPath(0));
       const pubkey = encodeSecp256k1Pubkey(pen.pubkey);
       const address = pubkeyToAddress(pubkey, "cosmos");
       const data = Encoding.toAscii("foo bar");
