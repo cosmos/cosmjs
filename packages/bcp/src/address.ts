@@ -1,6 +1,6 @@
+import { Secp256k1 } from "@cosmwasm/crypto";
 import { pubkeyToAddress as sdkPubkeyToAddress, types } from "@cosmwasm/sdk";
 import { Address, Algorithm, PubkeyBundle } from "@iov/bcp";
-import { Secp256k1 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
 
 const { toBase64 } = Encoding;

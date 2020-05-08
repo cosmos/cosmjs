@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { Sha256 } from "@iov/crypto";
+import { Sha256 } from "@cosmwasm/crypto";
 import { Bech32, Encoding } from "@iov/encoding";
 import { assert, sleep } from "@iov/utils";
 import { ReadonlyDate } from "readonly-date";

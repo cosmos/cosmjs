@@ -36,7 +36,7 @@
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
   },
   "dependencies": {
-    "@iov/crypto": "^2.1.0",
+    "@cosmwasm/crypto": "^0.7.7",
     "@iov/encoding": "^2.1.0",
     "@iov/utils": "^2.0.2",
     "axios": "^0.19.0",

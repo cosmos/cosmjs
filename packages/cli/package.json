@@ -38,8 +38,8 @@
     "!**/testdata/"
   ],
   "dependencies": {
+    "@cosmwasm/crypto": "^0.7.7",
     "@cosmwasm/sdk": "^0.7.7",
-    "@iov/crypto": "^2.1.0",
     "@iov/encoding": "^2.1.0",
     "@iov/utils": "^2.0.2",
     "axios": "^0.19.2",

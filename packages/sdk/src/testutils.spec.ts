@@ -1,4 +1,4 @@
-import { Random } from "@iov/crypto";
+import { Random } from "@cosmwasm/crypto";
 import { Bech32, Encoding } from "@iov/encoding";
 
 import hackatom from "./testdata/contract.json";

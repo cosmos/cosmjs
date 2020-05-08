@@ -1,3 +1,4 @@
+import { Random, Secp256k1, Secp256k1Signature, Sha256 } from "@cosmwasm/crypto";
 import { decodeSignature } from "@cosmwasm/sdk";
 import {
   Account,
@@ -17,7 +18,6 @@ import {
   TransactionState,
   UnsignedTransaction,
 } from "@iov/bcp";
-import { Random, Secp256k1, Secp256k1Signature, Sha256 } from "@iov/crypto";
 import { Bech32, Encoding } from "@iov/encoding";
 import { HdPaths, Secp256k1HdWallet, UserProfile } from "@iov/keycontrol";
 import { assert } from "@iov/utils";

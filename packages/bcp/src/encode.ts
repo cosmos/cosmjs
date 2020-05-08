@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
+import { Secp256k1 } from "@cosmwasm/crypto";
 import { encodeSecp256k1Pubkey, encodeSecp256k1Signature, types } from "@cosmwasm/sdk";
 import {
   Algorithm,
@@ -10,7 +11,6 @@ import {
   SignedTransaction,
   UnsignedTransaction,
 } from "@iov/bcp";
-import { Secp256k1 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
 
 import { BankTokens, Erc20Token } from "./types";

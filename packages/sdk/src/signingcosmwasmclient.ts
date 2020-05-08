@@ -1,4 +1,4 @@
-import { Sha256 } from "@iov/crypto";
+import { Sha256 } from "@cosmwasm/crypto";
 import { Encoding } from "@iov/encoding";
 import pako from "pako";
 

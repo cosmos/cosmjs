@@ -1,4 +1,4 @@
-import { Slip10RawIndex } from "@iov/crypto";
+import { Slip10RawIndex } from "@cosmwasm/crypto";
 
 export function debugPath(path: readonly Slip10RawIndex[]): string {
   return path.reduce((current, component): string => {

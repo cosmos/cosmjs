@@ -1,4 +1,4 @@
-import { Slip10RawIndex } from "@iov/crypto";
+import { Slip10RawIndex } from "@cosmwasm/crypto";
 
 import { debugPath } from "./hdpaths";
 

@@ -1,5 +1,5 @@
+import { Bip39, Random } from "@cosmwasm/crypto";
 import { ChainId } from "@iov/bcp";
-import { Bip39, Random } from "@iov/crypto";
 
 import * as constants from "../constants";
 import { createUserProfile } from "../profile";

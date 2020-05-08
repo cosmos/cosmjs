@@ -72,11 +72,9 @@ export function main(originalArgs: readonly string[]): void {
       ],
     ],
     [
-      "@iov/crypto",
+      "@cosmwasm/crypto",
       [
         "Bip39",
-        "Ed25519",
-        "Ed25519Keypair",
         "EnglishMnemonic",
         "Random",
         "Secp256k1",

@@ -1,4 +1,4 @@
-import { Ripemd160, Sha256 } from "@iov/crypto";
+import { Ripemd160, Sha256 } from "@cosmwasm/crypto";
 import { Bech32, Encoding } from "@iov/encoding";
 
 import { PubKey, pubkeyType } from "./types";

@@ -1,6 +1,6 @@
 import { CosmWasmCodec, CosmWasmConnection, TokenConfiguration } from "@cosmwasm/bcp";
+import { Random } from "@cosmwasm/crypto";
 import { Address, ChainId, Identity, TokenTicker } from "@iov/bcp";
-import { Random } from "@iov/crypto";
 import { Bech32 } from "@iov/encoding";
 import { UserProfile } from "@iov/keycontrol";
 import { assert } from "@iov/utils";

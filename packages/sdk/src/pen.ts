@@ -7,7 +7,7 @@ import {
   Slip10,
   Slip10Curve,
   Slip10RawIndex,
-} from "@iov/crypto";
+} from "@cosmwasm/crypto";
 
 import { encodeSecp256k1Signature } from "./signature";
 import { StdSignature } from "./types";

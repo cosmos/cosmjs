@@ -36,8 +36,8 @@
   },
   "dependencies": {
     "@cosmwasm/bcp": "^0.7.7",
+    "@cosmwasm/crypto": "^0.7.7",
     "@iov/bcp": "^2.1.0",
-    "@iov/crypto": "^2.1.0",
     "@iov/encoding": "^2.1.0",
     "@iov/keycontrol": "^2.1.0",
     "@iov/utils": "^2.0.2",

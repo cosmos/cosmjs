@@ -1,4 +1,4 @@
-import { Secp256k1, Secp256k1Signature, Sha256 } from "@iov/crypto";
+import { Secp256k1, Secp256k1Signature, Sha256 } from "@cosmwasm/crypto";
 import { Encoding } from "@iov/encoding";
 
 import { Secp256k1Pen } from "./pen";
