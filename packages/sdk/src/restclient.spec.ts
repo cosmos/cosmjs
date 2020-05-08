@@ -806,7 +806,7 @@ describe("RestClient", () => {
       });
     });
 
-    it("can send tokens with additional signatures", async () => {
+    it("can't send transaction with additional signatures", async () => {
       pendingWithoutWasmd();
       const account1 = await Secp256k1Pen.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(0));
       const account2 = await Secp256k1Pen.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(1));
@@ -890,7 +890,7 @@ describe("RestClient", () => {
           amount: [
             {
               denom: "ucosm",
-              amount: "1234567",
+              amount: "7654321",
             },
           ],
         },
@@ -920,11 +920,6 @@ describe("RestClient", () => {
       const postResult = await client.postTx(signedTx);
       // console.log(postResult.raw_log);
       expect(postResult.code).toBeUndefined();
-
-      await sleep(500);
-      const searched = await client.txsQuery(`tx.hash=${postResult.txhash}`);
-      expect(searched.txs.length).toEqual(1);
-      expect(searched.txs[0].tx.value.signatures).toEqual([signature1]);
     });
 
     it("can send multiple messages with multiple signatures", async () => {
@@ -956,7 +951,7 @@ describe("RestClient", () => {
           amount: [
             {
               denom: "ucosm",
-              amount: "1234567",
+              amount: "7654321",
             },
           ],
         },
@@ -996,7 +991,7 @@ describe("RestClient", () => {
       expect(searched.txs[0].tx.value.signatures).toEqual([signature2, signature1]);
     });
 
-    it("the order of signatures matters (1)", async () => {
+    it("can't send transaction with wrong signature order (1)", async () => {
       pendingWithoutWasmd();
       const account1 = await Secp256k1Pen.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(0));
       const account2 = await Secp256k1Pen.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(1));
@@ -1025,7 +1020,7 @@ describe("RestClient", () => {
           amount: [
             {
               denom: "ucosm",
-              amount: "1234567",
+              amount: "7654321",
             },
           ],
         },
@@ -1060,7 +1055,7 @@ describe("RestClient", () => {
       expect(postResult.code).toEqual(8);
     });
 
-    it("the order of signatures matters (2)", async () => {
+    it("can't send transaction with wrong signature order (2)", async () => {
       pendingWithoutWasmd();
       const account1 = await Secp256k1Pen.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(0));
       const account2 = await Secp256k1Pen.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(1));
@@ -1089,7 +1084,7 @@ describe("RestClient", () => {
           amount: [
             {
               denom: "ucosm",
-              amount: "1234567",
+              amount: "7654321",
             },
           ],
         },
