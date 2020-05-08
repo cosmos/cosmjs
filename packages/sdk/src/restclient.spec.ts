@@ -4,9 +4,10 @@ import { Encoding } from "@iov/encoding";
 import { assert, sleep } from "@iov/utils";
 import { ReadonlyDate } from "readonly-date";
 
+import { rawSecp256k1PubkeyToAddress } from "./address";
 import { makeSignBytes } from "./encoding";
 import { findAttribute, parseLogs } from "./logs";
-import { Pen, Secp256k1Pen } from "./pen";
+import { makeCosmoshubPath, Pen, Secp256k1Pen } from "./pen";
 import { encodeBech32Pubkey } from "./pubkey";
 import { PostTxsResponse, RestClient, TxsResponse } from "./restclient";
 import { SigningCosmWasmClient } from "./signingcosmwasmclient";
@@ -25,6 +26,7 @@ import {
   tendermintIdMatcher,
   tendermintOptionalIdMatcher,
   tendermintShortHashMatcher,
+  unused,
   wasmd,
   wasmdEnabled,
 } from "./testutils.spec";
@@ -45,9 +47,6 @@ import {
 const { fromAscii, fromBase64, fromHex, toAscii, toBase64, toHex } = Encoding;
 
 const emptyAddress = "cosmos1ltkhnmdcqemmd2tkhnx7qx66tq7e0wykw2j85k";
-const unusedAccount = {
-  address: "cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u",
-};
 
 function makeSignedTx(firstMsg: Msg, fee: StdFee, memo: string, firstSignature: StdSignature): StdTx {
   return {
@@ -176,12 +175,12 @@ describe("RestClient", () => {
     it("works for unused account without pubkey", async () => {
       pendingWithoutWasmd();
       const client = new RestClient(wasmd.endpoint);
-      const { height, result } = await client.authAccounts(unusedAccount.address);
+      const { height, result } = await client.authAccounts(unused.address);
       expect(height).toMatch(nonNegativeIntegerMatcher);
       expect(result).toEqual({
         type: "cosmos-sdk/Account",
         value: {
-          address: unusedAccount.address,
+          address: unused.address,
           public_key: "", // not known to the chain
           coins: [
             {
@@ -193,7 +192,7 @@ describe("RestClient", () => {
               denom: "ustake",
             },
           ],
-          account_number: 5,
+          account_number: unused.accountNumber,
           sequence: 0,
         },
       });
@@ -805,6 +804,319 @@ describe("RestClient", () => {
         gas_wanted: jasmine.stringMatching(nonNegativeIntegerMatcher),
         gas_used: jasmine.stringMatching(nonNegativeIntegerMatcher),
       });
+    });
+
+    it("can't send transaction with additional signatures", async () => {
+      pendingWithoutWasmd();
+      const account1 = await Secp256k1Pen.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(0));
+      const account2 = await Secp256k1Pen.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(1));
+      const account3 = await Secp256k1Pen.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(2));
+      const address1 = rawSecp256k1PubkeyToAddress(account1.pubkey, "cosmos");
+      const address2 = rawSecp256k1PubkeyToAddress(account2.pubkey, "cosmos");
+      const address3 = rawSecp256k1PubkeyToAddress(account3.pubkey, "cosmos");
+
+      const memo = "My first contract on chain";
+      const theMsg: MsgSend = {
+        type: "cosmos-sdk/MsgSend",
+        value: {
+          from_address: address1,
+          to_address: emptyAddress,
+          amount: [
+            {
+              denom: "ucosm",
+              amount: "1234567",
+            },
+          ],
+        },
+      };
+
+      const fee: StdFee = {
+        amount: [
+          {
+            amount: "5000",
+            denom: "ucosm",
+          },
+        ],
+        gas: "890000",
+      };
+
+      const client = new RestClient(wasmd.endpoint);
+      const { account_number: an1, sequence: sequence1 } = (await client.authAccounts(address1)).result.value;
+      const { account_number: an2, sequence: sequence2 } = (await client.authAccounts(address2)).result.value;
+      const { account_number: an3, sequence: sequence3 } = (await client.authAccounts(address3)).result.value;
+
+      const signBytes1 = makeSignBytes([theMsg], fee, wasmd.chainId, memo, an1, sequence1);
+      const signBytes2 = makeSignBytes([theMsg], fee, wasmd.chainId, memo, an2, sequence2);
+      const signBytes3 = makeSignBytes([theMsg], fee, wasmd.chainId, memo, an3, sequence3);
+      const signature1 = await account1.sign(signBytes1);
+      const signature2 = await account2.sign(signBytes2);
+      const signature3 = await account3.sign(signBytes3);
+      const signedTx = {
+        msg: [theMsg],
+        fee: fee,
+        memo: memo,
+        signatures: [signature1, signature2, signature3],
+      };
+      const postResult = await client.postTx(signedTx);
+      // console.log(postResult.raw_log);
+      expect(postResult.code).toEqual(4);
+      expect(postResult.raw_log).toContain("wrong number of signers");
+    });
+
+    it("can send multiple messages with one signature", async () => {
+      pendingWithoutWasmd();
+      const account1 = await Secp256k1Pen.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(0));
+      const address1 = rawSecp256k1PubkeyToAddress(account1.pubkey, "cosmos");
+
+      const memo = "My first contract on chain";
+      const msg1: MsgSend = {
+        type: "cosmos-sdk/MsgSend",
+        value: {
+          from_address: address1,
+          to_address: emptyAddress,
+          amount: [
+            {
+              denom: "ucosm",
+              amount: "1234567",
+            },
+          ],
+        },
+      };
+      const msg2: MsgSend = {
+        type: "cosmos-sdk/MsgSend",
+        value: {
+          from_address: address1,
+          to_address: emptyAddress,
+          amount: [
+            {
+              denom: "ucosm",
+              amount: "7654321",
+            },
+          ],
+        },
+      };
+
+      const fee: StdFee = {
+        amount: [
+          {
+            amount: "5000",
+            denom: "ucosm",
+          },
+        ],
+        gas: "890000",
+      };
+
+      const client = new RestClient(wasmd.endpoint);
+      const { account_number, sequence } = (await client.authAccounts(address1)).result.value;
+
+      const signBytes = makeSignBytes([msg1, msg2], fee, wasmd.chainId, memo, account_number, sequence);
+      const signature1 = await account1.sign(signBytes);
+      const signedTx = {
+        msg: [msg1, msg2],
+        fee: fee,
+        memo: memo,
+        signatures: [signature1],
+      };
+      const postResult = await client.postTx(signedTx);
+      // console.log(postResult.raw_log);
+      expect(postResult.code).toBeUndefined();
+    });
+
+    it("can send multiple messages with multiple signatures", async () => {
+      pendingWithoutWasmd();
+      const account1 = await Secp256k1Pen.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(0));
+      const account2 = await Secp256k1Pen.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(1));
+      const address1 = rawSecp256k1PubkeyToAddress(account1.pubkey, "cosmos");
+      const address2 = rawSecp256k1PubkeyToAddress(account2.pubkey, "cosmos");
+
+      const memo = "My first contract on chain";
+      const msg1: MsgSend = {
+        type: "cosmos-sdk/MsgSend",
+        value: {
+          from_address: address1,
+          to_address: emptyAddress,
+          amount: [
+            {
+              denom: "ucosm",
+              amount: "1234567",
+            },
+          ],
+        },
+      };
+      const msg2: MsgSend = {
+        type: "cosmos-sdk/MsgSend",
+        value: {
+          from_address: address2,
+          to_address: emptyAddress,
+          amount: [
+            {
+              denom: "ucosm",
+              amount: "7654321",
+            },
+          ],
+        },
+      };
+
+      const fee: StdFee = {
+        amount: [
+          {
+            amount: "5000",
+            denom: "ucosm",
+          },
+        ],
+        gas: "890000",
+      };
+
+      const client = new RestClient(wasmd.endpoint);
+      const { account_number: an1, sequence: sequence1 } = (await client.authAccounts(address1)).result.value;
+      const { account_number: an2, sequence: sequence2 } = (await client.authAccounts(address2)).result.value;
+
+      const signBytes1 = makeSignBytes([msg2, msg1], fee, wasmd.chainId, memo, an1, sequence1);
+      const signBytes2 = makeSignBytes([msg2, msg1], fee, wasmd.chainId, memo, an2, sequence2);
+      const signature1 = await account1.sign(signBytes1);
+      const signature2 = await account2.sign(signBytes2);
+      const signedTx = {
+        msg: [msg2, msg1],
+        fee: fee,
+        memo: memo,
+        signatures: [signature2, signature1],
+      };
+      const postResult = await client.postTx(signedTx);
+      // console.log(postResult.raw_log);
+      expect(postResult.code).toBeUndefined();
+
+      await sleep(500);
+      const searched = await client.txsQuery(`tx.hash=${postResult.txhash}`);
+      expect(searched.txs.length).toEqual(1);
+      expect(searched.txs[0].tx.value.signatures).toEqual([signature2, signature1]);
+    });
+
+    it("can't send transaction with wrong signature order (1)", async () => {
+      pendingWithoutWasmd();
+      const account1 = await Secp256k1Pen.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(0));
+      const account2 = await Secp256k1Pen.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(1));
+      const address1 = rawSecp256k1PubkeyToAddress(account1.pubkey, "cosmos");
+      const address2 = rawSecp256k1PubkeyToAddress(account2.pubkey, "cosmos");
+
+      const memo = "My first contract on chain";
+      const msg1: MsgSend = {
+        type: "cosmos-sdk/MsgSend",
+        value: {
+          from_address: address1,
+          to_address: emptyAddress,
+          amount: [
+            {
+              denom: "ucosm",
+              amount: "1234567",
+            },
+          ],
+        },
+      };
+      const msg2: MsgSend = {
+        type: "cosmos-sdk/MsgSend",
+        value: {
+          from_address: address2,
+          to_address: emptyAddress,
+          amount: [
+            {
+              denom: "ucosm",
+              amount: "7654321",
+            },
+          ],
+        },
+      };
+
+      const fee: StdFee = {
+        amount: [
+          {
+            amount: "5000",
+            denom: "ucosm",
+          },
+        ],
+        gas: "890000",
+      };
+
+      const client = new RestClient(wasmd.endpoint);
+      const { account_number: an1, sequence: sequence1 } = (await client.authAccounts(address1)).result.value;
+      const { account_number: an2, sequence: sequence2 } = (await client.authAccounts(address2)).result.value;
+
+      const signBytes1 = makeSignBytes([msg1, msg2], fee, wasmd.chainId, memo, an1, sequence1);
+      const signBytes2 = makeSignBytes([msg1, msg2], fee, wasmd.chainId, memo, an2, sequence2);
+      const signature1 = await account1.sign(signBytes1);
+      const signature2 = await account2.sign(signBytes2);
+      const signedTx = {
+        msg: [msg1, msg2],
+        fee: fee,
+        memo: memo,
+        signatures: [signature2, signature1],
+      };
+      const postResult = await client.postTx(signedTx);
+      // console.log(postResult.raw_log);
+      expect(postResult.code).toEqual(8);
+    });
+
+    it("can't send transaction with wrong signature order (2)", async () => {
+      pendingWithoutWasmd();
+      const account1 = await Secp256k1Pen.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(0));
+      const account2 = await Secp256k1Pen.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(1));
+      const address1 = rawSecp256k1PubkeyToAddress(account1.pubkey, "cosmos");
+      const address2 = rawSecp256k1PubkeyToAddress(account2.pubkey, "cosmos");
+
+      const memo = "My first contract on chain";
+      const msg1: MsgSend = {
+        type: "cosmos-sdk/MsgSend",
+        value: {
+          from_address: address1,
+          to_address: emptyAddress,
+          amount: [
+            {
+              denom: "ucosm",
+              amount: "1234567",
+            },
+          ],
+        },
+      };
+      const msg2: MsgSend = {
+        type: "cosmos-sdk/MsgSend",
+        value: {
+          from_address: address2,
+          to_address: emptyAddress,
+          amount: [
+            {
+              denom: "ucosm",
+              amount: "7654321",
+            },
+          ],
+        },
+      };
+
+      const fee: StdFee = {
+        amount: [
+          {
+            amount: "5000",
+            denom: "ucosm",
+          },
+        ],
+        gas: "890000",
+      };
+
+      const client = new RestClient(wasmd.endpoint);
+      const { account_number: an1, sequence: sequence1 } = (await client.authAccounts(address1)).result.value;
+      const { account_number: an2, sequence: sequence2 } = (await client.authAccounts(address2)).result.value;
+
+      const signBytes1 = makeSignBytes([msg2, msg1], fee, wasmd.chainId, memo, an1, sequence1);
+      const signBytes2 = makeSignBytes([msg2, msg1], fee, wasmd.chainId, memo, an2, sequence2);
+      const signature1 = await account1.sign(signBytes1);
+      const signature2 = await account2.sign(signBytes2);
+      const signedTx = {
+        msg: [msg2, msg1],
+        fee: fee,
+        memo: memo,
+        signatures: [signature1, signature2],
+      };
+      const postResult = await client.postTx(signedTx);
+      // console.log(postResult.raw_log);
+      expect(postResult.code).toEqual(8);
     });
 
     it("can upload, instantiate and execute wasm", async () => {

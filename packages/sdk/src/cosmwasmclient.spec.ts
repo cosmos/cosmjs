@@ -17,16 +17,13 @@ import {
   makeRandomAddress,
   pendingWithoutWasmd,
   tendermintIdMatcher,
+  unused,
   wasmd,
   wasmdEnabled,
 } from "./testutils.spec";
 import { MsgSend, StdFee } from "./types";
 
 const { fromAscii, fromHex, fromUtf8, toAscii, toBase64 } = Encoding;
-
-const unused = {
-  address: "cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u",
-};
 
 const guest = {
   address: "cosmos17d0jcz59jf68g52vq38tuuncmwwjk42u6mcxej",
@@ -113,8 +110,8 @@ describe("CosmWasmClient", () => {
       pendingWithoutWasmd();
       const client = new CosmWasmClient(wasmd.endpoint);
       expect(await client.getNonce(unused.address)).toEqual({
-        accountNumber: 5,
-        sequence: 0,
+        accountNumber: unused.accountNumber,
+        sequence: unused.sequence,
       });
     });
 
@@ -135,8 +132,8 @@ describe("CosmWasmClient", () => {
       const client = new CosmWasmClient(wasmd.endpoint);
       expect(await client.getAccount(unused.address)).toEqual({
         address: unused.address,
-        accountNumber: 5,
-        sequence: 0,
+        accountNumber: unused.accountNumber,
+        sequence: unused.sequence,
         pubkey: undefined,
         balance: [
           { denom: "ucosm", amount: "1000000000" },
@@ -345,7 +342,7 @@ describe("CosmWasmClient", () => {
           decimals: 5,
           name: "Hash token",
           symbol: "HASH",
-          initial_balances: [
+          initial_balances: jasmine.arrayContaining([
             {
               address: faucet.address,
               amount: "11",
@@ -358,7 +355,7 @@ describe("CosmWasmClient", () => {
               address: guest.address,
               amount: "22004000000",
             },
-          ],
+          ]),
         },
       });
     });

@@ -271,11 +271,13 @@ describe("CosmWasmClient.searchTx", () => {
 
       // Check basic structure of all results
       for (const result of results) {
-        const msg = fromOneElementArray(result.tx.value.msg);
-        assert(isMsgSend(msg), `${result.hash} (height ${result.height}) is not a bank send transaction`);
-        expect(
-          msg.value.to_address === sendSuccessful.sender || msg.value.from_address == sendSuccessful.sender,
-        ).toEqual(true);
+        const containsMsgWithSender = !!result.tx.value.msg.find(
+          (msg) => isMsgSend(msg) && msg.value.from_address == sendSuccessful!.sender,
+        );
+        const containsMsgWithRecipient = !!result.tx.value.msg.find(
+          (msg) => isMsgSend(msg) && msg.value.to_address === sendSuccessful!.sender,
+        );
+        expect(containsMsgWithSender || containsMsgWithRecipient).toEqual(true);
       }
 
       // Check details of most recent result

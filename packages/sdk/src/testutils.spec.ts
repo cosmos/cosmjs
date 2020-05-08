@@ -49,6 +49,17 @@ export const faucet = {
   address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
 };
 
+/** Unused account */
+export const unused = {
+  pubkey: {
+    type: "tendermint/PubKeySecp256k1",
+    value: "ArkCaFUJ/IH+vKBmNRCdUVl3mCAhbopk9jjW4Ko4OfRQ",
+  },
+  address: "cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u",
+  accountNumber: 9,
+  sequence: 0,
+};
+
 export function wasmdEnabled(): boolean {
   return !!process.env.WASMD_ENABLED;
 }

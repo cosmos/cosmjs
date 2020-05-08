@@ -84,8 +84,16 @@ You should get output matching the following:
 
 1. Faucet<br>
    economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone<br>
-   A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ<br>
-   cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6
+   Address 0: cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6<br>
+   Address 1: cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5<br>
+   Address 2: cosmos1xy4yqngt0nlkdcenxymg8tenrghmek4nmqm28k<br>
+   Address 3: cosmos142u9fgcjdlycfcez3lw8x6x5h7rfjlnfhpw2lx<br>
+   Address 4: cosmos1hsm76p4ahyhl5yh3ve9ur49r5kemhp2r0dcjvx<br>
+   Pubkey 0: A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ<br>
+   Pubkey 1: AiDosfIbBi54XJ1QjCeApumcy/FjdtF+YhywPf3DKTx7<br>
+   Pubkey 2: AzQg33JZqH7vSsm09esZY5bZvmzYwE/SY78cA0iLxpD7<br>
+   Pubkey 3: A3gOAlB6aiRTCPvWMQg2+ZbGYNsLd8qlvV28m8p2UhY2<br>
+   Pubkey 4: Aum2063ub/ErUnIUB36sK55LktGUStgcbSiaAnL1wadu<br>
 2. Unused: for testing account state; this account never changes balances or nonces<br>
    oyster design unusual machine spread century engine gravity focus cave carry slot<br>
    ArkCaFUJ/IH+vKBmNRCdUVl3mCAhbopk9jjW4Ko4OfRQ<br>
