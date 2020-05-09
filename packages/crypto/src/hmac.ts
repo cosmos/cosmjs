@@ -15,7 +15,7 @@ export class Hmac<H extends HashFunction> implements HashFunction {
 
     const blockSize = new hashFunctionConstructor().blockSize;
 
-    this.hash = data => new hashFunctionConstructor().update(data).digest();
+    this.hash = (data) => new hashFunctionConstructor().update(data).digest();
 
     let key = originalKey;
     if (key.length > blockSize) {
@@ -27,10 +27,10 @@ export class Hmac<H extends HashFunction> implements HashFunction {
       key = new Uint8Array([...key, ...zeroPadding]);
     }
 
-    // tslint:disable-next-line:no-bitwise
-    this.oKeyPad = key.map(keyByte => keyByte ^ 0x5c);
-    // tslint:disable-next-line:no-bitwise
-    this.iKeyPad = key.map(keyByte => keyByte ^ 0x36);
+    // eslint-disable-next-line no-bitwise
+    this.oKeyPad = key.map((keyByte) => keyByte ^ 0x5c);
+    // eslint-disable-next-line no-bitwise
+    this.iKeyPad = key.map((keyByte) => keyByte ^ 0x36);
     this.messageHasher = new hashFunctionConstructor();
     this.blockSize = blockSize;
 

@@ -28,7 +28,6 @@ export class EnglishMnemonic {
     }
 
     // Throws with informative error message if mnemonic is not valid
-    // tslint:disable-next-line:no-unused-expression
     bip39.mnemonicToEntropy(mnemonic);
 
     this.data = mnemonic;

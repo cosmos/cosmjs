@@ -166,7 +166,7 @@ export class Slip10 {
   }
 
   private static isZero(privkey: Uint8Array): boolean {
-    return privkey.every(byte => byte === 0);
+    return privkey.every((byte) => byte === 0);
   }
 
   private static isGteN(curve: Slip10Curve, privkey: Uint8Array): boolean {
