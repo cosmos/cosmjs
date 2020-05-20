@@ -1357,13 +1357,14 @@ describe("RestClient", () => {
         pendingWithoutWasmd();
 
         // we can query the verifier properly
-        const verifier = await client.queryContractSmart(contractAddress!, { verifier: {} });
-        expect(fromAscii(verifier)).toEqual(faucet.address);
+        const resultDocument = await client.queryContractSmart(contractAddress!, { verifier: {} });
+        expect(resultDocument).toEqual({ verifier: faucet.address });
 
         // invalid query syntax throws an error
         await client.queryContractSmart(contractAddress!, { nosuchkey: {} }).then(
           () => fail("shouldn't succeed"),
-          (error) => expect(error).toMatch("Error parsing QueryMsg"),
+          (error) =>
+            expect(error).toMatch(/query wasm contract failed: parsing hackatom::contract::QueryMsg/),
         );
 
         // invalid address throws an error
