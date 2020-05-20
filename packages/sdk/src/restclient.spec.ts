@@ -305,7 +305,7 @@ describe("RestClient", () => {
         id: jasmine.stringMatching(tendermintShortHashMatcher),
         listen_addr: "tcp://0.0.0.0:26656",
         network: wasmd.chainId,
-        version: "0.33.0",
+        version: jasmine.stringMatching(/^0\.33\.[0-9]+$/),
         channels: "4020212223303800",
         moniker: wasmd.chainId,
         other: { tx_index: "on", rpc_address: "tcp://0.0.0.0:26657" },
