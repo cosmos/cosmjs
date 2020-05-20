@@ -60,9 +60,8 @@ const connect = async (mnemonic: string, opts: Partial<Options>): Promise<{
 };
 
 // smartQuery assumes the content is proper JSON data and parses before returning it
-const smartQuery = async (client: CosmWasmClient, addr: string, query: object): Promise<any> => {
-  const bin = await client.queryContractSmart(addr, query);
-  return JSON.parse(fromUtf8(bin));
+async function smartQuery(client: CosmWasmClient, addr: string, query: object): Promise<any> {
+  return client.queryContractSmart(addr, query);
 }
 
 // loadOrCreateMnemonic will try to load a mnemonic from the file.
