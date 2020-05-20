@@ -1,6 +1,6 @@
 {
   "name": "@cosmwasm/cli",
-  "version": "0.7.7",
+  "version": "0.7.8",
   "description": "Command line interface",
   "contributors": [
     "IOV SAS <admin@iov.one>",
@@ -38,7 +38,7 @@
     "!**/testdata/"
   ],
   "dependencies": {
-    "@cosmwasm/sdk": "^0.7.7",
+    "@cosmwasm/sdk": "^0.7.8",
     "@iov/crypto": "^2.1.0",
     "@iov/encoding": "^2.1.0",
     "@iov/utils": "^2.0.2",
