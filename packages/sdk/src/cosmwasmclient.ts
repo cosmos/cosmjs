@@ -4,7 +4,7 @@ import { Encoding } from "@iov/encoding";
 import { Log, parseLogs } from "./logs";
 import { decodeBech32Pubkey } from "./pubkey";
 import { BroadcastMode, RestClient } from "./restclient";
-import { Coin, CosmosSdkTx, PubKey, StdTx } from "./types";
+import { Coin, CosmosSdkTx, JsonObject, PubKey, StdTx } from "./types";
 
 export interface GetNonceResult {
   readonly accountNumber: number;
@@ -391,12 +391,13 @@ export class CosmWasmClient {
   }
 
   /**
-   * Makes a "smart query" on the contract, returns raw data
+   * Makes a smart query on the contract, returns the parsed JSON document.
    *
    * Promise is rejected when contract does not exist.
    * Promise is rejected for invalid query format.
+   * Promise is rejected for invalid response format.
    */
-  public async queryContractSmart(address: string, queryMsg: object): Promise<Uint8Array> {
+  public async queryContractSmart(address: string, queryMsg: object): Promise<JsonObject> {
     try {
       return await this.restClient.queryContractSmart(address, queryMsg);
     } catch (error) {

@@ -23,7 +23,7 @@ import {
 } from "./testutils.spec";
 import { MsgSend, StdFee } from "./types";
 
-const { fromAscii, fromHex, fromUtf8, toAscii, toBase64 } = Encoding;
+const { fromHex, fromUtf8, toAscii, toBase64 } = Encoding;
 
 const guest = {
   address: "cosmos17d0jcz59jf68g52vq38tuuncmwwjk42u6mcxej",
@@ -438,8 +438,8 @@ describe("CosmWasmClient", () => {
       assert(contract);
 
       const client = new CosmWasmClient(wasmd.endpoint);
-      const verifier = await client.queryContractSmart(contract.address, { verifier: {} });
-      expect(fromAscii(verifier)).toEqual(contract.initMsg.verifier);
+      const resultDocument = await client.queryContractSmart(contract.address, { verifier: {} });
+      expect(resultDocument).toEqual({ verifier: contract.initMsg.verifier });
     });
 
     it("errors for malformed query message", async () => {
@@ -449,7 +449,7 @@ describe("CosmWasmClient", () => {
       const client = new CosmWasmClient(wasmd.endpoint);
       await client.queryContractSmart(contract.address, { broken: {} }).then(
         () => fail("must not succeed"),
-        (error) => expect(error).toMatch(/Error parsing QueryMsg/i),
+        (error) => expect(error).toMatch(/query wasm contract failed: parsing hackatom::contract::QueryMsg/i),
       );
     });
 

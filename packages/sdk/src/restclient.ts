@@ -1,9 +1,9 @@
 import { Encoding, isNonNullObject } from "@iov/encoding";
 import axios, { AxiosError, AxiosInstance } from "axios";
 
-import { Coin, CosmosSdkTx, Model, parseWasmData, StdTx, WasmData } from "./types";
+import { Coin, CosmosSdkTx, JsonObject, Model, parseWasmData, StdTx, WasmData } from "./types";
 
-const { fromBase64, toHex, toUtf8 } = Encoding;
+const { fromBase64, fromUtf8, toHex, toUtf8 } = Encoding;
 
 export interface CosmosSdkAccount {
   /** Bech32 account address */
@@ -441,14 +441,16 @@ export class RestClient {
     return data.length === 0 ? null : fromBase64(data[0].val);
   }
 
-  // Makes a "smart query" on the contract, returns response verbatim (json.RawMessage)
-  // Throws error if no such contract or invalid query format
-  public async queryContractSmart(address: string, query: object): Promise<Uint8Array> {
+  /**
+   * Makes a smart query on the contract and parses the reponse as JSON.
+   * Throws error if no such contract exists, the query format is invalid or the response is invalid.
+   */
+  public async queryContractSmart(address: string, query: object): Promise<JsonObject> {
     const encoded = toHex(toUtf8(JSON.stringify(query)));
     const path = `/wasm/contract/${address}/smart/${encoded}?encoding=hex`;
     const responseData = (await this.get(path)) as WasmResponse<SmartQueryResponse>;
     const result = unwrapWasmResponse(responseData);
-    // no extra parse here for now, see https://github.com/confio/cosmwasm/issues/144
-    return fromBase64(result.smart);
+    // By convention, smart queries must return a valid JSON document (see https://github.com/CosmWasm/cosmwasm/issues/144)
+    return JSON.parse(fromUtf8(fromBase64(result.smart)));
   }
 }

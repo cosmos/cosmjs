@@ -1,6 +1,6 @@
 import { Log } from "./logs";
 import { BroadcastMode, RestClient } from "./restclient";
-import { Coin, CosmosSdkTx, PubKey, StdTx } from "./types";
+import { Coin, CosmosSdkTx, JsonObject, PubKey, StdTx } from "./types";
 export interface GetNonceResult {
   readonly accountNumber: number;
   readonly sequence: number;
@@ -163,11 +163,12 @@ export declare class CosmWasmClient {
    */
   queryContractRaw(address: string, key: Uint8Array): Promise<Uint8Array | null>;
   /**
-   * Makes a "smart query" on the contract, returns raw data
+   * Makes a smart query on the contract, returns the parsed JSON document.
    *
    * Promise is rejected when contract does not exist.
    * Promise is rejected for invalid query format.
+   * Promise is rejected for invalid response format.
    */
-  queryContractSmart(address: string, queryMsg: object): Promise<Uint8Array>;
+  queryContractSmart(address: string, queryMsg: object): Promise<JsonObject>;
   private txsQuery;
 }

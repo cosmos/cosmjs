@@ -43,8 +43,6 @@ import { decodeAmount, decodePubkey, parseTxsResponseSigned, parseTxsResponseUns
 import { buildSignedTx } from "./encode";
 import { accountToNonce, BankToken, Erc20Token } from "./types";
 
-const { fromAscii } = Encoding;
-
 // poll every 0.5 seconds (block time 1s)
 const defaultPollInterval = 500;
 
@@ -170,8 +168,7 @@ export class CosmWasmConnection implements BlockchainConnection {
       this.erc20Tokens.map(
         async (erc20): Promise<Amount> => {
           const queryMsg = { balance: { address: address } };
-          const smart = await this.cosmWasmClient.queryContractSmart(erc20.contractAddress, queryMsg);
-          const response = JSON.parse(fromAscii(smart));
+          const response = await this.cosmWasmClient.queryContractSmart(erc20.contractAddress, queryMsg);
           const normalizedBalance = new BN(response.balance).toString();
           return {
             fractionalDigits: erc20.fractionalDigits,
