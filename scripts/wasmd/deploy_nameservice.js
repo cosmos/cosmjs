@@ -12,8 +12,8 @@ const faucet = {
 };
 
 const codeMeta = {
-  source: "https://crates.io/api/v1/crates/cw-nameservice/0.2.0/download",
-  builder: "confio/cosmwasm-opt:0.7.0",
+  source: "https://not-yet-published.cw-nameservice",
+  builder: "confio/cosmwasm-opt:0.7.3",
 };
 
 const free = {

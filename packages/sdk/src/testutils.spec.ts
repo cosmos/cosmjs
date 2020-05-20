@@ -24,9 +24,9 @@ export const bech32AddressMatcher = /^[\x21-\x7e]{1,83}1[02-9ac-hj-np-z]{38}$/;
 /** Deployed as part of scripts/wasmd/init.sh */
 export const deployedErc20 = {
   codeId: 1,
-  source: "https://crates.io/api/v1/crates/cw-erc20/0.3.0/download",
+  source: "https://not-yet-published.cw-erc20",
   builder: "confio/cosmwasm-opt:0.7.3",
-  checksum: "3dfa55f790a636c11ae2936473734a4d271d441f32d0cfcd7ac19c17b162f85b",
+  checksum: "1f6285492e7ea00596ef472ba166cb96ac3f91d694cb8c8e15f7c023ac451947",
   instances: [
     "cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5", // HASH
     "cosmos1hqrdl6wstt8qzshwc6mrumpjk9338k0lr4dqxd", // ISA

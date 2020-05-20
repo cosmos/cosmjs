@@ -22,7 +22,7 @@ const guest = {
 };
 
 const codeMeta = {
-  source: "https://crates.io/api/v1/crates/cw-erc20/0.3.0/download",
+  source: "https://not-yet-published.cw-erc20",
   builder: "confio/cosmwasm-opt:0.7.3",
 };
 
