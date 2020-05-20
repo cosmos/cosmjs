@@ -43,7 +43,9 @@ jobs:
       # feature, as documented in https://circleci.com/docs/2.0/building-docker-images/#separation-of-environments
       # As a consequence, we cannot use the circleci CLI for this job because "You cannot use the machine
       # executor in local jobs." (https://circleci.com/docs/2.0/local-cli/#limitations-of-running-jobs-locally)
-      image: ubuntu-1604:201903-01
+      #
+      # Available images: https://circleci.com/docs/2.0/configuration-reference/#available-machine-images
+      image: ubuntu-1604:202004-01
     steps:
       - checkout
       - run: # start early for less wait time below
