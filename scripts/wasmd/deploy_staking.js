@@ -16,13 +16,15 @@ const codeMeta = {
   builder: "cosmwasm/rust-optimizer:0.8.0",
 };
 
+// To get the proper validator address, run the demo chain (./scripts/wasmd/start.sh), then run:
+//   curl http://localhost:1317/staking/validators | jq .result[0].operator_address
 const bounty = {
   label: "Bounty",
   initMsg: {
     name: "Bounty",
     symbol: "BOUNTY",
     decimals: 3,
-    validator: "cosmosvaloper1ea5cpmcj2vf5d0xwurncx7zdnmkuc6eq696h9a", // cosmosvaloper17mggn4znyeyg25wd7498qxl7r2jhgue8u4qjcq
+    validator: "cosmosvaloper1ea5cpmcj2vf5d0xwurncx7zdnmkuc6eq696h9a",
     exit_tax: "0.005", // 0.5 %
     min_withdrawal: "7",
   },
