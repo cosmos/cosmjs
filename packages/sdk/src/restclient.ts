@@ -1,7 +1,8 @@
 import { Encoding, isNonNullObject } from "@iov/encoding";
 import axios, { AxiosError, AxiosInstance } from "axios";
 
-import { Coin, CosmosSdkTx, JsonObject, Model, parseWasmData, StdTx, WasmData } from "./types";
+import { Coin } from "./coins";
+import { CosmosSdkTx, JsonObject, Model, parseWasmData, StdTx, WasmData } from "./types";
 
 const { fromBase64, fromUtf8, toHex, toUtf8 } = Encoding;
 

@@ -1,10 +1,11 @@
 import { Sha256 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
 
+import { Coin } from "./coins";
 import { Log, parseLogs } from "./logs";
 import { decodeBech32Pubkey } from "./pubkey";
 import { BroadcastMode, RestClient } from "./restclient";
-import { Coin, CosmosSdkTx, JsonObject, PubKey, StdTx } from "./types";
+import { CosmosSdkTx, JsonObject, PubKey, StdTx } from "./types";
 
 export interface GetNonceResult {
   readonly accountNumber: number;

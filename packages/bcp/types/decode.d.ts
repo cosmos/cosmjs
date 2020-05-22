@@ -1,4 +1,4 @@
-import { IndexedTx, types } from "@cosmwasm/sdk";
+import { Coin, IndexedTx, types } from "@cosmwasm/sdk";
 import {
   Amount,
   ChainId,
@@ -17,8 +17,8 @@ import { BankTokens, Erc20Token } from "./types";
 export declare function decodePubkey(pubkey: types.PubKey): PubkeyBundle;
 export declare function decodeSignature(signature: string): SignatureBytes;
 export declare function decodeFullSignature(signature: types.StdSignature, nonce: number): FullSignature;
-export declare function coinToDecimal(tokens: BankTokens, coin: types.Coin): readonly [Decimal, string];
-export declare function decodeAmount(tokens: BankTokens, coin: types.Coin): Amount;
+export declare function coinToDecimal(tokens: BankTokens, coin: Coin): readonly [Decimal, string];
+export declare function decodeAmount(tokens: BankTokens, coin: Coin): Amount;
 export declare function parseMsg(
   msg: types.Msg,
   memo: string | undefined,

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { encodeSecp256k1Pubkey, encodeSecp256k1Signature, types } from "@cosmwasm/sdk";
+import { Coin, encodeSecp256k1Pubkey, encodeSecp256k1Signature, types } from "@cosmwasm/sdk";
 import {
   Algorithm,
   Amount,
@@ -40,7 +40,7 @@ export function toErc20Amount(amount: Amount, erc20Token: Erc20Token): string {
   return amount.quantity;
 }
 
-export function toBankCoin(amount: Amount, tokens: BankTokens): types.Coin {
+export function toBankCoin(amount: Amount, tokens: BankTokens): Coin {
   const match = tokens.find((token) => token.ticker === amount.tokenTicker);
   if (!match) throw Error(`unknown ticker: ${amount.tokenTicker}`);
   if (match.fractionalDigits !== amount.fractionalDigits) {

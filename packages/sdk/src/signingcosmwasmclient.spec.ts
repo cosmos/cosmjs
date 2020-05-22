@@ -2,12 +2,12 @@ import { Sha256 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
 import { assert } from "@iov/utils";
 
+import { Coin } from "./coins";
 import { PrivateCosmWasmClient } from "./cosmwasmclient";
 import { Secp256k1Pen } from "./pen";
 import { RestClient } from "./restclient";
 import { SigningCosmWasmClient, UploadMeta } from "./signingcosmwasmclient";
 import { getHackatom, makeRandomAddress, pendingWithoutWasmd } from "./testutils.spec";
-import { Coin } from "./types";
 
 const { toHex } = Encoding;
 

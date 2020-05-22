@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { assert, sleep } from "@iov/utils";
 
+import { Coin } from "./coins";
 import { CosmWasmClient } from "./cosmwasmclient";
 import { makeSignBytes } from "./encoding";
 import { Secp256k1Pen } from "./pen";
@@ -15,14 +16,7 @@ import {
   wasmd,
   wasmdEnabled,
 } from "./testutils.spec";
-import {
-  Coin,
-  CosmosSdkTx,
-  isMsgExecuteContract,
-  isMsgInstantiateContract,
-  isMsgSend,
-  MsgSend,
-} from "./types";
+import { CosmosSdkTx, isMsgExecuteContract, isMsgInstantiateContract, isMsgSend, MsgSend } from "./types";
 
 describe("CosmWasmClient.searchTx", () => {
   let sendSuccessful:

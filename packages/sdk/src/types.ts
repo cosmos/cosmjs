@@ -1,5 +1,7 @@
 import { Encoding } from "@iov/encoding";
 
+import { Coin } from "./coins";
+
 const { fromBase64, fromHex } = Encoding;
 
 /** An Amino/Cosmos SDK StdTx */
@@ -117,11 +119,6 @@ export function isMsgExecuteContract(msg: Msg): msg is MsgExecuteContract {
 export interface StdFee {
   readonly amount: ReadonlyArray<Coin>;
   readonly gas: string;
-}
-
-export interface Coin {
-  readonly denom: string;
-  readonly amount: string;
 }
 
 export interface StdSignature {

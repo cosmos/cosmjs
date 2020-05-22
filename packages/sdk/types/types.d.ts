@@ -1,3 +1,4 @@
+import { Coin } from "./coins";
 /** An Amino/Cosmos SDK StdTx */
 export interface StdTx {
   readonly msg: ReadonlyArray<Msg>;
@@ -87,10 +88,6 @@ export declare function isMsgExecuteContract(msg: Msg): msg is MsgExecuteContrac
 export interface StdFee {
   readonly amount: ReadonlyArray<Coin>;
   readonly gas: string;
-}
-export interface Coin {
-  readonly denom: string;
-  readonly amount: string;
 }
 export interface StdSignature {
   readonly pub_key: PubKey;

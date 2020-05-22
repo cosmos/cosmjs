@@ -1,4 +1,5 @@
-import { Coin, CosmosSdkTx, JsonObject, Model, StdTx } from "./types";
+import { Coin } from "./coins";
+import { CosmosSdkTx, JsonObject, Model, StdTx } from "./types";
 export interface CosmosSdkAccount {
   /** Bech32 account address */
   readonly address: string;

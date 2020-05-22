@@ -3,12 +3,12 @@ import { Encoding } from "@iov/encoding";
 import pako from "pako";
 
 import { isValidBuilder } from "./builder";
+import { Coin, coins } from "./coins";
 import { Account, CosmWasmClient, GetNonceResult, PostTxResult } from "./cosmwasmclient";
 import { makeSignBytes } from "./encoding";
 import { findAttribute, Log } from "./logs";
 import { BroadcastMode } from "./restclient";
 import {
-  Coin,
   MsgExecuteContract,
   MsgInstantiateContract,
   MsgSend,
@@ -28,10 +28,6 @@ export interface FeeTable {
   readonly send: StdFee;
 }
 
-function singleAmount(amount: number, denom: string): readonly Coin[] {
-  return [{ amount: amount.toString(), denom: denom }];
-}
-
 function prepareBuilder(buider: string | undefined): string {
   if (buider === undefined) {
     return ""; // normalization needed by backend
@@ -43,19 +39,19 @@ function prepareBuilder(buider: string | undefined): string {
 
 const defaultFees: FeeTable = {
   upload: {
-    amount: singleAmount(25000, "ucosm"),
+    amount: coins(25000, "ucosm"),
     gas: "1000000", // one million
   },
   init: {
-    amount: singleAmount(12500, "ucosm"),
+    amount: coins(12500, "ucosm"),
     gas: "500000", // 500k
   },
   exec: {
-    amount: singleAmount(5000, "ucosm"),
+    amount: coins(5000, "ucosm"),
     gas: "200000", // 200k
   },
   send: {
-    amount: singleAmount(2000, "ucosm"),
+    amount: coins(2000, "ucosm"),
     gas: "80000", // 80k
   },
 };
