@@ -122,7 +122,7 @@ describe("Staking demo", () => {
       });
     }
 
-    const unbondMsg: HandleMsg = { unbond: { amount: "112233" } };
+    const unbondMsg: HandleMsg = { unbond: { amount: "110000" } };
     // await ownerClient.execute(contractAddress, unbondMsg);
     await userClient.execute(contractAddress, unbondMsg);
 
@@ -130,14 +130,14 @@ describe("Staking demo", () => {
     {
       const query: QueryMsg = { balance: { address: userAddress } };
       const response: BalanceResponse = await ownerClient.queryContractSmart(contractAddress, query);
-      expect(response).toEqual({ balance: "0" });
+      expect(response).toEqual({ balance: "2233" });
     }
 
-    // Check collected tax (0.5 % of 112233)
+    // Check collected tax (0.5 % of 110000)
     {
       const query: QueryMsg = { balance: { address: ownerAddress } };
       const response: BalanceResponse = await ownerClient.queryContractSmart(contractAddress, query);
-      expect(response).toEqual({ balance: "561" });
+      expect(response).toEqual({ balance: "550" });
     }
   });
 });
