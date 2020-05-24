@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { Coin, Secp256k1Pen, SigningCosmWasmClient } from "@cosmwasm/sdk";
+import { Coin, coins, Secp256k1Pen, SigningCosmWasmClient } from "@cosmwasm/sdk";
 
 import {
   BalanceResponse,
@@ -34,7 +34,12 @@ describe("Staking demo", () => {
   it("works", async () => {
     pendingWithoutWasmd();
     const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-    const client = new SigningCosmWasmClient(httpUrl, faucet.address, (signBytes) => pen.sign(signBytes));
+    const client = new SigningCosmWasmClient(httpUrl, faucet.address, (signBytes) => pen.sign(signBytes), {
+      exec: {
+        amount: coins(5000, "ucosm"),
+        gas: "300000", // 300k, needed for unbonding
+      },
+    });
 
     const initMsg: InitMsg = {
       name: "Bounty",
@@ -50,20 +55,16 @@ describe("Staking demo", () => {
       `Staking derivative BOUNTY ${new Date()}`,
     );
 
-    const tokenInfoQuery: QueryMsg = { token_info: {} };
-    const tokenInfoResponse: TokenInfoResponse = await client.queryContractSmart(
-      contractAddress,
-      tokenInfoQuery,
-    );
-    expect(tokenInfoResponse).toEqual({ decimals: 3, name: "Bounty", symbol: "BOUNTY" });
+    {
+      const query: QueryMsg = { token_info: {} };
+      const response: TokenInfoResponse = await client.queryContractSmart(contractAddress, query);
+      expect(response).toEqual({ decimals: 3, name: "Bounty", symbol: "BOUNTY" });
+    }
 
     {
-      const investmentQuery: QueryMsg = { investment: {} };
-      const investmentResponse: InvestmentResponse = await client.queryContractSmart(
-        contractAddress,
-        investmentQuery,
-      );
-      expect(investmentResponse).toEqual({
+      const query: QueryMsg = { investment: {} };
+      const response: InvestmentResponse = await client.queryContractSmart(contractAddress, query);
+      expect(response).toEqual({
         token_supply: "0",
         staked_tokens: { denom: "ustake", amount: "0" },
         nominal_value: "1",
@@ -83,12 +84,9 @@ describe("Staking demo", () => {
 
     // Status changed
     {
-      const investmentQuery: QueryMsg = { investment: {} };
-      const investmentResponse: InvestmentResponse = await client.queryContractSmart(
-        contractAddress,
-        investmentQuery,
-      );
-      expect(investmentResponse).toEqual({
+      const quer: QueryMsg = { investment: {} };
+      const response: InvestmentResponse = await client.queryContractSmart(contractAddress, quer);
+      expect(response).toEqual({
         token_supply: "112233",
         staked_tokens: { denom: "ustake", amount: "112233" },
         nominal_value: "1",
@@ -101,10 +99,22 @@ describe("Staking demo", () => {
 
     // Get balance
     {
-      const balanceQuery: QueryMsg = { balance: { address: faucet.address } };
-      const balanceResponse: BalanceResponse = await client.queryContractSmart(contractAddress, balanceQuery);
-      expect(balanceResponse).toEqual({
+      const query: QueryMsg = { balance: { address: faucet.address } };
+      const response: BalanceResponse = await client.queryContractSmart(contractAddress, query);
+      expect(response).toEqual({
         balance: "112233",
+      });
+    }
+
+    const unbondMsg: HandleMsg = { unbond: { amount: "112233" } };
+    await client.execute(contractAddress, unbondMsg, undefined, [amount]);
+
+    // Get balance
+    {
+      const query: QueryMsg = { balance: { address: faucet.address } };
+      const response: BalanceResponse = await client.queryContractSmart(contractAddress, query);
+      expect(response).toEqual({
+        balance: "561", // some profits left
       });
     }
   });
