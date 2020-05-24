@@ -9,6 +9,7 @@ import {
   Slip10RawIndex,
 } from "@iov/crypto";
 
+import { rawSecp256k1PubkeyToAddress } from "./address";
 import { encodeSecp256k1Signature } from "./signature";
 import { StdSignature } from "./types";
 
@@ -83,5 +84,9 @@ export class Secp256k1Pen implements Pen {
     const signature = await Secp256k1.createSignature(message, this.privkey);
     const fixedLengthSignature = new Uint8Array([...signature.r(32), ...signature.s(32)]);
     return encodeSecp256k1Signature(this.pubkey, fixedLengthSignature);
+  }
+
+  public address(prefix: string): string {
+    return rawSecp256k1PubkeyToAddress(this.pubkey, prefix);
   }
 }
