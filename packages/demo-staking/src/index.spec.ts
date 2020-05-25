@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { Coin, coins, Secp256k1Pen, SigningCosmWasmClient } from "@cosmwasm/sdk";
+import { Coin, coins, makeCosmoshubPath, Secp256k1Pen, SigningCosmWasmClient } from "@cosmwasm/sdk";
 
 import {
   BalanceResponse,
@@ -28,48 +28,64 @@ const codeId = 3;
 
 /** Instance parameters */
 const validator = "cosmosvaloper1ea5cpmcj2vf5d0xwurncx7zdnmkuc6eq696h9a";
-const exit_tax = "0.005"; // 0.5 %
+const exitTax = "0.005"; // 0.5 %
 
 describe("Staking demo", () => {
   it("works", async () => {
     pendingWithoutWasmd();
-    const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-    const client = new SigningCosmWasmClient(httpUrl, faucet.address, (signBytes) => pen.sign(signBytes), {
-      exec: {
-        amount: coins(5000, "ucosm"),
-        gas: "300000", // 300k, needed for unbonding
+    // The owner of the contract that will collect the tax
+    const ownerPen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
+    const ownerAddress = ownerPen.address("cosmos");
+    const ownerClient = new SigningCosmWasmClient(httpUrl, ownerAddress, (signBytes) =>
+      ownerPen.sign(signBytes),
+    );
+
+    // a user of the contract
+    const userPen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(1));
+    const userAddress = userPen.address("cosmos");
+    const userClient = new SigningCosmWasmClient(
+      httpUrl,
+      userAddress,
+      (signBytes) => userPen.sign(signBytes),
+      {
+        exec: {
+          amount: coins(5000, "ucosm"),
+          gas: "300000", // 300k, needed for unbonding
+        },
       },
-    });
+    );
 
     const initMsg: InitMsg = {
       name: "Bounty",
       symbol: "BOUNTY",
       decimals: 3,
       validator: validator,
-      exit_tax: exit_tax,
+      exit_tax: exitTax,
       min_withdrawal: "7",
     };
-    const { contractAddress } = await client.instantiate(
+    const { contractAddress } = await ownerClient.instantiate(
       codeId,
       initMsg,
       `Staking derivative BOUNTY ${new Date()}`,
     );
 
+    // Query token info (immutable)
     {
       const query: QueryMsg = { token_info: {} };
-      const response: TokenInfoResponse = await client.queryContractSmart(contractAddress, query);
+      const response: TokenInfoResponse = await ownerClient.queryContractSmart(contractAddress, query);
       expect(response).toEqual({ decimals: 3, name: "Bounty", symbol: "BOUNTY" });
     }
 
+    // Query investment info (changes with bonding/unbonding)
     {
       const query: QueryMsg = { investment: {} };
-      const response: InvestmentResponse = await client.queryContractSmart(contractAddress, query);
+      const response: InvestmentResponse = await ownerClient.queryContractSmart(contractAddress, query);
       expect(response).toEqual({
         token_supply: "0",
         staked_tokens: { denom: "ustake", amount: "0" },
         nominal_value: "1",
-        owner: faucet.address,
-        exit_tax: exit_tax,
+        owner: ownerAddress,
+        exit_tax: exitTax,
         validator: validator,
         min_withdrawal: "7",
       });
@@ -80,18 +96,18 @@ describe("Staking demo", () => {
       amount: "112233",
       denom: "ustake",
     };
-    await client.execute(contractAddress, bondMsg, undefined, [amount]);
+    await userClient.execute(contractAddress, bondMsg, undefined, [amount]);
 
-    // Status changed
+    // Investment info changed
     {
       const quer: QueryMsg = { investment: {} };
-      const response: InvestmentResponse = await client.queryContractSmart(contractAddress, quer);
+      const response: InvestmentResponse = await ownerClient.queryContractSmart(contractAddress, quer);
       expect(response).toEqual({
         token_supply: "112233",
         staked_tokens: { denom: "ustake", amount: "112233" },
         nominal_value: "1",
-        owner: faucet.address,
-        exit_tax: exit_tax,
+        owner: ownerAddress,
+        exit_tax: exitTax,
         validator: validator,
         min_withdrawal: "7",
       });
@@ -99,23 +115,29 @@ describe("Staking demo", () => {
 
     // Get balance
     {
-      const query: QueryMsg = { balance: { address: faucet.address } };
-      const response: BalanceResponse = await client.queryContractSmart(contractAddress, query);
+      const query: QueryMsg = { balance: { address: userAddress } };
+      const response: BalanceResponse = await ownerClient.queryContractSmart(contractAddress, query);
       expect(response).toEqual({
         balance: "112233",
       });
     }
 
     const unbondMsg: HandleMsg = { unbond: { amount: "112233" } };
-    await client.execute(contractAddress, unbondMsg, undefined, [amount]);
+    // await ownerClient.execute(contractAddress, unbondMsg);
+    await userClient.execute(contractAddress, unbondMsg);
 
     // Get balance
     {
-      const query: QueryMsg = { balance: { address: faucet.address } };
-      const response: BalanceResponse = await client.queryContractSmart(contractAddress, query);
-      expect(response).toEqual({
-        balance: "561", // some profits left
-      });
+      const query: QueryMsg = { balance: { address: userAddress } };
+      const response: BalanceResponse = await ownerClient.queryContractSmart(contractAddress, query);
+      expect(response).toEqual({ balance: "0" });
+    }
+
+    // Check collected tax (0.5 % of 112233)
+    {
+      const query: QueryMsg = { balance: { address: ownerAddress } };
+      const response: BalanceResponse = await ownerClient.queryContractSmart(contractAddress, query);
+      expect(response).toEqual({ balance: "561" });
     }
   });
 });
