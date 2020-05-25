@@ -27,8 +27,14 @@ const faucet = {
 const codeId = 3;
 
 /** Instance parameters */
-const validator = "cosmosvaloper1ea5cpmcj2vf5d0xwurncx7zdnmkuc6eq696h9a";
-const exitTax = "0.005"; // 0.5 %
+const params = {
+  name: "Bounty",
+  symbol: "BOUNTY",
+  decimals: 3,
+  validator: "cosmosvaloper1ea5cpmcj2vf5d0xwurncx7zdnmkuc6eq696h9a",
+  exitTax: "0.005", // 0.5 %
+  minWithdrawal: "700",
+};
 
 describe("Staking demo", () => {
   it("works", async () => {
@@ -56,12 +62,12 @@ describe("Staking demo", () => {
     );
 
     const initMsg: InitMsg = {
-      name: "Bounty",
-      symbol: "BOUNTY",
-      decimals: 3,
-      validator: validator,
-      exit_tax: exitTax,
-      min_withdrawal: "7",
+      name: params.name,
+      symbol: params.symbol,
+      decimals: params.decimals,
+      validator: params.validator,
+      exit_tax: params.exitTax,
+      min_withdrawal: params.minWithdrawal,
     };
     const { contractAddress } = await ownerClient.instantiate(
       codeId,
@@ -73,7 +79,11 @@ describe("Staking demo", () => {
     {
       const query: QueryMsg = { token_info: {} };
       const response: TokenInfoResponse = await ownerClient.queryContractSmart(contractAddress, query);
-      expect(response).toEqual({ decimals: 3, name: "Bounty", symbol: "BOUNTY" });
+      expect(response).toEqual({
+        decimals: params.decimals,
+        name: params.name,
+        symbol: params.symbol,
+      });
     }
 
     // Query investment info (changes with bonding/unbonding)
@@ -85,9 +95,9 @@ describe("Staking demo", () => {
         staked_tokens: { denom: "ustake", amount: "0" },
         nominal_value: "1",
         owner: ownerAddress,
-        exit_tax: exitTax,
-        validator: validator,
-        min_withdrawal: "7",
+        exit_tax: params.exitTax,
+        validator: params.validator,
+        min_withdrawal: params.minWithdrawal,
       });
     }
 
@@ -107,9 +117,9 @@ describe("Staking demo", () => {
         staked_tokens: { denom: "ustake", amount: "112233" },
         nominal_value: "1",
         owner: ownerAddress,
-        exit_tax: exitTax,
-        validator: validator,
-        min_withdrawal: "7",
+        exit_tax: params.exitTax,
+        validator: params.validator,
+        min_withdrawal: params.minWithdrawal,
       });
     }
 
