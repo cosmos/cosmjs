@@ -17,9 +17,7 @@
     "type": "git",
     "url": "https://github.com/confio/cosmwasm-js/tree/master/packages/demo-staking"
   },
-  "publishConfig": {
-    "access": "public"
-  },
+  "private": true,
   "scripts": {
     "docs": "shx rm -rf docs && typedoc --options typedoc.js",
     "format": "prettier --write --loglevel warn \"./src/**/*.ts\"",
