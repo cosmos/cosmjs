@@ -5,6 +5,7 @@ import { assert, sleep } from "@iov/utils";
 import { ReadonlyDate } from "readonly-date";
 
 import { rawSecp256k1PubkeyToAddress } from "./address";
+import { Coin } from "./coins";
 import { makeSignBytes } from "./encoding";
 import { findAttribute, parseLogs } from "./logs";
 import { makeCosmoshubPath, Pen, Secp256k1Pen } from "./pen";
@@ -31,7 +32,6 @@ import {
   wasmdEnabled,
 } from "./testutils.spec";
 import {
-  Coin,
   isMsgInstantiateContract,
   isMsgStoreCode,
   Msg,

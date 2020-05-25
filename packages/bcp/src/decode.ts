@@ -1,4 +1,4 @@
-import { IndexedTx, types } from "@cosmwasm/sdk";
+import { Coin, IndexedTx, types } from "@cosmwasm/sdk";
 import {
   Address,
   Algorithm,
@@ -54,7 +54,7 @@ export function decodeFullSignature(signature: types.StdSignature, nonce: number
   };
 }
 
-export function coinToDecimal(tokens: BankTokens, coin: types.Coin): readonly [Decimal, string] {
+export function coinToDecimal(tokens: BankTokens, coin: Coin): readonly [Decimal, string] {
   const match = tokens.find(({ denom }) => denom === coin.denom);
   if (!match) {
     throw Error(`unknown denom: ${coin.denom}`);
@@ -63,7 +63,7 @@ export function coinToDecimal(tokens: BankTokens, coin: types.Coin): readonly [D
   return [value, match.ticker];
 }
 
-export function decodeAmount(tokens: BankTokens, coin: types.Coin): Amount {
+export function decodeAmount(tokens: BankTokens, coin: Coin): Amount {
   const [value, ticker] = coinToDecimal(tokens, coin);
   return {
     quantity: value.atomics,

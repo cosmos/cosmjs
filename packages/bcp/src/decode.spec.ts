@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { IndexedTx, types } from "@cosmwasm/sdk";
+import { Coin, IndexedTx, types } from "@cosmwasm/sdk";
 import { Address, Algorithm, isSendTransaction, SendTransaction, TokenTicker } from "@iov/bcp";
 import { Encoding } from "@iov/encoding";
 import { assert } from "@iov/utils";
@@ -135,7 +135,7 @@ describe("decode", () => {
 
   describe("decodeAmount", () => {
     it("works", () => {
-      const amount: types.Coin = {
+      const amount: Coin = {
         denom: "uatom",
         amount: "11657995",
       };

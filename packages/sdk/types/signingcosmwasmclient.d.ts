@@ -1,7 +1,8 @@
+import { Coin } from "./coins";
 import { Account, CosmWasmClient, GetNonceResult, PostTxResult } from "./cosmwasmclient";
 import { Log } from "./logs";
 import { BroadcastMode } from "./restclient";
-import { Coin, StdFee, StdSignature } from "./types";
+import { StdFee, StdSignature } from "./types";
 export interface SigningCallback {
   (signBytes: Uint8Array): Promise<StdSignature>;
 }
