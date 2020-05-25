@@ -28,7 +28,7 @@ describe("Sec256k1Pen", () => {
     });
   });
 
-  describe("createSignature", () => {
+  describe("sign", () => {
     it("creates correct signatures", async () => {
       const pen = await Secp256k1Pen.fromMnemonic(
         "special sign fit simple patrol salute grocery chicken wheat radar tonight ceiling",
@@ -42,6 +42,15 @@ describe("Sec256k1Pen", () => {
         pubkey,
       );
       expect(valid).toEqual(true);
+    });
+  });
+
+  describe("address", () => {
+    it("creates same address as Go imlementation", async () => {
+      const pen = await Secp256k1Pen.fromMnemonic(
+        "oyster design unusual machine spread century engine gravity focus cave carry slot",
+      );
+      expect(pen.address("cosmos")).toEqual("cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u");
     });
   });
 });

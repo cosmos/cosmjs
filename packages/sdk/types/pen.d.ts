@@ -29,4 +29,5 @@ export declare class Secp256k1Pen implements Pen {
    * Creates and returns a signature
    */
   sign(signBytes: Uint8Array, prehashType?: PrehashType): Promise<StdSignature>;
+  address(prefix: string): string;
 }
