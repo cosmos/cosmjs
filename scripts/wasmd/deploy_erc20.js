@@ -22,8 +22,8 @@ const guest = {
 };
 
 const codeMeta = {
-  source: "https://not-yet-published.cw-erc20",
-  builder: "confio/cosmwasm-opt:0.7.3",
+  source: "https://crates.io/api/v1/crates/cw-erc20/0.4.0/download",
+  builder: "cosmwasm/rust-optimizer:0.8.0"
 };
 
 const initMsgHash = {
