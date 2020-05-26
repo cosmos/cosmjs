@@ -7,14 +7,14 @@ interface Options {
 };
 
 const defaultOptions: Options = {
-  httpUrl: "https://lcd.demo-071.cosmwasm.com",
+  httpUrl: "https://lcd.demo-08.cosmwasm.com",
   networkId: "testing",
   feeToken: "ucosm",
   gasPrice: 0.025,
   bech32prefix: "cosmos",
 }
 
-const defaultFaucetUrl = "https://faucet.demo-071.cosmwasm.com/credit";
+const defaultFaucetUrl = "https://faucet.demo-08.cosmwasm.com/credit";
 
 const buildFeeTable = (feeToken: string, gasPrice: number): FeeTable => {
   const stdFee = (gas: number, denom: string, price: number) => {
@@ -88,6 +88,10 @@ const hitFaucet = async (faucetUrl: string, address: string, ticker: string): Pr
 
 const randomAddress = async (prefix: string): Promise<string> => {
   const mnemonic = Bip39.encode(Random.getBytes(16)).toString();
+  return mnemonicToAddress(prefix, mnemonic);
+}
+
+const mnemonicToAddress = async (prefix: string, mnemonic: string): Promise<string> => {
   const pen = await Secp256k1Pen.fromMnemonic(mnemonic);
   const pubkey = encodeSecp256k1Pubkey(pen.pubkey);
   return pubkeyToAddress(pubkey, prefix);
