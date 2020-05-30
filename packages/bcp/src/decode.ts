@@ -21,7 +21,7 @@ import {
 import { Decimal, Encoding } from "@iov/encoding";
 import BN from "bn.js";
 
-import { BankTokens, Erc20Token } from "./types";
+import { BankToken, Erc20Token } from "./types";
 
 const { fromBase64 } = Encoding;
 
@@ -54,7 +54,7 @@ export function decodeFullSignature(signature: types.StdSignature, nonce: number
   };
 }
 
-export function coinToDecimal(tokens: BankTokens, coin: Coin): readonly [Decimal, string] {
+export function coinToDecimal(tokens: readonly BankToken[], coin: Coin): readonly [Decimal, string] {
   const match = tokens.find(({ denom }) => denom === coin.denom);
   if (!match) {
     throw Error(`unknown denom: ${coin.denom}`);
@@ -63,7 +63,7 @@ export function coinToDecimal(tokens: BankTokens, coin: Coin): readonly [Decimal
   return [value, match.ticker];
 }
 
-export function decodeAmount(tokens: BankTokens, coin: Coin): Amount {
+export function decodeAmount(tokens: readonly BankToken[], coin: Coin): Amount {
   const [value, ticker] = coinToDecimal(tokens, coin);
   return {
     quantity: value.atomics,
@@ -76,7 +76,7 @@ export function parseMsg(
   msg: types.Msg,
   memo: string | undefined,
   chainId: ChainId,
-  tokens: BankTokens,
+  tokens: readonly BankToken[],
   erc20Tokens: readonly Erc20Token[],
 ): UnsignedTransaction {
   if (types.isMsgSend(msg)) {
@@ -130,7 +130,7 @@ export function parseMsg(
   }
 }
 
-export function parseFee(fee: types.StdFee, tokens: BankTokens): Fee {
+export function parseFee(fee: types.StdFee, tokens: readonly BankToken[]): Fee {
   if (fee.amount.length !== 1) {
     throw new Error("Only fee with one amount is supported");
   }
@@ -143,7 +143,7 @@ export function parseFee(fee: types.StdFee, tokens: BankTokens): Fee {
 export function parseUnsignedTx(
   txValue: types.StdTx,
   chainId: ChainId,
-  tokens: BankTokens,
+  tokens: readonly BankToken[],
   erc20Tokens: readonly Erc20Token[],
 ): UnsignedTransaction {
   if (!types.isStdTx(txValue)) {
@@ -167,7 +167,7 @@ export function parseSignedTx(
   txValue: types.StdTx,
   chainId: ChainId,
   nonce: Nonce,
-  tokens: BankTokens,
+  tokens: readonly BankToken[],
   erc20Tokens: readonly Erc20Token[],
 ): SignedTransaction {
   const [primarySignature] = txValue.signatures.map((signature) => decodeFullSignature(signature, nonce));
@@ -181,7 +181,7 @@ export function parseTxsResponseUnsigned(
   chainId: ChainId,
   currentHeight: number,
   response: IndexedTx,
-  tokens: BankTokens,
+  tokens: readonly BankToken[],
   erc20Tokens: readonly Erc20Token[],
 ): ConfirmedTransaction<UnsignedTransaction> {
   return {
@@ -198,7 +198,7 @@ export function parseTxsResponseSigned(
   currentHeight: number,
   nonce: Nonce,
   response: IndexedTx,
-  tokens: BankTokens,
+  tokens: readonly BankToken[],
   erc20Tokens: readonly Erc20Token[],
 ): ConfirmedAndSignedTransaction<UnsignedTransaction> {
   return {

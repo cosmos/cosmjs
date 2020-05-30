@@ -22,7 +22,7 @@ import {
   toBankCoin,
   toErc20Amount,
 } from "./encode";
-import { BankTokens, Erc20Token } from "./types";
+import { BankToken, Erc20Token } from "./types";
 
 const { fromBase64 } = Encoding;
 
@@ -42,7 +42,7 @@ describe("encode", () => {
     tokenTicker: atom,
   };
   const defaultMemo = "hello cosmos hub";
-  const defaultTokens: BankTokens = [
+  const defaultTokens: readonly BankToken[] = [
     {
       fractionalDigits: 6,
       ticker: "ATOM",
