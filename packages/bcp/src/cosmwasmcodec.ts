@@ -20,14 +20,18 @@ import { pubkeyToAddress } from "./address";
 import { Caip5 } from "./caip5";
 import { parseSignedTx } from "./decode";
 import { buildSignedTx, buildUnsignedTx } from "./encode";
-import { BankTokens, Erc20Token, nonceToAccountNumber, nonceToSequence } from "./types";
+import { BankToken, Erc20Token, nonceToAccountNumber, nonceToSequence } from "./types";
 
 export class CosmWasmCodec implements TxCodec {
   private readonly addressPrefix: string;
-  private readonly bankTokens: BankTokens;
+  private readonly bankTokens: readonly BankToken[];
   private readonly erc20Tokens: readonly Erc20Token[];
 
-  public constructor(addressPrefix: string, bankTokens: BankTokens, erc20Tokens: readonly Erc20Token[] = []) {
+  public constructor(
+    addressPrefix: string,
+    bankTokens: readonly BankToken[],
+    erc20Tokens: readonly Erc20Token[] = [],
+  ) {
     this.addressPrefix = addressPrefix;
     this.bankTokens = bankTokens;
     this.erc20Tokens = erc20Tokens;

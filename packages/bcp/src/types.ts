@@ -15,8 +15,6 @@ export interface BankToken {
   readonly fractionalDigits: number;
 }
 
-export type BankTokens = ReadonlyArray<BankToken>;
-
 export interface Erc20Token {
   readonly contractAddress: string;
   readonly ticker: string;

@@ -18,7 +18,7 @@ import {
 } from "./decode";
 import * as testdata from "./testdata.spec";
 import cosmoshub from "./testdata/cosmoshub.json";
-import { BankTokens, Erc20Token } from "./types";
+import { BankToken, Erc20Token } from "./types";
 
 const { fromBase64, fromHex } = Encoding;
 
@@ -57,7 +57,7 @@ describe("decode", () => {
     },
     gasLimit: "200000",
   };
-  const defaultTokens: BankTokens = [
+  const defaultTokens: readonly BankToken[] = [
     {
       fractionalDigits: 6,
       ticker: "ATOM",

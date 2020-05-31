@@ -13,7 +13,7 @@ import {
 import { Secp256k1 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
 
-import { BankTokens, Erc20Token } from "./types";
+import { BankToken, Erc20Token } from "./types";
 
 const { toBase64 } = Encoding;
 
@@ -40,7 +40,7 @@ export function toErc20Amount(amount: Amount, erc20Token: Erc20Token): string {
   return amount.quantity;
 }
 
-export function toBankCoin(amount: Amount, tokens: BankTokens): Coin {
+export function toBankCoin(amount: Amount, tokens: readonly BankToken[]): Coin {
   const match = tokens.find((token) => token.ticker === amount.tokenTicker);
   if (!match) throw Error(`unknown ticker: ${amount.tokenTicker}`);
   if (match.fractionalDigits !== amount.fractionalDigits) {
@@ -54,7 +54,7 @@ export function toBankCoin(amount: Amount, tokens: BankTokens): Coin {
   };
 }
 
-export function encodeFee(fee: Fee, tokens: BankTokens): types.StdFee {
+export function encodeFee(fee: Fee, tokens: readonly BankToken[]): types.StdFee {
   if (fee.tokens === undefined) {
     throw new Error("Cannot encode fee without tokens");
   }
@@ -81,7 +81,7 @@ export function encodeFullSignature(fullSignature: FullSignature): types.StdSign
 
 export function buildUnsignedTx(
   tx: UnsignedTransaction,
-  bankTokens: BankTokens,
+  bankTokens: readonly BankToken[],
   erc20Tokens: readonly Erc20Token[] = [],
 ): types.CosmosSdkTx {
   if (!isSendTransaction(tx)) {
@@ -144,7 +144,7 @@ export function buildUnsignedTx(
 
 export function buildSignedTx(
   tx: SignedTransaction,
-  bankTokens: BankTokens,
+  bankTokens: readonly BankToken[],
   erc20Tokens: readonly Erc20Token[] = [],
 ): types.CosmosSdkTx {
   const built = buildUnsignedTx(tx.transaction, bankTokens, erc20Tokens);
