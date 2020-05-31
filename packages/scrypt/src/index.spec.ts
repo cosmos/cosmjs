@@ -22,7 +22,7 @@ for (const impl of ["js", "wasm"] as const) {
         const result = await scrypt.run(password, salt, keplrParams);
         expect(result).toBeTruthy();
       }
-    }, 30_000);
+    }, 60_000);
 
     it("conforms to test vectors from RFC 7914", async () => {
       const scrypt = await Scrypt.make(impl);
@@ -62,6 +62,6 @@ for (const impl of ["js", "wasm"] as const) {
         );
         expect(await scrypt.run(p, s, params)).toEqual(expected);
       }
-    }, 30_000);
+    }, 60_000);
   });
 }

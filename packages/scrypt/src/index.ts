@@ -16,7 +16,9 @@ export interface ScryptParams {
 
 // Global symbols in some environments
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/WebAssembly
+// https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch
 declare const WebAssembly: any | undefined;
+declare const fetch: any | undefined;
 
 type ScryptImplementation = "js" | "wasm";
 
@@ -29,12 +31,17 @@ export class Scrypt {
         return new Scrypt(impl);
       }
       case "wasm": {
-        const path = require("path").join(__dirname, "scrypt.wasm");
-        const bytes = require("fs").readFileSync(path);
-        // console.log(bytes);
-        const wasmModule = new WebAssembly.Module(bytes);
+        if (typeof fetch !== "undefined") {
+          await scryptWasm.default("/base/build/scrypt.wasm");
+        } else {
+          // Node.js
+          const wasmPath = require("path").join(__dirname, "scrypt.wasm");
+          const wasmBytes = require("fs").readFileSync(wasmPath);
+          // console.log(wasmBytes);
+          const wasmModule = new WebAssembly.Module(wasmBytes);
+          await scryptWasm.default(wasmModule);
+        }
 
-        await scryptWasm.default(wasmModule);
         return new Scrypt(impl);
       }
       default:

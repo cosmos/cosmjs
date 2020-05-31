@@ -5,7 +5,7 @@
     "outDir": "build",
     "declarationDir": "build/types",
     "rootDir": "src",
-    "allowJs": true
+    "allowJs": true,
   },
   "include": [
     "src/**/*"
