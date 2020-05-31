@@ -25,7 +25,8 @@
     "lint-fix": "eslint --max-warnings 0 \"**/*.{js,ts}\" --fix",
     "move-types": "shx rm -rf ./types/* && shx mv build/types/* ./types && rm -rf ./types/testdata && shx rm -f ./types/*.spec.d.ts",
     "format-types": "prettier --write --loglevel warn \"./types/**/*.d.ts\"",
-    "build": "shx rm -rf ./build && tsc && yarn move-types && yarn format-types",
+    "prebuild": "shx rm -rf ./build && mkdir ./build && cp src/scrypt_wasm/scrypt_wasm_bg.wasm build/scrypt.wasm",
+    "build": "tsc && yarn move-types && yarn format-types",
     "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build",
     "test-node": "node jasmine-testrunner.js",
     "test-firefox": "yarn pack-web && karma start --single-run --browsers Firefox",
@@ -34,9 +35,9 @@
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
   },
   "dependencies": {
+    "@iov/encoding": "^2.1.0",
     "scrypt-js": "^3"
   },
   "devDependencies": {
-    "@iov/encoding": "^2.1.0"
   }
 }

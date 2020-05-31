@@ -1,5 +1,15 @@
 # @cosmwasm/scrypt
 
+## Update guide
+
+This packages includes a build of https://github.com/MyEtherWallet/scrypt-wasm/pull/2.
+Check out this repo and look into `Makefile` for how to install `wasm-pack`.
+
+1. Run `wasm-pack build --target web`
+2. Copy `pkg/scrypt_wasm_bg.wasm` into `src/scrypt_wasm`
+3. Copy `pkg/scrypt_wasm.js` into `src/scrypt_wasm/index.js`
+4. In `src/scrypt_wasm/index.js` replace `input = import.meta.url.replace(/\.js$/, "_bg.wasm");` with `throw new Error("input undefined");`
+
 ## License
 
 This package is part of the cosmwasm-js repository, licensed under the Apache
