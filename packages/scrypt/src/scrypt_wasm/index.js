@@ -1,3 +1,11 @@
+// For Node.js 10 support
+if (typeof TextEncoder === "undefined" && global) {
+  global.TextEncoder = require("util").TextEncoder;
+}
+if (typeof TextDecoder === "undefined" && global) {
+  global.TextDecoder = require("util").TextDecoder;
+}
+
 let wasm;
 
 let WASM_VECTOR_LEN = 0;
