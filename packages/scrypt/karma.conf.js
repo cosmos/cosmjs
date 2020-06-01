@@ -8,10 +8,7 @@ module.exports = function (config) {
     frameworks: ["jasmine"],
 
     // list of files / patterns to load in the browser
-    files: [
-      "dist/web/tests.js",
-      { pattern: "build/scrypt.wasm", included: false, served: true, watched: false },
-    ],
+    files: ["dist/web/tests.js"],
 
     client: {
       jasmine: {

@@ -5,7 +5,7 @@ import * as scryptJs from "scrypt-js";
 // @ts-ignore: 7016
 import * as scryptWasm from "./scrypt_wasm";
 
-const { toHex, fromHex } = Encoding;
+const { toHex, fromHex, fromBase64 } = Encoding;
 
 export interface ScryptParams {
   readonly dkLen: number;
@@ -31,17 +31,10 @@ export class Scrypt {
         return new Scrypt(impl);
       }
       case "wasm": {
-        if (typeof fetch !== "undefined") {
-          await scryptWasm.default("/base/build/scrypt.wasm");
-        } else {
-          // Node.js
-          const wasmPath = require("path").join(__dirname, "scrypt.wasm");
-          const wasmBytes = require("fs").readFileSync(wasmPath);
-          // console.log(wasmBytes);
-          const wasmModule = new WebAssembly.Module(wasmBytes);
-          await scryptWasm.default(wasmModule);
-        }
-
+        // Using a dynamic import allows Webpack to move this into a separate chunk in many configurations
+        const wasmBlob = (await import("./scrypt_wasm/wasm.json")).default;
+        const wasmBytes = fromBase64(wasmBlob);
+        await scryptWasm.default(wasmBytes);
         return new Scrypt(impl);
       }
       default:
