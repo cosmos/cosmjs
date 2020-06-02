@@ -69,7 +69,6 @@ const bob = {
 
 describe("CosmWasmConnection", () => {
   const cosm = "COSM" as TokenTicker;
-  const isa = "ISA" as TokenTicker;
   const httpUrl = "http://localhost:1317";
   const defaultChainId = "cosmos:testing" as ChainId;
   const defaultEmptyAddress = "cosmos1h806c7khnvmjlywdrkdgk2vrayy2mmvf9rxk2r" as Address;
@@ -102,26 +101,6 @@ describe("CosmWasmConnection", () => {
         name: "Staking Token",
         ticker: "STAKE",
         denom: "ustake",
-      },
-    ],
-    erc20Tokens: [
-      {
-        contractAddress: "cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
-        fractionalDigits: 5,
-        ticker: "HASH",
-        name: "Hash Token",
-      },
-      {
-        contractAddress: "cosmos1hqrdl6wstt8qzshwc6mrumpjk9338k0lr4dqxd",
-        fractionalDigits: 0,
-        ticker: "ISA",
-        name: "Isa Token",
-      },
-      {
-        contractAddress: "cosmos18r5szma8hm93pvx6lwpjwyxruw27e0k5uw835c",
-        fractionalDigits: 18,
-        ticker: "JADE",
-        name: "Jade Token",
       },
     ],
   };
@@ -199,21 +178,6 @@ describe("CosmWasmConnection", () => {
           tokenTicker: "COSM" as TokenTicker,
         },
         {
-          fractionalDigits: 5,
-          tokenName: "Hash Token",
-          tokenTicker: "HASH" as TokenTicker,
-        },
-        {
-          fractionalDigits: 0,
-          tokenName: "Isa Token",
-          tokenTicker: "ISA" as TokenTicker,
-        },
-        {
-          fractionalDigits: 18,
-          tokenName: "Jade Token",
-          tokenTicker: "JADE" as TokenTicker,
-        },
-        {
           fractionalDigits: 6,
           tokenName: "Staking Token",
           tokenTicker: "STAKE" as TokenTicker,
@@ -254,16 +218,6 @@ describe("CosmWasmConnection", () => {
           tokenTicker: "COSM" as TokenTicker,
           quantity: "1000000000",
           fractionalDigits: 6,
-        },
-        {
-          tokenTicker: "HASH" as TokenTicker,
-          quantity: "12812345",
-          fractionalDigits: 5,
-        },
-        {
-          tokenTicker: "ISA" as TokenTicker,
-          quantity: "42",
-          fractionalDigits: 0,
         },
         {
           tokenTicker: "STAKE" as TokenTicker,
@@ -389,56 +343,6 @@ describe("CosmWasmConnection", () => {
       assert(isConfirmedTransaction(getResponse), "Expected transaction to succeed");
       assert(getResponse.log, "Log must be available");
       // we get a json response in the log for each msg, multiple events is good (transfer succeeded)
-      const [firstLog] = JSON.parse(getResponse.log);
-      expect(firstLog.events.length).toEqual(2);
-
-      const { transaction, signatures } = getResponse;
-      assert(isSendTransaction(transaction), "Expected send transaction");
-      expect(transaction).toEqual(unsigned);
-      expect(signatures.length).toEqual(1);
-      expect(signatures[0]).toEqual({
-        nonce: signed.signatures[0].nonce,
-        pubkey: {
-          algo: signed.signatures[0].pubkey.algo,
-          data: Secp256k1.compressPubkey(signed.signatures[0].pubkey.data),
-        },
-        signature: Secp256k1.trimRecoveryByte(signed.signatures[0].signature),
-      });
-
-      connection.disconnect();
-    });
-
-    it("can get a recently posted ERC20 send transaction", async () => {
-      pendingWithoutWasmd();
-      const connection = await CosmWasmConnection.establish(httpUrl, defaultAddressPrefix, defaultConfig);
-      const profile = new UserProfile();
-      const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(bob.mnemonic));
-      const senderIdentity = await profile.createIdentity(wallet.id, defaultChainId, bob.path);
-      const senderAddress = connection.codec.identityToAddress(senderIdentity);
-
-      const unsigned = await connection.withDefaultFee<SendTransaction>({
-        kind: "bcp/send",
-        chainId: defaultChainId,
-        sender: senderAddress,
-        recipient: defaultRecipient,
-        memo: "An ERC20 payment",
-        amount: {
-          quantity: "345",
-          fractionalDigits: 0,
-          tokenTicker: isa,
-        },
-      });
-      const nonce = await connection.getNonce({ address: senderAddress });
-      const signed = await profile.signTransaction(senderIdentity, unsigned, connection.codec, nonce);
-      const postableBytes = connection.codec.bytesToPost(signed);
-      const response = await connection.postTx(postableBytes);
-      const { transactionId } = response;
-      await response.blockInfo.waitFor((info) => isBlockInfoSucceeded(info));
-
-      const getResponse = await connection.getTx(transactionId);
-      expect(getResponse.transactionId).toEqual(transactionId);
-      assert(isConfirmedTransaction(getResponse), "Expected transaction to succeed");
-      assert(getResponse.log, "Log must be available");
       const [firstLog] = JSON.parse(getResponse.log);
       expect(firstLog.events.length).toEqual(2);
 
@@ -584,124 +488,6 @@ describe("CosmWasmConnection", () => {
       expect(firstByRecipientLog.events.length).toEqual(2);
       expect(firstByRecipientLog.events[0].type).toEqual("message");
       expect(firstByRecipientLog.events[1].type).toEqual("transfer");
-      const byRecipeintTransaction = byRecipientResult.transaction;
-      assert(isSendTransaction(byRecipeintTransaction), "Expected send transaction");
-      expect(byRecipeintTransaction).toEqual(unsigned);
-
-      // search by height
-      const heightResults = await connection.searchTx({ height: byIdResult.height });
-      expect(heightResults.length).toEqual(1);
-      const heightResult = heightResults[0];
-      expect(heightResult.transactionId).toEqual(transactionId);
-      assert(isConfirmedTransaction(heightResult), "Expected transaction to succeed");
-      assert(heightResult.log, "Log must be available");
-      const [firstHeightLog] = JSON.parse(heightResult.log);
-      expect(firstHeightLog.events.length).toEqual(2);
-      const heightTransaction = heightResult.transaction;
-      assert(isSendTransaction(heightTransaction), "Expected send transaction");
-      expect(heightTransaction).toEqual(unsigned);
-
-      connection.disconnect();
-    });
-
-    it("can post an ERC20 transfer and search for the transaction", async () => {
-      pendingWithoutWasmd();
-      const connection = await CosmWasmConnection.establish(httpUrl, defaultAddressPrefix, defaultConfig);
-      const profile = new UserProfile();
-      const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(bob.mnemonic));
-      const sender = await profile.createIdentity(wallet.id, defaultChainId, bob.path);
-      const senderAddress = connection.codec.identityToAddress(sender);
-
-      const recipient = makeRandomAddress();
-      const unsigned = await connection.withDefaultFee<SendTransaction>({
-        kind: "bcp/send",
-        chainId: defaultChainId,
-        sender: senderAddress,
-        recipient: recipient,
-        memo: "My first payment",
-        amount: {
-          quantity: "75",
-          fractionalDigits: 0,
-          tokenTicker: "ISA" as TokenTicker,
-        },
-      });
-      const nonce = await connection.getNonce({ address: senderAddress });
-      const signed = await profile.signTransaction(sender, unsigned, connection.codec, nonce);
-      const postableBytes = connection.codec.bytesToPost(signed);
-      const response = await connection.postTx(postableBytes);
-      const { transactionId } = response;
-      const blockInfo = await response.blockInfo.waitFor((info) => !isBlockInfoPending(info));
-      expect(blockInfo.state).toEqual(TransactionState.Succeeded);
-
-      // search by id
-      const byIdResults = await connection.searchTx({ id: transactionId });
-      expect(byIdResults.length).toEqual(1);
-      const byIdResult = byIdResults[0];
-      expect(byIdResult.transactionId).toEqual(transactionId);
-      assert(isConfirmedTransaction(byIdResult), "Expected transaction to succeed");
-      assert(byIdResult.log, "Log must be available");
-      const [firstByIdlog] = JSON.parse(byIdResult.log);
-      expect(firstByIdlog.events.length).toEqual(2);
-      expect(firstByIdlog.events[0].type).toEqual("message");
-      expect(firstByIdlog.events[1].type).toEqual("wasm");
-      // wasm event attributes added by contract
-      expect(firstByIdlog.events[1].attributes).toContain({ key: "action", value: "transfer" });
-      expect(firstByIdlog.events[1].attributes).toContain({ key: "sender", value: senderAddress });
-      expect(firstByIdlog.events[1].attributes).toContain({ key: "recipient", value: recipient });
-      // wasm event attributes added wasmd
-      expect(firstByIdlog.events[1].attributes).toContain({
-        key: "contract_address",
-        value: defaultConfig.erc20Tokens![1].contractAddress,
-      });
-      const byIdTransaction = byIdResult.transaction;
-      assert(isSendTransaction(byIdTransaction), "Expected send transaction");
-      expect(byIdTransaction).toEqual(unsigned);
-
-      // search by sender address
-      const bySenderResults = await connection.searchTx({ sentFromOrTo: senderAddress });
-      expect(bySenderResults).toBeTruthy();
-      expect(bySenderResults.length).toBeGreaterThanOrEqual(1);
-      const bySenderResult = bySenderResults[bySenderResults.length - 1];
-      expect(bySenderResult.transactionId).toEqual(transactionId);
-      assert(isConfirmedTransaction(bySenderResult), "Expected transaction to succeed");
-      assert(bySenderResult.log, "Log must be available");
-      const [firstBySenderLog] = JSON.parse(bySenderResult.log);
-      expect(firstBySenderLog.events.length).toEqual(2);
-      expect(firstBySenderLog.events[0].type).toEqual("message");
-      expect(firstBySenderLog.events[1].type).toEqual("wasm");
-      // wasm event attributes added by contract
-      expect(firstBySenderLog.events[1].attributes).toContain({ key: "action", value: "transfer" });
-      expect(firstBySenderLog.events[1].attributes).toContain({ key: "sender", value: senderAddress });
-      expect(firstBySenderLog.events[1].attributes).toContain({ key: "recipient", value: recipient });
-      // wasm event attributes added wasmd
-      expect(firstBySenderLog.events[1].attributes).toContain({
-        key: "contract_address",
-        value: defaultConfig.erc20Tokens![1].contractAddress,
-      });
-      const bySenderTransaction = bySenderResult.transaction;
-      assert(isSendTransaction(bySenderTransaction), "Expected send transaction");
-      expect(bySenderTransaction).toEqual(unsigned);
-
-      // search by recipient address
-      const byRecipientResults = await connection.searchTx({ sentFromOrTo: recipient });
-      expect(byRecipientResults.length).toBeGreaterThanOrEqual(1);
-      const byRecipientResult = byRecipientResults[byRecipientResults.length - 1];
-      expect(byRecipientResult.transactionId).toEqual(transactionId);
-      assert(isConfirmedTransaction(byRecipientResult), "Expected transaction to succeed");
-      assert(byRecipientResult.log, "Log must be available");
-      const [firstByRecipientLog] = JSON.parse(bySenderResult.log);
-      expect(firstByRecipientLog.events.length).toEqual(2);
-      expect(firstByRecipientLog.events[0].type).toEqual("message");
-      expect(firstByRecipientLog.events[1].type).toEqual("wasm");
-      // wasm event attributes added by contract
-      expect(firstByRecipientLog.events[1].attributes).toContain({ key: "action", value: "transfer" });
-      expect(firstByRecipientLog.events[1].attributes).toContain({ key: "sender", value: senderAddress });
-      expect(firstByRecipientLog.events[1].attributes).toContain({ key: "recipient", value: recipient });
-      // wasm event attributes added wasmd
-      expect(firstByRecipientLog.events[1].attributes).toContain({
-        key: "contract_address",
-        value: defaultConfig.erc20Tokens![1].contractAddress,
-      });
       const byRecipeintTransaction = byRecipientResult.transaction;
       assert(isSendTransaction(byRecipeintTransaction), "Expected send transaction");
       expect(byRecipeintTransaction).toEqual(unsigned);

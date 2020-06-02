@@ -22,7 +22,7 @@ import {
 import { Secp256k1 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
 
-import { BankToken, Erc20Token } from "./types";
+import { BankToken } from "./types";
 
 const { toBase64 } = Encoding;
 
@@ -39,14 +39,6 @@ export function encodePubkey(pubkey: PubkeyBundle): PubKey {
     default:
       throw new Error("Unsupported pubkey algo");
   }
-}
-
-export function toErc20Amount(amount: Amount, erc20Token: Erc20Token): string {
-  if (amount.tokenTicker !== erc20Token.ticker) throw new Error("Ticker mismatch between amount and token");
-  if (amount.fractionalDigits !== erc20Token.fractionalDigits) {
-    throw new Error("Fractional digits mismatch between amount and token");
-  }
-  return amount.quantity;
 }
 
 export function toBankCoin(amount: Amount, tokens: readonly BankToken[]): Coin {
@@ -88,17 +80,12 @@ export function encodeFullSignature(fullSignature: FullSignature): StdSignature 
   }
 }
 
-export function buildUnsignedTx(
-  tx: UnsignedTransaction,
-  bankTokens: readonly BankToken[],
-  erc20Tokens: readonly Erc20Token[] = [],
-): CosmosSdkTx {
+export function buildUnsignedTx(tx: UnsignedTransaction, bankTokens: readonly BankToken[]): CosmosSdkTx {
   if (!isSendTransaction(tx)) {
     throw new Error("Received transaction of unsupported kind");
   }
 
   const matchingBankToken = bankTokens.find((t) => t.ticker === tx.amount.tokenTicker);
-  const matchingErc20Token = erc20Tokens.find((t) => t.ticker === tx.amount.tokenTicker);
 
   if (!tx.fee) throw new Error("Transaction fee must be set");
 
@@ -121,42 +108,13 @@ export function buildUnsignedTx(
         fee: encodeFee(tx.fee, bankTokens),
       },
     };
-  } else if (matchingErc20Token) {
-    return {
-      type: "cosmos-sdk/StdTx",
-      value: {
-        msg: [
-          {
-            type: "wasm/execute",
-            value: {
-              sender: tx.sender,
-              contract: matchingErc20Token.contractAddress,
-              msg: {
-                transfer: {
-                  amount: toErc20Amount(tx.amount, matchingErc20Token),
-                  recipient: tx.recipient,
-                },
-              },
-              sent_funds: [],
-            },
-          },
-        ],
-        memo: tx.memo || "",
-        signatures: [],
-        fee: encodeFee(tx.fee, bankTokens),
-      },
-    };
   } else {
     throw new Error("Cannot encode this type of transaction");
   }
 }
 
-export function buildSignedTx(
-  tx: SignedTransaction,
-  bankTokens: readonly BankToken[],
-  erc20Tokens: readonly Erc20Token[] = [],
-): CosmosSdkTx {
-  const built = buildUnsignedTx(tx.transaction, bankTokens, erc20Tokens);
+export function buildSignedTx(tx: SignedTransaction, bankTokens: readonly BankToken[]): CosmosSdkTx {
+  const built = buildUnsignedTx(tx.transaction, bankTokens);
   return {
     ...built,
     value: {

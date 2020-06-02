@@ -1,15 +1,15 @@
 import {
-  CosmWasmClient,
-  isMsgExecuteContract,
-  isMsgInstantiateContract,
-  isMsgStoreCode,
-} from "@cosmwasm/cosmwasm";
-import { findSequenceForSignedTx, IndexedTx, isMsgSend, isStdTx, SearchTxFilter } from "@cosmwasm/sdk38";
+  CosmosClient,
+  findSequenceForSignedTx,
+  IndexedTx,
+  isMsgSend,
+  isStdTx,
+  SearchTxFilter,
+} from "@cosmwasm/sdk38";
 import {
   Account,
   AccountQuery,
   AddressQuery,
-  Amount,
   BlockchainConnection,
   BlockHeader,
   BlockId,
@@ -37,7 +37,6 @@ import {
 } from "@iov/bcp";
 import { Encoding, Uint53 } from "@iov/encoding";
 import { concat, DefaultValueProducer, ValueAndUpdates } from "@iov/stream";
-import BN from "bn.js";
 import equal from "fast-deep-equal";
 import { ReadonlyDate } from "readonly-date";
 import { Producer, Stream } from "xstream";
@@ -47,7 +46,7 @@ import { Caip5 } from "./caip5";
 import { CosmWasmCodec } from "./cosmwasmcodec";
 import { decodeAmount, decodePubkey, parseTxsResponseSigned, parseTxsResponseUnsigned } from "./decode";
 import { buildSignedTx } from "./encode";
-import { accountToNonce, BankToken, Erc20Token } from "./types";
+import { accountToNonce, BankToken } from "./types";
 
 // poll every 0.5 seconds (block time 1s)
 const defaultPollInterval = 500;
@@ -55,8 +54,6 @@ const defaultPollInterval = 500;
 export interface TokenConfiguration {
   /** Supported tokens of the Cosmos SDK bank module */
   readonly bankTokens: ReadonlyArray<BankToken & { readonly name: string }>;
-  /** Smart contract based tokens (ERC20 compatible). Unset means empty array. */
-  readonly erc20Tokens?: ReadonlyArray<Erc20Token & { readonly name: string }>;
 }
 
 function isDefined<X>(value: X | undefined): value is X {
@@ -92,43 +89,40 @@ export class CosmWasmConnection implements BlockchainConnection {
     addressPrefix: string,
     tokens: TokenConfiguration,
   ): Promise<CosmWasmConnection> {
-    const cosmWasmClient = new CosmWasmClient(url);
-    const chainData = await this.initialize(cosmWasmClient);
-    return new CosmWasmConnection(cosmWasmClient, chainData, addressPrefix, tokens);
+    const cosmosClient = new CosmosClient(url);
+    const chainData = await this.initialize(cosmosClient);
+    return new CosmWasmConnection(cosmosClient, chainData, addressPrefix, tokens);
   }
 
-  private static async initialize(cosmWasmClient: CosmWasmClient): Promise<ChainId> {
-    const rawChainId = await cosmWasmClient.getChainId();
+  private static async initialize(cosmosClient: CosmosClient): Promise<ChainId> {
+    const rawChainId = await cosmosClient.getChainId();
     return Caip5.encode(rawChainId);
   }
 
   public readonly chainId: ChainId;
   public readonly codec: TxCodec;
 
-  private readonly cosmWasmClient: CosmWasmClient;
+  private readonly cosmosClient: CosmosClient;
   private readonly addressPrefix: string;
   private readonly bankTokens: readonly BankToken[];
-  private readonly erc20Tokens: readonly Erc20Token[];
 
   // these are derived from arguments (cached for use in multiple functions)
   private readonly feeToken: BankToken | undefined;
   private readonly supportedTokens: readonly Token[];
 
   private constructor(
-    cosmWasmClient: CosmWasmClient,
+    cosmosClient: CosmosClient,
     chainId: ChainId,
     addressPrefix: string,
     tokens: TokenConfiguration,
   ) {
-    this.cosmWasmClient = cosmWasmClient;
+    this.cosmosClient = cosmosClient;
     this.chainId = chainId;
-    this.codec = new CosmWasmCodec(addressPrefix, tokens.bankTokens, tokens.erc20Tokens);
+    this.codec = new CosmWasmCodec(addressPrefix, tokens.bankTokens);
     this.addressPrefix = addressPrefix;
     this.bankTokens = tokens.bankTokens;
     this.feeToken = this.bankTokens.find(() => true);
-    const erc20Tokens = tokens.erc20Tokens || [];
-    this.erc20Tokens = erc20Tokens;
-    this.supportedTokens = [...tokens.bankTokens, ...erc20Tokens]
+    this.supportedTokens = tokens.bankTokens
       .map((info) => ({
         tokenTicker: info.ticker as TokenTicker,
         tokenName: info.name,
@@ -142,7 +136,7 @@ export class CosmWasmConnection implements BlockchainConnection {
   }
 
   public async height(): Promise<number> {
-    return this.cosmWasmClient.getHeight();
+    return this.cosmosClient.getHeight();
   }
 
   public async getToken(searchTicker: TokenTicker): Promise<Token | undefined> {
@@ -158,40 +152,24 @@ export class CosmWasmConnection implements BlockchainConnection {
    * context and network available, which we might use to implement the API in an async way.
    */
   public async identifier(signed: SignedTransaction): Promise<TransactionId> {
-    const tx = buildSignedTx(signed, this.bankTokens, this.erc20Tokens);
-    const id = await this.cosmWasmClient.getIdentifier(tx);
+    const tx = buildSignedTx(signed, this.bankTokens);
+    const id = await this.cosmosClient.getIdentifier(tx);
     return id as TransactionId;
   }
 
   public async getAccount(query: AccountQuery): Promise<Account | undefined> {
     const address = isPubkeyQuery(query) ? pubkeyToAddress(query.pubkey, this.addressPrefix) : query.address;
-    const bankAccount = await this.cosmWasmClient.getAccount(address);
+    const bankAccount = await this.cosmosClient.getAccount(address);
 
     const supportedBankCoins = (bankAccount?.balance || []).filter(({ denom }) =>
       this.bankTokens.find((token) => token.denom === denom),
     );
-    const erc20Amounts = await Promise.all(
-      this.erc20Tokens.map(
-        async (erc20): Promise<Amount> => {
-          const queryMsg = { balance: { address: address } };
-          const response = await this.cosmWasmClient.queryContractSmart(erc20.contractAddress, queryMsg);
-          const normalizedBalance = new BN(response.balance).toString();
-          return {
-            fractionalDigits: erc20.fractionalDigits,
-            quantity: normalizedBalance,
-            tokenTicker: erc20.ticker as TokenTicker,
-          };
-        },
-      ),
-    );
-    const nonZeroErc20Amounts = erc20Amounts.filter((amount) => amount.quantity !== "0");
 
-    if (!bankAccount && nonZeroErc20Amounts.length === 0) {
+    if (!bankAccount) {
       return undefined;
     } else {
       const balance = [
         ...supportedBankCoins.map((coin) => decodeAmount(this.bankTokens, coin)),
-        ...nonZeroErc20Amounts,
       ].sort((a, b) => a.tokenTicker.localeCompare(b.tokenTicker));
       const pubkey = bankAccount?.pubkey ? decodePubkey(bankAccount.pubkey) : undefined;
       return {
@@ -234,7 +212,7 @@ export class CosmWasmConnection implements BlockchainConnection {
 
   public async getNonce(query: AddressQuery | PubkeyQuery): Promise<Nonce> {
     const address = isPubkeyQuery(query) ? pubkeyToAddress(query.pubkey, this.addressPrefix) : query.address;
-    const { accountNumber, sequence } = await this.cosmWasmClient.getNonce(address);
+    const { accountNumber, sequence } = await this.cosmosClient.getNonce(address);
     return accountToNonce(accountNumber, sequence);
   }
 
@@ -249,7 +227,7 @@ export class CosmWasmConnection implements BlockchainConnection {
   }
 
   public async getBlockHeader(height: number): Promise<BlockHeader> {
-    const { id, header, txs } = await this.cosmWasmClient.getBlock(height);
+    const { id, header, txs } = await this.cosmosClient.getBlock(height);
     return {
       id: id as BlockId,
       height: header.height,
@@ -265,7 +243,7 @@ export class CosmWasmConnection implements BlockchainConnection {
   public async getTx(
     id: TransactionId,
   ): Promise<ConfirmedAndSignedTransaction<UnsignedTransaction> | FailedTransaction> {
-    const results = await this.cosmWasmClient.searchTx({ id: id });
+    const results = await this.cosmosClient.searchTx({ id: id });
     switch (results.length) {
       case 0:
         throw new Error("Transaction does not exist");
@@ -279,7 +257,7 @@ export class CosmWasmConnection implements BlockchainConnection {
   public async postTx(tx: PostableBytes): Promise<PostTxResponse> {
     const txAsJson = JSON.parse(Encoding.fromUtf8(tx));
     if (!isStdTx(txAsJson)) throw new Error("Postable bytes must contain a JSON encoded StdTx");
-    const { transactionHash, rawLog } = await this.cosmWasmClient.postTx(txAsJson);
+    const { transactionHash, rawLog } = await this.cosmosClient.postTx(txAsJson);
     const transactionId = transactionHash as TransactionId;
     const firstEvent: BlockInfo = { state: TransactionState.Pending };
     let blockInfoInterval: NodeJS.Timeout;
@@ -340,36 +318,12 @@ export class CosmWasmConnection implements BlockchainConnection {
 
     let txs: readonly IndexedTx[];
     if (id) {
-      txs = await this.cosmWasmClient.searchTx({ id: id }, filter);
+      txs = await this.cosmosClient.searchTx({ id: id }, filter);
     } else if (height) {
-      txs = await this.cosmWasmClient.searchTx({ height: height }, filter);
+      txs = await this.cosmosClient.searchTx({ height: height }, filter);
     } else if (sentFromOrTo) {
       const pendingRequests = new Array<Promise<readonly IndexedTx[]>>();
-      pendingRequests.push(this.cosmWasmClient.searchTx({ sentFromOrTo: sentFromOrTo }, filter));
-      for (const contract of this.erc20Tokens.map((token) => token.contractAddress)) {
-        const searchBySender = [
-          {
-            key: "wasm.contract_address",
-            value: contract,
-          },
-          {
-            key: "wasm.sender",
-            value: sentFromOrTo,
-          },
-        ];
-        const searchByRecipient = [
-          {
-            key: "wasm.contract_address",
-            value: contract,
-          },
-          {
-            key: "wasm.recipient",
-            value: sentFromOrTo,
-          },
-        ];
-        pendingRequests.push(this.cosmWasmClient.searchTx({ tags: searchBySender }, filter));
-        pendingRequests.push(this.cosmWasmClient.searchTx({ tags: searchByRecipient }, filter));
-      }
+      pendingRequests.push(this.cosmosClient.searchTx({ sentFromOrTo: sentFromOrTo }, filter));
       const responses = await Promise.all(pendingRequests);
       const allResults = responses.reduce((accumulator, results) => accumulator.concat(results), []);
       txs = deduplicate(allResults, (a, b) => a.hash.localeCompare(b.hash)).sort(compareByHeightAndHash);
@@ -463,13 +417,7 @@ export class CosmWasmConnection implements BlockchainConnection {
   private parseAndPopulateTxResponseUnsigned(
     response: IndexedTx,
   ): ConfirmedTransaction<UnsignedTransaction> | FailedTransaction {
-    return parseTxsResponseUnsigned(
-      this.chainId,
-      response.height,
-      response,
-      this.bankTokens,
-      this.erc20Tokens,
-    );
+    return parseTxsResponseUnsigned(this.chainId, response.height, response, this.bankTokens);
   }
 
   private async parseAndPopulateTxResponseSigned(
@@ -481,17 +429,11 @@ export class CosmWasmConnection implements BlockchainConnection {
     let senderAddress: string;
     if (isMsgSend(firstMsg)) {
       senderAddress = firstMsg.value.from_address;
-    } else if (
-      isMsgStoreCode(firstMsg) ||
-      isMsgInstantiateContract(firstMsg) ||
-      isMsgExecuteContract(firstMsg)
-    ) {
-      senderAddress = firstMsg.value.sender;
     } else {
       throw new Error(`Got unsupported type of message: ${firstMsg.type}`);
     }
 
-    const { accountNumber, sequence: currentSequence } = await this.cosmWasmClient.getNonce(senderAddress);
+    const { accountNumber, sequence: currentSequence } = await this.cosmosClient.getNonce(senderAddress);
     const sequenceForTx = await findSequenceForSignedTx(
       response.tx,
       Caip5.decode(this.chainId),
@@ -502,14 +444,7 @@ export class CosmWasmConnection implements BlockchainConnection {
 
     const nonce = accountToNonce(accountNumber, sequenceForTx);
 
-    return parseTxsResponseSigned(
-      this.chainId,
-      response.height,
-      nonce,
-      response,
-      this.bankTokens,
-      this.erc20Tokens,
-    );
+    return parseTxsResponseSigned(this.chainId, response.height, nonce, response, this.bankTokens);
   }
 
   private waitForTransaction(

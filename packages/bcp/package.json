@@ -36,7 +36,6 @@
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
   },
   "dependencies": {
-    "@cosmwasm/cosmwasm": "^0.8.0",
     "@cosmwasm/sdk38": "^0.8.0",
     "@iov/bcp": "^2.1.0",
     "@iov/crypto": "^2.1.0",
