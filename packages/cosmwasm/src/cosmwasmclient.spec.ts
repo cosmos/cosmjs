@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { Secp256k1Pen, makeSignBytes } from "@cosmwasm/sdk38";
+import { makeSignBytes, Secp256k1Pen } from "@cosmwasm/sdk38";
 import { Sha256 } from "@iov/crypto";
 import { Bech32, Encoding } from "@iov/encoding";
 import { assert, sleep } from "@iov/utils";
@@ -7,6 +7,7 @@ import { ReadonlyDate } from "readonly-date";
 
 import { Code, CosmWasmClient, PrivateCosmWasmClient } from "./cosmwasmclient";
 import { findAttribute } from "./logs";
+import { MsgSend } from "./msgs";
 import { SigningCosmWasmClient } from "./signingcosmwasmclient";
 import cosmoshub from "./testdata/cosmoshub.json";
 import {
@@ -20,7 +21,7 @@ import {
   wasmd,
   wasmdEnabled,
 } from "./testutils.spec";
-import { MsgSend, StdFee } from "./types";
+import { StdFee } from "./types";
 
 const { fromHex, fromUtf8, toAscii, toBase64 } = Encoding;
 

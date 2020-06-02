@@ -6,15 +6,9 @@ import pako from "pako";
 import { isValidBuilder } from "./builder";
 import { Account, CosmWasmClient, GetNonceResult, PostTxResult } from "./cosmwasmclient";
 import { findAttribute, Log } from "./logs";
+import { MsgExecuteContract, MsgInstantiateContract, MsgSend, MsgStoreCode } from "./msgs";
 import { BroadcastMode } from "./restclient";
-import {
-  MsgExecuteContract,
-  MsgInstantiateContract,
-  MsgSend,
-  MsgStoreCode,
-  StdFee,
-  StdSignature,
-} from "./types";
+import { StdFee, StdSignature } from "./types";
 
 export interface SigningCallback {
   (signBytes: Uint8Array): Promise<StdSignature>;

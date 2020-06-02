@@ -1,6 +1,5 @@
 import { Coin } from "./coins";
 import { Account, CosmosClient, GetNonceResult, PostTxResult } from "./cosmosclient";
-import { Log } from "./logs";
 import { BroadcastMode } from "./restclient";
 import { StdFee, StdSignature } from "./types";
 export interface SigningCallback {
@@ -11,39 +10,6 @@ export interface FeeTable {
   readonly init: StdFee;
   readonly exec: StdFee;
   readonly send: StdFee;
-}
-export interface UploadMeta {
-  /** The source URL */
-  readonly source?: string;
-  /** The builder tag */
-  readonly builder?: string;
-}
-export interface UploadResult {
-  /** Size of the original wasm code in bytes */
-  readonly originalSize: number;
-  /** A hex encoded sha256 checksum of the original wasm code (that is stored on chain) */
-  readonly originalChecksum: string;
-  /** Size of the compressed wasm code in bytes */
-  readonly compressedSize: number;
-  /** A hex encoded sha256 checksum of the compressed wasm code (that stored in the transaction) */
-  readonly compressedChecksum: string;
-  /** The ID of the code asigned by the chain */
-  readonly codeId: number;
-  readonly logs: readonly Log[];
-  /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
-  readonly transactionHash: string;
-}
-export interface InstantiateResult {
-  /** The address of the newly instantiated contract */
-  readonly contractAddress: string;
-  readonly logs: readonly Log[];
-  /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
-  readonly transactionHash: string;
-}
-export interface ExecuteResult {
-  readonly logs: readonly Log[];
-  /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
-  readonly transactionHash: string;
 }
 export declare class SigningCosmosClient extends CosmosClient {
   readonly senderAddress: string;

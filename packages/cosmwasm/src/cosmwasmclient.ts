@@ -1,9 +1,8 @@
-import { Coin } from "@cosmwasm/sdk38";
+import { Coin, decodeBech32Pubkey, IndexedTx } from "@cosmwasm/sdk38";
 import { Sha256 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
 
 import { Log, parseLogs } from "./logs";
-import { decodeBech32Pubkey } from "./pubkey";
 import { BroadcastMode, RestClient } from "./restclient";
 import { CosmosSdkTx, JsonObject, PubKey, StdTx } from "./types";
 
@@ -101,24 +100,6 @@ export interface Contract {
 export interface ContractDetails extends Contract {
   /** Argument passed on initialization of the contract */
   readonly initMsg: object;
-}
-
-/** A transaction that is indexed as part of the transaction history */
-export interface IndexedTx {
-  readonly height: number;
-  /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
-  readonly hash: string;
-  /** Transaction execution error code. 0 on success. */
-  readonly code: number;
-  readonly rawLog: string;
-  readonly logs: readonly Log[];
-  readonly tx: CosmosSdkTx;
-  /** The gas limit as set by the user */
-  readonly gasWanted?: number;
-  /** The gas used by the execution */
-  readonly gasUsed?: number;
-  /** An RFC 3339 time string like e.g. '2020-02-15T10:39:10.4696305Z' */
-  readonly timestamp: string;
 }
 
 export interface BlockHeader {

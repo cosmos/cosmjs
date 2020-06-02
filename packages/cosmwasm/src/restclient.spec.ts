@@ -1,12 +1,28 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { Coin, makeCosmoshubPath, Pen, rawSecp256k1PubkeyToAddress, Secp256k1Pen, makeSignBytes } from "@cosmwasm/sdk38";
+import {
+  Coin,
+  encodeBech32Pubkey,
+  makeCosmoshubPath,
+  makeSignBytes,
+  Pen,
+  rawSecp256k1PubkeyToAddress,
+  Secp256k1Pen,
+} from "@cosmwasm/sdk38";
 import { Sha256 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
 import { assert, sleep } from "@iov/utils";
 import { ReadonlyDate } from "readonly-date";
 
 import { findAttribute, parseLogs } from "./logs";
-import { encodeBech32Pubkey } from "./pubkey";
+import {
+  isMsgInstantiateContract,
+  isMsgStoreCode,
+  Msg,
+  MsgExecuteContract,
+  MsgInstantiateContract,
+  MsgSend,
+  MsgStoreCode,
+} from "./msgs";
 import { PostTxsResponse, RestClient, TxsResponse } from "./restclient";
 import { SigningCosmWasmClient } from "./signingcosmwasmclient";
 import cosmoshub from "./testdata/cosmoshub.json";
@@ -28,18 +44,7 @@ import {
   wasmd,
   wasmdEnabled,
 } from "./testutils.spec";
-import {
-  isMsgInstantiateContract,
-  isMsgStoreCode,
-  Msg,
-  MsgExecuteContract,
-  MsgInstantiateContract,
-  MsgSend,
-  MsgStoreCode,
-  StdFee,
-  StdSignature,
-  StdTx,
-} from "./types";
+import { StdFee, StdSignature, StdTx } from "./types";
 
 const { fromAscii, fromBase64, fromHex, toAscii, toBase64, toHex } = Encoding;
 

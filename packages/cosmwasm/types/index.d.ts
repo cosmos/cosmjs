@@ -1,6 +1,5 @@
 import * as logs from "./logs";
-import * as types from "./types";
-export { logs, types };
+export { logs };
 export { BroadcastMode, RestClient, TxsResponse } from "./restclient";
 export {
   Account,
@@ -12,7 +11,6 @@ export {
   ContractDetails,
   CosmWasmClient,
   GetNonceResult,
-  IndexedTx,
   PostTxResult,
   SearchByHeightQuery,
   SearchByIdQuery,
@@ -21,7 +19,6 @@ export {
   SearchTxQuery,
   SearchTxFilter,
 } from "./cosmwasmclient";
-export { decodeBech32Pubkey, encodeBech32Pubkey, encodeSecp256k1Pubkey } from "./pubkey";
 export {
   ExecuteResult,
   FeeTable,
@@ -31,3 +28,11 @@ export {
   UploadMeta,
   UploadResult,
 } from "./signingcosmwasmclient";
+export {
+  isMsgExecuteContract,
+  isMsgInstantiateContract,
+  isMsgStoreCode,
+  MsgStoreCode,
+  MsgExecuteContract,
+  MsgInstantiateContract,
+} from "./msgs";
