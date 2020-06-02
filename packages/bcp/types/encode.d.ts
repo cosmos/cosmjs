@@ -1,4 +1,4 @@
-import { Coin, types } from "@cosmwasm/sdk";
+import { Coin, types } from "@cosmwasm/sdk38";
 import { Amount, Fee, FullSignature, PubkeyBundle, SignedTransaction, UnsignedTransaction } from "@iov/bcp";
 import { BankToken, Erc20Token } from "./types";
 export declare function encodePubkey(pubkey: PubkeyBundle): types.PubKey;

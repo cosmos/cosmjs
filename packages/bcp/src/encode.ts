@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { Coin, encodeSecp256k1Pubkey, encodeSecp256k1Signature, types } from "@cosmwasm/sdk";
+import { Coin, encodeSecp256k1Pubkey, encodeSecp256k1Signature, types } from "@cosmwasm/sdk38";
 import {
   Algorithm,
   Amount,

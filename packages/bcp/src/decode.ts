@@ -1,4 +1,5 @@
-import { Coin, IndexedTx, types } from "@cosmwasm/sdk";
+import { isMsgExecuteContract } from "@cosmwasm/cosmwasm";
+import { Coin, IndexedTx, types } from "@cosmwasm/sdk38";
 import {
   Address,
   Algorithm,
@@ -92,7 +93,7 @@ export function parseMsg(
       memo: memo,
     };
     return send;
-  } else if (types.isMsgExecuteContract(msg)) {
+  } else if (isMsgExecuteContract(msg)) {
     const matchingTokenContract = erc20Tokens.find((t) => t.contractAddress === msg.value.contract);
     if (!matchingTokenContract) {
       return {

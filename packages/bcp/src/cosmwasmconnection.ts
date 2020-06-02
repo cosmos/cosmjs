@@ -1,4 +1,10 @@
-import { CosmWasmClient, findSequenceForSignedTx, IndexedTx, SearchTxFilter, types } from "@cosmwasm/sdk";
+import {
+  CosmWasmClient,
+  isMsgExecuteContract,
+  isMsgInstantiateContract,
+  isMsgStoreCode,
+} from "@cosmwasm/cosmwasm";
+import { findSequenceForSignedTx, IndexedTx, SearchTxFilter, types } from "@cosmwasm/sdk38";
 import {
   Account,
   AccountQuery,
@@ -476,9 +482,9 @@ export class CosmWasmConnection implements BlockchainConnection {
     if (types.isMsgSend(firstMsg)) {
       senderAddress = firstMsg.value.from_address;
     } else if (
-      types.isMsgStoreCode(firstMsg) ||
-      types.isMsgInstantiateContract(firstMsg) ||
-      types.isMsgExecuteContract(firstMsg)
+      isMsgStoreCode(firstMsg) ||
+      isMsgInstantiateContract(firstMsg) ||
+      isMsgExecuteContract(firstMsg)
     ) {
       senderAddress = firstMsg.value.sender;
     } else {

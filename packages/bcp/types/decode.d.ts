@@ -1,4 +1,4 @@
-import { Coin, IndexedTx, types } from "@cosmwasm/sdk";
+import { Coin, IndexedTx, types } from "@cosmwasm/sdk38";
 import {
   Amount,
   ChainId,

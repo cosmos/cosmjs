@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { Coin, IndexedTx, types } from "@cosmwasm/sdk";
+import { MsgExecuteContract } from "@cosmwasm/cosmwasm";
+import { Coin, IndexedTx, types } from "@cosmwasm/sdk38";
 import { Address, Algorithm, isSendTransaction, SendTransaction, TokenTicker } from "@iov/bcp";
 import { Encoding } from "@iov/encoding";
 import { assert } from "@iov/utils";
@@ -164,7 +165,7 @@ describe("decode", () => {
     });
 
     it("works for ERC20 send transaction", () => {
-      const msg: types.MsgExecuteContract = {
+      const msg: MsgExecuteContract = {
         type: "wasm/execute",
         value: {
           sender: "cosmos1h806c7khnvmjlywdrkdgk2vrayy2mmvf9rxk2r",
@@ -218,7 +219,7 @@ describe("decode", () => {
     });
 
     it("works for ERC20 send transaction", () => {
-      const msg: types.MsgExecuteContract = {
+      const msg: MsgExecuteContract = {
         type: "wasm/execute",
         value: {
           sender: "cosmos1h806c7khnvmjlywdrkdgk2vrayy2mmvf9rxk2r",

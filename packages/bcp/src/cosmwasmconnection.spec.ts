@@ -1,4 +1,4 @@
-import { decodeSignature } from "@cosmwasm/sdk";
+import { decodeSignature } from "@cosmwasm/sdk38";
 import {
   Account,
   Address,
