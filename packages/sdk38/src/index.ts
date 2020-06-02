@@ -1,6 +1,5 @@
 import * as logs from "./logs";
-import * as types from "./types";
-export { logs, types };
+export { logs };
 
 export { pubkeyToAddress, rawSecp256k1PubkeyToAddress } from "./address";
 export { Coin, coin, coins } from "./coins";
@@ -32,3 +31,14 @@ export { decodeBech32Pubkey, encodeBech32Pubkey, encodeSecp256k1Pubkey } from ".
 export { findSequenceForSignedTx } from "./sequence";
 export { encodeSecp256k1Signature, decodeSignature } from "./signature";
 export { FeeTable, SigningCallback, SigningCosmosClient } from "./signingcosmosclient";
+export {
+  isMsgSend,
+  isStdTx,
+  pubkeyType,
+  CosmosSdkTx,
+  PubKey,
+  MsgSend,
+  StdFee,
+  StdSignature,
+  StdTx,
+} from "./types";

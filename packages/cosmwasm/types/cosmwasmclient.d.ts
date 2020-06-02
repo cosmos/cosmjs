@@ -1,7 +1,7 @@
-import { Coin, IndexedTx } from "@cosmwasm/sdk38";
+import { Coin, CosmosSdkTx, IndexedTx, PubKey, StdTx } from "@cosmwasm/sdk38";
 import { Log } from "./logs";
 import { BroadcastMode, RestClient } from "./restclient";
-import { CosmosSdkTx, JsonObject, PubKey, StdTx } from "./types";
+import { JsonObject } from "./types";
 export interface GetNonceResult {
   readonly accountNumber: number;
   readonly sequence: number;

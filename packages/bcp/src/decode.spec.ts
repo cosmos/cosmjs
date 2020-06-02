@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { MsgExecuteContract } from "@cosmwasm/cosmwasm";
-import { Coin, IndexedTx, types } from "@cosmwasm/sdk38";
+import { Coin, IndexedTx, PubKey, StdSignature, StdTx } from "@cosmwasm/sdk38";
+import { Msg } from "@cosmwasm/sdk38/types/types";
 import { Address, Algorithm, isSendTransaction, SendTransaction, TokenTicker } from "@iov/bcp";
 import { Encoding } from "@iov/encoding";
 import { assert } from "@iov/utils";
@@ -85,7 +86,7 @@ describe("decode", () => {
 
   describe("decodePubkey", () => {
     it("works for secp256k1", () => {
-      const pubkey: types.PubKey = {
+      const pubkey: PubKey = {
         type: "tendermint/PubKeySecp256k1",
         value: "AtQaCqFnshaZQp6rIkvAPyzThvCvXSDO+9AzbxVErqJP",
       };
@@ -93,7 +94,7 @@ describe("decode", () => {
     });
 
     it("works for ed25519", () => {
-      const pubkey: types.PubKey = {
+      const pubkey: PubKey = {
         type: "tendermint/PubKeyEd25519",
         value: "s69CnMgLTpuRyEfecjws3mWssBrOICUx8C2O1DkKSto=",
       };
@@ -105,7 +106,7 @@ describe("decode", () => {
 
     it("throws for unsupported types", () => {
       // https://github.com/tendermint/tendermint/blob/v0.33.0/crypto/sr25519/codec.go#L12
-      const pubkey: types.PubKey = {
+      const pubkey: PubKey = {
         type: "tendermint/PubKeySr25519",
         value: "N4FJNPE5r/Twz55kO1QEIxyaGF5/HTXH6WgLQJWsy1o=",
       };
@@ -123,7 +124,7 @@ describe("decode", () => {
 
   describe("decodeFullSignature", () => {
     it("works", () => {
-      const fullSignature: types.StdSignature = {
+      const fullSignature: StdSignature = {
         pub_key: {
           type: "tendermint/PubKeySecp256k1",
           value: "AtQaCqFnshaZQp6rIkvAPyzThvCvXSDO+9AzbxVErqJP",
@@ -146,7 +147,7 @@ describe("decode", () => {
 
   describe("parseMsg", () => {
     it("works for bank send transaction", () => {
-      const msg: types.Msg = {
+      const msg: Msg = {
         type: "cosmos-sdk/MsgSend",
         value: {
           from_address: "cosmos1h806c7khnvmjlywdrkdgk2vrayy2mmvf9rxk2r",
@@ -233,7 +234,7 @@ describe("decode", () => {
           sent_funds: [],
         },
       };
-      const tx: types.StdTx = {
+      const tx: StdTx = {
         msg: [msg],
         memo: defaultMemo,
         fee: {

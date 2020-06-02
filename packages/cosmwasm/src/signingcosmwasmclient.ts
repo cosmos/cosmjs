@@ -1,4 +1,4 @@
-import { Coin, coins, makeSignBytes } from "@cosmwasm/sdk38";
+import { Coin, coins, makeSignBytes, StdFee, StdSignature } from "@cosmwasm/sdk38";
 import { Sha256 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
 import pako from "pako";
@@ -8,7 +8,6 @@ import { Account, CosmWasmClient, GetNonceResult, PostTxResult } from "./cosmwas
 import { findAttribute, Log } from "./logs";
 import { MsgExecuteContract, MsgInstantiateContract, MsgSend, MsgStoreCode } from "./msgs";
 import { BroadcastMode } from "./restclient";
-import { StdFee, StdSignature } from "./types";
 
 export interface SigningCallback {
   (signBytes: Uint8Array): Promise<StdSignature>;

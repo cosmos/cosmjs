@@ -1,8 +1,8 @@
-import { Coin } from "@cosmwasm/sdk38";
+import { Coin, CosmosSdkTx, StdTx } from "@cosmwasm/sdk38";
 import { Encoding, isNonNullObject } from "@iov/encoding";
 import axios, { AxiosError, AxiosInstance } from "axios";
 
-import { CosmosSdkTx, JsonObject, Model, parseWasmData, StdTx, WasmData } from "./types";
+import { JsonObject, Model, parseWasmData, WasmData } from "./types";
 
 const { fromBase64, fromUtf8, toHex, toUtf8 } = Encoding;
 

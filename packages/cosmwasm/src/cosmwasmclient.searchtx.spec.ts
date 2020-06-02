@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { Coin, makeSignBytes, Secp256k1Pen } from "@cosmwasm/sdk38";
+import { Coin, CosmosSdkTx, makeSignBytes, Secp256k1Pen } from "@cosmwasm/sdk38";
 import { assert, sleep } from "@iov/utils";
 
 import { CosmWasmClient } from "./cosmwasmclient";
@@ -15,7 +15,6 @@ import {
   wasmd,
   wasmdEnabled,
 } from "./testutils.spec";
-import { CosmosSdkTx } from "./types";
 
 describe("CosmWasmClient.searchTx", () => {
   let sendSuccessful:

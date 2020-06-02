@@ -1,6 +1,6 @@
 const defaultHttpUrl = "http://localhost:1317";
 const defaultNetworkId = "testing";
-const defaultFee: types.StdFee = {
+const defaultFee: StdFee = {
   amount: [
     {
       amount: "5000",

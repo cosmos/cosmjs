@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { makeSignBytes, Secp256k1Pen } from "@cosmwasm/sdk38";
+import { makeSignBytes, Secp256k1Pen, StdFee } from "@cosmwasm/sdk38";
 import { Sha256 } from "@iov/crypto";
 import { Bech32, Encoding } from "@iov/encoding";
 import { assert, sleep } from "@iov/utils";
@@ -21,7 +21,6 @@ import {
   wasmd,
   wasmdEnabled,
 } from "./testutils.spec";
-import { StdFee } from "./types";
 
 const { fromHex, fromUtf8, toAscii, toBase64 } = Encoding;
 

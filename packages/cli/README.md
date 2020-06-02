@@ -50,7 +50,7 @@ const { account_number, sequence } = (await client.authAccounts(faucetAddress)).
 // Craft a send transaction
 const emptyAddress = Bech32.encode("cosmos", Random.getBytes(20));
 const memo = "My first contract on chain";
-const sendTokensMsg: types.MsgSend = {
+const sendTokensMsg: MsgSend = {
   type: "cosmos-sdk/MsgSend",
   value: {
     from_address: faucetAddress,
@@ -66,7 +66,7 @@ const sendTokensMsg: types.MsgSend = {
 
 const signBytes = makeSignBytes([sendTokensMsg], defaultFee, defaultNetworkId, memo, account_number, sequence);
 const signature = await pen.sign(signBytes);
-const signedTx: types.StdTx = {
+const signedTx: StdTx = {
     msg: [sendTokensMsg],
     fee: defaultFee,
     memo: memo,

@@ -5,7 +5,7 @@ export type HandleMsg =
         msgs: (
           | {
               send: {
-                amount: types.Coin[];
+                amount: Coin[];
                 from_address: string;
                 to_address: string;
               };
@@ -15,7 +15,7 @@ export type HandleMsg =
                 contract_addr: string;
                 // this had to be changed - is Base64 encoded string
                 msg: string;
-                send: types.Coin[] | null;
+                send: Coin[] | null;
               };
             }
           | {
@@ -53,7 +53,7 @@ export interface State {
 
 const base64Msg = (msg: object): string => toBase64(toUtf8(JSON.stringify(msg)));
 
-const sendMsg = (from_address: string, to_address: string, amount: types.Coin[]) => {
+const sendMsg = (from_address: string, to_address: string, amount: Coin[]) => {
   return {
     send: {
       from_address,
@@ -63,7 +63,7 @@ const sendMsg = (from_address: string, to_address: string, amount: types.Coin[])
   };
 }
 
-const contractMsg = (contract_addr: string, msg: object, amount?: types.Coin[]) => {
+const contractMsg = (contract_addr: string, msg: object, amount?: Coin[]) => {
   return {
     contract: {
       contract_addr,

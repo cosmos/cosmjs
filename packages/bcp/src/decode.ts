@@ -1,5 +1,6 @@
 import { isMsgExecuteContract } from "@cosmwasm/cosmwasm";
-import { Coin, IndexedTx, types } from "@cosmwasm/sdk38";
+import { Coin, IndexedTx, PubKey, StdSignature } from "@cosmwasm/sdk38";
+import { isMsgSend, isStdTx, Msg, pubkeyType, StdFee, StdTx } from "@cosmwasm/sdk38/types/types";
 import {
   Address,
   Algorithm,
@@ -26,14 +27,14 @@ import { BankToken, Erc20Token } from "./types";
 
 const { fromBase64 } = Encoding;
 
-export function decodePubkey(pubkey: types.PubKey): PubkeyBundle {
+export function decodePubkey(pubkey: PubKey): PubkeyBundle {
   switch (pubkey.type) {
-    case types.pubkeyType.secp256k1:
+    case pubkeyType.secp256k1:
       return {
         algo: Algorithm.Secp256k1,
         data: fromBase64(pubkey.value) as PubkeyBytes,
       };
-    case types.pubkeyType.ed25519:
+    case pubkeyType.ed25519:
       return {
         algo: Algorithm.Ed25519,
         data: fromBase64(pubkey.value) as PubkeyBytes,
@@ -47,7 +48,7 @@ export function decodeSignature(signature: string): SignatureBytes {
   return fromBase64(signature) as SignatureBytes;
 }
 
-export function decodeFullSignature(signature: types.StdSignature, nonce: number): FullSignature {
+export function decodeFullSignature(signature: StdSignature, nonce: number): FullSignature {
   return {
     nonce: nonce as Nonce,
     pubkey: decodePubkey(signature.pub_key),
@@ -74,13 +75,13 @@ export function decodeAmount(tokens: readonly BankToken[], coin: Coin): Amount {
 }
 
 export function parseMsg(
-  msg: types.Msg,
+  msg: Msg,
   memo: string | undefined,
   chainId: ChainId,
   tokens: readonly BankToken[],
   erc20Tokens: readonly Erc20Token[],
 ): UnsignedTransaction {
-  if (types.isMsgSend(msg)) {
+  if (isMsgSend(msg)) {
     if (msg.value.amount.length !== 1) {
       throw new Error("Only MsgSend with one amount is supported");
     }
@@ -131,7 +132,7 @@ export function parseMsg(
   }
 }
 
-export function parseFee(fee: types.StdFee, tokens: readonly BankToken[]): Fee {
+export function parseFee(fee: StdFee, tokens: readonly BankToken[]): Fee {
   if (fee.amount.length !== 1) {
     throw new Error("Only fee with one amount is supported");
   }
@@ -142,12 +143,12 @@ export function parseFee(fee: types.StdFee, tokens: readonly BankToken[]): Fee {
 }
 
 export function parseUnsignedTx(
-  txValue: types.StdTx,
+  txValue: StdTx,
   chainId: ChainId,
   tokens: readonly BankToken[],
   erc20Tokens: readonly Erc20Token[],
 ): UnsignedTransaction {
-  if (!types.isStdTx(txValue)) {
+  if (!isStdTx(txValue)) {
     throw new Error("Only StdTx is supported");
   }
   if (txValue.msg.length !== 1) {
@@ -165,7 +166,7 @@ export function parseUnsignedTx(
 }
 
 export function parseSignedTx(
-  txValue: types.StdTx,
+  txValue: StdTx,
   chainId: ChainId,
   nonce: Nonce,
   tokens: readonly BankToken[],

@@ -7,6 +7,9 @@ import {
   Pen,
   rawSecp256k1PubkeyToAddress,
   Secp256k1Pen,
+  StdFee,
+  StdSignature,
+  StdTx,
 } from "@cosmwasm/sdk38";
 import { Sha256 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
@@ -44,7 +47,6 @@ import {
   wasmd,
   wasmdEnabled,
 } from "./testutils.spec";
-import { StdFee, StdSignature, StdTx } from "./types";
 
 const { fromAscii, fromBase64, fromHex, toAscii, toBase64, toHex } = Encoding;
 

@@ -1,4 +1,5 @@
-import { Coin, IndexedTx, types } from "@cosmwasm/sdk38";
+import { Coin, IndexedTx, PubKey, StdSignature } from "@cosmwasm/sdk38";
+import { Msg, StdFee, StdTx } from "@cosmwasm/sdk38/types/types";
 import {
   Amount,
   ChainId,
@@ -14,27 +15,27 @@ import {
 } from "@iov/bcp";
 import { Decimal } from "@iov/encoding";
 import { BankToken, Erc20Token } from "./types";
-export declare function decodePubkey(pubkey: types.PubKey): PubkeyBundle;
+export declare function decodePubkey(pubkey: PubKey): PubkeyBundle;
 export declare function decodeSignature(signature: string): SignatureBytes;
-export declare function decodeFullSignature(signature: types.StdSignature, nonce: number): FullSignature;
+export declare function decodeFullSignature(signature: StdSignature, nonce: number): FullSignature;
 export declare function coinToDecimal(tokens: readonly BankToken[], coin: Coin): readonly [Decimal, string];
 export declare function decodeAmount(tokens: readonly BankToken[], coin: Coin): Amount;
 export declare function parseMsg(
-  msg: types.Msg,
+  msg: Msg,
   memo: string | undefined,
   chainId: ChainId,
   tokens: readonly BankToken[],
   erc20Tokens: readonly Erc20Token[],
 ): UnsignedTransaction;
-export declare function parseFee(fee: types.StdFee, tokens: readonly BankToken[]): Fee;
+export declare function parseFee(fee: StdFee, tokens: readonly BankToken[]): Fee;
 export declare function parseUnsignedTx(
-  txValue: types.StdTx,
+  txValue: StdTx,
   chainId: ChainId,
   tokens: readonly BankToken[],
   erc20Tokens: readonly Erc20Token[],
 ): UnsignedTransaction;
 export declare function parseSignedTx(
-  txValue: types.StdTx,
+  txValue: StdTx,
   chainId: ChainId,
   nonce: Nonce,
   tokens: readonly BankToken[],

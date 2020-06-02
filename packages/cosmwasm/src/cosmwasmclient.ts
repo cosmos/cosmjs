@@ -1,10 +1,10 @@
-import { Coin, decodeBech32Pubkey, IndexedTx } from "@cosmwasm/sdk38";
+import { Coin, CosmosSdkTx, decodeBech32Pubkey, IndexedTx, PubKey, StdTx } from "@cosmwasm/sdk38";
 import { Sha256 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
 
 import { Log, parseLogs } from "./logs";
 import { BroadcastMode, RestClient } from "./restclient";
-import { CosmosSdkTx, JsonObject, PubKey, StdTx } from "./types";
+import { JsonObject } from "./types";
 
 export interface GetNonceResult {
   readonly accountNumber: number;
