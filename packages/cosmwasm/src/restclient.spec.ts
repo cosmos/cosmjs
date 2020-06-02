@@ -4,6 +4,8 @@ import {
   encodeBech32Pubkey,
   makeCosmoshubPath,
   makeSignBytes,
+  Msg,
+  MsgSend,
   Pen,
   rawSecp256k1PubkeyToAddress,
   Secp256k1Pen,
@@ -20,10 +22,8 @@ import { findAttribute, parseLogs } from "./logs";
 import {
   isMsgInstantiateContract,
   isMsgStoreCode,
-  Msg,
   MsgExecuteContract,
   MsgInstantiateContract,
-  MsgSend,
   MsgStoreCode,
 } from "./msgs";
 import { PostTxsResponse, RestClient, TxsResponse } from "./restclient";

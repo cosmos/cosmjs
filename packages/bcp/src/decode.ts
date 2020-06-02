@@ -1,6 +1,16 @@
 import { isMsgExecuteContract } from "@cosmwasm/cosmwasm";
-import { Coin, IndexedTx, PubKey, StdSignature } from "@cosmwasm/sdk38";
-import { isMsgSend, isStdTx, Msg, pubkeyType, StdFee, StdTx } from "@cosmwasm/sdk38/types/types";
+import {
+  Coin,
+  IndexedTx,
+  isMsgSend,
+  isStdTx,
+  Msg,
+  PubKey,
+  pubkeyType,
+  StdFee,
+  StdSignature,
+  StdTx,
+} from "@cosmwasm/sdk38";
 import {
   Address,
   Algorithm,

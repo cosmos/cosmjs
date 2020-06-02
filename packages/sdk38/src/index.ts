@@ -37,6 +37,7 @@ export {
   pubkeyType,
   CosmosSdkTx,
   PubKey,
+  Msg,
   MsgSend,
   StdFee,
   StdSignature,

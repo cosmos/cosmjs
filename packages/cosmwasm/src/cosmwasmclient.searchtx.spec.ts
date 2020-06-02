@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { Coin, CosmosSdkTx, makeSignBytes, Secp256k1Pen } from "@cosmwasm/sdk38";
+import { Coin, CosmosSdkTx, isMsgSend, makeSignBytes, MsgSend, Secp256k1Pen } from "@cosmwasm/sdk38";
 import { assert, sleep } from "@iov/utils";
 
 import { CosmWasmClient } from "./cosmwasmclient";
-import { isMsgExecuteContract, isMsgInstantiateContract, isMsgSend, MsgSend } from "./msgs";
+import { isMsgExecuteContract, isMsgInstantiateContract } from "./msgs";
 import { RestClient } from "./restclient";
 import { SigningCosmWasmClient } from "./signingcosmwasmclient";
 import {

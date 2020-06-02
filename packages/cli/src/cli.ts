@@ -72,6 +72,7 @@ export function main(originalArgs: readonly string[]): void {
         "marshalTx",
         "IndexedTx",
         "Coin",
+        "Msg",
         "MsgSend",
         "Pen",
         "PubKey",

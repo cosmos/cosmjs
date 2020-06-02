@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { MsgExecuteContract } from "@cosmwasm/cosmwasm";
-import { Coin, IndexedTx, PubKey, StdSignature, StdTx } from "@cosmwasm/sdk38";
-import { Msg } from "@cosmwasm/sdk38/types/types";
+import { Coin, IndexedTx, Msg, PubKey, StdSignature, StdTx } from "@cosmwasm/sdk38";
 import { Address, Algorithm, isSendTransaction, SendTransaction, TokenTicker } from "@iov/bcp";
 import { Encoding } from "@iov/encoding";
 import { assert } from "@iov/utils";

@@ -24,13 +24,13 @@ export interface CosmosSdkTx {
   readonly value: StdTx;
 }
 
-interface MsgTemplate {
+export interface Msg {
   readonly type: string;
   readonly value: any;
 }
 
 /** A Cosmos SDK token transfer message */
-export interface MsgSend extends MsgTemplate {
+export interface MsgSend extends Msg {
   readonly type: "cosmos-sdk/MsgSend";
   readonly value: {
     /** Bech32 account address */
@@ -40,8 +40,6 @@ export interface MsgSend extends MsgTemplate {
     readonly amount: ReadonlyArray<Coin>;
   };
 }
-
-export type Msg = MsgSend | MsgTemplate;
 
 export function isMsgSend(msg: Msg): msg is MsgSend {
   return (msg as MsgSend).type === "cosmos-sdk/MsgSend";

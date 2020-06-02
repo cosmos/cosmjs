@@ -11,12 +11,12 @@ export interface CosmosSdkTx {
   readonly type: string;
   readonly value: StdTx;
 }
-interface MsgTemplate {
+export interface Msg {
   readonly type: string;
   readonly value: any;
 }
 /** A Cosmos SDK token transfer message */
-export interface MsgSend extends MsgTemplate {
+export interface MsgSend extends Msg {
   readonly type: "cosmos-sdk/MsgSend";
   readonly value: {
     /** Bech32 account address */
@@ -26,7 +26,6 @@ export interface MsgSend extends MsgTemplate {
     readonly amount: ReadonlyArray<Coin>;
   };
 }
-export declare type Msg = MsgSend | MsgTemplate;
 export declare function isMsgSend(msg: Msg): msg is MsgSend;
 export interface StdFee {
   readonly amount: ReadonlyArray<Coin>;
@@ -63,4 +62,3 @@ export declare function parseWasmData({ key, val }: WasmData): Model;
  * This doen't privide any type safety over `any` but expresses intent in the code.
  */
 export declare type JsonObject = any;
-export {};

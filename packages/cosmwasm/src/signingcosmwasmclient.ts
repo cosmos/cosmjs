@@ -1,4 +1,4 @@
-import { Coin, coins, makeSignBytes, StdFee, StdSignature } from "@cosmwasm/sdk38";
+import { Coin, coins, makeSignBytes, MsgSend, StdFee, StdSignature } from "@cosmwasm/sdk38";
 import { Sha256 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
 import pako from "pako";
@@ -6,7 +6,7 @@ import pako from "pako";
 import { isValidBuilder } from "./builder";
 import { Account, CosmWasmClient, GetNonceResult, PostTxResult } from "./cosmwasmclient";
 import { findAttribute, Log } from "./logs";
-import { MsgExecuteContract, MsgInstantiateContract, MsgSend, MsgStoreCode } from "./msgs";
+import { MsgExecuteContract, MsgInstantiateContract, MsgStoreCode } from "./msgs";
 import { BroadcastMode } from "./restclient";
 
 export interface SigningCallback {
