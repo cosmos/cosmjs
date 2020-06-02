@@ -31,12 +31,8 @@ export interface TokenConfiguration {
     }
   >;
 }
-export declare class CosmWasmConnection implements BlockchainConnection {
-  static establish(
-    url: string,
-    addressPrefix: string,
-    tokens: TokenConfiguration,
-  ): Promise<CosmWasmConnection>;
+export declare class CosmosConnection implements BlockchainConnection {
+  static establish(url: string, addressPrefix: string, tokens: TokenConfiguration): Promise<CosmosConnection>;
   private static initialize;
   readonly chainId: ChainId;
   readonly codec: TxCodec;
@@ -51,7 +47,7 @@ export declare class CosmWasmConnection implements BlockchainConnection {
   getToken(searchTicker: TokenTicker): Promise<Token | undefined>;
   getAllTokens(): Promise<readonly Token[]>;
   /**
-   * This is a replacement for the unimplemented CosmWasmCodec.identifier. Here we have more
+   * This is a replacement for the unimplemented CosmosCodec.identifier. Here we have more
    * context and network available, which we might use to implement the API in an async way.
    */
   identifier(signed: SignedTransaction): Promise<TransactionId>;

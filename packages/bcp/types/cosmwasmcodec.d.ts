@@ -11,7 +11,7 @@ import {
   UnsignedTransaction,
 } from "@iov/bcp";
 import { BankToken } from "./types";
-export declare class CosmWasmCodec implements TxCodec {
+export declare class CosmosCodec implements TxCodec {
   private readonly addressPrefix;
   private readonly bankTokens;
   constructor(addressPrefix: string, bankTokens: readonly BankToken[]);

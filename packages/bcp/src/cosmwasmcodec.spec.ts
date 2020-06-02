@@ -1,7 +1,7 @@
 import { PostableBytes, PrehashType } from "@iov/bcp";
 import { Encoding } from "@iov/encoding";
 
-import { CosmWasmCodec } from "./cosmwasmcodec";
+import { CosmosCodec } from "./cosmwasmcodec";
 import { chainId, nonce, sendTxJson, signedTxBin, signedTxEncodedJson, signedTxJson } from "./testdata.spec";
 import { BankToken } from "./types";
 
@@ -17,8 +17,8 @@ const defaultBankTokens: readonly BankToken[] = [
   },
 ];
 
-describe("CosmWasmCodec", () => {
-  const codec = new CosmWasmCodec(defaultPrefix, defaultBankTokens);
+describe("CosmosCodec", () => {
+  const codec = new CosmosCodec(defaultPrefix, defaultBankTokens);
 
   describe("isValidAddress", () => {
     it("accepts valid addresses", () => {

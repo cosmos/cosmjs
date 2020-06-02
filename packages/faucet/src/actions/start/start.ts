@@ -1,4 +1,4 @@
-import { createCosmWasmConnector } from "@cosmwasm/bcp";
+import { createCosmosConnector } from "@cosmwasm/bcp";
 
 import { Webserver } from "../../api/webserver";
 import * as constants from "../../constants";
@@ -16,7 +16,7 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
 
   // Connection
   const blockchainBaseUrl = args[0];
-  const connector = createCosmWasmConnector(
+  const connector = createCosmosConnector(
     blockchainBaseUrl,
     constants.addressPrefix,
     constants.developmentTokenConfig,

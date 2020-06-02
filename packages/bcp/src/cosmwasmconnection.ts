@@ -43,7 +43,7 @@ import { Producer, Stream } from "xstream";
 
 import { pubkeyToAddress } from "./address";
 import { Caip5 } from "./caip5";
-import { CosmWasmCodec } from "./cosmwasmcodec";
+import { CosmosCodec } from "./cosmwasmcodec";
 import { decodeAmount, decodePubkey, parseTxsResponseSigned, parseTxsResponseUnsigned } from "./decode";
 import { buildSignedTx } from "./encode";
 import { accountToNonce, BankToken } from "./types";
@@ -82,16 +82,16 @@ function compareByHeightAndHash(a: IndexedTx, b: IndexedTx): number {
 /** Account and undefined are valid events. The third option means no event fired yet */
 type LastWatchAccountEvent = Account | undefined | "no_event_fired_yet";
 
-export class CosmWasmConnection implements BlockchainConnection {
+export class CosmosConnection implements BlockchainConnection {
   // we must know prefix and tokens a priori to understand the chain
   public static async establish(
     url: string,
     addressPrefix: string,
     tokens: TokenConfiguration,
-  ): Promise<CosmWasmConnection> {
+  ): Promise<CosmosConnection> {
     const cosmosClient = new CosmosClient(url);
     const chainData = await this.initialize(cosmosClient);
-    return new CosmWasmConnection(cosmosClient, chainData, addressPrefix, tokens);
+    return new CosmosConnection(cosmosClient, chainData, addressPrefix, tokens);
   }
 
   private static async initialize(cosmosClient: CosmosClient): Promise<ChainId> {
@@ -118,7 +118,7 @@ export class CosmWasmConnection implements BlockchainConnection {
   ) {
     this.cosmosClient = cosmosClient;
     this.chainId = chainId;
-    this.codec = new CosmWasmCodec(addressPrefix, tokens.bankTokens);
+    this.codec = new CosmosCodec(addressPrefix, tokens.bankTokens);
     this.addressPrefix = addressPrefix;
     this.bankTokens = tokens.bankTokens;
     this.feeToken = this.bankTokens.find(() => true);
@@ -148,7 +148,7 @@ export class CosmWasmConnection implements BlockchainConnection {
   }
 
   /**
-   * This is a replacement for the unimplemented CosmWasmCodec.identifier. Here we have more
+   * This is a replacement for the unimplemented CosmosCodec.identifier. Here we have more
    * context and network available, which we might use to implement the API in an async way.
    */
   public async identifier(signed: SignedTransaction): Promise<TransactionId> {

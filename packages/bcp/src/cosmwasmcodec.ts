@@ -22,7 +22,7 @@ import { parseSignedTx } from "./decode";
 import { buildSignedTx, buildUnsignedTx } from "./encode";
 import { BankToken, nonceToAccountNumber, nonceToSequence } from "./types";
 
-export class CosmWasmCodec implements TxCodec {
+export class CosmosCodec implements TxCodec {
   private readonly addressPrefix: string;
   private readonly bankTokens: readonly BankToken[];
 
