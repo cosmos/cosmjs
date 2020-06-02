@@ -30,19 +30,8 @@ export function main(originalArgs: readonly string[]): void {
 
   const imports = new Map<string, readonly string[]>([
     [
-      "@cosmwasm/sdk",
+      "@cosmwasm/cosmwasm",
       [
-        "encodeSecp256k1Pubkey",
-        "encodeSecp256k1Signature",
-        "logs",
-        "makeCosmoshubPath",
-        "makeSignBytes",
-        "marshalTx",
-        "Pen",
-        "pubkeyToAddress",
-        "RestClient",
-        "Secp256k1Pen",
-        "types",
         // cosmwasmclient
         "Account",
         "Block",
@@ -53,7 +42,6 @@ export function main(originalArgs: readonly string[]): void {
         "ContractDetails",
         "CosmWasmClient",
         "GetNonceResult",
-        "IndexedTx",
         "PostTxResult",
         "SearchByHeightQuery",
         "SearchByIdQuery",
@@ -69,6 +57,23 @@ export function main(originalArgs: readonly string[]): void {
         "SigningCosmWasmClient",
         "UploadMeta",
         "UploadResult",
+      ],
+    ],
+    [
+      "@cosmwasm/sdk38",
+      [
+        "encodeSecp256k1Pubkey",
+        "encodeSecp256k1Signature",
+        "logs",
+        "makeCosmoshubPath",
+        "makeSignBytes",
+        "marshalTx",
+        "Pen",
+        "pubkeyToAddress",
+        "RestClient",
+        "Secp256k1Pen",
+        "types",
+        "IndexedTx",
       ],
     ],
     [

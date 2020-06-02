@@ -38,7 +38,8 @@
     "!**/testdata/"
   ],
   "dependencies": {
-    "@cosmwasm/sdk": "^0.8.0",
+    "@cosmwasm/cosmwasm": "^0.8.0",
+    "@cosmwasm/sdk38": "^0.8.0",
     "@iov/crypto": "^2.1.0",
     "@iov/encoding": "^2.1.0",
     "@iov/utils": "^2.0.2",
