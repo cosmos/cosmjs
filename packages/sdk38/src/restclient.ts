@@ -14,7 +14,7 @@ export interface CosmosSdkAccount {
   readonly sequence: number;
 }
 
-export interface NodeInfo {
+interface NodeInfo {
   readonly protocol_version: {
     readonly p2p: string;
     readonly block: string;
@@ -32,7 +32,7 @@ export interface NodeInfo {
   };
 }
 
-export interface ApplicationVersion {
+interface ApplicationVersion {
   readonly name: string;
   readonly server_name: string;
   readonly client_name: string;
@@ -47,7 +47,7 @@ export interface NodeInfoResponse {
   readonly application_version: ApplicationVersion;
 }
 
-export interface BlockId {
+interface BlockId {
   readonly hash: string;
   // TODO: here we also have this
   // parts: {
@@ -56,7 +56,7 @@ export interface BlockId {
   // }
 }
 
-export interface BlockHeader {
+interface BlockHeader {
   readonly version: {
     readonly block: string;
     readonly app: string;
@@ -80,7 +80,7 @@ export interface BlockHeader {
   readonly proposer_address: string;
 }
 
-export interface Block {
+interface Block {
   readonly header: BlockHeader;
   readonly data: {
     /** Array of base64 encoded transactions */
@@ -93,7 +93,7 @@ export interface BlockResponse {
   readonly block: Block;
 }
 
-interface AuthAccountsResponse {
+export interface AuthAccountsResponse {
   readonly height: string;
   readonly result: {
     readonly type: "cosmos-sdk/Account";
@@ -132,7 +132,7 @@ export interface TxsResponse {
   readonly timestamp: string;
 }
 
-interface SearchTxsResponse {
+export interface SearchTxsResponse {
   readonly total_count: string;
   readonly count: string;
   readonly page_number: string;
@@ -158,55 +158,6 @@ interface EncodeTxResponse {
   // base64-encoded amino-binary encoded representation
   readonly tx: string;
 }
-
-export interface CodeInfo {
-  readonly id: number;
-  /** Bech32 account address */
-  readonly creator: string;
-  /** Hex-encoded sha256 hash of the code stored here */
-  readonly data_hash: string;
-  // TODO: these are not supported in current wasmd
-  readonly source?: string;
-  readonly builder?: string;
-}
-
-export interface CodeDetails extends CodeInfo {
-  /** Base64 encoded raw wasm data */
-  readonly data: string;
-}
-
-// This is list view, without contract info
-export interface ContractInfo {
-  readonly address: string;
-  readonly code_id: number;
-  /** Bech32 account address */
-  readonly creator: string;
-  readonly label: string;
-}
-
-export interface ContractDetails extends ContractInfo {
-  /** Argument passed on initialization of the contract */
-  readonly init_msg: object;
-}
-
-interface SmartQueryResponse {
-  // base64 encoded response
-  readonly smart: string;
-}
-
-type RestClientResponse =
-  | NodeInfoResponse
-  | BlockResponse
-  | AuthAccountsResponse
-  | TxsResponse
-  | SearchTxsResponse
-  | PostTxsResponse
-  | EncodeTxResponse
-  | WasmResponse<string>
-  | WasmResponse<CodeInfo[]>
-  | WasmResponse<CodeDetails>
-  | WasmResponse<ContractInfo[] | null>
-  | WasmResponse<ContractDetails | null>;
 
 /**
  * The mode used to send transaction
@@ -270,7 +221,7 @@ export class RestClient {
     this.broadcastMode = broadcastMode;
   }
 
-  public async get(path: string): Promise<RestClientResponse> {
+  public async get(path: string): Promise<any> {
     const { data } = await this.client.get(path).catch(parseAxiosError);
     if (data === null) {
       throw new Error("Received null response from server");
@@ -278,7 +229,7 @@ export class RestClient {
     return data;
   }
 
-  public async post(path: string, params: any): Promise<RestClientResponse> {
+  public async post(path: string, params: any): Promise<any> {
     if (!isNonNullObject(params)) throw new Error("Got unexpected type of params. Expected object.");
     const { data } = await this.client.post(path, params).catch(parseAxiosError);
     if (data === null) {
@@ -292,7 +243,7 @@ export class RestClient {
   public async authAccounts(address: string): Promise<AuthAccountsResponse> {
     const path = `/auth/accounts/${address}`;
     const responseData = await this.get(path);
-    if ((responseData as any).result.type !== "cosmos-sdk/Account") {
+    if (responseData.result.type !== "cosmos-sdk/Account") {
       throw new Error("Unexpected response data format");
     }
     return responseData as AuthAccountsResponse;
@@ -302,7 +253,7 @@ export class RestClient {
 
   public async blocksLatest(): Promise<BlockResponse> {
     const responseData = await this.get("/blocks/latest");
-    if (!(responseData as any).block) {
+    if (!responseData.block) {
       throw new Error("Unexpected response data format");
     }
     return responseData as BlockResponse;
@@ -310,7 +261,7 @@ export class RestClient {
 
   public async blocks(height: number): Promise<BlockResponse> {
     const responseData = await this.get(`/blocks/${height}`);
-    if (!(responseData as any).block) {
+    if (!responseData.block) {
       throw new Error("Unexpected response data format");
     }
     return responseData as BlockResponse;
@@ -320,7 +271,7 @@ export class RestClient {
 
   public async nodeInfo(): Promise<NodeInfoResponse> {
     const responseData = await this.get("/node_info");
-    if (!(responseData as any).node_info) {
+    if (!responseData.node_info) {
       throw new Error("Unexpected response data format");
     }
     return responseData as NodeInfoResponse;
@@ -330,7 +281,7 @@ export class RestClient {
 
   public async txById(id: string): Promise<TxsResponse> {
     const responseData = await this.get(`/txs/${id}`);
-    if (!(responseData as any).tx) {
+    if (!responseData.tx) {
       throw new Error("Unexpected response data format");
     }
     return responseData as TxsResponse;
@@ -338,7 +289,7 @@ export class RestClient {
 
   public async txsQuery(query: string): Promise<SearchTxsResponse> {
     const responseData = await this.get(`/txs?${query}`);
-    if (!(responseData as any).txs) {
+    if (!responseData.txs) {
       throw new Error("Unexpected response data format");
     }
     return responseData as SearchTxsResponse;
@@ -347,7 +298,7 @@ export class RestClient {
   /** returns the amino-encoding of the transaction performed by the server */
   public async encodeTx(tx: CosmosSdkTx): Promise<Uint8Array> {
     const responseData = await this.post("/txs/encode", tx);
-    if (!(responseData as any).tx) {
+    if (!responseData.tx) {
       throw new Error("Unexpected response data format");
     }
     return Encoding.fromBase64((responseData as EncodeTxResponse).tx);
@@ -366,7 +317,7 @@ export class RestClient {
       mode: this.broadcastMode,
     };
     const responseData = await this.post("/txs", params);
-    if (!(responseData as any).txhash) {
+    if (!responseData.txhash) {
       throw new Error("Unexpected response data format");
     }
     return responseData as PostTxsResponse;

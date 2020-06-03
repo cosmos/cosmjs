@@ -9,7 +9,7 @@ export interface CosmosSdkAccount {
   readonly account_number: number;
   readonly sequence: number;
 }
-export interface NodeInfo {
+interface NodeInfo {
   readonly protocol_version: {
     readonly p2p: string;
     readonly block: string;
@@ -26,7 +26,7 @@ export interface NodeInfo {
     readonly rpc_address: string;
   };
 }
-export interface ApplicationVersion {
+interface ApplicationVersion {
   readonly name: string;
   readonly server_name: string;
   readonly client_name: string;
@@ -39,10 +39,10 @@ export interface NodeInfoResponse {
   readonly node_info: NodeInfo;
   readonly application_version: ApplicationVersion;
 }
-export interface BlockId {
+interface BlockId {
   readonly hash: string;
 }
-export interface BlockHeader {
+interface BlockHeader {
   readonly version: {
     readonly block: string;
     readonly app: string;
@@ -65,7 +65,7 @@ export interface BlockHeader {
   readonly evidence_hash: string;
   readonly proposer_address: string;
 }
-export interface Block {
+interface Block {
   readonly header: BlockHeader;
   readonly data: {
     /** Array of base64 encoded transactions */
@@ -76,20 +76,12 @@ export interface BlockResponse {
   readonly block_id: BlockId;
   readonly block: Block;
 }
-interface AuthAccountsResponse {
+export interface AuthAccountsResponse {
   readonly height: string;
   readonly result: {
     readonly type: "cosmos-sdk/Account";
     readonly value: CosmosSdkAccount;
   };
-}
-declare type WasmResponse<T = string> = WasmSuccess<T> | WasmError;
-interface WasmSuccess<T = string> {
-  readonly height: string;
-  readonly result: T;
-}
-interface WasmError {
-  readonly error: string;
 }
 export interface TxsResponse {
   readonly height: string;
@@ -107,7 +99,7 @@ export interface TxsResponse {
   readonly gas_used?: string;
   readonly timestamp: string;
 }
-interface SearchTxsResponse {
+export interface SearchTxsResponse {
   readonly total_count: string;
   readonly count: string;
   readonly page_number: string;
@@ -127,46 +119,6 @@ export interface PostTxsResponse {
   /** The gas used by the execution */
   readonly gas_used?: string;
 }
-interface EncodeTxResponse {
-  readonly tx: string;
-}
-export interface CodeInfo {
-  readonly id: number;
-  /** Bech32 account address */
-  readonly creator: string;
-  /** Hex-encoded sha256 hash of the code stored here */
-  readonly data_hash: string;
-  readonly source?: string;
-  readonly builder?: string;
-}
-export interface CodeDetails extends CodeInfo {
-  /** Base64 encoded raw wasm data */
-  readonly data: string;
-}
-export interface ContractInfo {
-  readonly address: string;
-  readonly code_id: number;
-  /** Bech32 account address */
-  readonly creator: string;
-  readonly label: string;
-}
-export interface ContractDetails extends ContractInfo {
-  /** Argument passed on initialization of the contract */
-  readonly init_msg: object;
-}
-declare type RestClientResponse =
-  | NodeInfoResponse
-  | BlockResponse
-  | AuthAccountsResponse
-  | TxsResponse
-  | SearchTxsResponse
-  | PostTxsResponse
-  | EncodeTxResponse
-  | WasmResponse<string>
-  | WasmResponse<CodeInfo[]>
-  | WasmResponse<CodeDetails>
-  | WasmResponse<ContractInfo[] | null>
-  | WasmResponse<ContractDetails | null>;
 /**
  * The mode used to send transaction
  *
@@ -195,8 +147,8 @@ export declare class RestClient {
    * @param broadcastMode Defines at which point of the transaction processing the postTx method (i.e. transaction broadcasting) returns
    */
   constructor(apiUrl: string, broadcastMode?: BroadcastMode);
-  get(path: string): Promise<RestClientResponse>;
-  post(path: string, params: any): Promise<RestClientResponse>;
+  get(path: string): Promise<any>;
+  post(path: string, params: any): Promise<any>;
   authAccounts(address: string): Promise<AuthAccountsResponse>;
   blocksLatest(): Promise<BlockResponse>;
   blocks(height: number): Promise<BlockResponse>;

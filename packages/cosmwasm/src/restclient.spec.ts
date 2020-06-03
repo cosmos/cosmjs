@@ -7,6 +7,7 @@ import {
   Msg,
   MsgSend,
   Pen,
+  PostTxsResponse,
   rawSecp256k1PubkeyToAddress,
   Secp256k1Pen,
   StdFee,
@@ -26,7 +27,7 @@ import {
   MsgInstantiateContract,
   MsgStoreCode,
 } from "./msgs";
-import { PostTxsResponse, RestClient, TxsResponse } from "./restclient";
+import { RestClient, TxsResponse } from "./restclient";
 import { SigningCosmWasmClient } from "./signingcosmwasmclient";
 import cosmoshub from "./testdata/cosmoshub.json";
 import {

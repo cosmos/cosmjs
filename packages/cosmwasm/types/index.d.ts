@@ -1,6 +1,6 @@
 import * as logs from "./logs";
 export { logs };
-export { BroadcastMode, RestClient, TxsResponse } from "./restclient";
+export { RestClient, TxsResponse } from "./restclient";
 export {
   Account,
   Block,
