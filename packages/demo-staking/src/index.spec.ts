@@ -18,10 +18,9 @@ function pendingWithoutWasmd(): void {
 }
 
 const httpUrl = "http://localhost:1317";
-const faucet = {
-  mnemonic:
-    "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone",
-  address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+const alice = {
+  mnemonic: "enlist hip relief stomach skate base shallow young switch frequent cry park",
+  address0: "cosmos14qemq0vw6y3gc3u3e0aty2e764u4gs5le3hada",
 };
 
 /** Code info staking.wasm */
@@ -41,14 +40,14 @@ describe("Staking demo", () => {
   it("works", async () => {
     pendingWithoutWasmd();
     // The owner of the contract that will collect the tax
-    const ownerPen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
+    const ownerPen = await Secp256k1Pen.fromMnemonic(alice.mnemonic);
     const ownerAddress = ownerPen.address("cosmos");
     const ownerClient = new SigningCosmWasmClient(httpUrl, ownerAddress, (signBytes) =>
       ownerPen.sign(signBytes),
     );
 
     // a user of the contract
-    const userPen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(1));
+    const userPen = await Secp256k1Pen.fromMnemonic(alice.mnemonic, makeCosmoshubPath(1));
     const userAddress = userPen.address("cosmos");
     const userClient = new SigningCosmWasmClient(
       httpUrl,

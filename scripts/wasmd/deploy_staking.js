@@ -6,10 +6,9 @@ const { Secp256k1Pen } = require("@cosmwasm/sdk38");
 const fs = require("fs");
 
 const httpUrl = "http://localhost:1317";
-const faucet = {
-  mnemonic:
-    "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone",
-  address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+const alice = {
+  mnemonic: "enlist hip relief stomach skate base shallow young switch frequent cry park",
+  address0: "cosmos14qemq0vw6y3gc3u3e0aty2e764u4gs5le3hada",
 };
 
 const codeMeta = {
@@ -32,8 +31,8 @@ const bounty = {
 };
 
 async function main() {
-  const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-  const client = new SigningCosmWasmClient(httpUrl, faucet.address, (signBytes) => pen.sign(signBytes));
+  const pen = await Secp256k1Pen.fromMnemonic(alice.mnemonic);
+  const client = new SigningCosmWasmClient(httpUrl, alice.address0, (signBytes) => pen.sign(signBytes));
 
   const wasm = fs.readFileSync(__dirname + "/contracts/staking.wasm");
   const uploadReceipt = await client.upload(wasm, codeMeta, "Upload Staking code");

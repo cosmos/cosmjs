@@ -10,8 +10,8 @@ import { findAttribute } from "./logs";
 import { SigningCosmWasmClient } from "./signingcosmwasmclient";
 import cosmoshub from "./testdata/cosmoshub.json";
 import {
+  alice,
   deployedErc20,
-  faucet,
   getHackatom,
   makeRandomAddress,
   pendingWithoutWasmd,
@@ -202,14 +202,14 @@ describe("CosmWasmClient", () => {
   describe("postTx", () => {
     it("works", async () => {
       pendingWithoutWasmd();
-      const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
+      const pen = await Secp256k1Pen.fromMnemonic(alice.mnemonic);
       const client = new CosmWasmClient(wasmd.endpoint);
 
       const memo = "My first contract on chain";
       const sendMsg: MsgSend = {
         type: "cosmos-sdk/MsgSend",
         value: {
-          from_address: faucet.address,
+          from_address: alice.address0,
           to_address: makeRandomAddress(),
           amount: [
             {
@@ -231,7 +231,7 @@ describe("CosmWasmClient", () => {
       };
 
       const chainId = await client.getChainId();
-      const { accountNumber, sequence } = await client.getNonce(faucet.address);
+      const { accountNumber, sequence } = await client.getNonce(alice.address0);
       const signBytes = makeSignBytes([sendMsg], fee, chainId, memo, accountNumber, sequence);
       const signature = await pen.sign(signBytes);
       const signedTx = {
@@ -259,7 +259,7 @@ describe("CosmWasmClient", () => {
         source: deployedErc20.source,
         builder: deployedErc20.builder,
         checksum: deployedErc20.checksum,
-        creator: faucet.address,
+        creator: alice.address0,
       });
     });
   });
@@ -275,7 +275,7 @@ describe("CosmWasmClient", () => {
         source: deployedErc20.source,
         builder: deployedErc20.builder,
         checksum: deployedErc20.checksum,
-        creator: faucet.address,
+        creator: alice.address0,
       };
 
       // check info
@@ -308,19 +308,19 @@ describe("CosmWasmClient", () => {
       expect(hash).toEqual({
         address: "cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
         codeId: 1,
-        creator: faucet.address,
+        creator: alice.address0,
         label: "HASH",
       });
       expect(isa).toEqual({
         address: "cosmos1hqrdl6wstt8qzshwc6mrumpjk9338k0lr4dqxd",
         codeId: 1,
-        creator: faucet.address,
+        creator: alice.address0,
         label: "ISA",
       });
       expect(jade).toEqual({
         address: "cosmos18r5szma8hm93pvx6lwpjwyxruw27e0k5uw835c",
         codeId: 1,
-        creator: faucet.address,
+        creator: alice.address0,
         label: "JADE",
       });
     });
@@ -334,7 +334,7 @@ describe("CosmWasmClient", () => {
       expect(hash).toEqual({
         address: "cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
         codeId: 1,
-        creator: faucet.address,
+        creator: alice.address0,
         label: "HASH",
         initMsg: {
           decimals: 5,
@@ -342,7 +342,7 @@ describe("CosmWasmClient", () => {
           symbol: "HASH",
           initial_balances: jasmine.arrayContaining([
             {
-              address: faucet.address,
+              address: alice.address0,
               amount: "11",
             },
             {
@@ -367,8 +367,8 @@ describe("CosmWasmClient", () => {
     beforeAll(async () => {
       if (wasmdEnabled()) {
         pendingWithoutWasmd();
-        const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-        const client = new SigningCosmWasmClient(wasmd.endpoint, faucet.address, (signBytes) =>
+        const pen = await Secp256k1Pen.fromMnemonic(alice.mnemonic);
+        const client = new SigningCosmWasmClient(wasmd.endpoint, alice.address0, (signBytes) =>
           pen.sign(signBytes),
         );
         const { codeId } = await client.upload(getHackatom());
@@ -388,7 +388,7 @@ describe("CosmWasmClient", () => {
       expect(JSON.parse(fromUtf8(raw))).toEqual({
         verifier: toBase64(Bech32.decode(contract.initMsg.verifier).data),
         beneficiary: toBase64(Bech32.decode(contract.initMsg.beneficiary).data),
-        funder: toBase64(Bech32.decode(faucet.address).data),
+        funder: toBase64(Bech32.decode(alice.address0).data),
       });
     });
 
@@ -420,8 +420,8 @@ describe("CosmWasmClient", () => {
     beforeAll(async () => {
       if (wasmdEnabled()) {
         pendingWithoutWasmd();
-        const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-        const client = new SigningCosmWasmClient(wasmd.endpoint, faucet.address, (signBytes) =>
+        const pen = await Secp256k1Pen.fromMnemonic(alice.mnemonic);
+        const client = new SigningCosmWasmClient(wasmd.endpoint, alice.address0, (signBytes) =>
           pen.sign(signBytes),
         );
         const { codeId } = await client.upload(getHackatom());

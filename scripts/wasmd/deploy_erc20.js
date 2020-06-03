@@ -6,14 +6,13 @@ const { Secp256k1Pen } = require("@cosmwasm/sdk38");
 const fs = require("fs");
 
 const httpUrl = "http://localhost:1317";
-const faucet = {
-  mnemonic:
-    "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone",
-  address0: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
-  address1: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
-  address2: "cosmos1xy4yqngt0nlkdcenxymg8tenrghmek4nmqm28k",
-  address3: "cosmos142u9fgcjdlycfcez3lw8x6x5h7rfjlnfhpw2lx",
-  address4: "cosmos1hsm76p4ahyhl5yh3ve9ur49r5kemhp2r0dcjvx",
+const alice = {
+  mnemonic: "enlist hip relief stomach skate base shallow young switch frequent cry park",
+  address0: "cosmos14qemq0vw6y3gc3u3e0aty2e764u4gs5le3hada",
+  address1: "cosmos1hhg2rlu9jscacku2wwckws7932qqqu8x3gfgw0",
+  address2: "cosmos1xv9tklw7d82sezh9haa573wufgy59vmwe6xxe5",
+  address3: "cosmos17yg9mssjenmc3jkqth6ulcwj9cxujrxxzezwta",
+  address4: "cosmos1f7j7ryulwjfe9ljplvhtcaxa6wqgula3etktce",
 };
 const unused = {
   address: "cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u",
@@ -24,7 +23,7 @@ const guest = {
 
 const codeMeta = {
   source: "https://crates.io/api/v1/crates/cw-erc20/0.4.0/download",
-  builder: "cosmwasm/rust-optimizer:0.8.0"
+  builder: "cosmwasm/rust-optimizer:0.8.0",
 };
 
 const initMsgHash = {
@@ -33,23 +32,23 @@ const initMsgHash = {
   symbol: "HASH",
   initial_balances: [
     {
-      address: faucet.address0,
+      address: alice.address0,
       amount: "11",
     },
     {
-      address: faucet.address1,
+      address: alice.address1,
       amount: "11",
     },
     {
-      address: faucet.address2,
+      address: alice.address2,
       amount: "11",
     },
     {
-      address: faucet.address3,
+      address: alice.address3,
       amount: "11",
     },
     {
-      address: faucet.address4,
+      address: alice.address4,
       amount: "11",
     },
     {
@@ -68,23 +67,23 @@ const initMsgIsa = {
   symbol: "ISA",
   initial_balances: [
     {
-      address: faucet.address0,
+      address: alice.address0,
       amount: "999999999",
     },
     {
-      address: faucet.address1,
+      address: alice.address1,
       amount: "999999999",
     },
     {
-      address: faucet.address2,
+      address: alice.address2,
       amount: "999999999",
     },
     {
-      address: faucet.address3,
+      address: alice.address3,
       amount: "999999999",
     },
     {
-      address: faucet.address4,
+      address: alice.address4,
       amount: "999999999",
     },
     {
@@ -99,23 +98,23 @@ const initMsgJade = {
   symbol: "JADE",
   initial_balances: [
     {
-      address: faucet.address0,
+      address: alice.address0,
       amount: "189189189000000000000000000", // 189189189 JADE
     },
     {
-      address: faucet.address1,
+      address: alice.address1,
       amount: "189189189000000000000000000", // 189189189 JADE
     },
     {
-      address: faucet.address2,
+      address: alice.address2,
       amount: "189189189000000000000000000", // 189189189 JADE
     },
     {
-      address: faucet.address3,
+      address: alice.address3,
       amount: "189189189000000000000000000", // 189189189 JADE
     },
     {
-      address: faucet.address4,
+      address: alice.address4,
       amount: "189189189000000000000000000", // 189189189 JADE
     },
     {
@@ -126,8 +125,8 @@ const initMsgJade = {
 };
 
 async function main() {
-  const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-  const client = new SigningCosmWasmClient(httpUrl, faucet.address0, (signBytes) => pen.sign(signBytes));
+  const pen = await Secp256k1Pen.fromMnemonic(alice.mnemonic);
+  const client = new SigningCosmWasmClient(httpUrl, alice.address0, (signBytes) => pen.sign(signBytes));
 
   const wasm = fs.readFileSync(__dirname + "/contracts/cw-erc20.wasm");
   const uploadReceipt = await client.upload(wasm, codeMeta, "Upload ERC20 contract");

@@ -31,9 +31,9 @@ import { RestClient, TxsResponse } from "./restclient";
 import { SigningCosmWasmClient } from "./signingcosmwasmclient";
 import cosmoshub from "./testdata/cosmoshub.json";
 import {
+  alice,
   bech32AddressMatcher,
   deployedErc20,
-  faucet,
   fromOneElementArray,
   getHackatom,
   makeRandomAddress,
@@ -71,7 +71,7 @@ async function uploadCustomContract(
   const theMsg: MsgStoreCode = {
     type: "wasm/store-code",
     value: {
-      sender: faucet.address,
+      sender: alice.address0,
       wasm_byte_code: toBase64(wasmCode),
       source: "https://github.com/confio/cosmwasm/raw/0.7/lib/vm/testdata/contract_0.6.wasm",
       builder: "confio/cosmwasm-opt:0.6.2",
@@ -87,7 +87,7 @@ async function uploadCustomContract(
     gas: "89000000",
   };
 
-  const { account_number, sequence } = (await client.authAccounts(faucet.address)).result.value;
+  const { account_number, sequence } = (await client.authAccounts(alice.address0)).result.value;
   const signBytes = makeSignBytes([theMsg], fee, wasmd.chainId, memo, account_number, sequence);
   const signature = await pen.sign(signBytes);
   const signedTx = makeSignedTx(theMsg, fee, memo, signature);
@@ -109,11 +109,11 @@ async function instantiateContract(
   const theMsg: MsgInstantiateContract = {
     type: "wasm/instantiate",
     value: {
-      sender: faucet.address,
+      sender: alice.address0,
       code_id: codeId.toString(),
       label: "my escrow",
       init_msg: {
-        verifier: faucet.address,
+        verifier: alice.address0,
         beneficiary: beneficiaryAddress,
       },
       init_funds: transferAmount || [],
@@ -129,7 +129,7 @@ async function instantiateContract(
     gas: "89000000",
   };
 
-  const { account_number, sequence } = (await client.authAccounts(faucet.address)).result.value;
+  const { account_number, sequence } = (await client.authAccounts(alice.address0)).result.value;
   const signBytes = makeSignBytes([theMsg], fee, wasmd.chainId, memo, account_number, sequence);
   const signature = await pen.sign(signBytes);
   const signedTx = makeSignedTx(theMsg, fee, memo, signature);
@@ -145,7 +145,7 @@ async function executeContract(
   const theMsg: MsgExecuteContract = {
     type: "wasm/execute",
     value: {
-      sender: faucet.address,
+      sender: alice.address0,
       contract: contractAddress,
       msg: { release: {} },
       sent_funds: [],
@@ -161,7 +161,7 @@ async function executeContract(
     gas: "89000000",
   };
 
-  const { account_number, sequence } = (await client.authAccounts(faucet.address)).result.value;
+  const { account_number, sequence } = (await client.authAccounts(alice.address0)).result.value;
   const signBytes = makeSignBytes([theMsg], fee, wasmd.chainId, memo, account_number, sequence);
   const signature = await pen.sign(signBytes);
   const signedTx = makeSignedTx(theMsg, fee, memo, signature);
@@ -207,10 +207,10 @@ describe("RestClient", () => {
     it("has correct pubkey for faucet", async () => {
       pendingWithoutWasmd();
       const client = new RestClient(wasmd.endpoint);
-      const { result } = await client.authAccounts(faucet.address);
+      const { result } = await client.authAccounts(alice.address0);
       expect(result.value).toEqual(
         jasmine.objectContaining({
-          public_key: encodeBech32Pubkey(faucet.pubkey, "cosmospub"),
+          public_key: encodeBech32Pubkey(alice.pubkey0, "cosmospub"),
         }),
       );
     });
@@ -347,8 +347,8 @@ describe("RestClient", () => {
 
     beforeAll(async () => {
       if (wasmdEnabled()) {
-        const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-        const client = new SigningCosmWasmClient(wasmd.endpoint, faucet.address, (signBytes) =>
+        const pen = await Secp256k1Pen.fromMnemonic(alice.mnemonic);
+        const client = new SigningCosmWasmClient(wasmd.endpoint, alice.address0, (signBytes) =>
           pen.sign(signBytes),
         );
 
@@ -360,7 +360,7 @@ describe("RestClient", () => {
           };
           const result = await client.sendTokens(recipient, [transferAmount]);
           successful = {
-            sender: faucet.address,
+            sender: alice.address0,
             recipient: recipient,
             hash: result.transactionHash,
           };
@@ -379,7 +379,7 @@ describe("RestClient", () => {
             type: "cosmos-sdk/MsgSend",
             value: {
               // eslint-disable-next-line @typescript-eslint/camelcase
-              from_address: faucet.address,
+              from_address: alice.address0,
               // eslint-disable-next-line @typescript-eslint/camelcase
               to_address: recipient,
               amount: transferAmount,
@@ -412,7 +412,7 @@ describe("RestClient", () => {
             // console.log(error);
           }
           unsuccessful = {
-            sender: faucet.address,
+            sender: alice.address0,
             recipient: recipient,
             hash: transactionId,
           };
@@ -485,8 +485,8 @@ describe("RestClient", () => {
 
     beforeAll(async () => {
       if (wasmdEnabled()) {
-        const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-        const client = new SigningCosmWasmClient(wasmd.endpoint, faucet.address, (signBytes) =>
+        const pen = await Secp256k1Pen.fromMnemonic(alice.mnemonic);
+        const client = new SigningCosmWasmClient(wasmd.endpoint, alice.address0, (signBytes) =>
           pen.sign(signBytes),
         );
 
@@ -502,7 +502,7 @@ describe("RestClient", () => {
         await sleep(50); // wait until tx is indexed
         const txDetails = await new RestClient(wasmd.endpoint).txById(result.transactionHash);
         posted = {
-          sender: faucet.address,
+          sender: alice.address0,
           recipient: recipient,
           hash: result.transactionHash,
           height: Number.parseInt(txDetails.height, 10),
@@ -666,7 +666,7 @@ describe("RestClient", () => {
       assert(isMsgInstantiateContract(jade));
       expect(store.value).toEqual(
         jasmine.objectContaining({
-          sender: faucet.address,
+          sender: alice.address0,
           source: deployedErc20.source,
           builder: deployedErc20.builder,
         }),
@@ -678,21 +678,21 @@ describe("RestClient", () => {
           symbol: "HASH",
         }),
         label: "HASH",
-        sender: faucet.address,
+        sender: alice.address0,
       });
       expect(isa.value).toEqual({
         code_id: deployedErc20.codeId.toString(),
         init_funds: [],
         init_msg: jasmine.objectContaining({ symbol: "ISA" }),
         label: "ISA",
-        sender: faucet.address,
+        sender: alice.address0,
       });
       expect(jade.value).toEqual({
         code_id: deployedErc20.codeId.toString(),
         init_funds: [],
         init_msg: jasmine.objectContaining({ symbol: "JADE" }),
         label: "JADE",
-        sender: faucet.address,
+        sender: alice.address0,
       });
     });
 
@@ -711,7 +711,7 @@ describe("RestClient", () => {
         assert(isMsgStoreCode(store));
         expect(store.value).toEqual(
           jasmine.objectContaining({
-            sender: faucet.address,
+            sender: alice.address0,
             source: deployedErc20.source,
             builder: deployedErc20.builder,
           }),
@@ -734,21 +734,21 @@ describe("RestClient", () => {
             symbol: "HASH",
           }),
           label: "HASH",
-          sender: faucet.address,
+          sender: alice.address0,
         });
         expect(isa.value).toEqual({
           code_id: deployedErc20.codeId.toString(),
           init_funds: [],
           init_msg: jasmine.objectContaining({ symbol: "ISA" }),
           label: "ISA",
-          sender: faucet.address,
+          sender: alice.address0,
         });
         expect(jade.value).toEqual({
           code_id: deployedErc20.codeId.toString(),
           init_funds: [],
           init_msg: jasmine.objectContaining({ symbol: "JADE" }),
           label: "JADE",
-          sender: faucet.address,
+          sender: alice.address0,
         });
       }
     });
@@ -765,13 +765,13 @@ describe("RestClient", () => {
   describe("postTx", () => {
     it("can send tokens", async () => {
       pendingWithoutWasmd();
-      const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
+      const pen = await Secp256k1Pen.fromMnemonic(alice.mnemonic);
 
       const memo = "My first contract on chain";
       const theMsg: MsgSend = {
         type: "cosmos-sdk/MsgSend",
         value: {
-          from_address: faucet.address,
+          from_address: alice.address0,
           to_address: emptyAddress,
           amount: [
             {
@@ -793,7 +793,7 @@ describe("RestClient", () => {
       };
 
       const client = new RestClient(wasmd.endpoint);
-      const { account_number, sequence } = (await client.authAccounts(faucet.address)).result.value;
+      const { account_number, sequence } = (await client.authAccounts(alice.address0)).result.value;
 
       const signBytes = makeSignBytes([theMsg], fee, wasmd.chainId, memo, account_number, sequence);
       const signature = await pen.sign(signBytes);
@@ -813,9 +813,9 @@ describe("RestClient", () => {
 
     it("can't send transaction with additional signatures", async () => {
       pendingWithoutWasmd();
-      const account1 = await Secp256k1Pen.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(0));
-      const account2 = await Secp256k1Pen.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(1));
-      const account3 = await Secp256k1Pen.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(2));
+      const account1 = await Secp256k1Pen.fromMnemonic(alice.mnemonic, makeCosmoshubPath(0));
+      const account2 = await Secp256k1Pen.fromMnemonic(alice.mnemonic, makeCosmoshubPath(1));
+      const account3 = await Secp256k1Pen.fromMnemonic(alice.mnemonic, makeCosmoshubPath(2));
       const address1 = rawSecp256k1PubkeyToAddress(account1.pubkey, "cosmos");
       const address2 = rawSecp256k1PubkeyToAddress(account2.pubkey, "cosmos");
       const address3 = rawSecp256k1PubkeyToAddress(account3.pubkey, "cosmos");
@@ -870,7 +870,7 @@ describe("RestClient", () => {
 
     it("can send multiple messages with one signature", async () => {
       pendingWithoutWasmd();
-      const account1 = await Secp256k1Pen.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(0));
+      const account1 = await Secp256k1Pen.fromMnemonic(alice.mnemonic, makeCosmoshubPath(0));
       const address1 = rawSecp256k1PubkeyToAddress(account1.pubkey, "cosmos");
 
       const memo = "My first contract on chain";
@@ -929,8 +929,8 @@ describe("RestClient", () => {
 
     it("can send multiple messages with multiple signatures", async () => {
       pendingWithoutWasmd();
-      const account1 = await Secp256k1Pen.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(0));
-      const account2 = await Secp256k1Pen.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(1));
+      const account1 = await Secp256k1Pen.fromMnemonic(alice.mnemonic, makeCosmoshubPath(0));
+      const account2 = await Secp256k1Pen.fromMnemonic(alice.mnemonic, makeCosmoshubPath(1));
       const address1 = rawSecp256k1PubkeyToAddress(account1.pubkey, "cosmos");
       const address2 = rawSecp256k1PubkeyToAddress(account2.pubkey, "cosmos");
 
@@ -998,8 +998,8 @@ describe("RestClient", () => {
 
     it("can't send transaction with wrong signature order (1)", async () => {
       pendingWithoutWasmd();
-      const account1 = await Secp256k1Pen.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(0));
-      const account2 = await Secp256k1Pen.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(1));
+      const account1 = await Secp256k1Pen.fromMnemonic(alice.mnemonic, makeCosmoshubPath(0));
+      const account2 = await Secp256k1Pen.fromMnemonic(alice.mnemonic, makeCosmoshubPath(1));
       const address1 = rawSecp256k1PubkeyToAddress(account1.pubkey, "cosmos");
       const address2 = rawSecp256k1PubkeyToAddress(account2.pubkey, "cosmos");
 
@@ -1062,8 +1062,8 @@ describe("RestClient", () => {
 
     it("can't send transaction with wrong signature order (2)", async () => {
       pendingWithoutWasmd();
-      const account1 = await Secp256k1Pen.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(0));
-      const account2 = await Secp256k1Pen.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(1));
+      const account1 = await Secp256k1Pen.fromMnemonic(alice.mnemonic, makeCosmoshubPath(0));
+      const account2 = await Secp256k1Pen.fromMnemonic(alice.mnemonic, makeCosmoshubPath(1));
       const address1 = rawSecp256k1PubkeyToAddress(account1.pubkey, "cosmos");
       const address2 = rawSecp256k1PubkeyToAddress(account2.pubkey, "cosmos");
 
@@ -1126,7 +1126,7 @@ describe("RestClient", () => {
 
     it("can upload, instantiate and execute wasm", async () => {
       pendingWithoutWasmd();
-      const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
+      const pen = await Secp256k1Pen.fromMnemonic(alice.mnemonic);
       const client = new RestClient(wasmd.endpoint);
 
       const transferAmount: readonly Coin[] = [
@@ -1200,7 +1200,7 @@ describe("RestClient", () => {
   describe("query", () => {
     it("can list upload code", async () => {
       pendingWithoutWasmd();
-      const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
+      const pen = await Secp256k1Pen.fromMnemonic(alice.mnemonic);
       const client = new RestClient(wasmd.endpoint);
 
       // check with contracts were here first to compare
@@ -1221,7 +1221,7 @@ describe("RestClient", () => {
       expect(newInfos.length).toEqual(numExisting + 1);
       const lastInfo = newInfos[newInfos.length - 1];
       expect(lastInfo.id).toEqual(codeId);
-      expect(lastInfo.creator).toEqual(faucet.address);
+      expect(lastInfo.creator).toEqual(alice.address0);
 
       // ensure metadata is present
       expect(lastInfo.source).toEqual(
@@ -1240,7 +1240,7 @@ describe("RestClient", () => {
 
     it("can list contracts and get info", async () => {
       pendingWithoutWasmd();
-      const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
+      const pen = await Secp256k1Pen.fromMnemonic(alice.mnemonic);
       const client = new RestClient(wasmd.endpoint);
       const beneficiaryAddress = makeRandomAddress();
       const transferAmount: readonly Coin[] = [
@@ -1284,7 +1284,7 @@ describe("RestClient", () => {
       expect(newContract).toEqual(
         jasmine.objectContaining({
           code_id: codeId,
-          creator: faucet.address,
+          creator: alice.address0,
           label: "my escrow",
         }),
       );
@@ -1293,7 +1293,7 @@ describe("RestClient", () => {
       const myInfo = await client.getContractInfo(myAddress);
       assert(myInfo);
       expect(myInfo.code_id).toEqual(codeId);
-      expect(myInfo.creator).toEqual(faucet.address);
+      expect(myInfo.creator).toEqual(alice.address0);
       expect((myInfo.init_msg as any).beneficiary).toEqual(beneficiaryAddress);
 
       // make sure random addresses don't give useful info
@@ -1309,7 +1309,7 @@ describe("RestClient", () => {
 
       beforeAll(async () => {
         if (wasmdEnabled()) {
-          const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
+          const pen = await Secp256k1Pen.fromMnemonic(alice.mnemonic);
           const uploadResult = await uploadContract(client, pen);
           assert(!uploadResult.code);
           const uploadLogs = parseLogs(uploadResult.logs);
@@ -1363,7 +1363,7 @@ describe("RestClient", () => {
 
         // we can query the verifier properly
         const resultDocument = await client.queryContractSmart(contractAddress!, { verifier: {} });
-        expect(resultDocument).toEqual({ verifier: faucet.address });
+        expect(resultDocument).toEqual({ verifier: alice.address0 });
 
         // invalid query syntax throws an error
         await client.queryContractSmart(contractAddress!, { nosuchkey: {} }).then(

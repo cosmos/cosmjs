@@ -7,8 +7,8 @@ import { isMsgExecuteContract, isMsgInstantiateContract } from "./msgs";
 import { RestClient } from "./restclient";
 import { SigningCosmWasmClient } from "./signingcosmwasmclient";
 import {
+  alice,
   deployedErc20,
-  faucet,
   fromOneElementArray,
   makeRandomAddress,
   pendingWithoutWasmd,
@@ -47,8 +47,8 @@ describe("CosmWasmClient.searchTx", () => {
 
   beforeAll(async () => {
     if (wasmdEnabled()) {
-      const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-      const client = new SigningCosmWasmClient(wasmd.endpoint, faucet.address, (signBytes) =>
+      const pen = await Secp256k1Pen.fromMnemonic(alice.mnemonic);
+      const client = new SigningCosmWasmClient(wasmd.endpoint, alice.address0, (signBytes) =>
         pen.sign(signBytes),
       );
 
@@ -62,7 +62,7 @@ describe("CosmWasmClient.searchTx", () => {
         await sleep(50); // wait until tx is indexed
         const txDetails = await new RestClient(wasmd.endpoint).txById(result.transactionHash);
         sendSuccessful = {
-          sender: faucet.address,
+          sender: alice.address0,
           recipient: recipient,
           hash: result.transactionHash,
           height: Number.parseInt(txDetails.height, 10),
@@ -83,7 +83,7 @@ describe("CosmWasmClient.searchTx", () => {
           type: "cosmos-sdk/MsgSend",
           value: {
             // eslint-disable-next-line @typescript-eslint/camelcase
-            from_address: faucet.address,
+            from_address: alice.address0,
             // eslint-disable-next-line @typescript-eslint/camelcase
             to_address: recipient,
             amount: transferAmount,
@@ -120,7 +120,7 @@ describe("CosmWasmClient.searchTx", () => {
           // console.log(error);
         }
         sendUnsuccessful = {
-          sender: faucet.address,
+          sender: alice.address0,
           recipient: recipient,
           hash: transactionId,
           height: heightBeforeThis + 1,
@@ -140,7 +140,7 @@ describe("CosmWasmClient.searchTx", () => {
         await sleep(50); // wait until tx is indexed
         const txDetails = await new RestClient(wasmd.endpoint).txById(result.transactionHash);
         postedExecute = {
-          sender: faucet.address,
+          sender: alice.address0,
           contract: hashInstance,
           hash: result.transactionHash,
           height: Number.parseInt(txDetails.height, 10),
@@ -415,7 +415,7 @@ describe("CosmWasmClient.searchTx", () => {
       expect(first).toEqual({
         type: "wasm/instantiate",
         value: {
-          sender: faucet.address,
+          sender: alice.address0,
           code_id: deployedErc20.codeId.toString(),
           label: "HASH",
           init_msg: jasmine.objectContaining({ symbol: "HASH" }),
