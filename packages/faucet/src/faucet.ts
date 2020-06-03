@@ -102,20 +102,21 @@ export class Faucet {
   public async loadAccounts(): Promise<ReadonlyArray<MinimalAccount>> {
     const addresses = [this.holderAddress, ...this.distributorAddresses];
 
-    const out: MinimalAccount[] = [];
-    for (const address of addresses) {
-      const response = await this.readOnlyClient.getAccount(address);
-      if (response) {
-        out.push(response);
-      } else {
-        out.push({
-          address: address,
-          balance: [],
-        });
-      }
-    }
-
-    return out;
+    return Promise.all(
+      addresses.map(
+        async (address): Promise<MinimalAccount> => {
+          const response = await this.readOnlyClient.getAccount(address);
+          if (response) {
+            return response;
+          } else {
+            return {
+              address: address,
+              balance: [],
+            };
+          }
+        },
+      ),
+    );
   }
 
   public async refill(): Promise<void> {
