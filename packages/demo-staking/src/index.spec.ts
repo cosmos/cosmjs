@@ -32,7 +32,7 @@ const params = {
   name: "Bounty",
   symbol: "BOUNTY",
   decimals: 3,
-  validator: "cosmosvaloper1ea5cpmcj2vf5d0xwurncx7zdnmkuc6eq696h9a",
+  validator: "cosmosvaloper1gjvanqxc774u6ed9thj4gpn9gj5zus5u32enqn",
   exitTax: "0.005", // 0.5 %
   minWithdrawal: "700",
 };
