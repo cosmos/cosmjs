@@ -1,10 +1,10 @@
-import { Address, TokenTicker } from "@iov/bcp";
-
 import { HttpError } from "./httperror";
 
 export interface CreditRequestBodyData {
-  readonly ticker: TokenTicker;
-  readonly address: Address;
+  /** The ticker symbol */
+  readonly ticker: string;
+  /** The recipient address */
+  readonly address: string;
 }
 
 export class RequestParser {
@@ -28,8 +28,8 @@ export class RequestParser {
     }
 
     return {
-      address: address as Address,
-      ticker: ticker as TokenTicker,
+      address: address,
+      ticker: ticker,
     };
   }
 }

@@ -1,12 +1,10 @@
-import { CosmosCodec, CosmosConnection, TokenConfiguration } from "@cosmwasm/bcp";
-import { Address, ChainId, Identity, TokenTicker } from "@iov/bcp";
+import { CosmosClient } from "@cosmwasm/sdk38";
 import { Random } from "@iov/crypto";
 import { Bech32 } from "@iov/encoding";
-import { UserProfile } from "@iov/keycontrol";
 import { assert } from "@iov/utils";
 
 import { Faucet } from "./faucet";
-import { createUserProfile } from "./profile";
+import { TokenConfiguration } from "./types";
 
 function pendingWithoutWasmd(): void {
   if (!process.env.WASMD_ENABLED) {
@@ -15,175 +13,165 @@ function pendingWithoutWasmd(): void {
 }
 
 const httpUrl = "http://localhost:1317";
-const defaultConfig: TokenConfiguration = {
+const defaultTokenConfig: TokenConfiguration = {
   bankTokens: [
     {
       fractionalDigits: 6,
-      name: "Fee Token",
-      ticker: "COSM",
+      tickerSymbol: "COSM",
       denom: "ucosm",
     },
     {
       fractionalDigits: 6,
-      name: "Staking Token",
-      ticker: "STAKE",
+      tickerSymbol: "STAKE",
       denom: "ustake",
     },
   ],
 };
 const defaultAddressPrefix = "cosmos";
-const defaultChainId = "cosmos:testing" as ChainId;
-const codec = new CosmosCodec(defaultAddressPrefix, defaultConfig.bankTokens);
 
-function makeRandomAddress(): Address {
-  return Bech32.encode(defaultAddressPrefix, Random.getBytes(20)) as Address;
+function makeRandomAddress(): string {
+  return Bech32.encode(defaultAddressPrefix, Random.getBytes(20));
 }
 
 const faucetMnemonic =
   "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone";
 
-async function makeProfile(
-  distributors = 0,
-): Promise<{ readonly profile: UserProfile; readonly holder: Identity; readonly distributors: Identity[] }> {
-  const [profile, identities] = await createUserProfile(faucetMnemonic, defaultChainId, distributors);
-  return {
-    profile: profile,
-    holder: identities[0],
-    distributors: identities.slice(1),
-  };
-}
-
 describe("Faucet", () => {
   describe("constructor", () => {
     it("can be constructed", async () => {
       pendingWithoutWasmd();
-      const connection = await CosmosConnection.establish(httpUrl, defaultAddressPrefix, defaultConfig);
-      const { profile } = await makeProfile();
-      const faucet = new Faucet(defaultConfig, connection, codec, profile);
+      const faucet = await Faucet.make(httpUrl, defaultAddressPrefix, defaultTokenConfig, faucetMnemonic, 3);
       expect(faucet).toBeTruthy();
-      connection.disconnect();
+    });
+  });
+
+  describe("availableTokens", () => {
+    it("is empty when no tokens are configures", async () => {
+      const faucet = await Faucet.make(httpUrl, defaultAddressPrefix, { bankTokens: [] }, faucetMnemonic, 3);
+      const tickers = await faucet.availableTokens();
+      expect(tickers).toEqual([]);
+    });
+
+    it("is empty when no tokens are configures", async () => {
+      const faucet = await Faucet.make(httpUrl, defaultAddressPrefix, defaultTokenConfig, faucetMnemonic, 3);
+      const tickers = await faucet.availableTokens();
+      expect(tickers).toEqual(["COSM", "STAKE"]);
     });
   });
 
   describe("send", () => {
     it("can send bank token", async () => {
       pendingWithoutWasmd();
-      const connection = await CosmosConnection.establish(httpUrl, defaultAddressPrefix, defaultConfig);
-      const { profile, holder } = await makeProfile();
-      const faucet = new Faucet(defaultConfig, connection, codec, profile);
+      const faucet = await Faucet.make(httpUrl, defaultAddressPrefix, defaultTokenConfig, faucetMnemonic, 3);
       const recipient = makeRandomAddress();
       await faucet.send({
         amount: {
-          quantity: "23456",
-          fractionalDigits: 6,
-          tokenTicker: "COSM" as TokenTicker,
+          amount: "23456",
+          denom: "ucosm",
         },
-        sender: holder,
+        sender: faucet.holderAddress,
         recipient: recipient,
       });
-      const account = await connection.getAccount({ address: recipient });
+
+      const readOnlyClient = new CosmosClient(httpUrl);
+      const account = await readOnlyClient.getAccount(recipient);
       assert(account);
       expect(account.balance).toEqual([
         {
-          quantity: "23456",
-          fractionalDigits: 6,
-          tokenTicker: "COSM" as TokenTicker,
+          amount: "23456",
+          denom: "ucosm",
         },
       ]);
-      connection.disconnect();
     });
   });
 
   describe("refill", () => {
     it("works", async () => {
       pendingWithoutWasmd();
-      const connection = await CosmosConnection.establish(httpUrl, defaultAddressPrefix, defaultConfig);
-      const { profile, distributors } = await makeProfile(1);
-      const faucet = new Faucet(defaultConfig, connection, codec, profile);
+      const faucet = await Faucet.make(httpUrl, defaultAddressPrefix, defaultTokenConfig, faucetMnemonic, 3);
       await faucet.refill();
-      const distributorBalance = (await connection.getAccount({ pubkey: distributors[0].pubkey }))?.balance;
+      const readOnlyClient = new CosmosClient(httpUrl);
+      const distributorBalance = (await readOnlyClient.getAccount(faucet.distributorAddresses[0]))?.balance;
       assert(distributorBalance);
       expect(distributorBalance).toEqual([
         jasmine.objectContaining({
-          tokenTicker: "COSM",
-          fractionalDigits: 6,
+          denom: "ucosm",
         }),
         jasmine.objectContaining({
-          tokenTicker: "STAKE",
-          fractionalDigits: 6,
+          denom: "ustake",
         }),
       ]);
-      expect(Number.parseInt(distributorBalance[0].quantity, 10)).toBeGreaterThanOrEqual(80_000000);
-      expect(Number.parseInt(distributorBalance[1].quantity, 10)).toBeGreaterThanOrEqual(80_000000);
-      connection.disconnect();
+      expect(Number.parseInt(distributorBalance[0].amount, 10)).toBeGreaterThanOrEqual(80_000000);
+      expect(Number.parseInt(distributorBalance[1].amount, 10)).toBeGreaterThanOrEqual(80_000000);
     });
   });
 
   describe("credit", () => {
     it("works for fee token", async () => {
       pendingWithoutWasmd();
-      const connection = await CosmosConnection.establish(httpUrl, defaultAddressPrefix, defaultConfig);
-      const { profile } = await makeProfile(1);
-      const faucet = new Faucet(defaultConfig, connection, codec, profile);
+      const faucet = await Faucet.make(httpUrl, defaultAddressPrefix, defaultTokenConfig, faucetMnemonic, 3);
       const recipient = makeRandomAddress();
-      await faucet.credit(recipient, "COSM" as TokenTicker);
-      const account = await connection.getAccount({ address: recipient });
+      await faucet.credit(recipient, "COSM");
+
+      const readOnlyClient = new CosmosClient(httpUrl);
+      const account = await readOnlyClient.getAccount(recipient);
       assert(account);
       expect(account.balance).toEqual([
         {
-          quantity: "10000000",
-          fractionalDigits: 6,
-          tokenTicker: "COSM" as TokenTicker,
+          amount: "10000000",
+          denom: "ucosm",
         },
       ]);
-      connection.disconnect();
     });
 
     it("works for stake token", async () => {
       pendingWithoutWasmd();
-      const connection = await CosmosConnection.establish(httpUrl, defaultAddressPrefix, defaultConfig);
-      const { profile } = await makeProfile(1);
-      const faucet = new Faucet(defaultConfig, connection, codec, profile);
+      const faucet = await Faucet.make(httpUrl, defaultAddressPrefix, defaultTokenConfig, faucetMnemonic, 3);
       const recipient = makeRandomAddress();
-      await faucet.credit(recipient, "STAKE" as TokenTicker);
-      const account = await connection.getAccount({ address: recipient });
+      await faucet.credit(recipient, "STAKE");
+
+      const readOnlyClient = new CosmosClient(httpUrl);
+      const account = await readOnlyClient.getAccount(recipient);
       assert(account);
       expect(account.balance).toEqual([
         {
-          quantity: "10000000",
-          fractionalDigits: 6,
-          tokenTicker: "STAKE" as TokenTicker,
+          amount: "10000000",
+          denom: "ustake",
         },
       ]);
-      connection.disconnect();
     });
   });
 
   describe("loadTokenTickers", () => {
     it("works", async () => {
       pendingWithoutWasmd();
-      const connection = await CosmosConnection.establish(httpUrl, defaultAddressPrefix, defaultConfig);
-      const { profile } = await makeProfile();
-      const faucet = new Faucet(defaultConfig, connection, codec, profile);
-      const tickers = await faucet.loadTokenTickers();
+      const faucet = await Faucet.make(httpUrl, defaultAddressPrefix, defaultTokenConfig, faucetMnemonic, 3);
+      const tickers = faucet.loadTokenTickers();
       expect(tickers).toEqual(["COSM", "STAKE"]);
-      connection.disconnect();
     });
   });
 
   describe("loadAccounts", () => {
     it("works", async () => {
       pendingWithoutWasmd();
-      const connection = await CosmosConnection.establish(httpUrl, defaultAddressPrefix, defaultConfig);
-      const { profile, holder } = await makeProfile();
-      const faucet = new Faucet(defaultConfig, connection, codec, profile);
+      const faucet = await Faucet.make(httpUrl, defaultAddressPrefix, defaultTokenConfig, faucetMnemonic, 1);
       const accounts = await faucet.loadAccounts();
-      const expectedHolderAccount = await connection.getAccount({ pubkey: holder.pubkey });
+
+      const readOnlyClient = new CosmosClient(httpUrl);
+      const expectedHolderAccount = await readOnlyClient.getAccount(faucet.holderAddress);
+      const expectedDistributorAccount = await readOnlyClient.getAccount(faucet.distributorAddresses[0]);
       assert(expectedHolderAccount);
+      assert(expectedDistributorAccount);
       expect(accounts).toEqual([
-        { address: expectedHolderAccount.address, balance: expectedHolderAccount.balance },
+        jasmine.objectContaining({
+          address: expectedHolderAccount.address,
+          balance: expectedHolderAccount.balance,
+        }),
+        jasmine.objectContaining({
+          address: expectedDistributorAccount.address,
+          balance: expectedDistributorAccount.balance,
+        }),
       ]);
-      connection.disconnect();
     });
   });
 });

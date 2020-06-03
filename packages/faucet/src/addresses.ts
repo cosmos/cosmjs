@@ -1,17 +1,13 @@
-import { CosmosCodec } from "@cosmwasm/bcp";
-import { Address, Identity, TxCodec } from "@iov/bcp";
+import { Bech32 } from "@iov/encoding";
 
-import * as constants from "./constants";
-
-const noTokensCodec: Pick<TxCodec, "identityToAddress" | "isValidAddress"> = new CosmosCodec(
-  constants.addressPrefix,
-  [],
-);
-
-export function identityToAddress(identity: Identity): Address {
-  return noTokensCodec.identityToAddress(identity);
-}
-
-export function isValidAddress(input: string): boolean {
-  return noTokensCodec.isValidAddress(input);
+export function isValidAddress(input: string, requiredPrefix: string): boolean {
+  try {
+    const { prefix, data } = Bech32.decode(input);
+    if (prefix !== requiredPrefix) {
+      return false;
+    }
+    return data.length === 20;
+  } catch {
+    return false;
+  }
 }

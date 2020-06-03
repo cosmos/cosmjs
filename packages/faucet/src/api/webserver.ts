@@ -1,24 +1,23 @@
 import Koa from "koa";
 import cors = require("@koa/cors");
-import { ChainId } from "@iov/bcp";
 import bodyParser from "koa-bodyparser";
 
 import { isValidAddress } from "../addresses";
+import * as constants from "../constants";
 import { Faucet } from "../faucet";
-import { availableTokensFromHolder } from "../multichainhelpers";
 import { HttpError } from "./httperror";
 import { RequestParser } from "./requestparser";
 
 /** This will be passed 1:1 to the user */
 export interface ChainConstants {
   readonly nodeUrl: string;
-  readonly chainId: ChainId;
+  readonly chainId: string;
 }
 
 export class Webserver {
   private readonly api = new Koa();
 
-  constructor(faucet: Faucet, chainChinstants: ChainConstants) {
+  constructor(faucet: Faucet, chainConstants: ChainConstants) {
     this.api.use(cors());
     this.api.use(bodyParser());
 
@@ -35,11 +34,11 @@ export class Webserver {
           break;
         case "/status": {
           const [holder, ...distributors] = await faucet.loadAccounts();
-          const availableTokens = availableTokensFromHolder(holder);
-          const chainTokens = await faucet.loadTokenTickers();
+          const availableTokens = await faucet.availableTokens();
+          const chainTokens = faucet.loadTokenTickers();
           context.response.body = {
             status: "ok",
-            ...chainChinstants,
+            ...chainConstants,
             chainTokens: chainTokens,
             availableTokens: availableTokens,
             holder: holder,
@@ -60,12 +59,11 @@ export class Webserver {
           const requestBody = context.request.body;
           const { address, ticker } = RequestParser.parseCreditBody(requestBody);
 
-          if (!isValidAddress(address)) {
+          if (!isValidAddress(address, constants.addressPrefix)) {
             throw new HttpError(400, "Address is not in the expected format for this chain.");
           }
 
-          const [holder] = await faucet.loadAccounts();
-          const availableTokens = availableTokensFromHolder(holder);
+          const availableTokens = await faucet.availableTokens();
           if (availableTokens.indexOf(ticker) === -1) {
             const tokens = JSON.stringify(availableTokens);
             throw new HttpError(422, `Token is not available. Available tokens are: ${tokens}`);
