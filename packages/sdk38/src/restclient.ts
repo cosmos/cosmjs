@@ -2,9 +2,7 @@ import { Encoding, isNonNullObject } from "@iov/encoding";
 import axios, { AxiosError, AxiosInstance } from "axios";
 
 import { Coin } from "./coins";
-import { CosmosSdkTx, JsonObject, Model, parseWasmData, StdTx, WasmData } from "./types";
-
-const { fromBase64, fromUtf8, toHex, toUtf8 } = Encoding;
+import { CosmosSdkTx, StdTx } from "./types";
 
 export interface CosmosSdkAccount {
   /** Bech32 account address */
@@ -210,13 +208,6 @@ type RestClientResponse =
   | WasmResponse<ContractInfo[] | null>
   | WasmResponse<ContractDetails | null>;
 
-/** Unfortunately, Cosmos SDK encodes empty arrays as null */
-type CosmosSdkArray<T> = ReadonlyArray<T> | null;
-
-function normalizeArray<T>(backend: CosmosSdkArray<T>): ReadonlyArray<T> {
-  return backend || [];
-}
-
 /**
  * The mode used to send transaction
  *
@@ -229,17 +220,6 @@ export enum BroadcastMode {
   Sync = "sync",
   /** Return right away */
   Async = "async",
-}
-
-function isWasmError<T>(resp: WasmResponse<T>): resp is WasmError {
-  return (resp as WasmError).error !== undefined;
-}
-
-function unwrapWasmResponse<T>(response: WasmResponse<T>): T {
-  if (isWasmError(response)) {
-    throw new Error(response.error);
-  }
-  return response.result;
 }
 
 // We want to get message data from 500 errors
@@ -390,68 +370,5 @@ export class RestClient {
       throw new Error("Unexpected response data format");
     }
     return responseData as PostTxsResponse;
-  }
-
-  // The /wasm endpoints
-
-  // wasm rest queries are listed here: https://github.com/cosmwasm/wasmd/blob/master/x/wasm/client/rest/query.go#L19-L27
-  public async listCodeInfo(): Promise<readonly CodeInfo[]> {
-    const path = `/wasm/code`;
-    const responseData = (await this.get(path)) as WasmResponse<CosmosSdkArray<CodeInfo>>;
-    return normalizeArray(unwrapWasmResponse(responseData));
-  }
-
-  // this will download the original wasm bytecode by code id
-  // throws error if no code with this id
-  public async getCode(id: number): Promise<CodeDetails> {
-    const path = `/wasm/code/${id}`;
-    const responseData = (await this.get(path)) as WasmResponse<CodeDetails>;
-    return unwrapWasmResponse(responseData);
-  }
-
-  public async listContractsByCodeId(id: number): Promise<readonly ContractInfo[]> {
-    const path = `/wasm/code/${id}/contracts`;
-    const responseData = (await this.get(path)) as WasmResponse<CosmosSdkArray<ContractInfo>>;
-    return normalizeArray(unwrapWasmResponse(responseData));
-  }
-
-  /**
-   * Returns null when contract was not found at this address.
-   */
-  public async getContractInfo(address: string): Promise<ContractDetails | null> {
-    const path = `/wasm/contract/${address}`;
-    const response = (await this.get(path)) as WasmResponse<ContractDetails | null>;
-    return unwrapWasmResponse(response);
-  }
-
-  // Returns all contract state.
-  // This is an empty array if no such contract, or contract has no data.
-  public async getAllContractState(address: string): Promise<readonly Model[]> {
-    const path = `/wasm/contract/${address}/state`;
-    const responseData = (await this.get(path)) as WasmResponse<CosmosSdkArray<WasmData>>;
-    return normalizeArray(unwrapWasmResponse(responseData)).map(parseWasmData);
-  }
-
-  // Returns the data at the key if present (unknown decoded json),
-  // or null if no data at this (contract address, key) pair
-  public async queryContractRaw(address: string, key: Uint8Array): Promise<Uint8Array | null> {
-    const hexKey = toHex(key);
-    const path = `/wasm/contract/${address}/raw/${hexKey}?encoding=hex`;
-    const responseData = (await this.get(path)) as WasmResponse<WasmData[]>;
-    const data = unwrapWasmResponse(responseData);
-    return data.length === 0 ? null : fromBase64(data[0].val);
-  }
-
-  /**
-   * Makes a smart query on the contract and parses the reponse as JSON.
-   * Throws error if no such contract exists, the query format is invalid or the response is invalid.
-   */
-  public async queryContractSmart(address: string, query: object): Promise<JsonObject> {
-    const encoded = toHex(toUtf8(JSON.stringify(query)));
-    const path = `/wasm/contract/${address}/smart/${encoded}?encoding=hex`;
-    const responseData = (await this.get(path)) as WasmResponse<SmartQueryResponse>;
-    const result = unwrapWasmResponse(responseData);
-    // By convention, smart queries must return a valid JSON document (see https://github.com/CosmWasm/cosmwasm/issues/144)
-    return JSON.parse(fromUtf8(fromBase64(result.smart)));
   }
 }

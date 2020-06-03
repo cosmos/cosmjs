@@ -5,7 +5,7 @@ import { Coin } from "./coins";
 import { Log, parseLogs } from "./logs";
 import { decodeBech32Pubkey } from "./pubkey";
 import { BroadcastMode, RestClient } from "./restclient";
-import { CosmosSdkTx, JsonObject, PubKey, StdTx } from "./types";
+import { CosmosSdkTx, PubKey, StdTx } from "./types";
 
 export interface GetNonceResult {
   readonly accountNumber: number;
@@ -75,34 +75,6 @@ export interface SearchTxFilter {
   readonly maxHeight?: number;
 }
 
-export interface Code {
-  readonly id: number;
-  /** Bech32 account address */
-  readonly creator: string;
-  /** Hex-encoded sha256 hash of the code stored here */
-  readonly checksum: string;
-  readonly source?: string;
-  readonly builder?: string;
-}
-
-export interface CodeDetails extends Code {
-  /** The original wasm bytes */
-  readonly data: Uint8Array;
-}
-
-export interface Contract {
-  readonly address: string;
-  readonly codeId: number;
-  /** Bech32 account address */
-  readonly creator: string;
-  readonly label: string;
-}
-
-export interface ContractDetails extends Contract {
-  /** Argument passed on initialization of the contract */
-  readonly initMsg: object;
-}
-
 /** A transaction that is indexed as part of the transaction history */
 export interface IndexedTx {
   readonly height: number;
@@ -150,7 +122,6 @@ export class CosmosClient {
   /** Any address the chain considers valid (valid bech32 with proper prefix) */
   protected anyValidAddress: string | undefined;
 
-  private readonly codesCache = new Map<number, CodeDetails>();
   private chainId: string | undefined;
 
   /**
@@ -316,102 +287,6 @@ export class CosmosClient {
       rawLog: result.raw_log || "",
       transactionHash: result.txhash,
     };
-  }
-
-  public async getCodes(): Promise<readonly Code[]> {
-    const result = await this.restClient.listCodeInfo();
-    return result.map(
-      (entry): Code => {
-        this.anyValidAddress = entry.creator;
-        return {
-          id: entry.id,
-          creator: entry.creator,
-          checksum: Encoding.toHex(Encoding.fromHex(entry.data_hash)),
-          source: entry.source || undefined,
-          builder: entry.builder || undefined,
-        };
-      },
-    );
-  }
-
-  public async getCodeDetails(codeId: number): Promise<CodeDetails> {
-    const cached = this.codesCache.get(codeId);
-    if (cached) return cached;
-
-    const getCodeResult = await this.restClient.getCode(codeId);
-    const codeDetails: CodeDetails = {
-      id: getCodeResult.id,
-      creator: getCodeResult.creator,
-      checksum: Encoding.toHex(Encoding.fromHex(getCodeResult.data_hash)),
-      source: getCodeResult.source || undefined,
-      builder: getCodeResult.builder || undefined,
-      data: Encoding.fromBase64(getCodeResult.data),
-    };
-    this.codesCache.set(codeId, codeDetails);
-    return codeDetails;
-  }
-
-  public async getContracts(codeId: number): Promise<readonly Contract[]> {
-    const result = await this.restClient.listContractsByCodeId(codeId);
-    return result.map(
-      (entry): Contract => ({
-        address: entry.address,
-        codeId: entry.code_id,
-        creator: entry.creator,
-        label: entry.label,
-      }),
-    );
-  }
-
-  /**
-   * Throws an error if no contract was found at the address
-   */
-  public async getContract(address: string): Promise<ContractDetails> {
-    const result = await this.restClient.getContractInfo(address);
-    if (!result) throw new Error(`No contract found at address "${address}"`);
-    return {
-      address: result.address,
-      codeId: result.code_id,
-      creator: result.creator,
-      label: result.label,
-      initMsg: result.init_msg,
-    };
-  }
-
-  /**
-   * Returns the data at the key if present (raw contract dependent storage data)
-   * or null if no data at this key.
-   *
-   * Promise is rejected when contract does not exist.
-   */
-  public async queryContractRaw(address: string, key: Uint8Array): Promise<Uint8Array | null> {
-    // just test contract existence
-    const _info = await this.getContract(address);
-
-    return this.restClient.queryContractRaw(address, key);
-  }
-
-  /**
-   * Makes a smart query on the contract, returns the parsed JSON document.
-   *
-   * Promise is rejected when contract does not exist.
-   * Promise is rejected for invalid query format.
-   * Promise is rejected for invalid response format.
-   */
-  public async queryContractSmart(address: string, queryMsg: object): Promise<JsonObject> {
-    try {
-      return await this.restClient.queryContractSmart(address, queryMsg);
-    } catch (error) {
-      if (error instanceof Error) {
-        if (error.message.startsWith("not found: contract")) {
-          throw new Error(`No contract found at address "${address}"`);
-        } else {
-          throw error;
-        }
-      } else {
-        throw error;
-      }
-    }
   }
 
   private async txsQuery(query: string): Promise<readonly IndexedTx[]> {

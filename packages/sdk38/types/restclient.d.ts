@@ -1,5 +1,5 @@
 import { Coin } from "./coins";
-import { CosmosSdkTx, JsonObject, Model, StdTx } from "./types";
+import { CosmosSdkTx, StdTx } from "./types";
 export interface CosmosSdkAccount {
   /** Bech32 account address */
   readonly address: string;
@@ -213,19 +213,5 @@ export declare class RestClient {
    * @param tx a signed transaction as StdTx (i.e. not wrapped in type/value container)
    */
   postTx(tx: StdTx): Promise<PostTxsResponse>;
-  listCodeInfo(): Promise<readonly CodeInfo[]>;
-  getCode(id: number): Promise<CodeDetails>;
-  listContractsByCodeId(id: number): Promise<readonly ContractInfo[]>;
-  /**
-   * Returns null when contract was not found at this address.
-   */
-  getContractInfo(address: string): Promise<ContractDetails | null>;
-  getAllContractState(address: string): Promise<readonly Model[]>;
-  queryContractRaw(address: string, key: Uint8Array): Promise<Uint8Array | null>;
-  /**
-   * Makes a smart query on the contract and parses the reponse as JSON.
-   * Throws error if no such contract exists, the query format is invalid or the response is invalid.
-   */
-  queryContractSmart(address: string, query: object): Promise<JsonObject>;
 }
 export {};

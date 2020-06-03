@@ -1,7 +1,7 @@
 import { Coin } from "./coins";
 import { Log } from "./logs";
 import { BroadcastMode, RestClient } from "./restclient";
-import { CosmosSdkTx, JsonObject, PubKey, StdTx } from "./types";
+import { CosmosSdkTx, PubKey, StdTx } from "./types";
 export interface GetNonceResult {
   readonly accountNumber: number;
   readonly sequence: number;
@@ -48,30 +48,6 @@ export interface SearchTxFilter {
   readonly minHeight?: number;
   readonly maxHeight?: number;
 }
-export interface Code {
-  readonly id: number;
-  /** Bech32 account address */
-  readonly creator: string;
-  /** Hex-encoded sha256 hash of the code stored here */
-  readonly checksum: string;
-  readonly source?: string;
-  readonly builder?: string;
-}
-export interface CodeDetails extends Code {
-  /** The original wasm bytes */
-  readonly data: Uint8Array;
-}
-export interface Contract {
-  readonly address: string;
-  readonly codeId: number;
-  /** Bech32 account address */
-  readonly creator: string;
-  readonly label: string;
-}
-export interface ContractDetails extends Contract {
-  /** Argument passed on initialization of the contract */
-  readonly initMsg: object;
-}
 /** A transaction that is indexed as part of the transaction history */
 export interface IndexedTx {
   readonly height: number;
@@ -114,7 +90,6 @@ export declare class CosmosClient {
   protected readonly restClient: RestClient;
   /** Any address the chain considers valid (valid bech32 with proper prefix) */
   protected anyValidAddress: string | undefined;
-  private readonly codesCache;
   private chainId;
   /**
    * Creates a new client to interact with a CosmWasm blockchain.
@@ -149,27 +124,5 @@ export declare class CosmosClient {
   getBlock(height?: number): Promise<Block>;
   searchTx(query: SearchTxQuery, filter?: SearchTxFilter): Promise<readonly IndexedTx[]>;
   postTx(tx: StdTx): Promise<PostTxResult>;
-  getCodes(): Promise<readonly Code[]>;
-  getCodeDetails(codeId: number): Promise<CodeDetails>;
-  getContracts(codeId: number): Promise<readonly Contract[]>;
-  /**
-   * Throws an error if no contract was found at the address
-   */
-  getContract(address: string): Promise<ContractDetails>;
-  /**
-   * Returns the data at the key if present (raw contract dependent storage data)
-   * or null if no data at this key.
-   *
-   * Promise is rejected when contract does not exist.
-   */
-  queryContractRaw(address: string, key: Uint8Array): Promise<Uint8Array | null>;
-  /**
-   * Makes a smart query on the contract, returns the parsed JSON document.
-   *
-   * Promise is rejected when contract does not exist.
-   * Promise is rejected for invalid query format.
-   * Promise is rejected for invalid response format.
-   */
-  queryContractSmart(address: string, queryMsg: object): Promise<JsonObject>;
   private txsQuery;
 }

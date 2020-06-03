@@ -76,7 +76,7 @@ describe("CosmosClient", () => {
       const height1 = await client.getHeight();
       expect(height1).toBeGreaterThan(0);
 
-      await client.getCodes(); // warm up the client
+      await client.getAccount(guest.address); // warm up the client
 
       const height2 = await client.getHeight();
       expect(height2).toBeGreaterThan(0);
@@ -85,7 +85,7 @@ describe("CosmosClient", () => {
       expect(height3).toEqual(height2 + 1);
 
       expect(blockLatestSpy).toHaveBeenCalledTimes(1);
-      expect(authAccountsSpy).toHaveBeenCalledTimes(2);
+      expect(authAccountsSpy).toHaveBeenCalledTimes(3);
     });
   });
 
@@ -230,67 +230,6 @@ describe("CosmosClient", () => {
       const amountAttr = findAttribute(logs, "transfer", "amount");
       expect(amountAttr.value).toEqual("1234567ucosm");
       expect(transactionHash).toMatch(/^[0-9A-F]{64}$/);
-    });
-  });
-
-  describe("getContracts", () => {
-    it("works", async () => {
-      pendingWithoutWasmd();
-      const client = new CosmosClient(wasmd.endpoint);
-      const result = await client.getContracts(1);
-      expect(result.length).toBeGreaterThanOrEqual(3);
-      const [hash, isa, jade] = result;
-      expect(hash).toEqual({
-        address: "cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
-        codeId: 1,
-        creator: faucet.address,
-        label: "HASH",
-      });
-      expect(isa).toEqual({
-        address: "cosmos1hqrdl6wstt8qzshwc6mrumpjk9338k0lr4dqxd",
-        codeId: 1,
-        creator: faucet.address,
-        label: "ISA",
-      });
-      expect(jade).toEqual({
-        address: "cosmos18r5szma8hm93pvx6lwpjwyxruw27e0k5uw835c",
-        codeId: 1,
-        creator: faucet.address,
-        label: "JADE",
-      });
-    });
-  });
-
-  describe("getContract", () => {
-    it("works for HASH instance", async () => {
-      pendingWithoutWasmd();
-      const client = new CosmosClient(wasmd.endpoint);
-      const hash = await client.getContract("cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5");
-      expect(hash).toEqual({
-        address: "cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
-        codeId: 1,
-        creator: faucet.address,
-        label: "HASH",
-        initMsg: {
-          decimals: 5,
-          name: "Hash token",
-          symbol: "HASH",
-          initial_balances: jasmine.arrayContaining([
-            {
-              address: faucet.address,
-              amount: "11",
-            },
-            {
-              address: unused.address,
-              amount: "12812345",
-            },
-            {
-              address: guest.address,
-              amount: "22004000000",
-            },
-          ]),
-        },
-      });
     });
   });
 });
