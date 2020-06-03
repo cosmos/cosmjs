@@ -1,9 +1,9 @@
-import { CosmWasmCodec } from "@cosmwasm/bcp";
+import { CosmosCodec } from "@cosmwasm/bcp";
 import { Address, Identity, TxCodec } from "@iov/bcp";
 
 import * as constants from "./constants";
 
-const noTokensCodec: Pick<TxCodec, "identityToAddress" | "isValidAddress"> = new CosmWasmCodec(
+const noTokensCodec: Pick<TxCodec, "identityToAddress" | "isValidAddress"> = new CosmosCodec(
   constants.addressPrefix,
   [],
 );

@@ -58,9 +58,7 @@ export class TokenManager {
   }
 
   private getFractionalDigits(ticker: TokenTicker): number {
-    const match = [...this.config.bankTokens, ...(this.config.erc20Tokens || [])].find(
-      (token) => token.ticker === ticker,
-    );
+    const match = this.config.bankTokens.find((token) => token.ticker === ticker);
     if (!match) throw new Error(`No token found for ticker symbol: ${ticker}`);
     return match.fractionalDigits;
   }

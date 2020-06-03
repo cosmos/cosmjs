@@ -1,4 +1,3 @@
-import { isMsgExecuteContract } from "@cosmwasm/cosmwasm";
 import {
   Coin,
   IndexedTx,
@@ -31,9 +30,8 @@ import {
   UnsignedTransaction,
 } from "@iov/bcp";
 import { Decimal, Encoding } from "@iov/encoding";
-import BN from "bn.js";
 
-import { BankToken, Erc20Token } from "./types";
+import { BankToken } from "./types";
 
 const { fromBase64 } = Encoding;
 
@@ -89,7 +87,6 @@ export function parseMsg(
   memo: string | undefined,
   chainId: ChainId,
   tokens: readonly BankToken[],
-  erc20Tokens: readonly Erc20Token[],
 ): UnsignedTransaction {
   if (isMsgSend(msg)) {
     if (msg.value.amount.length !== 1) {
@@ -101,34 +98,6 @@ export function parseMsg(
       sender: msg.value.from_address as Address,
       recipient: msg.value.to_address as Address,
       amount: decodeAmount(tokens, msg.value.amount[0]),
-      memo: memo,
-    };
-    return send;
-  } else if (isMsgExecuteContract(msg)) {
-    const matchingTokenContract = erc20Tokens.find((t) => t.contractAddress === msg.value.contract);
-    if (!matchingTokenContract) {
-      return {
-        chainId: chainId,
-        kind: "bcp/unknown",
-      };
-    }
-
-    const recipient: string | undefined = msg.value.msg.transfer?.recipient;
-    if (!recipient) throw new Error("Could not read recipient");
-
-    const amount: string | undefined = msg.value.msg.transfer?.amount;
-    if (!amount) throw new Error("Could not read recipient");
-
-    const send: SendTransaction = {
-      kind: "bcp/send",
-      chainId: chainId,
-      sender: msg.value.sender as Address,
-      recipient: recipient as Address,
-      amount: {
-        quantity: new BN(amount).toString(),
-        fractionalDigits: matchingTokenContract.fractionalDigits,
-        tokenTicker: matchingTokenContract.ticker as TokenTicker,
-      },
       memo: memo,
     };
     return send;
@@ -156,7 +125,6 @@ export function parseUnsignedTx(
   txValue: StdTx,
   chainId: ChainId,
   tokens: readonly BankToken[],
-  erc20Tokens: readonly Erc20Token[],
 ): UnsignedTransaction {
   if (!isStdTx(txValue)) {
     throw new Error("Only StdTx is supported");
@@ -165,7 +133,7 @@ export function parseUnsignedTx(
     throw new Error("Only single-message transactions currently supported");
   }
 
-  const msg = parseMsg(txValue.msg[0], txValue.memo, chainId, tokens, erc20Tokens);
+  const msg = parseMsg(txValue.msg[0], txValue.memo, chainId, tokens);
   const fee = parseFee(txValue.fee, tokens);
 
   return {
@@ -180,11 +148,10 @@ export function parseSignedTx(
   chainId: ChainId,
   nonce: Nonce,
   tokens: readonly BankToken[],
-  erc20Tokens: readonly Erc20Token[],
 ): SignedTransaction {
   const [primarySignature] = txValue.signatures.map((signature) => decodeFullSignature(signature, nonce));
   return {
-    transaction: parseUnsignedTx(txValue, chainId, tokens, erc20Tokens),
+    transaction: parseUnsignedTx(txValue, chainId, tokens),
     signatures: [primarySignature],
   };
 }
@@ -194,10 +161,9 @@ export function parseTxsResponseUnsigned(
   currentHeight: number,
   response: IndexedTx,
   tokens: readonly BankToken[],
-  erc20Tokens: readonly Erc20Token[],
 ): ConfirmedTransaction<UnsignedTransaction> {
   return {
-    transaction: parseUnsignedTx(response.tx.value, chainId, tokens, erc20Tokens),
+    transaction: parseUnsignedTx(response.tx.value, chainId, tokens),
     height: response.height,
     confirmations: currentHeight - response.height + 1,
     transactionId: response.hash as TransactionId,
@@ -211,10 +177,9 @@ export function parseTxsResponseSigned(
   nonce: Nonce,
   response: IndexedTx,
   tokens: readonly BankToken[],
-  erc20Tokens: readonly Erc20Token[],
 ): ConfirmedAndSignedTransaction<UnsignedTransaction> {
   return {
-    ...parseSignedTx(response.tx.value, chainId, nonce, tokens, erc20Tokens),
+    ...parseSignedTx(response.tx.value, chainId, nonce, tokens),
     height: response.height,
     confirmations: currentHeight - response.height + 1,
     transactionId: response.hash as TransactionId,

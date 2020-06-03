@@ -22,7 +22,7 @@ import {
   UnsignedTransaction,
 } from "@iov/bcp";
 import { Stream } from "xstream";
-import { BankToken, Erc20Token } from "./types";
+import { BankToken } from "./types";
 export interface TokenConfiguration {
   /** Supported tokens of the Cosmos SDK bank module */
   readonly bankTokens: ReadonlyArray<
@@ -30,26 +30,15 @@ export interface TokenConfiguration {
       readonly name: string;
     }
   >;
-  /** Smart contract based tokens (ERC20 compatible). Unset means empty array. */
-  readonly erc20Tokens?: ReadonlyArray<
-    Erc20Token & {
-      readonly name: string;
-    }
-  >;
 }
-export declare class CosmWasmConnection implements BlockchainConnection {
-  static establish(
-    url: string,
-    addressPrefix: string,
-    tokens: TokenConfiguration,
-  ): Promise<CosmWasmConnection>;
+export declare class CosmosConnection implements BlockchainConnection {
+  static establish(url: string, addressPrefix: string, tokens: TokenConfiguration): Promise<CosmosConnection>;
   private static initialize;
   readonly chainId: ChainId;
   readonly codec: TxCodec;
-  private readonly cosmWasmClient;
+  private readonly cosmosClient;
   private readonly addressPrefix;
   private readonly bankTokens;
-  private readonly erc20Tokens;
   private readonly feeToken;
   private readonly supportedTokens;
   private constructor();
@@ -58,7 +47,7 @@ export declare class CosmWasmConnection implements BlockchainConnection {
   getToken(searchTicker: TokenTicker): Promise<Token | undefined>;
   getAllTokens(): Promise<readonly Token[]>;
   /**
-   * This is a replacement for the unimplemented CosmWasmCodec.identifier. Here we have more
+   * This is a replacement for the unimplemented CosmosCodec.identifier. Here we have more
    * context and network available, which we might use to implement the API in an async way.
    */
   identifier(signed: SignedTransaction): Promise<TransactionId>;

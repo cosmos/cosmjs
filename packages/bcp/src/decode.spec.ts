@@ -1,9 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { MsgExecuteContract } from "@cosmwasm/cosmwasm";
-import { Coin, IndexedTx, Msg, PubKey, StdSignature, StdTx } from "@cosmwasm/sdk38";
-import { Address, Algorithm, isSendTransaction, SendTransaction, TokenTicker } from "@iov/bcp";
+import { Coin, IndexedTx, Msg, PubKey, StdSignature } from "@cosmwasm/sdk38";
+import { Address, Algorithm, SendTransaction, TokenTicker } from "@iov/bcp";
 import { Encoding } from "@iov/encoding";
-import { assert } from "@iov/utils";
 
 import {
   decodeAmount,
@@ -19,7 +17,7 @@ import {
 } from "./decode";
 import * as testdata from "./testdata.spec";
 import cosmoshub from "./testdata/cosmoshub.json";
-import { BankToken, Erc20Token } from "./types";
+import { BankToken } from "./types";
 
 const { fromBase64, fromHex } = Encoding;
 
@@ -63,23 +61,6 @@ describe("decode", () => {
       fractionalDigits: 6,
       ticker: "ATOM",
       denom: "uatom",
-    },
-  ];
-  const defaultErc20Tokens: Erc20Token[] = [
-    {
-      contractAddress: "cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
-      fractionalDigits: 5,
-      ticker: "HASH",
-    },
-    {
-      contractAddress: "cosmos1hqrdl6wstt8qzshwc6mrumpjk9338k0lr4dqxd",
-      fractionalDigits: 0,
-      ticker: "ISA",
-    },
-    {
-      contractAddress: "cosmos18r5szma8hm93pvx6lwpjwyxruw27e0k5uw835c",
-      fractionalDigits: 18,
-      ticker: "JADE",
     },
   ];
 
@@ -159,40 +140,7 @@ describe("decode", () => {
           ],
         },
       };
-      expect(parseMsg(msg, defaultMemo, testdata.chainId, defaultTokens, defaultErc20Tokens)).toEqual(
-        defaultSendTransaction,
-      );
-    });
-
-    it("works for ERC20 send transaction", () => {
-      const msg: MsgExecuteContract = {
-        type: "wasm/execute",
-        value: {
-          sender: "cosmos1h806c7khnvmjlywdrkdgk2vrayy2mmvf9rxk2r",
-          contract: defaultErc20Tokens[0].contractAddress,
-          msg: {
-            transfer: {
-              amount: "887878484",
-              recipient: "cosmos1z7g5w84ynmjyg0kqpahdjqpj7yq34v3suckp0e",
-            },
-          },
-          sent_funds: [],
-        },
-      };
-      const transaction = parseMsg(msg, defaultMemo, testdata.chainId, defaultTokens, defaultErc20Tokens);
-      assert(isSendTransaction(transaction));
-      expect(transaction).toEqual({
-        kind: "bcp/send",
-        chainId: testdata.chainId,
-        sender: "cosmos1h806c7khnvmjlywdrkdgk2vrayy2mmvf9rxk2r" as Address,
-        recipient: "cosmos1z7g5w84ynmjyg0kqpahdjqpj7yq34v3suckp0e" as Address,
-        amount: {
-          quantity: "887878484",
-          tokenTicker: "HASH" as TokenTicker,
-          fractionalDigits: 5,
-        },
-        memo: defaultMemo,
-      });
+      expect(parseMsg(msg, defaultMemo, testdata.chainId, defaultTokens)).toEqual(defaultSendTransaction);
     });
   });
 
@@ -213,69 +161,17 @@ describe("decode", () => {
 
   describe("parseUnsignedTx", () => {
     it("works for bank send transaction", () => {
-      expect(
-        parseUnsignedTx(cosmoshub.tx.value, testdata.chainId, defaultTokens, defaultErc20Tokens),
-      ).toEqual(testdata.sendTxJson);
-    });
-
-    it("works for ERC20 send transaction", () => {
-      const msg: MsgExecuteContract = {
-        type: "wasm/execute",
-        value: {
-          sender: "cosmos1h806c7khnvmjlywdrkdgk2vrayy2mmvf9rxk2r",
-          contract: defaultErc20Tokens[0].contractAddress,
-          msg: {
-            transfer: {
-              amount: "887878484",
-              recipient: "cosmos1z7g5w84ynmjyg0kqpahdjqpj7yq34v3suckp0e",
-            },
-          },
-          sent_funds: [],
-        },
-      };
-      const tx: StdTx = {
-        msg: [msg],
-        memo: defaultMemo,
-        fee: {
-          amount: [
-            {
-              denom: "uatom",
-              amount: "5000",
-            },
-          ],
-          gas: "200000",
-        },
-        signatures: [],
-      };
-      const unsigned = parseUnsignedTx(tx, testdata.chainId, defaultTokens, defaultErc20Tokens);
-      assert(isSendTransaction(unsigned));
-      expect(unsigned).toEqual({
-        kind: "bcp/send",
-        chainId: testdata.chainId,
-        sender: "cosmos1h806c7khnvmjlywdrkdgk2vrayy2mmvf9rxk2r" as Address,
-        recipient: "cosmos1z7g5w84ynmjyg0kqpahdjqpj7yq34v3suckp0e" as Address,
-        amount: {
-          quantity: "887878484",
-          tokenTicker: "HASH" as TokenTicker,
-          fractionalDigits: 5,
-        },
-        memo: defaultMemo,
-        fee: defaultFee,
-      });
+      expect(parseUnsignedTx(cosmoshub.tx.value, testdata.chainId, defaultTokens)).toEqual(
+        testdata.sendTxJson,
+      );
     });
   });
 
   describe("parseSignedTx", () => {
     it("works", () => {
-      expect(
-        parseSignedTx(
-          cosmoshub.tx.value,
-          testdata.chainId,
-          testdata.nonce,
-          defaultTokens,
-          defaultErc20Tokens,
-        ),
-      ).toEqual(testdata.signedTxJson);
+      expect(parseSignedTx(cosmoshub.tx.value, testdata.chainId, testdata.nonce, defaultTokens)).toEqual(
+        testdata.signedTxJson,
+      );
     });
   });
 
@@ -298,15 +194,9 @@ describe("decode", () => {
         transactionId: testdata.txId,
         log: '[{"msg_index":0,"success":true,"log":""}]',
       };
-      expect(
-        parseTxsResponseUnsigned(
-          testdata.chainId,
-          currentHeight,
-          txsResponse,
-          defaultTokens,
-          defaultErc20Tokens,
-        ),
-      ).toEqual(expected);
+      expect(parseTxsResponseUnsigned(testdata.chainId, currentHeight, txsResponse, defaultTokens)).toEqual(
+        expected,
+      );
     });
   });
 
@@ -330,14 +220,7 @@ describe("decode", () => {
         log: '[{"msg_index":0,"success":true,"log":""}]',
       };
       expect(
-        parseTxsResponseSigned(
-          testdata.chainId,
-          currentHeight,
-          testdata.nonce,
-          txsResponse,
-          defaultTokens,
-          defaultErc20Tokens,
-        ),
+        parseTxsResponseSigned(testdata.chainId, currentHeight, testdata.nonce, txsResponse, defaultTokens),
       ).toEqual(expected);
     });
   });

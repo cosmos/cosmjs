@@ -20,25 +20,19 @@ import { pubkeyToAddress } from "./address";
 import { Caip5 } from "./caip5";
 import { parseSignedTx } from "./decode";
 import { buildSignedTx, buildUnsignedTx } from "./encode";
-import { BankToken, Erc20Token, nonceToAccountNumber, nonceToSequence } from "./types";
+import { BankToken, nonceToAccountNumber, nonceToSequence } from "./types";
 
-export class CosmWasmCodec implements TxCodec {
+export class CosmosCodec implements TxCodec {
   private readonly addressPrefix: string;
   private readonly bankTokens: readonly BankToken[];
-  private readonly erc20Tokens: readonly Erc20Token[];
 
-  public constructor(
-    addressPrefix: string,
-    bankTokens: readonly BankToken[],
-    erc20Tokens: readonly Erc20Token[] = [],
-  ) {
+  public constructor(addressPrefix: string, bankTokens: readonly BankToken[]) {
     this.addressPrefix = addressPrefix;
     this.bankTokens = bankTokens;
-    this.erc20Tokens = erc20Tokens;
   }
 
   public bytesToSign(unsigned: UnsignedTransaction, nonce: Nonce): SigningJob {
-    const built = buildUnsignedTx(unsigned, this.bankTokens, this.erc20Tokens);
+    const built = buildUnsignedTx(unsigned, this.bankTokens);
 
     const signBytes = makeSignBytes(
       built.value.msg,
@@ -58,7 +52,7 @@ export class CosmWasmCodec implements TxCodec {
   // PostableBytes are JSON-encoded StdTx
   public bytesToPost(signed: SignedTransaction): PostableBytes {
     // TODO: change this as well (return StdTx, not AminoTx)?
-    const built = buildSignedTx(signed, this.bankTokens, this.erc20Tokens);
+    const built = buildSignedTx(signed, this.bankTokens);
     return marshalTx(built.value) as PostableBytes;
   }
 
@@ -76,7 +70,7 @@ export class CosmWasmCodec implements TxCodec {
       throw new Error("Nonce is required");
     }
     const parsed = unmarshalTx(bytes);
-    return parseSignedTx(parsed, chainId, nonce, this.bankTokens, this.erc20Tokens);
+    return parseSignedTx(parsed, chainId, nonce, this.bankTokens);
   }
 
   public identityToAddress(identity: Identity): Address {
