@@ -39,14 +39,13 @@ export const wasmd = {
   chainId: "testing",
 };
 
-export const faucet = {
-  mnemonic:
-    "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone",
-  pubkey: {
+export const alice = {
+  mnemonic: "enlist hip relief stomach skate base shallow young switch frequent cry park",
+  pubkey0: {
     type: "tendermint/PubKeySecp256k1",
-    value: "A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ",
+    value: "A9cXhWb8ZpqCzkA8dQCPV29KdeRLV3rUYxrkHudLbQtS",
   },
-  address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+  address0: "cosmos14qemq0vw6y3gc3u3e0aty2e764u4gs5le3hada",
 };
 
 /** Unused account */
@@ -56,7 +55,7 @@ export const unused = {
     value: "ArkCaFUJ/IH+vKBmNRCdUVl3mCAhbopk9jjW4Ko4OfRQ",
   },
   address: "cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u",
-  accountNumber: 9,
+  accountNumber: 19,
   sequence: 0,
 };
 

@@ -197,8 +197,8 @@ describe("CosmosClient.searchTx", () => {
       assert(sendSuccessful, "value must be set in beforeAll()");
       const client = new CosmosClient(wasmd.endpoint);
       const result = await client.searchTx({ height: sendSuccessful.height });
-      expect(result.length).toEqual(1);
-      expect(result[0]).toEqual(
+      expect(result.length).toBeGreaterThanOrEqual(1);
+      expect(result).toContain(
         jasmine.objectContaining({
           height: sendSuccessful.height,
           hash: sendSuccessful.hash,
@@ -213,8 +213,8 @@ describe("CosmosClient.searchTx", () => {
       assert(sendUnsuccessful, "value must be set in beforeAll()");
       const client = new CosmosClient(wasmd.endpoint);
       const result = await client.searchTx({ height: sendUnsuccessful.height });
-      expect(result.length).toEqual(1);
-      expect(result[0]).toEqual(
+      expect(result.length).toBeGreaterThanOrEqual(1);
+      expect(result).toContain(
         jasmine.objectContaining({
           height: sendUnsuccessful.height,
           hash: sendUnsuccessful.hash,

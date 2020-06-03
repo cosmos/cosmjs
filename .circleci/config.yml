@@ -89,8 +89,7 @@ jobs:
           environment:
             WASMD_ENABLED: 1
             SKIP_BUILD: 1
-          # TODO: Remove concurrency argument to speed up testing (https://github.com/CosmWasm/cosmwasm-js/issues/185)
-          command: yarn test --concurrency 1 --stream
+          command: yarn test --stream
       - run:
           name: Run CLI selftest
           working_directory: packages/cli
