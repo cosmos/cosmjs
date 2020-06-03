@@ -6,21 +6,11 @@ import { assert } from "@iov/utils";
 import { PrivateCosmWasmClient } from "./cosmwasmclient";
 import { RestClient } from "./restclient";
 import { SigningCosmWasmClient, UploadMeta } from "./signingcosmwasmclient";
-import { getHackatom, makeRandomAddress, pendingWithoutWasmd } from "./testutils.spec";
+import { faucet, getHackatom, makeRandomAddress, pendingWithoutWasmd } from "./testutils.spec";
 
 const { toHex } = Encoding;
 
 const httpUrl = "http://localhost:1317";
-
-const faucet = {
-  mnemonic:
-    "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone",
-  pubkey: {
-    type: "tendermint/PubKeySecp256k1",
-    value: "A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ",
-  },
-  address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
-};
 
 describe("SigningCosmWasmClient", () => {
   describe("makeReadOnly", () => {
