@@ -1,4 +1,4 @@
-# @cosmwasm/sdk
+# @cosmwasm/faucet
 
 [![npm version](https://img.shields.io/npm/v/@cosmwasm/faucet.svg)](https://www.npmjs.com/package/@cosmwasm/faucet)
 

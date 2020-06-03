@@ -1,5 +1,14 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { Coin, encodeSecp256k1Pubkey, encodeSecp256k1Signature, types } from "@cosmwasm/sdk";
+import {
+  Coin,
+  CosmosSdkTx,
+  encodeSecp256k1Pubkey,
+  encodeSecp256k1Signature,
+  PubKey,
+  pubkeyType,
+  StdFee,
+  StdSignature,
+} from "@cosmwasm/sdk38";
 import {
   Algorithm,
   Amount,
@@ -18,13 +27,13 @@ import { BankToken, Erc20Token } from "./types";
 const { toBase64 } = Encoding;
 
 // TODO: This function seems to be unused and is not well tested (e.g. uncompressed secp256k1 or ed25519)
-export function encodePubkey(pubkey: PubkeyBundle): types.PubKey {
+export function encodePubkey(pubkey: PubkeyBundle): PubKey {
   switch (pubkey.algo) {
     case Algorithm.Secp256k1:
       return encodeSecp256k1Pubkey(pubkey.data);
     case Algorithm.Ed25519:
       return {
-        type: types.pubkeyType.ed25519,
+        type: pubkeyType.ed25519,
         value: toBase64(pubkey.data),
       };
     default:
@@ -54,7 +63,7 @@ export function toBankCoin(amount: Amount, tokens: readonly BankToken[]): Coin {
   };
 }
 
-export function encodeFee(fee: Fee, tokens: readonly BankToken[]): types.StdFee {
+export function encodeFee(fee: Fee, tokens: readonly BankToken[]): StdFee {
   if (fee.tokens === undefined) {
     throw new Error("Cannot encode fee without tokens");
   }
@@ -67,7 +76,7 @@ export function encodeFee(fee: Fee, tokens: readonly BankToken[]): types.StdFee 
   };
 }
 
-export function encodeFullSignature(fullSignature: FullSignature): types.StdSignature {
+export function encodeFullSignature(fullSignature: FullSignature): StdSignature {
   switch (fullSignature.pubkey.algo) {
     case Algorithm.Secp256k1: {
       const compressedPubkey = Secp256k1.compressPubkey(fullSignature.pubkey.data);
@@ -83,7 +92,7 @@ export function buildUnsignedTx(
   tx: UnsignedTransaction,
   bankTokens: readonly BankToken[],
   erc20Tokens: readonly Erc20Token[] = [],
-): types.CosmosSdkTx {
+): CosmosSdkTx {
   if (!isSendTransaction(tx)) {
     throw new Error("Received transaction of unsupported kind");
   }
@@ -146,7 +155,7 @@ export function buildSignedTx(
   tx: SignedTransaction,
   bankTokens: readonly BankToken[],
   erc20Tokens: readonly Erc20Token[] = [],
-): types.CosmosSdkTx {
+): CosmosSdkTx {
   const built = buildUnsignedTx(tx.transaction, bankTokens, erc20Tokens);
   return {
     ...built,

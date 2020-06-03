@@ -1,4 +1,10 @@
-import { CosmWasmClient, findSequenceForSignedTx, IndexedTx, SearchTxFilter, types } from "@cosmwasm/sdk";
+import {
+  CosmWasmClient,
+  isMsgExecuteContract,
+  isMsgInstantiateContract,
+  isMsgStoreCode,
+} from "@cosmwasm/cosmwasm";
+import { findSequenceForSignedTx, IndexedTx, isMsgSend, isStdTx, SearchTxFilter } from "@cosmwasm/sdk38";
 import {
   Account,
   AccountQuery,
@@ -272,7 +278,7 @@ export class CosmWasmConnection implements BlockchainConnection {
 
   public async postTx(tx: PostableBytes): Promise<PostTxResponse> {
     const txAsJson = JSON.parse(Encoding.fromUtf8(tx));
-    if (!types.isStdTx(txAsJson)) throw new Error("Postable bytes must contain a JSON encoded StdTx");
+    if (!isStdTx(txAsJson)) throw new Error("Postable bytes must contain a JSON encoded StdTx");
     const { transactionHash, rawLog } = await this.cosmWasmClient.postTx(txAsJson);
     const transactionId = transactionHash as TransactionId;
     const firstEvent: BlockInfo = { state: TransactionState.Pending };
@@ -473,12 +479,12 @@ export class CosmWasmConnection implements BlockchainConnection {
     if (!firstMsg) throw new Error("Got transaction without a first message. What is going on here?");
 
     let senderAddress: string;
-    if (types.isMsgSend(firstMsg)) {
+    if (isMsgSend(firstMsg)) {
       senderAddress = firstMsg.value.from_address;
     } else if (
-      types.isMsgStoreCode(firstMsg) ||
-      types.isMsgInstantiateContract(firstMsg) ||
-      types.isMsgExecuteContract(firstMsg)
+      isMsgStoreCode(firstMsg) ||
+      isMsgInstantiateContract(firstMsg) ||
+      isMsgExecuteContract(firstMsg)
     ) {
       senderAddress = firstMsg.value.sender;
     } else {

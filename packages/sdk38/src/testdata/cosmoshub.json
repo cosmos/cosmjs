@@ -1,0 +1,44 @@
+{
+  "//source": "https://hubble.figment.network/cosmos/chains/cosmoshub-3/blocks/415777/transactions/2BD600EA6090FC75FD844CA73542CC90A828770F4C01C5B483C3C1C43CCB65F4?format=json",
+  "tx": {
+    "type": "cosmos-sdk/StdTx",
+    "value": {
+      "msg": [
+        {
+          "type": "cosmos-sdk/MsgSend",
+          "value": {
+            "from_address": "cosmos1txqfn5jmcts0x0q7krdxj8tgf98tj0965vqlmq",
+            "to_address": "cosmos1nynns8ex9fq6sjjfj8k79ymkdz4sqth06xexae",
+            "amount": [
+              {
+                "denom": "uatom",
+                "amount": "35997500"
+              }
+            ]
+          }
+        }
+      ],
+      "fee": {
+        "amount": [
+          {
+            "denom": "uatom",
+            "amount": "2500"
+          }
+        ],
+        "gas": "100000"
+      },
+      "signatures": [
+        {
+          "pub_key": {
+            "type": "tendermint/PubKeySecp256k1",
+            "value": "A5qFcJBJvEK/fOmEAY0DHNWwSRZ9TEfNZyH8VoVvDtAq"
+          },
+          "signature": "NK1Oy4EUGAsoC03c1wi9GG03JC/39LEdautC5Jk643oIbEPqeXHMwaqbdvO/Jws0X/NAXaN8SAy2KNY5Qml+5Q=="
+        }
+      ],
+      "memo": ""
+    }
+  },
+  "tx_data": "ygEoKBapCkOoo2GaChRZgJnSW8Lg8zwesNppHWhJTrk8uhIUmSc4HyYqQahKSZHt4pN2aKsALu8aEQoFdWF0b20SCDM1OTk3NTAwEhMKDQoFdWF0b20SBDI1MDAQoI0GGmoKJuta6YchA5qFcJBJvEK/fOmEAY0DHNWwSRZ9TEfNZyH8VoVvDtAqEkA0rU7LgRQYCygLTdzXCL0YbTckL/f0sR1q60LkmTrjeghsQ+p5cczBqpt2878nCzRf80Bdo3xIDLYo1jlCaX7l",
+  "id": "2BD600EA6090FC75FD844CA73542CC90A828770F4C01C5B483C3C1C43CCB65F4"
+}
