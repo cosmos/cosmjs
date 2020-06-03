@@ -1,7 +1,7 @@
 {
   "name": "@cosmwasm/bcp",
   "version": "0.8.0",
-  "description": "Transaction codec and client to communicate with any wasmd blockchain",
+  "description": "Transaction codec and client to communicate with a Cosmos SDK 0.38 blockchain",
   "author": "Ethan Frey <ethanfrey@users.noreply.github.com>",
   "license": "Apache-2.0",
   "main": "build/index.js",

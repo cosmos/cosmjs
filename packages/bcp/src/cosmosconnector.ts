@@ -1,7 +1,7 @@
 import { ChainConnector, ChainId } from "@iov/bcp";
 
-import { CosmosCodec } from "./cosmwasmcodec";
-import { CosmosConnection, TokenConfiguration } from "./cosmwasmconnection";
+import { CosmosCodec } from "./cosmoscodec";
+import { CosmosConnection, TokenConfiguration } from "./cosmosconnection";
 
 /**
  * A helper to connect to a cosmos-based chain at a given url

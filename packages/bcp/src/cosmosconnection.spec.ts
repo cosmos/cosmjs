@@ -23,7 +23,7 @@ import { HdPaths, Secp256k1HdWallet, UserProfile } from "@iov/keycontrol";
 import { assert } from "@iov/utils";
 import BN from "bn.js";
 
-import { CosmosConnection, TokenConfiguration } from "./cosmwasmconnection";
+import { CosmosConnection, TokenConfiguration } from "./cosmosconnection";
 import { encodeFullSignature } from "./encode";
 import * as testdata from "./testdata.spec";
 

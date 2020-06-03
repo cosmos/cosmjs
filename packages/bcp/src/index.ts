@@ -1,4 +1,4 @@
-export { CosmosCodec } from "./cosmwasmcodec";
-export { CosmosConnection, TokenConfiguration } from "./cosmwasmconnection";
-export { createCosmosConnector } from "./cosmwasmconnector";
+export { CosmosCodec } from "./cosmoscodec";
+export { CosmosConnection, TokenConfiguration } from "./cosmosconnection";
+export { createCosmosConnector } from "./cosmosconnector";
 export { BankToken } from "./types";

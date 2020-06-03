@@ -43,7 +43,7 @@ import { Producer, Stream } from "xstream";
 
 import { pubkeyToAddress } from "./address";
 import { Caip5 } from "./caip5";
-import { CosmosCodec } from "./cosmwasmcodec";
+import { CosmosCodec } from "./cosmoscodec";
 import { decodeAmount, decodePubkey, parseTxsResponseSigned, parseTxsResponseUnsigned } from "./decode";
 import { buildSignedTx } from "./encode";
 import { accountToNonce, BankToken } from "./types";
