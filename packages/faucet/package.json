@@ -35,11 +35,9 @@
     "test": "yarn build-or-skip && yarn test-node"
   },
   "dependencies": {
-    "@cosmwasm/bcp": "^0.8.0",
-    "@iov/bcp": "^2.1.0",
+    "@cosmwasm/sdk38": "^0.8.0",
     "@iov/crypto": "^2.1.0",
     "@iov/encoding": "^2.1.0",
-    "@iov/keycontrol": "^2.1.0",
     "@iov/utils": "^2.0.2",
     "@koa/cors": "^3.0.0",
     "axios": "^0.19.0",

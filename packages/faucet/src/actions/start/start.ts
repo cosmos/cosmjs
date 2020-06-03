@@ -1,11 +1,9 @@
-import { createCosmosConnector } from "@cosmwasm/bcp";
+import { CosmosClient } from "@cosmwasm/sdk38";
 
 import { Webserver } from "../../api/webserver";
 import * as constants from "../../constants";
 import { logAccountsState } from "../../debugging";
 import { Faucet } from "../../faucet";
-import { availableTokensFromHolder } from "../../multichainhelpers";
-import { createUserProfile } from "../../profile";
 
 export async function start(args: ReadonlyArray<string>): Promise<void> {
   if (args.length < 1) {
@@ -16,35 +14,28 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
 
   // Connection
   const blockchainBaseUrl = args[0];
-  const connector = createCosmosConnector(
+  console.info(`Connecting to blockchain ${blockchainBaseUrl} ...`);
+  const chainId = await new CosmosClient(blockchainBaseUrl).getChainId();
+  console.info(`Connected to network: ${chainId}`);
+
+  // Faucet
+  if (!constants.mnemonic) throw new Error("The FAUCET_MNEMONIC environment variable is not set");
+  const faucet = await Faucet.make(
     blockchainBaseUrl,
     constants.addressPrefix,
     constants.developmentTokenConfig,
-  );
-  console.info(`Connecting to blockchain ${blockchainBaseUrl} ...`);
-  const connection = await connector.establishConnection();
-  console.info(`Connected to network: ${connection.chainId}`);
-
-  // Profile
-  if (!constants.mnemonic) throw new Error("The FAUCET_MNEMONIC environment variable is not set");
-  const [profile] = await createUserProfile(
     constants.mnemonic,
-    connection.chainId,
     constants.concurrency,
     true,
   );
-
-  // Faucet
-  const faucet = new Faucet(constants.developmentTokenConfig, connection, connector.codec, profile, true);
-  const chainTokens = await faucet.loadTokenTickers();
+  const chainTokens = faucet.loadTokenTickers();
   console.info("Chain tokens:", chainTokens);
   const accounts = await faucet.loadAccounts();
-  logAccountsState(accounts);
-  let availableTokens = availableTokensFromHolder(accounts[0]);
+  logAccountsState(accounts, constants.developmentTokenConfig);
+  let availableTokens = await faucet.availableTokens();
   console.info("Available tokens:", availableTokens);
   setInterval(async () => {
-    const updatedAccounts = await faucet.loadAccounts();
-    availableTokens = availableTokensFromHolder(updatedAccounts[0]);
+    availableTokens = await faucet.availableTokens();
     console.info("Available tokens:", availableTokens);
   }, 60_000);
 
@@ -52,6 +43,6 @@ export async function start(args: ReadonlyArray<string>): Promise<void> {
   setInterval(async () => faucet.refill(), 60_000); // ever 60 seconds
 
   console.info("Creating webserver ...");
-  const server = new Webserver(faucet, { nodeUrl: blockchainBaseUrl, chainId: connection.chainId });
+  const server = new Webserver(faucet, { nodeUrl: blockchainBaseUrl, chainId: chainId });
   server.start(constants.port);
 }

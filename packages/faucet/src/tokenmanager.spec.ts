@@ -1,19 +1,15 @@
-import { TokenConfiguration } from "@cosmwasm/bcp";
-import { TokenTicker } from "@iov/bcp";
-
 import { TokenManager } from "./tokenmanager";
+import { TokenConfiguration } from "./types";
 
 const dummyConfig: TokenConfiguration = {
   bankTokens: [
     {
-      ticker: "TOKENZ",
-      name: "The tokenz",
+      tickerSymbol: "TOKENZ",
       fractionalDigits: 6,
       denom: "utokenz",
     },
     {
-      ticker: "TRASH",
-      name: "Trash token",
+      tickerSymbol: "TRASH",
       fractionalDigits: 3,
       denom: "mtrash",
     },
@@ -32,34 +28,30 @@ describe("TokenManager", () => {
     const tm = new TokenManager(dummyConfig);
 
     it("returns 10 tokens by default", () => {
-      expect(tm.creditAmount("TOKENZ" as TokenTicker)).toEqual({
-        quantity: "10000000",
-        fractionalDigits: 6,
-        tokenTicker: "TOKENZ",
+      expect(tm.creditAmount("TOKENZ")).toEqual({
+        amount: "10000000",
+        denom: "utokenz",
       });
-      expect(tm.creditAmount("TRASH" as TokenTicker)).toEqual({
-        quantity: "10000",
-        fractionalDigits: 3,
-        tokenTicker: "TRASH",
+      expect(tm.creditAmount("TRASH")).toEqual({
+        amount: "10000",
+        denom: "mtrash",
       });
     });
 
     it("returns value from env variable when set", () => {
       process.env.FAUCET_CREDIT_AMOUNT_TRASH = "22";
-      expect(tm.creditAmount("TRASH" as TokenTicker)).toEqual({
-        quantity: "22000",
-        fractionalDigits: 3,
-        tokenTicker: "TRASH",
+      expect(tm.creditAmount("TRASH")).toEqual({
+        amount: "22000",
+        denom: "mtrash",
       });
       process.env.FAUCET_CREDIT_AMOUNT_TRASH = "";
     });
 
     it("returns default when env variable is set to empty", () => {
       process.env.FAUCET_CREDIT_AMOUNT_TRASH = "";
-      expect(tm.creditAmount("TRASH" as TokenTicker)).toEqual({
-        quantity: "10000",
-        fractionalDigits: 3,
-        tokenTicker: "TRASH",
+      expect(tm.creditAmount("TRASH")).toEqual({
+        amount: "10000",
+        denom: "mtrash",
       });
       process.env.FAUCET_CREDIT_AMOUNT_TRASH = "";
     });
@@ -74,38 +66,34 @@ describe("TokenManager", () => {
     });
 
     it("returns 20*10 + '000' by default", () => {
-      expect(tm.refillAmount("TRASH" as TokenTicker)).toEqual({
-        quantity: "200000",
-        fractionalDigits: 3,
-        tokenTicker: "TRASH",
+      expect(tm.refillAmount("TRASH")).toEqual({
+        amount: "200000",
+        denom: "mtrash",
       });
     });
 
     it("returns 20*22 + '000' when credit amount is 22", () => {
       process.env.FAUCET_CREDIT_AMOUNT_TRASH = "22";
-      expect(tm.refillAmount("TRASH" as TokenTicker)).toEqual({
-        quantity: "440000",
-        fractionalDigits: 3,
-        tokenTicker: "TRASH",
+      expect(tm.refillAmount("TRASH")).toEqual({
+        amount: "440000",
+        denom: "mtrash",
       });
     });
 
     it("returns 30*10 + '000' when refill factor is 30", () => {
       process.env.FAUCET_REFILL_FACTOR = "30";
-      expect(tm.refillAmount("TRASH" as TokenTicker)).toEqual({
-        quantity: "300000",
-        fractionalDigits: 3,
-        tokenTicker: "TRASH",
+      expect(tm.refillAmount("TRASH")).toEqual({
+        amount: "300000",
+        denom: "mtrash",
       });
     });
 
     it("returns 30*22 + '000' when refill factor is 30 and credit amount is 22", () => {
       process.env.FAUCET_REFILL_FACTOR = "30";
       process.env.FAUCET_CREDIT_AMOUNT_TRASH = "22";
-      expect(tm.refillAmount("TRASH" as TokenTicker)).toEqual({
-        quantity: "660000",
-        fractionalDigits: 3,
-        tokenTicker: "TRASH",
+      expect(tm.refillAmount("TRASH")).toEqual({
+        amount: "660000",
+        denom: "mtrash",
       });
     });
   });
@@ -119,38 +107,34 @@ describe("TokenManager", () => {
     });
 
     it("returns 8*10 + '000' by default", () => {
-      expect(tm.refillThreshold("TRASH" as TokenTicker)).toEqual({
-        quantity: "80000",
-        fractionalDigits: 3,
-        tokenTicker: "TRASH",
+      expect(tm.refillThreshold("TRASH")).toEqual({
+        amount: "80000",
+        denom: "mtrash",
       });
     });
 
     it("returns 8*22 + '000' when credit amount is 22", () => {
       process.env.FAUCET_CREDIT_AMOUNT_TRASH = "22";
-      expect(tm.refillThreshold("TRASH" as TokenTicker)).toEqual({
-        quantity: "176000",
-        fractionalDigits: 3,
-        tokenTicker: "TRASH",
+      expect(tm.refillThreshold("TRASH")).toEqual({
+        amount: "176000",
+        denom: "mtrash",
       });
     });
 
     it("returns 5*10 + '000' when refill threshold is 5", () => {
       process.env.FAUCET_REFILL_THRESHOLD = "5";
-      expect(tm.refillThreshold("TRASH" as TokenTicker)).toEqual({
-        quantity: "50000",
-        fractionalDigits: 3,
-        tokenTicker: "TRASH",
+      expect(tm.refillThreshold("TRASH")).toEqual({
+        amount: "50000",
+        denom: "mtrash",
       });
     });
 
     it("returns 5*22 + '000' when refill threshold is 5 and credit amount is 22", () => {
       process.env.FAUCET_REFILL_THRESHOLD = "5";
       process.env.FAUCET_CREDIT_AMOUNT_TRASH = "22";
-      expect(tm.refillThreshold("TRASH" as TokenTicker)).toEqual({
-        quantity: "110000",
-        fractionalDigits: 3,
-        tokenTicker: "TRASH",
+      expect(tm.refillThreshold("TRASH")).toEqual({
+        amount: "110000",
+        denom: "mtrash",
       });
     });
   });

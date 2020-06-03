@@ -1,4 +1,4 @@
-import { TokenConfiguration } from "@cosmwasm/bcp";
+import { TokenConfiguration } from "./types";
 
 export const binaryName = "cosmwasm-faucet";
 export const concurrency: number = Number.parseInt(process.env.FAUCET_CONCURRENCY || "", 10) || 5;
@@ -12,14 +12,12 @@ export const developmentTokenConfig: TokenConfiguration = {
   bankTokens: [
     {
       fractionalDigits: 6,
-      name: "Fee Token",
-      ticker: "COSM",
+      tickerSymbol: "COSM",
       denom: "ucosm",
     },
     {
       fractionalDigits: 6,
-      name: "Staking Token",
-      ticker: "STAKE",
+      tickerSymbol: "STAKE",
       denom: "ustake",
     },
   ],

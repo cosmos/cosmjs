@@ -1,105 +1,112 @@
-import { TokenConfiguration } from "@cosmwasm/bcp";
-import {
-  Account,
-  Address,
-  BlockchainConnection,
-  Identity,
-  isBlockInfoFailed,
-  isBlockInfoPending,
-  SendTransaction,
-  TokenTicker,
-  TxCodec,
-} from "@iov/bcp";
-import { UserProfile } from "@iov/keycontrol";
+import { CosmosClient, Pen, SigningCosmosClient } from "@cosmwasm/sdk38";
 import { sleep } from "@iov/utils";
 
-import { identityToAddress } from "./addresses";
 import { debugAccount, logAccountsState, logSendJob } from "./debugging";
-import { availableTokensFromHolder, identitiesOfFirstWallet } from "./multichainhelpers";
+import { createPens } from "./profile";
 import { TokenManager } from "./tokenmanager";
-import { SendJob } from "./types";
+import { MinimalAccount, SendJob, TokenConfiguration } from "./types";
+
+function isDefined<X>(value: X | undefined): value is X {
+  return value !== undefined;
+}
 
 export class Faucet {
-  public get holder(): Identity {
-    return identitiesOfFirstWallet(this.profile)[0];
-  }
-  public get distributors(): readonly Identity[] {
-    return identitiesOfFirstWallet(this.profile).slice(1);
+  public static async make(
+    apiUrl: string,
+    addressPrefix: string,
+    config: TokenConfiguration,
+    mnemonic: string,
+    numberOfDistributors: number,
+    logging = false,
+  ): Promise<Faucet> {
+    const pens = await createPens(mnemonic, addressPrefix, numberOfDistributors, logging);
+    return new Faucet(apiUrl, addressPrefix, config, pens, logging);
   }
 
+  public readonly addressPrefix: string;
+  public readonly holderAddress: string;
+  public readonly distributorAddresses: readonly string[];
+
+  private readonly tokenConfig: TokenConfiguration;
   private readonly tokenManager: TokenManager;
-  private readonly connection: BlockchainConnection;
-  private readonly codec: TxCodec;
-  private readonly profile: UserProfile;
+  private readonly readOnlyClient: CosmosClient;
+  private readonly clients: { [senderAddress: string]: SigningCosmosClient };
   private readonly logging: boolean;
   private creditCount = 0;
 
-  public constructor(
+  private constructor(
+    apiUrl: string,
+    addressPrefix: string,
     config: TokenConfiguration,
-    connection: BlockchainConnection,
-    codec: TxCodec,
-    profile: UserProfile,
+    pens: readonly [string, Pen][],
     logging = false,
   ) {
+    this.addressPrefix = addressPrefix;
+    this.tokenConfig = config;
     this.tokenManager = new TokenManager(config);
-    this.connection = connection;
-    this.codec = codec;
-    this.profile = profile;
+
+    this.readOnlyClient = new CosmosClient(apiUrl);
+
+    this.holderAddress = pens[0][0];
+    this.distributorAddresses = pens.slice(1).map((pair) => pair[0]);
+
+    // we need one client per sender
+    const clients: { [senderAddress: string]: SigningCosmosClient } = {};
+    for (const [senderAddress, pen] of pens) {
+      clients[senderAddress] = new SigningCosmosClient(apiUrl, senderAddress, (signBytes) =>
+        pen.sign(signBytes),
+      );
+    }
+    this.clients = clients;
     this.logging = logging;
+  }
+
+  /**
+   * Returns a list of ticker symbols of tokens owned by the the holder and configured in the faucet
+   */
+  public async availableTokens(): Promise<ReadonlyArray<string>> {
+    const holderAccount = await this.readOnlyClient.getAccount(this.holderAddress);
+    const balance = holderAccount ? holderAccount.balance : [];
+
+    return balance
+      .filter((b) => b.amount !== "0")
+      .map((b) => this.tokenConfig.bankTokens.find((token) => token.denom == b.denom))
+      .filter(isDefined)
+      .map((token) => token.tickerSymbol);
   }
 
   /**
    * Creates and posts a send transaction. Then waits until the transaction is in a block.
    */
   public async send(job: SendJob): Promise<void> {
-    const sendWithFee = await this.connection.withDefaultFee<SendTransaction>({
-      kind: "bcp/send",
-      chainId: this.connection.chainId,
-      sender: this.codec.identityToAddress(job.sender),
-      senderPubkey: job.sender.pubkey,
-      recipient: job.recipient,
-      memo: "Make love, not war",
-      amount: job.amount,
-    });
-
-    const nonce = await this.connection.getNonce({ pubkey: job.sender.pubkey });
-    const signed = await this.profile.signTransaction(job.sender, sendWithFee, this.codec, nonce);
-
-    const post = await this.connection.postTx(this.codec.bytesToPost(signed));
-    const blockInfo = await post.blockInfo.waitFor((info) => !isBlockInfoPending(info));
-    if (isBlockInfoFailed(blockInfo)) {
-      throw new Error(`Sending tokens failed. Code: ${blockInfo.code}, message: ${blockInfo.message}`);
-    }
+    await this.clients[job.sender].sendTokens(job.recipient, [job.amount], "Make love, not war");
   }
 
   /** Use one of the distributor accounts to send tokend to user */
-  public async credit(recipient: Address, ticker: TokenTicker): Promise<void> {
-    if (this.distributors.length === 0) throw new Error("No distributor account available");
-    const sender = this.distributors[this.getCreditCount() % this.distributors.length];
+  public async credit(recipient: string, tickerSymbol: string): Promise<void> {
+    if (this.distributorAddresses.length === 0) throw new Error("No distributor account available");
+    const sender = this.distributorAddresses[this.getCreditCount() % this.distributorAddresses.length];
     const job: SendJob = {
       sender: sender,
       recipient: recipient,
-      amount: this.tokenManager.creditAmount(ticker),
+      amount: this.tokenManager.creditAmount(tickerSymbol),
     };
-    if (this.logging) logSendJob(job);
+    if (this.logging) logSendJob(job, this.tokenConfig);
     await this.send(job);
   }
 
-  public async loadTokenTickers(): Promise<ReadonlyArray<TokenTicker>> {
-    return (await this.connection.getAllTokens()).map((token) => token.tokenTicker);
+  public loadTokenTickers(): readonly string[] {
+    return this.tokenConfig.bankTokens.map((token) => token.tickerSymbol);
   }
 
-  public async loadAccounts(): Promise<ReadonlyArray<Pick<Account, "address" | "balance">>> {
-    const addresses = identitiesOfFirstWallet(this.profile).map((identity) => identityToAddress(identity));
+  public async loadAccounts(): Promise<ReadonlyArray<MinimalAccount>> {
+    const addresses = [this.holderAddress, ...this.distributorAddresses];
 
-    const out: Account[] = [];
+    const out: MinimalAccount[] = [];
     for (const address of addresses) {
-      const response = await this.connection.getAccount({ address: address });
+      const response = await this.readOnlyClient.getAccount(address);
       if (response) {
-        out.push({
-          address: response.address,
-          balance: response.balance,
-        });
+        out.push(response);
       } else {
         out.push({
           address: address,
@@ -113,49 +120,49 @@ export class Faucet {
 
   public async refill(): Promise<void> {
     if (this.logging) {
-      console.info(`Connected to network: ${this.connection.chainId}`);
-      console.info(`Tokens on network: ${(await this.loadTokenTickers()).join(", ")}`);
+      console.info(`Connected to network: ${this.readOnlyClient.getChainId()}`);
+      console.info(`Tokens on network: ${this.loadTokenTickers().join(", ")}`);
     }
 
     const accounts = await this.loadAccounts();
-    if (this.logging) logAccountsState(accounts);
-    const [holderAccount, ...distributorAccounts] = accounts;
+    if (this.logging) logAccountsState(accounts, this.tokenConfig);
+    const [_, ...distributorAccounts] = accounts;
 
-    const availableTokens = availableTokensFromHolder(holderAccount);
+    const availableTokens = await this.availableTokens();
     if (this.logging) console.info("Available tokens:", availableTokens);
 
     const jobs: SendJob[] = [];
-    for (const token of availableTokens) {
+    for (const tickerSymbol of availableTokens) {
       const refillDistibutors = distributorAccounts.filter((account) =>
-        this.tokenManager.needsRefill(account, token),
+        this.tokenManager.needsRefill(account, tickerSymbol),
       );
 
       if (this.logging) {
-        console.info(`Refilling ${token} of:`);
+        console.info(`Refilling ${tickerSymbol} of:`);
         console.info(
           refillDistibutors.length
-            ? refillDistibutors.map((r) => `  ${debugAccount(r)}`).join("\n")
+            ? refillDistibutors.map((r) => `  ${debugAccount(r, this.tokenConfig)}`).join("\n")
             : "  none",
         );
       }
       for (const refillDistibutor of refillDistibutors) {
         jobs.push({
-          sender: this.holder,
+          sender: this.holderAddress,
           recipient: refillDistibutor.address,
-          amount: this.tokenManager.refillAmount(token),
+          amount: this.tokenManager.refillAmount(tickerSymbol),
         });
       }
     }
     if (jobs.length > 0) {
       for (const job of jobs) {
-        if (this.logging) logSendJob(job);
+        if (this.logging) logSendJob(job, this.tokenConfig);
         await this.send(job);
         await sleep(50);
       }
 
       if (this.logging) {
         console.info("Done refilling accounts.");
-        logAccountsState(await this.loadAccounts());
+        logAccountsState(await this.loadAccounts(), this.tokenConfig);
       }
     } else {
       if (this.logging) {
