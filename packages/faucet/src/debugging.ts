@@ -1,4 +1,4 @@
-import { Coin } from "@cosmwasm/sdk38";
+import { Coin } from "@cosmjs/sdk38";
 import { Decimal } from "@iov/encoding";
 
 import { MinimalAccount, SendJob, TokenConfiguration } from "./types";

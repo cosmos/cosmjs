@@ -1,4 +1,4 @@
-import { BroadcastMode, Coin, CosmosSdkTx, IndexedTx, PubKey, StdTx } from "@cosmwasm/sdk38";
+import { BroadcastMode, Coin, CosmosSdkTx, IndexedTx, PubKey, StdTx } from "@cosmjs/sdk38";
 import { Log } from "./logs";
 import { RestClient } from "./restclient";
 import { JsonObject } from "./types";

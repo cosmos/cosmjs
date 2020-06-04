@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
 /* eslint-disable @typescript-eslint/camelcase */
-const { SigningCosmWasmClient } = require("@cosmwasm/cosmwasm");
-const { Secp256k1Pen } = require("@cosmwasm/sdk38");
+const { SigningCosmWasmClient } = require("@cosmjs/cosmwasm");
+const { Secp256k1Pen } = require("@cosmjs/sdk38");
 const fs = require("fs");
 
 const httpUrl = "http://localhost:1317";

@@ -1,4 +1,4 @@
-import { decodeSignature } from "@cosmwasm/sdk38";
+import { decodeSignature } from "@cosmjs/sdk38";
 import {
   Account,
   Address,

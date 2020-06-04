@@ -1,5 +1,5 @@
 {
-  "name": "@cosmwasm/sdk38",
+  "name": "@cosmjs/sdk38",
   "version": "0.8.0",
   "description": "Utilities for Cosmos SDK 0.38",
   "author": "Ethan Frey <ethanfrey@users.noreply.github.com>",

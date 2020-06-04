@@ -1,4 +1,4 @@
-import { PubKey, pubkeyToAddress as sdkPubkeyToAddress, pubkeyType } from "@cosmwasm/sdk38";
+import { PubKey, pubkeyToAddress as sdkPubkeyToAddress, pubkeyType } from "@cosmjs/sdk38";
 import { Address, Algorithm, PubkeyBundle } from "@iov/bcp";
 import { Secp256k1 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";

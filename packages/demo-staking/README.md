@@ -1,4 +1,4 @@
-# @cosmwasm/demo-staking
+# @cosmjs/demo-staking
 
 ## License
 

@@ -1,4 +1,4 @@
-import { BroadcastMode, CosmosSdkTx, RestClient as BaseRestClient } from "@cosmwasm/sdk38";
+import { BroadcastMode, CosmosSdkTx, RestClient as BaseRestClient } from "@cosmjs/sdk38";
 import { Encoding } from "@iov/encoding";
 
 import { JsonObject, Model, parseWasmData, WasmData } from "./types";

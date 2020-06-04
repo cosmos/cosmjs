@@ -1,4 +1,4 @@
-import { Coin, Msg } from "@cosmwasm/sdk38";
+import { Coin, Msg } from "@cosmjs/sdk38";
 /**
  * Uploads Wam code to the chain
  *

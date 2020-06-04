@@ -1,4 +1,4 @@
-import { BroadcastMode, Coin, StdFee, StdSignature } from "@cosmwasm/sdk38";
+import { BroadcastMode, Coin, StdFee, StdSignature } from "@cosmjs/sdk38";
 import { Account, CosmWasmClient, GetNonceResult, PostTxResult } from "./cosmwasmclient";
 import { Log } from "./logs";
 export interface SigningCallback {

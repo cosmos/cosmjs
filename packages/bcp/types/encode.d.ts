@@ -1,4 +1,4 @@
-import { Coin, CosmosSdkTx, PubKey, StdFee, StdSignature } from "@cosmwasm/sdk38";
+import { Coin, CosmosSdkTx, PubKey, StdFee, StdSignature } from "@cosmjs/sdk38";
 import { Amount, Fee, FullSignature, PubkeyBundle, SignedTransaction, UnsignedTransaction } from "@iov/bcp";
 import { BankToken } from "./types";
 export declare function encodePubkey(pubkey: PubkeyBundle): PubKey;

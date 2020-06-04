@@ -1,4 +1,4 @@
-import { Account, Coin } from "@cosmwasm/sdk38";
+import { Account, Coin } from "@cosmjs/sdk38";
 
 export interface SendJob {
   readonly sender: string;

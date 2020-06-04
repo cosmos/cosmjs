@@ -1,4 +1,4 @@
-import { Coin, IndexedTx, Msg, PubKey, StdFee, StdSignature, StdTx } from "@cosmwasm/sdk38";
+import { Coin, IndexedTx, Msg, PubKey, StdFee, StdSignature, StdTx } from "@cosmjs/sdk38";
 import {
   Amount,
   ChainId,

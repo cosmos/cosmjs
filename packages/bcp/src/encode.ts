@@ -8,7 +8,7 @@ import {
   pubkeyType,
   StdFee,
   StdSignature,
-} from "@cosmwasm/sdk38";
+} from "@cosmjs/sdk38";
 import {
   Algorithm,
   Amount,

@@ -1,4 +1,4 @@
-import { Coin, Secp256k1Pen } from "@cosmwasm/sdk38";
+import { Coin, Secp256k1Pen } from "@cosmjs/sdk38";
 import { Sha256 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
 import { assert } from "@iov/utils";

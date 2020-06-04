@@ -30,7 +30,7 @@ export function main(originalArgs: readonly string[]): void {
 
   const imports = new Map<string, readonly string[]>([
     [
-      "@cosmwasm/cosmwasm",
+      "@cosmjs/cosmwasm",
       [
         // cosmwasmclient
         "Account",
@@ -60,7 +60,7 @@ export function main(originalArgs: readonly string[]): void {
       ],
     ],
     [
-      "@cosmwasm/sdk38",
+      "@cosmjs/sdk38",
       [
         "coin",
         "coins",

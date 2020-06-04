@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { Coin, IndexedTx, Msg, PubKey, StdSignature } from "@cosmwasm/sdk38";
+import { Coin, IndexedTx, Msg, PubKey, StdSignature } from "@cosmjs/sdk38";
 import { Address, Algorithm, SendTransaction, TokenTicker } from "@iov/bcp";
 import { Encoding } from "@iov/encoding";
 
