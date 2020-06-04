@@ -17,8 +17,7 @@ export {
   SearchTxQuery,
   SearchTxFilter,
 } from "./cosmosclient";
-export { unmarshalTx } from "./decoding";
-export { makeSignBytes, marshalTx } from "./encoding";
+export { makeSignBytes } from "./encoding";
 export {
   AuthAccountsResponse,
   BlockResponse,

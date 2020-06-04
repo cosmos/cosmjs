@@ -69,7 +69,6 @@ export function main(originalArgs: readonly string[]): void {
         "logs",
         "makeCosmoshubPath",
         "makeSignBytes",
-        "marshalTx",
         "IndexedTx",
         "Coin",
         "Msg",
