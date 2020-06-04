@@ -92,23 +92,23 @@
     unique-filename "^1.1.1"
     which "^1.3.1"
 
-"@iov/bcp@^2.1.0", "@iov/bcp@^2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@iov/bcp/-/bcp-2.2.0.tgz#4db3502115c5bb1bb34f471c0d129734ee449da5"
-  integrity sha512-jeFvT9oYiYAKhO2p70G3tpcWKkZIGkVq7daI367RzTIPJC29CCGajde2OdBN6O0OMSMctW0hksC7bVz+Pfv/tg==
+"@iov/bcp@^2.3.2":
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/@iov/bcp/-/bcp-2.3.2.tgz#23dc92839951beb239ec6ed56490d7534d67451c"
+  integrity sha512-o9ae5Q8jHgGyxsUnyoRcL200YVbDEYXAb6ZaAFad5/aFjhVawjTDSgya+vL8zI+t8BBixJZcXOjeDaqLtWRQAw==
   dependencies:
-    "@iov/crypto" "^2.2.0"
-    "@iov/encoding" "^2.2.0"
-    "@iov/stream" "^2.2.0"
+    "@iov/crypto" "^2.3.2"
+    "@iov/encoding" "^2.3.2"
+    "@iov/stream" "^2.3.2"
     type-tagger "^1.0.0"
     xstream "^11.10.0"
 
-"@iov/crypto@^2.1.0", "@iov/crypto@^2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@iov/crypto/-/crypto-2.2.0.tgz#9413436fa6ddf8fadddb1c208dd1304dc654287c"
-  integrity sha512-E/DJ0Y4z1ZXCWlXlx2J9SZ/oollaBQu1u5kT53ypRZcAe3X9UTJFGusi/SuZ/fuyvIKwlsa9mUqvJQt2tl2RxQ==
+"@iov/crypto@^2.3.2":
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/@iov/crypto/-/crypto-2.3.2.tgz#0f65623d29d1df7e35620bbbeede70f1d0797ff9"
+  integrity sha512-inHHZa9kr+4K88ZhqOQC/LVlZBcZlE0Kkj97ynWGzaR4CCdCFa0KOkx2vef2CH0J6wbfC13e6b93/MuQyGiUAw==
   dependencies:
-    "@iov/encoding" "^2.2.0"
+    "@iov/encoding" "^2.3.2"
     bip39 "^3.0.2"
     bn.js "^4.11.8"
     elliptic "^6.4.0"
@@ -120,25 +120,25 @@
     type-tagger "^1.0.0"
     unorm "^1.5.0"
 
-"@iov/encoding@^2.1.0", "@iov/encoding@^2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@iov/encoding/-/encoding-2.2.0.tgz#584454c12b7fa754b714912cb9595a85303bfa75"
-  integrity sha512-C61ysbRja92CC37gD66ndy+fpbXswlQWgiEftAqHG6QuFs4Zng1/3zwL5Mb4DhzlH2z21+YPwRtfWM5rk1kDmQ==
+"@iov/encoding@^2.3.2":
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/@iov/encoding/-/encoding-2.3.2.tgz#4b37966af0345a6bc904bb58189dc1ea9d14ad9b"
+  integrity sha512-viioqo1flTkG4Oxb0PvoBXGozHq9fObAgAL4dRHJe9zmChE77EBX2Y5u0nabd2JwAhEbir56AtsrUe4dOrtd5w==
   dependencies:
     base64-js "^1.3.0"
-    bech32 "^1.1.3"
+    bech32 "^1.1.4"
     bn.js "^4.11.8"
     readonly-date "^1.0.0"
 
-"@iov/keycontrol@^2.1.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@iov/keycontrol/-/keycontrol-2.2.0.tgz#1f250b444580dc494a5d5f11625094eeeda09938"
-  integrity sha512-XoiezMe6hyKT+qJpam5QO51x3e4WY5bl7pTYua9GfwpJnU0ClkGLO1g0YkGKB5q0f2ymk2s0MEgTxKQx9RLkyA==
+"@iov/keycontrol@^2.3.2":
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/@iov/keycontrol/-/keycontrol-2.3.2.tgz#42b556476c489e45b01ec47ec9ed28f287f5199e"
+  integrity sha512-Ile1c+ceAwefulNZ2pYu1TFeoFcx4S2oJTS57sFDNJzDDjn5xvEgNpdn4xkDDdGvkQOnexiMNifeCjInHBJpjQ==
   dependencies:
-    "@iov/bcp" "^2.2.0"
-    "@iov/crypto" "^2.2.0"
-    "@iov/encoding" "^2.2.0"
-    "@iov/stream" "^2.2.0"
+    "@iov/bcp" "^2.3.2"
+    "@iov/crypto" "^2.3.2"
+    "@iov/encoding" "^2.3.2"
+    "@iov/stream" "^2.3.2"
     "@types/abstract-leveldown" "^5.0.1"
     "@types/levelup" "^3.1.0"
     "@types/node" "^10.12.18"
@@ -150,17 +150,17 @@
     type-tagger "^1.0.0"
     xstream "^11.10.0"
 
-"@iov/stream@^2.0.2", "@iov/stream@^2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@iov/stream/-/stream-2.2.0.tgz#a26eaaff391a7304d481867843d8afe81321db27"
-  integrity sha512-idtQoaNsGCS5KHO6Ymq9w2P6bq2yIaQfdAjjXuzQPX79lmuS1w2Pq6XGBnhMeQ7LVbluvy9JFIgZVcEQ7iSHvA==
+"@iov/stream@^2.3.2":
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/@iov/stream/-/stream-2.3.2.tgz#472063f3a4fcd1e97de0ae99189f98b94825afac"
+  integrity sha512-nOq5OKwK2rWnyzXpGTAKZToCU0jmTjEC05owVzmBfw3+7hmjlExrGGbLncjcMWzbvp2VVpHc2l01Tr+qpzr8Vw==
   dependencies:
     xstream "^11.10.0"
 
-"@iov/utils@^2.0.2":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@iov/utils/-/utils-2.2.0.tgz#46e234db283b5553f7c1ce24307a708b9710b0bc"
-  integrity sha512-dy3iWphow125x1cChOBye0knmm9ddnmkv5/aOmu8w/KL5H3Y7WkJ8VY/Gz3ePdBIjPXU8sEihnmanVGiz0WsPw==
+"@iov/utils@^2.3.2":
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/@iov/utils/-/utils-2.3.2.tgz#a499ec304b4febaeb3af309dedbb30e14a09c91e"
+  integrity sha512-mtdZ8zh/LGjwA72HofOc8JF3KN1Rc1jwaQATePLDwIIJRw0AJXx2GLRBBRjja41huuw9ND0E2mQWlYLtYsNnUA==
 
 "@koa/cors@^3.0.0":
   version "3.0.0"
@@ -1811,10 +1811,10 @@ bcrypt-pbkdf@^1.0.0:
   dependencies:
     tweetnacl "^0.14.3"
 
-bech32@^1.1.3:
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/bech32/-/bech32-1.1.3.tgz#bd47a8986bbb3eec34a56a097a84b8d3e9a2dfcd"
-  integrity sha512-yuVFUvrNcoJi0sv5phmqc6P+Fl1HjRDRNOOkHY2X/3LBy2bIGNSFx4fZ95HMaXHupuS7cZR15AsvtmCIF4UEyg==
+bech32@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/bech32/-/bech32-1.1.4.tgz#e38c9f37bf179b8eb16ae3a772b40c356d4832e9"
+  integrity sha512-s0IrSOzLlbvX7yp4WBfPITzpAU8sqQcpsmwXDiKwrG4r491vwCO/XpejasRNl0piBMe/DvP4Tz0mIS/X1DPJBQ==
 
 before-after-hook@^2.0.0:
   version "2.1.0"
