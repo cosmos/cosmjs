@@ -35,13 +35,7 @@
   },
   "dependencies": {
     "@cosmjs/cosmwasm": "^0.8.0",
-    "@cosmjs/sdk38": "^0.8.0",
-    "@iov/crypto": "^2.1.0",
-    "@iov/encoding": "^2.1.0",
-    "@iov/stream": "^2.0.2",
-    "@iov/utils": "^2.0.2"
+    "@cosmjs/sdk38": "^0.8.0"
   },
-  "devDependencies": {
-    "@iov/keycontrol": "^2.1.0"
-  }
+  "devDependencies": {}
 }
