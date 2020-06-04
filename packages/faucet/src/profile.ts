@@ -1,6 +1,5 @@
 import { makeCosmoshubPath, Pen, Secp256k1Pen } from "@cosmjs/sdk38";
-
-import { debugPath } from "./hdpaths";
+import { pathToString } from "@iov/crypto";
 
 export async function createPens(
   mnemonic: string,
@@ -18,7 +17,7 @@ export async function createPens(
     const address = pen.address(addressPrefix);
     if (logging) {
       const role = i === 0 ? "token holder " : `distributor ${i}`;
-      console.info(`Created ${role} (${debugPath(path)}): ${address}`);
+      console.info(`Created ${role} (${pathToString(path)}): ${address}`);
     }
     pens.push([address, pen]);
   }
