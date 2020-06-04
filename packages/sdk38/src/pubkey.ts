@@ -1,4 +1,4 @@
-import { Bech32, Encoding } from "@iov/encoding";
+import { Bech32, fromBase64, fromHex, toBase64, toHex } from "@iov/encoding";
 import equal from "fast-deep-equal";
 
 import { PubKey, pubkeyType } from "./types";
@@ -9,16 +9,16 @@ export function encodeSecp256k1Pubkey(pubkey: Uint8Array): PubKey {
   }
   return {
     type: pubkeyType.secp256k1,
-    value: Encoding.toBase64(pubkey),
+    value: toBase64(pubkey),
   };
 }
 
 // As discussed in https://github.com/binance-chain/javascript-sdk/issues/163
 // Prefixes listed here: https://github.com/tendermint/tendermint/blob/d419fffe18531317c28c29a292ad7d253f6cafdf/docs/spec/blockchain/encoding.md#public-key-cryptography
 // Last bytes is varint-encoded length prefix
-const pubkeyAminoPrefixSecp256k1 = Encoding.fromHex("eb5ae98721");
-const pubkeyAminoPrefixEd25519 = Encoding.fromHex("1624de6420");
-const pubkeyAminoPrefixSr25519 = Encoding.fromHex("0dfb1005");
+const pubkeyAminoPrefixSecp256k1 = fromHex("eb5ae98721");
+const pubkeyAminoPrefixEd25519 = fromHex("1624de6420");
+const pubkeyAminoPrefixSr25519 = fromHex("0dfb1005");
 const pubkeyAminoPrefixLength = pubkeyAminoPrefixSecp256k1.length;
 
 export function decodeBech32Pubkey(bechEncoded: string): PubKey {
@@ -32,7 +32,7 @@ export function decodeBech32Pubkey(bechEncoded: string): PubKey {
     }
     return {
       type: pubkeyType.secp256k1,
-      value: Encoding.toBase64(rest),
+      value: toBase64(rest),
     };
   } else if (equal(aminoPrefix, pubkeyAminoPrefixEd25519)) {
     if (rest.length !== 32) {
@@ -40,7 +40,7 @@ export function decodeBech32Pubkey(bechEncoded: string): PubKey {
     }
     return {
       type: pubkeyType.ed25519,
-      value: Encoding.toBase64(rest),
+      value: toBase64(rest),
     };
   } else if (equal(aminoPrefix, pubkeyAminoPrefixSr25519)) {
     if (rest.length !== 32) {
@@ -48,10 +48,10 @@ export function decodeBech32Pubkey(bechEncoded: string): PubKey {
     }
     return {
       type: pubkeyType.sr25519,
-      value: Encoding.toBase64(rest),
+      value: toBase64(rest),
     };
   } else {
-    throw new Error("Unsupported Pubkey type. Amino prefix: " + Encoding.toHex(aminoPrefix));
+    throw new Error("Unsupported Pubkey type. Amino prefix: " + toHex(aminoPrefix));
   }
 }
 
@@ -66,6 +66,6 @@ export function encodeBech32Pubkey(pubkey: PubKey, prefix: string): string {
       throw new Error("Unsupported pubkey type");
   }
 
-  const data = new Uint8Array([...aminoPrefix, ...Encoding.fromBase64(pubkey.value)]);
+  const data = new Uint8Array([...aminoPrefix, ...fromBase64(pubkey.value)]);
   return Bech32.encode(prefix, data);
 }

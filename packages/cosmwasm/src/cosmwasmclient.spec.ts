@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { makeSignBytes, MsgSend, Secp256k1Pen, StdFee } from "@cosmjs/sdk38";
 import { Sha256 } from "@iov/crypto";
-import { Bech32, Encoding } from "@iov/encoding";
+import { Bech32, fromHex, fromUtf8, toAscii, toBase64 } from "@iov/encoding";
 import { assert, sleep } from "@iov/utils";
 import { ReadonlyDate } from "readonly-date";
 
@@ -20,8 +20,6 @@ import {
   wasmd,
   wasmdEnabled,
 } from "./testutils.spec";
-
-const { fromHex, fromUtf8, toAscii, toBase64 } = Encoding;
 
 const guest = {
   address: "cosmos17d0jcz59jf68g52vq38tuuncmwwjk42u6mcxej",

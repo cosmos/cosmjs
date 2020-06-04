@@ -1,14 +1,12 @@
 import { Coin, Secp256k1Pen } from "@cosmjs/sdk38";
 import { Sha256 } from "@iov/crypto";
-import { Encoding } from "@iov/encoding";
+import { toHex } from "@iov/encoding";
 import { assert } from "@iov/utils";
 
 import { PrivateCosmWasmClient } from "./cosmwasmclient";
 import { RestClient } from "./restclient";
 import { SigningCosmWasmClient, UploadMeta } from "./signingcosmwasmclient";
 import { alice, getHackatom, makeRandomAddress, pendingWithoutWasmd } from "./testutils.spec";
-
-const { toHex } = Encoding;
 
 const httpUrl = "http://localhost:1317";
 

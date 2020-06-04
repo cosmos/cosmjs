@@ -1,5 +1,5 @@
 import { Sha256 } from "@iov/crypto";
-import { Encoding } from "@iov/encoding";
+import { fromBase64, toHex } from "@iov/encoding";
 
 import { Coin } from "./coins";
 import { Log, parseLogs } from "./logs";
@@ -167,7 +167,7 @@ export class CosmosClient {
     // We consult the REST API because we don't have a local amino encoder
     const bytes = await this.restClient.encodeTx(tx);
     const hash = new Sha256(bytes).digest();
-    return Encoding.toHex(hash).toUpperCase();
+    return toHex(hash).toUpperCase();
   }
 
   /**
@@ -224,7 +224,7 @@ export class CosmosClient {
         height: parseInt(response.block.header.height, 10),
         chainId: response.block.header.chain_id,
       },
-      txs: (response.block.data.txs || []).map((encoded) => Encoding.fromBase64(encoded)),
+      txs: (response.block.data.txs || []).map(fromBase64),
     };
   }
 

@@ -1,9 +1,7 @@
 import { BroadcastMode, CosmosSdkTx, RestClient as BaseRestClient } from "@cosmjs/sdk38";
-import { Encoding } from "@iov/encoding";
+import { fromBase64, fromUtf8, toHex, toUtf8 } from "@iov/encoding";
 
 import { JsonObject, Model, parseWasmData, WasmData } from "./types";
-
-const { fromBase64, fromUtf8, toHex, toUtf8 } = Encoding;
 
 // Currently all wasm query responses return json-encoded strings...
 // later deprecate this and use the specific types for result

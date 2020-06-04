@@ -1,8 +1,6 @@
-import { Encoding } from "@iov/encoding";
+import { fromHex, toBase64 } from "@iov/encoding";
 
 import { pubkeyToAddress } from "./address";
-
-const { toBase64, fromHex } = Encoding;
 
 describe("address", () => {
   describe("pubkeyToAddress", () => {

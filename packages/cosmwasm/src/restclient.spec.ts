@@ -15,7 +15,7 @@ import {
   StdTx,
 } from "@cosmjs/sdk38";
 import { Sha256 } from "@iov/crypto";
-import { Encoding } from "@iov/encoding";
+import { fromAscii, fromBase64, fromHex, toAscii, toBase64, toHex } from "@iov/encoding";
 import { assert, sleep } from "@iov/utils";
 import { ReadonlyDate } from "readonly-date";
 
@@ -48,8 +48,6 @@ import {
   wasmd,
   wasmdEnabled,
 } from "./testutils.spec";
-
-const { fromAscii, fromBase64, fromHex, toAscii, toBase64, toHex } = Encoding;
 
 const emptyAddress = "cosmos1ltkhnmdcqemmd2tkhnx7qx66tq7e0wykw2j85k";
 

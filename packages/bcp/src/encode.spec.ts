@@ -11,7 +11,7 @@ import {
   SignedTransaction,
   TokenTicker,
 } from "@iov/bcp";
-import { Encoding } from "@iov/encoding";
+import { fromBase64 } from "@iov/encoding";
 
 import {
   buildSignedTx,
@@ -22,8 +22,6 @@ import {
   toBankCoin,
 } from "./encode";
 import { BankToken } from "./types";
-
-const { fromBase64 } = Encoding;
 
 describe("encode", () => {
   const atom = "ATOM" as TokenTicker;

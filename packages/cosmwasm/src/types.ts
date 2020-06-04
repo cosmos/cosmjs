@@ -1,6 +1,4 @@
-import { Encoding } from "@iov/encoding";
-
-const { fromBase64, fromHex } = Encoding;
+import { fromBase64, fromHex } from "@iov/encoding";
 
 export interface WasmData {
   // key is hex-encoded

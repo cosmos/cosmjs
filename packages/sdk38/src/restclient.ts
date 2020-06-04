@@ -1,4 +1,4 @@
-import { Encoding, isNonNullObject } from "@iov/encoding";
+import { fromBase64, isNonNullObject } from "@iov/encoding";
 import axios, { AxiosError, AxiosInstance } from "axios";
 
 import { Coin } from "./coins";
@@ -301,7 +301,7 @@ export class RestClient {
     if (!responseData.tx) {
       throw new Error("Unexpected response data format");
     }
-    return Encoding.fromBase64((responseData as EncodeTxResponse).tx);
+    return fromBase64((responseData as EncodeTxResponse).tx);
   }
 
   /**

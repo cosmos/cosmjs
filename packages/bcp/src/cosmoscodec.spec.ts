@@ -1,11 +1,9 @@
 import { PostableBytes, PrehashType } from "@iov/bcp";
-import { Encoding } from "@iov/encoding";
+import { toUtf8 } from "@iov/encoding";
 
 import { CosmosCodec } from "./cosmoscodec";
 import { chainId, nonce, sendTxJson, signedTxBin, signedTxEncodedJson, signedTxJson } from "./testdata.spec";
 import { BankToken } from "./types";
-
-const { toUtf8 } = Encoding;
 
 const defaultPrefix = "cosmos";
 
