@@ -14,6 +14,9 @@ on 2020-06-05.
 The code in packages/utils was forked from https://github.com/iov-one/iov-core/tree/v2.3.2/packages/iov-utils
 on 2020-06-05.
 
+The code in packages/encoding and packages/math was forked from https://github.com/iov-one/iov-core/tree/v2.3.2/packages/iov-encoding
+on 2020-06-05.
+
 Copyright 2018-2020 IOV SAS
 Copyright 2020 Confio UO
 Copyright 2020 Simon Warta
