@@ -14,7 +14,6 @@ describe("EnglishMnemonic", () => {
       const checksum = new Sha256(bip39EnglishTxt).digest();
       expect(checksum).toEqual(fromHex("2f5eed53a4727b4bf8880d8f3f199efc90e58503646d9ff8eff3a2ed3b24dbda"));
 
-      // tslint:disable-next-line: readonly-array
       const wordsFromSpec: string[] = [];
 
       let start = 0; // the start cursor marks the first byte of the word
@@ -30,8 +29,6 @@ describe("EnglishMnemonic", () => {
       expect(EnglishMnemonic.wordlist).toEqual(wordsFromSpec);
     });
   });
-
-  // tslint:disable:no-unused-expression
 
   it("works for valid inputs", () => {
     expect(() => {
@@ -233,8 +230,6 @@ describe("EnglishMnemonic", () => {
         ),
     ).toThrowError(/contains invalid word/i);
   });
-
-  // tslint:enable:no-unused-expression
 
   describe("toString", () => {
     it("works", () => {

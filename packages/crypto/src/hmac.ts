@@ -27,9 +27,9 @@ export class Hmac<H extends HashFunction> implements HashFunction {
       key = new Uint8Array([...key, ...zeroPadding]);
     }
 
-    // tslint:disable-next-line:no-bitwise
+    // eslint-disable-next-line no-bitwise
     this.oKeyPad = key.map((keyByte) => keyByte ^ 0x5c);
-    // tslint:disable-next-line:no-bitwise
+    // eslint-disable-next-line no-bitwise
     this.iKeyPad = key.map((keyByte) => keyByte ^ 0x36);
     this.messageHasher = new hashFunctionConstructor();
     this.blockSize = blockSize;

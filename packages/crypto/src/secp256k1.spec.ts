@@ -1,4 +1,4 @@
-/* tslint:disable:no-bitwise */
+/* eslint-disable no-bitwise */
 import { fromHex } from "@iov/encoding";
 
 import { Secp256k1 } from "./secp256k1";

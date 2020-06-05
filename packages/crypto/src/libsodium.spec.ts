@@ -1,4 +1,4 @@
-/* tslint:disable:no-bitwise */
+/* eslint-disable no-bitwise */
 import { fromHex, toAscii } from "@iov/encoding";
 
 import {
