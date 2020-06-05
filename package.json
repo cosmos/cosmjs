@@ -30,6 +30,7 @@
     "lint-fix": "lerna run lint-fix",
     "test": "lerna run test",
     "test-firefox": "lerna run test-firefox",
+    "test-chrome": "lerna run test-chrome",
     "build": "lerna run build",
     "docs": "lerna run docs"
   },

@@ -31,7 +31,7 @@
     "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build",
     "test-node": "node jasmine-testrunner.js",
     "test-firefox": "yarn pack-web && karma start --single-run --browsers Firefox",
-    "test-chrome": "yarn pack-web && karma start --single-run --browsers ChromeHeadlessInsecure",
+    "test-chrome": "yarn pack-web && karma start --single-run --browsers ChromeHeadless",
     "test": "yarn build-or-skip && yarn test-node",
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
   },

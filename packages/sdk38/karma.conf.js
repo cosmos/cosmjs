@@ -43,12 +43,5 @@ module.exports = function (config) {
 
     // Keep brower open for debugging. This is overridden by yarn scripts
     singleRun: false,
-
-    customLaunchers: {
-      ChromeHeadlessInsecure: {
-        base: "ChromeHeadless",
-        flags: ["--disable-web-security"],
-      },
-    },
   });
 };
