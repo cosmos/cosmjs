@@ -63,7 +63,7 @@ function isDefined<X>(value: X | undefined): value is X {
 function deduplicate<T>(input: ReadonlyArray<T>, comparator: (a: T, b: T) => number): Array<T> {
   const out = new Array<T>();
   for (const element of input) {
-    if (!out.find((o) => comparator(o, element) === 0)) {
+    if (out.find((o) => comparator(o, element) === 0) === undefined) {
       out.push(element);
     }
   }
