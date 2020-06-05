@@ -488,16 +488,13 @@ describe("CosmosConnection", () => {
 
       // search by height
       const heightResults = await connection.searchTx({ height: byIdResult.height });
-      expect(heightResults.length).toEqual(1);
-      const heightResult = heightResults[0];
-      expect(heightResult.transactionId).toEqual(transactionId);
-      assert(isConfirmedTransaction(heightResult), "Expected transaction to succeed");
-      assert(heightResult.log, "Log must be available");
-      const [firstHeightLog] = JSON.parse(heightResult.log);
-      expect(firstHeightLog.events.length).toEqual(2);
-      const heightTransaction = heightResult.transaction;
-      assert(isSendTransaction(heightTransaction), "Expected send transaction");
-      expect(heightTransaction).toEqual(unsigned);
+      expect(heightResults.length).toBeGreaterThanOrEqual(1);
+      expect(heightResults).toContain(
+        jasmine.objectContaining({
+          transactionId: transactionId,
+          transaction: unsigned,
+        }),
+      );
 
       connection.disconnect();
     });
@@ -647,23 +644,23 @@ describe("CosmosConnection", () => {
       // search by height
       {
         const results = await connection.searchTx({ height: height });
-        expect(results.length).toEqual(1);
+        expect(results.length).toBeGreaterThanOrEqual(1);
       }
       {
         const results = await connection.searchTx({ height: height, minHeight: height });
-        expect(results.length).toEqual(1);
+        expect(results.length).toBeGreaterThanOrEqual(1);
       }
       {
         const results = await connection.searchTx({ height: height, minHeight: height - 2 });
-        expect(results.length).toEqual(1);
+        expect(results.length).toBeGreaterThanOrEqual(1);
       }
       {
         const results = await connection.searchTx({ height: height, maxHeight: height });
-        expect(results.length).toEqual(1);
+        expect(results.length).toBeGreaterThanOrEqual(1);
       }
       {
         const results = await connection.searchTx({ height: height, maxHeight: height + 2 });
-        expect(results.length).toEqual(1);
+        expect(results.length).toBeGreaterThanOrEqual(1);
       }
       {
         const results = await connection.searchTx({ height: height, minHeight: height + 1 });
@@ -679,7 +676,7 @@ describe("CosmosConnection", () => {
           minHeight: height,
           maxHeight: height,
         });
-        expect(results.length).toEqual(1);
+        expect(results.length).toBeGreaterThanOrEqual(1);
       }
       {
         const results = await connection.searchTx({ height: height, minHeight: height + 1 });
