@@ -6,7 +6,7 @@ import {
   IndexedTx,
   PubKey,
   StdTx,
-} from "@cosmwasm/sdk38";
+} from "@cosmjs/sdk38";
 import { Sha256 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
 

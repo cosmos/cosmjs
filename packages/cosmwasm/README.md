@@ -1,6 +1,6 @@
-# @cosmwasm/cosmwasm
+# @cosmjs/cosmwasm
 
-[![npm version](https://img.shields.io/npm/v/@cosmwasm/cosmwasm.svg)](https://www.npmjs.com/package/@cosmwasm/cosmwasm)
+[![npm version](https://img.shields.io/npm/v/@cosmjs/cosmwasm.svg)](https://www.npmjs.com/package/@cosmjs/cosmwasm)
 
 An SDK to build CosmWasm clients.
 

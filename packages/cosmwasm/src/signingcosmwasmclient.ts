@@ -1,4 +1,4 @@
-import { BroadcastMode, Coin, coins, makeSignBytes, MsgSend, StdFee, StdSignature } from "@cosmwasm/sdk38";
+import { BroadcastMode, Coin, coins, makeSignBytes, MsgSend, StdFee, StdSignature } from "@cosmjs/sdk38";
 import { Sha256 } from "@iov/crypto";
 import { Encoding } from "@iov/encoding";
 import pako from "pako";

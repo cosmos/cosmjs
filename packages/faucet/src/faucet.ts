@@ -1,4 +1,4 @@
-import { CosmosClient, Pen, SigningCosmosClient } from "@cosmwasm/sdk38";
+import { CosmosClient, Pen, SigningCosmosClient } from "@cosmjs/sdk38";
 import { sleep } from "@iov/utils";
 
 import { debugAccount, logAccountsState, logSendJob } from "./debugging";

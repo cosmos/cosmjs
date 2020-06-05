@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { SigningCosmWasmClient } from "@cosmwasm/cosmwasm";
-import { Coin, coins, makeCosmoshubPath, Secp256k1Pen } from "@cosmwasm/sdk38";
+import { SigningCosmWasmClient } from "@cosmjs/cosmwasm";
+import { Coin, coins, makeCosmoshubPath, Secp256k1Pen } from "@cosmjs/sdk38";
 
 import {
   BalanceResponse,

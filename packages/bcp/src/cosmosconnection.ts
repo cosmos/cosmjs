@@ -5,7 +5,7 @@ import {
   isMsgSend,
   isStdTx,
   SearchTxFilter,
-} from "@cosmwasm/sdk38";
+} from "@cosmjs/sdk38";
 import {
   Account,
   AccountQuery,

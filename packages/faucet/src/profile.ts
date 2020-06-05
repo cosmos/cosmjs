@@ -1,4 +1,4 @@
-import { makeCosmoshubPath, Pen, Secp256k1Pen } from "@cosmwasm/sdk38";
+import { makeCosmoshubPath, Pen, Secp256k1Pen } from "@cosmjs/sdk38";
 
 import { debugPath } from "./hdpaths";
 

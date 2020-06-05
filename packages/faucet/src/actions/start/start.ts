@@ -1,4 +1,4 @@
-import { CosmosClient } from "@cosmwasm/sdk38";
+import { CosmosClient } from "@cosmjs/sdk38";
 
 import { Webserver } from "../../api/webserver";
 import * as constants from "../../constants";

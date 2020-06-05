@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { makeSignBytes, marshalTx, unmarshalTx } from "@cosmwasm/sdk38";
+import { makeSignBytes, marshalTx, unmarshalTx } from "@cosmjs/sdk38";
 import {
   Address,
   ChainId,

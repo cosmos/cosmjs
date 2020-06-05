@@ -9,7 +9,7 @@ import {
   StdFee,
   StdSignature,
   StdTx,
-} from "@cosmwasm/sdk38";
+} from "@cosmjs/sdk38";
 import {
   Address,
   Algorithm,
