@@ -2,11 +2,11 @@
 
 [![npm version](https://img.shields.io/npm/v/@cosmjs/crypto.svg)](https://www.npmjs.com/package/@cosmjs/crypto)
 
-@iov/cosmjs contains low-level cryptographic functionality used in other @cosmjs
-libraries. Little of it is implemented here, but mainly it is a curation of
-external libraries along with correctness tests. We add type-safety, some more
-checks, and a simple API to these libraries. This can also be freely imported
-outside of CosmJS based applications.
+This package contains low-level cryptographic functionality used in other
+@cosmjs libraries. Little of it is implemented here, but mainly it is a curation
+of external libraries along with correctness tests. We add type-safety, some
+more checks, and a simple API to these libraries. This can also be freely
+imported outside of CosmJS based applications.
 
 ## License
 
