@@ -20,9 +20,7 @@
     "type": "git",
     "url": "https://github.com/CosmWasm/cosmjs/tree/master/packages/bcp"
   },
-  "publishConfig": {
-    "access": "public"
-  },
+  "private": true,
   "scripts": {
     "docs": "shx rm -rf docs && typedoc --options typedoc.js",
     "format": "prettier --write --loglevel warn \"./src/**/*.ts\"",
