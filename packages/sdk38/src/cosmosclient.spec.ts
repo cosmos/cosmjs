@@ -17,6 +17,8 @@ import {
 } from "./testutils.spec";
 import { MsgSend, StdFee } from "./types";
 
+const blockTime = 1_000; // ms
+
 const guest = {
   address: "cosmos17d0jcz59jf68g52vq38tuuncmwwjk42u6mcxej",
 };
@@ -80,9 +82,10 @@ describe("CosmosClient", () => {
 
       const height2 = await client.getHeight();
       expect(height2).toBeGreaterThan(0);
-      await sleep(1_000);
+      await sleep(blockTime);
       const height3 = await client.getHeight();
-      expect(height3).toEqual(height2 + 1);
+      expect(height3).toBeGreaterThanOrEqual(height2 + 1);
+      expect(height3).toBeLessThanOrEqual(height2 + 2);
 
       expect(blockLatestSpy).toHaveBeenCalledTimes(1);
       expect(authAccountsSpy).toHaveBeenCalledTimes(3);
