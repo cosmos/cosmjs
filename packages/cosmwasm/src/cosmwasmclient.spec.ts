@@ -94,7 +94,7 @@ describe("CosmWasmClient", () => {
 
       const height2 = await client.getHeight();
       expect(height2).toBeGreaterThan(0);
-      await sleep(blockTime);
+      await sleep(blockTime * 1.3); // tolerate chain being 30% slower than expected
       const height3 = await client.getHeight();
       expect(height3).toBeGreaterThanOrEqual(height2 + 1);
       expect(height3).toBeLessThanOrEqual(height2 + 2);
