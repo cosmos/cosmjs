@@ -158,7 +158,7 @@ export class Faucet {
       for (const job of jobs) {
         if (this.logging) logSendJob(job, this.tokenConfig);
         await this.send(job);
-        await sleep(50);
+        await sleep(75);
       }
 
       if (this.logging) {

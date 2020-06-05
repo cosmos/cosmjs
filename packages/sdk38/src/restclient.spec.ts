@@ -290,7 +290,7 @@ describe("RestClient", () => {
           };
         }
 
-        await sleep(50); // wait until transactions are indexed
+        await sleep(75); // wait until transactions are indexed
       }
     });
 
@@ -371,7 +371,7 @@ describe("RestClient", () => {
         ];
         const result = await client.sendTokens(recipient, transferAmount);
 
-        await sleep(50); // wait until tx is indexed
+        await sleep(75); // wait until tx is indexed
         const txDetails = await new RestClient(wasmd.endpoint).txById(result.transactionHash);
         posted = {
           sender: faucet.address,

@@ -51,7 +51,7 @@ describe("CosmosClient.searchTx", () => {
           amount: "1234567",
         };
         const result = await client.sendTokens(recipient, [transferAmount]);
-        await sleep(50); // wait until tx is indexed
+        await sleep(75); // wait until tx is indexed
         const txDetails = await new RestClient(wasmd.endpoint).txById(result.transactionHash);
         sendSuccessful = {
           sender: faucet.address,
