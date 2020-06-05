@@ -39,15 +39,12 @@ function makeRandomAddress(): Address {
   return Bech32.encode(defaultAddressPrefix, Random.getBytes(20)) as Address;
 }
 
-const faucet = {
-  mnemonic:
-    "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone",
-  path: HdPaths.cosmosHub(0),
-  pubkey: {
+const alice = {
+  address0: "cosmos14qemq0vw6y3gc3u3e0aty2e764u4gs5le3hada" as Address,
+  pubkey0: {
     algo: Algorithm.Secp256k1,
-    data: fromBase64("A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ") as PubkeyBytes,
+    data: fromBase64("A9cXhWb8ZpqCzkA8dQCPV29KdeRLV3rUYxrkHudLbQtS") as PubkeyBytes,
   },
-  address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6" as Address,
 };
 
 /**
@@ -238,8 +235,8 @@ describe("CosmosConnection", () => {
     it("has a pubkey when getting account with transactions", async () => {
       pendingWithoutWasmd();
       const connection = await CosmosConnection.establish(httpUrl, defaultAddressPrefix, defaultConfig);
-      const account = await connection.getAccount({ address: faucet.address });
-      expect(account?.pubkey).toEqual(faucet.pubkey);
+      const account = await connection.getAccount({ address: alice.address0 });
+      expect(account?.pubkey).toEqual(alice.pubkey0);
       connection.disconnect();
     });
   });
