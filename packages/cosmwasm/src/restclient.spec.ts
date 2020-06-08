@@ -60,11 +60,7 @@ function makeSignedTx(firstMsg: Msg, fee: StdFee, memo: string, firstSignature: 
   };
 }
 
-async function uploadCustomContract(
-  client: RestClient,
-  pen: Pen,
-  wasmCode: Uint8Array,
-): Promise<PostTxsResponse> {
+async function uploadContract(client: RestClient, pen: Pen, wasmCode: Uint8Array): Promise<PostTxsResponse> {
   const memo = "My first contract on chain";
   const theMsg: MsgStoreCode = {
     type: "wasm/store-code",
@@ -90,10 +86,6 @@ async function uploadCustomContract(
   const signature = await pen.sign(signBytes);
   const signedTx = makeSignedTx(theMsg, fee, memo, signature);
   return client.postTx(signedTx);
-}
-
-async function uploadContract(client: RestClient, pen: Pen): Promise<PostTxsResponse> {
-  return uploadCustomContract(client, pen, getHackatom());
 }
 
 async function instantiateContract(
@@ -1144,7 +1136,7 @@ describe("RestClient", () => {
       // upload
       {
         // console.log("Raw log:", result.raw_log);
-        const result = await uploadContract(client, pen);
+        const result = await uploadContract(client, pen, getHackatom());
         expect(result.code).toBeFalsy();
         const logs = parseLogs(result.logs);
         const codeIdAttr = findAttribute(logs, "message", "code_id");
@@ -1208,7 +1200,7 @@ describe("RestClient", () => {
 
       // upload data
       const wasmCode = getHackatom();
-      const result = await uploadCustomContract(client, pen, wasmCode);
+      const result = await uploadContract(client, pen, wasmCode);
       expect(result.code).toBeFalsy();
       const logs = parseLogs(result.logs);
       const codeIdAttr = findAttribute(logs, "message", "code_id");
@@ -1254,7 +1246,7 @@ describe("RestClient", () => {
       if (existingInfos.length > 0) {
         codeId = existingInfos[existingInfos.length - 1].id;
       } else {
-        const uploadResult = await uploadContract(client, pen);
+        const uploadResult = await uploadContract(client, pen, getHackatom());
         expect(uploadResult.code).toBeFalsy();
         const uploadLogs = parseLogs(uploadResult.logs);
         const codeIdAttr = findAttribute(uploadLogs, "message", "code_id");
@@ -1308,7 +1300,7 @@ describe("RestClient", () => {
       beforeAll(async () => {
         if (wasmdEnabled()) {
           const pen = await Secp256k1Pen.fromMnemonic(alice.mnemonic);
-          const uploadResult = await uploadContract(client, pen);
+          const uploadResult = await uploadContract(client, pen, getHackatom());
           assert(!uploadResult.code);
           const uploadLogs = parseLogs(uploadResult.logs);
           const codeId = Number.parseInt(findAttribute(uploadLogs, "message", "code_id").value, 10);
