@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { Encoding } from "@iov/encoding";
+import { fromBase64 } from "@iov/encoding";
 import { assert, sleep } from "@iov/utils";
 import { ReadonlyDate } from "readonly-date";
 
@@ -26,8 +26,6 @@ import {
   wasmdEnabled,
 } from "./testutils.spec";
 import { Msg, MsgSend, StdFee, StdSignature, StdTx } from "./types";
-
-const { fromBase64 } = Encoding;
 
 const emptyAddress = "cosmos1ltkhnmdcqemmd2tkhnx7qx66tq7e0wykw2j85k";
 

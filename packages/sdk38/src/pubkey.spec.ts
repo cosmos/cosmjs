@@ -1,9 +1,7 @@
-import { Encoding } from "@iov/encoding";
+import { fromBase64 } from "@iov/encoding";
 
 import { decodeBech32Pubkey, encodeBech32Pubkey, encodeSecp256k1Pubkey } from "./pubkey";
 import { PubKey } from "./types";
-
-const { fromBase64 } = Encoding;
 
 describe("pubkey", () => {
   describe("encodeSecp256k1Pubkey", () => {

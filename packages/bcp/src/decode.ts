@@ -29,11 +29,9 @@ import {
   TransactionId,
   UnsignedTransaction,
 } from "@iov/bcp";
-import { Decimal, Encoding } from "@iov/encoding";
+import { Decimal, fromBase64 } from "@iov/encoding";
 
 import { BankToken } from "./types";
-
-const { fromBase64 } = Encoding;
 
 export function decodePubkey(pubkey: PubKey): PubkeyBundle {
   switch (pubkey.type) {

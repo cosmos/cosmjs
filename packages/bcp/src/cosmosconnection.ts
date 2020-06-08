@@ -35,7 +35,7 @@ import {
   TxCodec,
   UnsignedTransaction,
 } from "@iov/bcp";
-import { Encoding, Uint53 } from "@iov/encoding";
+import { fromUtf8, Uint53 } from "@iov/encoding";
 import { concat, DefaultValueProducer, ValueAndUpdates } from "@iov/stream";
 import equal from "fast-deep-equal";
 import { ReadonlyDate } from "readonly-date";
@@ -255,7 +255,7 @@ export class CosmosConnection implements BlockchainConnection {
   }
 
   public async postTx(tx: PostableBytes): Promise<PostTxResponse> {
-    const txAsJson = JSON.parse(Encoding.fromUtf8(tx));
+    const txAsJson = JSON.parse(fromUtf8(tx));
     if (!isStdTx(txAsJson)) throw new Error("Postable bytes must contain a JSON encoded StdTx");
     const { transactionHash, rawLog } = await this.cosmosClient.postTx(txAsJson);
     const transactionId = transactionHash as TransactionId;

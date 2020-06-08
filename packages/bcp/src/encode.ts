@@ -20,11 +20,9 @@ import {
   UnsignedTransaction,
 } from "@iov/bcp";
 import { Secp256k1 } from "@iov/crypto";
-import { Encoding } from "@iov/encoding";
+import { toBase64 } from "@iov/encoding";
 
 import { BankToken } from "./types";
-
-const { toBase64 } = Encoding;
 
 // TODO: This function seems to be unused and is not well tested (e.g. uncompressed secp256k1 or ed25519)
 export function encodePubkey(pubkey: PubkeyBundle): PubKey {

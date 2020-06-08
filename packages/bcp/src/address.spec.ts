@@ -1,9 +1,7 @@
 import { Algorithm, PubkeyBytes } from "@iov/bcp";
-import { Encoding } from "@iov/encoding";
+import { fromBase64, fromHex } from "@iov/encoding";
 
 import { pubkeyToAddress } from "./address";
-
-const { fromBase64, fromHex } = Encoding;
 
 describe("address", () => {
   describe("pubkeyToAddress", () => {

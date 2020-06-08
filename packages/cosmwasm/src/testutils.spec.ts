@@ -1,10 +1,10 @@
 import { Random } from "@iov/crypto";
-import { Bech32, Encoding } from "@iov/encoding";
+import { Bech32, fromBase64 } from "@iov/encoding";
 
 import hackatom from "./testdata/contract.json";
 
 export function getHackatom(): Uint8Array {
-  return Encoding.fromBase64(hackatom.data);
+  return fromBase64(hackatom.data);
 }
 
 export function makeRandomAddress(): string {

@@ -1,9 +1,7 @@
-import { Encoding } from "@iov/encoding";
+import { fromBase64 } from "@iov/encoding";
 
 import { decodeSignature, encodeSecp256k1Signature } from "./signature";
 import { StdSignature } from "./types";
-
-const { fromBase64 } = Encoding;
 
 describe("signature", () => {
   describe("encodeSecp256k1Signature", () => {

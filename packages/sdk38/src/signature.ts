@@ -1,4 +1,4 @@
-import { Encoding } from "@iov/encoding";
+import { fromBase64, toBase64 } from "@iov/encoding";
 
 import { encodeSecp256k1Pubkey } from "./pubkey";
 import { pubkeyType, StdSignature } from "./types";
@@ -19,7 +19,7 @@ export function encodeSecp256k1Signature(pubkey: Uint8Array, signature: Uint8Arr
   return {
     // eslint-disable-next-line @typescript-eslint/camelcase
     pub_key: encodeSecp256k1Pubkey(pubkey),
-    signature: Encoding.toBase64(signature),
+    signature: toBase64(signature),
   };
 }
 
@@ -30,8 +30,8 @@ export function decodeSignature(
     // Note: please don't add cases here without writing additional unit tests
     case pubkeyType.secp256k1:
       return {
-        pubkey: Encoding.fromBase64(signature.pub_key.value),
-        signature: Encoding.fromBase64(signature.signature),
+        pubkey: fromBase64(signature.pub_key.value),
+        signature: fromBase64(signature.signature),
       };
     default:
       throw new Error("Unsupported pubkey type");

@@ -1,9 +1,7 @@
 import { Ripemd160, Sha256 } from "@iov/crypto";
-import { Bech32, Encoding } from "@iov/encoding";
+import { Bech32, fromBase64 } from "@iov/encoding";
 
 import { PubKey, pubkeyType } from "./types";
-
-const { fromBase64 } = Encoding;
 
 export function rawSecp256k1PubkeyToAddress(pubkeyRaw: Uint8Array, prefix: string): string {
   if (pubkeyRaw.length !== 33) {

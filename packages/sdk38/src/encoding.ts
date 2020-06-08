@@ -1,8 +1,6 @@
-import { Encoding } from "@iov/encoding";
+import { toUtf8 } from "@iov/encoding";
 
 import { Msg, StdFee, StdTx } from "./types";
-
-const { toUtf8 } = Encoding;
 
 function sortJson(json: any): any {
   if (typeof json !== "object" || json === null) {
@@ -24,7 +22,7 @@ function sortJson(json: any): any {
 
 export function marshalTx(tx: StdTx): Uint8Array {
   const json = JSON.stringify(tx);
-  return Encoding.toUtf8(json);
+  return toUtf8(json);
 }
 
 interface SignJson {

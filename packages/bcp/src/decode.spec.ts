@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { Coin, IndexedTx, Msg, PubKey, StdSignature } from "@cosmjs/sdk38";
 import { Address, Algorithm, SendTransaction, TokenTicker } from "@iov/bcp";
-import { Encoding } from "@iov/encoding";
+import { fromBase64, fromHex } from "@iov/encoding";
 
 import {
   decodeAmount,
@@ -18,8 +18,6 @@ import {
 import * as testdata from "./testdata.spec";
 import cosmoshub from "./testdata/cosmoshub.json";
 import { BankToken } from "./types";
-
-const { fromBase64, fromHex } = Encoding;
 
 describe("decode", () => {
   const defaultPubkey = {

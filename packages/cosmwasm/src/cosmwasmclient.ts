@@ -8,7 +8,7 @@ import {
   StdTx,
 } from "@cosmjs/sdk38";
 import { Sha256 } from "@iov/crypto";
-import { Encoding } from "@iov/encoding";
+import { fromBase64, fromHex, toHex } from "@iov/encoding";
 
 import { Log, parseLogs } from "./logs";
 import { RestClient } from "./restclient";
@@ -185,7 +185,7 @@ export class CosmWasmClient {
     // We consult the REST API because we don't have a local amino encoder
     const bytes = await this.restClient.encodeTx(tx);
     const hash = new Sha256(bytes).digest();
-    return Encoding.toHex(hash).toUpperCase();
+    return toHex(hash).toUpperCase();
   }
 
   /**
@@ -242,7 +242,7 @@ export class CosmWasmClient {
         height: parseInt(response.block.header.height, 10),
         chainId: response.block.header.chain_id,
       },
-      txs: (response.block.data.txs || []).map((encoded) => Encoding.fromBase64(encoded)),
+      txs: (response.block.data.txs || []).map(fromBase64),
     };
   }
 
@@ -315,7 +315,7 @@ export class CosmWasmClient {
         return {
           id: entry.id,
           creator: entry.creator,
-          checksum: Encoding.toHex(Encoding.fromHex(entry.data_hash)),
+          checksum: toHex(fromHex(entry.data_hash)),
           source: entry.source || undefined,
           builder: entry.builder || undefined,
         };
@@ -331,10 +331,10 @@ export class CosmWasmClient {
     const codeDetails: CodeDetails = {
       id: getCodeResult.id,
       creator: getCodeResult.creator,
-      checksum: Encoding.toHex(Encoding.fromHex(getCodeResult.data_hash)),
+      checksum: toHex(fromHex(getCodeResult.data_hash)),
       source: getCodeResult.source || undefined,
       builder: getCodeResult.builder || undefined,
-      data: Encoding.fromBase64(getCodeResult.data),
+      data: fromBase64(getCodeResult.data),
     };
     this.codesCache.set(codeId, codeDetails);
     return codeDetails;

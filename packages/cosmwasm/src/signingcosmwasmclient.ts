@@ -1,6 +1,6 @@
 import { BroadcastMode, Coin, coins, makeSignBytes, MsgSend, StdFee, StdSignature } from "@cosmjs/sdk38";
 import { Sha256 } from "@iov/crypto";
-import { Encoding } from "@iov/encoding";
+import { toBase64, toHex } from "@iov/encoding";
 import pako from "pako";
 
 import { isValidBuilder } from "./builder";
@@ -136,7 +136,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       value: {
         sender: this.senderAddress,
         // eslint-disable-next-line @typescript-eslint/camelcase
-        wasm_byte_code: Encoding.toBase64(compressed),
+        wasm_byte_code: toBase64(compressed),
         source: source,
         builder: builder,
       },
@@ -157,9 +157,9 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     const codeIdAttr = findAttribute(result.logs, "message", "code_id");
     return {
       originalSize: wasmCode.length,
-      originalChecksum: Encoding.toHex(new Sha256(wasmCode).digest()),
+      originalChecksum: toHex(new Sha256(wasmCode).digest()),
       compressedSize: compressed.length,
-      compressedChecksum: Encoding.toHex(new Sha256(compressed).digest()),
+      compressedChecksum: toHex(new Sha256(compressed).digest()),
       codeId: Number.parseInt(codeIdAttr.value, 10),
       logs: result.logs,
       transactionHash: result.transactionHash,

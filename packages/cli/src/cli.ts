@@ -102,8 +102,15 @@ export function main(originalArgs: readonly string[]): void {
     [
       "@iov/encoding",
       [
+        "fromAscii",
+        "fromBase64",
+        "fromHex",
+        "fromUtf8",
+        "toAscii",
+        "toBase64",
+        "toHex",
+        "toUtf8",
         "Bech32",
-        "Encoding",
         "Decimal",
         // integers
         "Int53",
@@ -122,17 +129,6 @@ export function main(originalArgs: readonly string[]): void {
   for (const [moduleName, symbols] of imports.entries()) {
     console.info(colors.yellow(`  * from ${moduleName}: ${symbols.join(", ")}`));
   }
-  const encodingHelpers = [
-    "fromAscii",
-    "fromBase64",
-    "fromHex",
-    "fromUtf8",
-    "toAscii",
-    "toBase64",
-    "toHex",
-    "toUtf8",
-  ];
-  console.info(colors.yellow(`  * helper functions: ${encodingHelpers.join(", ")}`));
 
   let init = `
     import axios from "axios";
@@ -141,8 +137,6 @@ export function main(originalArgs: readonly string[]): void {
   for (const [moduleName, symbols] of imports.entries()) {
     init += `import { ${symbols.join(", ")} } from "${moduleName}";\n`;
   }
-  // helper functions
-  init += `const { ${encodingHelpers.join(", ")} } = Encoding;\n`;
 
   if (args.selftest) {
     // execute some trival stuff and exit
@@ -167,7 +161,7 @@ export function main(originalArgs: readonly string[]): void {
       const pen = await Secp256k1Pen.fromMnemonic(mnemonic, makeCosmoshubPath(0));
       const pubkey = encodeSecp256k1Pubkey(pen.pubkey);
       const address = pubkeyToAddress(pubkey, "cosmos");
-      const data = Encoding.toAscii("foo bar");
+      const data = toAscii("foo bar");
       const signature = await pen.sign(data);
 
       console.info("Done testing, will exit now.");
