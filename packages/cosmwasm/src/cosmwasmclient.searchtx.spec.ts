@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { Coin, CosmosSdkTx, isMsgSend, makeSignBytes, MsgSend, Secp256k1Pen } from "@cosmjs/sdk38";
+import { Uint53 } from "@iov/encoding";
 import { assert, sleep } from "@iov/utils";
 
 import { CosmWasmClient } from "./cosmwasmclient";
@@ -112,20 +113,22 @@ describe("CosmWasmClient.searchTx", () => {
           },
         };
         const transactionId = await client.getIdentifier(tx);
-        const heightBeforeThis = await client.getHeight();
         try {
           await client.postTx(tx.value);
         } catch (error) {
           // postTx() throws on execution failures, which is a questionable design. Ignore for now.
           // console.log(error);
+          const errorMessage: string = error.toString();
+          const [_, heightMatch] = errorMessage.match(/at height ([0-9]+)/) || ["", ""];
+
+          sendUnsuccessful = {
+            sender: alice.address0,
+            recipient: recipient,
+            hash: transactionId,
+            height: Uint53.fromString(heightMatch).toNumber(),
+            tx: tx,
+          };
         }
-        sendUnsuccessful = {
-          sender: alice.address0,
-          recipient: recipient,
-          hash: transactionId,
-          height: heightBeforeThis + 1,
-          tx: tx,
-        };
       }
 
       {

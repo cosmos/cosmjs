@@ -21,6 +21,8 @@ import {
   wasmdEnabled,
 } from "./testutils.spec";
 
+const blockTime = 1_000; // ms
+
 const guest = {
   address: "cosmos17d0jcz59jf68g52vq38tuuncmwwjk42u6mcxej",
 };
@@ -70,9 +72,10 @@ describe("CosmWasmClient", () => {
 
       const height1 = await client.getHeight();
       expect(height1).toBeGreaterThan(0);
-      await sleep(1_000);
+      await sleep(blockTime * 1.3); // tolerate chain being 30% slower than expected
       const height2 = await client.getHeight();
-      expect(height2).toEqual(height1 + 1);
+      expect(height2).toBeGreaterThanOrEqual(height1 + 1);
+      expect(height2).toBeLessThanOrEqual(height1 + 2);
 
       expect(blockLatestSpy).toHaveBeenCalledTimes(2);
     });
@@ -92,9 +95,10 @@ describe("CosmWasmClient", () => {
 
       const height2 = await client.getHeight();
       expect(height2).toBeGreaterThan(0);
-      await sleep(1_000);
+      await sleep(blockTime * 1.3); // tolerate chain being 30% slower than expected
       const height3 = await client.getHeight();
-      expect(height3).toEqual(height2 + 1);
+      expect(height3).toBeGreaterThanOrEqual(height2 + 1);
+      expect(height3).toBeLessThanOrEqual(height2 + 2);
 
       expect(blockLatestSpy).toHaveBeenCalledTimes(1);
       expect(authAccountsSpy).toHaveBeenCalledTimes(2);

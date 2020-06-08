@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
+import { Uint53 } from "@iov/encoding";
 import { assert, sleep } from "@iov/utils";
 
 import { Coin } from "./coins";
@@ -104,20 +105,22 @@ describe("CosmosClient.searchTx", () => {
           },
         };
         const transactionId = await client.getIdentifier(tx);
-        const heightBeforeThis = await client.getHeight();
         try {
           await client.postTx(tx.value);
         } catch (error) {
           // postTx() throws on execution failures, which is a questionable design. Ignore for now.
           // console.log(error);
+          const errorMessage: string = error.toString();
+          const [_, heightMatch] = errorMessage.match(/at height ([0-9]+)/) || ["", ""];
+
+          sendUnsuccessful = {
+            sender: faucet.address,
+            recipient: recipient,
+            hash: transactionId,
+            height: Uint53.fromString(heightMatch).toNumber(),
+            tx: tx,
+          };
         }
-        sendUnsuccessful = {
-          sender: faucet.address,
-          recipient: recipient,
-          hash: transactionId,
-          height: heightBeforeThis + 1,
-          tx: tx,
-        };
       }
     }
   });

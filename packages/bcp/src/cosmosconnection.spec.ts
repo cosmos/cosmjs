@@ -39,15 +39,12 @@ function makeRandomAddress(): Address {
   return Bech32.encode(defaultAddressPrefix, Random.getBytes(20)) as Address;
 }
 
-const faucet = {
-  mnemonic:
-    "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone",
-  path: HdPaths.cosmosHub(0),
-  pubkey: {
+const alice = {
+  address0: "cosmos14qemq0vw6y3gc3u3e0aty2e764u4gs5le3hada" as Address,
+  pubkey0: {
     algo: Algorithm.Secp256k1,
-    data: fromBase64("A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ") as PubkeyBytes,
+    data: fromBase64("A9cXhWb8ZpqCzkA8dQCPV29KdeRLV3rUYxrkHudLbQtS") as PubkeyBytes,
   },
-  address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6" as Address,
 };
 
 /**
@@ -55,14 +52,13 @@ const faucet = {
  * with multiple messages are found.
  */
 const bob = {
-  mnemonic:
-    "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone",
-  path: HdPaths.cosmosHub(4),
+  mnemonic: "remain fragile remove stamp quiz bus country dress critic mammal office need",
+  path0: HdPaths.cosmosHub(0),
   pubkey: {
     algo: Algorithm.Secp256k1,
-    data: fromBase64("Aum2063ub/ErUnIUB36sK55LktGUStgcbSiaAnL1wadu") as PubkeyBytes,
+    data: fromBase64("A0d/GxY+UALE+miWJP0qyq4/EayG1G6tsg24v+cbD6By") as PubkeyBytes,
   },
-  address: "cosmos1hsm76p4ahyhl5yh3ve9ur49r5kemhp2r0dcjvx" as Address,
+  address: "cosmos1lvrwcvrqlc5ktzp2c4t22xgkx29q3y83lktgzl" as Address,
 };
 
 describe("CosmosConnection", () => {
@@ -238,8 +234,8 @@ describe("CosmosConnection", () => {
     it("has a pubkey when getting account with transactions", async () => {
       pendingWithoutWasmd();
       const connection = await CosmosConnection.establish(httpUrl, defaultAddressPrefix, defaultConfig);
-      const account = await connection.getAccount({ address: faucet.address });
-      expect(account?.pubkey).toEqual(faucet.pubkey);
+      const account = await connection.getAccount({ address: alice.address0 });
+      expect(account?.pubkey).toEqual(alice.pubkey0);
       connection.disconnect();
     });
   });
@@ -286,7 +282,7 @@ describe("CosmosConnection", () => {
 
         const profile = new UserProfile();
         const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(bob.mnemonic));
-        const sender = await profile.createIdentity(wallet.id, defaultChainId, bob.path);
+        const sender = await profile.createIdentity(wallet.id, defaultChainId, bob.path0);
         const senderAddress = connection.codec.identityToAddress(sender);
 
         for (const i of [0, 1]) {
@@ -314,7 +310,7 @@ describe("CosmosConnection", () => {
       const connection = await CosmosConnection.establish(httpUrl, defaultAddressPrefix, defaultConfig);
       const profile = new UserProfile();
       const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(bob.mnemonic));
-      const senderIdentity = await profile.createIdentity(wallet.id, defaultChainId, bob.path);
+      const senderIdentity = await profile.createIdentity(wallet.id, defaultChainId, bob.path0);
       const senderAddress = connection.codec.identityToAddress(senderIdentity);
 
       const unsigned = await connection.withDefaultFee<SendTransaction>({
@@ -421,7 +417,7 @@ describe("CosmosConnection", () => {
       const connection = await CosmosConnection.establish(httpUrl, defaultAddressPrefix, defaultConfig);
       const profile = new UserProfile();
       const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(bob.mnemonic));
-      const sender = await profile.createIdentity(wallet.id, defaultChainId, bob.path);
+      const sender = await profile.createIdentity(wallet.id, defaultChainId, bob.path0);
       const senderAddress = connection.codec.identityToAddress(sender);
 
       const unsigned = await connection.withDefaultFee<SendTransaction>({
@@ -492,16 +488,13 @@ describe("CosmosConnection", () => {
 
       // search by height
       const heightResults = await connection.searchTx({ height: byIdResult.height });
-      expect(heightResults.length).toEqual(1);
-      const heightResult = heightResults[0];
-      expect(heightResult.transactionId).toEqual(transactionId);
-      assert(isConfirmedTransaction(heightResult), "Expected transaction to succeed");
-      assert(heightResult.log, "Log must be available");
-      const [firstHeightLog] = JSON.parse(heightResult.log);
-      expect(firstHeightLog.events.length).toEqual(2);
-      const heightTransaction = heightResult.transaction;
-      assert(isSendTransaction(heightTransaction), "Expected send transaction");
-      expect(heightTransaction).toEqual(unsigned);
+      expect(heightResults.length).toBeGreaterThanOrEqual(1);
+      expect(heightResults).toContain(
+        jasmine.objectContaining({
+          transactionId: transactionId,
+          transaction: unsigned,
+        }),
+      );
 
       connection.disconnect();
     });
@@ -511,7 +504,7 @@ describe("CosmosConnection", () => {
       const connection = await CosmosConnection.establish(httpUrl, defaultAddressPrefix, defaultConfig);
       const profile = new UserProfile();
       const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(bob.mnemonic));
-      const sender = await profile.createIdentity(wallet.id, defaultChainId, bob.path);
+      const sender = await profile.createIdentity(wallet.id, defaultChainId, bob.path0);
       const senderAddress = connection.codec.identityToAddress(sender);
 
       const recipient = makeRandomAddress();
@@ -651,23 +644,23 @@ describe("CosmosConnection", () => {
       // search by height
       {
         const results = await connection.searchTx({ height: height });
-        expect(results.length).toEqual(1);
+        expect(results.length).toBeGreaterThanOrEqual(1);
       }
       {
         const results = await connection.searchTx({ height: height, minHeight: height });
-        expect(results.length).toEqual(1);
+        expect(results.length).toBeGreaterThanOrEqual(1);
       }
       {
         const results = await connection.searchTx({ height: height, minHeight: height - 2 });
-        expect(results.length).toEqual(1);
+        expect(results.length).toBeGreaterThanOrEqual(1);
       }
       {
         const results = await connection.searchTx({ height: height, maxHeight: height });
-        expect(results.length).toEqual(1);
+        expect(results.length).toBeGreaterThanOrEqual(1);
       }
       {
         const results = await connection.searchTx({ height: height, maxHeight: height + 2 });
-        expect(results.length).toEqual(1);
+        expect(results.length).toBeGreaterThanOrEqual(1);
       }
       {
         const results = await connection.searchTx({ height: height, minHeight: height + 1 });
@@ -683,7 +676,7 @@ describe("CosmosConnection", () => {
           minHeight: height,
           maxHeight: height,
         });
-        expect(results.length).toEqual(1);
+        expect(results.length).toBeGreaterThanOrEqual(1);
       }
       {
         const results = await connection.searchTx({ height: height, minHeight: height + 1 });
@@ -723,7 +716,7 @@ describe("CosmosConnection", () => {
 
         const profile = new UserProfile();
         const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(bob.mnemonic));
-        const sender = await profile.createIdentity(wallet.id, defaultChainId, bob.path);
+        const sender = await profile.createIdentity(wallet.id, defaultChainId, bob.path0);
 
         // send transactions
 
@@ -806,7 +799,7 @@ describe("CosmosConnection", () => {
 
         const profile = new UserProfile();
         const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(bob.mnemonic));
-        const sender = await profile.createIdentity(wallet.id, defaultChainId, bob.path);
+        const sender = await profile.createIdentity(wallet.id, defaultChainId, bob.path0);
 
         const recipientAddress = makeRandomAddress();
         const send = await connection.withDefaultFee<SendTransaction>({
@@ -856,7 +849,7 @@ describe("CosmosConnection", () => {
 
         const profile = new UserProfile();
         const wallet = profile.addWallet(Secp256k1HdWallet.fromMnemonic(bob.mnemonic));
-        const sender = await profile.createIdentity(wallet.id, defaultChainId, bob.path);
+        const sender = await profile.createIdentity(wallet.id, defaultChainId, bob.path0);
 
         // send transactions
 

@@ -387,12 +387,12 @@ describe("RestClient", () => {
       const client = new RestClient(wasmd.endpoint);
       const result = await client.txsQuery(`tx.height=${posted.height}&limit=26`);
       expect(result).toEqual({
-        count: "1",
+        count: jasmine.stringMatching(/^(1|2|3|4|5)$/), // 1-5 transactions as string
         limit: "26",
         page_number: "1",
         page_total: "1",
-        total_count: "1",
-        txs: [posted.tx],
+        total_count: jasmine.stringMatching(/^(1|2|3|4|5)$/), // 1-5 transactions as string
+        txs: jasmine.arrayContaining([posted.tx]),
       });
     });
 
