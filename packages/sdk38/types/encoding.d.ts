@@ -1,5 +1,4 @@
-import { Msg, StdFee, StdTx } from "./types";
-export declare function marshalTx(tx: StdTx): Uint8Array;
+import { Msg, StdFee } from "./types";
 export declare function makeSignBytes(
   msgs: readonly Msg[],
   fee: StdFee,

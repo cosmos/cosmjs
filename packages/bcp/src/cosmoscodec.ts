@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { makeSignBytes, marshalTx, unmarshalTx } from "@cosmjs/sdk38";
+import { isStdTx, makeSignBytes, StdTx } from "@cosmjs/sdk38";
 import {
   Address,
   ChainId,
@@ -14,13 +14,26 @@ import {
   TxCodec,
   UnsignedTransaction,
 } from "@iov/bcp";
-import { Bech32 } from "@iov/encoding";
+import { Bech32, fromUtf8, toUtf8 } from "@iov/encoding";
 
 import { pubkeyToAddress } from "./address";
 import { Caip5 } from "./caip5";
 import { parseSignedTx } from "./decode";
 import { buildSignedTx, buildUnsignedTx } from "./encode";
 import { BankToken, nonceToAccountNumber, nonceToSequence } from "./types";
+
+function marshalTx(tx: StdTx): Uint8Array {
+  const json = JSON.stringify(tx);
+  return toUtf8(json);
+}
+
+function unmarshalTx(data: Uint8Array): StdTx {
+  const decoded = JSON.parse(fromUtf8(data));
+  if (!isStdTx(decoded)) {
+    throw new Error("Must be json encoded StdTx");
+  }
+  return decoded;
+}
 
 export class CosmosCodec implements TxCodec {
   private readonly addressPrefix: string;
