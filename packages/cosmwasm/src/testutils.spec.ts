@@ -3,8 +3,20 @@ import { Bech32, fromBase64 } from "@iov/encoding";
 
 import hackatom from "./testdata/contract.json";
 
-export function getHackatom(): Uint8Array {
-  return fromBase64(hackatom.data);
+/** An internal testing type. SigningCosmWasmClient has a similar but different interface */
+export interface ContractUploadInstructions {
+  /** The wasm bytecode */
+  readonly data: Uint8Array;
+  readonly source?: string;
+  readonly builder?: string;
+}
+
+export function getHackatom(): ContractUploadInstructions {
+  return {
+    data: fromBase64(hackatom.data),
+    source: "https://some.registry.nice/project/raw/0.7/lib/vm/testdata/contract_0.6.wasm.blub.tar.gz",
+    builder: "confio/cosmwasm-opt:12.34.56",
+  };
 }
 
 export function makeRandomAddress(): string {

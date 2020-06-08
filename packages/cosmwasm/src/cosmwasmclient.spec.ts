@@ -373,7 +373,7 @@ describe("CosmWasmClient", () => {
         const client = new SigningCosmWasmClient(wasmd.endpoint, alice.address0, (signBytes) =>
           pen.sign(signBytes),
         );
-        const { codeId } = await client.upload(getHackatom());
+        const { codeId } = await client.upload(getHackatom().data);
         const initMsg = { verifier: makeRandomAddress(), beneficiary: makeRandomAddress() };
         const { contractAddress } = await client.instantiate(codeId, initMsg, "random hackatom");
         contract = { initMsg: initMsg, address: contractAddress };
@@ -426,7 +426,7 @@ describe("CosmWasmClient", () => {
         const client = new SigningCosmWasmClient(wasmd.endpoint, alice.address0, (signBytes) =>
           pen.sign(signBytes),
         );
-        const { codeId } = await client.upload(getHackatom());
+        const { codeId } = await client.upload(getHackatom().data);
         const initMsg = { verifier: makeRandomAddress(), beneficiary: makeRandomAddress() };
         const { contractAddress } = await client.instantiate(codeId, initMsg, "a different hackatom");
         contract = { initMsg: initMsg, address: contractAddress };

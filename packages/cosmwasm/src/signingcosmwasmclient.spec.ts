@@ -42,7 +42,7 @@ describe("SigningCosmWasmClient", () => {
       pendingWithoutWasmd();
       const pen = await Secp256k1Pen.fromMnemonic(alice.mnemonic);
       const client = new SigningCosmWasmClient(httpUrl, alice.address0, (signBytes) => pen.sign(signBytes));
-      const wasm = getHackatom();
+      const wasm = getHackatom().data;
       const {
         codeId,
         originalChecksum,
@@ -61,13 +61,13 @@ describe("SigningCosmWasmClient", () => {
       pendingWithoutWasmd();
       const pen = await Secp256k1Pen.fromMnemonic(alice.mnemonic);
       const client = new SigningCosmWasmClient(httpUrl, alice.address0, (signBytes) => pen.sign(signBytes));
-      const wasm = getHackatom();
+      const hackatom = getHackatom();
 
       const meta: UploadMeta = {
         source: "https://crates.io/api/v1/crates/cw-nameservice/0.1.0/download",
         builder: "confio/cosmwasm-opt:0.6.2",
       };
-      const { codeId } = await client.upload(wasm, meta);
+      const { codeId } = await client.upload(hackatom.data, meta);
 
       const codeDetails = await client.getCodeDetails(codeId);
       expect(codeDetails.source).toEqual(meta.source);
@@ -80,7 +80,7 @@ describe("SigningCosmWasmClient", () => {
       pendingWithoutWasmd();
       const pen = await Secp256k1Pen.fromMnemonic(alice.mnemonic);
       const client = new SigningCosmWasmClient(httpUrl, alice.address0, (signBytes) => pen.sign(signBytes));
-      const { codeId } = await client.upload(getHackatom());
+      const { codeId } = await client.upload(getHackatom().data);
 
       const transferAmount: readonly Coin[] = [
         {
@@ -113,7 +113,7 @@ describe("SigningCosmWasmClient", () => {
       pendingWithoutWasmd();
       const pen = await Secp256k1Pen.fromMnemonic(alice.mnemonic);
       const client = new SigningCosmWasmClient(httpUrl, alice.address0, (signBytes) => pen.sign(signBytes));
-      const { codeId } = await client.upload(getHackatom());
+      const { codeId } = await client.upload(getHackatom().data);
 
       const contractAddress1 = await client.instantiate(
         codeId,
@@ -140,7 +140,7 @@ describe("SigningCosmWasmClient", () => {
       pendingWithoutWasmd();
       const pen = await Secp256k1Pen.fromMnemonic(alice.mnemonic);
       const client = new SigningCosmWasmClient(httpUrl, alice.address0, (signBytes) => pen.sign(signBytes));
-      const { codeId } = await client.upload(getHackatom());
+      const { codeId } = await client.upload(getHackatom().data);
 
       // instantiate
       const transferAmount: readonly Coin[] = [

@@ -33,6 +33,7 @@ import cosmoshub from "./testdata/cosmoshub.json";
 import {
   alice,
   bech32AddressMatcher,
+  ContractUploadInstructions,
   deployedErc20,
   fromOneElementArray,
   getHackatom,
@@ -60,15 +61,19 @@ function makeSignedTx(firstMsg: Msg, fee: StdFee, memo: string, firstSignature: 
   };
 }
 
-async function uploadContract(client: RestClient, pen: Pen, wasmCode: Uint8Array): Promise<PostTxsResponse> {
+async function uploadContract(
+  client: RestClient,
+  pen: Pen,
+  contract: ContractUploadInstructions,
+): Promise<PostTxsResponse> {
   const memo = "My first contract on chain";
   const theMsg: MsgStoreCode = {
     type: "wasm/store-code",
     value: {
       sender: alice.address0,
-      wasm_byte_code: toBase64(wasmCode),
-      source: "https://github.com/confio/cosmwasm/raw/0.7/lib/vm/testdata/contract_0.6.wasm",
-      builder: "confio/cosmwasm-opt:0.6.2",
+      wasm_byte_code: toBase64(contract.data),
+      source: contract.source || "",
+      builder: contract.builder || "",
     },
   };
   const fee: StdFee = {
@@ -1199,8 +1204,8 @@ describe("RestClient", () => {
       const numExisting = existingInfos.length;
 
       // upload data
-      const wasmCode = getHackatom();
-      const result = await uploadContract(client, pen, wasmCode);
+      const hackatom = getHackatom();
+      const result = await uploadContract(client, pen, hackatom);
       expect(result.code).toBeFalsy();
       const logs = parseLogs(result.logs);
       const codeIdAttr = findAttribute(logs, "message", "code_id");
@@ -1214,18 +1219,16 @@ describe("RestClient", () => {
       expect(lastInfo.creator).toEqual(alice.address0);
 
       // ensure metadata is present
-      expect(lastInfo.source).toEqual(
-        "https://github.com/confio/cosmwasm/raw/0.7/lib/vm/testdata/contract_0.6.wasm",
-      );
-      expect(lastInfo.builder).toEqual("confio/cosmwasm-opt:0.6.2");
+      expect(lastInfo.source).toEqual(hackatom.source);
+      expect(lastInfo.builder).toEqual(hackatom.builder);
 
       // check code hash matches expectation
-      const wasmHash = new Sha256(wasmCode).digest();
+      const wasmHash = new Sha256(hackatom.data).digest();
       expect(lastInfo.data_hash.toLowerCase()).toEqual(toHex(wasmHash));
 
       // download code and check against auto-gen
       const { data } = await client.getCode(codeId);
-      expect(fromBase64(data)).toEqual(wasmCode);
+      expect(fromBase64(data)).toEqual(hackatom.data);
     });
 
     it("can list contracts and get info", async () => {
