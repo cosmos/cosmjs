@@ -85,7 +85,7 @@ const postResult = await client.postTx(signedTx);
 ## Extended helpers
 
 The above code shows you the use of the API and various objects and is a great way to learn
-how to embed cosmwasm-js into your project. However, if you just want a cli to perform some
+how to embed cosmjs into your project. However, if you just want a cli to perform some
 quick queries on a chain, you can use an extended set of helpers:
 
 Start with `./bin/cosmwasm-cli --init examples/helpers.ts`
@@ -217,7 +217,7 @@ Do note that the ERC contract is code `5` on this network (instead of `1` above)
 If you are using the go commands and have tokens there, you may want to reuse the same account.
 (If you don't know what this is, just skip this section). You can reuse the mnemonic between the
 Go tooling and the Node.js tooling, but this violates all security protocols - only use this for
-testnets. In the future we will offer proper encrypted key management for CosmWasm-JS.
+testnets. In the future we will offer proper encrypted key management for cosmjs.
 
 (You can replace `wasmcli` with `xrncli` and use `regenOptions` if you wish to use that testnet)
 
@@ -247,7 +247,7 @@ Save mnemonic to a file
 echo "cousin nephew vintage label empty sunny cargo mushroom photo side clarify sleep solid entire deal tattoo vehicle record discover arrive sting staff salt uncle" > wasmcli.key
 ```
 
-Load it up in cosmwasm-js: `./bin/cosmwasm-cli --init examples/helpers.ts`
+Load it up in cosmjs: `./bin/cosmwasm-cli --init examples/helpers.ts`
 
 ```ts
 const mnemonic = loadOrCreateMnemonic("wasmcli.key");
@@ -266,7 +266,7 @@ with proper types.
 
 ## License
 
-This package is part of the cosmwasm-js repository, licensed under the Apache
+This package is part of the cosmjs repository, licensed under the Apache
 License 2.0 (see
 [NOTICE](https://github.com/CosmWasm/cosmjs/blob/master/NOTICE) and
 [LICENSE](https://github.com/CosmWasm/cosmjs/blob/master/LICENSE)).
