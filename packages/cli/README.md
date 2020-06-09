@@ -64,14 +64,21 @@ const sendTokensMsg: MsgSend = {
   },
 };
 
-const signBytes = makeSignBytes([sendTokensMsg], defaultFee, defaultNetworkId, memo, account_number, sequence);
+const signBytes = makeSignBytes(
+  [sendTokensMsg],
+  defaultFee,
+  defaultNetworkId,
+  memo,
+  account_number,
+  sequence,
+);
 const signature = await pen.sign(signBytes);
 const signedTx: StdTx = {
-    msg: [sendTokensMsg],
-    fee: defaultFee,
-    memo: memo,
-    signatures: [signature],
-  }
+  msg: [sendTokensMsg],
+  fee: defaultFee,
+  memo: memo,
+  signatures: [signature],
+};
 const postResult = await client.postTx(signedTx);
 ```
 
@@ -91,12 +98,12 @@ Setup Account:
 // you can hand-copy a mnemonic here, but this is easiest for reuse between sessions
 // it creates a random one first time, then reads it in the future
 const mnemonic = loadOrCreateMnemonic("foo.key");
-const {address, client} = await connect(mnemonic, {});
-address
+const { address, client } = await connect(mnemonic, {});
+address;
 
 client.getAccount();
 // if empty - this only works with CosmWasm
-hitFaucet(defaultFaucetUrl, address, "COSM")
+hitFaucet(defaultFaucetUrl, address, "COSM");
 client.getAccount();
 ```
 
@@ -104,17 +111,17 @@ View contracts:
 
 ```ts
 // show all code and contracts
-client.getCodes()
+client.getCodes();
 
 // query the first contract for first code
 const contracts = await client.getContracts(1);
-contracts
-const info = await client.getContract(contracts[0].address)
-info
-info.initMsg
+contracts;
+const info = await client.getContract(contracts[0].address);
+info;
+info.initMsg;
 
 // see your balance here
-smartQuery(client, addr, { balance: { address } })
+smartQuery(client, addr, { balance: { address } });
 ```
 
 Instantiate and use ERC20 contract:
@@ -122,38 +129,46 @@ Instantiate and use ERC20 contract:
 ```ts
 // no money? no problem.
 // let's make our own s**coin - replace "FOO" with something else to avoid duplicates
-const initMsg = { name: "Foo Coin", symbol: "FOO", decimals: 2, initial_balances: [{address, amount: "123456789"}]}
+const initMsg = {
+  name: "Foo Coin",
+  symbol: "FOO",
+  decimals: 2,
+  initial_balances: [{ address, amount: "123456789" }],
+};
 const foo = await client.instantiate(1, initMsg, "FOO");
-foo
-foo.logs[0].events[0]
+foo;
+foo.logs[0].events[0];
 const fooAddr = foo.contractAddress;
 
 // we can also find this another way...
-const fooAddr2 = await client.getContracts(1).then(contracts => contracts.filter(x => x.label == "FOO").map(x => x.address)[0])
-[fooAddr, fooAddr2]
+const fooAddr2 = await client
+  .getContracts(1)
+  .then((contracts) => contracts.filter((x) => x.label == "FOO").map((x) => x.address)[0])[
+  (fooAddr, fooAddr2)
+];
 
 // now we have some cash
-smartQuery(client, fooAddr, { balance: { address } })
+smartQuery(client, fooAddr, { balance: { address } });
 
 const rcpt = await randomAddress("cosmos");
-rcpt
-smartQuery(client, fooAddr, { balance: { address: rcpt } })
+rcpt;
+smartQuery(client, fooAddr, { balance: { address: rcpt } });
 
-const execMsg = { transfer: {recipient: rcpt, amount: "808"}}
+const execMsg = { transfer: { recipient: rcpt, amount: "808" } };
 const exec = await client.execute(fooAddr, execMsg);
-exec
-exec.logs[0].events[0]
-smartQuery(client, fooAddr, { balance: { address: rcpt } })
+exec;
+exec.logs[0].events[0];
+smartQuery(client, fooAddr, { balance: { address: rcpt } });
 ```
 
 Or just send tokens:
 
 ```ts
-client.getAccount(rcpt)
+client.getAccount(rcpt);
 
-const sent = await client.sendTokens(rcpt, [{amount: "1234", denom: "ucosm"}])
-sent
-foo.logs[0].events[0]
+const sent = await client.sendTokens(rcpt, [{ amount: "1234", denom: "ucosm" }]);
+sent;
+foo.logs[0].events[0];
 ```
 
 ### Use Custom Network
@@ -191,7 +206,7 @@ Hit the faucet with your address (in browser): https://regen.vitwit.com/faucet t
 
 ```ts
 // should have tokens now
-client.getAccount()
+client.getAccount();
 ```
 
 At this point you can continue all the other behaviors from above, looking at codes, etc.
@@ -236,10 +251,10 @@ Load it up in cosmwasm-js: `./bin/cosmwasm-cli --init examples/helpers.ts`
 
 ```ts
 const mnemonic = loadOrCreateMnemonic("wasmcli.key");
-const {address, client} = await connect(mnemonic, regenOptions);
+const { address, client } = await connect(mnemonic, regenOptions);
 
 // this should match what you got on the cli - showing compatibility
-address
+address;
 ```
 
 Once you have access to the same key as in the cli, you can use those tokens to play with contracts.
