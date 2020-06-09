@@ -2,7 +2,7 @@
 import { sleep } from "@cosmjs/utils";
 import { ReadonlyDate } from "readonly-date";
 
-import { CosmosClient, PrivateCosmWasmClient } from "./cosmosclient";
+import { CosmosClient, isPostTxFailureResult, PrivateCosmWasmClient } from "./cosmosclient";
 import { makeSignBytes } from "./encoding";
 import { findAttribute } from "./logs";
 import { Secp256k1Pen } from "./pen";
@@ -230,7 +230,11 @@ describe("CosmosClient", () => {
         memo: memo,
         signatures: [signature],
       };
-      const { logs, transactionHash } = await client.postTx(signedTx);
+      const txResult = await client.postTx(signedTx);
+      if (isPostTxFailureResult(txResult)) {
+        throw new Error("Post tx failed");
+      }
+      const { logs, transactionHash } = txResult;
       const amountAttr = findAttribute(logs, "transfer", "amount");
       expect(amountAttr.value).toEqual("1234567ucosm");
       expect(transactionHash).toMatch(/^[0-9A-F]{64}$/);
