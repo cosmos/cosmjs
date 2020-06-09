@@ -14,12 +14,24 @@ export interface Account {
   readonly accountNumber: number;
   readonly sequence: number;
 }
-export interface PostTxResult {
+export interface PostTxFailureResult {
+  /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
+  readonly transactionHash: string;
+  readonly height: string;
+  readonly code: number;
+  readonly rawLog: string;
+}
+export interface PostTxSuccessResult {
   readonly logs: readonly Log[];
   readonly rawLog: string;
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
+  readonly data?: Uint8Array;
 }
+export declare type PostTxResult = PostTxSuccessResult | PostTxFailureResult;
+export declare function isPostTxFailureResult(
+  postTxResult: PostTxResult,
+): postTxResult is PostTxFailureResult;
 export interface SearchByIdQuery {
   readonly id: string;
 }

@@ -19,6 +19,7 @@ import {
 import { assert, sleep } from "@cosmjs/utils";
 import { ReadonlyDate } from "readonly-date";
 
+import { isPostTxFailureResult } from "./cosmwasmclient";
 import { findAttribute, parseLogs } from "./logs";
 import {
   isMsgInstantiateContract,
@@ -400,11 +401,9 @@ describe("RestClient", () => {
             signatures: [signature],
           };
           const transactionId = await client.getIdentifier({ type: "cosmos-sdk/StdTx", value: signedTx });
-          try {
-            await client.postTx(signedTx);
-          } catch (error) {
-            // postTx() throws on execution failures, which is a questionable design. Ignore for now.
-            // console.log(error);
+          const result = await client.postTx(signedTx);
+          if (!isPostTxFailureResult(result)) {
+            throw new Error("Post tx succeeded unexpectedly");
           }
           unsuccessful = {
             sender: alice.address0,
@@ -858,7 +857,6 @@ describe("RestClient", () => {
         signatures: [signature1, signature2, signature3],
       };
       const postResult = await client.postTx(signedTx);
-      // console.log(postResult.raw_log);
       expect(postResult.code).toEqual(4);
       expect(postResult.raw_log).toContain("wrong number of signers");
     });
@@ -918,7 +916,6 @@ describe("RestClient", () => {
         signatures: [signature1],
       };
       const postResult = await client.postTx(signedTx);
-      // console.log(postResult.raw_log);
       expect(postResult.code).toBeUndefined();
     });
 
@@ -982,7 +979,6 @@ describe("RestClient", () => {
         signatures: [signature2, signature1],
       };
       const postResult = await client.postTx(signedTx);
-      // console.log(postResult.raw_log);
       expect(postResult.code).toBeUndefined();
 
       await sleep(500);
@@ -1051,7 +1047,6 @@ describe("RestClient", () => {
         signatures: [signature2, signature1],
       };
       const postResult = await client.postTx(signedTx);
-      // console.log(postResult.raw_log);
       expect(postResult.code).toEqual(8);
     });
 
@@ -1115,7 +1110,6 @@ describe("RestClient", () => {
         signatures: [signature1, signature2],
       };
       const postResult = await client.postTx(signedTx);
-      // console.log(postResult.raw_log);
       expect(postResult.code).toEqual(8);
     });
 

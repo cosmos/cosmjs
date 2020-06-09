@@ -4,7 +4,14 @@ import { BroadcastMode, Coin, coins, makeSignBytes, MsgSend, StdFee, StdSignatur
 import pako from "pako";
 
 import { isValidBuilder } from "./builder";
-import { Account, CosmWasmClient, GetNonceResult, PostTxResult } from "./cosmwasmclient";
+import {
+  Account,
+  CosmWasmClient,
+  GetNonceResult,
+  isPostTxFailureResult,
+  PostTxFailureResult,
+  PostTxResult,
+} from "./cosmwasmclient";
 import { findAttribute, Log } from "./logs";
 import { MsgExecuteContract, MsgInstantiateContract, MsgStoreCode } from "./msgs";
 
@@ -84,6 +91,10 @@ export interface ExecuteResult {
   readonly transactionHash: string;
 }
 
+function createPostTxErrorMessage(result: PostTxFailureResult): string {
+  return `Error when posting tx ${result.transactionHash} at height ${result.height}. Code: ${result.code}; Raw log: ${result.rawLog}`;
+}
+
 export class SigningCosmWasmClient extends CosmWasmClient {
   public readonly senderAddress: string;
 
@@ -154,6 +165,9 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     };
 
     const result = await this.postTx(signedTx);
+    if (isPostTxFailureResult(result)) {
+      throw new Error(createPostTxErrorMessage(result));
+    }
     const codeIdAttr = findAttribute(result.logs, "message", "code_id");
     return {
       originalSize: wasmCode.length,
@@ -200,6 +214,9 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     };
 
     const result = await this.postTx(signedTx);
+    if (isPostTxFailureResult(result)) {
+      throw new Error(createPostTxErrorMessage(result));
+    }
     const contractAddressAttr = findAttribute(result.logs, "message", "contract_address");
     return {
       contractAddress: contractAddressAttr.value,
@@ -237,6 +254,9 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     };
 
     const result = await this.postTx(signedTx);
+    if (isPostTxFailureResult(result)) {
+      throw new Error(createPostTxErrorMessage(result));
+    }
     return {
       logs: result.logs,
       transactionHash: result.transactionHash,

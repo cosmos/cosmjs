@@ -3,7 +3,7 @@ import { Uint53 } from "@cosmjs/math";
 import { Coin, CosmosSdkTx, isMsgSend, makeSignBytes, MsgSend, Secp256k1Pen } from "@cosmjs/sdk38";
 import { assert, sleep } from "@cosmjs/utils";
 
-import { CosmWasmClient } from "./cosmwasmclient";
+import { CosmWasmClient, isPostTxFailureResult } from "./cosmwasmclient";
 import { isMsgExecuteContract, isMsgInstantiateContract } from "./msgs";
 import { RestClient } from "./restclient";
 import { SigningCosmWasmClient } from "./signingcosmwasmclient";
@@ -113,19 +113,13 @@ describe("CosmWasmClient.searchTx", () => {
           },
         };
         const transactionId = await client.getIdentifier(tx);
-        try {
-          await client.postTx(tx.value);
-        } catch (error) {
-          // postTx() throws on execution failures, which is a questionable design. Ignore for now.
-          // console.log(error);
-          const errorMessage: string = error.toString();
-          const [_, heightMatch] = errorMessage.match(/at height ([0-9]+)/) || ["", ""];
-
+        const result = await client.postTx(tx.value);
+        if (isPostTxFailureResult(result)) {
           sendUnsuccessful = {
             sender: alice.address0,
             recipient: recipient,
             hash: transactionId,
-            height: Uint53.fromString(heightMatch).toNumber(),
+            height: Uint53.fromString(result.height).toNumber(),
             tx: tx,
           };
         }

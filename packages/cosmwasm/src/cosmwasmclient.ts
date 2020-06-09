@@ -28,11 +28,26 @@ export interface Account {
   readonly sequence: number;
 }
 
-export interface PostTxResult {
+export interface PostTxFailureResult {
+  /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
+  readonly transactionHash: string;
+  readonly height: string;
+  readonly code: number;
+  readonly rawLog: string;
+}
+
+export interface PostTxSuccessResult {
   readonly logs: readonly Log[];
   readonly rawLog: string;
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
+  readonly data?: Uint8Array;
+}
+
+export type PostTxResult = PostTxSuccessResult | PostTxFailureResult;
+
+export function isPostTxFailureResult(postTxResult: PostTxResult): postTxResult is PostTxFailureResult {
+  return (postTxResult as PostTxFailureResult).code !== undefined;
 }
 
 export interface SearchByIdQuery {
@@ -294,17 +309,19 @@ export class CosmWasmClient {
       throw new Error("Received ill-formatted txhash. Must be non-empty upper-case hex");
     }
 
-    if (result.code) {
-      throw new Error(
-        `Error when posting tx ${result.txhash} at height ${result.height}. Code: ${result.code}; Raw log: ${result.raw_log}`,
-      );
-    }
-
-    return {
-      logs: result.logs ? parseLogs(result.logs) : [],
-      rawLog: result.raw_log || "",
-      transactionHash: result.txhash,
-    };
+    return result.code !== undefined
+      ? {
+          height: result.height,
+          transactionHash: result.txhash,
+          code: result.code,
+          rawLog: result.raw_log || "",
+        }
+      : {
+          logs: result.logs ? parseLogs(result.logs) : [],
+          rawLog: result.raw_log || "",
+          transactionHash: result.txhash,
+          data: result.data ? fromHex(result.data) : undefined,
+        };
   }
 
   public async getCodes(): Promise<readonly Code[]> {
