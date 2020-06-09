@@ -7,7 +7,7 @@ import {
   Slip10,
   Slip10Curve,
   Slip10RawIndex,
-} from "@iov/crypto";
+} from "@cosmjs/crypto";
 
 import { rawSecp256k1PubkeyToAddress } from "./address";
 import { encodeSecp256k1Signature } from "./signature";

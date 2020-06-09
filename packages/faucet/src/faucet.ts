@@ -1,5 +1,5 @@
 import { CosmosClient, Pen, SigningCosmosClient } from "@cosmjs/sdk38";
-import { sleep } from "@iov/utils";
+import { sleep } from "@cosmjs/utils";
 
 import { debugAccount, logAccountsState, logSendJob } from "./debugging";
 import { createPens } from "./profile";

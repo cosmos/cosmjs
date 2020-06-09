@@ -1,5 +1,5 @@
+import { toUtf8 } from "@cosmjs/encoding";
 import { PostableBytes, PrehashType } from "@iov/bcp";
-import { toUtf8 } from "@iov/encoding";
 
 import { CosmosCodec } from "./cosmoscodec";
 import { chainId, nonce, sendTxJson, signedTxBin, signedTxEncodedJson, signedTxJson } from "./testdata.spec";

@@ -1,5 +1,5 @@
-import { Secp256k1, Secp256k1Signature, Sha256 } from "@iov/crypto";
-import { fromHex, toAscii } from "@iov/encoding";
+import { Secp256k1, Secp256k1Signature, Sha256 } from "@cosmjs/crypto";
+import { fromHex, toAscii } from "@cosmjs/encoding";
 
 import { Secp256k1Pen } from "./pen";
 import { decodeSignature } from "./signature";

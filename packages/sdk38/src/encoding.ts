@@ -1,4 +1,4 @@
-import { toUtf8 } from "@iov/encoding";
+import { toUtf8 } from "@cosmjs/encoding";
 
 import { Msg, StdFee } from "./types";
 

@@ -1,6 +1,6 @@
+import { Sha256 } from "@cosmjs/crypto";
+import { toHex, toUtf8 } from "@cosmjs/encoding";
 import { ChainId } from "@iov/bcp";
-import { Sha256 } from "@iov/crypto";
-import { toHex, toUtf8 } from "@iov/encoding";
 
 const hashedPrefix = "hashed-";
 

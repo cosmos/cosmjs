@@ -36,9 +36,10 @@
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
   },
   "dependencies": {
-    "@iov/crypto": "^2.3.2",
-    "@iov/encoding": "^2.3.2",
-    "@iov/utils": "^2.3.2",
+    "@cosmjs/crypto": "^0.8.0",
+    "@cosmjs/encoding": "^0.8.0",
+    "@cosmjs/math": "^0.8.0",
+    "@cosmjs/utils": "^0.8.0",
     "axios": "^0.19.0",
     "fast-deep-equal": "^3.1.1"
   },

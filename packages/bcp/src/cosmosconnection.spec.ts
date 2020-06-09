@@ -1,4 +1,7 @@
+import { Random, Secp256k1, Secp256k1Signature, Sha256 } from "@cosmjs/crypto";
+import { Bech32, fromBase64 } from "@cosmjs/encoding";
 import { decodeSignature } from "@cosmjs/sdk38";
+import { assert } from "@cosmjs/utils";
 import {
   Account,
   Address,
@@ -17,10 +20,7 @@ import {
   TransactionState,
   UnsignedTransaction,
 } from "@iov/bcp";
-import { Random, Secp256k1, Secp256k1Signature, Sha256 } from "@iov/crypto";
-import { Bech32, fromBase64 } from "@iov/encoding";
 import { HdPaths, Secp256k1HdWallet, UserProfile } from "@iov/keycontrol";
-import { assert } from "@iov/utils";
 import BN from "bn.js";
 
 import { CosmosConnection, TokenConfiguration } from "./cosmosconnection";

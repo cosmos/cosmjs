@@ -1,5 +1,5 @@
+import { pathToString } from "@cosmjs/crypto";
 import { makeCosmoshubPath, Pen, Secp256k1Pen } from "@cosmjs/sdk38";
-import { pathToString } from "@iov/crypto";
 
 export async function createPens(
   mnemonic: string,

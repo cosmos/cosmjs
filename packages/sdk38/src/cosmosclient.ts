@@ -1,5 +1,5 @@
-import { Sha256 } from "@iov/crypto";
-import { fromBase64, toHex } from "@iov/encoding";
+import { Sha256 } from "@cosmjs/crypto";
+import { fromBase64, toHex } from "@cosmjs/encoding";
 
 import { Coin } from "./coins";
 import { Log, parseLogs } from "./logs";

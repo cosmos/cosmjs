@@ -1,5 +1,5 @@
-import { Random } from "@iov/crypto";
-import { Bech32, fromBase64 } from "@iov/encoding";
+import { Random } from "@cosmjs/crypto";
+import { Bech32, fromBase64 } from "@cosmjs/encoding";
 
 import hackatom from "./testdata/contract.json";
 

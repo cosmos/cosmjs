@@ -1,5 +1,5 @@
+import { fromBase64, fromUtf8, toHex, toUtf8 } from "@cosmjs/encoding";
 import { BroadcastMode, CosmosSdkTx, RestClient as BaseRestClient } from "@cosmjs/sdk38";
-import { fromBase64, fromUtf8, toHex, toUtf8 } from "@iov/encoding";
 
 import { JsonObject, Model, parseWasmData, WasmData } from "./types";
 

@@ -1,7 +1,7 @@
+import { Sha256 } from "@cosmjs/crypto";
+import { toHex } from "@cosmjs/encoding";
 import { Coin, Secp256k1Pen } from "@cosmjs/sdk38";
-import { Sha256 } from "@iov/crypto";
-import { toHex } from "@iov/encoding";
-import { assert } from "@iov/utils";
+import { assert } from "@cosmjs/utils";
 
 import { PrivateCosmWasmClient } from "./cosmwasmclient";
 import { RestClient } from "./restclient";

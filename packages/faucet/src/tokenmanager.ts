@@ -1,5 +1,5 @@
+import { Decimal, Uint53 } from "@cosmjs/math";
 import { Coin } from "@cosmjs/sdk38";
-import { Decimal, Uint53 } from "@iov/encoding";
 
 import { BankTokenMeta, MinimalAccount, TokenConfiguration } from "./types";
 

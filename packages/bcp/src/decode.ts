@@ -1,3 +1,5 @@
+import { fromBase64 } from "@cosmjs/encoding";
+import { Decimal } from "@cosmjs/math";
 import {
   Coin,
   IndexedTx,
@@ -29,7 +31,6 @@ import {
   TransactionId,
   UnsignedTransaction,
 } from "@iov/bcp";
-import { Decimal, fromBase64 } from "@iov/encoding";
 
 import { BankToken } from "./types";
 

@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/camelcase */
+import { Sha256 } from "@cosmjs/crypto";
+import { Bech32, fromHex, fromUtf8, toAscii, toBase64 } from "@cosmjs/encoding";
 import { makeSignBytes, MsgSend, Secp256k1Pen, StdFee } from "@cosmjs/sdk38";
-import { Sha256 } from "@iov/crypto";
-import { Bech32, fromHex, fromUtf8, toAscii, toBase64 } from "@iov/encoding";
-import { assert, sleep } from "@iov/utils";
+import { assert, sleep } from "@cosmjs/utils";
 import { ReadonlyDate } from "readonly-date";
 
 import { Code, CosmWasmClient, PrivateCosmWasmClient } from "./cosmwasmclient";

@@ -1,4 +1,4 @@
-import { Bip39, Random } from "@iov/crypto";
+import { Bip39, Random } from "@cosmjs/crypto";
 
 import * as constants from "../constants";
 import { createPens } from "../profile";

@@ -1,3 +1,5 @@
+import { Sha256 } from "@cosmjs/crypto";
+import { fromBase64, fromHex, toHex } from "@cosmjs/encoding";
 import {
   BroadcastMode,
   Coin,
@@ -7,8 +9,6 @@ import {
   PubKey,
   StdTx,
 } from "@cosmjs/sdk38";
-import { Sha256 } from "@iov/crypto";
-import { fromBase64, fromHex, toHex } from "@iov/encoding";
 
 import { Log, parseLogs } from "./logs";
 import { RestClient } from "./restclient";

@@ -1,4 +1,4 @@
-import { Bech32 } from "@iov/encoding";
+import { Bech32 } from "@cosmjs/encoding";
 
 export function isValidAddress(input: string, requiredPrefix: string): boolean {
   try {

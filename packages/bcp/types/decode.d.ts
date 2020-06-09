@@ -1,3 +1,4 @@
+import { Decimal } from "@cosmjs/math";
 import { Coin, IndexedTx, Msg, PubKey, StdFee, StdSignature, StdTx } from "@cosmjs/sdk38";
 import {
   Amount,
@@ -12,7 +13,6 @@ import {
   SignedTransaction,
   UnsignedTransaction,
 } from "@iov/bcp";
-import { Decimal } from "@iov/encoding";
 import { BankToken } from "./types";
 export declare function decodePubkey(pubkey: PubKey): PubkeyBundle;
 export declare function decodeSignature(signature: string): SignatureBytes;

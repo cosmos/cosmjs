@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/camelcase */
+import { Secp256k1 } from "@cosmjs/crypto";
+import { toBase64 } from "@cosmjs/encoding";
 import {
   Coin,
   CosmosSdkTx,
@@ -19,8 +21,6 @@ import {
   SignedTransaction,
   UnsignedTransaction,
 } from "@iov/bcp";
-import { Secp256k1 } from "@iov/crypto";
-import { toBase64 } from "@iov/encoding";
 
 import { BankToken } from "./types";
 

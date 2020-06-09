@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { isNonNullObject } from "@iov/encoding";
+import { isNonNullObject } from "@cosmjs/utils";
 
 export interface Attribute {
   readonly key: string;

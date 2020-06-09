@@ -1,4 +1,4 @@
-import { fromBase64, toBase64 } from "@iov/encoding";
+import { fromBase64, toBase64 } from "@cosmjs/encoding";
 
 import { encodeSecp256k1Pubkey } from "./pubkey";
 import { pubkeyType, StdSignature } from "./types";

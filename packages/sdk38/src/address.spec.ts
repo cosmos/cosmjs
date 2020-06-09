@@ -1,4 +1,4 @@
-import { fromHex, toBase64 } from "@iov/encoding";
+import { fromHex, toBase64 } from "@cosmjs/encoding";
 
 import { pubkeyToAddress } from "./address";
 

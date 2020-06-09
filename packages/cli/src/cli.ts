@@ -60,6 +60,27 @@ export function main(originalArgs: readonly string[]): void {
       ],
     ],
     [
+      "@cosmjs/crypto",
+      [
+        "Bip39",
+        "Ed25519",
+        "Ed25519Keypair",
+        "EnglishMnemonic",
+        "Random",
+        "Secp256k1",
+        "Sha256",
+        "Sha512",
+        "Slip10",
+        "Slip10Curve",
+        "Slip10RawIndex",
+      ],
+    ],
+    [
+      "@cosmjs/encoding",
+      ["fromAscii", "fromBase64", "fromHex", "fromUtf8", "toAscii", "toBase64", "toHex", "toUtf8", "Bech32"],
+    ],
+    ["@cosmjs/math", ["Decimal", "Int53", "Uint32", "Uint53", "Uint64"]],
+    [
       "@cosmjs/sdk38",
       [
         "coin",
@@ -82,43 +103,7 @@ export function main(originalArgs: readonly string[]): void {
         "StdTx",
       ],
     ],
-    [
-      "@iov/crypto",
-      [
-        "Bip39",
-        "Ed25519",
-        "Ed25519Keypair",
-        "EnglishMnemonic",
-        "Random",
-        "Secp256k1",
-        "Sha256",
-        "Sha512",
-        "Slip10",
-        "Slip10Curve",
-        "Slip10RawIndex",
-      ],
-    ],
-    [
-      "@iov/encoding",
-      [
-        "fromAscii",
-        "fromBase64",
-        "fromHex",
-        "fromUtf8",
-        "toAscii",
-        "toBase64",
-        "toHex",
-        "toUtf8",
-        "Bech32",
-        "Decimal",
-        // integers
-        "Int53",
-        "Uint32",
-        "Uint53",
-        "Uint64",
-      ],
-    ],
-    ["@iov/utils", ["assert", "sleep"]],
+    ["@cosmjs/utils", ["assert", "sleep"]],
   ]);
 
   console.info(colors.green("Initializing session for you. Have fun!"));

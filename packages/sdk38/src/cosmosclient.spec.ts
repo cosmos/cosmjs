@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { sleep } from "@iov/utils";
+import { sleep } from "@cosmjs/utils";
 import { ReadonlyDate } from "readonly-date";
 
 import { CosmosClient, PrivateCosmWasmClient } from "./cosmosclient";

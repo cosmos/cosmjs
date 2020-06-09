@@ -1,5 +1,5 @@
+import { Decimal } from "@cosmjs/math";
 import { Coin } from "@cosmjs/sdk38";
-import { Decimal } from "@iov/encoding";
 
 import { MinimalAccount, SendJob, TokenConfiguration } from "./types";
 

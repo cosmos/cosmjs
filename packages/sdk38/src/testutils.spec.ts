@@ -1,5 +1,5 @@
-import { Random } from "@iov/crypto";
-import { Bech32 } from "@iov/encoding";
+import { Random } from "@cosmjs/crypto";
+import { Bech32 } from "@cosmjs/encoding";
 
 export function makeRandomAddress(): string {
   return Bech32.encode("cosmos", Random.getBytes(20));
