@@ -18,7 +18,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/confio/cosmwasm-js/tree/master/packages/bcp"
+    "url": "https://github.com/CosmWasm/cosmjs/tree/master/packages/bcp"
   },
   "publishConfig": {
     "access": "public"
