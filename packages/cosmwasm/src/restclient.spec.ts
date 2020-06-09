@@ -15,8 +15,8 @@ import {
   StdSignature,
   StdTx,
 } from "@cosmjs/sdk38";
+import { assert, sleep } from "@cosmjs/utils";
 import { Bech32, fromAscii, fromBase64, fromHex, toAscii, toBase64, toHex } from "@iov/encoding";
-import { assert, sleep } from "@iov/utils";
 import { ReadonlyDate } from "readonly-date";
 
 import { findAttribute, parseLogs } from "./logs";

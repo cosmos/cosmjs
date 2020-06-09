@@ -38,8 +38,8 @@
   "dependencies": {
     "@cosmjs/crypto": "^0.8.0",
     "@cosmjs/sdk38": "^0.8.0",
+    "@cosmjs/utils": "^0.8.0",
     "@iov/encoding": "^2.3.2",
-    "@iov/utils": "^2.3.2",
     "axios": "^0.19.0",
     "fast-deep-equal": "^3.1.1",
     "pako": "^1.0.11"

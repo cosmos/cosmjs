@@ -1,4 +1,4 @@
-import { assert } from "@iov/utils";
+import { assert } from "@cosmjs/utils";
 
 import { Coin } from "./coins";
 import { PrivateCosmWasmClient } from "./cosmosclient";

@@ -118,7 +118,7 @@ export function main(originalArgs: readonly string[]): void {
         "Uint64",
       ],
     ],
-    ["@iov/utils", ["assert", "sleep"]],
+    ["@cosmjs/utils", ["assert", "sleep"]],
   ]);
 
   console.info(colors.green("Initializing session for you. Have fun!"));
