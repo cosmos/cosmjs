@@ -1,4 +1,4 @@
-import { fromHex } from "@iov/encoding";
+import { fromHex } from "@cosmjs/encoding";
 
 import { Bip39 } from "./bip39";
 import { EnglishMnemonic } from "./englishmnemonic";

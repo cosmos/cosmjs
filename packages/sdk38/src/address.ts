@@ -1,5 +1,5 @@
 import { Ripemd160, Sha256 } from "@cosmjs/crypto";
-import { Bech32, fromBase64 } from "@iov/encoding";
+import { Bech32, fromBase64 } from "@cosmjs/encoding";
 
 import { PubKey, pubkeyType } from "./types";
 

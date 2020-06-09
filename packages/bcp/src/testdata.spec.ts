@@ -1,3 +1,4 @@
+import { fromBase64, toUtf8 } from "@cosmjs/encoding";
 import {
   Address,
   Algorithm,
@@ -12,7 +13,6 @@ import {
   TokenTicker,
   TransactionId,
 } from "@iov/bcp";
-import { fromBase64, toUtf8 } from "@iov/encoding";
 
 import data from "./testdata/cosmoshub.json";
 

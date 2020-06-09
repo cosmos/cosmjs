@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { Sha256 } from "@cosmjs/crypto";
+import { Bech32, fromAscii, fromBase64, fromHex, toAscii, toBase64, toHex } from "@cosmjs/encoding";
 import {
   Coin,
   encodeBech32Pubkey,
@@ -16,7 +17,6 @@ import {
   StdTx,
 } from "@cosmjs/sdk38";
 import { assert, sleep } from "@cosmjs/utils";
-import { Bech32, fromAscii, fromBase64, fromHex, toAscii, toBase64, toHex } from "@iov/encoding";
 import { ReadonlyDate } from "readonly-date";
 
 import { findAttribute, parseLogs } from "./logs";

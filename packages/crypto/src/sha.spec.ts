@@ -1,4 +1,4 @@
-import { fromHex, toHex } from "@iov/encoding";
+import { fromHex, toHex } from "@cosmjs/encoding";
 
 import { Sha256 } from "./sha";
 import shaVectors from "./testdata/sha.json";

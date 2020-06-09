@@ -1,4 +1,4 @@
-import { Uint32 } from "@iov/encoding";
+import { Uint32 } from "@cosmjs/math";
 export interface Slip10Result {
   readonly chainCode: Uint8Array;
   readonly privkey: Uint8Array;

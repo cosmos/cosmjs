@@ -1,4 +1,4 @@
-import { fromHex, toHex } from "@iov/encoding";
+import { fromHex, toHex } from "@cosmjs/encoding";
 import BN from "bn.js";
 import elliptic from "elliptic";
 import { As } from "type-tagger";

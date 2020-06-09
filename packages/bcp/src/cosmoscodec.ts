@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
+import { Bech32, fromUtf8, toUtf8 } from "@cosmjs/encoding";
 import { isStdTx, makeSignBytes, StdTx } from "@cosmjs/sdk38";
 import {
   Address,
@@ -14,7 +15,6 @@ import {
   TxCodec,
   UnsignedTransaction,
 } from "@iov/bcp";
-import { Bech32, fromUtf8, toUtf8 } from "@iov/encoding";
 
 import { pubkeyToAddress } from "./address";
 import { Caip5 } from "./caip5";

@@ -1,5 +1,5 @@
+import { fromBase64, fromHex } from "@cosmjs/encoding";
 import { Algorithm, PubkeyBytes } from "@iov/bcp";
-import { fromBase64, fromHex } from "@iov/encoding";
 
 import { pubkeyToAddress } from "./address";
 

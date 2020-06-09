@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/camelcase */
+import { fromBase64 } from "@cosmjs/encoding";
 import { assert, sleep } from "@cosmjs/utils";
-import { fromBase64 } from "@iov/encoding";
 import { ReadonlyDate } from "readonly-date";
 
 import { rawSecp256k1PubkeyToAddress } from "./address";

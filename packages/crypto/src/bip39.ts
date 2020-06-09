@@ -1,4 +1,4 @@
-import { fromHex, toHex } from "@iov/encoding";
+import { fromHex, toHex } from "@cosmjs/encoding";
 import * as bip39 from "bip39";
 import { pbkdf2 } from "pbkdf2";
 import * as unorm from "unorm";

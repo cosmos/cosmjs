@@ -1,4 +1,5 @@
-import { fromBase64, isNonNullObject } from "@iov/encoding";
+import { fromBase64 } from "@cosmjs/encoding";
+import { isNonNullObject } from "@cosmjs/utils";
 import axios, { AxiosError, AxiosInstance } from "axios";
 
 import { Coin } from "./coins";

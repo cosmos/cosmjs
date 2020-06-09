@@ -1,5 +1,5 @@
 /* eslint-disable no-bitwise */
-import { fromHex, toAscii } from "@iov/encoding";
+import { fromHex, toAscii } from "@cosmjs/encoding";
 
 import {
   Argon2id,

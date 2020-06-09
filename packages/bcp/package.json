@@ -40,10 +40,11 @@
   },
   "dependencies": {
     "@cosmjs/crypto": "^0.8.0",
+    "@cosmjs/encoding": "^0.8.0",
+    "@cosmjs/math": "^0.8.0",
     "@cosmjs/sdk38": "^0.8.0",
     "@cosmjs/utils": "^0.8.0",
     "@iov/bcp": "^2.3.2",
-    "@iov/encoding": "^2.3.2",
     "@iov/stream": "^2.3.2",
     "bn.js": "^5.1.1",
     "fast-deep-equal": "^3.1.1",

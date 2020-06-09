@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
+import { fromBase64 } from "@cosmjs/encoding";
 import {
   Address,
   Algorithm,
@@ -11,7 +12,6 @@ import {
   SignedTransaction,
   TokenTicker,
 } from "@iov/bcp";
-import { fromBase64 } from "@iov/encoding";
 
 import {
   buildSignedTx,

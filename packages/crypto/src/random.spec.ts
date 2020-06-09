@@ -1,4 +1,4 @@
-import { isUint8Array } from "@iov/encoding";
+import { isUint8Array } from "@cosmjs/utils";
 
 import { Random } from "./random";
 

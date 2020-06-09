@@ -1,6 +1,6 @@
 import { Sha256 } from "@cosmjs/crypto";
+import { toBase64, toHex } from "@cosmjs/encoding";
 import { BroadcastMode, Coin, coins, makeSignBytes, MsgSend, StdFee, StdSignature } from "@cosmjs/sdk38";
-import { toBase64, toHex } from "@iov/encoding";
 import pako from "pako";
 
 import { isValidBuilder } from "./builder";

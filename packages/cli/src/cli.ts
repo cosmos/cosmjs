@@ -76,6 +76,11 @@ export function main(originalArgs: readonly string[]): void {
       ],
     ],
     [
+      "@cosmjs/encoding",
+      ["fromAscii", "fromBase64", "fromHex", "fromUtf8", "toAscii", "toBase64", "toHex", "toUtf8", "Bech32"],
+    ],
+    ["@cosmjs/math", ["Decimal", "Int53", "Uint32", "Uint53", "Uint64"]],
+    [
       "@cosmjs/sdk38",
       [
         "coin",
@@ -96,26 +101,6 @@ export function main(originalArgs: readonly string[]): void {
         "Secp256k1Pen",
         "StdFee",
         "StdTx",
-      ],
-    ],
-    [
-      "@iov/encoding",
-      [
-        "fromAscii",
-        "fromBase64",
-        "fromHex",
-        "fromUtf8",
-        "toAscii",
-        "toBase64",
-        "toHex",
-        "toUtf8",
-        "Bech32",
-        "Decimal",
-        // integers
-        "Int53",
-        "Uint32",
-        "Uint53",
-        "Uint64",
       ],
     ],
     ["@cosmjs/utils", ["assert", "sleep"]],

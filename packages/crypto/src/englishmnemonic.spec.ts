@@ -1,4 +1,4 @@
-import { fromAscii, fromBase64, fromHex } from "@iov/encoding";
+import { fromAscii, fromBase64, fromHex } from "@cosmjs/encoding";
 
 import { EnglishMnemonic } from "./englishmnemonic";
 import { Sha256 } from "./sha";

@@ -1,7 +1,7 @@
 import { Random } from "@cosmjs/crypto";
+import { Bech32 } from "@cosmjs/encoding";
 import { CosmosClient } from "@cosmjs/sdk38";
 import { assert } from "@cosmjs/utils";
-import { Bech32 } from "@iov/encoding";
 
 import { Faucet } from "./faucet";
 import { TokenConfiguration } from "./types";

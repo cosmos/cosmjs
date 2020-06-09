@@ -1,3 +1,5 @@
+import { fromUtf8 } from "@cosmjs/encoding";
+import { Uint53 } from "@cosmjs/math";
 import {
   CosmosClient,
   findSequenceForSignedTx,
@@ -35,7 +37,6 @@ import {
   TxCodec,
   UnsignedTransaction,
 } from "@iov/bcp";
-import { fromUtf8, Uint53 } from "@iov/encoding";
 import { concat, DefaultValueProducer, ValueAndUpdates } from "@iov/stream";
 import equal from "fast-deep-equal";
 import { ReadonlyDate } from "readonly-date";

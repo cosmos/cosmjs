@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/camelcase */
+import { Uint53 } from "@cosmjs/math";
 import { assert, sleep } from "@cosmjs/utils";
-import { Uint53 } from "@iov/encoding";
 
 import { Coin } from "./coins";
 import { CosmosClient } from "./cosmosclient";

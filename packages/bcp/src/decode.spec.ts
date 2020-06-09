@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
+import { fromBase64, fromHex } from "@cosmjs/encoding";
 import { Coin, IndexedTx, Msg, PubKey, StdSignature } from "@cosmjs/sdk38";
 import { Address, Algorithm, SendTransaction, TokenTicker } from "@iov/bcp";
-import { fromBase64, fromHex } from "@iov/encoding";
 
 import {
   decodeAmount,

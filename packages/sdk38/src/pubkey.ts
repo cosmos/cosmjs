@@ -1,4 +1,4 @@
-import { Bech32, fromBase64, fromHex, toBase64, toHex } from "@iov/encoding";
+import { Bech32, fromBase64, fromHex, toBase64, toHex } from "@cosmjs/encoding";
 import equal from "fast-deep-equal";
 
 import { PubKey, pubkeyType } from "./types";

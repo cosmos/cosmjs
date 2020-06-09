@@ -1,4 +1,4 @@
-import { fromHex } from "@iov/encoding";
+import { fromHex } from "@cosmjs/encoding";
 
 import { Hmac } from "./hmac";
 import { Sha1, Sha256, Sha512 } from "./sha";

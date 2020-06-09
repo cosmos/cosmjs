@@ -1,4 +1,4 @@
-import { fromBase64 } from "@iov/encoding";
+import { fromBase64 } from "@cosmjs/encoding";
 
 import { decodeSignature, encodeSecp256k1Signature } from "./signature";
 import { StdSignature } from "./types";

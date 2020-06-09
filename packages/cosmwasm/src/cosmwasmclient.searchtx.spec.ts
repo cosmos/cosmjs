@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
+import { Uint53 } from "@cosmjs/math";
 import { Coin, CosmosSdkTx, isMsgSend, makeSignBytes, MsgSend, Secp256k1Pen } from "@cosmjs/sdk38";
 import { assert, sleep } from "@cosmjs/utils";
-import { Uint53 } from "@iov/encoding";
 
 import { CosmWasmClient } from "./cosmwasmclient";
 import { isMsgExecuteContract, isMsgInstantiateContract } from "./msgs";
