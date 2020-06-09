@@ -1,5 +1,5 @@
 {
-  "name": "cosmwasm-js-monorepo-root",
+  "name": "cosmjs-monorepo-root",
   "description": "Transaction codec and client to communicate with any wasmd blockchain",
   "private": true,
   "author": "Ethan Frey <ethanfrey@users.noreply.github.com>",
