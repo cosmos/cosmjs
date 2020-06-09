@@ -46,13 +46,15 @@ describe("Faucet", () => {
   });
 
   describe("availableTokens", () => {
-    it("is empty when no tokens are configures", async () => {
+    it("is empty when no tokens are configured", async () => {
+      pendingWithoutWasmd();
       const faucet = await Faucet.make(httpUrl, defaultAddressPrefix, { bankTokens: [] }, faucetMnemonic, 3);
       const tickers = await faucet.availableTokens();
       expect(tickers).toEqual([]);
     });
 
-    it("is empty when no tokens are configures", async () => {
+    it("is empty when no tokens are configured", async () => {
+      pendingWithoutWasmd();
       const faucet = await Faucet.make(httpUrl, defaultAddressPrefix, defaultTokenConfig, faucetMnemonic, 3);
       const tickers = await faucet.availableTokens();
       expect(tickers).toEqual(["COSM", "STAKE"]);
