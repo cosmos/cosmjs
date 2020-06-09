@@ -16,8 +16,8 @@ Ensure the account is set up:
 // you can hand-copy a mnemonic here, but this is easiest for reuse between sessions
 // it creates a random one first time, then reads it in the future
 const mnemonic = loadOrCreateMnemonic("foo.key");
-const {address, client} = await connect(mnemonic, {});
-address
+const { address, client } = await connect(mnemonic, {});
+address;
 client.getAccount();
 ```
 
@@ -27,8 +27,8 @@ the hash is [defined here](https://github.com/CosmWasm/cosmwasm-examples/blob/ma
 it is already uploaded:
 
 ```ts
-const hash = "1f50bbff503fd9c7bfe713bbf42b309cf88ef299fa76e0242051c9a7e25649a3"
-client.getCodes().then(codes => codes.filter(x => x.checksum === hash))
+const hash = "1f50bbff503fd9c7bfe713bbf42b309cf88ef299fa76e0242051c9a7e25649a3";
+client.getCodes().then((codes) => codes.filter((x) => x.checksum === hash));
 ```
 
 If it is not uploaded, we will upload it:
@@ -39,21 +39,24 @@ const wasmUrl = "https://github.com/CosmWasm/cosmwasm-examples/blob/mask-0.1.0/m
 const wasm = await downloadWasm(wasmUrl);
 
 // Or load from local file
-const wasmFile = ".../cosmwasm-examples/mask/contract.wasm"
+const wasmFile = ".../cosmwasm-examples/mask/contract.wasm";
 const wasm = fs.readFileSync(wasmFile);
 
 // Then upload it
-const up = await client.upload(wasm, { source: "https://crates.io/api/v1/crates/cw-mask/0.1.0/download", builder: "confio/cosmwasm-opt:0.7.3"});
-up
-up.logs[0].events[0]
+const up = await client.upload(wasm, {
+  source: "https://crates.io/api/v1/crates/cw-mask/0.1.0/download",
+  builder: "confio/cosmwasm-opt:0.7.3",
+});
+up;
+up.logs[0].events[0];
 ```
 
 Now, make an instance (as above):
 
 ```ts
 // get the proper codeId
-const codes = await client.getCodes()
-const codeId = codes.filter(x => x.checksum === hash).map(x => x.id)[0]
+const codes = await client.getCodes();
+const codeId = codes.filter((x) => x.checksum === hash).map((x) => x.id)[0];
 
 // instantiate one contract
 const maskResp = await client.instantiate(codeId, {}, "My Mask");
@@ -61,26 +64,26 @@ const mask = maskResp.contractAddress;
 
 // You can also find the contractAddress later (in a future session), like:
 const contracts = await client.getContracts(codeId);
-const mask = contracts.filter(x => x.label == "My Mask").map(x => x.address)[0];
+const mask = contracts.filter((x) => x.label == "My Mask").map((x) => x.address)[0];
 ```
 
 Now, let's use the mask. To do so, we need to load it up with some tokens
 (both native and ERC20 - from the contract you deployed last time).
 
 ```ts
-client.sendTokens(mask, [{amount: "500000", "denom": "ucosm"}])
-client.getAccount(mask)
+client.sendTokens(mask, [{ amount: "500000", denom: "ucosm" }]);
+client.getAccount(mask);
 
 // get the foo contract again...
 const ercId = 1; // from earlier example, change this if different on your network
 const ercs = await client.getContracts(ercId);
-const foo = ercs.filter(x => x.label == "FOO").map(x => x.address)[0];
+const foo = ercs.filter((x) => x.label == "FOO").map((x) => x.address)[0];
 
 // send some erc tokens to the mask as before
-smartQuery(client, foo, { balance: { address: mask } })
-const ercMsg = { transfer: {recipient: mask, amount: "800000"}}
+smartQuery(client, foo, { balance: { address: mask } });
+const ercMsg = { transfer: { recipient: mask, amount: "800000" } };
 client.execute(foo, ercMsg);
-smartQuery(client, foo, { balance: { address: mask } })
+smartQuery(client, foo, { balance: { address: mask } });
 ```
 
 ## Usage
@@ -91,13 +94,15 @@ Now, let's send some tokens from it:
 
 ```ts
 const rand = await randomAddress("cosmos");
-client.getAccount(rand)
-client.getAccount(mask)
+client.getAccount(rand);
+client.getAccount(mask);
 
-const callSend: HandleMsg = { reflectmsg: { msgs: [sendMsg(mask, rand, [{amount: "80000", denom: "ucosm"}])]}};
-client.execute(mask, callSend)
-client.getAccount(rand)
-client.getAccount(mask)
+const callSend: HandleMsg = {
+  reflectmsg: { msgs: [sendMsg(mask, rand, [{ amount: "80000", denom: "ucosm" }])] },
+};
+client.execute(mask, callSend);
+client.getAccount(rand);
+client.getAccount(mask);
 ```
 
 ### Sending "ERC20" Tokens
@@ -105,13 +110,15 @@ client.getAccount(mask)
 And call the ERC20 contract from it:
 
 ```ts
-smartQuery(client, foo, { balance: { address: rand } })
-smartQuery(client, foo, { balance: { address: mask } })
+smartQuery(client, foo, { balance: { address: rand } });
+smartQuery(client, foo, { balance: { address: mask } });
 
-const callContract: HandleMsg = { reflectmsg: { msgs: [contractMsg(foo, {transfer: {"amount": "80000", "recipient": rand}})]}};
-client.execute(mask, callContract)
-smartQuery(client, foo, { balance: { address: rand } })
-smartQuery(client, foo, { balance: { address: mask } })
+const callContract: HandleMsg = {
+  reflectmsg: { msgs: [contractMsg(foo, { transfer: { amount: "80000", recipient: rand } })] },
+};
+client.execute(mask, callContract);
+smartQuery(client, foo, { balance: { address: rand } });
+smartQuery(client, foo, { balance: { address: mask } });
 ```
 
 ### Staking via OpaqueMsg
@@ -206,35 +213,37 @@ and our open staking position in one fell swoop, without the other modules/contr
 
 ```ts
 const aliceMnem = loadOrCreateMnemonic("other.key");
-const {address: alice, client: aliceClient} = await connect(aliceMnem, {});
-alice
+const { address: alice, client: aliceClient } = await connect(aliceMnem, {});
+alice;
 
-client.getAccount()
-aliceClient.getAccount()
+client.getAccount();
+aliceClient.getAccount();
 
 // send some minimal tokens
-client.sendTokens(alice, [{amount: "500000", "denom": "ucosm"}])
-aliceClient.getAccount()
+client.sendTokens(alice, [{ amount: "500000", denom: "ucosm" }]);
+aliceClient.getAccount();
 
 // now, transfer ownership of the mask
 const query: QueryMsg = { owner: {} };
 smartQuery(client, mask, query);
-const transferMsg: HandleMsg = { changeowner: { owner: alice }}
-client.execute(mask, transferMsg)
+const transferMsg: HandleMsg = { changeowner: { owner: alice } };
+client.execute(mask, transferMsg);
 smartQuery(client, mask, query);
 ```
 
 From now own, alice can control the mask, not me.... And she can extract the erc20 tokens or anything else the mask controls
 
 ```ts
-smartQuery(client, foo, { balance: { address: alice } })
+smartQuery(client, foo, { balance: { address: alice } });
 
-const withdraw: HandleMsg = { reflectmsg: { msgs: [contractMsg(foo, {transfer: {"amount": "80000", "recipient": alice}})]}};
+const withdraw: HandleMsg = {
+  reflectmsg: { msgs: [contractMsg(foo, { transfer: { amount: "80000", recipient: alice } })] },
+};
 // this will error (me)
-client.execute(mask, withdraw)
+client.execute(mask, withdraw);
 // this will succeed (alice)
-aliceClient.execute(mask, withdraw)
-smartQuery(client, foo, { balance: { address: alice } })
+aliceClient.execute(mask, withdraw);
+smartQuery(client, foo, { balance: { address: alice } });
 ```
 
 Please explore the use-cases of the Mask. More than a production-ready contract (which it may be),
