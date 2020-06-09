@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/camelcase */
+import { Sha256 } from "@cosmjs/crypto";
 import { makeSignBytes, MsgSend, Secp256k1Pen, StdFee } from "@cosmjs/sdk38";
-import { Sha256 } from "@iov/crypto";
 import { Bech32, fromHex, fromUtf8, toAscii, toBase64 } from "@iov/encoding";
 import { assert, sleep } from "@iov/utils";
 import { ReadonlyDate } from "readonly-date";

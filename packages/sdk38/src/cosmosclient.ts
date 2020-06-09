@@ -1,4 +1,4 @@
-import { Sha256 } from "@iov/crypto";
+import { Sha256 } from "@cosmjs/crypto";
 import { fromBase64, toHex } from "@iov/encoding";
 
 import { Coin } from "./coins";

@@ -35,8 +35,8 @@
     "test": "yarn build-or-skip && yarn test-node"
   },
   "dependencies": {
+    "@cosmjs/crypto": "^0.8.0",
     "@cosmjs/sdk38": "^0.8.0",
-    "@iov/crypto": "^2.3.2",
     "@iov/encoding": "^2.3.2",
     "@iov/utils": "^2.3.2",
     "@koa/cors": "^3.0.0",

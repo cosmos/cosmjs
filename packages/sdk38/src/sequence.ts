@@ -1,4 +1,4 @@
-import { Secp256k1, Secp256k1Signature, Sha256 } from "@iov/crypto";
+import { Secp256k1, Secp256k1Signature, Sha256 } from "@cosmjs/crypto";
 
 import { makeSignBytes } from "./encoding";
 import { decodeSignature } from "./signature";

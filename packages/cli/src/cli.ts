@@ -60,6 +60,22 @@ export function main(originalArgs: readonly string[]): void {
       ],
     ],
     [
+      "@cosmjs/crypto",
+      [
+        "Bip39",
+        "Ed25519",
+        "Ed25519Keypair",
+        "EnglishMnemonic",
+        "Random",
+        "Secp256k1",
+        "Sha256",
+        "Sha512",
+        "Slip10",
+        "Slip10Curve",
+        "Slip10RawIndex",
+      ],
+    ],
+    [
       "@cosmjs/sdk38",
       [
         "coin",
@@ -80,22 +96,6 @@ export function main(originalArgs: readonly string[]): void {
         "Secp256k1Pen",
         "StdFee",
         "StdTx",
-      ],
-    ],
-    [
-      "@iov/crypto",
-      [
-        "Bip39",
-        "Ed25519",
-        "Ed25519Keypair",
-        "EnglishMnemonic",
-        "Random",
-        "Secp256k1",
-        "Sha256",
-        "Sha512",
-        "Slip10",
-        "Slip10Curve",
-        "Slip10RawIndex",
       ],
     ],
     [

@@ -39,8 +39,8 @@
   ],
   "dependencies": {
     "@cosmjs/cosmwasm": "^0.8.0",
+    "@cosmjs/crypto": "^0.8.0",
     "@cosmjs/sdk38": "^0.8.0",
-    "@iov/crypto": "^2.3.2",
     "@iov/encoding": "^2.3.2",
     "@iov/utils": "^2.3.2",
     "axios": "^0.19.2",

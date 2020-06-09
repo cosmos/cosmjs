@@ -1,6 +1,6 @@
+import { Secp256k1 } from "@cosmjs/crypto";
 import { PubKey, pubkeyToAddress as sdkPubkeyToAddress, pubkeyType } from "@cosmjs/sdk38";
 import { Address, Algorithm, PubkeyBundle } from "@iov/bcp";
-import { Secp256k1 } from "@iov/crypto";
 import { toBase64 } from "@iov/encoding";
 
 // See https://github.com/tendermint/tendermint/blob/f2ada0a604b4c0763bda2f64fac53d506d3beca7/docs/spec/blockchain/encoding.md#public-key-cryptography

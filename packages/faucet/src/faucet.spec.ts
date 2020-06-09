@@ -1,5 +1,5 @@
+import { Random } from "@cosmjs/crypto";
 import { CosmosClient } from "@cosmjs/sdk38";
-import { Random } from "@iov/crypto";
 import { Bech32 } from "@iov/encoding";
 import { assert } from "@iov/utils";
 
