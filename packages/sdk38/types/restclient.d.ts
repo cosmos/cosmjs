@@ -111,6 +111,12 @@ export interface PostTxsResponse {
   readonly height: string;
   readonly txhash: string;
   readonly code?: number;
+  /**
+   * The result data of the execution (hex encoded).
+   *
+   * @see https://github.com/cosmos/cosmos-sdk/blob/v0.38.4/types/result.go#L101
+   */
+  readonly data?: string;
   readonly raw_log?: string;
   /** The same as `raw_log` but deserialized? */
   readonly logs?: object;

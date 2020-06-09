@@ -15,7 +15,7 @@ import {
   StdTx,
 } from "@cosmjs/sdk38";
 import { Sha256 } from "@iov/crypto";
-import { fromAscii, fromBase64, fromHex, toAscii, toBase64, toHex } from "@iov/encoding";
+import { Bech32, fromAscii, fromBase64, fromHex, toAscii, toBase64, toHex } from "@iov/encoding";
 import { assert, sleep } from "@iov/utils";
 import { ReadonlyDate } from "readonly-date";
 
@@ -1148,6 +1148,7 @@ describe("RestClient", () => {
         codeId = Number.parseInt(codeIdAttr.value, 10);
         expect(codeId).toBeGreaterThanOrEqual(1);
         expect(codeId).toBeLessThanOrEqual(200);
+        expect(result.data).toEqual(toHex(toAscii(`${codeId}`)).toUpperCase());
       }
 
       let contractAddress: string;
@@ -1162,6 +1163,7 @@ describe("RestClient", () => {
         contractAddress = contractAddressAttr.value;
         const amountAttr = findAttribute(logs, "transfer", "amount");
         expect(amountAttr.value).toEqual("1234ucosm,321ustake");
+        expect(result.data).toEqual(toHex(Bech32.decode(contractAddress).data).toUpperCase());
 
         const balance = (await client.authAccounts(contractAddress)).result.value.coins;
         expect(balance).toEqual(transferAmount);
