@@ -180,7 +180,7 @@ client.execute(mask, callOpaque2)
 
 // Note: currently this returns an error about "Event type must be one of message, transfer, wasm; got delegate"
 // That is on the client parsing the logs on success. Don't worry, it will be fixed soon.
-// https://github.com/CosmWasm/cosmwasm-js/issues/157
+// https://github.com/CosmWasm/cosmjs/issues/157
 ```
 
 Now validate this with the CLI tooling:

@@ -15,7 +15,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/confio/cosmwasm-js/tree/master/packages/demo-staking"
+    "url": "https://github.com/CosmWasm/cosmjs/tree/master/packages/demo-staking"
   },
   "private": true,
   "scripts": {

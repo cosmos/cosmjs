@@ -8,5 +8,5 @@ A [BCP](https://github.com/iov-one/iov-core/tree/master/packages/iov-bcp) implem
 
 This package is part of the cosmwasm-js repository, licensed under the Apache
 License 2.0 (see
-[NOTICE](https://github.com/confio/cosmwasm-js/blob/master/NOTICE) and
-[LICENSE](https://github.com/confio/cosmwasm-js/blob/master/LICENSE)).
+[NOTICE](https://github.com/CosmWasm/cosmjs/blob/master/NOTICE) and
+[LICENSE](https://github.com/CosmWasm/cosmjs/blob/master/LICENSE)).
