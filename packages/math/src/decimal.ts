@@ -64,6 +64,11 @@ export class Decimal {
     }
   }
 
+  public static compare(a: Decimal, b: Decimal): number {
+    if (a.fractionalDigits !== b.fractionalDigits) throw new Error("Fractional digits do not match");
+    return a.data.atomics.cmp(new BN(b.atomics));
+  }
+
   public get atomics(): string {
     return this.data.atomics.toString();
   }
@@ -117,5 +122,25 @@ export class Decimal {
     if (this.fractionalDigits !== b.fractionalDigits) throw new Error("Fractional digits do not match");
     const sum = this.data.atomics.add(new BN(b.atomics));
     return new Decimal(sum.toString(), this.fractionalDigits);
+  }
+
+  public equals(b: Decimal): boolean {
+    return Decimal.compare(this, b) === 0;
+  }
+
+  public isLessThan(b: Decimal): boolean {
+    return Decimal.compare(this, b) < 0;
+  }
+
+  public isLessThanOrEqual(b: Decimal): boolean {
+    return Decimal.compare(this, b) <= 0;
+  }
+
+  public isGreaterThan(b: Decimal): boolean {
+    return Decimal.compare(this, b) > 0;
+  }
+
+  public isGreaterThanOrEqual(b: Decimal): boolean {
+    return Decimal.compare(this, b) >= 0;
   }
 }

@@ -54,9 +54,7 @@ export class TokenManager {
     const thresholdAmount = this.refillThreshold(tickerSymbol);
     const threshold = Decimal.fromAtomics(thresholdAmount.amount, meta.fractionalDigits);
 
-    // TODO: perform < operation on Decimal type directly
-    // https://github.com/iov-one/iov-core/issues/1375
-    return balance.toFloatApproximation() < threshold.toFloatApproximation();
+    return balance.isLessThan(threshold);
   }
 
   private getTokenMeta(tickerSymbol: string): BankTokenMeta {

@@ -210,4 +210,214 @@ describe("Decimal", () => {
       expect(() => zero.plus(Decimal.fromUserInput("1", 7))).toThrowError(/do not match/i);
     });
   });
+
+  describe("equals", () => {
+    it("returns correct values", () => {
+      const zero = Decimal.fromUserInput("0", 5);
+      expect(zero.equals(Decimal.fromUserInput("0", 5))).toEqual(true);
+      expect(zero.equals(Decimal.fromUserInput("1", 5))).toEqual(false);
+      expect(zero.equals(Decimal.fromUserInput("2", 5))).toEqual(false);
+      expect(zero.equals(Decimal.fromUserInput("2.8", 5))).toEqual(false);
+      expect(zero.equals(Decimal.fromUserInput("0.12345", 5))).toEqual(false);
+
+      const one = Decimal.fromUserInput("1", 5);
+      expect(one.equals(Decimal.fromUserInput("0", 5))).toEqual(false);
+      expect(one.equals(Decimal.fromUserInput("1", 5))).toEqual(true);
+      expect(one.equals(Decimal.fromUserInput("2", 5))).toEqual(false);
+      expect(one.equals(Decimal.fromUserInput("2.8", 5))).toEqual(false);
+      expect(one.equals(Decimal.fromUserInput("0.12345", 5))).toEqual(false);
+
+      const oneDotFive = Decimal.fromUserInput("1.5", 5);
+      expect(oneDotFive.equals(Decimal.fromUserInput("0", 5))).toEqual(false);
+      expect(oneDotFive.equals(Decimal.fromUserInput("1", 5))).toEqual(false);
+      expect(oneDotFive.equals(Decimal.fromUserInput("1.5", 5))).toEqual(true);
+      expect(oneDotFive.equals(Decimal.fromUserInput("2", 5))).toEqual(false);
+      expect(oneDotFive.equals(Decimal.fromUserInput("2.8", 5))).toEqual(false);
+      expect(oneDotFive.equals(Decimal.fromUserInput("0.12345", 5))).toEqual(false);
+
+      // original value remain unchanged
+      expect(zero.toString()).toEqual("0");
+      expect(one.toString()).toEqual("1");
+      expect(oneDotFive.toString()).toEqual("1.5");
+    });
+
+    it("throws for different fractional digits", () => {
+      const zero = Decimal.fromUserInput("0", 5);
+      expect(() => zero.equals(Decimal.fromUserInput("1", 1))).toThrowError(/do not match/i);
+      expect(() => zero.equals(Decimal.fromUserInput("1", 2))).toThrowError(/do not match/i);
+      expect(() => zero.equals(Decimal.fromUserInput("1", 3))).toThrowError(/do not match/i);
+      expect(() => zero.equals(Decimal.fromUserInput("1", 4))).toThrowError(/do not match/i);
+
+      expect(() => zero.equals(Decimal.fromUserInput("1", 6))).toThrowError(/do not match/i);
+      expect(() => zero.equals(Decimal.fromUserInput("1", 7))).toThrowError(/do not match/i);
+    });
+  });
+
+  describe("isLessThan", () => {
+    it("returns correct values", () => {
+      const zero = Decimal.fromUserInput("0", 5);
+      expect(zero.isLessThan(Decimal.fromUserInput("0", 5))).toEqual(false);
+      expect(zero.isLessThan(Decimal.fromUserInput("1", 5))).toEqual(true);
+      expect(zero.isLessThan(Decimal.fromUserInput("2", 5))).toEqual(true);
+      expect(zero.isLessThan(Decimal.fromUserInput("2.8", 5))).toEqual(true);
+      expect(zero.isLessThan(Decimal.fromUserInput("0.12345", 5))).toEqual(true);
+
+      const one = Decimal.fromUserInput("1", 5);
+      expect(one.isLessThan(Decimal.fromUserInput("0", 5))).toEqual(false);
+      expect(one.isLessThan(Decimal.fromUserInput("1", 5))).toEqual(false);
+      expect(one.isLessThan(Decimal.fromUserInput("2", 5))).toEqual(true);
+      expect(one.isLessThan(Decimal.fromUserInput("2.8", 5))).toEqual(true);
+      expect(one.isLessThan(Decimal.fromUserInput("0.12345", 5))).toEqual(false);
+
+      const oneDotFive = Decimal.fromUserInput("1.5", 5);
+      expect(oneDotFive.isLessThan(Decimal.fromUserInput("0", 5))).toEqual(false);
+      expect(oneDotFive.isLessThan(Decimal.fromUserInput("1", 5))).toEqual(false);
+      expect(oneDotFive.isLessThan(Decimal.fromUserInput("1.5", 5))).toEqual(false);
+      expect(oneDotFive.isLessThan(Decimal.fromUserInput("2", 5))).toEqual(true);
+      expect(oneDotFive.isLessThan(Decimal.fromUserInput("2.8", 5))).toEqual(true);
+      expect(oneDotFive.isLessThan(Decimal.fromUserInput("0.12345", 5))).toEqual(false);
+
+      // original value remain unchanged
+      expect(zero.toString()).toEqual("0");
+      expect(one.toString()).toEqual("1");
+      expect(oneDotFive.toString()).toEqual("1.5");
+    });
+
+    it("throws for different fractional digits", () => {
+      const zero = Decimal.fromUserInput("0", 5);
+      expect(() => zero.isLessThan(Decimal.fromUserInput("1", 1))).toThrowError(/do not match/i);
+      expect(() => zero.isLessThan(Decimal.fromUserInput("1", 2))).toThrowError(/do not match/i);
+      expect(() => zero.isLessThan(Decimal.fromUserInput("1", 3))).toThrowError(/do not match/i);
+      expect(() => zero.isLessThan(Decimal.fromUserInput("1", 4))).toThrowError(/do not match/i);
+
+      expect(() => zero.isLessThan(Decimal.fromUserInput("1", 6))).toThrowError(/do not match/i);
+      expect(() => zero.isLessThan(Decimal.fromUserInput("1", 7))).toThrowError(/do not match/i);
+    });
+  });
+
+  describe("isLessThanOrEqual", () => {
+    it("returns correct values", () => {
+      const zero = Decimal.fromUserInput("0", 5);
+      expect(zero.isLessThanOrEqual(Decimal.fromUserInput("0", 5))).toEqual(true);
+      expect(zero.isLessThanOrEqual(Decimal.fromUserInput("1", 5))).toEqual(true);
+      expect(zero.isLessThanOrEqual(Decimal.fromUserInput("2", 5))).toEqual(true);
+      expect(zero.isLessThanOrEqual(Decimal.fromUserInput("2.8", 5))).toEqual(true);
+      expect(zero.isLessThanOrEqual(Decimal.fromUserInput("0.12345", 5))).toEqual(true);
+
+      const one = Decimal.fromUserInput("1", 5);
+      expect(one.isLessThanOrEqual(Decimal.fromUserInput("0", 5))).toEqual(false);
+      expect(one.isLessThanOrEqual(Decimal.fromUserInput("1", 5))).toEqual(true);
+      expect(one.isLessThanOrEqual(Decimal.fromUserInput("2", 5))).toEqual(true);
+      expect(one.isLessThanOrEqual(Decimal.fromUserInput("2.8", 5))).toEqual(true);
+      expect(one.isLessThanOrEqual(Decimal.fromUserInput("0.12345", 5))).toEqual(false);
+
+      const oneDotFive = Decimal.fromUserInput("1.5", 5);
+      expect(oneDotFive.isLessThanOrEqual(Decimal.fromUserInput("0", 5))).toEqual(false);
+      expect(oneDotFive.isLessThanOrEqual(Decimal.fromUserInput("1", 5))).toEqual(false);
+      expect(oneDotFive.isLessThanOrEqual(Decimal.fromUserInput("1.5", 5))).toEqual(true);
+      expect(oneDotFive.isLessThanOrEqual(Decimal.fromUserInput("2", 5))).toEqual(true);
+      expect(oneDotFive.isLessThanOrEqual(Decimal.fromUserInput("2.8", 5))).toEqual(true);
+      expect(oneDotFive.isLessThanOrEqual(Decimal.fromUserInput("0.12345", 5))).toEqual(false);
+
+      // original value remain unchanged
+      expect(zero.toString()).toEqual("0");
+      expect(one.toString()).toEqual("1");
+      expect(oneDotFive.toString()).toEqual("1.5");
+    });
+
+    it("throws for different fractional digits", () => {
+      const zero = Decimal.fromUserInput("0", 5);
+      expect(() => zero.isLessThanOrEqual(Decimal.fromUserInput("1", 1))).toThrowError(/do not match/i);
+      expect(() => zero.isLessThanOrEqual(Decimal.fromUserInput("1", 2))).toThrowError(/do not match/i);
+      expect(() => zero.isLessThanOrEqual(Decimal.fromUserInput("1", 3))).toThrowError(/do not match/i);
+      expect(() => zero.isLessThanOrEqual(Decimal.fromUserInput("1", 4))).toThrowError(/do not match/i);
+
+      expect(() => zero.isLessThanOrEqual(Decimal.fromUserInput("1", 6))).toThrowError(/do not match/i);
+      expect(() => zero.isLessThanOrEqual(Decimal.fromUserInput("1", 7))).toThrowError(/do not match/i);
+    });
+  });
+
+  describe("isGreaterThan", () => {
+    it("returns correct values", () => {
+      const zero = Decimal.fromUserInput("0", 5);
+      expect(zero.isGreaterThan(Decimal.fromUserInput("0", 5))).toEqual(false);
+      expect(zero.isGreaterThan(Decimal.fromUserInput("1", 5))).toEqual(false);
+      expect(zero.isGreaterThan(Decimal.fromUserInput("2", 5))).toEqual(false);
+      expect(zero.isGreaterThan(Decimal.fromUserInput("2.8", 5))).toEqual(false);
+      expect(zero.isGreaterThan(Decimal.fromUserInput("0.12345", 5))).toEqual(false);
+
+      const one = Decimal.fromUserInput("1", 5);
+      expect(one.isGreaterThan(Decimal.fromUserInput("0", 5))).toEqual(true);
+      expect(one.isGreaterThan(Decimal.fromUserInput("1", 5))).toEqual(false);
+      expect(one.isGreaterThan(Decimal.fromUserInput("2", 5))).toEqual(false);
+      expect(one.isGreaterThan(Decimal.fromUserInput("2.8", 5))).toEqual(false);
+      expect(one.isGreaterThan(Decimal.fromUserInput("0.12345", 5))).toEqual(true);
+
+      const oneDotFive = Decimal.fromUserInput("1.5", 5);
+      expect(oneDotFive.isGreaterThan(Decimal.fromUserInput("0", 5))).toEqual(true);
+      expect(oneDotFive.isGreaterThan(Decimal.fromUserInput("1", 5))).toEqual(true);
+      expect(oneDotFive.isGreaterThan(Decimal.fromUserInput("1.5", 5))).toEqual(false);
+      expect(oneDotFive.isGreaterThan(Decimal.fromUserInput("2", 5))).toEqual(false);
+      expect(oneDotFive.isGreaterThan(Decimal.fromUserInput("2.8", 5))).toEqual(false);
+      expect(oneDotFive.isGreaterThan(Decimal.fromUserInput("0.12345", 5))).toEqual(true);
+
+      // original value remain unchanged
+      expect(zero.toString()).toEqual("0");
+      expect(one.toString()).toEqual("1");
+      expect(oneDotFive.toString()).toEqual("1.5");
+    });
+
+    it("throws for different fractional digits", () => {
+      const zero = Decimal.fromUserInput("0", 5);
+      expect(() => zero.isGreaterThan(Decimal.fromUserInput("1", 1))).toThrowError(/do not match/i);
+      expect(() => zero.isGreaterThan(Decimal.fromUserInput("1", 2))).toThrowError(/do not match/i);
+      expect(() => zero.isGreaterThan(Decimal.fromUserInput("1", 3))).toThrowError(/do not match/i);
+      expect(() => zero.isGreaterThan(Decimal.fromUserInput("1", 4))).toThrowError(/do not match/i);
+
+      expect(() => zero.isGreaterThan(Decimal.fromUserInput("1", 6))).toThrowError(/do not match/i);
+      expect(() => zero.isGreaterThan(Decimal.fromUserInput("1", 7))).toThrowError(/do not match/i);
+    });
+  });
+
+  describe("isGreaterThanOrEqual", () => {
+    it("returns correct values", () => {
+      const zero = Decimal.fromUserInput("0", 5);
+      expect(zero.isGreaterThanOrEqual(Decimal.fromUserInput("0", 5))).toEqual(true);
+      expect(zero.isGreaterThanOrEqual(Decimal.fromUserInput("1", 5))).toEqual(false);
+      expect(zero.isGreaterThanOrEqual(Decimal.fromUserInput("2", 5))).toEqual(false);
+      expect(zero.isGreaterThanOrEqual(Decimal.fromUserInput("2.8", 5))).toEqual(false);
+      expect(zero.isGreaterThanOrEqual(Decimal.fromUserInput("0.12345", 5))).toEqual(false);
+
+      const one = Decimal.fromUserInput("1", 5);
+      expect(one.isGreaterThanOrEqual(Decimal.fromUserInput("0", 5))).toEqual(true);
+      expect(one.isGreaterThanOrEqual(Decimal.fromUserInput("1", 5))).toEqual(true);
+      expect(one.isGreaterThanOrEqual(Decimal.fromUserInput("2", 5))).toEqual(false);
+      expect(one.isGreaterThanOrEqual(Decimal.fromUserInput("2.8", 5))).toEqual(false);
+      expect(one.isGreaterThanOrEqual(Decimal.fromUserInput("0.12345", 5))).toEqual(true);
+
+      const oneDotFive = Decimal.fromUserInput("1.5", 5);
+      expect(oneDotFive.isGreaterThanOrEqual(Decimal.fromUserInput("0", 5))).toEqual(true);
+      expect(oneDotFive.isGreaterThanOrEqual(Decimal.fromUserInput("1", 5))).toEqual(true);
+      expect(oneDotFive.isGreaterThanOrEqual(Decimal.fromUserInput("1.5", 5))).toEqual(true);
+      expect(oneDotFive.isGreaterThanOrEqual(Decimal.fromUserInput("2", 5))).toEqual(false);
+      expect(oneDotFive.isGreaterThanOrEqual(Decimal.fromUserInput("2.8", 5))).toEqual(false);
+      expect(oneDotFive.isGreaterThanOrEqual(Decimal.fromUserInput("0.12345", 5))).toEqual(true);
+
+      // original value remain unchanged
+      expect(zero.toString()).toEqual("0");
+      expect(one.toString()).toEqual("1");
+      expect(oneDotFive.toString()).toEqual("1.5");
+    });
+
+    it("throws for different fractional digits", () => {
+      const zero = Decimal.fromUserInput("0", 5);
+      expect(() => zero.isGreaterThanOrEqual(Decimal.fromUserInput("1", 1))).toThrowError(/do not match/i);
+      expect(() => zero.isGreaterThanOrEqual(Decimal.fromUserInput("1", 2))).toThrowError(/do not match/i);
+      expect(() => zero.isGreaterThanOrEqual(Decimal.fromUserInput("1", 3))).toThrowError(/do not match/i);
+      expect(() => zero.isGreaterThanOrEqual(Decimal.fromUserInput("1", 4))).toThrowError(/do not match/i);
+
+      expect(() => zero.isGreaterThanOrEqual(Decimal.fromUserInput("1", 6))).toThrowError(/do not match/i);
+      expect(() => zero.isGreaterThanOrEqual(Decimal.fromUserInput("1", 7))).toThrowError(/do not match/i);
+    });
+  });
 });
