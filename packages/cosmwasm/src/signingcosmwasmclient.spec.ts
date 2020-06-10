@@ -3,7 +3,7 @@ import { toHex } from "@cosmjs/encoding";
 import { Coin, Secp256k1Pen } from "@cosmjs/sdk38";
 import { assert } from "@cosmjs/utils";
 
-import { PrivateCosmWasmClient } from "./cosmwasmclient";
+import { isPostTxFailure, PrivateCosmWasmClient } from "./cosmwasmclient";
 import { RestClient } from "./restclient";
 import { SigningCosmWasmClient, UploadMeta } from "./signingcosmwasmclient";
 import { alice, getHackatom, makeRandomAddress, pendingWithoutWasmd } from "./testutils.spec";
@@ -205,6 +205,7 @@ describe("SigningCosmWasmClient", () => {
 
       // send
       const result = await client.sendTokens(beneficiaryAddress, transferAmount, "for dinner");
+      assert(!isPostTxFailure(result));
       const [firstLog] = result.logs;
       expect(firstLog).toBeTruthy();
 

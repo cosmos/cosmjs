@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { Uint53 } from "@cosmjs/math";
 import { assert, sleep } from "@cosmjs/utils";
 
 import { Coin } from "./coins";
-import { CosmosClient } from "./cosmosclient";
+import { CosmosClient, isPostTxFailure } from "./cosmosclient";
 import { makeSignBytes } from "./encoding";
 import { Secp256k1Pen } from "./pen";
 import { RestClient } from "./restclient";
@@ -105,19 +104,13 @@ describe("CosmosClient.searchTx", () => {
           },
         };
         const transactionId = await client.getIdentifier(tx);
-        try {
-          await client.postTx(tx.value);
-        } catch (error) {
-          // postTx() throws on execution failures, which is a questionable design. Ignore for now.
-          // console.log(error);
-          const errorMessage: string = error.toString();
-          const [_, heightMatch] = errorMessage.match(/at height ([0-9]+)/) || ["", ""];
-
+        const result = await client.postTx(tx.value);
+        if (isPostTxFailure(result)) {
           sendUnsuccessful = {
             sender: faucet.address,
             recipient: recipient,
             hash: transactionId,
-            height: Uint53.fromString(heightMatch).toNumber(),
+            height: result.height,
             tx: tx,
           };
         }

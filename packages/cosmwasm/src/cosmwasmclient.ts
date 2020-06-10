@@ -1,5 +1,6 @@
 import { Sha256 } from "@cosmjs/crypto";
 import { fromBase64, fromHex, toHex } from "@cosmjs/encoding";
+import { Uint53 } from "@cosmjs/math";
 import {
   BroadcastMode,
   Coin,
@@ -28,11 +29,26 @@ export interface Account {
   readonly sequence: number;
 }
 
-export interface PostTxResult {
+export interface PostTxFailure {
+  /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
+  readonly transactionHash: string;
+  readonly height: number;
+  readonly code: number;
+  readonly rawLog: string;
+}
+
+export interface PostTxSuccess {
   readonly logs: readonly Log[];
   readonly rawLog: string;
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
+  readonly data?: Uint8Array;
+}
+
+export type PostTxResult = PostTxSuccess | PostTxFailure;
+
+export function isPostTxFailure(postTxResult: PostTxResult): postTxResult is PostTxFailure {
+  return !!(postTxResult as PostTxFailure).code;
 }
 
 export interface SearchByIdQuery {
@@ -294,17 +310,19 @@ export class CosmWasmClient {
       throw new Error("Received ill-formatted txhash. Must be non-empty upper-case hex");
     }
 
-    if (result.code) {
-      throw new Error(
-        `Error when posting tx ${result.txhash} at height ${result.height}. Code: ${result.code}; Raw log: ${result.raw_log}`,
-      );
-    }
-
-    return {
-      logs: result.logs ? parseLogs(result.logs) : [],
-      rawLog: result.raw_log || "",
-      transactionHash: result.txhash,
-    };
+    return result.code !== undefined
+      ? {
+          height: Uint53.fromString(result.height).toNumber(),
+          transactionHash: result.txhash,
+          code: result.code,
+          rawLog: result.raw_log || "",
+        }
+      : {
+          logs: result.logs ? parseLogs(result.logs) : [],
+          rawLog: result.raw_log || "",
+          transactionHash: result.txhash,
+          data: result.data ? fromHex(result.data) : undefined,
+        };
   }
 
   public async getCodes(): Promise<readonly Code[]> {
