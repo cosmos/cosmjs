@@ -5,7 +5,7 @@ import { makeSignBytes, MsgSend, Secp256k1Pen, StdFee } from "@cosmjs/sdk38";
 import { assert, sleep } from "@cosmjs/utils";
 import { ReadonlyDate } from "readonly-date";
 
-import { Code, CosmWasmClient, isPostTxFailureResult, PrivateCosmWasmClient } from "./cosmwasmclient";
+import { Code, CosmWasmClient, isPostTxFailure, PrivateCosmWasmClient } from "./cosmwasmclient";
 import { findAttribute } from "./logs";
 import { SigningCosmWasmClient } from "./signingcosmwasmclient";
 import cosmoshub from "./testdata/cosmoshub.json";
@@ -243,9 +243,7 @@ describe("CosmWasmClient", () => {
         signatures: [signature],
       };
       const result = await client.postTx(signedTx);
-      if (isPostTxFailureResult(result)) {
-        throw new Error("Post tx failed");
-      }
+      assert(!isPostTxFailure(result));
       const { logs, transactionHash } = result;
       const amountAttr = findAttribute(logs, "transfer", "amount");
       expect(amountAttr.value).toEqual("1234567ucosm");

@@ -8,8 +8,8 @@ import {
   Account,
   CosmWasmClient,
   GetNonceResult,
-  isPostTxFailureResult,
-  PostTxFailureResult,
+  isPostTxFailure,
+  PostTxFailure,
   PostTxResult,
 } from "./cosmwasmclient";
 import { findAttribute, Log } from "./logs";
@@ -91,7 +91,7 @@ export interface ExecuteResult {
   readonly transactionHash: string;
 }
 
-function createPostTxErrorMessage(result: PostTxFailureResult): string {
+function createPostTxErrorMessage(result: PostTxFailure): string {
   return `Error when posting tx ${result.transactionHash} at height ${result.height}. Code: ${result.code}; Raw log: ${result.rawLog}`;
 }
 
@@ -165,7 +165,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     };
 
     const result = await this.postTx(signedTx);
-    if (isPostTxFailureResult(result)) {
+    if (isPostTxFailure(result)) {
       throw new Error(createPostTxErrorMessage(result));
     }
     const codeIdAttr = findAttribute(result.logs, "message", "code_id");
@@ -214,7 +214,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     };
 
     const result = await this.postTx(signedTx);
-    if (isPostTxFailureResult(result)) {
+    if (isPostTxFailure(result)) {
       throw new Error(createPostTxErrorMessage(result));
     }
     const contractAddressAttr = findAttribute(result.logs, "message", "contract_address");
@@ -254,7 +254,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     };
 
     const result = await this.postTx(signedTx);
-    if (isPostTxFailureResult(result)) {
+    if (isPostTxFailure(result)) {
       throw new Error(createPostTxErrorMessage(result));
     }
     return {

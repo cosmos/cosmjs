@@ -19,7 +19,7 @@ import {
 import { assert, sleep } from "@cosmjs/utils";
 import { ReadonlyDate } from "readonly-date";
 
-import { isPostTxFailureResult } from "./cosmwasmclient";
+import { isPostTxFailure } from "./cosmwasmclient";
 import { findAttribute, parseLogs } from "./logs";
 import {
   isMsgInstantiateContract,
@@ -402,9 +402,7 @@ describe("RestClient", () => {
           };
           const transactionId = await client.getIdentifier({ type: "cosmos-sdk/StdTx", value: signedTx });
           const result = await client.postTx(signedTx);
-          if (!isPostTxFailureResult(result)) {
-            throw new Error("Post tx succeeded unexpectedly");
-          }
+          assert(isPostTxFailure(result));
           unsuccessful = {
             sender: alice.address0,
             recipient: recipient,

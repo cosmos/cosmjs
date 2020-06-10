@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { Uint53 } from "@cosmjs/math";
 import { Coin, CosmosSdkTx, isMsgSend, makeSignBytes, MsgSend, Secp256k1Pen } from "@cosmjs/sdk38";
 import { assert, sleep } from "@cosmjs/utils";
 
-import { CosmWasmClient, isPostTxFailureResult } from "./cosmwasmclient";
+import { CosmWasmClient, isPostTxFailure } from "./cosmwasmclient";
 import { isMsgExecuteContract, isMsgInstantiateContract } from "./msgs";
 import { RestClient } from "./restclient";
 import { SigningCosmWasmClient } from "./signingcosmwasmclient";
@@ -114,12 +113,12 @@ describe("CosmWasmClient.searchTx", () => {
         };
         const transactionId = await client.getIdentifier(tx);
         const result = await client.postTx(tx.value);
-        if (isPostTxFailureResult(result)) {
+        if (isPostTxFailure(result)) {
           sendUnsuccessful = {
             sender: alice.address0,
             recipient: recipient,
             hash: transactionId,
-            height: Uint53.fromString(result.height).toNumber(),
+            height: result.height,
             tx: tx,
           };
         }
