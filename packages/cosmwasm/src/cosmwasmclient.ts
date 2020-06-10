@@ -286,11 +286,26 @@ export class CosmWasmClient {
       // We cannot get both in one request (see https://github.com/cosmos/gaia/issues/75)
       const sentQuery = withFilters(`message.module=bank&message.sender=${query.sentFromOrTo}`);
       const receivedQuery = withFilters(`message.module=bank&transfer.recipient=${query.sentFromOrTo}`);
-      const sent = await this.txsQuery(sentQuery);
-      const received = await this.txsQuery(receivedQuery);
+      const [sent, received] = (await Promise.all([
+        this.txsQuery(sentQuery),
+        this.txsQuery(receivedQuery),
+      ])) as [IndexedTx[], IndexedTx[]];
 
-      const sentHashes = sent.map((t) => t.hash);
-      txs = [...sent, ...received.filter((t) => !sentHashes.includes(t.hash))];
+      let mergedTxs: readonly IndexedTx[] = [];
+      /* eslint-disable @typescript-eslint/no-non-null-assertion */
+      // sent/received are presorted
+      while (sent.length && received.length) {
+        const next =
+          sent[0].hash === received[0].hash
+            ? sent.shift()! && received.shift()!
+            : sent[0].height <= received[0].height
+            ? sent.shift()!
+            : received.shift()!;
+        mergedTxs = [...mergedTxs, next];
+      }
+      /* eslint-enable @typescript-eslint/no-non-null-assertion */
+      // At least one of sent/received is empty by now
+      txs = [...mergedTxs, ...sent, ...received];
     } else if (isSearchByTagsQuery(query)) {
       const rawQuery = withFilters(query.tags.map((t) => `${t.key}=${t.value}`).join("&"));
       txs = await this.txsQuery(rawQuery);

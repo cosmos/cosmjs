@@ -16,25 +16,20 @@ import {
   wasmdEnabled,
 } from "./testutils.spec";
 
+type TestSendTx =
+  | {
+      readonly sender: string;
+      readonly recipient: string;
+      readonly hash: string;
+      readonly height: number;
+      readonly tx: CosmosSdkTx;
+    }
+  | undefined;
+
 describe("CosmWasmClient.searchTx", () => {
-  let sendSuccessful:
-    | {
-        readonly sender: string;
-        readonly recipient: string;
-        readonly hash: string;
-        readonly height: number;
-        readonly tx: CosmosSdkTx;
-      }
-    | undefined;
-  let sendUnsuccessful:
-    | {
-        readonly sender: string;
-        readonly recipient: string;
-        readonly hash: string;
-        readonly height: number;
-        readonly tx: CosmosSdkTx;
-      }
-    | undefined;
+  let sendSuccessful: TestSendTx;
+  let sendSelfSuccessful: TestSendTx;
+  let sendUnsuccessful: TestSendTx;
   let postedExecute:
     | {
         readonly sender: string;
@@ -62,6 +57,24 @@ describe("CosmWasmClient.searchTx", () => {
         await sleep(75); // wait until tx is indexed
         const txDetails = await new RestClient(wasmd.endpoint).txById(result.transactionHash);
         sendSuccessful = {
+          sender: alice.address0,
+          recipient: recipient,
+          hash: result.transactionHash,
+          height: Number.parseInt(txDetails.height, 10),
+          tx: txDetails.tx,
+        };
+      }
+
+      {
+        const recipient = alice.address0;
+        const transferAmount: Coin = {
+          denom: "ucosm",
+          amount: "2345678",
+        };
+        const result = await client.sendTokens(recipient, [transferAmount]);
+        await sleep(75); // wait until tx is indexed
+        const txDetails = await new RestClient(wasmd.endpoint).txById(result.transactionHash);
+        sendSelfSuccessful = {
           sender: alice.address0,
           recipient: recipient,
           hash: result.transactionHash,
@@ -268,8 +281,8 @@ describe("CosmWasmClient.searchTx", () => {
         expect(containsMsgWithSender || containsMsgWithRecipient).toEqual(true);
       }
 
-      // Check details of most recent result
-      expect(results[results.length - 1]).toEqual(
+      // Check details of most recent result (not sent to self)
+      expect(results[results.length - 2]).toEqual(
         jasmine.objectContaining({
           height: sendSuccessful.height,
           hash: sendSuccessful.hash,
@@ -303,6 +316,17 @@ describe("CosmWasmClient.searchTx", () => {
           tx: sendSuccessful.tx,
         }),
       );
+    });
+
+    it("can search by sender or recipient (sorted and deduplicated)", async () => {
+      pendingWithoutWasmd();
+      assert(sendSelfSuccessful, "value must be set in beforeAll()");
+      const txhash = sendSelfSuccessful.hash;
+      const client = new CosmWasmClient(wasmd.endpoint);
+      const results = await client.searchTx({ sentFromOrTo: sendSelfSuccessful.recipient });
+
+      expect(Array.from(results).sort((tx1, tx2) => tx1.height - tx2.height)).toEqual(results);
+      expect(results.filter((result) => result.hash === txhash).length).toEqual(1);
     });
 
     it("can search by recipient and filter by minHeight", async () => {
