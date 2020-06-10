@@ -291,7 +291,7 @@ export class CosmWasmClient {
         this.txsQuery(receivedQuery),
       ])) as [IndexedTx[], IndexedTx[]];
 
-      txs = [];
+      let mergedTxs: readonly IndexedTx[] = [];
       /* eslint-disable @typescript-eslint/no-non-null-assertion */
       // sent/received are presorted
       while (sent.length && received.length) {
@@ -301,11 +301,11 @@ export class CosmWasmClient {
             : sent[0].height <= received[0].height
             ? sent.shift()!
             : received.shift()!;
-        txs = [...txs, next];
+        mergedTxs = [...mergedTxs, next];
       }
       /* eslint-enable @typescript-eslint/no-non-null-assertion */
       // At least one of sent/received is empty by now
-      txs = [...txs, ...sent, ...received];
+      txs = [...mergedTxs, ...sent, ...received];
     } else if (isSearchByTagsQuery(query)) {
       const rawQuery = withFilters(query.tags.map((t) => `${t.key}=${t.value}`).join("&"));
       txs = await this.txsQuery(rawQuery);
