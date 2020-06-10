@@ -1,4 +1,4 @@
-# CosmWasm JS
+# CosmJS
 
 This is a JavaScript/TypeScript client-side binding to [wasmd](https://github.com/cosmwasm/wasmd), a sample blockchain for the [cosmwasm](https://github.com/confio/cosmwasm) smart contracting platform.
 
