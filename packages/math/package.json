@@ -1,8 +1,10 @@
 {
   "name": "@cosmjs/math",
-  "version": "0.8.0",
+  "version": "0.20.0",
   "description": "Math helpers for blockchain projects",
-  "contributors": ["IOV SAS <admin@iov.one>"],
+  "contributors": [
+    "IOV SAS <admin@iov.one>"
+  ],
   "license": "Apache-2.0",
   "main": "build/index.js",
   "types": "types/index.d.ts",

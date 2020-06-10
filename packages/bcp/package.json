@@ -1,6 +1,6 @@
 {
   "name": "@iov/cosmos-sdk",
-  "version": "0.8.0",
+  "version": "0.20.0",
   "description": "Transaction codec and client to communicate with a Cosmos SDK 0.38 blockchain",
   "contributors": [
     "Ethan Frey <ethanfrey@users.noreply.github.com>",
@@ -37,11 +37,11 @@
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
   },
   "dependencies": {
-    "@cosmjs/crypto": "^0.8.0",
-    "@cosmjs/encoding": "^0.8.0",
-    "@cosmjs/math": "^0.8.0",
-    "@cosmjs/sdk38": "^0.8.0",
-    "@cosmjs/utils": "^0.8.0",
+    "@cosmjs/crypto": "^0.20.0",
+    "@cosmjs/encoding": "^0.20.0",
+    "@cosmjs/math": "^0.20.0",
+    "@cosmjs/sdk38": "^0.20.0",
+    "@cosmjs/utils": "^0.20.0",
     "@iov/bcp": "^2.3.2",
     "@iov/stream": "^2.3.2",
     "bn.js": "^5.1.1",
