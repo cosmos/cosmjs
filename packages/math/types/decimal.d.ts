@@ -23,4 +23,10 @@ export declare class Decimal {
    * Both values need to have the same fractional digits.
    */
   plus(b: Decimal): Decimal;
+  compare(b: Decimal): number;
+  equals(b: Decimal): boolean;
+  isLessThan(b: Decimal): boolean;
+  isLessThanOrEqual(b: Decimal): boolean;
+  isGreaterThan(b: Decimal): boolean;
+  isGreaterThanOrEqual(b: Decimal): boolean;
 }
