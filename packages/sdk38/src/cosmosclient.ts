@@ -1,5 +1,6 @@
 import { Sha256 } from "@cosmjs/crypto";
 import { fromBase64, fromHex, toHex } from "@cosmjs/encoding";
+import { Uint53 } from "@cosmjs/math";
 
 import { Coin } from "./coins";
 import { Log, parseLogs } from "./logs";
@@ -21,15 +22,15 @@ export interface Account {
   readonly sequence: number;
 }
 
-export interface PostTxFailureResult {
+export interface PostTxFailure {
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
-  readonly height: string;
+  readonly height: number;
   readonly code: number;
   readonly rawLog: string;
 }
 
-export interface PostTxSuccessResult {
+export interface PostTxSuccess {
   readonly logs: readonly Log[];
   readonly rawLog: string;
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
@@ -37,10 +38,10 @@ export interface PostTxSuccessResult {
   readonly data?: Uint8Array;
 }
 
-export type PostTxResult = PostTxSuccessResult | PostTxFailureResult;
+export type PostTxResult = PostTxSuccess | PostTxFailure;
 
-export function isPostTxFailureResult(postTxResult: PostTxResult): postTxResult is PostTxFailureResult {
-  return (postTxResult as PostTxFailureResult).code !== undefined;
+export function isPostTxFailure(postTxResult: PostTxResult): postTxResult is PostTxFailure {
+  return !!(postTxResult as PostTxFailure).code;
 }
 
 export interface SearchByIdQuery {
@@ -293,7 +294,7 @@ export class CosmosClient {
 
     return result.code !== undefined
       ? {
-          height: result.height,
+          height: Uint53.fromString(result.height).toNumber(),
           transactionHash: result.txhash,
           code: result.code,
           rawLog: result.raw_log || "",

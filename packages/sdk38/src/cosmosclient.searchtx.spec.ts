@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { Uint53 } from "@cosmjs/math";
 import { assert, sleep } from "@cosmjs/utils";
 
 import { Coin } from "./coins";
-import { CosmosClient, isPostTxFailureResult } from "./cosmosclient";
+import { CosmosClient, isPostTxFailure } from "./cosmosclient";
 import { makeSignBytes } from "./encoding";
 import { Secp256k1Pen } from "./pen";
 import { RestClient } from "./restclient";
@@ -106,12 +105,12 @@ describe("CosmosClient.searchTx", () => {
         };
         const transactionId = await client.getIdentifier(tx);
         const result = await client.postTx(tx.value);
-        if (isPostTxFailureResult(result)) {
+        if (isPostTxFailure(result)) {
           sendUnsuccessful = {
             sender: faucet.address,
             recipient: recipient,
             hash: transactionId,
-            height: Uint53.fromString(result.height).toNumber(),
+            height: result.height,
             tx: tx,
           };
         }

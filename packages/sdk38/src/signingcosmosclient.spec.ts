@@ -1,7 +1,7 @@
 import { assert } from "@cosmjs/utils";
 
 import { Coin } from "./coins";
-import { isPostTxFailureResult, PrivateCosmWasmClient } from "./cosmosclient";
+import { isPostTxFailure, PrivateCosmWasmClient } from "./cosmosclient";
 import { Secp256k1Pen } from "./pen";
 import { SigningCosmosClient } from "./signingcosmosclient";
 import { makeRandomAddress, pendingWithoutWasmd } from "./testutils.spec";
@@ -66,9 +66,7 @@ describe("SigningCosmosClient", () => {
 
       // send
       const result = await client.sendTokens(beneficiaryAddress, transferAmount, "for dinner");
-      if (isPostTxFailureResult(result)) {
-        throw new Error("Send tokens failed");
-      }
+      assert(!isPostTxFailure(result));
       const [firstLog] = result.logs;
       expect(firstLog).toBeTruthy();
 

@@ -4,7 +4,7 @@ import { assert, sleep } from "@cosmjs/utils";
 import { ReadonlyDate } from "readonly-date";
 
 import { rawSecp256k1PubkeyToAddress } from "./address";
-import { isPostTxFailureResult } from "./cosmosclient";
+import { isPostTxFailure } from "./cosmosclient";
 import { makeSignBytes } from "./encoding";
 import { parseLogs } from "./logs";
 import { makeCosmoshubPath, Secp256k1Pen } from "./pen";
@@ -277,9 +277,7 @@ describe("RestClient", () => {
           };
           const transactionId = await client.getIdentifier({ type: "cosmos-sdk/StdTx", value: signedTx });
           const result = await client.postTx(signedTx);
-          if (!isPostTxFailureResult(result)) {
-            throw new Error("Post tx succeeded unexpectedly");
-          }
+          assert(isPostTxFailure(result));
           unsuccessful = {
             sender: faucet.address,
             recipient: recipient,
