@@ -1,5 +1,5 @@
 {
-  "name": "@cosmjs/protobuf-demo",
+  "name": "@cosmjs/demo-protobuf",
   "private": true,
   "version": "0.20.0",
   "description": "Utilities for Cosmos SDK 0.38",
