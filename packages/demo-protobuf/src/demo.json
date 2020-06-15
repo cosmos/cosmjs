@@ -1,0 +1,12 @@
+{
+  "nested": {
+    "MsgDemo": {
+      "fields": {
+        "example": {
+          "type": "string",
+          "id": 1
+        }
+      }
+    }
+  }
+}
