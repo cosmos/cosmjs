@@ -92,6 +92,64 @@
     unique-filename "^1.1.1"
     which "^1.3.1"
 
+"@iov/crypto@^2.3.2":
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/@iov/crypto/-/crypto-2.3.2.tgz#0f65623d29d1df7e35620bbbeede70f1d0797ff9"
+  integrity sha512-inHHZa9kr+4K88ZhqOQC/LVlZBcZlE0Kkj97ynWGzaR4CCdCFa0KOkx2vef2CH0J6wbfC13e6b93/MuQyGiUAw==
+  dependencies:
+    "@iov/encoding" "^2.3.2"
+    bip39 "^3.0.2"
+    bn.js "^4.11.8"
+    elliptic "^6.4.0"
+    js-sha3 "^0.8.0"
+    libsodium-wrappers "^0.7.6"
+    pbkdf2 "^3.0.16"
+    ripemd160 "^2.0.2"
+    sha.js "^2.4.11"
+    type-tagger "^1.0.0"
+    unorm "^1.5.0"
+
+"@iov/encoding@^2.3.2":
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/@iov/encoding/-/encoding-2.3.2.tgz#4b37966af0345a6bc904bb58189dc1ea9d14ad9b"
+  integrity sha512-viioqo1flTkG4Oxb0PvoBXGozHq9fObAgAL4dRHJe9zmChE77EBX2Y5u0nabd2JwAhEbir56AtsrUe4dOrtd5w==
+  dependencies:
+    base64-js "^1.3.0"
+    bech32 "^1.1.4"
+    bn.js "^4.11.8"
+    readonly-date "^1.0.0"
+
+"@iov/jsonrpc@^2.3.2":
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/@iov/jsonrpc/-/jsonrpc-2.3.2.tgz#5cdfa56333741073cc00f17d54efb9f526b9705a"
+  integrity sha512-fPryTYZ4na1F/K0AF4eRjf1mwg97s8N/AgvELHyqpm7Bq9zvV0/ZBPvzjV1mqmPMfONx91qLIkpDguwmwEb8NA==
+  dependencies:
+    "@iov/encoding" "^2.3.2"
+    "@iov/stream" "^2.3.2"
+    xstream "^11.10.0"
+
+"@iov/socket@^2.3.2":
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/@iov/socket/-/socket-2.3.2.tgz#adc8ef389bafc5380e1c7415fb21f9a890d79195"
+  integrity sha512-LMIVGhYNvEdctHwjprVYv5QnDxXLNNZ9ASU0IRlsjHsMNR1Tcy+FsdqqQ5PJlW1r/r92dHLCfV9IKXucg/h8rQ==
+  dependencies:
+    "@iov/stream" "^2.3.2"
+    isomorphic-ws "^4.0.1"
+    ws "^6.2.0"
+    xstream "^11.10.0"
+
+"@iov/stream@^2.3.2":
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/@iov/stream/-/stream-2.3.2.tgz#472063f3a4fcd1e97de0ae99189f98b94825afac"
+  integrity sha512-nOq5OKwK2rWnyzXpGTAKZToCU0jmTjEC05owVzmBfw3+7hmjlExrGGbLncjcMWzbvp2VVpHc2l01Tr+qpzr8Vw==
+  dependencies:
+    xstream "^11.10.0"
+
+"@iov/utils@^2.3.2":
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/@iov/utils/-/utils-2.3.2.tgz#a499ec304b4febaeb3af309dedbb30e14a09c91e"
+  integrity sha512-mtdZ8zh/LGjwA72HofOc8JF3KN1Rc1jwaQATePLDwIIJRw0AJXx2GLRBBRjja41huuw9ND0E2mQWlYLtYsNnUA==
+
 "@koa/cors@^3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@koa/cors/-/cors-3.0.0.tgz#df021b4df2dadf1e2b04d7c8ddf93ba2d42519cb"
@@ -4649,6 +4707,11 @@ isobject@^4.0.0:
   resolved "https://registry.yarnpkg.com/isobject/-/isobject-4.0.0.tgz#3f1c9155e73b192022a80819bacd0343711697b0"
   integrity sha512-S/2fF5wH8SJA/kmwr6HYhK/RI/OkhD84k8ntalo0iJjZikgq1XFvR5M8NPT1x5F7fBwCG3qHfnzeP/Vh/ZxCUA==
 
+isomorphic-ws@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/isomorphic-ws/-/isomorphic-ws-4.0.1.tgz#55fd4cd6c5e6491e76dc125938dd863f5cd4f2dc"
+  integrity sha512-BhBvN2MBpWTaSHdWRb/bwdZJ1WaehQ2L1KngkCkfLUGF0mAWAT1sQUQacEmQ0jXkFw/czDXPNQSL5u2/Krsz1w==
+
 isstream@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
@@ -8078,6 +8141,13 @@ write@1.0.3:
   dependencies:
     mkdirp "^0.5.1"
 
+ws@^6.2.0:
+  version "6.2.1"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-6.2.1.tgz#442fdf0a47ed64f59b6a5d8ff130f4748ed524fb"
+  integrity sha512-GIyAXC2cB7LjvpgMt9EKS2ldqr0MTrORaleiOno6TweZ6r3TKtoFQWay/2PceJ3RuBasOHzXNn5Lrw1X0bEjqA==
+  dependencies:
+    async-limiter "~1.0.0"
+
 ws@^7.1.2:
   version "7.3.0"
   resolved "https://registry.yarnpkg.com/ws/-/ws-7.3.0.tgz#4b2f7f219b3d3737bc1a2fbf145d825b94d38ffd"
@@ -8094,6 +8164,13 @@ xmlhttprequest-ssl@~1.5.4:
   version "1.5.5"
   resolved "https://registry.yarnpkg.com/xmlhttprequest-ssl/-/xmlhttprequest-ssl-1.5.5.tgz#c2876b06168aadc40e57d97e81191ac8f4398b3e"
   integrity sha1-wodrBhaKrcQOV9l+gRkayPQ5iz4=
+
+xstream@^11.10.0:
+  version "11.12.0"
+  resolved "https://registry.yarnpkg.com/xstream/-/xstream-11.12.0.tgz#a85fded069cc8ac3aedc9538e5d94ab6d0ce845a"
+  integrity sha512-rceZqhyRPJdmDNh8hyFEnOacNrL4pTVkNZzoLvFqOVaIZHbM3bS15ycqI5V9eJXCRMfgEapwzcNzPjkIRUkv2Q==
+  dependencies:
+    symbol-observable "1.2.0"
 
 xstream@^11.11.0:
   version "11.11.0"
