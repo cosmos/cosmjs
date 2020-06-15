@@ -16,9 +16,7 @@ automatically, and call:
 ```ts
 import { Client } from "@iov/tendermint-rpc";
 
-const client = await Client.connect(
-  "ws://rpc-private-a-x-exchangenet.iov.one:16657",
-);
+const client = await Client.connect("ws://rpc-private-a-x-exchangenet.iov.one:16657");
 
 const genesis = await client.genesis();
 const status = await client.status();
@@ -69,7 +67,7 @@ and another for decoding
 [Responses](https://iov-one.github.io/iov-core-docs/latest/iov-tendermint-rpc/classes/responses.html).
 The Tendermint version-specific functionality is implemented in global objects
 (like e.g.
-[v0_31](https://iov-one.github.io/iov-core-docs/latest/iov-tendermint-rpc/globals.html#v0_31)).
+[v0_32](https://iov-one.github.io/iov-core-docs/latest/iov-tendermint-rpc/globals.html#v0_32)).
 This knowledge is mainly for those who want to add support for new versions,
 which should be added to the
 [auto-detect method](https://iov-one.github.io/iov-core-docs/latest/iov-tendermint-rpc/classes/client.html#detectversion).
