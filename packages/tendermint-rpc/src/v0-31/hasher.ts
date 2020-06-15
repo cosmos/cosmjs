@@ -1,4 +1,4 @@
-import { Sha256 } from "@iov/crypto";
+import { Sha256 } from "@cosmjs/crypto";
 
 import { encodeBlockId, encodeBytes, encodeInt, encodeString, encodeTime, encodeVersion } from "../encodings";
 import { Header } from "../responses";

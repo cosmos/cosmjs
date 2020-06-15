@@ -92,23 +92,6 @@
     unique-filename "^1.1.1"
     which "^1.3.1"
 
-"@iov/crypto@^2.3.2":
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/@iov/crypto/-/crypto-2.3.2.tgz#0f65623d29d1df7e35620bbbeede70f1d0797ff9"
-  integrity sha512-inHHZa9kr+4K88ZhqOQC/LVlZBcZlE0Kkj97ynWGzaR4CCdCFa0KOkx2vef2CH0J6wbfC13e6b93/MuQyGiUAw==
-  dependencies:
-    "@iov/encoding" "^2.3.2"
-    bip39 "^3.0.2"
-    bn.js "^4.11.8"
-    elliptic "^6.4.0"
-    js-sha3 "^0.8.0"
-    libsodium-wrappers "^0.7.6"
-    pbkdf2 "^3.0.16"
-    ripemd160 "^2.0.2"
-    sha.js "^2.4.11"
-    type-tagger "^1.0.0"
-    unorm "^1.5.0"
-
 "@iov/encoding@^2.3.2":
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/@iov/encoding/-/encoding-2.3.2.tgz#4b37966af0345a6bc904bb58189dc1ea9d14ad9b"
