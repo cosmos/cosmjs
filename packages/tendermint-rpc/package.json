@@ -49,6 +49,6 @@
     "xstream": "^11.10.0"
   },
   "devDependencies": {
-    "@iov/utils": "^2.3.2"
+    "@cosmjs/utils": "^0.20.0"
   }
 }

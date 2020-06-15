@@ -128,11 +128,6 @@
   dependencies:
     xstream "^11.10.0"
 
-"@iov/utils@^2.3.2":
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/@iov/utils/-/utils-2.3.2.tgz#a499ec304b4febaeb3af309dedbb30e14a09c91e"
-  integrity sha512-mtdZ8zh/LGjwA72HofOc8JF3KN1Rc1jwaQATePLDwIIJRw0AJXx2GLRBBRjja41huuw9ND0E2mQWlYLtYsNnUA==
-
 "@koa/cors@^3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@koa/cors/-/cors-3.0.0.tgz#df021b4df2dadf1e2b04d7c8ddf93ba2d42519cb"

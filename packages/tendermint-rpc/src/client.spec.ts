@@ -1,7 +1,7 @@
 // tslint:disable:readonly-array
 import { toAscii } from "@cosmjs/encoding";
+import { sleep } from "@cosmjs/utils";
 import { firstEvent, toListPromise } from "@iov/stream";
-import { sleep } from "@iov/utils";
 import { ReadonlyDate } from "readonly-date";
 import { Stream } from "xstream";
 
