@@ -1,4 +1,4 @@
-import { fromBase64, fromHex } from "@iov/encoding";
+import { fromBase64, fromHex } from "@cosmjs/encoding";
 import { ReadonlyDate } from "readonly-date";
 
 import { ReadonlyDateWithNanoseconds } from "../responses";

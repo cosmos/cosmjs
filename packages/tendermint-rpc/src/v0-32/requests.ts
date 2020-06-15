@@ -1,4 +1,4 @@
-import { toHex } from "@iov/encoding";
+import { toHex } from "@cosmjs/encoding";
 import { JsonRpcRequest } from "@iov/jsonrpc";
 
 import { assertNotEmpty, Base64, Base64String, HexString, Integer, IntegerString, may } from "../encodings";

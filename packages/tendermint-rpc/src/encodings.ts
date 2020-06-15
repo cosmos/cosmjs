@@ -1,4 +1,5 @@
-import { fromBase64, fromHex, fromRfc3339, Int53, toBase64, toHex, toUtf8 } from "@iov/encoding";
+import { fromBase64, fromHex, fromRfc3339, toBase64, toHex, toUtf8 } from "@cosmjs/encoding";
+import { Int53 } from "@cosmjs/math";
 import { As } from "type-tagger";
 
 import { BlockId, ReadonlyDateWithNanoseconds, Version } from "./responses";
