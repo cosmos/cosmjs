@@ -34,7 +34,7 @@ describe("protobuf demo", () => {
     });
     const msgSendBytes = MsgSend.encode(msgSend).finish();
     const msgSendWrapped = Any.create({
-      type_url: "cosmos_sdk/cosmos.bank.MsgSend",
+      type_url: "/cosmos.bank.MsgSend",
       value: msgSendBytes,
     });
     const txBody = TxBody.create({
@@ -59,7 +59,7 @@ describe("protobuf demo", () => {
 
   it("works with dynamically loaded proto files", () => {
     const { root } = protobuf.parse(demoProto);
-    const typeUrl = "demo/demo.MsgDemo";
+    const typeUrl = "/demo.MsgDemo";
     const encoder = root.lookupType(getTypeName(typeUrl));
     const msgDemo = (encoder.create({
       example: "Some example text",
@@ -90,7 +90,7 @@ describe("protobuf demo", () => {
 
   it("works with dynamically loaded json files", () => {
     const root = protobuf.Root.fromJSON(demoJson);
-    const typeUrl = "demo/demo.MsgDemo";
+    const typeUrl = "/demo.MsgDemo";
     const encoder = root.lookupType(getTypeName(typeUrl));
     const msgDemo = (encoder.create({
       example: "Some example text",
@@ -120,7 +120,7 @@ describe("protobuf demo", () => {
   });
 
   it("works with reflection", () => {
-    const typeUrl = "demo/demo.MsgDemo";
+    const typeUrl = "/demo.MsgDemo";
     const encoder = reflectionRoot.lookupType(getTypeName(typeUrl));
     const msgDemo = (encoder.create({
       example: "Some example text",
