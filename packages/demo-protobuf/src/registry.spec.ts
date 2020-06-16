@@ -39,13 +39,13 @@ describe("registry demo", () => {
     });
     const txBodyBytes = TxBody.encode(txBody).finish();
 
-    const txBodyDecoded = (TxBody.decode(txBodyBytes) as unknown) as cosmosSdk.tx.v1.TxBody;
+    const txBodyDecoded = TxBody.decode(txBodyBytes);
     const msg = txBodyDecoded.messages[0];
     assert(msg.type_url);
     assert(msg.value);
 
     const decoder = registry.lookupType(msg.type_url)!;
-    const msgSendDecoded = (decoder.decode(msg.value) as unknown) as cosmosSdk.x.bank.v1.MsgSend;
+    const msgSendDecoded = decoder.decode(msg.value);
 
     // fromAddress and toAddress are now Buffers
     expect(Uint8Array.from(msgSendDecoded.fromAddress)).toEqual(msgSend.fromAddress);
@@ -60,9 +60,9 @@ describe("registry demo", () => {
     const TxBody = registry.lookupType("/cosmos.tx.TxBody")!;
     const Any = registry.lookupType("/google.protobuf.Any")!;
 
-    const msgDemo = (MsgDemo.create({
+    const msgDemo = MsgDemo.create({
       example: "Some example text",
-    }) as unknown) as MsgDemo;
+    });
     const msgDemoBytes = MsgDemo.encode(msgDemo).finish();
     const msgDemoWrapped = Any.create({
       type_url: typeUrl,
@@ -76,13 +76,13 @@ describe("registry demo", () => {
     });
     const txBodyBytes = TxBody.encode(txBody).finish();
 
-    const txBodyDecoded = (TxBody.decode(txBodyBytes) as unknown) as cosmosSdk.tx.v1.TxBody;
+    const txBodyDecoded = TxBody.decode(txBodyBytes);
     const msg = txBodyDecoded.messages[0];
     assert(msg.type_url);
     assert(msg.value);
 
     const decoder = registry.lookupType(msg.type_url)!;
-    const msgDemoDecoded = (decoder.decode(msg.value) as unknown) as MsgDemo;
+    const msgDemoDecoded = decoder.decode(msg.value);
     expect(msgDemoDecoded.example).toEqual(msgDemo.example);
   });
 });
