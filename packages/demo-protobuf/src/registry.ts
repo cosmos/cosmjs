@@ -2,7 +2,7 @@ import protobuf from "protobufjs";
 
 import { cosmos_sdk as cosmosSdk, google } from "./generated/codecimpl";
 
-interface GeneratedType {
+export interface GeneratedType {
   readonly create: (properties?: { [k: string]: any }) => any;
   readonly encode: (message: any | { [k: string]: any }, writer?: protobuf.Writer) => protobuf.Writer;
   readonly decode: (reader: protobuf.Reader | Uint8Array, length?: number) => any;
