@@ -14,6 +14,7 @@ interface GeneratedType {
 export declare class Registry {
   private readonly types;
   constructor(customTypes?: Iterable<[string, GeneratedType]>);
+  register(name: string, type: GeneratedType): void;
   lookupType(name: string): GeneratedType | undefined;
 }
 export {};

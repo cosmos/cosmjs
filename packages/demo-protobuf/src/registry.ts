@@ -21,6 +21,10 @@ export class Registry {
     ]);
   }
 
+  public register(name: string, type: GeneratedType): void {
+    this.types.set(name, type);
+  }
+
   public lookupType(name: string): GeneratedType | undefined {
     return this.types.get(name);
   }
