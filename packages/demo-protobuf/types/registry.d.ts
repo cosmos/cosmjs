@@ -1,5 +1,5 @@
 import protobuf from "protobufjs";
-interface GeneratedType {
+export interface GeneratedType {
   readonly create: (properties?: { [k: string]: any }) => any;
   readonly encode: (
     message:
@@ -17,4 +17,3 @@ export declare class Registry {
   register(name: string, type: GeneratedType): void;
   lookupType(name: string): GeneratedType | undefined;
 }
-export {};
