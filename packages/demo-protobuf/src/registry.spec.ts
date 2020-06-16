@@ -65,7 +65,7 @@ describe("registry demo", () => {
     }) as unknown) as MsgDemo;
     const msgDemoBytes = MsgDemo.encode(msgDemo).finish();
     const msgDemoWrapped = Any.create({
-      type_url: "/demo.MsgDemo",
+      type_url: typeUrl,
       value: msgDemoBytes,
     });
     const txBody = TxBody.create({
