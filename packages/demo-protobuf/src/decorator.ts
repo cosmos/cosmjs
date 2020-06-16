@@ -17,8 +17,12 @@ function CosmosMessage(registry: Registry, typeUrl: string): TypeDecorator<any> 
   };
 }
 
+const CosmosField = {
+  String: (id: number) => Field.d(id, "string"),
+};
+
 @CosmosMessage(myRegistry, "/demo.MsgDemo")
 export class MsgDemo extends Message<{}> {
-  @Field.d(1, "string")
+  @CosmosField.String(1)
   public readonly example: string = "";
 }
