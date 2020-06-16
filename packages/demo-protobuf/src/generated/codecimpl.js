@@ -18,1526 +18,1660 @@ $root.cosmos_sdk = (function() {
      */
     var cosmos_sdk = {};
 
-    cosmos_sdk.codec = (function() {
+    cosmos_sdk.x = (function() {
 
         /**
-         * Namespace codec.
+         * Namespace x.
          * @memberof cosmos_sdk
          * @namespace
          */
-        var codec = {};
+        var x = {};
 
-        codec.v1 = (function() {
+        x.bank = (function() {
 
             /**
-             * Namespace v1.
-             * @memberof cosmos_sdk.codec
+             * Namespace bank.
+             * @memberof cosmos_sdk.x
              * @namespace
              */
-            var v1 = {};
+            var bank = {};
 
-            v1.Dog = (function() {
-
-                /**
-                 * Properties of a Dog.
-                 * @memberof cosmos_sdk.codec.v1
-                 * @interface IDog
-                 * @property {string|null} [size] Dog size
-                 * @property {string|null} [name] Dog name
-                 */
+            bank.v1 = (function() {
 
                 /**
-                 * Constructs a new Dog.
-                 * @memberof cosmos_sdk.codec.v1
-                 * @classdesc Represents a Dog.
-                 * @implements IDog
-                 * @constructor
-                 * @param {cosmos_sdk.codec.v1.IDog=} [p] Properties to set
+                 * Namespace v1.
+                 * @memberof cosmos_sdk.x.bank
+                 * @namespace
                  */
-                function Dog(p) {
-                    if (p)
-                        for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                            if (p[ks[i]] != null)
-                                this[ks[i]] = p[ks[i]];
-                }
+                var v1 = {};
 
-                /**
-                 * Dog size.
-                 * @member {string} size
-                 * @memberof cosmos_sdk.codec.v1.Dog
-                 * @instance
-                 */
-                Dog.prototype.size = "";
+                v1.MsgSend = (function() {
 
-                /**
-                 * Dog name.
-                 * @member {string} name
-                 * @memberof cosmos_sdk.codec.v1.Dog
-                 * @instance
-                 */
-                Dog.prototype.name = "";
+                    /**
+                     * Properties of a MsgSend.
+                     * @memberof cosmos_sdk.x.bank.v1
+                     * @interface IMsgSend
+                     * @property {Uint8Array|null} [fromAddress] MsgSend fromAddress
+                     * @property {Uint8Array|null} [toAddress] MsgSend toAddress
+                     * @property {Array.<cosmos_sdk.v1.ICoin>|null} [amount] MsgSend amount
+                     */
 
-                /**
-                 * Creates a new Dog instance using the specified properties.
-                 * @function create
-                 * @memberof cosmos_sdk.codec.v1.Dog
-                 * @static
-                 * @param {cosmos_sdk.codec.v1.IDog=} [properties] Properties to set
-                 * @returns {cosmos_sdk.codec.v1.Dog} Dog instance
-                 */
-                Dog.create = function create(properties) {
-                    return new Dog(properties);
-                };
-
-                /**
-                 * Encodes the specified Dog message. Does not implicitly {@link cosmos_sdk.codec.v1.Dog.verify|verify} messages.
-                 * @function encode
-                 * @memberof cosmos_sdk.codec.v1.Dog
-                 * @static
-                 * @param {cosmos_sdk.codec.v1.IDog} m Dog message or plain object to encode
-                 * @param {$protobuf.Writer} [w] Writer to encode to
-                 * @returns {$protobuf.Writer} Writer
-                 */
-                Dog.encode = function encode(m, w) {
-                    if (!w)
-                        w = $Writer.create();
-                    if (m.size != null && Object.hasOwnProperty.call(m, "size"))
-                        w.uint32(10).string(m.size);
-                    if (m.name != null && Object.hasOwnProperty.call(m, "name"))
-                        w.uint32(18).string(m.name);
-                    return w;
-                };
-
-                /**
-                 * Decodes a Dog message from the specified reader or buffer.
-                 * @function decode
-                 * @memberof cosmos_sdk.codec.v1.Dog
-                 * @static
-                 * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                 * @param {number} [l] Message length if known beforehand
-                 * @returns {cosmos_sdk.codec.v1.Dog} Dog
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                Dog.decode = function decode(r, l) {
-                    if (!(r instanceof $Reader))
-                        r = $Reader.create(r);
-                    var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.codec.v1.Dog();
-                    while (r.pos < c) {
-                        var t = r.uint32();
-                        switch (t >>> 3) {
-                        case 1:
-                            m.size = r.string();
-                            break;
-                        case 2:
-                            m.name = r.string();
-                            break;
-                        default:
-                            r.skipType(t & 7);
-                            break;
-                        }
+                    /**
+                     * Constructs a new MsgSend.
+                     * @memberof cosmos_sdk.x.bank.v1
+                     * @classdesc Represents a MsgSend.
+                     * @implements IMsgSend
+                     * @constructor
+                     * @param {cosmos_sdk.x.bank.v1.IMsgSend=} [p] Properties to set
+                     */
+                    function MsgSend(p) {
+                        this.amount = [];
+                        if (p)
+                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+                                if (p[ks[i]] != null)
+                                    this[ks[i]] = p[ks[i]];
                     }
-                    return m;
-                };
 
-                return Dog;
-            })();
+                    /**
+                     * MsgSend fromAddress.
+                     * @member {Uint8Array} fromAddress
+                     * @memberof cosmos_sdk.x.bank.v1.MsgSend
+                     * @instance
+                     */
+                    MsgSend.prototype.fromAddress = $util.newBuffer([]);
 
-            v1.Cat = (function() {
+                    /**
+                     * MsgSend toAddress.
+                     * @member {Uint8Array} toAddress
+                     * @memberof cosmos_sdk.x.bank.v1.MsgSend
+                     * @instance
+                     */
+                    MsgSend.prototype.toAddress = $util.newBuffer([]);
 
-                /**
-                 * Properties of a Cat.
-                 * @memberof cosmos_sdk.codec.v1
-                 * @interface ICat
-                 * @property {string|null} [moniker] Cat moniker
-                 * @property {number|null} [lives] Cat lives
-                 */
+                    /**
+                     * MsgSend amount.
+                     * @member {Array.<cosmos_sdk.v1.ICoin>} amount
+                     * @memberof cosmos_sdk.x.bank.v1.MsgSend
+                     * @instance
+                     */
+                    MsgSend.prototype.amount = $util.emptyArray;
 
-                /**
-                 * Constructs a new Cat.
-                 * @memberof cosmos_sdk.codec.v1
-                 * @classdesc Represents a Cat.
-                 * @implements ICat
-                 * @constructor
-                 * @param {cosmos_sdk.codec.v1.ICat=} [p] Properties to set
-                 */
-                function Cat(p) {
-                    if (p)
-                        for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                            if (p[ks[i]] != null)
-                                this[ks[i]] = p[ks[i]];
-                }
+                    /**
+                     * Creates a new MsgSend instance using the specified properties.
+                     * @function create
+                     * @memberof cosmos_sdk.x.bank.v1.MsgSend
+                     * @static
+                     * @param {cosmos_sdk.x.bank.v1.IMsgSend=} [properties] Properties to set
+                     * @returns {cosmos_sdk.x.bank.v1.MsgSend} MsgSend instance
+                     */
+                    MsgSend.create = function create(properties) {
+                        return new MsgSend(properties);
+                    };
 
-                /**
-                 * Cat moniker.
-                 * @member {string} moniker
-                 * @memberof cosmos_sdk.codec.v1.Cat
-                 * @instance
-                 */
-                Cat.prototype.moniker = "";
-
-                /**
-                 * Cat lives.
-                 * @member {number} lives
-                 * @memberof cosmos_sdk.codec.v1.Cat
-                 * @instance
-                 */
-                Cat.prototype.lives = 0;
-
-                /**
-                 * Creates a new Cat instance using the specified properties.
-                 * @function create
-                 * @memberof cosmos_sdk.codec.v1.Cat
-                 * @static
-                 * @param {cosmos_sdk.codec.v1.ICat=} [properties] Properties to set
-                 * @returns {cosmos_sdk.codec.v1.Cat} Cat instance
-                 */
-                Cat.create = function create(properties) {
-                    return new Cat(properties);
-                };
-
-                /**
-                 * Encodes the specified Cat message. Does not implicitly {@link cosmos_sdk.codec.v1.Cat.verify|verify} messages.
-                 * @function encode
-                 * @memberof cosmos_sdk.codec.v1.Cat
-                 * @static
-                 * @param {cosmos_sdk.codec.v1.ICat} m Cat message or plain object to encode
-                 * @param {$protobuf.Writer} [w] Writer to encode to
-                 * @returns {$protobuf.Writer} Writer
-                 */
-                Cat.encode = function encode(m, w) {
-                    if (!w)
-                        w = $Writer.create();
-                    if (m.moniker != null && Object.hasOwnProperty.call(m, "moniker"))
-                        w.uint32(10).string(m.moniker);
-                    if (m.lives != null && Object.hasOwnProperty.call(m, "lives"))
-                        w.uint32(16).int32(m.lives);
-                    return w;
-                };
-
-                /**
-                 * Decodes a Cat message from the specified reader or buffer.
-                 * @function decode
-                 * @memberof cosmos_sdk.codec.v1.Cat
-                 * @static
-                 * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                 * @param {number} [l] Message length if known beforehand
-                 * @returns {cosmos_sdk.codec.v1.Cat} Cat
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                Cat.decode = function decode(r, l) {
-                    if (!(r instanceof $Reader))
-                        r = $Reader.create(r);
-                    var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.codec.v1.Cat();
-                    while (r.pos < c) {
-                        var t = r.uint32();
-                        switch (t >>> 3) {
-                        case 1:
-                            m.moniker = r.string();
-                            break;
-                        case 2:
-                            m.lives = r.int32();
-                            break;
-                        default:
-                            r.skipType(t & 7);
-                            break;
+                    /**
+                     * Encodes the specified MsgSend message. Does not implicitly {@link cosmos_sdk.x.bank.v1.MsgSend.verify|verify} messages.
+                     * @function encode
+                     * @memberof cosmos_sdk.x.bank.v1.MsgSend
+                     * @static
+                     * @param {cosmos_sdk.x.bank.v1.IMsgSend} m MsgSend message or plain object to encode
+                     * @param {$protobuf.Writer} [w] Writer to encode to
+                     * @returns {$protobuf.Writer} Writer
+                     */
+                    MsgSend.encode = function encode(m, w) {
+                        if (!w)
+                            w = $Writer.create();
+                        if (m.fromAddress != null && Object.hasOwnProperty.call(m, "fromAddress"))
+                            w.uint32(10).bytes(m.fromAddress);
+                        if (m.toAddress != null && Object.hasOwnProperty.call(m, "toAddress"))
+                            w.uint32(18).bytes(m.toAddress);
+                        if (m.amount != null && m.amount.length) {
+                            for (var i = 0; i < m.amount.length; ++i)
+                                $root.cosmos_sdk.v1.Coin.encode(m.amount[i], w.uint32(26).fork()).ldelim();
                         }
-                    }
-                    return m;
-                };
+                        return w;
+                    };
 
-                return Cat;
-            })();
-
-            v1.HasAnimal = (function() {
-
-                /**
-                 * Properties of a HasAnimal.
-                 * @memberof cosmos_sdk.codec.v1
-                 * @interface IHasAnimal
-                 * @property {google.protobuf.IAny|null} [animal] HasAnimal animal
-                 * @property {number|Long|null} [x] HasAnimal x
-                 */
-
-                /**
-                 * Constructs a new HasAnimal.
-                 * @memberof cosmos_sdk.codec.v1
-                 * @classdesc Represents a HasAnimal.
-                 * @implements IHasAnimal
-                 * @constructor
-                 * @param {cosmos_sdk.codec.v1.IHasAnimal=} [p] Properties to set
-                 */
-                function HasAnimal(p) {
-                    if (p)
-                        for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                            if (p[ks[i]] != null)
-                                this[ks[i]] = p[ks[i]];
-                }
-
-                /**
-                 * HasAnimal animal.
-                 * @member {google.protobuf.IAny|null|undefined} animal
-                 * @memberof cosmos_sdk.codec.v1.HasAnimal
-                 * @instance
-                 */
-                HasAnimal.prototype.animal = null;
-
-                /**
-                 * HasAnimal x.
-                 * @member {number|Long} x
-                 * @memberof cosmos_sdk.codec.v1.HasAnimal
-                 * @instance
-                 */
-                HasAnimal.prototype.x = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
-
-                /**
-                 * Creates a new HasAnimal instance using the specified properties.
-                 * @function create
-                 * @memberof cosmos_sdk.codec.v1.HasAnimal
-                 * @static
-                 * @param {cosmos_sdk.codec.v1.IHasAnimal=} [properties] Properties to set
-                 * @returns {cosmos_sdk.codec.v1.HasAnimal} HasAnimal instance
-                 */
-                HasAnimal.create = function create(properties) {
-                    return new HasAnimal(properties);
-                };
-
-                /**
-                 * Encodes the specified HasAnimal message. Does not implicitly {@link cosmos_sdk.codec.v1.HasAnimal.verify|verify} messages.
-                 * @function encode
-                 * @memberof cosmos_sdk.codec.v1.HasAnimal
-                 * @static
-                 * @param {cosmos_sdk.codec.v1.IHasAnimal} m HasAnimal message or plain object to encode
-                 * @param {$protobuf.Writer} [w] Writer to encode to
-                 * @returns {$protobuf.Writer} Writer
-                 */
-                HasAnimal.encode = function encode(m, w) {
-                    if (!w)
-                        w = $Writer.create();
-                    if (m.animal != null && Object.hasOwnProperty.call(m, "animal"))
-                        $root.google.protobuf.Any.encode(m.animal, w.uint32(10).fork()).ldelim();
-                    if (m.x != null && Object.hasOwnProperty.call(m, "x"))
-                        w.uint32(16).int64(m.x);
-                    return w;
-                };
-
-                /**
-                 * Decodes a HasAnimal message from the specified reader or buffer.
-                 * @function decode
-                 * @memberof cosmos_sdk.codec.v1.HasAnimal
-                 * @static
-                 * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                 * @param {number} [l] Message length if known beforehand
-                 * @returns {cosmos_sdk.codec.v1.HasAnimal} HasAnimal
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                HasAnimal.decode = function decode(r, l) {
-                    if (!(r instanceof $Reader))
-                        r = $Reader.create(r);
-                    var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.codec.v1.HasAnimal();
-                    while (r.pos < c) {
-                        var t = r.uint32();
-                        switch (t >>> 3) {
-                        case 1:
-                            m.animal = $root.google.protobuf.Any.decode(r, r.uint32());
-                            break;
-                        case 2:
-                            m.x = r.int64();
-                            break;
-                        default:
-                            r.skipType(t & 7);
-                            break;
+                    /**
+                     * Decodes a MsgSend message from the specified reader or buffer.
+                     * @function decode
+                     * @memberof cosmos_sdk.x.bank.v1.MsgSend
+                     * @static
+                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
+                     * @param {number} [l] Message length if known beforehand
+                     * @returns {cosmos_sdk.x.bank.v1.MsgSend} MsgSend
+                     * @throws {Error} If the payload is not a reader or valid buffer
+                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                     */
+                    MsgSend.decode = function decode(r, l) {
+                        if (!(r instanceof $Reader))
+                            r = $Reader.create(r);
+                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.bank.v1.MsgSend();
+                        while (r.pos < c) {
+                            var t = r.uint32();
+                            switch (t >>> 3) {
+                            case 1:
+                                m.fromAddress = r.bytes();
+                                break;
+                            case 2:
+                                m.toAddress = r.bytes();
+                                break;
+                            case 3:
+                                if (!(m.amount && m.amount.length))
+                                    m.amount = [];
+                                m.amount.push($root.cosmos_sdk.v1.Coin.decode(r, r.uint32()));
+                                break;
+                            default:
+                                r.skipType(t & 7);
+                                break;
+                            }
                         }
+                        return m;
+                    };
+
+                    return MsgSend;
+                })();
+
+                v1.Input = (function() {
+
+                    /**
+                     * Properties of an Input.
+                     * @memberof cosmos_sdk.x.bank.v1
+                     * @interface IInput
+                     * @property {Uint8Array|null} [address] Input address
+                     * @property {Array.<cosmos_sdk.v1.ICoin>|null} [coins] Input coins
+                     */
+
+                    /**
+                     * Constructs a new Input.
+                     * @memberof cosmos_sdk.x.bank.v1
+                     * @classdesc Represents an Input.
+                     * @implements IInput
+                     * @constructor
+                     * @param {cosmos_sdk.x.bank.v1.IInput=} [p] Properties to set
+                     */
+                    function Input(p) {
+                        this.coins = [];
+                        if (p)
+                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+                                if (p[ks[i]] != null)
+                                    this[ks[i]] = p[ks[i]];
                     }
-                    return m;
-                };
 
-                return HasAnimal;
-            })();
+                    /**
+                     * Input address.
+                     * @member {Uint8Array} address
+                     * @memberof cosmos_sdk.x.bank.v1.Input
+                     * @instance
+                     */
+                    Input.prototype.address = $util.newBuffer([]);
 
-            v1.HasHasAnimal = (function() {
+                    /**
+                     * Input coins.
+                     * @member {Array.<cosmos_sdk.v1.ICoin>} coins
+                     * @memberof cosmos_sdk.x.bank.v1.Input
+                     * @instance
+                     */
+                    Input.prototype.coins = $util.emptyArray;
 
-                /**
-                 * Properties of a HasHasAnimal.
-                 * @memberof cosmos_sdk.codec.v1
-                 * @interface IHasHasAnimal
-                 * @property {google.protobuf.IAny|null} [hasAnimal] HasHasAnimal hasAnimal
-                 */
+                    /**
+                     * Creates a new Input instance using the specified properties.
+                     * @function create
+                     * @memberof cosmos_sdk.x.bank.v1.Input
+                     * @static
+                     * @param {cosmos_sdk.x.bank.v1.IInput=} [properties] Properties to set
+                     * @returns {cosmos_sdk.x.bank.v1.Input} Input instance
+                     */
+                    Input.create = function create(properties) {
+                        return new Input(properties);
+                    };
 
-                /**
-                 * Constructs a new HasHasAnimal.
-                 * @memberof cosmos_sdk.codec.v1
-                 * @classdesc Represents a HasHasAnimal.
-                 * @implements IHasHasAnimal
-                 * @constructor
-                 * @param {cosmos_sdk.codec.v1.IHasHasAnimal=} [p] Properties to set
-                 */
-                function HasHasAnimal(p) {
-                    if (p)
-                        for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                            if (p[ks[i]] != null)
-                                this[ks[i]] = p[ks[i]];
-                }
-
-                /**
-                 * HasHasAnimal hasAnimal.
-                 * @member {google.protobuf.IAny|null|undefined} hasAnimal
-                 * @memberof cosmos_sdk.codec.v1.HasHasAnimal
-                 * @instance
-                 */
-                HasHasAnimal.prototype.hasAnimal = null;
-
-                /**
-                 * Creates a new HasHasAnimal instance using the specified properties.
-                 * @function create
-                 * @memberof cosmos_sdk.codec.v1.HasHasAnimal
-                 * @static
-                 * @param {cosmos_sdk.codec.v1.IHasHasAnimal=} [properties] Properties to set
-                 * @returns {cosmos_sdk.codec.v1.HasHasAnimal} HasHasAnimal instance
-                 */
-                HasHasAnimal.create = function create(properties) {
-                    return new HasHasAnimal(properties);
-                };
-
-                /**
-                 * Encodes the specified HasHasAnimal message. Does not implicitly {@link cosmos_sdk.codec.v1.HasHasAnimal.verify|verify} messages.
-                 * @function encode
-                 * @memberof cosmos_sdk.codec.v1.HasHasAnimal
-                 * @static
-                 * @param {cosmos_sdk.codec.v1.IHasHasAnimal} m HasHasAnimal message or plain object to encode
-                 * @param {$protobuf.Writer} [w] Writer to encode to
-                 * @returns {$protobuf.Writer} Writer
-                 */
-                HasHasAnimal.encode = function encode(m, w) {
-                    if (!w)
-                        w = $Writer.create();
-                    if (m.hasAnimal != null && Object.hasOwnProperty.call(m, "hasAnimal"))
-                        $root.google.protobuf.Any.encode(m.hasAnimal, w.uint32(10).fork()).ldelim();
-                    return w;
-                };
-
-                /**
-                 * Decodes a HasHasAnimal message from the specified reader or buffer.
-                 * @function decode
-                 * @memberof cosmos_sdk.codec.v1.HasHasAnimal
-                 * @static
-                 * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                 * @param {number} [l] Message length if known beforehand
-                 * @returns {cosmos_sdk.codec.v1.HasHasAnimal} HasHasAnimal
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                HasHasAnimal.decode = function decode(r, l) {
-                    if (!(r instanceof $Reader))
-                        r = $Reader.create(r);
-                    var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.codec.v1.HasHasAnimal();
-                    while (r.pos < c) {
-                        var t = r.uint32();
-                        switch (t >>> 3) {
-                        case 1:
-                            m.hasAnimal = $root.google.protobuf.Any.decode(r, r.uint32());
-                            break;
-                        default:
-                            r.skipType(t & 7);
-                            break;
+                    /**
+                     * Encodes the specified Input message. Does not implicitly {@link cosmos_sdk.x.bank.v1.Input.verify|verify} messages.
+                     * @function encode
+                     * @memberof cosmos_sdk.x.bank.v1.Input
+                     * @static
+                     * @param {cosmos_sdk.x.bank.v1.IInput} m Input message or plain object to encode
+                     * @param {$protobuf.Writer} [w] Writer to encode to
+                     * @returns {$protobuf.Writer} Writer
+                     */
+                    Input.encode = function encode(m, w) {
+                        if (!w)
+                            w = $Writer.create();
+                        if (m.address != null && Object.hasOwnProperty.call(m, "address"))
+                            w.uint32(10).bytes(m.address);
+                        if (m.coins != null && m.coins.length) {
+                            for (var i = 0; i < m.coins.length; ++i)
+                                $root.cosmos_sdk.v1.Coin.encode(m.coins[i], w.uint32(18).fork()).ldelim();
                         }
-                    }
-                    return m;
-                };
+                        return w;
+                    };
 
-                return HasHasAnimal;
-            })();
-
-            v1.HasHasHasAnimal = (function() {
-
-                /**
-                 * Properties of a HasHasHasAnimal.
-                 * @memberof cosmos_sdk.codec.v1
-                 * @interface IHasHasHasAnimal
-                 * @property {google.protobuf.IAny|null} [hasHasAnimal] HasHasHasAnimal hasHasAnimal
-                 */
-
-                /**
-                 * Constructs a new HasHasHasAnimal.
-                 * @memberof cosmos_sdk.codec.v1
-                 * @classdesc Represents a HasHasHasAnimal.
-                 * @implements IHasHasHasAnimal
-                 * @constructor
-                 * @param {cosmos_sdk.codec.v1.IHasHasHasAnimal=} [p] Properties to set
-                 */
-                function HasHasHasAnimal(p) {
-                    if (p)
-                        for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                            if (p[ks[i]] != null)
-                                this[ks[i]] = p[ks[i]];
-                }
-
-                /**
-                 * HasHasHasAnimal hasHasAnimal.
-                 * @member {google.protobuf.IAny|null|undefined} hasHasAnimal
-                 * @memberof cosmos_sdk.codec.v1.HasHasHasAnimal
-                 * @instance
-                 */
-                HasHasHasAnimal.prototype.hasHasAnimal = null;
-
-                /**
-                 * Creates a new HasHasHasAnimal instance using the specified properties.
-                 * @function create
-                 * @memberof cosmos_sdk.codec.v1.HasHasHasAnimal
-                 * @static
-                 * @param {cosmos_sdk.codec.v1.IHasHasHasAnimal=} [properties] Properties to set
-                 * @returns {cosmos_sdk.codec.v1.HasHasHasAnimal} HasHasHasAnimal instance
-                 */
-                HasHasHasAnimal.create = function create(properties) {
-                    return new HasHasHasAnimal(properties);
-                };
-
-                /**
-                 * Encodes the specified HasHasHasAnimal message. Does not implicitly {@link cosmos_sdk.codec.v1.HasHasHasAnimal.verify|verify} messages.
-                 * @function encode
-                 * @memberof cosmos_sdk.codec.v1.HasHasHasAnimal
-                 * @static
-                 * @param {cosmos_sdk.codec.v1.IHasHasHasAnimal} m HasHasHasAnimal message or plain object to encode
-                 * @param {$protobuf.Writer} [w] Writer to encode to
-                 * @returns {$protobuf.Writer} Writer
-                 */
-                HasHasHasAnimal.encode = function encode(m, w) {
-                    if (!w)
-                        w = $Writer.create();
-                    if (m.hasHasAnimal != null && Object.hasOwnProperty.call(m, "hasHasAnimal"))
-                        $root.google.protobuf.Any.encode(m.hasHasAnimal, w.uint32(10).fork()).ldelim();
-                    return w;
-                };
-
-                /**
-                 * Decodes a HasHasHasAnimal message from the specified reader or buffer.
-                 * @function decode
-                 * @memberof cosmos_sdk.codec.v1.HasHasHasAnimal
-                 * @static
-                 * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                 * @param {number} [l] Message length if known beforehand
-                 * @returns {cosmos_sdk.codec.v1.HasHasHasAnimal} HasHasHasAnimal
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                HasHasHasAnimal.decode = function decode(r, l) {
-                    if (!(r instanceof $Reader))
-                        r = $Reader.create(r);
-                    var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.codec.v1.HasHasHasAnimal();
-                    while (r.pos < c) {
-                        var t = r.uint32();
-                        switch (t >>> 3) {
-                        case 1:
-                            m.hasHasAnimal = $root.google.protobuf.Any.decode(r, r.uint32());
-                            break;
-                        default:
-                            r.skipType(t & 7);
-                            break;
+                    /**
+                     * Decodes an Input message from the specified reader or buffer.
+                     * @function decode
+                     * @memberof cosmos_sdk.x.bank.v1.Input
+                     * @static
+                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
+                     * @param {number} [l] Message length if known beforehand
+                     * @returns {cosmos_sdk.x.bank.v1.Input} Input
+                     * @throws {Error} If the payload is not a reader or valid buffer
+                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                     */
+                    Input.decode = function decode(r, l) {
+                        if (!(r instanceof $Reader))
+                            r = $Reader.create(r);
+                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.bank.v1.Input();
+                        while (r.pos < c) {
+                            var t = r.uint32();
+                            switch (t >>> 3) {
+                            case 1:
+                                m.address = r.bytes();
+                                break;
+                            case 2:
+                                if (!(m.coins && m.coins.length))
+                                    m.coins = [];
+                                m.coins.push($root.cosmos_sdk.v1.Coin.decode(r, r.uint32()));
+                                break;
+                            default:
+                                r.skipType(t & 7);
+                                break;
+                            }
                         }
+                        return m;
+                    };
+
+                    return Input;
+                })();
+
+                v1.Output = (function() {
+
+                    /**
+                     * Properties of an Output.
+                     * @memberof cosmos_sdk.x.bank.v1
+                     * @interface IOutput
+                     * @property {Uint8Array|null} [address] Output address
+                     * @property {Array.<cosmos_sdk.v1.ICoin>|null} [coins] Output coins
+                     */
+
+                    /**
+                     * Constructs a new Output.
+                     * @memberof cosmos_sdk.x.bank.v1
+                     * @classdesc Represents an Output.
+                     * @implements IOutput
+                     * @constructor
+                     * @param {cosmos_sdk.x.bank.v1.IOutput=} [p] Properties to set
+                     */
+                    function Output(p) {
+                        this.coins = [];
+                        if (p)
+                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+                                if (p[ks[i]] != null)
+                                    this[ks[i]] = p[ks[i]];
                     }
-                    return m;
-                };
 
-                return HasHasHasAnimal;
-            })();
+                    /**
+                     * Output address.
+                     * @member {Uint8Array} address
+                     * @memberof cosmos_sdk.x.bank.v1.Output
+                     * @instance
+                     */
+                    Output.prototype.address = $util.newBuffer([]);
 
-            v1.TestService = (function() {
+                    /**
+                     * Output coins.
+                     * @member {Array.<cosmos_sdk.v1.ICoin>} coins
+                     * @memberof cosmos_sdk.x.bank.v1.Output
+                     * @instance
+                     */
+                    Output.prototype.coins = $util.emptyArray;
 
-                /**
-                 * Constructs a new TestService service.
-                 * @memberof cosmos_sdk.codec.v1
-                 * @classdesc Represents a TestService
-                 * @extends $protobuf.rpc.Service
-                 * @constructor
-                 * @param {$protobuf.RPCImpl} rpcImpl RPC implementation
-                 * @param {boolean} [requestDelimited=false] Whether requests are length-delimited
-                 * @param {boolean} [responseDelimited=false] Whether responses are length-delimited
-                 */
-                function TestService(rpcImpl, requestDelimited, responseDelimited) {
-                    $protobuf.rpc.Service.call(this, rpcImpl, requestDelimited, responseDelimited);
-                }
+                    /**
+                     * Creates a new Output instance using the specified properties.
+                     * @function create
+                     * @memberof cosmos_sdk.x.bank.v1.Output
+                     * @static
+                     * @param {cosmos_sdk.x.bank.v1.IOutput=} [properties] Properties to set
+                     * @returns {cosmos_sdk.x.bank.v1.Output} Output instance
+                     */
+                    Output.create = function create(properties) {
+                        return new Output(properties);
+                    };
 
-                (TestService.prototype = Object.create($protobuf.rpc.Service.prototype)).constructor = TestService;
-
-                /**
-                 * Creates new TestService service using the specified rpc implementation.
-                 * @function create
-                 * @memberof cosmos_sdk.codec.v1.TestService
-                 * @static
-                 * @param {$protobuf.RPCImpl} rpcImpl RPC implementation
-                 * @param {boolean} [requestDelimited=false] Whether requests are length-delimited
-                 * @param {boolean} [responseDelimited=false] Whether responses are length-delimited
-                 * @returns {TestService} RPC service. Useful where requests and/or responses are streamed.
-                 */
-                TestService.create = function create(rpcImpl, requestDelimited, responseDelimited) {
-                    return new this(rpcImpl, requestDelimited, responseDelimited);
-                };
-
-                /**
-                 * Callback as used by {@link cosmos_sdk.codec.v1.TestService#echo}.
-                 * @memberof cosmos_sdk.codec.v1.TestService
-                 * @typedef EchoCallback
-                 * @type {function}
-                 * @param {Error|null} error Error, if any
-                 * @param {cosmos_sdk.codec.v1.EchoResponse} [response] EchoResponse
-                 */
-
-                /**
-                 * Calls Echo.
-                 * @function echo
-                 * @memberof cosmos_sdk.codec.v1.TestService
-                 * @instance
-                 * @param {cosmos_sdk.codec.v1.IEchoRequest} request EchoRequest message or plain object
-                 * @param {cosmos_sdk.codec.v1.TestService.EchoCallback} callback Node-style callback called with the error, if any, and EchoResponse
-                 * @returns {undefined}
-                 * @variation 1
-                 */
-                Object.defineProperty(TestService.prototype.echo = function echo(request, callback) {
-                    return this.rpcCall(echo, $root.cosmos_sdk.codec.v1.EchoRequest, $root.cosmos_sdk.codec.v1.EchoResponse, request, callback);
-                }, "name", { value: "Echo" });
-
-                /**
-                 * Calls Echo.
-                 * @function echo
-                 * @memberof cosmos_sdk.codec.v1.TestService
-                 * @instance
-                 * @param {cosmos_sdk.codec.v1.IEchoRequest} request EchoRequest message or plain object
-                 * @returns {Promise<cosmos_sdk.codec.v1.EchoResponse>} Promise
-                 * @variation 2
-                 */
-
-                /**
-                 * Callback as used by {@link cosmos_sdk.codec.v1.TestService#sayHello}.
-                 * @memberof cosmos_sdk.codec.v1.TestService
-                 * @typedef SayHelloCallback
-                 * @type {function}
-                 * @param {Error|null} error Error, if any
-                 * @param {cosmos_sdk.codec.v1.SayHelloResponse} [response] SayHelloResponse
-                 */
-
-                /**
-                 * Calls SayHello.
-                 * @function sayHello
-                 * @memberof cosmos_sdk.codec.v1.TestService
-                 * @instance
-                 * @param {cosmos_sdk.codec.v1.ISayHelloRequest} request SayHelloRequest message or plain object
-                 * @param {cosmos_sdk.codec.v1.TestService.SayHelloCallback} callback Node-style callback called with the error, if any, and SayHelloResponse
-                 * @returns {undefined}
-                 * @variation 1
-                 */
-                Object.defineProperty(TestService.prototype.sayHello = function sayHello(request, callback) {
-                    return this.rpcCall(sayHello, $root.cosmos_sdk.codec.v1.SayHelloRequest, $root.cosmos_sdk.codec.v1.SayHelloResponse, request, callback);
-                }, "name", { value: "SayHello" });
-
-                /**
-                 * Calls SayHello.
-                 * @function sayHello
-                 * @memberof cosmos_sdk.codec.v1.TestService
-                 * @instance
-                 * @param {cosmos_sdk.codec.v1.ISayHelloRequest} request SayHelloRequest message or plain object
-                 * @returns {Promise<cosmos_sdk.codec.v1.SayHelloResponse>} Promise
-                 * @variation 2
-                 */
-
-                return TestService;
-            })();
-
-            v1.EchoRequest = (function() {
-
-                /**
-                 * Properties of an EchoRequest.
-                 * @memberof cosmos_sdk.codec.v1
-                 * @interface IEchoRequest
-                 * @property {string|null} [message] EchoRequest message
-                 */
-
-                /**
-                 * Constructs a new EchoRequest.
-                 * @memberof cosmos_sdk.codec.v1
-                 * @classdesc Represents an EchoRequest.
-                 * @implements IEchoRequest
-                 * @constructor
-                 * @param {cosmos_sdk.codec.v1.IEchoRequest=} [p] Properties to set
-                 */
-                function EchoRequest(p) {
-                    if (p)
-                        for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                            if (p[ks[i]] != null)
-                                this[ks[i]] = p[ks[i]];
-                }
-
-                /**
-                 * EchoRequest message.
-                 * @member {string} message
-                 * @memberof cosmos_sdk.codec.v1.EchoRequest
-                 * @instance
-                 */
-                EchoRequest.prototype.message = "";
-
-                /**
-                 * Creates a new EchoRequest instance using the specified properties.
-                 * @function create
-                 * @memberof cosmos_sdk.codec.v1.EchoRequest
-                 * @static
-                 * @param {cosmos_sdk.codec.v1.IEchoRequest=} [properties] Properties to set
-                 * @returns {cosmos_sdk.codec.v1.EchoRequest} EchoRequest instance
-                 */
-                EchoRequest.create = function create(properties) {
-                    return new EchoRequest(properties);
-                };
-
-                /**
-                 * Encodes the specified EchoRequest message. Does not implicitly {@link cosmos_sdk.codec.v1.EchoRequest.verify|verify} messages.
-                 * @function encode
-                 * @memberof cosmos_sdk.codec.v1.EchoRequest
-                 * @static
-                 * @param {cosmos_sdk.codec.v1.IEchoRequest} m EchoRequest message or plain object to encode
-                 * @param {$protobuf.Writer} [w] Writer to encode to
-                 * @returns {$protobuf.Writer} Writer
-                 */
-                EchoRequest.encode = function encode(m, w) {
-                    if (!w)
-                        w = $Writer.create();
-                    if (m.message != null && Object.hasOwnProperty.call(m, "message"))
-                        w.uint32(10).string(m.message);
-                    return w;
-                };
-
-                /**
-                 * Decodes an EchoRequest message from the specified reader or buffer.
-                 * @function decode
-                 * @memberof cosmos_sdk.codec.v1.EchoRequest
-                 * @static
-                 * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                 * @param {number} [l] Message length if known beforehand
-                 * @returns {cosmos_sdk.codec.v1.EchoRequest} EchoRequest
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                EchoRequest.decode = function decode(r, l) {
-                    if (!(r instanceof $Reader))
-                        r = $Reader.create(r);
-                    var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.codec.v1.EchoRequest();
-                    while (r.pos < c) {
-                        var t = r.uint32();
-                        switch (t >>> 3) {
-                        case 1:
-                            m.message = r.string();
-                            break;
-                        default:
-                            r.skipType(t & 7);
-                            break;
+                    /**
+                     * Encodes the specified Output message. Does not implicitly {@link cosmos_sdk.x.bank.v1.Output.verify|verify} messages.
+                     * @function encode
+                     * @memberof cosmos_sdk.x.bank.v1.Output
+                     * @static
+                     * @param {cosmos_sdk.x.bank.v1.IOutput} m Output message or plain object to encode
+                     * @param {$protobuf.Writer} [w] Writer to encode to
+                     * @returns {$protobuf.Writer} Writer
+                     */
+                    Output.encode = function encode(m, w) {
+                        if (!w)
+                            w = $Writer.create();
+                        if (m.address != null && Object.hasOwnProperty.call(m, "address"))
+                            w.uint32(10).bytes(m.address);
+                        if (m.coins != null && m.coins.length) {
+                            for (var i = 0; i < m.coins.length; ++i)
+                                $root.cosmos_sdk.v1.Coin.encode(m.coins[i], w.uint32(18).fork()).ldelim();
                         }
-                    }
-                    return m;
-                };
+                        return w;
+                    };
 
-                return EchoRequest;
-            })();
-
-            v1.EchoResponse = (function() {
-
-                /**
-                 * Properties of an EchoResponse.
-                 * @memberof cosmos_sdk.codec.v1
-                 * @interface IEchoResponse
-                 * @property {string|null} [message] EchoResponse message
-                 */
-
-                /**
-                 * Constructs a new EchoResponse.
-                 * @memberof cosmos_sdk.codec.v1
-                 * @classdesc Represents an EchoResponse.
-                 * @implements IEchoResponse
-                 * @constructor
-                 * @param {cosmos_sdk.codec.v1.IEchoResponse=} [p] Properties to set
-                 */
-                function EchoResponse(p) {
-                    if (p)
-                        for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                            if (p[ks[i]] != null)
-                                this[ks[i]] = p[ks[i]];
-                }
-
-                /**
-                 * EchoResponse message.
-                 * @member {string} message
-                 * @memberof cosmos_sdk.codec.v1.EchoResponse
-                 * @instance
-                 */
-                EchoResponse.prototype.message = "";
-
-                /**
-                 * Creates a new EchoResponse instance using the specified properties.
-                 * @function create
-                 * @memberof cosmos_sdk.codec.v1.EchoResponse
-                 * @static
-                 * @param {cosmos_sdk.codec.v1.IEchoResponse=} [properties] Properties to set
-                 * @returns {cosmos_sdk.codec.v1.EchoResponse} EchoResponse instance
-                 */
-                EchoResponse.create = function create(properties) {
-                    return new EchoResponse(properties);
-                };
-
-                /**
-                 * Encodes the specified EchoResponse message. Does not implicitly {@link cosmos_sdk.codec.v1.EchoResponse.verify|verify} messages.
-                 * @function encode
-                 * @memberof cosmos_sdk.codec.v1.EchoResponse
-                 * @static
-                 * @param {cosmos_sdk.codec.v1.IEchoResponse} m EchoResponse message or plain object to encode
-                 * @param {$protobuf.Writer} [w] Writer to encode to
-                 * @returns {$protobuf.Writer} Writer
-                 */
-                EchoResponse.encode = function encode(m, w) {
-                    if (!w)
-                        w = $Writer.create();
-                    if (m.message != null && Object.hasOwnProperty.call(m, "message"))
-                        w.uint32(10).string(m.message);
-                    return w;
-                };
-
-                /**
-                 * Decodes an EchoResponse message from the specified reader or buffer.
-                 * @function decode
-                 * @memberof cosmos_sdk.codec.v1.EchoResponse
-                 * @static
-                 * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                 * @param {number} [l] Message length if known beforehand
-                 * @returns {cosmos_sdk.codec.v1.EchoResponse} EchoResponse
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                EchoResponse.decode = function decode(r, l) {
-                    if (!(r instanceof $Reader))
-                        r = $Reader.create(r);
-                    var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.codec.v1.EchoResponse();
-                    while (r.pos < c) {
-                        var t = r.uint32();
-                        switch (t >>> 3) {
-                        case 1:
-                            m.message = r.string();
-                            break;
-                        default:
-                            r.skipType(t & 7);
-                            break;
+                    /**
+                     * Decodes an Output message from the specified reader or buffer.
+                     * @function decode
+                     * @memberof cosmos_sdk.x.bank.v1.Output
+                     * @static
+                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
+                     * @param {number} [l] Message length if known beforehand
+                     * @returns {cosmos_sdk.x.bank.v1.Output} Output
+                     * @throws {Error} If the payload is not a reader or valid buffer
+                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                     */
+                    Output.decode = function decode(r, l) {
+                        if (!(r instanceof $Reader))
+                            r = $Reader.create(r);
+                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.bank.v1.Output();
+                        while (r.pos < c) {
+                            var t = r.uint32();
+                            switch (t >>> 3) {
+                            case 1:
+                                m.address = r.bytes();
+                                break;
+                            case 2:
+                                if (!(m.coins && m.coins.length))
+                                    m.coins = [];
+                                m.coins.push($root.cosmos_sdk.v1.Coin.decode(r, r.uint32()));
+                                break;
+                            default:
+                                r.skipType(t & 7);
+                                break;
+                            }
                         }
+                        return m;
+                    };
+
+                    return Output;
+                })();
+
+                v1.MsgMultiSend = (function() {
+
+                    /**
+                     * Properties of a MsgMultiSend.
+                     * @memberof cosmos_sdk.x.bank.v1
+                     * @interface IMsgMultiSend
+                     * @property {Array.<cosmos_sdk.x.bank.v1.IInput>|null} [inputs] MsgMultiSend inputs
+                     * @property {Array.<cosmos_sdk.x.bank.v1.IOutput>|null} [outputs] MsgMultiSend outputs
+                     */
+
+                    /**
+                     * Constructs a new MsgMultiSend.
+                     * @memberof cosmos_sdk.x.bank.v1
+                     * @classdesc Represents a MsgMultiSend.
+                     * @implements IMsgMultiSend
+                     * @constructor
+                     * @param {cosmos_sdk.x.bank.v1.IMsgMultiSend=} [p] Properties to set
+                     */
+                    function MsgMultiSend(p) {
+                        this.inputs = [];
+                        this.outputs = [];
+                        if (p)
+                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+                                if (p[ks[i]] != null)
+                                    this[ks[i]] = p[ks[i]];
                     }
-                    return m;
-                };
 
-                return EchoResponse;
-            })();
+                    /**
+                     * MsgMultiSend inputs.
+                     * @member {Array.<cosmos_sdk.x.bank.v1.IInput>} inputs
+                     * @memberof cosmos_sdk.x.bank.v1.MsgMultiSend
+                     * @instance
+                     */
+                    MsgMultiSend.prototype.inputs = $util.emptyArray;
 
-            v1.SayHelloRequest = (function() {
+                    /**
+                     * MsgMultiSend outputs.
+                     * @member {Array.<cosmos_sdk.x.bank.v1.IOutput>} outputs
+                     * @memberof cosmos_sdk.x.bank.v1.MsgMultiSend
+                     * @instance
+                     */
+                    MsgMultiSend.prototype.outputs = $util.emptyArray;
 
-                /**
-                 * Properties of a SayHelloRequest.
-                 * @memberof cosmos_sdk.codec.v1
-                 * @interface ISayHelloRequest
-                 * @property {string|null} [name] SayHelloRequest name
-                 */
+                    /**
+                     * Creates a new MsgMultiSend instance using the specified properties.
+                     * @function create
+                     * @memberof cosmos_sdk.x.bank.v1.MsgMultiSend
+                     * @static
+                     * @param {cosmos_sdk.x.bank.v1.IMsgMultiSend=} [properties] Properties to set
+                     * @returns {cosmos_sdk.x.bank.v1.MsgMultiSend} MsgMultiSend instance
+                     */
+                    MsgMultiSend.create = function create(properties) {
+                        return new MsgMultiSend(properties);
+                    };
 
-                /**
-                 * Constructs a new SayHelloRequest.
-                 * @memberof cosmos_sdk.codec.v1
-                 * @classdesc Represents a SayHelloRequest.
-                 * @implements ISayHelloRequest
-                 * @constructor
-                 * @param {cosmos_sdk.codec.v1.ISayHelloRequest=} [p] Properties to set
-                 */
-                function SayHelloRequest(p) {
-                    if (p)
-                        for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                            if (p[ks[i]] != null)
-                                this[ks[i]] = p[ks[i]];
-                }
-
-                /**
-                 * SayHelloRequest name.
-                 * @member {string} name
-                 * @memberof cosmos_sdk.codec.v1.SayHelloRequest
-                 * @instance
-                 */
-                SayHelloRequest.prototype.name = "";
-
-                /**
-                 * Creates a new SayHelloRequest instance using the specified properties.
-                 * @function create
-                 * @memberof cosmos_sdk.codec.v1.SayHelloRequest
-                 * @static
-                 * @param {cosmos_sdk.codec.v1.ISayHelloRequest=} [properties] Properties to set
-                 * @returns {cosmos_sdk.codec.v1.SayHelloRequest} SayHelloRequest instance
-                 */
-                SayHelloRequest.create = function create(properties) {
-                    return new SayHelloRequest(properties);
-                };
-
-                /**
-                 * Encodes the specified SayHelloRequest message. Does not implicitly {@link cosmos_sdk.codec.v1.SayHelloRequest.verify|verify} messages.
-                 * @function encode
-                 * @memberof cosmos_sdk.codec.v1.SayHelloRequest
-                 * @static
-                 * @param {cosmos_sdk.codec.v1.ISayHelloRequest} m SayHelloRequest message or plain object to encode
-                 * @param {$protobuf.Writer} [w] Writer to encode to
-                 * @returns {$protobuf.Writer} Writer
-                 */
-                SayHelloRequest.encode = function encode(m, w) {
-                    if (!w)
-                        w = $Writer.create();
-                    if (m.name != null && Object.hasOwnProperty.call(m, "name"))
-                        w.uint32(10).string(m.name);
-                    return w;
-                };
-
-                /**
-                 * Decodes a SayHelloRequest message from the specified reader or buffer.
-                 * @function decode
-                 * @memberof cosmos_sdk.codec.v1.SayHelloRequest
-                 * @static
-                 * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                 * @param {number} [l] Message length if known beforehand
-                 * @returns {cosmos_sdk.codec.v1.SayHelloRequest} SayHelloRequest
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                SayHelloRequest.decode = function decode(r, l) {
-                    if (!(r instanceof $Reader))
-                        r = $Reader.create(r);
-                    var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.codec.v1.SayHelloRequest();
-                    while (r.pos < c) {
-                        var t = r.uint32();
-                        switch (t >>> 3) {
-                        case 1:
-                            m.name = r.string();
-                            break;
-                        default:
-                            r.skipType(t & 7);
-                            break;
+                    /**
+                     * Encodes the specified MsgMultiSend message. Does not implicitly {@link cosmos_sdk.x.bank.v1.MsgMultiSend.verify|verify} messages.
+                     * @function encode
+                     * @memberof cosmos_sdk.x.bank.v1.MsgMultiSend
+                     * @static
+                     * @param {cosmos_sdk.x.bank.v1.IMsgMultiSend} m MsgMultiSend message or plain object to encode
+                     * @param {$protobuf.Writer} [w] Writer to encode to
+                     * @returns {$protobuf.Writer} Writer
+                     */
+                    MsgMultiSend.encode = function encode(m, w) {
+                        if (!w)
+                            w = $Writer.create();
+                        if (m.inputs != null && m.inputs.length) {
+                            for (var i = 0; i < m.inputs.length; ++i)
+                                $root.cosmos_sdk.x.bank.v1.Input.encode(m.inputs[i], w.uint32(10).fork()).ldelim();
                         }
-                    }
-                    return m;
-                };
-
-                return SayHelloRequest;
-            })();
-
-            v1.SayHelloResponse = (function() {
-
-                /**
-                 * Properties of a SayHelloResponse.
-                 * @memberof cosmos_sdk.codec.v1
-                 * @interface ISayHelloResponse
-                 * @property {string|null} [greeting] SayHelloResponse greeting
-                 */
-
-                /**
-                 * Constructs a new SayHelloResponse.
-                 * @memberof cosmos_sdk.codec.v1
-                 * @classdesc Represents a SayHelloResponse.
-                 * @implements ISayHelloResponse
-                 * @constructor
-                 * @param {cosmos_sdk.codec.v1.ISayHelloResponse=} [p] Properties to set
-                 */
-                function SayHelloResponse(p) {
-                    if (p)
-                        for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                            if (p[ks[i]] != null)
-                                this[ks[i]] = p[ks[i]];
-                }
-
-                /**
-                 * SayHelloResponse greeting.
-                 * @member {string} greeting
-                 * @memberof cosmos_sdk.codec.v1.SayHelloResponse
-                 * @instance
-                 */
-                SayHelloResponse.prototype.greeting = "";
-
-                /**
-                 * Creates a new SayHelloResponse instance using the specified properties.
-                 * @function create
-                 * @memberof cosmos_sdk.codec.v1.SayHelloResponse
-                 * @static
-                 * @param {cosmos_sdk.codec.v1.ISayHelloResponse=} [properties] Properties to set
-                 * @returns {cosmos_sdk.codec.v1.SayHelloResponse} SayHelloResponse instance
-                 */
-                SayHelloResponse.create = function create(properties) {
-                    return new SayHelloResponse(properties);
-                };
-
-                /**
-                 * Encodes the specified SayHelloResponse message. Does not implicitly {@link cosmos_sdk.codec.v1.SayHelloResponse.verify|verify} messages.
-                 * @function encode
-                 * @memberof cosmos_sdk.codec.v1.SayHelloResponse
-                 * @static
-                 * @param {cosmos_sdk.codec.v1.ISayHelloResponse} m SayHelloResponse message or plain object to encode
-                 * @param {$protobuf.Writer} [w] Writer to encode to
-                 * @returns {$protobuf.Writer} Writer
-                 */
-                SayHelloResponse.encode = function encode(m, w) {
-                    if (!w)
-                        w = $Writer.create();
-                    if (m.greeting != null && Object.hasOwnProperty.call(m, "greeting"))
-                        w.uint32(10).string(m.greeting);
-                    return w;
-                };
-
-                /**
-                 * Decodes a SayHelloResponse message from the specified reader or buffer.
-                 * @function decode
-                 * @memberof cosmos_sdk.codec.v1.SayHelloResponse
-                 * @static
-                 * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                 * @param {number} [l] Message length if known beforehand
-                 * @returns {cosmos_sdk.codec.v1.SayHelloResponse} SayHelloResponse
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                SayHelloResponse.decode = function decode(r, l) {
-                    if (!(r instanceof $Reader))
-                        r = $Reader.create(r);
-                    var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.codec.v1.SayHelloResponse();
-                    while (r.pos < c) {
-                        var t = r.uint32();
-                        switch (t >>> 3) {
-                        case 1:
-                            m.greeting = r.string();
-                            break;
-                        default:
-                            r.skipType(t & 7);
-                            break;
+                        if (m.outputs != null && m.outputs.length) {
+                            for (var i = 0; i < m.outputs.length; ++i)
+                                $root.cosmos_sdk.x.bank.v1.Output.encode(m.outputs[i], w.uint32(18).fork()).ldelim();
                         }
-                    }
-                    return m;
-                };
+                        return w;
+                    };
 
-                return SayHelloResponse;
+                    /**
+                     * Decodes a MsgMultiSend message from the specified reader or buffer.
+                     * @function decode
+                     * @memberof cosmos_sdk.x.bank.v1.MsgMultiSend
+                     * @static
+                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
+                     * @param {number} [l] Message length if known beforehand
+                     * @returns {cosmos_sdk.x.bank.v1.MsgMultiSend} MsgMultiSend
+                     * @throws {Error} If the payload is not a reader or valid buffer
+                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                     */
+                    MsgMultiSend.decode = function decode(r, l) {
+                        if (!(r instanceof $Reader))
+                            r = $Reader.create(r);
+                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.bank.v1.MsgMultiSend();
+                        while (r.pos < c) {
+                            var t = r.uint32();
+                            switch (t >>> 3) {
+                            case 1:
+                                if (!(m.inputs && m.inputs.length))
+                                    m.inputs = [];
+                                m.inputs.push($root.cosmos_sdk.x.bank.v1.Input.decode(r, r.uint32()));
+                                break;
+                            case 2:
+                                if (!(m.outputs && m.outputs.length))
+                                    m.outputs = [];
+                                m.outputs.push($root.cosmos_sdk.x.bank.v1.Output.decode(r, r.uint32()));
+                                break;
+                            default:
+                                r.skipType(t & 7);
+                                break;
+                            }
+                        }
+                        return m;
+                    };
+
+                    return MsgMultiSend;
+                })();
+
+                v1.Supply = (function() {
+
+                    /**
+                     * Properties of a Supply.
+                     * @memberof cosmos_sdk.x.bank.v1
+                     * @interface ISupply
+                     * @property {Array.<cosmos_sdk.v1.ICoin>|null} [total] Supply total
+                     */
+
+                    /**
+                     * Constructs a new Supply.
+                     * @memberof cosmos_sdk.x.bank.v1
+                     * @classdesc Represents a Supply.
+                     * @implements ISupply
+                     * @constructor
+                     * @param {cosmos_sdk.x.bank.v1.ISupply=} [p] Properties to set
+                     */
+                    function Supply(p) {
+                        this.total = [];
+                        if (p)
+                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+                                if (p[ks[i]] != null)
+                                    this[ks[i]] = p[ks[i]];
+                    }
+
+                    /**
+                     * Supply total.
+                     * @member {Array.<cosmos_sdk.v1.ICoin>} total
+                     * @memberof cosmos_sdk.x.bank.v1.Supply
+                     * @instance
+                     */
+                    Supply.prototype.total = $util.emptyArray;
+
+                    /**
+                     * Creates a new Supply instance using the specified properties.
+                     * @function create
+                     * @memberof cosmos_sdk.x.bank.v1.Supply
+                     * @static
+                     * @param {cosmos_sdk.x.bank.v1.ISupply=} [properties] Properties to set
+                     * @returns {cosmos_sdk.x.bank.v1.Supply} Supply instance
+                     */
+                    Supply.create = function create(properties) {
+                        return new Supply(properties);
+                    };
+
+                    /**
+                     * Encodes the specified Supply message. Does not implicitly {@link cosmos_sdk.x.bank.v1.Supply.verify|verify} messages.
+                     * @function encode
+                     * @memberof cosmos_sdk.x.bank.v1.Supply
+                     * @static
+                     * @param {cosmos_sdk.x.bank.v1.ISupply} m Supply message or plain object to encode
+                     * @param {$protobuf.Writer} [w] Writer to encode to
+                     * @returns {$protobuf.Writer} Writer
+                     */
+                    Supply.encode = function encode(m, w) {
+                        if (!w)
+                            w = $Writer.create();
+                        if (m.total != null && m.total.length) {
+                            for (var i = 0; i < m.total.length; ++i)
+                                $root.cosmos_sdk.v1.Coin.encode(m.total[i], w.uint32(10).fork()).ldelim();
+                        }
+                        return w;
+                    };
+
+                    /**
+                     * Decodes a Supply message from the specified reader or buffer.
+                     * @function decode
+                     * @memberof cosmos_sdk.x.bank.v1.Supply
+                     * @static
+                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
+                     * @param {number} [l] Message length if known beforehand
+                     * @returns {cosmos_sdk.x.bank.v1.Supply} Supply
+                     * @throws {Error} If the payload is not a reader or valid buffer
+                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                     */
+                    Supply.decode = function decode(r, l) {
+                        if (!(r instanceof $Reader))
+                            r = $Reader.create(r);
+                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.bank.v1.Supply();
+                        while (r.pos < c) {
+                            var t = r.uint32();
+                            switch (t >>> 3) {
+                            case 1:
+                                if (!(m.total && m.total.length))
+                                    m.total = [];
+                                m.total.push($root.cosmos_sdk.v1.Coin.decode(r, r.uint32()));
+                                break;
+                            default:
+                                r.skipType(t & 7);
+                                break;
+                            }
+                        }
+                        return m;
+                    };
+
+                    return Supply;
+                })();
+
+                return v1;
             })();
 
-            return v1;
+            return bank;
         })();
 
-        return codec;
+        return x;
     })();
 
-    cosmos_sdk.crypto = (function() {
+    cosmos_sdk.v1 = (function() {
 
         /**
-         * Namespace crypto.
+         * Namespace v1.
          * @memberof cosmos_sdk
          * @namespace
          */
-        var crypto = {};
+        var v1 = {};
 
-        crypto.v1 = (function() {
+        v1.Coin = (function() {
 
             /**
-             * Namespace v1.
-             * @memberof cosmos_sdk.crypto
-             * @namespace
+             * Properties of a Coin.
+             * @memberof cosmos_sdk.v1
+             * @interface ICoin
+             * @property {string|null} [denom] Coin denom
+             * @property {string|null} [amount] Coin amount
              */
-            var v1 = {};
 
-            v1.PublicKey = (function() {
+            /**
+             * Constructs a new Coin.
+             * @memberof cosmos_sdk.v1
+             * @classdesc Represents a Coin.
+             * @implements ICoin
+             * @constructor
+             * @param {cosmos_sdk.v1.ICoin=} [p] Properties to set
+             */
+            function Coin(p) {
+                if (p)
+                    for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+                        if (p[ks[i]] != null)
+                            this[ks[i]] = p[ks[i]];
+            }
 
-                /**
-                 * Properties of a PublicKey.
-                 * @memberof cosmos_sdk.crypto.v1
-                 * @interface IPublicKey
-                 * @property {Uint8Array|null} [secp256k1] PublicKey secp256k1
-                 * @property {Uint8Array|null} [ed25519] PublicKey ed25519
-                 * @property {Uint8Array|null} [sr25519] PublicKey sr25519
-                 * @property {cosmos_sdk.crypto.v1.IPubKeyMultisigThreshold|null} [multisig] PublicKey multisig
-                 * @property {Uint8Array|null} [secp256r1] PublicKey secp256r1
-                 * @property {google.protobuf.IAny|null} [anyPubkey] PublicKey anyPubkey
-                 */
+            /**
+             * Coin denom.
+             * @member {string} denom
+             * @memberof cosmos_sdk.v1.Coin
+             * @instance
+             */
+            Coin.prototype.denom = "";
 
-                /**
-                 * Constructs a new PublicKey.
-                 * @memberof cosmos_sdk.crypto.v1
-                 * @classdesc Represents a PublicKey.
-                 * @implements IPublicKey
-                 * @constructor
-                 * @param {cosmos_sdk.crypto.v1.IPublicKey=} [p] Properties to set
-                 */
-                function PublicKey(p) {
-                    if (p)
-                        for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                            if (p[ks[i]] != null)
-                                this[ks[i]] = p[ks[i]];
+            /**
+             * Coin amount.
+             * @member {string} amount
+             * @memberof cosmos_sdk.v1.Coin
+             * @instance
+             */
+            Coin.prototype.amount = "";
+
+            /**
+             * Creates a new Coin instance using the specified properties.
+             * @function create
+             * @memberof cosmos_sdk.v1.Coin
+             * @static
+             * @param {cosmos_sdk.v1.ICoin=} [properties] Properties to set
+             * @returns {cosmos_sdk.v1.Coin} Coin instance
+             */
+            Coin.create = function create(properties) {
+                return new Coin(properties);
+            };
+
+            /**
+             * Encodes the specified Coin message. Does not implicitly {@link cosmos_sdk.v1.Coin.verify|verify} messages.
+             * @function encode
+             * @memberof cosmos_sdk.v1.Coin
+             * @static
+             * @param {cosmos_sdk.v1.ICoin} m Coin message or plain object to encode
+             * @param {$protobuf.Writer} [w] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            Coin.encode = function encode(m, w) {
+                if (!w)
+                    w = $Writer.create();
+                if (m.denom != null && Object.hasOwnProperty.call(m, "denom"))
+                    w.uint32(10).string(m.denom);
+                if (m.amount != null && Object.hasOwnProperty.call(m, "amount"))
+                    w.uint32(18).string(m.amount);
+                return w;
+            };
+
+            /**
+             * Decodes a Coin message from the specified reader or buffer.
+             * @function decode
+             * @memberof cosmos_sdk.v1.Coin
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
+             * @param {number} [l] Message length if known beforehand
+             * @returns {cosmos_sdk.v1.Coin} Coin
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            Coin.decode = function decode(r, l) {
+                if (!(r instanceof $Reader))
+                    r = $Reader.create(r);
+                var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.v1.Coin();
+                while (r.pos < c) {
+                    var t = r.uint32();
+                    switch (t >>> 3) {
+                    case 1:
+                        m.denom = r.string();
+                        break;
+                    case 2:
+                        m.amount = r.string();
+                        break;
+                    default:
+                        r.skipType(t & 7);
+                        break;
+                    }
                 }
+                return m;
+            };
 
-                /**
-                 * PublicKey secp256k1.
-                 * @member {Uint8Array} secp256k1
-                 * @memberof cosmos_sdk.crypto.v1.PublicKey
-                 * @instance
-                 */
-                PublicKey.prototype.secp256k1 = $util.newBuffer([]);
-
-                /**
-                 * PublicKey ed25519.
-                 * @member {Uint8Array} ed25519
-                 * @memberof cosmos_sdk.crypto.v1.PublicKey
-                 * @instance
-                 */
-                PublicKey.prototype.ed25519 = $util.newBuffer([]);
-
-                /**
-                 * PublicKey sr25519.
-                 * @member {Uint8Array} sr25519
-                 * @memberof cosmos_sdk.crypto.v1.PublicKey
-                 * @instance
-                 */
-                PublicKey.prototype.sr25519 = $util.newBuffer([]);
-
-                /**
-                 * PublicKey multisig.
-                 * @member {cosmos_sdk.crypto.v1.IPubKeyMultisigThreshold|null|undefined} multisig
-                 * @memberof cosmos_sdk.crypto.v1.PublicKey
-                 * @instance
-                 */
-                PublicKey.prototype.multisig = null;
-
-                /**
-                 * PublicKey secp256r1.
-                 * @member {Uint8Array} secp256r1
-                 * @memberof cosmos_sdk.crypto.v1.PublicKey
-                 * @instance
-                 */
-                PublicKey.prototype.secp256r1 = $util.newBuffer([]);
-
-                /**
-                 * PublicKey anyPubkey.
-                 * @member {google.protobuf.IAny|null|undefined} anyPubkey
-                 * @memberof cosmos_sdk.crypto.v1.PublicKey
-                 * @instance
-                 */
-                PublicKey.prototype.anyPubkey = null;
-
-                // OneOf field names bound to virtual getters and setters
-                var $oneOfFields;
-
-                /**
-                 * PublicKey sum.
-                 * @member {"secp256k1"|"ed25519"|"sr25519"|"multisig"|"secp256r1"|"anyPubkey"|undefined} sum
-                 * @memberof cosmos_sdk.crypto.v1.PublicKey
-                 * @instance
-                 */
-                Object.defineProperty(PublicKey.prototype, "sum", {
-                    get: $util.oneOfGetter($oneOfFields = ["secp256k1", "ed25519", "sr25519", "multisig", "secp256r1", "anyPubkey"]),
-                    set: $util.oneOfSetter($oneOfFields)
-                });
-
-                /**
-                 * Creates a new PublicKey instance using the specified properties.
-                 * @function create
-                 * @memberof cosmos_sdk.crypto.v1.PublicKey
-                 * @static
-                 * @param {cosmos_sdk.crypto.v1.IPublicKey=} [properties] Properties to set
-                 * @returns {cosmos_sdk.crypto.v1.PublicKey} PublicKey instance
-                 */
-                PublicKey.create = function create(properties) {
-                    return new PublicKey(properties);
-                };
-
-                /**
-                 * Encodes the specified PublicKey message. Does not implicitly {@link cosmos_sdk.crypto.v1.PublicKey.verify|verify} messages.
-                 * @function encode
-                 * @memberof cosmos_sdk.crypto.v1.PublicKey
-                 * @static
-                 * @param {cosmos_sdk.crypto.v1.IPublicKey} m PublicKey message or plain object to encode
-                 * @param {$protobuf.Writer} [w] Writer to encode to
-                 * @returns {$protobuf.Writer} Writer
-                 */
-                PublicKey.encode = function encode(m, w) {
-                    if (!w)
-                        w = $Writer.create();
-                    if (m.secp256k1 != null && Object.hasOwnProperty.call(m, "secp256k1"))
-                        w.uint32(10).bytes(m.secp256k1);
-                    if (m.ed25519 != null && Object.hasOwnProperty.call(m, "ed25519"))
-                        w.uint32(18).bytes(m.ed25519);
-                    if (m.sr25519 != null && Object.hasOwnProperty.call(m, "sr25519"))
-                        w.uint32(26).bytes(m.sr25519);
-                    if (m.multisig != null && Object.hasOwnProperty.call(m, "multisig"))
-                        $root.cosmos_sdk.crypto.v1.PubKeyMultisigThreshold.encode(m.multisig, w.uint32(34).fork()).ldelim();
-                    if (m.secp256r1 != null && Object.hasOwnProperty.call(m, "secp256r1"))
-                        w.uint32(42).bytes(m.secp256r1);
-                    if (m.anyPubkey != null && Object.hasOwnProperty.call(m, "anyPubkey"))
-                        $root.google.protobuf.Any.encode(m.anyPubkey, w.uint32(122).fork()).ldelim();
-                    return w;
-                };
-
-                /**
-                 * Decodes a PublicKey message from the specified reader or buffer.
-                 * @function decode
-                 * @memberof cosmos_sdk.crypto.v1.PublicKey
-                 * @static
-                 * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                 * @param {number} [l] Message length if known beforehand
-                 * @returns {cosmos_sdk.crypto.v1.PublicKey} PublicKey
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                PublicKey.decode = function decode(r, l) {
-                    if (!(r instanceof $Reader))
-                        r = $Reader.create(r);
-                    var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.crypto.v1.PublicKey();
-                    while (r.pos < c) {
-                        var t = r.uint32();
-                        switch (t >>> 3) {
-                        case 1:
-                            m.secp256k1 = r.bytes();
-                            break;
-                        case 2:
-                            m.ed25519 = r.bytes();
-                            break;
-                        case 3:
-                            m.sr25519 = r.bytes();
-                            break;
-                        case 4:
-                            m.multisig = $root.cosmos_sdk.crypto.v1.PubKeyMultisigThreshold.decode(r, r.uint32());
-                            break;
-                        case 5:
-                            m.secp256r1 = r.bytes();
-                            break;
-                        case 15:
-                            m.anyPubkey = $root.google.protobuf.Any.decode(r, r.uint32());
-                            break;
-                        default:
-                            r.skipType(t & 7);
-                            break;
-                        }
-                    }
-                    return m;
-                };
-
-                return PublicKey;
-            })();
-
-            v1.PubKeyMultisigThreshold = (function() {
-
-                /**
-                 * Properties of a PubKeyMultisigThreshold.
-                 * @memberof cosmos_sdk.crypto.v1
-                 * @interface IPubKeyMultisigThreshold
-                 * @property {number|null} [threshold] PubKeyMultisigThreshold threshold
-                 * @property {Array.<cosmos_sdk.crypto.v1.IPublicKey>|null} [publicKeys] PubKeyMultisigThreshold publicKeys
-                 */
-
-                /**
-                 * Constructs a new PubKeyMultisigThreshold.
-                 * @memberof cosmos_sdk.crypto.v1
-                 * @classdesc Represents a PubKeyMultisigThreshold.
-                 * @implements IPubKeyMultisigThreshold
-                 * @constructor
-                 * @param {cosmos_sdk.crypto.v1.IPubKeyMultisigThreshold=} [p] Properties to set
-                 */
-                function PubKeyMultisigThreshold(p) {
-                    this.publicKeys = [];
-                    if (p)
-                        for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                            if (p[ks[i]] != null)
-                                this[ks[i]] = p[ks[i]];
-                }
-
-                /**
-                 * PubKeyMultisigThreshold threshold.
-                 * @member {number} threshold
-                 * @memberof cosmos_sdk.crypto.v1.PubKeyMultisigThreshold
-                 * @instance
-                 */
-                PubKeyMultisigThreshold.prototype.threshold = 0;
-
-                /**
-                 * PubKeyMultisigThreshold publicKeys.
-                 * @member {Array.<cosmos_sdk.crypto.v1.IPublicKey>} publicKeys
-                 * @memberof cosmos_sdk.crypto.v1.PubKeyMultisigThreshold
-                 * @instance
-                 */
-                PubKeyMultisigThreshold.prototype.publicKeys = $util.emptyArray;
-
-                /**
-                 * Creates a new PubKeyMultisigThreshold instance using the specified properties.
-                 * @function create
-                 * @memberof cosmos_sdk.crypto.v1.PubKeyMultisigThreshold
-                 * @static
-                 * @param {cosmos_sdk.crypto.v1.IPubKeyMultisigThreshold=} [properties] Properties to set
-                 * @returns {cosmos_sdk.crypto.v1.PubKeyMultisigThreshold} PubKeyMultisigThreshold instance
-                 */
-                PubKeyMultisigThreshold.create = function create(properties) {
-                    return new PubKeyMultisigThreshold(properties);
-                };
-
-                /**
-                 * Encodes the specified PubKeyMultisigThreshold message. Does not implicitly {@link cosmos_sdk.crypto.v1.PubKeyMultisigThreshold.verify|verify} messages.
-                 * @function encode
-                 * @memberof cosmos_sdk.crypto.v1.PubKeyMultisigThreshold
-                 * @static
-                 * @param {cosmos_sdk.crypto.v1.IPubKeyMultisigThreshold} m PubKeyMultisigThreshold message or plain object to encode
-                 * @param {$protobuf.Writer} [w] Writer to encode to
-                 * @returns {$protobuf.Writer} Writer
-                 */
-                PubKeyMultisigThreshold.encode = function encode(m, w) {
-                    if (!w)
-                        w = $Writer.create();
-                    if (m.threshold != null && Object.hasOwnProperty.call(m, "threshold"))
-                        w.uint32(8).uint32(m.threshold);
-                    if (m.publicKeys != null && m.publicKeys.length) {
-                        for (var i = 0; i < m.publicKeys.length; ++i)
-                            $root.cosmos_sdk.crypto.v1.PublicKey.encode(m.publicKeys[i], w.uint32(18).fork()).ldelim();
-                    }
-                    return w;
-                };
-
-                /**
-                 * Decodes a PubKeyMultisigThreshold message from the specified reader or buffer.
-                 * @function decode
-                 * @memberof cosmos_sdk.crypto.v1.PubKeyMultisigThreshold
-                 * @static
-                 * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                 * @param {number} [l] Message length if known beforehand
-                 * @returns {cosmos_sdk.crypto.v1.PubKeyMultisigThreshold} PubKeyMultisigThreshold
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                PubKeyMultisigThreshold.decode = function decode(r, l) {
-                    if (!(r instanceof $Reader))
-                        r = $Reader.create(r);
-                    var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.crypto.v1.PubKeyMultisigThreshold();
-                    while (r.pos < c) {
-                        var t = r.uint32();
-                        switch (t >>> 3) {
-                        case 1:
-                            m.threshold = r.uint32();
-                            break;
-                        case 2:
-                            if (!(m.publicKeys && m.publicKeys.length))
-                                m.publicKeys = [];
-                            m.publicKeys.push($root.cosmos_sdk.crypto.v1.PublicKey.decode(r, r.uint32()));
-                            break;
-                        default:
-                            r.skipType(t & 7);
-                            break;
-                        }
-                    }
-                    return m;
-                };
-
-                return PubKeyMultisigThreshold;
-            })();
-
-            v1.MultiSignature = (function() {
-
-                /**
-                 * Properties of a MultiSignature.
-                 * @memberof cosmos_sdk.crypto.v1
-                 * @interface IMultiSignature
-                 * @property {Array.<Uint8Array>|null} [signatures] MultiSignature signatures
-                 */
-
-                /**
-                 * Constructs a new MultiSignature.
-                 * @memberof cosmos_sdk.crypto.v1
-                 * @classdesc Represents a MultiSignature.
-                 * @implements IMultiSignature
-                 * @constructor
-                 * @param {cosmos_sdk.crypto.v1.IMultiSignature=} [p] Properties to set
-                 */
-                function MultiSignature(p) {
-                    this.signatures = [];
-                    if (p)
-                        for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                            if (p[ks[i]] != null)
-                                this[ks[i]] = p[ks[i]];
-                }
-
-                /**
-                 * MultiSignature signatures.
-                 * @member {Array.<Uint8Array>} signatures
-                 * @memberof cosmos_sdk.crypto.v1.MultiSignature
-                 * @instance
-                 */
-                MultiSignature.prototype.signatures = $util.emptyArray;
-
-                /**
-                 * Creates a new MultiSignature instance using the specified properties.
-                 * @function create
-                 * @memberof cosmos_sdk.crypto.v1.MultiSignature
-                 * @static
-                 * @param {cosmos_sdk.crypto.v1.IMultiSignature=} [properties] Properties to set
-                 * @returns {cosmos_sdk.crypto.v1.MultiSignature} MultiSignature instance
-                 */
-                MultiSignature.create = function create(properties) {
-                    return new MultiSignature(properties);
-                };
-
-                /**
-                 * Encodes the specified MultiSignature message. Does not implicitly {@link cosmos_sdk.crypto.v1.MultiSignature.verify|verify} messages.
-                 * @function encode
-                 * @memberof cosmos_sdk.crypto.v1.MultiSignature
-                 * @static
-                 * @param {cosmos_sdk.crypto.v1.IMultiSignature} m MultiSignature message or plain object to encode
-                 * @param {$protobuf.Writer} [w] Writer to encode to
-                 * @returns {$protobuf.Writer} Writer
-                 */
-                MultiSignature.encode = function encode(m, w) {
-                    if (!w)
-                        w = $Writer.create();
-                    if (m.signatures != null && m.signatures.length) {
-                        for (var i = 0; i < m.signatures.length; ++i)
-                            w.uint32(10).bytes(m.signatures[i]);
-                    }
-                    return w;
-                };
-
-                /**
-                 * Decodes a MultiSignature message from the specified reader or buffer.
-                 * @function decode
-                 * @memberof cosmos_sdk.crypto.v1.MultiSignature
-                 * @static
-                 * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                 * @param {number} [l] Message length if known beforehand
-                 * @returns {cosmos_sdk.crypto.v1.MultiSignature} MultiSignature
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                MultiSignature.decode = function decode(r, l) {
-                    if (!(r instanceof $Reader))
-                        r = $Reader.create(r);
-                    var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.crypto.v1.MultiSignature();
-                    while (r.pos < c) {
-                        var t = r.uint32();
-                        switch (t >>> 3) {
-                        case 1:
-                            if (!(m.signatures && m.signatures.length))
-                                m.signatures = [];
-                            m.signatures.push(r.bytes());
-                            break;
-                        default:
-                            r.skipType(t & 7);
-                            break;
-                        }
-                    }
-                    return m;
-                };
-
-                return MultiSignature;
-            })();
-
-            v1.CompactBitArray = (function() {
-
-                /**
-                 * Properties of a CompactBitArray.
-                 * @memberof cosmos_sdk.crypto.v1
-                 * @interface ICompactBitArray
-                 * @property {number|null} [extraBitsStored] CompactBitArray extraBitsStored
-                 * @property {Uint8Array|null} [elems] CompactBitArray elems
-                 */
-
-                /**
-                 * Constructs a new CompactBitArray.
-                 * @memberof cosmos_sdk.crypto.v1
-                 * @classdesc Represents a CompactBitArray.
-                 * @implements ICompactBitArray
-                 * @constructor
-                 * @param {cosmos_sdk.crypto.v1.ICompactBitArray=} [p] Properties to set
-                 */
-                function CompactBitArray(p) {
-                    if (p)
-                        for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                            if (p[ks[i]] != null)
-                                this[ks[i]] = p[ks[i]];
-                }
-
-                /**
-                 * CompactBitArray extraBitsStored.
-                 * @member {number} extraBitsStored
-                 * @memberof cosmos_sdk.crypto.v1.CompactBitArray
-                 * @instance
-                 */
-                CompactBitArray.prototype.extraBitsStored = 0;
-
-                /**
-                 * CompactBitArray elems.
-                 * @member {Uint8Array} elems
-                 * @memberof cosmos_sdk.crypto.v1.CompactBitArray
-                 * @instance
-                 */
-                CompactBitArray.prototype.elems = $util.newBuffer([]);
-
-                /**
-                 * Creates a new CompactBitArray instance using the specified properties.
-                 * @function create
-                 * @memberof cosmos_sdk.crypto.v1.CompactBitArray
-                 * @static
-                 * @param {cosmos_sdk.crypto.v1.ICompactBitArray=} [properties] Properties to set
-                 * @returns {cosmos_sdk.crypto.v1.CompactBitArray} CompactBitArray instance
-                 */
-                CompactBitArray.create = function create(properties) {
-                    return new CompactBitArray(properties);
-                };
-
-                /**
-                 * Encodes the specified CompactBitArray message. Does not implicitly {@link cosmos_sdk.crypto.v1.CompactBitArray.verify|verify} messages.
-                 * @function encode
-                 * @memberof cosmos_sdk.crypto.v1.CompactBitArray
-                 * @static
-                 * @param {cosmos_sdk.crypto.v1.ICompactBitArray} m CompactBitArray message or plain object to encode
-                 * @param {$protobuf.Writer} [w] Writer to encode to
-                 * @returns {$protobuf.Writer} Writer
-                 */
-                CompactBitArray.encode = function encode(m, w) {
-                    if (!w)
-                        w = $Writer.create();
-                    if (m.extraBitsStored != null && Object.hasOwnProperty.call(m, "extraBitsStored"))
-                        w.uint32(8).uint32(m.extraBitsStored);
-                    if (m.elems != null && Object.hasOwnProperty.call(m, "elems"))
-                        w.uint32(18).bytes(m.elems);
-                    return w;
-                };
-
-                /**
-                 * Decodes a CompactBitArray message from the specified reader or buffer.
-                 * @function decode
-                 * @memberof cosmos_sdk.crypto.v1.CompactBitArray
-                 * @static
-                 * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                 * @param {number} [l] Message length if known beforehand
-                 * @returns {cosmos_sdk.crypto.v1.CompactBitArray} CompactBitArray
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                CompactBitArray.decode = function decode(r, l) {
-                    if (!(r instanceof $Reader))
-                        r = $Reader.create(r);
-                    var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.crypto.v1.CompactBitArray();
-                    while (r.pos < c) {
-                        var t = r.uint32();
-                        switch (t >>> 3) {
-                        case 1:
-                            m.extraBitsStored = r.uint32();
-                            break;
-                        case 2:
-                            m.elems = r.bytes();
-                            break;
-                        default:
-                            r.skipType(t & 7);
-                            break;
-                        }
-                    }
-                    return m;
-                };
-
-                return CompactBitArray;
-            })();
-
-            return v1;
+            return Coin;
         })();
 
-        return crypto;
+        v1.DecCoin = (function() {
+
+            /**
+             * Properties of a DecCoin.
+             * @memberof cosmos_sdk.v1
+             * @interface IDecCoin
+             * @property {string|null} [denom] DecCoin denom
+             * @property {string|null} [amount] DecCoin amount
+             */
+
+            /**
+             * Constructs a new DecCoin.
+             * @memberof cosmos_sdk.v1
+             * @classdesc Represents a DecCoin.
+             * @implements IDecCoin
+             * @constructor
+             * @param {cosmos_sdk.v1.IDecCoin=} [p] Properties to set
+             */
+            function DecCoin(p) {
+                if (p)
+                    for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+                        if (p[ks[i]] != null)
+                            this[ks[i]] = p[ks[i]];
+            }
+
+            /**
+             * DecCoin denom.
+             * @member {string} denom
+             * @memberof cosmos_sdk.v1.DecCoin
+             * @instance
+             */
+            DecCoin.prototype.denom = "";
+
+            /**
+             * DecCoin amount.
+             * @member {string} amount
+             * @memberof cosmos_sdk.v1.DecCoin
+             * @instance
+             */
+            DecCoin.prototype.amount = "";
+
+            /**
+             * Creates a new DecCoin instance using the specified properties.
+             * @function create
+             * @memberof cosmos_sdk.v1.DecCoin
+             * @static
+             * @param {cosmos_sdk.v1.IDecCoin=} [properties] Properties to set
+             * @returns {cosmos_sdk.v1.DecCoin} DecCoin instance
+             */
+            DecCoin.create = function create(properties) {
+                return new DecCoin(properties);
+            };
+
+            /**
+             * Encodes the specified DecCoin message. Does not implicitly {@link cosmos_sdk.v1.DecCoin.verify|verify} messages.
+             * @function encode
+             * @memberof cosmos_sdk.v1.DecCoin
+             * @static
+             * @param {cosmos_sdk.v1.IDecCoin} m DecCoin message or plain object to encode
+             * @param {$protobuf.Writer} [w] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            DecCoin.encode = function encode(m, w) {
+                if (!w)
+                    w = $Writer.create();
+                if (m.denom != null && Object.hasOwnProperty.call(m, "denom"))
+                    w.uint32(10).string(m.denom);
+                if (m.amount != null && Object.hasOwnProperty.call(m, "amount"))
+                    w.uint32(18).string(m.amount);
+                return w;
+            };
+
+            /**
+             * Decodes a DecCoin message from the specified reader or buffer.
+             * @function decode
+             * @memberof cosmos_sdk.v1.DecCoin
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
+             * @param {number} [l] Message length if known beforehand
+             * @returns {cosmos_sdk.v1.DecCoin} DecCoin
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            DecCoin.decode = function decode(r, l) {
+                if (!(r instanceof $Reader))
+                    r = $Reader.create(r);
+                var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.v1.DecCoin();
+                while (r.pos < c) {
+                    var t = r.uint32();
+                    switch (t >>> 3) {
+                    case 1:
+                        m.denom = r.string();
+                        break;
+                    case 2:
+                        m.amount = r.string();
+                        break;
+                    default:
+                        r.skipType(t & 7);
+                        break;
+                    }
+                }
+                return m;
+            };
+
+            return DecCoin;
+        })();
+
+        v1.IntProto = (function() {
+
+            /**
+             * Properties of an IntProto.
+             * @memberof cosmos_sdk.v1
+             * @interface IIntProto
+             * @property {string|null} [int] IntProto int
+             */
+
+            /**
+             * Constructs a new IntProto.
+             * @memberof cosmos_sdk.v1
+             * @classdesc Represents an IntProto.
+             * @implements IIntProto
+             * @constructor
+             * @param {cosmos_sdk.v1.IIntProto=} [p] Properties to set
+             */
+            function IntProto(p) {
+                if (p)
+                    for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+                        if (p[ks[i]] != null)
+                            this[ks[i]] = p[ks[i]];
+            }
+
+            /**
+             * IntProto int.
+             * @member {string} int
+             * @memberof cosmos_sdk.v1.IntProto
+             * @instance
+             */
+            IntProto.prototype.int = "";
+
+            /**
+             * Creates a new IntProto instance using the specified properties.
+             * @function create
+             * @memberof cosmos_sdk.v1.IntProto
+             * @static
+             * @param {cosmos_sdk.v1.IIntProto=} [properties] Properties to set
+             * @returns {cosmos_sdk.v1.IntProto} IntProto instance
+             */
+            IntProto.create = function create(properties) {
+                return new IntProto(properties);
+            };
+
+            /**
+             * Encodes the specified IntProto message. Does not implicitly {@link cosmos_sdk.v1.IntProto.verify|verify} messages.
+             * @function encode
+             * @memberof cosmos_sdk.v1.IntProto
+             * @static
+             * @param {cosmos_sdk.v1.IIntProto} m IntProto message or plain object to encode
+             * @param {$protobuf.Writer} [w] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            IntProto.encode = function encode(m, w) {
+                if (!w)
+                    w = $Writer.create();
+                if (m.int != null && Object.hasOwnProperty.call(m, "int"))
+                    w.uint32(10).string(m.int);
+                return w;
+            };
+
+            /**
+             * Decodes an IntProto message from the specified reader or buffer.
+             * @function decode
+             * @memberof cosmos_sdk.v1.IntProto
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
+             * @param {number} [l] Message length if known beforehand
+             * @returns {cosmos_sdk.v1.IntProto} IntProto
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            IntProto.decode = function decode(r, l) {
+                if (!(r instanceof $Reader))
+                    r = $Reader.create(r);
+                var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.v1.IntProto();
+                while (r.pos < c) {
+                    var t = r.uint32();
+                    switch (t >>> 3) {
+                    case 1:
+                        m.int = r.string();
+                        break;
+                    default:
+                        r.skipType(t & 7);
+                        break;
+                    }
+                }
+                return m;
+            };
+
+            return IntProto;
+        })();
+
+        v1.DecProto = (function() {
+
+            /**
+             * Properties of a DecProto.
+             * @memberof cosmos_sdk.v1
+             * @interface IDecProto
+             * @property {string|null} [dec] DecProto dec
+             */
+
+            /**
+             * Constructs a new DecProto.
+             * @memberof cosmos_sdk.v1
+             * @classdesc Represents a DecProto.
+             * @implements IDecProto
+             * @constructor
+             * @param {cosmos_sdk.v1.IDecProto=} [p] Properties to set
+             */
+            function DecProto(p) {
+                if (p)
+                    for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+                        if (p[ks[i]] != null)
+                            this[ks[i]] = p[ks[i]];
+            }
+
+            /**
+             * DecProto dec.
+             * @member {string} dec
+             * @memberof cosmos_sdk.v1.DecProto
+             * @instance
+             */
+            DecProto.prototype.dec = "";
+
+            /**
+             * Creates a new DecProto instance using the specified properties.
+             * @function create
+             * @memberof cosmos_sdk.v1.DecProto
+             * @static
+             * @param {cosmos_sdk.v1.IDecProto=} [properties] Properties to set
+             * @returns {cosmos_sdk.v1.DecProto} DecProto instance
+             */
+            DecProto.create = function create(properties) {
+                return new DecProto(properties);
+            };
+
+            /**
+             * Encodes the specified DecProto message. Does not implicitly {@link cosmos_sdk.v1.DecProto.verify|verify} messages.
+             * @function encode
+             * @memberof cosmos_sdk.v1.DecProto
+             * @static
+             * @param {cosmos_sdk.v1.IDecProto} m DecProto message or plain object to encode
+             * @param {$protobuf.Writer} [w] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            DecProto.encode = function encode(m, w) {
+                if (!w)
+                    w = $Writer.create();
+                if (m.dec != null && Object.hasOwnProperty.call(m, "dec"))
+                    w.uint32(10).string(m.dec);
+                return w;
+            };
+
+            /**
+             * Decodes a DecProto message from the specified reader or buffer.
+             * @function decode
+             * @memberof cosmos_sdk.v1.DecProto
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
+             * @param {number} [l] Message length if known beforehand
+             * @returns {cosmos_sdk.v1.DecProto} DecProto
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            DecProto.decode = function decode(r, l) {
+                if (!(r instanceof $Reader))
+                    r = $Reader.create(r);
+                var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.v1.DecProto();
+                while (r.pos < c) {
+                    var t = r.uint32();
+                    switch (t >>> 3) {
+                    case 1:
+                        m.dec = r.string();
+                        break;
+                    default:
+                        r.skipType(t & 7);
+                        break;
+                    }
+                }
+                return m;
+            };
+
+            return DecProto;
+        })();
+
+        v1.ValAddresses = (function() {
+
+            /**
+             * Properties of a ValAddresses.
+             * @memberof cosmos_sdk.v1
+             * @interface IValAddresses
+             * @property {Array.<Uint8Array>|null} [addresses] ValAddresses addresses
+             */
+
+            /**
+             * Constructs a new ValAddresses.
+             * @memberof cosmos_sdk.v1
+             * @classdesc Represents a ValAddresses.
+             * @implements IValAddresses
+             * @constructor
+             * @param {cosmos_sdk.v1.IValAddresses=} [p] Properties to set
+             */
+            function ValAddresses(p) {
+                this.addresses = [];
+                if (p)
+                    for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+                        if (p[ks[i]] != null)
+                            this[ks[i]] = p[ks[i]];
+            }
+
+            /**
+             * ValAddresses addresses.
+             * @member {Array.<Uint8Array>} addresses
+             * @memberof cosmos_sdk.v1.ValAddresses
+             * @instance
+             */
+            ValAddresses.prototype.addresses = $util.emptyArray;
+
+            /**
+             * Creates a new ValAddresses instance using the specified properties.
+             * @function create
+             * @memberof cosmos_sdk.v1.ValAddresses
+             * @static
+             * @param {cosmos_sdk.v1.IValAddresses=} [properties] Properties to set
+             * @returns {cosmos_sdk.v1.ValAddresses} ValAddresses instance
+             */
+            ValAddresses.create = function create(properties) {
+                return new ValAddresses(properties);
+            };
+
+            /**
+             * Encodes the specified ValAddresses message. Does not implicitly {@link cosmos_sdk.v1.ValAddresses.verify|verify} messages.
+             * @function encode
+             * @memberof cosmos_sdk.v1.ValAddresses
+             * @static
+             * @param {cosmos_sdk.v1.IValAddresses} m ValAddresses message or plain object to encode
+             * @param {$protobuf.Writer} [w] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            ValAddresses.encode = function encode(m, w) {
+                if (!w)
+                    w = $Writer.create();
+                if (m.addresses != null && m.addresses.length) {
+                    for (var i = 0; i < m.addresses.length; ++i)
+                        w.uint32(10).bytes(m.addresses[i]);
+                }
+                return w;
+            };
+
+            /**
+             * Decodes a ValAddresses message from the specified reader or buffer.
+             * @function decode
+             * @memberof cosmos_sdk.v1.ValAddresses
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
+             * @param {number} [l] Message length if known beforehand
+             * @returns {cosmos_sdk.v1.ValAddresses} ValAddresses
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            ValAddresses.decode = function decode(r, l) {
+                if (!(r instanceof $Reader))
+                    r = $Reader.create(r);
+                var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.v1.ValAddresses();
+                while (r.pos < c) {
+                    var t = r.uint32();
+                    switch (t >>> 3) {
+                    case 1:
+                        if (!(m.addresses && m.addresses.length))
+                            m.addresses = [];
+                        m.addresses.push(r.bytes());
+                        break;
+                    default:
+                        r.skipType(t & 7);
+                        break;
+                    }
+                }
+                return m;
+            };
+
+            return ValAddresses;
+        })();
+
+        v1.GasInfo = (function() {
+
+            /**
+             * Properties of a GasInfo.
+             * @memberof cosmos_sdk.v1
+             * @interface IGasInfo
+             * @property {number|Long|null} [gasWanted] GasInfo gasWanted
+             * @property {number|Long|null} [gasUsed] GasInfo gasUsed
+             */
+
+            /**
+             * Constructs a new GasInfo.
+             * @memberof cosmos_sdk.v1
+             * @classdesc Represents a GasInfo.
+             * @implements IGasInfo
+             * @constructor
+             * @param {cosmos_sdk.v1.IGasInfo=} [p] Properties to set
+             */
+            function GasInfo(p) {
+                if (p)
+                    for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+                        if (p[ks[i]] != null)
+                            this[ks[i]] = p[ks[i]];
+            }
+
+            /**
+             * GasInfo gasWanted.
+             * @member {number|Long} gasWanted
+             * @memberof cosmos_sdk.v1.GasInfo
+             * @instance
+             */
+            GasInfo.prototype.gasWanted = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+
+            /**
+             * GasInfo gasUsed.
+             * @member {number|Long} gasUsed
+             * @memberof cosmos_sdk.v1.GasInfo
+             * @instance
+             */
+            GasInfo.prototype.gasUsed = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+
+            /**
+             * Creates a new GasInfo instance using the specified properties.
+             * @function create
+             * @memberof cosmos_sdk.v1.GasInfo
+             * @static
+             * @param {cosmos_sdk.v1.IGasInfo=} [properties] Properties to set
+             * @returns {cosmos_sdk.v1.GasInfo} GasInfo instance
+             */
+            GasInfo.create = function create(properties) {
+                return new GasInfo(properties);
+            };
+
+            /**
+             * Encodes the specified GasInfo message. Does not implicitly {@link cosmos_sdk.v1.GasInfo.verify|verify} messages.
+             * @function encode
+             * @memberof cosmos_sdk.v1.GasInfo
+             * @static
+             * @param {cosmos_sdk.v1.IGasInfo} m GasInfo message or plain object to encode
+             * @param {$protobuf.Writer} [w] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            GasInfo.encode = function encode(m, w) {
+                if (!w)
+                    w = $Writer.create();
+                if (m.gasWanted != null && Object.hasOwnProperty.call(m, "gasWanted"))
+                    w.uint32(8).uint64(m.gasWanted);
+                if (m.gasUsed != null && Object.hasOwnProperty.call(m, "gasUsed"))
+                    w.uint32(16).uint64(m.gasUsed);
+                return w;
+            };
+
+            /**
+             * Decodes a GasInfo message from the specified reader or buffer.
+             * @function decode
+             * @memberof cosmos_sdk.v1.GasInfo
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
+             * @param {number} [l] Message length if known beforehand
+             * @returns {cosmos_sdk.v1.GasInfo} GasInfo
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            GasInfo.decode = function decode(r, l) {
+                if (!(r instanceof $Reader))
+                    r = $Reader.create(r);
+                var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.v1.GasInfo();
+                while (r.pos < c) {
+                    var t = r.uint32();
+                    switch (t >>> 3) {
+                    case 1:
+                        m.gasWanted = r.uint64();
+                        break;
+                    case 2:
+                        m.gasUsed = r.uint64();
+                        break;
+                    default:
+                        r.skipType(t & 7);
+                        break;
+                    }
+                }
+                return m;
+            };
+
+            return GasInfo;
+        })();
+
+        v1.Result = (function() {
+
+            /**
+             * Properties of a Result.
+             * @memberof cosmos_sdk.v1
+             * @interface IResult
+             * @property {Uint8Array|null} [data] Result data
+             * @property {string|null} [log] Result log
+             * @property {Array.<tendermint.abci.types.IEvent>|null} [events] Result events
+             */
+
+            /**
+             * Constructs a new Result.
+             * @memberof cosmos_sdk.v1
+             * @classdesc Represents a Result.
+             * @implements IResult
+             * @constructor
+             * @param {cosmos_sdk.v1.IResult=} [p] Properties to set
+             */
+            function Result(p) {
+                this.events = [];
+                if (p)
+                    for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+                        if (p[ks[i]] != null)
+                            this[ks[i]] = p[ks[i]];
+            }
+
+            /**
+             * Result data.
+             * @member {Uint8Array} data
+             * @memberof cosmos_sdk.v1.Result
+             * @instance
+             */
+            Result.prototype.data = $util.newBuffer([]);
+
+            /**
+             * Result log.
+             * @member {string} log
+             * @memberof cosmos_sdk.v1.Result
+             * @instance
+             */
+            Result.prototype.log = "";
+
+            /**
+             * Result events.
+             * @member {Array.<tendermint.abci.types.IEvent>} events
+             * @memberof cosmos_sdk.v1.Result
+             * @instance
+             */
+            Result.prototype.events = $util.emptyArray;
+
+            /**
+             * Creates a new Result instance using the specified properties.
+             * @function create
+             * @memberof cosmos_sdk.v1.Result
+             * @static
+             * @param {cosmos_sdk.v1.IResult=} [properties] Properties to set
+             * @returns {cosmos_sdk.v1.Result} Result instance
+             */
+            Result.create = function create(properties) {
+                return new Result(properties);
+            };
+
+            /**
+             * Encodes the specified Result message. Does not implicitly {@link cosmos_sdk.v1.Result.verify|verify} messages.
+             * @function encode
+             * @memberof cosmos_sdk.v1.Result
+             * @static
+             * @param {cosmos_sdk.v1.IResult} m Result message or plain object to encode
+             * @param {$protobuf.Writer} [w] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            Result.encode = function encode(m, w) {
+                if (!w)
+                    w = $Writer.create();
+                if (m.data != null && Object.hasOwnProperty.call(m, "data"))
+                    w.uint32(10).bytes(m.data);
+                if (m.log != null && Object.hasOwnProperty.call(m, "log"))
+                    w.uint32(18).string(m.log);
+                if (m.events != null && m.events.length) {
+                    for (var i = 0; i < m.events.length; ++i)
+                        $root.tendermint.abci.types.Event.encode(m.events[i], w.uint32(26).fork()).ldelim();
+                }
+                return w;
+            };
+
+            /**
+             * Decodes a Result message from the specified reader or buffer.
+             * @function decode
+             * @memberof cosmos_sdk.v1.Result
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
+             * @param {number} [l] Message length if known beforehand
+             * @returns {cosmos_sdk.v1.Result} Result
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            Result.decode = function decode(r, l) {
+                if (!(r instanceof $Reader))
+                    r = $Reader.create(r);
+                var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.v1.Result();
+                while (r.pos < c) {
+                    var t = r.uint32();
+                    switch (t >>> 3) {
+                    case 1:
+                        m.data = r.bytes();
+                        break;
+                    case 2:
+                        m.log = r.string();
+                        break;
+                    case 3:
+                        if (!(m.events && m.events.length))
+                            m.events = [];
+                        m.events.push($root.tendermint.abci.types.Event.decode(r, r.uint32()));
+                        break;
+                    default:
+                        r.skipType(t & 7);
+                        break;
+                    }
+                }
+                return m;
+            };
+
+            return Result;
+        })();
+
+        v1.SimulationResponse = (function() {
+
+            /**
+             * Properties of a SimulationResponse.
+             * @memberof cosmos_sdk.v1
+             * @interface ISimulationResponse
+             * @property {cosmos_sdk.v1.IGasInfo|null} [gasInfo] SimulationResponse gasInfo
+             * @property {cosmos_sdk.v1.IResult|null} [result] SimulationResponse result
+             */
+
+            /**
+             * Constructs a new SimulationResponse.
+             * @memberof cosmos_sdk.v1
+             * @classdesc Represents a SimulationResponse.
+             * @implements ISimulationResponse
+             * @constructor
+             * @param {cosmos_sdk.v1.ISimulationResponse=} [p] Properties to set
+             */
+            function SimulationResponse(p) {
+                if (p)
+                    for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+                        if (p[ks[i]] != null)
+                            this[ks[i]] = p[ks[i]];
+            }
+
+            /**
+             * SimulationResponse gasInfo.
+             * @member {cosmos_sdk.v1.IGasInfo|null|undefined} gasInfo
+             * @memberof cosmos_sdk.v1.SimulationResponse
+             * @instance
+             */
+            SimulationResponse.prototype.gasInfo = null;
+
+            /**
+             * SimulationResponse result.
+             * @member {cosmos_sdk.v1.IResult|null|undefined} result
+             * @memberof cosmos_sdk.v1.SimulationResponse
+             * @instance
+             */
+            SimulationResponse.prototype.result = null;
+
+            /**
+             * Creates a new SimulationResponse instance using the specified properties.
+             * @function create
+             * @memberof cosmos_sdk.v1.SimulationResponse
+             * @static
+             * @param {cosmos_sdk.v1.ISimulationResponse=} [properties] Properties to set
+             * @returns {cosmos_sdk.v1.SimulationResponse} SimulationResponse instance
+             */
+            SimulationResponse.create = function create(properties) {
+                return new SimulationResponse(properties);
+            };
+
+            /**
+             * Encodes the specified SimulationResponse message. Does not implicitly {@link cosmos_sdk.v1.SimulationResponse.verify|verify} messages.
+             * @function encode
+             * @memberof cosmos_sdk.v1.SimulationResponse
+             * @static
+             * @param {cosmos_sdk.v1.ISimulationResponse} m SimulationResponse message or plain object to encode
+             * @param {$protobuf.Writer} [w] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            SimulationResponse.encode = function encode(m, w) {
+                if (!w)
+                    w = $Writer.create();
+                if (m.gasInfo != null && Object.hasOwnProperty.call(m, "gasInfo"))
+                    $root.cosmos_sdk.v1.GasInfo.encode(m.gasInfo, w.uint32(10).fork()).ldelim();
+                if (m.result != null && Object.hasOwnProperty.call(m, "result"))
+                    $root.cosmos_sdk.v1.Result.encode(m.result, w.uint32(18).fork()).ldelim();
+                return w;
+            };
+
+            /**
+             * Decodes a SimulationResponse message from the specified reader or buffer.
+             * @function decode
+             * @memberof cosmos_sdk.v1.SimulationResponse
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
+             * @param {number} [l] Message length if known beforehand
+             * @returns {cosmos_sdk.v1.SimulationResponse} SimulationResponse
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            SimulationResponse.decode = function decode(r, l) {
+                if (!(r instanceof $Reader))
+                    r = $Reader.create(r);
+                var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.v1.SimulationResponse();
+                while (r.pos < c) {
+                    var t = r.uint32();
+                    switch (t >>> 3) {
+                    case 1:
+                        m.gasInfo = $root.cosmos_sdk.v1.GasInfo.decode(r, r.uint32());
+                        break;
+                    case 2:
+                        m.result = $root.cosmos_sdk.v1.Result.decode(r, r.uint32());
+                        break;
+                    default:
+                        r.skipType(t & 7);
+                        break;
+                    }
+                }
+                return m;
+            };
+
+            return SimulationResponse;
+        })();
+
+        v1.MsgData = (function() {
+
+            /**
+             * Properties of a MsgData.
+             * @memberof cosmos_sdk.v1
+             * @interface IMsgData
+             * @property {string|null} [msgType] MsgData msgType
+             * @property {Uint8Array|null} [data] MsgData data
+             */
+
+            /**
+             * Constructs a new MsgData.
+             * @memberof cosmos_sdk.v1
+             * @classdesc Represents a MsgData.
+             * @implements IMsgData
+             * @constructor
+             * @param {cosmos_sdk.v1.IMsgData=} [p] Properties to set
+             */
+            function MsgData(p) {
+                if (p)
+                    for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+                        if (p[ks[i]] != null)
+                            this[ks[i]] = p[ks[i]];
+            }
+
+            /**
+             * MsgData msgType.
+             * @member {string} msgType
+             * @memberof cosmos_sdk.v1.MsgData
+             * @instance
+             */
+            MsgData.prototype.msgType = "";
+
+            /**
+             * MsgData data.
+             * @member {Uint8Array} data
+             * @memberof cosmos_sdk.v1.MsgData
+             * @instance
+             */
+            MsgData.prototype.data = $util.newBuffer([]);
+
+            /**
+             * Creates a new MsgData instance using the specified properties.
+             * @function create
+             * @memberof cosmos_sdk.v1.MsgData
+             * @static
+             * @param {cosmos_sdk.v1.IMsgData=} [properties] Properties to set
+             * @returns {cosmos_sdk.v1.MsgData} MsgData instance
+             */
+            MsgData.create = function create(properties) {
+                return new MsgData(properties);
+            };
+
+            /**
+             * Encodes the specified MsgData message. Does not implicitly {@link cosmos_sdk.v1.MsgData.verify|verify} messages.
+             * @function encode
+             * @memberof cosmos_sdk.v1.MsgData
+             * @static
+             * @param {cosmos_sdk.v1.IMsgData} m MsgData message or plain object to encode
+             * @param {$protobuf.Writer} [w] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            MsgData.encode = function encode(m, w) {
+                if (!w)
+                    w = $Writer.create();
+                if (m.msgType != null && Object.hasOwnProperty.call(m, "msgType"))
+                    w.uint32(10).string(m.msgType);
+                if (m.data != null && Object.hasOwnProperty.call(m, "data"))
+                    w.uint32(18).bytes(m.data);
+                return w;
+            };
+
+            /**
+             * Decodes a MsgData message from the specified reader or buffer.
+             * @function decode
+             * @memberof cosmos_sdk.v1.MsgData
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
+             * @param {number} [l] Message length if known beforehand
+             * @returns {cosmos_sdk.v1.MsgData} MsgData
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            MsgData.decode = function decode(r, l) {
+                if (!(r instanceof $Reader))
+                    r = $Reader.create(r);
+                var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.v1.MsgData();
+                while (r.pos < c) {
+                    var t = r.uint32();
+                    switch (t >>> 3) {
+                    case 1:
+                        m.msgType = r.string();
+                        break;
+                    case 2:
+                        m.data = r.bytes();
+                        break;
+                    default:
+                        r.skipType(t & 7);
+                        break;
+                    }
+                }
+                return m;
+            };
+
+            return MsgData;
+        })();
+
+        v1.TxData = (function() {
+
+            /**
+             * Properties of a TxData.
+             * @memberof cosmos_sdk.v1
+             * @interface ITxData
+             * @property {Array.<cosmos_sdk.v1.IMsgData>|null} [data] TxData data
+             */
+
+            /**
+             * Constructs a new TxData.
+             * @memberof cosmos_sdk.v1
+             * @classdesc Represents a TxData.
+             * @implements ITxData
+             * @constructor
+             * @param {cosmos_sdk.v1.ITxData=} [p] Properties to set
+             */
+            function TxData(p) {
+                this.data = [];
+                if (p)
+                    for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+                        if (p[ks[i]] != null)
+                            this[ks[i]] = p[ks[i]];
+            }
+
+            /**
+             * TxData data.
+             * @member {Array.<cosmos_sdk.v1.IMsgData>} data
+             * @memberof cosmos_sdk.v1.TxData
+             * @instance
+             */
+            TxData.prototype.data = $util.emptyArray;
+
+            /**
+             * Creates a new TxData instance using the specified properties.
+             * @function create
+             * @memberof cosmos_sdk.v1.TxData
+             * @static
+             * @param {cosmos_sdk.v1.ITxData=} [properties] Properties to set
+             * @returns {cosmos_sdk.v1.TxData} TxData instance
+             */
+            TxData.create = function create(properties) {
+                return new TxData(properties);
+            };
+
+            /**
+             * Encodes the specified TxData message. Does not implicitly {@link cosmos_sdk.v1.TxData.verify|verify} messages.
+             * @function encode
+             * @memberof cosmos_sdk.v1.TxData
+             * @static
+             * @param {cosmos_sdk.v1.ITxData} m TxData message or plain object to encode
+             * @param {$protobuf.Writer} [w] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            TxData.encode = function encode(m, w) {
+                if (!w)
+                    w = $Writer.create();
+                if (m.data != null && m.data.length) {
+                    for (var i = 0; i < m.data.length; ++i)
+                        $root.cosmos_sdk.v1.MsgData.encode(m.data[i], w.uint32(10).fork()).ldelim();
+                }
+                return w;
+            };
+
+            /**
+             * Decodes a TxData message from the specified reader or buffer.
+             * @function decode
+             * @memberof cosmos_sdk.v1.TxData
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
+             * @param {number} [l] Message length if known beforehand
+             * @returns {cosmos_sdk.v1.TxData} TxData
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            TxData.decode = function decode(r, l) {
+                if (!(r instanceof $Reader))
+                    r = $Reader.create(r);
+                var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.v1.TxData();
+                while (r.pos < c) {
+                    var t = r.uint32();
+                    switch (t >>> 3) {
+                    case 1:
+                        if (!(m.data && m.data.length))
+                            m.data = [];
+                        m.data.push($root.cosmos_sdk.v1.MsgData.decode(r, r.uint32()));
+                        break;
+                    default:
+                        r.skipType(t & 7);
+                        break;
+                    }
+                }
+                return m;
+            };
+
+            return TxData;
+        })();
+
+        return v1;
     })();
 
     cosmos_sdk.tx = (function() {
@@ -1548,48 +1682,6 @@ $root.cosmos_sdk = (function() {
          * @namespace
          */
         var tx = {};
-
-        tx.signing = (function() {
-
-            /**
-             * Namespace signing.
-             * @memberof cosmos_sdk.tx
-             * @namespace
-             */
-            var signing = {};
-
-            signing.v1 = (function() {
-
-                /**
-                 * Namespace v1.
-                 * @memberof cosmos_sdk.tx.signing
-                 * @namespace
-                 */
-                var v1 = {};
-
-                /**
-                 * SignMode enum.
-                 * @name cosmos_sdk.tx.signing.v1.SignMode
-                 * @enum {number}
-                 * @property {number} SIGN_MODE_UNSPECIFIED=0 SIGN_MODE_UNSPECIFIED value
-                 * @property {number} SIGN_MODE_DIRECT=1 SIGN_MODE_DIRECT value
-                 * @property {number} SIGN_MODE_TEXTUAL=2 SIGN_MODE_TEXTUAL value
-                 * @property {number} SIGN_MODE_LEGACY_AMINO_JSON=127 SIGN_MODE_LEGACY_AMINO_JSON value
-                 */
-                v1.SignMode = (function() {
-                    var valuesById = {}, values = Object.create(valuesById);
-                    values[valuesById[0] = "SIGN_MODE_UNSPECIFIED"] = 0;
-                    values[valuesById[1] = "SIGN_MODE_DIRECT"] = 1;
-                    values[valuesById[2] = "SIGN_MODE_TEXTUAL"] = 2;
-                    values[valuesById[127] = "SIGN_MODE_LEGACY_AMINO_JSON"] = 127;
-                    return values;
-                })();
-
-                return v1;
-            })();
-
-            return signing;
-        })();
 
         tx.v1 = (function() {
 
@@ -2699,15107 +2791,570 @@ $root.cosmos_sdk = (function() {
             return v1;
         })();
 
+        tx.signing = (function() {
+
+            /**
+             * Namespace signing.
+             * @memberof cosmos_sdk.tx
+             * @namespace
+             */
+            var signing = {};
+
+            signing.v1 = (function() {
+
+                /**
+                 * Namespace v1.
+                 * @memberof cosmos_sdk.tx.signing
+                 * @namespace
+                 */
+                var v1 = {};
+
+                /**
+                 * SignMode enum.
+                 * @name cosmos_sdk.tx.signing.v1.SignMode
+                 * @enum {number}
+                 * @property {number} SIGN_MODE_UNSPECIFIED=0 SIGN_MODE_UNSPECIFIED value
+                 * @property {number} SIGN_MODE_DIRECT=1 SIGN_MODE_DIRECT value
+                 * @property {number} SIGN_MODE_TEXTUAL=2 SIGN_MODE_TEXTUAL value
+                 * @property {number} SIGN_MODE_LEGACY_AMINO_JSON=127 SIGN_MODE_LEGACY_AMINO_JSON value
+                 */
+                v1.SignMode = (function() {
+                    var valuesById = {}, values = Object.create(valuesById);
+                    values[valuesById[0] = "SIGN_MODE_UNSPECIFIED"] = 0;
+                    values[valuesById[1] = "SIGN_MODE_DIRECT"] = 1;
+                    values[valuesById[2] = "SIGN_MODE_TEXTUAL"] = 2;
+                    values[valuesById[127] = "SIGN_MODE_LEGACY_AMINO_JSON"] = 127;
+                    return values;
+                })();
+
+                return v1;
+            })();
+
+            return signing;
+        })();
+
         return tx;
     })();
 
-    cosmos_sdk.v1 = (function() {
+    cosmos_sdk.crypto = (function() {
 
         /**
-         * Namespace v1.
+         * Namespace crypto.
          * @memberof cosmos_sdk
          * @namespace
          */
-        var v1 = {};
+        var crypto = {};
 
-        v1.Coin = (function() {
-
-            /**
-             * Properties of a Coin.
-             * @memberof cosmos_sdk.v1
-             * @interface ICoin
-             * @property {string|null} [denom] Coin denom
-             * @property {string|null} [amount] Coin amount
-             */
+        crypto.v1 = (function() {
 
             /**
-             * Constructs a new Coin.
-             * @memberof cosmos_sdk.v1
-             * @classdesc Represents a Coin.
-             * @implements ICoin
-             * @constructor
-             * @param {cosmos_sdk.v1.ICoin=} [p] Properties to set
+             * Namespace v1.
+             * @memberof cosmos_sdk.crypto
+             * @namespace
              */
-            function Coin(p) {
-                if (p)
-                    for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
-                            this[ks[i]] = p[ks[i]];
-            }
+            var v1 = {};
 
-            /**
-             * Coin denom.
-             * @member {string} denom
-             * @memberof cosmos_sdk.v1.Coin
-             * @instance
-             */
-            Coin.prototype.denom = "";
+            v1.PublicKey = (function() {
 
-            /**
-             * Coin amount.
-             * @member {string} amount
-             * @memberof cosmos_sdk.v1.Coin
-             * @instance
-             */
-            Coin.prototype.amount = "";
+                /**
+                 * Properties of a PublicKey.
+                 * @memberof cosmos_sdk.crypto.v1
+                 * @interface IPublicKey
+                 * @property {Uint8Array|null} [secp256k1] PublicKey secp256k1
+                 * @property {Uint8Array|null} [ed25519] PublicKey ed25519
+                 * @property {Uint8Array|null} [sr25519] PublicKey sr25519
+                 * @property {cosmos_sdk.crypto.v1.IPubKeyMultisigThreshold|null} [multisig] PublicKey multisig
+                 * @property {Uint8Array|null} [secp256r1] PublicKey secp256r1
+                 * @property {google.protobuf.IAny|null} [anyPubkey] PublicKey anyPubkey
+                 */
 
-            /**
-             * Creates a new Coin instance using the specified properties.
-             * @function create
-             * @memberof cosmos_sdk.v1.Coin
-             * @static
-             * @param {cosmos_sdk.v1.ICoin=} [properties] Properties to set
-             * @returns {cosmos_sdk.v1.Coin} Coin instance
-             */
-            Coin.create = function create(properties) {
-                return new Coin(properties);
-            };
-
-            /**
-             * Encodes the specified Coin message. Does not implicitly {@link cosmos_sdk.v1.Coin.verify|verify} messages.
-             * @function encode
-             * @memberof cosmos_sdk.v1.Coin
-             * @static
-             * @param {cosmos_sdk.v1.ICoin} m Coin message or plain object to encode
-             * @param {$protobuf.Writer} [w] Writer to encode to
-             * @returns {$protobuf.Writer} Writer
-             */
-            Coin.encode = function encode(m, w) {
-                if (!w)
-                    w = $Writer.create();
-                if (m.denom != null && Object.hasOwnProperty.call(m, "denom"))
-                    w.uint32(10).string(m.denom);
-                if (m.amount != null && Object.hasOwnProperty.call(m, "amount"))
-                    w.uint32(18).string(m.amount);
-                return w;
-            };
-
-            /**
-             * Decodes a Coin message from the specified reader or buffer.
-             * @function decode
-             * @memberof cosmos_sdk.v1.Coin
-             * @static
-             * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-             * @param {number} [l] Message length if known beforehand
-             * @returns {cosmos_sdk.v1.Coin} Coin
-             * @throws {Error} If the payload is not a reader or valid buffer
-             * @throws {$protobuf.util.ProtocolError} If required fields are missing
-             */
-            Coin.decode = function decode(r, l) {
-                if (!(r instanceof $Reader))
-                    r = $Reader.create(r);
-                var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.v1.Coin();
-                while (r.pos < c) {
-                    var t = r.uint32();
-                    switch (t >>> 3) {
-                    case 1:
-                        m.denom = r.string();
-                        break;
-                    case 2:
-                        m.amount = r.string();
-                        break;
-                    default:
-                        r.skipType(t & 7);
-                        break;
-                    }
+                /**
+                 * Constructs a new PublicKey.
+                 * @memberof cosmos_sdk.crypto.v1
+                 * @classdesc Represents a PublicKey.
+                 * @implements IPublicKey
+                 * @constructor
+                 * @param {cosmos_sdk.crypto.v1.IPublicKey=} [p] Properties to set
+                 */
+                function PublicKey(p) {
+                    if (p)
+                        for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+                            if (p[ks[i]] != null)
+                                this[ks[i]] = p[ks[i]];
                 }
-                return m;
-            };
 
-            return Coin;
-        })();
+                /**
+                 * PublicKey secp256k1.
+                 * @member {Uint8Array} secp256k1
+                 * @memberof cosmos_sdk.crypto.v1.PublicKey
+                 * @instance
+                 */
+                PublicKey.prototype.secp256k1 = $util.newBuffer([]);
 
-        v1.DecCoin = (function() {
+                /**
+                 * PublicKey ed25519.
+                 * @member {Uint8Array} ed25519
+                 * @memberof cosmos_sdk.crypto.v1.PublicKey
+                 * @instance
+                 */
+                PublicKey.prototype.ed25519 = $util.newBuffer([]);
 
-            /**
-             * Properties of a DecCoin.
-             * @memberof cosmos_sdk.v1
-             * @interface IDecCoin
-             * @property {string|null} [denom] DecCoin denom
-             * @property {string|null} [amount] DecCoin amount
-             */
+                /**
+                 * PublicKey sr25519.
+                 * @member {Uint8Array} sr25519
+                 * @memberof cosmos_sdk.crypto.v1.PublicKey
+                 * @instance
+                 */
+                PublicKey.prototype.sr25519 = $util.newBuffer([]);
 
-            /**
-             * Constructs a new DecCoin.
-             * @memberof cosmos_sdk.v1
-             * @classdesc Represents a DecCoin.
-             * @implements IDecCoin
-             * @constructor
-             * @param {cosmos_sdk.v1.IDecCoin=} [p] Properties to set
-             */
-            function DecCoin(p) {
-                if (p)
-                    for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
-                            this[ks[i]] = p[ks[i]];
-            }
+                /**
+                 * PublicKey multisig.
+                 * @member {cosmos_sdk.crypto.v1.IPubKeyMultisigThreshold|null|undefined} multisig
+                 * @memberof cosmos_sdk.crypto.v1.PublicKey
+                 * @instance
+                 */
+                PublicKey.prototype.multisig = null;
 
-            /**
-             * DecCoin denom.
-             * @member {string} denom
-             * @memberof cosmos_sdk.v1.DecCoin
-             * @instance
-             */
-            DecCoin.prototype.denom = "";
+                /**
+                 * PublicKey secp256r1.
+                 * @member {Uint8Array} secp256r1
+                 * @memberof cosmos_sdk.crypto.v1.PublicKey
+                 * @instance
+                 */
+                PublicKey.prototype.secp256r1 = $util.newBuffer([]);
 
-            /**
-             * DecCoin amount.
-             * @member {string} amount
-             * @memberof cosmos_sdk.v1.DecCoin
-             * @instance
-             */
-            DecCoin.prototype.amount = "";
+                /**
+                 * PublicKey anyPubkey.
+                 * @member {google.protobuf.IAny|null|undefined} anyPubkey
+                 * @memberof cosmos_sdk.crypto.v1.PublicKey
+                 * @instance
+                 */
+                PublicKey.prototype.anyPubkey = null;
 
-            /**
-             * Creates a new DecCoin instance using the specified properties.
-             * @function create
-             * @memberof cosmos_sdk.v1.DecCoin
-             * @static
-             * @param {cosmos_sdk.v1.IDecCoin=} [properties] Properties to set
-             * @returns {cosmos_sdk.v1.DecCoin} DecCoin instance
-             */
-            DecCoin.create = function create(properties) {
-                return new DecCoin(properties);
-            };
+                // OneOf field names bound to virtual getters and setters
+                var $oneOfFields;
 
-            /**
-             * Encodes the specified DecCoin message. Does not implicitly {@link cosmos_sdk.v1.DecCoin.verify|verify} messages.
-             * @function encode
-             * @memberof cosmos_sdk.v1.DecCoin
-             * @static
-             * @param {cosmos_sdk.v1.IDecCoin} m DecCoin message or plain object to encode
-             * @param {$protobuf.Writer} [w] Writer to encode to
-             * @returns {$protobuf.Writer} Writer
-             */
-            DecCoin.encode = function encode(m, w) {
-                if (!w)
-                    w = $Writer.create();
-                if (m.denom != null && Object.hasOwnProperty.call(m, "denom"))
-                    w.uint32(10).string(m.denom);
-                if (m.amount != null && Object.hasOwnProperty.call(m, "amount"))
-                    w.uint32(18).string(m.amount);
-                return w;
-            };
+                /**
+                 * PublicKey sum.
+                 * @member {"secp256k1"|"ed25519"|"sr25519"|"multisig"|"secp256r1"|"anyPubkey"|undefined} sum
+                 * @memberof cosmos_sdk.crypto.v1.PublicKey
+                 * @instance
+                 */
+                Object.defineProperty(PublicKey.prototype, "sum", {
+                    get: $util.oneOfGetter($oneOfFields = ["secp256k1", "ed25519", "sr25519", "multisig", "secp256r1", "anyPubkey"]),
+                    set: $util.oneOfSetter($oneOfFields)
+                });
 
-            /**
-             * Decodes a DecCoin message from the specified reader or buffer.
-             * @function decode
-             * @memberof cosmos_sdk.v1.DecCoin
-             * @static
-             * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-             * @param {number} [l] Message length if known beforehand
-             * @returns {cosmos_sdk.v1.DecCoin} DecCoin
-             * @throws {Error} If the payload is not a reader or valid buffer
-             * @throws {$protobuf.util.ProtocolError} If required fields are missing
-             */
-            DecCoin.decode = function decode(r, l) {
-                if (!(r instanceof $Reader))
-                    r = $Reader.create(r);
-                var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.v1.DecCoin();
-                while (r.pos < c) {
-                    var t = r.uint32();
-                    switch (t >>> 3) {
-                    case 1:
-                        m.denom = r.string();
-                        break;
-                    case 2:
-                        m.amount = r.string();
-                        break;
-                    default:
-                        r.skipType(t & 7);
-                        break;
+                /**
+                 * Creates a new PublicKey instance using the specified properties.
+                 * @function create
+                 * @memberof cosmos_sdk.crypto.v1.PublicKey
+                 * @static
+                 * @param {cosmos_sdk.crypto.v1.IPublicKey=} [properties] Properties to set
+                 * @returns {cosmos_sdk.crypto.v1.PublicKey} PublicKey instance
+                 */
+                PublicKey.create = function create(properties) {
+                    return new PublicKey(properties);
+                };
+
+                /**
+                 * Encodes the specified PublicKey message. Does not implicitly {@link cosmos_sdk.crypto.v1.PublicKey.verify|verify} messages.
+                 * @function encode
+                 * @memberof cosmos_sdk.crypto.v1.PublicKey
+                 * @static
+                 * @param {cosmos_sdk.crypto.v1.IPublicKey} m PublicKey message or plain object to encode
+                 * @param {$protobuf.Writer} [w] Writer to encode to
+                 * @returns {$protobuf.Writer} Writer
+                 */
+                PublicKey.encode = function encode(m, w) {
+                    if (!w)
+                        w = $Writer.create();
+                    if (m.secp256k1 != null && Object.hasOwnProperty.call(m, "secp256k1"))
+                        w.uint32(10).bytes(m.secp256k1);
+                    if (m.ed25519 != null && Object.hasOwnProperty.call(m, "ed25519"))
+                        w.uint32(18).bytes(m.ed25519);
+                    if (m.sr25519 != null && Object.hasOwnProperty.call(m, "sr25519"))
+                        w.uint32(26).bytes(m.sr25519);
+                    if (m.multisig != null && Object.hasOwnProperty.call(m, "multisig"))
+                        $root.cosmos_sdk.crypto.v1.PubKeyMultisigThreshold.encode(m.multisig, w.uint32(34).fork()).ldelim();
+                    if (m.secp256r1 != null && Object.hasOwnProperty.call(m, "secp256r1"))
+                        w.uint32(42).bytes(m.secp256r1);
+                    if (m.anyPubkey != null && Object.hasOwnProperty.call(m, "anyPubkey"))
+                        $root.google.protobuf.Any.encode(m.anyPubkey, w.uint32(122).fork()).ldelim();
+                    return w;
+                };
+
+                /**
+                 * Decodes a PublicKey message from the specified reader or buffer.
+                 * @function decode
+                 * @memberof cosmos_sdk.crypto.v1.PublicKey
+                 * @static
+                 * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
+                 * @param {number} [l] Message length if known beforehand
+                 * @returns {cosmos_sdk.crypto.v1.PublicKey} PublicKey
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                PublicKey.decode = function decode(r, l) {
+                    if (!(r instanceof $Reader))
+                        r = $Reader.create(r);
+                    var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.crypto.v1.PublicKey();
+                    while (r.pos < c) {
+                        var t = r.uint32();
+                        switch (t >>> 3) {
+                        case 1:
+                            m.secp256k1 = r.bytes();
+                            break;
+                        case 2:
+                            m.ed25519 = r.bytes();
+                            break;
+                        case 3:
+                            m.sr25519 = r.bytes();
+                            break;
+                        case 4:
+                            m.multisig = $root.cosmos_sdk.crypto.v1.PubKeyMultisigThreshold.decode(r, r.uint32());
+                            break;
+                        case 5:
+                            m.secp256r1 = r.bytes();
+                            break;
+                        case 15:
+                            m.anyPubkey = $root.google.protobuf.Any.decode(r, r.uint32());
+                            break;
+                        default:
+                            r.skipType(t & 7);
+                            break;
+                        }
                     }
+                    return m;
+                };
+
+                return PublicKey;
+            })();
+
+            v1.PubKeyMultisigThreshold = (function() {
+
+                /**
+                 * Properties of a PubKeyMultisigThreshold.
+                 * @memberof cosmos_sdk.crypto.v1
+                 * @interface IPubKeyMultisigThreshold
+                 * @property {number|null} [threshold] PubKeyMultisigThreshold threshold
+                 * @property {Array.<cosmos_sdk.crypto.v1.IPublicKey>|null} [publicKeys] PubKeyMultisigThreshold publicKeys
+                 */
+
+                /**
+                 * Constructs a new PubKeyMultisigThreshold.
+                 * @memberof cosmos_sdk.crypto.v1
+                 * @classdesc Represents a PubKeyMultisigThreshold.
+                 * @implements IPubKeyMultisigThreshold
+                 * @constructor
+                 * @param {cosmos_sdk.crypto.v1.IPubKeyMultisigThreshold=} [p] Properties to set
+                 */
+                function PubKeyMultisigThreshold(p) {
+                    this.publicKeys = [];
+                    if (p)
+                        for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+                            if (p[ks[i]] != null)
+                                this[ks[i]] = p[ks[i]];
                 }
-                return m;
-            };
 
-            return DecCoin;
-        })();
+                /**
+                 * PubKeyMultisigThreshold threshold.
+                 * @member {number} threshold
+                 * @memberof cosmos_sdk.crypto.v1.PubKeyMultisigThreshold
+                 * @instance
+                 */
+                PubKeyMultisigThreshold.prototype.threshold = 0;
 
-        v1.IntProto = (function() {
+                /**
+                 * PubKeyMultisigThreshold publicKeys.
+                 * @member {Array.<cosmos_sdk.crypto.v1.IPublicKey>} publicKeys
+                 * @memberof cosmos_sdk.crypto.v1.PubKeyMultisigThreshold
+                 * @instance
+                 */
+                PubKeyMultisigThreshold.prototype.publicKeys = $util.emptyArray;
 
-            /**
-             * Properties of an IntProto.
-             * @memberof cosmos_sdk.v1
-             * @interface IIntProto
-             * @property {string|null} [int] IntProto int
-             */
+                /**
+                 * Creates a new PubKeyMultisigThreshold instance using the specified properties.
+                 * @function create
+                 * @memberof cosmos_sdk.crypto.v1.PubKeyMultisigThreshold
+                 * @static
+                 * @param {cosmos_sdk.crypto.v1.IPubKeyMultisigThreshold=} [properties] Properties to set
+                 * @returns {cosmos_sdk.crypto.v1.PubKeyMultisigThreshold} PubKeyMultisigThreshold instance
+                 */
+                PubKeyMultisigThreshold.create = function create(properties) {
+                    return new PubKeyMultisigThreshold(properties);
+                };
 
-            /**
-             * Constructs a new IntProto.
-             * @memberof cosmos_sdk.v1
-             * @classdesc Represents an IntProto.
-             * @implements IIntProto
-             * @constructor
-             * @param {cosmos_sdk.v1.IIntProto=} [p] Properties to set
-             */
-            function IntProto(p) {
-                if (p)
-                    for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
-                            this[ks[i]] = p[ks[i]];
-            }
-
-            /**
-             * IntProto int.
-             * @member {string} int
-             * @memberof cosmos_sdk.v1.IntProto
-             * @instance
-             */
-            IntProto.prototype.int = "";
-
-            /**
-             * Creates a new IntProto instance using the specified properties.
-             * @function create
-             * @memberof cosmos_sdk.v1.IntProto
-             * @static
-             * @param {cosmos_sdk.v1.IIntProto=} [properties] Properties to set
-             * @returns {cosmos_sdk.v1.IntProto} IntProto instance
-             */
-            IntProto.create = function create(properties) {
-                return new IntProto(properties);
-            };
-
-            /**
-             * Encodes the specified IntProto message. Does not implicitly {@link cosmos_sdk.v1.IntProto.verify|verify} messages.
-             * @function encode
-             * @memberof cosmos_sdk.v1.IntProto
-             * @static
-             * @param {cosmos_sdk.v1.IIntProto} m IntProto message or plain object to encode
-             * @param {$protobuf.Writer} [w] Writer to encode to
-             * @returns {$protobuf.Writer} Writer
-             */
-            IntProto.encode = function encode(m, w) {
-                if (!w)
-                    w = $Writer.create();
-                if (m.int != null && Object.hasOwnProperty.call(m, "int"))
-                    w.uint32(10).string(m.int);
-                return w;
-            };
-
-            /**
-             * Decodes an IntProto message from the specified reader or buffer.
-             * @function decode
-             * @memberof cosmos_sdk.v1.IntProto
-             * @static
-             * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-             * @param {number} [l] Message length if known beforehand
-             * @returns {cosmos_sdk.v1.IntProto} IntProto
-             * @throws {Error} If the payload is not a reader or valid buffer
-             * @throws {$protobuf.util.ProtocolError} If required fields are missing
-             */
-            IntProto.decode = function decode(r, l) {
-                if (!(r instanceof $Reader))
-                    r = $Reader.create(r);
-                var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.v1.IntProto();
-                while (r.pos < c) {
-                    var t = r.uint32();
-                    switch (t >>> 3) {
-                    case 1:
-                        m.int = r.string();
-                        break;
-                    default:
-                        r.skipType(t & 7);
-                        break;
+                /**
+                 * Encodes the specified PubKeyMultisigThreshold message. Does not implicitly {@link cosmos_sdk.crypto.v1.PubKeyMultisigThreshold.verify|verify} messages.
+                 * @function encode
+                 * @memberof cosmos_sdk.crypto.v1.PubKeyMultisigThreshold
+                 * @static
+                 * @param {cosmos_sdk.crypto.v1.IPubKeyMultisigThreshold} m PubKeyMultisigThreshold message or plain object to encode
+                 * @param {$protobuf.Writer} [w] Writer to encode to
+                 * @returns {$protobuf.Writer} Writer
+                 */
+                PubKeyMultisigThreshold.encode = function encode(m, w) {
+                    if (!w)
+                        w = $Writer.create();
+                    if (m.threshold != null && Object.hasOwnProperty.call(m, "threshold"))
+                        w.uint32(8).uint32(m.threshold);
+                    if (m.publicKeys != null && m.publicKeys.length) {
+                        for (var i = 0; i < m.publicKeys.length; ++i)
+                            $root.cosmos_sdk.crypto.v1.PublicKey.encode(m.publicKeys[i], w.uint32(18).fork()).ldelim();
                     }
+                    return w;
+                };
+
+                /**
+                 * Decodes a PubKeyMultisigThreshold message from the specified reader or buffer.
+                 * @function decode
+                 * @memberof cosmos_sdk.crypto.v1.PubKeyMultisigThreshold
+                 * @static
+                 * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
+                 * @param {number} [l] Message length if known beforehand
+                 * @returns {cosmos_sdk.crypto.v1.PubKeyMultisigThreshold} PubKeyMultisigThreshold
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                PubKeyMultisigThreshold.decode = function decode(r, l) {
+                    if (!(r instanceof $Reader))
+                        r = $Reader.create(r);
+                    var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.crypto.v1.PubKeyMultisigThreshold();
+                    while (r.pos < c) {
+                        var t = r.uint32();
+                        switch (t >>> 3) {
+                        case 1:
+                            m.threshold = r.uint32();
+                            break;
+                        case 2:
+                            if (!(m.publicKeys && m.publicKeys.length))
+                                m.publicKeys = [];
+                            m.publicKeys.push($root.cosmos_sdk.crypto.v1.PublicKey.decode(r, r.uint32()));
+                            break;
+                        default:
+                            r.skipType(t & 7);
+                            break;
+                        }
+                    }
+                    return m;
+                };
+
+                return PubKeyMultisigThreshold;
+            })();
+
+            v1.MultiSignature = (function() {
+
+                /**
+                 * Properties of a MultiSignature.
+                 * @memberof cosmos_sdk.crypto.v1
+                 * @interface IMultiSignature
+                 * @property {Array.<Uint8Array>|null} [signatures] MultiSignature signatures
+                 */
+
+                /**
+                 * Constructs a new MultiSignature.
+                 * @memberof cosmos_sdk.crypto.v1
+                 * @classdesc Represents a MultiSignature.
+                 * @implements IMultiSignature
+                 * @constructor
+                 * @param {cosmos_sdk.crypto.v1.IMultiSignature=} [p] Properties to set
+                 */
+                function MultiSignature(p) {
+                    this.signatures = [];
+                    if (p)
+                        for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+                            if (p[ks[i]] != null)
+                                this[ks[i]] = p[ks[i]];
                 }
-                return m;
-            };
 
-            return IntProto;
-        })();
+                /**
+                 * MultiSignature signatures.
+                 * @member {Array.<Uint8Array>} signatures
+                 * @memberof cosmos_sdk.crypto.v1.MultiSignature
+                 * @instance
+                 */
+                MultiSignature.prototype.signatures = $util.emptyArray;
 
-        v1.DecProto = (function() {
+                /**
+                 * Creates a new MultiSignature instance using the specified properties.
+                 * @function create
+                 * @memberof cosmos_sdk.crypto.v1.MultiSignature
+                 * @static
+                 * @param {cosmos_sdk.crypto.v1.IMultiSignature=} [properties] Properties to set
+                 * @returns {cosmos_sdk.crypto.v1.MultiSignature} MultiSignature instance
+                 */
+                MultiSignature.create = function create(properties) {
+                    return new MultiSignature(properties);
+                };
 
-            /**
-             * Properties of a DecProto.
-             * @memberof cosmos_sdk.v1
-             * @interface IDecProto
-             * @property {string|null} [dec] DecProto dec
-             */
-
-            /**
-             * Constructs a new DecProto.
-             * @memberof cosmos_sdk.v1
-             * @classdesc Represents a DecProto.
-             * @implements IDecProto
-             * @constructor
-             * @param {cosmos_sdk.v1.IDecProto=} [p] Properties to set
-             */
-            function DecProto(p) {
-                if (p)
-                    for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
-                            this[ks[i]] = p[ks[i]];
-            }
-
-            /**
-             * DecProto dec.
-             * @member {string} dec
-             * @memberof cosmos_sdk.v1.DecProto
-             * @instance
-             */
-            DecProto.prototype.dec = "";
-
-            /**
-             * Creates a new DecProto instance using the specified properties.
-             * @function create
-             * @memberof cosmos_sdk.v1.DecProto
-             * @static
-             * @param {cosmos_sdk.v1.IDecProto=} [properties] Properties to set
-             * @returns {cosmos_sdk.v1.DecProto} DecProto instance
-             */
-            DecProto.create = function create(properties) {
-                return new DecProto(properties);
-            };
-
-            /**
-             * Encodes the specified DecProto message. Does not implicitly {@link cosmos_sdk.v1.DecProto.verify|verify} messages.
-             * @function encode
-             * @memberof cosmos_sdk.v1.DecProto
-             * @static
-             * @param {cosmos_sdk.v1.IDecProto} m DecProto message or plain object to encode
-             * @param {$protobuf.Writer} [w] Writer to encode to
-             * @returns {$protobuf.Writer} Writer
-             */
-            DecProto.encode = function encode(m, w) {
-                if (!w)
-                    w = $Writer.create();
-                if (m.dec != null && Object.hasOwnProperty.call(m, "dec"))
-                    w.uint32(10).string(m.dec);
-                return w;
-            };
-
-            /**
-             * Decodes a DecProto message from the specified reader or buffer.
-             * @function decode
-             * @memberof cosmos_sdk.v1.DecProto
-             * @static
-             * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-             * @param {number} [l] Message length if known beforehand
-             * @returns {cosmos_sdk.v1.DecProto} DecProto
-             * @throws {Error} If the payload is not a reader or valid buffer
-             * @throws {$protobuf.util.ProtocolError} If required fields are missing
-             */
-            DecProto.decode = function decode(r, l) {
-                if (!(r instanceof $Reader))
-                    r = $Reader.create(r);
-                var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.v1.DecProto();
-                while (r.pos < c) {
-                    var t = r.uint32();
-                    switch (t >>> 3) {
-                    case 1:
-                        m.dec = r.string();
-                        break;
-                    default:
-                        r.skipType(t & 7);
-                        break;
+                /**
+                 * Encodes the specified MultiSignature message. Does not implicitly {@link cosmos_sdk.crypto.v1.MultiSignature.verify|verify} messages.
+                 * @function encode
+                 * @memberof cosmos_sdk.crypto.v1.MultiSignature
+                 * @static
+                 * @param {cosmos_sdk.crypto.v1.IMultiSignature} m MultiSignature message or plain object to encode
+                 * @param {$protobuf.Writer} [w] Writer to encode to
+                 * @returns {$protobuf.Writer} Writer
+                 */
+                MultiSignature.encode = function encode(m, w) {
+                    if (!w)
+                        w = $Writer.create();
+                    if (m.signatures != null && m.signatures.length) {
+                        for (var i = 0; i < m.signatures.length; ++i)
+                            w.uint32(10).bytes(m.signatures[i]);
                     }
+                    return w;
+                };
+
+                /**
+                 * Decodes a MultiSignature message from the specified reader or buffer.
+                 * @function decode
+                 * @memberof cosmos_sdk.crypto.v1.MultiSignature
+                 * @static
+                 * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
+                 * @param {number} [l] Message length if known beforehand
+                 * @returns {cosmos_sdk.crypto.v1.MultiSignature} MultiSignature
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                MultiSignature.decode = function decode(r, l) {
+                    if (!(r instanceof $Reader))
+                        r = $Reader.create(r);
+                    var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.crypto.v1.MultiSignature();
+                    while (r.pos < c) {
+                        var t = r.uint32();
+                        switch (t >>> 3) {
+                        case 1:
+                            if (!(m.signatures && m.signatures.length))
+                                m.signatures = [];
+                            m.signatures.push(r.bytes());
+                            break;
+                        default:
+                            r.skipType(t & 7);
+                            break;
+                        }
+                    }
+                    return m;
+                };
+
+                return MultiSignature;
+            })();
+
+            v1.CompactBitArray = (function() {
+
+                /**
+                 * Properties of a CompactBitArray.
+                 * @memberof cosmos_sdk.crypto.v1
+                 * @interface ICompactBitArray
+                 * @property {number|null} [extraBitsStored] CompactBitArray extraBitsStored
+                 * @property {Uint8Array|null} [elems] CompactBitArray elems
+                 */
+
+                /**
+                 * Constructs a new CompactBitArray.
+                 * @memberof cosmos_sdk.crypto.v1
+                 * @classdesc Represents a CompactBitArray.
+                 * @implements ICompactBitArray
+                 * @constructor
+                 * @param {cosmos_sdk.crypto.v1.ICompactBitArray=} [p] Properties to set
+                 */
+                function CompactBitArray(p) {
+                    if (p)
+                        for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+                            if (p[ks[i]] != null)
+                                this[ks[i]] = p[ks[i]];
                 }
-                return m;
-            };
-
-            return DecProto;
-        })();
-
-        v1.ValAddresses = (function() {
-
-            /**
-             * Properties of a ValAddresses.
-             * @memberof cosmos_sdk.v1
-             * @interface IValAddresses
-             * @property {Array.<Uint8Array>|null} [addresses] ValAddresses addresses
-             */
-
-            /**
-             * Constructs a new ValAddresses.
-             * @memberof cosmos_sdk.v1
-             * @classdesc Represents a ValAddresses.
-             * @implements IValAddresses
-             * @constructor
-             * @param {cosmos_sdk.v1.IValAddresses=} [p] Properties to set
-             */
-            function ValAddresses(p) {
-                this.addresses = [];
-                if (p)
-                    for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
-                            this[ks[i]] = p[ks[i]];
-            }
-
-            /**
-             * ValAddresses addresses.
-             * @member {Array.<Uint8Array>} addresses
-             * @memberof cosmos_sdk.v1.ValAddresses
-             * @instance
-             */
-            ValAddresses.prototype.addresses = $util.emptyArray;
-
-            /**
-             * Creates a new ValAddresses instance using the specified properties.
-             * @function create
-             * @memberof cosmos_sdk.v1.ValAddresses
-             * @static
-             * @param {cosmos_sdk.v1.IValAddresses=} [properties] Properties to set
-             * @returns {cosmos_sdk.v1.ValAddresses} ValAddresses instance
-             */
-            ValAddresses.create = function create(properties) {
-                return new ValAddresses(properties);
-            };
-
-            /**
-             * Encodes the specified ValAddresses message. Does not implicitly {@link cosmos_sdk.v1.ValAddresses.verify|verify} messages.
-             * @function encode
-             * @memberof cosmos_sdk.v1.ValAddresses
-             * @static
-             * @param {cosmos_sdk.v1.IValAddresses} m ValAddresses message or plain object to encode
-             * @param {$protobuf.Writer} [w] Writer to encode to
-             * @returns {$protobuf.Writer} Writer
-             */
-            ValAddresses.encode = function encode(m, w) {
-                if (!w)
-                    w = $Writer.create();
-                if (m.addresses != null && m.addresses.length) {
-                    for (var i = 0; i < m.addresses.length; ++i)
-                        w.uint32(10).bytes(m.addresses[i]);
-                }
-                return w;
-            };
-
-            /**
-             * Decodes a ValAddresses message from the specified reader or buffer.
-             * @function decode
-             * @memberof cosmos_sdk.v1.ValAddresses
-             * @static
-             * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-             * @param {number} [l] Message length if known beforehand
-             * @returns {cosmos_sdk.v1.ValAddresses} ValAddresses
-             * @throws {Error} If the payload is not a reader or valid buffer
-             * @throws {$protobuf.util.ProtocolError} If required fields are missing
-             */
-            ValAddresses.decode = function decode(r, l) {
-                if (!(r instanceof $Reader))
-                    r = $Reader.create(r);
-                var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.v1.ValAddresses();
-                while (r.pos < c) {
-                    var t = r.uint32();
-                    switch (t >>> 3) {
-                    case 1:
-                        if (!(m.addresses && m.addresses.length))
-                            m.addresses = [];
-                        m.addresses.push(r.bytes());
-                        break;
-                    default:
-                        r.skipType(t & 7);
-                        break;
-                    }
-                }
-                return m;
-            };
-
-            return ValAddresses;
-        })();
-
-        v1.GasInfo = (function() {
-
-            /**
-             * Properties of a GasInfo.
-             * @memberof cosmos_sdk.v1
-             * @interface IGasInfo
-             * @property {number|Long|null} [gasWanted] GasInfo gasWanted
-             * @property {number|Long|null} [gasUsed] GasInfo gasUsed
-             */
-
-            /**
-             * Constructs a new GasInfo.
-             * @memberof cosmos_sdk.v1
-             * @classdesc Represents a GasInfo.
-             * @implements IGasInfo
-             * @constructor
-             * @param {cosmos_sdk.v1.IGasInfo=} [p] Properties to set
-             */
-            function GasInfo(p) {
-                if (p)
-                    for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
-                            this[ks[i]] = p[ks[i]];
-            }
-
-            /**
-             * GasInfo gasWanted.
-             * @member {number|Long} gasWanted
-             * @memberof cosmos_sdk.v1.GasInfo
-             * @instance
-             */
-            GasInfo.prototype.gasWanted = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-            /**
-             * GasInfo gasUsed.
-             * @member {number|Long} gasUsed
-             * @memberof cosmos_sdk.v1.GasInfo
-             * @instance
-             */
-            GasInfo.prototype.gasUsed = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-            /**
-             * Creates a new GasInfo instance using the specified properties.
-             * @function create
-             * @memberof cosmos_sdk.v1.GasInfo
-             * @static
-             * @param {cosmos_sdk.v1.IGasInfo=} [properties] Properties to set
-             * @returns {cosmos_sdk.v1.GasInfo} GasInfo instance
-             */
-            GasInfo.create = function create(properties) {
-                return new GasInfo(properties);
-            };
-
-            /**
-             * Encodes the specified GasInfo message. Does not implicitly {@link cosmos_sdk.v1.GasInfo.verify|verify} messages.
-             * @function encode
-             * @memberof cosmos_sdk.v1.GasInfo
-             * @static
-             * @param {cosmos_sdk.v1.IGasInfo} m GasInfo message or plain object to encode
-             * @param {$protobuf.Writer} [w] Writer to encode to
-             * @returns {$protobuf.Writer} Writer
-             */
-            GasInfo.encode = function encode(m, w) {
-                if (!w)
-                    w = $Writer.create();
-                if (m.gasWanted != null && Object.hasOwnProperty.call(m, "gasWanted"))
-                    w.uint32(8).uint64(m.gasWanted);
-                if (m.gasUsed != null && Object.hasOwnProperty.call(m, "gasUsed"))
-                    w.uint32(16).uint64(m.gasUsed);
-                return w;
-            };
-
-            /**
-             * Decodes a GasInfo message from the specified reader or buffer.
-             * @function decode
-             * @memberof cosmos_sdk.v1.GasInfo
-             * @static
-             * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-             * @param {number} [l] Message length if known beforehand
-             * @returns {cosmos_sdk.v1.GasInfo} GasInfo
-             * @throws {Error} If the payload is not a reader or valid buffer
-             * @throws {$protobuf.util.ProtocolError} If required fields are missing
-             */
-            GasInfo.decode = function decode(r, l) {
-                if (!(r instanceof $Reader))
-                    r = $Reader.create(r);
-                var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.v1.GasInfo();
-                while (r.pos < c) {
-                    var t = r.uint32();
-                    switch (t >>> 3) {
-                    case 1:
-                        m.gasWanted = r.uint64();
-                        break;
-                    case 2:
-                        m.gasUsed = r.uint64();
-                        break;
-                    default:
-                        r.skipType(t & 7);
-                        break;
-                    }
-                }
-                return m;
-            };
-
-            return GasInfo;
-        })();
-
-        v1.Result = (function() {
-
-            /**
-             * Properties of a Result.
-             * @memberof cosmos_sdk.v1
-             * @interface IResult
-             * @property {Uint8Array|null} [data] Result data
-             * @property {string|null} [log] Result log
-             * @property {Array.<tendermint.abci.types.IEvent>|null} [events] Result events
-             */
-
-            /**
-             * Constructs a new Result.
-             * @memberof cosmos_sdk.v1
-             * @classdesc Represents a Result.
-             * @implements IResult
-             * @constructor
-             * @param {cosmos_sdk.v1.IResult=} [p] Properties to set
-             */
-            function Result(p) {
-                this.events = [];
-                if (p)
-                    for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
-                            this[ks[i]] = p[ks[i]];
-            }
-
-            /**
-             * Result data.
-             * @member {Uint8Array} data
-             * @memberof cosmos_sdk.v1.Result
-             * @instance
-             */
-            Result.prototype.data = $util.newBuffer([]);
-
-            /**
-             * Result log.
-             * @member {string} log
-             * @memberof cosmos_sdk.v1.Result
-             * @instance
-             */
-            Result.prototype.log = "";
-
-            /**
-             * Result events.
-             * @member {Array.<tendermint.abci.types.IEvent>} events
-             * @memberof cosmos_sdk.v1.Result
-             * @instance
-             */
-            Result.prototype.events = $util.emptyArray;
-
-            /**
-             * Creates a new Result instance using the specified properties.
-             * @function create
-             * @memberof cosmos_sdk.v1.Result
-             * @static
-             * @param {cosmos_sdk.v1.IResult=} [properties] Properties to set
-             * @returns {cosmos_sdk.v1.Result} Result instance
-             */
-            Result.create = function create(properties) {
-                return new Result(properties);
-            };
-
-            /**
-             * Encodes the specified Result message. Does not implicitly {@link cosmos_sdk.v1.Result.verify|verify} messages.
-             * @function encode
-             * @memberof cosmos_sdk.v1.Result
-             * @static
-             * @param {cosmos_sdk.v1.IResult} m Result message or plain object to encode
-             * @param {$protobuf.Writer} [w] Writer to encode to
-             * @returns {$protobuf.Writer} Writer
-             */
-            Result.encode = function encode(m, w) {
-                if (!w)
-                    w = $Writer.create();
-                if (m.data != null && Object.hasOwnProperty.call(m, "data"))
-                    w.uint32(10).bytes(m.data);
-                if (m.log != null && Object.hasOwnProperty.call(m, "log"))
-                    w.uint32(18).string(m.log);
-                if (m.events != null && m.events.length) {
-                    for (var i = 0; i < m.events.length; ++i)
-                        $root.tendermint.abci.types.Event.encode(m.events[i], w.uint32(26).fork()).ldelim();
-                }
-                return w;
-            };
-
-            /**
-             * Decodes a Result message from the specified reader or buffer.
-             * @function decode
-             * @memberof cosmos_sdk.v1.Result
-             * @static
-             * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-             * @param {number} [l] Message length if known beforehand
-             * @returns {cosmos_sdk.v1.Result} Result
-             * @throws {Error} If the payload is not a reader or valid buffer
-             * @throws {$protobuf.util.ProtocolError} If required fields are missing
-             */
-            Result.decode = function decode(r, l) {
-                if (!(r instanceof $Reader))
-                    r = $Reader.create(r);
-                var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.v1.Result();
-                while (r.pos < c) {
-                    var t = r.uint32();
-                    switch (t >>> 3) {
-                    case 1:
-                        m.data = r.bytes();
-                        break;
-                    case 2:
-                        m.log = r.string();
-                        break;
-                    case 3:
-                        if (!(m.events && m.events.length))
-                            m.events = [];
-                        m.events.push($root.tendermint.abci.types.Event.decode(r, r.uint32()));
-                        break;
-                    default:
-                        r.skipType(t & 7);
-                        break;
-                    }
-                }
-                return m;
-            };
-
-            return Result;
-        })();
-
-        v1.SimulationResponse = (function() {
-
-            /**
-             * Properties of a SimulationResponse.
-             * @memberof cosmos_sdk.v1
-             * @interface ISimulationResponse
-             * @property {cosmos_sdk.v1.IGasInfo|null} [gasInfo] SimulationResponse gasInfo
-             * @property {cosmos_sdk.v1.IResult|null} [result] SimulationResponse result
-             */
-
-            /**
-             * Constructs a new SimulationResponse.
-             * @memberof cosmos_sdk.v1
-             * @classdesc Represents a SimulationResponse.
-             * @implements ISimulationResponse
-             * @constructor
-             * @param {cosmos_sdk.v1.ISimulationResponse=} [p] Properties to set
-             */
-            function SimulationResponse(p) {
-                if (p)
-                    for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
-                            this[ks[i]] = p[ks[i]];
-            }
-
-            /**
-             * SimulationResponse gasInfo.
-             * @member {cosmos_sdk.v1.IGasInfo|null|undefined} gasInfo
-             * @memberof cosmos_sdk.v1.SimulationResponse
-             * @instance
-             */
-            SimulationResponse.prototype.gasInfo = null;
-
-            /**
-             * SimulationResponse result.
-             * @member {cosmos_sdk.v1.IResult|null|undefined} result
-             * @memberof cosmos_sdk.v1.SimulationResponse
-             * @instance
-             */
-            SimulationResponse.prototype.result = null;
-
-            /**
-             * Creates a new SimulationResponse instance using the specified properties.
-             * @function create
-             * @memberof cosmos_sdk.v1.SimulationResponse
-             * @static
-             * @param {cosmos_sdk.v1.ISimulationResponse=} [properties] Properties to set
-             * @returns {cosmos_sdk.v1.SimulationResponse} SimulationResponse instance
-             */
-            SimulationResponse.create = function create(properties) {
-                return new SimulationResponse(properties);
-            };
-
-            /**
-             * Encodes the specified SimulationResponse message. Does not implicitly {@link cosmos_sdk.v1.SimulationResponse.verify|verify} messages.
-             * @function encode
-             * @memberof cosmos_sdk.v1.SimulationResponse
-             * @static
-             * @param {cosmos_sdk.v1.ISimulationResponse} m SimulationResponse message or plain object to encode
-             * @param {$protobuf.Writer} [w] Writer to encode to
-             * @returns {$protobuf.Writer} Writer
-             */
-            SimulationResponse.encode = function encode(m, w) {
-                if (!w)
-                    w = $Writer.create();
-                if (m.gasInfo != null && Object.hasOwnProperty.call(m, "gasInfo"))
-                    $root.cosmos_sdk.v1.GasInfo.encode(m.gasInfo, w.uint32(10).fork()).ldelim();
-                if (m.result != null && Object.hasOwnProperty.call(m, "result"))
-                    $root.cosmos_sdk.v1.Result.encode(m.result, w.uint32(18).fork()).ldelim();
-                return w;
-            };
-
-            /**
-             * Decodes a SimulationResponse message from the specified reader or buffer.
-             * @function decode
-             * @memberof cosmos_sdk.v1.SimulationResponse
-             * @static
-             * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-             * @param {number} [l] Message length if known beforehand
-             * @returns {cosmos_sdk.v1.SimulationResponse} SimulationResponse
-             * @throws {Error} If the payload is not a reader or valid buffer
-             * @throws {$protobuf.util.ProtocolError} If required fields are missing
-             */
-            SimulationResponse.decode = function decode(r, l) {
-                if (!(r instanceof $Reader))
-                    r = $Reader.create(r);
-                var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.v1.SimulationResponse();
-                while (r.pos < c) {
-                    var t = r.uint32();
-                    switch (t >>> 3) {
-                    case 1:
-                        m.gasInfo = $root.cosmos_sdk.v1.GasInfo.decode(r, r.uint32());
-                        break;
-                    case 2:
-                        m.result = $root.cosmos_sdk.v1.Result.decode(r, r.uint32());
-                        break;
-                    default:
-                        r.skipType(t & 7);
-                        break;
-                    }
-                }
-                return m;
-            };
-
-            return SimulationResponse;
-        })();
-
-        v1.MsgData = (function() {
-
-            /**
-             * Properties of a MsgData.
-             * @memberof cosmos_sdk.v1
-             * @interface IMsgData
-             * @property {string|null} [msgType] MsgData msgType
-             * @property {Uint8Array|null} [data] MsgData data
-             */
-
-            /**
-             * Constructs a new MsgData.
-             * @memberof cosmos_sdk.v1
-             * @classdesc Represents a MsgData.
-             * @implements IMsgData
-             * @constructor
-             * @param {cosmos_sdk.v1.IMsgData=} [p] Properties to set
-             */
-            function MsgData(p) {
-                if (p)
-                    for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
-                            this[ks[i]] = p[ks[i]];
-            }
-
-            /**
-             * MsgData msgType.
-             * @member {string} msgType
-             * @memberof cosmos_sdk.v1.MsgData
-             * @instance
-             */
-            MsgData.prototype.msgType = "";
-
-            /**
-             * MsgData data.
-             * @member {Uint8Array} data
-             * @memberof cosmos_sdk.v1.MsgData
-             * @instance
-             */
-            MsgData.prototype.data = $util.newBuffer([]);
-
-            /**
-             * Creates a new MsgData instance using the specified properties.
-             * @function create
-             * @memberof cosmos_sdk.v1.MsgData
-             * @static
-             * @param {cosmos_sdk.v1.IMsgData=} [properties] Properties to set
-             * @returns {cosmos_sdk.v1.MsgData} MsgData instance
-             */
-            MsgData.create = function create(properties) {
-                return new MsgData(properties);
-            };
-
-            /**
-             * Encodes the specified MsgData message. Does not implicitly {@link cosmos_sdk.v1.MsgData.verify|verify} messages.
-             * @function encode
-             * @memberof cosmos_sdk.v1.MsgData
-             * @static
-             * @param {cosmos_sdk.v1.IMsgData} m MsgData message or plain object to encode
-             * @param {$protobuf.Writer} [w] Writer to encode to
-             * @returns {$protobuf.Writer} Writer
-             */
-            MsgData.encode = function encode(m, w) {
-                if (!w)
-                    w = $Writer.create();
-                if (m.msgType != null && Object.hasOwnProperty.call(m, "msgType"))
-                    w.uint32(10).string(m.msgType);
-                if (m.data != null && Object.hasOwnProperty.call(m, "data"))
-                    w.uint32(18).bytes(m.data);
-                return w;
-            };
-
-            /**
-             * Decodes a MsgData message from the specified reader or buffer.
-             * @function decode
-             * @memberof cosmos_sdk.v1.MsgData
-             * @static
-             * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-             * @param {number} [l] Message length if known beforehand
-             * @returns {cosmos_sdk.v1.MsgData} MsgData
-             * @throws {Error} If the payload is not a reader or valid buffer
-             * @throws {$protobuf.util.ProtocolError} If required fields are missing
-             */
-            MsgData.decode = function decode(r, l) {
-                if (!(r instanceof $Reader))
-                    r = $Reader.create(r);
-                var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.v1.MsgData();
-                while (r.pos < c) {
-                    var t = r.uint32();
-                    switch (t >>> 3) {
-                    case 1:
-                        m.msgType = r.string();
-                        break;
-                    case 2:
-                        m.data = r.bytes();
-                        break;
-                    default:
-                        r.skipType(t & 7);
-                        break;
-                    }
-                }
-                return m;
-            };
-
-            return MsgData;
-        })();
-
-        v1.TxData = (function() {
-
-            /**
-             * Properties of a TxData.
-             * @memberof cosmos_sdk.v1
-             * @interface ITxData
-             * @property {Array.<cosmos_sdk.v1.IMsgData>|null} [data] TxData data
-             */
-
-            /**
-             * Constructs a new TxData.
-             * @memberof cosmos_sdk.v1
-             * @classdesc Represents a TxData.
-             * @implements ITxData
-             * @constructor
-             * @param {cosmos_sdk.v1.ITxData=} [p] Properties to set
-             */
-            function TxData(p) {
-                this.data = [];
-                if (p)
-                    for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
-                            this[ks[i]] = p[ks[i]];
-            }
-
-            /**
-             * TxData data.
-             * @member {Array.<cosmos_sdk.v1.IMsgData>} data
-             * @memberof cosmos_sdk.v1.TxData
-             * @instance
-             */
-            TxData.prototype.data = $util.emptyArray;
-
-            /**
-             * Creates a new TxData instance using the specified properties.
-             * @function create
-             * @memberof cosmos_sdk.v1.TxData
-             * @static
-             * @param {cosmos_sdk.v1.ITxData=} [properties] Properties to set
-             * @returns {cosmos_sdk.v1.TxData} TxData instance
-             */
-            TxData.create = function create(properties) {
-                return new TxData(properties);
-            };
-
-            /**
-             * Encodes the specified TxData message. Does not implicitly {@link cosmos_sdk.v1.TxData.verify|verify} messages.
-             * @function encode
-             * @memberof cosmos_sdk.v1.TxData
-             * @static
-             * @param {cosmos_sdk.v1.ITxData} m TxData message or plain object to encode
-             * @param {$protobuf.Writer} [w] Writer to encode to
-             * @returns {$protobuf.Writer} Writer
-             */
-            TxData.encode = function encode(m, w) {
-                if (!w)
-                    w = $Writer.create();
-                if (m.data != null && m.data.length) {
-                    for (var i = 0; i < m.data.length; ++i)
-                        $root.cosmos_sdk.v1.MsgData.encode(m.data[i], w.uint32(10).fork()).ldelim();
-                }
-                return w;
-            };
-
-            /**
-             * Decodes a TxData message from the specified reader or buffer.
-             * @function decode
-             * @memberof cosmos_sdk.v1.TxData
-             * @static
-             * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-             * @param {number} [l] Message length if known beforehand
-             * @returns {cosmos_sdk.v1.TxData} TxData
-             * @throws {Error} If the payload is not a reader or valid buffer
-             * @throws {$protobuf.util.ProtocolError} If required fields are missing
-             */
-            TxData.decode = function decode(r, l) {
-                if (!(r instanceof $Reader))
-                    r = $Reader.create(r);
-                var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.v1.TxData();
-                while (r.pos < c) {
-                    var t = r.uint32();
-                    switch (t >>> 3) {
-                    case 1:
-                        if (!(m.data && m.data.length))
-                            m.data = [];
-                        m.data.push($root.cosmos_sdk.v1.MsgData.decode(r, r.uint32()));
-                        break;
-                    default:
-                        r.skipType(t & 7);
-                        break;
-                    }
-                }
-                return m;
-            };
-
-            return TxData;
-        })();
-
-        return v1;
-    })();
-
-    cosmos_sdk.x = (function() {
-
-        /**
-         * Namespace x.
-         * @memberof cosmos_sdk
-         * @namespace
-         */
-        var x = {};
-
-        x.auth = (function() {
-
-            /**
-             * Namespace auth.
-             * @memberof cosmos_sdk.x
-             * @namespace
-             */
-            var auth = {};
-
-            auth.v1 = (function() {
 
                 /**
-                 * Namespace v1.
-                 * @memberof cosmos_sdk.x.auth
-                 * @namespace
+                 * CompactBitArray extraBitsStored.
+                 * @member {number} extraBitsStored
+                 * @memberof cosmos_sdk.crypto.v1.CompactBitArray
+                 * @instance
                  */
-                var v1 = {};
+                CompactBitArray.prototype.extraBitsStored = 0;
 
-                v1.BaseAccount = (function() {
+                /**
+                 * CompactBitArray elems.
+                 * @member {Uint8Array} elems
+                 * @memberof cosmos_sdk.crypto.v1.CompactBitArray
+                 * @instance
+                 */
+                CompactBitArray.prototype.elems = $util.newBuffer([]);
 
-                    /**
-                     * Properties of a BaseAccount.
-                     * @memberof cosmos_sdk.x.auth.v1
-                     * @interface IBaseAccount
-                     * @property {Uint8Array|null} [address] BaseAccount address
-                     * @property {Uint8Array|null} [pubKey] BaseAccount pubKey
-                     * @property {number|Long|null} [accountNumber] BaseAccount accountNumber
-                     * @property {number|Long|null} [sequence] BaseAccount sequence
-                     */
+                /**
+                 * Creates a new CompactBitArray instance using the specified properties.
+                 * @function create
+                 * @memberof cosmos_sdk.crypto.v1.CompactBitArray
+                 * @static
+                 * @param {cosmos_sdk.crypto.v1.ICompactBitArray=} [properties] Properties to set
+                 * @returns {cosmos_sdk.crypto.v1.CompactBitArray} CompactBitArray instance
+                 */
+                CompactBitArray.create = function create(properties) {
+                    return new CompactBitArray(properties);
+                };
 
-                    /**
-                     * Constructs a new BaseAccount.
-                     * @memberof cosmos_sdk.x.auth.v1
-                     * @classdesc Represents a BaseAccount.
-                     * @implements IBaseAccount
-                     * @constructor
-                     * @param {cosmos_sdk.x.auth.v1.IBaseAccount=} [p] Properties to set
-                     */
-                    function BaseAccount(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
+                /**
+                 * Encodes the specified CompactBitArray message. Does not implicitly {@link cosmos_sdk.crypto.v1.CompactBitArray.verify|verify} messages.
+                 * @function encode
+                 * @memberof cosmos_sdk.crypto.v1.CompactBitArray
+                 * @static
+                 * @param {cosmos_sdk.crypto.v1.ICompactBitArray} m CompactBitArray message or plain object to encode
+                 * @param {$protobuf.Writer} [w] Writer to encode to
+                 * @returns {$protobuf.Writer} Writer
+                 */
+                CompactBitArray.encode = function encode(m, w) {
+                    if (!w)
+                        w = $Writer.create();
+                    if (m.extraBitsStored != null && Object.hasOwnProperty.call(m, "extraBitsStored"))
+                        w.uint32(8).uint32(m.extraBitsStored);
+                    if (m.elems != null && Object.hasOwnProperty.call(m, "elems"))
+                        w.uint32(18).bytes(m.elems);
+                    return w;
+                };
+
+                /**
+                 * Decodes a CompactBitArray message from the specified reader or buffer.
+                 * @function decode
+                 * @memberof cosmos_sdk.crypto.v1.CompactBitArray
+                 * @static
+                 * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
+                 * @param {number} [l] Message length if known beforehand
+                 * @returns {cosmos_sdk.crypto.v1.CompactBitArray} CompactBitArray
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                CompactBitArray.decode = function decode(r, l) {
+                    if (!(r instanceof $Reader))
+                        r = $Reader.create(r);
+                    var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.crypto.v1.CompactBitArray();
+                    while (r.pos < c) {
+                        var t = r.uint32();
+                        switch (t >>> 3) {
+                        case 1:
+                            m.extraBitsStored = r.uint32();
+                            break;
+                        case 2:
+                            m.elems = r.bytes();
+                            break;
+                        default:
+                            r.skipType(t & 7);
+                            break;
+                        }
                     }
+                    return m;
+                };
 
-                    /**
-                     * BaseAccount address.
-                     * @member {Uint8Array} address
-                     * @memberof cosmos_sdk.x.auth.v1.BaseAccount
-                     * @instance
-                     */
-                    BaseAccount.prototype.address = $util.newBuffer([]);
-
-                    /**
-                     * BaseAccount pubKey.
-                     * @member {Uint8Array} pubKey
-                     * @memberof cosmos_sdk.x.auth.v1.BaseAccount
-                     * @instance
-                     */
-                    BaseAccount.prototype.pubKey = $util.newBuffer([]);
-
-                    /**
-                     * BaseAccount accountNumber.
-                     * @member {number|Long} accountNumber
-                     * @memberof cosmos_sdk.x.auth.v1.BaseAccount
-                     * @instance
-                     */
-                    BaseAccount.prototype.accountNumber = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-                    /**
-                     * BaseAccount sequence.
-                     * @member {number|Long} sequence
-                     * @memberof cosmos_sdk.x.auth.v1.BaseAccount
-                     * @instance
-                     */
-                    BaseAccount.prototype.sequence = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-                    /**
-                     * Creates a new BaseAccount instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.auth.v1.BaseAccount
-                     * @static
-                     * @param {cosmos_sdk.x.auth.v1.IBaseAccount=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.auth.v1.BaseAccount} BaseAccount instance
-                     */
-                    BaseAccount.create = function create(properties) {
-                        return new BaseAccount(properties);
-                    };
-
-                    /**
-                     * Encodes the specified BaseAccount message. Does not implicitly {@link cosmos_sdk.x.auth.v1.BaseAccount.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.auth.v1.BaseAccount
-                     * @static
-                     * @param {cosmos_sdk.x.auth.v1.IBaseAccount} m BaseAccount message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    BaseAccount.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.address != null && Object.hasOwnProperty.call(m, "address"))
-                            w.uint32(10).bytes(m.address);
-                        if (m.pubKey != null && Object.hasOwnProperty.call(m, "pubKey"))
-                            w.uint32(18).bytes(m.pubKey);
-                        if (m.accountNumber != null && Object.hasOwnProperty.call(m, "accountNumber"))
-                            w.uint32(24).uint64(m.accountNumber);
-                        if (m.sequence != null && Object.hasOwnProperty.call(m, "sequence"))
-                            w.uint32(32).uint64(m.sequence);
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a BaseAccount message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.auth.v1.BaseAccount
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.auth.v1.BaseAccount} BaseAccount
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    BaseAccount.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.auth.v1.BaseAccount();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.address = r.bytes();
-                                break;
-                            case 2:
-                                m.pubKey = r.bytes();
-                                break;
-                            case 3:
-                                m.accountNumber = r.uint64();
-                                break;
-                            case 4:
-                                m.sequence = r.uint64();
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return BaseAccount;
-                })();
-
-                v1.ModuleAccount = (function() {
-
-                    /**
-                     * Properties of a ModuleAccount.
-                     * @memberof cosmos_sdk.x.auth.v1
-                     * @interface IModuleAccount
-                     * @property {cosmos_sdk.x.auth.v1.IBaseAccount|null} [baseAccount] ModuleAccount baseAccount
-                     * @property {string|null} [name] ModuleAccount name
-                     * @property {Array.<string>|null} [permissions] ModuleAccount permissions
-                     */
-
-                    /**
-                     * Constructs a new ModuleAccount.
-                     * @memberof cosmos_sdk.x.auth.v1
-                     * @classdesc Represents a ModuleAccount.
-                     * @implements IModuleAccount
-                     * @constructor
-                     * @param {cosmos_sdk.x.auth.v1.IModuleAccount=} [p] Properties to set
-                     */
-                    function ModuleAccount(p) {
-                        this.permissions = [];
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * ModuleAccount baseAccount.
-                     * @member {cosmos_sdk.x.auth.v1.IBaseAccount|null|undefined} baseAccount
-                     * @memberof cosmos_sdk.x.auth.v1.ModuleAccount
-                     * @instance
-                     */
-                    ModuleAccount.prototype.baseAccount = null;
-
-                    /**
-                     * ModuleAccount name.
-                     * @member {string} name
-                     * @memberof cosmos_sdk.x.auth.v1.ModuleAccount
-                     * @instance
-                     */
-                    ModuleAccount.prototype.name = "";
-
-                    /**
-                     * ModuleAccount permissions.
-                     * @member {Array.<string>} permissions
-                     * @memberof cosmos_sdk.x.auth.v1.ModuleAccount
-                     * @instance
-                     */
-                    ModuleAccount.prototype.permissions = $util.emptyArray;
-
-                    /**
-                     * Creates a new ModuleAccount instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.auth.v1.ModuleAccount
-                     * @static
-                     * @param {cosmos_sdk.x.auth.v1.IModuleAccount=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.auth.v1.ModuleAccount} ModuleAccount instance
-                     */
-                    ModuleAccount.create = function create(properties) {
-                        return new ModuleAccount(properties);
-                    };
-
-                    /**
-                     * Encodes the specified ModuleAccount message. Does not implicitly {@link cosmos_sdk.x.auth.v1.ModuleAccount.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.auth.v1.ModuleAccount
-                     * @static
-                     * @param {cosmos_sdk.x.auth.v1.IModuleAccount} m ModuleAccount message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    ModuleAccount.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.baseAccount != null && Object.hasOwnProperty.call(m, "baseAccount"))
-                            $root.cosmos_sdk.x.auth.v1.BaseAccount.encode(m.baseAccount, w.uint32(10).fork()).ldelim();
-                        if (m.name != null && Object.hasOwnProperty.call(m, "name"))
-                            w.uint32(18).string(m.name);
-                        if (m.permissions != null && m.permissions.length) {
-                            for (var i = 0; i < m.permissions.length; ++i)
-                                w.uint32(26).string(m.permissions[i]);
-                        }
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a ModuleAccount message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.auth.v1.ModuleAccount
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.auth.v1.ModuleAccount} ModuleAccount
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    ModuleAccount.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.auth.v1.ModuleAccount();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.baseAccount = $root.cosmos_sdk.x.auth.v1.BaseAccount.decode(r, r.uint32());
-                                break;
-                            case 2:
-                                m.name = r.string();
-                                break;
-                            case 3:
-                                if (!(m.permissions && m.permissions.length))
-                                    m.permissions = [];
-                                m.permissions.push(r.string());
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return ModuleAccount;
-                })();
-
-                v1.Params = (function() {
-
-                    /**
-                     * Properties of a Params.
-                     * @memberof cosmos_sdk.x.auth.v1
-                     * @interface IParams
-                     * @property {number|Long|null} [maxMemoCharacters] Params maxMemoCharacters
-                     * @property {number|Long|null} [txSigLimit] Params txSigLimit
-                     * @property {number|Long|null} [txSizeCostPerByte] Params txSizeCostPerByte
-                     * @property {number|Long|null} [sigVerifyCostEd25519] Params sigVerifyCostEd25519
-                     * @property {number|Long|null} [sigVerifyCostSecp256k1] Params sigVerifyCostSecp256k1
-                     */
-
-                    /**
-                     * Constructs a new Params.
-                     * @memberof cosmos_sdk.x.auth.v1
-                     * @classdesc Represents a Params.
-                     * @implements IParams
-                     * @constructor
-                     * @param {cosmos_sdk.x.auth.v1.IParams=} [p] Properties to set
-                     */
-                    function Params(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * Params maxMemoCharacters.
-                     * @member {number|Long} maxMemoCharacters
-                     * @memberof cosmos_sdk.x.auth.v1.Params
-                     * @instance
-                     */
-                    Params.prototype.maxMemoCharacters = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-                    /**
-                     * Params txSigLimit.
-                     * @member {number|Long} txSigLimit
-                     * @memberof cosmos_sdk.x.auth.v1.Params
-                     * @instance
-                     */
-                    Params.prototype.txSigLimit = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-                    /**
-                     * Params txSizeCostPerByte.
-                     * @member {number|Long} txSizeCostPerByte
-                     * @memberof cosmos_sdk.x.auth.v1.Params
-                     * @instance
-                     */
-                    Params.prototype.txSizeCostPerByte = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-                    /**
-                     * Params sigVerifyCostEd25519.
-                     * @member {number|Long} sigVerifyCostEd25519
-                     * @memberof cosmos_sdk.x.auth.v1.Params
-                     * @instance
-                     */
-                    Params.prototype.sigVerifyCostEd25519 = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-                    /**
-                     * Params sigVerifyCostSecp256k1.
-                     * @member {number|Long} sigVerifyCostSecp256k1
-                     * @memberof cosmos_sdk.x.auth.v1.Params
-                     * @instance
-                     */
-                    Params.prototype.sigVerifyCostSecp256k1 = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-                    /**
-                     * Creates a new Params instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.auth.v1.Params
-                     * @static
-                     * @param {cosmos_sdk.x.auth.v1.IParams=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.auth.v1.Params} Params instance
-                     */
-                    Params.create = function create(properties) {
-                        return new Params(properties);
-                    };
-
-                    /**
-                     * Encodes the specified Params message. Does not implicitly {@link cosmos_sdk.x.auth.v1.Params.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.auth.v1.Params
-                     * @static
-                     * @param {cosmos_sdk.x.auth.v1.IParams} m Params message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    Params.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.maxMemoCharacters != null && Object.hasOwnProperty.call(m, "maxMemoCharacters"))
-                            w.uint32(8).uint64(m.maxMemoCharacters);
-                        if (m.txSigLimit != null && Object.hasOwnProperty.call(m, "txSigLimit"))
-                            w.uint32(16).uint64(m.txSigLimit);
-                        if (m.txSizeCostPerByte != null && Object.hasOwnProperty.call(m, "txSizeCostPerByte"))
-                            w.uint32(24).uint64(m.txSizeCostPerByte);
-                        if (m.sigVerifyCostEd25519 != null && Object.hasOwnProperty.call(m, "sigVerifyCostEd25519"))
-                            w.uint32(32).uint64(m.sigVerifyCostEd25519);
-                        if (m.sigVerifyCostSecp256k1 != null && Object.hasOwnProperty.call(m, "sigVerifyCostSecp256k1"))
-                            w.uint32(40).uint64(m.sigVerifyCostSecp256k1);
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a Params message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.auth.v1.Params
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.auth.v1.Params} Params
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    Params.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.auth.v1.Params();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.maxMemoCharacters = r.uint64();
-                                break;
-                            case 2:
-                                m.txSigLimit = r.uint64();
-                                break;
-                            case 3:
-                                m.txSizeCostPerByte = r.uint64();
-                                break;
-                            case 4:
-                                m.sigVerifyCostEd25519 = r.uint64();
-                                break;
-                            case 5:
-                                m.sigVerifyCostSecp256k1 = r.uint64();
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return Params;
-                })();
-
-                return v1;
+                return CompactBitArray;
             })();
 
-            auth.vesting = (function() {
-
-                /**
-                 * Namespace vesting.
-                 * @memberof cosmos_sdk.x.auth
-                 * @namespace
-                 */
-                var vesting = {};
-
-                vesting.v1 = (function() {
-
-                    /**
-                     * Namespace v1.
-                     * @memberof cosmos_sdk.x.auth.vesting
-                     * @namespace
-                     */
-                    var v1 = {};
-
-                    v1.BaseVestingAccount = (function() {
-
-                        /**
-                         * Properties of a BaseVestingAccount.
-                         * @memberof cosmos_sdk.x.auth.vesting.v1
-                         * @interface IBaseVestingAccount
-                         * @property {cosmos_sdk.x.auth.v1.IBaseAccount|null} [baseAccount] BaseVestingAccount baseAccount
-                         * @property {Array.<cosmos_sdk.v1.ICoin>|null} [originalVesting] BaseVestingAccount originalVesting
-                         * @property {Array.<cosmos_sdk.v1.ICoin>|null} [delegatedFree] BaseVestingAccount delegatedFree
-                         * @property {Array.<cosmos_sdk.v1.ICoin>|null} [delegatedVesting] BaseVestingAccount delegatedVesting
-                         * @property {number|Long|null} [endTime] BaseVestingAccount endTime
-                         */
-
-                        /**
-                         * Constructs a new BaseVestingAccount.
-                         * @memberof cosmos_sdk.x.auth.vesting.v1
-                         * @classdesc Represents a BaseVestingAccount.
-                         * @implements IBaseVestingAccount
-                         * @constructor
-                         * @param {cosmos_sdk.x.auth.vesting.v1.IBaseVestingAccount=} [p] Properties to set
-                         */
-                        function BaseVestingAccount(p) {
-                            this.originalVesting = [];
-                            this.delegatedFree = [];
-                            this.delegatedVesting = [];
-                            if (p)
-                                for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                    if (p[ks[i]] != null)
-                                        this[ks[i]] = p[ks[i]];
-                        }
-
-                        /**
-                         * BaseVestingAccount baseAccount.
-                         * @member {cosmos_sdk.x.auth.v1.IBaseAccount|null|undefined} baseAccount
-                         * @memberof cosmos_sdk.x.auth.vesting.v1.BaseVestingAccount
-                         * @instance
-                         */
-                        BaseVestingAccount.prototype.baseAccount = null;
-
-                        /**
-                         * BaseVestingAccount originalVesting.
-                         * @member {Array.<cosmos_sdk.v1.ICoin>} originalVesting
-                         * @memberof cosmos_sdk.x.auth.vesting.v1.BaseVestingAccount
-                         * @instance
-                         */
-                        BaseVestingAccount.prototype.originalVesting = $util.emptyArray;
-
-                        /**
-                         * BaseVestingAccount delegatedFree.
-                         * @member {Array.<cosmos_sdk.v1.ICoin>} delegatedFree
-                         * @memberof cosmos_sdk.x.auth.vesting.v1.BaseVestingAccount
-                         * @instance
-                         */
-                        BaseVestingAccount.prototype.delegatedFree = $util.emptyArray;
-
-                        /**
-                         * BaseVestingAccount delegatedVesting.
-                         * @member {Array.<cosmos_sdk.v1.ICoin>} delegatedVesting
-                         * @memberof cosmos_sdk.x.auth.vesting.v1.BaseVestingAccount
-                         * @instance
-                         */
-                        BaseVestingAccount.prototype.delegatedVesting = $util.emptyArray;
-
-                        /**
-                         * BaseVestingAccount endTime.
-                         * @member {number|Long} endTime
-                         * @memberof cosmos_sdk.x.auth.vesting.v1.BaseVestingAccount
-                         * @instance
-                         */
-                        BaseVestingAccount.prototype.endTime = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
-
-                        /**
-                         * Creates a new BaseVestingAccount instance using the specified properties.
-                         * @function create
-                         * @memberof cosmos_sdk.x.auth.vesting.v1.BaseVestingAccount
-                         * @static
-                         * @param {cosmos_sdk.x.auth.vesting.v1.IBaseVestingAccount=} [properties] Properties to set
-                         * @returns {cosmos_sdk.x.auth.vesting.v1.BaseVestingAccount} BaseVestingAccount instance
-                         */
-                        BaseVestingAccount.create = function create(properties) {
-                            return new BaseVestingAccount(properties);
-                        };
-
-                        /**
-                         * Encodes the specified BaseVestingAccount message. Does not implicitly {@link cosmos_sdk.x.auth.vesting.v1.BaseVestingAccount.verify|verify} messages.
-                         * @function encode
-                         * @memberof cosmos_sdk.x.auth.vesting.v1.BaseVestingAccount
-                         * @static
-                         * @param {cosmos_sdk.x.auth.vesting.v1.IBaseVestingAccount} m BaseVestingAccount message or plain object to encode
-                         * @param {$protobuf.Writer} [w] Writer to encode to
-                         * @returns {$protobuf.Writer} Writer
-                         */
-                        BaseVestingAccount.encode = function encode(m, w) {
-                            if (!w)
-                                w = $Writer.create();
-                            if (m.baseAccount != null && Object.hasOwnProperty.call(m, "baseAccount"))
-                                $root.cosmos_sdk.x.auth.v1.BaseAccount.encode(m.baseAccount, w.uint32(10).fork()).ldelim();
-                            if (m.originalVesting != null && m.originalVesting.length) {
-                                for (var i = 0; i < m.originalVesting.length; ++i)
-                                    $root.cosmos_sdk.v1.Coin.encode(m.originalVesting[i], w.uint32(18).fork()).ldelim();
-                            }
-                            if (m.delegatedFree != null && m.delegatedFree.length) {
-                                for (var i = 0; i < m.delegatedFree.length; ++i)
-                                    $root.cosmos_sdk.v1.Coin.encode(m.delegatedFree[i], w.uint32(26).fork()).ldelim();
-                            }
-                            if (m.delegatedVesting != null && m.delegatedVesting.length) {
-                                for (var i = 0; i < m.delegatedVesting.length; ++i)
-                                    $root.cosmos_sdk.v1.Coin.encode(m.delegatedVesting[i], w.uint32(34).fork()).ldelim();
-                            }
-                            if (m.endTime != null && Object.hasOwnProperty.call(m, "endTime"))
-                                w.uint32(40).int64(m.endTime);
-                            return w;
-                        };
-
-                        /**
-                         * Decodes a BaseVestingAccount message from the specified reader or buffer.
-                         * @function decode
-                         * @memberof cosmos_sdk.x.auth.vesting.v1.BaseVestingAccount
-                         * @static
-                         * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                         * @param {number} [l] Message length if known beforehand
-                         * @returns {cosmos_sdk.x.auth.vesting.v1.BaseVestingAccount} BaseVestingAccount
-                         * @throws {Error} If the payload is not a reader or valid buffer
-                         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                         */
-                        BaseVestingAccount.decode = function decode(r, l) {
-                            if (!(r instanceof $Reader))
-                                r = $Reader.create(r);
-                            var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.auth.vesting.v1.BaseVestingAccount();
-                            while (r.pos < c) {
-                                var t = r.uint32();
-                                switch (t >>> 3) {
-                                case 1:
-                                    m.baseAccount = $root.cosmos_sdk.x.auth.v1.BaseAccount.decode(r, r.uint32());
-                                    break;
-                                case 2:
-                                    if (!(m.originalVesting && m.originalVesting.length))
-                                        m.originalVesting = [];
-                                    m.originalVesting.push($root.cosmos_sdk.v1.Coin.decode(r, r.uint32()));
-                                    break;
-                                case 3:
-                                    if (!(m.delegatedFree && m.delegatedFree.length))
-                                        m.delegatedFree = [];
-                                    m.delegatedFree.push($root.cosmos_sdk.v1.Coin.decode(r, r.uint32()));
-                                    break;
-                                case 4:
-                                    if (!(m.delegatedVesting && m.delegatedVesting.length))
-                                        m.delegatedVesting = [];
-                                    m.delegatedVesting.push($root.cosmos_sdk.v1.Coin.decode(r, r.uint32()));
-                                    break;
-                                case 5:
-                                    m.endTime = r.int64();
-                                    break;
-                                default:
-                                    r.skipType(t & 7);
-                                    break;
-                                }
-                            }
-                            return m;
-                        };
-
-                        return BaseVestingAccount;
-                    })();
-
-                    v1.ContinuousVestingAccount = (function() {
-
-                        /**
-                         * Properties of a ContinuousVestingAccount.
-                         * @memberof cosmos_sdk.x.auth.vesting.v1
-                         * @interface IContinuousVestingAccount
-                         * @property {cosmos_sdk.x.auth.vesting.v1.IBaseVestingAccount|null} [baseVestingAccount] ContinuousVestingAccount baseVestingAccount
-                         * @property {number|Long|null} [startTime] ContinuousVestingAccount startTime
-                         */
-
-                        /**
-                         * Constructs a new ContinuousVestingAccount.
-                         * @memberof cosmos_sdk.x.auth.vesting.v1
-                         * @classdesc Represents a ContinuousVestingAccount.
-                         * @implements IContinuousVestingAccount
-                         * @constructor
-                         * @param {cosmos_sdk.x.auth.vesting.v1.IContinuousVestingAccount=} [p] Properties to set
-                         */
-                        function ContinuousVestingAccount(p) {
-                            if (p)
-                                for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                    if (p[ks[i]] != null)
-                                        this[ks[i]] = p[ks[i]];
-                        }
-
-                        /**
-                         * ContinuousVestingAccount baseVestingAccount.
-                         * @member {cosmos_sdk.x.auth.vesting.v1.IBaseVestingAccount|null|undefined} baseVestingAccount
-                         * @memberof cosmos_sdk.x.auth.vesting.v1.ContinuousVestingAccount
-                         * @instance
-                         */
-                        ContinuousVestingAccount.prototype.baseVestingAccount = null;
-
-                        /**
-                         * ContinuousVestingAccount startTime.
-                         * @member {number|Long} startTime
-                         * @memberof cosmos_sdk.x.auth.vesting.v1.ContinuousVestingAccount
-                         * @instance
-                         */
-                        ContinuousVestingAccount.prototype.startTime = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
-
-                        /**
-                         * Creates a new ContinuousVestingAccount instance using the specified properties.
-                         * @function create
-                         * @memberof cosmos_sdk.x.auth.vesting.v1.ContinuousVestingAccount
-                         * @static
-                         * @param {cosmos_sdk.x.auth.vesting.v1.IContinuousVestingAccount=} [properties] Properties to set
-                         * @returns {cosmos_sdk.x.auth.vesting.v1.ContinuousVestingAccount} ContinuousVestingAccount instance
-                         */
-                        ContinuousVestingAccount.create = function create(properties) {
-                            return new ContinuousVestingAccount(properties);
-                        };
-
-                        /**
-                         * Encodes the specified ContinuousVestingAccount message. Does not implicitly {@link cosmos_sdk.x.auth.vesting.v1.ContinuousVestingAccount.verify|verify} messages.
-                         * @function encode
-                         * @memberof cosmos_sdk.x.auth.vesting.v1.ContinuousVestingAccount
-                         * @static
-                         * @param {cosmos_sdk.x.auth.vesting.v1.IContinuousVestingAccount} m ContinuousVestingAccount message or plain object to encode
-                         * @param {$protobuf.Writer} [w] Writer to encode to
-                         * @returns {$protobuf.Writer} Writer
-                         */
-                        ContinuousVestingAccount.encode = function encode(m, w) {
-                            if (!w)
-                                w = $Writer.create();
-                            if (m.baseVestingAccount != null && Object.hasOwnProperty.call(m, "baseVestingAccount"))
-                                $root.cosmos_sdk.x.auth.vesting.v1.BaseVestingAccount.encode(m.baseVestingAccount, w.uint32(10).fork()).ldelim();
-                            if (m.startTime != null && Object.hasOwnProperty.call(m, "startTime"))
-                                w.uint32(16).int64(m.startTime);
-                            return w;
-                        };
-
-                        /**
-                         * Decodes a ContinuousVestingAccount message from the specified reader or buffer.
-                         * @function decode
-                         * @memberof cosmos_sdk.x.auth.vesting.v1.ContinuousVestingAccount
-                         * @static
-                         * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                         * @param {number} [l] Message length if known beforehand
-                         * @returns {cosmos_sdk.x.auth.vesting.v1.ContinuousVestingAccount} ContinuousVestingAccount
-                         * @throws {Error} If the payload is not a reader or valid buffer
-                         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                         */
-                        ContinuousVestingAccount.decode = function decode(r, l) {
-                            if (!(r instanceof $Reader))
-                                r = $Reader.create(r);
-                            var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.auth.vesting.v1.ContinuousVestingAccount();
-                            while (r.pos < c) {
-                                var t = r.uint32();
-                                switch (t >>> 3) {
-                                case 1:
-                                    m.baseVestingAccount = $root.cosmos_sdk.x.auth.vesting.v1.BaseVestingAccount.decode(r, r.uint32());
-                                    break;
-                                case 2:
-                                    m.startTime = r.int64();
-                                    break;
-                                default:
-                                    r.skipType(t & 7);
-                                    break;
-                                }
-                            }
-                            return m;
-                        };
-
-                        return ContinuousVestingAccount;
-                    })();
-
-                    v1.DelayedVestingAccount = (function() {
-
-                        /**
-                         * Properties of a DelayedVestingAccount.
-                         * @memberof cosmos_sdk.x.auth.vesting.v1
-                         * @interface IDelayedVestingAccount
-                         * @property {cosmos_sdk.x.auth.vesting.v1.IBaseVestingAccount|null} [baseVestingAccount] DelayedVestingAccount baseVestingAccount
-                         */
-
-                        /**
-                         * Constructs a new DelayedVestingAccount.
-                         * @memberof cosmos_sdk.x.auth.vesting.v1
-                         * @classdesc Represents a DelayedVestingAccount.
-                         * @implements IDelayedVestingAccount
-                         * @constructor
-                         * @param {cosmos_sdk.x.auth.vesting.v1.IDelayedVestingAccount=} [p] Properties to set
-                         */
-                        function DelayedVestingAccount(p) {
-                            if (p)
-                                for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                    if (p[ks[i]] != null)
-                                        this[ks[i]] = p[ks[i]];
-                        }
-
-                        /**
-                         * DelayedVestingAccount baseVestingAccount.
-                         * @member {cosmos_sdk.x.auth.vesting.v1.IBaseVestingAccount|null|undefined} baseVestingAccount
-                         * @memberof cosmos_sdk.x.auth.vesting.v1.DelayedVestingAccount
-                         * @instance
-                         */
-                        DelayedVestingAccount.prototype.baseVestingAccount = null;
-
-                        /**
-                         * Creates a new DelayedVestingAccount instance using the specified properties.
-                         * @function create
-                         * @memberof cosmos_sdk.x.auth.vesting.v1.DelayedVestingAccount
-                         * @static
-                         * @param {cosmos_sdk.x.auth.vesting.v1.IDelayedVestingAccount=} [properties] Properties to set
-                         * @returns {cosmos_sdk.x.auth.vesting.v1.DelayedVestingAccount} DelayedVestingAccount instance
-                         */
-                        DelayedVestingAccount.create = function create(properties) {
-                            return new DelayedVestingAccount(properties);
-                        };
-
-                        /**
-                         * Encodes the specified DelayedVestingAccount message. Does not implicitly {@link cosmos_sdk.x.auth.vesting.v1.DelayedVestingAccount.verify|verify} messages.
-                         * @function encode
-                         * @memberof cosmos_sdk.x.auth.vesting.v1.DelayedVestingAccount
-                         * @static
-                         * @param {cosmos_sdk.x.auth.vesting.v1.IDelayedVestingAccount} m DelayedVestingAccount message or plain object to encode
-                         * @param {$protobuf.Writer} [w] Writer to encode to
-                         * @returns {$protobuf.Writer} Writer
-                         */
-                        DelayedVestingAccount.encode = function encode(m, w) {
-                            if (!w)
-                                w = $Writer.create();
-                            if (m.baseVestingAccount != null && Object.hasOwnProperty.call(m, "baseVestingAccount"))
-                                $root.cosmos_sdk.x.auth.vesting.v1.BaseVestingAccount.encode(m.baseVestingAccount, w.uint32(10).fork()).ldelim();
-                            return w;
-                        };
-
-                        /**
-                         * Decodes a DelayedVestingAccount message from the specified reader or buffer.
-                         * @function decode
-                         * @memberof cosmos_sdk.x.auth.vesting.v1.DelayedVestingAccount
-                         * @static
-                         * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                         * @param {number} [l] Message length if known beforehand
-                         * @returns {cosmos_sdk.x.auth.vesting.v1.DelayedVestingAccount} DelayedVestingAccount
-                         * @throws {Error} If the payload is not a reader or valid buffer
-                         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                         */
-                        DelayedVestingAccount.decode = function decode(r, l) {
-                            if (!(r instanceof $Reader))
-                                r = $Reader.create(r);
-                            var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.auth.vesting.v1.DelayedVestingAccount();
-                            while (r.pos < c) {
-                                var t = r.uint32();
-                                switch (t >>> 3) {
-                                case 1:
-                                    m.baseVestingAccount = $root.cosmos_sdk.x.auth.vesting.v1.BaseVestingAccount.decode(r, r.uint32());
-                                    break;
-                                default:
-                                    r.skipType(t & 7);
-                                    break;
-                                }
-                            }
-                            return m;
-                        };
-
-                        return DelayedVestingAccount;
-                    })();
-
-                    v1.Period = (function() {
-
-                        /**
-                         * Properties of a Period.
-                         * @memberof cosmos_sdk.x.auth.vesting.v1
-                         * @interface IPeriod
-                         * @property {number|Long|null} [length] Period length
-                         * @property {Array.<cosmos_sdk.v1.ICoin>|null} [amount] Period amount
-                         */
-
-                        /**
-                         * Constructs a new Period.
-                         * @memberof cosmos_sdk.x.auth.vesting.v1
-                         * @classdesc Represents a Period.
-                         * @implements IPeriod
-                         * @constructor
-                         * @param {cosmos_sdk.x.auth.vesting.v1.IPeriod=} [p] Properties to set
-                         */
-                        function Period(p) {
-                            this.amount = [];
-                            if (p)
-                                for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                    if (p[ks[i]] != null)
-                                        this[ks[i]] = p[ks[i]];
-                        }
-
-                        /**
-                         * Period length.
-                         * @member {number|Long} length
-                         * @memberof cosmos_sdk.x.auth.vesting.v1.Period
-                         * @instance
-                         */
-                        Period.prototype.length = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
-
-                        /**
-                         * Period amount.
-                         * @member {Array.<cosmos_sdk.v1.ICoin>} amount
-                         * @memberof cosmos_sdk.x.auth.vesting.v1.Period
-                         * @instance
-                         */
-                        Period.prototype.amount = $util.emptyArray;
-
-                        /**
-                         * Creates a new Period instance using the specified properties.
-                         * @function create
-                         * @memberof cosmos_sdk.x.auth.vesting.v1.Period
-                         * @static
-                         * @param {cosmos_sdk.x.auth.vesting.v1.IPeriod=} [properties] Properties to set
-                         * @returns {cosmos_sdk.x.auth.vesting.v1.Period} Period instance
-                         */
-                        Period.create = function create(properties) {
-                            return new Period(properties);
-                        };
-
-                        /**
-                         * Encodes the specified Period message. Does not implicitly {@link cosmos_sdk.x.auth.vesting.v1.Period.verify|verify} messages.
-                         * @function encode
-                         * @memberof cosmos_sdk.x.auth.vesting.v1.Period
-                         * @static
-                         * @param {cosmos_sdk.x.auth.vesting.v1.IPeriod} m Period message or plain object to encode
-                         * @param {$protobuf.Writer} [w] Writer to encode to
-                         * @returns {$protobuf.Writer} Writer
-                         */
-                        Period.encode = function encode(m, w) {
-                            if (!w)
-                                w = $Writer.create();
-                            if (m.length != null && Object.hasOwnProperty.call(m, "length"))
-                                w.uint32(8).int64(m.length);
-                            if (m.amount != null && m.amount.length) {
-                                for (var i = 0; i < m.amount.length; ++i)
-                                    $root.cosmos_sdk.v1.Coin.encode(m.amount[i], w.uint32(18).fork()).ldelim();
-                            }
-                            return w;
-                        };
-
-                        /**
-                         * Decodes a Period message from the specified reader or buffer.
-                         * @function decode
-                         * @memberof cosmos_sdk.x.auth.vesting.v1.Period
-                         * @static
-                         * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                         * @param {number} [l] Message length if known beforehand
-                         * @returns {cosmos_sdk.x.auth.vesting.v1.Period} Period
-                         * @throws {Error} If the payload is not a reader or valid buffer
-                         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                         */
-                        Period.decode = function decode(r, l) {
-                            if (!(r instanceof $Reader))
-                                r = $Reader.create(r);
-                            var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.auth.vesting.v1.Period();
-                            while (r.pos < c) {
-                                var t = r.uint32();
-                                switch (t >>> 3) {
-                                case 1:
-                                    m.length = r.int64();
-                                    break;
-                                case 2:
-                                    if (!(m.amount && m.amount.length))
-                                        m.amount = [];
-                                    m.amount.push($root.cosmos_sdk.v1.Coin.decode(r, r.uint32()));
-                                    break;
-                                default:
-                                    r.skipType(t & 7);
-                                    break;
-                                }
-                            }
-                            return m;
-                        };
-
-                        return Period;
-                    })();
-
-                    v1.PeriodicVestingAccount = (function() {
-
-                        /**
-                         * Properties of a PeriodicVestingAccount.
-                         * @memberof cosmos_sdk.x.auth.vesting.v1
-                         * @interface IPeriodicVestingAccount
-                         * @property {cosmos_sdk.x.auth.vesting.v1.IBaseVestingAccount|null} [baseVestingAccount] PeriodicVestingAccount baseVestingAccount
-                         * @property {number|Long|null} [startTime] PeriodicVestingAccount startTime
-                         * @property {Array.<cosmos_sdk.x.auth.vesting.v1.IPeriod>|null} [vestingPeriods] PeriodicVestingAccount vestingPeriods
-                         */
-
-                        /**
-                         * Constructs a new PeriodicVestingAccount.
-                         * @memberof cosmos_sdk.x.auth.vesting.v1
-                         * @classdesc Represents a PeriodicVestingAccount.
-                         * @implements IPeriodicVestingAccount
-                         * @constructor
-                         * @param {cosmos_sdk.x.auth.vesting.v1.IPeriodicVestingAccount=} [p] Properties to set
-                         */
-                        function PeriodicVestingAccount(p) {
-                            this.vestingPeriods = [];
-                            if (p)
-                                for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                    if (p[ks[i]] != null)
-                                        this[ks[i]] = p[ks[i]];
-                        }
-
-                        /**
-                         * PeriodicVestingAccount baseVestingAccount.
-                         * @member {cosmos_sdk.x.auth.vesting.v1.IBaseVestingAccount|null|undefined} baseVestingAccount
-                         * @memberof cosmos_sdk.x.auth.vesting.v1.PeriodicVestingAccount
-                         * @instance
-                         */
-                        PeriodicVestingAccount.prototype.baseVestingAccount = null;
-
-                        /**
-                         * PeriodicVestingAccount startTime.
-                         * @member {number|Long} startTime
-                         * @memberof cosmos_sdk.x.auth.vesting.v1.PeriodicVestingAccount
-                         * @instance
-                         */
-                        PeriodicVestingAccount.prototype.startTime = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
-
-                        /**
-                         * PeriodicVestingAccount vestingPeriods.
-                         * @member {Array.<cosmos_sdk.x.auth.vesting.v1.IPeriod>} vestingPeriods
-                         * @memberof cosmos_sdk.x.auth.vesting.v1.PeriodicVestingAccount
-                         * @instance
-                         */
-                        PeriodicVestingAccount.prototype.vestingPeriods = $util.emptyArray;
-
-                        /**
-                         * Creates a new PeriodicVestingAccount instance using the specified properties.
-                         * @function create
-                         * @memberof cosmos_sdk.x.auth.vesting.v1.PeriodicVestingAccount
-                         * @static
-                         * @param {cosmos_sdk.x.auth.vesting.v1.IPeriodicVestingAccount=} [properties] Properties to set
-                         * @returns {cosmos_sdk.x.auth.vesting.v1.PeriodicVestingAccount} PeriodicVestingAccount instance
-                         */
-                        PeriodicVestingAccount.create = function create(properties) {
-                            return new PeriodicVestingAccount(properties);
-                        };
-
-                        /**
-                         * Encodes the specified PeriodicVestingAccount message. Does not implicitly {@link cosmos_sdk.x.auth.vesting.v1.PeriodicVestingAccount.verify|verify} messages.
-                         * @function encode
-                         * @memberof cosmos_sdk.x.auth.vesting.v1.PeriodicVestingAccount
-                         * @static
-                         * @param {cosmos_sdk.x.auth.vesting.v1.IPeriodicVestingAccount} m PeriodicVestingAccount message or plain object to encode
-                         * @param {$protobuf.Writer} [w] Writer to encode to
-                         * @returns {$protobuf.Writer} Writer
-                         */
-                        PeriodicVestingAccount.encode = function encode(m, w) {
-                            if (!w)
-                                w = $Writer.create();
-                            if (m.baseVestingAccount != null && Object.hasOwnProperty.call(m, "baseVestingAccount"))
-                                $root.cosmos_sdk.x.auth.vesting.v1.BaseVestingAccount.encode(m.baseVestingAccount, w.uint32(10).fork()).ldelim();
-                            if (m.startTime != null && Object.hasOwnProperty.call(m, "startTime"))
-                                w.uint32(16).int64(m.startTime);
-                            if (m.vestingPeriods != null && m.vestingPeriods.length) {
-                                for (var i = 0; i < m.vestingPeriods.length; ++i)
-                                    $root.cosmos_sdk.x.auth.vesting.v1.Period.encode(m.vestingPeriods[i], w.uint32(26).fork()).ldelim();
-                            }
-                            return w;
-                        };
-
-                        /**
-                         * Decodes a PeriodicVestingAccount message from the specified reader or buffer.
-                         * @function decode
-                         * @memberof cosmos_sdk.x.auth.vesting.v1.PeriodicVestingAccount
-                         * @static
-                         * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                         * @param {number} [l] Message length if known beforehand
-                         * @returns {cosmos_sdk.x.auth.vesting.v1.PeriodicVestingAccount} PeriodicVestingAccount
-                         * @throws {Error} If the payload is not a reader or valid buffer
-                         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                         */
-                        PeriodicVestingAccount.decode = function decode(r, l) {
-                            if (!(r instanceof $Reader))
-                                r = $Reader.create(r);
-                            var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.auth.vesting.v1.PeriodicVestingAccount();
-                            while (r.pos < c) {
-                                var t = r.uint32();
-                                switch (t >>> 3) {
-                                case 1:
-                                    m.baseVestingAccount = $root.cosmos_sdk.x.auth.vesting.v1.BaseVestingAccount.decode(r, r.uint32());
-                                    break;
-                                case 2:
-                                    m.startTime = r.int64();
-                                    break;
-                                case 3:
-                                    if (!(m.vestingPeriods && m.vestingPeriods.length))
-                                        m.vestingPeriods = [];
-                                    m.vestingPeriods.push($root.cosmos_sdk.x.auth.vesting.v1.Period.decode(r, r.uint32()));
-                                    break;
-                                default:
-                                    r.skipType(t & 7);
-                                    break;
-                                }
-                            }
-                            return m;
-                        };
-
-                        return PeriodicVestingAccount;
-                    })();
-
-                    return v1;
-                })();
-
-                return vesting;
-            })();
-
-            return auth;
+            return v1;
         })();
 
-        x.bank = (function() {
-
-            /**
-             * Namespace bank.
-             * @memberof cosmos_sdk.x
-             * @namespace
-             */
-            var bank = {};
-
-            bank.v1 = (function() {
-
-                /**
-                 * Namespace v1.
-                 * @memberof cosmos_sdk.x.bank
-                 * @namespace
-                 */
-                var v1 = {};
-
-                v1.Query = (function() {
-
-                    /**
-                     * Constructs a new Query service.
-                     * @memberof cosmos_sdk.x.bank.v1
-                     * @classdesc Represents a Query
-                     * @extends $protobuf.rpc.Service
-                     * @constructor
-                     * @param {$protobuf.RPCImpl} rpcImpl RPC implementation
-                     * @param {boolean} [requestDelimited=false] Whether requests are length-delimited
-                     * @param {boolean} [responseDelimited=false] Whether responses are length-delimited
-                     */
-                    function Query(rpcImpl, requestDelimited, responseDelimited) {
-                        $protobuf.rpc.Service.call(this, rpcImpl, requestDelimited, responseDelimited);
-                    }
-
-                    (Query.prototype = Object.create($protobuf.rpc.Service.prototype)).constructor = Query;
-
-                    /**
-                     * Creates new Query service using the specified rpc implementation.
-                     * @function create
-                     * @memberof cosmos_sdk.x.bank.v1.Query
-                     * @static
-                     * @param {$protobuf.RPCImpl} rpcImpl RPC implementation
-                     * @param {boolean} [requestDelimited=false] Whether requests are length-delimited
-                     * @param {boolean} [responseDelimited=false] Whether responses are length-delimited
-                     * @returns {Query} RPC service. Useful where requests and/or responses are streamed.
-                     */
-                    Query.create = function create(rpcImpl, requestDelimited, responseDelimited) {
-                        return new this(rpcImpl, requestDelimited, responseDelimited);
-                    };
-
-                    /**
-                     * Callback as used by {@link cosmos_sdk.x.bank.v1.Query#balance}.
-                     * @memberof cosmos_sdk.x.bank.v1.Query
-                     * @typedef BalanceCallback
-                     * @type {function}
-                     * @param {Error|null} error Error, if any
-                     * @param {cosmos_sdk.x.bank.v1.QueryBalanceResponse} [response] QueryBalanceResponse
-                     */
-
-                    /**
-                     * Calls Balance.
-                     * @function balance
-                     * @memberof cosmos_sdk.x.bank.v1.Query
-                     * @instance
-                     * @param {cosmos_sdk.x.bank.v1.IQueryBalanceRequest} request QueryBalanceRequest message or plain object
-                     * @param {cosmos_sdk.x.bank.v1.Query.BalanceCallback} callback Node-style callback called with the error, if any, and QueryBalanceResponse
-                     * @returns {undefined}
-                     * @variation 1
-                     */
-                    Object.defineProperty(Query.prototype.balance = function balance(request, callback) {
-                        return this.rpcCall(balance, $root.cosmos_sdk.x.bank.v1.QueryBalanceRequest, $root.cosmos_sdk.x.bank.v1.QueryBalanceResponse, request, callback);
-                    }, "name", { value: "Balance" });
-
-                    /**
-                     * Calls Balance.
-                     * @function balance
-                     * @memberof cosmos_sdk.x.bank.v1.Query
-                     * @instance
-                     * @param {cosmos_sdk.x.bank.v1.IQueryBalanceRequest} request QueryBalanceRequest message or plain object
-                     * @returns {Promise<cosmos_sdk.x.bank.v1.QueryBalanceResponse>} Promise
-                     * @variation 2
-                     */
-
-                    /**
-                     * Callback as used by {@link cosmos_sdk.x.bank.v1.Query#allBalances}.
-                     * @memberof cosmos_sdk.x.bank.v1.Query
-                     * @typedef AllBalancesCallback
-                     * @type {function}
-                     * @param {Error|null} error Error, if any
-                     * @param {cosmos_sdk.x.bank.v1.QueryAllBalancesResponse} [response] QueryAllBalancesResponse
-                     */
-
-                    /**
-                     * Calls AllBalances.
-                     * @function allBalances
-                     * @memberof cosmos_sdk.x.bank.v1.Query
-                     * @instance
-                     * @param {cosmos_sdk.x.bank.v1.IQueryAllBalancesRequest} request QueryAllBalancesRequest message or plain object
-                     * @param {cosmos_sdk.x.bank.v1.Query.AllBalancesCallback} callback Node-style callback called with the error, if any, and QueryAllBalancesResponse
-                     * @returns {undefined}
-                     * @variation 1
-                     */
-                    Object.defineProperty(Query.prototype.allBalances = function allBalances(request, callback) {
-                        return this.rpcCall(allBalances, $root.cosmos_sdk.x.bank.v1.QueryAllBalancesRequest, $root.cosmos_sdk.x.bank.v1.QueryAllBalancesResponse, request, callback);
-                    }, "name", { value: "AllBalances" });
-
-                    /**
-                     * Calls AllBalances.
-                     * @function allBalances
-                     * @memberof cosmos_sdk.x.bank.v1.Query
-                     * @instance
-                     * @param {cosmos_sdk.x.bank.v1.IQueryAllBalancesRequest} request QueryAllBalancesRequest message or plain object
-                     * @returns {Promise<cosmos_sdk.x.bank.v1.QueryAllBalancesResponse>} Promise
-                     * @variation 2
-                     */
-
-                    /**
-                     * Callback as used by {@link cosmos_sdk.x.bank.v1.Query#totalSupply}.
-                     * @memberof cosmos_sdk.x.bank.v1.Query
-                     * @typedef TotalSupplyCallback
-                     * @type {function}
-                     * @param {Error|null} error Error, if any
-                     * @param {cosmos_sdk.x.bank.v1.QueryTotalSupplyResponse} [response] QueryTotalSupplyResponse
-                     */
-
-                    /**
-                     * Calls TotalSupply.
-                     * @function totalSupply
-                     * @memberof cosmos_sdk.x.bank.v1.Query
-                     * @instance
-                     * @param {cosmos_sdk.x.bank.v1.IQueryTotalSupplyRequest} request QueryTotalSupplyRequest message or plain object
-                     * @param {cosmos_sdk.x.bank.v1.Query.TotalSupplyCallback} callback Node-style callback called with the error, if any, and QueryTotalSupplyResponse
-                     * @returns {undefined}
-                     * @variation 1
-                     */
-                    Object.defineProperty(Query.prototype.totalSupply = function totalSupply(request, callback) {
-                        return this.rpcCall(totalSupply, $root.cosmos_sdk.x.bank.v1.QueryTotalSupplyRequest, $root.cosmos_sdk.x.bank.v1.QueryTotalSupplyResponse, request, callback);
-                    }, "name", { value: "TotalSupply" });
-
-                    /**
-                     * Calls TotalSupply.
-                     * @function totalSupply
-                     * @memberof cosmos_sdk.x.bank.v1.Query
-                     * @instance
-                     * @param {cosmos_sdk.x.bank.v1.IQueryTotalSupplyRequest} request QueryTotalSupplyRequest message or plain object
-                     * @returns {Promise<cosmos_sdk.x.bank.v1.QueryTotalSupplyResponse>} Promise
-                     * @variation 2
-                     */
-
-                    /**
-                     * Callback as used by {@link cosmos_sdk.x.bank.v1.Query#supplyOf}.
-                     * @memberof cosmos_sdk.x.bank.v1.Query
-                     * @typedef SupplyOfCallback
-                     * @type {function}
-                     * @param {Error|null} error Error, if any
-                     * @param {cosmos_sdk.x.bank.v1.QuerySupplyOfResponse} [response] QuerySupplyOfResponse
-                     */
-
-                    /**
-                     * Calls SupplyOf.
-                     * @function supplyOf
-                     * @memberof cosmos_sdk.x.bank.v1.Query
-                     * @instance
-                     * @param {cosmos_sdk.x.bank.v1.IQuerySupplyOfRequest} request QuerySupplyOfRequest message or plain object
-                     * @param {cosmos_sdk.x.bank.v1.Query.SupplyOfCallback} callback Node-style callback called with the error, if any, and QuerySupplyOfResponse
-                     * @returns {undefined}
-                     * @variation 1
-                     */
-                    Object.defineProperty(Query.prototype.supplyOf = function supplyOf(request, callback) {
-                        return this.rpcCall(supplyOf, $root.cosmos_sdk.x.bank.v1.QuerySupplyOfRequest, $root.cosmos_sdk.x.bank.v1.QuerySupplyOfResponse, request, callback);
-                    }, "name", { value: "SupplyOf" });
-
-                    /**
-                     * Calls SupplyOf.
-                     * @function supplyOf
-                     * @memberof cosmos_sdk.x.bank.v1.Query
-                     * @instance
-                     * @param {cosmos_sdk.x.bank.v1.IQuerySupplyOfRequest} request QuerySupplyOfRequest message or plain object
-                     * @returns {Promise<cosmos_sdk.x.bank.v1.QuerySupplyOfResponse>} Promise
-                     * @variation 2
-                     */
-
-                    return Query;
-                })();
-
-                v1.QueryBalanceRequest = (function() {
-
-                    /**
-                     * Properties of a QueryBalanceRequest.
-                     * @memberof cosmos_sdk.x.bank.v1
-                     * @interface IQueryBalanceRequest
-                     * @property {Uint8Array|null} [address] QueryBalanceRequest address
-                     * @property {string|null} [denom] QueryBalanceRequest denom
-                     */
-
-                    /**
-                     * Constructs a new QueryBalanceRequest.
-                     * @memberof cosmos_sdk.x.bank.v1
-                     * @classdesc Represents a QueryBalanceRequest.
-                     * @implements IQueryBalanceRequest
-                     * @constructor
-                     * @param {cosmos_sdk.x.bank.v1.IQueryBalanceRequest=} [p] Properties to set
-                     */
-                    function QueryBalanceRequest(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * QueryBalanceRequest address.
-                     * @member {Uint8Array} address
-                     * @memberof cosmos_sdk.x.bank.v1.QueryBalanceRequest
-                     * @instance
-                     */
-                    QueryBalanceRequest.prototype.address = $util.newBuffer([]);
-
-                    /**
-                     * QueryBalanceRequest denom.
-                     * @member {string} denom
-                     * @memberof cosmos_sdk.x.bank.v1.QueryBalanceRequest
-                     * @instance
-                     */
-                    QueryBalanceRequest.prototype.denom = "";
-
-                    /**
-                     * Creates a new QueryBalanceRequest instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.bank.v1.QueryBalanceRequest
-                     * @static
-                     * @param {cosmos_sdk.x.bank.v1.IQueryBalanceRequest=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.bank.v1.QueryBalanceRequest} QueryBalanceRequest instance
-                     */
-                    QueryBalanceRequest.create = function create(properties) {
-                        return new QueryBalanceRequest(properties);
-                    };
-
-                    /**
-                     * Encodes the specified QueryBalanceRequest message. Does not implicitly {@link cosmos_sdk.x.bank.v1.QueryBalanceRequest.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.bank.v1.QueryBalanceRequest
-                     * @static
-                     * @param {cosmos_sdk.x.bank.v1.IQueryBalanceRequest} m QueryBalanceRequest message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    QueryBalanceRequest.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.address != null && Object.hasOwnProperty.call(m, "address"))
-                            w.uint32(10).bytes(m.address);
-                        if (m.denom != null && Object.hasOwnProperty.call(m, "denom"))
-                            w.uint32(18).string(m.denom);
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a QueryBalanceRequest message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.bank.v1.QueryBalanceRequest
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.bank.v1.QueryBalanceRequest} QueryBalanceRequest
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    QueryBalanceRequest.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.bank.v1.QueryBalanceRequest();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.address = r.bytes();
-                                break;
-                            case 2:
-                                m.denom = r.string();
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return QueryBalanceRequest;
-                })();
-
-                v1.QueryBalanceResponse = (function() {
-
-                    /**
-                     * Properties of a QueryBalanceResponse.
-                     * @memberof cosmos_sdk.x.bank.v1
-                     * @interface IQueryBalanceResponse
-                     * @property {cosmos_sdk.v1.ICoin|null} [balance] QueryBalanceResponse balance
-                     */
-
-                    /**
-                     * Constructs a new QueryBalanceResponse.
-                     * @memberof cosmos_sdk.x.bank.v1
-                     * @classdesc Represents a QueryBalanceResponse.
-                     * @implements IQueryBalanceResponse
-                     * @constructor
-                     * @param {cosmos_sdk.x.bank.v1.IQueryBalanceResponse=} [p] Properties to set
-                     */
-                    function QueryBalanceResponse(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * QueryBalanceResponse balance.
-                     * @member {cosmos_sdk.v1.ICoin|null|undefined} balance
-                     * @memberof cosmos_sdk.x.bank.v1.QueryBalanceResponse
-                     * @instance
-                     */
-                    QueryBalanceResponse.prototype.balance = null;
-
-                    /**
-                     * Creates a new QueryBalanceResponse instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.bank.v1.QueryBalanceResponse
-                     * @static
-                     * @param {cosmos_sdk.x.bank.v1.IQueryBalanceResponse=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.bank.v1.QueryBalanceResponse} QueryBalanceResponse instance
-                     */
-                    QueryBalanceResponse.create = function create(properties) {
-                        return new QueryBalanceResponse(properties);
-                    };
-
-                    /**
-                     * Encodes the specified QueryBalanceResponse message. Does not implicitly {@link cosmos_sdk.x.bank.v1.QueryBalanceResponse.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.bank.v1.QueryBalanceResponse
-                     * @static
-                     * @param {cosmos_sdk.x.bank.v1.IQueryBalanceResponse} m QueryBalanceResponse message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    QueryBalanceResponse.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.balance != null && Object.hasOwnProperty.call(m, "balance"))
-                            $root.cosmos_sdk.v1.Coin.encode(m.balance, w.uint32(10).fork()).ldelim();
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a QueryBalanceResponse message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.bank.v1.QueryBalanceResponse
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.bank.v1.QueryBalanceResponse} QueryBalanceResponse
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    QueryBalanceResponse.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.bank.v1.QueryBalanceResponse();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.balance = $root.cosmos_sdk.v1.Coin.decode(r, r.uint32());
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return QueryBalanceResponse;
-                })();
-
-                v1.QueryAllBalancesRequest = (function() {
-
-                    /**
-                     * Properties of a QueryAllBalancesRequest.
-                     * @memberof cosmos_sdk.x.bank.v1
-                     * @interface IQueryAllBalancesRequest
-                     * @property {Uint8Array|null} [address] QueryAllBalancesRequest address
-                     */
-
-                    /**
-                     * Constructs a new QueryAllBalancesRequest.
-                     * @memberof cosmos_sdk.x.bank.v1
-                     * @classdesc Represents a QueryAllBalancesRequest.
-                     * @implements IQueryAllBalancesRequest
-                     * @constructor
-                     * @param {cosmos_sdk.x.bank.v1.IQueryAllBalancesRequest=} [p] Properties to set
-                     */
-                    function QueryAllBalancesRequest(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * QueryAllBalancesRequest address.
-                     * @member {Uint8Array} address
-                     * @memberof cosmos_sdk.x.bank.v1.QueryAllBalancesRequest
-                     * @instance
-                     */
-                    QueryAllBalancesRequest.prototype.address = $util.newBuffer([]);
-
-                    /**
-                     * Creates a new QueryAllBalancesRequest instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.bank.v1.QueryAllBalancesRequest
-                     * @static
-                     * @param {cosmos_sdk.x.bank.v1.IQueryAllBalancesRequest=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.bank.v1.QueryAllBalancesRequest} QueryAllBalancesRequest instance
-                     */
-                    QueryAllBalancesRequest.create = function create(properties) {
-                        return new QueryAllBalancesRequest(properties);
-                    };
-
-                    /**
-                     * Encodes the specified QueryAllBalancesRequest message. Does not implicitly {@link cosmos_sdk.x.bank.v1.QueryAllBalancesRequest.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.bank.v1.QueryAllBalancesRequest
-                     * @static
-                     * @param {cosmos_sdk.x.bank.v1.IQueryAllBalancesRequest} m QueryAllBalancesRequest message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    QueryAllBalancesRequest.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.address != null && Object.hasOwnProperty.call(m, "address"))
-                            w.uint32(10).bytes(m.address);
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a QueryAllBalancesRequest message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.bank.v1.QueryAllBalancesRequest
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.bank.v1.QueryAllBalancesRequest} QueryAllBalancesRequest
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    QueryAllBalancesRequest.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.bank.v1.QueryAllBalancesRequest();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.address = r.bytes();
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return QueryAllBalancesRequest;
-                })();
-
-                v1.QueryAllBalancesResponse = (function() {
-
-                    /**
-                     * Properties of a QueryAllBalancesResponse.
-                     * @memberof cosmos_sdk.x.bank.v1
-                     * @interface IQueryAllBalancesResponse
-                     * @property {Array.<cosmos_sdk.v1.ICoin>|null} [balances] QueryAllBalancesResponse balances
-                     */
-
-                    /**
-                     * Constructs a new QueryAllBalancesResponse.
-                     * @memberof cosmos_sdk.x.bank.v1
-                     * @classdesc Represents a QueryAllBalancesResponse.
-                     * @implements IQueryAllBalancesResponse
-                     * @constructor
-                     * @param {cosmos_sdk.x.bank.v1.IQueryAllBalancesResponse=} [p] Properties to set
-                     */
-                    function QueryAllBalancesResponse(p) {
-                        this.balances = [];
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * QueryAllBalancesResponse balances.
-                     * @member {Array.<cosmos_sdk.v1.ICoin>} balances
-                     * @memberof cosmos_sdk.x.bank.v1.QueryAllBalancesResponse
-                     * @instance
-                     */
-                    QueryAllBalancesResponse.prototype.balances = $util.emptyArray;
-
-                    /**
-                     * Creates a new QueryAllBalancesResponse instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.bank.v1.QueryAllBalancesResponse
-                     * @static
-                     * @param {cosmos_sdk.x.bank.v1.IQueryAllBalancesResponse=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.bank.v1.QueryAllBalancesResponse} QueryAllBalancesResponse instance
-                     */
-                    QueryAllBalancesResponse.create = function create(properties) {
-                        return new QueryAllBalancesResponse(properties);
-                    };
-
-                    /**
-                     * Encodes the specified QueryAllBalancesResponse message. Does not implicitly {@link cosmos_sdk.x.bank.v1.QueryAllBalancesResponse.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.bank.v1.QueryAllBalancesResponse
-                     * @static
-                     * @param {cosmos_sdk.x.bank.v1.IQueryAllBalancesResponse} m QueryAllBalancesResponse message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    QueryAllBalancesResponse.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.balances != null && m.balances.length) {
-                            for (var i = 0; i < m.balances.length; ++i)
-                                $root.cosmos_sdk.v1.Coin.encode(m.balances[i], w.uint32(10).fork()).ldelim();
-                        }
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a QueryAllBalancesResponse message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.bank.v1.QueryAllBalancesResponse
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.bank.v1.QueryAllBalancesResponse} QueryAllBalancesResponse
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    QueryAllBalancesResponse.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.bank.v1.QueryAllBalancesResponse();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                if (!(m.balances && m.balances.length))
-                                    m.balances = [];
-                                m.balances.push($root.cosmos_sdk.v1.Coin.decode(r, r.uint32()));
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return QueryAllBalancesResponse;
-                })();
-
-                v1.QueryTotalSupplyRequest = (function() {
-
-                    /**
-                     * Properties of a QueryTotalSupplyRequest.
-                     * @memberof cosmos_sdk.x.bank.v1
-                     * @interface IQueryTotalSupplyRequest
-                     */
-
-                    /**
-                     * Constructs a new QueryTotalSupplyRequest.
-                     * @memberof cosmos_sdk.x.bank.v1
-                     * @classdesc Represents a QueryTotalSupplyRequest.
-                     * @implements IQueryTotalSupplyRequest
-                     * @constructor
-                     * @param {cosmos_sdk.x.bank.v1.IQueryTotalSupplyRequest=} [p] Properties to set
-                     */
-                    function QueryTotalSupplyRequest(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * Creates a new QueryTotalSupplyRequest instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.bank.v1.QueryTotalSupplyRequest
-                     * @static
-                     * @param {cosmos_sdk.x.bank.v1.IQueryTotalSupplyRequest=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.bank.v1.QueryTotalSupplyRequest} QueryTotalSupplyRequest instance
-                     */
-                    QueryTotalSupplyRequest.create = function create(properties) {
-                        return new QueryTotalSupplyRequest(properties);
-                    };
-
-                    /**
-                     * Encodes the specified QueryTotalSupplyRequest message. Does not implicitly {@link cosmos_sdk.x.bank.v1.QueryTotalSupplyRequest.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.bank.v1.QueryTotalSupplyRequest
-                     * @static
-                     * @param {cosmos_sdk.x.bank.v1.IQueryTotalSupplyRequest} m QueryTotalSupplyRequest message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    QueryTotalSupplyRequest.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a QueryTotalSupplyRequest message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.bank.v1.QueryTotalSupplyRequest
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.bank.v1.QueryTotalSupplyRequest} QueryTotalSupplyRequest
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    QueryTotalSupplyRequest.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.bank.v1.QueryTotalSupplyRequest();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return QueryTotalSupplyRequest;
-                })();
-
-                v1.QueryTotalSupplyResponse = (function() {
-
-                    /**
-                     * Properties of a QueryTotalSupplyResponse.
-                     * @memberof cosmos_sdk.x.bank.v1
-                     * @interface IQueryTotalSupplyResponse
-                     * @property {Array.<cosmos_sdk.v1.ICoin>|null} [supply] QueryTotalSupplyResponse supply
-                     */
-
-                    /**
-                     * Constructs a new QueryTotalSupplyResponse.
-                     * @memberof cosmos_sdk.x.bank.v1
-                     * @classdesc Represents a QueryTotalSupplyResponse.
-                     * @implements IQueryTotalSupplyResponse
-                     * @constructor
-                     * @param {cosmos_sdk.x.bank.v1.IQueryTotalSupplyResponse=} [p] Properties to set
-                     */
-                    function QueryTotalSupplyResponse(p) {
-                        this.supply = [];
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * QueryTotalSupplyResponse supply.
-                     * @member {Array.<cosmos_sdk.v1.ICoin>} supply
-                     * @memberof cosmos_sdk.x.bank.v1.QueryTotalSupplyResponse
-                     * @instance
-                     */
-                    QueryTotalSupplyResponse.prototype.supply = $util.emptyArray;
-
-                    /**
-                     * Creates a new QueryTotalSupplyResponse instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.bank.v1.QueryTotalSupplyResponse
-                     * @static
-                     * @param {cosmos_sdk.x.bank.v1.IQueryTotalSupplyResponse=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.bank.v1.QueryTotalSupplyResponse} QueryTotalSupplyResponse instance
-                     */
-                    QueryTotalSupplyResponse.create = function create(properties) {
-                        return new QueryTotalSupplyResponse(properties);
-                    };
-
-                    /**
-                     * Encodes the specified QueryTotalSupplyResponse message. Does not implicitly {@link cosmos_sdk.x.bank.v1.QueryTotalSupplyResponse.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.bank.v1.QueryTotalSupplyResponse
-                     * @static
-                     * @param {cosmos_sdk.x.bank.v1.IQueryTotalSupplyResponse} m QueryTotalSupplyResponse message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    QueryTotalSupplyResponse.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.supply != null && m.supply.length) {
-                            for (var i = 0; i < m.supply.length; ++i)
-                                $root.cosmos_sdk.v1.Coin.encode(m.supply[i], w.uint32(10).fork()).ldelim();
-                        }
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a QueryTotalSupplyResponse message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.bank.v1.QueryTotalSupplyResponse
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.bank.v1.QueryTotalSupplyResponse} QueryTotalSupplyResponse
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    QueryTotalSupplyResponse.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.bank.v1.QueryTotalSupplyResponse();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                if (!(m.supply && m.supply.length))
-                                    m.supply = [];
-                                m.supply.push($root.cosmos_sdk.v1.Coin.decode(r, r.uint32()));
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return QueryTotalSupplyResponse;
-                })();
-
-                v1.QuerySupplyOfRequest = (function() {
-
-                    /**
-                     * Properties of a QuerySupplyOfRequest.
-                     * @memberof cosmos_sdk.x.bank.v1
-                     * @interface IQuerySupplyOfRequest
-                     * @property {string|null} [denom] QuerySupplyOfRequest denom
-                     */
-
-                    /**
-                     * Constructs a new QuerySupplyOfRequest.
-                     * @memberof cosmos_sdk.x.bank.v1
-                     * @classdesc Represents a QuerySupplyOfRequest.
-                     * @implements IQuerySupplyOfRequest
-                     * @constructor
-                     * @param {cosmos_sdk.x.bank.v1.IQuerySupplyOfRequest=} [p] Properties to set
-                     */
-                    function QuerySupplyOfRequest(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * QuerySupplyOfRequest denom.
-                     * @member {string} denom
-                     * @memberof cosmos_sdk.x.bank.v1.QuerySupplyOfRequest
-                     * @instance
-                     */
-                    QuerySupplyOfRequest.prototype.denom = "";
-
-                    /**
-                     * Creates a new QuerySupplyOfRequest instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.bank.v1.QuerySupplyOfRequest
-                     * @static
-                     * @param {cosmos_sdk.x.bank.v1.IQuerySupplyOfRequest=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.bank.v1.QuerySupplyOfRequest} QuerySupplyOfRequest instance
-                     */
-                    QuerySupplyOfRequest.create = function create(properties) {
-                        return new QuerySupplyOfRequest(properties);
-                    };
-
-                    /**
-                     * Encodes the specified QuerySupplyOfRequest message. Does not implicitly {@link cosmos_sdk.x.bank.v1.QuerySupplyOfRequest.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.bank.v1.QuerySupplyOfRequest
-                     * @static
-                     * @param {cosmos_sdk.x.bank.v1.IQuerySupplyOfRequest} m QuerySupplyOfRequest message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    QuerySupplyOfRequest.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.denom != null && Object.hasOwnProperty.call(m, "denom"))
-                            w.uint32(10).string(m.denom);
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a QuerySupplyOfRequest message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.bank.v1.QuerySupplyOfRequest
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.bank.v1.QuerySupplyOfRequest} QuerySupplyOfRequest
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    QuerySupplyOfRequest.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.bank.v1.QuerySupplyOfRequest();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.denom = r.string();
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return QuerySupplyOfRequest;
-                })();
-
-                v1.QuerySupplyOfResponse = (function() {
-
-                    /**
-                     * Properties of a QuerySupplyOfResponse.
-                     * @memberof cosmos_sdk.x.bank.v1
-                     * @interface IQuerySupplyOfResponse
-                     * @property {string|null} [amount] QuerySupplyOfResponse amount
-                     */
-
-                    /**
-                     * Constructs a new QuerySupplyOfResponse.
-                     * @memberof cosmos_sdk.x.bank.v1
-                     * @classdesc Represents a QuerySupplyOfResponse.
-                     * @implements IQuerySupplyOfResponse
-                     * @constructor
-                     * @param {cosmos_sdk.x.bank.v1.IQuerySupplyOfResponse=} [p] Properties to set
-                     */
-                    function QuerySupplyOfResponse(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * QuerySupplyOfResponse amount.
-                     * @member {string} amount
-                     * @memberof cosmos_sdk.x.bank.v1.QuerySupplyOfResponse
-                     * @instance
-                     */
-                    QuerySupplyOfResponse.prototype.amount = "";
-
-                    /**
-                     * Creates a new QuerySupplyOfResponse instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.bank.v1.QuerySupplyOfResponse
-                     * @static
-                     * @param {cosmos_sdk.x.bank.v1.IQuerySupplyOfResponse=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.bank.v1.QuerySupplyOfResponse} QuerySupplyOfResponse instance
-                     */
-                    QuerySupplyOfResponse.create = function create(properties) {
-                        return new QuerySupplyOfResponse(properties);
-                    };
-
-                    /**
-                     * Encodes the specified QuerySupplyOfResponse message. Does not implicitly {@link cosmos_sdk.x.bank.v1.QuerySupplyOfResponse.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.bank.v1.QuerySupplyOfResponse
-                     * @static
-                     * @param {cosmos_sdk.x.bank.v1.IQuerySupplyOfResponse} m QuerySupplyOfResponse message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    QuerySupplyOfResponse.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.amount != null && Object.hasOwnProperty.call(m, "amount"))
-                            w.uint32(10).string(m.amount);
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a QuerySupplyOfResponse message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.bank.v1.QuerySupplyOfResponse
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.bank.v1.QuerySupplyOfResponse} QuerySupplyOfResponse
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    QuerySupplyOfResponse.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.bank.v1.QuerySupplyOfResponse();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.amount = r.string();
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return QuerySupplyOfResponse;
-                })();
-
-                v1.MsgSend = (function() {
-
-                    /**
-                     * Properties of a MsgSend.
-                     * @memberof cosmos_sdk.x.bank.v1
-                     * @interface IMsgSend
-                     * @property {Uint8Array|null} [fromAddress] MsgSend fromAddress
-                     * @property {Uint8Array|null} [toAddress] MsgSend toAddress
-                     * @property {Array.<cosmos_sdk.v1.ICoin>|null} [amount] MsgSend amount
-                     */
-
-                    /**
-                     * Constructs a new MsgSend.
-                     * @memberof cosmos_sdk.x.bank.v1
-                     * @classdesc Represents a MsgSend.
-                     * @implements IMsgSend
-                     * @constructor
-                     * @param {cosmos_sdk.x.bank.v1.IMsgSend=} [p] Properties to set
-                     */
-                    function MsgSend(p) {
-                        this.amount = [];
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * MsgSend fromAddress.
-                     * @member {Uint8Array} fromAddress
-                     * @memberof cosmos_sdk.x.bank.v1.MsgSend
-                     * @instance
-                     */
-                    MsgSend.prototype.fromAddress = $util.newBuffer([]);
-
-                    /**
-                     * MsgSend toAddress.
-                     * @member {Uint8Array} toAddress
-                     * @memberof cosmos_sdk.x.bank.v1.MsgSend
-                     * @instance
-                     */
-                    MsgSend.prototype.toAddress = $util.newBuffer([]);
-
-                    /**
-                     * MsgSend amount.
-                     * @member {Array.<cosmos_sdk.v1.ICoin>} amount
-                     * @memberof cosmos_sdk.x.bank.v1.MsgSend
-                     * @instance
-                     */
-                    MsgSend.prototype.amount = $util.emptyArray;
-
-                    /**
-                     * Creates a new MsgSend instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.bank.v1.MsgSend
-                     * @static
-                     * @param {cosmos_sdk.x.bank.v1.IMsgSend=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.bank.v1.MsgSend} MsgSend instance
-                     */
-                    MsgSend.create = function create(properties) {
-                        return new MsgSend(properties);
-                    };
-
-                    /**
-                     * Encodes the specified MsgSend message. Does not implicitly {@link cosmos_sdk.x.bank.v1.MsgSend.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.bank.v1.MsgSend
-                     * @static
-                     * @param {cosmos_sdk.x.bank.v1.IMsgSend} m MsgSend message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    MsgSend.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.fromAddress != null && Object.hasOwnProperty.call(m, "fromAddress"))
-                            w.uint32(10).bytes(m.fromAddress);
-                        if (m.toAddress != null && Object.hasOwnProperty.call(m, "toAddress"))
-                            w.uint32(18).bytes(m.toAddress);
-                        if (m.amount != null && m.amount.length) {
-                            for (var i = 0; i < m.amount.length; ++i)
-                                $root.cosmos_sdk.v1.Coin.encode(m.amount[i], w.uint32(26).fork()).ldelim();
-                        }
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a MsgSend message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.bank.v1.MsgSend
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.bank.v1.MsgSend} MsgSend
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    MsgSend.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.bank.v1.MsgSend();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.fromAddress = r.bytes();
-                                break;
-                            case 2:
-                                m.toAddress = r.bytes();
-                                break;
-                            case 3:
-                                if (!(m.amount && m.amount.length))
-                                    m.amount = [];
-                                m.amount.push($root.cosmos_sdk.v1.Coin.decode(r, r.uint32()));
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return MsgSend;
-                })();
-
-                v1.Input = (function() {
-
-                    /**
-                     * Properties of an Input.
-                     * @memberof cosmos_sdk.x.bank.v1
-                     * @interface IInput
-                     * @property {Uint8Array|null} [address] Input address
-                     * @property {Array.<cosmos_sdk.v1.ICoin>|null} [coins] Input coins
-                     */
-
-                    /**
-                     * Constructs a new Input.
-                     * @memberof cosmos_sdk.x.bank.v1
-                     * @classdesc Represents an Input.
-                     * @implements IInput
-                     * @constructor
-                     * @param {cosmos_sdk.x.bank.v1.IInput=} [p] Properties to set
-                     */
-                    function Input(p) {
-                        this.coins = [];
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * Input address.
-                     * @member {Uint8Array} address
-                     * @memberof cosmos_sdk.x.bank.v1.Input
-                     * @instance
-                     */
-                    Input.prototype.address = $util.newBuffer([]);
-
-                    /**
-                     * Input coins.
-                     * @member {Array.<cosmos_sdk.v1.ICoin>} coins
-                     * @memberof cosmos_sdk.x.bank.v1.Input
-                     * @instance
-                     */
-                    Input.prototype.coins = $util.emptyArray;
-
-                    /**
-                     * Creates a new Input instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.bank.v1.Input
-                     * @static
-                     * @param {cosmos_sdk.x.bank.v1.IInput=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.bank.v1.Input} Input instance
-                     */
-                    Input.create = function create(properties) {
-                        return new Input(properties);
-                    };
-
-                    /**
-                     * Encodes the specified Input message. Does not implicitly {@link cosmos_sdk.x.bank.v1.Input.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.bank.v1.Input
-                     * @static
-                     * @param {cosmos_sdk.x.bank.v1.IInput} m Input message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    Input.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.address != null && Object.hasOwnProperty.call(m, "address"))
-                            w.uint32(10).bytes(m.address);
-                        if (m.coins != null && m.coins.length) {
-                            for (var i = 0; i < m.coins.length; ++i)
-                                $root.cosmos_sdk.v1.Coin.encode(m.coins[i], w.uint32(18).fork()).ldelim();
-                        }
-                        return w;
-                    };
-
-                    /**
-                     * Decodes an Input message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.bank.v1.Input
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.bank.v1.Input} Input
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    Input.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.bank.v1.Input();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.address = r.bytes();
-                                break;
-                            case 2:
-                                if (!(m.coins && m.coins.length))
-                                    m.coins = [];
-                                m.coins.push($root.cosmos_sdk.v1.Coin.decode(r, r.uint32()));
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return Input;
-                })();
-
-                v1.Output = (function() {
-
-                    /**
-                     * Properties of an Output.
-                     * @memberof cosmos_sdk.x.bank.v1
-                     * @interface IOutput
-                     * @property {Uint8Array|null} [address] Output address
-                     * @property {Array.<cosmos_sdk.v1.ICoin>|null} [coins] Output coins
-                     */
-
-                    /**
-                     * Constructs a new Output.
-                     * @memberof cosmos_sdk.x.bank.v1
-                     * @classdesc Represents an Output.
-                     * @implements IOutput
-                     * @constructor
-                     * @param {cosmos_sdk.x.bank.v1.IOutput=} [p] Properties to set
-                     */
-                    function Output(p) {
-                        this.coins = [];
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * Output address.
-                     * @member {Uint8Array} address
-                     * @memberof cosmos_sdk.x.bank.v1.Output
-                     * @instance
-                     */
-                    Output.prototype.address = $util.newBuffer([]);
-
-                    /**
-                     * Output coins.
-                     * @member {Array.<cosmos_sdk.v1.ICoin>} coins
-                     * @memberof cosmos_sdk.x.bank.v1.Output
-                     * @instance
-                     */
-                    Output.prototype.coins = $util.emptyArray;
-
-                    /**
-                     * Creates a new Output instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.bank.v1.Output
-                     * @static
-                     * @param {cosmos_sdk.x.bank.v1.IOutput=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.bank.v1.Output} Output instance
-                     */
-                    Output.create = function create(properties) {
-                        return new Output(properties);
-                    };
-
-                    /**
-                     * Encodes the specified Output message. Does not implicitly {@link cosmos_sdk.x.bank.v1.Output.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.bank.v1.Output
-                     * @static
-                     * @param {cosmos_sdk.x.bank.v1.IOutput} m Output message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    Output.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.address != null && Object.hasOwnProperty.call(m, "address"))
-                            w.uint32(10).bytes(m.address);
-                        if (m.coins != null && m.coins.length) {
-                            for (var i = 0; i < m.coins.length; ++i)
-                                $root.cosmos_sdk.v1.Coin.encode(m.coins[i], w.uint32(18).fork()).ldelim();
-                        }
-                        return w;
-                    };
-
-                    /**
-                     * Decodes an Output message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.bank.v1.Output
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.bank.v1.Output} Output
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    Output.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.bank.v1.Output();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.address = r.bytes();
-                                break;
-                            case 2:
-                                if (!(m.coins && m.coins.length))
-                                    m.coins = [];
-                                m.coins.push($root.cosmos_sdk.v1.Coin.decode(r, r.uint32()));
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return Output;
-                })();
-
-                v1.MsgMultiSend = (function() {
-
-                    /**
-                     * Properties of a MsgMultiSend.
-                     * @memberof cosmos_sdk.x.bank.v1
-                     * @interface IMsgMultiSend
-                     * @property {Array.<cosmos_sdk.x.bank.v1.IInput>|null} [inputs] MsgMultiSend inputs
-                     * @property {Array.<cosmos_sdk.x.bank.v1.IOutput>|null} [outputs] MsgMultiSend outputs
-                     */
-
-                    /**
-                     * Constructs a new MsgMultiSend.
-                     * @memberof cosmos_sdk.x.bank.v1
-                     * @classdesc Represents a MsgMultiSend.
-                     * @implements IMsgMultiSend
-                     * @constructor
-                     * @param {cosmos_sdk.x.bank.v1.IMsgMultiSend=} [p] Properties to set
-                     */
-                    function MsgMultiSend(p) {
-                        this.inputs = [];
-                        this.outputs = [];
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * MsgMultiSend inputs.
-                     * @member {Array.<cosmos_sdk.x.bank.v1.IInput>} inputs
-                     * @memberof cosmos_sdk.x.bank.v1.MsgMultiSend
-                     * @instance
-                     */
-                    MsgMultiSend.prototype.inputs = $util.emptyArray;
-
-                    /**
-                     * MsgMultiSend outputs.
-                     * @member {Array.<cosmos_sdk.x.bank.v1.IOutput>} outputs
-                     * @memberof cosmos_sdk.x.bank.v1.MsgMultiSend
-                     * @instance
-                     */
-                    MsgMultiSend.prototype.outputs = $util.emptyArray;
-
-                    /**
-                     * Creates a new MsgMultiSend instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.bank.v1.MsgMultiSend
-                     * @static
-                     * @param {cosmos_sdk.x.bank.v1.IMsgMultiSend=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.bank.v1.MsgMultiSend} MsgMultiSend instance
-                     */
-                    MsgMultiSend.create = function create(properties) {
-                        return new MsgMultiSend(properties);
-                    };
-
-                    /**
-                     * Encodes the specified MsgMultiSend message. Does not implicitly {@link cosmos_sdk.x.bank.v1.MsgMultiSend.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.bank.v1.MsgMultiSend
-                     * @static
-                     * @param {cosmos_sdk.x.bank.v1.IMsgMultiSend} m MsgMultiSend message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    MsgMultiSend.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.inputs != null && m.inputs.length) {
-                            for (var i = 0; i < m.inputs.length; ++i)
-                                $root.cosmos_sdk.x.bank.v1.Input.encode(m.inputs[i], w.uint32(10).fork()).ldelim();
-                        }
-                        if (m.outputs != null && m.outputs.length) {
-                            for (var i = 0; i < m.outputs.length; ++i)
-                                $root.cosmos_sdk.x.bank.v1.Output.encode(m.outputs[i], w.uint32(18).fork()).ldelim();
-                        }
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a MsgMultiSend message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.bank.v1.MsgMultiSend
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.bank.v1.MsgMultiSend} MsgMultiSend
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    MsgMultiSend.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.bank.v1.MsgMultiSend();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                if (!(m.inputs && m.inputs.length))
-                                    m.inputs = [];
-                                m.inputs.push($root.cosmos_sdk.x.bank.v1.Input.decode(r, r.uint32()));
-                                break;
-                            case 2:
-                                if (!(m.outputs && m.outputs.length))
-                                    m.outputs = [];
-                                m.outputs.push($root.cosmos_sdk.x.bank.v1.Output.decode(r, r.uint32()));
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return MsgMultiSend;
-                })();
-
-                v1.Supply = (function() {
-
-                    /**
-                     * Properties of a Supply.
-                     * @memberof cosmos_sdk.x.bank.v1
-                     * @interface ISupply
-                     * @property {Array.<cosmos_sdk.v1.ICoin>|null} [total] Supply total
-                     */
-
-                    /**
-                     * Constructs a new Supply.
-                     * @memberof cosmos_sdk.x.bank.v1
-                     * @classdesc Represents a Supply.
-                     * @implements ISupply
-                     * @constructor
-                     * @param {cosmos_sdk.x.bank.v1.ISupply=} [p] Properties to set
-                     */
-                    function Supply(p) {
-                        this.total = [];
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * Supply total.
-                     * @member {Array.<cosmos_sdk.v1.ICoin>} total
-                     * @memberof cosmos_sdk.x.bank.v1.Supply
-                     * @instance
-                     */
-                    Supply.prototype.total = $util.emptyArray;
-
-                    /**
-                     * Creates a new Supply instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.bank.v1.Supply
-                     * @static
-                     * @param {cosmos_sdk.x.bank.v1.ISupply=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.bank.v1.Supply} Supply instance
-                     */
-                    Supply.create = function create(properties) {
-                        return new Supply(properties);
-                    };
-
-                    /**
-                     * Encodes the specified Supply message. Does not implicitly {@link cosmos_sdk.x.bank.v1.Supply.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.bank.v1.Supply
-                     * @static
-                     * @param {cosmos_sdk.x.bank.v1.ISupply} m Supply message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    Supply.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.total != null && m.total.length) {
-                            for (var i = 0; i < m.total.length; ++i)
-                                $root.cosmos_sdk.v1.Coin.encode(m.total[i], w.uint32(10).fork()).ldelim();
-                        }
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a Supply message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.bank.v1.Supply
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.bank.v1.Supply} Supply
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    Supply.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.bank.v1.Supply();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                if (!(m.total && m.total.length))
-                                    m.total = [];
-                                m.total.push($root.cosmos_sdk.v1.Coin.decode(r, r.uint32()));
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return Supply;
-                })();
-
-                return v1;
-            })();
-
-            return bank;
-        })();
-
-        x.capability = (function() {
-
-            /**
-             * Namespace capability.
-             * @memberof cosmos_sdk.x
-             * @namespace
-             */
-            var capability = {};
-
-            capability.v1 = (function() {
-
-                /**
-                 * Namespace v1.
-                 * @memberof cosmos_sdk.x.capability
-                 * @namespace
-                 */
-                var v1 = {};
-
-                v1.Capability = (function() {
-
-                    /**
-                     * Properties of a Capability.
-                     * @memberof cosmos_sdk.x.capability.v1
-                     * @interface ICapability
-                     * @property {number|Long|null} [index] Capability index
-                     */
-
-                    /**
-                     * Constructs a new Capability.
-                     * @memberof cosmos_sdk.x.capability.v1
-                     * @classdesc Represents a Capability.
-                     * @implements ICapability
-                     * @constructor
-                     * @param {cosmos_sdk.x.capability.v1.ICapability=} [p] Properties to set
-                     */
-                    function Capability(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * Capability index.
-                     * @member {number|Long} index
-                     * @memberof cosmos_sdk.x.capability.v1.Capability
-                     * @instance
-                     */
-                    Capability.prototype.index = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-                    /**
-                     * Creates a new Capability instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.capability.v1.Capability
-                     * @static
-                     * @param {cosmos_sdk.x.capability.v1.ICapability=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.capability.v1.Capability} Capability instance
-                     */
-                    Capability.create = function create(properties) {
-                        return new Capability(properties);
-                    };
-
-                    /**
-                     * Encodes the specified Capability message. Does not implicitly {@link cosmos_sdk.x.capability.v1.Capability.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.capability.v1.Capability
-                     * @static
-                     * @param {cosmos_sdk.x.capability.v1.ICapability} m Capability message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    Capability.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.index != null && Object.hasOwnProperty.call(m, "index"))
-                            w.uint32(8).uint64(m.index);
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a Capability message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.capability.v1.Capability
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.capability.v1.Capability} Capability
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    Capability.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.capability.v1.Capability();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.index = r.uint64();
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return Capability;
-                })();
-
-                v1.Owner = (function() {
-
-                    /**
-                     * Properties of an Owner.
-                     * @memberof cosmos_sdk.x.capability.v1
-                     * @interface IOwner
-                     * @property {string|null} [module] Owner module
-                     * @property {string|null} [name] Owner name
-                     */
-
-                    /**
-                     * Constructs a new Owner.
-                     * @memberof cosmos_sdk.x.capability.v1
-                     * @classdesc Represents an Owner.
-                     * @implements IOwner
-                     * @constructor
-                     * @param {cosmos_sdk.x.capability.v1.IOwner=} [p] Properties to set
-                     */
-                    function Owner(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * Owner module.
-                     * @member {string} module
-                     * @memberof cosmos_sdk.x.capability.v1.Owner
-                     * @instance
-                     */
-                    Owner.prototype.module = "";
-
-                    /**
-                     * Owner name.
-                     * @member {string} name
-                     * @memberof cosmos_sdk.x.capability.v1.Owner
-                     * @instance
-                     */
-                    Owner.prototype.name = "";
-
-                    /**
-                     * Creates a new Owner instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.capability.v1.Owner
-                     * @static
-                     * @param {cosmos_sdk.x.capability.v1.IOwner=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.capability.v1.Owner} Owner instance
-                     */
-                    Owner.create = function create(properties) {
-                        return new Owner(properties);
-                    };
-
-                    /**
-                     * Encodes the specified Owner message. Does not implicitly {@link cosmos_sdk.x.capability.v1.Owner.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.capability.v1.Owner
-                     * @static
-                     * @param {cosmos_sdk.x.capability.v1.IOwner} m Owner message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    Owner.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.module != null && Object.hasOwnProperty.call(m, "module"))
-                            w.uint32(10).string(m.module);
-                        if (m.name != null && Object.hasOwnProperty.call(m, "name"))
-                            w.uint32(18).string(m.name);
-                        return w;
-                    };
-
-                    /**
-                     * Decodes an Owner message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.capability.v1.Owner
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.capability.v1.Owner} Owner
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    Owner.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.capability.v1.Owner();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.module = r.string();
-                                break;
-                            case 2:
-                                m.name = r.string();
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return Owner;
-                })();
-
-                v1.CapabilityOwners = (function() {
-
-                    /**
-                     * Properties of a CapabilityOwners.
-                     * @memberof cosmos_sdk.x.capability.v1
-                     * @interface ICapabilityOwners
-                     * @property {Array.<cosmos_sdk.x.capability.v1.IOwner>|null} [owners] CapabilityOwners owners
-                     */
-
-                    /**
-                     * Constructs a new CapabilityOwners.
-                     * @memberof cosmos_sdk.x.capability.v1
-                     * @classdesc Represents a CapabilityOwners.
-                     * @implements ICapabilityOwners
-                     * @constructor
-                     * @param {cosmos_sdk.x.capability.v1.ICapabilityOwners=} [p] Properties to set
-                     */
-                    function CapabilityOwners(p) {
-                        this.owners = [];
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * CapabilityOwners owners.
-                     * @member {Array.<cosmos_sdk.x.capability.v1.IOwner>} owners
-                     * @memberof cosmos_sdk.x.capability.v1.CapabilityOwners
-                     * @instance
-                     */
-                    CapabilityOwners.prototype.owners = $util.emptyArray;
-
-                    /**
-                     * Creates a new CapabilityOwners instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.capability.v1.CapabilityOwners
-                     * @static
-                     * @param {cosmos_sdk.x.capability.v1.ICapabilityOwners=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.capability.v1.CapabilityOwners} CapabilityOwners instance
-                     */
-                    CapabilityOwners.create = function create(properties) {
-                        return new CapabilityOwners(properties);
-                    };
-
-                    /**
-                     * Encodes the specified CapabilityOwners message. Does not implicitly {@link cosmos_sdk.x.capability.v1.CapabilityOwners.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.capability.v1.CapabilityOwners
-                     * @static
-                     * @param {cosmos_sdk.x.capability.v1.ICapabilityOwners} m CapabilityOwners message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    CapabilityOwners.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.owners != null && m.owners.length) {
-                            for (var i = 0; i < m.owners.length; ++i)
-                                $root.cosmos_sdk.x.capability.v1.Owner.encode(m.owners[i], w.uint32(10).fork()).ldelim();
-                        }
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a CapabilityOwners message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.capability.v1.CapabilityOwners
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.capability.v1.CapabilityOwners} CapabilityOwners
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    CapabilityOwners.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.capability.v1.CapabilityOwners();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                if (!(m.owners && m.owners.length))
-                                    m.owners = [];
-                                m.owners.push($root.cosmos_sdk.x.capability.v1.Owner.decode(r, r.uint32()));
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return CapabilityOwners;
-                })();
-
-                return v1;
-            })();
-
-            return capability;
-        })();
-
-        x.crisis = (function() {
-
-            /**
-             * Namespace crisis.
-             * @memberof cosmos_sdk.x
-             * @namespace
-             */
-            var crisis = {};
-
-            crisis.v1 = (function() {
-
-                /**
-                 * Namespace v1.
-                 * @memberof cosmos_sdk.x.crisis
-                 * @namespace
-                 */
-                var v1 = {};
-
-                v1.MsgVerifyInvariant = (function() {
-
-                    /**
-                     * Properties of a MsgVerifyInvariant.
-                     * @memberof cosmos_sdk.x.crisis.v1
-                     * @interface IMsgVerifyInvariant
-                     * @property {Uint8Array|null} [sender] MsgVerifyInvariant sender
-                     * @property {string|null} [invariantModuleName] MsgVerifyInvariant invariantModuleName
-                     * @property {string|null} [invariantRoute] MsgVerifyInvariant invariantRoute
-                     */
-
-                    /**
-                     * Constructs a new MsgVerifyInvariant.
-                     * @memberof cosmos_sdk.x.crisis.v1
-                     * @classdesc Represents a MsgVerifyInvariant.
-                     * @implements IMsgVerifyInvariant
-                     * @constructor
-                     * @param {cosmos_sdk.x.crisis.v1.IMsgVerifyInvariant=} [p] Properties to set
-                     */
-                    function MsgVerifyInvariant(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * MsgVerifyInvariant sender.
-                     * @member {Uint8Array} sender
-                     * @memberof cosmos_sdk.x.crisis.v1.MsgVerifyInvariant
-                     * @instance
-                     */
-                    MsgVerifyInvariant.prototype.sender = $util.newBuffer([]);
-
-                    /**
-                     * MsgVerifyInvariant invariantModuleName.
-                     * @member {string} invariantModuleName
-                     * @memberof cosmos_sdk.x.crisis.v1.MsgVerifyInvariant
-                     * @instance
-                     */
-                    MsgVerifyInvariant.prototype.invariantModuleName = "";
-
-                    /**
-                     * MsgVerifyInvariant invariantRoute.
-                     * @member {string} invariantRoute
-                     * @memberof cosmos_sdk.x.crisis.v1.MsgVerifyInvariant
-                     * @instance
-                     */
-                    MsgVerifyInvariant.prototype.invariantRoute = "";
-
-                    /**
-                     * Creates a new MsgVerifyInvariant instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.crisis.v1.MsgVerifyInvariant
-                     * @static
-                     * @param {cosmos_sdk.x.crisis.v1.IMsgVerifyInvariant=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.crisis.v1.MsgVerifyInvariant} MsgVerifyInvariant instance
-                     */
-                    MsgVerifyInvariant.create = function create(properties) {
-                        return new MsgVerifyInvariant(properties);
-                    };
-
-                    /**
-                     * Encodes the specified MsgVerifyInvariant message. Does not implicitly {@link cosmos_sdk.x.crisis.v1.MsgVerifyInvariant.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.crisis.v1.MsgVerifyInvariant
-                     * @static
-                     * @param {cosmos_sdk.x.crisis.v1.IMsgVerifyInvariant} m MsgVerifyInvariant message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    MsgVerifyInvariant.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.sender != null && Object.hasOwnProperty.call(m, "sender"))
-                            w.uint32(10).bytes(m.sender);
-                        if (m.invariantModuleName != null && Object.hasOwnProperty.call(m, "invariantModuleName"))
-                            w.uint32(18).string(m.invariantModuleName);
-                        if (m.invariantRoute != null && Object.hasOwnProperty.call(m, "invariantRoute"))
-                            w.uint32(26).string(m.invariantRoute);
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a MsgVerifyInvariant message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.crisis.v1.MsgVerifyInvariant
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.crisis.v1.MsgVerifyInvariant} MsgVerifyInvariant
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    MsgVerifyInvariant.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.crisis.v1.MsgVerifyInvariant();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.sender = r.bytes();
-                                break;
-                            case 2:
-                                m.invariantModuleName = r.string();
-                                break;
-                            case 3:
-                                m.invariantRoute = r.string();
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return MsgVerifyInvariant;
-                })();
-
-                return v1;
-            })();
-
-            return crisis;
-        })();
-
-        x.distribution = (function() {
-
-            /**
-             * Namespace distribution.
-             * @memberof cosmos_sdk.x
-             * @namespace
-             */
-            var distribution = {};
-
-            distribution.v1 = (function() {
-
-                /**
-                 * Namespace v1.
-                 * @memberof cosmos_sdk.x.distribution
-                 * @namespace
-                 */
-                var v1 = {};
-
-                v1.MsgSetWithdrawAddress = (function() {
-
-                    /**
-                     * Properties of a MsgSetWithdrawAddress.
-                     * @memberof cosmos_sdk.x.distribution.v1
-                     * @interface IMsgSetWithdrawAddress
-                     * @property {Uint8Array|null} [delegatorAddress] MsgSetWithdrawAddress delegatorAddress
-                     * @property {Uint8Array|null} [withdrawAddress] MsgSetWithdrawAddress withdrawAddress
-                     */
-
-                    /**
-                     * Constructs a new MsgSetWithdrawAddress.
-                     * @memberof cosmos_sdk.x.distribution.v1
-                     * @classdesc Represents a MsgSetWithdrawAddress.
-                     * @implements IMsgSetWithdrawAddress
-                     * @constructor
-                     * @param {cosmos_sdk.x.distribution.v1.IMsgSetWithdrawAddress=} [p] Properties to set
-                     */
-                    function MsgSetWithdrawAddress(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * MsgSetWithdrawAddress delegatorAddress.
-                     * @member {Uint8Array} delegatorAddress
-                     * @memberof cosmos_sdk.x.distribution.v1.MsgSetWithdrawAddress
-                     * @instance
-                     */
-                    MsgSetWithdrawAddress.prototype.delegatorAddress = $util.newBuffer([]);
-
-                    /**
-                     * MsgSetWithdrawAddress withdrawAddress.
-                     * @member {Uint8Array} withdrawAddress
-                     * @memberof cosmos_sdk.x.distribution.v1.MsgSetWithdrawAddress
-                     * @instance
-                     */
-                    MsgSetWithdrawAddress.prototype.withdrawAddress = $util.newBuffer([]);
-
-                    /**
-                     * Creates a new MsgSetWithdrawAddress instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.distribution.v1.MsgSetWithdrawAddress
-                     * @static
-                     * @param {cosmos_sdk.x.distribution.v1.IMsgSetWithdrawAddress=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.distribution.v1.MsgSetWithdrawAddress} MsgSetWithdrawAddress instance
-                     */
-                    MsgSetWithdrawAddress.create = function create(properties) {
-                        return new MsgSetWithdrawAddress(properties);
-                    };
-
-                    /**
-                     * Encodes the specified MsgSetWithdrawAddress message. Does not implicitly {@link cosmos_sdk.x.distribution.v1.MsgSetWithdrawAddress.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.distribution.v1.MsgSetWithdrawAddress
-                     * @static
-                     * @param {cosmos_sdk.x.distribution.v1.IMsgSetWithdrawAddress} m MsgSetWithdrawAddress message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    MsgSetWithdrawAddress.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.delegatorAddress != null && Object.hasOwnProperty.call(m, "delegatorAddress"))
-                            w.uint32(10).bytes(m.delegatorAddress);
-                        if (m.withdrawAddress != null && Object.hasOwnProperty.call(m, "withdrawAddress"))
-                            w.uint32(18).bytes(m.withdrawAddress);
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a MsgSetWithdrawAddress message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.distribution.v1.MsgSetWithdrawAddress
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.distribution.v1.MsgSetWithdrawAddress} MsgSetWithdrawAddress
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    MsgSetWithdrawAddress.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.distribution.v1.MsgSetWithdrawAddress();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.delegatorAddress = r.bytes();
-                                break;
-                            case 2:
-                                m.withdrawAddress = r.bytes();
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return MsgSetWithdrawAddress;
-                })();
-
-                v1.MsgWithdrawDelegatorReward = (function() {
-
-                    /**
-                     * Properties of a MsgWithdrawDelegatorReward.
-                     * @memberof cosmos_sdk.x.distribution.v1
-                     * @interface IMsgWithdrawDelegatorReward
-                     * @property {Uint8Array|null} [delegatorAddress] MsgWithdrawDelegatorReward delegatorAddress
-                     * @property {Uint8Array|null} [validatorAddress] MsgWithdrawDelegatorReward validatorAddress
-                     */
-
-                    /**
-                     * Constructs a new MsgWithdrawDelegatorReward.
-                     * @memberof cosmos_sdk.x.distribution.v1
-                     * @classdesc Represents a MsgWithdrawDelegatorReward.
-                     * @implements IMsgWithdrawDelegatorReward
-                     * @constructor
-                     * @param {cosmos_sdk.x.distribution.v1.IMsgWithdrawDelegatorReward=} [p] Properties to set
-                     */
-                    function MsgWithdrawDelegatorReward(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * MsgWithdrawDelegatorReward delegatorAddress.
-                     * @member {Uint8Array} delegatorAddress
-                     * @memberof cosmos_sdk.x.distribution.v1.MsgWithdrawDelegatorReward
-                     * @instance
-                     */
-                    MsgWithdrawDelegatorReward.prototype.delegatorAddress = $util.newBuffer([]);
-
-                    /**
-                     * MsgWithdrawDelegatorReward validatorAddress.
-                     * @member {Uint8Array} validatorAddress
-                     * @memberof cosmos_sdk.x.distribution.v1.MsgWithdrawDelegatorReward
-                     * @instance
-                     */
-                    MsgWithdrawDelegatorReward.prototype.validatorAddress = $util.newBuffer([]);
-
-                    /**
-                     * Creates a new MsgWithdrawDelegatorReward instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.distribution.v1.MsgWithdrawDelegatorReward
-                     * @static
-                     * @param {cosmos_sdk.x.distribution.v1.IMsgWithdrawDelegatorReward=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.distribution.v1.MsgWithdrawDelegatorReward} MsgWithdrawDelegatorReward instance
-                     */
-                    MsgWithdrawDelegatorReward.create = function create(properties) {
-                        return new MsgWithdrawDelegatorReward(properties);
-                    };
-
-                    /**
-                     * Encodes the specified MsgWithdrawDelegatorReward message. Does not implicitly {@link cosmos_sdk.x.distribution.v1.MsgWithdrawDelegatorReward.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.distribution.v1.MsgWithdrawDelegatorReward
-                     * @static
-                     * @param {cosmos_sdk.x.distribution.v1.IMsgWithdrawDelegatorReward} m MsgWithdrawDelegatorReward message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    MsgWithdrawDelegatorReward.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.delegatorAddress != null && Object.hasOwnProperty.call(m, "delegatorAddress"))
-                            w.uint32(10).bytes(m.delegatorAddress);
-                        if (m.validatorAddress != null && Object.hasOwnProperty.call(m, "validatorAddress"))
-                            w.uint32(18).bytes(m.validatorAddress);
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a MsgWithdrawDelegatorReward message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.distribution.v1.MsgWithdrawDelegatorReward
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.distribution.v1.MsgWithdrawDelegatorReward} MsgWithdrawDelegatorReward
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    MsgWithdrawDelegatorReward.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.distribution.v1.MsgWithdrawDelegatorReward();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.delegatorAddress = r.bytes();
-                                break;
-                            case 2:
-                                m.validatorAddress = r.bytes();
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return MsgWithdrawDelegatorReward;
-                })();
-
-                v1.MsgWithdrawValidatorCommission = (function() {
-
-                    /**
-                     * Properties of a MsgWithdrawValidatorCommission.
-                     * @memberof cosmos_sdk.x.distribution.v1
-                     * @interface IMsgWithdrawValidatorCommission
-                     * @property {Uint8Array|null} [validatorAddress] MsgWithdrawValidatorCommission validatorAddress
-                     */
-
-                    /**
-                     * Constructs a new MsgWithdrawValidatorCommission.
-                     * @memberof cosmos_sdk.x.distribution.v1
-                     * @classdesc Represents a MsgWithdrawValidatorCommission.
-                     * @implements IMsgWithdrawValidatorCommission
-                     * @constructor
-                     * @param {cosmos_sdk.x.distribution.v1.IMsgWithdrawValidatorCommission=} [p] Properties to set
-                     */
-                    function MsgWithdrawValidatorCommission(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * MsgWithdrawValidatorCommission validatorAddress.
-                     * @member {Uint8Array} validatorAddress
-                     * @memberof cosmos_sdk.x.distribution.v1.MsgWithdrawValidatorCommission
-                     * @instance
-                     */
-                    MsgWithdrawValidatorCommission.prototype.validatorAddress = $util.newBuffer([]);
-
-                    /**
-                     * Creates a new MsgWithdrawValidatorCommission instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.distribution.v1.MsgWithdrawValidatorCommission
-                     * @static
-                     * @param {cosmos_sdk.x.distribution.v1.IMsgWithdrawValidatorCommission=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.distribution.v1.MsgWithdrawValidatorCommission} MsgWithdrawValidatorCommission instance
-                     */
-                    MsgWithdrawValidatorCommission.create = function create(properties) {
-                        return new MsgWithdrawValidatorCommission(properties);
-                    };
-
-                    /**
-                     * Encodes the specified MsgWithdrawValidatorCommission message. Does not implicitly {@link cosmos_sdk.x.distribution.v1.MsgWithdrawValidatorCommission.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.distribution.v1.MsgWithdrawValidatorCommission
-                     * @static
-                     * @param {cosmos_sdk.x.distribution.v1.IMsgWithdrawValidatorCommission} m MsgWithdrawValidatorCommission message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    MsgWithdrawValidatorCommission.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.validatorAddress != null && Object.hasOwnProperty.call(m, "validatorAddress"))
-                            w.uint32(10).bytes(m.validatorAddress);
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a MsgWithdrawValidatorCommission message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.distribution.v1.MsgWithdrawValidatorCommission
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.distribution.v1.MsgWithdrawValidatorCommission} MsgWithdrawValidatorCommission
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    MsgWithdrawValidatorCommission.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.distribution.v1.MsgWithdrawValidatorCommission();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.validatorAddress = r.bytes();
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return MsgWithdrawValidatorCommission;
-                })();
-
-                v1.MsgFundCommunityPool = (function() {
-
-                    /**
-                     * Properties of a MsgFundCommunityPool.
-                     * @memberof cosmos_sdk.x.distribution.v1
-                     * @interface IMsgFundCommunityPool
-                     * @property {Array.<cosmos_sdk.v1.ICoin>|null} [amount] MsgFundCommunityPool amount
-                     * @property {Uint8Array|null} [depositor] MsgFundCommunityPool depositor
-                     */
-
-                    /**
-                     * Constructs a new MsgFundCommunityPool.
-                     * @memberof cosmos_sdk.x.distribution.v1
-                     * @classdesc Represents a MsgFundCommunityPool.
-                     * @implements IMsgFundCommunityPool
-                     * @constructor
-                     * @param {cosmos_sdk.x.distribution.v1.IMsgFundCommunityPool=} [p] Properties to set
-                     */
-                    function MsgFundCommunityPool(p) {
-                        this.amount = [];
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * MsgFundCommunityPool amount.
-                     * @member {Array.<cosmos_sdk.v1.ICoin>} amount
-                     * @memberof cosmos_sdk.x.distribution.v1.MsgFundCommunityPool
-                     * @instance
-                     */
-                    MsgFundCommunityPool.prototype.amount = $util.emptyArray;
-
-                    /**
-                     * MsgFundCommunityPool depositor.
-                     * @member {Uint8Array} depositor
-                     * @memberof cosmos_sdk.x.distribution.v1.MsgFundCommunityPool
-                     * @instance
-                     */
-                    MsgFundCommunityPool.prototype.depositor = $util.newBuffer([]);
-
-                    /**
-                     * Creates a new MsgFundCommunityPool instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.distribution.v1.MsgFundCommunityPool
-                     * @static
-                     * @param {cosmos_sdk.x.distribution.v1.IMsgFundCommunityPool=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.distribution.v1.MsgFundCommunityPool} MsgFundCommunityPool instance
-                     */
-                    MsgFundCommunityPool.create = function create(properties) {
-                        return new MsgFundCommunityPool(properties);
-                    };
-
-                    /**
-                     * Encodes the specified MsgFundCommunityPool message. Does not implicitly {@link cosmos_sdk.x.distribution.v1.MsgFundCommunityPool.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.distribution.v1.MsgFundCommunityPool
-                     * @static
-                     * @param {cosmos_sdk.x.distribution.v1.IMsgFundCommunityPool} m MsgFundCommunityPool message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    MsgFundCommunityPool.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.amount != null && m.amount.length) {
-                            for (var i = 0; i < m.amount.length; ++i)
-                                $root.cosmos_sdk.v1.Coin.encode(m.amount[i], w.uint32(10).fork()).ldelim();
-                        }
-                        if (m.depositor != null && Object.hasOwnProperty.call(m, "depositor"))
-                            w.uint32(18).bytes(m.depositor);
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a MsgFundCommunityPool message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.distribution.v1.MsgFundCommunityPool
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.distribution.v1.MsgFundCommunityPool} MsgFundCommunityPool
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    MsgFundCommunityPool.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.distribution.v1.MsgFundCommunityPool();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                if (!(m.amount && m.amount.length))
-                                    m.amount = [];
-                                m.amount.push($root.cosmos_sdk.v1.Coin.decode(r, r.uint32()));
-                                break;
-                            case 2:
-                                m.depositor = r.bytes();
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return MsgFundCommunityPool;
-                })();
-
-                v1.Params = (function() {
-
-                    /**
-                     * Properties of a Params.
-                     * @memberof cosmos_sdk.x.distribution.v1
-                     * @interface IParams
-                     * @property {string|null} [communityTax] Params communityTax
-                     * @property {string|null} [baseProposerReward] Params baseProposerReward
-                     * @property {string|null} [bonusProposerReward] Params bonusProposerReward
-                     * @property {boolean|null} [withdrawAddrEnabled] Params withdrawAddrEnabled
-                     */
-
-                    /**
-                     * Constructs a new Params.
-                     * @memberof cosmos_sdk.x.distribution.v1
-                     * @classdesc Represents a Params.
-                     * @implements IParams
-                     * @constructor
-                     * @param {cosmos_sdk.x.distribution.v1.IParams=} [p] Properties to set
-                     */
-                    function Params(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * Params communityTax.
-                     * @member {string} communityTax
-                     * @memberof cosmos_sdk.x.distribution.v1.Params
-                     * @instance
-                     */
-                    Params.prototype.communityTax = "";
-
-                    /**
-                     * Params baseProposerReward.
-                     * @member {string} baseProposerReward
-                     * @memberof cosmos_sdk.x.distribution.v1.Params
-                     * @instance
-                     */
-                    Params.prototype.baseProposerReward = "";
-
-                    /**
-                     * Params bonusProposerReward.
-                     * @member {string} bonusProposerReward
-                     * @memberof cosmos_sdk.x.distribution.v1.Params
-                     * @instance
-                     */
-                    Params.prototype.bonusProposerReward = "";
-
-                    /**
-                     * Params withdrawAddrEnabled.
-                     * @member {boolean} withdrawAddrEnabled
-                     * @memberof cosmos_sdk.x.distribution.v1.Params
-                     * @instance
-                     */
-                    Params.prototype.withdrawAddrEnabled = false;
-
-                    /**
-                     * Creates a new Params instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.distribution.v1.Params
-                     * @static
-                     * @param {cosmos_sdk.x.distribution.v1.IParams=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.distribution.v1.Params} Params instance
-                     */
-                    Params.create = function create(properties) {
-                        return new Params(properties);
-                    };
-
-                    /**
-                     * Encodes the specified Params message. Does not implicitly {@link cosmos_sdk.x.distribution.v1.Params.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.distribution.v1.Params
-                     * @static
-                     * @param {cosmos_sdk.x.distribution.v1.IParams} m Params message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    Params.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.communityTax != null && Object.hasOwnProperty.call(m, "communityTax"))
-                            w.uint32(10).string(m.communityTax);
-                        if (m.baseProposerReward != null && Object.hasOwnProperty.call(m, "baseProposerReward"))
-                            w.uint32(18).string(m.baseProposerReward);
-                        if (m.bonusProposerReward != null && Object.hasOwnProperty.call(m, "bonusProposerReward"))
-                            w.uint32(26).string(m.bonusProposerReward);
-                        if (m.withdrawAddrEnabled != null && Object.hasOwnProperty.call(m, "withdrawAddrEnabled"))
-                            w.uint32(32).bool(m.withdrawAddrEnabled);
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a Params message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.distribution.v1.Params
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.distribution.v1.Params} Params
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    Params.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.distribution.v1.Params();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.communityTax = r.string();
-                                break;
-                            case 2:
-                                m.baseProposerReward = r.string();
-                                break;
-                            case 3:
-                                m.bonusProposerReward = r.string();
-                                break;
-                            case 4:
-                                m.withdrawAddrEnabled = r.bool();
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return Params;
-                })();
-
-                v1.ValidatorHistoricalRewards = (function() {
-
-                    /**
-                     * Properties of a ValidatorHistoricalRewards.
-                     * @memberof cosmos_sdk.x.distribution.v1
-                     * @interface IValidatorHistoricalRewards
-                     * @property {Array.<cosmos_sdk.v1.IDecCoin>|null} [cumulativeRewardRatio] ValidatorHistoricalRewards cumulativeRewardRatio
-                     * @property {number|null} [referenceCount] ValidatorHistoricalRewards referenceCount
-                     */
-
-                    /**
-                     * Constructs a new ValidatorHistoricalRewards.
-                     * @memberof cosmos_sdk.x.distribution.v1
-                     * @classdesc Represents a ValidatorHistoricalRewards.
-                     * @implements IValidatorHistoricalRewards
-                     * @constructor
-                     * @param {cosmos_sdk.x.distribution.v1.IValidatorHistoricalRewards=} [p] Properties to set
-                     */
-                    function ValidatorHistoricalRewards(p) {
-                        this.cumulativeRewardRatio = [];
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * ValidatorHistoricalRewards cumulativeRewardRatio.
-                     * @member {Array.<cosmos_sdk.v1.IDecCoin>} cumulativeRewardRatio
-                     * @memberof cosmos_sdk.x.distribution.v1.ValidatorHistoricalRewards
-                     * @instance
-                     */
-                    ValidatorHistoricalRewards.prototype.cumulativeRewardRatio = $util.emptyArray;
-
-                    /**
-                     * ValidatorHistoricalRewards referenceCount.
-                     * @member {number} referenceCount
-                     * @memberof cosmos_sdk.x.distribution.v1.ValidatorHistoricalRewards
-                     * @instance
-                     */
-                    ValidatorHistoricalRewards.prototype.referenceCount = 0;
-
-                    /**
-                     * Creates a new ValidatorHistoricalRewards instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.distribution.v1.ValidatorHistoricalRewards
-                     * @static
-                     * @param {cosmos_sdk.x.distribution.v1.IValidatorHistoricalRewards=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.distribution.v1.ValidatorHistoricalRewards} ValidatorHistoricalRewards instance
-                     */
-                    ValidatorHistoricalRewards.create = function create(properties) {
-                        return new ValidatorHistoricalRewards(properties);
-                    };
-
-                    /**
-                     * Encodes the specified ValidatorHistoricalRewards message. Does not implicitly {@link cosmos_sdk.x.distribution.v1.ValidatorHistoricalRewards.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.distribution.v1.ValidatorHistoricalRewards
-                     * @static
-                     * @param {cosmos_sdk.x.distribution.v1.IValidatorHistoricalRewards} m ValidatorHistoricalRewards message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    ValidatorHistoricalRewards.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.cumulativeRewardRatio != null && m.cumulativeRewardRatio.length) {
-                            for (var i = 0; i < m.cumulativeRewardRatio.length; ++i)
-                                $root.cosmos_sdk.v1.DecCoin.encode(m.cumulativeRewardRatio[i], w.uint32(10).fork()).ldelim();
-                        }
-                        if (m.referenceCount != null && Object.hasOwnProperty.call(m, "referenceCount"))
-                            w.uint32(16).uint32(m.referenceCount);
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a ValidatorHistoricalRewards message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.distribution.v1.ValidatorHistoricalRewards
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.distribution.v1.ValidatorHistoricalRewards} ValidatorHistoricalRewards
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    ValidatorHistoricalRewards.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.distribution.v1.ValidatorHistoricalRewards();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                if (!(m.cumulativeRewardRatio && m.cumulativeRewardRatio.length))
-                                    m.cumulativeRewardRatio = [];
-                                m.cumulativeRewardRatio.push($root.cosmos_sdk.v1.DecCoin.decode(r, r.uint32()));
-                                break;
-                            case 2:
-                                m.referenceCount = r.uint32();
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return ValidatorHistoricalRewards;
-                })();
-
-                v1.ValidatorCurrentRewards = (function() {
-
-                    /**
-                     * Properties of a ValidatorCurrentRewards.
-                     * @memberof cosmos_sdk.x.distribution.v1
-                     * @interface IValidatorCurrentRewards
-                     * @property {Array.<cosmos_sdk.v1.IDecCoin>|null} [rewards] ValidatorCurrentRewards rewards
-                     * @property {number|Long|null} [period] ValidatorCurrentRewards period
-                     */
-
-                    /**
-                     * Constructs a new ValidatorCurrentRewards.
-                     * @memberof cosmos_sdk.x.distribution.v1
-                     * @classdesc Represents a ValidatorCurrentRewards.
-                     * @implements IValidatorCurrentRewards
-                     * @constructor
-                     * @param {cosmos_sdk.x.distribution.v1.IValidatorCurrentRewards=} [p] Properties to set
-                     */
-                    function ValidatorCurrentRewards(p) {
-                        this.rewards = [];
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * ValidatorCurrentRewards rewards.
-                     * @member {Array.<cosmos_sdk.v1.IDecCoin>} rewards
-                     * @memberof cosmos_sdk.x.distribution.v1.ValidatorCurrentRewards
-                     * @instance
-                     */
-                    ValidatorCurrentRewards.prototype.rewards = $util.emptyArray;
-
-                    /**
-                     * ValidatorCurrentRewards period.
-                     * @member {number|Long} period
-                     * @memberof cosmos_sdk.x.distribution.v1.ValidatorCurrentRewards
-                     * @instance
-                     */
-                    ValidatorCurrentRewards.prototype.period = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-                    /**
-                     * Creates a new ValidatorCurrentRewards instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.distribution.v1.ValidatorCurrentRewards
-                     * @static
-                     * @param {cosmos_sdk.x.distribution.v1.IValidatorCurrentRewards=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.distribution.v1.ValidatorCurrentRewards} ValidatorCurrentRewards instance
-                     */
-                    ValidatorCurrentRewards.create = function create(properties) {
-                        return new ValidatorCurrentRewards(properties);
-                    };
-
-                    /**
-                     * Encodes the specified ValidatorCurrentRewards message. Does not implicitly {@link cosmos_sdk.x.distribution.v1.ValidatorCurrentRewards.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.distribution.v1.ValidatorCurrentRewards
-                     * @static
-                     * @param {cosmos_sdk.x.distribution.v1.IValidatorCurrentRewards} m ValidatorCurrentRewards message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    ValidatorCurrentRewards.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.rewards != null && m.rewards.length) {
-                            for (var i = 0; i < m.rewards.length; ++i)
-                                $root.cosmos_sdk.v1.DecCoin.encode(m.rewards[i], w.uint32(10).fork()).ldelim();
-                        }
-                        if (m.period != null && Object.hasOwnProperty.call(m, "period"))
-                            w.uint32(16).uint64(m.period);
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a ValidatorCurrentRewards message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.distribution.v1.ValidatorCurrentRewards
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.distribution.v1.ValidatorCurrentRewards} ValidatorCurrentRewards
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    ValidatorCurrentRewards.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.distribution.v1.ValidatorCurrentRewards();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                if (!(m.rewards && m.rewards.length))
-                                    m.rewards = [];
-                                m.rewards.push($root.cosmos_sdk.v1.DecCoin.decode(r, r.uint32()));
-                                break;
-                            case 2:
-                                m.period = r.uint64();
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return ValidatorCurrentRewards;
-                })();
-
-                v1.ValidatorAccumulatedCommission = (function() {
-
-                    /**
-                     * Properties of a ValidatorAccumulatedCommission.
-                     * @memberof cosmos_sdk.x.distribution.v1
-                     * @interface IValidatorAccumulatedCommission
-                     * @property {Array.<cosmos_sdk.v1.IDecCoin>|null} [commission] ValidatorAccumulatedCommission commission
-                     */
-
-                    /**
-                     * Constructs a new ValidatorAccumulatedCommission.
-                     * @memberof cosmos_sdk.x.distribution.v1
-                     * @classdesc Represents a ValidatorAccumulatedCommission.
-                     * @implements IValidatorAccumulatedCommission
-                     * @constructor
-                     * @param {cosmos_sdk.x.distribution.v1.IValidatorAccumulatedCommission=} [p] Properties to set
-                     */
-                    function ValidatorAccumulatedCommission(p) {
-                        this.commission = [];
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * ValidatorAccumulatedCommission commission.
-                     * @member {Array.<cosmos_sdk.v1.IDecCoin>} commission
-                     * @memberof cosmos_sdk.x.distribution.v1.ValidatorAccumulatedCommission
-                     * @instance
-                     */
-                    ValidatorAccumulatedCommission.prototype.commission = $util.emptyArray;
-
-                    /**
-                     * Creates a new ValidatorAccumulatedCommission instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.distribution.v1.ValidatorAccumulatedCommission
-                     * @static
-                     * @param {cosmos_sdk.x.distribution.v1.IValidatorAccumulatedCommission=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.distribution.v1.ValidatorAccumulatedCommission} ValidatorAccumulatedCommission instance
-                     */
-                    ValidatorAccumulatedCommission.create = function create(properties) {
-                        return new ValidatorAccumulatedCommission(properties);
-                    };
-
-                    /**
-                     * Encodes the specified ValidatorAccumulatedCommission message. Does not implicitly {@link cosmos_sdk.x.distribution.v1.ValidatorAccumulatedCommission.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.distribution.v1.ValidatorAccumulatedCommission
-                     * @static
-                     * @param {cosmos_sdk.x.distribution.v1.IValidatorAccumulatedCommission} m ValidatorAccumulatedCommission message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    ValidatorAccumulatedCommission.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.commission != null && m.commission.length) {
-                            for (var i = 0; i < m.commission.length; ++i)
-                                $root.cosmos_sdk.v1.DecCoin.encode(m.commission[i], w.uint32(10).fork()).ldelim();
-                        }
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a ValidatorAccumulatedCommission message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.distribution.v1.ValidatorAccumulatedCommission
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.distribution.v1.ValidatorAccumulatedCommission} ValidatorAccumulatedCommission
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    ValidatorAccumulatedCommission.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.distribution.v1.ValidatorAccumulatedCommission();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                if (!(m.commission && m.commission.length))
-                                    m.commission = [];
-                                m.commission.push($root.cosmos_sdk.v1.DecCoin.decode(r, r.uint32()));
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return ValidatorAccumulatedCommission;
-                })();
-
-                v1.ValidatorOutstandingRewards = (function() {
-
-                    /**
-                     * Properties of a ValidatorOutstandingRewards.
-                     * @memberof cosmos_sdk.x.distribution.v1
-                     * @interface IValidatorOutstandingRewards
-                     * @property {Array.<cosmos_sdk.v1.IDecCoin>|null} [rewards] ValidatorOutstandingRewards rewards
-                     */
-
-                    /**
-                     * Constructs a new ValidatorOutstandingRewards.
-                     * @memberof cosmos_sdk.x.distribution.v1
-                     * @classdesc Represents a ValidatorOutstandingRewards.
-                     * @implements IValidatorOutstandingRewards
-                     * @constructor
-                     * @param {cosmos_sdk.x.distribution.v1.IValidatorOutstandingRewards=} [p] Properties to set
-                     */
-                    function ValidatorOutstandingRewards(p) {
-                        this.rewards = [];
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * ValidatorOutstandingRewards rewards.
-                     * @member {Array.<cosmos_sdk.v1.IDecCoin>} rewards
-                     * @memberof cosmos_sdk.x.distribution.v1.ValidatorOutstandingRewards
-                     * @instance
-                     */
-                    ValidatorOutstandingRewards.prototype.rewards = $util.emptyArray;
-
-                    /**
-                     * Creates a new ValidatorOutstandingRewards instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.distribution.v1.ValidatorOutstandingRewards
-                     * @static
-                     * @param {cosmos_sdk.x.distribution.v1.IValidatorOutstandingRewards=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.distribution.v1.ValidatorOutstandingRewards} ValidatorOutstandingRewards instance
-                     */
-                    ValidatorOutstandingRewards.create = function create(properties) {
-                        return new ValidatorOutstandingRewards(properties);
-                    };
-
-                    /**
-                     * Encodes the specified ValidatorOutstandingRewards message. Does not implicitly {@link cosmos_sdk.x.distribution.v1.ValidatorOutstandingRewards.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.distribution.v1.ValidatorOutstandingRewards
-                     * @static
-                     * @param {cosmos_sdk.x.distribution.v1.IValidatorOutstandingRewards} m ValidatorOutstandingRewards message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    ValidatorOutstandingRewards.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.rewards != null && m.rewards.length) {
-                            for (var i = 0; i < m.rewards.length; ++i)
-                                $root.cosmos_sdk.v1.DecCoin.encode(m.rewards[i], w.uint32(10).fork()).ldelim();
-                        }
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a ValidatorOutstandingRewards message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.distribution.v1.ValidatorOutstandingRewards
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.distribution.v1.ValidatorOutstandingRewards} ValidatorOutstandingRewards
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    ValidatorOutstandingRewards.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.distribution.v1.ValidatorOutstandingRewards();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                if (!(m.rewards && m.rewards.length))
-                                    m.rewards = [];
-                                m.rewards.push($root.cosmos_sdk.v1.DecCoin.decode(r, r.uint32()));
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return ValidatorOutstandingRewards;
-                })();
-
-                v1.ValidatorSlashEvent = (function() {
-
-                    /**
-                     * Properties of a ValidatorSlashEvent.
-                     * @memberof cosmos_sdk.x.distribution.v1
-                     * @interface IValidatorSlashEvent
-                     * @property {number|Long|null} [validatorPeriod] ValidatorSlashEvent validatorPeriod
-                     * @property {string|null} [fraction] ValidatorSlashEvent fraction
-                     */
-
-                    /**
-                     * Constructs a new ValidatorSlashEvent.
-                     * @memberof cosmos_sdk.x.distribution.v1
-                     * @classdesc Represents a ValidatorSlashEvent.
-                     * @implements IValidatorSlashEvent
-                     * @constructor
-                     * @param {cosmos_sdk.x.distribution.v1.IValidatorSlashEvent=} [p] Properties to set
-                     */
-                    function ValidatorSlashEvent(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * ValidatorSlashEvent validatorPeriod.
-                     * @member {number|Long} validatorPeriod
-                     * @memberof cosmos_sdk.x.distribution.v1.ValidatorSlashEvent
-                     * @instance
-                     */
-                    ValidatorSlashEvent.prototype.validatorPeriod = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-                    /**
-                     * ValidatorSlashEvent fraction.
-                     * @member {string} fraction
-                     * @memberof cosmos_sdk.x.distribution.v1.ValidatorSlashEvent
-                     * @instance
-                     */
-                    ValidatorSlashEvent.prototype.fraction = "";
-
-                    /**
-                     * Creates a new ValidatorSlashEvent instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.distribution.v1.ValidatorSlashEvent
-                     * @static
-                     * @param {cosmos_sdk.x.distribution.v1.IValidatorSlashEvent=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.distribution.v1.ValidatorSlashEvent} ValidatorSlashEvent instance
-                     */
-                    ValidatorSlashEvent.create = function create(properties) {
-                        return new ValidatorSlashEvent(properties);
-                    };
-
-                    /**
-                     * Encodes the specified ValidatorSlashEvent message. Does not implicitly {@link cosmos_sdk.x.distribution.v1.ValidatorSlashEvent.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.distribution.v1.ValidatorSlashEvent
-                     * @static
-                     * @param {cosmos_sdk.x.distribution.v1.IValidatorSlashEvent} m ValidatorSlashEvent message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    ValidatorSlashEvent.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.validatorPeriod != null && Object.hasOwnProperty.call(m, "validatorPeriod"))
-                            w.uint32(8).uint64(m.validatorPeriod);
-                        if (m.fraction != null && Object.hasOwnProperty.call(m, "fraction"))
-                            w.uint32(18).string(m.fraction);
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a ValidatorSlashEvent message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.distribution.v1.ValidatorSlashEvent
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.distribution.v1.ValidatorSlashEvent} ValidatorSlashEvent
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    ValidatorSlashEvent.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.distribution.v1.ValidatorSlashEvent();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.validatorPeriod = r.uint64();
-                                break;
-                            case 2:
-                                m.fraction = r.string();
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return ValidatorSlashEvent;
-                })();
-
-                v1.ValidatorSlashEvents = (function() {
-
-                    /**
-                     * Properties of a ValidatorSlashEvents.
-                     * @memberof cosmos_sdk.x.distribution.v1
-                     * @interface IValidatorSlashEvents
-                     * @property {Array.<cosmos_sdk.x.distribution.v1.IValidatorSlashEvent>|null} [validatorSlashEvents] ValidatorSlashEvents validatorSlashEvents
-                     */
-
-                    /**
-                     * Constructs a new ValidatorSlashEvents.
-                     * @memberof cosmos_sdk.x.distribution.v1
-                     * @classdesc Represents a ValidatorSlashEvents.
-                     * @implements IValidatorSlashEvents
-                     * @constructor
-                     * @param {cosmos_sdk.x.distribution.v1.IValidatorSlashEvents=} [p] Properties to set
-                     */
-                    function ValidatorSlashEvents(p) {
-                        this.validatorSlashEvents = [];
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * ValidatorSlashEvents validatorSlashEvents.
-                     * @member {Array.<cosmos_sdk.x.distribution.v1.IValidatorSlashEvent>} validatorSlashEvents
-                     * @memberof cosmos_sdk.x.distribution.v1.ValidatorSlashEvents
-                     * @instance
-                     */
-                    ValidatorSlashEvents.prototype.validatorSlashEvents = $util.emptyArray;
-
-                    /**
-                     * Creates a new ValidatorSlashEvents instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.distribution.v1.ValidatorSlashEvents
-                     * @static
-                     * @param {cosmos_sdk.x.distribution.v1.IValidatorSlashEvents=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.distribution.v1.ValidatorSlashEvents} ValidatorSlashEvents instance
-                     */
-                    ValidatorSlashEvents.create = function create(properties) {
-                        return new ValidatorSlashEvents(properties);
-                    };
-
-                    /**
-                     * Encodes the specified ValidatorSlashEvents message. Does not implicitly {@link cosmos_sdk.x.distribution.v1.ValidatorSlashEvents.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.distribution.v1.ValidatorSlashEvents
-                     * @static
-                     * @param {cosmos_sdk.x.distribution.v1.IValidatorSlashEvents} m ValidatorSlashEvents message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    ValidatorSlashEvents.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.validatorSlashEvents != null && m.validatorSlashEvents.length) {
-                            for (var i = 0; i < m.validatorSlashEvents.length; ++i)
-                                $root.cosmos_sdk.x.distribution.v1.ValidatorSlashEvent.encode(m.validatorSlashEvents[i], w.uint32(10).fork()).ldelim();
-                        }
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a ValidatorSlashEvents message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.distribution.v1.ValidatorSlashEvents
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.distribution.v1.ValidatorSlashEvents} ValidatorSlashEvents
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    ValidatorSlashEvents.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.distribution.v1.ValidatorSlashEvents();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                if (!(m.validatorSlashEvents && m.validatorSlashEvents.length))
-                                    m.validatorSlashEvents = [];
-                                m.validatorSlashEvents.push($root.cosmos_sdk.x.distribution.v1.ValidatorSlashEvent.decode(r, r.uint32()));
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return ValidatorSlashEvents;
-                })();
-
-                v1.FeePool = (function() {
-
-                    /**
-                     * Properties of a FeePool.
-                     * @memberof cosmos_sdk.x.distribution.v1
-                     * @interface IFeePool
-                     * @property {Array.<cosmos_sdk.v1.IDecCoin>|null} [communityPool] FeePool communityPool
-                     */
-
-                    /**
-                     * Constructs a new FeePool.
-                     * @memberof cosmos_sdk.x.distribution.v1
-                     * @classdesc Represents a FeePool.
-                     * @implements IFeePool
-                     * @constructor
-                     * @param {cosmos_sdk.x.distribution.v1.IFeePool=} [p] Properties to set
-                     */
-                    function FeePool(p) {
-                        this.communityPool = [];
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * FeePool communityPool.
-                     * @member {Array.<cosmos_sdk.v1.IDecCoin>} communityPool
-                     * @memberof cosmos_sdk.x.distribution.v1.FeePool
-                     * @instance
-                     */
-                    FeePool.prototype.communityPool = $util.emptyArray;
-
-                    /**
-                     * Creates a new FeePool instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.distribution.v1.FeePool
-                     * @static
-                     * @param {cosmos_sdk.x.distribution.v1.IFeePool=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.distribution.v1.FeePool} FeePool instance
-                     */
-                    FeePool.create = function create(properties) {
-                        return new FeePool(properties);
-                    };
-
-                    /**
-                     * Encodes the specified FeePool message. Does not implicitly {@link cosmos_sdk.x.distribution.v1.FeePool.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.distribution.v1.FeePool
-                     * @static
-                     * @param {cosmos_sdk.x.distribution.v1.IFeePool} m FeePool message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    FeePool.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.communityPool != null && m.communityPool.length) {
-                            for (var i = 0; i < m.communityPool.length; ++i)
-                                $root.cosmos_sdk.v1.DecCoin.encode(m.communityPool[i], w.uint32(10).fork()).ldelim();
-                        }
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a FeePool message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.distribution.v1.FeePool
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.distribution.v1.FeePool} FeePool
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    FeePool.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.distribution.v1.FeePool();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                if (!(m.communityPool && m.communityPool.length))
-                                    m.communityPool = [];
-                                m.communityPool.push($root.cosmos_sdk.v1.DecCoin.decode(r, r.uint32()));
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return FeePool;
-                })();
-
-                v1.CommunityPoolSpendProposal = (function() {
-
-                    /**
-                     * Properties of a CommunityPoolSpendProposal.
-                     * @memberof cosmos_sdk.x.distribution.v1
-                     * @interface ICommunityPoolSpendProposal
-                     * @property {string|null} [title] CommunityPoolSpendProposal title
-                     * @property {string|null} [description] CommunityPoolSpendProposal description
-                     * @property {Uint8Array|null} [recipient] CommunityPoolSpendProposal recipient
-                     * @property {Array.<cosmos_sdk.v1.ICoin>|null} [amount] CommunityPoolSpendProposal amount
-                     */
-
-                    /**
-                     * Constructs a new CommunityPoolSpendProposal.
-                     * @memberof cosmos_sdk.x.distribution.v1
-                     * @classdesc Represents a CommunityPoolSpendProposal.
-                     * @implements ICommunityPoolSpendProposal
-                     * @constructor
-                     * @param {cosmos_sdk.x.distribution.v1.ICommunityPoolSpendProposal=} [p] Properties to set
-                     */
-                    function CommunityPoolSpendProposal(p) {
-                        this.amount = [];
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * CommunityPoolSpendProposal title.
-                     * @member {string} title
-                     * @memberof cosmos_sdk.x.distribution.v1.CommunityPoolSpendProposal
-                     * @instance
-                     */
-                    CommunityPoolSpendProposal.prototype.title = "";
-
-                    /**
-                     * CommunityPoolSpendProposal description.
-                     * @member {string} description
-                     * @memberof cosmos_sdk.x.distribution.v1.CommunityPoolSpendProposal
-                     * @instance
-                     */
-                    CommunityPoolSpendProposal.prototype.description = "";
-
-                    /**
-                     * CommunityPoolSpendProposal recipient.
-                     * @member {Uint8Array} recipient
-                     * @memberof cosmos_sdk.x.distribution.v1.CommunityPoolSpendProposal
-                     * @instance
-                     */
-                    CommunityPoolSpendProposal.prototype.recipient = $util.newBuffer([]);
-
-                    /**
-                     * CommunityPoolSpendProposal amount.
-                     * @member {Array.<cosmos_sdk.v1.ICoin>} amount
-                     * @memberof cosmos_sdk.x.distribution.v1.CommunityPoolSpendProposal
-                     * @instance
-                     */
-                    CommunityPoolSpendProposal.prototype.amount = $util.emptyArray;
-
-                    /**
-                     * Creates a new CommunityPoolSpendProposal instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.distribution.v1.CommunityPoolSpendProposal
-                     * @static
-                     * @param {cosmos_sdk.x.distribution.v1.ICommunityPoolSpendProposal=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.distribution.v1.CommunityPoolSpendProposal} CommunityPoolSpendProposal instance
-                     */
-                    CommunityPoolSpendProposal.create = function create(properties) {
-                        return new CommunityPoolSpendProposal(properties);
-                    };
-
-                    /**
-                     * Encodes the specified CommunityPoolSpendProposal message. Does not implicitly {@link cosmos_sdk.x.distribution.v1.CommunityPoolSpendProposal.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.distribution.v1.CommunityPoolSpendProposal
-                     * @static
-                     * @param {cosmos_sdk.x.distribution.v1.ICommunityPoolSpendProposal} m CommunityPoolSpendProposal message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    CommunityPoolSpendProposal.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.title != null && Object.hasOwnProperty.call(m, "title"))
-                            w.uint32(10).string(m.title);
-                        if (m.description != null && Object.hasOwnProperty.call(m, "description"))
-                            w.uint32(18).string(m.description);
-                        if (m.recipient != null && Object.hasOwnProperty.call(m, "recipient"))
-                            w.uint32(26).bytes(m.recipient);
-                        if (m.amount != null && m.amount.length) {
-                            for (var i = 0; i < m.amount.length; ++i)
-                                $root.cosmos_sdk.v1.Coin.encode(m.amount[i], w.uint32(34).fork()).ldelim();
-                        }
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a CommunityPoolSpendProposal message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.distribution.v1.CommunityPoolSpendProposal
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.distribution.v1.CommunityPoolSpendProposal} CommunityPoolSpendProposal
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    CommunityPoolSpendProposal.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.distribution.v1.CommunityPoolSpendProposal();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.title = r.string();
-                                break;
-                            case 2:
-                                m.description = r.string();
-                                break;
-                            case 3:
-                                m.recipient = r.bytes();
-                                break;
-                            case 4:
-                                if (!(m.amount && m.amount.length))
-                                    m.amount = [];
-                                m.amount.push($root.cosmos_sdk.v1.Coin.decode(r, r.uint32()));
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return CommunityPoolSpendProposal;
-                })();
-
-                v1.DelegatorStartingInfo = (function() {
-
-                    /**
-                     * Properties of a DelegatorStartingInfo.
-                     * @memberof cosmos_sdk.x.distribution.v1
-                     * @interface IDelegatorStartingInfo
-                     * @property {number|Long|null} [previousPeriod] DelegatorStartingInfo previousPeriod
-                     * @property {string|null} [stake] DelegatorStartingInfo stake
-                     * @property {number|Long|null} [height] DelegatorStartingInfo height
-                     */
-
-                    /**
-                     * Constructs a new DelegatorStartingInfo.
-                     * @memberof cosmos_sdk.x.distribution.v1
-                     * @classdesc Represents a DelegatorStartingInfo.
-                     * @implements IDelegatorStartingInfo
-                     * @constructor
-                     * @param {cosmos_sdk.x.distribution.v1.IDelegatorStartingInfo=} [p] Properties to set
-                     */
-                    function DelegatorStartingInfo(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * DelegatorStartingInfo previousPeriod.
-                     * @member {number|Long} previousPeriod
-                     * @memberof cosmos_sdk.x.distribution.v1.DelegatorStartingInfo
-                     * @instance
-                     */
-                    DelegatorStartingInfo.prototype.previousPeriod = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-                    /**
-                     * DelegatorStartingInfo stake.
-                     * @member {string} stake
-                     * @memberof cosmos_sdk.x.distribution.v1.DelegatorStartingInfo
-                     * @instance
-                     */
-                    DelegatorStartingInfo.prototype.stake = "";
-
-                    /**
-                     * DelegatorStartingInfo height.
-                     * @member {number|Long} height
-                     * @memberof cosmos_sdk.x.distribution.v1.DelegatorStartingInfo
-                     * @instance
-                     */
-                    DelegatorStartingInfo.prototype.height = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-                    /**
-                     * Creates a new DelegatorStartingInfo instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.distribution.v1.DelegatorStartingInfo
-                     * @static
-                     * @param {cosmos_sdk.x.distribution.v1.IDelegatorStartingInfo=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.distribution.v1.DelegatorStartingInfo} DelegatorStartingInfo instance
-                     */
-                    DelegatorStartingInfo.create = function create(properties) {
-                        return new DelegatorStartingInfo(properties);
-                    };
-
-                    /**
-                     * Encodes the specified DelegatorStartingInfo message. Does not implicitly {@link cosmos_sdk.x.distribution.v1.DelegatorStartingInfo.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.distribution.v1.DelegatorStartingInfo
-                     * @static
-                     * @param {cosmos_sdk.x.distribution.v1.IDelegatorStartingInfo} m DelegatorStartingInfo message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    DelegatorStartingInfo.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.previousPeriod != null && Object.hasOwnProperty.call(m, "previousPeriod"))
-                            w.uint32(8).uint64(m.previousPeriod);
-                        if (m.stake != null && Object.hasOwnProperty.call(m, "stake"))
-                            w.uint32(18).string(m.stake);
-                        if (m.height != null && Object.hasOwnProperty.call(m, "height"))
-                            w.uint32(24).uint64(m.height);
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a DelegatorStartingInfo message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.distribution.v1.DelegatorStartingInfo
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.distribution.v1.DelegatorStartingInfo} DelegatorStartingInfo
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    DelegatorStartingInfo.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.distribution.v1.DelegatorStartingInfo();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.previousPeriod = r.uint64();
-                                break;
-                            case 2:
-                                m.stake = r.string();
-                                break;
-                            case 3:
-                                m.height = r.uint64();
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return DelegatorStartingInfo;
-                })();
-
-                return v1;
-            })();
-
-            return distribution;
-        })();
-
-        x.evidence = (function() {
-
-            /**
-             * Namespace evidence.
-             * @memberof cosmos_sdk.x
-             * @namespace
-             */
-            var evidence = {};
-
-            evidence.v1 = (function() {
-
-                /**
-                 * Namespace v1.
-                 * @memberof cosmos_sdk.x.evidence
-                 * @namespace
-                 */
-                var v1 = {};
-
-                v1.MsgSubmitEvidence = (function() {
-
-                    /**
-                     * Properties of a MsgSubmitEvidence.
-                     * @memberof cosmos_sdk.x.evidence.v1
-                     * @interface IMsgSubmitEvidence
-                     * @property {Uint8Array|null} [submitter] MsgSubmitEvidence submitter
-                     * @property {google.protobuf.IAny|null} [evidence] MsgSubmitEvidence evidence
-                     */
-
-                    /**
-                     * Constructs a new MsgSubmitEvidence.
-                     * @memberof cosmos_sdk.x.evidence.v1
-                     * @classdesc Represents a MsgSubmitEvidence.
-                     * @implements IMsgSubmitEvidence
-                     * @constructor
-                     * @param {cosmos_sdk.x.evidence.v1.IMsgSubmitEvidence=} [p] Properties to set
-                     */
-                    function MsgSubmitEvidence(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * MsgSubmitEvidence submitter.
-                     * @member {Uint8Array} submitter
-                     * @memberof cosmos_sdk.x.evidence.v1.MsgSubmitEvidence
-                     * @instance
-                     */
-                    MsgSubmitEvidence.prototype.submitter = $util.newBuffer([]);
-
-                    /**
-                     * MsgSubmitEvidence evidence.
-                     * @member {google.protobuf.IAny|null|undefined} evidence
-                     * @memberof cosmos_sdk.x.evidence.v1.MsgSubmitEvidence
-                     * @instance
-                     */
-                    MsgSubmitEvidence.prototype.evidence = null;
-
-                    /**
-                     * Creates a new MsgSubmitEvidence instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.evidence.v1.MsgSubmitEvidence
-                     * @static
-                     * @param {cosmos_sdk.x.evidence.v1.IMsgSubmitEvidence=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.evidence.v1.MsgSubmitEvidence} MsgSubmitEvidence instance
-                     */
-                    MsgSubmitEvidence.create = function create(properties) {
-                        return new MsgSubmitEvidence(properties);
-                    };
-
-                    /**
-                     * Encodes the specified MsgSubmitEvidence message. Does not implicitly {@link cosmos_sdk.x.evidence.v1.MsgSubmitEvidence.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.evidence.v1.MsgSubmitEvidence
-                     * @static
-                     * @param {cosmos_sdk.x.evidence.v1.IMsgSubmitEvidence} m MsgSubmitEvidence message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    MsgSubmitEvidence.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.submitter != null && Object.hasOwnProperty.call(m, "submitter"))
-                            w.uint32(10).bytes(m.submitter);
-                        if (m.evidence != null && Object.hasOwnProperty.call(m, "evidence"))
-                            $root.google.protobuf.Any.encode(m.evidence, w.uint32(18).fork()).ldelim();
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a MsgSubmitEvidence message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.evidence.v1.MsgSubmitEvidence
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.evidence.v1.MsgSubmitEvidence} MsgSubmitEvidence
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    MsgSubmitEvidence.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.evidence.v1.MsgSubmitEvidence();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.submitter = r.bytes();
-                                break;
-                            case 2:
-                                m.evidence = $root.google.protobuf.Any.decode(r, r.uint32());
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return MsgSubmitEvidence;
-                })();
-
-                v1.Equivocation = (function() {
-
-                    /**
-                     * Properties of an Equivocation.
-                     * @memberof cosmos_sdk.x.evidence.v1
-                     * @interface IEquivocation
-                     * @property {number|Long|null} [height] Equivocation height
-                     * @property {google.protobuf.ITimestamp|null} [time] Equivocation time
-                     * @property {number|Long|null} [power] Equivocation power
-                     * @property {Uint8Array|null} [consensusAddress] Equivocation consensusAddress
-                     */
-
-                    /**
-                     * Constructs a new Equivocation.
-                     * @memberof cosmos_sdk.x.evidence.v1
-                     * @classdesc Represents an Equivocation.
-                     * @implements IEquivocation
-                     * @constructor
-                     * @param {cosmos_sdk.x.evidence.v1.IEquivocation=} [p] Properties to set
-                     */
-                    function Equivocation(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * Equivocation height.
-                     * @member {number|Long} height
-                     * @memberof cosmos_sdk.x.evidence.v1.Equivocation
-                     * @instance
-                     */
-                    Equivocation.prototype.height = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
-
-                    /**
-                     * Equivocation time.
-                     * @member {google.protobuf.ITimestamp|null|undefined} time
-                     * @memberof cosmos_sdk.x.evidence.v1.Equivocation
-                     * @instance
-                     */
-                    Equivocation.prototype.time = null;
-
-                    /**
-                     * Equivocation power.
-                     * @member {number|Long} power
-                     * @memberof cosmos_sdk.x.evidence.v1.Equivocation
-                     * @instance
-                     */
-                    Equivocation.prototype.power = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
-
-                    /**
-                     * Equivocation consensusAddress.
-                     * @member {Uint8Array} consensusAddress
-                     * @memberof cosmos_sdk.x.evidence.v1.Equivocation
-                     * @instance
-                     */
-                    Equivocation.prototype.consensusAddress = $util.newBuffer([]);
-
-                    /**
-                     * Creates a new Equivocation instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.evidence.v1.Equivocation
-                     * @static
-                     * @param {cosmos_sdk.x.evidence.v1.IEquivocation=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.evidence.v1.Equivocation} Equivocation instance
-                     */
-                    Equivocation.create = function create(properties) {
-                        return new Equivocation(properties);
-                    };
-
-                    /**
-                     * Encodes the specified Equivocation message. Does not implicitly {@link cosmos_sdk.x.evidence.v1.Equivocation.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.evidence.v1.Equivocation
-                     * @static
-                     * @param {cosmos_sdk.x.evidence.v1.IEquivocation} m Equivocation message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    Equivocation.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.height != null && Object.hasOwnProperty.call(m, "height"))
-                            w.uint32(8).int64(m.height);
-                        if (m.time != null && Object.hasOwnProperty.call(m, "time"))
-                            $root.google.protobuf.Timestamp.encode(m.time, w.uint32(18).fork()).ldelim();
-                        if (m.power != null && Object.hasOwnProperty.call(m, "power"))
-                            w.uint32(24).int64(m.power);
-                        if (m.consensusAddress != null && Object.hasOwnProperty.call(m, "consensusAddress"))
-                            w.uint32(34).bytes(m.consensusAddress);
-                        return w;
-                    };
-
-                    /**
-                     * Decodes an Equivocation message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.evidence.v1.Equivocation
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.evidence.v1.Equivocation} Equivocation
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    Equivocation.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.evidence.v1.Equivocation();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.height = r.int64();
-                                break;
-                            case 2:
-                                m.time = $root.google.protobuf.Timestamp.decode(r, r.uint32());
-                                break;
-                            case 3:
-                                m.power = r.int64();
-                                break;
-                            case 4:
-                                m.consensusAddress = r.bytes();
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return Equivocation;
-                })();
-
-                return v1;
-            })();
-
-            return evidence;
-        })();
-
-        x.gov = (function() {
-
-            /**
-             * Namespace gov.
-             * @memberof cosmos_sdk.x
-             * @namespace
-             */
-            var gov = {};
-
-            gov.v1 = (function() {
-
-                /**
-                 * Namespace v1.
-                 * @memberof cosmos_sdk.x.gov
-                 * @namespace
-                 */
-                var v1 = {};
-
-                v1.MsgSubmitProposal = (function() {
-
-                    /**
-                     * Properties of a MsgSubmitProposal.
-                     * @memberof cosmos_sdk.x.gov.v1
-                     * @interface IMsgSubmitProposal
-                     * @property {google.protobuf.IAny|null} [content] MsgSubmitProposal content
-                     * @property {Array.<cosmos_sdk.v1.ICoin>|null} [initialDeposit] MsgSubmitProposal initialDeposit
-                     * @property {Uint8Array|null} [proposer] MsgSubmitProposal proposer
-                     */
-
-                    /**
-                     * Constructs a new MsgSubmitProposal.
-                     * @memberof cosmos_sdk.x.gov.v1
-                     * @classdesc Represents a MsgSubmitProposal.
-                     * @implements IMsgSubmitProposal
-                     * @constructor
-                     * @param {cosmos_sdk.x.gov.v1.IMsgSubmitProposal=} [p] Properties to set
-                     */
-                    function MsgSubmitProposal(p) {
-                        this.initialDeposit = [];
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * MsgSubmitProposal content.
-                     * @member {google.protobuf.IAny|null|undefined} content
-                     * @memberof cosmos_sdk.x.gov.v1.MsgSubmitProposal
-                     * @instance
-                     */
-                    MsgSubmitProposal.prototype.content = null;
-
-                    /**
-                     * MsgSubmitProposal initialDeposit.
-                     * @member {Array.<cosmos_sdk.v1.ICoin>} initialDeposit
-                     * @memberof cosmos_sdk.x.gov.v1.MsgSubmitProposal
-                     * @instance
-                     */
-                    MsgSubmitProposal.prototype.initialDeposit = $util.emptyArray;
-
-                    /**
-                     * MsgSubmitProposal proposer.
-                     * @member {Uint8Array} proposer
-                     * @memberof cosmos_sdk.x.gov.v1.MsgSubmitProposal
-                     * @instance
-                     */
-                    MsgSubmitProposal.prototype.proposer = $util.newBuffer([]);
-
-                    /**
-                     * Creates a new MsgSubmitProposal instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.gov.v1.MsgSubmitProposal
-                     * @static
-                     * @param {cosmos_sdk.x.gov.v1.IMsgSubmitProposal=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.gov.v1.MsgSubmitProposal} MsgSubmitProposal instance
-                     */
-                    MsgSubmitProposal.create = function create(properties) {
-                        return new MsgSubmitProposal(properties);
-                    };
-
-                    /**
-                     * Encodes the specified MsgSubmitProposal message. Does not implicitly {@link cosmos_sdk.x.gov.v1.MsgSubmitProposal.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.gov.v1.MsgSubmitProposal
-                     * @static
-                     * @param {cosmos_sdk.x.gov.v1.IMsgSubmitProposal} m MsgSubmitProposal message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    MsgSubmitProposal.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.content != null && Object.hasOwnProperty.call(m, "content"))
-                            $root.google.protobuf.Any.encode(m.content, w.uint32(10).fork()).ldelim();
-                        if (m.initialDeposit != null && m.initialDeposit.length) {
-                            for (var i = 0; i < m.initialDeposit.length; ++i)
-                                $root.cosmos_sdk.v1.Coin.encode(m.initialDeposit[i], w.uint32(18).fork()).ldelim();
-                        }
-                        if (m.proposer != null && Object.hasOwnProperty.call(m, "proposer"))
-                            w.uint32(26).bytes(m.proposer);
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a MsgSubmitProposal message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.gov.v1.MsgSubmitProposal
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.gov.v1.MsgSubmitProposal} MsgSubmitProposal
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    MsgSubmitProposal.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.gov.v1.MsgSubmitProposal();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.content = $root.google.protobuf.Any.decode(r, r.uint32());
-                                break;
-                            case 2:
-                                if (!(m.initialDeposit && m.initialDeposit.length))
-                                    m.initialDeposit = [];
-                                m.initialDeposit.push($root.cosmos_sdk.v1.Coin.decode(r, r.uint32()));
-                                break;
-                            case 3:
-                                m.proposer = r.bytes();
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return MsgSubmitProposal;
-                })();
-
-                v1.MsgVote = (function() {
-
-                    /**
-                     * Properties of a MsgVote.
-                     * @memberof cosmos_sdk.x.gov.v1
-                     * @interface IMsgVote
-                     * @property {number|Long|null} [proposalId] MsgVote proposalId
-                     * @property {Uint8Array|null} [voter] MsgVote voter
-                     * @property {cosmos_sdk.x.gov.v1.VoteOption|null} [option] MsgVote option
-                     */
-
-                    /**
-                     * Constructs a new MsgVote.
-                     * @memberof cosmos_sdk.x.gov.v1
-                     * @classdesc Represents a MsgVote.
-                     * @implements IMsgVote
-                     * @constructor
-                     * @param {cosmos_sdk.x.gov.v1.IMsgVote=} [p] Properties to set
-                     */
-                    function MsgVote(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * MsgVote proposalId.
-                     * @member {number|Long} proposalId
-                     * @memberof cosmos_sdk.x.gov.v1.MsgVote
-                     * @instance
-                     */
-                    MsgVote.prototype.proposalId = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-                    /**
-                     * MsgVote voter.
-                     * @member {Uint8Array} voter
-                     * @memberof cosmos_sdk.x.gov.v1.MsgVote
-                     * @instance
-                     */
-                    MsgVote.prototype.voter = $util.newBuffer([]);
-
-                    /**
-                     * MsgVote option.
-                     * @member {cosmos_sdk.x.gov.v1.VoteOption} option
-                     * @memberof cosmos_sdk.x.gov.v1.MsgVote
-                     * @instance
-                     */
-                    MsgVote.prototype.option = 0;
-
-                    /**
-                     * Creates a new MsgVote instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.gov.v1.MsgVote
-                     * @static
-                     * @param {cosmos_sdk.x.gov.v1.IMsgVote=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.gov.v1.MsgVote} MsgVote instance
-                     */
-                    MsgVote.create = function create(properties) {
-                        return new MsgVote(properties);
-                    };
-
-                    /**
-                     * Encodes the specified MsgVote message. Does not implicitly {@link cosmos_sdk.x.gov.v1.MsgVote.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.gov.v1.MsgVote
-                     * @static
-                     * @param {cosmos_sdk.x.gov.v1.IMsgVote} m MsgVote message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    MsgVote.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.proposalId != null && Object.hasOwnProperty.call(m, "proposalId"))
-                            w.uint32(8).uint64(m.proposalId);
-                        if (m.voter != null && Object.hasOwnProperty.call(m, "voter"))
-                            w.uint32(18).bytes(m.voter);
-                        if (m.option != null && Object.hasOwnProperty.call(m, "option"))
-                            w.uint32(24).int32(m.option);
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a MsgVote message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.gov.v1.MsgVote
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.gov.v1.MsgVote} MsgVote
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    MsgVote.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.gov.v1.MsgVote();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.proposalId = r.uint64();
-                                break;
-                            case 2:
-                                m.voter = r.bytes();
-                                break;
-                            case 3:
-                                m.option = r.int32();
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return MsgVote;
-                })();
-
-                v1.MsgDeposit = (function() {
-
-                    /**
-                     * Properties of a MsgDeposit.
-                     * @memberof cosmos_sdk.x.gov.v1
-                     * @interface IMsgDeposit
-                     * @property {number|Long|null} [proposalId] MsgDeposit proposalId
-                     * @property {Uint8Array|null} [depositor] MsgDeposit depositor
-                     * @property {Array.<cosmos_sdk.v1.ICoin>|null} [amount] MsgDeposit amount
-                     */
-
-                    /**
-                     * Constructs a new MsgDeposit.
-                     * @memberof cosmos_sdk.x.gov.v1
-                     * @classdesc Represents a MsgDeposit.
-                     * @implements IMsgDeposit
-                     * @constructor
-                     * @param {cosmos_sdk.x.gov.v1.IMsgDeposit=} [p] Properties to set
-                     */
-                    function MsgDeposit(p) {
-                        this.amount = [];
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * MsgDeposit proposalId.
-                     * @member {number|Long} proposalId
-                     * @memberof cosmos_sdk.x.gov.v1.MsgDeposit
-                     * @instance
-                     */
-                    MsgDeposit.prototype.proposalId = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-                    /**
-                     * MsgDeposit depositor.
-                     * @member {Uint8Array} depositor
-                     * @memberof cosmos_sdk.x.gov.v1.MsgDeposit
-                     * @instance
-                     */
-                    MsgDeposit.prototype.depositor = $util.newBuffer([]);
-
-                    /**
-                     * MsgDeposit amount.
-                     * @member {Array.<cosmos_sdk.v1.ICoin>} amount
-                     * @memberof cosmos_sdk.x.gov.v1.MsgDeposit
-                     * @instance
-                     */
-                    MsgDeposit.prototype.amount = $util.emptyArray;
-
-                    /**
-                     * Creates a new MsgDeposit instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.gov.v1.MsgDeposit
-                     * @static
-                     * @param {cosmos_sdk.x.gov.v1.IMsgDeposit=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.gov.v1.MsgDeposit} MsgDeposit instance
-                     */
-                    MsgDeposit.create = function create(properties) {
-                        return new MsgDeposit(properties);
-                    };
-
-                    /**
-                     * Encodes the specified MsgDeposit message. Does not implicitly {@link cosmos_sdk.x.gov.v1.MsgDeposit.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.gov.v1.MsgDeposit
-                     * @static
-                     * @param {cosmos_sdk.x.gov.v1.IMsgDeposit} m MsgDeposit message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    MsgDeposit.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.proposalId != null && Object.hasOwnProperty.call(m, "proposalId"))
-                            w.uint32(8).uint64(m.proposalId);
-                        if (m.depositor != null && Object.hasOwnProperty.call(m, "depositor"))
-                            w.uint32(18).bytes(m.depositor);
-                        if (m.amount != null && m.amount.length) {
-                            for (var i = 0; i < m.amount.length; ++i)
-                                $root.cosmos_sdk.v1.Coin.encode(m.amount[i], w.uint32(26).fork()).ldelim();
-                        }
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a MsgDeposit message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.gov.v1.MsgDeposit
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.gov.v1.MsgDeposit} MsgDeposit
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    MsgDeposit.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.gov.v1.MsgDeposit();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.proposalId = r.uint64();
-                                break;
-                            case 2:
-                                m.depositor = r.bytes();
-                                break;
-                            case 3:
-                                if (!(m.amount && m.amount.length))
-                                    m.amount = [];
-                                m.amount.push($root.cosmos_sdk.v1.Coin.decode(r, r.uint32()));
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return MsgDeposit;
-                })();
-
-                /**
-                 * VoteOption enum.
-                 * @name cosmos_sdk.x.gov.v1.VoteOption
-                 * @enum {number}
-                 * @property {number} VOTE_OPTION_UNSPECIFIED=0 VOTE_OPTION_UNSPECIFIED value
-                 * @property {number} VOTE_OPTION_YES=1 VOTE_OPTION_YES value
-                 * @property {number} VOTE_OPTION_ABSTAIN=2 VOTE_OPTION_ABSTAIN value
-                 * @property {number} VOTE_OPTION_NO=3 VOTE_OPTION_NO value
-                 * @property {number} VOTE_OPTION_NO_WITH_VETO=4 VOTE_OPTION_NO_WITH_VETO value
-                 */
-                v1.VoteOption = (function() {
-                    var valuesById = {}, values = Object.create(valuesById);
-                    values[valuesById[0] = "VOTE_OPTION_UNSPECIFIED"] = 0;
-                    values[valuesById[1] = "VOTE_OPTION_YES"] = 1;
-                    values[valuesById[2] = "VOTE_OPTION_ABSTAIN"] = 2;
-                    values[valuesById[3] = "VOTE_OPTION_NO"] = 3;
-                    values[valuesById[4] = "VOTE_OPTION_NO_WITH_VETO"] = 4;
-                    return values;
-                })();
-
-                v1.TextProposal = (function() {
-
-                    /**
-                     * Properties of a TextProposal.
-                     * @memberof cosmos_sdk.x.gov.v1
-                     * @interface ITextProposal
-                     * @property {string|null} [title] TextProposal title
-                     * @property {string|null} [description] TextProposal description
-                     */
-
-                    /**
-                     * Constructs a new TextProposal.
-                     * @memberof cosmos_sdk.x.gov.v1
-                     * @classdesc Represents a TextProposal.
-                     * @implements ITextProposal
-                     * @constructor
-                     * @param {cosmos_sdk.x.gov.v1.ITextProposal=} [p] Properties to set
-                     */
-                    function TextProposal(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * TextProposal title.
-                     * @member {string} title
-                     * @memberof cosmos_sdk.x.gov.v1.TextProposal
-                     * @instance
-                     */
-                    TextProposal.prototype.title = "";
-
-                    /**
-                     * TextProposal description.
-                     * @member {string} description
-                     * @memberof cosmos_sdk.x.gov.v1.TextProposal
-                     * @instance
-                     */
-                    TextProposal.prototype.description = "";
-
-                    /**
-                     * Creates a new TextProposal instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.gov.v1.TextProposal
-                     * @static
-                     * @param {cosmos_sdk.x.gov.v1.ITextProposal=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.gov.v1.TextProposal} TextProposal instance
-                     */
-                    TextProposal.create = function create(properties) {
-                        return new TextProposal(properties);
-                    };
-
-                    /**
-                     * Encodes the specified TextProposal message. Does not implicitly {@link cosmos_sdk.x.gov.v1.TextProposal.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.gov.v1.TextProposal
-                     * @static
-                     * @param {cosmos_sdk.x.gov.v1.ITextProposal} m TextProposal message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    TextProposal.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.title != null && Object.hasOwnProperty.call(m, "title"))
-                            w.uint32(10).string(m.title);
-                        if (m.description != null && Object.hasOwnProperty.call(m, "description"))
-                            w.uint32(18).string(m.description);
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a TextProposal message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.gov.v1.TextProposal
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.gov.v1.TextProposal} TextProposal
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    TextProposal.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.gov.v1.TextProposal();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.title = r.string();
-                                break;
-                            case 2:
-                                m.description = r.string();
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return TextProposal;
-                })();
-
-                v1.Deposit = (function() {
-
-                    /**
-                     * Properties of a Deposit.
-                     * @memberof cosmos_sdk.x.gov.v1
-                     * @interface IDeposit
-                     * @property {number|Long|null} [proposalId] Deposit proposalId
-                     * @property {Uint8Array|null} [depositor] Deposit depositor
-                     * @property {Array.<cosmos_sdk.v1.ICoin>|null} [amount] Deposit amount
-                     */
-
-                    /**
-                     * Constructs a new Deposit.
-                     * @memberof cosmos_sdk.x.gov.v1
-                     * @classdesc Represents a Deposit.
-                     * @implements IDeposit
-                     * @constructor
-                     * @param {cosmos_sdk.x.gov.v1.IDeposit=} [p] Properties to set
-                     */
-                    function Deposit(p) {
-                        this.amount = [];
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * Deposit proposalId.
-                     * @member {number|Long} proposalId
-                     * @memberof cosmos_sdk.x.gov.v1.Deposit
-                     * @instance
-                     */
-                    Deposit.prototype.proposalId = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-                    /**
-                     * Deposit depositor.
-                     * @member {Uint8Array} depositor
-                     * @memberof cosmos_sdk.x.gov.v1.Deposit
-                     * @instance
-                     */
-                    Deposit.prototype.depositor = $util.newBuffer([]);
-
-                    /**
-                     * Deposit amount.
-                     * @member {Array.<cosmos_sdk.v1.ICoin>} amount
-                     * @memberof cosmos_sdk.x.gov.v1.Deposit
-                     * @instance
-                     */
-                    Deposit.prototype.amount = $util.emptyArray;
-
-                    /**
-                     * Creates a new Deposit instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.gov.v1.Deposit
-                     * @static
-                     * @param {cosmos_sdk.x.gov.v1.IDeposit=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.gov.v1.Deposit} Deposit instance
-                     */
-                    Deposit.create = function create(properties) {
-                        return new Deposit(properties);
-                    };
-
-                    /**
-                     * Encodes the specified Deposit message. Does not implicitly {@link cosmos_sdk.x.gov.v1.Deposit.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.gov.v1.Deposit
-                     * @static
-                     * @param {cosmos_sdk.x.gov.v1.IDeposit} m Deposit message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    Deposit.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.proposalId != null && Object.hasOwnProperty.call(m, "proposalId"))
-                            w.uint32(8).uint64(m.proposalId);
-                        if (m.depositor != null && Object.hasOwnProperty.call(m, "depositor"))
-                            w.uint32(18).bytes(m.depositor);
-                        if (m.amount != null && m.amount.length) {
-                            for (var i = 0; i < m.amount.length; ++i)
-                                $root.cosmos_sdk.v1.Coin.encode(m.amount[i], w.uint32(26).fork()).ldelim();
-                        }
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a Deposit message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.gov.v1.Deposit
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.gov.v1.Deposit} Deposit
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    Deposit.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.gov.v1.Deposit();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.proposalId = r.uint64();
-                                break;
-                            case 2:
-                                m.depositor = r.bytes();
-                                break;
-                            case 3:
-                                if (!(m.amount && m.amount.length))
-                                    m.amount = [];
-                                m.amount.push($root.cosmos_sdk.v1.Coin.decode(r, r.uint32()));
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return Deposit;
-                })();
-
-                v1.Proposal = (function() {
-
-                    /**
-                     * Properties of a Proposal.
-                     * @memberof cosmos_sdk.x.gov.v1
-                     * @interface IProposal
-                     * @property {number|Long|null} [proposalId] Proposal proposalId
-                     * @property {google.protobuf.IAny|null} [content] Proposal content
-                     * @property {cosmos_sdk.x.gov.v1.ProposalStatus|null} [status] Proposal status
-                     * @property {cosmos_sdk.x.gov.v1.ITallyResult|null} [finalTallyResult] Proposal finalTallyResult
-                     * @property {google.protobuf.ITimestamp|null} [submitTime] Proposal submitTime
-                     * @property {google.protobuf.ITimestamp|null} [depositEndTime] Proposal depositEndTime
-                     * @property {Array.<cosmos_sdk.v1.ICoin>|null} [totalDeposit] Proposal totalDeposit
-                     * @property {google.protobuf.ITimestamp|null} [votingStartTime] Proposal votingStartTime
-                     * @property {google.protobuf.ITimestamp|null} [votingEndTime] Proposal votingEndTime
-                     */
-
-                    /**
-                     * Constructs a new Proposal.
-                     * @memberof cosmos_sdk.x.gov.v1
-                     * @classdesc Represents a Proposal.
-                     * @implements IProposal
-                     * @constructor
-                     * @param {cosmos_sdk.x.gov.v1.IProposal=} [p] Properties to set
-                     */
-                    function Proposal(p) {
-                        this.totalDeposit = [];
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * Proposal proposalId.
-                     * @member {number|Long} proposalId
-                     * @memberof cosmos_sdk.x.gov.v1.Proposal
-                     * @instance
-                     */
-                    Proposal.prototype.proposalId = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-                    /**
-                     * Proposal content.
-                     * @member {google.protobuf.IAny|null|undefined} content
-                     * @memberof cosmos_sdk.x.gov.v1.Proposal
-                     * @instance
-                     */
-                    Proposal.prototype.content = null;
-
-                    /**
-                     * Proposal status.
-                     * @member {cosmos_sdk.x.gov.v1.ProposalStatus} status
-                     * @memberof cosmos_sdk.x.gov.v1.Proposal
-                     * @instance
-                     */
-                    Proposal.prototype.status = 0;
-
-                    /**
-                     * Proposal finalTallyResult.
-                     * @member {cosmos_sdk.x.gov.v1.ITallyResult|null|undefined} finalTallyResult
-                     * @memberof cosmos_sdk.x.gov.v1.Proposal
-                     * @instance
-                     */
-                    Proposal.prototype.finalTallyResult = null;
-
-                    /**
-                     * Proposal submitTime.
-                     * @member {google.protobuf.ITimestamp|null|undefined} submitTime
-                     * @memberof cosmos_sdk.x.gov.v1.Proposal
-                     * @instance
-                     */
-                    Proposal.prototype.submitTime = null;
-
-                    /**
-                     * Proposal depositEndTime.
-                     * @member {google.protobuf.ITimestamp|null|undefined} depositEndTime
-                     * @memberof cosmos_sdk.x.gov.v1.Proposal
-                     * @instance
-                     */
-                    Proposal.prototype.depositEndTime = null;
-
-                    /**
-                     * Proposal totalDeposit.
-                     * @member {Array.<cosmos_sdk.v1.ICoin>} totalDeposit
-                     * @memberof cosmos_sdk.x.gov.v1.Proposal
-                     * @instance
-                     */
-                    Proposal.prototype.totalDeposit = $util.emptyArray;
-
-                    /**
-                     * Proposal votingStartTime.
-                     * @member {google.protobuf.ITimestamp|null|undefined} votingStartTime
-                     * @memberof cosmos_sdk.x.gov.v1.Proposal
-                     * @instance
-                     */
-                    Proposal.prototype.votingStartTime = null;
-
-                    /**
-                     * Proposal votingEndTime.
-                     * @member {google.protobuf.ITimestamp|null|undefined} votingEndTime
-                     * @memberof cosmos_sdk.x.gov.v1.Proposal
-                     * @instance
-                     */
-                    Proposal.prototype.votingEndTime = null;
-
-                    /**
-                     * Creates a new Proposal instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.gov.v1.Proposal
-                     * @static
-                     * @param {cosmos_sdk.x.gov.v1.IProposal=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.gov.v1.Proposal} Proposal instance
-                     */
-                    Proposal.create = function create(properties) {
-                        return new Proposal(properties);
-                    };
-
-                    /**
-                     * Encodes the specified Proposal message. Does not implicitly {@link cosmos_sdk.x.gov.v1.Proposal.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.gov.v1.Proposal
-                     * @static
-                     * @param {cosmos_sdk.x.gov.v1.IProposal} m Proposal message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    Proposal.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.proposalId != null && Object.hasOwnProperty.call(m, "proposalId"))
-                            w.uint32(8).uint64(m.proposalId);
-                        if (m.content != null && Object.hasOwnProperty.call(m, "content"))
-                            $root.google.protobuf.Any.encode(m.content, w.uint32(18).fork()).ldelim();
-                        if (m.status != null && Object.hasOwnProperty.call(m, "status"))
-                            w.uint32(24).int32(m.status);
-                        if (m.finalTallyResult != null && Object.hasOwnProperty.call(m, "finalTallyResult"))
-                            $root.cosmos_sdk.x.gov.v1.TallyResult.encode(m.finalTallyResult, w.uint32(34).fork()).ldelim();
-                        if (m.submitTime != null && Object.hasOwnProperty.call(m, "submitTime"))
-                            $root.google.protobuf.Timestamp.encode(m.submitTime, w.uint32(42).fork()).ldelim();
-                        if (m.depositEndTime != null && Object.hasOwnProperty.call(m, "depositEndTime"))
-                            $root.google.protobuf.Timestamp.encode(m.depositEndTime, w.uint32(50).fork()).ldelim();
-                        if (m.totalDeposit != null && m.totalDeposit.length) {
-                            for (var i = 0; i < m.totalDeposit.length; ++i)
-                                $root.cosmos_sdk.v1.Coin.encode(m.totalDeposit[i], w.uint32(58).fork()).ldelim();
-                        }
-                        if (m.votingStartTime != null && Object.hasOwnProperty.call(m, "votingStartTime"))
-                            $root.google.protobuf.Timestamp.encode(m.votingStartTime, w.uint32(66).fork()).ldelim();
-                        if (m.votingEndTime != null && Object.hasOwnProperty.call(m, "votingEndTime"))
-                            $root.google.protobuf.Timestamp.encode(m.votingEndTime, w.uint32(74).fork()).ldelim();
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a Proposal message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.gov.v1.Proposal
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.gov.v1.Proposal} Proposal
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    Proposal.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.gov.v1.Proposal();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.proposalId = r.uint64();
-                                break;
-                            case 2:
-                                m.content = $root.google.protobuf.Any.decode(r, r.uint32());
-                                break;
-                            case 3:
-                                m.status = r.int32();
-                                break;
-                            case 4:
-                                m.finalTallyResult = $root.cosmos_sdk.x.gov.v1.TallyResult.decode(r, r.uint32());
-                                break;
-                            case 5:
-                                m.submitTime = $root.google.protobuf.Timestamp.decode(r, r.uint32());
-                                break;
-                            case 6:
-                                m.depositEndTime = $root.google.protobuf.Timestamp.decode(r, r.uint32());
-                                break;
-                            case 7:
-                                if (!(m.totalDeposit && m.totalDeposit.length))
-                                    m.totalDeposit = [];
-                                m.totalDeposit.push($root.cosmos_sdk.v1.Coin.decode(r, r.uint32()));
-                                break;
-                            case 8:
-                                m.votingStartTime = $root.google.protobuf.Timestamp.decode(r, r.uint32());
-                                break;
-                            case 9:
-                                m.votingEndTime = $root.google.protobuf.Timestamp.decode(r, r.uint32());
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return Proposal;
-                })();
-
-                /**
-                 * ProposalStatus enum.
-                 * @name cosmos_sdk.x.gov.v1.ProposalStatus
-                 * @enum {number}
-                 * @property {number} PROPOSAL_STATUS_UNSPECIFIED=0 PROPOSAL_STATUS_UNSPECIFIED value
-                 * @property {number} PROPOSAL_STATUS_DEPOSIT_PERIOD=1 PROPOSAL_STATUS_DEPOSIT_PERIOD value
-                 * @property {number} PROPOSAL_STATUS_VOTING_PERIOD=2 PROPOSAL_STATUS_VOTING_PERIOD value
-                 * @property {number} PROPOSAL_STATUS_PASSED=3 PROPOSAL_STATUS_PASSED value
-                 * @property {number} PROPOSAL_STATUS_REJECTED=4 PROPOSAL_STATUS_REJECTED value
-                 * @property {number} PROPOSAL_STATUS_FAILED=5 PROPOSAL_STATUS_FAILED value
-                 */
-                v1.ProposalStatus = (function() {
-                    var valuesById = {}, values = Object.create(valuesById);
-                    values[valuesById[0] = "PROPOSAL_STATUS_UNSPECIFIED"] = 0;
-                    values[valuesById[1] = "PROPOSAL_STATUS_DEPOSIT_PERIOD"] = 1;
-                    values[valuesById[2] = "PROPOSAL_STATUS_VOTING_PERIOD"] = 2;
-                    values[valuesById[3] = "PROPOSAL_STATUS_PASSED"] = 3;
-                    values[valuesById[4] = "PROPOSAL_STATUS_REJECTED"] = 4;
-                    values[valuesById[5] = "PROPOSAL_STATUS_FAILED"] = 5;
-                    return values;
-                })();
-
-                v1.TallyResult = (function() {
-
-                    /**
-                     * Properties of a TallyResult.
-                     * @memberof cosmos_sdk.x.gov.v1
-                     * @interface ITallyResult
-                     * @property {string|null} [yes] TallyResult yes
-                     * @property {string|null} [abstain] TallyResult abstain
-                     * @property {string|null} [no] TallyResult no
-                     * @property {string|null} [noWithVeto] TallyResult noWithVeto
-                     */
-
-                    /**
-                     * Constructs a new TallyResult.
-                     * @memberof cosmos_sdk.x.gov.v1
-                     * @classdesc Represents a TallyResult.
-                     * @implements ITallyResult
-                     * @constructor
-                     * @param {cosmos_sdk.x.gov.v1.ITallyResult=} [p] Properties to set
-                     */
-                    function TallyResult(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * TallyResult yes.
-                     * @member {string} yes
-                     * @memberof cosmos_sdk.x.gov.v1.TallyResult
-                     * @instance
-                     */
-                    TallyResult.prototype.yes = "";
-
-                    /**
-                     * TallyResult abstain.
-                     * @member {string} abstain
-                     * @memberof cosmos_sdk.x.gov.v1.TallyResult
-                     * @instance
-                     */
-                    TallyResult.prototype.abstain = "";
-
-                    /**
-                     * TallyResult no.
-                     * @member {string} no
-                     * @memberof cosmos_sdk.x.gov.v1.TallyResult
-                     * @instance
-                     */
-                    TallyResult.prototype.no = "";
-
-                    /**
-                     * TallyResult noWithVeto.
-                     * @member {string} noWithVeto
-                     * @memberof cosmos_sdk.x.gov.v1.TallyResult
-                     * @instance
-                     */
-                    TallyResult.prototype.noWithVeto = "";
-
-                    /**
-                     * Creates a new TallyResult instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.gov.v1.TallyResult
-                     * @static
-                     * @param {cosmos_sdk.x.gov.v1.ITallyResult=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.gov.v1.TallyResult} TallyResult instance
-                     */
-                    TallyResult.create = function create(properties) {
-                        return new TallyResult(properties);
-                    };
-
-                    /**
-                     * Encodes the specified TallyResult message. Does not implicitly {@link cosmos_sdk.x.gov.v1.TallyResult.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.gov.v1.TallyResult
-                     * @static
-                     * @param {cosmos_sdk.x.gov.v1.ITallyResult} m TallyResult message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    TallyResult.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.yes != null && Object.hasOwnProperty.call(m, "yes"))
-                            w.uint32(10).string(m.yes);
-                        if (m.abstain != null && Object.hasOwnProperty.call(m, "abstain"))
-                            w.uint32(18).string(m.abstain);
-                        if (m.no != null && Object.hasOwnProperty.call(m, "no"))
-                            w.uint32(26).string(m.no);
-                        if (m.noWithVeto != null && Object.hasOwnProperty.call(m, "noWithVeto"))
-                            w.uint32(34).string(m.noWithVeto);
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a TallyResult message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.gov.v1.TallyResult
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.gov.v1.TallyResult} TallyResult
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    TallyResult.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.gov.v1.TallyResult();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.yes = r.string();
-                                break;
-                            case 2:
-                                m.abstain = r.string();
-                                break;
-                            case 3:
-                                m.no = r.string();
-                                break;
-                            case 4:
-                                m.noWithVeto = r.string();
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return TallyResult;
-                })();
-
-                v1.Vote = (function() {
-
-                    /**
-                     * Properties of a Vote.
-                     * @memberof cosmos_sdk.x.gov.v1
-                     * @interface IVote
-                     * @property {number|Long|null} [proposalId] Vote proposalId
-                     * @property {Uint8Array|null} [voter] Vote voter
-                     * @property {cosmos_sdk.x.gov.v1.VoteOption|null} [option] Vote option
-                     */
-
-                    /**
-                     * Constructs a new Vote.
-                     * @memberof cosmos_sdk.x.gov.v1
-                     * @classdesc Represents a Vote.
-                     * @implements IVote
-                     * @constructor
-                     * @param {cosmos_sdk.x.gov.v1.IVote=} [p] Properties to set
-                     */
-                    function Vote(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * Vote proposalId.
-                     * @member {number|Long} proposalId
-                     * @memberof cosmos_sdk.x.gov.v1.Vote
-                     * @instance
-                     */
-                    Vote.prototype.proposalId = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-                    /**
-                     * Vote voter.
-                     * @member {Uint8Array} voter
-                     * @memberof cosmos_sdk.x.gov.v1.Vote
-                     * @instance
-                     */
-                    Vote.prototype.voter = $util.newBuffer([]);
-
-                    /**
-                     * Vote option.
-                     * @member {cosmos_sdk.x.gov.v1.VoteOption} option
-                     * @memberof cosmos_sdk.x.gov.v1.Vote
-                     * @instance
-                     */
-                    Vote.prototype.option = 0;
-
-                    /**
-                     * Creates a new Vote instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.gov.v1.Vote
-                     * @static
-                     * @param {cosmos_sdk.x.gov.v1.IVote=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.gov.v1.Vote} Vote instance
-                     */
-                    Vote.create = function create(properties) {
-                        return new Vote(properties);
-                    };
-
-                    /**
-                     * Encodes the specified Vote message. Does not implicitly {@link cosmos_sdk.x.gov.v1.Vote.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.gov.v1.Vote
-                     * @static
-                     * @param {cosmos_sdk.x.gov.v1.IVote} m Vote message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    Vote.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.proposalId != null && Object.hasOwnProperty.call(m, "proposalId"))
-                            w.uint32(8).uint64(m.proposalId);
-                        if (m.voter != null && Object.hasOwnProperty.call(m, "voter"))
-                            w.uint32(18).bytes(m.voter);
-                        if (m.option != null && Object.hasOwnProperty.call(m, "option"))
-                            w.uint32(24).int32(m.option);
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a Vote message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.gov.v1.Vote
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.gov.v1.Vote} Vote
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    Vote.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.gov.v1.Vote();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.proposalId = r.uint64();
-                                break;
-                            case 2:
-                                m.voter = r.bytes();
-                                break;
-                            case 3:
-                                m.option = r.int32();
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return Vote;
-                })();
-
-                return v1;
-            })();
-
-            return gov;
-        })();
-
-        x.transfer = (function() {
-
-            /**
-             * Namespace transfer.
-             * @memberof cosmos_sdk.x
-             * @namespace
-             */
-            var transfer = {};
-
-            transfer.v1 = (function() {
-
-                /**
-                 * Namespace v1.
-                 * @memberof cosmos_sdk.x.transfer
-                 * @namespace
-                 */
-                var v1 = {};
-
-                v1.MsgTransfer = (function() {
-
-                    /**
-                     * Properties of a MsgTransfer.
-                     * @memberof cosmos_sdk.x.transfer.v1
-                     * @interface IMsgTransfer
-                     * @property {string|null} [sourcePort] MsgTransfer sourcePort
-                     * @property {string|null} [sourceChannel] MsgTransfer sourceChannel
-                     * @property {Array.<cosmos_sdk.v1.ICoin>|null} [amount] MsgTransfer amount
-                     * @property {Uint8Array|null} [sender] MsgTransfer sender
-                     * @property {string|null} [receiver] MsgTransfer receiver
-                     * @property {number|Long|null} [timeoutHeight] MsgTransfer timeoutHeight
-                     * @property {number|Long|null} [timeoutTimestamp] MsgTransfer timeoutTimestamp
-                     */
-
-                    /**
-                     * Constructs a new MsgTransfer.
-                     * @memberof cosmos_sdk.x.transfer.v1
-                     * @classdesc Represents a MsgTransfer.
-                     * @implements IMsgTransfer
-                     * @constructor
-                     * @param {cosmos_sdk.x.transfer.v1.IMsgTransfer=} [p] Properties to set
-                     */
-                    function MsgTransfer(p) {
-                        this.amount = [];
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * MsgTransfer sourcePort.
-                     * @member {string} sourcePort
-                     * @memberof cosmos_sdk.x.transfer.v1.MsgTransfer
-                     * @instance
-                     */
-                    MsgTransfer.prototype.sourcePort = "";
-
-                    /**
-                     * MsgTransfer sourceChannel.
-                     * @member {string} sourceChannel
-                     * @memberof cosmos_sdk.x.transfer.v1.MsgTransfer
-                     * @instance
-                     */
-                    MsgTransfer.prototype.sourceChannel = "";
-
-                    /**
-                     * MsgTransfer amount.
-                     * @member {Array.<cosmos_sdk.v1.ICoin>} amount
-                     * @memberof cosmos_sdk.x.transfer.v1.MsgTransfer
-                     * @instance
-                     */
-                    MsgTransfer.prototype.amount = $util.emptyArray;
-
-                    /**
-                     * MsgTransfer sender.
-                     * @member {Uint8Array} sender
-                     * @memberof cosmos_sdk.x.transfer.v1.MsgTransfer
-                     * @instance
-                     */
-                    MsgTransfer.prototype.sender = $util.newBuffer([]);
-
-                    /**
-                     * MsgTransfer receiver.
-                     * @member {string} receiver
-                     * @memberof cosmos_sdk.x.transfer.v1.MsgTransfer
-                     * @instance
-                     */
-                    MsgTransfer.prototype.receiver = "";
-
-                    /**
-                     * MsgTransfer timeoutHeight.
-                     * @member {number|Long} timeoutHeight
-                     * @memberof cosmos_sdk.x.transfer.v1.MsgTransfer
-                     * @instance
-                     */
-                    MsgTransfer.prototype.timeoutHeight = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-                    /**
-                     * MsgTransfer timeoutTimestamp.
-                     * @member {number|Long} timeoutTimestamp
-                     * @memberof cosmos_sdk.x.transfer.v1.MsgTransfer
-                     * @instance
-                     */
-                    MsgTransfer.prototype.timeoutTimestamp = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-                    /**
-                     * Creates a new MsgTransfer instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.transfer.v1.MsgTransfer
-                     * @static
-                     * @param {cosmos_sdk.x.transfer.v1.IMsgTransfer=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.transfer.v1.MsgTransfer} MsgTransfer instance
-                     */
-                    MsgTransfer.create = function create(properties) {
-                        return new MsgTransfer(properties);
-                    };
-
-                    /**
-                     * Encodes the specified MsgTransfer message. Does not implicitly {@link cosmos_sdk.x.transfer.v1.MsgTransfer.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.transfer.v1.MsgTransfer
-                     * @static
-                     * @param {cosmos_sdk.x.transfer.v1.IMsgTransfer} m MsgTransfer message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    MsgTransfer.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.sourcePort != null && Object.hasOwnProperty.call(m, "sourcePort"))
-                            w.uint32(10).string(m.sourcePort);
-                        if (m.sourceChannel != null && Object.hasOwnProperty.call(m, "sourceChannel"))
-                            w.uint32(18).string(m.sourceChannel);
-                        if (m.amount != null && m.amount.length) {
-                            for (var i = 0; i < m.amount.length; ++i)
-                                $root.cosmos_sdk.v1.Coin.encode(m.amount[i], w.uint32(26).fork()).ldelim();
-                        }
-                        if (m.sender != null && Object.hasOwnProperty.call(m, "sender"))
-                            w.uint32(34).bytes(m.sender);
-                        if (m.receiver != null && Object.hasOwnProperty.call(m, "receiver"))
-                            w.uint32(42).string(m.receiver);
-                        if (m.timeoutHeight != null && Object.hasOwnProperty.call(m, "timeoutHeight"))
-                            w.uint32(48).uint64(m.timeoutHeight);
-                        if (m.timeoutTimestamp != null && Object.hasOwnProperty.call(m, "timeoutTimestamp"))
-                            w.uint32(56).uint64(m.timeoutTimestamp);
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a MsgTransfer message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.transfer.v1.MsgTransfer
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.transfer.v1.MsgTransfer} MsgTransfer
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    MsgTransfer.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.transfer.v1.MsgTransfer();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.sourcePort = r.string();
-                                break;
-                            case 2:
-                                m.sourceChannel = r.string();
-                                break;
-                            case 3:
-                                if (!(m.amount && m.amount.length))
-                                    m.amount = [];
-                                m.amount.push($root.cosmos_sdk.v1.Coin.decode(r, r.uint32()));
-                                break;
-                            case 4:
-                                m.sender = r.bytes();
-                                break;
-                            case 5:
-                                m.receiver = r.string();
-                                break;
-                            case 6:
-                                m.timeoutHeight = r.uint64();
-                                break;
-                            case 7:
-                                m.timeoutTimestamp = r.uint64();
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return MsgTransfer;
-                })();
-
-                v1.FungibleTokenPacketData = (function() {
-
-                    /**
-                     * Properties of a FungibleTokenPacketData.
-                     * @memberof cosmos_sdk.x.transfer.v1
-                     * @interface IFungibleTokenPacketData
-                     * @property {Array.<cosmos_sdk.v1.ICoin>|null} [amount] FungibleTokenPacketData amount
-                     * @property {string|null} [sender] FungibleTokenPacketData sender
-                     * @property {string|null} [receiver] FungibleTokenPacketData receiver
-                     */
-
-                    /**
-                     * Constructs a new FungibleTokenPacketData.
-                     * @memberof cosmos_sdk.x.transfer.v1
-                     * @classdesc Represents a FungibleTokenPacketData.
-                     * @implements IFungibleTokenPacketData
-                     * @constructor
-                     * @param {cosmos_sdk.x.transfer.v1.IFungibleTokenPacketData=} [p] Properties to set
-                     */
-                    function FungibleTokenPacketData(p) {
-                        this.amount = [];
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * FungibleTokenPacketData amount.
-                     * @member {Array.<cosmos_sdk.v1.ICoin>} amount
-                     * @memberof cosmos_sdk.x.transfer.v1.FungibleTokenPacketData
-                     * @instance
-                     */
-                    FungibleTokenPacketData.prototype.amount = $util.emptyArray;
-
-                    /**
-                     * FungibleTokenPacketData sender.
-                     * @member {string} sender
-                     * @memberof cosmos_sdk.x.transfer.v1.FungibleTokenPacketData
-                     * @instance
-                     */
-                    FungibleTokenPacketData.prototype.sender = "";
-
-                    /**
-                     * FungibleTokenPacketData receiver.
-                     * @member {string} receiver
-                     * @memberof cosmos_sdk.x.transfer.v1.FungibleTokenPacketData
-                     * @instance
-                     */
-                    FungibleTokenPacketData.prototype.receiver = "";
-
-                    /**
-                     * Creates a new FungibleTokenPacketData instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.transfer.v1.FungibleTokenPacketData
-                     * @static
-                     * @param {cosmos_sdk.x.transfer.v1.IFungibleTokenPacketData=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.transfer.v1.FungibleTokenPacketData} FungibleTokenPacketData instance
-                     */
-                    FungibleTokenPacketData.create = function create(properties) {
-                        return new FungibleTokenPacketData(properties);
-                    };
-
-                    /**
-                     * Encodes the specified FungibleTokenPacketData message. Does not implicitly {@link cosmos_sdk.x.transfer.v1.FungibleTokenPacketData.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.transfer.v1.FungibleTokenPacketData
-                     * @static
-                     * @param {cosmos_sdk.x.transfer.v1.IFungibleTokenPacketData} m FungibleTokenPacketData message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    FungibleTokenPacketData.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.amount != null && m.amount.length) {
-                            for (var i = 0; i < m.amount.length; ++i)
-                                $root.cosmos_sdk.v1.Coin.encode(m.amount[i], w.uint32(10).fork()).ldelim();
-                        }
-                        if (m.sender != null && Object.hasOwnProperty.call(m, "sender"))
-                            w.uint32(18).string(m.sender);
-                        if (m.receiver != null && Object.hasOwnProperty.call(m, "receiver"))
-                            w.uint32(26).string(m.receiver);
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a FungibleTokenPacketData message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.transfer.v1.FungibleTokenPacketData
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.transfer.v1.FungibleTokenPacketData} FungibleTokenPacketData
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    FungibleTokenPacketData.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.transfer.v1.FungibleTokenPacketData();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                if (!(m.amount && m.amount.length))
-                                    m.amount = [];
-                                m.amount.push($root.cosmos_sdk.v1.Coin.decode(r, r.uint32()));
-                                break;
-                            case 2:
-                                m.sender = r.string();
-                                break;
-                            case 3:
-                                m.receiver = r.string();
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return FungibleTokenPacketData;
-                })();
-
-                v1.FungibleTokenPacketAcknowledgement = (function() {
-
-                    /**
-                     * Properties of a FungibleTokenPacketAcknowledgement.
-                     * @memberof cosmos_sdk.x.transfer.v1
-                     * @interface IFungibleTokenPacketAcknowledgement
-                     * @property {boolean|null} [success] FungibleTokenPacketAcknowledgement success
-                     * @property {string|null} [error] FungibleTokenPacketAcknowledgement error
-                     */
-
-                    /**
-                     * Constructs a new FungibleTokenPacketAcknowledgement.
-                     * @memberof cosmos_sdk.x.transfer.v1
-                     * @classdesc Represents a FungibleTokenPacketAcknowledgement.
-                     * @implements IFungibleTokenPacketAcknowledgement
-                     * @constructor
-                     * @param {cosmos_sdk.x.transfer.v1.IFungibleTokenPacketAcknowledgement=} [p] Properties to set
-                     */
-                    function FungibleTokenPacketAcknowledgement(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * FungibleTokenPacketAcknowledgement success.
-                     * @member {boolean} success
-                     * @memberof cosmos_sdk.x.transfer.v1.FungibleTokenPacketAcknowledgement
-                     * @instance
-                     */
-                    FungibleTokenPacketAcknowledgement.prototype.success = false;
-
-                    /**
-                     * FungibleTokenPacketAcknowledgement error.
-                     * @member {string} error
-                     * @memberof cosmos_sdk.x.transfer.v1.FungibleTokenPacketAcknowledgement
-                     * @instance
-                     */
-                    FungibleTokenPacketAcknowledgement.prototype.error = "";
-
-                    /**
-                     * Creates a new FungibleTokenPacketAcknowledgement instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.transfer.v1.FungibleTokenPacketAcknowledgement
-                     * @static
-                     * @param {cosmos_sdk.x.transfer.v1.IFungibleTokenPacketAcknowledgement=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.transfer.v1.FungibleTokenPacketAcknowledgement} FungibleTokenPacketAcknowledgement instance
-                     */
-                    FungibleTokenPacketAcknowledgement.create = function create(properties) {
-                        return new FungibleTokenPacketAcknowledgement(properties);
-                    };
-
-                    /**
-                     * Encodes the specified FungibleTokenPacketAcknowledgement message. Does not implicitly {@link cosmos_sdk.x.transfer.v1.FungibleTokenPacketAcknowledgement.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.transfer.v1.FungibleTokenPacketAcknowledgement
-                     * @static
-                     * @param {cosmos_sdk.x.transfer.v1.IFungibleTokenPacketAcknowledgement} m FungibleTokenPacketAcknowledgement message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    FungibleTokenPacketAcknowledgement.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.success != null && Object.hasOwnProperty.call(m, "success"))
-                            w.uint32(8).bool(m.success);
-                        if (m.error != null && Object.hasOwnProperty.call(m, "error"))
-                            w.uint32(18).string(m.error);
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a FungibleTokenPacketAcknowledgement message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.transfer.v1.FungibleTokenPacketAcknowledgement
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.transfer.v1.FungibleTokenPacketAcknowledgement} FungibleTokenPacketAcknowledgement
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    FungibleTokenPacketAcknowledgement.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.transfer.v1.FungibleTokenPacketAcknowledgement();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.success = r.bool();
-                                break;
-                            case 2:
-                                m.error = r.string();
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return FungibleTokenPacketAcknowledgement;
-                })();
-
-                return v1;
-            })();
-
-            return transfer;
-        })();
-
-        x.ibc = (function() {
-
-            /**
-             * Namespace ibc.
-             * @memberof cosmos_sdk.x
-             * @namespace
-             */
-            var ibc = {};
-
-            ibc.connection = (function() {
-
-                /**
-                 * Namespace connection.
-                 * @memberof cosmos_sdk.x.ibc
-                 * @namespace
-                 */
-                var connection = {};
-
-                connection.v1 = (function() {
-
-                    /**
-                     * Namespace v1.
-                     * @memberof cosmos_sdk.x.ibc.connection
-                     * @namespace
-                     */
-                    var v1 = {};
-
-                    v1.MsgConnectionOpenInit = (function() {
-
-                        /**
-                         * Properties of a MsgConnectionOpenInit.
-                         * @memberof cosmos_sdk.x.ibc.connection.v1
-                         * @interface IMsgConnectionOpenInit
-                         * @property {string|null} [clientId] MsgConnectionOpenInit clientId
-                         * @property {string|null} [connectionId] MsgConnectionOpenInit connectionId
-                         * @property {cosmos_sdk.x.ibc.connection.v1.ICounterparty|null} [counterparty] MsgConnectionOpenInit counterparty
-                         * @property {Uint8Array|null} [signer] MsgConnectionOpenInit signer
-                         */
-
-                        /**
-                         * Constructs a new MsgConnectionOpenInit.
-                         * @memberof cosmos_sdk.x.ibc.connection.v1
-                         * @classdesc Represents a MsgConnectionOpenInit.
-                         * @implements IMsgConnectionOpenInit
-                         * @constructor
-                         * @param {cosmos_sdk.x.ibc.connection.v1.IMsgConnectionOpenInit=} [p] Properties to set
-                         */
-                        function MsgConnectionOpenInit(p) {
-                            if (p)
-                                for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                    if (p[ks[i]] != null)
-                                        this[ks[i]] = p[ks[i]];
-                        }
-
-                        /**
-                         * MsgConnectionOpenInit clientId.
-                         * @member {string} clientId
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenInit
-                         * @instance
-                         */
-                        MsgConnectionOpenInit.prototype.clientId = "";
-
-                        /**
-                         * MsgConnectionOpenInit connectionId.
-                         * @member {string} connectionId
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenInit
-                         * @instance
-                         */
-                        MsgConnectionOpenInit.prototype.connectionId = "";
-
-                        /**
-                         * MsgConnectionOpenInit counterparty.
-                         * @member {cosmos_sdk.x.ibc.connection.v1.ICounterparty|null|undefined} counterparty
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenInit
-                         * @instance
-                         */
-                        MsgConnectionOpenInit.prototype.counterparty = null;
-
-                        /**
-                         * MsgConnectionOpenInit signer.
-                         * @member {Uint8Array} signer
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenInit
-                         * @instance
-                         */
-                        MsgConnectionOpenInit.prototype.signer = $util.newBuffer([]);
-
-                        /**
-                         * Creates a new MsgConnectionOpenInit instance using the specified properties.
-                         * @function create
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenInit
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.connection.v1.IMsgConnectionOpenInit=} [properties] Properties to set
-                         * @returns {cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenInit} MsgConnectionOpenInit instance
-                         */
-                        MsgConnectionOpenInit.create = function create(properties) {
-                            return new MsgConnectionOpenInit(properties);
-                        };
-
-                        /**
-                         * Encodes the specified MsgConnectionOpenInit message. Does not implicitly {@link cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenInit.verify|verify} messages.
-                         * @function encode
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenInit
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.connection.v1.IMsgConnectionOpenInit} m MsgConnectionOpenInit message or plain object to encode
-                         * @param {$protobuf.Writer} [w] Writer to encode to
-                         * @returns {$protobuf.Writer} Writer
-                         */
-                        MsgConnectionOpenInit.encode = function encode(m, w) {
-                            if (!w)
-                                w = $Writer.create();
-                            if (m.clientId != null && Object.hasOwnProperty.call(m, "clientId"))
-                                w.uint32(10).string(m.clientId);
-                            if (m.connectionId != null && Object.hasOwnProperty.call(m, "connectionId"))
-                                w.uint32(18).string(m.connectionId);
-                            if (m.counterparty != null && Object.hasOwnProperty.call(m, "counterparty"))
-                                $root.cosmos_sdk.x.ibc.connection.v1.Counterparty.encode(m.counterparty, w.uint32(26).fork()).ldelim();
-                            if (m.signer != null && Object.hasOwnProperty.call(m, "signer"))
-                                w.uint32(34).bytes(m.signer);
-                            return w;
-                        };
-
-                        /**
-                         * Decodes a MsgConnectionOpenInit message from the specified reader or buffer.
-                         * @function decode
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenInit
-                         * @static
-                         * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                         * @param {number} [l] Message length if known beforehand
-                         * @returns {cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenInit} MsgConnectionOpenInit
-                         * @throws {Error} If the payload is not a reader or valid buffer
-                         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                         */
-                        MsgConnectionOpenInit.decode = function decode(r, l) {
-                            if (!(r instanceof $Reader))
-                                r = $Reader.create(r);
-                            var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenInit();
-                            while (r.pos < c) {
-                                var t = r.uint32();
-                                switch (t >>> 3) {
-                                case 1:
-                                    m.clientId = r.string();
-                                    break;
-                                case 2:
-                                    m.connectionId = r.string();
-                                    break;
-                                case 3:
-                                    m.counterparty = $root.cosmos_sdk.x.ibc.connection.v1.Counterparty.decode(r, r.uint32());
-                                    break;
-                                case 4:
-                                    m.signer = r.bytes();
-                                    break;
-                                default:
-                                    r.skipType(t & 7);
-                                    break;
-                                }
-                            }
-                            return m;
-                        };
-
-                        return MsgConnectionOpenInit;
-                    })();
-
-                    v1.MsgConnectionOpenTry = (function() {
-
-                        /**
-                         * Properties of a MsgConnectionOpenTry.
-                         * @memberof cosmos_sdk.x.ibc.connection.v1
-                         * @interface IMsgConnectionOpenTry
-                         * @property {string|null} [clientId] MsgConnectionOpenTry clientId
-                         * @property {string|null} [connectionId] MsgConnectionOpenTry connectionId
-                         * @property {cosmos_sdk.x.ibc.connection.v1.ICounterparty|null} [counterparty] MsgConnectionOpenTry counterparty
-                         * @property {Array.<string>|null} [counterpartyVersions] MsgConnectionOpenTry counterpartyVersions
-                         * @property {Uint8Array|null} [proofInit] MsgConnectionOpenTry proofInit
-                         * @property {number|Long|null} [proofHeight] MsgConnectionOpenTry proofHeight
-                         * @property {Uint8Array|null} [proofConsensus] MsgConnectionOpenTry proofConsensus
-                         * @property {number|Long|null} [consensusHeight] MsgConnectionOpenTry consensusHeight
-                         * @property {Uint8Array|null} [signer] MsgConnectionOpenTry signer
-                         */
-
-                        /**
-                         * Constructs a new MsgConnectionOpenTry.
-                         * @memberof cosmos_sdk.x.ibc.connection.v1
-                         * @classdesc Represents a MsgConnectionOpenTry.
-                         * @implements IMsgConnectionOpenTry
-                         * @constructor
-                         * @param {cosmos_sdk.x.ibc.connection.v1.IMsgConnectionOpenTry=} [p] Properties to set
-                         */
-                        function MsgConnectionOpenTry(p) {
-                            this.counterpartyVersions = [];
-                            if (p)
-                                for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                    if (p[ks[i]] != null)
-                                        this[ks[i]] = p[ks[i]];
-                        }
-
-                        /**
-                         * MsgConnectionOpenTry clientId.
-                         * @member {string} clientId
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenTry
-                         * @instance
-                         */
-                        MsgConnectionOpenTry.prototype.clientId = "";
-
-                        /**
-                         * MsgConnectionOpenTry connectionId.
-                         * @member {string} connectionId
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenTry
-                         * @instance
-                         */
-                        MsgConnectionOpenTry.prototype.connectionId = "";
-
-                        /**
-                         * MsgConnectionOpenTry counterparty.
-                         * @member {cosmos_sdk.x.ibc.connection.v1.ICounterparty|null|undefined} counterparty
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenTry
-                         * @instance
-                         */
-                        MsgConnectionOpenTry.prototype.counterparty = null;
-
-                        /**
-                         * MsgConnectionOpenTry counterpartyVersions.
-                         * @member {Array.<string>} counterpartyVersions
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenTry
-                         * @instance
-                         */
-                        MsgConnectionOpenTry.prototype.counterpartyVersions = $util.emptyArray;
-
-                        /**
-                         * MsgConnectionOpenTry proofInit.
-                         * @member {Uint8Array} proofInit
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenTry
-                         * @instance
-                         */
-                        MsgConnectionOpenTry.prototype.proofInit = $util.newBuffer([]);
-
-                        /**
-                         * MsgConnectionOpenTry proofHeight.
-                         * @member {number|Long} proofHeight
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenTry
-                         * @instance
-                         */
-                        MsgConnectionOpenTry.prototype.proofHeight = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-                        /**
-                         * MsgConnectionOpenTry proofConsensus.
-                         * @member {Uint8Array} proofConsensus
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenTry
-                         * @instance
-                         */
-                        MsgConnectionOpenTry.prototype.proofConsensus = $util.newBuffer([]);
-
-                        /**
-                         * MsgConnectionOpenTry consensusHeight.
-                         * @member {number|Long} consensusHeight
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenTry
-                         * @instance
-                         */
-                        MsgConnectionOpenTry.prototype.consensusHeight = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-                        /**
-                         * MsgConnectionOpenTry signer.
-                         * @member {Uint8Array} signer
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenTry
-                         * @instance
-                         */
-                        MsgConnectionOpenTry.prototype.signer = $util.newBuffer([]);
-
-                        /**
-                         * Creates a new MsgConnectionOpenTry instance using the specified properties.
-                         * @function create
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenTry
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.connection.v1.IMsgConnectionOpenTry=} [properties] Properties to set
-                         * @returns {cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenTry} MsgConnectionOpenTry instance
-                         */
-                        MsgConnectionOpenTry.create = function create(properties) {
-                            return new MsgConnectionOpenTry(properties);
-                        };
-
-                        /**
-                         * Encodes the specified MsgConnectionOpenTry message. Does not implicitly {@link cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenTry.verify|verify} messages.
-                         * @function encode
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenTry
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.connection.v1.IMsgConnectionOpenTry} m MsgConnectionOpenTry message or plain object to encode
-                         * @param {$protobuf.Writer} [w] Writer to encode to
-                         * @returns {$protobuf.Writer} Writer
-                         */
-                        MsgConnectionOpenTry.encode = function encode(m, w) {
-                            if (!w)
-                                w = $Writer.create();
-                            if (m.clientId != null && Object.hasOwnProperty.call(m, "clientId"))
-                                w.uint32(10).string(m.clientId);
-                            if (m.connectionId != null && Object.hasOwnProperty.call(m, "connectionId"))
-                                w.uint32(18).string(m.connectionId);
-                            if (m.counterparty != null && Object.hasOwnProperty.call(m, "counterparty"))
-                                $root.cosmos_sdk.x.ibc.connection.v1.Counterparty.encode(m.counterparty, w.uint32(26).fork()).ldelim();
-                            if (m.counterpartyVersions != null && m.counterpartyVersions.length) {
-                                for (var i = 0; i < m.counterpartyVersions.length; ++i)
-                                    w.uint32(34).string(m.counterpartyVersions[i]);
-                            }
-                            if (m.proofInit != null && Object.hasOwnProperty.call(m, "proofInit"))
-                                w.uint32(42).bytes(m.proofInit);
-                            if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
-                                w.uint32(48).uint64(m.proofHeight);
-                            if (m.proofConsensus != null && Object.hasOwnProperty.call(m, "proofConsensus"))
-                                w.uint32(58).bytes(m.proofConsensus);
-                            if (m.consensusHeight != null && Object.hasOwnProperty.call(m, "consensusHeight"))
-                                w.uint32(64).uint64(m.consensusHeight);
-                            if (m.signer != null && Object.hasOwnProperty.call(m, "signer"))
-                                w.uint32(74).bytes(m.signer);
-                            return w;
-                        };
-
-                        /**
-                         * Decodes a MsgConnectionOpenTry message from the specified reader or buffer.
-                         * @function decode
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenTry
-                         * @static
-                         * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                         * @param {number} [l] Message length if known beforehand
-                         * @returns {cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenTry} MsgConnectionOpenTry
-                         * @throws {Error} If the payload is not a reader or valid buffer
-                         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                         */
-                        MsgConnectionOpenTry.decode = function decode(r, l) {
-                            if (!(r instanceof $Reader))
-                                r = $Reader.create(r);
-                            var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenTry();
-                            while (r.pos < c) {
-                                var t = r.uint32();
-                                switch (t >>> 3) {
-                                case 1:
-                                    m.clientId = r.string();
-                                    break;
-                                case 2:
-                                    m.connectionId = r.string();
-                                    break;
-                                case 3:
-                                    m.counterparty = $root.cosmos_sdk.x.ibc.connection.v1.Counterparty.decode(r, r.uint32());
-                                    break;
-                                case 4:
-                                    if (!(m.counterpartyVersions && m.counterpartyVersions.length))
-                                        m.counterpartyVersions = [];
-                                    m.counterpartyVersions.push(r.string());
-                                    break;
-                                case 5:
-                                    m.proofInit = r.bytes();
-                                    break;
-                                case 6:
-                                    m.proofHeight = r.uint64();
-                                    break;
-                                case 7:
-                                    m.proofConsensus = r.bytes();
-                                    break;
-                                case 8:
-                                    m.consensusHeight = r.uint64();
-                                    break;
-                                case 9:
-                                    m.signer = r.bytes();
-                                    break;
-                                default:
-                                    r.skipType(t & 7);
-                                    break;
-                                }
-                            }
-                            return m;
-                        };
-
-                        return MsgConnectionOpenTry;
-                    })();
-
-                    v1.MsgConnectionOpenAck = (function() {
-
-                        /**
-                         * Properties of a MsgConnectionOpenAck.
-                         * @memberof cosmos_sdk.x.ibc.connection.v1
-                         * @interface IMsgConnectionOpenAck
-                         * @property {string|null} [connectionId] MsgConnectionOpenAck connectionId
-                         * @property {string|null} [version] MsgConnectionOpenAck version
-                         * @property {Uint8Array|null} [proofTry] MsgConnectionOpenAck proofTry
-                         * @property {number|Long|null} [proofHeight] MsgConnectionOpenAck proofHeight
-                         * @property {Uint8Array|null} [proofConsensus] MsgConnectionOpenAck proofConsensus
-                         * @property {number|Long|null} [consensusHeight] MsgConnectionOpenAck consensusHeight
-                         * @property {Uint8Array|null} [signer] MsgConnectionOpenAck signer
-                         */
-
-                        /**
-                         * Constructs a new MsgConnectionOpenAck.
-                         * @memberof cosmos_sdk.x.ibc.connection.v1
-                         * @classdesc Represents a MsgConnectionOpenAck.
-                         * @implements IMsgConnectionOpenAck
-                         * @constructor
-                         * @param {cosmos_sdk.x.ibc.connection.v1.IMsgConnectionOpenAck=} [p] Properties to set
-                         */
-                        function MsgConnectionOpenAck(p) {
-                            if (p)
-                                for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                    if (p[ks[i]] != null)
-                                        this[ks[i]] = p[ks[i]];
-                        }
-
-                        /**
-                         * MsgConnectionOpenAck connectionId.
-                         * @member {string} connectionId
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenAck
-                         * @instance
-                         */
-                        MsgConnectionOpenAck.prototype.connectionId = "";
-
-                        /**
-                         * MsgConnectionOpenAck version.
-                         * @member {string} version
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenAck
-                         * @instance
-                         */
-                        MsgConnectionOpenAck.prototype.version = "";
-
-                        /**
-                         * MsgConnectionOpenAck proofTry.
-                         * @member {Uint8Array} proofTry
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenAck
-                         * @instance
-                         */
-                        MsgConnectionOpenAck.prototype.proofTry = $util.newBuffer([]);
-
-                        /**
-                         * MsgConnectionOpenAck proofHeight.
-                         * @member {number|Long} proofHeight
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenAck
-                         * @instance
-                         */
-                        MsgConnectionOpenAck.prototype.proofHeight = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-                        /**
-                         * MsgConnectionOpenAck proofConsensus.
-                         * @member {Uint8Array} proofConsensus
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenAck
-                         * @instance
-                         */
-                        MsgConnectionOpenAck.prototype.proofConsensus = $util.newBuffer([]);
-
-                        /**
-                         * MsgConnectionOpenAck consensusHeight.
-                         * @member {number|Long} consensusHeight
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenAck
-                         * @instance
-                         */
-                        MsgConnectionOpenAck.prototype.consensusHeight = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-                        /**
-                         * MsgConnectionOpenAck signer.
-                         * @member {Uint8Array} signer
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenAck
-                         * @instance
-                         */
-                        MsgConnectionOpenAck.prototype.signer = $util.newBuffer([]);
-
-                        /**
-                         * Creates a new MsgConnectionOpenAck instance using the specified properties.
-                         * @function create
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenAck
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.connection.v1.IMsgConnectionOpenAck=} [properties] Properties to set
-                         * @returns {cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenAck} MsgConnectionOpenAck instance
-                         */
-                        MsgConnectionOpenAck.create = function create(properties) {
-                            return new MsgConnectionOpenAck(properties);
-                        };
-
-                        /**
-                         * Encodes the specified MsgConnectionOpenAck message. Does not implicitly {@link cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenAck.verify|verify} messages.
-                         * @function encode
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenAck
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.connection.v1.IMsgConnectionOpenAck} m MsgConnectionOpenAck message or plain object to encode
-                         * @param {$protobuf.Writer} [w] Writer to encode to
-                         * @returns {$protobuf.Writer} Writer
-                         */
-                        MsgConnectionOpenAck.encode = function encode(m, w) {
-                            if (!w)
-                                w = $Writer.create();
-                            if (m.connectionId != null && Object.hasOwnProperty.call(m, "connectionId"))
-                                w.uint32(10).string(m.connectionId);
-                            if (m.version != null && Object.hasOwnProperty.call(m, "version"))
-                                w.uint32(18).string(m.version);
-                            if (m.proofTry != null && Object.hasOwnProperty.call(m, "proofTry"))
-                                w.uint32(26).bytes(m.proofTry);
-                            if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
-                                w.uint32(32).uint64(m.proofHeight);
-                            if (m.proofConsensus != null && Object.hasOwnProperty.call(m, "proofConsensus"))
-                                w.uint32(42).bytes(m.proofConsensus);
-                            if (m.consensusHeight != null && Object.hasOwnProperty.call(m, "consensusHeight"))
-                                w.uint32(48).uint64(m.consensusHeight);
-                            if (m.signer != null && Object.hasOwnProperty.call(m, "signer"))
-                                w.uint32(58).bytes(m.signer);
-                            return w;
-                        };
-
-                        /**
-                         * Decodes a MsgConnectionOpenAck message from the specified reader or buffer.
-                         * @function decode
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenAck
-                         * @static
-                         * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                         * @param {number} [l] Message length if known beforehand
-                         * @returns {cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenAck} MsgConnectionOpenAck
-                         * @throws {Error} If the payload is not a reader or valid buffer
-                         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                         */
-                        MsgConnectionOpenAck.decode = function decode(r, l) {
-                            if (!(r instanceof $Reader))
-                                r = $Reader.create(r);
-                            var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenAck();
-                            while (r.pos < c) {
-                                var t = r.uint32();
-                                switch (t >>> 3) {
-                                case 1:
-                                    m.connectionId = r.string();
-                                    break;
-                                case 2:
-                                    m.version = r.string();
-                                    break;
-                                case 3:
-                                    m.proofTry = r.bytes();
-                                    break;
-                                case 4:
-                                    m.proofHeight = r.uint64();
-                                    break;
-                                case 5:
-                                    m.proofConsensus = r.bytes();
-                                    break;
-                                case 6:
-                                    m.consensusHeight = r.uint64();
-                                    break;
-                                case 7:
-                                    m.signer = r.bytes();
-                                    break;
-                                default:
-                                    r.skipType(t & 7);
-                                    break;
-                                }
-                            }
-                            return m;
-                        };
-
-                        return MsgConnectionOpenAck;
-                    })();
-
-                    v1.MsgConnectionOpenConfirm = (function() {
-
-                        /**
-                         * Properties of a MsgConnectionOpenConfirm.
-                         * @memberof cosmos_sdk.x.ibc.connection.v1
-                         * @interface IMsgConnectionOpenConfirm
-                         * @property {string|null} [connectionId] MsgConnectionOpenConfirm connectionId
-                         * @property {Uint8Array|null} [proofAck] MsgConnectionOpenConfirm proofAck
-                         * @property {number|Long|null} [proofHeight] MsgConnectionOpenConfirm proofHeight
-                         * @property {Uint8Array|null} [signer] MsgConnectionOpenConfirm signer
-                         */
-
-                        /**
-                         * Constructs a new MsgConnectionOpenConfirm.
-                         * @memberof cosmos_sdk.x.ibc.connection.v1
-                         * @classdesc Represents a MsgConnectionOpenConfirm.
-                         * @implements IMsgConnectionOpenConfirm
-                         * @constructor
-                         * @param {cosmos_sdk.x.ibc.connection.v1.IMsgConnectionOpenConfirm=} [p] Properties to set
-                         */
-                        function MsgConnectionOpenConfirm(p) {
-                            if (p)
-                                for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                    if (p[ks[i]] != null)
-                                        this[ks[i]] = p[ks[i]];
-                        }
-
-                        /**
-                         * MsgConnectionOpenConfirm connectionId.
-                         * @member {string} connectionId
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenConfirm
-                         * @instance
-                         */
-                        MsgConnectionOpenConfirm.prototype.connectionId = "";
-
-                        /**
-                         * MsgConnectionOpenConfirm proofAck.
-                         * @member {Uint8Array} proofAck
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenConfirm
-                         * @instance
-                         */
-                        MsgConnectionOpenConfirm.prototype.proofAck = $util.newBuffer([]);
-
-                        /**
-                         * MsgConnectionOpenConfirm proofHeight.
-                         * @member {number|Long} proofHeight
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenConfirm
-                         * @instance
-                         */
-                        MsgConnectionOpenConfirm.prototype.proofHeight = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-                        /**
-                         * MsgConnectionOpenConfirm signer.
-                         * @member {Uint8Array} signer
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenConfirm
-                         * @instance
-                         */
-                        MsgConnectionOpenConfirm.prototype.signer = $util.newBuffer([]);
-
-                        /**
-                         * Creates a new MsgConnectionOpenConfirm instance using the specified properties.
-                         * @function create
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenConfirm
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.connection.v1.IMsgConnectionOpenConfirm=} [properties] Properties to set
-                         * @returns {cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenConfirm} MsgConnectionOpenConfirm instance
-                         */
-                        MsgConnectionOpenConfirm.create = function create(properties) {
-                            return new MsgConnectionOpenConfirm(properties);
-                        };
-
-                        /**
-                         * Encodes the specified MsgConnectionOpenConfirm message. Does not implicitly {@link cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenConfirm.verify|verify} messages.
-                         * @function encode
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenConfirm
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.connection.v1.IMsgConnectionOpenConfirm} m MsgConnectionOpenConfirm message or plain object to encode
-                         * @param {$protobuf.Writer} [w] Writer to encode to
-                         * @returns {$protobuf.Writer} Writer
-                         */
-                        MsgConnectionOpenConfirm.encode = function encode(m, w) {
-                            if (!w)
-                                w = $Writer.create();
-                            if (m.connectionId != null && Object.hasOwnProperty.call(m, "connectionId"))
-                                w.uint32(10).string(m.connectionId);
-                            if (m.proofAck != null && Object.hasOwnProperty.call(m, "proofAck"))
-                                w.uint32(18).bytes(m.proofAck);
-                            if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
-                                w.uint32(24).uint64(m.proofHeight);
-                            if (m.signer != null && Object.hasOwnProperty.call(m, "signer"))
-                                w.uint32(34).bytes(m.signer);
-                            return w;
-                        };
-
-                        /**
-                         * Decodes a MsgConnectionOpenConfirm message from the specified reader or buffer.
-                         * @function decode
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenConfirm
-                         * @static
-                         * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                         * @param {number} [l] Message length if known beforehand
-                         * @returns {cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenConfirm} MsgConnectionOpenConfirm
-                         * @throws {Error} If the payload is not a reader or valid buffer
-                         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                         */
-                        MsgConnectionOpenConfirm.decode = function decode(r, l) {
-                            if (!(r instanceof $Reader))
-                                r = $Reader.create(r);
-                            var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenConfirm();
-                            while (r.pos < c) {
-                                var t = r.uint32();
-                                switch (t >>> 3) {
-                                case 1:
-                                    m.connectionId = r.string();
-                                    break;
-                                case 2:
-                                    m.proofAck = r.bytes();
-                                    break;
-                                case 3:
-                                    m.proofHeight = r.uint64();
-                                    break;
-                                case 4:
-                                    m.signer = r.bytes();
-                                    break;
-                                default:
-                                    r.skipType(t & 7);
-                                    break;
-                                }
-                            }
-                            return m;
-                        };
-
-                        return MsgConnectionOpenConfirm;
-                    })();
-
-                    v1.ConnectionEnd = (function() {
-
-                        /**
-                         * Properties of a ConnectionEnd.
-                         * @memberof cosmos_sdk.x.ibc.connection.v1
-                         * @interface IConnectionEnd
-                         * @property {string|null} [id] ConnectionEnd id
-                         * @property {string|null} [clientId] ConnectionEnd clientId
-                         * @property {Array.<string>|null} [versions] ConnectionEnd versions
-                         * @property {cosmos_sdk.x.ibc.connection.v1.State|null} [state] ConnectionEnd state
-                         * @property {cosmos_sdk.x.ibc.connection.v1.ICounterparty|null} [counterparty] ConnectionEnd counterparty
-                         */
-
-                        /**
-                         * Constructs a new ConnectionEnd.
-                         * @memberof cosmos_sdk.x.ibc.connection.v1
-                         * @classdesc Represents a ConnectionEnd.
-                         * @implements IConnectionEnd
-                         * @constructor
-                         * @param {cosmos_sdk.x.ibc.connection.v1.IConnectionEnd=} [p] Properties to set
-                         */
-                        function ConnectionEnd(p) {
-                            this.versions = [];
-                            if (p)
-                                for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                    if (p[ks[i]] != null)
-                                        this[ks[i]] = p[ks[i]];
-                        }
-
-                        /**
-                         * ConnectionEnd id.
-                         * @member {string} id
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.ConnectionEnd
-                         * @instance
-                         */
-                        ConnectionEnd.prototype.id = "";
-
-                        /**
-                         * ConnectionEnd clientId.
-                         * @member {string} clientId
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.ConnectionEnd
-                         * @instance
-                         */
-                        ConnectionEnd.prototype.clientId = "";
-
-                        /**
-                         * ConnectionEnd versions.
-                         * @member {Array.<string>} versions
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.ConnectionEnd
-                         * @instance
-                         */
-                        ConnectionEnd.prototype.versions = $util.emptyArray;
-
-                        /**
-                         * ConnectionEnd state.
-                         * @member {cosmos_sdk.x.ibc.connection.v1.State} state
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.ConnectionEnd
-                         * @instance
-                         */
-                        ConnectionEnd.prototype.state = 0;
-
-                        /**
-                         * ConnectionEnd counterparty.
-                         * @member {cosmos_sdk.x.ibc.connection.v1.ICounterparty|null|undefined} counterparty
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.ConnectionEnd
-                         * @instance
-                         */
-                        ConnectionEnd.prototype.counterparty = null;
-
-                        /**
-                         * Creates a new ConnectionEnd instance using the specified properties.
-                         * @function create
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.ConnectionEnd
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.connection.v1.IConnectionEnd=} [properties] Properties to set
-                         * @returns {cosmos_sdk.x.ibc.connection.v1.ConnectionEnd} ConnectionEnd instance
-                         */
-                        ConnectionEnd.create = function create(properties) {
-                            return new ConnectionEnd(properties);
-                        };
-
-                        /**
-                         * Encodes the specified ConnectionEnd message. Does not implicitly {@link cosmos_sdk.x.ibc.connection.v1.ConnectionEnd.verify|verify} messages.
-                         * @function encode
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.ConnectionEnd
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.connection.v1.IConnectionEnd} m ConnectionEnd message or plain object to encode
-                         * @param {$protobuf.Writer} [w] Writer to encode to
-                         * @returns {$protobuf.Writer} Writer
-                         */
-                        ConnectionEnd.encode = function encode(m, w) {
-                            if (!w)
-                                w = $Writer.create();
-                            if (m.id != null && Object.hasOwnProperty.call(m, "id"))
-                                w.uint32(10).string(m.id);
-                            if (m.clientId != null && Object.hasOwnProperty.call(m, "clientId"))
-                                w.uint32(18).string(m.clientId);
-                            if (m.versions != null && m.versions.length) {
-                                for (var i = 0; i < m.versions.length; ++i)
-                                    w.uint32(26).string(m.versions[i]);
-                            }
-                            if (m.state != null && Object.hasOwnProperty.call(m, "state"))
-                                w.uint32(32).int32(m.state);
-                            if (m.counterparty != null && Object.hasOwnProperty.call(m, "counterparty"))
-                                $root.cosmos_sdk.x.ibc.connection.v1.Counterparty.encode(m.counterparty, w.uint32(42).fork()).ldelim();
-                            return w;
-                        };
-
-                        /**
-                         * Decodes a ConnectionEnd message from the specified reader or buffer.
-                         * @function decode
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.ConnectionEnd
-                         * @static
-                         * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                         * @param {number} [l] Message length if known beforehand
-                         * @returns {cosmos_sdk.x.ibc.connection.v1.ConnectionEnd} ConnectionEnd
-                         * @throws {Error} If the payload is not a reader or valid buffer
-                         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                         */
-                        ConnectionEnd.decode = function decode(r, l) {
-                            if (!(r instanceof $Reader))
-                                r = $Reader.create(r);
-                            var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.ibc.connection.v1.ConnectionEnd();
-                            while (r.pos < c) {
-                                var t = r.uint32();
-                                switch (t >>> 3) {
-                                case 1:
-                                    m.id = r.string();
-                                    break;
-                                case 2:
-                                    m.clientId = r.string();
-                                    break;
-                                case 3:
-                                    if (!(m.versions && m.versions.length))
-                                        m.versions = [];
-                                    m.versions.push(r.string());
-                                    break;
-                                case 4:
-                                    m.state = r.int32();
-                                    break;
-                                case 5:
-                                    m.counterparty = $root.cosmos_sdk.x.ibc.connection.v1.Counterparty.decode(r, r.uint32());
-                                    break;
-                                default:
-                                    r.skipType(t & 7);
-                                    break;
-                                }
-                            }
-                            return m;
-                        };
-
-                        return ConnectionEnd;
-                    })();
-
-                    /**
-                     * State enum.
-                     * @name cosmos_sdk.x.ibc.connection.v1.State
-                     * @enum {number}
-                     * @property {number} STATE_UNINITIALIZED_UNSPECIFIED=0 STATE_UNINITIALIZED_UNSPECIFIED value
-                     * @property {number} STATE_INIT=1 STATE_INIT value
-                     * @property {number} STATE_TRYOPEN=2 STATE_TRYOPEN value
-                     * @property {number} STATE_OPEN=3 STATE_OPEN value
-                     */
-                    v1.State = (function() {
-                        var valuesById = {}, values = Object.create(valuesById);
-                        values[valuesById[0] = "STATE_UNINITIALIZED_UNSPECIFIED"] = 0;
-                        values[valuesById[1] = "STATE_INIT"] = 1;
-                        values[valuesById[2] = "STATE_TRYOPEN"] = 2;
-                        values[valuesById[3] = "STATE_OPEN"] = 3;
-                        return values;
-                    })();
-
-                    v1.Counterparty = (function() {
-
-                        /**
-                         * Properties of a Counterparty.
-                         * @memberof cosmos_sdk.x.ibc.connection.v1
-                         * @interface ICounterparty
-                         * @property {string|null} [clientId] Counterparty clientId
-                         * @property {string|null} [connectionId] Counterparty connectionId
-                         * @property {cosmos_sdk.x.ibc.commitment.v1.IMerklePrefix|null} [prefix] Counterparty prefix
-                         */
-
-                        /**
-                         * Constructs a new Counterparty.
-                         * @memberof cosmos_sdk.x.ibc.connection.v1
-                         * @classdesc Represents a Counterparty.
-                         * @implements ICounterparty
-                         * @constructor
-                         * @param {cosmos_sdk.x.ibc.connection.v1.ICounterparty=} [p] Properties to set
-                         */
-                        function Counterparty(p) {
-                            if (p)
-                                for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                    if (p[ks[i]] != null)
-                                        this[ks[i]] = p[ks[i]];
-                        }
-
-                        /**
-                         * Counterparty clientId.
-                         * @member {string} clientId
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.Counterparty
-                         * @instance
-                         */
-                        Counterparty.prototype.clientId = "";
-
-                        /**
-                         * Counterparty connectionId.
-                         * @member {string} connectionId
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.Counterparty
-                         * @instance
-                         */
-                        Counterparty.prototype.connectionId = "";
-
-                        /**
-                         * Counterparty prefix.
-                         * @member {cosmos_sdk.x.ibc.commitment.v1.IMerklePrefix|null|undefined} prefix
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.Counterparty
-                         * @instance
-                         */
-                        Counterparty.prototype.prefix = null;
-
-                        /**
-                         * Creates a new Counterparty instance using the specified properties.
-                         * @function create
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.Counterparty
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.connection.v1.ICounterparty=} [properties] Properties to set
-                         * @returns {cosmos_sdk.x.ibc.connection.v1.Counterparty} Counterparty instance
-                         */
-                        Counterparty.create = function create(properties) {
-                            return new Counterparty(properties);
-                        };
-
-                        /**
-                         * Encodes the specified Counterparty message. Does not implicitly {@link cosmos_sdk.x.ibc.connection.v1.Counterparty.verify|verify} messages.
-                         * @function encode
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.Counterparty
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.connection.v1.ICounterparty} m Counterparty message or plain object to encode
-                         * @param {$protobuf.Writer} [w] Writer to encode to
-                         * @returns {$protobuf.Writer} Writer
-                         */
-                        Counterparty.encode = function encode(m, w) {
-                            if (!w)
-                                w = $Writer.create();
-                            if (m.clientId != null && Object.hasOwnProperty.call(m, "clientId"))
-                                w.uint32(10).string(m.clientId);
-                            if (m.connectionId != null && Object.hasOwnProperty.call(m, "connectionId"))
-                                w.uint32(18).string(m.connectionId);
-                            if (m.prefix != null && Object.hasOwnProperty.call(m, "prefix"))
-                                $root.cosmos_sdk.x.ibc.commitment.v1.MerklePrefix.encode(m.prefix, w.uint32(26).fork()).ldelim();
-                            return w;
-                        };
-
-                        /**
-                         * Decodes a Counterparty message from the specified reader or buffer.
-                         * @function decode
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.Counterparty
-                         * @static
-                         * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                         * @param {number} [l] Message length if known beforehand
-                         * @returns {cosmos_sdk.x.ibc.connection.v1.Counterparty} Counterparty
-                         * @throws {Error} If the payload is not a reader or valid buffer
-                         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                         */
-                        Counterparty.decode = function decode(r, l) {
-                            if (!(r instanceof $Reader))
-                                r = $Reader.create(r);
-                            var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.ibc.connection.v1.Counterparty();
-                            while (r.pos < c) {
-                                var t = r.uint32();
-                                switch (t >>> 3) {
-                                case 1:
-                                    m.clientId = r.string();
-                                    break;
-                                case 2:
-                                    m.connectionId = r.string();
-                                    break;
-                                case 3:
-                                    m.prefix = $root.cosmos_sdk.x.ibc.commitment.v1.MerklePrefix.decode(r, r.uint32());
-                                    break;
-                                default:
-                                    r.skipType(t & 7);
-                                    break;
-                                }
-                            }
-                            return m;
-                        };
-
-                        return Counterparty;
-                    })();
-
-                    v1.ClientPaths = (function() {
-
-                        /**
-                         * Properties of a ClientPaths.
-                         * @memberof cosmos_sdk.x.ibc.connection.v1
-                         * @interface IClientPaths
-                         * @property {Array.<string>|null} [paths] ClientPaths paths
-                         */
-
-                        /**
-                         * Constructs a new ClientPaths.
-                         * @memberof cosmos_sdk.x.ibc.connection.v1
-                         * @classdesc Represents a ClientPaths.
-                         * @implements IClientPaths
-                         * @constructor
-                         * @param {cosmos_sdk.x.ibc.connection.v1.IClientPaths=} [p] Properties to set
-                         */
-                        function ClientPaths(p) {
-                            this.paths = [];
-                            if (p)
-                                for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                    if (p[ks[i]] != null)
-                                        this[ks[i]] = p[ks[i]];
-                        }
-
-                        /**
-                         * ClientPaths paths.
-                         * @member {Array.<string>} paths
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.ClientPaths
-                         * @instance
-                         */
-                        ClientPaths.prototype.paths = $util.emptyArray;
-
-                        /**
-                         * Creates a new ClientPaths instance using the specified properties.
-                         * @function create
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.ClientPaths
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.connection.v1.IClientPaths=} [properties] Properties to set
-                         * @returns {cosmos_sdk.x.ibc.connection.v1.ClientPaths} ClientPaths instance
-                         */
-                        ClientPaths.create = function create(properties) {
-                            return new ClientPaths(properties);
-                        };
-
-                        /**
-                         * Encodes the specified ClientPaths message. Does not implicitly {@link cosmos_sdk.x.ibc.connection.v1.ClientPaths.verify|verify} messages.
-                         * @function encode
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.ClientPaths
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.connection.v1.IClientPaths} m ClientPaths message or plain object to encode
-                         * @param {$protobuf.Writer} [w] Writer to encode to
-                         * @returns {$protobuf.Writer} Writer
-                         */
-                        ClientPaths.encode = function encode(m, w) {
-                            if (!w)
-                                w = $Writer.create();
-                            if (m.paths != null && m.paths.length) {
-                                for (var i = 0; i < m.paths.length; ++i)
-                                    w.uint32(10).string(m.paths[i]);
-                            }
-                            return w;
-                        };
-
-                        /**
-                         * Decodes a ClientPaths message from the specified reader or buffer.
-                         * @function decode
-                         * @memberof cosmos_sdk.x.ibc.connection.v1.ClientPaths
-                         * @static
-                         * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                         * @param {number} [l] Message length if known beforehand
-                         * @returns {cosmos_sdk.x.ibc.connection.v1.ClientPaths} ClientPaths
-                         * @throws {Error} If the payload is not a reader or valid buffer
-                         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                         */
-                        ClientPaths.decode = function decode(r, l) {
-                            if (!(r instanceof $Reader))
-                                r = $Reader.create(r);
-                            var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.ibc.connection.v1.ClientPaths();
-                            while (r.pos < c) {
-                                var t = r.uint32();
-                                switch (t >>> 3) {
-                                case 1:
-                                    if (!(m.paths && m.paths.length))
-                                        m.paths = [];
-                                    m.paths.push(r.string());
-                                    break;
-                                default:
-                                    r.skipType(t & 7);
-                                    break;
-                                }
-                            }
-                            return m;
-                        };
-
-                        return ClientPaths;
-                    })();
-
-                    return v1;
-                })();
-
-                return connection;
-            })();
-
-            ibc.channel = (function() {
-
-                /**
-                 * Namespace channel.
-                 * @memberof cosmos_sdk.x.ibc
-                 * @namespace
-                 */
-                var channel = {};
-
-                channel.v1 = (function() {
-
-                    /**
-                     * Namespace v1.
-                     * @memberof cosmos_sdk.x.ibc.channel
-                     * @namespace
-                     */
-                    var v1 = {};
-
-                    v1.MsgChannelOpenInit = (function() {
-
-                        /**
-                         * Properties of a MsgChannelOpenInit.
-                         * @memberof cosmos_sdk.x.ibc.channel.v1
-                         * @interface IMsgChannelOpenInit
-                         * @property {string|null} [portId] MsgChannelOpenInit portId
-                         * @property {string|null} [channelId] MsgChannelOpenInit channelId
-                         * @property {cosmos_sdk.x.ibc.channel.v1.IChannel|null} [channel] MsgChannelOpenInit channel
-                         * @property {Uint8Array|null} [signer] MsgChannelOpenInit signer
-                         */
-
-                        /**
-                         * Constructs a new MsgChannelOpenInit.
-                         * @memberof cosmos_sdk.x.ibc.channel.v1
-                         * @classdesc Represents a MsgChannelOpenInit.
-                         * @implements IMsgChannelOpenInit
-                         * @constructor
-                         * @param {cosmos_sdk.x.ibc.channel.v1.IMsgChannelOpenInit=} [p] Properties to set
-                         */
-                        function MsgChannelOpenInit(p) {
-                            if (p)
-                                for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                    if (p[ks[i]] != null)
-                                        this[ks[i]] = p[ks[i]];
-                        }
-
-                        /**
-                         * MsgChannelOpenInit portId.
-                         * @member {string} portId
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenInit
-                         * @instance
-                         */
-                        MsgChannelOpenInit.prototype.portId = "";
-
-                        /**
-                         * MsgChannelOpenInit channelId.
-                         * @member {string} channelId
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenInit
-                         * @instance
-                         */
-                        MsgChannelOpenInit.prototype.channelId = "";
-
-                        /**
-                         * MsgChannelOpenInit channel.
-                         * @member {cosmos_sdk.x.ibc.channel.v1.IChannel|null|undefined} channel
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenInit
-                         * @instance
-                         */
-                        MsgChannelOpenInit.prototype.channel = null;
-
-                        /**
-                         * MsgChannelOpenInit signer.
-                         * @member {Uint8Array} signer
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenInit
-                         * @instance
-                         */
-                        MsgChannelOpenInit.prototype.signer = $util.newBuffer([]);
-
-                        /**
-                         * Creates a new MsgChannelOpenInit instance using the specified properties.
-                         * @function create
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenInit
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.channel.v1.IMsgChannelOpenInit=} [properties] Properties to set
-                         * @returns {cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenInit} MsgChannelOpenInit instance
-                         */
-                        MsgChannelOpenInit.create = function create(properties) {
-                            return new MsgChannelOpenInit(properties);
-                        };
-
-                        /**
-                         * Encodes the specified MsgChannelOpenInit message. Does not implicitly {@link cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenInit.verify|verify} messages.
-                         * @function encode
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenInit
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.channel.v1.IMsgChannelOpenInit} m MsgChannelOpenInit message or plain object to encode
-                         * @param {$protobuf.Writer} [w] Writer to encode to
-                         * @returns {$protobuf.Writer} Writer
-                         */
-                        MsgChannelOpenInit.encode = function encode(m, w) {
-                            if (!w)
-                                w = $Writer.create();
-                            if (m.portId != null && Object.hasOwnProperty.call(m, "portId"))
-                                w.uint32(10).string(m.portId);
-                            if (m.channelId != null && Object.hasOwnProperty.call(m, "channelId"))
-                                w.uint32(18).string(m.channelId);
-                            if (m.channel != null && Object.hasOwnProperty.call(m, "channel"))
-                                $root.cosmos_sdk.x.ibc.channel.v1.Channel.encode(m.channel, w.uint32(26).fork()).ldelim();
-                            if (m.signer != null && Object.hasOwnProperty.call(m, "signer"))
-                                w.uint32(34).bytes(m.signer);
-                            return w;
-                        };
-
-                        /**
-                         * Decodes a MsgChannelOpenInit message from the specified reader or buffer.
-                         * @function decode
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenInit
-                         * @static
-                         * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                         * @param {number} [l] Message length if known beforehand
-                         * @returns {cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenInit} MsgChannelOpenInit
-                         * @throws {Error} If the payload is not a reader or valid buffer
-                         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                         */
-                        MsgChannelOpenInit.decode = function decode(r, l) {
-                            if (!(r instanceof $Reader))
-                                r = $Reader.create(r);
-                            var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenInit();
-                            while (r.pos < c) {
-                                var t = r.uint32();
-                                switch (t >>> 3) {
-                                case 1:
-                                    m.portId = r.string();
-                                    break;
-                                case 2:
-                                    m.channelId = r.string();
-                                    break;
-                                case 3:
-                                    m.channel = $root.cosmos_sdk.x.ibc.channel.v1.Channel.decode(r, r.uint32());
-                                    break;
-                                case 4:
-                                    m.signer = r.bytes();
-                                    break;
-                                default:
-                                    r.skipType(t & 7);
-                                    break;
-                                }
-                            }
-                            return m;
-                        };
-
-                        return MsgChannelOpenInit;
-                    })();
-
-                    v1.MsgChannelOpenTry = (function() {
-
-                        /**
-                         * Properties of a MsgChannelOpenTry.
-                         * @memberof cosmos_sdk.x.ibc.channel.v1
-                         * @interface IMsgChannelOpenTry
-                         * @property {string|null} [portId] MsgChannelOpenTry portId
-                         * @property {string|null} [channelId] MsgChannelOpenTry channelId
-                         * @property {cosmos_sdk.x.ibc.channel.v1.IChannel|null} [channel] MsgChannelOpenTry channel
-                         * @property {string|null} [counterpartyVersion] MsgChannelOpenTry counterpartyVersion
-                         * @property {Uint8Array|null} [proofInit] MsgChannelOpenTry proofInit
-                         * @property {number|Long|null} [proofHeight] MsgChannelOpenTry proofHeight
-                         * @property {Uint8Array|null} [signer] MsgChannelOpenTry signer
-                         */
-
-                        /**
-                         * Constructs a new MsgChannelOpenTry.
-                         * @memberof cosmos_sdk.x.ibc.channel.v1
-                         * @classdesc Represents a MsgChannelOpenTry.
-                         * @implements IMsgChannelOpenTry
-                         * @constructor
-                         * @param {cosmos_sdk.x.ibc.channel.v1.IMsgChannelOpenTry=} [p] Properties to set
-                         */
-                        function MsgChannelOpenTry(p) {
-                            if (p)
-                                for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                    if (p[ks[i]] != null)
-                                        this[ks[i]] = p[ks[i]];
-                        }
-
-                        /**
-                         * MsgChannelOpenTry portId.
-                         * @member {string} portId
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenTry
-                         * @instance
-                         */
-                        MsgChannelOpenTry.prototype.portId = "";
-
-                        /**
-                         * MsgChannelOpenTry channelId.
-                         * @member {string} channelId
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenTry
-                         * @instance
-                         */
-                        MsgChannelOpenTry.prototype.channelId = "";
-
-                        /**
-                         * MsgChannelOpenTry channel.
-                         * @member {cosmos_sdk.x.ibc.channel.v1.IChannel|null|undefined} channel
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenTry
-                         * @instance
-                         */
-                        MsgChannelOpenTry.prototype.channel = null;
-
-                        /**
-                         * MsgChannelOpenTry counterpartyVersion.
-                         * @member {string} counterpartyVersion
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenTry
-                         * @instance
-                         */
-                        MsgChannelOpenTry.prototype.counterpartyVersion = "";
-
-                        /**
-                         * MsgChannelOpenTry proofInit.
-                         * @member {Uint8Array} proofInit
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenTry
-                         * @instance
-                         */
-                        MsgChannelOpenTry.prototype.proofInit = $util.newBuffer([]);
-
-                        /**
-                         * MsgChannelOpenTry proofHeight.
-                         * @member {number|Long} proofHeight
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenTry
-                         * @instance
-                         */
-                        MsgChannelOpenTry.prototype.proofHeight = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-                        /**
-                         * MsgChannelOpenTry signer.
-                         * @member {Uint8Array} signer
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenTry
-                         * @instance
-                         */
-                        MsgChannelOpenTry.prototype.signer = $util.newBuffer([]);
-
-                        /**
-                         * Creates a new MsgChannelOpenTry instance using the specified properties.
-                         * @function create
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenTry
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.channel.v1.IMsgChannelOpenTry=} [properties] Properties to set
-                         * @returns {cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenTry} MsgChannelOpenTry instance
-                         */
-                        MsgChannelOpenTry.create = function create(properties) {
-                            return new MsgChannelOpenTry(properties);
-                        };
-
-                        /**
-                         * Encodes the specified MsgChannelOpenTry message. Does not implicitly {@link cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenTry.verify|verify} messages.
-                         * @function encode
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenTry
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.channel.v1.IMsgChannelOpenTry} m MsgChannelOpenTry message or plain object to encode
-                         * @param {$protobuf.Writer} [w] Writer to encode to
-                         * @returns {$protobuf.Writer} Writer
-                         */
-                        MsgChannelOpenTry.encode = function encode(m, w) {
-                            if (!w)
-                                w = $Writer.create();
-                            if (m.portId != null && Object.hasOwnProperty.call(m, "portId"))
-                                w.uint32(10).string(m.portId);
-                            if (m.channelId != null && Object.hasOwnProperty.call(m, "channelId"))
-                                w.uint32(18).string(m.channelId);
-                            if (m.channel != null && Object.hasOwnProperty.call(m, "channel"))
-                                $root.cosmos_sdk.x.ibc.channel.v1.Channel.encode(m.channel, w.uint32(26).fork()).ldelim();
-                            if (m.counterpartyVersion != null && Object.hasOwnProperty.call(m, "counterpartyVersion"))
-                                w.uint32(34).string(m.counterpartyVersion);
-                            if (m.proofInit != null && Object.hasOwnProperty.call(m, "proofInit"))
-                                w.uint32(42).bytes(m.proofInit);
-                            if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
-                                w.uint32(48).uint64(m.proofHeight);
-                            if (m.signer != null && Object.hasOwnProperty.call(m, "signer"))
-                                w.uint32(58).bytes(m.signer);
-                            return w;
-                        };
-
-                        /**
-                         * Decodes a MsgChannelOpenTry message from the specified reader or buffer.
-                         * @function decode
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenTry
-                         * @static
-                         * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                         * @param {number} [l] Message length if known beforehand
-                         * @returns {cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenTry} MsgChannelOpenTry
-                         * @throws {Error} If the payload is not a reader or valid buffer
-                         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                         */
-                        MsgChannelOpenTry.decode = function decode(r, l) {
-                            if (!(r instanceof $Reader))
-                                r = $Reader.create(r);
-                            var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenTry();
-                            while (r.pos < c) {
-                                var t = r.uint32();
-                                switch (t >>> 3) {
-                                case 1:
-                                    m.portId = r.string();
-                                    break;
-                                case 2:
-                                    m.channelId = r.string();
-                                    break;
-                                case 3:
-                                    m.channel = $root.cosmos_sdk.x.ibc.channel.v1.Channel.decode(r, r.uint32());
-                                    break;
-                                case 4:
-                                    m.counterpartyVersion = r.string();
-                                    break;
-                                case 5:
-                                    m.proofInit = r.bytes();
-                                    break;
-                                case 6:
-                                    m.proofHeight = r.uint64();
-                                    break;
-                                case 7:
-                                    m.signer = r.bytes();
-                                    break;
-                                default:
-                                    r.skipType(t & 7);
-                                    break;
-                                }
-                            }
-                            return m;
-                        };
-
-                        return MsgChannelOpenTry;
-                    })();
-
-                    v1.MsgChannelOpenAck = (function() {
-
-                        /**
-                         * Properties of a MsgChannelOpenAck.
-                         * @memberof cosmos_sdk.x.ibc.channel.v1
-                         * @interface IMsgChannelOpenAck
-                         * @property {string|null} [portId] MsgChannelOpenAck portId
-                         * @property {string|null} [channelId] MsgChannelOpenAck channelId
-                         * @property {string|null} [counterpartyVersion] MsgChannelOpenAck counterpartyVersion
-                         * @property {Uint8Array|null} [proofTry] MsgChannelOpenAck proofTry
-                         * @property {number|Long|null} [proofHeight] MsgChannelOpenAck proofHeight
-                         * @property {Uint8Array|null} [signer] MsgChannelOpenAck signer
-                         */
-
-                        /**
-                         * Constructs a new MsgChannelOpenAck.
-                         * @memberof cosmos_sdk.x.ibc.channel.v1
-                         * @classdesc Represents a MsgChannelOpenAck.
-                         * @implements IMsgChannelOpenAck
-                         * @constructor
-                         * @param {cosmos_sdk.x.ibc.channel.v1.IMsgChannelOpenAck=} [p] Properties to set
-                         */
-                        function MsgChannelOpenAck(p) {
-                            if (p)
-                                for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                    if (p[ks[i]] != null)
-                                        this[ks[i]] = p[ks[i]];
-                        }
-
-                        /**
-                         * MsgChannelOpenAck portId.
-                         * @member {string} portId
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenAck
-                         * @instance
-                         */
-                        MsgChannelOpenAck.prototype.portId = "";
-
-                        /**
-                         * MsgChannelOpenAck channelId.
-                         * @member {string} channelId
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenAck
-                         * @instance
-                         */
-                        MsgChannelOpenAck.prototype.channelId = "";
-
-                        /**
-                         * MsgChannelOpenAck counterpartyVersion.
-                         * @member {string} counterpartyVersion
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenAck
-                         * @instance
-                         */
-                        MsgChannelOpenAck.prototype.counterpartyVersion = "";
-
-                        /**
-                         * MsgChannelOpenAck proofTry.
-                         * @member {Uint8Array} proofTry
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenAck
-                         * @instance
-                         */
-                        MsgChannelOpenAck.prototype.proofTry = $util.newBuffer([]);
-
-                        /**
-                         * MsgChannelOpenAck proofHeight.
-                         * @member {number|Long} proofHeight
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenAck
-                         * @instance
-                         */
-                        MsgChannelOpenAck.prototype.proofHeight = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-                        /**
-                         * MsgChannelOpenAck signer.
-                         * @member {Uint8Array} signer
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenAck
-                         * @instance
-                         */
-                        MsgChannelOpenAck.prototype.signer = $util.newBuffer([]);
-
-                        /**
-                         * Creates a new MsgChannelOpenAck instance using the specified properties.
-                         * @function create
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenAck
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.channel.v1.IMsgChannelOpenAck=} [properties] Properties to set
-                         * @returns {cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenAck} MsgChannelOpenAck instance
-                         */
-                        MsgChannelOpenAck.create = function create(properties) {
-                            return new MsgChannelOpenAck(properties);
-                        };
-
-                        /**
-                         * Encodes the specified MsgChannelOpenAck message. Does not implicitly {@link cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenAck.verify|verify} messages.
-                         * @function encode
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenAck
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.channel.v1.IMsgChannelOpenAck} m MsgChannelOpenAck message or plain object to encode
-                         * @param {$protobuf.Writer} [w] Writer to encode to
-                         * @returns {$protobuf.Writer} Writer
-                         */
-                        MsgChannelOpenAck.encode = function encode(m, w) {
-                            if (!w)
-                                w = $Writer.create();
-                            if (m.portId != null && Object.hasOwnProperty.call(m, "portId"))
-                                w.uint32(10).string(m.portId);
-                            if (m.channelId != null && Object.hasOwnProperty.call(m, "channelId"))
-                                w.uint32(18).string(m.channelId);
-                            if (m.counterpartyVersion != null && Object.hasOwnProperty.call(m, "counterpartyVersion"))
-                                w.uint32(26).string(m.counterpartyVersion);
-                            if (m.proofTry != null && Object.hasOwnProperty.call(m, "proofTry"))
-                                w.uint32(34).bytes(m.proofTry);
-                            if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
-                                w.uint32(40).uint64(m.proofHeight);
-                            if (m.signer != null && Object.hasOwnProperty.call(m, "signer"))
-                                w.uint32(50).bytes(m.signer);
-                            return w;
-                        };
-
-                        /**
-                         * Decodes a MsgChannelOpenAck message from the specified reader or buffer.
-                         * @function decode
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenAck
-                         * @static
-                         * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                         * @param {number} [l] Message length if known beforehand
-                         * @returns {cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenAck} MsgChannelOpenAck
-                         * @throws {Error} If the payload is not a reader or valid buffer
-                         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                         */
-                        MsgChannelOpenAck.decode = function decode(r, l) {
-                            if (!(r instanceof $Reader))
-                                r = $Reader.create(r);
-                            var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenAck();
-                            while (r.pos < c) {
-                                var t = r.uint32();
-                                switch (t >>> 3) {
-                                case 1:
-                                    m.portId = r.string();
-                                    break;
-                                case 2:
-                                    m.channelId = r.string();
-                                    break;
-                                case 3:
-                                    m.counterpartyVersion = r.string();
-                                    break;
-                                case 4:
-                                    m.proofTry = r.bytes();
-                                    break;
-                                case 5:
-                                    m.proofHeight = r.uint64();
-                                    break;
-                                case 6:
-                                    m.signer = r.bytes();
-                                    break;
-                                default:
-                                    r.skipType(t & 7);
-                                    break;
-                                }
-                            }
-                            return m;
-                        };
-
-                        return MsgChannelOpenAck;
-                    })();
-
-                    v1.MsgChannelOpenConfirm = (function() {
-
-                        /**
-                         * Properties of a MsgChannelOpenConfirm.
-                         * @memberof cosmos_sdk.x.ibc.channel.v1
-                         * @interface IMsgChannelOpenConfirm
-                         * @property {string|null} [portId] MsgChannelOpenConfirm portId
-                         * @property {string|null} [channelId] MsgChannelOpenConfirm channelId
-                         * @property {Uint8Array|null} [proofAck] MsgChannelOpenConfirm proofAck
-                         * @property {number|Long|null} [proofHeight] MsgChannelOpenConfirm proofHeight
-                         * @property {Uint8Array|null} [signer] MsgChannelOpenConfirm signer
-                         */
-
-                        /**
-                         * Constructs a new MsgChannelOpenConfirm.
-                         * @memberof cosmos_sdk.x.ibc.channel.v1
-                         * @classdesc Represents a MsgChannelOpenConfirm.
-                         * @implements IMsgChannelOpenConfirm
-                         * @constructor
-                         * @param {cosmos_sdk.x.ibc.channel.v1.IMsgChannelOpenConfirm=} [p] Properties to set
-                         */
-                        function MsgChannelOpenConfirm(p) {
-                            if (p)
-                                for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                    if (p[ks[i]] != null)
-                                        this[ks[i]] = p[ks[i]];
-                        }
-
-                        /**
-                         * MsgChannelOpenConfirm portId.
-                         * @member {string} portId
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenConfirm
-                         * @instance
-                         */
-                        MsgChannelOpenConfirm.prototype.portId = "";
-
-                        /**
-                         * MsgChannelOpenConfirm channelId.
-                         * @member {string} channelId
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenConfirm
-                         * @instance
-                         */
-                        MsgChannelOpenConfirm.prototype.channelId = "";
-
-                        /**
-                         * MsgChannelOpenConfirm proofAck.
-                         * @member {Uint8Array} proofAck
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenConfirm
-                         * @instance
-                         */
-                        MsgChannelOpenConfirm.prototype.proofAck = $util.newBuffer([]);
-
-                        /**
-                         * MsgChannelOpenConfirm proofHeight.
-                         * @member {number|Long} proofHeight
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenConfirm
-                         * @instance
-                         */
-                        MsgChannelOpenConfirm.prototype.proofHeight = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-                        /**
-                         * MsgChannelOpenConfirm signer.
-                         * @member {Uint8Array} signer
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenConfirm
-                         * @instance
-                         */
-                        MsgChannelOpenConfirm.prototype.signer = $util.newBuffer([]);
-
-                        /**
-                         * Creates a new MsgChannelOpenConfirm instance using the specified properties.
-                         * @function create
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenConfirm
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.channel.v1.IMsgChannelOpenConfirm=} [properties] Properties to set
-                         * @returns {cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenConfirm} MsgChannelOpenConfirm instance
-                         */
-                        MsgChannelOpenConfirm.create = function create(properties) {
-                            return new MsgChannelOpenConfirm(properties);
-                        };
-
-                        /**
-                         * Encodes the specified MsgChannelOpenConfirm message. Does not implicitly {@link cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenConfirm.verify|verify} messages.
-                         * @function encode
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenConfirm
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.channel.v1.IMsgChannelOpenConfirm} m MsgChannelOpenConfirm message or plain object to encode
-                         * @param {$protobuf.Writer} [w] Writer to encode to
-                         * @returns {$protobuf.Writer} Writer
-                         */
-                        MsgChannelOpenConfirm.encode = function encode(m, w) {
-                            if (!w)
-                                w = $Writer.create();
-                            if (m.portId != null && Object.hasOwnProperty.call(m, "portId"))
-                                w.uint32(10).string(m.portId);
-                            if (m.channelId != null && Object.hasOwnProperty.call(m, "channelId"))
-                                w.uint32(18).string(m.channelId);
-                            if (m.proofAck != null && Object.hasOwnProperty.call(m, "proofAck"))
-                                w.uint32(26).bytes(m.proofAck);
-                            if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
-                                w.uint32(32).uint64(m.proofHeight);
-                            if (m.signer != null && Object.hasOwnProperty.call(m, "signer"))
-                                w.uint32(42).bytes(m.signer);
-                            return w;
-                        };
-
-                        /**
-                         * Decodes a MsgChannelOpenConfirm message from the specified reader or buffer.
-                         * @function decode
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenConfirm
-                         * @static
-                         * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                         * @param {number} [l] Message length if known beforehand
-                         * @returns {cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenConfirm} MsgChannelOpenConfirm
-                         * @throws {Error} If the payload is not a reader or valid buffer
-                         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                         */
-                        MsgChannelOpenConfirm.decode = function decode(r, l) {
-                            if (!(r instanceof $Reader))
-                                r = $Reader.create(r);
-                            var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenConfirm();
-                            while (r.pos < c) {
-                                var t = r.uint32();
-                                switch (t >>> 3) {
-                                case 1:
-                                    m.portId = r.string();
-                                    break;
-                                case 2:
-                                    m.channelId = r.string();
-                                    break;
-                                case 3:
-                                    m.proofAck = r.bytes();
-                                    break;
-                                case 4:
-                                    m.proofHeight = r.uint64();
-                                    break;
-                                case 5:
-                                    m.signer = r.bytes();
-                                    break;
-                                default:
-                                    r.skipType(t & 7);
-                                    break;
-                                }
-                            }
-                            return m;
-                        };
-
-                        return MsgChannelOpenConfirm;
-                    })();
-
-                    v1.MsgChannelCloseInit = (function() {
-
-                        /**
-                         * Properties of a MsgChannelCloseInit.
-                         * @memberof cosmos_sdk.x.ibc.channel.v1
-                         * @interface IMsgChannelCloseInit
-                         * @property {string|null} [portId] MsgChannelCloseInit portId
-                         * @property {string|null} [channelId] MsgChannelCloseInit channelId
-                         * @property {Uint8Array|null} [signer] MsgChannelCloseInit signer
-                         */
-
-                        /**
-                         * Constructs a new MsgChannelCloseInit.
-                         * @memberof cosmos_sdk.x.ibc.channel.v1
-                         * @classdesc Represents a MsgChannelCloseInit.
-                         * @implements IMsgChannelCloseInit
-                         * @constructor
-                         * @param {cosmos_sdk.x.ibc.channel.v1.IMsgChannelCloseInit=} [p] Properties to set
-                         */
-                        function MsgChannelCloseInit(p) {
-                            if (p)
-                                for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                    if (p[ks[i]] != null)
-                                        this[ks[i]] = p[ks[i]];
-                        }
-
-                        /**
-                         * MsgChannelCloseInit portId.
-                         * @member {string} portId
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelCloseInit
-                         * @instance
-                         */
-                        MsgChannelCloseInit.prototype.portId = "";
-
-                        /**
-                         * MsgChannelCloseInit channelId.
-                         * @member {string} channelId
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelCloseInit
-                         * @instance
-                         */
-                        MsgChannelCloseInit.prototype.channelId = "";
-
-                        /**
-                         * MsgChannelCloseInit signer.
-                         * @member {Uint8Array} signer
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelCloseInit
-                         * @instance
-                         */
-                        MsgChannelCloseInit.prototype.signer = $util.newBuffer([]);
-
-                        /**
-                         * Creates a new MsgChannelCloseInit instance using the specified properties.
-                         * @function create
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelCloseInit
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.channel.v1.IMsgChannelCloseInit=} [properties] Properties to set
-                         * @returns {cosmos_sdk.x.ibc.channel.v1.MsgChannelCloseInit} MsgChannelCloseInit instance
-                         */
-                        MsgChannelCloseInit.create = function create(properties) {
-                            return new MsgChannelCloseInit(properties);
-                        };
-
-                        /**
-                         * Encodes the specified MsgChannelCloseInit message. Does not implicitly {@link cosmos_sdk.x.ibc.channel.v1.MsgChannelCloseInit.verify|verify} messages.
-                         * @function encode
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelCloseInit
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.channel.v1.IMsgChannelCloseInit} m MsgChannelCloseInit message or plain object to encode
-                         * @param {$protobuf.Writer} [w] Writer to encode to
-                         * @returns {$protobuf.Writer} Writer
-                         */
-                        MsgChannelCloseInit.encode = function encode(m, w) {
-                            if (!w)
-                                w = $Writer.create();
-                            if (m.portId != null && Object.hasOwnProperty.call(m, "portId"))
-                                w.uint32(10).string(m.portId);
-                            if (m.channelId != null && Object.hasOwnProperty.call(m, "channelId"))
-                                w.uint32(18).string(m.channelId);
-                            if (m.signer != null && Object.hasOwnProperty.call(m, "signer"))
-                                w.uint32(26).bytes(m.signer);
-                            return w;
-                        };
-
-                        /**
-                         * Decodes a MsgChannelCloseInit message from the specified reader or buffer.
-                         * @function decode
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelCloseInit
-                         * @static
-                         * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                         * @param {number} [l] Message length if known beforehand
-                         * @returns {cosmos_sdk.x.ibc.channel.v1.MsgChannelCloseInit} MsgChannelCloseInit
-                         * @throws {Error} If the payload is not a reader or valid buffer
-                         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                         */
-                        MsgChannelCloseInit.decode = function decode(r, l) {
-                            if (!(r instanceof $Reader))
-                                r = $Reader.create(r);
-                            var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.ibc.channel.v1.MsgChannelCloseInit();
-                            while (r.pos < c) {
-                                var t = r.uint32();
-                                switch (t >>> 3) {
-                                case 1:
-                                    m.portId = r.string();
-                                    break;
-                                case 2:
-                                    m.channelId = r.string();
-                                    break;
-                                case 3:
-                                    m.signer = r.bytes();
-                                    break;
-                                default:
-                                    r.skipType(t & 7);
-                                    break;
-                                }
-                            }
-                            return m;
-                        };
-
-                        return MsgChannelCloseInit;
-                    })();
-
-                    v1.MsgChannelCloseConfirm = (function() {
-
-                        /**
-                         * Properties of a MsgChannelCloseConfirm.
-                         * @memberof cosmos_sdk.x.ibc.channel.v1
-                         * @interface IMsgChannelCloseConfirm
-                         * @property {string|null} [portId] MsgChannelCloseConfirm portId
-                         * @property {string|null} [channelId] MsgChannelCloseConfirm channelId
-                         * @property {Uint8Array|null} [proofInit] MsgChannelCloseConfirm proofInit
-                         * @property {number|Long|null} [proofHeight] MsgChannelCloseConfirm proofHeight
-                         * @property {Uint8Array|null} [signer] MsgChannelCloseConfirm signer
-                         */
-
-                        /**
-                         * Constructs a new MsgChannelCloseConfirm.
-                         * @memberof cosmos_sdk.x.ibc.channel.v1
-                         * @classdesc Represents a MsgChannelCloseConfirm.
-                         * @implements IMsgChannelCloseConfirm
-                         * @constructor
-                         * @param {cosmos_sdk.x.ibc.channel.v1.IMsgChannelCloseConfirm=} [p] Properties to set
-                         */
-                        function MsgChannelCloseConfirm(p) {
-                            if (p)
-                                for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                    if (p[ks[i]] != null)
-                                        this[ks[i]] = p[ks[i]];
-                        }
-
-                        /**
-                         * MsgChannelCloseConfirm portId.
-                         * @member {string} portId
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelCloseConfirm
-                         * @instance
-                         */
-                        MsgChannelCloseConfirm.prototype.portId = "";
-
-                        /**
-                         * MsgChannelCloseConfirm channelId.
-                         * @member {string} channelId
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelCloseConfirm
-                         * @instance
-                         */
-                        MsgChannelCloseConfirm.prototype.channelId = "";
-
-                        /**
-                         * MsgChannelCloseConfirm proofInit.
-                         * @member {Uint8Array} proofInit
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelCloseConfirm
-                         * @instance
-                         */
-                        MsgChannelCloseConfirm.prototype.proofInit = $util.newBuffer([]);
-
-                        /**
-                         * MsgChannelCloseConfirm proofHeight.
-                         * @member {number|Long} proofHeight
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelCloseConfirm
-                         * @instance
-                         */
-                        MsgChannelCloseConfirm.prototype.proofHeight = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-                        /**
-                         * MsgChannelCloseConfirm signer.
-                         * @member {Uint8Array} signer
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelCloseConfirm
-                         * @instance
-                         */
-                        MsgChannelCloseConfirm.prototype.signer = $util.newBuffer([]);
-
-                        /**
-                         * Creates a new MsgChannelCloseConfirm instance using the specified properties.
-                         * @function create
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelCloseConfirm
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.channel.v1.IMsgChannelCloseConfirm=} [properties] Properties to set
-                         * @returns {cosmos_sdk.x.ibc.channel.v1.MsgChannelCloseConfirm} MsgChannelCloseConfirm instance
-                         */
-                        MsgChannelCloseConfirm.create = function create(properties) {
-                            return new MsgChannelCloseConfirm(properties);
-                        };
-
-                        /**
-                         * Encodes the specified MsgChannelCloseConfirm message. Does not implicitly {@link cosmos_sdk.x.ibc.channel.v1.MsgChannelCloseConfirm.verify|verify} messages.
-                         * @function encode
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelCloseConfirm
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.channel.v1.IMsgChannelCloseConfirm} m MsgChannelCloseConfirm message or plain object to encode
-                         * @param {$protobuf.Writer} [w] Writer to encode to
-                         * @returns {$protobuf.Writer} Writer
-                         */
-                        MsgChannelCloseConfirm.encode = function encode(m, w) {
-                            if (!w)
-                                w = $Writer.create();
-                            if (m.portId != null && Object.hasOwnProperty.call(m, "portId"))
-                                w.uint32(10).string(m.portId);
-                            if (m.channelId != null && Object.hasOwnProperty.call(m, "channelId"))
-                                w.uint32(18).string(m.channelId);
-                            if (m.proofInit != null && Object.hasOwnProperty.call(m, "proofInit"))
-                                w.uint32(26).bytes(m.proofInit);
-                            if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
-                                w.uint32(32).uint64(m.proofHeight);
-                            if (m.signer != null && Object.hasOwnProperty.call(m, "signer"))
-                                w.uint32(42).bytes(m.signer);
-                            return w;
-                        };
-
-                        /**
-                         * Decodes a MsgChannelCloseConfirm message from the specified reader or buffer.
-                         * @function decode
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelCloseConfirm
-                         * @static
-                         * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                         * @param {number} [l] Message length if known beforehand
-                         * @returns {cosmos_sdk.x.ibc.channel.v1.MsgChannelCloseConfirm} MsgChannelCloseConfirm
-                         * @throws {Error} If the payload is not a reader or valid buffer
-                         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                         */
-                        MsgChannelCloseConfirm.decode = function decode(r, l) {
-                            if (!(r instanceof $Reader))
-                                r = $Reader.create(r);
-                            var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.ibc.channel.v1.MsgChannelCloseConfirm();
-                            while (r.pos < c) {
-                                var t = r.uint32();
-                                switch (t >>> 3) {
-                                case 1:
-                                    m.portId = r.string();
-                                    break;
-                                case 2:
-                                    m.channelId = r.string();
-                                    break;
-                                case 3:
-                                    m.proofInit = r.bytes();
-                                    break;
-                                case 4:
-                                    m.proofHeight = r.uint64();
-                                    break;
-                                case 5:
-                                    m.signer = r.bytes();
-                                    break;
-                                default:
-                                    r.skipType(t & 7);
-                                    break;
-                                }
-                            }
-                            return m;
-                        };
-
-                        return MsgChannelCloseConfirm;
-                    })();
-
-                    v1.MsgPacket = (function() {
-
-                        /**
-                         * Properties of a MsgPacket.
-                         * @memberof cosmos_sdk.x.ibc.channel.v1
-                         * @interface IMsgPacket
-                         * @property {cosmos_sdk.x.ibc.channel.v1.IPacket|null} [packet] MsgPacket packet
-                         * @property {Uint8Array|null} [proof] MsgPacket proof
-                         * @property {number|Long|null} [proofHeight] MsgPacket proofHeight
-                         * @property {Uint8Array|null} [signer] MsgPacket signer
-                         */
-
-                        /**
-                         * Constructs a new MsgPacket.
-                         * @memberof cosmos_sdk.x.ibc.channel.v1
-                         * @classdesc Represents a MsgPacket.
-                         * @implements IMsgPacket
-                         * @constructor
-                         * @param {cosmos_sdk.x.ibc.channel.v1.IMsgPacket=} [p] Properties to set
-                         */
-                        function MsgPacket(p) {
-                            if (p)
-                                for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                    if (p[ks[i]] != null)
-                                        this[ks[i]] = p[ks[i]];
-                        }
-
-                        /**
-                         * MsgPacket packet.
-                         * @member {cosmos_sdk.x.ibc.channel.v1.IPacket|null|undefined} packet
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgPacket
-                         * @instance
-                         */
-                        MsgPacket.prototype.packet = null;
-
-                        /**
-                         * MsgPacket proof.
-                         * @member {Uint8Array} proof
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgPacket
-                         * @instance
-                         */
-                        MsgPacket.prototype.proof = $util.newBuffer([]);
-
-                        /**
-                         * MsgPacket proofHeight.
-                         * @member {number|Long} proofHeight
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgPacket
-                         * @instance
-                         */
-                        MsgPacket.prototype.proofHeight = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-                        /**
-                         * MsgPacket signer.
-                         * @member {Uint8Array} signer
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgPacket
-                         * @instance
-                         */
-                        MsgPacket.prototype.signer = $util.newBuffer([]);
-
-                        /**
-                         * Creates a new MsgPacket instance using the specified properties.
-                         * @function create
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgPacket
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.channel.v1.IMsgPacket=} [properties] Properties to set
-                         * @returns {cosmos_sdk.x.ibc.channel.v1.MsgPacket} MsgPacket instance
-                         */
-                        MsgPacket.create = function create(properties) {
-                            return new MsgPacket(properties);
-                        };
-
-                        /**
-                         * Encodes the specified MsgPacket message. Does not implicitly {@link cosmos_sdk.x.ibc.channel.v1.MsgPacket.verify|verify} messages.
-                         * @function encode
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgPacket
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.channel.v1.IMsgPacket} m MsgPacket message or plain object to encode
-                         * @param {$protobuf.Writer} [w] Writer to encode to
-                         * @returns {$protobuf.Writer} Writer
-                         */
-                        MsgPacket.encode = function encode(m, w) {
-                            if (!w)
-                                w = $Writer.create();
-                            if (m.packet != null && Object.hasOwnProperty.call(m, "packet"))
-                                $root.cosmos_sdk.x.ibc.channel.v1.Packet.encode(m.packet, w.uint32(10).fork()).ldelim();
-                            if (m.proof != null && Object.hasOwnProperty.call(m, "proof"))
-                                w.uint32(18).bytes(m.proof);
-                            if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
-                                w.uint32(24).uint64(m.proofHeight);
-                            if (m.signer != null && Object.hasOwnProperty.call(m, "signer"))
-                                w.uint32(34).bytes(m.signer);
-                            return w;
-                        };
-
-                        /**
-                         * Decodes a MsgPacket message from the specified reader or buffer.
-                         * @function decode
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgPacket
-                         * @static
-                         * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                         * @param {number} [l] Message length if known beforehand
-                         * @returns {cosmos_sdk.x.ibc.channel.v1.MsgPacket} MsgPacket
-                         * @throws {Error} If the payload is not a reader or valid buffer
-                         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                         */
-                        MsgPacket.decode = function decode(r, l) {
-                            if (!(r instanceof $Reader))
-                                r = $Reader.create(r);
-                            var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.ibc.channel.v1.MsgPacket();
-                            while (r.pos < c) {
-                                var t = r.uint32();
-                                switch (t >>> 3) {
-                                case 1:
-                                    m.packet = $root.cosmos_sdk.x.ibc.channel.v1.Packet.decode(r, r.uint32());
-                                    break;
-                                case 2:
-                                    m.proof = r.bytes();
-                                    break;
-                                case 3:
-                                    m.proofHeight = r.uint64();
-                                    break;
-                                case 4:
-                                    m.signer = r.bytes();
-                                    break;
-                                default:
-                                    r.skipType(t & 7);
-                                    break;
-                                }
-                            }
-                            return m;
-                        };
-
-                        return MsgPacket;
-                    })();
-
-                    v1.MsgTimeout = (function() {
-
-                        /**
-                         * Properties of a MsgTimeout.
-                         * @memberof cosmos_sdk.x.ibc.channel.v1
-                         * @interface IMsgTimeout
-                         * @property {cosmos_sdk.x.ibc.channel.v1.IPacket|null} [packet] MsgTimeout packet
-                         * @property {Uint8Array|null} [proof] MsgTimeout proof
-                         * @property {number|Long|null} [proofHeight] MsgTimeout proofHeight
-                         * @property {number|Long|null} [nextSequenceRecv] MsgTimeout nextSequenceRecv
-                         * @property {Uint8Array|null} [signer] MsgTimeout signer
-                         */
-
-                        /**
-                         * Constructs a new MsgTimeout.
-                         * @memberof cosmos_sdk.x.ibc.channel.v1
-                         * @classdesc Represents a MsgTimeout.
-                         * @implements IMsgTimeout
-                         * @constructor
-                         * @param {cosmos_sdk.x.ibc.channel.v1.IMsgTimeout=} [p] Properties to set
-                         */
-                        function MsgTimeout(p) {
-                            if (p)
-                                for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                    if (p[ks[i]] != null)
-                                        this[ks[i]] = p[ks[i]];
-                        }
-
-                        /**
-                         * MsgTimeout packet.
-                         * @member {cosmos_sdk.x.ibc.channel.v1.IPacket|null|undefined} packet
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgTimeout
-                         * @instance
-                         */
-                        MsgTimeout.prototype.packet = null;
-
-                        /**
-                         * MsgTimeout proof.
-                         * @member {Uint8Array} proof
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgTimeout
-                         * @instance
-                         */
-                        MsgTimeout.prototype.proof = $util.newBuffer([]);
-
-                        /**
-                         * MsgTimeout proofHeight.
-                         * @member {number|Long} proofHeight
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgTimeout
-                         * @instance
-                         */
-                        MsgTimeout.prototype.proofHeight = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-                        /**
-                         * MsgTimeout nextSequenceRecv.
-                         * @member {number|Long} nextSequenceRecv
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgTimeout
-                         * @instance
-                         */
-                        MsgTimeout.prototype.nextSequenceRecv = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-                        /**
-                         * MsgTimeout signer.
-                         * @member {Uint8Array} signer
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgTimeout
-                         * @instance
-                         */
-                        MsgTimeout.prototype.signer = $util.newBuffer([]);
-
-                        /**
-                         * Creates a new MsgTimeout instance using the specified properties.
-                         * @function create
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgTimeout
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.channel.v1.IMsgTimeout=} [properties] Properties to set
-                         * @returns {cosmos_sdk.x.ibc.channel.v1.MsgTimeout} MsgTimeout instance
-                         */
-                        MsgTimeout.create = function create(properties) {
-                            return new MsgTimeout(properties);
-                        };
-
-                        /**
-                         * Encodes the specified MsgTimeout message. Does not implicitly {@link cosmos_sdk.x.ibc.channel.v1.MsgTimeout.verify|verify} messages.
-                         * @function encode
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgTimeout
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.channel.v1.IMsgTimeout} m MsgTimeout message or plain object to encode
-                         * @param {$protobuf.Writer} [w] Writer to encode to
-                         * @returns {$protobuf.Writer} Writer
-                         */
-                        MsgTimeout.encode = function encode(m, w) {
-                            if (!w)
-                                w = $Writer.create();
-                            if (m.packet != null && Object.hasOwnProperty.call(m, "packet"))
-                                $root.cosmos_sdk.x.ibc.channel.v1.Packet.encode(m.packet, w.uint32(10).fork()).ldelim();
-                            if (m.proof != null && Object.hasOwnProperty.call(m, "proof"))
-                                w.uint32(18).bytes(m.proof);
-                            if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
-                                w.uint32(24).uint64(m.proofHeight);
-                            if (m.nextSequenceRecv != null && Object.hasOwnProperty.call(m, "nextSequenceRecv"))
-                                w.uint32(32).uint64(m.nextSequenceRecv);
-                            if (m.signer != null && Object.hasOwnProperty.call(m, "signer"))
-                                w.uint32(42).bytes(m.signer);
-                            return w;
-                        };
-
-                        /**
-                         * Decodes a MsgTimeout message from the specified reader or buffer.
-                         * @function decode
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgTimeout
-                         * @static
-                         * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                         * @param {number} [l] Message length if known beforehand
-                         * @returns {cosmos_sdk.x.ibc.channel.v1.MsgTimeout} MsgTimeout
-                         * @throws {Error} If the payload is not a reader or valid buffer
-                         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                         */
-                        MsgTimeout.decode = function decode(r, l) {
-                            if (!(r instanceof $Reader))
-                                r = $Reader.create(r);
-                            var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.ibc.channel.v1.MsgTimeout();
-                            while (r.pos < c) {
-                                var t = r.uint32();
-                                switch (t >>> 3) {
-                                case 1:
-                                    m.packet = $root.cosmos_sdk.x.ibc.channel.v1.Packet.decode(r, r.uint32());
-                                    break;
-                                case 2:
-                                    m.proof = r.bytes();
-                                    break;
-                                case 3:
-                                    m.proofHeight = r.uint64();
-                                    break;
-                                case 4:
-                                    m.nextSequenceRecv = r.uint64();
-                                    break;
-                                case 5:
-                                    m.signer = r.bytes();
-                                    break;
-                                default:
-                                    r.skipType(t & 7);
-                                    break;
-                                }
-                            }
-                            return m;
-                        };
-
-                        return MsgTimeout;
-                    })();
-
-                    v1.MsgAcknowledgement = (function() {
-
-                        /**
-                         * Properties of a MsgAcknowledgement.
-                         * @memberof cosmos_sdk.x.ibc.channel.v1
-                         * @interface IMsgAcknowledgement
-                         * @property {cosmos_sdk.x.ibc.channel.v1.IPacket|null} [packet] MsgAcknowledgement packet
-                         * @property {Uint8Array|null} [acknowledgement] MsgAcknowledgement acknowledgement
-                         * @property {Uint8Array|null} [proof] MsgAcknowledgement proof
-                         * @property {number|Long|null} [proofHeight] MsgAcknowledgement proofHeight
-                         * @property {Uint8Array|null} [signer] MsgAcknowledgement signer
-                         */
-
-                        /**
-                         * Constructs a new MsgAcknowledgement.
-                         * @memberof cosmos_sdk.x.ibc.channel.v1
-                         * @classdesc Represents a MsgAcknowledgement.
-                         * @implements IMsgAcknowledgement
-                         * @constructor
-                         * @param {cosmos_sdk.x.ibc.channel.v1.IMsgAcknowledgement=} [p] Properties to set
-                         */
-                        function MsgAcknowledgement(p) {
-                            if (p)
-                                for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                    if (p[ks[i]] != null)
-                                        this[ks[i]] = p[ks[i]];
-                        }
-
-                        /**
-                         * MsgAcknowledgement packet.
-                         * @member {cosmos_sdk.x.ibc.channel.v1.IPacket|null|undefined} packet
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgAcknowledgement
-                         * @instance
-                         */
-                        MsgAcknowledgement.prototype.packet = null;
-
-                        /**
-                         * MsgAcknowledgement acknowledgement.
-                         * @member {Uint8Array} acknowledgement
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgAcknowledgement
-                         * @instance
-                         */
-                        MsgAcknowledgement.prototype.acknowledgement = $util.newBuffer([]);
-
-                        /**
-                         * MsgAcknowledgement proof.
-                         * @member {Uint8Array} proof
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgAcknowledgement
-                         * @instance
-                         */
-                        MsgAcknowledgement.prototype.proof = $util.newBuffer([]);
-
-                        /**
-                         * MsgAcknowledgement proofHeight.
-                         * @member {number|Long} proofHeight
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgAcknowledgement
-                         * @instance
-                         */
-                        MsgAcknowledgement.prototype.proofHeight = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-                        /**
-                         * MsgAcknowledgement signer.
-                         * @member {Uint8Array} signer
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgAcknowledgement
-                         * @instance
-                         */
-                        MsgAcknowledgement.prototype.signer = $util.newBuffer([]);
-
-                        /**
-                         * Creates a new MsgAcknowledgement instance using the specified properties.
-                         * @function create
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgAcknowledgement
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.channel.v1.IMsgAcknowledgement=} [properties] Properties to set
-                         * @returns {cosmos_sdk.x.ibc.channel.v1.MsgAcknowledgement} MsgAcknowledgement instance
-                         */
-                        MsgAcknowledgement.create = function create(properties) {
-                            return new MsgAcknowledgement(properties);
-                        };
-
-                        /**
-                         * Encodes the specified MsgAcknowledgement message. Does not implicitly {@link cosmos_sdk.x.ibc.channel.v1.MsgAcknowledgement.verify|verify} messages.
-                         * @function encode
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgAcknowledgement
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.channel.v1.IMsgAcknowledgement} m MsgAcknowledgement message or plain object to encode
-                         * @param {$protobuf.Writer} [w] Writer to encode to
-                         * @returns {$protobuf.Writer} Writer
-                         */
-                        MsgAcknowledgement.encode = function encode(m, w) {
-                            if (!w)
-                                w = $Writer.create();
-                            if (m.packet != null && Object.hasOwnProperty.call(m, "packet"))
-                                $root.cosmos_sdk.x.ibc.channel.v1.Packet.encode(m.packet, w.uint32(10).fork()).ldelim();
-                            if (m.acknowledgement != null && Object.hasOwnProperty.call(m, "acknowledgement"))
-                                w.uint32(18).bytes(m.acknowledgement);
-                            if (m.proof != null && Object.hasOwnProperty.call(m, "proof"))
-                                w.uint32(26).bytes(m.proof);
-                            if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
-                                w.uint32(32).uint64(m.proofHeight);
-                            if (m.signer != null && Object.hasOwnProperty.call(m, "signer"))
-                                w.uint32(42).bytes(m.signer);
-                            return w;
-                        };
-
-                        /**
-                         * Decodes a MsgAcknowledgement message from the specified reader or buffer.
-                         * @function decode
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.MsgAcknowledgement
-                         * @static
-                         * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                         * @param {number} [l] Message length if known beforehand
-                         * @returns {cosmos_sdk.x.ibc.channel.v1.MsgAcknowledgement} MsgAcknowledgement
-                         * @throws {Error} If the payload is not a reader or valid buffer
-                         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                         */
-                        MsgAcknowledgement.decode = function decode(r, l) {
-                            if (!(r instanceof $Reader))
-                                r = $Reader.create(r);
-                            var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.ibc.channel.v1.MsgAcknowledgement();
-                            while (r.pos < c) {
-                                var t = r.uint32();
-                                switch (t >>> 3) {
-                                case 1:
-                                    m.packet = $root.cosmos_sdk.x.ibc.channel.v1.Packet.decode(r, r.uint32());
-                                    break;
-                                case 2:
-                                    m.acknowledgement = r.bytes();
-                                    break;
-                                case 3:
-                                    m.proof = r.bytes();
-                                    break;
-                                case 4:
-                                    m.proofHeight = r.uint64();
-                                    break;
-                                case 5:
-                                    m.signer = r.bytes();
-                                    break;
-                                default:
-                                    r.skipType(t & 7);
-                                    break;
-                                }
-                            }
-                            return m;
-                        };
-
-                        return MsgAcknowledgement;
-                    })();
-
-                    v1.Channel = (function() {
-
-                        /**
-                         * Properties of a Channel.
-                         * @memberof cosmos_sdk.x.ibc.channel.v1
-                         * @interface IChannel
-                         * @property {cosmos_sdk.x.ibc.channel.v1.State|null} [state] Channel state
-                         * @property {cosmos_sdk.x.ibc.channel.v1.Order|null} [ordering] Channel ordering
-                         * @property {cosmos_sdk.x.ibc.channel.v1.ICounterparty|null} [counterparty] Channel counterparty
-                         * @property {Array.<string>|null} [connectionHops] Channel connectionHops
-                         * @property {string|null} [version] Channel version
-                         */
-
-                        /**
-                         * Constructs a new Channel.
-                         * @memberof cosmos_sdk.x.ibc.channel.v1
-                         * @classdesc Represents a Channel.
-                         * @implements IChannel
-                         * @constructor
-                         * @param {cosmos_sdk.x.ibc.channel.v1.IChannel=} [p] Properties to set
-                         */
-                        function Channel(p) {
-                            this.connectionHops = [];
-                            if (p)
-                                for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                    if (p[ks[i]] != null)
-                                        this[ks[i]] = p[ks[i]];
-                        }
-
-                        /**
-                         * Channel state.
-                         * @member {cosmos_sdk.x.ibc.channel.v1.State} state
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.Channel
-                         * @instance
-                         */
-                        Channel.prototype.state = 0;
-
-                        /**
-                         * Channel ordering.
-                         * @member {cosmos_sdk.x.ibc.channel.v1.Order} ordering
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.Channel
-                         * @instance
-                         */
-                        Channel.prototype.ordering = 0;
-
-                        /**
-                         * Channel counterparty.
-                         * @member {cosmos_sdk.x.ibc.channel.v1.ICounterparty|null|undefined} counterparty
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.Channel
-                         * @instance
-                         */
-                        Channel.prototype.counterparty = null;
-
-                        /**
-                         * Channel connectionHops.
-                         * @member {Array.<string>} connectionHops
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.Channel
-                         * @instance
-                         */
-                        Channel.prototype.connectionHops = $util.emptyArray;
-
-                        /**
-                         * Channel version.
-                         * @member {string} version
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.Channel
-                         * @instance
-                         */
-                        Channel.prototype.version = "";
-
-                        /**
-                         * Creates a new Channel instance using the specified properties.
-                         * @function create
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.Channel
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.channel.v1.IChannel=} [properties] Properties to set
-                         * @returns {cosmos_sdk.x.ibc.channel.v1.Channel} Channel instance
-                         */
-                        Channel.create = function create(properties) {
-                            return new Channel(properties);
-                        };
-
-                        /**
-                         * Encodes the specified Channel message. Does not implicitly {@link cosmos_sdk.x.ibc.channel.v1.Channel.verify|verify} messages.
-                         * @function encode
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.Channel
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.channel.v1.IChannel} m Channel message or plain object to encode
-                         * @param {$protobuf.Writer} [w] Writer to encode to
-                         * @returns {$protobuf.Writer} Writer
-                         */
-                        Channel.encode = function encode(m, w) {
-                            if (!w)
-                                w = $Writer.create();
-                            if (m.state != null && Object.hasOwnProperty.call(m, "state"))
-                                w.uint32(8).int32(m.state);
-                            if (m.ordering != null && Object.hasOwnProperty.call(m, "ordering"))
-                                w.uint32(16).int32(m.ordering);
-                            if (m.counterparty != null && Object.hasOwnProperty.call(m, "counterparty"))
-                                $root.cosmos_sdk.x.ibc.channel.v1.Counterparty.encode(m.counterparty, w.uint32(26).fork()).ldelim();
-                            if (m.connectionHops != null && m.connectionHops.length) {
-                                for (var i = 0; i < m.connectionHops.length; ++i)
-                                    w.uint32(34).string(m.connectionHops[i]);
-                            }
-                            if (m.version != null && Object.hasOwnProperty.call(m, "version"))
-                                w.uint32(42).string(m.version);
-                            return w;
-                        };
-
-                        /**
-                         * Decodes a Channel message from the specified reader or buffer.
-                         * @function decode
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.Channel
-                         * @static
-                         * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                         * @param {number} [l] Message length if known beforehand
-                         * @returns {cosmos_sdk.x.ibc.channel.v1.Channel} Channel
-                         * @throws {Error} If the payload is not a reader or valid buffer
-                         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                         */
-                        Channel.decode = function decode(r, l) {
-                            if (!(r instanceof $Reader))
-                                r = $Reader.create(r);
-                            var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.ibc.channel.v1.Channel();
-                            while (r.pos < c) {
-                                var t = r.uint32();
-                                switch (t >>> 3) {
-                                case 1:
-                                    m.state = r.int32();
-                                    break;
-                                case 2:
-                                    m.ordering = r.int32();
-                                    break;
-                                case 3:
-                                    m.counterparty = $root.cosmos_sdk.x.ibc.channel.v1.Counterparty.decode(r, r.uint32());
-                                    break;
-                                case 4:
-                                    if (!(m.connectionHops && m.connectionHops.length))
-                                        m.connectionHops = [];
-                                    m.connectionHops.push(r.string());
-                                    break;
-                                case 5:
-                                    m.version = r.string();
-                                    break;
-                                default:
-                                    r.skipType(t & 7);
-                                    break;
-                                }
-                            }
-                            return m;
-                        };
-
-                        return Channel;
-                    })();
-
-                    /**
-                     * State enum.
-                     * @name cosmos_sdk.x.ibc.channel.v1.State
-                     * @enum {number}
-                     * @property {number} STATE_UNINITIALIZED_UNSPECIFIED=0 STATE_UNINITIALIZED_UNSPECIFIED value
-                     * @property {number} STATE_INIT=1 STATE_INIT value
-                     * @property {number} STATE_TRYOPEN=2 STATE_TRYOPEN value
-                     * @property {number} STATE_OPEN=3 STATE_OPEN value
-                     * @property {number} STATE_CLOSED=4 STATE_CLOSED value
-                     */
-                    v1.State = (function() {
-                        var valuesById = {}, values = Object.create(valuesById);
-                        values[valuesById[0] = "STATE_UNINITIALIZED_UNSPECIFIED"] = 0;
-                        values[valuesById[1] = "STATE_INIT"] = 1;
-                        values[valuesById[2] = "STATE_TRYOPEN"] = 2;
-                        values[valuesById[3] = "STATE_OPEN"] = 3;
-                        values[valuesById[4] = "STATE_CLOSED"] = 4;
-                        return values;
-                    })();
-
-                    /**
-                     * Order enum.
-                     * @name cosmos_sdk.x.ibc.channel.v1.Order
-                     * @enum {number}
-                     * @property {number} ORDER_NONE_UNSPECIFIED=0 ORDER_NONE_UNSPECIFIED value
-                     * @property {number} ORDER_UNORDERED=1 ORDER_UNORDERED value
-                     * @property {number} ORDER_ORDERED=2 ORDER_ORDERED value
-                     */
-                    v1.Order = (function() {
-                        var valuesById = {}, values = Object.create(valuesById);
-                        values[valuesById[0] = "ORDER_NONE_UNSPECIFIED"] = 0;
-                        values[valuesById[1] = "ORDER_UNORDERED"] = 1;
-                        values[valuesById[2] = "ORDER_ORDERED"] = 2;
-                        return values;
-                    })();
-
-                    v1.Counterparty = (function() {
-
-                        /**
-                         * Properties of a Counterparty.
-                         * @memberof cosmos_sdk.x.ibc.channel.v1
-                         * @interface ICounterparty
-                         * @property {string|null} [portId] Counterparty portId
-                         * @property {string|null} [channelId] Counterparty channelId
-                         */
-
-                        /**
-                         * Constructs a new Counterparty.
-                         * @memberof cosmos_sdk.x.ibc.channel.v1
-                         * @classdesc Represents a Counterparty.
-                         * @implements ICounterparty
-                         * @constructor
-                         * @param {cosmos_sdk.x.ibc.channel.v1.ICounterparty=} [p] Properties to set
-                         */
-                        function Counterparty(p) {
-                            if (p)
-                                for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                    if (p[ks[i]] != null)
-                                        this[ks[i]] = p[ks[i]];
-                        }
-
-                        /**
-                         * Counterparty portId.
-                         * @member {string} portId
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.Counterparty
-                         * @instance
-                         */
-                        Counterparty.prototype.portId = "";
-
-                        /**
-                         * Counterparty channelId.
-                         * @member {string} channelId
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.Counterparty
-                         * @instance
-                         */
-                        Counterparty.prototype.channelId = "";
-
-                        /**
-                         * Creates a new Counterparty instance using the specified properties.
-                         * @function create
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.Counterparty
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.channel.v1.ICounterparty=} [properties] Properties to set
-                         * @returns {cosmos_sdk.x.ibc.channel.v1.Counterparty} Counterparty instance
-                         */
-                        Counterparty.create = function create(properties) {
-                            return new Counterparty(properties);
-                        };
-
-                        /**
-                         * Encodes the specified Counterparty message. Does not implicitly {@link cosmos_sdk.x.ibc.channel.v1.Counterparty.verify|verify} messages.
-                         * @function encode
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.Counterparty
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.channel.v1.ICounterparty} m Counterparty message or plain object to encode
-                         * @param {$protobuf.Writer} [w] Writer to encode to
-                         * @returns {$protobuf.Writer} Writer
-                         */
-                        Counterparty.encode = function encode(m, w) {
-                            if (!w)
-                                w = $Writer.create();
-                            if (m.portId != null && Object.hasOwnProperty.call(m, "portId"))
-                                w.uint32(10).string(m.portId);
-                            if (m.channelId != null && Object.hasOwnProperty.call(m, "channelId"))
-                                w.uint32(18).string(m.channelId);
-                            return w;
-                        };
-
-                        /**
-                         * Decodes a Counterparty message from the specified reader or buffer.
-                         * @function decode
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.Counterparty
-                         * @static
-                         * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                         * @param {number} [l] Message length if known beforehand
-                         * @returns {cosmos_sdk.x.ibc.channel.v1.Counterparty} Counterparty
-                         * @throws {Error} If the payload is not a reader or valid buffer
-                         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                         */
-                        Counterparty.decode = function decode(r, l) {
-                            if (!(r instanceof $Reader))
-                                r = $Reader.create(r);
-                            var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.ibc.channel.v1.Counterparty();
-                            while (r.pos < c) {
-                                var t = r.uint32();
-                                switch (t >>> 3) {
-                                case 1:
-                                    m.portId = r.string();
-                                    break;
-                                case 2:
-                                    m.channelId = r.string();
-                                    break;
-                                default:
-                                    r.skipType(t & 7);
-                                    break;
-                                }
-                            }
-                            return m;
-                        };
-
-                        return Counterparty;
-                    })();
-
-                    v1.Packet = (function() {
-
-                        /**
-                         * Properties of a Packet.
-                         * @memberof cosmos_sdk.x.ibc.channel.v1
-                         * @interface IPacket
-                         * @property {number|Long|null} [sequence] Packet sequence
-                         * @property {string|null} [sourcePort] Packet sourcePort
-                         * @property {string|null} [sourceChannel] Packet sourceChannel
-                         * @property {string|null} [destinationPort] Packet destinationPort
-                         * @property {string|null} [destinationChannel] Packet destinationChannel
-                         * @property {Uint8Array|null} [data] Packet data
-                         * @property {number|Long|null} [timeoutHeight] Packet timeoutHeight
-                         * @property {number|Long|null} [timeoutTimestamp] Packet timeoutTimestamp
-                         */
-
-                        /**
-                         * Constructs a new Packet.
-                         * @memberof cosmos_sdk.x.ibc.channel.v1
-                         * @classdesc Represents a Packet.
-                         * @implements IPacket
-                         * @constructor
-                         * @param {cosmos_sdk.x.ibc.channel.v1.IPacket=} [p] Properties to set
-                         */
-                        function Packet(p) {
-                            if (p)
-                                for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                    if (p[ks[i]] != null)
-                                        this[ks[i]] = p[ks[i]];
-                        }
-
-                        /**
-                         * Packet sequence.
-                         * @member {number|Long} sequence
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.Packet
-                         * @instance
-                         */
-                        Packet.prototype.sequence = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-                        /**
-                         * Packet sourcePort.
-                         * @member {string} sourcePort
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.Packet
-                         * @instance
-                         */
-                        Packet.prototype.sourcePort = "";
-
-                        /**
-                         * Packet sourceChannel.
-                         * @member {string} sourceChannel
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.Packet
-                         * @instance
-                         */
-                        Packet.prototype.sourceChannel = "";
-
-                        /**
-                         * Packet destinationPort.
-                         * @member {string} destinationPort
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.Packet
-                         * @instance
-                         */
-                        Packet.prototype.destinationPort = "";
-
-                        /**
-                         * Packet destinationChannel.
-                         * @member {string} destinationChannel
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.Packet
-                         * @instance
-                         */
-                        Packet.prototype.destinationChannel = "";
-
-                        /**
-                         * Packet data.
-                         * @member {Uint8Array} data
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.Packet
-                         * @instance
-                         */
-                        Packet.prototype.data = $util.newBuffer([]);
-
-                        /**
-                         * Packet timeoutHeight.
-                         * @member {number|Long} timeoutHeight
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.Packet
-                         * @instance
-                         */
-                        Packet.prototype.timeoutHeight = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-                        /**
-                         * Packet timeoutTimestamp.
-                         * @member {number|Long} timeoutTimestamp
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.Packet
-                         * @instance
-                         */
-                        Packet.prototype.timeoutTimestamp = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-                        /**
-                         * Creates a new Packet instance using the specified properties.
-                         * @function create
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.Packet
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.channel.v1.IPacket=} [properties] Properties to set
-                         * @returns {cosmos_sdk.x.ibc.channel.v1.Packet} Packet instance
-                         */
-                        Packet.create = function create(properties) {
-                            return new Packet(properties);
-                        };
-
-                        /**
-                         * Encodes the specified Packet message. Does not implicitly {@link cosmos_sdk.x.ibc.channel.v1.Packet.verify|verify} messages.
-                         * @function encode
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.Packet
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.channel.v1.IPacket} m Packet message or plain object to encode
-                         * @param {$protobuf.Writer} [w] Writer to encode to
-                         * @returns {$protobuf.Writer} Writer
-                         */
-                        Packet.encode = function encode(m, w) {
-                            if (!w)
-                                w = $Writer.create();
-                            if (m.sequence != null && Object.hasOwnProperty.call(m, "sequence"))
-                                w.uint32(8).uint64(m.sequence);
-                            if (m.sourcePort != null && Object.hasOwnProperty.call(m, "sourcePort"))
-                                w.uint32(18).string(m.sourcePort);
-                            if (m.sourceChannel != null && Object.hasOwnProperty.call(m, "sourceChannel"))
-                                w.uint32(26).string(m.sourceChannel);
-                            if (m.destinationPort != null && Object.hasOwnProperty.call(m, "destinationPort"))
-                                w.uint32(34).string(m.destinationPort);
-                            if (m.destinationChannel != null && Object.hasOwnProperty.call(m, "destinationChannel"))
-                                w.uint32(42).string(m.destinationChannel);
-                            if (m.data != null && Object.hasOwnProperty.call(m, "data"))
-                                w.uint32(50).bytes(m.data);
-                            if (m.timeoutHeight != null && Object.hasOwnProperty.call(m, "timeoutHeight"))
-                                w.uint32(56).uint64(m.timeoutHeight);
-                            if (m.timeoutTimestamp != null && Object.hasOwnProperty.call(m, "timeoutTimestamp"))
-                                w.uint32(64).uint64(m.timeoutTimestamp);
-                            return w;
-                        };
-
-                        /**
-                         * Decodes a Packet message from the specified reader or buffer.
-                         * @function decode
-                         * @memberof cosmos_sdk.x.ibc.channel.v1.Packet
-                         * @static
-                         * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                         * @param {number} [l] Message length if known beforehand
-                         * @returns {cosmos_sdk.x.ibc.channel.v1.Packet} Packet
-                         * @throws {Error} If the payload is not a reader or valid buffer
-                         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                         */
-                        Packet.decode = function decode(r, l) {
-                            if (!(r instanceof $Reader))
-                                r = $Reader.create(r);
-                            var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.ibc.channel.v1.Packet();
-                            while (r.pos < c) {
-                                var t = r.uint32();
-                                switch (t >>> 3) {
-                                case 1:
-                                    m.sequence = r.uint64();
-                                    break;
-                                case 2:
-                                    m.sourcePort = r.string();
-                                    break;
-                                case 3:
-                                    m.sourceChannel = r.string();
-                                    break;
-                                case 4:
-                                    m.destinationPort = r.string();
-                                    break;
-                                case 5:
-                                    m.destinationChannel = r.string();
-                                    break;
-                                case 6:
-                                    m.data = r.bytes();
-                                    break;
-                                case 7:
-                                    m.timeoutHeight = r.uint64();
-                                    break;
-                                case 8:
-                                    m.timeoutTimestamp = r.uint64();
-                                    break;
-                                default:
-                                    r.skipType(t & 7);
-                                    break;
-                                }
-                            }
-                            return m;
-                        };
-
-                        return Packet;
-                    })();
-
-                    return v1;
-                })();
-
-                return channel;
-            })();
-
-            ibc.commitment = (function() {
-
-                /**
-                 * Namespace commitment.
-                 * @memberof cosmos_sdk.x.ibc
-                 * @namespace
-                 */
-                var commitment = {};
-
-                commitment.v1 = (function() {
-
-                    /**
-                     * Namespace v1.
-                     * @memberof cosmos_sdk.x.ibc.commitment
-                     * @namespace
-                     */
-                    var v1 = {};
-
-                    v1.MerkleRoot = (function() {
-
-                        /**
-                         * Properties of a MerkleRoot.
-                         * @memberof cosmos_sdk.x.ibc.commitment.v1
-                         * @interface IMerkleRoot
-                         * @property {Uint8Array|null} [hash] MerkleRoot hash
-                         */
-
-                        /**
-                         * Constructs a new MerkleRoot.
-                         * @memberof cosmos_sdk.x.ibc.commitment.v1
-                         * @classdesc Represents a MerkleRoot.
-                         * @implements IMerkleRoot
-                         * @constructor
-                         * @param {cosmos_sdk.x.ibc.commitment.v1.IMerkleRoot=} [p] Properties to set
-                         */
-                        function MerkleRoot(p) {
-                            if (p)
-                                for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                    if (p[ks[i]] != null)
-                                        this[ks[i]] = p[ks[i]];
-                        }
-
-                        /**
-                         * MerkleRoot hash.
-                         * @member {Uint8Array} hash
-                         * @memberof cosmos_sdk.x.ibc.commitment.v1.MerkleRoot
-                         * @instance
-                         */
-                        MerkleRoot.prototype.hash = $util.newBuffer([]);
-
-                        /**
-                         * Creates a new MerkleRoot instance using the specified properties.
-                         * @function create
-                         * @memberof cosmos_sdk.x.ibc.commitment.v1.MerkleRoot
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.commitment.v1.IMerkleRoot=} [properties] Properties to set
-                         * @returns {cosmos_sdk.x.ibc.commitment.v1.MerkleRoot} MerkleRoot instance
-                         */
-                        MerkleRoot.create = function create(properties) {
-                            return new MerkleRoot(properties);
-                        };
-
-                        /**
-                         * Encodes the specified MerkleRoot message. Does not implicitly {@link cosmos_sdk.x.ibc.commitment.v1.MerkleRoot.verify|verify} messages.
-                         * @function encode
-                         * @memberof cosmos_sdk.x.ibc.commitment.v1.MerkleRoot
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.commitment.v1.IMerkleRoot} m MerkleRoot message or plain object to encode
-                         * @param {$protobuf.Writer} [w] Writer to encode to
-                         * @returns {$protobuf.Writer} Writer
-                         */
-                        MerkleRoot.encode = function encode(m, w) {
-                            if (!w)
-                                w = $Writer.create();
-                            if (m.hash != null && Object.hasOwnProperty.call(m, "hash"))
-                                w.uint32(10).bytes(m.hash);
-                            return w;
-                        };
-
-                        /**
-                         * Decodes a MerkleRoot message from the specified reader or buffer.
-                         * @function decode
-                         * @memberof cosmos_sdk.x.ibc.commitment.v1.MerkleRoot
-                         * @static
-                         * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                         * @param {number} [l] Message length if known beforehand
-                         * @returns {cosmos_sdk.x.ibc.commitment.v1.MerkleRoot} MerkleRoot
-                         * @throws {Error} If the payload is not a reader or valid buffer
-                         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                         */
-                        MerkleRoot.decode = function decode(r, l) {
-                            if (!(r instanceof $Reader))
-                                r = $Reader.create(r);
-                            var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.ibc.commitment.v1.MerkleRoot();
-                            while (r.pos < c) {
-                                var t = r.uint32();
-                                switch (t >>> 3) {
-                                case 1:
-                                    m.hash = r.bytes();
-                                    break;
-                                default:
-                                    r.skipType(t & 7);
-                                    break;
-                                }
-                            }
-                            return m;
-                        };
-
-                        return MerkleRoot;
-                    })();
-
-                    v1.MerklePrefix = (function() {
-
-                        /**
-                         * Properties of a MerklePrefix.
-                         * @memberof cosmos_sdk.x.ibc.commitment.v1
-                         * @interface IMerklePrefix
-                         * @property {Uint8Array|null} [keyPrefix] MerklePrefix keyPrefix
-                         */
-
-                        /**
-                         * Constructs a new MerklePrefix.
-                         * @memberof cosmos_sdk.x.ibc.commitment.v1
-                         * @classdesc Represents a MerklePrefix.
-                         * @implements IMerklePrefix
-                         * @constructor
-                         * @param {cosmos_sdk.x.ibc.commitment.v1.IMerklePrefix=} [p] Properties to set
-                         */
-                        function MerklePrefix(p) {
-                            if (p)
-                                for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                    if (p[ks[i]] != null)
-                                        this[ks[i]] = p[ks[i]];
-                        }
-
-                        /**
-                         * MerklePrefix keyPrefix.
-                         * @member {Uint8Array} keyPrefix
-                         * @memberof cosmos_sdk.x.ibc.commitment.v1.MerklePrefix
-                         * @instance
-                         */
-                        MerklePrefix.prototype.keyPrefix = $util.newBuffer([]);
-
-                        /**
-                         * Creates a new MerklePrefix instance using the specified properties.
-                         * @function create
-                         * @memberof cosmos_sdk.x.ibc.commitment.v1.MerklePrefix
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.commitment.v1.IMerklePrefix=} [properties] Properties to set
-                         * @returns {cosmos_sdk.x.ibc.commitment.v1.MerklePrefix} MerklePrefix instance
-                         */
-                        MerklePrefix.create = function create(properties) {
-                            return new MerklePrefix(properties);
-                        };
-
-                        /**
-                         * Encodes the specified MerklePrefix message. Does not implicitly {@link cosmos_sdk.x.ibc.commitment.v1.MerklePrefix.verify|verify} messages.
-                         * @function encode
-                         * @memberof cosmos_sdk.x.ibc.commitment.v1.MerklePrefix
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.commitment.v1.IMerklePrefix} m MerklePrefix message or plain object to encode
-                         * @param {$protobuf.Writer} [w] Writer to encode to
-                         * @returns {$protobuf.Writer} Writer
-                         */
-                        MerklePrefix.encode = function encode(m, w) {
-                            if (!w)
-                                w = $Writer.create();
-                            if (m.keyPrefix != null && Object.hasOwnProperty.call(m, "keyPrefix"))
-                                w.uint32(10).bytes(m.keyPrefix);
-                            return w;
-                        };
-
-                        /**
-                         * Decodes a MerklePrefix message from the specified reader or buffer.
-                         * @function decode
-                         * @memberof cosmos_sdk.x.ibc.commitment.v1.MerklePrefix
-                         * @static
-                         * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                         * @param {number} [l] Message length if known beforehand
-                         * @returns {cosmos_sdk.x.ibc.commitment.v1.MerklePrefix} MerklePrefix
-                         * @throws {Error} If the payload is not a reader or valid buffer
-                         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                         */
-                        MerklePrefix.decode = function decode(r, l) {
-                            if (!(r instanceof $Reader))
-                                r = $Reader.create(r);
-                            var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.ibc.commitment.v1.MerklePrefix();
-                            while (r.pos < c) {
-                                var t = r.uint32();
-                                switch (t >>> 3) {
-                                case 1:
-                                    m.keyPrefix = r.bytes();
-                                    break;
-                                default:
-                                    r.skipType(t & 7);
-                                    break;
-                                }
-                            }
-                            return m;
-                        };
-
-                        return MerklePrefix;
-                    })();
-
-                    v1.MerklePath = (function() {
-
-                        /**
-                         * Properties of a MerklePath.
-                         * @memberof cosmos_sdk.x.ibc.commitment.v1
-                         * @interface IMerklePath
-                         * @property {cosmos_sdk.x.ibc.commitment.v1.IKeyPath|null} [keyPath] MerklePath keyPath
-                         */
-
-                        /**
-                         * Constructs a new MerklePath.
-                         * @memberof cosmos_sdk.x.ibc.commitment.v1
-                         * @classdesc Represents a MerklePath.
-                         * @implements IMerklePath
-                         * @constructor
-                         * @param {cosmos_sdk.x.ibc.commitment.v1.IMerklePath=} [p] Properties to set
-                         */
-                        function MerklePath(p) {
-                            if (p)
-                                for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                    if (p[ks[i]] != null)
-                                        this[ks[i]] = p[ks[i]];
-                        }
-
-                        /**
-                         * MerklePath keyPath.
-                         * @member {cosmos_sdk.x.ibc.commitment.v1.IKeyPath|null|undefined} keyPath
-                         * @memberof cosmos_sdk.x.ibc.commitment.v1.MerklePath
-                         * @instance
-                         */
-                        MerklePath.prototype.keyPath = null;
-
-                        /**
-                         * Creates a new MerklePath instance using the specified properties.
-                         * @function create
-                         * @memberof cosmos_sdk.x.ibc.commitment.v1.MerklePath
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.commitment.v1.IMerklePath=} [properties] Properties to set
-                         * @returns {cosmos_sdk.x.ibc.commitment.v1.MerklePath} MerklePath instance
-                         */
-                        MerklePath.create = function create(properties) {
-                            return new MerklePath(properties);
-                        };
-
-                        /**
-                         * Encodes the specified MerklePath message. Does not implicitly {@link cosmos_sdk.x.ibc.commitment.v1.MerklePath.verify|verify} messages.
-                         * @function encode
-                         * @memberof cosmos_sdk.x.ibc.commitment.v1.MerklePath
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.commitment.v1.IMerklePath} m MerklePath message or plain object to encode
-                         * @param {$protobuf.Writer} [w] Writer to encode to
-                         * @returns {$protobuf.Writer} Writer
-                         */
-                        MerklePath.encode = function encode(m, w) {
-                            if (!w)
-                                w = $Writer.create();
-                            if (m.keyPath != null && Object.hasOwnProperty.call(m, "keyPath"))
-                                $root.cosmos_sdk.x.ibc.commitment.v1.KeyPath.encode(m.keyPath, w.uint32(10).fork()).ldelim();
-                            return w;
-                        };
-
-                        /**
-                         * Decodes a MerklePath message from the specified reader or buffer.
-                         * @function decode
-                         * @memberof cosmos_sdk.x.ibc.commitment.v1.MerklePath
-                         * @static
-                         * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                         * @param {number} [l] Message length if known beforehand
-                         * @returns {cosmos_sdk.x.ibc.commitment.v1.MerklePath} MerklePath
-                         * @throws {Error} If the payload is not a reader or valid buffer
-                         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                         */
-                        MerklePath.decode = function decode(r, l) {
-                            if (!(r instanceof $Reader))
-                                r = $Reader.create(r);
-                            var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.ibc.commitment.v1.MerklePath();
-                            while (r.pos < c) {
-                                var t = r.uint32();
-                                switch (t >>> 3) {
-                                case 1:
-                                    m.keyPath = $root.cosmos_sdk.x.ibc.commitment.v1.KeyPath.decode(r, r.uint32());
-                                    break;
-                                default:
-                                    r.skipType(t & 7);
-                                    break;
-                                }
-                            }
-                            return m;
-                        };
-
-                        return MerklePath;
-                    })();
-
-                    v1.MerkleProof = (function() {
-
-                        /**
-                         * Properties of a MerkleProof.
-                         * @memberof cosmos_sdk.x.ibc.commitment.v1
-                         * @interface IMerkleProof
-                         * @property {tendermint.crypto.merkle.IProof|null} [proof] MerkleProof proof
-                         */
-
-                        /**
-                         * Constructs a new MerkleProof.
-                         * @memberof cosmos_sdk.x.ibc.commitment.v1
-                         * @classdesc Represents a MerkleProof.
-                         * @implements IMerkleProof
-                         * @constructor
-                         * @param {cosmos_sdk.x.ibc.commitment.v1.IMerkleProof=} [p] Properties to set
-                         */
-                        function MerkleProof(p) {
-                            if (p)
-                                for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                    if (p[ks[i]] != null)
-                                        this[ks[i]] = p[ks[i]];
-                        }
-
-                        /**
-                         * MerkleProof proof.
-                         * @member {tendermint.crypto.merkle.IProof|null|undefined} proof
-                         * @memberof cosmos_sdk.x.ibc.commitment.v1.MerkleProof
-                         * @instance
-                         */
-                        MerkleProof.prototype.proof = null;
-
-                        /**
-                         * Creates a new MerkleProof instance using the specified properties.
-                         * @function create
-                         * @memberof cosmos_sdk.x.ibc.commitment.v1.MerkleProof
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.commitment.v1.IMerkleProof=} [properties] Properties to set
-                         * @returns {cosmos_sdk.x.ibc.commitment.v1.MerkleProof} MerkleProof instance
-                         */
-                        MerkleProof.create = function create(properties) {
-                            return new MerkleProof(properties);
-                        };
-
-                        /**
-                         * Encodes the specified MerkleProof message. Does not implicitly {@link cosmos_sdk.x.ibc.commitment.v1.MerkleProof.verify|verify} messages.
-                         * @function encode
-                         * @memberof cosmos_sdk.x.ibc.commitment.v1.MerkleProof
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.commitment.v1.IMerkleProof} m MerkleProof message or plain object to encode
-                         * @param {$protobuf.Writer} [w] Writer to encode to
-                         * @returns {$protobuf.Writer} Writer
-                         */
-                        MerkleProof.encode = function encode(m, w) {
-                            if (!w)
-                                w = $Writer.create();
-                            if (m.proof != null && Object.hasOwnProperty.call(m, "proof"))
-                                $root.tendermint.crypto.merkle.Proof.encode(m.proof, w.uint32(10).fork()).ldelim();
-                            return w;
-                        };
-
-                        /**
-                         * Decodes a MerkleProof message from the specified reader or buffer.
-                         * @function decode
-                         * @memberof cosmos_sdk.x.ibc.commitment.v1.MerkleProof
-                         * @static
-                         * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                         * @param {number} [l] Message length if known beforehand
-                         * @returns {cosmos_sdk.x.ibc.commitment.v1.MerkleProof} MerkleProof
-                         * @throws {Error} If the payload is not a reader or valid buffer
-                         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                         */
-                        MerkleProof.decode = function decode(r, l) {
-                            if (!(r instanceof $Reader))
-                                r = $Reader.create(r);
-                            var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof();
-                            while (r.pos < c) {
-                                var t = r.uint32();
-                                switch (t >>> 3) {
-                                case 1:
-                                    m.proof = $root.tendermint.crypto.merkle.Proof.decode(r, r.uint32());
-                                    break;
-                                default:
-                                    r.skipType(t & 7);
-                                    break;
-                                }
-                            }
-                            return m;
-                        };
-
-                        return MerkleProof;
-                    })();
-
-                    v1.KeyPath = (function() {
-
-                        /**
-                         * Properties of a KeyPath.
-                         * @memberof cosmos_sdk.x.ibc.commitment.v1
-                         * @interface IKeyPath
-                         * @property {Array.<cosmos_sdk.x.ibc.commitment.v1.IKey>|null} [keys] KeyPath keys
-                         */
-
-                        /**
-                         * Constructs a new KeyPath.
-                         * @memberof cosmos_sdk.x.ibc.commitment.v1
-                         * @classdesc Represents a KeyPath.
-                         * @implements IKeyPath
-                         * @constructor
-                         * @param {cosmos_sdk.x.ibc.commitment.v1.IKeyPath=} [p] Properties to set
-                         */
-                        function KeyPath(p) {
-                            this.keys = [];
-                            if (p)
-                                for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                    if (p[ks[i]] != null)
-                                        this[ks[i]] = p[ks[i]];
-                        }
-
-                        /**
-                         * KeyPath keys.
-                         * @member {Array.<cosmos_sdk.x.ibc.commitment.v1.IKey>} keys
-                         * @memberof cosmos_sdk.x.ibc.commitment.v1.KeyPath
-                         * @instance
-                         */
-                        KeyPath.prototype.keys = $util.emptyArray;
-
-                        /**
-                         * Creates a new KeyPath instance using the specified properties.
-                         * @function create
-                         * @memberof cosmos_sdk.x.ibc.commitment.v1.KeyPath
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.commitment.v1.IKeyPath=} [properties] Properties to set
-                         * @returns {cosmos_sdk.x.ibc.commitment.v1.KeyPath} KeyPath instance
-                         */
-                        KeyPath.create = function create(properties) {
-                            return new KeyPath(properties);
-                        };
-
-                        /**
-                         * Encodes the specified KeyPath message. Does not implicitly {@link cosmos_sdk.x.ibc.commitment.v1.KeyPath.verify|verify} messages.
-                         * @function encode
-                         * @memberof cosmos_sdk.x.ibc.commitment.v1.KeyPath
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.commitment.v1.IKeyPath} m KeyPath message or plain object to encode
-                         * @param {$protobuf.Writer} [w] Writer to encode to
-                         * @returns {$protobuf.Writer} Writer
-                         */
-                        KeyPath.encode = function encode(m, w) {
-                            if (!w)
-                                w = $Writer.create();
-                            if (m.keys != null && m.keys.length) {
-                                for (var i = 0; i < m.keys.length; ++i)
-                                    $root.cosmos_sdk.x.ibc.commitment.v1.Key.encode(m.keys[i], w.uint32(10).fork()).ldelim();
-                            }
-                            return w;
-                        };
-
-                        /**
-                         * Decodes a KeyPath message from the specified reader or buffer.
-                         * @function decode
-                         * @memberof cosmos_sdk.x.ibc.commitment.v1.KeyPath
-                         * @static
-                         * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                         * @param {number} [l] Message length if known beforehand
-                         * @returns {cosmos_sdk.x.ibc.commitment.v1.KeyPath} KeyPath
-                         * @throws {Error} If the payload is not a reader or valid buffer
-                         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                         */
-                        KeyPath.decode = function decode(r, l) {
-                            if (!(r instanceof $Reader))
-                                r = $Reader.create(r);
-                            var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.ibc.commitment.v1.KeyPath();
-                            while (r.pos < c) {
-                                var t = r.uint32();
-                                switch (t >>> 3) {
-                                case 1:
-                                    if (!(m.keys && m.keys.length))
-                                        m.keys = [];
-                                    m.keys.push($root.cosmos_sdk.x.ibc.commitment.v1.Key.decode(r, r.uint32()));
-                                    break;
-                                default:
-                                    r.skipType(t & 7);
-                                    break;
-                                }
-                            }
-                            return m;
-                        };
-
-                        return KeyPath;
-                    })();
-
-                    v1.Key = (function() {
-
-                        /**
-                         * Properties of a Key.
-                         * @memberof cosmos_sdk.x.ibc.commitment.v1
-                         * @interface IKey
-                         * @property {Uint8Array|null} [name] Key name
-                         * @property {cosmos_sdk.x.ibc.commitment.v1.KeyEncoding|null} [enc] Key enc
-                         */
-
-                        /**
-                         * Constructs a new Key.
-                         * @memberof cosmos_sdk.x.ibc.commitment.v1
-                         * @classdesc Represents a Key.
-                         * @implements IKey
-                         * @constructor
-                         * @param {cosmos_sdk.x.ibc.commitment.v1.IKey=} [p] Properties to set
-                         */
-                        function Key(p) {
-                            if (p)
-                                for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                    if (p[ks[i]] != null)
-                                        this[ks[i]] = p[ks[i]];
-                        }
-
-                        /**
-                         * Key name.
-                         * @member {Uint8Array} name
-                         * @memberof cosmos_sdk.x.ibc.commitment.v1.Key
-                         * @instance
-                         */
-                        Key.prototype.name = $util.newBuffer([]);
-
-                        /**
-                         * Key enc.
-                         * @member {cosmos_sdk.x.ibc.commitment.v1.KeyEncoding} enc
-                         * @memberof cosmos_sdk.x.ibc.commitment.v1.Key
-                         * @instance
-                         */
-                        Key.prototype.enc = 0;
-
-                        /**
-                         * Creates a new Key instance using the specified properties.
-                         * @function create
-                         * @memberof cosmos_sdk.x.ibc.commitment.v1.Key
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.commitment.v1.IKey=} [properties] Properties to set
-                         * @returns {cosmos_sdk.x.ibc.commitment.v1.Key} Key instance
-                         */
-                        Key.create = function create(properties) {
-                            return new Key(properties);
-                        };
-
-                        /**
-                         * Encodes the specified Key message. Does not implicitly {@link cosmos_sdk.x.ibc.commitment.v1.Key.verify|verify} messages.
-                         * @function encode
-                         * @memberof cosmos_sdk.x.ibc.commitment.v1.Key
-                         * @static
-                         * @param {cosmos_sdk.x.ibc.commitment.v1.IKey} m Key message or plain object to encode
-                         * @param {$protobuf.Writer} [w] Writer to encode to
-                         * @returns {$protobuf.Writer} Writer
-                         */
-                        Key.encode = function encode(m, w) {
-                            if (!w)
-                                w = $Writer.create();
-                            if (m.name != null && Object.hasOwnProperty.call(m, "name"))
-                                w.uint32(10).bytes(m.name);
-                            if (m.enc != null && Object.hasOwnProperty.call(m, "enc"))
-                                w.uint32(16).int32(m.enc);
-                            return w;
-                        };
-
-                        /**
-                         * Decodes a Key message from the specified reader or buffer.
-                         * @function decode
-                         * @memberof cosmos_sdk.x.ibc.commitment.v1.Key
-                         * @static
-                         * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                         * @param {number} [l] Message length if known beforehand
-                         * @returns {cosmos_sdk.x.ibc.commitment.v1.Key} Key
-                         * @throws {Error} If the payload is not a reader or valid buffer
-                         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                         */
-                        Key.decode = function decode(r, l) {
-                            if (!(r instanceof $Reader))
-                                r = $Reader.create(r);
-                            var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.ibc.commitment.v1.Key();
-                            while (r.pos < c) {
-                                var t = r.uint32();
-                                switch (t >>> 3) {
-                                case 1:
-                                    m.name = r.bytes();
-                                    break;
-                                case 2:
-                                    m.enc = r.int32();
-                                    break;
-                                default:
-                                    r.skipType(t & 7);
-                                    break;
-                                }
-                            }
-                            return m;
-                        };
-
-                        return Key;
-                    })();
-
-                    /**
-                     * KeyEncoding enum.
-                     * @name cosmos_sdk.x.ibc.commitment.v1.KeyEncoding
-                     * @enum {number}
-                     * @property {number} KEY_ENCODING_URL_UNSPECIFIED=0 KEY_ENCODING_URL_UNSPECIFIED value
-                     * @property {number} KEY_ENCODING_HEX=1 KEY_ENCODING_HEX value
-                     */
-                    v1.KeyEncoding = (function() {
-                        var valuesById = {}, values = Object.create(valuesById);
-                        values[valuesById[0] = "KEY_ENCODING_URL_UNSPECIFIED"] = 0;
-                        values[valuesById[1] = "KEY_ENCODING_HEX"] = 1;
-                        return values;
-                    })();
-
-                    return v1;
-                })();
-
-                return commitment;
-            })();
-
-            return ibc;
-        })();
-
-        x.mint = (function() {
-
-            /**
-             * Namespace mint.
-             * @memberof cosmos_sdk.x
-             * @namespace
-             */
-            var mint = {};
-
-            mint.v1 = (function() {
-
-                /**
-                 * Namespace v1.
-                 * @memberof cosmos_sdk.x.mint
-                 * @namespace
-                 */
-                var v1 = {};
-
-                v1.Minter = (function() {
-
-                    /**
-                     * Properties of a Minter.
-                     * @memberof cosmos_sdk.x.mint.v1
-                     * @interface IMinter
-                     * @property {string|null} [inflation] Minter inflation
-                     * @property {string|null} [annualProvisions] Minter annualProvisions
-                     */
-
-                    /**
-                     * Constructs a new Minter.
-                     * @memberof cosmos_sdk.x.mint.v1
-                     * @classdesc Represents a Minter.
-                     * @implements IMinter
-                     * @constructor
-                     * @param {cosmos_sdk.x.mint.v1.IMinter=} [p] Properties to set
-                     */
-                    function Minter(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * Minter inflation.
-                     * @member {string} inflation
-                     * @memberof cosmos_sdk.x.mint.v1.Minter
-                     * @instance
-                     */
-                    Minter.prototype.inflation = "";
-
-                    /**
-                     * Minter annualProvisions.
-                     * @member {string} annualProvisions
-                     * @memberof cosmos_sdk.x.mint.v1.Minter
-                     * @instance
-                     */
-                    Minter.prototype.annualProvisions = "";
-
-                    /**
-                     * Creates a new Minter instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.mint.v1.Minter
-                     * @static
-                     * @param {cosmos_sdk.x.mint.v1.IMinter=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.mint.v1.Minter} Minter instance
-                     */
-                    Minter.create = function create(properties) {
-                        return new Minter(properties);
-                    };
-
-                    /**
-                     * Encodes the specified Minter message. Does not implicitly {@link cosmos_sdk.x.mint.v1.Minter.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.mint.v1.Minter
-                     * @static
-                     * @param {cosmos_sdk.x.mint.v1.IMinter} m Minter message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    Minter.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.inflation != null && Object.hasOwnProperty.call(m, "inflation"))
-                            w.uint32(10).string(m.inflation);
-                        if (m.annualProvisions != null && Object.hasOwnProperty.call(m, "annualProvisions"))
-                            w.uint32(18).string(m.annualProvisions);
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a Minter message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.mint.v1.Minter
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.mint.v1.Minter} Minter
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    Minter.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.mint.v1.Minter();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.inflation = r.string();
-                                break;
-                            case 2:
-                                m.annualProvisions = r.string();
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return Minter;
-                })();
-
-                v1.Params = (function() {
-
-                    /**
-                     * Properties of a Params.
-                     * @memberof cosmos_sdk.x.mint.v1
-                     * @interface IParams
-                     * @property {string|null} [mintDenom] Params mintDenom
-                     * @property {string|null} [inflationRateChange] Params inflationRateChange
-                     * @property {string|null} [inflationMax] Params inflationMax
-                     * @property {string|null} [inflationMin] Params inflationMin
-                     * @property {string|null} [goalBonded] Params goalBonded
-                     * @property {number|Long|null} [blocksPerYear] Params blocksPerYear
-                     */
-
-                    /**
-                     * Constructs a new Params.
-                     * @memberof cosmos_sdk.x.mint.v1
-                     * @classdesc Represents a Params.
-                     * @implements IParams
-                     * @constructor
-                     * @param {cosmos_sdk.x.mint.v1.IParams=} [p] Properties to set
-                     */
-                    function Params(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * Params mintDenom.
-                     * @member {string} mintDenom
-                     * @memberof cosmos_sdk.x.mint.v1.Params
-                     * @instance
-                     */
-                    Params.prototype.mintDenom = "";
-
-                    /**
-                     * Params inflationRateChange.
-                     * @member {string} inflationRateChange
-                     * @memberof cosmos_sdk.x.mint.v1.Params
-                     * @instance
-                     */
-                    Params.prototype.inflationRateChange = "";
-
-                    /**
-                     * Params inflationMax.
-                     * @member {string} inflationMax
-                     * @memberof cosmos_sdk.x.mint.v1.Params
-                     * @instance
-                     */
-                    Params.prototype.inflationMax = "";
-
-                    /**
-                     * Params inflationMin.
-                     * @member {string} inflationMin
-                     * @memberof cosmos_sdk.x.mint.v1.Params
-                     * @instance
-                     */
-                    Params.prototype.inflationMin = "";
-
-                    /**
-                     * Params goalBonded.
-                     * @member {string} goalBonded
-                     * @memberof cosmos_sdk.x.mint.v1.Params
-                     * @instance
-                     */
-                    Params.prototype.goalBonded = "";
-
-                    /**
-                     * Params blocksPerYear.
-                     * @member {number|Long} blocksPerYear
-                     * @memberof cosmos_sdk.x.mint.v1.Params
-                     * @instance
-                     */
-                    Params.prototype.blocksPerYear = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-                    /**
-                     * Creates a new Params instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.mint.v1.Params
-                     * @static
-                     * @param {cosmos_sdk.x.mint.v1.IParams=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.mint.v1.Params} Params instance
-                     */
-                    Params.create = function create(properties) {
-                        return new Params(properties);
-                    };
-
-                    /**
-                     * Encodes the specified Params message. Does not implicitly {@link cosmos_sdk.x.mint.v1.Params.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.mint.v1.Params
-                     * @static
-                     * @param {cosmos_sdk.x.mint.v1.IParams} m Params message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    Params.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.mintDenom != null && Object.hasOwnProperty.call(m, "mintDenom"))
-                            w.uint32(10).string(m.mintDenom);
-                        if (m.inflationRateChange != null && Object.hasOwnProperty.call(m, "inflationRateChange"))
-                            w.uint32(18).string(m.inflationRateChange);
-                        if (m.inflationMax != null && Object.hasOwnProperty.call(m, "inflationMax"))
-                            w.uint32(26).string(m.inflationMax);
-                        if (m.inflationMin != null && Object.hasOwnProperty.call(m, "inflationMin"))
-                            w.uint32(34).string(m.inflationMin);
-                        if (m.goalBonded != null && Object.hasOwnProperty.call(m, "goalBonded"))
-                            w.uint32(42).string(m.goalBonded);
-                        if (m.blocksPerYear != null && Object.hasOwnProperty.call(m, "blocksPerYear"))
-                            w.uint32(48).uint64(m.blocksPerYear);
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a Params message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.mint.v1.Params
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.mint.v1.Params} Params
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    Params.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.mint.v1.Params();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.mintDenom = r.string();
-                                break;
-                            case 2:
-                                m.inflationRateChange = r.string();
-                                break;
-                            case 3:
-                                m.inflationMax = r.string();
-                                break;
-                            case 4:
-                                m.inflationMin = r.string();
-                                break;
-                            case 5:
-                                m.goalBonded = r.string();
-                                break;
-                            case 6:
-                                m.blocksPerYear = r.uint64();
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return Params;
-                })();
-
-                return v1;
-            })();
-
-            return mint;
-        })();
-
-        x.params = (function() {
-
-            /**
-             * Namespace params.
-             * @memberof cosmos_sdk.x
-             * @namespace
-             */
-            var params = {};
-
-            params.v1 = (function() {
-
-                /**
-                 * Namespace v1.
-                 * @memberof cosmos_sdk.x.params
-                 * @namespace
-                 */
-                var v1 = {};
-
-                v1.ParameterChangeProposal = (function() {
-
-                    /**
-                     * Properties of a ParameterChangeProposal.
-                     * @memberof cosmos_sdk.x.params.v1
-                     * @interface IParameterChangeProposal
-                     * @property {string|null} [title] ParameterChangeProposal title
-                     * @property {string|null} [description] ParameterChangeProposal description
-                     * @property {Array.<cosmos_sdk.x.params.v1.IParamChange>|null} [changes] ParameterChangeProposal changes
-                     */
-
-                    /**
-                     * Constructs a new ParameterChangeProposal.
-                     * @memberof cosmos_sdk.x.params.v1
-                     * @classdesc Represents a ParameterChangeProposal.
-                     * @implements IParameterChangeProposal
-                     * @constructor
-                     * @param {cosmos_sdk.x.params.v1.IParameterChangeProposal=} [p] Properties to set
-                     */
-                    function ParameterChangeProposal(p) {
-                        this.changes = [];
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * ParameterChangeProposal title.
-                     * @member {string} title
-                     * @memberof cosmos_sdk.x.params.v1.ParameterChangeProposal
-                     * @instance
-                     */
-                    ParameterChangeProposal.prototype.title = "";
-
-                    /**
-                     * ParameterChangeProposal description.
-                     * @member {string} description
-                     * @memberof cosmos_sdk.x.params.v1.ParameterChangeProposal
-                     * @instance
-                     */
-                    ParameterChangeProposal.prototype.description = "";
-
-                    /**
-                     * ParameterChangeProposal changes.
-                     * @member {Array.<cosmos_sdk.x.params.v1.IParamChange>} changes
-                     * @memberof cosmos_sdk.x.params.v1.ParameterChangeProposal
-                     * @instance
-                     */
-                    ParameterChangeProposal.prototype.changes = $util.emptyArray;
-
-                    /**
-                     * Creates a new ParameterChangeProposal instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.params.v1.ParameterChangeProposal
-                     * @static
-                     * @param {cosmos_sdk.x.params.v1.IParameterChangeProposal=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.params.v1.ParameterChangeProposal} ParameterChangeProposal instance
-                     */
-                    ParameterChangeProposal.create = function create(properties) {
-                        return new ParameterChangeProposal(properties);
-                    };
-
-                    /**
-                     * Encodes the specified ParameterChangeProposal message. Does not implicitly {@link cosmos_sdk.x.params.v1.ParameterChangeProposal.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.params.v1.ParameterChangeProposal
-                     * @static
-                     * @param {cosmos_sdk.x.params.v1.IParameterChangeProposal} m ParameterChangeProposal message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    ParameterChangeProposal.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.title != null && Object.hasOwnProperty.call(m, "title"))
-                            w.uint32(10).string(m.title);
-                        if (m.description != null && Object.hasOwnProperty.call(m, "description"))
-                            w.uint32(18).string(m.description);
-                        if (m.changes != null && m.changes.length) {
-                            for (var i = 0; i < m.changes.length; ++i)
-                                $root.cosmos_sdk.x.params.v1.ParamChange.encode(m.changes[i], w.uint32(26).fork()).ldelim();
-                        }
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a ParameterChangeProposal message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.params.v1.ParameterChangeProposal
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.params.v1.ParameterChangeProposal} ParameterChangeProposal
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    ParameterChangeProposal.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.params.v1.ParameterChangeProposal();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.title = r.string();
-                                break;
-                            case 2:
-                                m.description = r.string();
-                                break;
-                            case 3:
-                                if (!(m.changes && m.changes.length))
-                                    m.changes = [];
-                                m.changes.push($root.cosmos_sdk.x.params.v1.ParamChange.decode(r, r.uint32()));
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return ParameterChangeProposal;
-                })();
-
-                v1.ParamChange = (function() {
-
-                    /**
-                     * Properties of a ParamChange.
-                     * @memberof cosmos_sdk.x.params.v1
-                     * @interface IParamChange
-                     * @property {string|null} [subspace] ParamChange subspace
-                     * @property {string|null} [key] ParamChange key
-                     * @property {string|null} [value] ParamChange value
-                     */
-
-                    /**
-                     * Constructs a new ParamChange.
-                     * @memberof cosmos_sdk.x.params.v1
-                     * @classdesc Represents a ParamChange.
-                     * @implements IParamChange
-                     * @constructor
-                     * @param {cosmos_sdk.x.params.v1.IParamChange=} [p] Properties to set
-                     */
-                    function ParamChange(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * ParamChange subspace.
-                     * @member {string} subspace
-                     * @memberof cosmos_sdk.x.params.v1.ParamChange
-                     * @instance
-                     */
-                    ParamChange.prototype.subspace = "";
-
-                    /**
-                     * ParamChange key.
-                     * @member {string} key
-                     * @memberof cosmos_sdk.x.params.v1.ParamChange
-                     * @instance
-                     */
-                    ParamChange.prototype.key = "";
-
-                    /**
-                     * ParamChange value.
-                     * @member {string} value
-                     * @memberof cosmos_sdk.x.params.v1.ParamChange
-                     * @instance
-                     */
-                    ParamChange.prototype.value = "";
-
-                    /**
-                     * Creates a new ParamChange instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.params.v1.ParamChange
-                     * @static
-                     * @param {cosmos_sdk.x.params.v1.IParamChange=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.params.v1.ParamChange} ParamChange instance
-                     */
-                    ParamChange.create = function create(properties) {
-                        return new ParamChange(properties);
-                    };
-
-                    /**
-                     * Encodes the specified ParamChange message. Does not implicitly {@link cosmos_sdk.x.params.v1.ParamChange.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.params.v1.ParamChange
-                     * @static
-                     * @param {cosmos_sdk.x.params.v1.IParamChange} m ParamChange message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    ParamChange.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.subspace != null && Object.hasOwnProperty.call(m, "subspace"))
-                            w.uint32(10).string(m.subspace);
-                        if (m.key != null && Object.hasOwnProperty.call(m, "key"))
-                            w.uint32(18).string(m.key);
-                        if (m.value != null && Object.hasOwnProperty.call(m, "value"))
-                            w.uint32(26).string(m.value);
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a ParamChange message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.params.v1.ParamChange
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.params.v1.ParamChange} ParamChange
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    ParamChange.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.params.v1.ParamChange();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.subspace = r.string();
-                                break;
-                            case 2:
-                                m.key = r.string();
-                                break;
-                            case 3:
-                                m.value = r.string();
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return ParamChange;
-                })();
-
-                return v1;
-            })();
-
-            return params;
-        })();
-
-        x.slashing = (function() {
-
-            /**
-             * Namespace slashing.
-             * @memberof cosmos_sdk.x
-             * @namespace
-             */
-            var slashing = {};
-
-            slashing.v1 = (function() {
-
-                /**
-                 * Namespace v1.
-                 * @memberof cosmos_sdk.x.slashing
-                 * @namespace
-                 */
-                var v1 = {};
-
-                v1.MsgUnjail = (function() {
-
-                    /**
-                     * Properties of a MsgUnjail.
-                     * @memberof cosmos_sdk.x.slashing.v1
-                     * @interface IMsgUnjail
-                     * @property {Uint8Array|null} [validatorAddr] MsgUnjail validatorAddr
-                     */
-
-                    /**
-                     * Constructs a new MsgUnjail.
-                     * @memberof cosmos_sdk.x.slashing.v1
-                     * @classdesc Represents a MsgUnjail.
-                     * @implements IMsgUnjail
-                     * @constructor
-                     * @param {cosmos_sdk.x.slashing.v1.IMsgUnjail=} [p] Properties to set
-                     */
-                    function MsgUnjail(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * MsgUnjail validatorAddr.
-                     * @member {Uint8Array} validatorAddr
-                     * @memberof cosmos_sdk.x.slashing.v1.MsgUnjail
-                     * @instance
-                     */
-                    MsgUnjail.prototype.validatorAddr = $util.newBuffer([]);
-
-                    /**
-                     * Creates a new MsgUnjail instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.slashing.v1.MsgUnjail
-                     * @static
-                     * @param {cosmos_sdk.x.slashing.v1.IMsgUnjail=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.slashing.v1.MsgUnjail} MsgUnjail instance
-                     */
-                    MsgUnjail.create = function create(properties) {
-                        return new MsgUnjail(properties);
-                    };
-
-                    /**
-                     * Encodes the specified MsgUnjail message. Does not implicitly {@link cosmos_sdk.x.slashing.v1.MsgUnjail.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.slashing.v1.MsgUnjail
-                     * @static
-                     * @param {cosmos_sdk.x.slashing.v1.IMsgUnjail} m MsgUnjail message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    MsgUnjail.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.validatorAddr != null && Object.hasOwnProperty.call(m, "validatorAddr"))
-                            w.uint32(10).bytes(m.validatorAddr);
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a MsgUnjail message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.slashing.v1.MsgUnjail
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.slashing.v1.MsgUnjail} MsgUnjail
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    MsgUnjail.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.slashing.v1.MsgUnjail();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.validatorAddr = r.bytes();
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return MsgUnjail;
-                })();
-
-                v1.ValidatorSigningInfo = (function() {
-
-                    /**
-                     * Properties of a ValidatorSigningInfo.
-                     * @memberof cosmos_sdk.x.slashing.v1
-                     * @interface IValidatorSigningInfo
-                     * @property {Uint8Array|null} [address] ValidatorSigningInfo address
-                     * @property {number|Long|null} [startHeight] ValidatorSigningInfo startHeight
-                     * @property {number|Long|null} [indexOffset] ValidatorSigningInfo indexOffset
-                     * @property {google.protobuf.ITimestamp|null} [jailedUntil] ValidatorSigningInfo jailedUntil
-                     * @property {boolean|null} [tombstoned] ValidatorSigningInfo tombstoned
-                     * @property {number|Long|null} [missedBlocksCounter] ValidatorSigningInfo missedBlocksCounter
-                     */
-
-                    /**
-                     * Constructs a new ValidatorSigningInfo.
-                     * @memberof cosmos_sdk.x.slashing.v1
-                     * @classdesc Represents a ValidatorSigningInfo.
-                     * @implements IValidatorSigningInfo
-                     * @constructor
-                     * @param {cosmos_sdk.x.slashing.v1.IValidatorSigningInfo=} [p] Properties to set
-                     */
-                    function ValidatorSigningInfo(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * ValidatorSigningInfo address.
-                     * @member {Uint8Array} address
-                     * @memberof cosmos_sdk.x.slashing.v1.ValidatorSigningInfo
-                     * @instance
-                     */
-                    ValidatorSigningInfo.prototype.address = $util.newBuffer([]);
-
-                    /**
-                     * ValidatorSigningInfo startHeight.
-                     * @member {number|Long} startHeight
-                     * @memberof cosmos_sdk.x.slashing.v1.ValidatorSigningInfo
-                     * @instance
-                     */
-                    ValidatorSigningInfo.prototype.startHeight = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
-
-                    /**
-                     * ValidatorSigningInfo indexOffset.
-                     * @member {number|Long} indexOffset
-                     * @memberof cosmos_sdk.x.slashing.v1.ValidatorSigningInfo
-                     * @instance
-                     */
-                    ValidatorSigningInfo.prototype.indexOffset = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
-
-                    /**
-                     * ValidatorSigningInfo jailedUntil.
-                     * @member {google.protobuf.ITimestamp|null|undefined} jailedUntil
-                     * @memberof cosmos_sdk.x.slashing.v1.ValidatorSigningInfo
-                     * @instance
-                     */
-                    ValidatorSigningInfo.prototype.jailedUntil = null;
-
-                    /**
-                     * ValidatorSigningInfo tombstoned.
-                     * @member {boolean} tombstoned
-                     * @memberof cosmos_sdk.x.slashing.v1.ValidatorSigningInfo
-                     * @instance
-                     */
-                    ValidatorSigningInfo.prototype.tombstoned = false;
-
-                    /**
-                     * ValidatorSigningInfo missedBlocksCounter.
-                     * @member {number|Long} missedBlocksCounter
-                     * @memberof cosmos_sdk.x.slashing.v1.ValidatorSigningInfo
-                     * @instance
-                     */
-                    ValidatorSigningInfo.prototype.missedBlocksCounter = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
-
-                    /**
-                     * Creates a new ValidatorSigningInfo instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.slashing.v1.ValidatorSigningInfo
-                     * @static
-                     * @param {cosmos_sdk.x.slashing.v1.IValidatorSigningInfo=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.slashing.v1.ValidatorSigningInfo} ValidatorSigningInfo instance
-                     */
-                    ValidatorSigningInfo.create = function create(properties) {
-                        return new ValidatorSigningInfo(properties);
-                    };
-
-                    /**
-                     * Encodes the specified ValidatorSigningInfo message. Does not implicitly {@link cosmos_sdk.x.slashing.v1.ValidatorSigningInfo.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.slashing.v1.ValidatorSigningInfo
-                     * @static
-                     * @param {cosmos_sdk.x.slashing.v1.IValidatorSigningInfo} m ValidatorSigningInfo message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    ValidatorSigningInfo.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.address != null && Object.hasOwnProperty.call(m, "address"))
-                            w.uint32(10).bytes(m.address);
-                        if (m.startHeight != null && Object.hasOwnProperty.call(m, "startHeight"))
-                            w.uint32(16).int64(m.startHeight);
-                        if (m.indexOffset != null && Object.hasOwnProperty.call(m, "indexOffset"))
-                            w.uint32(24).int64(m.indexOffset);
-                        if (m.jailedUntil != null && Object.hasOwnProperty.call(m, "jailedUntil"))
-                            $root.google.protobuf.Timestamp.encode(m.jailedUntil, w.uint32(34).fork()).ldelim();
-                        if (m.tombstoned != null && Object.hasOwnProperty.call(m, "tombstoned"))
-                            w.uint32(40).bool(m.tombstoned);
-                        if (m.missedBlocksCounter != null && Object.hasOwnProperty.call(m, "missedBlocksCounter"))
-                            w.uint32(48).int64(m.missedBlocksCounter);
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a ValidatorSigningInfo message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.slashing.v1.ValidatorSigningInfo
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.slashing.v1.ValidatorSigningInfo} ValidatorSigningInfo
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    ValidatorSigningInfo.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.slashing.v1.ValidatorSigningInfo();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.address = r.bytes();
-                                break;
-                            case 2:
-                                m.startHeight = r.int64();
-                                break;
-                            case 3:
-                                m.indexOffset = r.int64();
-                                break;
-                            case 4:
-                                m.jailedUntil = $root.google.protobuf.Timestamp.decode(r, r.uint32());
-                                break;
-                            case 5:
-                                m.tombstoned = r.bool();
-                                break;
-                            case 6:
-                                m.missedBlocksCounter = r.int64();
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return ValidatorSigningInfo;
-                })();
-
-                return v1;
-            })();
-
-            return slashing;
-        })();
-
-        x.staking = (function() {
-
-            /**
-             * Namespace staking.
-             * @memberof cosmos_sdk.x
-             * @namespace
-             */
-            var staking = {};
-
-            staking.v1 = (function() {
-
-                /**
-                 * Namespace v1.
-                 * @memberof cosmos_sdk.x.staking
-                 * @namespace
-                 */
-                var v1 = {};
-
-                v1.MsgCreateValidator = (function() {
-
-                    /**
-                     * Properties of a MsgCreateValidator.
-                     * @memberof cosmos_sdk.x.staking.v1
-                     * @interface IMsgCreateValidator
-                     * @property {cosmos_sdk.x.staking.v1.IDescription|null} [description] MsgCreateValidator description
-                     * @property {cosmos_sdk.x.staking.v1.ICommissionRates|null} [commission] MsgCreateValidator commission
-                     * @property {string|null} [minSelfDelegation] MsgCreateValidator minSelfDelegation
-                     * @property {Uint8Array|null} [delegatorAddress] MsgCreateValidator delegatorAddress
-                     * @property {Uint8Array|null} [validatorAddress] MsgCreateValidator validatorAddress
-                     * @property {string|null} [pubkey] MsgCreateValidator pubkey
-                     * @property {cosmos_sdk.v1.ICoin|null} [value] MsgCreateValidator value
-                     */
-
-                    /**
-                     * Constructs a new MsgCreateValidator.
-                     * @memberof cosmos_sdk.x.staking.v1
-                     * @classdesc Represents a MsgCreateValidator.
-                     * @implements IMsgCreateValidator
-                     * @constructor
-                     * @param {cosmos_sdk.x.staking.v1.IMsgCreateValidator=} [p] Properties to set
-                     */
-                    function MsgCreateValidator(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * MsgCreateValidator description.
-                     * @member {cosmos_sdk.x.staking.v1.IDescription|null|undefined} description
-                     * @memberof cosmos_sdk.x.staking.v1.MsgCreateValidator
-                     * @instance
-                     */
-                    MsgCreateValidator.prototype.description = null;
-
-                    /**
-                     * MsgCreateValidator commission.
-                     * @member {cosmos_sdk.x.staking.v1.ICommissionRates|null|undefined} commission
-                     * @memberof cosmos_sdk.x.staking.v1.MsgCreateValidator
-                     * @instance
-                     */
-                    MsgCreateValidator.prototype.commission = null;
-
-                    /**
-                     * MsgCreateValidator minSelfDelegation.
-                     * @member {string} minSelfDelegation
-                     * @memberof cosmos_sdk.x.staking.v1.MsgCreateValidator
-                     * @instance
-                     */
-                    MsgCreateValidator.prototype.minSelfDelegation = "";
-
-                    /**
-                     * MsgCreateValidator delegatorAddress.
-                     * @member {Uint8Array} delegatorAddress
-                     * @memberof cosmos_sdk.x.staking.v1.MsgCreateValidator
-                     * @instance
-                     */
-                    MsgCreateValidator.prototype.delegatorAddress = $util.newBuffer([]);
-
-                    /**
-                     * MsgCreateValidator validatorAddress.
-                     * @member {Uint8Array} validatorAddress
-                     * @memberof cosmos_sdk.x.staking.v1.MsgCreateValidator
-                     * @instance
-                     */
-                    MsgCreateValidator.prototype.validatorAddress = $util.newBuffer([]);
-
-                    /**
-                     * MsgCreateValidator pubkey.
-                     * @member {string} pubkey
-                     * @memberof cosmos_sdk.x.staking.v1.MsgCreateValidator
-                     * @instance
-                     */
-                    MsgCreateValidator.prototype.pubkey = "";
-
-                    /**
-                     * MsgCreateValidator value.
-                     * @member {cosmos_sdk.v1.ICoin|null|undefined} value
-                     * @memberof cosmos_sdk.x.staking.v1.MsgCreateValidator
-                     * @instance
-                     */
-                    MsgCreateValidator.prototype.value = null;
-
-                    /**
-                     * Creates a new MsgCreateValidator instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.staking.v1.MsgCreateValidator
-                     * @static
-                     * @param {cosmos_sdk.x.staking.v1.IMsgCreateValidator=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.staking.v1.MsgCreateValidator} MsgCreateValidator instance
-                     */
-                    MsgCreateValidator.create = function create(properties) {
-                        return new MsgCreateValidator(properties);
-                    };
-
-                    /**
-                     * Encodes the specified MsgCreateValidator message. Does not implicitly {@link cosmos_sdk.x.staking.v1.MsgCreateValidator.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.staking.v1.MsgCreateValidator
-                     * @static
-                     * @param {cosmos_sdk.x.staking.v1.IMsgCreateValidator} m MsgCreateValidator message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    MsgCreateValidator.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.description != null && Object.hasOwnProperty.call(m, "description"))
-                            $root.cosmos_sdk.x.staking.v1.Description.encode(m.description, w.uint32(10).fork()).ldelim();
-                        if (m.commission != null && Object.hasOwnProperty.call(m, "commission"))
-                            $root.cosmos_sdk.x.staking.v1.CommissionRates.encode(m.commission, w.uint32(18).fork()).ldelim();
-                        if (m.minSelfDelegation != null && Object.hasOwnProperty.call(m, "minSelfDelegation"))
-                            w.uint32(26).string(m.minSelfDelegation);
-                        if (m.delegatorAddress != null && Object.hasOwnProperty.call(m, "delegatorAddress"))
-                            w.uint32(34).bytes(m.delegatorAddress);
-                        if (m.validatorAddress != null && Object.hasOwnProperty.call(m, "validatorAddress"))
-                            w.uint32(42).bytes(m.validatorAddress);
-                        if (m.pubkey != null && Object.hasOwnProperty.call(m, "pubkey"))
-                            w.uint32(50).string(m.pubkey);
-                        if (m.value != null && Object.hasOwnProperty.call(m, "value"))
-                            $root.cosmos_sdk.v1.Coin.encode(m.value, w.uint32(58).fork()).ldelim();
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a MsgCreateValidator message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.staking.v1.MsgCreateValidator
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.staking.v1.MsgCreateValidator} MsgCreateValidator
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    MsgCreateValidator.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.staking.v1.MsgCreateValidator();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.description = $root.cosmos_sdk.x.staking.v1.Description.decode(r, r.uint32());
-                                break;
-                            case 2:
-                                m.commission = $root.cosmos_sdk.x.staking.v1.CommissionRates.decode(r, r.uint32());
-                                break;
-                            case 3:
-                                m.minSelfDelegation = r.string();
-                                break;
-                            case 4:
-                                m.delegatorAddress = r.bytes();
-                                break;
-                            case 5:
-                                m.validatorAddress = r.bytes();
-                                break;
-                            case 6:
-                                m.pubkey = r.string();
-                                break;
-                            case 7:
-                                m.value = $root.cosmos_sdk.v1.Coin.decode(r, r.uint32());
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return MsgCreateValidator;
-                })();
-
-                v1.MsgEditValidator = (function() {
-
-                    /**
-                     * Properties of a MsgEditValidator.
-                     * @memberof cosmos_sdk.x.staking.v1
-                     * @interface IMsgEditValidator
-                     * @property {cosmos_sdk.x.staking.v1.IDescription|null} [description] MsgEditValidator description
-                     * @property {Uint8Array|null} [validatorAddress] MsgEditValidator validatorAddress
-                     * @property {string|null} [commissionRate] MsgEditValidator commissionRate
-                     * @property {string|null} [minSelfDelegation] MsgEditValidator minSelfDelegation
-                     */
-
-                    /**
-                     * Constructs a new MsgEditValidator.
-                     * @memberof cosmos_sdk.x.staking.v1
-                     * @classdesc Represents a MsgEditValidator.
-                     * @implements IMsgEditValidator
-                     * @constructor
-                     * @param {cosmos_sdk.x.staking.v1.IMsgEditValidator=} [p] Properties to set
-                     */
-                    function MsgEditValidator(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * MsgEditValidator description.
-                     * @member {cosmos_sdk.x.staking.v1.IDescription|null|undefined} description
-                     * @memberof cosmos_sdk.x.staking.v1.MsgEditValidator
-                     * @instance
-                     */
-                    MsgEditValidator.prototype.description = null;
-
-                    /**
-                     * MsgEditValidator validatorAddress.
-                     * @member {Uint8Array} validatorAddress
-                     * @memberof cosmos_sdk.x.staking.v1.MsgEditValidator
-                     * @instance
-                     */
-                    MsgEditValidator.prototype.validatorAddress = $util.newBuffer([]);
-
-                    /**
-                     * MsgEditValidator commissionRate.
-                     * @member {string} commissionRate
-                     * @memberof cosmos_sdk.x.staking.v1.MsgEditValidator
-                     * @instance
-                     */
-                    MsgEditValidator.prototype.commissionRate = "";
-
-                    /**
-                     * MsgEditValidator minSelfDelegation.
-                     * @member {string} minSelfDelegation
-                     * @memberof cosmos_sdk.x.staking.v1.MsgEditValidator
-                     * @instance
-                     */
-                    MsgEditValidator.prototype.minSelfDelegation = "";
-
-                    /**
-                     * Creates a new MsgEditValidator instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.staking.v1.MsgEditValidator
-                     * @static
-                     * @param {cosmos_sdk.x.staking.v1.IMsgEditValidator=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.staking.v1.MsgEditValidator} MsgEditValidator instance
-                     */
-                    MsgEditValidator.create = function create(properties) {
-                        return new MsgEditValidator(properties);
-                    };
-
-                    /**
-                     * Encodes the specified MsgEditValidator message. Does not implicitly {@link cosmos_sdk.x.staking.v1.MsgEditValidator.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.staking.v1.MsgEditValidator
-                     * @static
-                     * @param {cosmos_sdk.x.staking.v1.IMsgEditValidator} m MsgEditValidator message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    MsgEditValidator.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.description != null && Object.hasOwnProperty.call(m, "description"))
-                            $root.cosmos_sdk.x.staking.v1.Description.encode(m.description, w.uint32(10).fork()).ldelim();
-                        if (m.validatorAddress != null && Object.hasOwnProperty.call(m, "validatorAddress"))
-                            w.uint32(18).bytes(m.validatorAddress);
-                        if (m.commissionRate != null && Object.hasOwnProperty.call(m, "commissionRate"))
-                            w.uint32(26).string(m.commissionRate);
-                        if (m.minSelfDelegation != null && Object.hasOwnProperty.call(m, "minSelfDelegation"))
-                            w.uint32(34).string(m.minSelfDelegation);
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a MsgEditValidator message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.staking.v1.MsgEditValidator
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.staking.v1.MsgEditValidator} MsgEditValidator
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    MsgEditValidator.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.staking.v1.MsgEditValidator();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.description = $root.cosmos_sdk.x.staking.v1.Description.decode(r, r.uint32());
-                                break;
-                            case 2:
-                                m.validatorAddress = r.bytes();
-                                break;
-                            case 3:
-                                m.commissionRate = r.string();
-                                break;
-                            case 4:
-                                m.minSelfDelegation = r.string();
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return MsgEditValidator;
-                })();
-
-                v1.MsgDelegate = (function() {
-
-                    /**
-                     * Properties of a MsgDelegate.
-                     * @memberof cosmos_sdk.x.staking.v1
-                     * @interface IMsgDelegate
-                     * @property {Uint8Array|null} [delegatorAddress] MsgDelegate delegatorAddress
-                     * @property {Uint8Array|null} [validatorAddress] MsgDelegate validatorAddress
-                     * @property {cosmos_sdk.v1.ICoin|null} [amount] MsgDelegate amount
-                     */
-
-                    /**
-                     * Constructs a new MsgDelegate.
-                     * @memberof cosmos_sdk.x.staking.v1
-                     * @classdesc Represents a MsgDelegate.
-                     * @implements IMsgDelegate
-                     * @constructor
-                     * @param {cosmos_sdk.x.staking.v1.IMsgDelegate=} [p] Properties to set
-                     */
-                    function MsgDelegate(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * MsgDelegate delegatorAddress.
-                     * @member {Uint8Array} delegatorAddress
-                     * @memberof cosmos_sdk.x.staking.v1.MsgDelegate
-                     * @instance
-                     */
-                    MsgDelegate.prototype.delegatorAddress = $util.newBuffer([]);
-
-                    /**
-                     * MsgDelegate validatorAddress.
-                     * @member {Uint8Array} validatorAddress
-                     * @memberof cosmos_sdk.x.staking.v1.MsgDelegate
-                     * @instance
-                     */
-                    MsgDelegate.prototype.validatorAddress = $util.newBuffer([]);
-
-                    /**
-                     * MsgDelegate amount.
-                     * @member {cosmos_sdk.v1.ICoin|null|undefined} amount
-                     * @memberof cosmos_sdk.x.staking.v1.MsgDelegate
-                     * @instance
-                     */
-                    MsgDelegate.prototype.amount = null;
-
-                    /**
-                     * Creates a new MsgDelegate instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.staking.v1.MsgDelegate
-                     * @static
-                     * @param {cosmos_sdk.x.staking.v1.IMsgDelegate=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.staking.v1.MsgDelegate} MsgDelegate instance
-                     */
-                    MsgDelegate.create = function create(properties) {
-                        return new MsgDelegate(properties);
-                    };
-
-                    /**
-                     * Encodes the specified MsgDelegate message. Does not implicitly {@link cosmos_sdk.x.staking.v1.MsgDelegate.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.staking.v1.MsgDelegate
-                     * @static
-                     * @param {cosmos_sdk.x.staking.v1.IMsgDelegate} m MsgDelegate message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    MsgDelegate.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.delegatorAddress != null && Object.hasOwnProperty.call(m, "delegatorAddress"))
-                            w.uint32(10).bytes(m.delegatorAddress);
-                        if (m.validatorAddress != null && Object.hasOwnProperty.call(m, "validatorAddress"))
-                            w.uint32(18).bytes(m.validatorAddress);
-                        if (m.amount != null && Object.hasOwnProperty.call(m, "amount"))
-                            $root.cosmos_sdk.v1.Coin.encode(m.amount, w.uint32(26).fork()).ldelim();
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a MsgDelegate message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.staking.v1.MsgDelegate
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.staking.v1.MsgDelegate} MsgDelegate
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    MsgDelegate.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.staking.v1.MsgDelegate();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.delegatorAddress = r.bytes();
-                                break;
-                            case 2:
-                                m.validatorAddress = r.bytes();
-                                break;
-                            case 3:
-                                m.amount = $root.cosmos_sdk.v1.Coin.decode(r, r.uint32());
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return MsgDelegate;
-                })();
-
-                v1.MsgBeginRedelegate = (function() {
-
-                    /**
-                     * Properties of a MsgBeginRedelegate.
-                     * @memberof cosmos_sdk.x.staking.v1
-                     * @interface IMsgBeginRedelegate
-                     * @property {Uint8Array|null} [delegatorAddress] MsgBeginRedelegate delegatorAddress
-                     * @property {Uint8Array|null} [validatorSrcAddress] MsgBeginRedelegate validatorSrcAddress
-                     * @property {Uint8Array|null} [validatorDstAddress] MsgBeginRedelegate validatorDstAddress
-                     * @property {cosmos_sdk.v1.ICoin|null} [amount] MsgBeginRedelegate amount
-                     */
-
-                    /**
-                     * Constructs a new MsgBeginRedelegate.
-                     * @memberof cosmos_sdk.x.staking.v1
-                     * @classdesc Represents a MsgBeginRedelegate.
-                     * @implements IMsgBeginRedelegate
-                     * @constructor
-                     * @param {cosmos_sdk.x.staking.v1.IMsgBeginRedelegate=} [p] Properties to set
-                     */
-                    function MsgBeginRedelegate(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * MsgBeginRedelegate delegatorAddress.
-                     * @member {Uint8Array} delegatorAddress
-                     * @memberof cosmos_sdk.x.staking.v1.MsgBeginRedelegate
-                     * @instance
-                     */
-                    MsgBeginRedelegate.prototype.delegatorAddress = $util.newBuffer([]);
-
-                    /**
-                     * MsgBeginRedelegate validatorSrcAddress.
-                     * @member {Uint8Array} validatorSrcAddress
-                     * @memberof cosmos_sdk.x.staking.v1.MsgBeginRedelegate
-                     * @instance
-                     */
-                    MsgBeginRedelegate.prototype.validatorSrcAddress = $util.newBuffer([]);
-
-                    /**
-                     * MsgBeginRedelegate validatorDstAddress.
-                     * @member {Uint8Array} validatorDstAddress
-                     * @memberof cosmos_sdk.x.staking.v1.MsgBeginRedelegate
-                     * @instance
-                     */
-                    MsgBeginRedelegate.prototype.validatorDstAddress = $util.newBuffer([]);
-
-                    /**
-                     * MsgBeginRedelegate amount.
-                     * @member {cosmos_sdk.v1.ICoin|null|undefined} amount
-                     * @memberof cosmos_sdk.x.staking.v1.MsgBeginRedelegate
-                     * @instance
-                     */
-                    MsgBeginRedelegate.prototype.amount = null;
-
-                    /**
-                     * Creates a new MsgBeginRedelegate instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.staking.v1.MsgBeginRedelegate
-                     * @static
-                     * @param {cosmos_sdk.x.staking.v1.IMsgBeginRedelegate=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.staking.v1.MsgBeginRedelegate} MsgBeginRedelegate instance
-                     */
-                    MsgBeginRedelegate.create = function create(properties) {
-                        return new MsgBeginRedelegate(properties);
-                    };
-
-                    /**
-                     * Encodes the specified MsgBeginRedelegate message. Does not implicitly {@link cosmos_sdk.x.staking.v1.MsgBeginRedelegate.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.staking.v1.MsgBeginRedelegate
-                     * @static
-                     * @param {cosmos_sdk.x.staking.v1.IMsgBeginRedelegate} m MsgBeginRedelegate message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    MsgBeginRedelegate.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.delegatorAddress != null && Object.hasOwnProperty.call(m, "delegatorAddress"))
-                            w.uint32(10).bytes(m.delegatorAddress);
-                        if (m.validatorSrcAddress != null && Object.hasOwnProperty.call(m, "validatorSrcAddress"))
-                            w.uint32(18).bytes(m.validatorSrcAddress);
-                        if (m.validatorDstAddress != null && Object.hasOwnProperty.call(m, "validatorDstAddress"))
-                            w.uint32(26).bytes(m.validatorDstAddress);
-                        if (m.amount != null && Object.hasOwnProperty.call(m, "amount"))
-                            $root.cosmos_sdk.v1.Coin.encode(m.amount, w.uint32(34).fork()).ldelim();
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a MsgBeginRedelegate message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.staking.v1.MsgBeginRedelegate
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.staking.v1.MsgBeginRedelegate} MsgBeginRedelegate
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    MsgBeginRedelegate.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.staking.v1.MsgBeginRedelegate();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.delegatorAddress = r.bytes();
-                                break;
-                            case 2:
-                                m.validatorSrcAddress = r.bytes();
-                                break;
-                            case 3:
-                                m.validatorDstAddress = r.bytes();
-                                break;
-                            case 4:
-                                m.amount = $root.cosmos_sdk.v1.Coin.decode(r, r.uint32());
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return MsgBeginRedelegate;
-                })();
-
-                v1.MsgUndelegate = (function() {
-
-                    /**
-                     * Properties of a MsgUndelegate.
-                     * @memberof cosmos_sdk.x.staking.v1
-                     * @interface IMsgUndelegate
-                     * @property {Uint8Array|null} [delegatorAddress] MsgUndelegate delegatorAddress
-                     * @property {Uint8Array|null} [validatorAddress] MsgUndelegate validatorAddress
-                     * @property {cosmos_sdk.v1.ICoin|null} [amount] MsgUndelegate amount
-                     */
-
-                    /**
-                     * Constructs a new MsgUndelegate.
-                     * @memberof cosmos_sdk.x.staking.v1
-                     * @classdesc Represents a MsgUndelegate.
-                     * @implements IMsgUndelegate
-                     * @constructor
-                     * @param {cosmos_sdk.x.staking.v1.IMsgUndelegate=} [p] Properties to set
-                     */
-                    function MsgUndelegate(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * MsgUndelegate delegatorAddress.
-                     * @member {Uint8Array} delegatorAddress
-                     * @memberof cosmos_sdk.x.staking.v1.MsgUndelegate
-                     * @instance
-                     */
-                    MsgUndelegate.prototype.delegatorAddress = $util.newBuffer([]);
-
-                    /**
-                     * MsgUndelegate validatorAddress.
-                     * @member {Uint8Array} validatorAddress
-                     * @memberof cosmos_sdk.x.staking.v1.MsgUndelegate
-                     * @instance
-                     */
-                    MsgUndelegate.prototype.validatorAddress = $util.newBuffer([]);
-
-                    /**
-                     * MsgUndelegate amount.
-                     * @member {cosmos_sdk.v1.ICoin|null|undefined} amount
-                     * @memberof cosmos_sdk.x.staking.v1.MsgUndelegate
-                     * @instance
-                     */
-                    MsgUndelegate.prototype.amount = null;
-
-                    /**
-                     * Creates a new MsgUndelegate instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.staking.v1.MsgUndelegate
-                     * @static
-                     * @param {cosmos_sdk.x.staking.v1.IMsgUndelegate=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.staking.v1.MsgUndelegate} MsgUndelegate instance
-                     */
-                    MsgUndelegate.create = function create(properties) {
-                        return new MsgUndelegate(properties);
-                    };
-
-                    /**
-                     * Encodes the specified MsgUndelegate message. Does not implicitly {@link cosmos_sdk.x.staking.v1.MsgUndelegate.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.staking.v1.MsgUndelegate
-                     * @static
-                     * @param {cosmos_sdk.x.staking.v1.IMsgUndelegate} m MsgUndelegate message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    MsgUndelegate.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.delegatorAddress != null && Object.hasOwnProperty.call(m, "delegatorAddress"))
-                            w.uint32(10).bytes(m.delegatorAddress);
-                        if (m.validatorAddress != null && Object.hasOwnProperty.call(m, "validatorAddress"))
-                            w.uint32(18).bytes(m.validatorAddress);
-                        if (m.amount != null && Object.hasOwnProperty.call(m, "amount"))
-                            $root.cosmos_sdk.v1.Coin.encode(m.amount, w.uint32(26).fork()).ldelim();
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a MsgUndelegate message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.staking.v1.MsgUndelegate
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.staking.v1.MsgUndelegate} MsgUndelegate
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    MsgUndelegate.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.staking.v1.MsgUndelegate();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.delegatorAddress = r.bytes();
-                                break;
-                            case 2:
-                                m.validatorAddress = r.bytes();
-                                break;
-                            case 3:
-                                m.amount = $root.cosmos_sdk.v1.Coin.decode(r, r.uint32());
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return MsgUndelegate;
-                })();
-
-                v1.HistoricalInfo = (function() {
-
-                    /**
-                     * Properties of a HistoricalInfo.
-                     * @memberof cosmos_sdk.x.staking.v1
-                     * @interface IHistoricalInfo
-                     * @property {tendermint.abci.types.IHeader|null} [header] HistoricalInfo header
-                     * @property {Array.<cosmos_sdk.x.staking.v1.IValidator>|null} [valset] HistoricalInfo valset
-                     */
-
-                    /**
-                     * Constructs a new HistoricalInfo.
-                     * @memberof cosmos_sdk.x.staking.v1
-                     * @classdesc Represents a HistoricalInfo.
-                     * @implements IHistoricalInfo
-                     * @constructor
-                     * @param {cosmos_sdk.x.staking.v1.IHistoricalInfo=} [p] Properties to set
-                     */
-                    function HistoricalInfo(p) {
-                        this.valset = [];
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * HistoricalInfo header.
-                     * @member {tendermint.abci.types.IHeader|null|undefined} header
-                     * @memberof cosmos_sdk.x.staking.v1.HistoricalInfo
-                     * @instance
-                     */
-                    HistoricalInfo.prototype.header = null;
-
-                    /**
-                     * HistoricalInfo valset.
-                     * @member {Array.<cosmos_sdk.x.staking.v1.IValidator>} valset
-                     * @memberof cosmos_sdk.x.staking.v1.HistoricalInfo
-                     * @instance
-                     */
-                    HistoricalInfo.prototype.valset = $util.emptyArray;
-
-                    /**
-                     * Creates a new HistoricalInfo instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.staking.v1.HistoricalInfo
-                     * @static
-                     * @param {cosmos_sdk.x.staking.v1.IHistoricalInfo=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.staking.v1.HistoricalInfo} HistoricalInfo instance
-                     */
-                    HistoricalInfo.create = function create(properties) {
-                        return new HistoricalInfo(properties);
-                    };
-
-                    /**
-                     * Encodes the specified HistoricalInfo message. Does not implicitly {@link cosmos_sdk.x.staking.v1.HistoricalInfo.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.staking.v1.HistoricalInfo
-                     * @static
-                     * @param {cosmos_sdk.x.staking.v1.IHistoricalInfo} m HistoricalInfo message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    HistoricalInfo.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.header != null && Object.hasOwnProperty.call(m, "header"))
-                            $root.tendermint.abci.types.Header.encode(m.header, w.uint32(10).fork()).ldelim();
-                        if (m.valset != null && m.valset.length) {
-                            for (var i = 0; i < m.valset.length; ++i)
-                                $root.cosmos_sdk.x.staking.v1.Validator.encode(m.valset[i], w.uint32(18).fork()).ldelim();
-                        }
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a HistoricalInfo message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.staking.v1.HistoricalInfo
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.staking.v1.HistoricalInfo} HistoricalInfo
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    HistoricalInfo.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.staking.v1.HistoricalInfo();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.header = $root.tendermint.abci.types.Header.decode(r, r.uint32());
-                                break;
-                            case 2:
-                                if (!(m.valset && m.valset.length))
-                                    m.valset = [];
-                                m.valset.push($root.cosmos_sdk.x.staking.v1.Validator.decode(r, r.uint32()));
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return HistoricalInfo;
-                })();
-
-                v1.CommissionRates = (function() {
-
-                    /**
-                     * Properties of a CommissionRates.
-                     * @memberof cosmos_sdk.x.staking.v1
-                     * @interface ICommissionRates
-                     * @property {string|null} [rate] CommissionRates rate
-                     * @property {string|null} [maxRate] CommissionRates maxRate
-                     * @property {string|null} [maxChangeRate] CommissionRates maxChangeRate
-                     */
-
-                    /**
-                     * Constructs a new CommissionRates.
-                     * @memberof cosmos_sdk.x.staking.v1
-                     * @classdesc Represents a CommissionRates.
-                     * @implements ICommissionRates
-                     * @constructor
-                     * @param {cosmos_sdk.x.staking.v1.ICommissionRates=} [p] Properties to set
-                     */
-                    function CommissionRates(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * CommissionRates rate.
-                     * @member {string} rate
-                     * @memberof cosmos_sdk.x.staking.v1.CommissionRates
-                     * @instance
-                     */
-                    CommissionRates.prototype.rate = "";
-
-                    /**
-                     * CommissionRates maxRate.
-                     * @member {string} maxRate
-                     * @memberof cosmos_sdk.x.staking.v1.CommissionRates
-                     * @instance
-                     */
-                    CommissionRates.prototype.maxRate = "";
-
-                    /**
-                     * CommissionRates maxChangeRate.
-                     * @member {string} maxChangeRate
-                     * @memberof cosmos_sdk.x.staking.v1.CommissionRates
-                     * @instance
-                     */
-                    CommissionRates.prototype.maxChangeRate = "";
-
-                    /**
-                     * Creates a new CommissionRates instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.staking.v1.CommissionRates
-                     * @static
-                     * @param {cosmos_sdk.x.staking.v1.ICommissionRates=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.staking.v1.CommissionRates} CommissionRates instance
-                     */
-                    CommissionRates.create = function create(properties) {
-                        return new CommissionRates(properties);
-                    };
-
-                    /**
-                     * Encodes the specified CommissionRates message. Does not implicitly {@link cosmos_sdk.x.staking.v1.CommissionRates.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.staking.v1.CommissionRates
-                     * @static
-                     * @param {cosmos_sdk.x.staking.v1.ICommissionRates} m CommissionRates message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    CommissionRates.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.rate != null && Object.hasOwnProperty.call(m, "rate"))
-                            w.uint32(10).string(m.rate);
-                        if (m.maxRate != null && Object.hasOwnProperty.call(m, "maxRate"))
-                            w.uint32(18).string(m.maxRate);
-                        if (m.maxChangeRate != null && Object.hasOwnProperty.call(m, "maxChangeRate"))
-                            w.uint32(26).string(m.maxChangeRate);
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a CommissionRates message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.staking.v1.CommissionRates
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.staking.v1.CommissionRates} CommissionRates
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    CommissionRates.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.staking.v1.CommissionRates();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.rate = r.string();
-                                break;
-                            case 2:
-                                m.maxRate = r.string();
-                                break;
-                            case 3:
-                                m.maxChangeRate = r.string();
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return CommissionRates;
-                })();
-
-                v1.Commission = (function() {
-
-                    /**
-                     * Properties of a Commission.
-                     * @memberof cosmos_sdk.x.staking.v1
-                     * @interface ICommission
-                     * @property {cosmos_sdk.x.staking.v1.ICommissionRates|null} [commissionRates] Commission commissionRates
-                     * @property {google.protobuf.ITimestamp|null} [updateTime] Commission updateTime
-                     */
-
-                    /**
-                     * Constructs a new Commission.
-                     * @memberof cosmos_sdk.x.staking.v1
-                     * @classdesc Represents a Commission.
-                     * @implements ICommission
-                     * @constructor
-                     * @param {cosmos_sdk.x.staking.v1.ICommission=} [p] Properties to set
-                     */
-                    function Commission(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * Commission commissionRates.
-                     * @member {cosmos_sdk.x.staking.v1.ICommissionRates|null|undefined} commissionRates
-                     * @memberof cosmos_sdk.x.staking.v1.Commission
-                     * @instance
-                     */
-                    Commission.prototype.commissionRates = null;
-
-                    /**
-                     * Commission updateTime.
-                     * @member {google.protobuf.ITimestamp|null|undefined} updateTime
-                     * @memberof cosmos_sdk.x.staking.v1.Commission
-                     * @instance
-                     */
-                    Commission.prototype.updateTime = null;
-
-                    /**
-                     * Creates a new Commission instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.staking.v1.Commission
-                     * @static
-                     * @param {cosmos_sdk.x.staking.v1.ICommission=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.staking.v1.Commission} Commission instance
-                     */
-                    Commission.create = function create(properties) {
-                        return new Commission(properties);
-                    };
-
-                    /**
-                     * Encodes the specified Commission message. Does not implicitly {@link cosmos_sdk.x.staking.v1.Commission.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.staking.v1.Commission
-                     * @static
-                     * @param {cosmos_sdk.x.staking.v1.ICommission} m Commission message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    Commission.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.commissionRates != null && Object.hasOwnProperty.call(m, "commissionRates"))
-                            $root.cosmos_sdk.x.staking.v1.CommissionRates.encode(m.commissionRates, w.uint32(10).fork()).ldelim();
-                        if (m.updateTime != null && Object.hasOwnProperty.call(m, "updateTime"))
-                            $root.google.protobuf.Timestamp.encode(m.updateTime, w.uint32(18).fork()).ldelim();
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a Commission message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.staking.v1.Commission
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.staking.v1.Commission} Commission
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    Commission.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.staking.v1.Commission();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.commissionRates = $root.cosmos_sdk.x.staking.v1.CommissionRates.decode(r, r.uint32());
-                                break;
-                            case 2:
-                                m.updateTime = $root.google.protobuf.Timestamp.decode(r, r.uint32());
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return Commission;
-                })();
-
-                v1.Description = (function() {
-
-                    /**
-                     * Properties of a Description.
-                     * @memberof cosmos_sdk.x.staking.v1
-                     * @interface IDescription
-                     * @property {string|null} [moniker] Description moniker
-                     * @property {string|null} [identity] Description identity
-                     * @property {string|null} [website] Description website
-                     * @property {string|null} [securityContact] Description securityContact
-                     * @property {string|null} [details] Description details
-                     */
-
-                    /**
-                     * Constructs a new Description.
-                     * @memberof cosmos_sdk.x.staking.v1
-                     * @classdesc Represents a Description.
-                     * @implements IDescription
-                     * @constructor
-                     * @param {cosmos_sdk.x.staking.v1.IDescription=} [p] Properties to set
-                     */
-                    function Description(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * Description moniker.
-                     * @member {string} moniker
-                     * @memberof cosmos_sdk.x.staking.v1.Description
-                     * @instance
-                     */
-                    Description.prototype.moniker = "";
-
-                    /**
-                     * Description identity.
-                     * @member {string} identity
-                     * @memberof cosmos_sdk.x.staking.v1.Description
-                     * @instance
-                     */
-                    Description.prototype.identity = "";
-
-                    /**
-                     * Description website.
-                     * @member {string} website
-                     * @memberof cosmos_sdk.x.staking.v1.Description
-                     * @instance
-                     */
-                    Description.prototype.website = "";
-
-                    /**
-                     * Description securityContact.
-                     * @member {string} securityContact
-                     * @memberof cosmos_sdk.x.staking.v1.Description
-                     * @instance
-                     */
-                    Description.prototype.securityContact = "";
-
-                    /**
-                     * Description details.
-                     * @member {string} details
-                     * @memberof cosmos_sdk.x.staking.v1.Description
-                     * @instance
-                     */
-                    Description.prototype.details = "";
-
-                    /**
-                     * Creates a new Description instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.staking.v1.Description
-                     * @static
-                     * @param {cosmos_sdk.x.staking.v1.IDescription=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.staking.v1.Description} Description instance
-                     */
-                    Description.create = function create(properties) {
-                        return new Description(properties);
-                    };
-
-                    /**
-                     * Encodes the specified Description message. Does not implicitly {@link cosmos_sdk.x.staking.v1.Description.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.staking.v1.Description
-                     * @static
-                     * @param {cosmos_sdk.x.staking.v1.IDescription} m Description message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    Description.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.moniker != null && Object.hasOwnProperty.call(m, "moniker"))
-                            w.uint32(10).string(m.moniker);
-                        if (m.identity != null && Object.hasOwnProperty.call(m, "identity"))
-                            w.uint32(18).string(m.identity);
-                        if (m.website != null && Object.hasOwnProperty.call(m, "website"))
-                            w.uint32(26).string(m.website);
-                        if (m.securityContact != null && Object.hasOwnProperty.call(m, "securityContact"))
-                            w.uint32(34).string(m.securityContact);
-                        if (m.details != null && Object.hasOwnProperty.call(m, "details"))
-                            w.uint32(42).string(m.details);
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a Description message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.staking.v1.Description
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.staking.v1.Description} Description
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    Description.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.staking.v1.Description();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.moniker = r.string();
-                                break;
-                            case 2:
-                                m.identity = r.string();
-                                break;
-                            case 3:
-                                m.website = r.string();
-                                break;
-                            case 4:
-                                m.securityContact = r.string();
-                                break;
-                            case 5:
-                                m.details = r.string();
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return Description;
-                })();
-
-                v1.Validator = (function() {
-
-                    /**
-                     * Properties of a Validator.
-                     * @memberof cosmos_sdk.x.staking.v1
-                     * @interface IValidator
-                     * @property {Uint8Array|null} [operatorAddress] Validator operatorAddress
-                     * @property {string|null} [consensusPubkey] Validator consensusPubkey
-                     * @property {boolean|null} [jailed] Validator jailed
-                     * @property {number|null} [status] Validator status
-                     * @property {string|null} [tokens] Validator tokens
-                     * @property {string|null} [delegatorShares] Validator delegatorShares
-                     * @property {cosmos_sdk.x.staking.v1.IDescription|null} [description] Validator description
-                     * @property {number|Long|null} [unbondingHeight] Validator unbondingHeight
-                     * @property {google.protobuf.ITimestamp|null} [unbondingTime] Validator unbondingTime
-                     * @property {cosmos_sdk.x.staking.v1.ICommission|null} [commission] Validator commission
-                     * @property {string|null} [minSelfDelegation] Validator minSelfDelegation
-                     */
-
-                    /**
-                     * Constructs a new Validator.
-                     * @memberof cosmos_sdk.x.staking.v1
-                     * @classdesc Represents a Validator.
-                     * @implements IValidator
-                     * @constructor
-                     * @param {cosmos_sdk.x.staking.v1.IValidator=} [p] Properties to set
-                     */
-                    function Validator(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * Validator operatorAddress.
-                     * @member {Uint8Array} operatorAddress
-                     * @memberof cosmos_sdk.x.staking.v1.Validator
-                     * @instance
-                     */
-                    Validator.prototype.operatorAddress = $util.newBuffer([]);
-
-                    /**
-                     * Validator consensusPubkey.
-                     * @member {string} consensusPubkey
-                     * @memberof cosmos_sdk.x.staking.v1.Validator
-                     * @instance
-                     */
-                    Validator.prototype.consensusPubkey = "";
-
-                    /**
-                     * Validator jailed.
-                     * @member {boolean} jailed
-                     * @memberof cosmos_sdk.x.staking.v1.Validator
-                     * @instance
-                     */
-                    Validator.prototype.jailed = false;
-
-                    /**
-                     * Validator status.
-                     * @member {number} status
-                     * @memberof cosmos_sdk.x.staking.v1.Validator
-                     * @instance
-                     */
-                    Validator.prototype.status = 0;
-
-                    /**
-                     * Validator tokens.
-                     * @member {string} tokens
-                     * @memberof cosmos_sdk.x.staking.v1.Validator
-                     * @instance
-                     */
-                    Validator.prototype.tokens = "";
-
-                    /**
-                     * Validator delegatorShares.
-                     * @member {string} delegatorShares
-                     * @memberof cosmos_sdk.x.staking.v1.Validator
-                     * @instance
-                     */
-                    Validator.prototype.delegatorShares = "";
-
-                    /**
-                     * Validator description.
-                     * @member {cosmos_sdk.x.staking.v1.IDescription|null|undefined} description
-                     * @memberof cosmos_sdk.x.staking.v1.Validator
-                     * @instance
-                     */
-                    Validator.prototype.description = null;
-
-                    /**
-                     * Validator unbondingHeight.
-                     * @member {number|Long} unbondingHeight
-                     * @memberof cosmos_sdk.x.staking.v1.Validator
-                     * @instance
-                     */
-                    Validator.prototype.unbondingHeight = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
-
-                    /**
-                     * Validator unbondingTime.
-                     * @member {google.protobuf.ITimestamp|null|undefined} unbondingTime
-                     * @memberof cosmos_sdk.x.staking.v1.Validator
-                     * @instance
-                     */
-                    Validator.prototype.unbondingTime = null;
-
-                    /**
-                     * Validator commission.
-                     * @member {cosmos_sdk.x.staking.v1.ICommission|null|undefined} commission
-                     * @memberof cosmos_sdk.x.staking.v1.Validator
-                     * @instance
-                     */
-                    Validator.prototype.commission = null;
-
-                    /**
-                     * Validator minSelfDelegation.
-                     * @member {string} minSelfDelegation
-                     * @memberof cosmos_sdk.x.staking.v1.Validator
-                     * @instance
-                     */
-                    Validator.prototype.minSelfDelegation = "";
-
-                    /**
-                     * Creates a new Validator instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.staking.v1.Validator
-                     * @static
-                     * @param {cosmos_sdk.x.staking.v1.IValidator=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.staking.v1.Validator} Validator instance
-                     */
-                    Validator.create = function create(properties) {
-                        return new Validator(properties);
-                    };
-
-                    /**
-                     * Encodes the specified Validator message. Does not implicitly {@link cosmos_sdk.x.staking.v1.Validator.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.staking.v1.Validator
-                     * @static
-                     * @param {cosmos_sdk.x.staking.v1.IValidator} m Validator message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    Validator.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.operatorAddress != null && Object.hasOwnProperty.call(m, "operatorAddress"))
-                            w.uint32(10).bytes(m.operatorAddress);
-                        if (m.consensusPubkey != null && Object.hasOwnProperty.call(m, "consensusPubkey"))
-                            w.uint32(18).string(m.consensusPubkey);
-                        if (m.jailed != null && Object.hasOwnProperty.call(m, "jailed"))
-                            w.uint32(24).bool(m.jailed);
-                        if (m.status != null && Object.hasOwnProperty.call(m, "status"))
-                            w.uint32(32).int32(m.status);
-                        if (m.tokens != null && Object.hasOwnProperty.call(m, "tokens"))
-                            w.uint32(42).string(m.tokens);
-                        if (m.delegatorShares != null && Object.hasOwnProperty.call(m, "delegatorShares"))
-                            w.uint32(50).string(m.delegatorShares);
-                        if (m.description != null && Object.hasOwnProperty.call(m, "description"))
-                            $root.cosmos_sdk.x.staking.v1.Description.encode(m.description, w.uint32(58).fork()).ldelim();
-                        if (m.unbondingHeight != null && Object.hasOwnProperty.call(m, "unbondingHeight"))
-                            w.uint32(64).int64(m.unbondingHeight);
-                        if (m.unbondingTime != null && Object.hasOwnProperty.call(m, "unbondingTime"))
-                            $root.google.protobuf.Timestamp.encode(m.unbondingTime, w.uint32(74).fork()).ldelim();
-                        if (m.commission != null && Object.hasOwnProperty.call(m, "commission"))
-                            $root.cosmos_sdk.x.staking.v1.Commission.encode(m.commission, w.uint32(82).fork()).ldelim();
-                        if (m.minSelfDelegation != null && Object.hasOwnProperty.call(m, "minSelfDelegation"))
-                            w.uint32(90).string(m.minSelfDelegation);
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a Validator message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.staking.v1.Validator
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.staking.v1.Validator} Validator
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    Validator.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.staking.v1.Validator();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.operatorAddress = r.bytes();
-                                break;
-                            case 2:
-                                m.consensusPubkey = r.string();
-                                break;
-                            case 3:
-                                m.jailed = r.bool();
-                                break;
-                            case 4:
-                                m.status = r.int32();
-                                break;
-                            case 5:
-                                m.tokens = r.string();
-                                break;
-                            case 6:
-                                m.delegatorShares = r.string();
-                                break;
-                            case 7:
-                                m.description = $root.cosmos_sdk.x.staking.v1.Description.decode(r, r.uint32());
-                                break;
-                            case 8:
-                                m.unbondingHeight = r.int64();
-                                break;
-                            case 9:
-                                m.unbondingTime = $root.google.protobuf.Timestamp.decode(r, r.uint32());
-                                break;
-                            case 10:
-                                m.commission = $root.cosmos_sdk.x.staking.v1.Commission.decode(r, r.uint32());
-                                break;
-                            case 11:
-                                m.minSelfDelegation = r.string();
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return Validator;
-                })();
-
-                v1.DVPair = (function() {
-
-                    /**
-                     * Properties of a DVPair.
-                     * @memberof cosmos_sdk.x.staking.v1
-                     * @interface IDVPair
-                     * @property {Uint8Array|null} [delegatorAddress] DVPair delegatorAddress
-                     * @property {Uint8Array|null} [validatorAddress] DVPair validatorAddress
-                     */
-
-                    /**
-                     * Constructs a new DVPair.
-                     * @memberof cosmos_sdk.x.staking.v1
-                     * @classdesc Represents a DVPair.
-                     * @implements IDVPair
-                     * @constructor
-                     * @param {cosmos_sdk.x.staking.v1.IDVPair=} [p] Properties to set
-                     */
-                    function DVPair(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * DVPair delegatorAddress.
-                     * @member {Uint8Array} delegatorAddress
-                     * @memberof cosmos_sdk.x.staking.v1.DVPair
-                     * @instance
-                     */
-                    DVPair.prototype.delegatorAddress = $util.newBuffer([]);
-
-                    /**
-                     * DVPair validatorAddress.
-                     * @member {Uint8Array} validatorAddress
-                     * @memberof cosmos_sdk.x.staking.v1.DVPair
-                     * @instance
-                     */
-                    DVPair.prototype.validatorAddress = $util.newBuffer([]);
-
-                    /**
-                     * Creates a new DVPair instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.staking.v1.DVPair
-                     * @static
-                     * @param {cosmos_sdk.x.staking.v1.IDVPair=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.staking.v1.DVPair} DVPair instance
-                     */
-                    DVPair.create = function create(properties) {
-                        return new DVPair(properties);
-                    };
-
-                    /**
-                     * Encodes the specified DVPair message. Does not implicitly {@link cosmos_sdk.x.staking.v1.DVPair.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.staking.v1.DVPair
-                     * @static
-                     * @param {cosmos_sdk.x.staking.v1.IDVPair} m DVPair message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    DVPair.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.delegatorAddress != null && Object.hasOwnProperty.call(m, "delegatorAddress"))
-                            w.uint32(10).bytes(m.delegatorAddress);
-                        if (m.validatorAddress != null && Object.hasOwnProperty.call(m, "validatorAddress"))
-                            w.uint32(18).bytes(m.validatorAddress);
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a DVPair message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.staking.v1.DVPair
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.staking.v1.DVPair} DVPair
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    DVPair.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.staking.v1.DVPair();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.delegatorAddress = r.bytes();
-                                break;
-                            case 2:
-                                m.validatorAddress = r.bytes();
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return DVPair;
-                })();
-
-                v1.DVPairs = (function() {
-
-                    /**
-                     * Properties of a DVPairs.
-                     * @memberof cosmos_sdk.x.staking.v1
-                     * @interface IDVPairs
-                     * @property {Array.<cosmos_sdk.x.staking.v1.IDVPair>|null} [pairs] DVPairs pairs
-                     */
-
-                    /**
-                     * Constructs a new DVPairs.
-                     * @memberof cosmos_sdk.x.staking.v1
-                     * @classdesc Represents a DVPairs.
-                     * @implements IDVPairs
-                     * @constructor
-                     * @param {cosmos_sdk.x.staking.v1.IDVPairs=} [p] Properties to set
-                     */
-                    function DVPairs(p) {
-                        this.pairs = [];
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * DVPairs pairs.
-                     * @member {Array.<cosmos_sdk.x.staking.v1.IDVPair>} pairs
-                     * @memberof cosmos_sdk.x.staking.v1.DVPairs
-                     * @instance
-                     */
-                    DVPairs.prototype.pairs = $util.emptyArray;
-
-                    /**
-                     * Creates a new DVPairs instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.staking.v1.DVPairs
-                     * @static
-                     * @param {cosmos_sdk.x.staking.v1.IDVPairs=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.staking.v1.DVPairs} DVPairs instance
-                     */
-                    DVPairs.create = function create(properties) {
-                        return new DVPairs(properties);
-                    };
-
-                    /**
-                     * Encodes the specified DVPairs message. Does not implicitly {@link cosmos_sdk.x.staking.v1.DVPairs.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.staking.v1.DVPairs
-                     * @static
-                     * @param {cosmos_sdk.x.staking.v1.IDVPairs} m DVPairs message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    DVPairs.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.pairs != null && m.pairs.length) {
-                            for (var i = 0; i < m.pairs.length; ++i)
-                                $root.cosmos_sdk.x.staking.v1.DVPair.encode(m.pairs[i], w.uint32(10).fork()).ldelim();
-                        }
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a DVPairs message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.staking.v1.DVPairs
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.staking.v1.DVPairs} DVPairs
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    DVPairs.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.staking.v1.DVPairs();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                if (!(m.pairs && m.pairs.length))
-                                    m.pairs = [];
-                                m.pairs.push($root.cosmos_sdk.x.staking.v1.DVPair.decode(r, r.uint32()));
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return DVPairs;
-                })();
-
-                v1.DVVTriplet = (function() {
-
-                    /**
-                     * Properties of a DVVTriplet.
-                     * @memberof cosmos_sdk.x.staking.v1
-                     * @interface IDVVTriplet
-                     * @property {Uint8Array|null} [delegatorAddress] DVVTriplet delegatorAddress
-                     * @property {Uint8Array|null} [validatorSrcAddress] DVVTriplet validatorSrcAddress
-                     * @property {Uint8Array|null} [validatorDstAddress] DVVTriplet validatorDstAddress
-                     */
-
-                    /**
-                     * Constructs a new DVVTriplet.
-                     * @memberof cosmos_sdk.x.staking.v1
-                     * @classdesc Represents a DVVTriplet.
-                     * @implements IDVVTriplet
-                     * @constructor
-                     * @param {cosmos_sdk.x.staking.v1.IDVVTriplet=} [p] Properties to set
-                     */
-                    function DVVTriplet(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * DVVTriplet delegatorAddress.
-                     * @member {Uint8Array} delegatorAddress
-                     * @memberof cosmos_sdk.x.staking.v1.DVVTriplet
-                     * @instance
-                     */
-                    DVVTriplet.prototype.delegatorAddress = $util.newBuffer([]);
-
-                    /**
-                     * DVVTriplet validatorSrcAddress.
-                     * @member {Uint8Array} validatorSrcAddress
-                     * @memberof cosmos_sdk.x.staking.v1.DVVTriplet
-                     * @instance
-                     */
-                    DVVTriplet.prototype.validatorSrcAddress = $util.newBuffer([]);
-
-                    /**
-                     * DVVTriplet validatorDstAddress.
-                     * @member {Uint8Array} validatorDstAddress
-                     * @memberof cosmos_sdk.x.staking.v1.DVVTriplet
-                     * @instance
-                     */
-                    DVVTriplet.prototype.validatorDstAddress = $util.newBuffer([]);
-
-                    /**
-                     * Creates a new DVVTriplet instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.staking.v1.DVVTriplet
-                     * @static
-                     * @param {cosmos_sdk.x.staking.v1.IDVVTriplet=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.staking.v1.DVVTriplet} DVVTriplet instance
-                     */
-                    DVVTriplet.create = function create(properties) {
-                        return new DVVTriplet(properties);
-                    };
-
-                    /**
-                     * Encodes the specified DVVTriplet message. Does not implicitly {@link cosmos_sdk.x.staking.v1.DVVTriplet.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.staking.v1.DVVTriplet
-                     * @static
-                     * @param {cosmos_sdk.x.staking.v1.IDVVTriplet} m DVVTriplet message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    DVVTriplet.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.delegatorAddress != null && Object.hasOwnProperty.call(m, "delegatorAddress"))
-                            w.uint32(10).bytes(m.delegatorAddress);
-                        if (m.validatorSrcAddress != null && Object.hasOwnProperty.call(m, "validatorSrcAddress"))
-                            w.uint32(18).bytes(m.validatorSrcAddress);
-                        if (m.validatorDstAddress != null && Object.hasOwnProperty.call(m, "validatorDstAddress"))
-                            w.uint32(26).bytes(m.validatorDstAddress);
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a DVVTriplet message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.staking.v1.DVVTriplet
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.staking.v1.DVVTriplet} DVVTriplet
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    DVVTriplet.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.staking.v1.DVVTriplet();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.delegatorAddress = r.bytes();
-                                break;
-                            case 2:
-                                m.validatorSrcAddress = r.bytes();
-                                break;
-                            case 3:
-                                m.validatorDstAddress = r.bytes();
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return DVVTriplet;
-                })();
-
-                v1.DVVTriplets = (function() {
-
-                    /**
-                     * Properties of a DVVTriplets.
-                     * @memberof cosmos_sdk.x.staking.v1
-                     * @interface IDVVTriplets
-                     * @property {Array.<cosmos_sdk.x.staking.v1.IDVVTriplet>|null} [triplets] DVVTriplets triplets
-                     */
-
-                    /**
-                     * Constructs a new DVVTriplets.
-                     * @memberof cosmos_sdk.x.staking.v1
-                     * @classdesc Represents a DVVTriplets.
-                     * @implements IDVVTriplets
-                     * @constructor
-                     * @param {cosmos_sdk.x.staking.v1.IDVVTriplets=} [p] Properties to set
-                     */
-                    function DVVTriplets(p) {
-                        this.triplets = [];
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * DVVTriplets triplets.
-                     * @member {Array.<cosmos_sdk.x.staking.v1.IDVVTriplet>} triplets
-                     * @memberof cosmos_sdk.x.staking.v1.DVVTriplets
-                     * @instance
-                     */
-                    DVVTriplets.prototype.triplets = $util.emptyArray;
-
-                    /**
-                     * Creates a new DVVTriplets instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.staking.v1.DVVTriplets
-                     * @static
-                     * @param {cosmos_sdk.x.staking.v1.IDVVTriplets=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.staking.v1.DVVTriplets} DVVTriplets instance
-                     */
-                    DVVTriplets.create = function create(properties) {
-                        return new DVVTriplets(properties);
-                    };
-
-                    /**
-                     * Encodes the specified DVVTriplets message. Does not implicitly {@link cosmos_sdk.x.staking.v1.DVVTriplets.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.staking.v1.DVVTriplets
-                     * @static
-                     * @param {cosmos_sdk.x.staking.v1.IDVVTriplets} m DVVTriplets message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    DVVTriplets.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.triplets != null && m.triplets.length) {
-                            for (var i = 0; i < m.triplets.length; ++i)
-                                $root.cosmos_sdk.x.staking.v1.DVVTriplet.encode(m.triplets[i], w.uint32(10).fork()).ldelim();
-                        }
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a DVVTriplets message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.staking.v1.DVVTriplets
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.staking.v1.DVVTriplets} DVVTriplets
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    DVVTriplets.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.staking.v1.DVVTriplets();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                if (!(m.triplets && m.triplets.length))
-                                    m.triplets = [];
-                                m.triplets.push($root.cosmos_sdk.x.staking.v1.DVVTriplet.decode(r, r.uint32()));
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return DVVTriplets;
-                })();
-
-                v1.Delegation = (function() {
-
-                    /**
-                     * Properties of a Delegation.
-                     * @memberof cosmos_sdk.x.staking.v1
-                     * @interface IDelegation
-                     * @property {Uint8Array|null} [delegatorAddress] Delegation delegatorAddress
-                     * @property {Uint8Array|null} [validatorAddress] Delegation validatorAddress
-                     * @property {string|null} [shares] Delegation shares
-                     */
-
-                    /**
-                     * Constructs a new Delegation.
-                     * @memberof cosmos_sdk.x.staking.v1
-                     * @classdesc Represents a Delegation.
-                     * @implements IDelegation
-                     * @constructor
-                     * @param {cosmos_sdk.x.staking.v1.IDelegation=} [p] Properties to set
-                     */
-                    function Delegation(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * Delegation delegatorAddress.
-                     * @member {Uint8Array} delegatorAddress
-                     * @memberof cosmos_sdk.x.staking.v1.Delegation
-                     * @instance
-                     */
-                    Delegation.prototype.delegatorAddress = $util.newBuffer([]);
-
-                    /**
-                     * Delegation validatorAddress.
-                     * @member {Uint8Array} validatorAddress
-                     * @memberof cosmos_sdk.x.staking.v1.Delegation
-                     * @instance
-                     */
-                    Delegation.prototype.validatorAddress = $util.newBuffer([]);
-
-                    /**
-                     * Delegation shares.
-                     * @member {string} shares
-                     * @memberof cosmos_sdk.x.staking.v1.Delegation
-                     * @instance
-                     */
-                    Delegation.prototype.shares = "";
-
-                    /**
-                     * Creates a new Delegation instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.staking.v1.Delegation
-                     * @static
-                     * @param {cosmos_sdk.x.staking.v1.IDelegation=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.staking.v1.Delegation} Delegation instance
-                     */
-                    Delegation.create = function create(properties) {
-                        return new Delegation(properties);
-                    };
-
-                    /**
-                     * Encodes the specified Delegation message. Does not implicitly {@link cosmos_sdk.x.staking.v1.Delegation.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.staking.v1.Delegation
-                     * @static
-                     * @param {cosmos_sdk.x.staking.v1.IDelegation} m Delegation message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    Delegation.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.delegatorAddress != null && Object.hasOwnProperty.call(m, "delegatorAddress"))
-                            w.uint32(10).bytes(m.delegatorAddress);
-                        if (m.validatorAddress != null && Object.hasOwnProperty.call(m, "validatorAddress"))
-                            w.uint32(18).bytes(m.validatorAddress);
-                        if (m.shares != null && Object.hasOwnProperty.call(m, "shares"))
-                            w.uint32(26).string(m.shares);
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a Delegation message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.staking.v1.Delegation
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.staking.v1.Delegation} Delegation
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    Delegation.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.staking.v1.Delegation();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.delegatorAddress = r.bytes();
-                                break;
-                            case 2:
-                                m.validatorAddress = r.bytes();
-                                break;
-                            case 3:
-                                m.shares = r.string();
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return Delegation;
-                })();
-
-                v1.UnbondingDelegation = (function() {
-
-                    /**
-                     * Properties of an UnbondingDelegation.
-                     * @memberof cosmos_sdk.x.staking.v1
-                     * @interface IUnbondingDelegation
-                     * @property {Uint8Array|null} [delegatorAddress] UnbondingDelegation delegatorAddress
-                     * @property {Uint8Array|null} [validatorAddress] UnbondingDelegation validatorAddress
-                     * @property {Array.<cosmos_sdk.x.staking.v1.IUnbondingDelegationEntry>|null} [entries] UnbondingDelegation entries
-                     */
-
-                    /**
-                     * Constructs a new UnbondingDelegation.
-                     * @memberof cosmos_sdk.x.staking.v1
-                     * @classdesc Represents an UnbondingDelegation.
-                     * @implements IUnbondingDelegation
-                     * @constructor
-                     * @param {cosmos_sdk.x.staking.v1.IUnbondingDelegation=} [p] Properties to set
-                     */
-                    function UnbondingDelegation(p) {
-                        this.entries = [];
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * UnbondingDelegation delegatorAddress.
-                     * @member {Uint8Array} delegatorAddress
-                     * @memberof cosmos_sdk.x.staking.v1.UnbondingDelegation
-                     * @instance
-                     */
-                    UnbondingDelegation.prototype.delegatorAddress = $util.newBuffer([]);
-
-                    /**
-                     * UnbondingDelegation validatorAddress.
-                     * @member {Uint8Array} validatorAddress
-                     * @memberof cosmos_sdk.x.staking.v1.UnbondingDelegation
-                     * @instance
-                     */
-                    UnbondingDelegation.prototype.validatorAddress = $util.newBuffer([]);
-
-                    /**
-                     * UnbondingDelegation entries.
-                     * @member {Array.<cosmos_sdk.x.staking.v1.IUnbondingDelegationEntry>} entries
-                     * @memberof cosmos_sdk.x.staking.v1.UnbondingDelegation
-                     * @instance
-                     */
-                    UnbondingDelegation.prototype.entries = $util.emptyArray;
-
-                    /**
-                     * Creates a new UnbondingDelegation instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.staking.v1.UnbondingDelegation
-                     * @static
-                     * @param {cosmos_sdk.x.staking.v1.IUnbondingDelegation=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.staking.v1.UnbondingDelegation} UnbondingDelegation instance
-                     */
-                    UnbondingDelegation.create = function create(properties) {
-                        return new UnbondingDelegation(properties);
-                    };
-
-                    /**
-                     * Encodes the specified UnbondingDelegation message. Does not implicitly {@link cosmos_sdk.x.staking.v1.UnbondingDelegation.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.staking.v1.UnbondingDelegation
-                     * @static
-                     * @param {cosmos_sdk.x.staking.v1.IUnbondingDelegation} m UnbondingDelegation message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    UnbondingDelegation.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.delegatorAddress != null && Object.hasOwnProperty.call(m, "delegatorAddress"))
-                            w.uint32(10).bytes(m.delegatorAddress);
-                        if (m.validatorAddress != null && Object.hasOwnProperty.call(m, "validatorAddress"))
-                            w.uint32(18).bytes(m.validatorAddress);
-                        if (m.entries != null && m.entries.length) {
-                            for (var i = 0; i < m.entries.length; ++i)
-                                $root.cosmos_sdk.x.staking.v1.UnbondingDelegationEntry.encode(m.entries[i], w.uint32(26).fork()).ldelim();
-                        }
-                        return w;
-                    };
-
-                    /**
-                     * Decodes an UnbondingDelegation message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.staking.v1.UnbondingDelegation
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.staking.v1.UnbondingDelegation} UnbondingDelegation
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    UnbondingDelegation.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.staking.v1.UnbondingDelegation();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.delegatorAddress = r.bytes();
-                                break;
-                            case 2:
-                                m.validatorAddress = r.bytes();
-                                break;
-                            case 3:
-                                if (!(m.entries && m.entries.length))
-                                    m.entries = [];
-                                m.entries.push($root.cosmos_sdk.x.staking.v1.UnbondingDelegationEntry.decode(r, r.uint32()));
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return UnbondingDelegation;
-                })();
-
-                v1.UnbondingDelegationEntry = (function() {
-
-                    /**
-                     * Properties of an UnbondingDelegationEntry.
-                     * @memberof cosmos_sdk.x.staking.v1
-                     * @interface IUnbondingDelegationEntry
-                     * @property {number|Long|null} [creationHeight] UnbondingDelegationEntry creationHeight
-                     * @property {google.protobuf.ITimestamp|null} [completionTime] UnbondingDelegationEntry completionTime
-                     * @property {string|null} [initialBalance] UnbondingDelegationEntry initialBalance
-                     * @property {string|null} [balance] UnbondingDelegationEntry balance
-                     */
-
-                    /**
-                     * Constructs a new UnbondingDelegationEntry.
-                     * @memberof cosmos_sdk.x.staking.v1
-                     * @classdesc Represents an UnbondingDelegationEntry.
-                     * @implements IUnbondingDelegationEntry
-                     * @constructor
-                     * @param {cosmos_sdk.x.staking.v1.IUnbondingDelegationEntry=} [p] Properties to set
-                     */
-                    function UnbondingDelegationEntry(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * UnbondingDelegationEntry creationHeight.
-                     * @member {number|Long} creationHeight
-                     * @memberof cosmos_sdk.x.staking.v1.UnbondingDelegationEntry
-                     * @instance
-                     */
-                    UnbondingDelegationEntry.prototype.creationHeight = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
-
-                    /**
-                     * UnbondingDelegationEntry completionTime.
-                     * @member {google.protobuf.ITimestamp|null|undefined} completionTime
-                     * @memberof cosmos_sdk.x.staking.v1.UnbondingDelegationEntry
-                     * @instance
-                     */
-                    UnbondingDelegationEntry.prototype.completionTime = null;
-
-                    /**
-                     * UnbondingDelegationEntry initialBalance.
-                     * @member {string} initialBalance
-                     * @memberof cosmos_sdk.x.staking.v1.UnbondingDelegationEntry
-                     * @instance
-                     */
-                    UnbondingDelegationEntry.prototype.initialBalance = "";
-
-                    /**
-                     * UnbondingDelegationEntry balance.
-                     * @member {string} balance
-                     * @memberof cosmos_sdk.x.staking.v1.UnbondingDelegationEntry
-                     * @instance
-                     */
-                    UnbondingDelegationEntry.prototype.balance = "";
-
-                    /**
-                     * Creates a new UnbondingDelegationEntry instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.staking.v1.UnbondingDelegationEntry
-                     * @static
-                     * @param {cosmos_sdk.x.staking.v1.IUnbondingDelegationEntry=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.staking.v1.UnbondingDelegationEntry} UnbondingDelegationEntry instance
-                     */
-                    UnbondingDelegationEntry.create = function create(properties) {
-                        return new UnbondingDelegationEntry(properties);
-                    };
-
-                    /**
-                     * Encodes the specified UnbondingDelegationEntry message. Does not implicitly {@link cosmos_sdk.x.staking.v1.UnbondingDelegationEntry.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.staking.v1.UnbondingDelegationEntry
-                     * @static
-                     * @param {cosmos_sdk.x.staking.v1.IUnbondingDelegationEntry} m UnbondingDelegationEntry message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    UnbondingDelegationEntry.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.creationHeight != null && Object.hasOwnProperty.call(m, "creationHeight"))
-                            w.uint32(8).int64(m.creationHeight);
-                        if (m.completionTime != null && Object.hasOwnProperty.call(m, "completionTime"))
-                            $root.google.protobuf.Timestamp.encode(m.completionTime, w.uint32(18).fork()).ldelim();
-                        if (m.initialBalance != null && Object.hasOwnProperty.call(m, "initialBalance"))
-                            w.uint32(26).string(m.initialBalance);
-                        if (m.balance != null && Object.hasOwnProperty.call(m, "balance"))
-                            w.uint32(34).string(m.balance);
-                        return w;
-                    };
-
-                    /**
-                     * Decodes an UnbondingDelegationEntry message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.staking.v1.UnbondingDelegationEntry
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.staking.v1.UnbondingDelegationEntry} UnbondingDelegationEntry
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    UnbondingDelegationEntry.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.staking.v1.UnbondingDelegationEntry();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.creationHeight = r.int64();
-                                break;
-                            case 2:
-                                m.completionTime = $root.google.protobuf.Timestamp.decode(r, r.uint32());
-                                break;
-                            case 3:
-                                m.initialBalance = r.string();
-                                break;
-                            case 4:
-                                m.balance = r.string();
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return UnbondingDelegationEntry;
-                })();
-
-                v1.RedelegationEntry = (function() {
-
-                    /**
-                     * Properties of a RedelegationEntry.
-                     * @memberof cosmos_sdk.x.staking.v1
-                     * @interface IRedelegationEntry
-                     * @property {number|Long|null} [creationHeight] RedelegationEntry creationHeight
-                     * @property {google.protobuf.ITimestamp|null} [completionTime] RedelegationEntry completionTime
-                     * @property {string|null} [initialBalance] RedelegationEntry initialBalance
-                     * @property {string|null} [sharesDst] RedelegationEntry sharesDst
-                     */
-
-                    /**
-                     * Constructs a new RedelegationEntry.
-                     * @memberof cosmos_sdk.x.staking.v1
-                     * @classdesc Represents a RedelegationEntry.
-                     * @implements IRedelegationEntry
-                     * @constructor
-                     * @param {cosmos_sdk.x.staking.v1.IRedelegationEntry=} [p] Properties to set
-                     */
-                    function RedelegationEntry(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * RedelegationEntry creationHeight.
-                     * @member {number|Long} creationHeight
-                     * @memberof cosmos_sdk.x.staking.v1.RedelegationEntry
-                     * @instance
-                     */
-                    RedelegationEntry.prototype.creationHeight = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
-
-                    /**
-                     * RedelegationEntry completionTime.
-                     * @member {google.protobuf.ITimestamp|null|undefined} completionTime
-                     * @memberof cosmos_sdk.x.staking.v1.RedelegationEntry
-                     * @instance
-                     */
-                    RedelegationEntry.prototype.completionTime = null;
-
-                    /**
-                     * RedelegationEntry initialBalance.
-                     * @member {string} initialBalance
-                     * @memberof cosmos_sdk.x.staking.v1.RedelegationEntry
-                     * @instance
-                     */
-                    RedelegationEntry.prototype.initialBalance = "";
-
-                    /**
-                     * RedelegationEntry sharesDst.
-                     * @member {string} sharesDst
-                     * @memberof cosmos_sdk.x.staking.v1.RedelegationEntry
-                     * @instance
-                     */
-                    RedelegationEntry.prototype.sharesDst = "";
-
-                    /**
-                     * Creates a new RedelegationEntry instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.staking.v1.RedelegationEntry
-                     * @static
-                     * @param {cosmos_sdk.x.staking.v1.IRedelegationEntry=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.staking.v1.RedelegationEntry} RedelegationEntry instance
-                     */
-                    RedelegationEntry.create = function create(properties) {
-                        return new RedelegationEntry(properties);
-                    };
-
-                    /**
-                     * Encodes the specified RedelegationEntry message. Does not implicitly {@link cosmos_sdk.x.staking.v1.RedelegationEntry.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.staking.v1.RedelegationEntry
-                     * @static
-                     * @param {cosmos_sdk.x.staking.v1.IRedelegationEntry} m RedelegationEntry message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    RedelegationEntry.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.creationHeight != null && Object.hasOwnProperty.call(m, "creationHeight"))
-                            w.uint32(8).int64(m.creationHeight);
-                        if (m.completionTime != null && Object.hasOwnProperty.call(m, "completionTime"))
-                            $root.google.protobuf.Timestamp.encode(m.completionTime, w.uint32(18).fork()).ldelim();
-                        if (m.initialBalance != null && Object.hasOwnProperty.call(m, "initialBalance"))
-                            w.uint32(26).string(m.initialBalance);
-                        if (m.sharesDst != null && Object.hasOwnProperty.call(m, "sharesDst"))
-                            w.uint32(34).string(m.sharesDst);
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a RedelegationEntry message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.staking.v1.RedelegationEntry
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.staking.v1.RedelegationEntry} RedelegationEntry
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    RedelegationEntry.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.staking.v1.RedelegationEntry();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.creationHeight = r.int64();
-                                break;
-                            case 2:
-                                m.completionTime = $root.google.protobuf.Timestamp.decode(r, r.uint32());
-                                break;
-                            case 3:
-                                m.initialBalance = r.string();
-                                break;
-                            case 4:
-                                m.sharesDst = r.string();
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return RedelegationEntry;
-                })();
-
-                v1.Redelegation = (function() {
-
-                    /**
-                     * Properties of a Redelegation.
-                     * @memberof cosmos_sdk.x.staking.v1
-                     * @interface IRedelegation
-                     * @property {Uint8Array|null} [delegatorAddress] Redelegation delegatorAddress
-                     * @property {Uint8Array|null} [validatorSrcAddress] Redelegation validatorSrcAddress
-                     * @property {Uint8Array|null} [validatorDstAddress] Redelegation validatorDstAddress
-                     * @property {Array.<cosmos_sdk.x.staking.v1.IRedelegationEntry>|null} [entries] Redelegation entries
-                     */
-
-                    /**
-                     * Constructs a new Redelegation.
-                     * @memberof cosmos_sdk.x.staking.v1
-                     * @classdesc Represents a Redelegation.
-                     * @implements IRedelegation
-                     * @constructor
-                     * @param {cosmos_sdk.x.staking.v1.IRedelegation=} [p] Properties to set
-                     */
-                    function Redelegation(p) {
-                        this.entries = [];
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * Redelegation delegatorAddress.
-                     * @member {Uint8Array} delegatorAddress
-                     * @memberof cosmos_sdk.x.staking.v1.Redelegation
-                     * @instance
-                     */
-                    Redelegation.prototype.delegatorAddress = $util.newBuffer([]);
-
-                    /**
-                     * Redelegation validatorSrcAddress.
-                     * @member {Uint8Array} validatorSrcAddress
-                     * @memberof cosmos_sdk.x.staking.v1.Redelegation
-                     * @instance
-                     */
-                    Redelegation.prototype.validatorSrcAddress = $util.newBuffer([]);
-
-                    /**
-                     * Redelegation validatorDstAddress.
-                     * @member {Uint8Array} validatorDstAddress
-                     * @memberof cosmos_sdk.x.staking.v1.Redelegation
-                     * @instance
-                     */
-                    Redelegation.prototype.validatorDstAddress = $util.newBuffer([]);
-
-                    /**
-                     * Redelegation entries.
-                     * @member {Array.<cosmos_sdk.x.staking.v1.IRedelegationEntry>} entries
-                     * @memberof cosmos_sdk.x.staking.v1.Redelegation
-                     * @instance
-                     */
-                    Redelegation.prototype.entries = $util.emptyArray;
-
-                    /**
-                     * Creates a new Redelegation instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.staking.v1.Redelegation
-                     * @static
-                     * @param {cosmos_sdk.x.staking.v1.IRedelegation=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.staking.v1.Redelegation} Redelegation instance
-                     */
-                    Redelegation.create = function create(properties) {
-                        return new Redelegation(properties);
-                    };
-
-                    /**
-                     * Encodes the specified Redelegation message. Does not implicitly {@link cosmos_sdk.x.staking.v1.Redelegation.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.staking.v1.Redelegation
-                     * @static
-                     * @param {cosmos_sdk.x.staking.v1.IRedelegation} m Redelegation message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    Redelegation.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.delegatorAddress != null && Object.hasOwnProperty.call(m, "delegatorAddress"))
-                            w.uint32(10).bytes(m.delegatorAddress);
-                        if (m.validatorSrcAddress != null && Object.hasOwnProperty.call(m, "validatorSrcAddress"))
-                            w.uint32(18).bytes(m.validatorSrcAddress);
-                        if (m.validatorDstAddress != null && Object.hasOwnProperty.call(m, "validatorDstAddress"))
-                            w.uint32(26).bytes(m.validatorDstAddress);
-                        if (m.entries != null && m.entries.length) {
-                            for (var i = 0; i < m.entries.length; ++i)
-                                $root.cosmos_sdk.x.staking.v1.RedelegationEntry.encode(m.entries[i], w.uint32(34).fork()).ldelim();
-                        }
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a Redelegation message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.staking.v1.Redelegation
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.staking.v1.Redelegation} Redelegation
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    Redelegation.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.staking.v1.Redelegation();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.delegatorAddress = r.bytes();
-                                break;
-                            case 2:
-                                m.validatorSrcAddress = r.bytes();
-                                break;
-                            case 3:
-                                m.validatorDstAddress = r.bytes();
-                                break;
-                            case 4:
-                                if (!(m.entries && m.entries.length))
-                                    m.entries = [];
-                                m.entries.push($root.cosmos_sdk.x.staking.v1.RedelegationEntry.decode(r, r.uint32()));
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return Redelegation;
-                })();
-
-                v1.Params = (function() {
-
-                    /**
-                     * Properties of a Params.
-                     * @memberof cosmos_sdk.x.staking.v1
-                     * @interface IParams
-                     * @property {google.protobuf.IDuration|null} [unbondingTime] Params unbondingTime
-                     * @property {number|null} [maxValidators] Params maxValidators
-                     * @property {number|null} [maxEntries] Params maxEntries
-                     * @property {number|null} [historicalEntries] Params historicalEntries
-                     * @property {string|null} [bondDenom] Params bondDenom
-                     */
-
-                    /**
-                     * Constructs a new Params.
-                     * @memberof cosmos_sdk.x.staking.v1
-                     * @classdesc Represents a Params.
-                     * @implements IParams
-                     * @constructor
-                     * @param {cosmos_sdk.x.staking.v1.IParams=} [p] Properties to set
-                     */
-                    function Params(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * Params unbondingTime.
-                     * @member {google.protobuf.IDuration|null|undefined} unbondingTime
-                     * @memberof cosmos_sdk.x.staking.v1.Params
-                     * @instance
-                     */
-                    Params.prototype.unbondingTime = null;
-
-                    /**
-                     * Params maxValidators.
-                     * @member {number} maxValidators
-                     * @memberof cosmos_sdk.x.staking.v1.Params
-                     * @instance
-                     */
-                    Params.prototype.maxValidators = 0;
-
-                    /**
-                     * Params maxEntries.
-                     * @member {number} maxEntries
-                     * @memberof cosmos_sdk.x.staking.v1.Params
-                     * @instance
-                     */
-                    Params.prototype.maxEntries = 0;
-
-                    /**
-                     * Params historicalEntries.
-                     * @member {number} historicalEntries
-                     * @memberof cosmos_sdk.x.staking.v1.Params
-                     * @instance
-                     */
-                    Params.prototype.historicalEntries = 0;
-
-                    /**
-                     * Params bondDenom.
-                     * @member {string} bondDenom
-                     * @memberof cosmos_sdk.x.staking.v1.Params
-                     * @instance
-                     */
-                    Params.prototype.bondDenom = "";
-
-                    /**
-                     * Creates a new Params instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.staking.v1.Params
-                     * @static
-                     * @param {cosmos_sdk.x.staking.v1.IParams=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.staking.v1.Params} Params instance
-                     */
-                    Params.create = function create(properties) {
-                        return new Params(properties);
-                    };
-
-                    /**
-                     * Encodes the specified Params message. Does not implicitly {@link cosmos_sdk.x.staking.v1.Params.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.staking.v1.Params
-                     * @static
-                     * @param {cosmos_sdk.x.staking.v1.IParams} m Params message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    Params.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.unbondingTime != null && Object.hasOwnProperty.call(m, "unbondingTime"))
-                            $root.google.protobuf.Duration.encode(m.unbondingTime, w.uint32(10).fork()).ldelim();
-                        if (m.maxValidators != null && Object.hasOwnProperty.call(m, "maxValidators"))
-                            w.uint32(16).uint32(m.maxValidators);
-                        if (m.maxEntries != null && Object.hasOwnProperty.call(m, "maxEntries"))
-                            w.uint32(24).uint32(m.maxEntries);
-                        if (m.historicalEntries != null && Object.hasOwnProperty.call(m, "historicalEntries"))
-                            w.uint32(32).uint32(m.historicalEntries);
-                        if (m.bondDenom != null && Object.hasOwnProperty.call(m, "bondDenom"))
-                            w.uint32(42).string(m.bondDenom);
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a Params message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.staking.v1.Params
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.staking.v1.Params} Params
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    Params.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.staking.v1.Params();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.unbondingTime = $root.google.protobuf.Duration.decode(r, r.uint32());
-                                break;
-                            case 2:
-                                m.maxValidators = r.uint32();
-                                break;
-                            case 3:
-                                m.maxEntries = r.uint32();
-                                break;
-                            case 4:
-                                m.historicalEntries = r.uint32();
-                                break;
-                            case 5:
-                                m.bondDenom = r.string();
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return Params;
-                })();
-
-                return v1;
-            })();
-
-            return staking;
-        })();
-
-        x.upgrade = (function() {
-
-            /**
-             * Namespace upgrade.
-             * @memberof cosmos_sdk.x
-             * @namespace
-             */
-            var upgrade = {};
-
-            upgrade.v1 = (function() {
-
-                /**
-                 * Namespace v1.
-                 * @memberof cosmos_sdk.x.upgrade
-                 * @namespace
-                 */
-                var v1 = {};
-
-                v1.Plan = (function() {
-
-                    /**
-                     * Properties of a Plan.
-                     * @memberof cosmos_sdk.x.upgrade.v1
-                     * @interface IPlan
-                     * @property {string|null} [name] Plan name
-                     * @property {google.protobuf.ITimestamp|null} [time] Plan time
-                     * @property {number|Long|null} [height] Plan height
-                     * @property {string|null} [info] Plan info
-                     */
-
-                    /**
-                     * Constructs a new Plan.
-                     * @memberof cosmos_sdk.x.upgrade.v1
-                     * @classdesc Represents a Plan.
-                     * @implements IPlan
-                     * @constructor
-                     * @param {cosmos_sdk.x.upgrade.v1.IPlan=} [p] Properties to set
-                     */
-                    function Plan(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * Plan name.
-                     * @member {string} name
-                     * @memberof cosmos_sdk.x.upgrade.v1.Plan
-                     * @instance
-                     */
-                    Plan.prototype.name = "";
-
-                    /**
-                     * Plan time.
-                     * @member {google.protobuf.ITimestamp|null|undefined} time
-                     * @memberof cosmos_sdk.x.upgrade.v1.Plan
-                     * @instance
-                     */
-                    Plan.prototype.time = null;
-
-                    /**
-                     * Plan height.
-                     * @member {number|Long} height
-                     * @memberof cosmos_sdk.x.upgrade.v1.Plan
-                     * @instance
-                     */
-                    Plan.prototype.height = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
-
-                    /**
-                     * Plan info.
-                     * @member {string} info
-                     * @memberof cosmos_sdk.x.upgrade.v1.Plan
-                     * @instance
-                     */
-                    Plan.prototype.info = "";
-
-                    /**
-                     * Creates a new Plan instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.upgrade.v1.Plan
-                     * @static
-                     * @param {cosmos_sdk.x.upgrade.v1.IPlan=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.upgrade.v1.Plan} Plan instance
-                     */
-                    Plan.create = function create(properties) {
-                        return new Plan(properties);
-                    };
-
-                    /**
-                     * Encodes the specified Plan message. Does not implicitly {@link cosmos_sdk.x.upgrade.v1.Plan.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.upgrade.v1.Plan
-                     * @static
-                     * @param {cosmos_sdk.x.upgrade.v1.IPlan} m Plan message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    Plan.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.name != null && Object.hasOwnProperty.call(m, "name"))
-                            w.uint32(10).string(m.name);
-                        if (m.time != null && Object.hasOwnProperty.call(m, "time"))
-                            $root.google.protobuf.Timestamp.encode(m.time, w.uint32(18).fork()).ldelim();
-                        if (m.height != null && Object.hasOwnProperty.call(m, "height"))
-                            w.uint32(24).int64(m.height);
-                        if (m.info != null && Object.hasOwnProperty.call(m, "info"))
-                            w.uint32(34).string(m.info);
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a Plan message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.upgrade.v1.Plan
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.upgrade.v1.Plan} Plan
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    Plan.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.upgrade.v1.Plan();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.name = r.string();
-                                break;
-                            case 2:
-                                m.time = $root.google.protobuf.Timestamp.decode(r, r.uint32());
-                                break;
-                            case 3:
-                                m.height = r.int64();
-                                break;
-                            case 4:
-                                m.info = r.string();
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return Plan;
-                })();
-
-                v1.SoftwareUpgradeProposal = (function() {
-
-                    /**
-                     * Properties of a SoftwareUpgradeProposal.
-                     * @memberof cosmos_sdk.x.upgrade.v1
-                     * @interface ISoftwareUpgradeProposal
-                     * @property {string|null} [title] SoftwareUpgradeProposal title
-                     * @property {string|null} [description] SoftwareUpgradeProposal description
-                     * @property {cosmos_sdk.x.upgrade.v1.IPlan|null} [plan] SoftwareUpgradeProposal plan
-                     */
-
-                    /**
-                     * Constructs a new SoftwareUpgradeProposal.
-                     * @memberof cosmos_sdk.x.upgrade.v1
-                     * @classdesc Represents a SoftwareUpgradeProposal.
-                     * @implements ISoftwareUpgradeProposal
-                     * @constructor
-                     * @param {cosmos_sdk.x.upgrade.v1.ISoftwareUpgradeProposal=} [p] Properties to set
-                     */
-                    function SoftwareUpgradeProposal(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * SoftwareUpgradeProposal title.
-                     * @member {string} title
-                     * @memberof cosmos_sdk.x.upgrade.v1.SoftwareUpgradeProposal
-                     * @instance
-                     */
-                    SoftwareUpgradeProposal.prototype.title = "";
-
-                    /**
-                     * SoftwareUpgradeProposal description.
-                     * @member {string} description
-                     * @memberof cosmos_sdk.x.upgrade.v1.SoftwareUpgradeProposal
-                     * @instance
-                     */
-                    SoftwareUpgradeProposal.prototype.description = "";
-
-                    /**
-                     * SoftwareUpgradeProposal plan.
-                     * @member {cosmos_sdk.x.upgrade.v1.IPlan|null|undefined} plan
-                     * @memberof cosmos_sdk.x.upgrade.v1.SoftwareUpgradeProposal
-                     * @instance
-                     */
-                    SoftwareUpgradeProposal.prototype.plan = null;
-
-                    /**
-                     * Creates a new SoftwareUpgradeProposal instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.upgrade.v1.SoftwareUpgradeProposal
-                     * @static
-                     * @param {cosmos_sdk.x.upgrade.v1.ISoftwareUpgradeProposal=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.upgrade.v1.SoftwareUpgradeProposal} SoftwareUpgradeProposal instance
-                     */
-                    SoftwareUpgradeProposal.create = function create(properties) {
-                        return new SoftwareUpgradeProposal(properties);
-                    };
-
-                    /**
-                     * Encodes the specified SoftwareUpgradeProposal message. Does not implicitly {@link cosmos_sdk.x.upgrade.v1.SoftwareUpgradeProposal.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.upgrade.v1.SoftwareUpgradeProposal
-                     * @static
-                     * @param {cosmos_sdk.x.upgrade.v1.ISoftwareUpgradeProposal} m SoftwareUpgradeProposal message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    SoftwareUpgradeProposal.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.title != null && Object.hasOwnProperty.call(m, "title"))
-                            w.uint32(10).string(m.title);
-                        if (m.description != null && Object.hasOwnProperty.call(m, "description"))
-                            w.uint32(18).string(m.description);
-                        if (m.plan != null && Object.hasOwnProperty.call(m, "plan"))
-                            $root.cosmos_sdk.x.upgrade.v1.Plan.encode(m.plan, w.uint32(26).fork()).ldelim();
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a SoftwareUpgradeProposal message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.upgrade.v1.SoftwareUpgradeProposal
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.upgrade.v1.SoftwareUpgradeProposal} SoftwareUpgradeProposal
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    SoftwareUpgradeProposal.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.upgrade.v1.SoftwareUpgradeProposal();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.title = r.string();
-                                break;
-                            case 2:
-                                m.description = r.string();
-                                break;
-                            case 3:
-                                m.plan = $root.cosmos_sdk.x.upgrade.v1.Plan.decode(r, r.uint32());
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return SoftwareUpgradeProposal;
-                })();
-
-                v1.CancelSoftwareUpgradeProposal = (function() {
-
-                    /**
-                     * Properties of a CancelSoftwareUpgradeProposal.
-                     * @memberof cosmos_sdk.x.upgrade.v1
-                     * @interface ICancelSoftwareUpgradeProposal
-                     * @property {string|null} [title] CancelSoftwareUpgradeProposal title
-                     * @property {string|null} [description] CancelSoftwareUpgradeProposal description
-                     */
-
-                    /**
-                     * Constructs a new CancelSoftwareUpgradeProposal.
-                     * @memberof cosmos_sdk.x.upgrade.v1
-                     * @classdesc Represents a CancelSoftwareUpgradeProposal.
-                     * @implements ICancelSoftwareUpgradeProposal
-                     * @constructor
-                     * @param {cosmos_sdk.x.upgrade.v1.ICancelSoftwareUpgradeProposal=} [p] Properties to set
-                     */
-                    function CancelSoftwareUpgradeProposal(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * CancelSoftwareUpgradeProposal title.
-                     * @member {string} title
-                     * @memberof cosmos_sdk.x.upgrade.v1.CancelSoftwareUpgradeProposal
-                     * @instance
-                     */
-                    CancelSoftwareUpgradeProposal.prototype.title = "";
-
-                    /**
-                     * CancelSoftwareUpgradeProposal description.
-                     * @member {string} description
-                     * @memberof cosmos_sdk.x.upgrade.v1.CancelSoftwareUpgradeProposal
-                     * @instance
-                     */
-                    CancelSoftwareUpgradeProposal.prototype.description = "";
-
-                    /**
-                     * Creates a new CancelSoftwareUpgradeProposal instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.x.upgrade.v1.CancelSoftwareUpgradeProposal
-                     * @static
-                     * @param {cosmos_sdk.x.upgrade.v1.ICancelSoftwareUpgradeProposal=} [properties] Properties to set
-                     * @returns {cosmos_sdk.x.upgrade.v1.CancelSoftwareUpgradeProposal} CancelSoftwareUpgradeProposal instance
-                     */
-                    CancelSoftwareUpgradeProposal.create = function create(properties) {
-                        return new CancelSoftwareUpgradeProposal(properties);
-                    };
-
-                    /**
-                     * Encodes the specified CancelSoftwareUpgradeProposal message. Does not implicitly {@link cosmos_sdk.x.upgrade.v1.CancelSoftwareUpgradeProposal.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.x.upgrade.v1.CancelSoftwareUpgradeProposal
-                     * @static
-                     * @param {cosmos_sdk.x.upgrade.v1.ICancelSoftwareUpgradeProposal} m CancelSoftwareUpgradeProposal message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    CancelSoftwareUpgradeProposal.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.title != null && Object.hasOwnProperty.call(m, "title"))
-                            w.uint32(10).string(m.title);
-                        if (m.description != null && Object.hasOwnProperty.call(m, "description"))
-                            w.uint32(18).string(m.description);
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a CancelSoftwareUpgradeProposal message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.x.upgrade.v1.CancelSoftwareUpgradeProposal
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.x.upgrade.v1.CancelSoftwareUpgradeProposal} CancelSoftwareUpgradeProposal
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    CancelSoftwareUpgradeProposal.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.x.upgrade.v1.CancelSoftwareUpgradeProposal();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.title = r.string();
-                                break;
-                            case 2:
-                                m.description = r.string();
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return CancelSoftwareUpgradeProposal;
-                })();
-
-                return v1;
-            })();
-
-            return upgrade;
-        })();
-
-        return x;
-    })();
-
-    cosmos_sdk.ibc = (function() {
-
-        /**
-         * Namespace ibc.
-         * @memberof cosmos_sdk
-         * @namespace
-         */
-        var ibc = {};
-
-        ibc.localhost = (function() {
-
-            /**
-             * Namespace localhost.
-             * @memberof cosmos_sdk.ibc
-             * @namespace
-             */
-            var localhost = {};
-
-            localhost.v1 = (function() {
-
-                /**
-                 * Namespace v1.
-                 * @memberof cosmos_sdk.ibc.localhost
-                 * @namespace
-                 */
-                var v1 = {};
-
-                v1.MsgCreateClient = (function() {
-
-                    /**
-                     * Properties of a MsgCreateClient.
-                     * @memberof cosmos_sdk.ibc.localhost.v1
-                     * @interface IMsgCreateClient
-                     * @property {Uint8Array|null} [signer] MsgCreateClient signer
-                     */
-
-                    /**
-                     * Constructs a new MsgCreateClient.
-                     * @memberof cosmos_sdk.ibc.localhost.v1
-                     * @classdesc Represents a MsgCreateClient.
-                     * @implements IMsgCreateClient
-                     * @constructor
-                     * @param {cosmos_sdk.ibc.localhost.v1.IMsgCreateClient=} [p] Properties to set
-                     */
-                    function MsgCreateClient(p) {
-                        if (p)
-                            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                                if (p[ks[i]] != null)
-                                    this[ks[i]] = p[ks[i]];
-                    }
-
-                    /**
-                     * MsgCreateClient signer.
-                     * @member {Uint8Array} signer
-                     * @memberof cosmos_sdk.ibc.localhost.v1.MsgCreateClient
-                     * @instance
-                     */
-                    MsgCreateClient.prototype.signer = $util.newBuffer([]);
-
-                    /**
-                     * Creates a new MsgCreateClient instance using the specified properties.
-                     * @function create
-                     * @memberof cosmos_sdk.ibc.localhost.v1.MsgCreateClient
-                     * @static
-                     * @param {cosmos_sdk.ibc.localhost.v1.IMsgCreateClient=} [properties] Properties to set
-                     * @returns {cosmos_sdk.ibc.localhost.v1.MsgCreateClient} MsgCreateClient instance
-                     */
-                    MsgCreateClient.create = function create(properties) {
-                        return new MsgCreateClient(properties);
-                    };
-
-                    /**
-                     * Encodes the specified MsgCreateClient message. Does not implicitly {@link cosmos_sdk.ibc.localhost.v1.MsgCreateClient.verify|verify} messages.
-                     * @function encode
-                     * @memberof cosmos_sdk.ibc.localhost.v1.MsgCreateClient
-                     * @static
-                     * @param {cosmos_sdk.ibc.localhost.v1.IMsgCreateClient} m MsgCreateClient message or plain object to encode
-                     * @param {$protobuf.Writer} [w] Writer to encode to
-                     * @returns {$protobuf.Writer} Writer
-                     */
-                    MsgCreateClient.encode = function encode(m, w) {
-                        if (!w)
-                            w = $Writer.create();
-                        if (m.signer != null && Object.hasOwnProperty.call(m, "signer"))
-                            w.uint32(10).bytes(m.signer);
-                        return w;
-                    };
-
-                    /**
-                     * Decodes a MsgCreateClient message from the specified reader or buffer.
-                     * @function decode
-                     * @memberof cosmos_sdk.ibc.localhost.v1.MsgCreateClient
-                     * @static
-                     * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-                     * @param {number} [l] Message length if known beforehand
-                     * @returns {cosmos_sdk.ibc.localhost.v1.MsgCreateClient} MsgCreateClient
-                     * @throws {Error} If the payload is not a reader or valid buffer
-                     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                     */
-                    MsgCreateClient.decode = function decode(r, l) {
-                        if (!(r instanceof $Reader))
-                            r = $Reader.create(r);
-                        var c = l === undefined ? r.len : r.pos + l, m = new $root.cosmos_sdk.ibc.localhost.v1.MsgCreateClient();
-                        while (r.pos < c) {
-                            var t = r.uint32();
-                            switch (t >>> 3) {
-                            case 1:
-                                m.signer = r.bytes();
-                                break;
-                            default:
-                                r.skipType(t & 7);
-                                break;
-                            }
-                        }
-                        return m;
-                    };
-
-                    return MsgCreateClient;
-                })();
-
-                return v1;
-            })();
-
-            return localhost;
-        })();
-
-        return ibc;
+        return crypto;
     })();
 
     return cosmos_sdk;
-})();
-
-$root.cosmos_proto = (function() {
-
-    /**
-     * Namespace cosmos_proto.
-     * @exports cosmos_proto
-     * @namespace
-     */
-    var cosmos_proto = {};
-
-    return cosmos_proto;
-})();
-
-$root.gogoproto = (function() {
-
-    /**
-     * Namespace gogoproto.
-     * @exports gogoproto
-     * @namespace
-     */
-    var gogoproto = {};
-
-    return gogoproto;
 })();
 
 $root.tendermint = (function() {
@@ -23959,401 +9514,6 @@ $root.google = (function() {
             };
 
             return Any;
-        })();
-
-        protobuf.FileOptions = (function() {
-
-            /**
-             * Properties of a FileOptions.
-             * @memberof google.protobuf
-             * @interface IFileOptions
-             */
-
-            /**
-             * Constructs a new FileOptions.
-             * @memberof google.protobuf
-             * @classdesc Represents a FileOptions.
-             * @implements IFileOptions
-             * @constructor
-             * @param {google.protobuf.IFileOptions=} [p] Properties to set
-             */
-            function FileOptions(p) {
-                if (p)
-                    for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
-                            this[ks[i]] = p[ks[i]];
-            }
-
-            /**
-             * Creates a new FileOptions instance using the specified properties.
-             * @function create
-             * @memberof google.protobuf.FileOptions
-             * @static
-             * @param {google.protobuf.IFileOptions=} [properties] Properties to set
-             * @returns {google.protobuf.FileOptions} FileOptions instance
-             */
-            FileOptions.create = function create(properties) {
-                return new FileOptions(properties);
-            };
-
-            /**
-             * Encodes the specified FileOptions message. Does not implicitly {@link google.protobuf.FileOptions.verify|verify} messages.
-             * @function encode
-             * @memberof google.protobuf.FileOptions
-             * @static
-             * @param {google.protobuf.IFileOptions} m FileOptions message or plain object to encode
-             * @param {$protobuf.Writer} [w] Writer to encode to
-             * @returns {$protobuf.Writer} Writer
-             */
-            FileOptions.encode = function encode(m, w) {
-                if (!w)
-                    w = $Writer.create();
-                return w;
-            };
-
-            /**
-             * Decodes a FileOptions message from the specified reader or buffer.
-             * @function decode
-             * @memberof google.protobuf.FileOptions
-             * @static
-             * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-             * @param {number} [l] Message length if known beforehand
-             * @returns {google.protobuf.FileOptions} FileOptions
-             * @throws {Error} If the payload is not a reader or valid buffer
-             * @throws {$protobuf.util.ProtocolError} If required fields are missing
-             */
-            FileOptions.decode = function decode(r, l) {
-                if (!(r instanceof $Reader))
-                    r = $Reader.create(r);
-                var c = l === undefined ? r.len : r.pos + l, m = new $root.google.protobuf.FileOptions();
-                while (r.pos < c) {
-                    var t = r.uint32();
-                    switch (t >>> 3) {
-                    default:
-                        r.skipType(t & 7);
-                        break;
-                    }
-                }
-                return m;
-            };
-
-            return FileOptions;
-        })();
-
-        protobuf.MessageOptions = (function() {
-
-            /**
-             * Properties of a MessageOptions.
-             * @memberof google.protobuf
-             * @interface IMessageOptions
-             */
-
-            /**
-             * Constructs a new MessageOptions.
-             * @memberof google.protobuf
-             * @classdesc Represents a MessageOptions.
-             * @implements IMessageOptions
-             * @constructor
-             * @param {google.protobuf.IMessageOptions=} [p] Properties to set
-             */
-            function MessageOptions(p) {
-                if (p)
-                    for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
-                            this[ks[i]] = p[ks[i]];
-            }
-
-            /**
-             * Creates a new MessageOptions instance using the specified properties.
-             * @function create
-             * @memberof google.protobuf.MessageOptions
-             * @static
-             * @param {google.protobuf.IMessageOptions=} [properties] Properties to set
-             * @returns {google.protobuf.MessageOptions} MessageOptions instance
-             */
-            MessageOptions.create = function create(properties) {
-                return new MessageOptions(properties);
-            };
-
-            /**
-             * Encodes the specified MessageOptions message. Does not implicitly {@link google.protobuf.MessageOptions.verify|verify} messages.
-             * @function encode
-             * @memberof google.protobuf.MessageOptions
-             * @static
-             * @param {google.protobuf.IMessageOptions} m MessageOptions message or plain object to encode
-             * @param {$protobuf.Writer} [w] Writer to encode to
-             * @returns {$protobuf.Writer} Writer
-             */
-            MessageOptions.encode = function encode(m, w) {
-                if (!w)
-                    w = $Writer.create();
-                return w;
-            };
-
-            /**
-             * Decodes a MessageOptions message from the specified reader or buffer.
-             * @function decode
-             * @memberof google.protobuf.MessageOptions
-             * @static
-             * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-             * @param {number} [l] Message length if known beforehand
-             * @returns {google.protobuf.MessageOptions} MessageOptions
-             * @throws {Error} If the payload is not a reader or valid buffer
-             * @throws {$protobuf.util.ProtocolError} If required fields are missing
-             */
-            MessageOptions.decode = function decode(r, l) {
-                if (!(r instanceof $Reader))
-                    r = $Reader.create(r);
-                var c = l === undefined ? r.len : r.pos + l, m = new $root.google.protobuf.MessageOptions();
-                while (r.pos < c) {
-                    var t = r.uint32();
-                    switch (t >>> 3) {
-                    default:
-                        r.skipType(t & 7);
-                        break;
-                    }
-                }
-                return m;
-            };
-
-            return MessageOptions;
-        })();
-
-        protobuf.FieldOptions = (function() {
-
-            /**
-             * Properties of a FieldOptions.
-             * @memberof google.protobuf
-             * @interface IFieldOptions
-             */
-
-            /**
-             * Constructs a new FieldOptions.
-             * @memberof google.protobuf
-             * @classdesc Represents a FieldOptions.
-             * @implements IFieldOptions
-             * @constructor
-             * @param {google.protobuf.IFieldOptions=} [p] Properties to set
-             */
-            function FieldOptions(p) {
-                if (p)
-                    for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
-                            this[ks[i]] = p[ks[i]];
-            }
-
-            /**
-             * Creates a new FieldOptions instance using the specified properties.
-             * @function create
-             * @memberof google.protobuf.FieldOptions
-             * @static
-             * @param {google.protobuf.IFieldOptions=} [properties] Properties to set
-             * @returns {google.protobuf.FieldOptions} FieldOptions instance
-             */
-            FieldOptions.create = function create(properties) {
-                return new FieldOptions(properties);
-            };
-
-            /**
-             * Encodes the specified FieldOptions message. Does not implicitly {@link google.protobuf.FieldOptions.verify|verify} messages.
-             * @function encode
-             * @memberof google.protobuf.FieldOptions
-             * @static
-             * @param {google.protobuf.IFieldOptions} m FieldOptions message or plain object to encode
-             * @param {$protobuf.Writer} [w] Writer to encode to
-             * @returns {$protobuf.Writer} Writer
-             */
-            FieldOptions.encode = function encode(m, w) {
-                if (!w)
-                    w = $Writer.create();
-                return w;
-            };
-
-            /**
-             * Decodes a FieldOptions message from the specified reader or buffer.
-             * @function decode
-             * @memberof google.protobuf.FieldOptions
-             * @static
-             * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-             * @param {number} [l] Message length if known beforehand
-             * @returns {google.protobuf.FieldOptions} FieldOptions
-             * @throws {Error} If the payload is not a reader or valid buffer
-             * @throws {$protobuf.util.ProtocolError} If required fields are missing
-             */
-            FieldOptions.decode = function decode(r, l) {
-                if (!(r instanceof $Reader))
-                    r = $Reader.create(r);
-                var c = l === undefined ? r.len : r.pos + l, m = new $root.google.protobuf.FieldOptions();
-                while (r.pos < c) {
-                    var t = r.uint32();
-                    switch (t >>> 3) {
-                    default:
-                        r.skipType(t & 7);
-                        break;
-                    }
-                }
-                return m;
-            };
-
-            return FieldOptions;
-        })();
-
-        protobuf.EnumOptions = (function() {
-
-            /**
-             * Properties of an EnumOptions.
-             * @memberof google.protobuf
-             * @interface IEnumOptions
-             */
-
-            /**
-             * Constructs a new EnumOptions.
-             * @memberof google.protobuf
-             * @classdesc Represents an EnumOptions.
-             * @implements IEnumOptions
-             * @constructor
-             * @param {google.protobuf.IEnumOptions=} [p] Properties to set
-             */
-            function EnumOptions(p) {
-                if (p)
-                    for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
-                            this[ks[i]] = p[ks[i]];
-            }
-
-            /**
-             * Creates a new EnumOptions instance using the specified properties.
-             * @function create
-             * @memberof google.protobuf.EnumOptions
-             * @static
-             * @param {google.protobuf.IEnumOptions=} [properties] Properties to set
-             * @returns {google.protobuf.EnumOptions} EnumOptions instance
-             */
-            EnumOptions.create = function create(properties) {
-                return new EnumOptions(properties);
-            };
-
-            /**
-             * Encodes the specified EnumOptions message. Does not implicitly {@link google.protobuf.EnumOptions.verify|verify} messages.
-             * @function encode
-             * @memberof google.protobuf.EnumOptions
-             * @static
-             * @param {google.protobuf.IEnumOptions} m EnumOptions message or plain object to encode
-             * @param {$protobuf.Writer} [w] Writer to encode to
-             * @returns {$protobuf.Writer} Writer
-             */
-            EnumOptions.encode = function encode(m, w) {
-                if (!w)
-                    w = $Writer.create();
-                return w;
-            };
-
-            /**
-             * Decodes an EnumOptions message from the specified reader or buffer.
-             * @function decode
-             * @memberof google.protobuf.EnumOptions
-             * @static
-             * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-             * @param {number} [l] Message length if known beforehand
-             * @returns {google.protobuf.EnumOptions} EnumOptions
-             * @throws {Error} If the payload is not a reader or valid buffer
-             * @throws {$protobuf.util.ProtocolError} If required fields are missing
-             */
-            EnumOptions.decode = function decode(r, l) {
-                if (!(r instanceof $Reader))
-                    r = $Reader.create(r);
-                var c = l === undefined ? r.len : r.pos + l, m = new $root.google.protobuf.EnumOptions();
-                while (r.pos < c) {
-                    var t = r.uint32();
-                    switch (t >>> 3) {
-                    default:
-                        r.skipType(t & 7);
-                        break;
-                    }
-                }
-                return m;
-            };
-
-            return EnumOptions;
-        })();
-
-        protobuf.EnumValueOptions = (function() {
-
-            /**
-             * Properties of an EnumValueOptions.
-             * @memberof google.protobuf
-             * @interface IEnumValueOptions
-             */
-
-            /**
-             * Constructs a new EnumValueOptions.
-             * @memberof google.protobuf
-             * @classdesc Represents an EnumValueOptions.
-             * @implements IEnumValueOptions
-             * @constructor
-             * @param {google.protobuf.IEnumValueOptions=} [p] Properties to set
-             */
-            function EnumValueOptions(p) {
-                if (p)
-                    for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
-                            this[ks[i]] = p[ks[i]];
-            }
-
-            /**
-             * Creates a new EnumValueOptions instance using the specified properties.
-             * @function create
-             * @memberof google.protobuf.EnumValueOptions
-             * @static
-             * @param {google.protobuf.IEnumValueOptions=} [properties] Properties to set
-             * @returns {google.protobuf.EnumValueOptions} EnumValueOptions instance
-             */
-            EnumValueOptions.create = function create(properties) {
-                return new EnumValueOptions(properties);
-            };
-
-            /**
-             * Encodes the specified EnumValueOptions message. Does not implicitly {@link google.protobuf.EnumValueOptions.verify|verify} messages.
-             * @function encode
-             * @memberof google.protobuf.EnumValueOptions
-             * @static
-             * @param {google.protobuf.IEnumValueOptions} m EnumValueOptions message or plain object to encode
-             * @param {$protobuf.Writer} [w] Writer to encode to
-             * @returns {$protobuf.Writer} Writer
-             */
-            EnumValueOptions.encode = function encode(m, w) {
-                if (!w)
-                    w = $Writer.create();
-                return w;
-            };
-
-            /**
-             * Decodes an EnumValueOptions message from the specified reader or buffer.
-             * @function decode
-             * @memberof google.protobuf.EnumValueOptions
-             * @static
-             * @param {$protobuf.Reader|Uint8Array} r Reader or buffer to decode from
-             * @param {number} [l] Message length if known beforehand
-             * @returns {google.protobuf.EnumValueOptions} EnumValueOptions
-             * @throws {Error} If the payload is not a reader or valid buffer
-             * @throws {$protobuf.util.ProtocolError} If required fields are missing
-             */
-            EnumValueOptions.decode = function decode(r, l) {
-                if (!(r instanceof $Reader))
-                    r = $Reader.create(r);
-                var c = l === undefined ? r.len : r.pos + l, m = new $root.google.protobuf.EnumValueOptions();
-                while (r.pos < c) {
-                    var t = r.uint32();
-                    switch (t >>> 3) {
-                    default:
-                        r.skipType(t & 7);
-                        break;
-                    }
-                }
-                return m;
-            };
-
-            return EnumValueOptions;
         })();
 
         protobuf.Timestamp = (function() {
