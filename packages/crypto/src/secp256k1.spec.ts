@@ -1,5 +1,6 @@
 /* eslint-disable no-bitwise */
-import { fromHex } from "@cosmjs/encoding";
+import { fromHex, toHex } from "@cosmjs/encoding";
+import BN from "bn.js";
 
 import { Secp256k1 } from "./secp256k1";
 import { ExtendedSecp256k1Signature, Secp256k1Signature } from "./secp256k1signature";
@@ -97,7 +98,7 @@ describe("Secp256k1", () => {
     expect(signature.byteLength).toBeLessThanOrEqual(72);
   });
 
-  it("creates signatures deterministically", async () => {
+  it("creates signatures deterministically by default", async () => {
     const privkey = fromHex("43a9c17ccbb0e767ea29ce1f10813afde5f1e0a7a504e89b4d2cc2b952b8e0b9");
     const keypair = await Secp256k1.makeKeypair(privkey);
     const messageHash = new Uint8Array([0x11, 0x22]);
@@ -105,6 +106,32 @@ describe("Secp256k1", () => {
     const signature1 = await Secp256k1.createSignature(messageHash, keypair.privkey);
     const signature2 = await Secp256k1.createSignature(messageHash, keypair.privkey);
     expect(signature1).toEqual(signature2);
+  });
+
+  it("can create arbitrary number of valid signatures", async () => {
+    const privkey = fromHex("43a9c17ccbb0e767ea29ce1f10813afde5f1e0a7a504e89b4d2cc2b952b8e0b9");
+    const keypair = await Secp256k1.makeKeypair(privkey);
+    const messageHash = new Uint8Array([0x11, 0x22]);
+
+    // DON'T DO THIS AT HOME! Messing around with k is dangerous.
+    const signature0 = await Secp256k1.createSignature(messageHash, keypair.privkey);
+    const signature1 = await Secp256k1.createSignature(messageHash, keypair.privkey, { k: () => new BN(12) });
+    const signature2 = await Secp256k1.createSignature(messageHash, keypair.privkey, { k: () => new BN(2) });
+    const signature3 = await Secp256k1.createSignature(messageHash, keypair.privkey, { k: () => new BN(7) });
+    const signature4 = await Secp256k1.createSignature(messageHash, keypair.privkey, { k: () => new BN(99) });
+
+    // all valid
+    expect(await Secp256k1.verifySignature(signature0, messageHash, keypair.pubkey)).toEqual(true);
+    expect(await Secp256k1.verifySignature(signature1, messageHash, keypair.pubkey)).toEqual(true);
+    expect(await Secp256k1.verifySignature(signature2, messageHash, keypair.pubkey)).toEqual(true);
+    expect(await Secp256k1.verifySignature(signature3, messageHash, keypair.pubkey)).toEqual(true);
+    expect(await Secp256k1.verifySignature(signature4, messageHash, keypair.pubkey)).toEqual(true);
+
+    // all different
+    const encoded = [signature0, signature1, signature2, signature3, signature4].map((e) =>
+      toHex(e.toFixedLength()),
+    );
+    expect(new Set(encoded).size).toEqual(5);
   });
 
   it("throws for empty message hash in signing", async () => {

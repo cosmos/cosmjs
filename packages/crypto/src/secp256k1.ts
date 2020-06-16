@@ -13,6 +13,11 @@ interface Keypair {
   readonly privkey: Uint8Array;
 }
 
+export interface SigningOptions {
+  /** Never set this value unless your're absolutely sure what you're doing. Wrong usage can lead to leakage of the private key. */
+  k?: (iteration: number) => BN;
+}
+
 export type Secp256k1Keypair = Keypair & As<"secp256k1-keypair">;
 
 export class Secp256k1 {
@@ -53,6 +58,7 @@ export class Secp256k1 {
   public static async createSignature(
     messageHash: Uint8Array,
     privkey: Uint8Array,
+    options: SigningOptions = {},
   ): Promise<ExtendedSecp256k1Signature> {
     if (messageHash.length === 0) {
       throw new Error("Message hash must not be empty");
@@ -61,9 +67,16 @@ export class Secp256k1 {
       throw new Error("Message hash length must not exceed 32 bytes");
     }
 
+    if (options.k) {
+      console.warn("Manually setting k is dangerous. You have been warned.");
+    }
+
     const keypair = secp256k1.keyFromPrivate(privkey);
     // the `canonical` option ensures creation of lowS signature representations
-    const { r, s, recoveryParam } = keypair.sign(messageHash, { canonical: true });
+    const { r, s, recoveryParam } = keypair.sign(messageHash, {
+      canonical: true,
+      k: options.k as any, // types are wrong
+    });
     if (typeof recoveryParam !== "number") throw new Error("Recovery param missing");
     return new ExtendedSecp256k1Signature(
       Uint8Array.from(r.toArray()),
