@@ -50,7 +50,7 @@
     "diff": "^4",
     "recast": "^0.18.0",
     "ts-node": "^8",
-    "typescript": "~3.7",
+    "typescript": "~3.8",
     "yargs": "^15.3.1"
   },
   "devDependencies": {
