@@ -37,8 +37,10 @@
     "pack-proto": "pbjs -t static-module -w commonjs -o src/generated/codecimpl.js --sparse --no-beautify --no-delimited --no-verify --no-convert ./proto/**/*.proto",
     "define-proto": "pbts src/generated/codecimpl.js -o src/generated/codecimpl.d.ts"
   },
-  "devDependencies": {
-    "@cosmjs/utils": "^0.20.0",
+  "dependencies": {
     "protobufjs": "~6.9.0"
+  },
+  "devDependencies": {
+    "@cosmjs/utils": "^0.20.0"
   }
 }
