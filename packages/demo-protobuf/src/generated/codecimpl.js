@@ -2318,7 +2318,7 @@ $root.cosmos_sdk = (function() {
                  * @memberof cosmos_sdk.crypto.v1
                  * @interface IPubKeyMultisigThreshold
                  * @property {number|null} [threshold] PubKeyMultisigThreshold threshold
-                 * @property {Array.<cosmos_sdk.crypto.v1.IPublicKey>|null} [pubkeys] PubKeyMultisigThreshold pubkeys
+                 * @property {Array.<cosmos_sdk.crypto.v1.IPublicKey>|null} [publicKeys] PubKeyMultisigThreshold publicKeys
                  */
 
                 /**
@@ -2330,7 +2330,7 @@ $root.cosmos_sdk = (function() {
                  * @param {cosmos_sdk.crypto.v1.IPubKeyMultisigThreshold=} [properties] Properties to set
                  */
                 function PubKeyMultisigThreshold(properties) {
-                    this.pubkeys = [];
+                    this.publicKeys = [];
                     if (properties)
                         for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
@@ -2346,12 +2346,12 @@ $root.cosmos_sdk = (function() {
                 PubKeyMultisigThreshold.prototype.threshold = 0;
 
                 /**
-                 * PubKeyMultisigThreshold pubkeys.
-                 * @member {Array.<cosmos_sdk.crypto.v1.IPublicKey>} pubkeys
+                 * PubKeyMultisigThreshold publicKeys.
+                 * @member {Array.<cosmos_sdk.crypto.v1.IPublicKey>} publicKeys
                  * @memberof cosmos_sdk.crypto.v1.PubKeyMultisigThreshold
                  * @instance
                  */
-                PubKeyMultisigThreshold.prototype.pubkeys = $util.emptyArray;
+                PubKeyMultisigThreshold.prototype.publicKeys = $util.emptyArray;
 
                 /**
                  * Creates a new PubKeyMultisigThreshold instance using the specified properties.
@@ -2379,9 +2379,9 @@ $root.cosmos_sdk = (function() {
                         writer = $Writer.create();
                     if (message.threshold != null && Object.hasOwnProperty.call(message, "threshold"))
                         writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.threshold);
-                    if (message.pubkeys != null && message.pubkeys.length)
-                        for (var i = 0; i < message.pubkeys.length; ++i)
-                            $root.cosmos_sdk.crypto.v1.PublicKey.encode(message.pubkeys[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
+                    if (message.publicKeys != null && message.publicKeys.length)
+                        for (var i = 0; i < message.publicKeys.length; ++i)
+                            $root.cosmos_sdk.crypto.v1.PublicKey.encode(message.publicKeys[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
                     return writer;
                 };
 
@@ -2420,9 +2420,9 @@ $root.cosmos_sdk = (function() {
                             message.threshold = reader.uint32();
                             break;
                         case 2:
-                            if (!(message.pubkeys && message.pubkeys.length))
-                                message.pubkeys = [];
-                            message.pubkeys.push($root.cosmos_sdk.crypto.v1.PublicKey.decode(reader, reader.uint32()));
+                            if (!(message.publicKeys && message.publicKeys.length))
+                                message.publicKeys = [];
+                            message.publicKeys.push($root.cosmos_sdk.crypto.v1.PublicKey.decode(reader, reader.uint32()));
                             break;
                         default:
                             reader.skipType(tag & 7);
@@ -2462,13 +2462,13 @@ $root.cosmos_sdk = (function() {
                     if (message.threshold != null && message.hasOwnProperty("threshold"))
                         if (!$util.isInteger(message.threshold))
                             return "threshold: integer expected";
-                    if (message.pubkeys != null && message.hasOwnProperty("pubkeys")) {
-                        if (!Array.isArray(message.pubkeys))
-                            return "pubkeys: array expected";
-                        for (var i = 0; i < message.pubkeys.length; ++i) {
-                            var error = $root.cosmos_sdk.crypto.v1.PublicKey.verify(message.pubkeys[i]);
+                    if (message.publicKeys != null && message.hasOwnProperty("publicKeys")) {
+                        if (!Array.isArray(message.publicKeys))
+                            return "publicKeys: array expected";
+                        for (var i = 0; i < message.publicKeys.length; ++i) {
+                            var error = $root.cosmos_sdk.crypto.v1.PublicKey.verify(message.publicKeys[i]);
                             if (error)
-                                return "pubkeys." + error;
+                                return "publicKeys." + error;
                         }
                     }
                     return null;
@@ -2488,14 +2488,14 @@ $root.cosmos_sdk = (function() {
                     var message = new $root.cosmos_sdk.crypto.v1.PubKeyMultisigThreshold();
                     if (object.threshold != null)
                         message.threshold = object.threshold >>> 0;
-                    if (object.pubkeys) {
-                        if (!Array.isArray(object.pubkeys))
-                            throw TypeError(".cosmos_sdk.crypto.v1.PubKeyMultisigThreshold.pubkeys: array expected");
-                        message.pubkeys = [];
-                        for (var i = 0; i < object.pubkeys.length; ++i) {
-                            if (typeof object.pubkeys[i] !== "object")
-                                throw TypeError(".cosmos_sdk.crypto.v1.PubKeyMultisigThreshold.pubkeys: object expected");
-                            message.pubkeys[i] = $root.cosmos_sdk.crypto.v1.PublicKey.fromObject(object.pubkeys[i]);
+                    if (object.publicKeys) {
+                        if (!Array.isArray(object.publicKeys))
+                            throw TypeError(".cosmos_sdk.crypto.v1.PubKeyMultisigThreshold.publicKeys: array expected");
+                        message.publicKeys = [];
+                        for (var i = 0; i < object.publicKeys.length; ++i) {
+                            if (typeof object.publicKeys[i] !== "object")
+                                throw TypeError(".cosmos_sdk.crypto.v1.PubKeyMultisigThreshold.publicKeys: object expected");
+                            message.publicKeys[i] = $root.cosmos_sdk.crypto.v1.PublicKey.fromObject(object.publicKeys[i]);
                         }
                     }
                     return message;
@@ -2515,15 +2515,15 @@ $root.cosmos_sdk = (function() {
                         options = {};
                     var object = {};
                     if (options.arrays || options.defaults)
-                        object.pubkeys = [];
+                        object.publicKeys = [];
                     if (options.defaults)
                         object.threshold = 0;
                     if (message.threshold != null && message.hasOwnProperty("threshold"))
                         object.threshold = message.threshold;
-                    if (message.pubkeys && message.pubkeys.length) {
-                        object.pubkeys = [];
-                        for (var j = 0; j < message.pubkeys.length; ++j)
-                            object.pubkeys[j] = $root.cosmos_sdk.crypto.v1.PublicKey.toObject(message.pubkeys[j], options);
+                    if (message.publicKeys && message.publicKeys.length) {
+                        object.publicKeys = [];
+                        for (var j = 0; j < message.publicKeys.length; ++j)
+                            object.publicKeys[j] = $root.cosmos_sdk.crypto.v1.PublicKey.toObject(message.publicKeys[j], options);
                     }
                     return object;
                 };
@@ -2548,7 +2548,7 @@ $root.cosmos_sdk = (function() {
                  * Properties of a MultiSignature.
                  * @memberof cosmos_sdk.crypto.v1
                  * @interface IMultiSignature
-                 * @property {Array.<Uint8Array>|null} [sigs] MultiSignature sigs
+                 * @property {Array.<Uint8Array>|null} [signatures] MultiSignature signatures
                  */
 
                 /**
@@ -2560,7 +2560,7 @@ $root.cosmos_sdk = (function() {
                  * @param {cosmos_sdk.crypto.v1.IMultiSignature=} [properties] Properties to set
                  */
                 function MultiSignature(properties) {
-                    this.sigs = [];
+                    this.signatures = [];
                     if (properties)
                         for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
@@ -2568,12 +2568,12 @@ $root.cosmos_sdk = (function() {
                 }
 
                 /**
-                 * MultiSignature sigs.
-                 * @member {Array.<Uint8Array>} sigs
+                 * MultiSignature signatures.
+                 * @member {Array.<Uint8Array>} signatures
                  * @memberof cosmos_sdk.crypto.v1.MultiSignature
                  * @instance
                  */
-                MultiSignature.prototype.sigs = $util.emptyArray;
+                MultiSignature.prototype.signatures = $util.emptyArray;
 
                 /**
                  * Creates a new MultiSignature instance using the specified properties.
@@ -2599,9 +2599,9 @@ $root.cosmos_sdk = (function() {
                 MultiSignature.encode = function encode(message, writer) {
                     if (!writer)
                         writer = $Writer.create();
-                    if (message.sigs != null && message.sigs.length)
-                        for (var i = 0; i < message.sigs.length; ++i)
-                            writer.uint32(/* id 1, wireType 2 =*/10).bytes(message.sigs[i]);
+                    if (message.signatures != null && message.signatures.length)
+                        for (var i = 0; i < message.signatures.length; ++i)
+                            writer.uint32(/* id 1, wireType 2 =*/10).bytes(message.signatures[i]);
                     return writer;
                 };
 
@@ -2637,9 +2637,9 @@ $root.cosmos_sdk = (function() {
                         var tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
-                            if (!(message.sigs && message.sigs.length))
-                                message.sigs = [];
-                            message.sigs.push(reader.bytes());
+                            if (!(message.signatures && message.signatures.length))
+                                message.signatures = [];
+                            message.signatures.push(reader.bytes());
                             break;
                         default:
                             reader.skipType(tag & 7);
@@ -2676,12 +2676,12 @@ $root.cosmos_sdk = (function() {
                 MultiSignature.verify = function verify(message) {
                     if (typeof message !== "object" || message === null)
                         return "object expected";
-                    if (message.sigs != null && message.hasOwnProperty("sigs")) {
-                        if (!Array.isArray(message.sigs))
-                            return "sigs: array expected";
-                        for (var i = 0; i < message.sigs.length; ++i)
-                            if (!(message.sigs[i] && typeof message.sigs[i].length === "number" || $util.isString(message.sigs[i])))
-                                return "sigs: buffer[] expected";
+                    if (message.signatures != null && message.hasOwnProperty("signatures")) {
+                        if (!Array.isArray(message.signatures))
+                            return "signatures: array expected";
+                        for (var i = 0; i < message.signatures.length; ++i)
+                            if (!(message.signatures[i] && typeof message.signatures[i].length === "number" || $util.isString(message.signatures[i])))
+                                return "signatures: buffer[] expected";
                     }
                     return null;
                 };
@@ -2698,15 +2698,15 @@ $root.cosmos_sdk = (function() {
                     if (object instanceof $root.cosmos_sdk.crypto.v1.MultiSignature)
                         return object;
                     var message = new $root.cosmos_sdk.crypto.v1.MultiSignature();
-                    if (object.sigs) {
-                        if (!Array.isArray(object.sigs))
-                            throw TypeError(".cosmos_sdk.crypto.v1.MultiSignature.sigs: array expected");
-                        message.sigs = [];
-                        for (var i = 0; i < object.sigs.length; ++i)
-                            if (typeof object.sigs[i] === "string")
-                                $util.base64.decode(object.sigs[i], message.sigs[i] = $util.newBuffer($util.base64.length(object.sigs[i])), 0);
-                            else if (object.sigs[i].length)
-                                message.sigs[i] = object.sigs[i];
+                    if (object.signatures) {
+                        if (!Array.isArray(object.signatures))
+                            throw TypeError(".cosmos_sdk.crypto.v1.MultiSignature.signatures: array expected");
+                        message.signatures = [];
+                        for (var i = 0; i < object.signatures.length; ++i)
+                            if (typeof object.signatures[i] === "string")
+                                $util.base64.decode(object.signatures[i], message.signatures[i] = $util.newBuffer($util.base64.length(object.signatures[i])), 0);
+                            else if (object.signatures[i].length)
+                                message.signatures[i] = object.signatures[i];
                     }
                     return message;
                 };
@@ -2725,11 +2725,11 @@ $root.cosmos_sdk = (function() {
                         options = {};
                     var object = {};
                     if (options.arrays || options.defaults)
-                        object.sigs = [];
-                    if (message.sigs && message.sigs.length) {
-                        object.sigs = [];
-                        for (var j = 0; j < message.sigs.length; ++j)
-                            object.sigs[j] = options.bytes === String ? $util.base64.encode(message.sigs[j], 0, message.sigs[j].length) : options.bytes === Array ? Array.prototype.slice.call(message.sigs[j]) : message.sigs[j];
+                        object.signatures = [];
+                    if (message.signatures && message.signatures.length) {
+                        object.signatures = [];
+                        for (var j = 0; j < message.signatures.length; ++j)
+                            object.signatures[j] = options.bytes === String ? $util.base64.encode(message.signatures[j], 0, message.signatures[j].length) : options.bytes === Array ? Array.prototype.slice.call(message.signatures[j]) : message.signatures[j];
                     }
                     return object;
                 };
@@ -2981,6 +2981,48 @@ $root.cosmos_sdk = (function() {
          * @namespace
          */
         var tx = {};
+
+        tx.signing = (function() {
+
+            /**
+             * Namespace signing.
+             * @memberof cosmos_sdk.tx
+             * @namespace
+             */
+            var signing = {};
+
+            signing.v1 = (function() {
+
+                /**
+                 * Namespace v1.
+                 * @memberof cosmos_sdk.tx.signing
+                 * @namespace
+                 */
+                var v1 = {};
+
+                /**
+                 * SignMode enum.
+                 * @name cosmos_sdk.tx.signing.v1.SignMode
+                 * @enum {number}
+                 * @property {number} SIGN_MODE_UNSPECIFIED=0 SIGN_MODE_UNSPECIFIED value
+                 * @property {number} SIGN_MODE_DIRECT=1 SIGN_MODE_DIRECT value
+                 * @property {number} SIGN_MODE_TEXTUAL=2 SIGN_MODE_TEXTUAL value
+                 * @property {number} SIGN_MODE_LEGACY_AMINO_JSON=127 SIGN_MODE_LEGACY_AMINO_JSON value
+                 */
+                v1.SignMode = (function() {
+                    var valuesById = {}, values = Object.create(valuesById);
+                    values[valuesById[0] = "SIGN_MODE_UNSPECIFIED"] = 0;
+                    values[valuesById[1] = "SIGN_MODE_DIRECT"] = 1;
+                    values[valuesById[2] = "SIGN_MODE_TEXTUAL"] = 2;
+                    values[valuesById[127] = "SIGN_MODE_LEGACY_AMINO_JSON"] = 127;
+                    return values;
+                })();
+
+                return v1;
+            })();
+
+            return signing;
+        })();
 
         tx.v1 = (function() {
 
@@ -4626,7 +4668,7 @@ $root.cosmos_sdk = (function() {
                      * Properties of a Single.
                      * @memberof cosmos_sdk.tx.v1.ModeInfo
                      * @interface ISingle
-                     * @property {cosmos_sdk.tx.v1.SignMode|null} [mode] Single mode
+                     * @property {cosmos_sdk.tx.signing.v1.SignMode|null} [mode] Single mode
                      */
 
                     /**
@@ -4646,7 +4688,7 @@ $root.cosmos_sdk = (function() {
 
                     /**
                      * Single mode.
-                     * @member {cosmos_sdk.tx.v1.SignMode} mode
+                     * @member {cosmos_sdk.tx.signing.v1.SignMode} mode
                      * @memberof cosmos_sdk.tx.v1.ModeInfo.Single
                      * @instance
                      */
@@ -4812,7 +4854,7 @@ $root.cosmos_sdk = (function() {
                         if (options.defaults)
                             object.mode = options.enums === String ? "SIGN_MODE_UNSPECIFIED" : 0;
                         if (message.mode != null && message.hasOwnProperty("mode"))
-                            object.mode = options.enums === String ? $root.cosmos_sdk.tx.v1.SignMode[message.mode] : message.mode;
+                            object.mode = options.enums === String ? $root.cosmos_sdk.tx.signing.v1.SignMode[message.mode] : message.mode;
                         return object;
                     };
 
@@ -5067,24 +5109,6 @@ $root.cosmos_sdk = (function() {
                 })();
 
                 return ModeInfo;
-            })();
-
-            /**
-             * SignMode enum.
-             * @name cosmos_sdk.tx.v1.SignMode
-             * @enum {number}
-             * @property {number} SIGN_MODE_UNSPECIFIED=0 SIGN_MODE_UNSPECIFIED value
-             * @property {number} SIGN_MODE_DIRECT=1 SIGN_MODE_DIRECT value
-             * @property {number} SIGN_MODE_TEXTUAL=2 SIGN_MODE_TEXTUAL value
-             * @property {number} SIGN_MODE_LEGACY_AMINO_JSON=127 SIGN_MODE_LEGACY_AMINO_JSON value
-             */
-            v1.SignMode = (function() {
-                var valuesById = {}, values = Object.create(valuesById);
-                values[valuesById[0] = "SIGN_MODE_UNSPECIFIED"] = 0;
-                values[valuesById[1] = "SIGN_MODE_DIRECT"] = 1;
-                values[valuesById[2] = "SIGN_MODE_TEXTUAL"] = 2;
-                values[valuesById[127] = "SIGN_MODE_LEGACY_AMINO_JSON"] = 127;
-                return values;
             })();
 
             v1.Fee = (function() {
@@ -20966,9 +20990,9 @@ $root.cosmos_sdk = (function() {
                          * @property {string|null} [connectionId] MsgConnectionOpenTry connectionId
                          * @property {cosmos_sdk.x.ibc.connection.v1.ICounterparty|null} [counterparty] MsgConnectionOpenTry counterparty
                          * @property {Array.<string>|null} [counterpartyVersions] MsgConnectionOpenTry counterpartyVersions
-                         * @property {cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null} [proofInit] MsgConnectionOpenTry proofInit
+                         * @property {Uint8Array|null} [proofInit] MsgConnectionOpenTry proofInit
                          * @property {number|Long|null} [proofHeight] MsgConnectionOpenTry proofHeight
-                         * @property {cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null} [proofConsensus] MsgConnectionOpenTry proofConsensus
+                         * @property {Uint8Array|null} [proofConsensus] MsgConnectionOpenTry proofConsensus
                          * @property {number|Long|null} [consensusHeight] MsgConnectionOpenTry consensusHeight
                          * @property {Uint8Array|null} [signer] MsgConnectionOpenTry signer
                          */
@@ -21023,11 +21047,11 @@ $root.cosmos_sdk = (function() {
 
                         /**
                          * MsgConnectionOpenTry proofInit.
-                         * @member {cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null|undefined} proofInit
+                         * @member {Uint8Array} proofInit
                          * @memberof cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenTry
                          * @instance
                          */
-                        MsgConnectionOpenTry.prototype.proofInit = null;
+                        MsgConnectionOpenTry.prototype.proofInit = $util.newBuffer([]);
 
                         /**
                          * MsgConnectionOpenTry proofHeight.
@@ -21039,11 +21063,11 @@ $root.cosmos_sdk = (function() {
 
                         /**
                          * MsgConnectionOpenTry proofConsensus.
-                         * @member {cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null|undefined} proofConsensus
+                         * @member {Uint8Array} proofConsensus
                          * @memberof cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenTry
                          * @instance
                          */
-                        MsgConnectionOpenTry.prototype.proofConsensus = null;
+                        MsgConnectionOpenTry.prototype.proofConsensus = $util.newBuffer([]);
 
                         /**
                          * MsgConnectionOpenTry consensusHeight.
@@ -21095,11 +21119,11 @@ $root.cosmos_sdk = (function() {
                                 for (var i = 0; i < message.counterpartyVersions.length; ++i)
                                     writer.uint32(/* id 4, wireType 2 =*/34).string(message.counterpartyVersions[i]);
                             if (message.proofInit != null && Object.hasOwnProperty.call(message, "proofInit"))
-                                $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.encode(message.proofInit, writer.uint32(/* id 5, wireType 2 =*/42).fork()).ldelim();
+                                writer.uint32(/* id 5, wireType 2 =*/42).bytes(message.proofInit);
                             if (message.proofHeight != null && Object.hasOwnProperty.call(message, "proofHeight"))
                                 writer.uint32(/* id 6, wireType 0 =*/48).uint64(message.proofHeight);
                             if (message.proofConsensus != null && Object.hasOwnProperty.call(message, "proofConsensus"))
-                                $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.encode(message.proofConsensus, writer.uint32(/* id 7, wireType 2 =*/58).fork()).ldelim();
+                                writer.uint32(/* id 7, wireType 2 =*/58).bytes(message.proofConsensus);
                             if (message.consensusHeight != null && Object.hasOwnProperty.call(message, "consensusHeight"))
                                 writer.uint32(/* id 8, wireType 0 =*/64).uint64(message.consensusHeight);
                             if (message.signer != null && Object.hasOwnProperty.call(message, "signer"))
@@ -21153,13 +21177,13 @@ $root.cosmos_sdk = (function() {
                                     message.counterpartyVersions.push(reader.string());
                                     break;
                                 case 5:
-                                    message.proofInit = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.decode(reader, reader.uint32());
+                                    message.proofInit = reader.bytes();
                                     break;
                                 case 6:
                                     message.proofHeight = reader.uint64();
                                     break;
                                 case 7:
-                                    message.proofConsensus = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.decode(reader, reader.uint32());
+                                    message.proofConsensus = reader.bytes();
                                     break;
                                 case 8:
                                     message.consensusHeight = reader.uint64();
@@ -21220,19 +21244,15 @@ $root.cosmos_sdk = (function() {
                                     if (!$util.isString(message.counterpartyVersions[i]))
                                         return "counterpartyVersions: string[] expected";
                             }
-                            if (message.proofInit != null && message.hasOwnProperty("proofInit")) {
-                                var error = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.verify(message.proofInit);
-                                if (error)
-                                    return "proofInit." + error;
-                            }
+                            if (message.proofInit != null && message.hasOwnProperty("proofInit"))
+                                if (!(message.proofInit && typeof message.proofInit.length === "number" || $util.isString(message.proofInit)))
+                                    return "proofInit: buffer expected";
                             if (message.proofHeight != null && message.hasOwnProperty("proofHeight"))
                                 if (!$util.isInteger(message.proofHeight) && !(message.proofHeight && $util.isInteger(message.proofHeight.low) && $util.isInteger(message.proofHeight.high)))
                                     return "proofHeight: integer|Long expected";
-                            if (message.proofConsensus != null && message.hasOwnProperty("proofConsensus")) {
-                                var error = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.verify(message.proofConsensus);
-                                if (error)
-                                    return "proofConsensus." + error;
-                            }
+                            if (message.proofConsensus != null && message.hasOwnProperty("proofConsensus"))
+                                if (!(message.proofConsensus && typeof message.proofConsensus.length === "number" || $util.isString(message.proofConsensus)))
+                                    return "proofConsensus: buffer expected";
                             if (message.consensusHeight != null && message.hasOwnProperty("consensusHeight"))
                                 if (!$util.isInteger(message.consensusHeight) && !(message.consensusHeight && $util.isInteger(message.consensusHeight.low) && $util.isInteger(message.consensusHeight.high)))
                                     return "consensusHeight: integer|Long expected";
@@ -21270,11 +21290,11 @@ $root.cosmos_sdk = (function() {
                                 for (var i = 0; i < object.counterpartyVersions.length; ++i)
                                     message.counterpartyVersions[i] = String(object.counterpartyVersions[i]);
                             }
-                            if (object.proofInit != null) {
-                                if (typeof object.proofInit !== "object")
-                                    throw TypeError(".cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenTry.proofInit: object expected");
-                                message.proofInit = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.fromObject(object.proofInit);
-                            }
+                            if (object.proofInit != null)
+                                if (typeof object.proofInit === "string")
+                                    $util.base64.decode(object.proofInit, message.proofInit = $util.newBuffer($util.base64.length(object.proofInit)), 0);
+                                else if (object.proofInit.length)
+                                    message.proofInit = object.proofInit;
                             if (object.proofHeight != null)
                                 if ($util.Long)
                                     (message.proofHeight = $util.Long.fromValue(object.proofHeight)).unsigned = true;
@@ -21284,11 +21304,11 @@ $root.cosmos_sdk = (function() {
                                     message.proofHeight = object.proofHeight;
                                 else if (typeof object.proofHeight === "object")
                                     message.proofHeight = new $util.LongBits(object.proofHeight.low >>> 0, object.proofHeight.high >>> 0).toNumber(true);
-                            if (object.proofConsensus != null) {
-                                if (typeof object.proofConsensus !== "object")
-                                    throw TypeError(".cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenTry.proofConsensus: object expected");
-                                message.proofConsensus = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.fromObject(object.proofConsensus);
-                            }
+                            if (object.proofConsensus != null)
+                                if (typeof object.proofConsensus === "string")
+                                    $util.base64.decode(object.proofConsensus, message.proofConsensus = $util.newBuffer($util.base64.length(object.proofConsensus)), 0);
+                                else if (object.proofConsensus.length)
+                                    message.proofConsensus = object.proofConsensus;
                             if (object.consensusHeight != null)
                                 if ($util.Long)
                                     (message.consensusHeight = $util.Long.fromValue(object.consensusHeight)).unsigned = true;
@@ -21325,13 +21345,25 @@ $root.cosmos_sdk = (function() {
                                 object.clientId = "";
                                 object.connectionId = "";
                                 object.counterparty = null;
-                                object.proofInit = null;
+                                if (options.bytes === String)
+                                    object.proofInit = "";
+                                else {
+                                    object.proofInit = [];
+                                    if (options.bytes !== Array)
+                                        object.proofInit = $util.newBuffer(object.proofInit);
+                                }
                                 if ($util.Long) {
                                     var long = new $util.Long(0, 0, true);
                                     object.proofHeight = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                                 } else
                                     object.proofHeight = options.longs === String ? "0" : 0;
-                                object.proofConsensus = null;
+                                if (options.bytes === String)
+                                    object.proofConsensus = "";
+                                else {
+                                    object.proofConsensus = [];
+                                    if (options.bytes !== Array)
+                                        object.proofConsensus = $util.newBuffer(object.proofConsensus);
+                                }
                                 if ($util.Long) {
                                     var long = new $util.Long(0, 0, true);
                                     object.consensusHeight = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
@@ -21357,14 +21389,14 @@ $root.cosmos_sdk = (function() {
                                     object.counterpartyVersions[j] = message.counterpartyVersions[j];
                             }
                             if (message.proofInit != null && message.hasOwnProperty("proofInit"))
-                                object.proofInit = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.toObject(message.proofInit, options);
+                                object.proofInit = options.bytes === String ? $util.base64.encode(message.proofInit, 0, message.proofInit.length) : options.bytes === Array ? Array.prototype.slice.call(message.proofInit) : message.proofInit;
                             if (message.proofHeight != null && message.hasOwnProperty("proofHeight"))
                                 if (typeof message.proofHeight === "number")
                                     object.proofHeight = options.longs === String ? String(message.proofHeight) : message.proofHeight;
                                 else
                                     object.proofHeight = options.longs === String ? $util.Long.prototype.toString.call(message.proofHeight) : options.longs === Number ? new $util.LongBits(message.proofHeight.low >>> 0, message.proofHeight.high >>> 0).toNumber(true) : message.proofHeight;
                             if (message.proofConsensus != null && message.hasOwnProperty("proofConsensus"))
-                                object.proofConsensus = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.toObject(message.proofConsensus, options);
+                                object.proofConsensus = options.bytes === String ? $util.base64.encode(message.proofConsensus, 0, message.proofConsensus.length) : options.bytes === Array ? Array.prototype.slice.call(message.proofConsensus) : message.proofConsensus;
                             if (message.consensusHeight != null && message.hasOwnProperty("consensusHeight"))
                                 if (typeof message.consensusHeight === "number")
                                     object.consensusHeight = options.longs === String ? String(message.consensusHeight) : message.consensusHeight;
@@ -21397,9 +21429,9 @@ $root.cosmos_sdk = (function() {
                          * @interface IMsgConnectionOpenAck
                          * @property {string|null} [connectionId] MsgConnectionOpenAck connectionId
                          * @property {string|null} [version] MsgConnectionOpenAck version
-                         * @property {cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null} [proofTry] MsgConnectionOpenAck proofTry
+                         * @property {Uint8Array|null} [proofTry] MsgConnectionOpenAck proofTry
                          * @property {number|Long|null} [proofHeight] MsgConnectionOpenAck proofHeight
-                         * @property {cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null} [proofConsensus] MsgConnectionOpenAck proofConsensus
+                         * @property {Uint8Array|null} [proofConsensus] MsgConnectionOpenAck proofConsensus
                          * @property {number|Long|null} [consensusHeight] MsgConnectionOpenAck consensusHeight
                          * @property {Uint8Array|null} [signer] MsgConnectionOpenAck signer
                          */
@@ -21437,11 +21469,11 @@ $root.cosmos_sdk = (function() {
 
                         /**
                          * MsgConnectionOpenAck proofTry.
-                         * @member {cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null|undefined} proofTry
+                         * @member {Uint8Array} proofTry
                          * @memberof cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenAck
                          * @instance
                          */
-                        MsgConnectionOpenAck.prototype.proofTry = null;
+                        MsgConnectionOpenAck.prototype.proofTry = $util.newBuffer([]);
 
                         /**
                          * MsgConnectionOpenAck proofHeight.
@@ -21453,11 +21485,11 @@ $root.cosmos_sdk = (function() {
 
                         /**
                          * MsgConnectionOpenAck proofConsensus.
-                         * @member {cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null|undefined} proofConsensus
+                         * @member {Uint8Array} proofConsensus
                          * @memberof cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenAck
                          * @instance
                          */
-                        MsgConnectionOpenAck.prototype.proofConsensus = null;
+                        MsgConnectionOpenAck.prototype.proofConsensus = $util.newBuffer([]);
 
                         /**
                          * MsgConnectionOpenAck consensusHeight.
@@ -21504,11 +21536,11 @@ $root.cosmos_sdk = (function() {
                             if (message.version != null && Object.hasOwnProperty.call(message, "version"))
                                 writer.uint32(/* id 2, wireType 2 =*/18).string(message.version);
                             if (message.proofTry != null && Object.hasOwnProperty.call(message, "proofTry"))
-                                $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.encode(message.proofTry, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
+                                writer.uint32(/* id 3, wireType 2 =*/26).bytes(message.proofTry);
                             if (message.proofHeight != null && Object.hasOwnProperty.call(message, "proofHeight"))
                                 writer.uint32(/* id 4, wireType 0 =*/32).uint64(message.proofHeight);
                             if (message.proofConsensus != null && Object.hasOwnProperty.call(message, "proofConsensus"))
-                                $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.encode(message.proofConsensus, writer.uint32(/* id 5, wireType 2 =*/42).fork()).ldelim();
+                                writer.uint32(/* id 5, wireType 2 =*/42).bytes(message.proofConsensus);
                             if (message.consensusHeight != null && Object.hasOwnProperty.call(message, "consensusHeight"))
                                 writer.uint32(/* id 6, wireType 0 =*/48).uint64(message.consensusHeight);
                             if (message.signer != null && Object.hasOwnProperty.call(message, "signer"))
@@ -21554,13 +21586,13 @@ $root.cosmos_sdk = (function() {
                                     message.version = reader.string();
                                     break;
                                 case 3:
-                                    message.proofTry = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.decode(reader, reader.uint32());
+                                    message.proofTry = reader.bytes();
                                     break;
                                 case 4:
                                     message.proofHeight = reader.uint64();
                                     break;
                                 case 5:
-                                    message.proofConsensus = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.decode(reader, reader.uint32());
+                                    message.proofConsensus = reader.bytes();
                                     break;
                                 case 6:
                                     message.consensusHeight = reader.uint64();
@@ -21609,19 +21641,15 @@ $root.cosmos_sdk = (function() {
                             if (message.version != null && message.hasOwnProperty("version"))
                                 if (!$util.isString(message.version))
                                     return "version: string expected";
-                            if (message.proofTry != null && message.hasOwnProperty("proofTry")) {
-                                var error = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.verify(message.proofTry);
-                                if (error)
-                                    return "proofTry." + error;
-                            }
+                            if (message.proofTry != null && message.hasOwnProperty("proofTry"))
+                                if (!(message.proofTry && typeof message.proofTry.length === "number" || $util.isString(message.proofTry)))
+                                    return "proofTry: buffer expected";
                             if (message.proofHeight != null && message.hasOwnProperty("proofHeight"))
                                 if (!$util.isInteger(message.proofHeight) && !(message.proofHeight && $util.isInteger(message.proofHeight.low) && $util.isInteger(message.proofHeight.high)))
                                     return "proofHeight: integer|Long expected";
-                            if (message.proofConsensus != null && message.hasOwnProperty("proofConsensus")) {
-                                var error = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.verify(message.proofConsensus);
-                                if (error)
-                                    return "proofConsensus." + error;
-                            }
+                            if (message.proofConsensus != null && message.hasOwnProperty("proofConsensus"))
+                                if (!(message.proofConsensus && typeof message.proofConsensus.length === "number" || $util.isString(message.proofConsensus)))
+                                    return "proofConsensus: buffer expected";
                             if (message.consensusHeight != null && message.hasOwnProperty("consensusHeight"))
                                 if (!$util.isInteger(message.consensusHeight) && !(message.consensusHeight && $util.isInteger(message.consensusHeight.low) && $util.isInteger(message.consensusHeight.high)))
                                     return "consensusHeight: integer|Long expected";
@@ -21647,11 +21675,11 @@ $root.cosmos_sdk = (function() {
                                 message.connectionId = String(object.connectionId);
                             if (object.version != null)
                                 message.version = String(object.version);
-                            if (object.proofTry != null) {
-                                if (typeof object.proofTry !== "object")
-                                    throw TypeError(".cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenAck.proofTry: object expected");
-                                message.proofTry = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.fromObject(object.proofTry);
-                            }
+                            if (object.proofTry != null)
+                                if (typeof object.proofTry === "string")
+                                    $util.base64.decode(object.proofTry, message.proofTry = $util.newBuffer($util.base64.length(object.proofTry)), 0);
+                                else if (object.proofTry.length)
+                                    message.proofTry = object.proofTry;
                             if (object.proofHeight != null)
                                 if ($util.Long)
                                     (message.proofHeight = $util.Long.fromValue(object.proofHeight)).unsigned = true;
@@ -21661,11 +21689,11 @@ $root.cosmos_sdk = (function() {
                                     message.proofHeight = object.proofHeight;
                                 else if (typeof object.proofHeight === "object")
                                     message.proofHeight = new $util.LongBits(object.proofHeight.low >>> 0, object.proofHeight.high >>> 0).toNumber(true);
-                            if (object.proofConsensus != null) {
-                                if (typeof object.proofConsensus !== "object")
-                                    throw TypeError(".cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenAck.proofConsensus: object expected");
-                                message.proofConsensus = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.fromObject(object.proofConsensus);
-                            }
+                            if (object.proofConsensus != null)
+                                if (typeof object.proofConsensus === "string")
+                                    $util.base64.decode(object.proofConsensus, message.proofConsensus = $util.newBuffer($util.base64.length(object.proofConsensus)), 0);
+                                else if (object.proofConsensus.length)
+                                    message.proofConsensus = object.proofConsensus;
                             if (object.consensusHeight != null)
                                 if ($util.Long)
                                     (message.consensusHeight = $util.Long.fromValue(object.consensusHeight)).unsigned = true;
@@ -21699,13 +21727,25 @@ $root.cosmos_sdk = (function() {
                             if (options.defaults) {
                                 object.connectionId = "";
                                 object.version = "";
-                                object.proofTry = null;
+                                if (options.bytes === String)
+                                    object.proofTry = "";
+                                else {
+                                    object.proofTry = [];
+                                    if (options.bytes !== Array)
+                                        object.proofTry = $util.newBuffer(object.proofTry);
+                                }
                                 if ($util.Long) {
                                     var long = new $util.Long(0, 0, true);
                                     object.proofHeight = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                                 } else
                                     object.proofHeight = options.longs === String ? "0" : 0;
-                                object.proofConsensus = null;
+                                if (options.bytes === String)
+                                    object.proofConsensus = "";
+                                else {
+                                    object.proofConsensus = [];
+                                    if (options.bytes !== Array)
+                                        object.proofConsensus = $util.newBuffer(object.proofConsensus);
+                                }
                                 if ($util.Long) {
                                     var long = new $util.Long(0, 0, true);
                                     object.consensusHeight = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
@@ -21724,14 +21764,14 @@ $root.cosmos_sdk = (function() {
                             if (message.version != null && message.hasOwnProperty("version"))
                                 object.version = message.version;
                             if (message.proofTry != null && message.hasOwnProperty("proofTry"))
-                                object.proofTry = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.toObject(message.proofTry, options);
+                                object.proofTry = options.bytes === String ? $util.base64.encode(message.proofTry, 0, message.proofTry.length) : options.bytes === Array ? Array.prototype.slice.call(message.proofTry) : message.proofTry;
                             if (message.proofHeight != null && message.hasOwnProperty("proofHeight"))
                                 if (typeof message.proofHeight === "number")
                                     object.proofHeight = options.longs === String ? String(message.proofHeight) : message.proofHeight;
                                 else
                                     object.proofHeight = options.longs === String ? $util.Long.prototype.toString.call(message.proofHeight) : options.longs === Number ? new $util.LongBits(message.proofHeight.low >>> 0, message.proofHeight.high >>> 0).toNumber(true) : message.proofHeight;
                             if (message.proofConsensus != null && message.hasOwnProperty("proofConsensus"))
-                                object.proofConsensus = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.toObject(message.proofConsensus, options);
+                                object.proofConsensus = options.bytes === String ? $util.base64.encode(message.proofConsensus, 0, message.proofConsensus.length) : options.bytes === Array ? Array.prototype.slice.call(message.proofConsensus) : message.proofConsensus;
                             if (message.consensusHeight != null && message.hasOwnProperty("consensusHeight"))
                                 if (typeof message.consensusHeight === "number")
                                     object.consensusHeight = options.longs === String ? String(message.consensusHeight) : message.consensusHeight;
@@ -21763,7 +21803,7 @@ $root.cosmos_sdk = (function() {
                          * @memberof cosmos_sdk.x.ibc.connection.v1
                          * @interface IMsgConnectionOpenConfirm
                          * @property {string|null} [connectionId] MsgConnectionOpenConfirm connectionId
-                         * @property {cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null} [proofAck] MsgConnectionOpenConfirm proofAck
+                         * @property {Uint8Array|null} [proofAck] MsgConnectionOpenConfirm proofAck
                          * @property {number|Long|null} [proofHeight] MsgConnectionOpenConfirm proofHeight
                          * @property {Uint8Array|null} [signer] MsgConnectionOpenConfirm signer
                          */
@@ -21793,11 +21833,11 @@ $root.cosmos_sdk = (function() {
 
                         /**
                          * MsgConnectionOpenConfirm proofAck.
-                         * @member {cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null|undefined} proofAck
+                         * @member {Uint8Array} proofAck
                          * @memberof cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenConfirm
                          * @instance
                          */
-                        MsgConnectionOpenConfirm.prototype.proofAck = null;
+                        MsgConnectionOpenConfirm.prototype.proofAck = $util.newBuffer([]);
 
                         /**
                          * MsgConnectionOpenConfirm proofHeight.
@@ -21842,7 +21882,7 @@ $root.cosmos_sdk = (function() {
                             if (message.connectionId != null && Object.hasOwnProperty.call(message, "connectionId"))
                                 writer.uint32(/* id 1, wireType 2 =*/10).string(message.connectionId);
                             if (message.proofAck != null && Object.hasOwnProperty.call(message, "proofAck"))
-                                $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.encode(message.proofAck, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
+                                writer.uint32(/* id 2, wireType 2 =*/18).bytes(message.proofAck);
                             if (message.proofHeight != null && Object.hasOwnProperty.call(message, "proofHeight"))
                                 writer.uint32(/* id 3, wireType 0 =*/24).uint64(message.proofHeight);
                             if (message.signer != null && Object.hasOwnProperty.call(message, "signer"))
@@ -21885,7 +21925,7 @@ $root.cosmos_sdk = (function() {
                                     message.connectionId = reader.string();
                                     break;
                                 case 2:
-                                    message.proofAck = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.decode(reader, reader.uint32());
+                                    message.proofAck = reader.bytes();
                                     break;
                                 case 3:
                                     message.proofHeight = reader.uint64();
@@ -21931,11 +21971,9 @@ $root.cosmos_sdk = (function() {
                             if (message.connectionId != null && message.hasOwnProperty("connectionId"))
                                 if (!$util.isString(message.connectionId))
                                     return "connectionId: string expected";
-                            if (message.proofAck != null && message.hasOwnProperty("proofAck")) {
-                                var error = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.verify(message.proofAck);
-                                if (error)
-                                    return "proofAck." + error;
-                            }
+                            if (message.proofAck != null && message.hasOwnProperty("proofAck"))
+                                if (!(message.proofAck && typeof message.proofAck.length === "number" || $util.isString(message.proofAck)))
+                                    return "proofAck: buffer expected";
                             if (message.proofHeight != null && message.hasOwnProperty("proofHeight"))
                                 if (!$util.isInteger(message.proofHeight) && !(message.proofHeight && $util.isInteger(message.proofHeight.low) && $util.isInteger(message.proofHeight.high)))
                                     return "proofHeight: integer|Long expected";
@@ -21959,11 +21997,11 @@ $root.cosmos_sdk = (function() {
                             var message = new $root.cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenConfirm();
                             if (object.connectionId != null)
                                 message.connectionId = String(object.connectionId);
-                            if (object.proofAck != null) {
-                                if (typeof object.proofAck !== "object")
-                                    throw TypeError(".cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenConfirm.proofAck: object expected");
-                                message.proofAck = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.fromObject(object.proofAck);
-                            }
+                            if (object.proofAck != null)
+                                if (typeof object.proofAck === "string")
+                                    $util.base64.decode(object.proofAck, message.proofAck = $util.newBuffer($util.base64.length(object.proofAck)), 0);
+                                else if (object.proofAck.length)
+                                    message.proofAck = object.proofAck;
                             if (object.proofHeight != null)
                                 if ($util.Long)
                                     (message.proofHeight = $util.Long.fromValue(object.proofHeight)).unsigned = true;
@@ -21996,7 +22034,13 @@ $root.cosmos_sdk = (function() {
                             var object = {};
                             if (options.defaults) {
                                 object.connectionId = "";
-                                object.proofAck = null;
+                                if (options.bytes === String)
+                                    object.proofAck = "";
+                                else {
+                                    object.proofAck = [];
+                                    if (options.bytes !== Array)
+                                        object.proofAck = $util.newBuffer(object.proofAck);
+                                }
                                 if ($util.Long) {
                                     var long = new $util.Long(0, 0, true);
                                     object.proofHeight = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
@@ -22013,7 +22057,7 @@ $root.cosmos_sdk = (function() {
                             if (message.connectionId != null && message.hasOwnProperty("connectionId"))
                                 object.connectionId = message.connectionId;
                             if (message.proofAck != null && message.hasOwnProperty("proofAck"))
-                                object.proofAck = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.toObject(message.proofAck, options);
+                                object.proofAck = options.bytes === String ? $util.base64.encode(message.proofAck, 0, message.proofAck.length) : options.bytes === Array ? Array.prototype.slice.call(message.proofAck) : message.proofAck;
                             if (message.proofHeight != null && message.hasOwnProperty("proofHeight"))
                                 if (typeof message.proofHeight === "number")
                                     object.proofHeight = options.longs === String ? String(message.proofHeight) : message.proofHeight;
@@ -23119,7 +23163,7 @@ $root.cosmos_sdk = (function() {
                          * @property {string|null} [channelId] MsgChannelOpenTry channelId
                          * @property {cosmos_sdk.x.ibc.channel.v1.IChannel|null} [channel] MsgChannelOpenTry channel
                          * @property {string|null} [counterpartyVersion] MsgChannelOpenTry counterpartyVersion
-                         * @property {cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null} [proofInit] MsgChannelOpenTry proofInit
+                         * @property {Uint8Array|null} [proofInit] MsgChannelOpenTry proofInit
                          * @property {number|Long|null} [proofHeight] MsgChannelOpenTry proofHeight
                          * @property {Uint8Array|null} [signer] MsgChannelOpenTry signer
                          */
@@ -23173,11 +23217,11 @@ $root.cosmos_sdk = (function() {
 
                         /**
                          * MsgChannelOpenTry proofInit.
-                         * @member {cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null|undefined} proofInit
+                         * @member {Uint8Array} proofInit
                          * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenTry
                          * @instance
                          */
-                        MsgChannelOpenTry.prototype.proofInit = null;
+                        MsgChannelOpenTry.prototype.proofInit = $util.newBuffer([]);
 
                         /**
                          * MsgChannelOpenTry proofHeight.
@@ -23228,7 +23272,7 @@ $root.cosmos_sdk = (function() {
                             if (message.counterpartyVersion != null && Object.hasOwnProperty.call(message, "counterpartyVersion"))
                                 writer.uint32(/* id 4, wireType 2 =*/34).string(message.counterpartyVersion);
                             if (message.proofInit != null && Object.hasOwnProperty.call(message, "proofInit"))
-                                $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.encode(message.proofInit, writer.uint32(/* id 5, wireType 2 =*/42).fork()).ldelim();
+                                writer.uint32(/* id 5, wireType 2 =*/42).bytes(message.proofInit);
                             if (message.proofHeight != null && Object.hasOwnProperty.call(message, "proofHeight"))
                                 writer.uint32(/* id 6, wireType 0 =*/48).uint64(message.proofHeight);
                             if (message.signer != null && Object.hasOwnProperty.call(message, "signer"))
@@ -23280,7 +23324,7 @@ $root.cosmos_sdk = (function() {
                                     message.counterpartyVersion = reader.string();
                                     break;
                                 case 5:
-                                    message.proofInit = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.decode(reader, reader.uint32());
+                                    message.proofInit = reader.bytes();
                                     break;
                                 case 6:
                                     message.proofHeight = reader.uint64();
@@ -23337,11 +23381,9 @@ $root.cosmos_sdk = (function() {
                             if (message.counterpartyVersion != null && message.hasOwnProperty("counterpartyVersion"))
                                 if (!$util.isString(message.counterpartyVersion))
                                     return "counterpartyVersion: string expected";
-                            if (message.proofInit != null && message.hasOwnProperty("proofInit")) {
-                                var error = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.verify(message.proofInit);
-                                if (error)
-                                    return "proofInit." + error;
-                            }
+                            if (message.proofInit != null && message.hasOwnProperty("proofInit"))
+                                if (!(message.proofInit && typeof message.proofInit.length === "number" || $util.isString(message.proofInit)))
+                                    return "proofInit: buffer expected";
                             if (message.proofHeight != null && message.hasOwnProperty("proofHeight"))
                                 if (!$util.isInteger(message.proofHeight) && !(message.proofHeight && $util.isInteger(message.proofHeight.low) && $util.isInteger(message.proofHeight.high)))
                                     return "proofHeight: integer|Long expected";
@@ -23374,11 +23416,11 @@ $root.cosmos_sdk = (function() {
                             }
                             if (object.counterpartyVersion != null)
                                 message.counterpartyVersion = String(object.counterpartyVersion);
-                            if (object.proofInit != null) {
-                                if (typeof object.proofInit !== "object")
-                                    throw TypeError(".cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenTry.proofInit: object expected");
-                                message.proofInit = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.fromObject(object.proofInit);
-                            }
+                            if (object.proofInit != null)
+                                if (typeof object.proofInit === "string")
+                                    $util.base64.decode(object.proofInit, message.proofInit = $util.newBuffer($util.base64.length(object.proofInit)), 0);
+                                else if (object.proofInit.length)
+                                    message.proofInit = object.proofInit;
                             if (object.proofHeight != null)
                                 if ($util.Long)
                                     (message.proofHeight = $util.Long.fromValue(object.proofHeight)).unsigned = true;
@@ -23414,7 +23456,13 @@ $root.cosmos_sdk = (function() {
                                 object.channelId = "";
                                 object.channel = null;
                                 object.counterpartyVersion = "";
-                                object.proofInit = null;
+                                if (options.bytes === String)
+                                    object.proofInit = "";
+                                else {
+                                    object.proofInit = [];
+                                    if (options.bytes !== Array)
+                                        object.proofInit = $util.newBuffer(object.proofInit);
+                                }
                                 if ($util.Long) {
                                     var long = new $util.Long(0, 0, true);
                                     object.proofHeight = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
@@ -23437,7 +23485,7 @@ $root.cosmos_sdk = (function() {
                             if (message.counterpartyVersion != null && message.hasOwnProperty("counterpartyVersion"))
                                 object.counterpartyVersion = message.counterpartyVersion;
                             if (message.proofInit != null && message.hasOwnProperty("proofInit"))
-                                object.proofInit = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.toObject(message.proofInit, options);
+                                object.proofInit = options.bytes === String ? $util.base64.encode(message.proofInit, 0, message.proofInit.length) : options.bytes === Array ? Array.prototype.slice.call(message.proofInit) : message.proofInit;
                             if (message.proofHeight != null && message.hasOwnProperty("proofHeight"))
                                 if (typeof message.proofHeight === "number")
                                     object.proofHeight = options.longs === String ? String(message.proofHeight) : message.proofHeight;
@@ -23471,7 +23519,7 @@ $root.cosmos_sdk = (function() {
                          * @property {string|null} [portId] MsgChannelOpenAck portId
                          * @property {string|null} [channelId] MsgChannelOpenAck channelId
                          * @property {string|null} [counterpartyVersion] MsgChannelOpenAck counterpartyVersion
-                         * @property {cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null} [proofTry] MsgChannelOpenAck proofTry
+                         * @property {Uint8Array|null} [proofTry] MsgChannelOpenAck proofTry
                          * @property {number|Long|null} [proofHeight] MsgChannelOpenAck proofHeight
                          * @property {Uint8Array|null} [signer] MsgChannelOpenAck signer
                          */
@@ -23517,11 +23565,11 @@ $root.cosmos_sdk = (function() {
 
                         /**
                          * MsgChannelOpenAck proofTry.
-                         * @member {cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null|undefined} proofTry
+                         * @member {Uint8Array} proofTry
                          * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenAck
                          * @instance
                          */
-                        MsgChannelOpenAck.prototype.proofTry = null;
+                        MsgChannelOpenAck.prototype.proofTry = $util.newBuffer([]);
 
                         /**
                          * MsgChannelOpenAck proofHeight.
@@ -23570,7 +23618,7 @@ $root.cosmos_sdk = (function() {
                             if (message.counterpartyVersion != null && Object.hasOwnProperty.call(message, "counterpartyVersion"))
                                 writer.uint32(/* id 3, wireType 2 =*/26).string(message.counterpartyVersion);
                             if (message.proofTry != null && Object.hasOwnProperty.call(message, "proofTry"))
-                                $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.encode(message.proofTry, writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
+                                writer.uint32(/* id 4, wireType 2 =*/34).bytes(message.proofTry);
                             if (message.proofHeight != null && Object.hasOwnProperty.call(message, "proofHeight"))
                                 writer.uint32(/* id 5, wireType 0 =*/40).uint64(message.proofHeight);
                             if (message.signer != null && Object.hasOwnProperty.call(message, "signer"))
@@ -23619,7 +23667,7 @@ $root.cosmos_sdk = (function() {
                                     message.counterpartyVersion = reader.string();
                                     break;
                                 case 4:
-                                    message.proofTry = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.decode(reader, reader.uint32());
+                                    message.proofTry = reader.bytes();
                                     break;
                                 case 5:
                                     message.proofHeight = reader.uint64();
@@ -23671,11 +23719,9 @@ $root.cosmos_sdk = (function() {
                             if (message.counterpartyVersion != null && message.hasOwnProperty("counterpartyVersion"))
                                 if (!$util.isString(message.counterpartyVersion))
                                     return "counterpartyVersion: string expected";
-                            if (message.proofTry != null && message.hasOwnProperty("proofTry")) {
-                                var error = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.verify(message.proofTry);
-                                if (error)
-                                    return "proofTry." + error;
-                            }
+                            if (message.proofTry != null && message.hasOwnProperty("proofTry"))
+                                if (!(message.proofTry && typeof message.proofTry.length === "number" || $util.isString(message.proofTry)))
+                                    return "proofTry: buffer expected";
                             if (message.proofHeight != null && message.hasOwnProperty("proofHeight"))
                                 if (!$util.isInteger(message.proofHeight) && !(message.proofHeight && $util.isInteger(message.proofHeight.low) && $util.isInteger(message.proofHeight.high)))
                                     return "proofHeight: integer|Long expected";
@@ -23703,11 +23749,11 @@ $root.cosmos_sdk = (function() {
                                 message.channelId = String(object.channelId);
                             if (object.counterpartyVersion != null)
                                 message.counterpartyVersion = String(object.counterpartyVersion);
-                            if (object.proofTry != null) {
-                                if (typeof object.proofTry !== "object")
-                                    throw TypeError(".cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenAck.proofTry: object expected");
-                                message.proofTry = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.fromObject(object.proofTry);
-                            }
+                            if (object.proofTry != null)
+                                if (typeof object.proofTry === "string")
+                                    $util.base64.decode(object.proofTry, message.proofTry = $util.newBuffer($util.base64.length(object.proofTry)), 0);
+                                else if (object.proofTry.length)
+                                    message.proofTry = object.proofTry;
                             if (object.proofHeight != null)
                                 if ($util.Long)
                                     (message.proofHeight = $util.Long.fromValue(object.proofHeight)).unsigned = true;
@@ -23742,7 +23788,13 @@ $root.cosmos_sdk = (function() {
                                 object.portId = "";
                                 object.channelId = "";
                                 object.counterpartyVersion = "";
-                                object.proofTry = null;
+                                if (options.bytes === String)
+                                    object.proofTry = "";
+                                else {
+                                    object.proofTry = [];
+                                    if (options.bytes !== Array)
+                                        object.proofTry = $util.newBuffer(object.proofTry);
+                                }
                                 if ($util.Long) {
                                     var long = new $util.Long(0, 0, true);
                                     object.proofHeight = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
@@ -23763,7 +23815,7 @@ $root.cosmos_sdk = (function() {
                             if (message.counterpartyVersion != null && message.hasOwnProperty("counterpartyVersion"))
                                 object.counterpartyVersion = message.counterpartyVersion;
                             if (message.proofTry != null && message.hasOwnProperty("proofTry"))
-                                object.proofTry = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.toObject(message.proofTry, options);
+                                object.proofTry = options.bytes === String ? $util.base64.encode(message.proofTry, 0, message.proofTry.length) : options.bytes === Array ? Array.prototype.slice.call(message.proofTry) : message.proofTry;
                             if (message.proofHeight != null && message.hasOwnProperty("proofHeight"))
                                 if (typeof message.proofHeight === "number")
                                     object.proofHeight = options.longs === String ? String(message.proofHeight) : message.proofHeight;
@@ -23796,7 +23848,7 @@ $root.cosmos_sdk = (function() {
                          * @interface IMsgChannelOpenConfirm
                          * @property {string|null} [portId] MsgChannelOpenConfirm portId
                          * @property {string|null} [channelId] MsgChannelOpenConfirm channelId
-                         * @property {cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null} [proofAck] MsgChannelOpenConfirm proofAck
+                         * @property {Uint8Array|null} [proofAck] MsgChannelOpenConfirm proofAck
                          * @property {number|Long|null} [proofHeight] MsgChannelOpenConfirm proofHeight
                          * @property {Uint8Array|null} [signer] MsgChannelOpenConfirm signer
                          */
@@ -23834,11 +23886,11 @@ $root.cosmos_sdk = (function() {
 
                         /**
                          * MsgChannelOpenConfirm proofAck.
-                         * @member {cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null|undefined} proofAck
+                         * @member {Uint8Array} proofAck
                          * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenConfirm
                          * @instance
                          */
-                        MsgChannelOpenConfirm.prototype.proofAck = null;
+                        MsgChannelOpenConfirm.prototype.proofAck = $util.newBuffer([]);
 
                         /**
                          * MsgChannelOpenConfirm proofHeight.
@@ -23885,7 +23937,7 @@ $root.cosmos_sdk = (function() {
                             if (message.channelId != null && Object.hasOwnProperty.call(message, "channelId"))
                                 writer.uint32(/* id 2, wireType 2 =*/18).string(message.channelId);
                             if (message.proofAck != null && Object.hasOwnProperty.call(message, "proofAck"))
-                                $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.encode(message.proofAck, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
+                                writer.uint32(/* id 3, wireType 2 =*/26).bytes(message.proofAck);
                             if (message.proofHeight != null && Object.hasOwnProperty.call(message, "proofHeight"))
                                 writer.uint32(/* id 4, wireType 0 =*/32).uint64(message.proofHeight);
                             if (message.signer != null && Object.hasOwnProperty.call(message, "signer"))
@@ -23931,7 +23983,7 @@ $root.cosmos_sdk = (function() {
                                     message.channelId = reader.string();
                                     break;
                                 case 3:
-                                    message.proofAck = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.decode(reader, reader.uint32());
+                                    message.proofAck = reader.bytes();
                                     break;
                                 case 4:
                                     message.proofHeight = reader.uint64();
@@ -23980,11 +24032,9 @@ $root.cosmos_sdk = (function() {
                             if (message.channelId != null && message.hasOwnProperty("channelId"))
                                 if (!$util.isString(message.channelId))
                                     return "channelId: string expected";
-                            if (message.proofAck != null && message.hasOwnProperty("proofAck")) {
-                                var error = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.verify(message.proofAck);
-                                if (error)
-                                    return "proofAck." + error;
-                            }
+                            if (message.proofAck != null && message.hasOwnProperty("proofAck"))
+                                if (!(message.proofAck && typeof message.proofAck.length === "number" || $util.isString(message.proofAck)))
+                                    return "proofAck: buffer expected";
                             if (message.proofHeight != null && message.hasOwnProperty("proofHeight"))
                                 if (!$util.isInteger(message.proofHeight) && !(message.proofHeight && $util.isInteger(message.proofHeight.low) && $util.isInteger(message.proofHeight.high)))
                                     return "proofHeight: integer|Long expected";
@@ -24010,11 +24060,11 @@ $root.cosmos_sdk = (function() {
                                 message.portId = String(object.portId);
                             if (object.channelId != null)
                                 message.channelId = String(object.channelId);
-                            if (object.proofAck != null) {
-                                if (typeof object.proofAck !== "object")
-                                    throw TypeError(".cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenConfirm.proofAck: object expected");
-                                message.proofAck = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.fromObject(object.proofAck);
-                            }
+                            if (object.proofAck != null)
+                                if (typeof object.proofAck === "string")
+                                    $util.base64.decode(object.proofAck, message.proofAck = $util.newBuffer($util.base64.length(object.proofAck)), 0);
+                                else if (object.proofAck.length)
+                                    message.proofAck = object.proofAck;
                             if (object.proofHeight != null)
                                 if ($util.Long)
                                     (message.proofHeight = $util.Long.fromValue(object.proofHeight)).unsigned = true;
@@ -24048,7 +24098,13 @@ $root.cosmos_sdk = (function() {
                             if (options.defaults) {
                                 object.portId = "";
                                 object.channelId = "";
-                                object.proofAck = null;
+                                if (options.bytes === String)
+                                    object.proofAck = "";
+                                else {
+                                    object.proofAck = [];
+                                    if (options.bytes !== Array)
+                                        object.proofAck = $util.newBuffer(object.proofAck);
+                                }
                                 if ($util.Long) {
                                     var long = new $util.Long(0, 0, true);
                                     object.proofHeight = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
@@ -24067,7 +24123,7 @@ $root.cosmos_sdk = (function() {
                             if (message.channelId != null && message.hasOwnProperty("channelId"))
                                 object.channelId = message.channelId;
                             if (message.proofAck != null && message.hasOwnProperty("proofAck"))
-                                object.proofAck = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.toObject(message.proofAck, options);
+                                object.proofAck = options.bytes === String ? $util.base64.encode(message.proofAck, 0, message.proofAck.length) : options.bytes === Array ? Array.prototype.slice.call(message.proofAck) : message.proofAck;
                             if (message.proofHeight != null && message.hasOwnProperty("proofHeight"))
                                 if (typeof message.proofHeight === "number")
                                     object.proofHeight = options.longs === String ? String(message.proofHeight) : message.proofHeight;
@@ -24341,7 +24397,7 @@ $root.cosmos_sdk = (function() {
                          * @interface IMsgChannelCloseConfirm
                          * @property {string|null} [portId] MsgChannelCloseConfirm portId
                          * @property {string|null} [channelId] MsgChannelCloseConfirm channelId
-                         * @property {cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null} [proofInit] MsgChannelCloseConfirm proofInit
+                         * @property {Uint8Array|null} [proofInit] MsgChannelCloseConfirm proofInit
                          * @property {number|Long|null} [proofHeight] MsgChannelCloseConfirm proofHeight
                          * @property {Uint8Array|null} [signer] MsgChannelCloseConfirm signer
                          */
@@ -24379,11 +24435,11 @@ $root.cosmos_sdk = (function() {
 
                         /**
                          * MsgChannelCloseConfirm proofInit.
-                         * @member {cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null|undefined} proofInit
+                         * @member {Uint8Array} proofInit
                          * @memberof cosmos_sdk.x.ibc.channel.v1.MsgChannelCloseConfirm
                          * @instance
                          */
-                        MsgChannelCloseConfirm.prototype.proofInit = null;
+                        MsgChannelCloseConfirm.prototype.proofInit = $util.newBuffer([]);
 
                         /**
                          * MsgChannelCloseConfirm proofHeight.
@@ -24430,7 +24486,7 @@ $root.cosmos_sdk = (function() {
                             if (message.channelId != null && Object.hasOwnProperty.call(message, "channelId"))
                                 writer.uint32(/* id 2, wireType 2 =*/18).string(message.channelId);
                             if (message.proofInit != null && Object.hasOwnProperty.call(message, "proofInit"))
-                                $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.encode(message.proofInit, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
+                                writer.uint32(/* id 3, wireType 2 =*/26).bytes(message.proofInit);
                             if (message.proofHeight != null && Object.hasOwnProperty.call(message, "proofHeight"))
                                 writer.uint32(/* id 4, wireType 0 =*/32).uint64(message.proofHeight);
                             if (message.signer != null && Object.hasOwnProperty.call(message, "signer"))
@@ -24476,7 +24532,7 @@ $root.cosmos_sdk = (function() {
                                     message.channelId = reader.string();
                                     break;
                                 case 3:
-                                    message.proofInit = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.decode(reader, reader.uint32());
+                                    message.proofInit = reader.bytes();
                                     break;
                                 case 4:
                                     message.proofHeight = reader.uint64();
@@ -24525,11 +24581,9 @@ $root.cosmos_sdk = (function() {
                             if (message.channelId != null && message.hasOwnProperty("channelId"))
                                 if (!$util.isString(message.channelId))
                                     return "channelId: string expected";
-                            if (message.proofInit != null && message.hasOwnProperty("proofInit")) {
-                                var error = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.verify(message.proofInit);
-                                if (error)
-                                    return "proofInit." + error;
-                            }
+                            if (message.proofInit != null && message.hasOwnProperty("proofInit"))
+                                if (!(message.proofInit && typeof message.proofInit.length === "number" || $util.isString(message.proofInit)))
+                                    return "proofInit: buffer expected";
                             if (message.proofHeight != null && message.hasOwnProperty("proofHeight"))
                                 if (!$util.isInteger(message.proofHeight) && !(message.proofHeight && $util.isInteger(message.proofHeight.low) && $util.isInteger(message.proofHeight.high)))
                                     return "proofHeight: integer|Long expected";
@@ -24555,11 +24609,11 @@ $root.cosmos_sdk = (function() {
                                 message.portId = String(object.portId);
                             if (object.channelId != null)
                                 message.channelId = String(object.channelId);
-                            if (object.proofInit != null) {
-                                if (typeof object.proofInit !== "object")
-                                    throw TypeError(".cosmos_sdk.x.ibc.channel.v1.MsgChannelCloseConfirm.proofInit: object expected");
-                                message.proofInit = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.fromObject(object.proofInit);
-                            }
+                            if (object.proofInit != null)
+                                if (typeof object.proofInit === "string")
+                                    $util.base64.decode(object.proofInit, message.proofInit = $util.newBuffer($util.base64.length(object.proofInit)), 0);
+                                else if (object.proofInit.length)
+                                    message.proofInit = object.proofInit;
                             if (object.proofHeight != null)
                                 if ($util.Long)
                                     (message.proofHeight = $util.Long.fromValue(object.proofHeight)).unsigned = true;
@@ -24593,7 +24647,13 @@ $root.cosmos_sdk = (function() {
                             if (options.defaults) {
                                 object.portId = "";
                                 object.channelId = "";
-                                object.proofInit = null;
+                                if (options.bytes === String)
+                                    object.proofInit = "";
+                                else {
+                                    object.proofInit = [];
+                                    if (options.bytes !== Array)
+                                        object.proofInit = $util.newBuffer(object.proofInit);
+                                }
                                 if ($util.Long) {
                                     var long = new $util.Long(0, 0, true);
                                     object.proofHeight = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
@@ -24612,7 +24672,7 @@ $root.cosmos_sdk = (function() {
                             if (message.channelId != null && message.hasOwnProperty("channelId"))
                                 object.channelId = message.channelId;
                             if (message.proofInit != null && message.hasOwnProperty("proofInit"))
-                                object.proofInit = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.toObject(message.proofInit, options);
+                                object.proofInit = options.bytes === String ? $util.base64.encode(message.proofInit, 0, message.proofInit.length) : options.bytes === Array ? Array.prototype.slice.call(message.proofInit) : message.proofInit;
                             if (message.proofHeight != null && message.hasOwnProperty("proofHeight"))
                                 if (typeof message.proofHeight === "number")
                                     object.proofHeight = options.longs === String ? String(message.proofHeight) : message.proofHeight;
@@ -24644,7 +24704,7 @@ $root.cosmos_sdk = (function() {
                          * @memberof cosmos_sdk.x.ibc.channel.v1
                          * @interface IMsgPacket
                          * @property {cosmos_sdk.x.ibc.channel.v1.IPacket|null} [packet] MsgPacket packet
-                         * @property {cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null} [proof] MsgPacket proof
+                         * @property {Uint8Array|null} [proof] MsgPacket proof
                          * @property {number|Long|null} [proofHeight] MsgPacket proofHeight
                          * @property {Uint8Array|null} [signer] MsgPacket signer
                          */
@@ -24674,11 +24734,11 @@ $root.cosmos_sdk = (function() {
 
                         /**
                          * MsgPacket proof.
-                         * @member {cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null|undefined} proof
+                         * @member {Uint8Array} proof
                          * @memberof cosmos_sdk.x.ibc.channel.v1.MsgPacket
                          * @instance
                          */
-                        MsgPacket.prototype.proof = null;
+                        MsgPacket.prototype.proof = $util.newBuffer([]);
 
                         /**
                          * MsgPacket proofHeight.
@@ -24723,7 +24783,7 @@ $root.cosmos_sdk = (function() {
                             if (message.packet != null && Object.hasOwnProperty.call(message, "packet"))
                                 $root.cosmos_sdk.x.ibc.channel.v1.Packet.encode(message.packet, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
                             if (message.proof != null && Object.hasOwnProperty.call(message, "proof"))
-                                $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.encode(message.proof, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
+                                writer.uint32(/* id 2, wireType 2 =*/18).bytes(message.proof);
                             if (message.proofHeight != null && Object.hasOwnProperty.call(message, "proofHeight"))
                                 writer.uint32(/* id 3, wireType 0 =*/24).uint64(message.proofHeight);
                             if (message.signer != null && Object.hasOwnProperty.call(message, "signer"))
@@ -24766,7 +24826,7 @@ $root.cosmos_sdk = (function() {
                                     message.packet = $root.cosmos_sdk.x.ibc.channel.v1.Packet.decode(reader, reader.uint32());
                                     break;
                                 case 2:
-                                    message.proof = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.decode(reader, reader.uint32());
+                                    message.proof = reader.bytes();
                                     break;
                                 case 3:
                                     message.proofHeight = reader.uint64();
@@ -24814,11 +24874,9 @@ $root.cosmos_sdk = (function() {
                                 if (error)
                                     return "packet." + error;
                             }
-                            if (message.proof != null && message.hasOwnProperty("proof")) {
-                                var error = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.verify(message.proof);
-                                if (error)
-                                    return "proof." + error;
-                            }
+                            if (message.proof != null && message.hasOwnProperty("proof"))
+                                if (!(message.proof && typeof message.proof.length === "number" || $util.isString(message.proof)))
+                                    return "proof: buffer expected";
                             if (message.proofHeight != null && message.hasOwnProperty("proofHeight"))
                                 if (!$util.isInteger(message.proofHeight) && !(message.proofHeight && $util.isInteger(message.proofHeight.low) && $util.isInteger(message.proofHeight.high)))
                                     return "proofHeight: integer|Long expected";
@@ -24845,11 +24903,11 @@ $root.cosmos_sdk = (function() {
                                     throw TypeError(".cosmos_sdk.x.ibc.channel.v1.MsgPacket.packet: object expected");
                                 message.packet = $root.cosmos_sdk.x.ibc.channel.v1.Packet.fromObject(object.packet);
                             }
-                            if (object.proof != null) {
-                                if (typeof object.proof !== "object")
-                                    throw TypeError(".cosmos_sdk.x.ibc.channel.v1.MsgPacket.proof: object expected");
-                                message.proof = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.fromObject(object.proof);
-                            }
+                            if (object.proof != null)
+                                if (typeof object.proof === "string")
+                                    $util.base64.decode(object.proof, message.proof = $util.newBuffer($util.base64.length(object.proof)), 0);
+                                else if (object.proof.length)
+                                    message.proof = object.proof;
                             if (object.proofHeight != null)
                                 if ($util.Long)
                                     (message.proofHeight = $util.Long.fromValue(object.proofHeight)).unsigned = true;
@@ -24882,7 +24940,13 @@ $root.cosmos_sdk = (function() {
                             var object = {};
                             if (options.defaults) {
                                 object.packet = null;
-                                object.proof = null;
+                                if (options.bytes === String)
+                                    object.proof = "";
+                                else {
+                                    object.proof = [];
+                                    if (options.bytes !== Array)
+                                        object.proof = $util.newBuffer(object.proof);
+                                }
                                 if ($util.Long) {
                                     var long = new $util.Long(0, 0, true);
                                     object.proofHeight = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
@@ -24899,7 +24963,7 @@ $root.cosmos_sdk = (function() {
                             if (message.packet != null && message.hasOwnProperty("packet"))
                                 object.packet = $root.cosmos_sdk.x.ibc.channel.v1.Packet.toObject(message.packet, options);
                             if (message.proof != null && message.hasOwnProperty("proof"))
-                                object.proof = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.toObject(message.proof, options);
+                                object.proof = options.bytes === String ? $util.base64.encode(message.proof, 0, message.proof.length) : options.bytes === Array ? Array.prototype.slice.call(message.proof) : message.proof;
                             if (message.proofHeight != null && message.hasOwnProperty("proofHeight"))
                                 if (typeof message.proofHeight === "number")
                                     object.proofHeight = options.longs === String ? String(message.proofHeight) : message.proofHeight;
@@ -24931,7 +24995,7 @@ $root.cosmos_sdk = (function() {
                          * @memberof cosmos_sdk.x.ibc.channel.v1
                          * @interface IMsgTimeout
                          * @property {cosmos_sdk.x.ibc.channel.v1.IPacket|null} [packet] MsgTimeout packet
-                         * @property {cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null} [proof] MsgTimeout proof
+                         * @property {Uint8Array|null} [proof] MsgTimeout proof
                          * @property {number|Long|null} [proofHeight] MsgTimeout proofHeight
                          * @property {number|Long|null} [nextSequenceRecv] MsgTimeout nextSequenceRecv
                          * @property {Uint8Array|null} [signer] MsgTimeout signer
@@ -24962,11 +25026,11 @@ $root.cosmos_sdk = (function() {
 
                         /**
                          * MsgTimeout proof.
-                         * @member {cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null|undefined} proof
+                         * @member {Uint8Array} proof
                          * @memberof cosmos_sdk.x.ibc.channel.v1.MsgTimeout
                          * @instance
                          */
-                        MsgTimeout.prototype.proof = null;
+                        MsgTimeout.prototype.proof = $util.newBuffer([]);
 
                         /**
                          * MsgTimeout proofHeight.
@@ -25019,7 +25083,7 @@ $root.cosmos_sdk = (function() {
                             if (message.packet != null && Object.hasOwnProperty.call(message, "packet"))
                                 $root.cosmos_sdk.x.ibc.channel.v1.Packet.encode(message.packet, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
                             if (message.proof != null && Object.hasOwnProperty.call(message, "proof"))
-                                $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.encode(message.proof, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
+                                writer.uint32(/* id 2, wireType 2 =*/18).bytes(message.proof);
                             if (message.proofHeight != null && Object.hasOwnProperty.call(message, "proofHeight"))
                                 writer.uint32(/* id 3, wireType 0 =*/24).uint64(message.proofHeight);
                             if (message.nextSequenceRecv != null && Object.hasOwnProperty.call(message, "nextSequenceRecv"))
@@ -25064,7 +25128,7 @@ $root.cosmos_sdk = (function() {
                                     message.packet = $root.cosmos_sdk.x.ibc.channel.v1.Packet.decode(reader, reader.uint32());
                                     break;
                                 case 2:
-                                    message.proof = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.decode(reader, reader.uint32());
+                                    message.proof = reader.bytes();
                                     break;
                                 case 3:
                                     message.proofHeight = reader.uint64();
@@ -25115,11 +25179,9 @@ $root.cosmos_sdk = (function() {
                                 if (error)
                                     return "packet." + error;
                             }
-                            if (message.proof != null && message.hasOwnProperty("proof")) {
-                                var error = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.verify(message.proof);
-                                if (error)
-                                    return "proof." + error;
-                            }
+                            if (message.proof != null && message.hasOwnProperty("proof"))
+                                if (!(message.proof && typeof message.proof.length === "number" || $util.isString(message.proof)))
+                                    return "proof: buffer expected";
                             if (message.proofHeight != null && message.hasOwnProperty("proofHeight"))
                                 if (!$util.isInteger(message.proofHeight) && !(message.proofHeight && $util.isInteger(message.proofHeight.low) && $util.isInteger(message.proofHeight.high)))
                                     return "proofHeight: integer|Long expected";
@@ -25149,11 +25211,11 @@ $root.cosmos_sdk = (function() {
                                     throw TypeError(".cosmos_sdk.x.ibc.channel.v1.MsgTimeout.packet: object expected");
                                 message.packet = $root.cosmos_sdk.x.ibc.channel.v1.Packet.fromObject(object.packet);
                             }
-                            if (object.proof != null) {
-                                if (typeof object.proof !== "object")
-                                    throw TypeError(".cosmos_sdk.x.ibc.channel.v1.MsgTimeout.proof: object expected");
-                                message.proof = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.fromObject(object.proof);
-                            }
+                            if (object.proof != null)
+                                if (typeof object.proof === "string")
+                                    $util.base64.decode(object.proof, message.proof = $util.newBuffer($util.base64.length(object.proof)), 0);
+                                else if (object.proof.length)
+                                    message.proof = object.proof;
                             if (object.proofHeight != null)
                                 if ($util.Long)
                                     (message.proofHeight = $util.Long.fromValue(object.proofHeight)).unsigned = true;
@@ -25195,7 +25257,13 @@ $root.cosmos_sdk = (function() {
                             var object = {};
                             if (options.defaults) {
                                 object.packet = null;
-                                object.proof = null;
+                                if (options.bytes === String)
+                                    object.proof = "";
+                                else {
+                                    object.proof = [];
+                                    if (options.bytes !== Array)
+                                        object.proof = $util.newBuffer(object.proof);
+                                }
                                 if ($util.Long) {
                                     var long = new $util.Long(0, 0, true);
                                     object.proofHeight = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
@@ -25217,7 +25285,7 @@ $root.cosmos_sdk = (function() {
                             if (message.packet != null && message.hasOwnProperty("packet"))
                                 object.packet = $root.cosmos_sdk.x.ibc.channel.v1.Packet.toObject(message.packet, options);
                             if (message.proof != null && message.hasOwnProperty("proof"))
-                                object.proof = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.toObject(message.proof, options);
+                                object.proof = options.bytes === String ? $util.base64.encode(message.proof, 0, message.proof.length) : options.bytes === Array ? Array.prototype.slice.call(message.proof) : message.proof;
                             if (message.proofHeight != null && message.hasOwnProperty("proofHeight"))
                                 if (typeof message.proofHeight === "number")
                                     object.proofHeight = options.longs === String ? String(message.proofHeight) : message.proofHeight;
@@ -25255,7 +25323,7 @@ $root.cosmos_sdk = (function() {
                          * @interface IMsgAcknowledgement
                          * @property {cosmos_sdk.x.ibc.channel.v1.IPacket|null} [packet] MsgAcknowledgement packet
                          * @property {Uint8Array|null} [acknowledgement] MsgAcknowledgement acknowledgement
-                         * @property {cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null} [proof] MsgAcknowledgement proof
+                         * @property {Uint8Array|null} [proof] MsgAcknowledgement proof
                          * @property {number|Long|null} [proofHeight] MsgAcknowledgement proofHeight
                          * @property {Uint8Array|null} [signer] MsgAcknowledgement signer
                          */
@@ -25293,11 +25361,11 @@ $root.cosmos_sdk = (function() {
 
                         /**
                          * MsgAcknowledgement proof.
-                         * @member {cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null|undefined} proof
+                         * @member {Uint8Array} proof
                          * @memberof cosmos_sdk.x.ibc.channel.v1.MsgAcknowledgement
                          * @instance
                          */
-                        MsgAcknowledgement.prototype.proof = null;
+                        MsgAcknowledgement.prototype.proof = $util.newBuffer([]);
 
                         /**
                          * MsgAcknowledgement proofHeight.
@@ -25344,7 +25412,7 @@ $root.cosmos_sdk = (function() {
                             if (message.acknowledgement != null && Object.hasOwnProperty.call(message, "acknowledgement"))
                                 writer.uint32(/* id 2, wireType 2 =*/18).bytes(message.acknowledgement);
                             if (message.proof != null && Object.hasOwnProperty.call(message, "proof"))
-                                $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.encode(message.proof, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
+                                writer.uint32(/* id 3, wireType 2 =*/26).bytes(message.proof);
                             if (message.proofHeight != null && Object.hasOwnProperty.call(message, "proofHeight"))
                                 writer.uint32(/* id 4, wireType 0 =*/32).uint64(message.proofHeight);
                             if (message.signer != null && Object.hasOwnProperty.call(message, "signer"))
@@ -25390,7 +25458,7 @@ $root.cosmos_sdk = (function() {
                                     message.acknowledgement = reader.bytes();
                                     break;
                                 case 3:
-                                    message.proof = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.decode(reader, reader.uint32());
+                                    message.proof = reader.bytes();
                                     break;
                                 case 4:
                                     message.proofHeight = reader.uint64();
@@ -25441,11 +25509,9 @@ $root.cosmos_sdk = (function() {
                             if (message.acknowledgement != null && message.hasOwnProperty("acknowledgement"))
                                 if (!(message.acknowledgement && typeof message.acknowledgement.length === "number" || $util.isString(message.acknowledgement)))
                                     return "acknowledgement: buffer expected";
-                            if (message.proof != null && message.hasOwnProperty("proof")) {
-                                var error = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.verify(message.proof);
-                                if (error)
-                                    return "proof." + error;
-                            }
+                            if (message.proof != null && message.hasOwnProperty("proof"))
+                                if (!(message.proof && typeof message.proof.length === "number" || $util.isString(message.proof)))
+                                    return "proof: buffer expected";
                             if (message.proofHeight != null && message.hasOwnProperty("proofHeight"))
                                 if (!$util.isInteger(message.proofHeight) && !(message.proofHeight && $util.isInteger(message.proofHeight.low) && $util.isInteger(message.proofHeight.high)))
                                     return "proofHeight: integer|Long expected";
@@ -25477,11 +25543,11 @@ $root.cosmos_sdk = (function() {
                                     $util.base64.decode(object.acknowledgement, message.acknowledgement = $util.newBuffer($util.base64.length(object.acknowledgement)), 0);
                                 else if (object.acknowledgement.length)
                                     message.acknowledgement = object.acknowledgement;
-                            if (object.proof != null) {
-                                if (typeof object.proof !== "object")
-                                    throw TypeError(".cosmos_sdk.x.ibc.channel.v1.MsgAcknowledgement.proof: object expected");
-                                message.proof = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.fromObject(object.proof);
-                            }
+                            if (object.proof != null)
+                                if (typeof object.proof === "string")
+                                    $util.base64.decode(object.proof, message.proof = $util.newBuffer($util.base64.length(object.proof)), 0);
+                                else if (object.proof.length)
+                                    message.proof = object.proof;
                             if (object.proofHeight != null)
                                 if ($util.Long)
                                     (message.proofHeight = $util.Long.fromValue(object.proofHeight)).unsigned = true;
@@ -25521,7 +25587,13 @@ $root.cosmos_sdk = (function() {
                                     if (options.bytes !== Array)
                                         object.acknowledgement = $util.newBuffer(object.acknowledgement);
                                 }
-                                object.proof = null;
+                                if (options.bytes === String)
+                                    object.proof = "";
+                                else {
+                                    object.proof = [];
+                                    if (options.bytes !== Array)
+                                        object.proof = $util.newBuffer(object.proof);
+                                }
                                 if ($util.Long) {
                                     var long = new $util.Long(0, 0, true);
                                     object.proofHeight = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
@@ -25540,7 +25612,7 @@ $root.cosmos_sdk = (function() {
                             if (message.acknowledgement != null && message.hasOwnProperty("acknowledgement"))
                                 object.acknowledgement = options.bytes === String ? $util.base64.encode(message.acknowledgement, 0, message.acknowledgement.length) : options.bytes === Array ? Array.prototype.slice.call(message.acknowledgement) : message.acknowledgement;
                             if (message.proof != null && message.hasOwnProperty("proof"))
-                                object.proof = $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof.toObject(message.proof, options);
+                                object.proof = options.bytes === String ? $util.base64.encode(message.proof, 0, message.proof.length) : options.bytes === Array ? Array.prototype.slice.call(message.proof) : message.proof;
                             if (message.proofHeight != null && message.hasOwnProperty("proofHeight"))
                                 if (typeof message.proofHeight === "number")
                                     object.proofHeight = options.longs === String ? String(message.proofHeight) : message.proofHeight;

@@ -1039,8 +1039,8 @@ export namespace cosmos_sdk {
                 /** PubKeyMultisigThreshold threshold */
                 threshold?: (number|null);
 
-                /** PubKeyMultisigThreshold pubkeys */
-                pubkeys?: (cosmos_sdk.crypto.v1.IPublicKey[]|null);
+                /** PubKeyMultisigThreshold publicKeys */
+                publicKeys?: (cosmos_sdk.crypto.v1.IPublicKey[]|null);
             }
 
             /** Represents a PubKeyMultisigThreshold. */
@@ -1055,8 +1055,8 @@ export namespace cosmos_sdk {
                 /** PubKeyMultisigThreshold threshold. */
                 public threshold: number;
 
-                /** PubKeyMultisigThreshold pubkeys. */
-                public pubkeys: cosmos_sdk.crypto.v1.IPublicKey[];
+                /** PubKeyMultisigThreshold publicKeys. */
+                public publicKeys: cosmos_sdk.crypto.v1.IPublicKey[];
 
                 /**
                  * Creates a new PubKeyMultisigThreshold instance using the specified properties.
@@ -1132,8 +1132,8 @@ export namespace cosmos_sdk {
             /** Properties of a MultiSignature. */
             interface IMultiSignature {
 
-                /** MultiSignature sigs */
-                sigs?: (Uint8Array[]|null);
+                /** MultiSignature signatures */
+                signatures?: (Uint8Array[]|null);
             }
 
             /** Represents a MultiSignature. */
@@ -1145,8 +1145,8 @@ export namespace cosmos_sdk {
                  */
                 constructor(properties?: cosmos_sdk.crypto.v1.IMultiSignature);
 
-                /** MultiSignature sigs. */
-                public sigs: Uint8Array[];
+                /** MultiSignature signatures. */
+                public signatures: Uint8Array[];
 
                 /**
                  * Creates a new MultiSignature instance using the specified properties.
@@ -1319,6 +1319,22 @@ export namespace cosmos_sdk {
 
     /** Namespace tx. */
     namespace tx {
+
+        /** Namespace signing. */
+        namespace signing {
+
+            /** Namespace v1. */
+            namespace v1 {
+
+                /** SignMode enum. */
+                enum SignMode {
+                    SIGN_MODE_UNSPECIFIED = 0,
+                    SIGN_MODE_DIRECT = 1,
+                    SIGN_MODE_TEXTUAL = 2,
+                    SIGN_MODE_LEGACY_AMINO_JSON = 127
+                }
+            }
+        }
 
         /** Namespace v1. */
         namespace v1 {
@@ -1950,7 +1966,7 @@ export namespace cosmos_sdk {
                 interface ISingle {
 
                     /** Single mode */
-                    mode?: (cosmos_sdk.tx.v1.SignMode|null);
+                    mode?: (cosmos_sdk.tx.signing.v1.SignMode|null);
                 }
 
                 /** Represents a Single. */
@@ -1963,7 +1979,7 @@ export namespace cosmos_sdk {
                     constructor(properties?: cosmos_sdk.tx.v1.ModeInfo.ISingle);
 
                     /** Single mode. */
-                    public mode: cosmos_sdk.tx.v1.SignMode;
+                    public mode: cosmos_sdk.tx.signing.v1.SignMode;
 
                     /**
                      * Creates a new Single instance using the specified properties.
@@ -2131,14 +2147,6 @@ export namespace cosmos_sdk {
                      */
                     public toJSON(): { [k: string]: any };
                 }
-            }
-
-            /** SignMode enum. */
-            enum SignMode {
-                SIGN_MODE_UNSPECIFIED = 0,
-                SIGN_MODE_DIRECT = 1,
-                SIGN_MODE_TEXTUAL = 2,
-                SIGN_MODE_LEGACY_AMINO_JSON = 127
             }
 
             /** Properties of a Fee. */
@@ -8644,13 +8652,13 @@ export namespace cosmos_sdk {
                         counterpartyVersions?: (string[]|null);
 
                         /** MsgConnectionOpenTry proofInit */
-                        proofInit?: (cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null);
+                        proofInit?: (Uint8Array|null);
 
                         /** MsgConnectionOpenTry proofHeight */
                         proofHeight?: (number|Long|null);
 
                         /** MsgConnectionOpenTry proofConsensus */
-                        proofConsensus?: (cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null);
+                        proofConsensus?: (Uint8Array|null);
 
                         /** MsgConnectionOpenTry consensusHeight */
                         consensusHeight?: (number|Long|null);
@@ -8681,13 +8689,13 @@ export namespace cosmos_sdk {
                         public counterpartyVersions: string[];
 
                         /** MsgConnectionOpenTry proofInit. */
-                        public proofInit?: (cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null);
+                        public proofInit: Uint8Array;
 
                         /** MsgConnectionOpenTry proofHeight. */
                         public proofHeight: (number|Long);
 
                         /** MsgConnectionOpenTry proofConsensus. */
-                        public proofConsensus?: (cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null);
+                        public proofConsensus: Uint8Array;
 
                         /** MsgConnectionOpenTry consensusHeight. */
                         public consensusHeight: (number|Long);
@@ -8776,13 +8784,13 @@ export namespace cosmos_sdk {
                         version?: (string|null);
 
                         /** MsgConnectionOpenAck proofTry */
-                        proofTry?: (cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null);
+                        proofTry?: (Uint8Array|null);
 
                         /** MsgConnectionOpenAck proofHeight */
                         proofHeight?: (number|Long|null);
 
                         /** MsgConnectionOpenAck proofConsensus */
-                        proofConsensus?: (cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null);
+                        proofConsensus?: (Uint8Array|null);
 
                         /** MsgConnectionOpenAck consensusHeight */
                         consensusHeight?: (number|Long|null);
@@ -8807,13 +8815,13 @@ export namespace cosmos_sdk {
                         public version: string;
 
                         /** MsgConnectionOpenAck proofTry. */
-                        public proofTry?: (cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null);
+                        public proofTry: Uint8Array;
 
                         /** MsgConnectionOpenAck proofHeight. */
                         public proofHeight: (number|Long);
 
                         /** MsgConnectionOpenAck proofConsensus. */
-                        public proofConsensus?: (cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null);
+                        public proofConsensus: Uint8Array;
 
                         /** MsgConnectionOpenAck consensusHeight. */
                         public consensusHeight: (number|Long);
@@ -8899,7 +8907,7 @@ export namespace cosmos_sdk {
                         connectionId?: (string|null);
 
                         /** MsgConnectionOpenConfirm proofAck */
-                        proofAck?: (cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null);
+                        proofAck?: (Uint8Array|null);
 
                         /** MsgConnectionOpenConfirm proofHeight */
                         proofHeight?: (number|Long|null);
@@ -8921,7 +8929,7 @@ export namespace cosmos_sdk {
                         public connectionId: string;
 
                         /** MsgConnectionOpenConfirm proofAck. */
-                        public proofAck?: (cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null);
+                        public proofAck: Uint8Array;
 
                         /** MsgConnectionOpenConfirm proofHeight. */
                         public proofHeight: (number|Long);
@@ -9446,7 +9454,7 @@ export namespace cosmos_sdk {
                         counterpartyVersion?: (string|null);
 
                         /** MsgChannelOpenTry proofInit */
-                        proofInit?: (cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null);
+                        proofInit?: (Uint8Array|null);
 
                         /** MsgChannelOpenTry proofHeight */
                         proofHeight?: (number|Long|null);
@@ -9477,7 +9485,7 @@ export namespace cosmos_sdk {
                         public counterpartyVersion: string;
 
                         /** MsgChannelOpenTry proofInit. */
-                        public proofInit?: (cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null);
+                        public proofInit: Uint8Array;
 
                         /** MsgChannelOpenTry proofHeight. */
                         public proofHeight: (number|Long);
@@ -9569,7 +9577,7 @@ export namespace cosmos_sdk {
                         counterpartyVersion?: (string|null);
 
                         /** MsgChannelOpenAck proofTry */
-                        proofTry?: (cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null);
+                        proofTry?: (Uint8Array|null);
 
                         /** MsgChannelOpenAck proofHeight */
                         proofHeight?: (number|Long|null);
@@ -9597,7 +9605,7 @@ export namespace cosmos_sdk {
                         public counterpartyVersion: string;
 
                         /** MsgChannelOpenAck proofTry. */
-                        public proofTry?: (cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null);
+                        public proofTry: Uint8Array;
 
                         /** MsgChannelOpenAck proofHeight. */
                         public proofHeight: (number|Long);
@@ -9686,7 +9694,7 @@ export namespace cosmos_sdk {
                         channelId?: (string|null);
 
                         /** MsgChannelOpenConfirm proofAck */
-                        proofAck?: (cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null);
+                        proofAck?: (Uint8Array|null);
 
                         /** MsgChannelOpenConfirm proofHeight */
                         proofHeight?: (number|Long|null);
@@ -9711,7 +9719,7 @@ export namespace cosmos_sdk {
                         public channelId: string;
 
                         /** MsgChannelOpenConfirm proofAck. */
-                        public proofAck?: (cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null);
+                        public proofAck: Uint8Array;
 
                         /** MsgChannelOpenConfirm proofHeight. */
                         public proofHeight: (number|Long);
@@ -9902,7 +9910,7 @@ export namespace cosmos_sdk {
                         channelId?: (string|null);
 
                         /** MsgChannelCloseConfirm proofInit */
-                        proofInit?: (cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null);
+                        proofInit?: (Uint8Array|null);
 
                         /** MsgChannelCloseConfirm proofHeight */
                         proofHeight?: (number|Long|null);
@@ -9927,7 +9935,7 @@ export namespace cosmos_sdk {
                         public channelId: string;
 
                         /** MsgChannelCloseConfirm proofInit. */
-                        public proofInit?: (cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null);
+                        public proofInit: Uint8Array;
 
                         /** MsgChannelCloseConfirm proofHeight. */
                         public proofHeight: (number|Long);
@@ -10013,7 +10021,7 @@ export namespace cosmos_sdk {
                         packet?: (cosmos_sdk.x.ibc.channel.v1.IPacket|null);
 
                         /** MsgPacket proof */
-                        proof?: (cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null);
+                        proof?: (Uint8Array|null);
 
                         /** MsgPacket proofHeight */
                         proofHeight?: (number|Long|null);
@@ -10035,7 +10043,7 @@ export namespace cosmos_sdk {
                         public packet?: (cosmos_sdk.x.ibc.channel.v1.IPacket|null);
 
                         /** MsgPacket proof. */
-                        public proof?: (cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null);
+                        public proof: Uint8Array;
 
                         /** MsgPacket proofHeight. */
                         public proofHeight: (number|Long);
@@ -10121,7 +10129,7 @@ export namespace cosmos_sdk {
                         packet?: (cosmos_sdk.x.ibc.channel.v1.IPacket|null);
 
                         /** MsgTimeout proof */
-                        proof?: (cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null);
+                        proof?: (Uint8Array|null);
 
                         /** MsgTimeout proofHeight */
                         proofHeight?: (number|Long|null);
@@ -10146,7 +10154,7 @@ export namespace cosmos_sdk {
                         public packet?: (cosmos_sdk.x.ibc.channel.v1.IPacket|null);
 
                         /** MsgTimeout proof. */
-                        public proof?: (cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null);
+                        public proof: Uint8Array;
 
                         /** MsgTimeout proofHeight. */
                         public proofHeight: (number|Long);
@@ -10238,7 +10246,7 @@ export namespace cosmos_sdk {
                         acknowledgement?: (Uint8Array|null);
 
                         /** MsgAcknowledgement proof */
-                        proof?: (cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null);
+                        proof?: (Uint8Array|null);
 
                         /** MsgAcknowledgement proofHeight */
                         proofHeight?: (number|Long|null);
@@ -10263,7 +10271,7 @@ export namespace cosmos_sdk {
                         public acknowledgement: Uint8Array;
 
                         /** MsgAcknowledgement proof. */
-                        public proof?: (cosmos_sdk.x.ibc.commitment.v1.IMerkleProof|null);
+                        public proof: Uint8Array;
 
                         /** MsgAcknowledgement proofHeight. */
                         public proofHeight: (number|Long);
