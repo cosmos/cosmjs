@@ -1,22 +1,20 @@
 /*eslint-disable block-scoped-var, id-length, no-control-regex, no-magic-numbers, no-prototype-builtins, no-redeclare, no-shadow, no-var, sort-vars*/
-"use strict";
-
-var $protobuf = require("protobufjs/minimal");
+import * as $protobuf from "protobufjs/minimal";
 
 // Common aliases
-var $Reader = $protobuf.Reader, $Writer = $protobuf.Writer, $util = $protobuf.util;
+const $Reader = $protobuf.Reader, $Writer = $protobuf.Writer, $util = $protobuf.util;
 
 // Exported root namespace
-var $root = $protobuf.roots["default"] || ($protobuf.roots["default"] = {});
+const $root = $protobuf.roots["default"] || ($protobuf.roots["default"] = {});
 
-$root.cosmos_sdk = (function() {
+export const cosmos_sdk = $root.cosmos_sdk = (() => {
 
     /**
      * Namespace cosmos_sdk.
      * @exports cosmos_sdk
      * @namespace
      */
-    var cosmos_sdk = {};
+    const cosmos_sdk = {};
 
     cosmos_sdk.codec = (function() {
 
@@ -25,7 +23,7 @@ $root.cosmos_sdk = (function() {
          * @memberof cosmos_sdk
          * @namespace
          */
-        var codec = {};
+        const codec = {};
 
         codec.v1 = (function() {
 
@@ -34,7 +32,7 @@ $root.cosmos_sdk = (function() {
              * @memberof cosmos_sdk.codec
              * @namespace
              */
-            var v1 = {};
+            const v1 = {};
 
             v1.Dog = (function() {
 
@@ -56,7 +54,7 @@ $root.cosmos_sdk = (function() {
                  */
                 function Dog(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -135,9 +133,9 @@ $root.cosmos_sdk = (function() {
                 Dog.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.codec.v1.Dog();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.codec.v1.Dog();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.size = reader.string();
@@ -200,7 +198,7 @@ $root.cosmos_sdk = (function() {
                 Dog.fromObject = function fromObject(object) {
                     if (object instanceof $root.cosmos_sdk.codec.v1.Dog)
                         return object;
-                    var message = new $root.cosmos_sdk.codec.v1.Dog();
+                    let message = new $root.cosmos_sdk.codec.v1.Dog();
                     if (object.size != null)
                         message.size = String(object.size);
                     if (object.name != null)
@@ -220,7 +218,7 @@ $root.cosmos_sdk = (function() {
                 Dog.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.defaults) {
                         object.size = "";
                         object.name = "";
@@ -266,7 +264,7 @@ $root.cosmos_sdk = (function() {
                  */
                 function Cat(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -345,9 +343,9 @@ $root.cosmos_sdk = (function() {
                 Cat.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.codec.v1.Cat();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.codec.v1.Cat();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.moniker = reader.string();
@@ -410,7 +408,7 @@ $root.cosmos_sdk = (function() {
                 Cat.fromObject = function fromObject(object) {
                     if (object instanceof $root.cosmos_sdk.codec.v1.Cat)
                         return object;
-                    var message = new $root.cosmos_sdk.codec.v1.Cat();
+                    let message = new $root.cosmos_sdk.codec.v1.Cat();
                     if (object.moniker != null)
                         message.moniker = String(object.moniker);
                     if (object.lives != null)
@@ -430,7 +428,7 @@ $root.cosmos_sdk = (function() {
                 Cat.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.defaults) {
                         object.moniker = "";
                         object.lives = 0;
@@ -476,7 +474,7 @@ $root.cosmos_sdk = (function() {
                  */
                 function HasAnimal(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -555,9 +553,9 @@ $root.cosmos_sdk = (function() {
                 HasAnimal.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.codec.v1.HasAnimal();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.codec.v1.HasAnimal();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.animal = $root.google.protobuf.Any.decode(reader, reader.uint32());
@@ -601,7 +599,7 @@ $root.cosmos_sdk = (function() {
                     if (typeof message !== "object" || message === null)
                         return "object expected";
                     if (message.animal != null && message.hasOwnProperty("animal")) {
-                        var error = $root.google.protobuf.Any.verify(message.animal);
+                        let error = $root.google.protobuf.Any.verify(message.animal);
                         if (error)
                             return "animal." + error;
                     }
@@ -622,7 +620,7 @@ $root.cosmos_sdk = (function() {
                 HasAnimal.fromObject = function fromObject(object) {
                     if (object instanceof $root.cosmos_sdk.codec.v1.HasAnimal)
                         return object;
-                    var message = new $root.cosmos_sdk.codec.v1.HasAnimal();
+                    let message = new $root.cosmos_sdk.codec.v1.HasAnimal();
                     if (object.animal != null) {
                         if (typeof object.animal !== "object")
                             throw TypeError(".cosmos_sdk.codec.v1.HasAnimal.animal: object expected");
@@ -652,11 +650,11 @@ $root.cosmos_sdk = (function() {
                 HasAnimal.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.defaults) {
                         object.animal = null;
                         if ($util.Long) {
-                            var long = new $util.Long(0, 0, false);
+                            let long = new $util.Long(0, 0, false);
                             object.x = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                         } else
                             object.x = options.longs === String ? "0" : 0;
@@ -704,7 +702,7 @@ $root.cosmos_sdk = (function() {
                  */
                 function HasHasAnimal(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -773,9 +771,9 @@ $root.cosmos_sdk = (function() {
                 HasHasAnimal.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.codec.v1.HasHasAnimal();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.codec.v1.HasHasAnimal();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.hasAnimal = $root.google.protobuf.Any.decode(reader, reader.uint32());
@@ -816,7 +814,7 @@ $root.cosmos_sdk = (function() {
                     if (typeof message !== "object" || message === null)
                         return "object expected";
                     if (message.hasAnimal != null && message.hasOwnProperty("hasAnimal")) {
-                        var error = $root.google.protobuf.Any.verify(message.hasAnimal);
+                        let error = $root.google.protobuf.Any.verify(message.hasAnimal);
                         if (error)
                             return "hasAnimal." + error;
                     }
@@ -834,7 +832,7 @@ $root.cosmos_sdk = (function() {
                 HasHasAnimal.fromObject = function fromObject(object) {
                     if (object instanceof $root.cosmos_sdk.codec.v1.HasHasAnimal)
                         return object;
-                    var message = new $root.cosmos_sdk.codec.v1.HasHasAnimal();
+                    let message = new $root.cosmos_sdk.codec.v1.HasHasAnimal();
                     if (object.hasAnimal != null) {
                         if (typeof object.hasAnimal !== "object")
                             throw TypeError(".cosmos_sdk.codec.v1.HasHasAnimal.hasAnimal: object expected");
@@ -855,7 +853,7 @@ $root.cosmos_sdk = (function() {
                 HasHasAnimal.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.defaults)
                         object.hasAnimal = null;
                     if (message.hasAnimal != null && message.hasOwnProperty("hasAnimal"))
@@ -896,7 +894,7 @@ $root.cosmos_sdk = (function() {
                  */
                 function HasHasHasAnimal(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -965,9 +963,9 @@ $root.cosmos_sdk = (function() {
                 HasHasHasAnimal.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.codec.v1.HasHasHasAnimal();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.codec.v1.HasHasHasAnimal();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.hasHasAnimal = $root.google.protobuf.Any.decode(reader, reader.uint32());
@@ -1008,7 +1006,7 @@ $root.cosmos_sdk = (function() {
                     if (typeof message !== "object" || message === null)
                         return "object expected";
                     if (message.hasHasAnimal != null && message.hasOwnProperty("hasHasAnimal")) {
-                        var error = $root.google.protobuf.Any.verify(message.hasHasAnimal);
+                        let error = $root.google.protobuf.Any.verify(message.hasHasAnimal);
                         if (error)
                             return "hasHasAnimal." + error;
                     }
@@ -1026,7 +1024,7 @@ $root.cosmos_sdk = (function() {
                 HasHasHasAnimal.fromObject = function fromObject(object) {
                     if (object instanceof $root.cosmos_sdk.codec.v1.HasHasHasAnimal)
                         return object;
-                    var message = new $root.cosmos_sdk.codec.v1.HasHasHasAnimal();
+                    let message = new $root.cosmos_sdk.codec.v1.HasHasHasAnimal();
                     if (object.hasHasAnimal != null) {
                         if (typeof object.hasHasAnimal !== "object")
                             throw TypeError(".cosmos_sdk.codec.v1.HasHasHasAnimal.hasHasAnimal: object expected");
@@ -1047,7 +1045,7 @@ $root.cosmos_sdk = (function() {
                 HasHasHasAnimal.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.defaults)
                         object.hasHasAnimal = null;
                     if (message.hasHasAnimal != null && message.hasOwnProperty("hasHasAnimal"))
@@ -1189,7 +1187,7 @@ $root.cosmos_sdk = (function() {
                  */
                 function EchoRequest(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -1258,9 +1256,9 @@ $root.cosmos_sdk = (function() {
                 EchoRequest.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.codec.v1.EchoRequest();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.codec.v1.EchoRequest();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.message = reader.string();
@@ -1317,7 +1315,7 @@ $root.cosmos_sdk = (function() {
                 EchoRequest.fromObject = function fromObject(object) {
                     if (object instanceof $root.cosmos_sdk.codec.v1.EchoRequest)
                         return object;
-                    var message = new $root.cosmos_sdk.codec.v1.EchoRequest();
+                    let message = new $root.cosmos_sdk.codec.v1.EchoRequest();
                     if (object.message != null)
                         message.message = String(object.message);
                     return message;
@@ -1335,7 +1333,7 @@ $root.cosmos_sdk = (function() {
                 EchoRequest.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.defaults)
                         object.message = "";
                     if (message.message != null && message.hasOwnProperty("message"))
@@ -1376,7 +1374,7 @@ $root.cosmos_sdk = (function() {
                  */
                 function EchoResponse(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -1445,9 +1443,9 @@ $root.cosmos_sdk = (function() {
                 EchoResponse.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.codec.v1.EchoResponse();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.codec.v1.EchoResponse();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.message = reader.string();
@@ -1504,7 +1502,7 @@ $root.cosmos_sdk = (function() {
                 EchoResponse.fromObject = function fromObject(object) {
                     if (object instanceof $root.cosmos_sdk.codec.v1.EchoResponse)
                         return object;
-                    var message = new $root.cosmos_sdk.codec.v1.EchoResponse();
+                    let message = new $root.cosmos_sdk.codec.v1.EchoResponse();
                     if (object.message != null)
                         message.message = String(object.message);
                     return message;
@@ -1522,7 +1520,7 @@ $root.cosmos_sdk = (function() {
                 EchoResponse.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.defaults)
                         object.message = "";
                     if (message.message != null && message.hasOwnProperty("message"))
@@ -1563,7 +1561,7 @@ $root.cosmos_sdk = (function() {
                  */
                 function SayHelloRequest(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -1632,9 +1630,9 @@ $root.cosmos_sdk = (function() {
                 SayHelloRequest.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.codec.v1.SayHelloRequest();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.codec.v1.SayHelloRequest();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.name = reader.string();
@@ -1691,7 +1689,7 @@ $root.cosmos_sdk = (function() {
                 SayHelloRequest.fromObject = function fromObject(object) {
                     if (object instanceof $root.cosmos_sdk.codec.v1.SayHelloRequest)
                         return object;
-                    var message = new $root.cosmos_sdk.codec.v1.SayHelloRequest();
+                    let message = new $root.cosmos_sdk.codec.v1.SayHelloRequest();
                     if (object.name != null)
                         message.name = String(object.name);
                     return message;
@@ -1709,7 +1707,7 @@ $root.cosmos_sdk = (function() {
                 SayHelloRequest.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.defaults)
                         object.name = "";
                     if (message.name != null && message.hasOwnProperty("name"))
@@ -1750,7 +1748,7 @@ $root.cosmos_sdk = (function() {
                  */
                 function SayHelloResponse(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -1819,9 +1817,9 @@ $root.cosmos_sdk = (function() {
                 SayHelloResponse.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.codec.v1.SayHelloResponse();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.codec.v1.SayHelloResponse();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.greeting = reader.string();
@@ -1878,7 +1876,7 @@ $root.cosmos_sdk = (function() {
                 SayHelloResponse.fromObject = function fromObject(object) {
                     if (object instanceof $root.cosmos_sdk.codec.v1.SayHelloResponse)
                         return object;
-                    var message = new $root.cosmos_sdk.codec.v1.SayHelloResponse();
+                    let message = new $root.cosmos_sdk.codec.v1.SayHelloResponse();
                     if (object.greeting != null)
                         message.greeting = String(object.greeting);
                     return message;
@@ -1896,7 +1894,7 @@ $root.cosmos_sdk = (function() {
                 SayHelloResponse.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.defaults)
                         object.greeting = "";
                     if (message.greeting != null && message.hasOwnProperty("greeting"))
@@ -1931,7 +1929,7 @@ $root.cosmos_sdk = (function() {
          * @memberof cosmos_sdk
          * @namespace
          */
-        var crypto = {};
+        const crypto = {};
 
         crypto.v1 = (function() {
 
@@ -1940,7 +1938,7 @@ $root.cosmos_sdk = (function() {
              * @memberof cosmos_sdk.crypto
              * @namespace
              */
-            var v1 = {};
+            const v1 = {};
 
             v1.PublicKey = (function() {
 
@@ -1966,7 +1964,7 @@ $root.cosmos_sdk = (function() {
                  */
                 function PublicKey(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -2020,7 +2018,7 @@ $root.cosmos_sdk = (function() {
                 PublicKey.prototype.anyPubkey = null;
 
                 // OneOf field names bound to virtual getters and setters
-                var $oneOfFields;
+                let $oneOfFields;
 
                 /**
                  * PublicKey sum.
@@ -2099,9 +2097,9 @@ $root.cosmos_sdk = (function() {
                 PublicKey.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.crypto.v1.PublicKey();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.crypto.v1.PublicKey();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.secp256k1 = reader.bytes();
@@ -2156,7 +2154,7 @@ $root.cosmos_sdk = (function() {
                 PublicKey.verify = function verify(message) {
                     if (typeof message !== "object" || message === null)
                         return "object expected";
-                    var properties = {};
+                    let properties = {};
                     if (message.secp256k1 != null && message.hasOwnProperty("secp256k1")) {
                         properties.sum = 1;
                         if (!(message.secp256k1 && typeof message.secp256k1.length === "number" || $util.isString(message.secp256k1)))
@@ -2181,7 +2179,7 @@ $root.cosmos_sdk = (function() {
                             return "sum: multiple values";
                         properties.sum = 1;
                         {
-                            var error = $root.cosmos_sdk.crypto.v1.PubKeyMultisigThreshold.verify(message.multisig);
+                            let error = $root.cosmos_sdk.crypto.v1.PubKeyMultisigThreshold.verify(message.multisig);
                             if (error)
                                 return "multisig." + error;
                         }
@@ -2198,7 +2196,7 @@ $root.cosmos_sdk = (function() {
                             return "sum: multiple values";
                         properties.sum = 1;
                         {
-                            var error = $root.google.protobuf.Any.verify(message.anyPubkey);
+                            let error = $root.google.protobuf.Any.verify(message.anyPubkey);
                             if (error)
                                 return "anyPubkey." + error;
                         }
@@ -2217,7 +2215,7 @@ $root.cosmos_sdk = (function() {
                 PublicKey.fromObject = function fromObject(object) {
                     if (object instanceof $root.cosmos_sdk.crypto.v1.PublicKey)
                         return object;
-                    var message = new $root.cosmos_sdk.crypto.v1.PublicKey();
+                    let message = new $root.cosmos_sdk.crypto.v1.PublicKey();
                     if (object.secp256k1 != null)
                         if (typeof object.secp256k1 === "string")
                             $util.base64.decode(object.secp256k1, message.secp256k1 = $util.newBuffer($util.base64.length(object.secp256k1)), 0);
@@ -2263,7 +2261,7 @@ $root.cosmos_sdk = (function() {
                 PublicKey.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (message.secp256k1 != null && message.hasOwnProperty("secp256k1")) {
                         object.secp256k1 = options.bytes === String ? $util.base64.encode(message.secp256k1, 0, message.secp256k1.length) : options.bytes === Array ? Array.prototype.slice.call(message.secp256k1) : message.secp256k1;
                         if (options.oneofs)
@@ -2332,7 +2330,7 @@ $root.cosmos_sdk = (function() {
                 function PubKeyMultisigThreshold(properties) {
                     this.publicKeys = [];
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -2380,7 +2378,7 @@ $root.cosmos_sdk = (function() {
                     if (message.threshold != null && Object.hasOwnProperty.call(message, "threshold"))
                         writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.threshold);
                     if (message.publicKeys != null && message.publicKeys.length)
-                        for (var i = 0; i < message.publicKeys.length; ++i)
+                        for (let i = 0; i < message.publicKeys.length; ++i)
                             $root.cosmos_sdk.crypto.v1.PublicKey.encode(message.publicKeys[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
                     return writer;
                 };
@@ -2412,9 +2410,9 @@ $root.cosmos_sdk = (function() {
                 PubKeyMultisigThreshold.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.crypto.v1.PubKeyMultisigThreshold();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.crypto.v1.PubKeyMultisigThreshold();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.threshold = reader.uint32();
@@ -2465,8 +2463,8 @@ $root.cosmos_sdk = (function() {
                     if (message.publicKeys != null && message.hasOwnProperty("publicKeys")) {
                         if (!Array.isArray(message.publicKeys))
                             return "publicKeys: array expected";
-                        for (var i = 0; i < message.publicKeys.length; ++i) {
-                            var error = $root.cosmos_sdk.crypto.v1.PublicKey.verify(message.publicKeys[i]);
+                        for (let i = 0; i < message.publicKeys.length; ++i) {
+                            let error = $root.cosmos_sdk.crypto.v1.PublicKey.verify(message.publicKeys[i]);
                             if (error)
                                 return "publicKeys." + error;
                         }
@@ -2485,14 +2483,14 @@ $root.cosmos_sdk = (function() {
                 PubKeyMultisigThreshold.fromObject = function fromObject(object) {
                     if (object instanceof $root.cosmos_sdk.crypto.v1.PubKeyMultisigThreshold)
                         return object;
-                    var message = new $root.cosmos_sdk.crypto.v1.PubKeyMultisigThreshold();
+                    let message = new $root.cosmos_sdk.crypto.v1.PubKeyMultisigThreshold();
                     if (object.threshold != null)
                         message.threshold = object.threshold >>> 0;
                     if (object.publicKeys) {
                         if (!Array.isArray(object.publicKeys))
                             throw TypeError(".cosmos_sdk.crypto.v1.PubKeyMultisigThreshold.publicKeys: array expected");
                         message.publicKeys = [];
-                        for (var i = 0; i < object.publicKeys.length; ++i) {
+                        for (let i = 0; i < object.publicKeys.length; ++i) {
                             if (typeof object.publicKeys[i] !== "object")
                                 throw TypeError(".cosmos_sdk.crypto.v1.PubKeyMultisigThreshold.publicKeys: object expected");
                             message.publicKeys[i] = $root.cosmos_sdk.crypto.v1.PublicKey.fromObject(object.publicKeys[i]);
@@ -2513,7 +2511,7 @@ $root.cosmos_sdk = (function() {
                 PubKeyMultisigThreshold.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.arrays || options.defaults)
                         object.publicKeys = [];
                     if (options.defaults)
@@ -2522,7 +2520,7 @@ $root.cosmos_sdk = (function() {
                         object.threshold = message.threshold;
                     if (message.publicKeys && message.publicKeys.length) {
                         object.publicKeys = [];
-                        for (var j = 0; j < message.publicKeys.length; ++j)
+                        for (let j = 0; j < message.publicKeys.length; ++j)
                             object.publicKeys[j] = $root.cosmos_sdk.crypto.v1.PublicKey.toObject(message.publicKeys[j], options);
                     }
                     return object;
@@ -2562,7 +2560,7 @@ $root.cosmos_sdk = (function() {
                 function MultiSignature(properties) {
                     this.signatures = [];
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -2600,7 +2598,7 @@ $root.cosmos_sdk = (function() {
                     if (!writer)
                         writer = $Writer.create();
                     if (message.signatures != null && message.signatures.length)
-                        for (var i = 0; i < message.signatures.length; ++i)
+                        for (let i = 0; i < message.signatures.length; ++i)
                             writer.uint32(/* id 1, wireType 2 =*/10).bytes(message.signatures[i]);
                     return writer;
                 };
@@ -2632,9 +2630,9 @@ $root.cosmos_sdk = (function() {
                 MultiSignature.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.crypto.v1.MultiSignature();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.crypto.v1.MultiSignature();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             if (!(message.signatures && message.signatures.length))
@@ -2679,7 +2677,7 @@ $root.cosmos_sdk = (function() {
                     if (message.signatures != null && message.hasOwnProperty("signatures")) {
                         if (!Array.isArray(message.signatures))
                             return "signatures: array expected";
-                        for (var i = 0; i < message.signatures.length; ++i)
+                        for (let i = 0; i < message.signatures.length; ++i)
                             if (!(message.signatures[i] && typeof message.signatures[i].length === "number" || $util.isString(message.signatures[i])))
                                 return "signatures: buffer[] expected";
                     }
@@ -2697,12 +2695,12 @@ $root.cosmos_sdk = (function() {
                 MultiSignature.fromObject = function fromObject(object) {
                     if (object instanceof $root.cosmos_sdk.crypto.v1.MultiSignature)
                         return object;
-                    var message = new $root.cosmos_sdk.crypto.v1.MultiSignature();
+                    let message = new $root.cosmos_sdk.crypto.v1.MultiSignature();
                     if (object.signatures) {
                         if (!Array.isArray(object.signatures))
                             throw TypeError(".cosmos_sdk.crypto.v1.MultiSignature.signatures: array expected");
                         message.signatures = [];
-                        for (var i = 0; i < object.signatures.length; ++i)
+                        for (let i = 0; i < object.signatures.length; ++i)
                             if (typeof object.signatures[i] === "string")
                                 $util.base64.decode(object.signatures[i], message.signatures[i] = $util.newBuffer($util.base64.length(object.signatures[i])), 0);
                             else if (object.signatures[i].length)
@@ -2723,12 +2721,12 @@ $root.cosmos_sdk = (function() {
                 MultiSignature.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.arrays || options.defaults)
                         object.signatures = [];
                     if (message.signatures && message.signatures.length) {
                         object.signatures = [];
-                        for (var j = 0; j < message.signatures.length; ++j)
+                        for (let j = 0; j < message.signatures.length; ++j)
                             object.signatures[j] = options.bytes === String ? $util.base64.encode(message.signatures[j], 0, message.signatures[j].length) : options.bytes === Array ? Array.prototype.slice.call(message.signatures[j]) : message.signatures[j];
                     }
                     return object;
@@ -2768,7 +2766,7 @@ $root.cosmos_sdk = (function() {
                  */
                 function CompactBitArray(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -2847,9 +2845,9 @@ $root.cosmos_sdk = (function() {
                 CompactBitArray.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.crypto.v1.CompactBitArray();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.crypto.v1.CompactBitArray();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.extraBitsStored = reader.uint32();
@@ -2912,7 +2910,7 @@ $root.cosmos_sdk = (function() {
                 CompactBitArray.fromObject = function fromObject(object) {
                     if (object instanceof $root.cosmos_sdk.crypto.v1.CompactBitArray)
                         return object;
-                    var message = new $root.cosmos_sdk.crypto.v1.CompactBitArray();
+                    let message = new $root.cosmos_sdk.crypto.v1.CompactBitArray();
                     if (object.extraBitsStored != null)
                         message.extraBitsStored = object.extraBitsStored >>> 0;
                     if (object.elems != null)
@@ -2935,7 +2933,7 @@ $root.cosmos_sdk = (function() {
                 CompactBitArray.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.defaults) {
                         object.extraBitsStored = 0;
                         if (options.bytes === String)
@@ -2980,7 +2978,7 @@ $root.cosmos_sdk = (function() {
          * @memberof cosmos_sdk
          * @namespace
          */
-        var tx = {};
+        const tx = {};
 
         tx.signing = (function() {
 
@@ -2989,7 +2987,7 @@ $root.cosmos_sdk = (function() {
              * @memberof cosmos_sdk.tx
              * @namespace
              */
-            var signing = {};
+            const signing = {};
 
             signing.v1 = (function() {
 
@@ -2998,7 +2996,7 @@ $root.cosmos_sdk = (function() {
                  * @memberof cosmos_sdk.tx.signing
                  * @namespace
                  */
-                var v1 = {};
+                const v1 = {};
 
                 /**
                  * SignMode enum.
@@ -3010,7 +3008,7 @@ $root.cosmos_sdk = (function() {
                  * @property {number} SIGN_MODE_LEGACY_AMINO_JSON=127 SIGN_MODE_LEGACY_AMINO_JSON value
                  */
                 v1.SignMode = (function() {
-                    var valuesById = {}, values = Object.create(valuesById);
+                    const valuesById = {}, values = Object.create(valuesById);
                     values[valuesById[0] = "SIGN_MODE_UNSPECIFIED"] = 0;
                     values[valuesById[1] = "SIGN_MODE_DIRECT"] = 1;
                     values[valuesById[2] = "SIGN_MODE_TEXTUAL"] = 2;
@@ -3031,7 +3029,7 @@ $root.cosmos_sdk = (function() {
              * @memberof cosmos_sdk.tx
              * @namespace
              */
-            var v1 = {};
+            const v1 = {};
 
             v1.Tx = (function() {
 
@@ -3055,7 +3053,7 @@ $root.cosmos_sdk = (function() {
                 function Tx(properties) {
                     this.signatures = [];
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -3113,7 +3111,7 @@ $root.cosmos_sdk = (function() {
                     if (message.authInfo != null && Object.hasOwnProperty.call(message, "authInfo"))
                         $root.cosmos_sdk.tx.v1.AuthInfo.encode(message.authInfo, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
                     if (message.signatures != null && message.signatures.length)
-                        for (var i = 0; i < message.signatures.length; ++i)
+                        for (let i = 0; i < message.signatures.length; ++i)
                             writer.uint32(/* id 3, wireType 2 =*/26).bytes(message.signatures[i]);
                     return writer;
                 };
@@ -3145,9 +3143,9 @@ $root.cosmos_sdk = (function() {
                 Tx.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.tx.v1.Tx();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.tx.v1.Tx();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.body = $root.cosmos_sdk.tx.v1.TxBody.decode(reader, reader.uint32());
@@ -3196,19 +3194,19 @@ $root.cosmos_sdk = (function() {
                     if (typeof message !== "object" || message === null)
                         return "object expected";
                     if (message.body != null && message.hasOwnProperty("body")) {
-                        var error = $root.cosmos_sdk.tx.v1.TxBody.verify(message.body);
+                        let error = $root.cosmos_sdk.tx.v1.TxBody.verify(message.body);
                         if (error)
                             return "body." + error;
                     }
                     if (message.authInfo != null && message.hasOwnProperty("authInfo")) {
-                        var error = $root.cosmos_sdk.tx.v1.AuthInfo.verify(message.authInfo);
+                        let error = $root.cosmos_sdk.tx.v1.AuthInfo.verify(message.authInfo);
                         if (error)
                             return "authInfo." + error;
                     }
                     if (message.signatures != null && message.hasOwnProperty("signatures")) {
                         if (!Array.isArray(message.signatures))
                             return "signatures: array expected";
-                        for (var i = 0; i < message.signatures.length; ++i)
+                        for (let i = 0; i < message.signatures.length; ++i)
                             if (!(message.signatures[i] && typeof message.signatures[i].length === "number" || $util.isString(message.signatures[i])))
                                 return "signatures: buffer[] expected";
                     }
@@ -3226,7 +3224,7 @@ $root.cosmos_sdk = (function() {
                 Tx.fromObject = function fromObject(object) {
                     if (object instanceof $root.cosmos_sdk.tx.v1.Tx)
                         return object;
-                    var message = new $root.cosmos_sdk.tx.v1.Tx();
+                    let message = new $root.cosmos_sdk.tx.v1.Tx();
                     if (object.body != null) {
                         if (typeof object.body !== "object")
                             throw TypeError(".cosmos_sdk.tx.v1.Tx.body: object expected");
@@ -3241,7 +3239,7 @@ $root.cosmos_sdk = (function() {
                         if (!Array.isArray(object.signatures))
                             throw TypeError(".cosmos_sdk.tx.v1.Tx.signatures: array expected");
                         message.signatures = [];
-                        for (var i = 0; i < object.signatures.length; ++i)
+                        for (let i = 0; i < object.signatures.length; ++i)
                             if (typeof object.signatures[i] === "string")
                                 $util.base64.decode(object.signatures[i], message.signatures[i] = $util.newBuffer($util.base64.length(object.signatures[i])), 0);
                             else if (object.signatures[i].length)
@@ -3262,7 +3260,7 @@ $root.cosmos_sdk = (function() {
                 Tx.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.arrays || options.defaults)
                         object.signatures = [];
                     if (options.defaults) {
@@ -3275,7 +3273,7 @@ $root.cosmos_sdk = (function() {
                         object.authInfo = $root.cosmos_sdk.tx.v1.AuthInfo.toObject(message.authInfo, options);
                     if (message.signatures && message.signatures.length) {
                         object.signatures = [];
-                        for (var j = 0; j < message.signatures.length; ++j)
+                        for (let j = 0; j < message.signatures.length; ++j)
                             object.signatures[j] = options.bytes === String ? $util.base64.encode(message.signatures[j], 0, message.signatures[j].length) : options.bytes === Array ? Array.prototype.slice.call(message.signatures[j]) : message.signatures[j];
                     }
                     return object;
@@ -3318,7 +3316,7 @@ $root.cosmos_sdk = (function() {
                  */
                 function SignDoc(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -3427,9 +3425,9 @@ $root.cosmos_sdk = (function() {
                 SignDoc.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.tx.v1.SignDoc();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.tx.v1.SignDoc();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.body = $root.cosmos_sdk.tx.v1.TxBody.decode(reader, reader.uint32());
@@ -3482,12 +3480,12 @@ $root.cosmos_sdk = (function() {
                     if (typeof message !== "object" || message === null)
                         return "object expected";
                     if (message.body != null && message.hasOwnProperty("body")) {
-                        var error = $root.cosmos_sdk.tx.v1.TxBody.verify(message.body);
+                        let error = $root.cosmos_sdk.tx.v1.TxBody.verify(message.body);
                         if (error)
                             return "body." + error;
                     }
                     if (message.authInfo != null && message.hasOwnProperty("authInfo")) {
-                        var error = $root.cosmos_sdk.tx.v1.AuthInfo.verify(message.authInfo);
+                        let error = $root.cosmos_sdk.tx.v1.AuthInfo.verify(message.authInfo);
                         if (error)
                             return "authInfo." + error;
                     }
@@ -3514,7 +3512,7 @@ $root.cosmos_sdk = (function() {
                 SignDoc.fromObject = function fromObject(object) {
                     if (object instanceof $root.cosmos_sdk.tx.v1.SignDoc)
                         return object;
-                    var message = new $root.cosmos_sdk.tx.v1.SignDoc();
+                    let message = new $root.cosmos_sdk.tx.v1.SignDoc();
                     if (object.body != null) {
                         if (typeof object.body !== "object")
                             throw TypeError(".cosmos_sdk.tx.v1.SignDoc.body: object expected");
@@ -3560,18 +3558,18 @@ $root.cosmos_sdk = (function() {
                 SignDoc.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.defaults) {
                         object.body = null;
                         object.authInfo = null;
                         object.chainId = "";
                         if ($util.Long) {
-                            var long = new $util.Long(0, 0, true);
+                            let long = new $util.Long(0, 0, true);
                             object.accountNumber = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                         } else
                             object.accountNumber = options.longs === String ? "0" : 0;
                         if ($util.Long) {
-                            var long = new $util.Long(0, 0, true);
+                            let long = new $util.Long(0, 0, true);
                             object.accountSequence = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                         } else
                             object.accountSequence = options.longs === String ? "0" : 0;
@@ -3635,7 +3633,7 @@ $root.cosmos_sdk = (function() {
                     this.extensionOptions = [];
                     this.nonCriticalExtensionOptions = [];
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -3705,17 +3703,17 @@ $root.cosmos_sdk = (function() {
                     if (!writer)
                         writer = $Writer.create();
                     if (message.messages != null && message.messages.length)
-                        for (var i = 0; i < message.messages.length; ++i)
+                        for (let i = 0; i < message.messages.length; ++i)
                             $root.google.protobuf.Any.encode(message.messages[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
                     if (message.memo != null && Object.hasOwnProperty.call(message, "memo"))
                         writer.uint32(/* id 2, wireType 2 =*/18).string(message.memo);
                     if (message.timeoutHeight != null && Object.hasOwnProperty.call(message, "timeoutHeight"))
                         writer.uint32(/* id 3, wireType 0 =*/24).int64(message.timeoutHeight);
                     if (message.extensionOptions != null && message.extensionOptions.length)
-                        for (var i = 0; i < message.extensionOptions.length; ++i)
+                        for (let i = 0; i < message.extensionOptions.length; ++i)
                             $root.google.protobuf.Any.encode(message.extensionOptions[i], writer.uint32(/* id 1023, wireType 2 =*/8186).fork()).ldelim();
                     if (message.nonCriticalExtensionOptions != null && message.nonCriticalExtensionOptions.length)
-                        for (var i = 0; i < message.nonCriticalExtensionOptions.length; ++i)
+                        for (let i = 0; i < message.nonCriticalExtensionOptions.length; ++i)
                             $root.google.protobuf.Any.encode(message.nonCriticalExtensionOptions[i], writer.uint32(/* id 2047, wireType 2 =*/16378).fork()).ldelim();
                     return writer;
                 };
@@ -3747,9 +3745,9 @@ $root.cosmos_sdk = (function() {
                 TxBody.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.tx.v1.TxBody();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.tx.v1.TxBody();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             if (!(message.messages && message.messages.length))
@@ -3810,8 +3808,8 @@ $root.cosmos_sdk = (function() {
                     if (message.messages != null && message.hasOwnProperty("messages")) {
                         if (!Array.isArray(message.messages))
                             return "messages: array expected";
-                        for (var i = 0; i < message.messages.length; ++i) {
-                            var error = $root.google.protobuf.Any.verify(message.messages[i]);
+                        for (let i = 0; i < message.messages.length; ++i) {
+                            let error = $root.google.protobuf.Any.verify(message.messages[i]);
                             if (error)
                                 return "messages." + error;
                         }
@@ -3825,8 +3823,8 @@ $root.cosmos_sdk = (function() {
                     if (message.extensionOptions != null && message.hasOwnProperty("extensionOptions")) {
                         if (!Array.isArray(message.extensionOptions))
                             return "extensionOptions: array expected";
-                        for (var i = 0; i < message.extensionOptions.length; ++i) {
-                            var error = $root.google.protobuf.Any.verify(message.extensionOptions[i]);
+                        for (let i = 0; i < message.extensionOptions.length; ++i) {
+                            let error = $root.google.protobuf.Any.verify(message.extensionOptions[i]);
                             if (error)
                                 return "extensionOptions." + error;
                         }
@@ -3834,8 +3832,8 @@ $root.cosmos_sdk = (function() {
                     if (message.nonCriticalExtensionOptions != null && message.hasOwnProperty("nonCriticalExtensionOptions")) {
                         if (!Array.isArray(message.nonCriticalExtensionOptions))
                             return "nonCriticalExtensionOptions: array expected";
-                        for (var i = 0; i < message.nonCriticalExtensionOptions.length; ++i) {
-                            var error = $root.google.protobuf.Any.verify(message.nonCriticalExtensionOptions[i]);
+                        for (let i = 0; i < message.nonCriticalExtensionOptions.length; ++i) {
+                            let error = $root.google.protobuf.Any.verify(message.nonCriticalExtensionOptions[i]);
                             if (error)
                                 return "nonCriticalExtensionOptions." + error;
                         }
@@ -3854,12 +3852,12 @@ $root.cosmos_sdk = (function() {
                 TxBody.fromObject = function fromObject(object) {
                     if (object instanceof $root.cosmos_sdk.tx.v1.TxBody)
                         return object;
-                    var message = new $root.cosmos_sdk.tx.v1.TxBody();
+                    let message = new $root.cosmos_sdk.tx.v1.TxBody();
                     if (object.messages) {
                         if (!Array.isArray(object.messages))
                             throw TypeError(".cosmos_sdk.tx.v1.TxBody.messages: array expected");
                         message.messages = [];
-                        for (var i = 0; i < object.messages.length; ++i) {
+                        for (let i = 0; i < object.messages.length; ++i) {
                             if (typeof object.messages[i] !== "object")
                                 throw TypeError(".cosmos_sdk.tx.v1.TxBody.messages: object expected");
                             message.messages[i] = $root.google.protobuf.Any.fromObject(object.messages[i]);
@@ -3880,7 +3878,7 @@ $root.cosmos_sdk = (function() {
                         if (!Array.isArray(object.extensionOptions))
                             throw TypeError(".cosmos_sdk.tx.v1.TxBody.extensionOptions: array expected");
                         message.extensionOptions = [];
-                        for (var i = 0; i < object.extensionOptions.length; ++i) {
+                        for (let i = 0; i < object.extensionOptions.length; ++i) {
                             if (typeof object.extensionOptions[i] !== "object")
                                 throw TypeError(".cosmos_sdk.tx.v1.TxBody.extensionOptions: object expected");
                             message.extensionOptions[i] = $root.google.protobuf.Any.fromObject(object.extensionOptions[i]);
@@ -3890,7 +3888,7 @@ $root.cosmos_sdk = (function() {
                         if (!Array.isArray(object.nonCriticalExtensionOptions))
                             throw TypeError(".cosmos_sdk.tx.v1.TxBody.nonCriticalExtensionOptions: array expected");
                         message.nonCriticalExtensionOptions = [];
-                        for (var i = 0; i < object.nonCriticalExtensionOptions.length; ++i) {
+                        for (let i = 0; i < object.nonCriticalExtensionOptions.length; ++i) {
                             if (typeof object.nonCriticalExtensionOptions[i] !== "object")
                                 throw TypeError(".cosmos_sdk.tx.v1.TxBody.nonCriticalExtensionOptions: object expected");
                             message.nonCriticalExtensionOptions[i] = $root.google.protobuf.Any.fromObject(object.nonCriticalExtensionOptions[i]);
@@ -3911,7 +3909,7 @@ $root.cosmos_sdk = (function() {
                 TxBody.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.arrays || options.defaults) {
                         object.messages = [];
                         object.extensionOptions = [];
@@ -3920,14 +3918,14 @@ $root.cosmos_sdk = (function() {
                     if (options.defaults) {
                         object.memo = "";
                         if ($util.Long) {
-                            var long = new $util.Long(0, 0, false);
+                            let long = new $util.Long(0, 0, false);
                             object.timeoutHeight = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                         } else
                             object.timeoutHeight = options.longs === String ? "0" : 0;
                     }
                     if (message.messages && message.messages.length) {
                         object.messages = [];
-                        for (var j = 0; j < message.messages.length; ++j)
+                        for (let j = 0; j < message.messages.length; ++j)
                             object.messages[j] = $root.google.protobuf.Any.toObject(message.messages[j], options);
                     }
                     if (message.memo != null && message.hasOwnProperty("memo"))
@@ -3939,12 +3937,12 @@ $root.cosmos_sdk = (function() {
                             object.timeoutHeight = options.longs === String ? $util.Long.prototype.toString.call(message.timeoutHeight) : options.longs === Number ? new $util.LongBits(message.timeoutHeight.low >>> 0, message.timeoutHeight.high >>> 0).toNumber() : message.timeoutHeight;
                     if (message.extensionOptions && message.extensionOptions.length) {
                         object.extensionOptions = [];
-                        for (var j = 0; j < message.extensionOptions.length; ++j)
+                        for (let j = 0; j < message.extensionOptions.length; ++j)
                             object.extensionOptions[j] = $root.google.protobuf.Any.toObject(message.extensionOptions[j], options);
                     }
                     if (message.nonCriticalExtensionOptions && message.nonCriticalExtensionOptions.length) {
                         object.nonCriticalExtensionOptions = [];
-                        for (var j = 0; j < message.nonCriticalExtensionOptions.length; ++j)
+                        for (let j = 0; j < message.nonCriticalExtensionOptions.length; ++j)
                             object.nonCriticalExtensionOptions[j] = $root.google.protobuf.Any.toObject(message.nonCriticalExtensionOptions[j], options);
                     }
                     return object;
@@ -3985,7 +3983,7 @@ $root.cosmos_sdk = (function() {
                 function AuthInfo(properties) {
                     this.signerInfos = [];
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -4031,7 +4029,7 @@ $root.cosmos_sdk = (function() {
                     if (!writer)
                         writer = $Writer.create();
                     if (message.signerInfos != null && message.signerInfos.length)
-                        for (var i = 0; i < message.signerInfos.length; ++i)
+                        for (let i = 0; i < message.signerInfos.length; ++i)
                             $root.cosmos_sdk.tx.v1.SignerInfo.encode(message.signerInfos[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
                     if (message.fee != null && Object.hasOwnProperty.call(message, "fee"))
                         $root.cosmos_sdk.tx.v1.Fee.encode(message.fee, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
@@ -4065,9 +4063,9 @@ $root.cosmos_sdk = (function() {
                 AuthInfo.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.tx.v1.AuthInfo();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.tx.v1.AuthInfo();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             if (!(message.signerInfos && message.signerInfos.length))
@@ -4115,14 +4113,14 @@ $root.cosmos_sdk = (function() {
                     if (message.signerInfos != null && message.hasOwnProperty("signerInfos")) {
                         if (!Array.isArray(message.signerInfos))
                             return "signerInfos: array expected";
-                        for (var i = 0; i < message.signerInfos.length; ++i) {
-                            var error = $root.cosmos_sdk.tx.v1.SignerInfo.verify(message.signerInfos[i]);
+                        for (let i = 0; i < message.signerInfos.length; ++i) {
+                            let error = $root.cosmos_sdk.tx.v1.SignerInfo.verify(message.signerInfos[i]);
                             if (error)
                                 return "signerInfos." + error;
                         }
                     }
                     if (message.fee != null && message.hasOwnProperty("fee")) {
-                        var error = $root.cosmos_sdk.tx.v1.Fee.verify(message.fee);
+                        let error = $root.cosmos_sdk.tx.v1.Fee.verify(message.fee);
                         if (error)
                             return "fee." + error;
                     }
@@ -4140,12 +4138,12 @@ $root.cosmos_sdk = (function() {
                 AuthInfo.fromObject = function fromObject(object) {
                     if (object instanceof $root.cosmos_sdk.tx.v1.AuthInfo)
                         return object;
-                    var message = new $root.cosmos_sdk.tx.v1.AuthInfo();
+                    let message = new $root.cosmos_sdk.tx.v1.AuthInfo();
                     if (object.signerInfos) {
                         if (!Array.isArray(object.signerInfos))
                             throw TypeError(".cosmos_sdk.tx.v1.AuthInfo.signerInfos: array expected");
                         message.signerInfos = [];
-                        for (var i = 0; i < object.signerInfos.length; ++i) {
+                        for (let i = 0; i < object.signerInfos.length; ++i) {
                             if (typeof object.signerInfos[i] !== "object")
                                 throw TypeError(".cosmos_sdk.tx.v1.AuthInfo.signerInfos: object expected");
                             message.signerInfos[i] = $root.cosmos_sdk.tx.v1.SignerInfo.fromObject(object.signerInfos[i]);
@@ -4171,14 +4169,14 @@ $root.cosmos_sdk = (function() {
                 AuthInfo.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.arrays || options.defaults)
                         object.signerInfos = [];
                     if (options.defaults)
                         object.fee = null;
                     if (message.signerInfos && message.signerInfos.length) {
                         object.signerInfos = [];
-                        for (var j = 0; j < message.signerInfos.length; ++j)
+                        for (let j = 0; j < message.signerInfos.length; ++j)
                             object.signerInfos[j] = $root.cosmos_sdk.tx.v1.SignerInfo.toObject(message.signerInfos[j], options);
                     }
                     if (message.fee != null && message.hasOwnProperty("fee"))
@@ -4220,7 +4218,7 @@ $root.cosmos_sdk = (function() {
                  */
                 function SignerInfo(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -4299,9 +4297,9 @@ $root.cosmos_sdk = (function() {
                 SignerInfo.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.tx.v1.SignerInfo();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.tx.v1.SignerInfo();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.publicKey = $root.google.protobuf.Any.decode(reader, reader.uint32());
@@ -4345,12 +4343,12 @@ $root.cosmos_sdk = (function() {
                     if (typeof message !== "object" || message === null)
                         return "object expected";
                     if (message.publicKey != null && message.hasOwnProperty("publicKey")) {
-                        var error = $root.google.protobuf.Any.verify(message.publicKey);
+                        let error = $root.google.protobuf.Any.verify(message.publicKey);
                         if (error)
                             return "publicKey." + error;
                     }
                     if (message.modeInfo != null && message.hasOwnProperty("modeInfo")) {
-                        var error = $root.cosmos_sdk.tx.v1.ModeInfo.verify(message.modeInfo);
+                        let error = $root.cosmos_sdk.tx.v1.ModeInfo.verify(message.modeInfo);
                         if (error)
                             return "modeInfo." + error;
                     }
@@ -4368,7 +4366,7 @@ $root.cosmos_sdk = (function() {
                 SignerInfo.fromObject = function fromObject(object) {
                     if (object instanceof $root.cosmos_sdk.tx.v1.SignerInfo)
                         return object;
-                    var message = new $root.cosmos_sdk.tx.v1.SignerInfo();
+                    let message = new $root.cosmos_sdk.tx.v1.SignerInfo();
                     if (object.publicKey != null) {
                         if (typeof object.publicKey !== "object")
                             throw TypeError(".cosmos_sdk.tx.v1.SignerInfo.publicKey: object expected");
@@ -4394,7 +4392,7 @@ $root.cosmos_sdk = (function() {
                 SignerInfo.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.defaults) {
                         object.publicKey = null;
                         object.modeInfo = null;
@@ -4440,7 +4438,7 @@ $root.cosmos_sdk = (function() {
                  */
                 function ModeInfo(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -4462,7 +4460,7 @@ $root.cosmos_sdk = (function() {
                 ModeInfo.prototype.multi = null;
 
                 // OneOf field names bound to virtual getters and setters
-                var $oneOfFields;
+                let $oneOfFields;
 
                 /**
                  * ModeInfo sum.
@@ -4533,9 +4531,9 @@ $root.cosmos_sdk = (function() {
                 ModeInfo.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.tx.v1.ModeInfo();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.tx.v1.ModeInfo();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.single = $root.cosmos_sdk.tx.v1.ModeInfo.Single.decode(reader, reader.uint32());
@@ -4578,11 +4576,11 @@ $root.cosmos_sdk = (function() {
                 ModeInfo.verify = function verify(message) {
                     if (typeof message !== "object" || message === null)
                         return "object expected";
-                    var properties = {};
+                    let properties = {};
                     if (message.single != null && message.hasOwnProperty("single")) {
                         properties.sum = 1;
                         {
-                            var error = $root.cosmos_sdk.tx.v1.ModeInfo.Single.verify(message.single);
+                            let error = $root.cosmos_sdk.tx.v1.ModeInfo.Single.verify(message.single);
                             if (error)
                                 return "single." + error;
                         }
@@ -4592,7 +4590,7 @@ $root.cosmos_sdk = (function() {
                             return "sum: multiple values";
                         properties.sum = 1;
                         {
-                            var error = $root.cosmos_sdk.tx.v1.ModeInfo.Multi.verify(message.multi);
+                            let error = $root.cosmos_sdk.tx.v1.ModeInfo.Multi.verify(message.multi);
                             if (error)
                                 return "multi." + error;
                         }
@@ -4611,7 +4609,7 @@ $root.cosmos_sdk = (function() {
                 ModeInfo.fromObject = function fromObject(object) {
                     if (object instanceof $root.cosmos_sdk.tx.v1.ModeInfo)
                         return object;
-                    var message = new $root.cosmos_sdk.tx.v1.ModeInfo();
+                    let message = new $root.cosmos_sdk.tx.v1.ModeInfo();
                     if (object.single != null) {
                         if (typeof object.single !== "object")
                             throw TypeError(".cosmos_sdk.tx.v1.ModeInfo.single: object expected");
@@ -4637,7 +4635,7 @@ $root.cosmos_sdk = (function() {
                 ModeInfo.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (message.single != null && message.hasOwnProperty("single")) {
                         object.single = $root.cosmos_sdk.tx.v1.ModeInfo.Single.toObject(message.single, options);
                         if (options.oneofs)
@@ -4681,7 +4679,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function Single(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -4750,9 +4748,9 @@ $root.cosmos_sdk = (function() {
                     Single.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.tx.v1.ModeInfo.Single();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.tx.v1.ModeInfo.Single();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.mode = reader.int32();
@@ -4816,7 +4814,7 @@ $root.cosmos_sdk = (function() {
                     Single.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.tx.v1.ModeInfo.Single)
                             return object;
-                        var message = new $root.cosmos_sdk.tx.v1.ModeInfo.Single();
+                        let message = new $root.cosmos_sdk.tx.v1.ModeInfo.Single();
                         switch (object.mode) {
                         case "SIGN_MODE_UNSPECIFIED":
                         case 0:
@@ -4850,7 +4848,7 @@ $root.cosmos_sdk = (function() {
                     Single.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults)
                             object.mode = options.enums === String ? "SIGN_MODE_UNSPECIFIED" : 0;
                         if (message.mode != null && message.hasOwnProperty("mode"))
@@ -4893,7 +4891,7 @@ $root.cosmos_sdk = (function() {
                     function Multi(properties) {
                         this.modeInfos = [];
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -4941,7 +4939,7 @@ $root.cosmos_sdk = (function() {
                         if (message.bitarray != null && Object.hasOwnProperty.call(message, "bitarray"))
                             $root.cosmos_sdk.crypto.v1.CompactBitArray.encode(message.bitarray, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
                         if (message.modeInfos != null && message.modeInfos.length)
-                            for (var i = 0; i < message.modeInfos.length; ++i)
+                            for (let i = 0; i < message.modeInfos.length; ++i)
                                 $root.cosmos_sdk.tx.v1.ModeInfo.encode(message.modeInfos[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
                         return writer;
                     };
@@ -4973,9 +4971,9 @@ $root.cosmos_sdk = (function() {
                     Multi.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.tx.v1.ModeInfo.Multi();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.tx.v1.ModeInfo.Multi();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.bitarray = $root.cosmos_sdk.crypto.v1.CompactBitArray.decode(reader, reader.uint32());
@@ -5021,15 +5019,15 @@ $root.cosmos_sdk = (function() {
                         if (typeof message !== "object" || message === null)
                             return "object expected";
                         if (message.bitarray != null && message.hasOwnProperty("bitarray")) {
-                            var error = $root.cosmos_sdk.crypto.v1.CompactBitArray.verify(message.bitarray);
+                            let error = $root.cosmos_sdk.crypto.v1.CompactBitArray.verify(message.bitarray);
                             if (error)
                                 return "bitarray." + error;
                         }
                         if (message.modeInfos != null && message.hasOwnProperty("modeInfos")) {
                             if (!Array.isArray(message.modeInfos))
                                 return "modeInfos: array expected";
-                            for (var i = 0; i < message.modeInfos.length; ++i) {
-                                var error = $root.cosmos_sdk.tx.v1.ModeInfo.verify(message.modeInfos[i]);
+                            for (let i = 0; i < message.modeInfos.length; ++i) {
+                                let error = $root.cosmos_sdk.tx.v1.ModeInfo.verify(message.modeInfos[i]);
                                 if (error)
                                     return "modeInfos." + error;
                             }
@@ -5048,7 +5046,7 @@ $root.cosmos_sdk = (function() {
                     Multi.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.tx.v1.ModeInfo.Multi)
                             return object;
-                        var message = new $root.cosmos_sdk.tx.v1.ModeInfo.Multi();
+                        let message = new $root.cosmos_sdk.tx.v1.ModeInfo.Multi();
                         if (object.bitarray != null) {
                             if (typeof object.bitarray !== "object")
                                 throw TypeError(".cosmos_sdk.tx.v1.ModeInfo.Multi.bitarray: object expected");
@@ -5058,7 +5056,7 @@ $root.cosmos_sdk = (function() {
                             if (!Array.isArray(object.modeInfos))
                                 throw TypeError(".cosmos_sdk.tx.v1.ModeInfo.Multi.modeInfos: array expected");
                             message.modeInfos = [];
-                            for (var i = 0; i < object.modeInfos.length; ++i) {
+                            for (let i = 0; i < object.modeInfos.length; ++i) {
                                 if (typeof object.modeInfos[i] !== "object")
                                     throw TypeError(".cosmos_sdk.tx.v1.ModeInfo.Multi.modeInfos: object expected");
                                 message.modeInfos[i] = $root.cosmos_sdk.tx.v1.ModeInfo.fromObject(object.modeInfos[i]);
@@ -5079,7 +5077,7 @@ $root.cosmos_sdk = (function() {
                     Multi.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.arrays || options.defaults)
                             object.modeInfos = [];
                         if (options.defaults)
@@ -5088,7 +5086,7 @@ $root.cosmos_sdk = (function() {
                             object.bitarray = $root.cosmos_sdk.crypto.v1.CompactBitArray.toObject(message.bitarray, options);
                         if (message.modeInfos && message.modeInfos.length) {
                             object.modeInfos = [];
-                            for (var j = 0; j < message.modeInfos.length; ++j)
+                            for (let j = 0; j < message.modeInfos.length; ++j)
                                 object.modeInfos[j] = $root.cosmos_sdk.tx.v1.ModeInfo.toObject(message.modeInfos[j], options);
                         }
                         return object;
@@ -5132,7 +5130,7 @@ $root.cosmos_sdk = (function() {
                 function Fee(properties) {
                     this.amount = [];
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -5178,7 +5176,7 @@ $root.cosmos_sdk = (function() {
                     if (!writer)
                         writer = $Writer.create();
                     if (message.amount != null && message.amount.length)
-                        for (var i = 0; i < message.amount.length; ++i)
+                        for (let i = 0; i < message.amount.length; ++i)
                             $root.cosmos_sdk.v1.Coin.encode(message.amount[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
                     if (message.gasLimit != null && Object.hasOwnProperty.call(message, "gasLimit"))
                         writer.uint32(/* id 2, wireType 0 =*/16).uint64(message.gasLimit);
@@ -5212,9 +5210,9 @@ $root.cosmos_sdk = (function() {
                 Fee.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.tx.v1.Fee();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.tx.v1.Fee();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             if (!(message.amount && message.amount.length))
@@ -5262,8 +5260,8 @@ $root.cosmos_sdk = (function() {
                     if (message.amount != null && message.hasOwnProperty("amount")) {
                         if (!Array.isArray(message.amount))
                             return "amount: array expected";
-                        for (var i = 0; i < message.amount.length; ++i) {
-                            var error = $root.cosmos_sdk.v1.Coin.verify(message.amount[i]);
+                        for (let i = 0; i < message.amount.length; ++i) {
+                            let error = $root.cosmos_sdk.v1.Coin.verify(message.amount[i]);
                             if (error)
                                 return "amount." + error;
                         }
@@ -5285,12 +5283,12 @@ $root.cosmos_sdk = (function() {
                 Fee.fromObject = function fromObject(object) {
                     if (object instanceof $root.cosmos_sdk.tx.v1.Fee)
                         return object;
-                    var message = new $root.cosmos_sdk.tx.v1.Fee();
+                    let message = new $root.cosmos_sdk.tx.v1.Fee();
                     if (object.amount) {
                         if (!Array.isArray(object.amount))
                             throw TypeError(".cosmos_sdk.tx.v1.Fee.amount: array expected");
                         message.amount = [];
-                        for (var i = 0; i < object.amount.length; ++i) {
+                        for (let i = 0; i < object.amount.length; ++i) {
                             if (typeof object.amount[i] !== "object")
                                 throw TypeError(".cosmos_sdk.tx.v1.Fee.amount: object expected");
                             message.amount[i] = $root.cosmos_sdk.v1.Coin.fromObject(object.amount[i]);
@@ -5320,18 +5318,18 @@ $root.cosmos_sdk = (function() {
                 Fee.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.arrays || options.defaults)
                         object.amount = [];
                     if (options.defaults)
                         if ($util.Long) {
-                            var long = new $util.Long(0, 0, true);
+                            let long = new $util.Long(0, 0, true);
                             object.gasLimit = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                         } else
                             object.gasLimit = options.longs === String ? "0" : 0;
                     if (message.amount && message.amount.length) {
                         object.amount = [];
-                        for (var j = 0; j < message.amount.length; ++j)
+                        for (let j = 0; j < message.amount.length; ++j)
                             object.amount[j] = $root.cosmos_sdk.v1.Coin.toObject(message.amount[j], options);
                     }
                     if (message.gasLimit != null && message.hasOwnProperty("gasLimit"))
@@ -5369,7 +5367,7 @@ $root.cosmos_sdk = (function() {
          * @memberof cosmos_sdk
          * @namespace
          */
-        var v1 = {};
+        const v1 = {};
 
         v1.Coin = (function() {
 
@@ -5391,7 +5389,7 @@ $root.cosmos_sdk = (function() {
              */
             function Coin(properties) {
                 if (properties)
-                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
                             this[keys[i]] = properties[keys[i]];
             }
@@ -5470,9 +5468,9 @@ $root.cosmos_sdk = (function() {
             Coin.decode = function decode(reader, length) {
                 if (!(reader instanceof $Reader))
                     reader = $Reader.create(reader);
-                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.v1.Coin();
+                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.v1.Coin();
                 while (reader.pos < end) {
-                    var tag = reader.uint32();
+                    let tag = reader.uint32();
                     switch (tag >>> 3) {
                     case 1:
                         message.denom = reader.string();
@@ -5535,7 +5533,7 @@ $root.cosmos_sdk = (function() {
             Coin.fromObject = function fromObject(object) {
                 if (object instanceof $root.cosmos_sdk.v1.Coin)
                     return object;
-                var message = new $root.cosmos_sdk.v1.Coin();
+                let message = new $root.cosmos_sdk.v1.Coin();
                 if (object.denom != null)
                     message.denom = String(object.denom);
                 if (object.amount != null)
@@ -5555,7 +5553,7 @@ $root.cosmos_sdk = (function() {
             Coin.toObject = function toObject(message, options) {
                 if (!options)
                     options = {};
-                var object = {};
+                let object = {};
                 if (options.defaults) {
                     object.denom = "";
                     object.amount = "";
@@ -5601,7 +5599,7 @@ $root.cosmos_sdk = (function() {
              */
             function DecCoin(properties) {
                 if (properties)
-                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
                             this[keys[i]] = properties[keys[i]];
             }
@@ -5680,9 +5678,9 @@ $root.cosmos_sdk = (function() {
             DecCoin.decode = function decode(reader, length) {
                 if (!(reader instanceof $Reader))
                     reader = $Reader.create(reader);
-                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.v1.DecCoin();
+                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.v1.DecCoin();
                 while (reader.pos < end) {
-                    var tag = reader.uint32();
+                    let tag = reader.uint32();
                     switch (tag >>> 3) {
                     case 1:
                         message.denom = reader.string();
@@ -5745,7 +5743,7 @@ $root.cosmos_sdk = (function() {
             DecCoin.fromObject = function fromObject(object) {
                 if (object instanceof $root.cosmos_sdk.v1.DecCoin)
                     return object;
-                var message = new $root.cosmos_sdk.v1.DecCoin();
+                let message = new $root.cosmos_sdk.v1.DecCoin();
                 if (object.denom != null)
                     message.denom = String(object.denom);
                 if (object.amount != null)
@@ -5765,7 +5763,7 @@ $root.cosmos_sdk = (function() {
             DecCoin.toObject = function toObject(message, options) {
                 if (!options)
                     options = {};
-                var object = {};
+                let object = {};
                 if (options.defaults) {
                     object.denom = "";
                     object.amount = "";
@@ -5810,7 +5808,7 @@ $root.cosmos_sdk = (function() {
              */
             function IntProto(properties) {
                 if (properties)
-                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
                             this[keys[i]] = properties[keys[i]];
             }
@@ -5879,9 +5877,9 @@ $root.cosmos_sdk = (function() {
             IntProto.decode = function decode(reader, length) {
                 if (!(reader instanceof $Reader))
                     reader = $Reader.create(reader);
-                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.v1.IntProto();
+                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.v1.IntProto();
                 while (reader.pos < end) {
-                    var tag = reader.uint32();
+                    let tag = reader.uint32();
                     switch (tag >>> 3) {
                     case 1:
                         message.int = reader.string();
@@ -5938,7 +5936,7 @@ $root.cosmos_sdk = (function() {
             IntProto.fromObject = function fromObject(object) {
                 if (object instanceof $root.cosmos_sdk.v1.IntProto)
                     return object;
-                var message = new $root.cosmos_sdk.v1.IntProto();
+                let message = new $root.cosmos_sdk.v1.IntProto();
                 if (object.int != null)
                     message.int = String(object.int);
                 return message;
@@ -5956,7 +5954,7 @@ $root.cosmos_sdk = (function() {
             IntProto.toObject = function toObject(message, options) {
                 if (!options)
                     options = {};
-                var object = {};
+                let object = {};
                 if (options.defaults)
                     object.int = "";
                 if (message.int != null && message.hasOwnProperty("int"))
@@ -5997,7 +5995,7 @@ $root.cosmos_sdk = (function() {
              */
             function DecProto(properties) {
                 if (properties)
-                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
                             this[keys[i]] = properties[keys[i]];
             }
@@ -6066,9 +6064,9 @@ $root.cosmos_sdk = (function() {
             DecProto.decode = function decode(reader, length) {
                 if (!(reader instanceof $Reader))
                     reader = $Reader.create(reader);
-                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.v1.DecProto();
+                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.v1.DecProto();
                 while (reader.pos < end) {
-                    var tag = reader.uint32();
+                    let tag = reader.uint32();
                     switch (tag >>> 3) {
                     case 1:
                         message.dec = reader.string();
@@ -6125,7 +6123,7 @@ $root.cosmos_sdk = (function() {
             DecProto.fromObject = function fromObject(object) {
                 if (object instanceof $root.cosmos_sdk.v1.DecProto)
                     return object;
-                var message = new $root.cosmos_sdk.v1.DecProto();
+                let message = new $root.cosmos_sdk.v1.DecProto();
                 if (object.dec != null)
                     message.dec = String(object.dec);
                 return message;
@@ -6143,7 +6141,7 @@ $root.cosmos_sdk = (function() {
             DecProto.toObject = function toObject(message, options) {
                 if (!options)
                     options = {};
-                var object = {};
+                let object = {};
                 if (options.defaults)
                     object.dec = "";
                 if (message.dec != null && message.hasOwnProperty("dec"))
@@ -6185,7 +6183,7 @@ $root.cosmos_sdk = (function() {
             function ValAddresses(properties) {
                 this.addresses = [];
                 if (properties)
-                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
                             this[keys[i]] = properties[keys[i]];
             }
@@ -6223,7 +6221,7 @@ $root.cosmos_sdk = (function() {
                 if (!writer)
                     writer = $Writer.create();
                 if (message.addresses != null && message.addresses.length)
-                    for (var i = 0; i < message.addresses.length; ++i)
+                    for (let i = 0; i < message.addresses.length; ++i)
                         writer.uint32(/* id 1, wireType 2 =*/10).bytes(message.addresses[i]);
                 return writer;
             };
@@ -6255,9 +6253,9 @@ $root.cosmos_sdk = (function() {
             ValAddresses.decode = function decode(reader, length) {
                 if (!(reader instanceof $Reader))
                     reader = $Reader.create(reader);
-                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.v1.ValAddresses();
+                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.v1.ValAddresses();
                 while (reader.pos < end) {
-                    var tag = reader.uint32();
+                    let tag = reader.uint32();
                     switch (tag >>> 3) {
                     case 1:
                         if (!(message.addresses && message.addresses.length))
@@ -6302,7 +6300,7 @@ $root.cosmos_sdk = (function() {
                 if (message.addresses != null && message.hasOwnProperty("addresses")) {
                     if (!Array.isArray(message.addresses))
                         return "addresses: array expected";
-                    for (var i = 0; i < message.addresses.length; ++i)
+                    for (let i = 0; i < message.addresses.length; ++i)
                         if (!(message.addresses[i] && typeof message.addresses[i].length === "number" || $util.isString(message.addresses[i])))
                             return "addresses: buffer[] expected";
                 }
@@ -6320,12 +6318,12 @@ $root.cosmos_sdk = (function() {
             ValAddresses.fromObject = function fromObject(object) {
                 if (object instanceof $root.cosmos_sdk.v1.ValAddresses)
                     return object;
-                var message = new $root.cosmos_sdk.v1.ValAddresses();
+                let message = new $root.cosmos_sdk.v1.ValAddresses();
                 if (object.addresses) {
                     if (!Array.isArray(object.addresses))
                         throw TypeError(".cosmos_sdk.v1.ValAddresses.addresses: array expected");
                     message.addresses = [];
-                    for (var i = 0; i < object.addresses.length; ++i)
+                    for (let i = 0; i < object.addresses.length; ++i)
                         if (typeof object.addresses[i] === "string")
                             $util.base64.decode(object.addresses[i], message.addresses[i] = $util.newBuffer($util.base64.length(object.addresses[i])), 0);
                         else if (object.addresses[i].length)
@@ -6346,12 +6344,12 @@ $root.cosmos_sdk = (function() {
             ValAddresses.toObject = function toObject(message, options) {
                 if (!options)
                     options = {};
-                var object = {};
+                let object = {};
                 if (options.arrays || options.defaults)
                     object.addresses = [];
                 if (message.addresses && message.addresses.length) {
                     object.addresses = [];
-                    for (var j = 0; j < message.addresses.length; ++j)
+                    for (let j = 0; j < message.addresses.length; ++j)
                         object.addresses[j] = options.bytes === String ? $util.base64.encode(message.addresses[j], 0, message.addresses[j].length) : options.bytes === Array ? Array.prototype.slice.call(message.addresses[j]) : message.addresses[j];
                 }
                 return object;
@@ -6391,7 +6389,7 @@ $root.cosmos_sdk = (function() {
              */
             function GasInfo(properties) {
                 if (properties)
-                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
                             this[keys[i]] = properties[keys[i]];
             }
@@ -6470,9 +6468,9 @@ $root.cosmos_sdk = (function() {
             GasInfo.decode = function decode(reader, length) {
                 if (!(reader instanceof $Reader))
                     reader = $Reader.create(reader);
-                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.v1.GasInfo();
+                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.v1.GasInfo();
                 while (reader.pos < end) {
-                    var tag = reader.uint32();
+                    let tag = reader.uint32();
                     switch (tag >>> 3) {
                     case 1:
                         message.gasWanted = reader.uint64();
@@ -6535,7 +6533,7 @@ $root.cosmos_sdk = (function() {
             GasInfo.fromObject = function fromObject(object) {
                 if (object instanceof $root.cosmos_sdk.v1.GasInfo)
                     return object;
-                var message = new $root.cosmos_sdk.v1.GasInfo();
+                let message = new $root.cosmos_sdk.v1.GasInfo();
                 if (object.gasWanted != null)
                     if ($util.Long)
                         (message.gasWanted = $util.Long.fromValue(object.gasWanted)).unsigned = true;
@@ -6569,15 +6567,15 @@ $root.cosmos_sdk = (function() {
             GasInfo.toObject = function toObject(message, options) {
                 if (!options)
                     options = {};
-                var object = {};
+                let object = {};
                 if (options.defaults) {
                     if ($util.Long) {
-                        var long = new $util.Long(0, 0, true);
+                        let long = new $util.Long(0, 0, true);
                         object.gasWanted = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                     } else
                         object.gasWanted = options.longs === String ? "0" : 0;
                     if ($util.Long) {
-                        var long = new $util.Long(0, 0, true);
+                        let long = new $util.Long(0, 0, true);
                         object.gasUsed = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                     } else
                         object.gasUsed = options.longs === String ? "0" : 0;
@@ -6631,7 +6629,7 @@ $root.cosmos_sdk = (function() {
             function Result(properties) {
                 this.events = [];
                 if (properties)
-                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
                             this[keys[i]] = properties[keys[i]];
             }
@@ -6689,7 +6687,7 @@ $root.cosmos_sdk = (function() {
                 if (message.log != null && Object.hasOwnProperty.call(message, "log"))
                     writer.uint32(/* id 2, wireType 2 =*/18).string(message.log);
                 if (message.events != null && message.events.length)
-                    for (var i = 0; i < message.events.length; ++i)
+                    for (let i = 0; i < message.events.length; ++i)
                         $root.tendermint.abci.types.Event.encode(message.events[i], writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
                 return writer;
             };
@@ -6721,9 +6719,9 @@ $root.cosmos_sdk = (function() {
             Result.decode = function decode(reader, length) {
                 if (!(reader instanceof $Reader))
                     reader = $Reader.create(reader);
-                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.v1.Result();
+                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.v1.Result();
                 while (reader.pos < end) {
-                    var tag = reader.uint32();
+                    let tag = reader.uint32();
                     switch (tag >>> 3) {
                     case 1:
                         message.data = reader.bytes();
@@ -6780,8 +6778,8 @@ $root.cosmos_sdk = (function() {
                 if (message.events != null && message.hasOwnProperty("events")) {
                     if (!Array.isArray(message.events))
                         return "events: array expected";
-                    for (var i = 0; i < message.events.length; ++i) {
-                        var error = $root.tendermint.abci.types.Event.verify(message.events[i]);
+                    for (let i = 0; i < message.events.length; ++i) {
+                        let error = $root.tendermint.abci.types.Event.verify(message.events[i]);
                         if (error)
                             return "events." + error;
                     }
@@ -6800,7 +6798,7 @@ $root.cosmos_sdk = (function() {
             Result.fromObject = function fromObject(object) {
                 if (object instanceof $root.cosmos_sdk.v1.Result)
                     return object;
-                var message = new $root.cosmos_sdk.v1.Result();
+                let message = new $root.cosmos_sdk.v1.Result();
                 if (object.data != null)
                     if (typeof object.data === "string")
                         $util.base64.decode(object.data, message.data = $util.newBuffer($util.base64.length(object.data)), 0);
@@ -6812,7 +6810,7 @@ $root.cosmos_sdk = (function() {
                     if (!Array.isArray(object.events))
                         throw TypeError(".cosmos_sdk.v1.Result.events: array expected");
                     message.events = [];
-                    for (var i = 0; i < object.events.length; ++i) {
+                    for (let i = 0; i < object.events.length; ++i) {
                         if (typeof object.events[i] !== "object")
                             throw TypeError(".cosmos_sdk.v1.Result.events: object expected");
                         message.events[i] = $root.tendermint.abci.types.Event.fromObject(object.events[i]);
@@ -6833,7 +6831,7 @@ $root.cosmos_sdk = (function() {
             Result.toObject = function toObject(message, options) {
                 if (!options)
                     options = {};
-                var object = {};
+                let object = {};
                 if (options.arrays || options.defaults)
                     object.events = [];
                 if (options.defaults) {
@@ -6852,7 +6850,7 @@ $root.cosmos_sdk = (function() {
                     object.log = message.log;
                 if (message.events && message.events.length) {
                     object.events = [];
-                    for (var j = 0; j < message.events.length; ++j)
+                    for (let j = 0; j < message.events.length; ++j)
                         object.events[j] = $root.tendermint.abci.types.Event.toObject(message.events[j], options);
                 }
                 return object;
@@ -6892,7 +6890,7 @@ $root.cosmos_sdk = (function() {
              */
             function SimulationResponse(properties) {
                 if (properties)
-                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
                             this[keys[i]] = properties[keys[i]];
             }
@@ -6971,9 +6969,9 @@ $root.cosmos_sdk = (function() {
             SimulationResponse.decode = function decode(reader, length) {
                 if (!(reader instanceof $Reader))
                     reader = $Reader.create(reader);
-                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.v1.SimulationResponse();
+                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.v1.SimulationResponse();
                 while (reader.pos < end) {
-                    var tag = reader.uint32();
+                    let tag = reader.uint32();
                     switch (tag >>> 3) {
                     case 1:
                         message.gasInfo = $root.cosmos_sdk.v1.GasInfo.decode(reader, reader.uint32());
@@ -7017,12 +7015,12 @@ $root.cosmos_sdk = (function() {
                 if (typeof message !== "object" || message === null)
                     return "object expected";
                 if (message.gasInfo != null && message.hasOwnProperty("gasInfo")) {
-                    var error = $root.cosmos_sdk.v1.GasInfo.verify(message.gasInfo);
+                    let error = $root.cosmos_sdk.v1.GasInfo.verify(message.gasInfo);
                     if (error)
                         return "gasInfo." + error;
                 }
                 if (message.result != null && message.hasOwnProperty("result")) {
-                    var error = $root.cosmos_sdk.v1.Result.verify(message.result);
+                    let error = $root.cosmos_sdk.v1.Result.verify(message.result);
                     if (error)
                         return "result." + error;
                 }
@@ -7040,7 +7038,7 @@ $root.cosmos_sdk = (function() {
             SimulationResponse.fromObject = function fromObject(object) {
                 if (object instanceof $root.cosmos_sdk.v1.SimulationResponse)
                     return object;
-                var message = new $root.cosmos_sdk.v1.SimulationResponse();
+                let message = new $root.cosmos_sdk.v1.SimulationResponse();
                 if (object.gasInfo != null) {
                     if (typeof object.gasInfo !== "object")
                         throw TypeError(".cosmos_sdk.v1.SimulationResponse.gasInfo: object expected");
@@ -7066,7 +7064,7 @@ $root.cosmos_sdk = (function() {
             SimulationResponse.toObject = function toObject(message, options) {
                 if (!options)
                     options = {};
-                var object = {};
+                let object = {};
                 if (options.defaults) {
                     object.gasInfo = null;
                     object.result = null;
@@ -7112,7 +7110,7 @@ $root.cosmos_sdk = (function() {
              */
             function MsgData(properties) {
                 if (properties)
-                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
                             this[keys[i]] = properties[keys[i]];
             }
@@ -7191,9 +7189,9 @@ $root.cosmos_sdk = (function() {
             MsgData.decode = function decode(reader, length) {
                 if (!(reader instanceof $Reader))
                     reader = $Reader.create(reader);
-                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.v1.MsgData();
+                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.v1.MsgData();
                 while (reader.pos < end) {
-                    var tag = reader.uint32();
+                    let tag = reader.uint32();
                     switch (tag >>> 3) {
                     case 1:
                         message.msgType = reader.string();
@@ -7256,7 +7254,7 @@ $root.cosmos_sdk = (function() {
             MsgData.fromObject = function fromObject(object) {
                 if (object instanceof $root.cosmos_sdk.v1.MsgData)
                     return object;
-                var message = new $root.cosmos_sdk.v1.MsgData();
+                let message = new $root.cosmos_sdk.v1.MsgData();
                 if (object.msgType != null)
                     message.msgType = String(object.msgType);
                 if (object.data != null)
@@ -7279,7 +7277,7 @@ $root.cosmos_sdk = (function() {
             MsgData.toObject = function toObject(message, options) {
                 if (!options)
                     options = {};
-                var object = {};
+                let object = {};
                 if (options.defaults) {
                     object.msgType = "";
                     if (options.bytes === String)
@@ -7331,7 +7329,7 @@ $root.cosmos_sdk = (function() {
             function TxData(properties) {
                 this.data = [];
                 if (properties)
-                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
                             this[keys[i]] = properties[keys[i]];
             }
@@ -7369,7 +7367,7 @@ $root.cosmos_sdk = (function() {
                 if (!writer)
                     writer = $Writer.create();
                 if (message.data != null && message.data.length)
-                    for (var i = 0; i < message.data.length; ++i)
+                    for (let i = 0; i < message.data.length; ++i)
                         $root.cosmos_sdk.v1.MsgData.encode(message.data[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
                 return writer;
             };
@@ -7401,9 +7399,9 @@ $root.cosmos_sdk = (function() {
             TxData.decode = function decode(reader, length) {
                 if (!(reader instanceof $Reader))
                     reader = $Reader.create(reader);
-                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.v1.TxData();
+                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.v1.TxData();
                 while (reader.pos < end) {
-                    var tag = reader.uint32();
+                    let tag = reader.uint32();
                     switch (tag >>> 3) {
                     case 1:
                         if (!(message.data && message.data.length))
@@ -7448,8 +7446,8 @@ $root.cosmos_sdk = (function() {
                 if (message.data != null && message.hasOwnProperty("data")) {
                     if (!Array.isArray(message.data))
                         return "data: array expected";
-                    for (var i = 0; i < message.data.length; ++i) {
-                        var error = $root.cosmos_sdk.v1.MsgData.verify(message.data[i]);
+                    for (let i = 0; i < message.data.length; ++i) {
+                        let error = $root.cosmos_sdk.v1.MsgData.verify(message.data[i]);
                         if (error)
                             return "data." + error;
                     }
@@ -7468,12 +7466,12 @@ $root.cosmos_sdk = (function() {
             TxData.fromObject = function fromObject(object) {
                 if (object instanceof $root.cosmos_sdk.v1.TxData)
                     return object;
-                var message = new $root.cosmos_sdk.v1.TxData();
+                let message = new $root.cosmos_sdk.v1.TxData();
                 if (object.data) {
                     if (!Array.isArray(object.data))
                         throw TypeError(".cosmos_sdk.v1.TxData.data: array expected");
                     message.data = [];
-                    for (var i = 0; i < object.data.length; ++i) {
+                    for (let i = 0; i < object.data.length; ++i) {
                         if (typeof object.data[i] !== "object")
                             throw TypeError(".cosmos_sdk.v1.TxData.data: object expected");
                         message.data[i] = $root.cosmos_sdk.v1.MsgData.fromObject(object.data[i]);
@@ -7494,12 +7492,12 @@ $root.cosmos_sdk = (function() {
             TxData.toObject = function toObject(message, options) {
                 if (!options)
                     options = {};
-                var object = {};
+                let object = {};
                 if (options.arrays || options.defaults)
                     object.data = [];
                 if (message.data && message.data.length) {
                     object.data = [];
-                    for (var j = 0; j < message.data.length; ++j)
+                    for (let j = 0; j < message.data.length; ++j)
                         object.data[j] = $root.cosmos_sdk.v1.MsgData.toObject(message.data[j], options);
                 }
                 return object;
@@ -7529,7 +7527,7 @@ $root.cosmos_sdk = (function() {
          * @memberof cosmos_sdk
          * @namespace
          */
-        var x = {};
+        const x = {};
 
         x.auth = (function() {
 
@@ -7538,7 +7536,7 @@ $root.cosmos_sdk = (function() {
              * @memberof cosmos_sdk.x
              * @namespace
              */
-            var auth = {};
+            const auth = {};
 
             auth.v1 = (function() {
 
@@ -7547,7 +7545,7 @@ $root.cosmos_sdk = (function() {
                  * @memberof cosmos_sdk.x.auth
                  * @namespace
                  */
-                var v1 = {};
+                const v1 = {};
 
                 v1.BaseAccount = (function() {
 
@@ -7571,7 +7569,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function BaseAccount(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -7670,9 +7668,9 @@ $root.cosmos_sdk = (function() {
                     BaseAccount.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.auth.v1.BaseAccount();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.auth.v1.BaseAccount();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.address = reader.bytes();
@@ -7747,7 +7745,7 @@ $root.cosmos_sdk = (function() {
                     BaseAccount.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.auth.v1.BaseAccount)
                             return object;
-                        var message = new $root.cosmos_sdk.x.auth.v1.BaseAccount();
+                        let message = new $root.cosmos_sdk.x.auth.v1.BaseAccount();
                         if (object.address != null)
                             if (typeof object.address === "string")
                                 $util.base64.decode(object.address, message.address = $util.newBuffer($util.base64.length(object.address)), 0);
@@ -7791,7 +7789,7 @@ $root.cosmos_sdk = (function() {
                     BaseAccount.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults) {
                             if (options.bytes === String)
                                 object.address = "";
@@ -7808,12 +7806,12 @@ $root.cosmos_sdk = (function() {
                                     object.pubKey = $util.newBuffer(object.pubKey);
                             }
                             if ($util.Long) {
-                                var long = new $util.Long(0, 0, true);
+                                let long = new $util.Long(0, 0, true);
                                 object.accountNumber = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                             } else
                                 object.accountNumber = options.longs === String ? "0" : 0;
                             if ($util.Long) {
-                                var long = new $util.Long(0, 0, true);
+                                let long = new $util.Long(0, 0, true);
                                 object.sequence = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                             } else
                                 object.sequence = options.longs === String ? "0" : 0;
@@ -7871,7 +7869,7 @@ $root.cosmos_sdk = (function() {
                     function ModuleAccount(properties) {
                         this.permissions = [];
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -7929,7 +7927,7 @@ $root.cosmos_sdk = (function() {
                         if (message.name != null && Object.hasOwnProperty.call(message, "name"))
                             writer.uint32(/* id 2, wireType 2 =*/18).string(message.name);
                         if (message.permissions != null && message.permissions.length)
-                            for (var i = 0; i < message.permissions.length; ++i)
+                            for (let i = 0; i < message.permissions.length; ++i)
                                 writer.uint32(/* id 3, wireType 2 =*/26).string(message.permissions[i]);
                         return writer;
                     };
@@ -7961,9 +7959,9 @@ $root.cosmos_sdk = (function() {
                     ModuleAccount.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.auth.v1.ModuleAccount();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.auth.v1.ModuleAccount();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.baseAccount = $root.cosmos_sdk.x.auth.v1.BaseAccount.decode(reader, reader.uint32());
@@ -8012,7 +8010,7 @@ $root.cosmos_sdk = (function() {
                         if (typeof message !== "object" || message === null)
                             return "object expected";
                         if (message.baseAccount != null && message.hasOwnProperty("baseAccount")) {
-                            var error = $root.cosmos_sdk.x.auth.v1.BaseAccount.verify(message.baseAccount);
+                            let error = $root.cosmos_sdk.x.auth.v1.BaseAccount.verify(message.baseAccount);
                             if (error)
                                 return "baseAccount." + error;
                         }
@@ -8022,7 +8020,7 @@ $root.cosmos_sdk = (function() {
                         if (message.permissions != null && message.hasOwnProperty("permissions")) {
                             if (!Array.isArray(message.permissions))
                                 return "permissions: array expected";
-                            for (var i = 0; i < message.permissions.length; ++i)
+                            for (let i = 0; i < message.permissions.length; ++i)
                                 if (!$util.isString(message.permissions[i]))
                                     return "permissions: string[] expected";
                         }
@@ -8040,7 +8038,7 @@ $root.cosmos_sdk = (function() {
                     ModuleAccount.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.auth.v1.ModuleAccount)
                             return object;
-                        var message = new $root.cosmos_sdk.x.auth.v1.ModuleAccount();
+                        let message = new $root.cosmos_sdk.x.auth.v1.ModuleAccount();
                         if (object.baseAccount != null) {
                             if (typeof object.baseAccount !== "object")
                                 throw TypeError(".cosmos_sdk.x.auth.v1.ModuleAccount.baseAccount: object expected");
@@ -8052,7 +8050,7 @@ $root.cosmos_sdk = (function() {
                             if (!Array.isArray(object.permissions))
                                 throw TypeError(".cosmos_sdk.x.auth.v1.ModuleAccount.permissions: array expected");
                             message.permissions = [];
-                            for (var i = 0; i < object.permissions.length; ++i)
+                            for (let i = 0; i < object.permissions.length; ++i)
                                 message.permissions[i] = String(object.permissions[i]);
                         }
                         return message;
@@ -8070,7 +8068,7 @@ $root.cosmos_sdk = (function() {
                     ModuleAccount.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.arrays || options.defaults)
                             object.permissions = [];
                         if (options.defaults) {
@@ -8083,7 +8081,7 @@ $root.cosmos_sdk = (function() {
                             object.name = message.name;
                         if (message.permissions && message.permissions.length) {
                             object.permissions = [];
-                            for (var j = 0; j < message.permissions.length; ++j)
+                            for (let j = 0; j < message.permissions.length; ++j)
                                 object.permissions[j] = message.permissions[j];
                         }
                         return object;
@@ -8126,7 +8124,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function Params(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -8235,9 +8233,9 @@ $root.cosmos_sdk = (function() {
                     Params.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.auth.v1.Params();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.auth.v1.Params();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.maxMemoCharacters = reader.uint64();
@@ -8318,7 +8316,7 @@ $root.cosmos_sdk = (function() {
                     Params.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.auth.v1.Params)
                             return object;
-                        var message = new $root.cosmos_sdk.x.auth.v1.Params();
+                        let message = new $root.cosmos_sdk.x.auth.v1.Params();
                         if (object.maxMemoCharacters != null)
                             if ($util.Long)
                                 (message.maxMemoCharacters = $util.Long.fromValue(object.maxMemoCharacters)).unsigned = true;
@@ -8379,30 +8377,30 @@ $root.cosmos_sdk = (function() {
                     Params.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults) {
                             if ($util.Long) {
-                                var long = new $util.Long(0, 0, true);
+                                let long = new $util.Long(0, 0, true);
                                 object.maxMemoCharacters = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                             } else
                                 object.maxMemoCharacters = options.longs === String ? "0" : 0;
                             if ($util.Long) {
-                                var long = new $util.Long(0, 0, true);
+                                let long = new $util.Long(0, 0, true);
                                 object.txSigLimit = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                             } else
                                 object.txSigLimit = options.longs === String ? "0" : 0;
                             if ($util.Long) {
-                                var long = new $util.Long(0, 0, true);
+                                let long = new $util.Long(0, 0, true);
                                 object.txSizeCostPerByte = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                             } else
                                 object.txSizeCostPerByte = options.longs === String ? "0" : 0;
                             if ($util.Long) {
-                                var long = new $util.Long(0, 0, true);
+                                let long = new $util.Long(0, 0, true);
                                 object.sigVerifyCostEd25519 = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                             } else
                                 object.sigVerifyCostEd25519 = options.longs === String ? "0" : 0;
                             if ($util.Long) {
-                                var long = new $util.Long(0, 0, true);
+                                let long = new $util.Long(0, 0, true);
                                 object.sigVerifyCostSecp256k1 = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                             } else
                                 object.sigVerifyCostSecp256k1 = options.longs === String ? "0" : 0;
@@ -8459,7 +8457,7 @@ $root.cosmos_sdk = (function() {
                  * @memberof cosmos_sdk.x.auth
                  * @namespace
                  */
-                var vesting = {};
+                const vesting = {};
 
                 vesting.v1 = (function() {
 
@@ -8468,7 +8466,7 @@ $root.cosmos_sdk = (function() {
                      * @memberof cosmos_sdk.x.auth.vesting
                      * @namespace
                      */
-                    var v1 = {};
+                    const v1 = {};
 
                     v1.BaseVestingAccount = (function() {
 
@@ -8496,7 +8494,7 @@ $root.cosmos_sdk = (function() {
                             this.delegatedFree = [];
                             this.delegatedVesting = [];
                             if (properties)
-                                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                     if (properties[keys[i]] != null)
                                         this[keys[i]] = properties[keys[i]];
                         }
@@ -8568,13 +8566,13 @@ $root.cosmos_sdk = (function() {
                             if (message.baseAccount != null && Object.hasOwnProperty.call(message, "baseAccount"))
                                 $root.cosmos_sdk.x.auth.v1.BaseAccount.encode(message.baseAccount, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
                             if (message.originalVesting != null && message.originalVesting.length)
-                                for (var i = 0; i < message.originalVesting.length; ++i)
+                                for (let i = 0; i < message.originalVesting.length; ++i)
                                     $root.cosmos_sdk.v1.Coin.encode(message.originalVesting[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
                             if (message.delegatedFree != null && message.delegatedFree.length)
-                                for (var i = 0; i < message.delegatedFree.length; ++i)
+                                for (let i = 0; i < message.delegatedFree.length; ++i)
                                     $root.cosmos_sdk.v1.Coin.encode(message.delegatedFree[i], writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
                             if (message.delegatedVesting != null && message.delegatedVesting.length)
-                                for (var i = 0; i < message.delegatedVesting.length; ++i)
+                                for (let i = 0; i < message.delegatedVesting.length; ++i)
                                     $root.cosmos_sdk.v1.Coin.encode(message.delegatedVesting[i], writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
                             if (message.endTime != null && Object.hasOwnProperty.call(message, "endTime"))
                                 writer.uint32(/* id 5, wireType 0 =*/40).int64(message.endTime);
@@ -8608,9 +8606,9 @@ $root.cosmos_sdk = (function() {
                         BaseVestingAccount.decode = function decode(reader, length) {
                             if (!(reader instanceof $Reader))
                                 reader = $Reader.create(reader);
-                            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.auth.vesting.v1.BaseVestingAccount();
+                            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.auth.vesting.v1.BaseVestingAccount();
                             while (reader.pos < end) {
-                                var tag = reader.uint32();
+                                let tag = reader.uint32();
                                 switch (tag >>> 3) {
                                 case 1:
                                     message.baseAccount = $root.cosmos_sdk.x.auth.v1.BaseAccount.decode(reader, reader.uint32());
@@ -8669,15 +8667,15 @@ $root.cosmos_sdk = (function() {
                             if (typeof message !== "object" || message === null)
                                 return "object expected";
                             if (message.baseAccount != null && message.hasOwnProperty("baseAccount")) {
-                                var error = $root.cosmos_sdk.x.auth.v1.BaseAccount.verify(message.baseAccount);
+                                let error = $root.cosmos_sdk.x.auth.v1.BaseAccount.verify(message.baseAccount);
                                 if (error)
                                     return "baseAccount." + error;
                             }
                             if (message.originalVesting != null && message.hasOwnProperty("originalVesting")) {
                                 if (!Array.isArray(message.originalVesting))
                                     return "originalVesting: array expected";
-                                for (var i = 0; i < message.originalVesting.length; ++i) {
-                                    var error = $root.cosmos_sdk.v1.Coin.verify(message.originalVesting[i]);
+                                for (let i = 0; i < message.originalVesting.length; ++i) {
+                                    let error = $root.cosmos_sdk.v1.Coin.verify(message.originalVesting[i]);
                                     if (error)
                                         return "originalVesting." + error;
                                 }
@@ -8685,8 +8683,8 @@ $root.cosmos_sdk = (function() {
                             if (message.delegatedFree != null && message.hasOwnProperty("delegatedFree")) {
                                 if (!Array.isArray(message.delegatedFree))
                                     return "delegatedFree: array expected";
-                                for (var i = 0; i < message.delegatedFree.length; ++i) {
-                                    var error = $root.cosmos_sdk.v1.Coin.verify(message.delegatedFree[i]);
+                                for (let i = 0; i < message.delegatedFree.length; ++i) {
+                                    let error = $root.cosmos_sdk.v1.Coin.verify(message.delegatedFree[i]);
                                     if (error)
                                         return "delegatedFree." + error;
                                 }
@@ -8694,8 +8692,8 @@ $root.cosmos_sdk = (function() {
                             if (message.delegatedVesting != null && message.hasOwnProperty("delegatedVesting")) {
                                 if (!Array.isArray(message.delegatedVesting))
                                     return "delegatedVesting: array expected";
-                                for (var i = 0; i < message.delegatedVesting.length; ++i) {
-                                    var error = $root.cosmos_sdk.v1.Coin.verify(message.delegatedVesting[i]);
+                                for (let i = 0; i < message.delegatedVesting.length; ++i) {
+                                    let error = $root.cosmos_sdk.v1.Coin.verify(message.delegatedVesting[i]);
                                     if (error)
                                         return "delegatedVesting." + error;
                                 }
@@ -8717,7 +8715,7 @@ $root.cosmos_sdk = (function() {
                         BaseVestingAccount.fromObject = function fromObject(object) {
                             if (object instanceof $root.cosmos_sdk.x.auth.vesting.v1.BaseVestingAccount)
                                 return object;
-                            var message = new $root.cosmos_sdk.x.auth.vesting.v1.BaseVestingAccount();
+                            let message = new $root.cosmos_sdk.x.auth.vesting.v1.BaseVestingAccount();
                             if (object.baseAccount != null) {
                                 if (typeof object.baseAccount !== "object")
                                     throw TypeError(".cosmos_sdk.x.auth.vesting.v1.BaseVestingAccount.baseAccount: object expected");
@@ -8727,7 +8725,7 @@ $root.cosmos_sdk = (function() {
                                 if (!Array.isArray(object.originalVesting))
                                     throw TypeError(".cosmos_sdk.x.auth.vesting.v1.BaseVestingAccount.originalVesting: array expected");
                                 message.originalVesting = [];
-                                for (var i = 0; i < object.originalVesting.length; ++i) {
+                                for (let i = 0; i < object.originalVesting.length; ++i) {
                                     if (typeof object.originalVesting[i] !== "object")
                                         throw TypeError(".cosmos_sdk.x.auth.vesting.v1.BaseVestingAccount.originalVesting: object expected");
                                     message.originalVesting[i] = $root.cosmos_sdk.v1.Coin.fromObject(object.originalVesting[i]);
@@ -8737,7 +8735,7 @@ $root.cosmos_sdk = (function() {
                                 if (!Array.isArray(object.delegatedFree))
                                     throw TypeError(".cosmos_sdk.x.auth.vesting.v1.BaseVestingAccount.delegatedFree: array expected");
                                 message.delegatedFree = [];
-                                for (var i = 0; i < object.delegatedFree.length; ++i) {
+                                for (let i = 0; i < object.delegatedFree.length; ++i) {
                                     if (typeof object.delegatedFree[i] !== "object")
                                         throw TypeError(".cosmos_sdk.x.auth.vesting.v1.BaseVestingAccount.delegatedFree: object expected");
                                     message.delegatedFree[i] = $root.cosmos_sdk.v1.Coin.fromObject(object.delegatedFree[i]);
@@ -8747,7 +8745,7 @@ $root.cosmos_sdk = (function() {
                                 if (!Array.isArray(object.delegatedVesting))
                                     throw TypeError(".cosmos_sdk.x.auth.vesting.v1.BaseVestingAccount.delegatedVesting: array expected");
                                 message.delegatedVesting = [];
-                                for (var i = 0; i < object.delegatedVesting.length; ++i) {
+                                for (let i = 0; i < object.delegatedVesting.length; ++i) {
                                     if (typeof object.delegatedVesting[i] !== "object")
                                         throw TypeError(".cosmos_sdk.x.auth.vesting.v1.BaseVestingAccount.delegatedVesting: object expected");
                                     message.delegatedVesting[i] = $root.cosmos_sdk.v1.Coin.fromObject(object.delegatedVesting[i]);
@@ -8777,7 +8775,7 @@ $root.cosmos_sdk = (function() {
                         BaseVestingAccount.toObject = function toObject(message, options) {
                             if (!options)
                                 options = {};
-                            var object = {};
+                            let object = {};
                             if (options.arrays || options.defaults) {
                                 object.originalVesting = [];
                                 object.delegatedFree = [];
@@ -8786,7 +8784,7 @@ $root.cosmos_sdk = (function() {
                             if (options.defaults) {
                                 object.baseAccount = null;
                                 if ($util.Long) {
-                                    var long = new $util.Long(0, 0, false);
+                                    let long = new $util.Long(0, 0, false);
                                     object.endTime = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                                 } else
                                     object.endTime = options.longs === String ? "0" : 0;
@@ -8795,17 +8793,17 @@ $root.cosmos_sdk = (function() {
                                 object.baseAccount = $root.cosmos_sdk.x.auth.v1.BaseAccount.toObject(message.baseAccount, options);
                             if (message.originalVesting && message.originalVesting.length) {
                                 object.originalVesting = [];
-                                for (var j = 0; j < message.originalVesting.length; ++j)
+                                for (let j = 0; j < message.originalVesting.length; ++j)
                                     object.originalVesting[j] = $root.cosmos_sdk.v1.Coin.toObject(message.originalVesting[j], options);
                             }
                             if (message.delegatedFree && message.delegatedFree.length) {
                                 object.delegatedFree = [];
-                                for (var j = 0; j < message.delegatedFree.length; ++j)
+                                for (let j = 0; j < message.delegatedFree.length; ++j)
                                     object.delegatedFree[j] = $root.cosmos_sdk.v1.Coin.toObject(message.delegatedFree[j], options);
                             }
                             if (message.delegatedVesting && message.delegatedVesting.length) {
                                 object.delegatedVesting = [];
-                                for (var j = 0; j < message.delegatedVesting.length; ++j)
+                                for (let j = 0; j < message.delegatedVesting.length; ++j)
                                     object.delegatedVesting[j] = $root.cosmos_sdk.v1.Coin.toObject(message.delegatedVesting[j], options);
                             }
                             if (message.endTime != null && message.hasOwnProperty("endTime"))
@@ -8850,7 +8848,7 @@ $root.cosmos_sdk = (function() {
                          */
                         function ContinuousVestingAccount(properties) {
                             if (properties)
-                                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                     if (properties[keys[i]] != null)
                                         this[keys[i]] = properties[keys[i]];
                         }
@@ -8929,9 +8927,9 @@ $root.cosmos_sdk = (function() {
                         ContinuousVestingAccount.decode = function decode(reader, length) {
                             if (!(reader instanceof $Reader))
                                 reader = $Reader.create(reader);
-                            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.auth.vesting.v1.ContinuousVestingAccount();
+                            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.auth.vesting.v1.ContinuousVestingAccount();
                             while (reader.pos < end) {
-                                var tag = reader.uint32();
+                                let tag = reader.uint32();
                                 switch (tag >>> 3) {
                                 case 1:
                                     message.baseVestingAccount = $root.cosmos_sdk.x.auth.vesting.v1.BaseVestingAccount.decode(reader, reader.uint32());
@@ -8975,7 +8973,7 @@ $root.cosmos_sdk = (function() {
                             if (typeof message !== "object" || message === null)
                                 return "object expected";
                             if (message.baseVestingAccount != null && message.hasOwnProperty("baseVestingAccount")) {
-                                var error = $root.cosmos_sdk.x.auth.vesting.v1.BaseVestingAccount.verify(message.baseVestingAccount);
+                                let error = $root.cosmos_sdk.x.auth.vesting.v1.BaseVestingAccount.verify(message.baseVestingAccount);
                                 if (error)
                                     return "baseVestingAccount." + error;
                             }
@@ -8996,7 +8994,7 @@ $root.cosmos_sdk = (function() {
                         ContinuousVestingAccount.fromObject = function fromObject(object) {
                             if (object instanceof $root.cosmos_sdk.x.auth.vesting.v1.ContinuousVestingAccount)
                                 return object;
-                            var message = new $root.cosmos_sdk.x.auth.vesting.v1.ContinuousVestingAccount();
+                            let message = new $root.cosmos_sdk.x.auth.vesting.v1.ContinuousVestingAccount();
                             if (object.baseVestingAccount != null) {
                                 if (typeof object.baseVestingAccount !== "object")
                                     throw TypeError(".cosmos_sdk.x.auth.vesting.v1.ContinuousVestingAccount.baseVestingAccount: object expected");
@@ -9026,11 +9024,11 @@ $root.cosmos_sdk = (function() {
                         ContinuousVestingAccount.toObject = function toObject(message, options) {
                             if (!options)
                                 options = {};
-                            var object = {};
+                            let object = {};
                             if (options.defaults) {
                                 object.baseVestingAccount = null;
                                 if ($util.Long) {
-                                    var long = new $util.Long(0, 0, false);
+                                    let long = new $util.Long(0, 0, false);
                                     object.startTime = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                                 } else
                                     object.startTime = options.longs === String ? "0" : 0;
@@ -9078,7 +9076,7 @@ $root.cosmos_sdk = (function() {
                          */
                         function DelayedVestingAccount(properties) {
                             if (properties)
-                                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                     if (properties[keys[i]] != null)
                                         this[keys[i]] = properties[keys[i]];
                         }
@@ -9147,9 +9145,9 @@ $root.cosmos_sdk = (function() {
                         DelayedVestingAccount.decode = function decode(reader, length) {
                             if (!(reader instanceof $Reader))
                                 reader = $Reader.create(reader);
-                            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.auth.vesting.v1.DelayedVestingAccount();
+                            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.auth.vesting.v1.DelayedVestingAccount();
                             while (reader.pos < end) {
-                                var tag = reader.uint32();
+                                let tag = reader.uint32();
                                 switch (tag >>> 3) {
                                 case 1:
                                     message.baseVestingAccount = $root.cosmos_sdk.x.auth.vesting.v1.BaseVestingAccount.decode(reader, reader.uint32());
@@ -9190,7 +9188,7 @@ $root.cosmos_sdk = (function() {
                             if (typeof message !== "object" || message === null)
                                 return "object expected";
                             if (message.baseVestingAccount != null && message.hasOwnProperty("baseVestingAccount")) {
-                                var error = $root.cosmos_sdk.x.auth.vesting.v1.BaseVestingAccount.verify(message.baseVestingAccount);
+                                let error = $root.cosmos_sdk.x.auth.vesting.v1.BaseVestingAccount.verify(message.baseVestingAccount);
                                 if (error)
                                     return "baseVestingAccount." + error;
                             }
@@ -9208,7 +9206,7 @@ $root.cosmos_sdk = (function() {
                         DelayedVestingAccount.fromObject = function fromObject(object) {
                             if (object instanceof $root.cosmos_sdk.x.auth.vesting.v1.DelayedVestingAccount)
                                 return object;
-                            var message = new $root.cosmos_sdk.x.auth.vesting.v1.DelayedVestingAccount();
+                            let message = new $root.cosmos_sdk.x.auth.vesting.v1.DelayedVestingAccount();
                             if (object.baseVestingAccount != null) {
                                 if (typeof object.baseVestingAccount !== "object")
                                     throw TypeError(".cosmos_sdk.x.auth.vesting.v1.DelayedVestingAccount.baseVestingAccount: object expected");
@@ -9229,7 +9227,7 @@ $root.cosmos_sdk = (function() {
                         DelayedVestingAccount.toObject = function toObject(message, options) {
                             if (!options)
                                 options = {};
-                            var object = {};
+                            let object = {};
                             if (options.defaults)
                                 object.baseVestingAccount = null;
                             if (message.baseVestingAccount != null && message.hasOwnProperty("baseVestingAccount"))
@@ -9272,7 +9270,7 @@ $root.cosmos_sdk = (function() {
                         function Period(properties) {
                             this.amount = [];
                             if (properties)
-                                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                     if (properties[keys[i]] != null)
                                         this[keys[i]] = properties[keys[i]];
                         }
@@ -9320,7 +9318,7 @@ $root.cosmos_sdk = (function() {
                             if (message.length != null && Object.hasOwnProperty.call(message, "length"))
                                 writer.uint32(/* id 1, wireType 0 =*/8).int64(message.length);
                             if (message.amount != null && message.amount.length)
-                                for (var i = 0; i < message.amount.length; ++i)
+                                for (let i = 0; i < message.amount.length; ++i)
                                     $root.cosmos_sdk.v1.Coin.encode(message.amount[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
                             return writer;
                         };
@@ -9352,9 +9350,9 @@ $root.cosmos_sdk = (function() {
                         Period.decode = function decode(reader, length) {
                             if (!(reader instanceof $Reader))
                                 reader = $Reader.create(reader);
-                            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.auth.vesting.v1.Period();
+                            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.auth.vesting.v1.Period();
                             while (reader.pos < end) {
-                                var tag = reader.uint32();
+                                let tag = reader.uint32();
                                 switch (tag >>> 3) {
                                 case 1:
                                     message.length = reader.int64();
@@ -9405,8 +9403,8 @@ $root.cosmos_sdk = (function() {
                             if (message.amount != null && message.hasOwnProperty("amount")) {
                                 if (!Array.isArray(message.amount))
                                     return "amount: array expected";
-                                for (var i = 0; i < message.amount.length; ++i) {
-                                    var error = $root.cosmos_sdk.v1.Coin.verify(message.amount[i]);
+                                for (let i = 0; i < message.amount.length; ++i) {
+                                    let error = $root.cosmos_sdk.v1.Coin.verify(message.amount[i]);
                                     if (error)
                                         return "amount." + error;
                                 }
@@ -9425,7 +9423,7 @@ $root.cosmos_sdk = (function() {
                         Period.fromObject = function fromObject(object) {
                             if (object instanceof $root.cosmos_sdk.x.auth.vesting.v1.Period)
                                 return object;
-                            var message = new $root.cosmos_sdk.x.auth.vesting.v1.Period();
+                            let message = new $root.cosmos_sdk.x.auth.vesting.v1.Period();
                             if (object.length != null)
                                 if ($util.Long)
                                     (message.length = $util.Long.fromValue(object.length)).unsigned = false;
@@ -9439,7 +9437,7 @@ $root.cosmos_sdk = (function() {
                                 if (!Array.isArray(object.amount))
                                     throw TypeError(".cosmos_sdk.x.auth.vesting.v1.Period.amount: array expected");
                                 message.amount = [];
-                                for (var i = 0; i < object.amount.length; ++i) {
+                                for (let i = 0; i < object.amount.length; ++i) {
                                     if (typeof object.amount[i] !== "object")
                                         throw TypeError(".cosmos_sdk.x.auth.vesting.v1.Period.amount: object expected");
                                     message.amount[i] = $root.cosmos_sdk.v1.Coin.fromObject(object.amount[i]);
@@ -9460,12 +9458,12 @@ $root.cosmos_sdk = (function() {
                         Period.toObject = function toObject(message, options) {
                             if (!options)
                                 options = {};
-                            var object = {};
+                            let object = {};
                             if (options.arrays || options.defaults)
                                 object.amount = [];
                             if (options.defaults)
                                 if ($util.Long) {
-                                    var long = new $util.Long(0, 0, false);
+                                    let long = new $util.Long(0, 0, false);
                                     object.length = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                                 } else
                                     object.length = options.longs === String ? "0" : 0;
@@ -9476,7 +9474,7 @@ $root.cosmos_sdk = (function() {
                                     object.length = options.longs === String ? $util.Long.prototype.toString.call(message.length) : options.longs === Number ? new $util.LongBits(message.length.low >>> 0, message.length.high >>> 0).toNumber() : message.length;
                             if (message.amount && message.amount.length) {
                                 object.amount = [];
-                                for (var j = 0; j < message.amount.length; ++j)
+                                for (let j = 0; j < message.amount.length; ++j)
                                     object.amount[j] = $root.cosmos_sdk.v1.Coin.toObject(message.amount[j], options);
                             }
                             return object;
@@ -9518,7 +9516,7 @@ $root.cosmos_sdk = (function() {
                         function PeriodicVestingAccount(properties) {
                             this.vestingPeriods = [];
                             if (properties)
-                                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                     if (properties[keys[i]] != null)
                                         this[keys[i]] = properties[keys[i]];
                         }
@@ -9576,7 +9574,7 @@ $root.cosmos_sdk = (function() {
                             if (message.startTime != null && Object.hasOwnProperty.call(message, "startTime"))
                                 writer.uint32(/* id 2, wireType 0 =*/16).int64(message.startTime);
                             if (message.vestingPeriods != null && message.vestingPeriods.length)
-                                for (var i = 0; i < message.vestingPeriods.length; ++i)
+                                for (let i = 0; i < message.vestingPeriods.length; ++i)
                                     $root.cosmos_sdk.x.auth.vesting.v1.Period.encode(message.vestingPeriods[i], writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
                             return writer;
                         };
@@ -9608,9 +9606,9 @@ $root.cosmos_sdk = (function() {
                         PeriodicVestingAccount.decode = function decode(reader, length) {
                             if (!(reader instanceof $Reader))
                                 reader = $Reader.create(reader);
-                            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.auth.vesting.v1.PeriodicVestingAccount();
+                            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.auth.vesting.v1.PeriodicVestingAccount();
                             while (reader.pos < end) {
-                                var tag = reader.uint32();
+                                let tag = reader.uint32();
                                 switch (tag >>> 3) {
                                 case 1:
                                     message.baseVestingAccount = $root.cosmos_sdk.x.auth.vesting.v1.BaseVestingAccount.decode(reader, reader.uint32());
@@ -9659,7 +9657,7 @@ $root.cosmos_sdk = (function() {
                             if (typeof message !== "object" || message === null)
                                 return "object expected";
                             if (message.baseVestingAccount != null && message.hasOwnProperty("baseVestingAccount")) {
-                                var error = $root.cosmos_sdk.x.auth.vesting.v1.BaseVestingAccount.verify(message.baseVestingAccount);
+                                let error = $root.cosmos_sdk.x.auth.vesting.v1.BaseVestingAccount.verify(message.baseVestingAccount);
                                 if (error)
                                     return "baseVestingAccount." + error;
                             }
@@ -9669,8 +9667,8 @@ $root.cosmos_sdk = (function() {
                             if (message.vestingPeriods != null && message.hasOwnProperty("vestingPeriods")) {
                                 if (!Array.isArray(message.vestingPeriods))
                                     return "vestingPeriods: array expected";
-                                for (var i = 0; i < message.vestingPeriods.length; ++i) {
-                                    var error = $root.cosmos_sdk.x.auth.vesting.v1.Period.verify(message.vestingPeriods[i]);
+                                for (let i = 0; i < message.vestingPeriods.length; ++i) {
+                                    let error = $root.cosmos_sdk.x.auth.vesting.v1.Period.verify(message.vestingPeriods[i]);
                                     if (error)
                                         return "vestingPeriods." + error;
                                 }
@@ -9689,7 +9687,7 @@ $root.cosmos_sdk = (function() {
                         PeriodicVestingAccount.fromObject = function fromObject(object) {
                             if (object instanceof $root.cosmos_sdk.x.auth.vesting.v1.PeriodicVestingAccount)
                                 return object;
-                            var message = new $root.cosmos_sdk.x.auth.vesting.v1.PeriodicVestingAccount();
+                            let message = new $root.cosmos_sdk.x.auth.vesting.v1.PeriodicVestingAccount();
                             if (object.baseVestingAccount != null) {
                                 if (typeof object.baseVestingAccount !== "object")
                                     throw TypeError(".cosmos_sdk.x.auth.vesting.v1.PeriodicVestingAccount.baseVestingAccount: object expected");
@@ -9708,7 +9706,7 @@ $root.cosmos_sdk = (function() {
                                 if (!Array.isArray(object.vestingPeriods))
                                     throw TypeError(".cosmos_sdk.x.auth.vesting.v1.PeriodicVestingAccount.vestingPeriods: array expected");
                                 message.vestingPeriods = [];
-                                for (var i = 0; i < object.vestingPeriods.length; ++i) {
+                                for (let i = 0; i < object.vestingPeriods.length; ++i) {
                                     if (typeof object.vestingPeriods[i] !== "object")
                                         throw TypeError(".cosmos_sdk.x.auth.vesting.v1.PeriodicVestingAccount.vestingPeriods: object expected");
                                     message.vestingPeriods[i] = $root.cosmos_sdk.x.auth.vesting.v1.Period.fromObject(object.vestingPeriods[i]);
@@ -9729,13 +9727,13 @@ $root.cosmos_sdk = (function() {
                         PeriodicVestingAccount.toObject = function toObject(message, options) {
                             if (!options)
                                 options = {};
-                            var object = {};
+                            let object = {};
                             if (options.arrays || options.defaults)
                                 object.vestingPeriods = [];
                             if (options.defaults) {
                                 object.baseVestingAccount = null;
                                 if ($util.Long) {
-                                    var long = new $util.Long(0, 0, false);
+                                    let long = new $util.Long(0, 0, false);
                                     object.startTime = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                                 } else
                                     object.startTime = options.longs === String ? "0" : 0;
@@ -9749,7 +9747,7 @@ $root.cosmos_sdk = (function() {
                                     object.startTime = options.longs === String ? $util.Long.prototype.toString.call(message.startTime) : options.longs === Number ? new $util.LongBits(message.startTime.low >>> 0, message.startTime.high >>> 0).toNumber() : message.startTime;
                             if (message.vestingPeriods && message.vestingPeriods.length) {
                                 object.vestingPeriods = [];
-                                for (var j = 0; j < message.vestingPeriods.length; ++j)
+                                for (let j = 0; j < message.vestingPeriods.length; ++j)
                                     object.vestingPeriods[j] = $root.cosmos_sdk.x.auth.vesting.v1.Period.toObject(message.vestingPeriods[j], options);
                             }
                             return object;
@@ -9785,7 +9783,7 @@ $root.cosmos_sdk = (function() {
              * @memberof cosmos_sdk.x
              * @namespace
              */
-            var bank = {};
+            const bank = {};
 
             bank.v1 = (function() {
 
@@ -9794,7 +9792,7 @@ $root.cosmos_sdk = (function() {
                  * @memberof cosmos_sdk.x.bank
                  * @namespace
                  */
-                var v1 = {};
+                const v1 = {};
 
                 v1.Query = (function() {
 
@@ -9983,7 +9981,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function QueryBalanceRequest(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -10062,9 +10060,9 @@ $root.cosmos_sdk = (function() {
                     QueryBalanceRequest.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.bank.v1.QueryBalanceRequest();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.bank.v1.QueryBalanceRequest();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.address = reader.bytes();
@@ -10127,7 +10125,7 @@ $root.cosmos_sdk = (function() {
                     QueryBalanceRequest.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.bank.v1.QueryBalanceRequest)
                             return object;
-                        var message = new $root.cosmos_sdk.x.bank.v1.QueryBalanceRequest();
+                        let message = new $root.cosmos_sdk.x.bank.v1.QueryBalanceRequest();
                         if (object.address != null)
                             if (typeof object.address === "string")
                                 $util.base64.decode(object.address, message.address = $util.newBuffer($util.base64.length(object.address)), 0);
@@ -10150,7 +10148,7 @@ $root.cosmos_sdk = (function() {
                     QueryBalanceRequest.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults) {
                             if (options.bytes === String)
                                 object.address = "";
@@ -10201,7 +10199,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function QueryBalanceResponse(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -10270,9 +10268,9 @@ $root.cosmos_sdk = (function() {
                     QueryBalanceResponse.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.bank.v1.QueryBalanceResponse();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.bank.v1.QueryBalanceResponse();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.balance = $root.cosmos_sdk.v1.Coin.decode(reader, reader.uint32());
@@ -10313,7 +10311,7 @@ $root.cosmos_sdk = (function() {
                         if (typeof message !== "object" || message === null)
                             return "object expected";
                         if (message.balance != null && message.hasOwnProperty("balance")) {
-                            var error = $root.cosmos_sdk.v1.Coin.verify(message.balance);
+                            let error = $root.cosmos_sdk.v1.Coin.verify(message.balance);
                             if (error)
                                 return "balance." + error;
                         }
@@ -10331,7 +10329,7 @@ $root.cosmos_sdk = (function() {
                     QueryBalanceResponse.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.bank.v1.QueryBalanceResponse)
                             return object;
-                        var message = new $root.cosmos_sdk.x.bank.v1.QueryBalanceResponse();
+                        let message = new $root.cosmos_sdk.x.bank.v1.QueryBalanceResponse();
                         if (object.balance != null) {
                             if (typeof object.balance !== "object")
                                 throw TypeError(".cosmos_sdk.x.bank.v1.QueryBalanceResponse.balance: object expected");
@@ -10352,7 +10350,7 @@ $root.cosmos_sdk = (function() {
                     QueryBalanceResponse.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults)
                             object.balance = null;
                         if (message.balance != null && message.hasOwnProperty("balance"))
@@ -10393,7 +10391,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function QueryAllBalancesRequest(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -10462,9 +10460,9 @@ $root.cosmos_sdk = (function() {
                     QueryAllBalancesRequest.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.bank.v1.QueryAllBalancesRequest();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.bank.v1.QueryAllBalancesRequest();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.address = reader.bytes();
@@ -10521,7 +10519,7 @@ $root.cosmos_sdk = (function() {
                     QueryAllBalancesRequest.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.bank.v1.QueryAllBalancesRequest)
                             return object;
-                        var message = new $root.cosmos_sdk.x.bank.v1.QueryAllBalancesRequest();
+                        let message = new $root.cosmos_sdk.x.bank.v1.QueryAllBalancesRequest();
                         if (object.address != null)
                             if (typeof object.address === "string")
                                 $util.base64.decode(object.address, message.address = $util.newBuffer($util.base64.length(object.address)), 0);
@@ -10542,7 +10540,7 @@ $root.cosmos_sdk = (function() {
                     QueryAllBalancesRequest.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults)
                             if (options.bytes === String)
                                 object.address = "";
@@ -10590,7 +10588,7 @@ $root.cosmos_sdk = (function() {
                     function QueryAllBalancesResponse(properties) {
                         this.balances = [];
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -10628,7 +10626,7 @@ $root.cosmos_sdk = (function() {
                         if (!writer)
                             writer = $Writer.create();
                         if (message.balances != null && message.balances.length)
-                            for (var i = 0; i < message.balances.length; ++i)
+                            for (let i = 0; i < message.balances.length; ++i)
                                 $root.cosmos_sdk.v1.Coin.encode(message.balances[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
                         return writer;
                     };
@@ -10660,9 +10658,9 @@ $root.cosmos_sdk = (function() {
                     QueryAllBalancesResponse.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.bank.v1.QueryAllBalancesResponse();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.bank.v1.QueryAllBalancesResponse();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 if (!(message.balances && message.balances.length))
@@ -10707,8 +10705,8 @@ $root.cosmos_sdk = (function() {
                         if (message.balances != null && message.hasOwnProperty("balances")) {
                             if (!Array.isArray(message.balances))
                                 return "balances: array expected";
-                            for (var i = 0; i < message.balances.length; ++i) {
-                                var error = $root.cosmos_sdk.v1.Coin.verify(message.balances[i]);
+                            for (let i = 0; i < message.balances.length; ++i) {
+                                let error = $root.cosmos_sdk.v1.Coin.verify(message.balances[i]);
                                 if (error)
                                     return "balances." + error;
                             }
@@ -10727,12 +10725,12 @@ $root.cosmos_sdk = (function() {
                     QueryAllBalancesResponse.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.bank.v1.QueryAllBalancesResponse)
                             return object;
-                        var message = new $root.cosmos_sdk.x.bank.v1.QueryAllBalancesResponse();
+                        let message = new $root.cosmos_sdk.x.bank.v1.QueryAllBalancesResponse();
                         if (object.balances) {
                             if (!Array.isArray(object.balances))
                                 throw TypeError(".cosmos_sdk.x.bank.v1.QueryAllBalancesResponse.balances: array expected");
                             message.balances = [];
-                            for (var i = 0; i < object.balances.length; ++i) {
+                            for (let i = 0; i < object.balances.length; ++i) {
                                 if (typeof object.balances[i] !== "object")
                                     throw TypeError(".cosmos_sdk.x.bank.v1.QueryAllBalancesResponse.balances: object expected");
                                 message.balances[i] = $root.cosmos_sdk.v1.Coin.fromObject(object.balances[i]);
@@ -10753,12 +10751,12 @@ $root.cosmos_sdk = (function() {
                     QueryAllBalancesResponse.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.arrays || options.defaults)
                             object.balances = [];
                         if (message.balances && message.balances.length) {
                             object.balances = [];
-                            for (var j = 0; j < message.balances.length; ++j)
+                            for (let j = 0; j < message.balances.length; ++j)
                                 object.balances[j] = $root.cosmos_sdk.v1.Coin.toObject(message.balances[j], options);
                         }
                         return object;
@@ -10796,7 +10794,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function QueryTotalSupplyRequest(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -10855,9 +10853,9 @@ $root.cosmos_sdk = (function() {
                     QueryTotalSupplyRequest.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.bank.v1.QueryTotalSupplyRequest();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.bank.v1.QueryTotalSupplyRequest();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             default:
                                 reader.skipType(tag & 7);
@@ -10958,7 +10956,7 @@ $root.cosmos_sdk = (function() {
                     function QueryTotalSupplyResponse(properties) {
                         this.supply = [];
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -10996,7 +10994,7 @@ $root.cosmos_sdk = (function() {
                         if (!writer)
                             writer = $Writer.create();
                         if (message.supply != null && message.supply.length)
-                            for (var i = 0; i < message.supply.length; ++i)
+                            for (let i = 0; i < message.supply.length; ++i)
                                 $root.cosmos_sdk.v1.Coin.encode(message.supply[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
                         return writer;
                     };
@@ -11028,9 +11026,9 @@ $root.cosmos_sdk = (function() {
                     QueryTotalSupplyResponse.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.bank.v1.QueryTotalSupplyResponse();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.bank.v1.QueryTotalSupplyResponse();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 if (!(message.supply && message.supply.length))
@@ -11075,8 +11073,8 @@ $root.cosmos_sdk = (function() {
                         if (message.supply != null && message.hasOwnProperty("supply")) {
                             if (!Array.isArray(message.supply))
                                 return "supply: array expected";
-                            for (var i = 0; i < message.supply.length; ++i) {
-                                var error = $root.cosmos_sdk.v1.Coin.verify(message.supply[i]);
+                            for (let i = 0; i < message.supply.length; ++i) {
+                                let error = $root.cosmos_sdk.v1.Coin.verify(message.supply[i]);
                                 if (error)
                                     return "supply." + error;
                             }
@@ -11095,12 +11093,12 @@ $root.cosmos_sdk = (function() {
                     QueryTotalSupplyResponse.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.bank.v1.QueryTotalSupplyResponse)
                             return object;
-                        var message = new $root.cosmos_sdk.x.bank.v1.QueryTotalSupplyResponse();
+                        let message = new $root.cosmos_sdk.x.bank.v1.QueryTotalSupplyResponse();
                         if (object.supply) {
                             if (!Array.isArray(object.supply))
                                 throw TypeError(".cosmos_sdk.x.bank.v1.QueryTotalSupplyResponse.supply: array expected");
                             message.supply = [];
-                            for (var i = 0; i < object.supply.length; ++i) {
+                            for (let i = 0; i < object.supply.length; ++i) {
                                 if (typeof object.supply[i] !== "object")
                                     throw TypeError(".cosmos_sdk.x.bank.v1.QueryTotalSupplyResponse.supply: object expected");
                                 message.supply[i] = $root.cosmos_sdk.v1.Coin.fromObject(object.supply[i]);
@@ -11121,12 +11119,12 @@ $root.cosmos_sdk = (function() {
                     QueryTotalSupplyResponse.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.arrays || options.defaults)
                             object.supply = [];
                         if (message.supply && message.supply.length) {
                             object.supply = [];
-                            for (var j = 0; j < message.supply.length; ++j)
+                            for (let j = 0; j < message.supply.length; ++j)
                                 object.supply[j] = $root.cosmos_sdk.v1.Coin.toObject(message.supply[j], options);
                         }
                         return object;
@@ -11165,7 +11163,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function QuerySupplyOfRequest(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -11234,9 +11232,9 @@ $root.cosmos_sdk = (function() {
                     QuerySupplyOfRequest.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.bank.v1.QuerySupplyOfRequest();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.bank.v1.QuerySupplyOfRequest();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.denom = reader.string();
@@ -11293,7 +11291,7 @@ $root.cosmos_sdk = (function() {
                     QuerySupplyOfRequest.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.bank.v1.QuerySupplyOfRequest)
                             return object;
-                        var message = new $root.cosmos_sdk.x.bank.v1.QuerySupplyOfRequest();
+                        let message = new $root.cosmos_sdk.x.bank.v1.QuerySupplyOfRequest();
                         if (object.denom != null)
                             message.denom = String(object.denom);
                         return message;
@@ -11311,7 +11309,7 @@ $root.cosmos_sdk = (function() {
                     QuerySupplyOfRequest.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults)
                             object.denom = "";
                         if (message.denom != null && message.hasOwnProperty("denom"))
@@ -11352,7 +11350,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function QuerySupplyOfResponse(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -11421,9 +11419,9 @@ $root.cosmos_sdk = (function() {
                     QuerySupplyOfResponse.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.bank.v1.QuerySupplyOfResponse();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.bank.v1.QuerySupplyOfResponse();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.amount = reader.string();
@@ -11480,7 +11478,7 @@ $root.cosmos_sdk = (function() {
                     QuerySupplyOfResponse.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.bank.v1.QuerySupplyOfResponse)
                             return object;
-                        var message = new $root.cosmos_sdk.x.bank.v1.QuerySupplyOfResponse();
+                        let message = new $root.cosmos_sdk.x.bank.v1.QuerySupplyOfResponse();
                         if (object.amount != null)
                             message.amount = String(object.amount);
                         return message;
@@ -11498,7 +11496,7 @@ $root.cosmos_sdk = (function() {
                     QuerySupplyOfResponse.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults)
                             object.amount = "";
                         if (message.amount != null && message.hasOwnProperty("amount"))
@@ -11542,7 +11540,7 @@ $root.cosmos_sdk = (function() {
                     function MsgSend(properties) {
                         this.amount = [];
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -11600,7 +11598,7 @@ $root.cosmos_sdk = (function() {
                         if (message.toAddress != null && Object.hasOwnProperty.call(message, "toAddress"))
                             writer.uint32(/* id 2, wireType 2 =*/18).bytes(message.toAddress);
                         if (message.amount != null && message.amount.length)
-                            for (var i = 0; i < message.amount.length; ++i)
+                            for (let i = 0; i < message.amount.length; ++i)
                                 $root.cosmos_sdk.v1.Coin.encode(message.amount[i], writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
                         return writer;
                     };
@@ -11632,9 +11630,9 @@ $root.cosmos_sdk = (function() {
                     MsgSend.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.bank.v1.MsgSend();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.bank.v1.MsgSend();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.fromAddress = reader.bytes();
@@ -11691,8 +11689,8 @@ $root.cosmos_sdk = (function() {
                         if (message.amount != null && message.hasOwnProperty("amount")) {
                             if (!Array.isArray(message.amount))
                                 return "amount: array expected";
-                            for (var i = 0; i < message.amount.length; ++i) {
-                                var error = $root.cosmos_sdk.v1.Coin.verify(message.amount[i]);
+                            for (let i = 0; i < message.amount.length; ++i) {
+                                let error = $root.cosmos_sdk.v1.Coin.verify(message.amount[i]);
                                 if (error)
                                     return "amount." + error;
                             }
@@ -11711,7 +11709,7 @@ $root.cosmos_sdk = (function() {
                     MsgSend.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.bank.v1.MsgSend)
                             return object;
-                        var message = new $root.cosmos_sdk.x.bank.v1.MsgSend();
+                        let message = new $root.cosmos_sdk.x.bank.v1.MsgSend();
                         if (object.fromAddress != null)
                             if (typeof object.fromAddress === "string")
                                 $util.base64.decode(object.fromAddress, message.fromAddress = $util.newBuffer($util.base64.length(object.fromAddress)), 0);
@@ -11726,7 +11724,7 @@ $root.cosmos_sdk = (function() {
                             if (!Array.isArray(object.amount))
                                 throw TypeError(".cosmos_sdk.x.bank.v1.MsgSend.amount: array expected");
                             message.amount = [];
-                            for (var i = 0; i < object.amount.length; ++i) {
+                            for (let i = 0; i < object.amount.length; ++i) {
                                 if (typeof object.amount[i] !== "object")
                                     throw TypeError(".cosmos_sdk.x.bank.v1.MsgSend.amount: object expected");
                                 message.amount[i] = $root.cosmos_sdk.v1.Coin.fromObject(object.amount[i]);
@@ -11747,7 +11745,7 @@ $root.cosmos_sdk = (function() {
                     MsgSend.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.arrays || options.defaults)
                             object.amount = [];
                         if (options.defaults) {
@@ -11772,7 +11770,7 @@ $root.cosmos_sdk = (function() {
                             object.toAddress = options.bytes === String ? $util.base64.encode(message.toAddress, 0, message.toAddress.length) : options.bytes === Array ? Array.prototype.slice.call(message.toAddress) : message.toAddress;
                         if (message.amount && message.amount.length) {
                             object.amount = [];
-                            for (var j = 0; j < message.amount.length; ++j)
+                            for (let j = 0; j < message.amount.length; ++j)
                                 object.amount[j] = $root.cosmos_sdk.v1.Coin.toObject(message.amount[j], options);
                         }
                         return object;
@@ -11813,7 +11811,7 @@ $root.cosmos_sdk = (function() {
                     function Input(properties) {
                         this.coins = [];
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -11861,7 +11859,7 @@ $root.cosmos_sdk = (function() {
                         if (message.address != null && Object.hasOwnProperty.call(message, "address"))
                             writer.uint32(/* id 1, wireType 2 =*/10).bytes(message.address);
                         if (message.coins != null && message.coins.length)
-                            for (var i = 0; i < message.coins.length; ++i)
+                            for (let i = 0; i < message.coins.length; ++i)
                                 $root.cosmos_sdk.v1.Coin.encode(message.coins[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
                         return writer;
                     };
@@ -11893,9 +11891,9 @@ $root.cosmos_sdk = (function() {
                     Input.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.bank.v1.Input();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.bank.v1.Input();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.address = reader.bytes();
@@ -11946,8 +11944,8 @@ $root.cosmos_sdk = (function() {
                         if (message.coins != null && message.hasOwnProperty("coins")) {
                             if (!Array.isArray(message.coins))
                                 return "coins: array expected";
-                            for (var i = 0; i < message.coins.length; ++i) {
-                                var error = $root.cosmos_sdk.v1.Coin.verify(message.coins[i]);
+                            for (let i = 0; i < message.coins.length; ++i) {
+                                let error = $root.cosmos_sdk.v1.Coin.verify(message.coins[i]);
                                 if (error)
                                     return "coins." + error;
                             }
@@ -11966,7 +11964,7 @@ $root.cosmos_sdk = (function() {
                     Input.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.bank.v1.Input)
                             return object;
-                        var message = new $root.cosmos_sdk.x.bank.v1.Input();
+                        let message = new $root.cosmos_sdk.x.bank.v1.Input();
                         if (object.address != null)
                             if (typeof object.address === "string")
                                 $util.base64.decode(object.address, message.address = $util.newBuffer($util.base64.length(object.address)), 0);
@@ -11976,7 +11974,7 @@ $root.cosmos_sdk = (function() {
                             if (!Array.isArray(object.coins))
                                 throw TypeError(".cosmos_sdk.x.bank.v1.Input.coins: array expected");
                             message.coins = [];
-                            for (var i = 0; i < object.coins.length; ++i) {
+                            for (let i = 0; i < object.coins.length; ++i) {
                                 if (typeof object.coins[i] !== "object")
                                     throw TypeError(".cosmos_sdk.x.bank.v1.Input.coins: object expected");
                                 message.coins[i] = $root.cosmos_sdk.v1.Coin.fromObject(object.coins[i]);
@@ -11997,7 +11995,7 @@ $root.cosmos_sdk = (function() {
                     Input.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.arrays || options.defaults)
                             object.coins = [];
                         if (options.defaults)
@@ -12012,7 +12010,7 @@ $root.cosmos_sdk = (function() {
                             object.address = options.bytes === String ? $util.base64.encode(message.address, 0, message.address.length) : options.bytes === Array ? Array.prototype.slice.call(message.address) : message.address;
                         if (message.coins && message.coins.length) {
                             object.coins = [];
-                            for (var j = 0; j < message.coins.length; ++j)
+                            for (let j = 0; j < message.coins.length; ++j)
                                 object.coins[j] = $root.cosmos_sdk.v1.Coin.toObject(message.coins[j], options);
                         }
                         return object;
@@ -12053,7 +12051,7 @@ $root.cosmos_sdk = (function() {
                     function Output(properties) {
                         this.coins = [];
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -12101,7 +12099,7 @@ $root.cosmos_sdk = (function() {
                         if (message.address != null && Object.hasOwnProperty.call(message, "address"))
                             writer.uint32(/* id 1, wireType 2 =*/10).bytes(message.address);
                         if (message.coins != null && message.coins.length)
-                            for (var i = 0; i < message.coins.length; ++i)
+                            for (let i = 0; i < message.coins.length; ++i)
                                 $root.cosmos_sdk.v1.Coin.encode(message.coins[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
                         return writer;
                     };
@@ -12133,9 +12131,9 @@ $root.cosmos_sdk = (function() {
                     Output.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.bank.v1.Output();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.bank.v1.Output();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.address = reader.bytes();
@@ -12186,8 +12184,8 @@ $root.cosmos_sdk = (function() {
                         if (message.coins != null && message.hasOwnProperty("coins")) {
                             if (!Array.isArray(message.coins))
                                 return "coins: array expected";
-                            for (var i = 0; i < message.coins.length; ++i) {
-                                var error = $root.cosmos_sdk.v1.Coin.verify(message.coins[i]);
+                            for (let i = 0; i < message.coins.length; ++i) {
+                                let error = $root.cosmos_sdk.v1.Coin.verify(message.coins[i]);
                                 if (error)
                                     return "coins." + error;
                             }
@@ -12206,7 +12204,7 @@ $root.cosmos_sdk = (function() {
                     Output.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.bank.v1.Output)
                             return object;
-                        var message = new $root.cosmos_sdk.x.bank.v1.Output();
+                        let message = new $root.cosmos_sdk.x.bank.v1.Output();
                         if (object.address != null)
                             if (typeof object.address === "string")
                                 $util.base64.decode(object.address, message.address = $util.newBuffer($util.base64.length(object.address)), 0);
@@ -12216,7 +12214,7 @@ $root.cosmos_sdk = (function() {
                             if (!Array.isArray(object.coins))
                                 throw TypeError(".cosmos_sdk.x.bank.v1.Output.coins: array expected");
                             message.coins = [];
-                            for (var i = 0; i < object.coins.length; ++i) {
+                            for (let i = 0; i < object.coins.length; ++i) {
                                 if (typeof object.coins[i] !== "object")
                                     throw TypeError(".cosmos_sdk.x.bank.v1.Output.coins: object expected");
                                 message.coins[i] = $root.cosmos_sdk.v1.Coin.fromObject(object.coins[i]);
@@ -12237,7 +12235,7 @@ $root.cosmos_sdk = (function() {
                     Output.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.arrays || options.defaults)
                             object.coins = [];
                         if (options.defaults)
@@ -12252,7 +12250,7 @@ $root.cosmos_sdk = (function() {
                             object.address = options.bytes === String ? $util.base64.encode(message.address, 0, message.address.length) : options.bytes === Array ? Array.prototype.slice.call(message.address) : message.address;
                         if (message.coins && message.coins.length) {
                             object.coins = [];
-                            for (var j = 0; j < message.coins.length; ++j)
+                            for (let j = 0; j < message.coins.length; ++j)
                                 object.coins[j] = $root.cosmos_sdk.v1.Coin.toObject(message.coins[j], options);
                         }
                         return object;
@@ -12294,7 +12292,7 @@ $root.cosmos_sdk = (function() {
                         this.inputs = [];
                         this.outputs = [];
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -12340,10 +12338,10 @@ $root.cosmos_sdk = (function() {
                         if (!writer)
                             writer = $Writer.create();
                         if (message.inputs != null && message.inputs.length)
-                            for (var i = 0; i < message.inputs.length; ++i)
+                            for (let i = 0; i < message.inputs.length; ++i)
                                 $root.cosmos_sdk.x.bank.v1.Input.encode(message.inputs[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
                         if (message.outputs != null && message.outputs.length)
-                            for (var i = 0; i < message.outputs.length; ++i)
+                            for (let i = 0; i < message.outputs.length; ++i)
                                 $root.cosmos_sdk.x.bank.v1.Output.encode(message.outputs[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
                         return writer;
                     };
@@ -12375,9 +12373,9 @@ $root.cosmos_sdk = (function() {
                     MsgMultiSend.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.bank.v1.MsgMultiSend();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.bank.v1.MsgMultiSend();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 if (!(message.inputs && message.inputs.length))
@@ -12427,8 +12425,8 @@ $root.cosmos_sdk = (function() {
                         if (message.inputs != null && message.hasOwnProperty("inputs")) {
                             if (!Array.isArray(message.inputs))
                                 return "inputs: array expected";
-                            for (var i = 0; i < message.inputs.length; ++i) {
-                                var error = $root.cosmos_sdk.x.bank.v1.Input.verify(message.inputs[i]);
+                            for (let i = 0; i < message.inputs.length; ++i) {
+                                let error = $root.cosmos_sdk.x.bank.v1.Input.verify(message.inputs[i]);
                                 if (error)
                                     return "inputs." + error;
                             }
@@ -12436,8 +12434,8 @@ $root.cosmos_sdk = (function() {
                         if (message.outputs != null && message.hasOwnProperty("outputs")) {
                             if (!Array.isArray(message.outputs))
                                 return "outputs: array expected";
-                            for (var i = 0; i < message.outputs.length; ++i) {
-                                var error = $root.cosmos_sdk.x.bank.v1.Output.verify(message.outputs[i]);
+                            for (let i = 0; i < message.outputs.length; ++i) {
+                                let error = $root.cosmos_sdk.x.bank.v1.Output.verify(message.outputs[i]);
                                 if (error)
                                     return "outputs." + error;
                             }
@@ -12456,12 +12454,12 @@ $root.cosmos_sdk = (function() {
                     MsgMultiSend.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.bank.v1.MsgMultiSend)
                             return object;
-                        var message = new $root.cosmos_sdk.x.bank.v1.MsgMultiSend();
+                        let message = new $root.cosmos_sdk.x.bank.v1.MsgMultiSend();
                         if (object.inputs) {
                             if (!Array.isArray(object.inputs))
                                 throw TypeError(".cosmos_sdk.x.bank.v1.MsgMultiSend.inputs: array expected");
                             message.inputs = [];
-                            for (var i = 0; i < object.inputs.length; ++i) {
+                            for (let i = 0; i < object.inputs.length; ++i) {
                                 if (typeof object.inputs[i] !== "object")
                                     throw TypeError(".cosmos_sdk.x.bank.v1.MsgMultiSend.inputs: object expected");
                                 message.inputs[i] = $root.cosmos_sdk.x.bank.v1.Input.fromObject(object.inputs[i]);
@@ -12471,7 +12469,7 @@ $root.cosmos_sdk = (function() {
                             if (!Array.isArray(object.outputs))
                                 throw TypeError(".cosmos_sdk.x.bank.v1.MsgMultiSend.outputs: array expected");
                             message.outputs = [];
-                            for (var i = 0; i < object.outputs.length; ++i) {
+                            for (let i = 0; i < object.outputs.length; ++i) {
                                 if (typeof object.outputs[i] !== "object")
                                     throw TypeError(".cosmos_sdk.x.bank.v1.MsgMultiSend.outputs: object expected");
                                 message.outputs[i] = $root.cosmos_sdk.x.bank.v1.Output.fromObject(object.outputs[i]);
@@ -12492,19 +12490,19 @@ $root.cosmos_sdk = (function() {
                     MsgMultiSend.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.arrays || options.defaults) {
                             object.inputs = [];
                             object.outputs = [];
                         }
                         if (message.inputs && message.inputs.length) {
                             object.inputs = [];
-                            for (var j = 0; j < message.inputs.length; ++j)
+                            for (let j = 0; j < message.inputs.length; ++j)
                                 object.inputs[j] = $root.cosmos_sdk.x.bank.v1.Input.toObject(message.inputs[j], options);
                         }
                         if (message.outputs && message.outputs.length) {
                             object.outputs = [];
-                            for (var j = 0; j < message.outputs.length; ++j)
+                            for (let j = 0; j < message.outputs.length; ++j)
                                 object.outputs[j] = $root.cosmos_sdk.x.bank.v1.Output.toObject(message.outputs[j], options);
                         }
                         return object;
@@ -12544,7 +12542,7 @@ $root.cosmos_sdk = (function() {
                     function Supply(properties) {
                         this.total = [];
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -12582,7 +12580,7 @@ $root.cosmos_sdk = (function() {
                         if (!writer)
                             writer = $Writer.create();
                         if (message.total != null && message.total.length)
-                            for (var i = 0; i < message.total.length; ++i)
+                            for (let i = 0; i < message.total.length; ++i)
                                 $root.cosmos_sdk.v1.Coin.encode(message.total[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
                         return writer;
                     };
@@ -12614,9 +12612,9 @@ $root.cosmos_sdk = (function() {
                     Supply.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.bank.v1.Supply();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.bank.v1.Supply();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 if (!(message.total && message.total.length))
@@ -12661,8 +12659,8 @@ $root.cosmos_sdk = (function() {
                         if (message.total != null && message.hasOwnProperty("total")) {
                             if (!Array.isArray(message.total))
                                 return "total: array expected";
-                            for (var i = 0; i < message.total.length; ++i) {
-                                var error = $root.cosmos_sdk.v1.Coin.verify(message.total[i]);
+                            for (let i = 0; i < message.total.length; ++i) {
+                                let error = $root.cosmos_sdk.v1.Coin.verify(message.total[i]);
                                 if (error)
                                     return "total." + error;
                             }
@@ -12681,12 +12679,12 @@ $root.cosmos_sdk = (function() {
                     Supply.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.bank.v1.Supply)
                             return object;
-                        var message = new $root.cosmos_sdk.x.bank.v1.Supply();
+                        let message = new $root.cosmos_sdk.x.bank.v1.Supply();
                         if (object.total) {
                             if (!Array.isArray(object.total))
                                 throw TypeError(".cosmos_sdk.x.bank.v1.Supply.total: array expected");
                             message.total = [];
-                            for (var i = 0; i < object.total.length; ++i) {
+                            for (let i = 0; i < object.total.length; ++i) {
                                 if (typeof object.total[i] !== "object")
                                     throw TypeError(".cosmos_sdk.x.bank.v1.Supply.total: object expected");
                                 message.total[i] = $root.cosmos_sdk.v1.Coin.fromObject(object.total[i]);
@@ -12707,12 +12705,12 @@ $root.cosmos_sdk = (function() {
                     Supply.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.arrays || options.defaults)
                             object.total = [];
                         if (message.total && message.total.length) {
                             object.total = [];
-                            for (var j = 0; j < message.total.length; ++j)
+                            for (let j = 0; j < message.total.length; ++j)
                                 object.total[j] = $root.cosmos_sdk.v1.Coin.toObject(message.total[j], options);
                         }
                         return object;
@@ -12745,7 +12743,7 @@ $root.cosmos_sdk = (function() {
              * @memberof cosmos_sdk.x
              * @namespace
              */
-            var capability = {};
+            const capability = {};
 
             capability.v1 = (function() {
 
@@ -12754,7 +12752,7 @@ $root.cosmos_sdk = (function() {
                  * @memberof cosmos_sdk.x.capability
                  * @namespace
                  */
-                var v1 = {};
+                const v1 = {};
 
                 v1.Capability = (function() {
 
@@ -12775,7 +12773,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function Capability(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -12844,9 +12842,9 @@ $root.cosmos_sdk = (function() {
                     Capability.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.capability.v1.Capability();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.capability.v1.Capability();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.index = reader.uint64();
@@ -12903,7 +12901,7 @@ $root.cosmos_sdk = (function() {
                     Capability.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.capability.v1.Capability)
                             return object;
-                        var message = new $root.cosmos_sdk.x.capability.v1.Capability();
+                        let message = new $root.cosmos_sdk.x.capability.v1.Capability();
                         if (object.index != null)
                             if ($util.Long)
                                 (message.index = $util.Long.fromValue(object.index)).unsigned = true;
@@ -12928,10 +12926,10 @@ $root.cosmos_sdk = (function() {
                     Capability.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults)
                             if ($util.Long) {
-                                var long = new $util.Long(0, 0, true);
+                                let long = new $util.Long(0, 0, true);
                                 object.index = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                             } else
                                 object.index = options.longs === String ? "0" : 0;
@@ -12977,7 +12975,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function Owner(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -13056,9 +13054,9 @@ $root.cosmos_sdk = (function() {
                     Owner.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.capability.v1.Owner();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.capability.v1.Owner();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.module = reader.string();
@@ -13121,7 +13119,7 @@ $root.cosmos_sdk = (function() {
                     Owner.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.capability.v1.Owner)
                             return object;
-                        var message = new $root.cosmos_sdk.x.capability.v1.Owner();
+                        let message = new $root.cosmos_sdk.x.capability.v1.Owner();
                         if (object.module != null)
                             message.module = String(object.module);
                         if (object.name != null)
@@ -13141,7 +13139,7 @@ $root.cosmos_sdk = (function() {
                     Owner.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults) {
                             object.module = "";
                             object.name = "";
@@ -13187,7 +13185,7 @@ $root.cosmos_sdk = (function() {
                     function CapabilityOwners(properties) {
                         this.owners = [];
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -13225,7 +13223,7 @@ $root.cosmos_sdk = (function() {
                         if (!writer)
                             writer = $Writer.create();
                         if (message.owners != null && message.owners.length)
-                            for (var i = 0; i < message.owners.length; ++i)
+                            for (let i = 0; i < message.owners.length; ++i)
                                 $root.cosmos_sdk.x.capability.v1.Owner.encode(message.owners[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
                         return writer;
                     };
@@ -13257,9 +13255,9 @@ $root.cosmos_sdk = (function() {
                     CapabilityOwners.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.capability.v1.CapabilityOwners();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.capability.v1.CapabilityOwners();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 if (!(message.owners && message.owners.length))
@@ -13304,8 +13302,8 @@ $root.cosmos_sdk = (function() {
                         if (message.owners != null && message.hasOwnProperty("owners")) {
                             if (!Array.isArray(message.owners))
                                 return "owners: array expected";
-                            for (var i = 0; i < message.owners.length; ++i) {
-                                var error = $root.cosmos_sdk.x.capability.v1.Owner.verify(message.owners[i]);
+                            for (let i = 0; i < message.owners.length; ++i) {
+                                let error = $root.cosmos_sdk.x.capability.v1.Owner.verify(message.owners[i]);
                                 if (error)
                                     return "owners." + error;
                             }
@@ -13324,12 +13322,12 @@ $root.cosmos_sdk = (function() {
                     CapabilityOwners.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.capability.v1.CapabilityOwners)
                             return object;
-                        var message = new $root.cosmos_sdk.x.capability.v1.CapabilityOwners();
+                        let message = new $root.cosmos_sdk.x.capability.v1.CapabilityOwners();
                         if (object.owners) {
                             if (!Array.isArray(object.owners))
                                 throw TypeError(".cosmos_sdk.x.capability.v1.CapabilityOwners.owners: array expected");
                             message.owners = [];
-                            for (var i = 0; i < object.owners.length; ++i) {
+                            for (let i = 0; i < object.owners.length; ++i) {
                                 if (typeof object.owners[i] !== "object")
                                     throw TypeError(".cosmos_sdk.x.capability.v1.CapabilityOwners.owners: object expected");
                                 message.owners[i] = $root.cosmos_sdk.x.capability.v1.Owner.fromObject(object.owners[i]);
@@ -13350,12 +13348,12 @@ $root.cosmos_sdk = (function() {
                     CapabilityOwners.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.arrays || options.defaults)
                             object.owners = [];
                         if (message.owners && message.owners.length) {
                             object.owners = [];
-                            for (var j = 0; j < message.owners.length; ++j)
+                            for (let j = 0; j < message.owners.length; ++j)
                                 object.owners[j] = $root.cosmos_sdk.x.capability.v1.Owner.toObject(message.owners[j], options);
                         }
                         return object;
@@ -13388,7 +13386,7 @@ $root.cosmos_sdk = (function() {
              * @memberof cosmos_sdk.x
              * @namespace
              */
-            var crisis = {};
+            const crisis = {};
 
             crisis.v1 = (function() {
 
@@ -13397,7 +13395,7 @@ $root.cosmos_sdk = (function() {
                  * @memberof cosmos_sdk.x.crisis
                  * @namespace
                  */
-                var v1 = {};
+                const v1 = {};
 
                 v1.MsgVerifyInvariant = (function() {
 
@@ -13420,7 +13418,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function MsgVerifyInvariant(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -13509,9 +13507,9 @@ $root.cosmos_sdk = (function() {
                     MsgVerifyInvariant.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.crisis.v1.MsgVerifyInvariant();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.crisis.v1.MsgVerifyInvariant();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.sender = reader.bytes();
@@ -13580,7 +13578,7 @@ $root.cosmos_sdk = (function() {
                     MsgVerifyInvariant.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.crisis.v1.MsgVerifyInvariant)
                             return object;
-                        var message = new $root.cosmos_sdk.x.crisis.v1.MsgVerifyInvariant();
+                        let message = new $root.cosmos_sdk.x.crisis.v1.MsgVerifyInvariant();
                         if (object.sender != null)
                             if (typeof object.sender === "string")
                                 $util.base64.decode(object.sender, message.sender = $util.newBuffer($util.base64.length(object.sender)), 0);
@@ -13605,7 +13603,7 @@ $root.cosmos_sdk = (function() {
                     MsgVerifyInvariant.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults) {
                             if (options.bytes === String)
                                 object.sender = "";
@@ -13653,7 +13651,7 @@ $root.cosmos_sdk = (function() {
              * @memberof cosmos_sdk.x
              * @namespace
              */
-            var distribution = {};
+            const distribution = {};
 
             distribution.v1 = (function() {
 
@@ -13662,7 +13660,7 @@ $root.cosmos_sdk = (function() {
                  * @memberof cosmos_sdk.x.distribution
                  * @namespace
                  */
-                var v1 = {};
+                const v1 = {};
 
                 v1.MsgSetWithdrawAddress = (function() {
 
@@ -13684,7 +13682,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function MsgSetWithdrawAddress(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -13763,9 +13761,9 @@ $root.cosmos_sdk = (function() {
                     MsgSetWithdrawAddress.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.distribution.v1.MsgSetWithdrawAddress();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.distribution.v1.MsgSetWithdrawAddress();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.delegatorAddress = reader.bytes();
@@ -13828,7 +13826,7 @@ $root.cosmos_sdk = (function() {
                     MsgSetWithdrawAddress.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.distribution.v1.MsgSetWithdrawAddress)
                             return object;
-                        var message = new $root.cosmos_sdk.x.distribution.v1.MsgSetWithdrawAddress();
+                        let message = new $root.cosmos_sdk.x.distribution.v1.MsgSetWithdrawAddress();
                         if (object.delegatorAddress != null)
                             if (typeof object.delegatorAddress === "string")
                                 $util.base64.decode(object.delegatorAddress, message.delegatorAddress = $util.newBuffer($util.base64.length(object.delegatorAddress)), 0);
@@ -13854,7 +13852,7 @@ $root.cosmos_sdk = (function() {
                     MsgSetWithdrawAddress.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults) {
                             if (options.bytes === String)
                                 object.delegatorAddress = "";
@@ -13912,7 +13910,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function MsgWithdrawDelegatorReward(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -13991,9 +13989,9 @@ $root.cosmos_sdk = (function() {
                     MsgWithdrawDelegatorReward.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.distribution.v1.MsgWithdrawDelegatorReward();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.distribution.v1.MsgWithdrawDelegatorReward();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.delegatorAddress = reader.bytes();
@@ -14056,7 +14054,7 @@ $root.cosmos_sdk = (function() {
                     MsgWithdrawDelegatorReward.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.distribution.v1.MsgWithdrawDelegatorReward)
                             return object;
-                        var message = new $root.cosmos_sdk.x.distribution.v1.MsgWithdrawDelegatorReward();
+                        let message = new $root.cosmos_sdk.x.distribution.v1.MsgWithdrawDelegatorReward();
                         if (object.delegatorAddress != null)
                             if (typeof object.delegatorAddress === "string")
                                 $util.base64.decode(object.delegatorAddress, message.delegatorAddress = $util.newBuffer($util.base64.length(object.delegatorAddress)), 0);
@@ -14082,7 +14080,7 @@ $root.cosmos_sdk = (function() {
                     MsgWithdrawDelegatorReward.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults) {
                             if (options.bytes === String)
                                 object.delegatorAddress = "";
@@ -14139,7 +14137,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function MsgWithdrawValidatorCommission(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -14208,9 +14206,9 @@ $root.cosmos_sdk = (function() {
                     MsgWithdrawValidatorCommission.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.distribution.v1.MsgWithdrawValidatorCommission();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.distribution.v1.MsgWithdrawValidatorCommission();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.validatorAddress = reader.bytes();
@@ -14267,7 +14265,7 @@ $root.cosmos_sdk = (function() {
                     MsgWithdrawValidatorCommission.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.distribution.v1.MsgWithdrawValidatorCommission)
                             return object;
-                        var message = new $root.cosmos_sdk.x.distribution.v1.MsgWithdrawValidatorCommission();
+                        let message = new $root.cosmos_sdk.x.distribution.v1.MsgWithdrawValidatorCommission();
                         if (object.validatorAddress != null)
                             if (typeof object.validatorAddress === "string")
                                 $util.base64.decode(object.validatorAddress, message.validatorAddress = $util.newBuffer($util.base64.length(object.validatorAddress)), 0);
@@ -14288,7 +14286,7 @@ $root.cosmos_sdk = (function() {
                     MsgWithdrawValidatorCommission.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults)
                             if (options.bytes === String)
                                 object.validatorAddress = "";
@@ -14337,7 +14335,7 @@ $root.cosmos_sdk = (function() {
                     function MsgFundCommunityPool(properties) {
                         this.amount = [];
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -14383,7 +14381,7 @@ $root.cosmos_sdk = (function() {
                         if (!writer)
                             writer = $Writer.create();
                         if (message.amount != null && message.amount.length)
-                            for (var i = 0; i < message.amount.length; ++i)
+                            for (let i = 0; i < message.amount.length; ++i)
                                 $root.cosmos_sdk.v1.Coin.encode(message.amount[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
                         if (message.depositor != null && Object.hasOwnProperty.call(message, "depositor"))
                             writer.uint32(/* id 2, wireType 2 =*/18).bytes(message.depositor);
@@ -14417,9 +14415,9 @@ $root.cosmos_sdk = (function() {
                     MsgFundCommunityPool.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.distribution.v1.MsgFundCommunityPool();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.distribution.v1.MsgFundCommunityPool();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 if (!(message.amount && message.amount.length))
@@ -14467,8 +14465,8 @@ $root.cosmos_sdk = (function() {
                         if (message.amount != null && message.hasOwnProperty("amount")) {
                             if (!Array.isArray(message.amount))
                                 return "amount: array expected";
-                            for (var i = 0; i < message.amount.length; ++i) {
-                                var error = $root.cosmos_sdk.v1.Coin.verify(message.amount[i]);
+                            for (let i = 0; i < message.amount.length; ++i) {
+                                let error = $root.cosmos_sdk.v1.Coin.verify(message.amount[i]);
                                 if (error)
                                     return "amount." + error;
                             }
@@ -14490,12 +14488,12 @@ $root.cosmos_sdk = (function() {
                     MsgFundCommunityPool.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.distribution.v1.MsgFundCommunityPool)
                             return object;
-                        var message = new $root.cosmos_sdk.x.distribution.v1.MsgFundCommunityPool();
+                        let message = new $root.cosmos_sdk.x.distribution.v1.MsgFundCommunityPool();
                         if (object.amount) {
                             if (!Array.isArray(object.amount))
                                 throw TypeError(".cosmos_sdk.x.distribution.v1.MsgFundCommunityPool.amount: array expected");
                             message.amount = [];
-                            for (var i = 0; i < object.amount.length; ++i) {
+                            for (let i = 0; i < object.amount.length; ++i) {
                                 if (typeof object.amount[i] !== "object")
                                     throw TypeError(".cosmos_sdk.x.distribution.v1.MsgFundCommunityPool.amount: object expected");
                                 message.amount[i] = $root.cosmos_sdk.v1.Coin.fromObject(object.amount[i]);
@@ -14521,7 +14519,7 @@ $root.cosmos_sdk = (function() {
                     MsgFundCommunityPool.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.arrays || options.defaults)
                             object.amount = [];
                         if (options.defaults)
@@ -14534,7 +14532,7 @@ $root.cosmos_sdk = (function() {
                             }
                         if (message.amount && message.amount.length) {
                             object.amount = [];
-                            for (var j = 0; j < message.amount.length; ++j)
+                            for (let j = 0; j < message.amount.length; ++j)
                                 object.amount[j] = $root.cosmos_sdk.v1.Coin.toObject(message.amount[j], options);
                         }
                         if (message.depositor != null && message.hasOwnProperty("depositor"))
@@ -14578,7 +14576,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function Params(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -14677,9 +14675,9 @@ $root.cosmos_sdk = (function() {
                     Params.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.distribution.v1.Params();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.distribution.v1.Params();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.communityTax = reader.string();
@@ -14754,7 +14752,7 @@ $root.cosmos_sdk = (function() {
                     Params.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.distribution.v1.Params)
                             return object;
-                        var message = new $root.cosmos_sdk.x.distribution.v1.Params();
+                        let message = new $root.cosmos_sdk.x.distribution.v1.Params();
                         if (object.communityTax != null)
                             message.communityTax = String(object.communityTax);
                         if (object.baseProposerReward != null)
@@ -14778,7 +14776,7 @@ $root.cosmos_sdk = (function() {
                     Params.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults) {
                             object.communityTax = "";
                             object.baseProposerReward = "";
@@ -14831,7 +14829,7 @@ $root.cosmos_sdk = (function() {
                     function ValidatorHistoricalRewards(properties) {
                         this.cumulativeRewardRatio = [];
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -14877,7 +14875,7 @@ $root.cosmos_sdk = (function() {
                         if (!writer)
                             writer = $Writer.create();
                         if (message.cumulativeRewardRatio != null && message.cumulativeRewardRatio.length)
-                            for (var i = 0; i < message.cumulativeRewardRatio.length; ++i)
+                            for (let i = 0; i < message.cumulativeRewardRatio.length; ++i)
                                 $root.cosmos_sdk.v1.DecCoin.encode(message.cumulativeRewardRatio[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
                         if (message.referenceCount != null && Object.hasOwnProperty.call(message, "referenceCount"))
                             writer.uint32(/* id 2, wireType 0 =*/16).uint32(message.referenceCount);
@@ -14911,9 +14909,9 @@ $root.cosmos_sdk = (function() {
                     ValidatorHistoricalRewards.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.distribution.v1.ValidatorHistoricalRewards();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.distribution.v1.ValidatorHistoricalRewards();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 if (!(message.cumulativeRewardRatio && message.cumulativeRewardRatio.length))
@@ -14961,8 +14959,8 @@ $root.cosmos_sdk = (function() {
                         if (message.cumulativeRewardRatio != null && message.hasOwnProperty("cumulativeRewardRatio")) {
                             if (!Array.isArray(message.cumulativeRewardRatio))
                                 return "cumulativeRewardRatio: array expected";
-                            for (var i = 0; i < message.cumulativeRewardRatio.length; ++i) {
-                                var error = $root.cosmos_sdk.v1.DecCoin.verify(message.cumulativeRewardRatio[i]);
+                            for (let i = 0; i < message.cumulativeRewardRatio.length; ++i) {
+                                let error = $root.cosmos_sdk.v1.DecCoin.verify(message.cumulativeRewardRatio[i]);
                                 if (error)
                                     return "cumulativeRewardRatio." + error;
                             }
@@ -14984,12 +14982,12 @@ $root.cosmos_sdk = (function() {
                     ValidatorHistoricalRewards.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.distribution.v1.ValidatorHistoricalRewards)
                             return object;
-                        var message = new $root.cosmos_sdk.x.distribution.v1.ValidatorHistoricalRewards();
+                        let message = new $root.cosmos_sdk.x.distribution.v1.ValidatorHistoricalRewards();
                         if (object.cumulativeRewardRatio) {
                             if (!Array.isArray(object.cumulativeRewardRatio))
                                 throw TypeError(".cosmos_sdk.x.distribution.v1.ValidatorHistoricalRewards.cumulativeRewardRatio: array expected");
                             message.cumulativeRewardRatio = [];
-                            for (var i = 0; i < object.cumulativeRewardRatio.length; ++i) {
+                            for (let i = 0; i < object.cumulativeRewardRatio.length; ++i) {
                                 if (typeof object.cumulativeRewardRatio[i] !== "object")
                                     throw TypeError(".cosmos_sdk.x.distribution.v1.ValidatorHistoricalRewards.cumulativeRewardRatio: object expected");
                                 message.cumulativeRewardRatio[i] = $root.cosmos_sdk.v1.DecCoin.fromObject(object.cumulativeRewardRatio[i]);
@@ -15012,14 +15010,14 @@ $root.cosmos_sdk = (function() {
                     ValidatorHistoricalRewards.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.arrays || options.defaults)
                             object.cumulativeRewardRatio = [];
                         if (options.defaults)
                             object.referenceCount = 0;
                         if (message.cumulativeRewardRatio && message.cumulativeRewardRatio.length) {
                             object.cumulativeRewardRatio = [];
-                            for (var j = 0; j < message.cumulativeRewardRatio.length; ++j)
+                            for (let j = 0; j < message.cumulativeRewardRatio.length; ++j)
                                 object.cumulativeRewardRatio[j] = $root.cosmos_sdk.v1.DecCoin.toObject(message.cumulativeRewardRatio[j], options);
                         }
                         if (message.referenceCount != null && message.hasOwnProperty("referenceCount"))
@@ -15062,7 +15060,7 @@ $root.cosmos_sdk = (function() {
                     function ValidatorCurrentRewards(properties) {
                         this.rewards = [];
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -15108,7 +15106,7 @@ $root.cosmos_sdk = (function() {
                         if (!writer)
                             writer = $Writer.create();
                         if (message.rewards != null && message.rewards.length)
-                            for (var i = 0; i < message.rewards.length; ++i)
+                            for (let i = 0; i < message.rewards.length; ++i)
                                 $root.cosmos_sdk.v1.DecCoin.encode(message.rewards[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
                         if (message.period != null && Object.hasOwnProperty.call(message, "period"))
                             writer.uint32(/* id 2, wireType 0 =*/16).uint64(message.period);
@@ -15142,9 +15140,9 @@ $root.cosmos_sdk = (function() {
                     ValidatorCurrentRewards.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.distribution.v1.ValidatorCurrentRewards();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.distribution.v1.ValidatorCurrentRewards();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 if (!(message.rewards && message.rewards.length))
@@ -15192,8 +15190,8 @@ $root.cosmos_sdk = (function() {
                         if (message.rewards != null && message.hasOwnProperty("rewards")) {
                             if (!Array.isArray(message.rewards))
                                 return "rewards: array expected";
-                            for (var i = 0; i < message.rewards.length; ++i) {
-                                var error = $root.cosmos_sdk.v1.DecCoin.verify(message.rewards[i]);
+                            for (let i = 0; i < message.rewards.length; ++i) {
+                                let error = $root.cosmos_sdk.v1.DecCoin.verify(message.rewards[i]);
                                 if (error)
                                     return "rewards." + error;
                             }
@@ -15215,12 +15213,12 @@ $root.cosmos_sdk = (function() {
                     ValidatorCurrentRewards.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.distribution.v1.ValidatorCurrentRewards)
                             return object;
-                        var message = new $root.cosmos_sdk.x.distribution.v1.ValidatorCurrentRewards();
+                        let message = new $root.cosmos_sdk.x.distribution.v1.ValidatorCurrentRewards();
                         if (object.rewards) {
                             if (!Array.isArray(object.rewards))
                                 throw TypeError(".cosmos_sdk.x.distribution.v1.ValidatorCurrentRewards.rewards: array expected");
                             message.rewards = [];
-                            for (var i = 0; i < object.rewards.length; ++i) {
+                            for (let i = 0; i < object.rewards.length; ++i) {
                                 if (typeof object.rewards[i] !== "object")
                                     throw TypeError(".cosmos_sdk.x.distribution.v1.ValidatorCurrentRewards.rewards: object expected");
                                 message.rewards[i] = $root.cosmos_sdk.v1.DecCoin.fromObject(object.rewards[i]);
@@ -15250,18 +15248,18 @@ $root.cosmos_sdk = (function() {
                     ValidatorCurrentRewards.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.arrays || options.defaults)
                             object.rewards = [];
                         if (options.defaults)
                             if ($util.Long) {
-                                var long = new $util.Long(0, 0, true);
+                                let long = new $util.Long(0, 0, true);
                                 object.period = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                             } else
                                 object.period = options.longs === String ? "0" : 0;
                         if (message.rewards && message.rewards.length) {
                             object.rewards = [];
-                            for (var j = 0; j < message.rewards.length; ++j)
+                            for (let j = 0; j < message.rewards.length; ++j)
                                 object.rewards[j] = $root.cosmos_sdk.v1.DecCoin.toObject(message.rewards[j], options);
                         }
                         if (message.period != null && message.hasOwnProperty("period"))
@@ -15306,7 +15304,7 @@ $root.cosmos_sdk = (function() {
                     function ValidatorAccumulatedCommission(properties) {
                         this.commission = [];
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -15344,7 +15342,7 @@ $root.cosmos_sdk = (function() {
                         if (!writer)
                             writer = $Writer.create();
                         if (message.commission != null && message.commission.length)
-                            for (var i = 0; i < message.commission.length; ++i)
+                            for (let i = 0; i < message.commission.length; ++i)
                                 $root.cosmos_sdk.v1.DecCoin.encode(message.commission[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
                         return writer;
                     };
@@ -15376,9 +15374,9 @@ $root.cosmos_sdk = (function() {
                     ValidatorAccumulatedCommission.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.distribution.v1.ValidatorAccumulatedCommission();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.distribution.v1.ValidatorAccumulatedCommission();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 if (!(message.commission && message.commission.length))
@@ -15423,8 +15421,8 @@ $root.cosmos_sdk = (function() {
                         if (message.commission != null && message.hasOwnProperty("commission")) {
                             if (!Array.isArray(message.commission))
                                 return "commission: array expected";
-                            for (var i = 0; i < message.commission.length; ++i) {
-                                var error = $root.cosmos_sdk.v1.DecCoin.verify(message.commission[i]);
+                            for (let i = 0; i < message.commission.length; ++i) {
+                                let error = $root.cosmos_sdk.v1.DecCoin.verify(message.commission[i]);
                                 if (error)
                                     return "commission." + error;
                             }
@@ -15443,12 +15441,12 @@ $root.cosmos_sdk = (function() {
                     ValidatorAccumulatedCommission.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.distribution.v1.ValidatorAccumulatedCommission)
                             return object;
-                        var message = new $root.cosmos_sdk.x.distribution.v1.ValidatorAccumulatedCommission();
+                        let message = new $root.cosmos_sdk.x.distribution.v1.ValidatorAccumulatedCommission();
                         if (object.commission) {
                             if (!Array.isArray(object.commission))
                                 throw TypeError(".cosmos_sdk.x.distribution.v1.ValidatorAccumulatedCommission.commission: array expected");
                             message.commission = [];
-                            for (var i = 0; i < object.commission.length; ++i) {
+                            for (let i = 0; i < object.commission.length; ++i) {
                                 if (typeof object.commission[i] !== "object")
                                     throw TypeError(".cosmos_sdk.x.distribution.v1.ValidatorAccumulatedCommission.commission: object expected");
                                 message.commission[i] = $root.cosmos_sdk.v1.DecCoin.fromObject(object.commission[i]);
@@ -15469,12 +15467,12 @@ $root.cosmos_sdk = (function() {
                     ValidatorAccumulatedCommission.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.arrays || options.defaults)
                             object.commission = [];
                         if (message.commission && message.commission.length) {
                             object.commission = [];
-                            for (var j = 0; j < message.commission.length; ++j)
+                            for (let j = 0; j < message.commission.length; ++j)
                                 object.commission[j] = $root.cosmos_sdk.v1.DecCoin.toObject(message.commission[j], options);
                         }
                         return object;
@@ -15514,7 +15512,7 @@ $root.cosmos_sdk = (function() {
                     function ValidatorOutstandingRewards(properties) {
                         this.rewards = [];
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -15552,7 +15550,7 @@ $root.cosmos_sdk = (function() {
                         if (!writer)
                             writer = $Writer.create();
                         if (message.rewards != null && message.rewards.length)
-                            for (var i = 0; i < message.rewards.length; ++i)
+                            for (let i = 0; i < message.rewards.length; ++i)
                                 $root.cosmos_sdk.v1.DecCoin.encode(message.rewards[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
                         return writer;
                     };
@@ -15584,9 +15582,9 @@ $root.cosmos_sdk = (function() {
                     ValidatorOutstandingRewards.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.distribution.v1.ValidatorOutstandingRewards();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.distribution.v1.ValidatorOutstandingRewards();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 if (!(message.rewards && message.rewards.length))
@@ -15631,8 +15629,8 @@ $root.cosmos_sdk = (function() {
                         if (message.rewards != null && message.hasOwnProperty("rewards")) {
                             if (!Array.isArray(message.rewards))
                                 return "rewards: array expected";
-                            for (var i = 0; i < message.rewards.length; ++i) {
-                                var error = $root.cosmos_sdk.v1.DecCoin.verify(message.rewards[i]);
+                            for (let i = 0; i < message.rewards.length; ++i) {
+                                let error = $root.cosmos_sdk.v1.DecCoin.verify(message.rewards[i]);
                                 if (error)
                                     return "rewards." + error;
                             }
@@ -15651,12 +15649,12 @@ $root.cosmos_sdk = (function() {
                     ValidatorOutstandingRewards.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.distribution.v1.ValidatorOutstandingRewards)
                             return object;
-                        var message = new $root.cosmos_sdk.x.distribution.v1.ValidatorOutstandingRewards();
+                        let message = new $root.cosmos_sdk.x.distribution.v1.ValidatorOutstandingRewards();
                         if (object.rewards) {
                             if (!Array.isArray(object.rewards))
                                 throw TypeError(".cosmos_sdk.x.distribution.v1.ValidatorOutstandingRewards.rewards: array expected");
                             message.rewards = [];
-                            for (var i = 0; i < object.rewards.length; ++i) {
+                            for (let i = 0; i < object.rewards.length; ++i) {
                                 if (typeof object.rewards[i] !== "object")
                                     throw TypeError(".cosmos_sdk.x.distribution.v1.ValidatorOutstandingRewards.rewards: object expected");
                                 message.rewards[i] = $root.cosmos_sdk.v1.DecCoin.fromObject(object.rewards[i]);
@@ -15677,12 +15675,12 @@ $root.cosmos_sdk = (function() {
                     ValidatorOutstandingRewards.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.arrays || options.defaults)
                             object.rewards = [];
                         if (message.rewards && message.rewards.length) {
                             object.rewards = [];
-                            for (var j = 0; j < message.rewards.length; ++j)
+                            for (let j = 0; j < message.rewards.length; ++j)
                                 object.rewards[j] = $root.cosmos_sdk.v1.DecCoin.toObject(message.rewards[j], options);
                         }
                         return object;
@@ -15722,7 +15720,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function ValidatorSlashEvent(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -15801,9 +15799,9 @@ $root.cosmos_sdk = (function() {
                     ValidatorSlashEvent.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.distribution.v1.ValidatorSlashEvent();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.distribution.v1.ValidatorSlashEvent();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.validatorPeriod = reader.uint64();
@@ -15866,7 +15864,7 @@ $root.cosmos_sdk = (function() {
                     ValidatorSlashEvent.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.distribution.v1.ValidatorSlashEvent)
                             return object;
-                        var message = new $root.cosmos_sdk.x.distribution.v1.ValidatorSlashEvent();
+                        let message = new $root.cosmos_sdk.x.distribution.v1.ValidatorSlashEvent();
                         if (object.validatorPeriod != null)
                             if ($util.Long)
                                 (message.validatorPeriod = $util.Long.fromValue(object.validatorPeriod)).unsigned = true;
@@ -15893,10 +15891,10 @@ $root.cosmos_sdk = (function() {
                     ValidatorSlashEvent.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults) {
                             if ($util.Long) {
-                                var long = new $util.Long(0, 0, true);
+                                let long = new $util.Long(0, 0, true);
                                 object.validatorPeriod = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                             } else
                                 object.validatorPeriod = options.longs === String ? "0" : 0;
@@ -15946,7 +15944,7 @@ $root.cosmos_sdk = (function() {
                     function ValidatorSlashEvents(properties) {
                         this.validatorSlashEvents = [];
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -15984,7 +15982,7 @@ $root.cosmos_sdk = (function() {
                         if (!writer)
                             writer = $Writer.create();
                         if (message.validatorSlashEvents != null && message.validatorSlashEvents.length)
-                            for (var i = 0; i < message.validatorSlashEvents.length; ++i)
+                            for (let i = 0; i < message.validatorSlashEvents.length; ++i)
                                 $root.cosmos_sdk.x.distribution.v1.ValidatorSlashEvent.encode(message.validatorSlashEvents[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
                         return writer;
                     };
@@ -16016,9 +16014,9 @@ $root.cosmos_sdk = (function() {
                     ValidatorSlashEvents.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.distribution.v1.ValidatorSlashEvents();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.distribution.v1.ValidatorSlashEvents();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 if (!(message.validatorSlashEvents && message.validatorSlashEvents.length))
@@ -16063,8 +16061,8 @@ $root.cosmos_sdk = (function() {
                         if (message.validatorSlashEvents != null && message.hasOwnProperty("validatorSlashEvents")) {
                             if (!Array.isArray(message.validatorSlashEvents))
                                 return "validatorSlashEvents: array expected";
-                            for (var i = 0; i < message.validatorSlashEvents.length; ++i) {
-                                var error = $root.cosmos_sdk.x.distribution.v1.ValidatorSlashEvent.verify(message.validatorSlashEvents[i]);
+                            for (let i = 0; i < message.validatorSlashEvents.length; ++i) {
+                                let error = $root.cosmos_sdk.x.distribution.v1.ValidatorSlashEvent.verify(message.validatorSlashEvents[i]);
                                 if (error)
                                     return "validatorSlashEvents." + error;
                             }
@@ -16083,12 +16081,12 @@ $root.cosmos_sdk = (function() {
                     ValidatorSlashEvents.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.distribution.v1.ValidatorSlashEvents)
                             return object;
-                        var message = new $root.cosmos_sdk.x.distribution.v1.ValidatorSlashEvents();
+                        let message = new $root.cosmos_sdk.x.distribution.v1.ValidatorSlashEvents();
                         if (object.validatorSlashEvents) {
                             if (!Array.isArray(object.validatorSlashEvents))
                                 throw TypeError(".cosmos_sdk.x.distribution.v1.ValidatorSlashEvents.validatorSlashEvents: array expected");
                             message.validatorSlashEvents = [];
-                            for (var i = 0; i < object.validatorSlashEvents.length; ++i) {
+                            for (let i = 0; i < object.validatorSlashEvents.length; ++i) {
                                 if (typeof object.validatorSlashEvents[i] !== "object")
                                     throw TypeError(".cosmos_sdk.x.distribution.v1.ValidatorSlashEvents.validatorSlashEvents: object expected");
                                 message.validatorSlashEvents[i] = $root.cosmos_sdk.x.distribution.v1.ValidatorSlashEvent.fromObject(object.validatorSlashEvents[i]);
@@ -16109,12 +16107,12 @@ $root.cosmos_sdk = (function() {
                     ValidatorSlashEvents.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.arrays || options.defaults)
                             object.validatorSlashEvents = [];
                         if (message.validatorSlashEvents && message.validatorSlashEvents.length) {
                             object.validatorSlashEvents = [];
-                            for (var j = 0; j < message.validatorSlashEvents.length; ++j)
+                            for (let j = 0; j < message.validatorSlashEvents.length; ++j)
                                 object.validatorSlashEvents[j] = $root.cosmos_sdk.x.distribution.v1.ValidatorSlashEvent.toObject(message.validatorSlashEvents[j], options);
                         }
                         return object;
@@ -16154,7 +16152,7 @@ $root.cosmos_sdk = (function() {
                     function FeePool(properties) {
                         this.communityPool = [];
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -16192,7 +16190,7 @@ $root.cosmos_sdk = (function() {
                         if (!writer)
                             writer = $Writer.create();
                         if (message.communityPool != null && message.communityPool.length)
-                            for (var i = 0; i < message.communityPool.length; ++i)
+                            for (let i = 0; i < message.communityPool.length; ++i)
                                 $root.cosmos_sdk.v1.DecCoin.encode(message.communityPool[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
                         return writer;
                     };
@@ -16224,9 +16222,9 @@ $root.cosmos_sdk = (function() {
                     FeePool.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.distribution.v1.FeePool();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.distribution.v1.FeePool();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 if (!(message.communityPool && message.communityPool.length))
@@ -16271,8 +16269,8 @@ $root.cosmos_sdk = (function() {
                         if (message.communityPool != null && message.hasOwnProperty("communityPool")) {
                             if (!Array.isArray(message.communityPool))
                                 return "communityPool: array expected";
-                            for (var i = 0; i < message.communityPool.length; ++i) {
-                                var error = $root.cosmos_sdk.v1.DecCoin.verify(message.communityPool[i]);
+                            for (let i = 0; i < message.communityPool.length; ++i) {
+                                let error = $root.cosmos_sdk.v1.DecCoin.verify(message.communityPool[i]);
                                 if (error)
                                     return "communityPool." + error;
                             }
@@ -16291,12 +16289,12 @@ $root.cosmos_sdk = (function() {
                     FeePool.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.distribution.v1.FeePool)
                             return object;
-                        var message = new $root.cosmos_sdk.x.distribution.v1.FeePool();
+                        let message = new $root.cosmos_sdk.x.distribution.v1.FeePool();
                         if (object.communityPool) {
                             if (!Array.isArray(object.communityPool))
                                 throw TypeError(".cosmos_sdk.x.distribution.v1.FeePool.communityPool: array expected");
                             message.communityPool = [];
-                            for (var i = 0; i < object.communityPool.length; ++i) {
+                            for (let i = 0; i < object.communityPool.length; ++i) {
                                 if (typeof object.communityPool[i] !== "object")
                                     throw TypeError(".cosmos_sdk.x.distribution.v1.FeePool.communityPool: object expected");
                                 message.communityPool[i] = $root.cosmos_sdk.v1.DecCoin.fromObject(object.communityPool[i]);
@@ -16317,12 +16315,12 @@ $root.cosmos_sdk = (function() {
                     FeePool.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.arrays || options.defaults)
                             object.communityPool = [];
                         if (message.communityPool && message.communityPool.length) {
                             object.communityPool = [];
-                            for (var j = 0; j < message.communityPool.length; ++j)
+                            for (let j = 0; j < message.communityPool.length; ++j)
                                 object.communityPool[j] = $root.cosmos_sdk.v1.DecCoin.toObject(message.communityPool[j], options);
                         }
                         return object;
@@ -16365,7 +16363,7 @@ $root.cosmos_sdk = (function() {
                     function CommunityPoolSpendProposal(properties) {
                         this.amount = [];
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -16433,7 +16431,7 @@ $root.cosmos_sdk = (function() {
                         if (message.recipient != null && Object.hasOwnProperty.call(message, "recipient"))
                             writer.uint32(/* id 3, wireType 2 =*/26).bytes(message.recipient);
                         if (message.amount != null && message.amount.length)
-                            for (var i = 0; i < message.amount.length; ++i)
+                            for (let i = 0; i < message.amount.length; ++i)
                                 $root.cosmos_sdk.v1.Coin.encode(message.amount[i], writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
                         return writer;
                     };
@@ -16465,9 +16463,9 @@ $root.cosmos_sdk = (function() {
                     CommunityPoolSpendProposal.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.distribution.v1.CommunityPoolSpendProposal();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.distribution.v1.CommunityPoolSpendProposal();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.title = reader.string();
@@ -16530,8 +16528,8 @@ $root.cosmos_sdk = (function() {
                         if (message.amount != null && message.hasOwnProperty("amount")) {
                             if (!Array.isArray(message.amount))
                                 return "amount: array expected";
-                            for (var i = 0; i < message.amount.length; ++i) {
-                                var error = $root.cosmos_sdk.v1.Coin.verify(message.amount[i]);
+                            for (let i = 0; i < message.amount.length; ++i) {
+                                let error = $root.cosmos_sdk.v1.Coin.verify(message.amount[i]);
                                 if (error)
                                     return "amount." + error;
                             }
@@ -16550,7 +16548,7 @@ $root.cosmos_sdk = (function() {
                     CommunityPoolSpendProposal.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.distribution.v1.CommunityPoolSpendProposal)
                             return object;
-                        var message = new $root.cosmos_sdk.x.distribution.v1.CommunityPoolSpendProposal();
+                        let message = new $root.cosmos_sdk.x.distribution.v1.CommunityPoolSpendProposal();
                         if (object.title != null)
                             message.title = String(object.title);
                         if (object.description != null)
@@ -16564,7 +16562,7 @@ $root.cosmos_sdk = (function() {
                             if (!Array.isArray(object.amount))
                                 throw TypeError(".cosmos_sdk.x.distribution.v1.CommunityPoolSpendProposal.amount: array expected");
                             message.amount = [];
-                            for (var i = 0; i < object.amount.length; ++i) {
+                            for (let i = 0; i < object.amount.length; ++i) {
                                 if (typeof object.amount[i] !== "object")
                                     throw TypeError(".cosmos_sdk.x.distribution.v1.CommunityPoolSpendProposal.amount: object expected");
                                 message.amount[i] = $root.cosmos_sdk.v1.Coin.fromObject(object.amount[i]);
@@ -16585,7 +16583,7 @@ $root.cosmos_sdk = (function() {
                     CommunityPoolSpendProposal.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.arrays || options.defaults)
                             object.amount = [];
                         if (options.defaults) {
@@ -16607,7 +16605,7 @@ $root.cosmos_sdk = (function() {
                             object.recipient = options.bytes === String ? $util.base64.encode(message.recipient, 0, message.recipient.length) : options.bytes === Array ? Array.prototype.slice.call(message.recipient) : message.recipient;
                         if (message.amount && message.amount.length) {
                             object.amount = [];
-                            for (var j = 0; j < message.amount.length; ++j)
+                            for (let j = 0; j < message.amount.length; ++j)
                                 object.amount[j] = $root.cosmos_sdk.v1.Coin.toObject(message.amount[j], options);
                         }
                         return object;
@@ -16648,7 +16646,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function DelegatorStartingInfo(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -16737,9 +16735,9 @@ $root.cosmos_sdk = (function() {
                     DelegatorStartingInfo.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.distribution.v1.DelegatorStartingInfo();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.distribution.v1.DelegatorStartingInfo();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.previousPeriod = reader.uint64();
@@ -16808,7 +16806,7 @@ $root.cosmos_sdk = (function() {
                     DelegatorStartingInfo.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.distribution.v1.DelegatorStartingInfo)
                             return object;
-                        var message = new $root.cosmos_sdk.x.distribution.v1.DelegatorStartingInfo();
+                        let message = new $root.cosmos_sdk.x.distribution.v1.DelegatorStartingInfo();
                         if (object.previousPeriod != null)
                             if ($util.Long)
                                 (message.previousPeriod = $util.Long.fromValue(object.previousPeriod)).unsigned = true;
@@ -16844,16 +16842,16 @@ $root.cosmos_sdk = (function() {
                     DelegatorStartingInfo.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults) {
                             if ($util.Long) {
-                                var long = new $util.Long(0, 0, true);
+                                let long = new $util.Long(0, 0, true);
                                 object.previousPeriod = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                             } else
                                 object.previousPeriod = options.longs === String ? "0" : 0;
                             object.stake = "";
                             if ($util.Long) {
-                                var long = new $util.Long(0, 0, true);
+                                let long = new $util.Long(0, 0, true);
                                 object.height = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                             } else
                                 object.height = options.longs === String ? "0" : 0;
@@ -16900,7 +16898,7 @@ $root.cosmos_sdk = (function() {
              * @memberof cosmos_sdk.x
              * @namespace
              */
-            var evidence = {};
+            const evidence = {};
 
             evidence.v1 = (function() {
 
@@ -16909,7 +16907,7 @@ $root.cosmos_sdk = (function() {
                  * @memberof cosmos_sdk.x.evidence
                  * @namespace
                  */
-                var v1 = {};
+                const v1 = {};
 
                 v1.MsgSubmitEvidence = (function() {
 
@@ -16931,7 +16929,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function MsgSubmitEvidence(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -17010,9 +17008,9 @@ $root.cosmos_sdk = (function() {
                     MsgSubmitEvidence.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.evidence.v1.MsgSubmitEvidence();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.evidence.v1.MsgSubmitEvidence();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.submitter = reader.bytes();
@@ -17059,7 +17057,7 @@ $root.cosmos_sdk = (function() {
                             if (!(message.submitter && typeof message.submitter.length === "number" || $util.isString(message.submitter)))
                                 return "submitter: buffer expected";
                         if (message.evidence != null && message.hasOwnProperty("evidence")) {
-                            var error = $root.google.protobuf.Any.verify(message.evidence);
+                            let error = $root.google.protobuf.Any.verify(message.evidence);
                             if (error)
                                 return "evidence." + error;
                         }
@@ -17077,7 +17075,7 @@ $root.cosmos_sdk = (function() {
                     MsgSubmitEvidence.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.evidence.v1.MsgSubmitEvidence)
                             return object;
-                        var message = new $root.cosmos_sdk.x.evidence.v1.MsgSubmitEvidence();
+                        let message = new $root.cosmos_sdk.x.evidence.v1.MsgSubmitEvidence();
                         if (object.submitter != null)
                             if (typeof object.submitter === "string")
                                 $util.base64.decode(object.submitter, message.submitter = $util.newBuffer($util.base64.length(object.submitter)), 0);
@@ -17103,7 +17101,7 @@ $root.cosmos_sdk = (function() {
                     MsgSubmitEvidence.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults) {
                             if (options.bytes === String)
                                 object.submitter = "";
@@ -17157,7 +17155,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function Equivocation(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -17256,9 +17254,9 @@ $root.cosmos_sdk = (function() {
                     Equivocation.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.evidence.v1.Equivocation();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.evidence.v1.Equivocation();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.height = reader.int64();
@@ -17311,7 +17309,7 @@ $root.cosmos_sdk = (function() {
                             if (!$util.isInteger(message.height) && !(message.height && $util.isInteger(message.height.low) && $util.isInteger(message.height.high)))
                                 return "height: integer|Long expected";
                         if (message.time != null && message.hasOwnProperty("time")) {
-                            var error = $root.google.protobuf.Timestamp.verify(message.time);
+                            let error = $root.google.protobuf.Timestamp.verify(message.time);
                             if (error)
                                 return "time." + error;
                         }
@@ -17335,7 +17333,7 @@ $root.cosmos_sdk = (function() {
                     Equivocation.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.evidence.v1.Equivocation)
                             return object;
-                        var message = new $root.cosmos_sdk.x.evidence.v1.Equivocation();
+                        let message = new $root.cosmos_sdk.x.evidence.v1.Equivocation();
                         if (object.height != null)
                             if ($util.Long)
                                 (message.height = $util.Long.fromValue(object.height)).unsigned = false;
@@ -17379,16 +17377,16 @@ $root.cosmos_sdk = (function() {
                     Equivocation.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults) {
                             if ($util.Long) {
-                                var long = new $util.Long(0, 0, false);
+                                let long = new $util.Long(0, 0, false);
                                 object.height = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                             } else
                                 object.height = options.longs === String ? "0" : 0;
                             object.time = null;
                             if ($util.Long) {
-                                var long = new $util.Long(0, 0, false);
+                                let long = new $util.Long(0, 0, false);
                                 object.power = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                             } else
                                 object.power = options.longs === String ? "0" : 0;
@@ -17444,7 +17442,7 @@ $root.cosmos_sdk = (function() {
              * @memberof cosmos_sdk.x
              * @namespace
              */
-            var gov = {};
+            const gov = {};
 
             gov.v1 = (function() {
 
@@ -17453,7 +17451,7 @@ $root.cosmos_sdk = (function() {
                  * @memberof cosmos_sdk.x.gov
                  * @namespace
                  */
-                var v1 = {};
+                const v1 = {};
 
                 v1.MsgSubmitProposal = (function() {
 
@@ -17477,7 +17475,7 @@ $root.cosmos_sdk = (function() {
                     function MsgSubmitProposal(properties) {
                         this.initialDeposit = [];
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -17533,7 +17531,7 @@ $root.cosmos_sdk = (function() {
                         if (message.content != null && Object.hasOwnProperty.call(message, "content"))
                             $root.google.protobuf.Any.encode(message.content, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
                         if (message.initialDeposit != null && message.initialDeposit.length)
-                            for (var i = 0; i < message.initialDeposit.length; ++i)
+                            for (let i = 0; i < message.initialDeposit.length; ++i)
                                 $root.cosmos_sdk.v1.Coin.encode(message.initialDeposit[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
                         if (message.proposer != null && Object.hasOwnProperty.call(message, "proposer"))
                             writer.uint32(/* id 3, wireType 2 =*/26).bytes(message.proposer);
@@ -17567,9 +17565,9 @@ $root.cosmos_sdk = (function() {
                     MsgSubmitProposal.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.gov.v1.MsgSubmitProposal();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.gov.v1.MsgSubmitProposal();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.content = $root.google.protobuf.Any.decode(reader, reader.uint32());
@@ -17618,15 +17616,15 @@ $root.cosmos_sdk = (function() {
                         if (typeof message !== "object" || message === null)
                             return "object expected";
                         if (message.content != null && message.hasOwnProperty("content")) {
-                            var error = $root.google.protobuf.Any.verify(message.content);
+                            let error = $root.google.protobuf.Any.verify(message.content);
                             if (error)
                                 return "content." + error;
                         }
                         if (message.initialDeposit != null && message.hasOwnProperty("initialDeposit")) {
                             if (!Array.isArray(message.initialDeposit))
                                 return "initialDeposit: array expected";
-                            for (var i = 0; i < message.initialDeposit.length; ++i) {
-                                var error = $root.cosmos_sdk.v1.Coin.verify(message.initialDeposit[i]);
+                            for (let i = 0; i < message.initialDeposit.length; ++i) {
+                                let error = $root.cosmos_sdk.v1.Coin.verify(message.initialDeposit[i]);
                                 if (error)
                                     return "initialDeposit." + error;
                             }
@@ -17648,7 +17646,7 @@ $root.cosmos_sdk = (function() {
                     MsgSubmitProposal.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.gov.v1.MsgSubmitProposal)
                             return object;
-                        var message = new $root.cosmos_sdk.x.gov.v1.MsgSubmitProposal();
+                        let message = new $root.cosmos_sdk.x.gov.v1.MsgSubmitProposal();
                         if (object.content != null) {
                             if (typeof object.content !== "object")
                                 throw TypeError(".cosmos_sdk.x.gov.v1.MsgSubmitProposal.content: object expected");
@@ -17658,7 +17656,7 @@ $root.cosmos_sdk = (function() {
                             if (!Array.isArray(object.initialDeposit))
                                 throw TypeError(".cosmos_sdk.x.gov.v1.MsgSubmitProposal.initialDeposit: array expected");
                             message.initialDeposit = [];
-                            for (var i = 0; i < object.initialDeposit.length; ++i) {
+                            for (let i = 0; i < object.initialDeposit.length; ++i) {
                                 if (typeof object.initialDeposit[i] !== "object")
                                     throw TypeError(".cosmos_sdk.x.gov.v1.MsgSubmitProposal.initialDeposit: object expected");
                                 message.initialDeposit[i] = $root.cosmos_sdk.v1.Coin.fromObject(object.initialDeposit[i]);
@@ -17684,7 +17682,7 @@ $root.cosmos_sdk = (function() {
                     MsgSubmitProposal.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.arrays || options.defaults)
                             object.initialDeposit = [];
                         if (options.defaults) {
@@ -17701,7 +17699,7 @@ $root.cosmos_sdk = (function() {
                             object.content = $root.google.protobuf.Any.toObject(message.content, options);
                         if (message.initialDeposit && message.initialDeposit.length) {
                             object.initialDeposit = [];
-                            for (var j = 0; j < message.initialDeposit.length; ++j)
+                            for (let j = 0; j < message.initialDeposit.length; ++j)
                                 object.initialDeposit[j] = $root.cosmos_sdk.v1.Coin.toObject(message.initialDeposit[j], options);
                         }
                         if (message.proposer != null && message.hasOwnProperty("proposer"))
@@ -17744,7 +17742,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function MsgVote(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -17833,9 +17831,9 @@ $root.cosmos_sdk = (function() {
                     MsgVote.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.gov.v1.MsgVote();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.gov.v1.MsgVote();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.proposalId = reader.uint64();
@@ -17912,7 +17910,7 @@ $root.cosmos_sdk = (function() {
                     MsgVote.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.gov.v1.MsgVote)
                             return object;
-                        var message = new $root.cosmos_sdk.x.gov.v1.MsgVote();
+                        let message = new $root.cosmos_sdk.x.gov.v1.MsgVote();
                         if (object.proposalId != null)
                             if ($util.Long)
                                 (message.proposalId = $util.Long.fromValue(object.proposalId)).unsigned = true;
@@ -17964,10 +17962,10 @@ $root.cosmos_sdk = (function() {
                     MsgVote.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults) {
                             if ($util.Long) {
-                                var long = new $util.Long(0, 0, true);
+                                let long = new $util.Long(0, 0, true);
                                 object.proposalId = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                             } else
                                 object.proposalId = options.longs === String ? "0" : 0;
@@ -18028,7 +18026,7 @@ $root.cosmos_sdk = (function() {
                     function MsgDeposit(properties) {
                         this.amount = [];
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -18086,7 +18084,7 @@ $root.cosmos_sdk = (function() {
                         if (message.depositor != null && Object.hasOwnProperty.call(message, "depositor"))
                             writer.uint32(/* id 2, wireType 2 =*/18).bytes(message.depositor);
                         if (message.amount != null && message.amount.length)
-                            for (var i = 0; i < message.amount.length; ++i)
+                            for (let i = 0; i < message.amount.length; ++i)
                                 $root.cosmos_sdk.v1.Coin.encode(message.amount[i], writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
                         return writer;
                     };
@@ -18118,9 +18116,9 @@ $root.cosmos_sdk = (function() {
                     MsgDeposit.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.gov.v1.MsgDeposit();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.gov.v1.MsgDeposit();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.proposalId = reader.uint64();
@@ -18177,8 +18175,8 @@ $root.cosmos_sdk = (function() {
                         if (message.amount != null && message.hasOwnProperty("amount")) {
                             if (!Array.isArray(message.amount))
                                 return "amount: array expected";
-                            for (var i = 0; i < message.amount.length; ++i) {
-                                var error = $root.cosmos_sdk.v1.Coin.verify(message.amount[i]);
+                            for (let i = 0; i < message.amount.length; ++i) {
+                                let error = $root.cosmos_sdk.v1.Coin.verify(message.amount[i]);
                                 if (error)
                                     return "amount." + error;
                             }
@@ -18197,7 +18195,7 @@ $root.cosmos_sdk = (function() {
                     MsgDeposit.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.gov.v1.MsgDeposit)
                             return object;
-                        var message = new $root.cosmos_sdk.x.gov.v1.MsgDeposit();
+                        let message = new $root.cosmos_sdk.x.gov.v1.MsgDeposit();
                         if (object.proposalId != null)
                             if ($util.Long)
                                 (message.proposalId = $util.Long.fromValue(object.proposalId)).unsigned = true;
@@ -18216,7 +18214,7 @@ $root.cosmos_sdk = (function() {
                             if (!Array.isArray(object.amount))
                                 throw TypeError(".cosmos_sdk.x.gov.v1.MsgDeposit.amount: array expected");
                             message.amount = [];
-                            for (var i = 0; i < object.amount.length; ++i) {
+                            for (let i = 0; i < object.amount.length; ++i) {
                                 if (typeof object.amount[i] !== "object")
                                     throw TypeError(".cosmos_sdk.x.gov.v1.MsgDeposit.amount: object expected");
                                 message.amount[i] = $root.cosmos_sdk.v1.Coin.fromObject(object.amount[i]);
@@ -18237,12 +18235,12 @@ $root.cosmos_sdk = (function() {
                     MsgDeposit.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.arrays || options.defaults)
                             object.amount = [];
                         if (options.defaults) {
                             if ($util.Long) {
-                                var long = new $util.Long(0, 0, true);
+                                let long = new $util.Long(0, 0, true);
                                 object.proposalId = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                             } else
                                 object.proposalId = options.longs === String ? "0" : 0;
@@ -18263,7 +18261,7 @@ $root.cosmos_sdk = (function() {
                             object.depositor = options.bytes === String ? $util.base64.encode(message.depositor, 0, message.depositor.length) : options.bytes === Array ? Array.prototype.slice.call(message.depositor) : message.depositor;
                         if (message.amount && message.amount.length) {
                             object.amount = [];
-                            for (var j = 0; j < message.amount.length; ++j)
+                            for (let j = 0; j < message.amount.length; ++j)
                                 object.amount[j] = $root.cosmos_sdk.v1.Coin.toObject(message.amount[j], options);
                         }
                         return object;
@@ -18294,7 +18292,7 @@ $root.cosmos_sdk = (function() {
                  * @property {number} VOTE_OPTION_NO_WITH_VETO=4 VOTE_OPTION_NO_WITH_VETO value
                  */
                 v1.VoteOption = (function() {
-                    var valuesById = {}, values = Object.create(valuesById);
+                    const valuesById = {}, values = Object.create(valuesById);
                     values[valuesById[0] = "VOTE_OPTION_UNSPECIFIED"] = 0;
                     values[valuesById[1] = "VOTE_OPTION_YES"] = 1;
                     values[valuesById[2] = "VOTE_OPTION_ABSTAIN"] = 2;
@@ -18323,7 +18321,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function TextProposal(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -18402,9 +18400,9 @@ $root.cosmos_sdk = (function() {
                     TextProposal.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.gov.v1.TextProposal();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.gov.v1.TextProposal();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.title = reader.string();
@@ -18467,7 +18465,7 @@ $root.cosmos_sdk = (function() {
                     TextProposal.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.gov.v1.TextProposal)
                             return object;
-                        var message = new $root.cosmos_sdk.x.gov.v1.TextProposal();
+                        let message = new $root.cosmos_sdk.x.gov.v1.TextProposal();
                         if (object.title != null)
                             message.title = String(object.title);
                         if (object.description != null)
@@ -18487,7 +18485,7 @@ $root.cosmos_sdk = (function() {
                     TextProposal.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults) {
                             object.title = "";
                             object.description = "";
@@ -18535,7 +18533,7 @@ $root.cosmos_sdk = (function() {
                     function Deposit(properties) {
                         this.amount = [];
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -18593,7 +18591,7 @@ $root.cosmos_sdk = (function() {
                         if (message.depositor != null && Object.hasOwnProperty.call(message, "depositor"))
                             writer.uint32(/* id 2, wireType 2 =*/18).bytes(message.depositor);
                         if (message.amount != null && message.amount.length)
-                            for (var i = 0; i < message.amount.length; ++i)
+                            for (let i = 0; i < message.amount.length; ++i)
                                 $root.cosmos_sdk.v1.Coin.encode(message.amount[i], writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
                         return writer;
                     };
@@ -18625,9 +18623,9 @@ $root.cosmos_sdk = (function() {
                     Deposit.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.gov.v1.Deposit();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.gov.v1.Deposit();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.proposalId = reader.uint64();
@@ -18684,8 +18682,8 @@ $root.cosmos_sdk = (function() {
                         if (message.amount != null && message.hasOwnProperty("amount")) {
                             if (!Array.isArray(message.amount))
                                 return "amount: array expected";
-                            for (var i = 0; i < message.amount.length; ++i) {
-                                var error = $root.cosmos_sdk.v1.Coin.verify(message.amount[i]);
+                            for (let i = 0; i < message.amount.length; ++i) {
+                                let error = $root.cosmos_sdk.v1.Coin.verify(message.amount[i]);
                                 if (error)
                                     return "amount." + error;
                             }
@@ -18704,7 +18702,7 @@ $root.cosmos_sdk = (function() {
                     Deposit.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.gov.v1.Deposit)
                             return object;
-                        var message = new $root.cosmos_sdk.x.gov.v1.Deposit();
+                        let message = new $root.cosmos_sdk.x.gov.v1.Deposit();
                         if (object.proposalId != null)
                             if ($util.Long)
                                 (message.proposalId = $util.Long.fromValue(object.proposalId)).unsigned = true;
@@ -18723,7 +18721,7 @@ $root.cosmos_sdk = (function() {
                             if (!Array.isArray(object.amount))
                                 throw TypeError(".cosmos_sdk.x.gov.v1.Deposit.amount: array expected");
                             message.amount = [];
-                            for (var i = 0; i < object.amount.length; ++i) {
+                            for (let i = 0; i < object.amount.length; ++i) {
                                 if (typeof object.amount[i] !== "object")
                                     throw TypeError(".cosmos_sdk.x.gov.v1.Deposit.amount: object expected");
                                 message.amount[i] = $root.cosmos_sdk.v1.Coin.fromObject(object.amount[i]);
@@ -18744,12 +18742,12 @@ $root.cosmos_sdk = (function() {
                     Deposit.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.arrays || options.defaults)
                             object.amount = [];
                         if (options.defaults) {
                             if ($util.Long) {
-                                var long = new $util.Long(0, 0, true);
+                                let long = new $util.Long(0, 0, true);
                                 object.proposalId = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                             } else
                                 object.proposalId = options.longs === String ? "0" : 0;
@@ -18770,7 +18768,7 @@ $root.cosmos_sdk = (function() {
                             object.depositor = options.bytes === String ? $util.base64.encode(message.depositor, 0, message.depositor.length) : options.bytes === Array ? Array.prototype.slice.call(message.depositor) : message.depositor;
                         if (message.amount && message.amount.length) {
                             object.amount = [];
-                            for (var j = 0; j < message.amount.length; ++j)
+                            for (let j = 0; j < message.amount.length; ++j)
                                 object.amount[j] = $root.cosmos_sdk.v1.Coin.toObject(message.amount[j], options);
                         }
                         return object;
@@ -18818,7 +18816,7 @@ $root.cosmos_sdk = (function() {
                     function Proposal(properties) {
                         this.totalDeposit = [];
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -18932,7 +18930,7 @@ $root.cosmos_sdk = (function() {
                         if (message.depositEndTime != null && Object.hasOwnProperty.call(message, "depositEndTime"))
                             $root.google.protobuf.Timestamp.encode(message.depositEndTime, writer.uint32(/* id 6, wireType 2 =*/50).fork()).ldelim();
                         if (message.totalDeposit != null && message.totalDeposit.length)
-                            for (var i = 0; i < message.totalDeposit.length; ++i)
+                            for (let i = 0; i < message.totalDeposit.length; ++i)
                                 $root.cosmos_sdk.v1.Coin.encode(message.totalDeposit[i], writer.uint32(/* id 7, wireType 2 =*/58).fork()).ldelim();
                         if (message.votingStartTime != null && Object.hasOwnProperty.call(message, "votingStartTime"))
                             $root.google.protobuf.Timestamp.encode(message.votingStartTime, writer.uint32(/* id 8, wireType 2 =*/66).fork()).ldelim();
@@ -18968,9 +18966,9 @@ $root.cosmos_sdk = (function() {
                     Proposal.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.gov.v1.Proposal();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.gov.v1.Proposal();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.proposalId = reader.uint64();
@@ -19040,7 +19038,7 @@ $root.cosmos_sdk = (function() {
                             if (!$util.isInteger(message.proposalId) && !(message.proposalId && $util.isInteger(message.proposalId.low) && $util.isInteger(message.proposalId.high)))
                                 return "proposalId: integer|Long expected";
                         if (message.content != null && message.hasOwnProperty("content")) {
-                            var error = $root.google.protobuf.Any.verify(message.content);
+                            let error = $root.google.protobuf.Any.verify(message.content);
                             if (error)
                                 return "content." + error;
                         }
@@ -19057,36 +19055,36 @@ $root.cosmos_sdk = (function() {
                                 break;
                             }
                         if (message.finalTallyResult != null && message.hasOwnProperty("finalTallyResult")) {
-                            var error = $root.cosmos_sdk.x.gov.v1.TallyResult.verify(message.finalTallyResult);
+                            let error = $root.cosmos_sdk.x.gov.v1.TallyResult.verify(message.finalTallyResult);
                             if (error)
                                 return "finalTallyResult." + error;
                         }
                         if (message.submitTime != null && message.hasOwnProperty("submitTime")) {
-                            var error = $root.google.protobuf.Timestamp.verify(message.submitTime);
+                            let error = $root.google.protobuf.Timestamp.verify(message.submitTime);
                             if (error)
                                 return "submitTime." + error;
                         }
                         if (message.depositEndTime != null && message.hasOwnProperty("depositEndTime")) {
-                            var error = $root.google.protobuf.Timestamp.verify(message.depositEndTime);
+                            let error = $root.google.protobuf.Timestamp.verify(message.depositEndTime);
                             if (error)
                                 return "depositEndTime." + error;
                         }
                         if (message.totalDeposit != null && message.hasOwnProperty("totalDeposit")) {
                             if (!Array.isArray(message.totalDeposit))
                                 return "totalDeposit: array expected";
-                            for (var i = 0; i < message.totalDeposit.length; ++i) {
-                                var error = $root.cosmos_sdk.v1.Coin.verify(message.totalDeposit[i]);
+                            for (let i = 0; i < message.totalDeposit.length; ++i) {
+                                let error = $root.cosmos_sdk.v1.Coin.verify(message.totalDeposit[i]);
                                 if (error)
                                     return "totalDeposit." + error;
                             }
                         }
                         if (message.votingStartTime != null && message.hasOwnProperty("votingStartTime")) {
-                            var error = $root.google.protobuf.Timestamp.verify(message.votingStartTime);
+                            let error = $root.google.protobuf.Timestamp.verify(message.votingStartTime);
                             if (error)
                                 return "votingStartTime." + error;
                         }
                         if (message.votingEndTime != null && message.hasOwnProperty("votingEndTime")) {
-                            var error = $root.google.protobuf.Timestamp.verify(message.votingEndTime);
+                            let error = $root.google.protobuf.Timestamp.verify(message.votingEndTime);
                             if (error)
                                 return "votingEndTime." + error;
                         }
@@ -19104,7 +19102,7 @@ $root.cosmos_sdk = (function() {
                     Proposal.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.gov.v1.Proposal)
                             return object;
-                        var message = new $root.cosmos_sdk.x.gov.v1.Proposal();
+                        let message = new $root.cosmos_sdk.x.gov.v1.Proposal();
                         if (object.proposalId != null)
                             if ($util.Long)
                                 (message.proposalId = $util.Long.fromValue(object.proposalId)).unsigned = true;
@@ -19164,7 +19162,7 @@ $root.cosmos_sdk = (function() {
                             if (!Array.isArray(object.totalDeposit))
                                 throw TypeError(".cosmos_sdk.x.gov.v1.Proposal.totalDeposit: array expected");
                             message.totalDeposit = [];
-                            for (var i = 0; i < object.totalDeposit.length; ++i) {
+                            for (let i = 0; i < object.totalDeposit.length; ++i) {
                                 if (typeof object.totalDeposit[i] !== "object")
                                     throw TypeError(".cosmos_sdk.x.gov.v1.Proposal.totalDeposit: object expected");
                                 message.totalDeposit[i] = $root.cosmos_sdk.v1.Coin.fromObject(object.totalDeposit[i]);
@@ -19195,12 +19193,12 @@ $root.cosmos_sdk = (function() {
                     Proposal.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.arrays || options.defaults)
                             object.totalDeposit = [];
                         if (options.defaults) {
                             if ($util.Long) {
-                                var long = new $util.Long(0, 0, true);
+                                let long = new $util.Long(0, 0, true);
                                 object.proposalId = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                             } else
                                 object.proposalId = options.longs === String ? "0" : 0;
@@ -19229,7 +19227,7 @@ $root.cosmos_sdk = (function() {
                             object.depositEndTime = $root.google.protobuf.Timestamp.toObject(message.depositEndTime, options);
                         if (message.totalDeposit && message.totalDeposit.length) {
                             object.totalDeposit = [];
-                            for (var j = 0; j < message.totalDeposit.length; ++j)
+                            for (let j = 0; j < message.totalDeposit.length; ++j)
                                 object.totalDeposit[j] = $root.cosmos_sdk.v1.Coin.toObject(message.totalDeposit[j], options);
                         }
                         if (message.votingStartTime != null && message.hasOwnProperty("votingStartTime"))
@@ -19265,7 +19263,7 @@ $root.cosmos_sdk = (function() {
                  * @property {number} PROPOSAL_STATUS_FAILED=5 PROPOSAL_STATUS_FAILED value
                  */
                 v1.ProposalStatus = (function() {
-                    var valuesById = {}, values = Object.create(valuesById);
+                    const valuesById = {}, values = Object.create(valuesById);
                     values[valuesById[0] = "PROPOSAL_STATUS_UNSPECIFIED"] = 0;
                     values[valuesById[1] = "PROPOSAL_STATUS_DEPOSIT_PERIOD"] = 1;
                     values[valuesById[2] = "PROPOSAL_STATUS_VOTING_PERIOD"] = 2;
@@ -19297,7 +19295,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function TallyResult(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -19396,9 +19394,9 @@ $root.cosmos_sdk = (function() {
                     TallyResult.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.gov.v1.TallyResult();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.gov.v1.TallyResult();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.yes = reader.string();
@@ -19473,7 +19471,7 @@ $root.cosmos_sdk = (function() {
                     TallyResult.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.gov.v1.TallyResult)
                             return object;
-                        var message = new $root.cosmos_sdk.x.gov.v1.TallyResult();
+                        let message = new $root.cosmos_sdk.x.gov.v1.TallyResult();
                         if (object.yes != null)
                             message.yes = String(object.yes);
                         if (object.abstain != null)
@@ -19497,7 +19495,7 @@ $root.cosmos_sdk = (function() {
                     TallyResult.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults) {
                             object.yes = "";
                             object.abstain = "";
@@ -19550,7 +19548,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function Vote(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -19639,9 +19637,9 @@ $root.cosmos_sdk = (function() {
                     Vote.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.gov.v1.Vote();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.gov.v1.Vote();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.proposalId = reader.uint64();
@@ -19718,7 +19716,7 @@ $root.cosmos_sdk = (function() {
                     Vote.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.gov.v1.Vote)
                             return object;
-                        var message = new $root.cosmos_sdk.x.gov.v1.Vote();
+                        let message = new $root.cosmos_sdk.x.gov.v1.Vote();
                         if (object.proposalId != null)
                             if ($util.Long)
                                 (message.proposalId = $util.Long.fromValue(object.proposalId)).unsigned = true;
@@ -19770,10 +19768,10 @@ $root.cosmos_sdk = (function() {
                     Vote.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults) {
                             if ($util.Long) {
-                                var long = new $util.Long(0, 0, true);
+                                let long = new $util.Long(0, 0, true);
                                 object.proposalId = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                             } else
                                 object.proposalId = options.longs === String ? "0" : 0;
@@ -19825,7 +19823,7 @@ $root.cosmos_sdk = (function() {
              * @memberof cosmos_sdk.x
              * @namespace
              */
-            var transfer = {};
+            const transfer = {};
 
             transfer.v1 = (function() {
 
@@ -19834,7 +19832,7 @@ $root.cosmos_sdk = (function() {
                  * @memberof cosmos_sdk.x.transfer
                  * @namespace
                  */
-                var v1 = {};
+                const v1 = {};
 
                 v1.MsgTransfer = (function() {
 
@@ -19862,7 +19860,7 @@ $root.cosmos_sdk = (function() {
                     function MsgTransfer(properties) {
                         this.amount = [];
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -19952,7 +19950,7 @@ $root.cosmos_sdk = (function() {
                         if (message.sourceChannel != null && Object.hasOwnProperty.call(message, "sourceChannel"))
                             writer.uint32(/* id 2, wireType 2 =*/18).string(message.sourceChannel);
                         if (message.amount != null && message.amount.length)
-                            for (var i = 0; i < message.amount.length; ++i)
+                            for (let i = 0; i < message.amount.length; ++i)
                                 $root.cosmos_sdk.v1.Coin.encode(message.amount[i], writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
                         if (message.sender != null && Object.hasOwnProperty.call(message, "sender"))
                             writer.uint32(/* id 4, wireType 2 =*/34).bytes(message.sender);
@@ -19992,9 +19990,9 @@ $root.cosmos_sdk = (function() {
                     MsgTransfer.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.transfer.v1.MsgTransfer();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.transfer.v1.MsgTransfer();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.sourcePort = reader.string();
@@ -20063,8 +20061,8 @@ $root.cosmos_sdk = (function() {
                         if (message.amount != null && message.hasOwnProperty("amount")) {
                             if (!Array.isArray(message.amount))
                                 return "amount: array expected";
-                            for (var i = 0; i < message.amount.length; ++i) {
-                                var error = $root.cosmos_sdk.v1.Coin.verify(message.amount[i]);
+                            for (let i = 0; i < message.amount.length; ++i) {
+                                let error = $root.cosmos_sdk.v1.Coin.verify(message.amount[i]);
                                 if (error)
                                     return "amount." + error;
                             }
@@ -20095,7 +20093,7 @@ $root.cosmos_sdk = (function() {
                     MsgTransfer.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.transfer.v1.MsgTransfer)
                             return object;
-                        var message = new $root.cosmos_sdk.x.transfer.v1.MsgTransfer();
+                        let message = new $root.cosmos_sdk.x.transfer.v1.MsgTransfer();
                         if (object.sourcePort != null)
                             message.sourcePort = String(object.sourcePort);
                         if (object.sourceChannel != null)
@@ -20104,7 +20102,7 @@ $root.cosmos_sdk = (function() {
                             if (!Array.isArray(object.amount))
                                 throw TypeError(".cosmos_sdk.x.transfer.v1.MsgTransfer.amount: array expected");
                             message.amount = [];
-                            for (var i = 0; i < object.amount.length; ++i) {
+                            for (let i = 0; i < object.amount.length; ++i) {
                                 if (typeof object.amount[i] !== "object")
                                     throw TypeError(".cosmos_sdk.x.transfer.v1.MsgTransfer.amount: object expected");
                                 message.amount[i] = $root.cosmos_sdk.v1.Coin.fromObject(object.amount[i]);
@@ -20150,7 +20148,7 @@ $root.cosmos_sdk = (function() {
                     MsgTransfer.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.arrays || options.defaults)
                             object.amount = [];
                         if (options.defaults) {
@@ -20165,12 +20163,12 @@ $root.cosmos_sdk = (function() {
                             }
                             object.receiver = "";
                             if ($util.Long) {
-                                var long = new $util.Long(0, 0, true);
+                                let long = new $util.Long(0, 0, true);
                                 object.timeoutHeight = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                             } else
                                 object.timeoutHeight = options.longs === String ? "0" : 0;
                             if ($util.Long) {
-                                var long = new $util.Long(0, 0, true);
+                                let long = new $util.Long(0, 0, true);
                                 object.timeoutTimestamp = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                             } else
                                 object.timeoutTimestamp = options.longs === String ? "0" : 0;
@@ -20181,7 +20179,7 @@ $root.cosmos_sdk = (function() {
                             object.sourceChannel = message.sourceChannel;
                         if (message.amount && message.amount.length) {
                             object.amount = [];
-                            for (var j = 0; j < message.amount.length; ++j)
+                            for (let j = 0; j < message.amount.length; ++j)
                                 object.amount[j] = $root.cosmos_sdk.v1.Coin.toObject(message.amount[j], options);
                         }
                         if (message.sender != null && message.hasOwnProperty("sender"))
@@ -20237,7 +20235,7 @@ $root.cosmos_sdk = (function() {
                     function FungibleTokenPacketData(properties) {
                         this.amount = [];
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -20291,7 +20289,7 @@ $root.cosmos_sdk = (function() {
                         if (!writer)
                             writer = $Writer.create();
                         if (message.amount != null && message.amount.length)
-                            for (var i = 0; i < message.amount.length; ++i)
+                            for (let i = 0; i < message.amount.length; ++i)
                                 $root.cosmos_sdk.v1.Coin.encode(message.amount[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
                         if (message.sender != null && Object.hasOwnProperty.call(message, "sender"))
                             writer.uint32(/* id 2, wireType 2 =*/18).string(message.sender);
@@ -20327,9 +20325,9 @@ $root.cosmos_sdk = (function() {
                     FungibleTokenPacketData.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.transfer.v1.FungibleTokenPacketData();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.transfer.v1.FungibleTokenPacketData();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 if (!(message.amount && message.amount.length))
@@ -20380,8 +20378,8 @@ $root.cosmos_sdk = (function() {
                         if (message.amount != null && message.hasOwnProperty("amount")) {
                             if (!Array.isArray(message.amount))
                                 return "amount: array expected";
-                            for (var i = 0; i < message.amount.length; ++i) {
-                                var error = $root.cosmos_sdk.v1.Coin.verify(message.amount[i]);
+                            for (let i = 0; i < message.amount.length; ++i) {
+                                let error = $root.cosmos_sdk.v1.Coin.verify(message.amount[i]);
                                 if (error)
                                     return "amount." + error;
                             }
@@ -20406,12 +20404,12 @@ $root.cosmos_sdk = (function() {
                     FungibleTokenPacketData.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.transfer.v1.FungibleTokenPacketData)
                             return object;
-                        var message = new $root.cosmos_sdk.x.transfer.v1.FungibleTokenPacketData();
+                        let message = new $root.cosmos_sdk.x.transfer.v1.FungibleTokenPacketData();
                         if (object.amount) {
                             if (!Array.isArray(object.amount))
                                 throw TypeError(".cosmos_sdk.x.transfer.v1.FungibleTokenPacketData.amount: array expected");
                             message.amount = [];
-                            for (var i = 0; i < object.amount.length; ++i) {
+                            for (let i = 0; i < object.amount.length; ++i) {
                                 if (typeof object.amount[i] !== "object")
                                     throw TypeError(".cosmos_sdk.x.transfer.v1.FungibleTokenPacketData.amount: object expected");
                                 message.amount[i] = $root.cosmos_sdk.v1.Coin.fromObject(object.amount[i]);
@@ -20436,7 +20434,7 @@ $root.cosmos_sdk = (function() {
                     FungibleTokenPacketData.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.arrays || options.defaults)
                             object.amount = [];
                         if (options.defaults) {
@@ -20445,7 +20443,7 @@ $root.cosmos_sdk = (function() {
                         }
                         if (message.amount && message.amount.length) {
                             object.amount = [];
-                            for (var j = 0; j < message.amount.length; ++j)
+                            for (let j = 0; j < message.amount.length; ++j)
                                 object.amount[j] = $root.cosmos_sdk.v1.Coin.toObject(message.amount[j], options);
                         }
                         if (message.sender != null && message.hasOwnProperty("sender"))
@@ -20489,7 +20487,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function FungibleTokenPacketAcknowledgement(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -20568,9 +20566,9 @@ $root.cosmos_sdk = (function() {
                     FungibleTokenPacketAcknowledgement.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.transfer.v1.FungibleTokenPacketAcknowledgement();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.transfer.v1.FungibleTokenPacketAcknowledgement();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.success = reader.bool();
@@ -20633,7 +20631,7 @@ $root.cosmos_sdk = (function() {
                     FungibleTokenPacketAcknowledgement.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.transfer.v1.FungibleTokenPacketAcknowledgement)
                             return object;
-                        var message = new $root.cosmos_sdk.x.transfer.v1.FungibleTokenPacketAcknowledgement();
+                        let message = new $root.cosmos_sdk.x.transfer.v1.FungibleTokenPacketAcknowledgement();
                         if (object.success != null)
                             message.success = Boolean(object.success);
                         if (object.error != null)
@@ -20653,7 +20651,7 @@ $root.cosmos_sdk = (function() {
                     FungibleTokenPacketAcknowledgement.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults) {
                             object.success = false;
                             object.error = "";
@@ -20692,7 +20690,7 @@ $root.cosmos_sdk = (function() {
              * @memberof cosmos_sdk.x
              * @namespace
              */
-            var ibc = {};
+            const ibc = {};
 
             ibc.connection = (function() {
 
@@ -20701,7 +20699,7 @@ $root.cosmos_sdk = (function() {
                  * @memberof cosmos_sdk.x.ibc
                  * @namespace
                  */
-                var connection = {};
+                const connection = {};
 
                 connection.v1 = (function() {
 
@@ -20710,7 +20708,7 @@ $root.cosmos_sdk = (function() {
                      * @memberof cosmos_sdk.x.ibc.connection
                      * @namespace
                      */
-                    var v1 = {};
+                    const v1 = {};
 
                     v1.MsgConnectionOpenInit = (function() {
 
@@ -20734,7 +20732,7 @@ $root.cosmos_sdk = (function() {
                          */
                         function MsgConnectionOpenInit(properties) {
                             if (properties)
-                                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                     if (properties[keys[i]] != null)
                                         this[keys[i]] = properties[keys[i]];
                         }
@@ -20833,9 +20831,9 @@ $root.cosmos_sdk = (function() {
                         MsgConnectionOpenInit.decode = function decode(reader, length) {
                             if (!(reader instanceof $Reader))
                                 reader = $Reader.create(reader);
-                            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenInit();
+                            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenInit();
                             while (reader.pos < end) {
-                                var tag = reader.uint32();
+                                let tag = reader.uint32();
                                 switch (tag >>> 3) {
                                 case 1:
                                     message.clientId = reader.string();
@@ -20891,7 +20889,7 @@ $root.cosmos_sdk = (function() {
                                 if (!$util.isString(message.connectionId))
                                     return "connectionId: string expected";
                             if (message.counterparty != null && message.hasOwnProperty("counterparty")) {
-                                var error = $root.cosmos_sdk.x.ibc.connection.v1.Counterparty.verify(message.counterparty);
+                                let error = $root.cosmos_sdk.x.ibc.connection.v1.Counterparty.verify(message.counterparty);
                                 if (error)
                                     return "counterparty." + error;
                             }
@@ -20912,7 +20910,7 @@ $root.cosmos_sdk = (function() {
                         MsgConnectionOpenInit.fromObject = function fromObject(object) {
                             if (object instanceof $root.cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenInit)
                                 return object;
-                            var message = new $root.cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenInit();
+                            let message = new $root.cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenInit();
                             if (object.clientId != null)
                                 message.clientId = String(object.clientId);
                             if (object.connectionId != null)
@@ -20942,7 +20940,7 @@ $root.cosmos_sdk = (function() {
                         MsgConnectionOpenInit.toObject = function toObject(message, options) {
                             if (!options)
                                 options = {};
-                            var object = {};
+                            let object = {};
                             if (options.defaults) {
                                 object.clientId = "";
                                 object.connectionId = "";
@@ -21008,7 +21006,7 @@ $root.cosmos_sdk = (function() {
                         function MsgConnectionOpenTry(properties) {
                             this.counterpartyVersions = [];
                             if (properties)
-                                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                     if (properties[keys[i]] != null)
                                         this[keys[i]] = properties[keys[i]];
                         }
@@ -21116,7 +21114,7 @@ $root.cosmos_sdk = (function() {
                             if (message.counterparty != null && Object.hasOwnProperty.call(message, "counterparty"))
                                 $root.cosmos_sdk.x.ibc.connection.v1.Counterparty.encode(message.counterparty, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
                             if (message.counterpartyVersions != null && message.counterpartyVersions.length)
-                                for (var i = 0; i < message.counterpartyVersions.length; ++i)
+                                for (let i = 0; i < message.counterpartyVersions.length; ++i)
                                     writer.uint32(/* id 4, wireType 2 =*/34).string(message.counterpartyVersions[i]);
                             if (message.proofInit != null && Object.hasOwnProperty.call(message, "proofInit"))
                                 writer.uint32(/* id 5, wireType 2 =*/42).bytes(message.proofInit);
@@ -21158,9 +21156,9 @@ $root.cosmos_sdk = (function() {
                         MsgConnectionOpenTry.decode = function decode(reader, length) {
                             if (!(reader instanceof $Reader))
                                 reader = $Reader.create(reader);
-                            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenTry();
+                            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenTry();
                             while (reader.pos < end) {
-                                var tag = reader.uint32();
+                                let tag = reader.uint32();
                                 switch (tag >>> 3) {
                                 case 1:
                                     message.clientId = reader.string();
@@ -21233,14 +21231,14 @@ $root.cosmos_sdk = (function() {
                                 if (!$util.isString(message.connectionId))
                                     return "connectionId: string expected";
                             if (message.counterparty != null && message.hasOwnProperty("counterparty")) {
-                                var error = $root.cosmos_sdk.x.ibc.connection.v1.Counterparty.verify(message.counterparty);
+                                let error = $root.cosmos_sdk.x.ibc.connection.v1.Counterparty.verify(message.counterparty);
                                 if (error)
                                     return "counterparty." + error;
                             }
                             if (message.counterpartyVersions != null && message.hasOwnProperty("counterpartyVersions")) {
                                 if (!Array.isArray(message.counterpartyVersions))
                                     return "counterpartyVersions: array expected";
-                                for (var i = 0; i < message.counterpartyVersions.length; ++i)
+                                for (let i = 0; i < message.counterpartyVersions.length; ++i)
                                     if (!$util.isString(message.counterpartyVersions[i]))
                                         return "counterpartyVersions: string[] expected";
                             }
@@ -21273,7 +21271,7 @@ $root.cosmos_sdk = (function() {
                         MsgConnectionOpenTry.fromObject = function fromObject(object) {
                             if (object instanceof $root.cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenTry)
                                 return object;
-                            var message = new $root.cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenTry();
+                            let message = new $root.cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenTry();
                             if (object.clientId != null)
                                 message.clientId = String(object.clientId);
                             if (object.connectionId != null)
@@ -21287,7 +21285,7 @@ $root.cosmos_sdk = (function() {
                                 if (!Array.isArray(object.counterpartyVersions))
                                     throw TypeError(".cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenTry.counterpartyVersions: array expected");
                                 message.counterpartyVersions = [];
-                                for (var i = 0; i < object.counterpartyVersions.length; ++i)
+                                for (let i = 0; i < object.counterpartyVersions.length; ++i)
                                     message.counterpartyVersions[i] = String(object.counterpartyVersions[i]);
                             }
                             if (object.proofInit != null)
@@ -21338,7 +21336,7 @@ $root.cosmos_sdk = (function() {
                         MsgConnectionOpenTry.toObject = function toObject(message, options) {
                             if (!options)
                                 options = {};
-                            var object = {};
+                            let object = {};
                             if (options.arrays || options.defaults)
                                 object.counterpartyVersions = [];
                             if (options.defaults) {
@@ -21353,7 +21351,7 @@ $root.cosmos_sdk = (function() {
                                         object.proofInit = $util.newBuffer(object.proofInit);
                                 }
                                 if ($util.Long) {
-                                    var long = new $util.Long(0, 0, true);
+                                    let long = new $util.Long(0, 0, true);
                                     object.proofHeight = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                                 } else
                                     object.proofHeight = options.longs === String ? "0" : 0;
@@ -21365,7 +21363,7 @@ $root.cosmos_sdk = (function() {
                                         object.proofConsensus = $util.newBuffer(object.proofConsensus);
                                 }
                                 if ($util.Long) {
-                                    var long = new $util.Long(0, 0, true);
+                                    let long = new $util.Long(0, 0, true);
                                     object.consensusHeight = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                                 } else
                                     object.consensusHeight = options.longs === String ? "0" : 0;
@@ -21385,7 +21383,7 @@ $root.cosmos_sdk = (function() {
                                 object.counterparty = $root.cosmos_sdk.x.ibc.connection.v1.Counterparty.toObject(message.counterparty, options);
                             if (message.counterpartyVersions && message.counterpartyVersions.length) {
                                 object.counterpartyVersions = [];
-                                for (var j = 0; j < message.counterpartyVersions.length; ++j)
+                                for (let j = 0; j < message.counterpartyVersions.length; ++j)
                                     object.counterpartyVersions[j] = message.counterpartyVersions[j];
                             }
                             if (message.proofInit != null && message.hasOwnProperty("proofInit"))
@@ -21446,7 +21444,7 @@ $root.cosmos_sdk = (function() {
                          */
                         function MsgConnectionOpenAck(properties) {
                             if (properties)
-                                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                     if (properties[keys[i]] != null)
                                         this[keys[i]] = properties[keys[i]];
                         }
@@ -21575,9 +21573,9 @@ $root.cosmos_sdk = (function() {
                         MsgConnectionOpenAck.decode = function decode(reader, length) {
                             if (!(reader instanceof $Reader))
                                 reader = $Reader.create(reader);
-                            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenAck();
+                            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenAck();
                             while (reader.pos < end) {
-                                var tag = reader.uint32();
+                                let tag = reader.uint32();
                                 switch (tag >>> 3) {
                                 case 1:
                                     message.connectionId = reader.string();
@@ -21670,7 +21668,7 @@ $root.cosmos_sdk = (function() {
                         MsgConnectionOpenAck.fromObject = function fromObject(object) {
                             if (object instanceof $root.cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenAck)
                                 return object;
-                            var message = new $root.cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenAck();
+                            let message = new $root.cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenAck();
                             if (object.connectionId != null)
                                 message.connectionId = String(object.connectionId);
                             if (object.version != null)
@@ -21723,7 +21721,7 @@ $root.cosmos_sdk = (function() {
                         MsgConnectionOpenAck.toObject = function toObject(message, options) {
                             if (!options)
                                 options = {};
-                            var object = {};
+                            let object = {};
                             if (options.defaults) {
                                 object.connectionId = "";
                                 object.version = "";
@@ -21735,7 +21733,7 @@ $root.cosmos_sdk = (function() {
                                         object.proofTry = $util.newBuffer(object.proofTry);
                                 }
                                 if ($util.Long) {
-                                    var long = new $util.Long(0, 0, true);
+                                    let long = new $util.Long(0, 0, true);
                                     object.proofHeight = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                                 } else
                                     object.proofHeight = options.longs === String ? "0" : 0;
@@ -21747,7 +21745,7 @@ $root.cosmos_sdk = (function() {
                                         object.proofConsensus = $util.newBuffer(object.proofConsensus);
                                 }
                                 if ($util.Long) {
-                                    var long = new $util.Long(0, 0, true);
+                                    let long = new $util.Long(0, 0, true);
                                     object.consensusHeight = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                                 } else
                                     object.consensusHeight = options.longs === String ? "0" : 0;
@@ -21818,7 +21816,7 @@ $root.cosmos_sdk = (function() {
                          */
                         function MsgConnectionOpenConfirm(properties) {
                             if (properties)
-                                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                     if (properties[keys[i]] != null)
                                         this[keys[i]] = properties[keys[i]];
                         }
@@ -21917,9 +21915,9 @@ $root.cosmos_sdk = (function() {
                         MsgConnectionOpenConfirm.decode = function decode(reader, length) {
                             if (!(reader instanceof $Reader))
                                 reader = $Reader.create(reader);
-                            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenConfirm();
+                            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenConfirm();
                             while (reader.pos < end) {
-                                var tag = reader.uint32();
+                                let tag = reader.uint32();
                                 switch (tag >>> 3) {
                                 case 1:
                                     message.connectionId = reader.string();
@@ -21994,7 +21992,7 @@ $root.cosmos_sdk = (function() {
                         MsgConnectionOpenConfirm.fromObject = function fromObject(object) {
                             if (object instanceof $root.cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenConfirm)
                                 return object;
-                            var message = new $root.cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenConfirm();
+                            let message = new $root.cosmos_sdk.x.ibc.connection.v1.MsgConnectionOpenConfirm();
                             if (object.connectionId != null)
                                 message.connectionId = String(object.connectionId);
                             if (object.proofAck != null)
@@ -22031,7 +22029,7 @@ $root.cosmos_sdk = (function() {
                         MsgConnectionOpenConfirm.toObject = function toObject(message, options) {
                             if (!options)
                                 options = {};
-                            var object = {};
+                            let object = {};
                             if (options.defaults) {
                                 object.connectionId = "";
                                 if (options.bytes === String)
@@ -22042,7 +22040,7 @@ $root.cosmos_sdk = (function() {
                                         object.proofAck = $util.newBuffer(object.proofAck);
                                 }
                                 if ($util.Long) {
-                                    var long = new $util.Long(0, 0, true);
+                                    let long = new $util.Long(0, 0, true);
                                     object.proofHeight = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                                 } else
                                     object.proofHeight = options.longs === String ? "0" : 0;
@@ -22106,7 +22104,7 @@ $root.cosmos_sdk = (function() {
                         function ConnectionEnd(properties) {
                             this.versions = [];
                             if (properties)
-                                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                     if (properties[keys[i]] != null)
                                         this[keys[i]] = properties[keys[i]];
                         }
@@ -22180,7 +22178,7 @@ $root.cosmos_sdk = (function() {
                             if (message.clientId != null && Object.hasOwnProperty.call(message, "clientId"))
                                 writer.uint32(/* id 2, wireType 2 =*/18).string(message.clientId);
                             if (message.versions != null && message.versions.length)
-                                for (var i = 0; i < message.versions.length; ++i)
+                                for (let i = 0; i < message.versions.length; ++i)
                                     writer.uint32(/* id 3, wireType 2 =*/26).string(message.versions[i]);
                             if (message.state != null && Object.hasOwnProperty.call(message, "state"))
                                 writer.uint32(/* id 4, wireType 0 =*/32).int32(message.state);
@@ -22216,9 +22214,9 @@ $root.cosmos_sdk = (function() {
                         ConnectionEnd.decode = function decode(reader, length) {
                             if (!(reader instanceof $Reader))
                                 reader = $Reader.create(reader);
-                            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.connection.v1.ConnectionEnd();
+                            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.connection.v1.ConnectionEnd();
                             while (reader.pos < end) {
-                                var tag = reader.uint32();
+                                let tag = reader.uint32();
                                 switch (tag >>> 3) {
                                 case 1:
                                     message.id = reader.string();
@@ -22281,7 +22279,7 @@ $root.cosmos_sdk = (function() {
                             if (message.versions != null && message.hasOwnProperty("versions")) {
                                 if (!Array.isArray(message.versions))
                                     return "versions: array expected";
-                                for (var i = 0; i < message.versions.length; ++i)
+                                for (let i = 0; i < message.versions.length; ++i)
                                     if (!$util.isString(message.versions[i]))
                                         return "versions: string[] expected";
                             }
@@ -22296,7 +22294,7 @@ $root.cosmos_sdk = (function() {
                                     break;
                                 }
                             if (message.counterparty != null && message.hasOwnProperty("counterparty")) {
-                                var error = $root.cosmos_sdk.x.ibc.connection.v1.Counterparty.verify(message.counterparty);
+                                let error = $root.cosmos_sdk.x.ibc.connection.v1.Counterparty.verify(message.counterparty);
                                 if (error)
                                     return "counterparty." + error;
                             }
@@ -22314,7 +22312,7 @@ $root.cosmos_sdk = (function() {
                         ConnectionEnd.fromObject = function fromObject(object) {
                             if (object instanceof $root.cosmos_sdk.x.ibc.connection.v1.ConnectionEnd)
                                 return object;
-                            var message = new $root.cosmos_sdk.x.ibc.connection.v1.ConnectionEnd();
+                            let message = new $root.cosmos_sdk.x.ibc.connection.v1.ConnectionEnd();
                             if (object.id != null)
                                 message.id = String(object.id);
                             if (object.clientId != null)
@@ -22323,7 +22321,7 @@ $root.cosmos_sdk = (function() {
                                 if (!Array.isArray(object.versions))
                                     throw TypeError(".cosmos_sdk.x.ibc.connection.v1.ConnectionEnd.versions: array expected");
                                 message.versions = [];
-                                for (var i = 0; i < object.versions.length; ++i)
+                                for (let i = 0; i < object.versions.length; ++i)
                                     message.versions[i] = String(object.versions[i]);
                             }
                             switch (object.state) {
@@ -22364,7 +22362,7 @@ $root.cosmos_sdk = (function() {
                         ConnectionEnd.toObject = function toObject(message, options) {
                             if (!options)
                                 options = {};
-                            var object = {};
+                            let object = {};
                             if (options.arrays || options.defaults)
                                 object.versions = [];
                             if (options.defaults) {
@@ -22379,7 +22377,7 @@ $root.cosmos_sdk = (function() {
                                 object.clientId = message.clientId;
                             if (message.versions && message.versions.length) {
                                 object.versions = [];
-                                for (var j = 0; j < message.versions.length; ++j)
+                                for (let j = 0; j < message.versions.length; ++j)
                                     object.versions[j] = message.versions[j];
                             }
                             if (message.state != null && message.hasOwnProperty("state"))
@@ -22413,7 +22411,7 @@ $root.cosmos_sdk = (function() {
                      * @property {number} STATE_OPEN=3 STATE_OPEN value
                      */
                     v1.State = (function() {
-                        var valuesById = {}, values = Object.create(valuesById);
+                        const valuesById = {}, values = Object.create(valuesById);
                         values[valuesById[0] = "STATE_UNINITIALIZED_UNSPECIFIED"] = 0;
                         values[valuesById[1] = "STATE_INIT"] = 1;
                         values[valuesById[2] = "STATE_TRYOPEN"] = 2;
@@ -22442,7 +22440,7 @@ $root.cosmos_sdk = (function() {
                          */
                         function Counterparty(properties) {
                             if (properties)
-                                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                     if (properties[keys[i]] != null)
                                         this[keys[i]] = properties[keys[i]];
                         }
@@ -22531,9 +22529,9 @@ $root.cosmos_sdk = (function() {
                         Counterparty.decode = function decode(reader, length) {
                             if (!(reader instanceof $Reader))
                                 reader = $Reader.create(reader);
-                            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.connection.v1.Counterparty();
+                            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.connection.v1.Counterparty();
                             while (reader.pos < end) {
-                                var tag = reader.uint32();
+                                let tag = reader.uint32();
                                 switch (tag >>> 3) {
                                 case 1:
                                     message.clientId = reader.string();
@@ -22586,7 +22584,7 @@ $root.cosmos_sdk = (function() {
                                 if (!$util.isString(message.connectionId))
                                     return "connectionId: string expected";
                             if (message.prefix != null && message.hasOwnProperty("prefix")) {
-                                var error = $root.cosmos_sdk.x.ibc.commitment.v1.MerklePrefix.verify(message.prefix);
+                                let error = $root.cosmos_sdk.x.ibc.commitment.v1.MerklePrefix.verify(message.prefix);
                                 if (error)
                                     return "prefix." + error;
                             }
@@ -22604,7 +22602,7 @@ $root.cosmos_sdk = (function() {
                         Counterparty.fromObject = function fromObject(object) {
                             if (object instanceof $root.cosmos_sdk.x.ibc.connection.v1.Counterparty)
                                 return object;
-                            var message = new $root.cosmos_sdk.x.ibc.connection.v1.Counterparty();
+                            let message = new $root.cosmos_sdk.x.ibc.connection.v1.Counterparty();
                             if (object.clientId != null)
                                 message.clientId = String(object.clientId);
                             if (object.connectionId != null)
@@ -22629,7 +22627,7 @@ $root.cosmos_sdk = (function() {
                         Counterparty.toObject = function toObject(message, options) {
                             if (!options)
                                 options = {};
-                            var object = {};
+                            let object = {};
                             if (options.defaults) {
                                 object.clientId = "";
                                 object.connectionId = "";
@@ -22678,7 +22676,7 @@ $root.cosmos_sdk = (function() {
                         function ClientPaths(properties) {
                             this.paths = [];
                             if (properties)
-                                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                     if (properties[keys[i]] != null)
                                         this[keys[i]] = properties[keys[i]];
                         }
@@ -22716,7 +22714,7 @@ $root.cosmos_sdk = (function() {
                             if (!writer)
                                 writer = $Writer.create();
                             if (message.paths != null && message.paths.length)
-                                for (var i = 0; i < message.paths.length; ++i)
+                                for (let i = 0; i < message.paths.length; ++i)
                                     writer.uint32(/* id 1, wireType 2 =*/10).string(message.paths[i]);
                             return writer;
                         };
@@ -22748,9 +22746,9 @@ $root.cosmos_sdk = (function() {
                         ClientPaths.decode = function decode(reader, length) {
                             if (!(reader instanceof $Reader))
                                 reader = $Reader.create(reader);
-                            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.connection.v1.ClientPaths();
+                            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.connection.v1.ClientPaths();
                             while (reader.pos < end) {
-                                var tag = reader.uint32();
+                                let tag = reader.uint32();
                                 switch (tag >>> 3) {
                                 case 1:
                                     if (!(message.paths && message.paths.length))
@@ -22795,7 +22793,7 @@ $root.cosmos_sdk = (function() {
                             if (message.paths != null && message.hasOwnProperty("paths")) {
                                 if (!Array.isArray(message.paths))
                                     return "paths: array expected";
-                                for (var i = 0; i < message.paths.length; ++i)
+                                for (let i = 0; i < message.paths.length; ++i)
                                     if (!$util.isString(message.paths[i]))
                                         return "paths: string[] expected";
                             }
@@ -22813,12 +22811,12 @@ $root.cosmos_sdk = (function() {
                         ClientPaths.fromObject = function fromObject(object) {
                             if (object instanceof $root.cosmos_sdk.x.ibc.connection.v1.ClientPaths)
                                 return object;
-                            var message = new $root.cosmos_sdk.x.ibc.connection.v1.ClientPaths();
+                            let message = new $root.cosmos_sdk.x.ibc.connection.v1.ClientPaths();
                             if (object.paths) {
                                 if (!Array.isArray(object.paths))
                                     throw TypeError(".cosmos_sdk.x.ibc.connection.v1.ClientPaths.paths: array expected");
                                 message.paths = [];
-                                for (var i = 0; i < object.paths.length; ++i)
+                                for (let i = 0; i < object.paths.length; ++i)
                                     message.paths[i] = String(object.paths[i]);
                             }
                             return message;
@@ -22836,12 +22834,12 @@ $root.cosmos_sdk = (function() {
                         ClientPaths.toObject = function toObject(message, options) {
                             if (!options)
                                 options = {};
-                            var object = {};
+                            let object = {};
                             if (options.arrays || options.defaults)
                                 object.paths = [];
                             if (message.paths && message.paths.length) {
                                 object.paths = [];
-                                for (var j = 0; j < message.paths.length; ++j)
+                                for (let j = 0; j < message.paths.length; ++j)
                                     object.paths[j] = message.paths[j];
                             }
                             return object;
@@ -22874,7 +22872,7 @@ $root.cosmos_sdk = (function() {
                  * @memberof cosmos_sdk.x.ibc
                  * @namespace
                  */
-                var channel = {};
+                const channel = {};
 
                 channel.v1 = (function() {
 
@@ -22883,7 +22881,7 @@ $root.cosmos_sdk = (function() {
                      * @memberof cosmos_sdk.x.ibc.channel
                      * @namespace
                      */
-                    var v1 = {};
+                    const v1 = {};
 
                     v1.MsgChannelOpenInit = (function() {
 
@@ -22907,7 +22905,7 @@ $root.cosmos_sdk = (function() {
                          */
                         function MsgChannelOpenInit(properties) {
                             if (properties)
-                                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                     if (properties[keys[i]] != null)
                                         this[keys[i]] = properties[keys[i]];
                         }
@@ -23006,9 +23004,9 @@ $root.cosmos_sdk = (function() {
                         MsgChannelOpenInit.decode = function decode(reader, length) {
                             if (!(reader instanceof $Reader))
                                 reader = $Reader.create(reader);
-                            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenInit();
+                            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenInit();
                             while (reader.pos < end) {
-                                var tag = reader.uint32();
+                                let tag = reader.uint32();
                                 switch (tag >>> 3) {
                                 case 1:
                                     message.portId = reader.string();
@@ -23064,7 +23062,7 @@ $root.cosmos_sdk = (function() {
                                 if (!$util.isString(message.channelId))
                                     return "channelId: string expected";
                             if (message.channel != null && message.hasOwnProperty("channel")) {
-                                var error = $root.cosmos_sdk.x.ibc.channel.v1.Channel.verify(message.channel);
+                                let error = $root.cosmos_sdk.x.ibc.channel.v1.Channel.verify(message.channel);
                                 if (error)
                                     return "channel." + error;
                             }
@@ -23085,7 +23083,7 @@ $root.cosmos_sdk = (function() {
                         MsgChannelOpenInit.fromObject = function fromObject(object) {
                             if (object instanceof $root.cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenInit)
                                 return object;
-                            var message = new $root.cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenInit();
+                            let message = new $root.cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenInit();
                             if (object.portId != null)
                                 message.portId = String(object.portId);
                             if (object.channelId != null)
@@ -23115,7 +23113,7 @@ $root.cosmos_sdk = (function() {
                         MsgChannelOpenInit.toObject = function toObject(message, options) {
                             if (!options)
                                 options = {};
-                            var object = {};
+                            let object = {};
                             if (options.defaults) {
                                 object.portId = "";
                                 object.channelId = "";
@@ -23178,7 +23176,7 @@ $root.cosmos_sdk = (function() {
                          */
                         function MsgChannelOpenTry(properties) {
                             if (properties)
-                                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                     if (properties[keys[i]] != null)
                                         this[keys[i]] = properties[keys[i]];
                         }
@@ -23307,9 +23305,9 @@ $root.cosmos_sdk = (function() {
                         MsgChannelOpenTry.decode = function decode(reader, length) {
                             if (!(reader instanceof $Reader))
                                 reader = $Reader.create(reader);
-                            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenTry();
+                            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenTry();
                             while (reader.pos < end) {
-                                var tag = reader.uint32();
+                                let tag = reader.uint32();
                                 switch (tag >>> 3) {
                                 case 1:
                                     message.portId = reader.string();
@@ -23374,7 +23372,7 @@ $root.cosmos_sdk = (function() {
                                 if (!$util.isString(message.channelId))
                                     return "channelId: string expected";
                             if (message.channel != null && message.hasOwnProperty("channel")) {
-                                var error = $root.cosmos_sdk.x.ibc.channel.v1.Channel.verify(message.channel);
+                                let error = $root.cosmos_sdk.x.ibc.channel.v1.Channel.verify(message.channel);
                                 if (error)
                                     return "channel." + error;
                             }
@@ -23404,7 +23402,7 @@ $root.cosmos_sdk = (function() {
                         MsgChannelOpenTry.fromObject = function fromObject(object) {
                             if (object instanceof $root.cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenTry)
                                 return object;
-                            var message = new $root.cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenTry();
+                            let message = new $root.cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenTry();
                             if (object.portId != null)
                                 message.portId = String(object.portId);
                             if (object.channelId != null)
@@ -23450,7 +23448,7 @@ $root.cosmos_sdk = (function() {
                         MsgChannelOpenTry.toObject = function toObject(message, options) {
                             if (!options)
                                 options = {};
-                            var object = {};
+                            let object = {};
                             if (options.defaults) {
                                 object.portId = "";
                                 object.channelId = "";
@@ -23464,7 +23462,7 @@ $root.cosmos_sdk = (function() {
                                         object.proofInit = $util.newBuffer(object.proofInit);
                                 }
                                 if ($util.Long) {
-                                    var long = new $util.Long(0, 0, true);
+                                    let long = new $util.Long(0, 0, true);
                                     object.proofHeight = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                                 } else
                                     object.proofHeight = options.longs === String ? "0" : 0;
@@ -23534,7 +23532,7 @@ $root.cosmos_sdk = (function() {
                          */
                         function MsgChannelOpenAck(properties) {
                             if (properties)
-                                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                     if (properties[keys[i]] != null)
                                         this[keys[i]] = properties[keys[i]];
                         }
@@ -23653,9 +23651,9 @@ $root.cosmos_sdk = (function() {
                         MsgChannelOpenAck.decode = function decode(reader, length) {
                             if (!(reader instanceof $Reader))
                                 reader = $Reader.create(reader);
-                            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenAck();
+                            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenAck();
                             while (reader.pos < end) {
-                                var tag = reader.uint32();
+                                let tag = reader.uint32();
                                 switch (tag >>> 3) {
                                 case 1:
                                     message.portId = reader.string();
@@ -23742,7 +23740,7 @@ $root.cosmos_sdk = (function() {
                         MsgChannelOpenAck.fromObject = function fromObject(object) {
                             if (object instanceof $root.cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenAck)
                                 return object;
-                            var message = new $root.cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenAck();
+                            let message = new $root.cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenAck();
                             if (object.portId != null)
                                 message.portId = String(object.portId);
                             if (object.channelId != null)
@@ -23783,7 +23781,7 @@ $root.cosmos_sdk = (function() {
                         MsgChannelOpenAck.toObject = function toObject(message, options) {
                             if (!options)
                                 options = {};
-                            var object = {};
+                            let object = {};
                             if (options.defaults) {
                                 object.portId = "";
                                 object.channelId = "";
@@ -23796,7 +23794,7 @@ $root.cosmos_sdk = (function() {
                                         object.proofTry = $util.newBuffer(object.proofTry);
                                 }
                                 if ($util.Long) {
-                                    var long = new $util.Long(0, 0, true);
+                                    let long = new $util.Long(0, 0, true);
                                     object.proofHeight = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                                 } else
                                     object.proofHeight = options.longs === String ? "0" : 0;
@@ -23863,7 +23861,7 @@ $root.cosmos_sdk = (function() {
                          */
                         function MsgChannelOpenConfirm(properties) {
                             if (properties)
-                                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                     if (properties[keys[i]] != null)
                                         this[keys[i]] = properties[keys[i]];
                         }
@@ -23972,9 +23970,9 @@ $root.cosmos_sdk = (function() {
                         MsgChannelOpenConfirm.decode = function decode(reader, length) {
                             if (!(reader instanceof $Reader))
                                 reader = $Reader.create(reader);
-                            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenConfirm();
+                            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenConfirm();
                             while (reader.pos < end) {
-                                var tag = reader.uint32();
+                                let tag = reader.uint32();
                                 switch (tag >>> 3) {
                                 case 1:
                                     message.portId = reader.string();
@@ -24055,7 +24053,7 @@ $root.cosmos_sdk = (function() {
                         MsgChannelOpenConfirm.fromObject = function fromObject(object) {
                             if (object instanceof $root.cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenConfirm)
                                 return object;
-                            var message = new $root.cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenConfirm();
+                            let message = new $root.cosmos_sdk.x.ibc.channel.v1.MsgChannelOpenConfirm();
                             if (object.portId != null)
                                 message.portId = String(object.portId);
                             if (object.channelId != null)
@@ -24094,7 +24092,7 @@ $root.cosmos_sdk = (function() {
                         MsgChannelOpenConfirm.toObject = function toObject(message, options) {
                             if (!options)
                                 options = {};
-                            var object = {};
+                            let object = {};
                             if (options.defaults) {
                                 object.portId = "";
                                 object.channelId = "";
@@ -24106,7 +24104,7 @@ $root.cosmos_sdk = (function() {
                                         object.proofAck = $util.newBuffer(object.proofAck);
                                 }
                                 if ($util.Long) {
-                                    var long = new $util.Long(0, 0, true);
+                                    let long = new $util.Long(0, 0, true);
                                     object.proofHeight = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                                 } else
                                     object.proofHeight = options.longs === String ? "0" : 0;
@@ -24169,7 +24167,7 @@ $root.cosmos_sdk = (function() {
                          */
                         function MsgChannelCloseInit(properties) {
                             if (properties)
-                                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                     if (properties[keys[i]] != null)
                                         this[keys[i]] = properties[keys[i]];
                         }
@@ -24258,9 +24256,9 @@ $root.cosmos_sdk = (function() {
                         MsgChannelCloseInit.decode = function decode(reader, length) {
                             if (!(reader instanceof $Reader))
                                 reader = $Reader.create(reader);
-                            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.channel.v1.MsgChannelCloseInit();
+                            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.channel.v1.MsgChannelCloseInit();
                             while (reader.pos < end) {
-                                var tag = reader.uint32();
+                                let tag = reader.uint32();
                                 switch (tag >>> 3) {
                                 case 1:
                                     message.portId = reader.string();
@@ -24329,7 +24327,7 @@ $root.cosmos_sdk = (function() {
                         MsgChannelCloseInit.fromObject = function fromObject(object) {
                             if (object instanceof $root.cosmos_sdk.x.ibc.channel.v1.MsgChannelCloseInit)
                                 return object;
-                            var message = new $root.cosmos_sdk.x.ibc.channel.v1.MsgChannelCloseInit();
+                            let message = new $root.cosmos_sdk.x.ibc.channel.v1.MsgChannelCloseInit();
                             if (object.portId != null)
                                 message.portId = String(object.portId);
                             if (object.channelId != null)
@@ -24354,7 +24352,7 @@ $root.cosmos_sdk = (function() {
                         MsgChannelCloseInit.toObject = function toObject(message, options) {
                             if (!options)
                                 options = {};
-                            var object = {};
+                            let object = {};
                             if (options.defaults) {
                                 object.portId = "";
                                 object.channelId = "";
@@ -24412,7 +24410,7 @@ $root.cosmos_sdk = (function() {
                          */
                         function MsgChannelCloseConfirm(properties) {
                             if (properties)
-                                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                     if (properties[keys[i]] != null)
                                         this[keys[i]] = properties[keys[i]];
                         }
@@ -24521,9 +24519,9 @@ $root.cosmos_sdk = (function() {
                         MsgChannelCloseConfirm.decode = function decode(reader, length) {
                             if (!(reader instanceof $Reader))
                                 reader = $Reader.create(reader);
-                            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.channel.v1.MsgChannelCloseConfirm();
+                            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.channel.v1.MsgChannelCloseConfirm();
                             while (reader.pos < end) {
-                                var tag = reader.uint32();
+                                let tag = reader.uint32();
                                 switch (tag >>> 3) {
                                 case 1:
                                     message.portId = reader.string();
@@ -24604,7 +24602,7 @@ $root.cosmos_sdk = (function() {
                         MsgChannelCloseConfirm.fromObject = function fromObject(object) {
                             if (object instanceof $root.cosmos_sdk.x.ibc.channel.v1.MsgChannelCloseConfirm)
                                 return object;
-                            var message = new $root.cosmos_sdk.x.ibc.channel.v1.MsgChannelCloseConfirm();
+                            let message = new $root.cosmos_sdk.x.ibc.channel.v1.MsgChannelCloseConfirm();
                             if (object.portId != null)
                                 message.portId = String(object.portId);
                             if (object.channelId != null)
@@ -24643,7 +24641,7 @@ $root.cosmos_sdk = (function() {
                         MsgChannelCloseConfirm.toObject = function toObject(message, options) {
                             if (!options)
                                 options = {};
-                            var object = {};
+                            let object = {};
                             if (options.defaults) {
                                 object.portId = "";
                                 object.channelId = "";
@@ -24655,7 +24653,7 @@ $root.cosmos_sdk = (function() {
                                         object.proofInit = $util.newBuffer(object.proofInit);
                                 }
                                 if ($util.Long) {
-                                    var long = new $util.Long(0, 0, true);
+                                    let long = new $util.Long(0, 0, true);
                                     object.proofHeight = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                                 } else
                                     object.proofHeight = options.longs === String ? "0" : 0;
@@ -24719,7 +24717,7 @@ $root.cosmos_sdk = (function() {
                          */
                         function MsgPacket(properties) {
                             if (properties)
-                                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                     if (properties[keys[i]] != null)
                                         this[keys[i]] = properties[keys[i]];
                         }
@@ -24818,9 +24816,9 @@ $root.cosmos_sdk = (function() {
                         MsgPacket.decode = function decode(reader, length) {
                             if (!(reader instanceof $Reader))
                                 reader = $Reader.create(reader);
-                            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.channel.v1.MsgPacket();
+                            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.channel.v1.MsgPacket();
                             while (reader.pos < end) {
-                                var tag = reader.uint32();
+                                let tag = reader.uint32();
                                 switch (tag >>> 3) {
                                 case 1:
                                     message.packet = $root.cosmos_sdk.x.ibc.channel.v1.Packet.decode(reader, reader.uint32());
@@ -24870,7 +24868,7 @@ $root.cosmos_sdk = (function() {
                             if (typeof message !== "object" || message === null)
                                 return "object expected";
                             if (message.packet != null && message.hasOwnProperty("packet")) {
-                                var error = $root.cosmos_sdk.x.ibc.channel.v1.Packet.verify(message.packet);
+                                let error = $root.cosmos_sdk.x.ibc.channel.v1.Packet.verify(message.packet);
                                 if (error)
                                     return "packet." + error;
                             }
@@ -24897,7 +24895,7 @@ $root.cosmos_sdk = (function() {
                         MsgPacket.fromObject = function fromObject(object) {
                             if (object instanceof $root.cosmos_sdk.x.ibc.channel.v1.MsgPacket)
                                 return object;
-                            var message = new $root.cosmos_sdk.x.ibc.channel.v1.MsgPacket();
+                            let message = new $root.cosmos_sdk.x.ibc.channel.v1.MsgPacket();
                             if (object.packet != null) {
                                 if (typeof object.packet !== "object")
                                     throw TypeError(".cosmos_sdk.x.ibc.channel.v1.MsgPacket.packet: object expected");
@@ -24937,7 +24935,7 @@ $root.cosmos_sdk = (function() {
                         MsgPacket.toObject = function toObject(message, options) {
                             if (!options)
                                 options = {};
-                            var object = {};
+                            let object = {};
                             if (options.defaults) {
                                 object.packet = null;
                                 if (options.bytes === String)
@@ -24948,7 +24946,7 @@ $root.cosmos_sdk = (function() {
                                         object.proof = $util.newBuffer(object.proof);
                                 }
                                 if ($util.Long) {
-                                    var long = new $util.Long(0, 0, true);
+                                    let long = new $util.Long(0, 0, true);
                                     object.proofHeight = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                                 } else
                                     object.proofHeight = options.longs === String ? "0" : 0;
@@ -25011,7 +25009,7 @@ $root.cosmos_sdk = (function() {
                          */
                         function MsgTimeout(properties) {
                             if (properties)
-                                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                     if (properties[keys[i]] != null)
                                         this[keys[i]] = properties[keys[i]];
                         }
@@ -25120,9 +25118,9 @@ $root.cosmos_sdk = (function() {
                         MsgTimeout.decode = function decode(reader, length) {
                             if (!(reader instanceof $Reader))
                                 reader = $Reader.create(reader);
-                            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.channel.v1.MsgTimeout();
+                            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.channel.v1.MsgTimeout();
                             while (reader.pos < end) {
-                                var tag = reader.uint32();
+                                let tag = reader.uint32();
                                 switch (tag >>> 3) {
                                 case 1:
                                     message.packet = $root.cosmos_sdk.x.ibc.channel.v1.Packet.decode(reader, reader.uint32());
@@ -25175,7 +25173,7 @@ $root.cosmos_sdk = (function() {
                             if (typeof message !== "object" || message === null)
                                 return "object expected";
                             if (message.packet != null && message.hasOwnProperty("packet")) {
-                                var error = $root.cosmos_sdk.x.ibc.channel.v1.Packet.verify(message.packet);
+                                let error = $root.cosmos_sdk.x.ibc.channel.v1.Packet.verify(message.packet);
                                 if (error)
                                     return "packet." + error;
                             }
@@ -25205,7 +25203,7 @@ $root.cosmos_sdk = (function() {
                         MsgTimeout.fromObject = function fromObject(object) {
                             if (object instanceof $root.cosmos_sdk.x.ibc.channel.v1.MsgTimeout)
                                 return object;
-                            var message = new $root.cosmos_sdk.x.ibc.channel.v1.MsgTimeout();
+                            let message = new $root.cosmos_sdk.x.ibc.channel.v1.MsgTimeout();
                             if (object.packet != null) {
                                 if (typeof object.packet !== "object")
                                     throw TypeError(".cosmos_sdk.x.ibc.channel.v1.MsgTimeout.packet: object expected");
@@ -25254,7 +25252,7 @@ $root.cosmos_sdk = (function() {
                         MsgTimeout.toObject = function toObject(message, options) {
                             if (!options)
                                 options = {};
-                            var object = {};
+                            let object = {};
                             if (options.defaults) {
                                 object.packet = null;
                                 if (options.bytes === String)
@@ -25265,12 +25263,12 @@ $root.cosmos_sdk = (function() {
                                         object.proof = $util.newBuffer(object.proof);
                                 }
                                 if ($util.Long) {
-                                    var long = new $util.Long(0, 0, true);
+                                    let long = new $util.Long(0, 0, true);
                                     object.proofHeight = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                                 } else
                                     object.proofHeight = options.longs === String ? "0" : 0;
                                 if ($util.Long) {
-                                    var long = new $util.Long(0, 0, true);
+                                    let long = new $util.Long(0, 0, true);
                                     object.nextSequenceRecv = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                                 } else
                                     object.nextSequenceRecv = options.longs === String ? "0" : 0;
@@ -25338,7 +25336,7 @@ $root.cosmos_sdk = (function() {
                          */
                         function MsgAcknowledgement(properties) {
                             if (properties)
-                                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                     if (properties[keys[i]] != null)
                                         this[keys[i]] = properties[keys[i]];
                         }
@@ -25447,9 +25445,9 @@ $root.cosmos_sdk = (function() {
                         MsgAcknowledgement.decode = function decode(reader, length) {
                             if (!(reader instanceof $Reader))
                                 reader = $Reader.create(reader);
-                            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.channel.v1.MsgAcknowledgement();
+                            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.channel.v1.MsgAcknowledgement();
                             while (reader.pos < end) {
-                                var tag = reader.uint32();
+                                let tag = reader.uint32();
                                 switch (tag >>> 3) {
                                 case 1:
                                     message.packet = $root.cosmos_sdk.x.ibc.channel.v1.Packet.decode(reader, reader.uint32());
@@ -25502,7 +25500,7 @@ $root.cosmos_sdk = (function() {
                             if (typeof message !== "object" || message === null)
                                 return "object expected";
                             if (message.packet != null && message.hasOwnProperty("packet")) {
-                                var error = $root.cosmos_sdk.x.ibc.channel.v1.Packet.verify(message.packet);
+                                let error = $root.cosmos_sdk.x.ibc.channel.v1.Packet.verify(message.packet);
                                 if (error)
                                     return "packet." + error;
                             }
@@ -25532,7 +25530,7 @@ $root.cosmos_sdk = (function() {
                         MsgAcknowledgement.fromObject = function fromObject(object) {
                             if (object instanceof $root.cosmos_sdk.x.ibc.channel.v1.MsgAcknowledgement)
                                 return object;
-                            var message = new $root.cosmos_sdk.x.ibc.channel.v1.MsgAcknowledgement();
+                            let message = new $root.cosmos_sdk.x.ibc.channel.v1.MsgAcknowledgement();
                             if (object.packet != null) {
                                 if (typeof object.packet !== "object")
                                     throw TypeError(".cosmos_sdk.x.ibc.channel.v1.MsgAcknowledgement.packet: object expected");
@@ -25577,7 +25575,7 @@ $root.cosmos_sdk = (function() {
                         MsgAcknowledgement.toObject = function toObject(message, options) {
                             if (!options)
                                 options = {};
-                            var object = {};
+                            let object = {};
                             if (options.defaults) {
                                 object.packet = null;
                                 if (options.bytes === String)
@@ -25595,7 +25593,7 @@ $root.cosmos_sdk = (function() {
                                         object.proof = $util.newBuffer(object.proof);
                                 }
                                 if ($util.Long) {
-                                    var long = new $util.Long(0, 0, true);
+                                    let long = new $util.Long(0, 0, true);
                                     object.proofHeight = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                                 } else
                                     object.proofHeight = options.longs === String ? "0" : 0;
@@ -25661,7 +25659,7 @@ $root.cosmos_sdk = (function() {
                         function Channel(properties) {
                             this.connectionHops = [];
                             if (properties)
-                                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                     if (properties[keys[i]] != null)
                                         this[keys[i]] = properties[keys[i]];
                         }
@@ -25737,7 +25735,7 @@ $root.cosmos_sdk = (function() {
                             if (message.counterparty != null && Object.hasOwnProperty.call(message, "counterparty"))
                                 $root.cosmos_sdk.x.ibc.channel.v1.Counterparty.encode(message.counterparty, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
                             if (message.connectionHops != null && message.connectionHops.length)
-                                for (var i = 0; i < message.connectionHops.length; ++i)
+                                for (let i = 0; i < message.connectionHops.length; ++i)
                                     writer.uint32(/* id 4, wireType 2 =*/34).string(message.connectionHops[i]);
                             if (message.version != null && Object.hasOwnProperty.call(message, "version"))
                                 writer.uint32(/* id 5, wireType 2 =*/42).string(message.version);
@@ -25771,9 +25769,9 @@ $root.cosmos_sdk = (function() {
                         Channel.decode = function decode(reader, length) {
                             if (!(reader instanceof $Reader))
                                 reader = $Reader.create(reader);
-                            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.channel.v1.Channel();
+                            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.channel.v1.Channel();
                             while (reader.pos < end) {
-                                var tag = reader.uint32();
+                                let tag = reader.uint32();
                                 switch (tag >>> 3) {
                                 case 1:
                                     message.state = reader.int32();
@@ -25848,14 +25846,14 @@ $root.cosmos_sdk = (function() {
                                     break;
                                 }
                             if (message.counterparty != null && message.hasOwnProperty("counterparty")) {
-                                var error = $root.cosmos_sdk.x.ibc.channel.v1.Counterparty.verify(message.counterparty);
+                                let error = $root.cosmos_sdk.x.ibc.channel.v1.Counterparty.verify(message.counterparty);
                                 if (error)
                                     return "counterparty." + error;
                             }
                             if (message.connectionHops != null && message.hasOwnProperty("connectionHops")) {
                                 if (!Array.isArray(message.connectionHops))
                                     return "connectionHops: array expected";
-                                for (var i = 0; i < message.connectionHops.length; ++i)
+                                for (let i = 0; i < message.connectionHops.length; ++i)
                                     if (!$util.isString(message.connectionHops[i]))
                                         return "connectionHops: string[] expected";
                             }
@@ -25876,7 +25874,7 @@ $root.cosmos_sdk = (function() {
                         Channel.fromObject = function fromObject(object) {
                             if (object instanceof $root.cosmos_sdk.x.ibc.channel.v1.Channel)
                                 return object;
-                            var message = new $root.cosmos_sdk.x.ibc.channel.v1.Channel();
+                            let message = new $root.cosmos_sdk.x.ibc.channel.v1.Channel();
                             switch (object.state) {
                             case "STATE_UNINITIALIZED_UNSPECIFIED":
                             case 0:
@@ -25922,7 +25920,7 @@ $root.cosmos_sdk = (function() {
                                 if (!Array.isArray(object.connectionHops))
                                     throw TypeError(".cosmos_sdk.x.ibc.channel.v1.Channel.connectionHops: array expected");
                                 message.connectionHops = [];
-                                for (var i = 0; i < object.connectionHops.length; ++i)
+                                for (let i = 0; i < object.connectionHops.length; ++i)
                                     message.connectionHops[i] = String(object.connectionHops[i]);
                             }
                             if (object.version != null)
@@ -25942,7 +25940,7 @@ $root.cosmos_sdk = (function() {
                         Channel.toObject = function toObject(message, options) {
                             if (!options)
                                 options = {};
-                            var object = {};
+                            let object = {};
                             if (options.arrays || options.defaults)
                                 object.connectionHops = [];
                             if (options.defaults) {
@@ -25959,7 +25957,7 @@ $root.cosmos_sdk = (function() {
                                 object.counterparty = $root.cosmos_sdk.x.ibc.channel.v1.Counterparty.toObject(message.counterparty, options);
                             if (message.connectionHops && message.connectionHops.length) {
                                 object.connectionHops = [];
-                                for (var j = 0; j < message.connectionHops.length; ++j)
+                                for (let j = 0; j < message.connectionHops.length; ++j)
                                     object.connectionHops[j] = message.connectionHops[j];
                             }
                             if (message.version != null && message.hasOwnProperty("version"))
@@ -25992,7 +25990,7 @@ $root.cosmos_sdk = (function() {
                      * @property {number} STATE_CLOSED=4 STATE_CLOSED value
                      */
                     v1.State = (function() {
-                        var valuesById = {}, values = Object.create(valuesById);
+                        const valuesById = {}, values = Object.create(valuesById);
                         values[valuesById[0] = "STATE_UNINITIALIZED_UNSPECIFIED"] = 0;
                         values[valuesById[1] = "STATE_INIT"] = 1;
                         values[valuesById[2] = "STATE_TRYOPEN"] = 2;
@@ -26010,7 +26008,7 @@ $root.cosmos_sdk = (function() {
                      * @property {number} ORDER_ORDERED=2 ORDER_ORDERED value
                      */
                     v1.Order = (function() {
-                        var valuesById = {}, values = Object.create(valuesById);
+                        const valuesById = {}, values = Object.create(valuesById);
                         values[valuesById[0] = "ORDER_NONE_UNSPECIFIED"] = 0;
                         values[valuesById[1] = "ORDER_UNORDERED"] = 1;
                         values[valuesById[2] = "ORDER_ORDERED"] = 2;
@@ -26037,7 +26035,7 @@ $root.cosmos_sdk = (function() {
                          */
                         function Counterparty(properties) {
                             if (properties)
-                                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                     if (properties[keys[i]] != null)
                                         this[keys[i]] = properties[keys[i]];
                         }
@@ -26116,9 +26114,9 @@ $root.cosmos_sdk = (function() {
                         Counterparty.decode = function decode(reader, length) {
                             if (!(reader instanceof $Reader))
                                 reader = $Reader.create(reader);
-                            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.channel.v1.Counterparty();
+                            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.channel.v1.Counterparty();
                             while (reader.pos < end) {
-                                var tag = reader.uint32();
+                                let tag = reader.uint32();
                                 switch (tag >>> 3) {
                                 case 1:
                                     message.portId = reader.string();
@@ -26181,7 +26179,7 @@ $root.cosmos_sdk = (function() {
                         Counterparty.fromObject = function fromObject(object) {
                             if (object instanceof $root.cosmos_sdk.x.ibc.channel.v1.Counterparty)
                                 return object;
-                            var message = new $root.cosmos_sdk.x.ibc.channel.v1.Counterparty();
+                            let message = new $root.cosmos_sdk.x.ibc.channel.v1.Counterparty();
                             if (object.portId != null)
                                 message.portId = String(object.portId);
                             if (object.channelId != null)
@@ -26201,7 +26199,7 @@ $root.cosmos_sdk = (function() {
                         Counterparty.toObject = function toObject(message, options) {
                             if (!options)
                                 options = {};
-                            var object = {};
+                            let object = {};
                             if (options.defaults) {
                                 object.portId = "";
                                 object.channelId = "";
@@ -26253,7 +26251,7 @@ $root.cosmos_sdk = (function() {
                          */
                         function Packet(properties) {
                             if (properties)
-                                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                     if (properties[keys[i]] != null)
                                         this[keys[i]] = properties[keys[i]];
                         }
@@ -26392,9 +26390,9 @@ $root.cosmos_sdk = (function() {
                         Packet.decode = function decode(reader, length) {
                             if (!(reader instanceof $Reader))
                                 reader = $Reader.create(reader);
-                            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.channel.v1.Packet();
+                            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.channel.v1.Packet();
                             while (reader.pos < end) {
-                                var tag = reader.uint32();
+                                let tag = reader.uint32();
                                 switch (tag >>> 3) {
                                 case 1:
                                     message.sequence = reader.uint64();
@@ -26493,7 +26491,7 @@ $root.cosmos_sdk = (function() {
                         Packet.fromObject = function fromObject(object) {
                             if (object instanceof $root.cosmos_sdk.x.ibc.channel.v1.Packet)
                                 return object;
-                            var message = new $root.cosmos_sdk.x.ibc.channel.v1.Packet();
+                            let message = new $root.cosmos_sdk.x.ibc.channel.v1.Packet();
                             if (object.sequence != null)
                                 if ($util.Long)
                                     (message.sequence = $util.Long.fromValue(object.sequence)).unsigned = true;
@@ -26549,10 +26547,10 @@ $root.cosmos_sdk = (function() {
                         Packet.toObject = function toObject(message, options) {
                             if (!options)
                                 options = {};
-                            var object = {};
+                            let object = {};
                             if (options.defaults) {
                                 if ($util.Long) {
-                                    var long = new $util.Long(0, 0, true);
+                                    let long = new $util.Long(0, 0, true);
                                     object.sequence = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                                 } else
                                     object.sequence = options.longs === String ? "0" : 0;
@@ -26568,12 +26566,12 @@ $root.cosmos_sdk = (function() {
                                         object.data = $util.newBuffer(object.data);
                                 }
                                 if ($util.Long) {
-                                    var long = new $util.Long(0, 0, true);
+                                    let long = new $util.Long(0, 0, true);
                                     object.timeoutHeight = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                                 } else
                                     object.timeoutHeight = options.longs === String ? "0" : 0;
                                 if ($util.Long) {
-                                    var long = new $util.Long(0, 0, true);
+                                    let long = new $util.Long(0, 0, true);
                                     object.timeoutTimestamp = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                                 } else
                                     object.timeoutTimestamp = options.longs === String ? "0" : 0;
@@ -26633,7 +26631,7 @@ $root.cosmos_sdk = (function() {
                  * @memberof cosmos_sdk.x.ibc
                  * @namespace
                  */
-                var commitment = {};
+                const commitment = {};
 
                 commitment.v1 = (function() {
 
@@ -26642,7 +26640,7 @@ $root.cosmos_sdk = (function() {
                      * @memberof cosmos_sdk.x.ibc.commitment
                      * @namespace
                      */
-                    var v1 = {};
+                    const v1 = {};
 
                     v1.MerkleRoot = (function() {
 
@@ -26663,7 +26661,7 @@ $root.cosmos_sdk = (function() {
                          */
                         function MerkleRoot(properties) {
                             if (properties)
-                                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                     if (properties[keys[i]] != null)
                                         this[keys[i]] = properties[keys[i]];
                         }
@@ -26732,9 +26730,9 @@ $root.cosmos_sdk = (function() {
                         MerkleRoot.decode = function decode(reader, length) {
                             if (!(reader instanceof $Reader))
                                 reader = $Reader.create(reader);
-                            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.commitment.v1.MerkleRoot();
+                            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.commitment.v1.MerkleRoot();
                             while (reader.pos < end) {
-                                var tag = reader.uint32();
+                                let tag = reader.uint32();
                                 switch (tag >>> 3) {
                                 case 1:
                                     message.hash = reader.bytes();
@@ -26791,7 +26789,7 @@ $root.cosmos_sdk = (function() {
                         MerkleRoot.fromObject = function fromObject(object) {
                             if (object instanceof $root.cosmos_sdk.x.ibc.commitment.v1.MerkleRoot)
                                 return object;
-                            var message = new $root.cosmos_sdk.x.ibc.commitment.v1.MerkleRoot();
+                            let message = new $root.cosmos_sdk.x.ibc.commitment.v1.MerkleRoot();
                             if (object.hash != null)
                                 if (typeof object.hash === "string")
                                     $util.base64.decode(object.hash, message.hash = $util.newBuffer($util.base64.length(object.hash)), 0);
@@ -26812,7 +26810,7 @@ $root.cosmos_sdk = (function() {
                         MerkleRoot.toObject = function toObject(message, options) {
                             if (!options)
                                 options = {};
-                            var object = {};
+                            let object = {};
                             if (options.defaults)
                                 if (options.bytes === String)
                                     object.hash = "";
@@ -26859,7 +26857,7 @@ $root.cosmos_sdk = (function() {
                          */
                         function MerklePrefix(properties) {
                             if (properties)
-                                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                     if (properties[keys[i]] != null)
                                         this[keys[i]] = properties[keys[i]];
                         }
@@ -26928,9 +26926,9 @@ $root.cosmos_sdk = (function() {
                         MerklePrefix.decode = function decode(reader, length) {
                             if (!(reader instanceof $Reader))
                                 reader = $Reader.create(reader);
-                            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.commitment.v1.MerklePrefix();
+                            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.commitment.v1.MerklePrefix();
                             while (reader.pos < end) {
-                                var tag = reader.uint32();
+                                let tag = reader.uint32();
                                 switch (tag >>> 3) {
                                 case 1:
                                     message.keyPrefix = reader.bytes();
@@ -26987,7 +26985,7 @@ $root.cosmos_sdk = (function() {
                         MerklePrefix.fromObject = function fromObject(object) {
                             if (object instanceof $root.cosmos_sdk.x.ibc.commitment.v1.MerklePrefix)
                                 return object;
-                            var message = new $root.cosmos_sdk.x.ibc.commitment.v1.MerklePrefix();
+                            let message = new $root.cosmos_sdk.x.ibc.commitment.v1.MerklePrefix();
                             if (object.keyPrefix != null)
                                 if (typeof object.keyPrefix === "string")
                                     $util.base64.decode(object.keyPrefix, message.keyPrefix = $util.newBuffer($util.base64.length(object.keyPrefix)), 0);
@@ -27008,7 +27006,7 @@ $root.cosmos_sdk = (function() {
                         MerklePrefix.toObject = function toObject(message, options) {
                             if (!options)
                                 options = {};
-                            var object = {};
+                            let object = {};
                             if (options.defaults)
                                 if (options.bytes === String)
                                     object.keyPrefix = "";
@@ -27055,7 +27053,7 @@ $root.cosmos_sdk = (function() {
                          */
                         function MerklePath(properties) {
                             if (properties)
-                                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                     if (properties[keys[i]] != null)
                                         this[keys[i]] = properties[keys[i]];
                         }
@@ -27124,9 +27122,9 @@ $root.cosmos_sdk = (function() {
                         MerklePath.decode = function decode(reader, length) {
                             if (!(reader instanceof $Reader))
                                 reader = $Reader.create(reader);
-                            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.commitment.v1.MerklePath();
+                            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.commitment.v1.MerklePath();
                             while (reader.pos < end) {
-                                var tag = reader.uint32();
+                                let tag = reader.uint32();
                                 switch (tag >>> 3) {
                                 case 1:
                                     message.keyPath = $root.cosmos_sdk.x.ibc.commitment.v1.KeyPath.decode(reader, reader.uint32());
@@ -27167,7 +27165,7 @@ $root.cosmos_sdk = (function() {
                             if (typeof message !== "object" || message === null)
                                 return "object expected";
                             if (message.keyPath != null && message.hasOwnProperty("keyPath")) {
-                                var error = $root.cosmos_sdk.x.ibc.commitment.v1.KeyPath.verify(message.keyPath);
+                                let error = $root.cosmos_sdk.x.ibc.commitment.v1.KeyPath.verify(message.keyPath);
                                 if (error)
                                     return "keyPath." + error;
                             }
@@ -27185,7 +27183,7 @@ $root.cosmos_sdk = (function() {
                         MerklePath.fromObject = function fromObject(object) {
                             if (object instanceof $root.cosmos_sdk.x.ibc.commitment.v1.MerklePath)
                                 return object;
-                            var message = new $root.cosmos_sdk.x.ibc.commitment.v1.MerklePath();
+                            let message = new $root.cosmos_sdk.x.ibc.commitment.v1.MerklePath();
                             if (object.keyPath != null) {
                                 if (typeof object.keyPath !== "object")
                                     throw TypeError(".cosmos_sdk.x.ibc.commitment.v1.MerklePath.keyPath: object expected");
@@ -27206,7 +27204,7 @@ $root.cosmos_sdk = (function() {
                         MerklePath.toObject = function toObject(message, options) {
                             if (!options)
                                 options = {};
-                            var object = {};
+                            let object = {};
                             if (options.defaults)
                                 object.keyPath = null;
                             if (message.keyPath != null && message.hasOwnProperty("keyPath"))
@@ -27247,7 +27245,7 @@ $root.cosmos_sdk = (function() {
                          */
                         function MerkleProof(properties) {
                             if (properties)
-                                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                     if (properties[keys[i]] != null)
                                         this[keys[i]] = properties[keys[i]];
                         }
@@ -27316,9 +27314,9 @@ $root.cosmos_sdk = (function() {
                         MerkleProof.decode = function decode(reader, length) {
                             if (!(reader instanceof $Reader))
                                 reader = $Reader.create(reader);
-                            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof();
+                            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof();
                             while (reader.pos < end) {
-                                var tag = reader.uint32();
+                                let tag = reader.uint32();
                                 switch (tag >>> 3) {
                                 case 1:
                                     message.proof = $root.tendermint.crypto.merkle.Proof.decode(reader, reader.uint32());
@@ -27359,7 +27357,7 @@ $root.cosmos_sdk = (function() {
                             if (typeof message !== "object" || message === null)
                                 return "object expected";
                             if (message.proof != null && message.hasOwnProperty("proof")) {
-                                var error = $root.tendermint.crypto.merkle.Proof.verify(message.proof);
+                                let error = $root.tendermint.crypto.merkle.Proof.verify(message.proof);
                                 if (error)
                                     return "proof." + error;
                             }
@@ -27377,7 +27375,7 @@ $root.cosmos_sdk = (function() {
                         MerkleProof.fromObject = function fromObject(object) {
                             if (object instanceof $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof)
                                 return object;
-                            var message = new $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof();
+                            let message = new $root.cosmos_sdk.x.ibc.commitment.v1.MerkleProof();
                             if (object.proof != null) {
                                 if (typeof object.proof !== "object")
                                     throw TypeError(".cosmos_sdk.x.ibc.commitment.v1.MerkleProof.proof: object expected");
@@ -27398,7 +27396,7 @@ $root.cosmos_sdk = (function() {
                         MerkleProof.toObject = function toObject(message, options) {
                             if (!options)
                                 options = {};
-                            var object = {};
+                            let object = {};
                             if (options.defaults)
                                 object.proof = null;
                             if (message.proof != null && message.hasOwnProperty("proof"))
@@ -27440,7 +27438,7 @@ $root.cosmos_sdk = (function() {
                         function KeyPath(properties) {
                             this.keys = [];
                             if (properties)
-                                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                     if (properties[keys[i]] != null)
                                         this[keys[i]] = properties[keys[i]];
                         }
@@ -27478,7 +27476,7 @@ $root.cosmos_sdk = (function() {
                             if (!writer)
                                 writer = $Writer.create();
                             if (message.keys != null && message.keys.length)
-                                for (var i = 0; i < message.keys.length; ++i)
+                                for (let i = 0; i < message.keys.length; ++i)
                                     $root.cosmos_sdk.x.ibc.commitment.v1.Key.encode(message.keys[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
                             return writer;
                         };
@@ -27510,9 +27508,9 @@ $root.cosmos_sdk = (function() {
                         KeyPath.decode = function decode(reader, length) {
                             if (!(reader instanceof $Reader))
                                 reader = $Reader.create(reader);
-                            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.commitment.v1.KeyPath();
+                            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.commitment.v1.KeyPath();
                             while (reader.pos < end) {
-                                var tag = reader.uint32();
+                                let tag = reader.uint32();
                                 switch (tag >>> 3) {
                                 case 1:
                                     if (!(message.keys && message.keys.length))
@@ -27557,8 +27555,8 @@ $root.cosmos_sdk = (function() {
                             if (message.keys != null && message.hasOwnProperty("keys")) {
                                 if (!Array.isArray(message.keys))
                                     return "keys: array expected";
-                                for (var i = 0; i < message.keys.length; ++i) {
-                                    var error = $root.cosmos_sdk.x.ibc.commitment.v1.Key.verify(message.keys[i]);
+                                for (let i = 0; i < message.keys.length; ++i) {
+                                    let error = $root.cosmos_sdk.x.ibc.commitment.v1.Key.verify(message.keys[i]);
                                     if (error)
                                         return "keys." + error;
                                 }
@@ -27577,12 +27575,12 @@ $root.cosmos_sdk = (function() {
                         KeyPath.fromObject = function fromObject(object) {
                             if (object instanceof $root.cosmos_sdk.x.ibc.commitment.v1.KeyPath)
                                 return object;
-                            var message = new $root.cosmos_sdk.x.ibc.commitment.v1.KeyPath();
+                            let message = new $root.cosmos_sdk.x.ibc.commitment.v1.KeyPath();
                             if (object.keys) {
                                 if (!Array.isArray(object.keys))
                                     throw TypeError(".cosmos_sdk.x.ibc.commitment.v1.KeyPath.keys: array expected");
                                 message.keys = [];
-                                for (var i = 0; i < object.keys.length; ++i) {
+                                for (let i = 0; i < object.keys.length; ++i) {
                                     if (typeof object.keys[i] !== "object")
                                         throw TypeError(".cosmos_sdk.x.ibc.commitment.v1.KeyPath.keys: object expected");
                                     message.keys[i] = $root.cosmos_sdk.x.ibc.commitment.v1.Key.fromObject(object.keys[i]);
@@ -27603,12 +27601,12 @@ $root.cosmos_sdk = (function() {
                         KeyPath.toObject = function toObject(message, options) {
                             if (!options)
                                 options = {};
-                            var object = {};
+                            let object = {};
                             if (options.arrays || options.defaults)
                                 object.keys = [];
                             if (message.keys && message.keys.length) {
                                 object.keys = [];
-                                for (var j = 0; j < message.keys.length; ++j)
+                                for (let j = 0; j < message.keys.length; ++j)
                                     object.keys[j] = $root.cosmos_sdk.x.ibc.commitment.v1.Key.toObject(message.keys[j], options);
                             }
                             return object;
@@ -27648,7 +27646,7 @@ $root.cosmos_sdk = (function() {
                          */
                         function Key(properties) {
                             if (properties)
-                                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                     if (properties[keys[i]] != null)
                                         this[keys[i]] = properties[keys[i]];
                         }
@@ -27727,9 +27725,9 @@ $root.cosmos_sdk = (function() {
                         Key.decode = function decode(reader, length) {
                             if (!(reader instanceof $Reader))
                                 reader = $Reader.create(reader);
-                            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.commitment.v1.Key();
+                            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.ibc.commitment.v1.Key();
                             while (reader.pos < end) {
-                                var tag = reader.uint32();
+                                let tag = reader.uint32();
                                 switch (tag >>> 3) {
                                 case 1:
                                     message.name = reader.bytes();
@@ -27797,7 +27795,7 @@ $root.cosmos_sdk = (function() {
                         Key.fromObject = function fromObject(object) {
                             if (object instanceof $root.cosmos_sdk.x.ibc.commitment.v1.Key)
                                 return object;
-                            var message = new $root.cosmos_sdk.x.ibc.commitment.v1.Key();
+                            let message = new $root.cosmos_sdk.x.ibc.commitment.v1.Key();
                             if (object.name != null)
                                 if (typeof object.name === "string")
                                     $util.base64.decode(object.name, message.name = $util.newBuffer($util.base64.length(object.name)), 0);
@@ -27828,7 +27826,7 @@ $root.cosmos_sdk = (function() {
                         Key.toObject = function toObject(message, options) {
                             if (!options)
                                 options = {};
-                            var object = {};
+                            let object = {};
                             if (options.defaults) {
                                 if (options.bytes === String)
                                     object.name = "";
@@ -27868,7 +27866,7 @@ $root.cosmos_sdk = (function() {
                      * @property {number} KEY_ENCODING_HEX=1 KEY_ENCODING_HEX value
                      */
                     v1.KeyEncoding = (function() {
-                        var valuesById = {}, values = Object.create(valuesById);
+                        const valuesById = {}, values = Object.create(valuesById);
                         values[valuesById[0] = "KEY_ENCODING_URL_UNSPECIFIED"] = 0;
                         values[valuesById[1] = "KEY_ENCODING_HEX"] = 1;
                         return values;
@@ -27890,7 +27888,7 @@ $root.cosmos_sdk = (function() {
              * @memberof cosmos_sdk.x
              * @namespace
              */
-            var mint = {};
+            const mint = {};
 
             mint.v1 = (function() {
 
@@ -27899,7 +27897,7 @@ $root.cosmos_sdk = (function() {
                  * @memberof cosmos_sdk.x.mint
                  * @namespace
                  */
-                var v1 = {};
+                const v1 = {};
 
                 v1.Minter = (function() {
 
@@ -27921,7 +27919,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function Minter(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -28000,9 +27998,9 @@ $root.cosmos_sdk = (function() {
                     Minter.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.mint.v1.Minter();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.mint.v1.Minter();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.inflation = reader.string();
@@ -28065,7 +28063,7 @@ $root.cosmos_sdk = (function() {
                     Minter.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.mint.v1.Minter)
                             return object;
-                        var message = new $root.cosmos_sdk.x.mint.v1.Minter();
+                        let message = new $root.cosmos_sdk.x.mint.v1.Minter();
                         if (object.inflation != null)
                             message.inflation = String(object.inflation);
                         if (object.annualProvisions != null)
@@ -28085,7 +28083,7 @@ $root.cosmos_sdk = (function() {
                     Minter.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults) {
                             object.inflation = "";
                             object.annualProvisions = "";
@@ -28135,7 +28133,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function Params(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -28254,9 +28252,9 @@ $root.cosmos_sdk = (function() {
                     Params.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.mint.v1.Params();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.mint.v1.Params();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.mintDenom = reader.string();
@@ -28343,7 +28341,7 @@ $root.cosmos_sdk = (function() {
                     Params.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.mint.v1.Params)
                             return object;
-                        var message = new $root.cosmos_sdk.x.mint.v1.Params();
+                        let message = new $root.cosmos_sdk.x.mint.v1.Params();
                         if (object.mintDenom != null)
                             message.mintDenom = String(object.mintDenom);
                         if (object.inflationRateChange != null)
@@ -28378,7 +28376,7 @@ $root.cosmos_sdk = (function() {
                     Params.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults) {
                             object.mintDenom = "";
                             object.inflationRateChange = "";
@@ -28386,7 +28384,7 @@ $root.cosmos_sdk = (function() {
                             object.inflationMin = "";
                             object.goalBonded = "";
                             if ($util.Long) {
-                                var long = new $util.Long(0, 0, true);
+                                let long = new $util.Long(0, 0, true);
                                 object.blocksPerYear = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                             } else
                                 object.blocksPerYear = options.longs === String ? "0" : 0;
@@ -28436,7 +28434,7 @@ $root.cosmos_sdk = (function() {
              * @memberof cosmos_sdk.x
              * @namespace
              */
-            var params = {};
+            const params = {};
 
             params.v1 = (function() {
 
@@ -28445,7 +28443,7 @@ $root.cosmos_sdk = (function() {
                  * @memberof cosmos_sdk.x.params
                  * @namespace
                  */
-                var v1 = {};
+                const v1 = {};
 
                 v1.ParameterChangeProposal = (function() {
 
@@ -28469,7 +28467,7 @@ $root.cosmos_sdk = (function() {
                     function ParameterChangeProposal(properties) {
                         this.changes = [];
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -28527,7 +28525,7 @@ $root.cosmos_sdk = (function() {
                         if (message.description != null && Object.hasOwnProperty.call(message, "description"))
                             writer.uint32(/* id 2, wireType 2 =*/18).string(message.description);
                         if (message.changes != null && message.changes.length)
-                            for (var i = 0; i < message.changes.length; ++i)
+                            for (let i = 0; i < message.changes.length; ++i)
                                 $root.cosmos_sdk.x.params.v1.ParamChange.encode(message.changes[i], writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
                         return writer;
                     };
@@ -28559,9 +28557,9 @@ $root.cosmos_sdk = (function() {
                     ParameterChangeProposal.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.params.v1.ParameterChangeProposal();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.params.v1.ParameterChangeProposal();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.title = reader.string();
@@ -28618,8 +28616,8 @@ $root.cosmos_sdk = (function() {
                         if (message.changes != null && message.hasOwnProperty("changes")) {
                             if (!Array.isArray(message.changes))
                                 return "changes: array expected";
-                            for (var i = 0; i < message.changes.length; ++i) {
-                                var error = $root.cosmos_sdk.x.params.v1.ParamChange.verify(message.changes[i]);
+                            for (let i = 0; i < message.changes.length; ++i) {
+                                let error = $root.cosmos_sdk.x.params.v1.ParamChange.verify(message.changes[i]);
                                 if (error)
                                     return "changes." + error;
                             }
@@ -28638,7 +28636,7 @@ $root.cosmos_sdk = (function() {
                     ParameterChangeProposal.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.params.v1.ParameterChangeProposal)
                             return object;
-                        var message = new $root.cosmos_sdk.x.params.v1.ParameterChangeProposal();
+                        let message = new $root.cosmos_sdk.x.params.v1.ParameterChangeProposal();
                         if (object.title != null)
                             message.title = String(object.title);
                         if (object.description != null)
@@ -28647,7 +28645,7 @@ $root.cosmos_sdk = (function() {
                             if (!Array.isArray(object.changes))
                                 throw TypeError(".cosmos_sdk.x.params.v1.ParameterChangeProposal.changes: array expected");
                             message.changes = [];
-                            for (var i = 0; i < object.changes.length; ++i) {
+                            for (let i = 0; i < object.changes.length; ++i) {
                                 if (typeof object.changes[i] !== "object")
                                     throw TypeError(".cosmos_sdk.x.params.v1.ParameterChangeProposal.changes: object expected");
                                 message.changes[i] = $root.cosmos_sdk.x.params.v1.ParamChange.fromObject(object.changes[i]);
@@ -28668,7 +28666,7 @@ $root.cosmos_sdk = (function() {
                     ParameterChangeProposal.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.arrays || options.defaults)
                             object.changes = [];
                         if (options.defaults) {
@@ -28681,7 +28679,7 @@ $root.cosmos_sdk = (function() {
                             object.description = message.description;
                         if (message.changes && message.changes.length) {
                             object.changes = [];
-                            for (var j = 0; j < message.changes.length; ++j)
+                            for (let j = 0; j < message.changes.length; ++j)
                                 object.changes[j] = $root.cosmos_sdk.x.params.v1.ParamChange.toObject(message.changes[j], options);
                         }
                         return object;
@@ -28722,7 +28720,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function ParamChange(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -28811,9 +28809,9 @@ $root.cosmos_sdk = (function() {
                     ParamChange.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.params.v1.ParamChange();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.params.v1.ParamChange();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.subspace = reader.string();
@@ -28882,7 +28880,7 @@ $root.cosmos_sdk = (function() {
                     ParamChange.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.params.v1.ParamChange)
                             return object;
-                        var message = new $root.cosmos_sdk.x.params.v1.ParamChange();
+                        let message = new $root.cosmos_sdk.x.params.v1.ParamChange();
                         if (object.subspace != null)
                             message.subspace = String(object.subspace);
                         if (object.key != null)
@@ -28904,7 +28902,7 @@ $root.cosmos_sdk = (function() {
                     ParamChange.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults) {
                             object.subspace = "";
                             object.key = "";
@@ -28946,7 +28944,7 @@ $root.cosmos_sdk = (function() {
              * @memberof cosmos_sdk.x
              * @namespace
              */
-            var slashing = {};
+            const slashing = {};
 
             slashing.v1 = (function() {
 
@@ -28955,7 +28953,7 @@ $root.cosmos_sdk = (function() {
                  * @memberof cosmos_sdk.x.slashing
                  * @namespace
                  */
-                var v1 = {};
+                const v1 = {};
 
                 v1.MsgUnjail = (function() {
 
@@ -28976,7 +28974,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function MsgUnjail(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -29045,9 +29043,9 @@ $root.cosmos_sdk = (function() {
                     MsgUnjail.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.slashing.v1.MsgUnjail();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.slashing.v1.MsgUnjail();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.validatorAddr = reader.bytes();
@@ -29104,7 +29102,7 @@ $root.cosmos_sdk = (function() {
                     MsgUnjail.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.slashing.v1.MsgUnjail)
                             return object;
-                        var message = new $root.cosmos_sdk.x.slashing.v1.MsgUnjail();
+                        let message = new $root.cosmos_sdk.x.slashing.v1.MsgUnjail();
                         if (object.validatorAddr != null)
                             if (typeof object.validatorAddr === "string")
                                 $util.base64.decode(object.validatorAddr, message.validatorAddr = $util.newBuffer($util.base64.length(object.validatorAddr)), 0);
@@ -29125,7 +29123,7 @@ $root.cosmos_sdk = (function() {
                     MsgUnjail.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults)
                             if (options.bytes === String)
                                 object.validatorAddr = "";
@@ -29177,7 +29175,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function ValidatorSigningInfo(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -29296,9 +29294,9 @@ $root.cosmos_sdk = (function() {
                     ValidatorSigningInfo.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.slashing.v1.ValidatorSigningInfo();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.slashing.v1.ValidatorSigningInfo();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.address = reader.bytes();
@@ -29363,7 +29361,7 @@ $root.cosmos_sdk = (function() {
                             if (!$util.isInteger(message.indexOffset) && !(message.indexOffset && $util.isInteger(message.indexOffset.low) && $util.isInteger(message.indexOffset.high)))
                                 return "indexOffset: integer|Long expected";
                         if (message.jailedUntil != null && message.hasOwnProperty("jailedUntil")) {
-                            var error = $root.google.protobuf.Timestamp.verify(message.jailedUntil);
+                            let error = $root.google.protobuf.Timestamp.verify(message.jailedUntil);
                             if (error)
                                 return "jailedUntil." + error;
                         }
@@ -29387,7 +29385,7 @@ $root.cosmos_sdk = (function() {
                     ValidatorSigningInfo.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.slashing.v1.ValidatorSigningInfo)
                             return object;
-                        var message = new $root.cosmos_sdk.x.slashing.v1.ValidatorSigningInfo();
+                        let message = new $root.cosmos_sdk.x.slashing.v1.ValidatorSigningInfo();
                         if (object.address != null)
                             if (typeof object.address === "string")
                                 $util.base64.decode(object.address, message.address = $util.newBuffer($util.base64.length(object.address)), 0);
@@ -29442,7 +29440,7 @@ $root.cosmos_sdk = (function() {
                     ValidatorSigningInfo.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults) {
                             if (options.bytes === String)
                                 object.address = "";
@@ -29452,19 +29450,19 @@ $root.cosmos_sdk = (function() {
                                     object.address = $util.newBuffer(object.address);
                             }
                             if ($util.Long) {
-                                var long = new $util.Long(0, 0, false);
+                                let long = new $util.Long(0, 0, false);
                                 object.startHeight = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                             } else
                                 object.startHeight = options.longs === String ? "0" : 0;
                             if ($util.Long) {
-                                var long = new $util.Long(0, 0, false);
+                                let long = new $util.Long(0, 0, false);
                                 object.indexOffset = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                             } else
                                 object.indexOffset = options.longs === String ? "0" : 0;
                             object.jailedUntil = null;
                             object.tombstoned = false;
                             if ($util.Long) {
-                                var long = new $util.Long(0, 0, false);
+                                let long = new $util.Long(0, 0, false);
                                 object.missedBlocksCounter = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                             } else
                                 object.missedBlocksCounter = options.longs === String ? "0" : 0;
@@ -29520,7 +29518,7 @@ $root.cosmos_sdk = (function() {
              * @memberof cosmos_sdk.x
              * @namespace
              */
-            var staking = {};
+            const staking = {};
 
             staking.v1 = (function() {
 
@@ -29529,7 +29527,7 @@ $root.cosmos_sdk = (function() {
                  * @memberof cosmos_sdk.x.staking
                  * @namespace
                  */
-                var v1 = {};
+                const v1 = {};
 
                 v1.MsgCreateValidator = (function() {
 
@@ -29556,7 +29554,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function MsgCreateValidator(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -29685,9 +29683,9 @@ $root.cosmos_sdk = (function() {
                     MsgCreateValidator.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.staking.v1.MsgCreateValidator();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.staking.v1.MsgCreateValidator();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.description = $root.cosmos_sdk.x.staking.v1.Description.decode(reader, reader.uint32());
@@ -29746,12 +29744,12 @@ $root.cosmos_sdk = (function() {
                         if (typeof message !== "object" || message === null)
                             return "object expected";
                         if (message.description != null && message.hasOwnProperty("description")) {
-                            var error = $root.cosmos_sdk.x.staking.v1.Description.verify(message.description);
+                            let error = $root.cosmos_sdk.x.staking.v1.Description.verify(message.description);
                             if (error)
                                 return "description." + error;
                         }
                         if (message.commission != null && message.hasOwnProperty("commission")) {
-                            var error = $root.cosmos_sdk.x.staking.v1.CommissionRates.verify(message.commission);
+                            let error = $root.cosmos_sdk.x.staking.v1.CommissionRates.verify(message.commission);
                             if (error)
                                 return "commission." + error;
                         }
@@ -29768,7 +29766,7 @@ $root.cosmos_sdk = (function() {
                             if (!$util.isString(message.pubkey))
                                 return "pubkey: string expected";
                         if (message.value != null && message.hasOwnProperty("value")) {
-                            var error = $root.cosmos_sdk.v1.Coin.verify(message.value);
+                            let error = $root.cosmos_sdk.v1.Coin.verify(message.value);
                             if (error)
                                 return "value." + error;
                         }
@@ -29786,7 +29784,7 @@ $root.cosmos_sdk = (function() {
                     MsgCreateValidator.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.staking.v1.MsgCreateValidator)
                             return object;
-                        var message = new $root.cosmos_sdk.x.staking.v1.MsgCreateValidator();
+                        let message = new $root.cosmos_sdk.x.staking.v1.MsgCreateValidator();
                         if (object.description != null) {
                             if (typeof object.description !== "object")
                                 throw TypeError(".cosmos_sdk.x.staking.v1.MsgCreateValidator.description: object expected");
@@ -29831,7 +29829,7 @@ $root.cosmos_sdk = (function() {
                     MsgCreateValidator.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults) {
                             object.description = null;
                             object.commission = null;
@@ -29906,7 +29904,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function MsgEditValidator(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -30005,9 +30003,9 @@ $root.cosmos_sdk = (function() {
                     MsgEditValidator.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.staking.v1.MsgEditValidator();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.staking.v1.MsgEditValidator();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.description = $root.cosmos_sdk.x.staking.v1.Description.decode(reader, reader.uint32());
@@ -30057,7 +30055,7 @@ $root.cosmos_sdk = (function() {
                         if (typeof message !== "object" || message === null)
                             return "object expected";
                         if (message.description != null && message.hasOwnProperty("description")) {
-                            var error = $root.cosmos_sdk.x.staking.v1.Description.verify(message.description);
+                            let error = $root.cosmos_sdk.x.staking.v1.Description.verify(message.description);
                             if (error)
                                 return "description." + error;
                         }
@@ -30084,7 +30082,7 @@ $root.cosmos_sdk = (function() {
                     MsgEditValidator.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.staking.v1.MsgEditValidator)
                             return object;
-                        var message = new $root.cosmos_sdk.x.staking.v1.MsgEditValidator();
+                        let message = new $root.cosmos_sdk.x.staking.v1.MsgEditValidator();
                         if (object.description != null) {
                             if (typeof object.description !== "object")
                                 throw TypeError(".cosmos_sdk.x.staking.v1.MsgEditValidator.description: object expected");
@@ -30114,7 +30112,7 @@ $root.cosmos_sdk = (function() {
                     MsgEditValidator.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults) {
                             object.description = null;
                             if (options.bytes === String)
@@ -30173,7 +30171,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function MsgDelegate(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -30262,9 +30260,9 @@ $root.cosmos_sdk = (function() {
                     MsgDelegate.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.staking.v1.MsgDelegate();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.staking.v1.MsgDelegate();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.delegatorAddress = reader.bytes();
@@ -30317,7 +30315,7 @@ $root.cosmos_sdk = (function() {
                             if (!(message.validatorAddress && typeof message.validatorAddress.length === "number" || $util.isString(message.validatorAddress)))
                                 return "validatorAddress: buffer expected";
                         if (message.amount != null && message.hasOwnProperty("amount")) {
-                            var error = $root.cosmos_sdk.v1.Coin.verify(message.amount);
+                            let error = $root.cosmos_sdk.v1.Coin.verify(message.amount);
                             if (error)
                                 return "amount." + error;
                         }
@@ -30335,7 +30333,7 @@ $root.cosmos_sdk = (function() {
                     MsgDelegate.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.staking.v1.MsgDelegate)
                             return object;
-                        var message = new $root.cosmos_sdk.x.staking.v1.MsgDelegate();
+                        let message = new $root.cosmos_sdk.x.staking.v1.MsgDelegate();
                         if (object.delegatorAddress != null)
                             if (typeof object.delegatorAddress === "string")
                                 $util.base64.decode(object.delegatorAddress, message.delegatorAddress = $util.newBuffer($util.base64.length(object.delegatorAddress)), 0);
@@ -30366,7 +30364,7 @@ $root.cosmos_sdk = (function() {
                     MsgDelegate.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults) {
                             if (options.bytes === String)
                                 object.delegatorAddress = "";
@@ -30429,7 +30427,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function MsgBeginRedelegate(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -30528,9 +30526,9 @@ $root.cosmos_sdk = (function() {
                     MsgBeginRedelegate.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.staking.v1.MsgBeginRedelegate();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.staking.v1.MsgBeginRedelegate();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.delegatorAddress = reader.bytes();
@@ -30589,7 +30587,7 @@ $root.cosmos_sdk = (function() {
                             if (!(message.validatorDstAddress && typeof message.validatorDstAddress.length === "number" || $util.isString(message.validatorDstAddress)))
                                 return "validatorDstAddress: buffer expected";
                         if (message.amount != null && message.hasOwnProperty("amount")) {
-                            var error = $root.cosmos_sdk.v1.Coin.verify(message.amount);
+                            let error = $root.cosmos_sdk.v1.Coin.verify(message.amount);
                             if (error)
                                 return "amount." + error;
                         }
@@ -30607,7 +30605,7 @@ $root.cosmos_sdk = (function() {
                     MsgBeginRedelegate.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.staking.v1.MsgBeginRedelegate)
                             return object;
-                        var message = new $root.cosmos_sdk.x.staking.v1.MsgBeginRedelegate();
+                        let message = new $root.cosmos_sdk.x.staking.v1.MsgBeginRedelegate();
                         if (object.delegatorAddress != null)
                             if (typeof object.delegatorAddress === "string")
                                 $util.base64.decode(object.delegatorAddress, message.delegatorAddress = $util.newBuffer($util.base64.length(object.delegatorAddress)), 0);
@@ -30643,7 +30641,7 @@ $root.cosmos_sdk = (function() {
                     MsgBeginRedelegate.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults) {
                             if (options.bytes === String)
                                 object.delegatorAddress = "";
@@ -30714,7 +30712,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function MsgUndelegate(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -30803,9 +30801,9 @@ $root.cosmos_sdk = (function() {
                     MsgUndelegate.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.staking.v1.MsgUndelegate();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.staking.v1.MsgUndelegate();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.delegatorAddress = reader.bytes();
@@ -30858,7 +30856,7 @@ $root.cosmos_sdk = (function() {
                             if (!(message.validatorAddress && typeof message.validatorAddress.length === "number" || $util.isString(message.validatorAddress)))
                                 return "validatorAddress: buffer expected";
                         if (message.amount != null && message.hasOwnProperty("amount")) {
-                            var error = $root.cosmos_sdk.v1.Coin.verify(message.amount);
+                            let error = $root.cosmos_sdk.v1.Coin.verify(message.amount);
                             if (error)
                                 return "amount." + error;
                         }
@@ -30876,7 +30874,7 @@ $root.cosmos_sdk = (function() {
                     MsgUndelegate.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.staking.v1.MsgUndelegate)
                             return object;
-                        var message = new $root.cosmos_sdk.x.staking.v1.MsgUndelegate();
+                        let message = new $root.cosmos_sdk.x.staking.v1.MsgUndelegate();
                         if (object.delegatorAddress != null)
                             if (typeof object.delegatorAddress === "string")
                                 $util.base64.decode(object.delegatorAddress, message.delegatorAddress = $util.newBuffer($util.base64.length(object.delegatorAddress)), 0);
@@ -30907,7 +30905,7 @@ $root.cosmos_sdk = (function() {
                     MsgUndelegate.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults) {
                             if (options.bytes === String)
                                 object.delegatorAddress = "";
@@ -30969,7 +30967,7 @@ $root.cosmos_sdk = (function() {
                     function HistoricalInfo(properties) {
                         this.valset = [];
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -31017,7 +31015,7 @@ $root.cosmos_sdk = (function() {
                         if (message.header != null && Object.hasOwnProperty.call(message, "header"))
                             $root.tendermint.abci.types.Header.encode(message.header, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
                         if (message.valset != null && message.valset.length)
-                            for (var i = 0; i < message.valset.length; ++i)
+                            for (let i = 0; i < message.valset.length; ++i)
                                 $root.cosmos_sdk.x.staking.v1.Validator.encode(message.valset[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
                         return writer;
                     };
@@ -31049,9 +31047,9 @@ $root.cosmos_sdk = (function() {
                     HistoricalInfo.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.staking.v1.HistoricalInfo();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.staking.v1.HistoricalInfo();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.header = $root.tendermint.abci.types.Header.decode(reader, reader.uint32());
@@ -31097,15 +31095,15 @@ $root.cosmos_sdk = (function() {
                         if (typeof message !== "object" || message === null)
                             return "object expected";
                         if (message.header != null && message.hasOwnProperty("header")) {
-                            var error = $root.tendermint.abci.types.Header.verify(message.header);
+                            let error = $root.tendermint.abci.types.Header.verify(message.header);
                             if (error)
                                 return "header." + error;
                         }
                         if (message.valset != null && message.hasOwnProperty("valset")) {
                             if (!Array.isArray(message.valset))
                                 return "valset: array expected";
-                            for (var i = 0; i < message.valset.length; ++i) {
-                                var error = $root.cosmos_sdk.x.staking.v1.Validator.verify(message.valset[i]);
+                            for (let i = 0; i < message.valset.length; ++i) {
+                                let error = $root.cosmos_sdk.x.staking.v1.Validator.verify(message.valset[i]);
                                 if (error)
                                     return "valset." + error;
                             }
@@ -31124,7 +31122,7 @@ $root.cosmos_sdk = (function() {
                     HistoricalInfo.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.staking.v1.HistoricalInfo)
                             return object;
-                        var message = new $root.cosmos_sdk.x.staking.v1.HistoricalInfo();
+                        let message = new $root.cosmos_sdk.x.staking.v1.HistoricalInfo();
                         if (object.header != null) {
                             if (typeof object.header !== "object")
                                 throw TypeError(".cosmos_sdk.x.staking.v1.HistoricalInfo.header: object expected");
@@ -31134,7 +31132,7 @@ $root.cosmos_sdk = (function() {
                             if (!Array.isArray(object.valset))
                                 throw TypeError(".cosmos_sdk.x.staking.v1.HistoricalInfo.valset: array expected");
                             message.valset = [];
-                            for (var i = 0; i < object.valset.length; ++i) {
+                            for (let i = 0; i < object.valset.length; ++i) {
                                 if (typeof object.valset[i] !== "object")
                                     throw TypeError(".cosmos_sdk.x.staking.v1.HistoricalInfo.valset: object expected");
                                 message.valset[i] = $root.cosmos_sdk.x.staking.v1.Validator.fromObject(object.valset[i]);
@@ -31155,7 +31153,7 @@ $root.cosmos_sdk = (function() {
                     HistoricalInfo.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.arrays || options.defaults)
                             object.valset = [];
                         if (options.defaults)
@@ -31164,7 +31162,7 @@ $root.cosmos_sdk = (function() {
                             object.header = $root.tendermint.abci.types.Header.toObject(message.header, options);
                         if (message.valset && message.valset.length) {
                             object.valset = [];
-                            for (var j = 0; j < message.valset.length; ++j)
+                            for (let j = 0; j < message.valset.length; ++j)
                                 object.valset[j] = $root.cosmos_sdk.x.staking.v1.Validator.toObject(message.valset[j], options);
                         }
                         return object;
@@ -31205,7 +31203,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function CommissionRates(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -31294,9 +31292,9 @@ $root.cosmos_sdk = (function() {
                     CommissionRates.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.staking.v1.CommissionRates();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.staking.v1.CommissionRates();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.rate = reader.string();
@@ -31365,7 +31363,7 @@ $root.cosmos_sdk = (function() {
                     CommissionRates.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.staking.v1.CommissionRates)
                             return object;
-                        var message = new $root.cosmos_sdk.x.staking.v1.CommissionRates();
+                        let message = new $root.cosmos_sdk.x.staking.v1.CommissionRates();
                         if (object.rate != null)
                             message.rate = String(object.rate);
                         if (object.maxRate != null)
@@ -31387,7 +31385,7 @@ $root.cosmos_sdk = (function() {
                     CommissionRates.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults) {
                             object.rate = "";
                             object.maxRate = "";
@@ -31436,7 +31434,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function Commission(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -31515,9 +31513,9 @@ $root.cosmos_sdk = (function() {
                     Commission.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.staking.v1.Commission();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.staking.v1.Commission();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.commissionRates = $root.cosmos_sdk.x.staking.v1.CommissionRates.decode(reader, reader.uint32());
@@ -31561,12 +31559,12 @@ $root.cosmos_sdk = (function() {
                         if (typeof message !== "object" || message === null)
                             return "object expected";
                         if (message.commissionRates != null && message.hasOwnProperty("commissionRates")) {
-                            var error = $root.cosmos_sdk.x.staking.v1.CommissionRates.verify(message.commissionRates);
+                            let error = $root.cosmos_sdk.x.staking.v1.CommissionRates.verify(message.commissionRates);
                             if (error)
                                 return "commissionRates." + error;
                         }
                         if (message.updateTime != null && message.hasOwnProperty("updateTime")) {
-                            var error = $root.google.protobuf.Timestamp.verify(message.updateTime);
+                            let error = $root.google.protobuf.Timestamp.verify(message.updateTime);
                             if (error)
                                 return "updateTime." + error;
                         }
@@ -31584,7 +31582,7 @@ $root.cosmos_sdk = (function() {
                     Commission.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.staking.v1.Commission)
                             return object;
-                        var message = new $root.cosmos_sdk.x.staking.v1.Commission();
+                        let message = new $root.cosmos_sdk.x.staking.v1.Commission();
                         if (object.commissionRates != null) {
                             if (typeof object.commissionRates !== "object")
                                 throw TypeError(".cosmos_sdk.x.staking.v1.Commission.commissionRates: object expected");
@@ -31610,7 +31608,7 @@ $root.cosmos_sdk = (function() {
                     Commission.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults) {
                             object.commissionRates = null;
                             object.updateTime = null;
@@ -31659,7 +31657,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function Description(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -31768,9 +31766,9 @@ $root.cosmos_sdk = (function() {
                     Description.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.staking.v1.Description();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.staking.v1.Description();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.moniker = reader.string();
@@ -31851,7 +31849,7 @@ $root.cosmos_sdk = (function() {
                     Description.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.staking.v1.Description)
                             return object;
-                        var message = new $root.cosmos_sdk.x.staking.v1.Description();
+                        let message = new $root.cosmos_sdk.x.staking.v1.Description();
                         if (object.moniker != null)
                             message.moniker = String(object.moniker);
                         if (object.identity != null)
@@ -31877,7 +31875,7 @@ $root.cosmos_sdk = (function() {
                     Description.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults) {
                             object.moniker = "";
                             object.identity = "";
@@ -31941,7 +31939,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function Validator(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -32110,9 +32108,9 @@ $root.cosmos_sdk = (function() {
                     Validator.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.staking.v1.Validator();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.staking.v1.Validator();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.operatorAddress = reader.bytes();
@@ -32201,7 +32199,7 @@ $root.cosmos_sdk = (function() {
                             if (!$util.isString(message.delegatorShares))
                                 return "delegatorShares: string expected";
                         if (message.description != null && message.hasOwnProperty("description")) {
-                            var error = $root.cosmos_sdk.x.staking.v1.Description.verify(message.description);
+                            let error = $root.cosmos_sdk.x.staking.v1.Description.verify(message.description);
                             if (error)
                                 return "description." + error;
                         }
@@ -32209,12 +32207,12 @@ $root.cosmos_sdk = (function() {
                             if (!$util.isInteger(message.unbondingHeight) && !(message.unbondingHeight && $util.isInteger(message.unbondingHeight.low) && $util.isInteger(message.unbondingHeight.high)))
                                 return "unbondingHeight: integer|Long expected";
                         if (message.unbondingTime != null && message.hasOwnProperty("unbondingTime")) {
-                            var error = $root.google.protobuf.Timestamp.verify(message.unbondingTime);
+                            let error = $root.google.protobuf.Timestamp.verify(message.unbondingTime);
                             if (error)
                                 return "unbondingTime." + error;
                         }
                         if (message.commission != null && message.hasOwnProperty("commission")) {
-                            var error = $root.cosmos_sdk.x.staking.v1.Commission.verify(message.commission);
+                            let error = $root.cosmos_sdk.x.staking.v1.Commission.verify(message.commission);
                             if (error)
                                 return "commission." + error;
                         }
@@ -32235,7 +32233,7 @@ $root.cosmos_sdk = (function() {
                     Validator.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.staking.v1.Validator)
                             return object;
-                        var message = new $root.cosmos_sdk.x.staking.v1.Validator();
+                        let message = new $root.cosmos_sdk.x.staking.v1.Validator();
                         if (object.operatorAddress != null)
                             if (typeof object.operatorAddress === "string")
                                 $util.base64.decode(object.operatorAddress, message.operatorAddress = $util.newBuffer($util.base64.length(object.operatorAddress)), 0);
@@ -32292,7 +32290,7 @@ $root.cosmos_sdk = (function() {
                     Validator.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults) {
                             if (options.bytes === String)
                                 object.operatorAddress = "";
@@ -32308,7 +32306,7 @@ $root.cosmos_sdk = (function() {
                             object.delegatorShares = "";
                             object.description = null;
                             if ($util.Long) {
-                                var long = new $util.Long(0, 0, false);
+                                let long = new $util.Long(0, 0, false);
                                 object.unbondingHeight = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                             } else
                                 object.unbondingHeight = options.longs === String ? "0" : 0;
@@ -32378,7 +32376,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function DVPair(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -32457,9 +32455,9 @@ $root.cosmos_sdk = (function() {
                     DVPair.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.staking.v1.DVPair();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.staking.v1.DVPair();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.delegatorAddress = reader.bytes();
@@ -32522,7 +32520,7 @@ $root.cosmos_sdk = (function() {
                     DVPair.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.staking.v1.DVPair)
                             return object;
-                        var message = new $root.cosmos_sdk.x.staking.v1.DVPair();
+                        let message = new $root.cosmos_sdk.x.staking.v1.DVPair();
                         if (object.delegatorAddress != null)
                             if (typeof object.delegatorAddress === "string")
                                 $util.base64.decode(object.delegatorAddress, message.delegatorAddress = $util.newBuffer($util.base64.length(object.delegatorAddress)), 0);
@@ -32548,7 +32546,7 @@ $root.cosmos_sdk = (function() {
                     DVPair.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults) {
                             if (options.bytes === String)
                                 object.delegatorAddress = "";
@@ -32606,7 +32604,7 @@ $root.cosmos_sdk = (function() {
                     function DVPairs(properties) {
                         this.pairs = [];
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -32644,7 +32642,7 @@ $root.cosmos_sdk = (function() {
                         if (!writer)
                             writer = $Writer.create();
                         if (message.pairs != null && message.pairs.length)
-                            for (var i = 0; i < message.pairs.length; ++i)
+                            for (let i = 0; i < message.pairs.length; ++i)
                                 $root.cosmos_sdk.x.staking.v1.DVPair.encode(message.pairs[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
                         return writer;
                     };
@@ -32676,9 +32674,9 @@ $root.cosmos_sdk = (function() {
                     DVPairs.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.staking.v1.DVPairs();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.staking.v1.DVPairs();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 if (!(message.pairs && message.pairs.length))
@@ -32723,8 +32721,8 @@ $root.cosmos_sdk = (function() {
                         if (message.pairs != null && message.hasOwnProperty("pairs")) {
                             if (!Array.isArray(message.pairs))
                                 return "pairs: array expected";
-                            for (var i = 0; i < message.pairs.length; ++i) {
-                                var error = $root.cosmos_sdk.x.staking.v1.DVPair.verify(message.pairs[i]);
+                            for (let i = 0; i < message.pairs.length; ++i) {
+                                let error = $root.cosmos_sdk.x.staking.v1.DVPair.verify(message.pairs[i]);
                                 if (error)
                                     return "pairs." + error;
                             }
@@ -32743,12 +32741,12 @@ $root.cosmos_sdk = (function() {
                     DVPairs.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.staking.v1.DVPairs)
                             return object;
-                        var message = new $root.cosmos_sdk.x.staking.v1.DVPairs();
+                        let message = new $root.cosmos_sdk.x.staking.v1.DVPairs();
                         if (object.pairs) {
                             if (!Array.isArray(object.pairs))
                                 throw TypeError(".cosmos_sdk.x.staking.v1.DVPairs.pairs: array expected");
                             message.pairs = [];
-                            for (var i = 0; i < object.pairs.length; ++i) {
+                            for (let i = 0; i < object.pairs.length; ++i) {
                                 if (typeof object.pairs[i] !== "object")
                                     throw TypeError(".cosmos_sdk.x.staking.v1.DVPairs.pairs: object expected");
                                 message.pairs[i] = $root.cosmos_sdk.x.staking.v1.DVPair.fromObject(object.pairs[i]);
@@ -32769,12 +32767,12 @@ $root.cosmos_sdk = (function() {
                     DVPairs.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.arrays || options.defaults)
                             object.pairs = [];
                         if (message.pairs && message.pairs.length) {
                             object.pairs = [];
-                            for (var j = 0; j < message.pairs.length; ++j)
+                            for (let j = 0; j < message.pairs.length; ++j)
                                 object.pairs[j] = $root.cosmos_sdk.x.staking.v1.DVPair.toObject(message.pairs[j], options);
                         }
                         return object;
@@ -32815,7 +32813,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function DVVTriplet(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -32904,9 +32902,9 @@ $root.cosmos_sdk = (function() {
                     DVVTriplet.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.staking.v1.DVVTriplet();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.staking.v1.DVVTriplet();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.delegatorAddress = reader.bytes();
@@ -32975,7 +32973,7 @@ $root.cosmos_sdk = (function() {
                     DVVTriplet.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.staking.v1.DVVTriplet)
                             return object;
-                        var message = new $root.cosmos_sdk.x.staking.v1.DVVTriplet();
+                        let message = new $root.cosmos_sdk.x.staking.v1.DVVTriplet();
                         if (object.delegatorAddress != null)
                             if (typeof object.delegatorAddress === "string")
                                 $util.base64.decode(object.delegatorAddress, message.delegatorAddress = $util.newBuffer($util.base64.length(object.delegatorAddress)), 0);
@@ -33006,7 +33004,7 @@ $root.cosmos_sdk = (function() {
                     DVVTriplet.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults) {
                             if (options.bytes === String)
                                 object.delegatorAddress = "";
@@ -33073,7 +33071,7 @@ $root.cosmos_sdk = (function() {
                     function DVVTriplets(properties) {
                         this.triplets = [];
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -33111,7 +33109,7 @@ $root.cosmos_sdk = (function() {
                         if (!writer)
                             writer = $Writer.create();
                         if (message.triplets != null && message.triplets.length)
-                            for (var i = 0; i < message.triplets.length; ++i)
+                            for (let i = 0; i < message.triplets.length; ++i)
                                 $root.cosmos_sdk.x.staking.v1.DVVTriplet.encode(message.triplets[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
                         return writer;
                     };
@@ -33143,9 +33141,9 @@ $root.cosmos_sdk = (function() {
                     DVVTriplets.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.staking.v1.DVVTriplets();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.staking.v1.DVVTriplets();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 if (!(message.triplets && message.triplets.length))
@@ -33190,8 +33188,8 @@ $root.cosmos_sdk = (function() {
                         if (message.triplets != null && message.hasOwnProperty("triplets")) {
                             if (!Array.isArray(message.triplets))
                                 return "triplets: array expected";
-                            for (var i = 0; i < message.triplets.length; ++i) {
-                                var error = $root.cosmos_sdk.x.staking.v1.DVVTriplet.verify(message.triplets[i]);
+                            for (let i = 0; i < message.triplets.length; ++i) {
+                                let error = $root.cosmos_sdk.x.staking.v1.DVVTriplet.verify(message.triplets[i]);
                                 if (error)
                                     return "triplets." + error;
                             }
@@ -33210,12 +33208,12 @@ $root.cosmos_sdk = (function() {
                     DVVTriplets.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.staking.v1.DVVTriplets)
                             return object;
-                        var message = new $root.cosmos_sdk.x.staking.v1.DVVTriplets();
+                        let message = new $root.cosmos_sdk.x.staking.v1.DVVTriplets();
                         if (object.triplets) {
                             if (!Array.isArray(object.triplets))
                                 throw TypeError(".cosmos_sdk.x.staking.v1.DVVTriplets.triplets: array expected");
                             message.triplets = [];
-                            for (var i = 0; i < object.triplets.length; ++i) {
+                            for (let i = 0; i < object.triplets.length; ++i) {
                                 if (typeof object.triplets[i] !== "object")
                                     throw TypeError(".cosmos_sdk.x.staking.v1.DVVTriplets.triplets: object expected");
                                 message.triplets[i] = $root.cosmos_sdk.x.staking.v1.DVVTriplet.fromObject(object.triplets[i]);
@@ -33236,12 +33234,12 @@ $root.cosmos_sdk = (function() {
                     DVVTriplets.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.arrays || options.defaults)
                             object.triplets = [];
                         if (message.triplets && message.triplets.length) {
                             object.triplets = [];
-                            for (var j = 0; j < message.triplets.length; ++j)
+                            for (let j = 0; j < message.triplets.length; ++j)
                                 object.triplets[j] = $root.cosmos_sdk.x.staking.v1.DVVTriplet.toObject(message.triplets[j], options);
                         }
                         return object;
@@ -33282,7 +33280,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function Delegation(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -33371,9 +33369,9 @@ $root.cosmos_sdk = (function() {
                     Delegation.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.staking.v1.Delegation();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.staking.v1.Delegation();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.delegatorAddress = reader.bytes();
@@ -33442,7 +33440,7 @@ $root.cosmos_sdk = (function() {
                     Delegation.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.staking.v1.Delegation)
                             return object;
-                        var message = new $root.cosmos_sdk.x.staking.v1.Delegation();
+                        let message = new $root.cosmos_sdk.x.staking.v1.Delegation();
                         if (object.delegatorAddress != null)
                             if (typeof object.delegatorAddress === "string")
                                 $util.base64.decode(object.delegatorAddress, message.delegatorAddress = $util.newBuffer($util.base64.length(object.delegatorAddress)), 0);
@@ -33470,7 +33468,7 @@ $root.cosmos_sdk = (function() {
                     Delegation.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults) {
                             if (options.bytes === String)
                                 object.delegatorAddress = "";
@@ -33533,7 +33531,7 @@ $root.cosmos_sdk = (function() {
                     function UnbondingDelegation(properties) {
                         this.entries = [];
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -33591,7 +33589,7 @@ $root.cosmos_sdk = (function() {
                         if (message.validatorAddress != null && Object.hasOwnProperty.call(message, "validatorAddress"))
                             writer.uint32(/* id 2, wireType 2 =*/18).bytes(message.validatorAddress);
                         if (message.entries != null && message.entries.length)
-                            for (var i = 0; i < message.entries.length; ++i)
+                            for (let i = 0; i < message.entries.length; ++i)
                                 $root.cosmos_sdk.x.staking.v1.UnbondingDelegationEntry.encode(message.entries[i], writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
                         return writer;
                     };
@@ -33623,9 +33621,9 @@ $root.cosmos_sdk = (function() {
                     UnbondingDelegation.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.staking.v1.UnbondingDelegation();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.staking.v1.UnbondingDelegation();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.delegatorAddress = reader.bytes();
@@ -33682,8 +33680,8 @@ $root.cosmos_sdk = (function() {
                         if (message.entries != null && message.hasOwnProperty("entries")) {
                             if (!Array.isArray(message.entries))
                                 return "entries: array expected";
-                            for (var i = 0; i < message.entries.length; ++i) {
-                                var error = $root.cosmos_sdk.x.staking.v1.UnbondingDelegationEntry.verify(message.entries[i]);
+                            for (let i = 0; i < message.entries.length; ++i) {
+                                let error = $root.cosmos_sdk.x.staking.v1.UnbondingDelegationEntry.verify(message.entries[i]);
                                 if (error)
                                     return "entries." + error;
                             }
@@ -33702,7 +33700,7 @@ $root.cosmos_sdk = (function() {
                     UnbondingDelegation.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.staking.v1.UnbondingDelegation)
                             return object;
-                        var message = new $root.cosmos_sdk.x.staking.v1.UnbondingDelegation();
+                        let message = new $root.cosmos_sdk.x.staking.v1.UnbondingDelegation();
                         if (object.delegatorAddress != null)
                             if (typeof object.delegatorAddress === "string")
                                 $util.base64.decode(object.delegatorAddress, message.delegatorAddress = $util.newBuffer($util.base64.length(object.delegatorAddress)), 0);
@@ -33717,7 +33715,7 @@ $root.cosmos_sdk = (function() {
                             if (!Array.isArray(object.entries))
                                 throw TypeError(".cosmos_sdk.x.staking.v1.UnbondingDelegation.entries: array expected");
                             message.entries = [];
-                            for (var i = 0; i < object.entries.length; ++i) {
+                            for (let i = 0; i < object.entries.length; ++i) {
                                 if (typeof object.entries[i] !== "object")
                                     throw TypeError(".cosmos_sdk.x.staking.v1.UnbondingDelegation.entries: object expected");
                                 message.entries[i] = $root.cosmos_sdk.x.staking.v1.UnbondingDelegationEntry.fromObject(object.entries[i]);
@@ -33738,7 +33736,7 @@ $root.cosmos_sdk = (function() {
                     UnbondingDelegation.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.arrays || options.defaults)
                             object.entries = [];
                         if (options.defaults) {
@@ -33763,7 +33761,7 @@ $root.cosmos_sdk = (function() {
                             object.validatorAddress = options.bytes === String ? $util.base64.encode(message.validatorAddress, 0, message.validatorAddress.length) : options.bytes === Array ? Array.prototype.slice.call(message.validatorAddress) : message.validatorAddress;
                         if (message.entries && message.entries.length) {
                             object.entries = [];
-                            for (var j = 0; j < message.entries.length; ++j)
+                            for (let j = 0; j < message.entries.length; ++j)
                                 object.entries[j] = $root.cosmos_sdk.x.staking.v1.UnbondingDelegationEntry.toObject(message.entries[j], options);
                         }
                         return object;
@@ -33805,7 +33803,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function UnbondingDelegationEntry(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -33904,9 +33902,9 @@ $root.cosmos_sdk = (function() {
                     UnbondingDelegationEntry.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.staking.v1.UnbondingDelegationEntry();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.staking.v1.UnbondingDelegationEntry();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.creationHeight = reader.int64();
@@ -33959,7 +33957,7 @@ $root.cosmos_sdk = (function() {
                             if (!$util.isInteger(message.creationHeight) && !(message.creationHeight && $util.isInteger(message.creationHeight.low) && $util.isInteger(message.creationHeight.high)))
                                 return "creationHeight: integer|Long expected";
                         if (message.completionTime != null && message.hasOwnProperty("completionTime")) {
-                            var error = $root.google.protobuf.Timestamp.verify(message.completionTime);
+                            let error = $root.google.protobuf.Timestamp.verify(message.completionTime);
                             if (error)
                                 return "completionTime." + error;
                         }
@@ -33983,7 +33981,7 @@ $root.cosmos_sdk = (function() {
                     UnbondingDelegationEntry.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.staking.v1.UnbondingDelegationEntry)
                             return object;
-                        var message = new $root.cosmos_sdk.x.staking.v1.UnbondingDelegationEntry();
+                        let message = new $root.cosmos_sdk.x.staking.v1.UnbondingDelegationEntry();
                         if (object.creationHeight != null)
                             if ($util.Long)
                                 (message.creationHeight = $util.Long.fromValue(object.creationHeight)).unsigned = false;
@@ -34017,10 +34015,10 @@ $root.cosmos_sdk = (function() {
                     UnbondingDelegationEntry.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults) {
                             if ($util.Long) {
-                                var long = new $util.Long(0, 0, false);
+                                let long = new $util.Long(0, 0, false);
                                 object.creationHeight = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                             } else
                                 object.creationHeight = options.longs === String ? "0" : 0;
@@ -34078,7 +34076,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function RedelegationEntry(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -34177,9 +34175,9 @@ $root.cosmos_sdk = (function() {
                     RedelegationEntry.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.staking.v1.RedelegationEntry();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.staking.v1.RedelegationEntry();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.creationHeight = reader.int64();
@@ -34232,7 +34230,7 @@ $root.cosmos_sdk = (function() {
                             if (!$util.isInteger(message.creationHeight) && !(message.creationHeight && $util.isInteger(message.creationHeight.low) && $util.isInteger(message.creationHeight.high)))
                                 return "creationHeight: integer|Long expected";
                         if (message.completionTime != null && message.hasOwnProperty("completionTime")) {
-                            var error = $root.google.protobuf.Timestamp.verify(message.completionTime);
+                            let error = $root.google.protobuf.Timestamp.verify(message.completionTime);
                             if (error)
                                 return "completionTime." + error;
                         }
@@ -34256,7 +34254,7 @@ $root.cosmos_sdk = (function() {
                     RedelegationEntry.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.staking.v1.RedelegationEntry)
                             return object;
-                        var message = new $root.cosmos_sdk.x.staking.v1.RedelegationEntry();
+                        let message = new $root.cosmos_sdk.x.staking.v1.RedelegationEntry();
                         if (object.creationHeight != null)
                             if ($util.Long)
                                 (message.creationHeight = $util.Long.fromValue(object.creationHeight)).unsigned = false;
@@ -34290,10 +34288,10 @@ $root.cosmos_sdk = (function() {
                     RedelegationEntry.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults) {
                             if ($util.Long) {
-                                var long = new $util.Long(0, 0, false);
+                                let long = new $util.Long(0, 0, false);
                                 object.creationHeight = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                             } else
                                 object.creationHeight = options.longs === String ? "0" : 0;
@@ -34352,7 +34350,7 @@ $root.cosmos_sdk = (function() {
                     function Redelegation(properties) {
                         this.entries = [];
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -34420,7 +34418,7 @@ $root.cosmos_sdk = (function() {
                         if (message.validatorDstAddress != null && Object.hasOwnProperty.call(message, "validatorDstAddress"))
                             writer.uint32(/* id 3, wireType 2 =*/26).bytes(message.validatorDstAddress);
                         if (message.entries != null && message.entries.length)
-                            for (var i = 0; i < message.entries.length; ++i)
+                            for (let i = 0; i < message.entries.length; ++i)
                                 $root.cosmos_sdk.x.staking.v1.RedelegationEntry.encode(message.entries[i], writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
                         return writer;
                     };
@@ -34452,9 +34450,9 @@ $root.cosmos_sdk = (function() {
                     Redelegation.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.staking.v1.Redelegation();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.staking.v1.Redelegation();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.delegatorAddress = reader.bytes();
@@ -34517,8 +34515,8 @@ $root.cosmos_sdk = (function() {
                         if (message.entries != null && message.hasOwnProperty("entries")) {
                             if (!Array.isArray(message.entries))
                                 return "entries: array expected";
-                            for (var i = 0; i < message.entries.length; ++i) {
-                                var error = $root.cosmos_sdk.x.staking.v1.RedelegationEntry.verify(message.entries[i]);
+                            for (let i = 0; i < message.entries.length; ++i) {
+                                let error = $root.cosmos_sdk.x.staking.v1.RedelegationEntry.verify(message.entries[i]);
                                 if (error)
                                     return "entries." + error;
                             }
@@ -34537,7 +34535,7 @@ $root.cosmos_sdk = (function() {
                     Redelegation.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.staking.v1.Redelegation)
                             return object;
-                        var message = new $root.cosmos_sdk.x.staking.v1.Redelegation();
+                        let message = new $root.cosmos_sdk.x.staking.v1.Redelegation();
                         if (object.delegatorAddress != null)
                             if (typeof object.delegatorAddress === "string")
                                 $util.base64.decode(object.delegatorAddress, message.delegatorAddress = $util.newBuffer($util.base64.length(object.delegatorAddress)), 0);
@@ -34557,7 +34555,7 @@ $root.cosmos_sdk = (function() {
                             if (!Array.isArray(object.entries))
                                 throw TypeError(".cosmos_sdk.x.staking.v1.Redelegation.entries: array expected");
                             message.entries = [];
-                            for (var i = 0; i < object.entries.length; ++i) {
+                            for (let i = 0; i < object.entries.length; ++i) {
                                 if (typeof object.entries[i] !== "object")
                                     throw TypeError(".cosmos_sdk.x.staking.v1.Redelegation.entries: object expected");
                                 message.entries[i] = $root.cosmos_sdk.x.staking.v1.RedelegationEntry.fromObject(object.entries[i]);
@@ -34578,7 +34576,7 @@ $root.cosmos_sdk = (function() {
                     Redelegation.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.arrays || options.defaults)
                             object.entries = [];
                         if (options.defaults) {
@@ -34612,7 +34610,7 @@ $root.cosmos_sdk = (function() {
                             object.validatorDstAddress = options.bytes === String ? $util.base64.encode(message.validatorDstAddress, 0, message.validatorDstAddress.length) : options.bytes === Array ? Array.prototype.slice.call(message.validatorDstAddress) : message.validatorDstAddress;
                         if (message.entries && message.entries.length) {
                             object.entries = [];
-                            for (var j = 0; j < message.entries.length; ++j)
+                            for (let j = 0; j < message.entries.length; ++j)
                                 object.entries[j] = $root.cosmos_sdk.x.staking.v1.RedelegationEntry.toObject(message.entries[j], options);
                         }
                         return object;
@@ -34655,7 +34653,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function Params(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -34764,9 +34762,9 @@ $root.cosmos_sdk = (function() {
                     Params.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.staking.v1.Params();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.staking.v1.Params();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.unbondingTime = $root.google.protobuf.Duration.decode(reader, reader.uint32());
@@ -34819,7 +34817,7 @@ $root.cosmos_sdk = (function() {
                         if (typeof message !== "object" || message === null)
                             return "object expected";
                         if (message.unbondingTime != null && message.hasOwnProperty("unbondingTime")) {
-                            var error = $root.google.protobuf.Duration.verify(message.unbondingTime);
+                            let error = $root.google.protobuf.Duration.verify(message.unbondingTime);
                             if (error)
                                 return "unbondingTime." + error;
                         }
@@ -34849,7 +34847,7 @@ $root.cosmos_sdk = (function() {
                     Params.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.staking.v1.Params)
                             return object;
-                        var message = new $root.cosmos_sdk.x.staking.v1.Params();
+                        let message = new $root.cosmos_sdk.x.staking.v1.Params();
                         if (object.unbondingTime != null) {
                             if (typeof object.unbondingTime !== "object")
                                 throw TypeError(".cosmos_sdk.x.staking.v1.Params.unbondingTime: object expected");
@@ -34878,7 +34876,7 @@ $root.cosmos_sdk = (function() {
                     Params.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults) {
                             object.unbondingTime = null;
                             object.maxValidators = 0;
@@ -34926,7 +34924,7 @@ $root.cosmos_sdk = (function() {
              * @memberof cosmos_sdk.x
              * @namespace
              */
-            var upgrade = {};
+            const upgrade = {};
 
             upgrade.v1 = (function() {
 
@@ -34935,7 +34933,7 @@ $root.cosmos_sdk = (function() {
                  * @memberof cosmos_sdk.x.upgrade
                  * @namespace
                  */
-                var v1 = {};
+                const v1 = {};
 
                 v1.Plan = (function() {
 
@@ -34959,7 +34957,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function Plan(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -35058,9 +35056,9 @@ $root.cosmos_sdk = (function() {
                     Plan.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.upgrade.v1.Plan();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.upgrade.v1.Plan();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.name = reader.string();
@@ -35113,7 +35111,7 @@ $root.cosmos_sdk = (function() {
                             if (!$util.isString(message.name))
                                 return "name: string expected";
                         if (message.time != null && message.hasOwnProperty("time")) {
-                            var error = $root.google.protobuf.Timestamp.verify(message.time);
+                            let error = $root.google.protobuf.Timestamp.verify(message.time);
                             if (error)
                                 return "time." + error;
                         }
@@ -35137,7 +35135,7 @@ $root.cosmos_sdk = (function() {
                     Plan.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.upgrade.v1.Plan)
                             return object;
-                        var message = new $root.cosmos_sdk.x.upgrade.v1.Plan();
+                        let message = new $root.cosmos_sdk.x.upgrade.v1.Plan();
                         if (object.name != null)
                             message.name = String(object.name);
                         if (object.time != null) {
@@ -35171,12 +35169,12 @@ $root.cosmos_sdk = (function() {
                     Plan.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults) {
                             object.name = "";
                             object.time = null;
                             if ($util.Long) {
-                                var long = new $util.Long(0, 0, false);
+                                let long = new $util.Long(0, 0, false);
                                 object.height = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                             } else
                                 object.height = options.longs === String ? "0" : 0;
@@ -35231,7 +35229,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function SoftwareUpgradeProposal(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -35320,9 +35318,9 @@ $root.cosmos_sdk = (function() {
                     SoftwareUpgradeProposal.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.upgrade.v1.SoftwareUpgradeProposal();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.upgrade.v1.SoftwareUpgradeProposal();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.title = reader.string();
@@ -35375,7 +35373,7 @@ $root.cosmos_sdk = (function() {
                             if (!$util.isString(message.description))
                                 return "description: string expected";
                         if (message.plan != null && message.hasOwnProperty("plan")) {
-                            var error = $root.cosmos_sdk.x.upgrade.v1.Plan.verify(message.plan);
+                            let error = $root.cosmos_sdk.x.upgrade.v1.Plan.verify(message.plan);
                             if (error)
                                 return "plan." + error;
                         }
@@ -35393,7 +35391,7 @@ $root.cosmos_sdk = (function() {
                     SoftwareUpgradeProposal.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.upgrade.v1.SoftwareUpgradeProposal)
                             return object;
-                        var message = new $root.cosmos_sdk.x.upgrade.v1.SoftwareUpgradeProposal();
+                        let message = new $root.cosmos_sdk.x.upgrade.v1.SoftwareUpgradeProposal();
                         if (object.title != null)
                             message.title = String(object.title);
                         if (object.description != null)
@@ -35418,7 +35416,7 @@ $root.cosmos_sdk = (function() {
                     SoftwareUpgradeProposal.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults) {
                             object.title = "";
                             object.description = "";
@@ -35467,7 +35465,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function CancelSoftwareUpgradeProposal(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -35546,9 +35544,9 @@ $root.cosmos_sdk = (function() {
                     CancelSoftwareUpgradeProposal.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.upgrade.v1.CancelSoftwareUpgradeProposal();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.x.upgrade.v1.CancelSoftwareUpgradeProposal();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.title = reader.string();
@@ -35611,7 +35609,7 @@ $root.cosmos_sdk = (function() {
                     CancelSoftwareUpgradeProposal.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.x.upgrade.v1.CancelSoftwareUpgradeProposal)
                             return object;
-                        var message = new $root.cosmos_sdk.x.upgrade.v1.CancelSoftwareUpgradeProposal();
+                        let message = new $root.cosmos_sdk.x.upgrade.v1.CancelSoftwareUpgradeProposal();
                         if (object.title != null)
                             message.title = String(object.title);
                         if (object.description != null)
@@ -35631,7 +35629,7 @@ $root.cosmos_sdk = (function() {
                     CancelSoftwareUpgradeProposal.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults) {
                             object.title = "";
                             object.description = "";
@@ -35673,7 +35671,7 @@ $root.cosmos_sdk = (function() {
          * @memberof cosmos_sdk
          * @namespace
          */
-        var ibc = {};
+        const ibc = {};
 
         ibc.localhost = (function() {
 
@@ -35682,7 +35680,7 @@ $root.cosmos_sdk = (function() {
              * @memberof cosmos_sdk.ibc
              * @namespace
              */
-            var localhost = {};
+            const localhost = {};
 
             localhost.v1 = (function() {
 
@@ -35691,7 +35689,7 @@ $root.cosmos_sdk = (function() {
                  * @memberof cosmos_sdk.ibc.localhost
                  * @namespace
                  */
-                var v1 = {};
+                const v1 = {};
 
                 v1.MsgCreateClient = (function() {
 
@@ -35712,7 +35710,7 @@ $root.cosmos_sdk = (function() {
                      */
                     function MsgCreateClient(properties) {
                         if (properties)
-                            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                                 if (properties[keys[i]] != null)
                                     this[keys[i]] = properties[keys[i]];
                     }
@@ -35781,9 +35779,9 @@ $root.cosmos_sdk = (function() {
                     MsgCreateClient.decode = function decode(reader, length) {
                         if (!(reader instanceof $Reader))
                             reader = $Reader.create(reader);
-                        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.ibc.localhost.v1.MsgCreateClient();
+                        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.cosmos_sdk.ibc.localhost.v1.MsgCreateClient();
                         while (reader.pos < end) {
-                            var tag = reader.uint32();
+                            let tag = reader.uint32();
                             switch (tag >>> 3) {
                             case 1:
                                 message.signer = reader.bytes();
@@ -35840,7 +35838,7 @@ $root.cosmos_sdk = (function() {
                     MsgCreateClient.fromObject = function fromObject(object) {
                         if (object instanceof $root.cosmos_sdk.ibc.localhost.v1.MsgCreateClient)
                             return object;
-                        var message = new $root.cosmos_sdk.ibc.localhost.v1.MsgCreateClient();
+                        let message = new $root.cosmos_sdk.ibc.localhost.v1.MsgCreateClient();
                         if (object.signer != null)
                             if (typeof object.signer === "string")
                                 $util.base64.decode(object.signer, message.signer = $util.newBuffer($util.base64.length(object.signer)), 0);
@@ -35861,7 +35859,7 @@ $root.cosmos_sdk = (function() {
                     MsgCreateClient.toObject = function toObject(message, options) {
                         if (!options)
                             options = {};
-                        var object = {};
+                        let object = {};
                         if (options.defaults)
                             if (options.bytes === String)
                                 object.signer = "";
@@ -35901,38 +35899,38 @@ $root.cosmos_sdk = (function() {
     return cosmos_sdk;
 })();
 
-$root.cosmos_proto = (function() {
+export const cosmos_proto = $root.cosmos_proto = (() => {
 
     /**
      * Namespace cosmos_proto.
      * @exports cosmos_proto
      * @namespace
      */
-    var cosmos_proto = {};
+    const cosmos_proto = {};
 
     return cosmos_proto;
 })();
 
-$root.gogoproto = (function() {
+export const gogoproto = $root.gogoproto = (() => {
 
     /**
      * Namespace gogoproto.
      * @exports gogoproto
      * @namespace
      */
-    var gogoproto = {};
+    const gogoproto = {};
 
     return gogoproto;
 })();
 
-$root.tendermint = (function() {
+export const tendermint = $root.tendermint = (() => {
 
     /**
      * Namespace tendermint.
      * @exports tendermint
      * @namespace
      */
-    var tendermint = {};
+    const tendermint = {};
 
     tendermint.abci = (function() {
 
@@ -35941,7 +35939,7 @@ $root.tendermint = (function() {
          * @memberof tendermint
          * @namespace
          */
-        var abci = {};
+        const abci = {};
 
         abci.types = (function() {
 
@@ -35950,7 +35948,7 @@ $root.tendermint = (function() {
              * @memberof tendermint.abci
              * @namespace
              */
-            var types = {};
+            const types = {};
 
             types.Request = (function() {
 
@@ -35981,7 +35979,7 @@ $root.tendermint = (function() {
                  */
                 function Request(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -36075,7 +36073,7 @@ $root.tendermint = (function() {
                 Request.prototype.commit = null;
 
                 // OneOf field names bound to virtual getters and setters
-                var $oneOfFields;
+                let $oneOfFields;
 
                 /**
                  * Request value.
@@ -36164,9 +36162,9 @@ $root.tendermint = (function() {
                 Request.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.Request();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.Request();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 2:
                             message.echo = $root.tendermint.abci.types.RequestEcho.decode(reader, reader.uint32());
@@ -36236,11 +36234,11 @@ $root.tendermint = (function() {
                 Request.verify = function verify(message) {
                     if (typeof message !== "object" || message === null)
                         return "object expected";
-                    var properties = {};
+                    let properties = {};
                     if (message.echo != null && message.hasOwnProperty("echo")) {
                         properties.value = 1;
                         {
-                            var error = $root.tendermint.abci.types.RequestEcho.verify(message.echo);
+                            let error = $root.tendermint.abci.types.RequestEcho.verify(message.echo);
                             if (error)
                                 return "echo." + error;
                         }
@@ -36250,7 +36248,7 @@ $root.tendermint = (function() {
                             return "value: multiple values";
                         properties.value = 1;
                         {
-                            var error = $root.tendermint.abci.types.RequestFlush.verify(message.flush);
+                            let error = $root.tendermint.abci.types.RequestFlush.verify(message.flush);
                             if (error)
                                 return "flush." + error;
                         }
@@ -36260,7 +36258,7 @@ $root.tendermint = (function() {
                             return "value: multiple values";
                         properties.value = 1;
                         {
-                            var error = $root.tendermint.abci.types.RequestInfo.verify(message.info);
+                            let error = $root.tendermint.abci.types.RequestInfo.verify(message.info);
                             if (error)
                                 return "info." + error;
                         }
@@ -36270,7 +36268,7 @@ $root.tendermint = (function() {
                             return "value: multiple values";
                         properties.value = 1;
                         {
-                            var error = $root.tendermint.abci.types.RequestSetOption.verify(message.setOption);
+                            let error = $root.tendermint.abci.types.RequestSetOption.verify(message.setOption);
                             if (error)
                                 return "setOption." + error;
                         }
@@ -36280,7 +36278,7 @@ $root.tendermint = (function() {
                             return "value: multiple values";
                         properties.value = 1;
                         {
-                            var error = $root.tendermint.abci.types.RequestInitChain.verify(message.initChain);
+                            let error = $root.tendermint.abci.types.RequestInitChain.verify(message.initChain);
                             if (error)
                                 return "initChain." + error;
                         }
@@ -36290,7 +36288,7 @@ $root.tendermint = (function() {
                             return "value: multiple values";
                         properties.value = 1;
                         {
-                            var error = $root.tendermint.abci.types.RequestQuery.verify(message.query);
+                            let error = $root.tendermint.abci.types.RequestQuery.verify(message.query);
                             if (error)
                                 return "query." + error;
                         }
@@ -36300,7 +36298,7 @@ $root.tendermint = (function() {
                             return "value: multiple values";
                         properties.value = 1;
                         {
-                            var error = $root.tendermint.abci.types.RequestBeginBlock.verify(message.beginBlock);
+                            let error = $root.tendermint.abci.types.RequestBeginBlock.verify(message.beginBlock);
                             if (error)
                                 return "beginBlock." + error;
                         }
@@ -36310,7 +36308,7 @@ $root.tendermint = (function() {
                             return "value: multiple values";
                         properties.value = 1;
                         {
-                            var error = $root.tendermint.abci.types.RequestCheckTx.verify(message.checkTx);
+                            let error = $root.tendermint.abci.types.RequestCheckTx.verify(message.checkTx);
                             if (error)
                                 return "checkTx." + error;
                         }
@@ -36320,7 +36318,7 @@ $root.tendermint = (function() {
                             return "value: multiple values";
                         properties.value = 1;
                         {
-                            var error = $root.tendermint.abci.types.RequestDeliverTx.verify(message.deliverTx);
+                            let error = $root.tendermint.abci.types.RequestDeliverTx.verify(message.deliverTx);
                             if (error)
                                 return "deliverTx." + error;
                         }
@@ -36330,7 +36328,7 @@ $root.tendermint = (function() {
                             return "value: multiple values";
                         properties.value = 1;
                         {
-                            var error = $root.tendermint.abci.types.RequestEndBlock.verify(message.endBlock);
+                            let error = $root.tendermint.abci.types.RequestEndBlock.verify(message.endBlock);
                             if (error)
                                 return "endBlock." + error;
                         }
@@ -36340,7 +36338,7 @@ $root.tendermint = (function() {
                             return "value: multiple values";
                         properties.value = 1;
                         {
-                            var error = $root.tendermint.abci.types.RequestCommit.verify(message.commit);
+                            let error = $root.tendermint.abci.types.RequestCommit.verify(message.commit);
                             if (error)
                                 return "commit." + error;
                         }
@@ -36359,7 +36357,7 @@ $root.tendermint = (function() {
                 Request.fromObject = function fromObject(object) {
                     if (object instanceof $root.tendermint.abci.types.Request)
                         return object;
-                    var message = new $root.tendermint.abci.types.Request();
+                    let message = new $root.tendermint.abci.types.Request();
                     if (object.echo != null) {
                         if (typeof object.echo !== "object")
                             throw TypeError(".tendermint.abci.types.Request.echo: object expected");
@@ -36430,7 +36428,7 @@ $root.tendermint = (function() {
                 Request.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (message.echo != null && message.hasOwnProperty("echo")) {
                         object.echo = $root.tendermint.abci.types.RequestEcho.toObject(message.echo, options);
                         if (options.oneofs)
@@ -36522,7 +36520,7 @@ $root.tendermint = (function() {
                  */
                 function RequestEcho(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -36591,9 +36589,9 @@ $root.tendermint = (function() {
                 RequestEcho.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.RequestEcho();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.RequestEcho();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.message = reader.string();
@@ -36650,7 +36648,7 @@ $root.tendermint = (function() {
                 RequestEcho.fromObject = function fromObject(object) {
                     if (object instanceof $root.tendermint.abci.types.RequestEcho)
                         return object;
-                    var message = new $root.tendermint.abci.types.RequestEcho();
+                    let message = new $root.tendermint.abci.types.RequestEcho();
                     if (object.message != null)
                         message.message = String(object.message);
                     return message;
@@ -36668,7 +36666,7 @@ $root.tendermint = (function() {
                 RequestEcho.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.defaults)
                         object.message = "";
                     if (message.message != null && message.hasOwnProperty("message"))
@@ -36708,7 +36706,7 @@ $root.tendermint = (function() {
                  */
                 function RequestFlush(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -36767,9 +36765,9 @@ $root.tendermint = (function() {
                 RequestFlush.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.RequestFlush();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.RequestFlush();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         default:
                             reader.skipType(tag & 7);
@@ -36871,7 +36869,7 @@ $root.tendermint = (function() {
                  */
                 function RequestInfo(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -36960,9 +36958,9 @@ $root.tendermint = (function() {
                 RequestInfo.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.RequestInfo();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.RequestInfo();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.version = reader.string();
@@ -37031,7 +37029,7 @@ $root.tendermint = (function() {
                 RequestInfo.fromObject = function fromObject(object) {
                     if (object instanceof $root.tendermint.abci.types.RequestInfo)
                         return object;
-                    var message = new $root.tendermint.abci.types.RequestInfo();
+                    let message = new $root.tendermint.abci.types.RequestInfo();
                     if (object.version != null)
                         message.version = String(object.version);
                     if (object.blockVersion != null)
@@ -37067,16 +37065,16 @@ $root.tendermint = (function() {
                 RequestInfo.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.defaults) {
                         object.version = "";
                         if ($util.Long) {
-                            var long = new $util.Long(0, 0, true);
+                            let long = new $util.Long(0, 0, true);
                             object.blockVersion = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                         } else
                             object.blockVersion = options.longs === String ? "0" : 0;
                         if ($util.Long) {
-                            var long = new $util.Long(0, 0, true);
+                            let long = new $util.Long(0, 0, true);
                             object.p2pVersion = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                         } else
                             object.p2pVersion = options.longs === String ? "0" : 0;
@@ -37130,7 +37128,7 @@ $root.tendermint = (function() {
                  */
                 function RequestSetOption(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -37209,9 +37207,9 @@ $root.tendermint = (function() {
                 RequestSetOption.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.RequestSetOption();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.RequestSetOption();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.key = reader.string();
@@ -37274,7 +37272,7 @@ $root.tendermint = (function() {
                 RequestSetOption.fromObject = function fromObject(object) {
                     if (object instanceof $root.tendermint.abci.types.RequestSetOption)
                         return object;
-                    var message = new $root.tendermint.abci.types.RequestSetOption();
+                    let message = new $root.tendermint.abci.types.RequestSetOption();
                     if (object.key != null)
                         message.key = String(object.key);
                     if (object.value != null)
@@ -37294,7 +37292,7 @@ $root.tendermint = (function() {
                 RequestSetOption.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.defaults) {
                         object.key = "";
                         object.value = "";
@@ -37344,7 +37342,7 @@ $root.tendermint = (function() {
                 function RequestInitChain(properties) {
                     this.validators = [];
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -37420,7 +37418,7 @@ $root.tendermint = (function() {
                     if (message.consensusParams != null && Object.hasOwnProperty.call(message, "consensusParams"))
                         $root.tendermint.abci.types.ConsensusParams.encode(message.consensusParams, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
                     if (message.validators != null && message.validators.length)
-                        for (var i = 0; i < message.validators.length; ++i)
+                        for (let i = 0; i < message.validators.length; ++i)
                             $root.tendermint.abci.types.ValidatorUpdate.encode(message.validators[i], writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
                     if (message.appStateBytes != null && Object.hasOwnProperty.call(message, "appStateBytes"))
                         writer.uint32(/* id 5, wireType 2 =*/42).bytes(message.appStateBytes);
@@ -37454,9 +37452,9 @@ $root.tendermint = (function() {
                 RequestInitChain.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.RequestInitChain();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.RequestInitChain();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.time = $root.google.protobuf.Timestamp.decode(reader, reader.uint32());
@@ -37511,7 +37509,7 @@ $root.tendermint = (function() {
                     if (typeof message !== "object" || message === null)
                         return "object expected";
                     if (message.time != null && message.hasOwnProperty("time")) {
-                        var error = $root.google.protobuf.Timestamp.verify(message.time);
+                        let error = $root.google.protobuf.Timestamp.verify(message.time);
                         if (error)
                             return "time." + error;
                     }
@@ -37519,15 +37517,15 @@ $root.tendermint = (function() {
                         if (!$util.isString(message.chainId))
                             return "chainId: string expected";
                     if (message.consensusParams != null && message.hasOwnProperty("consensusParams")) {
-                        var error = $root.tendermint.abci.types.ConsensusParams.verify(message.consensusParams);
+                        let error = $root.tendermint.abci.types.ConsensusParams.verify(message.consensusParams);
                         if (error)
                             return "consensusParams." + error;
                     }
                     if (message.validators != null && message.hasOwnProperty("validators")) {
                         if (!Array.isArray(message.validators))
                             return "validators: array expected";
-                        for (var i = 0; i < message.validators.length; ++i) {
-                            var error = $root.tendermint.abci.types.ValidatorUpdate.verify(message.validators[i]);
+                        for (let i = 0; i < message.validators.length; ++i) {
+                            let error = $root.tendermint.abci.types.ValidatorUpdate.verify(message.validators[i]);
                             if (error)
                                 return "validators." + error;
                         }
@@ -37549,7 +37547,7 @@ $root.tendermint = (function() {
                 RequestInitChain.fromObject = function fromObject(object) {
                     if (object instanceof $root.tendermint.abci.types.RequestInitChain)
                         return object;
-                    var message = new $root.tendermint.abci.types.RequestInitChain();
+                    let message = new $root.tendermint.abci.types.RequestInitChain();
                     if (object.time != null) {
                         if (typeof object.time !== "object")
                             throw TypeError(".tendermint.abci.types.RequestInitChain.time: object expected");
@@ -37566,7 +37564,7 @@ $root.tendermint = (function() {
                         if (!Array.isArray(object.validators))
                             throw TypeError(".tendermint.abci.types.RequestInitChain.validators: array expected");
                         message.validators = [];
-                        for (var i = 0; i < object.validators.length; ++i) {
+                        for (let i = 0; i < object.validators.length; ++i) {
                             if (typeof object.validators[i] !== "object")
                                 throw TypeError(".tendermint.abci.types.RequestInitChain.validators: object expected");
                             message.validators[i] = $root.tendermint.abci.types.ValidatorUpdate.fromObject(object.validators[i]);
@@ -37592,7 +37590,7 @@ $root.tendermint = (function() {
                 RequestInitChain.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.arrays || options.defaults)
                         object.validators = [];
                     if (options.defaults) {
@@ -37615,7 +37613,7 @@ $root.tendermint = (function() {
                         object.consensusParams = $root.tendermint.abci.types.ConsensusParams.toObject(message.consensusParams, options);
                     if (message.validators && message.validators.length) {
                         object.validators = [];
-                        for (var j = 0; j < message.validators.length; ++j)
+                        for (let j = 0; j < message.validators.length; ++j)
                             object.validators[j] = $root.tendermint.abci.types.ValidatorUpdate.toObject(message.validators[j], options);
                     }
                     if (message.appStateBytes != null && message.hasOwnProperty("appStateBytes"))
@@ -37659,7 +37657,7 @@ $root.tendermint = (function() {
                  */
                 function RequestQuery(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -37758,9 +37756,9 @@ $root.tendermint = (function() {
                 RequestQuery.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.RequestQuery();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.RequestQuery();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.data = reader.bytes();
@@ -37835,7 +37833,7 @@ $root.tendermint = (function() {
                 RequestQuery.fromObject = function fromObject(object) {
                     if (object instanceof $root.tendermint.abci.types.RequestQuery)
                         return object;
-                    var message = new $root.tendermint.abci.types.RequestQuery();
+                    let message = new $root.tendermint.abci.types.RequestQuery();
                     if (object.data != null)
                         if (typeof object.data === "string")
                             $util.base64.decode(object.data, message.data = $util.newBuffer($util.base64.length(object.data)), 0);
@@ -37869,7 +37867,7 @@ $root.tendermint = (function() {
                 RequestQuery.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.defaults) {
                         if (options.bytes === String)
                             object.data = "";
@@ -37880,7 +37878,7 @@ $root.tendermint = (function() {
                         }
                         object.path = "";
                         if ($util.Long) {
-                            var long = new $util.Long(0, 0, false);
+                            let long = new $util.Long(0, 0, false);
                             object.height = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                         } else
                             object.height = options.longs === String ? "0" : 0;
@@ -37937,7 +37935,7 @@ $root.tendermint = (function() {
                 function RequestBeginBlock(properties) {
                     this.byzantineValidators = [];
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -38005,7 +38003,7 @@ $root.tendermint = (function() {
                     if (message.lastCommitInfo != null && Object.hasOwnProperty.call(message, "lastCommitInfo"))
                         $root.tendermint.abci.types.LastCommitInfo.encode(message.lastCommitInfo, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
                     if (message.byzantineValidators != null && message.byzantineValidators.length)
-                        for (var i = 0; i < message.byzantineValidators.length; ++i)
+                        for (let i = 0; i < message.byzantineValidators.length; ++i)
                             $root.tendermint.abci.types.Evidence.encode(message.byzantineValidators[i], writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
                     return writer;
                 };
@@ -38037,9 +38035,9 @@ $root.tendermint = (function() {
                 RequestBeginBlock.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.RequestBeginBlock();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.RequestBeginBlock();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.hash = reader.bytes();
@@ -38094,20 +38092,20 @@ $root.tendermint = (function() {
                         if (!(message.hash && typeof message.hash.length === "number" || $util.isString(message.hash)))
                             return "hash: buffer expected";
                     if (message.header != null && message.hasOwnProperty("header")) {
-                        var error = $root.tendermint.abci.types.Header.verify(message.header);
+                        let error = $root.tendermint.abci.types.Header.verify(message.header);
                         if (error)
                             return "header." + error;
                     }
                     if (message.lastCommitInfo != null && message.hasOwnProperty("lastCommitInfo")) {
-                        var error = $root.tendermint.abci.types.LastCommitInfo.verify(message.lastCommitInfo);
+                        let error = $root.tendermint.abci.types.LastCommitInfo.verify(message.lastCommitInfo);
                         if (error)
                             return "lastCommitInfo." + error;
                     }
                     if (message.byzantineValidators != null && message.hasOwnProperty("byzantineValidators")) {
                         if (!Array.isArray(message.byzantineValidators))
                             return "byzantineValidators: array expected";
-                        for (var i = 0; i < message.byzantineValidators.length; ++i) {
-                            var error = $root.tendermint.abci.types.Evidence.verify(message.byzantineValidators[i]);
+                        for (let i = 0; i < message.byzantineValidators.length; ++i) {
+                            let error = $root.tendermint.abci.types.Evidence.verify(message.byzantineValidators[i]);
                             if (error)
                                 return "byzantineValidators." + error;
                         }
@@ -38126,7 +38124,7 @@ $root.tendermint = (function() {
                 RequestBeginBlock.fromObject = function fromObject(object) {
                     if (object instanceof $root.tendermint.abci.types.RequestBeginBlock)
                         return object;
-                    var message = new $root.tendermint.abci.types.RequestBeginBlock();
+                    let message = new $root.tendermint.abci.types.RequestBeginBlock();
                     if (object.hash != null)
                         if (typeof object.hash === "string")
                             $util.base64.decode(object.hash, message.hash = $util.newBuffer($util.base64.length(object.hash)), 0);
@@ -38146,7 +38144,7 @@ $root.tendermint = (function() {
                         if (!Array.isArray(object.byzantineValidators))
                             throw TypeError(".tendermint.abci.types.RequestBeginBlock.byzantineValidators: array expected");
                         message.byzantineValidators = [];
-                        for (var i = 0; i < object.byzantineValidators.length; ++i) {
+                        for (let i = 0; i < object.byzantineValidators.length; ++i) {
                             if (typeof object.byzantineValidators[i] !== "object")
                                 throw TypeError(".tendermint.abci.types.RequestBeginBlock.byzantineValidators: object expected");
                             message.byzantineValidators[i] = $root.tendermint.abci.types.Evidence.fromObject(object.byzantineValidators[i]);
@@ -38167,7 +38165,7 @@ $root.tendermint = (function() {
                 RequestBeginBlock.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.arrays || options.defaults)
                         object.byzantineValidators = [];
                     if (options.defaults) {
@@ -38189,7 +38187,7 @@ $root.tendermint = (function() {
                         object.lastCommitInfo = $root.tendermint.abci.types.LastCommitInfo.toObject(message.lastCommitInfo, options);
                     if (message.byzantineValidators && message.byzantineValidators.length) {
                         object.byzantineValidators = [];
-                        for (var j = 0; j < message.byzantineValidators.length; ++j)
+                        for (let j = 0; j < message.byzantineValidators.length; ++j)
                             object.byzantineValidators[j] = $root.tendermint.abci.types.Evidence.toObject(message.byzantineValidators[j], options);
                     }
                     return object;
@@ -38217,7 +38215,7 @@ $root.tendermint = (function() {
              * @property {number} Recheck=1 Recheck value
              */
             types.CheckTxType = (function() {
-                var valuesById = {}, values = Object.create(valuesById);
+                const valuesById = {}, values = Object.create(valuesById);
                 values[valuesById[0] = "New"] = 0;
                 values[valuesById[1] = "Recheck"] = 1;
                 return values;
@@ -38243,7 +38241,7 @@ $root.tendermint = (function() {
                  */
                 function RequestCheckTx(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -38322,9 +38320,9 @@ $root.tendermint = (function() {
                 RequestCheckTx.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.RequestCheckTx();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.RequestCheckTx();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.tx = reader.bytes();
@@ -38392,7 +38390,7 @@ $root.tendermint = (function() {
                 RequestCheckTx.fromObject = function fromObject(object) {
                     if (object instanceof $root.tendermint.abci.types.RequestCheckTx)
                         return object;
-                    var message = new $root.tendermint.abci.types.RequestCheckTx();
+                    let message = new $root.tendermint.abci.types.RequestCheckTx();
                     if (object.tx != null)
                         if (typeof object.tx === "string")
                             $util.base64.decode(object.tx, message.tx = $util.newBuffer($util.base64.length(object.tx)), 0);
@@ -38423,7 +38421,7 @@ $root.tendermint = (function() {
                 RequestCheckTx.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.defaults) {
                         if (options.bytes === String)
                             object.tx = "";
@@ -38474,7 +38472,7 @@ $root.tendermint = (function() {
                  */
                 function RequestDeliverTx(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -38543,9 +38541,9 @@ $root.tendermint = (function() {
                 RequestDeliverTx.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.RequestDeliverTx();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.RequestDeliverTx();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.tx = reader.bytes();
@@ -38602,7 +38600,7 @@ $root.tendermint = (function() {
                 RequestDeliverTx.fromObject = function fromObject(object) {
                     if (object instanceof $root.tendermint.abci.types.RequestDeliverTx)
                         return object;
-                    var message = new $root.tendermint.abci.types.RequestDeliverTx();
+                    let message = new $root.tendermint.abci.types.RequestDeliverTx();
                     if (object.tx != null)
                         if (typeof object.tx === "string")
                             $util.base64.decode(object.tx, message.tx = $util.newBuffer($util.base64.length(object.tx)), 0);
@@ -38623,7 +38621,7 @@ $root.tendermint = (function() {
                 RequestDeliverTx.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.defaults)
                         if (options.bytes === String)
                             object.tx = "";
@@ -38670,7 +38668,7 @@ $root.tendermint = (function() {
                  */
                 function RequestEndBlock(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -38739,9 +38737,9 @@ $root.tendermint = (function() {
                 RequestEndBlock.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.RequestEndBlock();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.RequestEndBlock();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.height = reader.int64();
@@ -38798,7 +38796,7 @@ $root.tendermint = (function() {
                 RequestEndBlock.fromObject = function fromObject(object) {
                     if (object instanceof $root.tendermint.abci.types.RequestEndBlock)
                         return object;
-                    var message = new $root.tendermint.abci.types.RequestEndBlock();
+                    let message = new $root.tendermint.abci.types.RequestEndBlock();
                     if (object.height != null)
                         if ($util.Long)
                             (message.height = $util.Long.fromValue(object.height)).unsigned = false;
@@ -38823,10 +38821,10 @@ $root.tendermint = (function() {
                 RequestEndBlock.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.defaults)
                         if ($util.Long) {
-                            var long = new $util.Long(0, 0, false);
+                            let long = new $util.Long(0, 0, false);
                             object.height = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                         } else
                             object.height = options.longs === String ? "0" : 0;
@@ -38870,7 +38868,7 @@ $root.tendermint = (function() {
                  */
                 function RequestCommit(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -38929,9 +38927,9 @@ $root.tendermint = (function() {
                 RequestCommit.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.RequestCommit();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.RequestCommit();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         default:
                             reader.skipType(tag & 7);
@@ -39042,7 +39040,7 @@ $root.tendermint = (function() {
                  */
                 function Response(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -39144,7 +39142,7 @@ $root.tendermint = (function() {
                 Response.prototype.commit = null;
 
                 // OneOf field names bound to virtual getters and setters
-                var $oneOfFields;
+                let $oneOfFields;
 
                 /**
                  * Response value.
@@ -39235,9 +39233,9 @@ $root.tendermint = (function() {
                 Response.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.Response();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.Response();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.exception = $root.tendermint.abci.types.ResponseException.decode(reader, reader.uint32());
@@ -39310,11 +39308,11 @@ $root.tendermint = (function() {
                 Response.verify = function verify(message) {
                     if (typeof message !== "object" || message === null)
                         return "object expected";
-                    var properties = {};
+                    let properties = {};
                     if (message.exception != null && message.hasOwnProperty("exception")) {
                         properties.value = 1;
                         {
-                            var error = $root.tendermint.abci.types.ResponseException.verify(message.exception);
+                            let error = $root.tendermint.abci.types.ResponseException.verify(message.exception);
                             if (error)
                                 return "exception." + error;
                         }
@@ -39324,7 +39322,7 @@ $root.tendermint = (function() {
                             return "value: multiple values";
                         properties.value = 1;
                         {
-                            var error = $root.tendermint.abci.types.ResponseEcho.verify(message.echo);
+                            let error = $root.tendermint.abci.types.ResponseEcho.verify(message.echo);
                             if (error)
                                 return "echo." + error;
                         }
@@ -39334,7 +39332,7 @@ $root.tendermint = (function() {
                             return "value: multiple values";
                         properties.value = 1;
                         {
-                            var error = $root.tendermint.abci.types.ResponseFlush.verify(message.flush);
+                            let error = $root.tendermint.abci.types.ResponseFlush.verify(message.flush);
                             if (error)
                                 return "flush." + error;
                         }
@@ -39344,7 +39342,7 @@ $root.tendermint = (function() {
                             return "value: multiple values";
                         properties.value = 1;
                         {
-                            var error = $root.tendermint.abci.types.ResponseInfo.verify(message.info);
+                            let error = $root.tendermint.abci.types.ResponseInfo.verify(message.info);
                             if (error)
                                 return "info." + error;
                         }
@@ -39354,7 +39352,7 @@ $root.tendermint = (function() {
                             return "value: multiple values";
                         properties.value = 1;
                         {
-                            var error = $root.tendermint.abci.types.ResponseSetOption.verify(message.setOption);
+                            let error = $root.tendermint.abci.types.ResponseSetOption.verify(message.setOption);
                             if (error)
                                 return "setOption." + error;
                         }
@@ -39364,7 +39362,7 @@ $root.tendermint = (function() {
                             return "value: multiple values";
                         properties.value = 1;
                         {
-                            var error = $root.tendermint.abci.types.ResponseInitChain.verify(message.initChain);
+                            let error = $root.tendermint.abci.types.ResponseInitChain.verify(message.initChain);
                             if (error)
                                 return "initChain." + error;
                         }
@@ -39374,7 +39372,7 @@ $root.tendermint = (function() {
                             return "value: multiple values";
                         properties.value = 1;
                         {
-                            var error = $root.tendermint.abci.types.ResponseQuery.verify(message.query);
+                            let error = $root.tendermint.abci.types.ResponseQuery.verify(message.query);
                             if (error)
                                 return "query." + error;
                         }
@@ -39384,7 +39382,7 @@ $root.tendermint = (function() {
                             return "value: multiple values";
                         properties.value = 1;
                         {
-                            var error = $root.tendermint.abci.types.ResponseBeginBlock.verify(message.beginBlock);
+                            let error = $root.tendermint.abci.types.ResponseBeginBlock.verify(message.beginBlock);
                             if (error)
                                 return "beginBlock." + error;
                         }
@@ -39394,7 +39392,7 @@ $root.tendermint = (function() {
                             return "value: multiple values";
                         properties.value = 1;
                         {
-                            var error = $root.tendermint.abci.types.ResponseCheckTx.verify(message.checkTx);
+                            let error = $root.tendermint.abci.types.ResponseCheckTx.verify(message.checkTx);
                             if (error)
                                 return "checkTx." + error;
                         }
@@ -39404,7 +39402,7 @@ $root.tendermint = (function() {
                             return "value: multiple values";
                         properties.value = 1;
                         {
-                            var error = $root.tendermint.abci.types.ResponseDeliverTx.verify(message.deliverTx);
+                            let error = $root.tendermint.abci.types.ResponseDeliverTx.verify(message.deliverTx);
                             if (error)
                                 return "deliverTx." + error;
                         }
@@ -39414,7 +39412,7 @@ $root.tendermint = (function() {
                             return "value: multiple values";
                         properties.value = 1;
                         {
-                            var error = $root.tendermint.abci.types.ResponseEndBlock.verify(message.endBlock);
+                            let error = $root.tendermint.abci.types.ResponseEndBlock.verify(message.endBlock);
                             if (error)
                                 return "endBlock." + error;
                         }
@@ -39424,7 +39422,7 @@ $root.tendermint = (function() {
                             return "value: multiple values";
                         properties.value = 1;
                         {
-                            var error = $root.tendermint.abci.types.ResponseCommit.verify(message.commit);
+                            let error = $root.tendermint.abci.types.ResponseCommit.verify(message.commit);
                             if (error)
                                 return "commit." + error;
                         }
@@ -39443,7 +39441,7 @@ $root.tendermint = (function() {
                 Response.fromObject = function fromObject(object) {
                     if (object instanceof $root.tendermint.abci.types.Response)
                         return object;
-                    var message = new $root.tendermint.abci.types.Response();
+                    let message = new $root.tendermint.abci.types.Response();
                     if (object.exception != null) {
                         if (typeof object.exception !== "object")
                             throw TypeError(".tendermint.abci.types.Response.exception: object expected");
@@ -39519,7 +39517,7 @@ $root.tendermint = (function() {
                 Response.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (message.exception != null && message.hasOwnProperty("exception")) {
                         object.exception = $root.tendermint.abci.types.ResponseException.toObject(message.exception, options);
                         if (options.oneofs)
@@ -39616,7 +39614,7 @@ $root.tendermint = (function() {
                  */
                 function ResponseException(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -39685,9 +39683,9 @@ $root.tendermint = (function() {
                 ResponseException.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.ResponseException();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.ResponseException();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.error = reader.string();
@@ -39744,7 +39742,7 @@ $root.tendermint = (function() {
                 ResponseException.fromObject = function fromObject(object) {
                     if (object instanceof $root.tendermint.abci.types.ResponseException)
                         return object;
-                    var message = new $root.tendermint.abci.types.ResponseException();
+                    let message = new $root.tendermint.abci.types.ResponseException();
                     if (object.error != null)
                         message.error = String(object.error);
                     return message;
@@ -39762,7 +39760,7 @@ $root.tendermint = (function() {
                 ResponseException.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.defaults)
                         object.error = "";
                     if (message.error != null && message.hasOwnProperty("error"))
@@ -39803,7 +39801,7 @@ $root.tendermint = (function() {
                  */
                 function ResponseEcho(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -39872,9 +39870,9 @@ $root.tendermint = (function() {
                 ResponseEcho.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.ResponseEcho();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.ResponseEcho();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.message = reader.string();
@@ -39931,7 +39929,7 @@ $root.tendermint = (function() {
                 ResponseEcho.fromObject = function fromObject(object) {
                     if (object instanceof $root.tendermint.abci.types.ResponseEcho)
                         return object;
-                    var message = new $root.tendermint.abci.types.ResponseEcho();
+                    let message = new $root.tendermint.abci.types.ResponseEcho();
                     if (object.message != null)
                         message.message = String(object.message);
                     return message;
@@ -39949,7 +39947,7 @@ $root.tendermint = (function() {
                 ResponseEcho.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.defaults)
                         object.message = "";
                     if (message.message != null && message.hasOwnProperty("message"))
@@ -39989,7 +39987,7 @@ $root.tendermint = (function() {
                  */
                 function ResponseFlush(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -40048,9 +40046,9 @@ $root.tendermint = (function() {
                 ResponseFlush.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.ResponseFlush();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.ResponseFlush();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         default:
                             reader.skipType(tag & 7);
@@ -40154,7 +40152,7 @@ $root.tendermint = (function() {
                  */
                 function ResponseInfo(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -40263,9 +40261,9 @@ $root.tendermint = (function() {
                 ResponseInfo.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.ResponseInfo();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.ResponseInfo();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.data = reader.string();
@@ -40346,7 +40344,7 @@ $root.tendermint = (function() {
                 ResponseInfo.fromObject = function fromObject(object) {
                     if (object instanceof $root.tendermint.abci.types.ResponseInfo)
                         return object;
-                    var message = new $root.tendermint.abci.types.ResponseInfo();
+                    let message = new $root.tendermint.abci.types.ResponseInfo();
                     if (object.data != null)
                         message.data = String(object.data);
                     if (object.version != null)
@@ -40389,17 +40387,17 @@ $root.tendermint = (function() {
                 ResponseInfo.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.defaults) {
                         object.data = "";
                         object.version = "";
                         if ($util.Long) {
-                            var long = new $util.Long(0, 0, true);
+                            let long = new $util.Long(0, 0, true);
                             object.appVersion = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                         } else
                             object.appVersion = options.longs === String ? "0" : 0;
                         if ($util.Long) {
-                            var long = new $util.Long(0, 0, false);
+                            let long = new $util.Long(0, 0, false);
                             object.lastBlockHeight = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                         } else
                             object.lastBlockHeight = options.longs === String ? "0" : 0;
@@ -40465,7 +40463,7 @@ $root.tendermint = (function() {
                  */
                 function ResponseSetOption(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -40554,9 +40552,9 @@ $root.tendermint = (function() {
                 ResponseSetOption.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.ResponseSetOption();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.ResponseSetOption();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.code = reader.uint32();
@@ -40625,7 +40623,7 @@ $root.tendermint = (function() {
                 ResponseSetOption.fromObject = function fromObject(object) {
                     if (object instanceof $root.tendermint.abci.types.ResponseSetOption)
                         return object;
-                    var message = new $root.tendermint.abci.types.ResponseSetOption();
+                    let message = new $root.tendermint.abci.types.ResponseSetOption();
                     if (object.code != null)
                         message.code = object.code >>> 0;
                     if (object.log != null)
@@ -40647,7 +40645,7 @@ $root.tendermint = (function() {
                 ResponseSetOption.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.defaults) {
                         object.code = 0;
                         object.log = "";
@@ -40697,7 +40695,7 @@ $root.tendermint = (function() {
                 function ResponseInitChain(properties) {
                     this.validators = [];
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -40745,7 +40743,7 @@ $root.tendermint = (function() {
                     if (message.consensusParams != null && Object.hasOwnProperty.call(message, "consensusParams"))
                         $root.tendermint.abci.types.ConsensusParams.encode(message.consensusParams, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
                     if (message.validators != null && message.validators.length)
-                        for (var i = 0; i < message.validators.length; ++i)
+                        for (let i = 0; i < message.validators.length; ++i)
                             $root.tendermint.abci.types.ValidatorUpdate.encode(message.validators[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
                     return writer;
                 };
@@ -40777,9 +40775,9 @@ $root.tendermint = (function() {
                 ResponseInitChain.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.ResponseInitChain();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.ResponseInitChain();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.consensusParams = $root.tendermint.abci.types.ConsensusParams.decode(reader, reader.uint32());
@@ -40825,15 +40823,15 @@ $root.tendermint = (function() {
                     if (typeof message !== "object" || message === null)
                         return "object expected";
                     if (message.consensusParams != null && message.hasOwnProperty("consensusParams")) {
-                        var error = $root.tendermint.abci.types.ConsensusParams.verify(message.consensusParams);
+                        let error = $root.tendermint.abci.types.ConsensusParams.verify(message.consensusParams);
                         if (error)
                             return "consensusParams." + error;
                     }
                     if (message.validators != null && message.hasOwnProperty("validators")) {
                         if (!Array.isArray(message.validators))
                             return "validators: array expected";
-                        for (var i = 0; i < message.validators.length; ++i) {
-                            var error = $root.tendermint.abci.types.ValidatorUpdate.verify(message.validators[i]);
+                        for (let i = 0; i < message.validators.length; ++i) {
+                            let error = $root.tendermint.abci.types.ValidatorUpdate.verify(message.validators[i]);
                             if (error)
                                 return "validators." + error;
                         }
@@ -40852,7 +40850,7 @@ $root.tendermint = (function() {
                 ResponseInitChain.fromObject = function fromObject(object) {
                     if (object instanceof $root.tendermint.abci.types.ResponseInitChain)
                         return object;
-                    var message = new $root.tendermint.abci.types.ResponseInitChain();
+                    let message = new $root.tendermint.abci.types.ResponseInitChain();
                     if (object.consensusParams != null) {
                         if (typeof object.consensusParams !== "object")
                             throw TypeError(".tendermint.abci.types.ResponseInitChain.consensusParams: object expected");
@@ -40862,7 +40860,7 @@ $root.tendermint = (function() {
                         if (!Array.isArray(object.validators))
                             throw TypeError(".tendermint.abci.types.ResponseInitChain.validators: array expected");
                         message.validators = [];
-                        for (var i = 0; i < object.validators.length; ++i) {
+                        for (let i = 0; i < object.validators.length; ++i) {
                             if (typeof object.validators[i] !== "object")
                                 throw TypeError(".tendermint.abci.types.ResponseInitChain.validators: object expected");
                             message.validators[i] = $root.tendermint.abci.types.ValidatorUpdate.fromObject(object.validators[i]);
@@ -40883,7 +40881,7 @@ $root.tendermint = (function() {
                 ResponseInitChain.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.arrays || options.defaults)
                         object.validators = [];
                     if (options.defaults)
@@ -40892,7 +40890,7 @@ $root.tendermint = (function() {
                         object.consensusParams = $root.tendermint.abci.types.ConsensusParams.toObject(message.consensusParams, options);
                     if (message.validators && message.validators.length) {
                         object.validators = [];
-                        for (var j = 0; j < message.validators.length; ++j)
+                        for (let j = 0; j < message.validators.length; ++j)
                             object.validators[j] = $root.tendermint.abci.types.ValidatorUpdate.toObject(message.validators[j], options);
                     }
                     return object;
@@ -40939,7 +40937,7 @@ $root.tendermint = (function() {
                  */
                 function ResponseQuery(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -41088,9 +41086,9 @@ $root.tendermint = (function() {
                 ResponseQuery.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.ResponseQuery();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.ResponseQuery();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.code = reader.uint32();
@@ -41173,7 +41171,7 @@ $root.tendermint = (function() {
                         if (!(message.value && typeof message.value.length === "number" || $util.isString(message.value)))
                             return "value: buffer expected";
                     if (message.proof != null && message.hasOwnProperty("proof")) {
-                        var error = $root.tendermint.crypto.merkle.Proof.verify(message.proof);
+                        let error = $root.tendermint.crypto.merkle.Proof.verify(message.proof);
                         if (error)
                             return "proof." + error;
                     }
@@ -41197,7 +41195,7 @@ $root.tendermint = (function() {
                 ResponseQuery.fromObject = function fromObject(object) {
                     if (object instanceof $root.tendermint.abci.types.ResponseQuery)
                         return object;
-                    var message = new $root.tendermint.abci.types.ResponseQuery();
+                    let message = new $root.tendermint.abci.types.ResponseQuery();
                     if (object.code != null)
                         message.code = object.code >>> 0;
                     if (object.log != null)
@@ -41254,13 +41252,13 @@ $root.tendermint = (function() {
                 ResponseQuery.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.defaults) {
                         object.code = 0;
                         object.log = "";
                         object.info = "";
                         if ($util.Long) {
-                            var long = new $util.Long(0, 0, false);
+                            let long = new $util.Long(0, 0, false);
                             object.index = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                         } else
                             object.index = options.longs === String ? "0" : 0;
@@ -41280,7 +41278,7 @@ $root.tendermint = (function() {
                         }
                         object.proof = null;
                         if ($util.Long) {
-                            var long = new $util.Long(0, 0, false);
+                            let long = new $util.Long(0, 0, false);
                             object.height = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                         } else
                             object.height = options.longs === String ? "0" : 0;
@@ -41347,7 +41345,7 @@ $root.tendermint = (function() {
                 function ResponseBeginBlock(properties) {
                     this.events = [];
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -41385,7 +41383,7 @@ $root.tendermint = (function() {
                     if (!writer)
                         writer = $Writer.create();
                     if (message.events != null && message.events.length)
-                        for (var i = 0; i < message.events.length; ++i)
+                        for (let i = 0; i < message.events.length; ++i)
                             $root.tendermint.abci.types.Event.encode(message.events[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
                     return writer;
                 };
@@ -41417,9 +41415,9 @@ $root.tendermint = (function() {
                 ResponseBeginBlock.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.ResponseBeginBlock();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.ResponseBeginBlock();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             if (!(message.events && message.events.length))
@@ -41464,8 +41462,8 @@ $root.tendermint = (function() {
                     if (message.events != null && message.hasOwnProperty("events")) {
                         if (!Array.isArray(message.events))
                             return "events: array expected";
-                        for (var i = 0; i < message.events.length; ++i) {
-                            var error = $root.tendermint.abci.types.Event.verify(message.events[i]);
+                        for (let i = 0; i < message.events.length; ++i) {
+                            let error = $root.tendermint.abci.types.Event.verify(message.events[i]);
                             if (error)
                                 return "events." + error;
                         }
@@ -41484,12 +41482,12 @@ $root.tendermint = (function() {
                 ResponseBeginBlock.fromObject = function fromObject(object) {
                     if (object instanceof $root.tendermint.abci.types.ResponseBeginBlock)
                         return object;
-                    var message = new $root.tendermint.abci.types.ResponseBeginBlock();
+                    let message = new $root.tendermint.abci.types.ResponseBeginBlock();
                     if (object.events) {
                         if (!Array.isArray(object.events))
                             throw TypeError(".tendermint.abci.types.ResponseBeginBlock.events: array expected");
                         message.events = [];
-                        for (var i = 0; i < object.events.length; ++i) {
+                        for (let i = 0; i < object.events.length; ++i) {
                             if (typeof object.events[i] !== "object")
                                 throw TypeError(".tendermint.abci.types.ResponseBeginBlock.events: object expected");
                             message.events[i] = $root.tendermint.abci.types.Event.fromObject(object.events[i]);
@@ -41510,12 +41508,12 @@ $root.tendermint = (function() {
                 ResponseBeginBlock.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.arrays || options.defaults)
                         object.events = [];
                     if (message.events && message.events.length) {
                         object.events = [];
-                        for (var j = 0; j < message.events.length; ++j)
+                        for (let j = 0; j < message.events.length; ++j)
                             object.events[j] = $root.tendermint.abci.types.Event.toObject(message.events[j], options);
                     }
                     return object;
@@ -41562,7 +41560,7 @@ $root.tendermint = (function() {
                 function ResponseCheckTx(properties) {
                     this.events = [];
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -41668,7 +41666,7 @@ $root.tendermint = (function() {
                     if (message.gasUsed != null && Object.hasOwnProperty.call(message, "gasUsed"))
                         writer.uint32(/* id 6, wireType 0 =*/48).int64(message.gasUsed);
                     if (message.events != null && message.events.length)
-                        for (var i = 0; i < message.events.length; ++i)
+                        for (let i = 0; i < message.events.length; ++i)
                             $root.tendermint.abci.types.Event.encode(message.events[i], writer.uint32(/* id 7, wireType 2 =*/58).fork()).ldelim();
                     if (message.codespace != null && Object.hasOwnProperty.call(message, "codespace"))
                         writer.uint32(/* id 8, wireType 2 =*/66).string(message.codespace);
@@ -41702,9 +41700,9 @@ $root.tendermint = (function() {
                 ResponseCheckTx.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.ResponseCheckTx();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.ResponseCheckTx();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.code = reader.uint32();
@@ -41788,8 +41786,8 @@ $root.tendermint = (function() {
                     if (message.events != null && message.hasOwnProperty("events")) {
                         if (!Array.isArray(message.events))
                             return "events: array expected";
-                        for (var i = 0; i < message.events.length; ++i) {
-                            var error = $root.tendermint.abci.types.Event.verify(message.events[i]);
+                        for (let i = 0; i < message.events.length; ++i) {
+                            let error = $root.tendermint.abci.types.Event.verify(message.events[i]);
                             if (error)
                                 return "events." + error;
                         }
@@ -41811,7 +41809,7 @@ $root.tendermint = (function() {
                 ResponseCheckTx.fromObject = function fromObject(object) {
                     if (object instanceof $root.tendermint.abci.types.ResponseCheckTx)
                         return object;
-                    var message = new $root.tendermint.abci.types.ResponseCheckTx();
+                    let message = new $root.tendermint.abci.types.ResponseCheckTx();
                     if (object.code != null)
                         message.code = object.code >>> 0;
                     if (object.data != null)
@@ -41845,7 +41843,7 @@ $root.tendermint = (function() {
                         if (!Array.isArray(object.events))
                             throw TypeError(".tendermint.abci.types.ResponseCheckTx.events: array expected");
                         message.events = [];
-                        for (var i = 0; i < object.events.length; ++i) {
+                        for (let i = 0; i < object.events.length; ++i) {
                             if (typeof object.events[i] !== "object")
                                 throw TypeError(".tendermint.abci.types.ResponseCheckTx.events: object expected");
                             message.events[i] = $root.tendermint.abci.types.Event.fromObject(object.events[i]);
@@ -41868,7 +41866,7 @@ $root.tendermint = (function() {
                 ResponseCheckTx.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.arrays || options.defaults)
                         object.events = [];
                     if (options.defaults) {
@@ -41883,12 +41881,12 @@ $root.tendermint = (function() {
                         object.log = "";
                         object.info = "";
                         if ($util.Long) {
-                            var long = new $util.Long(0, 0, false);
+                            let long = new $util.Long(0, 0, false);
                             object.gasWanted = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                         } else
                             object.gasWanted = options.longs === String ? "0" : 0;
                         if ($util.Long) {
-                            var long = new $util.Long(0, 0, false);
+                            let long = new $util.Long(0, 0, false);
                             object.gasUsed = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                         } else
                             object.gasUsed = options.longs === String ? "0" : 0;
@@ -41914,7 +41912,7 @@ $root.tendermint = (function() {
                             object.gasUsed = options.longs === String ? $util.Long.prototype.toString.call(message.gasUsed) : options.longs === Number ? new $util.LongBits(message.gasUsed.low >>> 0, message.gasUsed.high >>> 0).toNumber() : message.gasUsed;
                     if (message.events && message.events.length) {
                         object.events = [];
-                        for (var j = 0; j < message.events.length; ++j)
+                        for (let j = 0; j < message.events.length; ++j)
                             object.events[j] = $root.tendermint.abci.types.Event.toObject(message.events[j], options);
                     }
                     if (message.codespace != null && message.hasOwnProperty("codespace"))
@@ -41963,7 +41961,7 @@ $root.tendermint = (function() {
                 function ResponseDeliverTx(properties) {
                     this.events = [];
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -42069,7 +42067,7 @@ $root.tendermint = (function() {
                     if (message.gasUsed != null && Object.hasOwnProperty.call(message, "gasUsed"))
                         writer.uint32(/* id 6, wireType 0 =*/48).int64(message.gasUsed);
                     if (message.events != null && message.events.length)
-                        for (var i = 0; i < message.events.length; ++i)
+                        for (let i = 0; i < message.events.length; ++i)
                             $root.tendermint.abci.types.Event.encode(message.events[i], writer.uint32(/* id 7, wireType 2 =*/58).fork()).ldelim();
                     if (message.codespace != null && Object.hasOwnProperty.call(message, "codespace"))
                         writer.uint32(/* id 8, wireType 2 =*/66).string(message.codespace);
@@ -42103,9 +42101,9 @@ $root.tendermint = (function() {
                 ResponseDeliverTx.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.ResponseDeliverTx();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.ResponseDeliverTx();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.code = reader.uint32();
@@ -42189,8 +42187,8 @@ $root.tendermint = (function() {
                     if (message.events != null && message.hasOwnProperty("events")) {
                         if (!Array.isArray(message.events))
                             return "events: array expected";
-                        for (var i = 0; i < message.events.length; ++i) {
-                            var error = $root.tendermint.abci.types.Event.verify(message.events[i]);
+                        for (let i = 0; i < message.events.length; ++i) {
+                            let error = $root.tendermint.abci.types.Event.verify(message.events[i]);
                             if (error)
                                 return "events." + error;
                         }
@@ -42212,7 +42210,7 @@ $root.tendermint = (function() {
                 ResponseDeliverTx.fromObject = function fromObject(object) {
                     if (object instanceof $root.tendermint.abci.types.ResponseDeliverTx)
                         return object;
-                    var message = new $root.tendermint.abci.types.ResponseDeliverTx();
+                    let message = new $root.tendermint.abci.types.ResponseDeliverTx();
                     if (object.code != null)
                         message.code = object.code >>> 0;
                     if (object.data != null)
@@ -42246,7 +42244,7 @@ $root.tendermint = (function() {
                         if (!Array.isArray(object.events))
                             throw TypeError(".tendermint.abci.types.ResponseDeliverTx.events: array expected");
                         message.events = [];
-                        for (var i = 0; i < object.events.length; ++i) {
+                        for (let i = 0; i < object.events.length; ++i) {
                             if (typeof object.events[i] !== "object")
                                 throw TypeError(".tendermint.abci.types.ResponseDeliverTx.events: object expected");
                             message.events[i] = $root.tendermint.abci.types.Event.fromObject(object.events[i]);
@@ -42269,7 +42267,7 @@ $root.tendermint = (function() {
                 ResponseDeliverTx.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.arrays || options.defaults)
                         object.events = [];
                     if (options.defaults) {
@@ -42284,12 +42282,12 @@ $root.tendermint = (function() {
                         object.log = "";
                         object.info = "";
                         if ($util.Long) {
-                            var long = new $util.Long(0, 0, false);
+                            let long = new $util.Long(0, 0, false);
                             object.gasWanted = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                         } else
                             object.gasWanted = options.longs === String ? "0" : 0;
                         if ($util.Long) {
-                            var long = new $util.Long(0, 0, false);
+                            let long = new $util.Long(0, 0, false);
                             object.gasUsed = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                         } else
                             object.gasUsed = options.longs === String ? "0" : 0;
@@ -42315,7 +42313,7 @@ $root.tendermint = (function() {
                             object.gasUsed = options.longs === String ? $util.Long.prototype.toString.call(message.gasUsed) : options.longs === Number ? new $util.LongBits(message.gasUsed.low >>> 0, message.gasUsed.high >>> 0).toNumber() : message.gasUsed;
                     if (message.events && message.events.length) {
                         object.events = [];
-                        for (var j = 0; j < message.events.length; ++j)
+                        for (let j = 0; j < message.events.length; ++j)
                             object.events[j] = $root.tendermint.abci.types.Event.toObject(message.events[j], options);
                     }
                     if (message.codespace != null && message.hasOwnProperty("codespace"))
@@ -42360,7 +42358,7 @@ $root.tendermint = (function() {
                     this.validatorUpdates = [];
                     this.events = [];
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -42414,12 +42412,12 @@ $root.tendermint = (function() {
                     if (!writer)
                         writer = $Writer.create();
                     if (message.validatorUpdates != null && message.validatorUpdates.length)
-                        for (var i = 0; i < message.validatorUpdates.length; ++i)
+                        for (let i = 0; i < message.validatorUpdates.length; ++i)
                             $root.tendermint.abci.types.ValidatorUpdate.encode(message.validatorUpdates[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
                     if (message.consensusParamUpdates != null && Object.hasOwnProperty.call(message, "consensusParamUpdates"))
                         $root.tendermint.abci.types.ConsensusParams.encode(message.consensusParamUpdates, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
                     if (message.events != null && message.events.length)
-                        for (var i = 0; i < message.events.length; ++i)
+                        for (let i = 0; i < message.events.length; ++i)
                             $root.tendermint.abci.types.Event.encode(message.events[i], writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
                     return writer;
                 };
@@ -42451,9 +42449,9 @@ $root.tendermint = (function() {
                 ResponseEndBlock.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.ResponseEndBlock();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.ResponseEndBlock();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             if (!(message.validatorUpdates && message.validatorUpdates.length))
@@ -42506,22 +42504,22 @@ $root.tendermint = (function() {
                     if (message.validatorUpdates != null && message.hasOwnProperty("validatorUpdates")) {
                         if (!Array.isArray(message.validatorUpdates))
                             return "validatorUpdates: array expected";
-                        for (var i = 0; i < message.validatorUpdates.length; ++i) {
-                            var error = $root.tendermint.abci.types.ValidatorUpdate.verify(message.validatorUpdates[i]);
+                        for (let i = 0; i < message.validatorUpdates.length; ++i) {
+                            let error = $root.tendermint.abci.types.ValidatorUpdate.verify(message.validatorUpdates[i]);
                             if (error)
                                 return "validatorUpdates." + error;
                         }
                     }
                     if (message.consensusParamUpdates != null && message.hasOwnProperty("consensusParamUpdates")) {
-                        var error = $root.tendermint.abci.types.ConsensusParams.verify(message.consensusParamUpdates);
+                        let error = $root.tendermint.abci.types.ConsensusParams.verify(message.consensusParamUpdates);
                         if (error)
                             return "consensusParamUpdates." + error;
                     }
                     if (message.events != null && message.hasOwnProperty("events")) {
                         if (!Array.isArray(message.events))
                             return "events: array expected";
-                        for (var i = 0; i < message.events.length; ++i) {
-                            var error = $root.tendermint.abci.types.Event.verify(message.events[i]);
+                        for (let i = 0; i < message.events.length; ++i) {
+                            let error = $root.tendermint.abci.types.Event.verify(message.events[i]);
                             if (error)
                                 return "events." + error;
                         }
@@ -42540,12 +42538,12 @@ $root.tendermint = (function() {
                 ResponseEndBlock.fromObject = function fromObject(object) {
                     if (object instanceof $root.tendermint.abci.types.ResponseEndBlock)
                         return object;
-                    var message = new $root.tendermint.abci.types.ResponseEndBlock();
+                    let message = new $root.tendermint.abci.types.ResponseEndBlock();
                     if (object.validatorUpdates) {
                         if (!Array.isArray(object.validatorUpdates))
                             throw TypeError(".tendermint.abci.types.ResponseEndBlock.validatorUpdates: array expected");
                         message.validatorUpdates = [];
-                        for (var i = 0; i < object.validatorUpdates.length; ++i) {
+                        for (let i = 0; i < object.validatorUpdates.length; ++i) {
                             if (typeof object.validatorUpdates[i] !== "object")
                                 throw TypeError(".tendermint.abci.types.ResponseEndBlock.validatorUpdates: object expected");
                             message.validatorUpdates[i] = $root.tendermint.abci.types.ValidatorUpdate.fromObject(object.validatorUpdates[i]);
@@ -42560,7 +42558,7 @@ $root.tendermint = (function() {
                         if (!Array.isArray(object.events))
                             throw TypeError(".tendermint.abci.types.ResponseEndBlock.events: array expected");
                         message.events = [];
-                        for (var i = 0; i < object.events.length; ++i) {
+                        for (let i = 0; i < object.events.length; ++i) {
                             if (typeof object.events[i] !== "object")
                                 throw TypeError(".tendermint.abci.types.ResponseEndBlock.events: object expected");
                             message.events[i] = $root.tendermint.abci.types.Event.fromObject(object.events[i]);
@@ -42581,7 +42579,7 @@ $root.tendermint = (function() {
                 ResponseEndBlock.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.arrays || options.defaults) {
                         object.validatorUpdates = [];
                         object.events = [];
@@ -42590,14 +42588,14 @@ $root.tendermint = (function() {
                         object.consensusParamUpdates = null;
                     if (message.validatorUpdates && message.validatorUpdates.length) {
                         object.validatorUpdates = [];
-                        for (var j = 0; j < message.validatorUpdates.length; ++j)
+                        for (let j = 0; j < message.validatorUpdates.length; ++j)
                             object.validatorUpdates[j] = $root.tendermint.abci.types.ValidatorUpdate.toObject(message.validatorUpdates[j], options);
                     }
                     if (message.consensusParamUpdates != null && message.hasOwnProperty("consensusParamUpdates"))
                         object.consensusParamUpdates = $root.tendermint.abci.types.ConsensusParams.toObject(message.consensusParamUpdates, options);
                     if (message.events && message.events.length) {
                         object.events = [];
-                        for (var j = 0; j < message.events.length; ++j)
+                        for (let j = 0; j < message.events.length; ++j)
                             object.events[j] = $root.tendermint.abci.types.Event.toObject(message.events[j], options);
                     }
                     return object;
@@ -42636,7 +42634,7 @@ $root.tendermint = (function() {
                  */
                 function ResponseCommit(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -42705,9 +42703,9 @@ $root.tendermint = (function() {
                 ResponseCommit.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.ResponseCommit();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.ResponseCommit();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 2:
                             message.data = reader.bytes();
@@ -42764,7 +42762,7 @@ $root.tendermint = (function() {
                 ResponseCommit.fromObject = function fromObject(object) {
                     if (object instanceof $root.tendermint.abci.types.ResponseCommit)
                         return object;
-                    var message = new $root.tendermint.abci.types.ResponseCommit();
+                    let message = new $root.tendermint.abci.types.ResponseCommit();
                     if (object.data != null)
                         if (typeof object.data === "string")
                             $util.base64.decode(object.data, message.data = $util.newBuffer($util.base64.length(object.data)), 0);
@@ -42785,7 +42783,7 @@ $root.tendermint = (function() {
                 ResponseCommit.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.defaults)
                         if (options.bytes === String)
                             object.data = "";
@@ -42834,7 +42832,7 @@ $root.tendermint = (function() {
                  */
                 function ConsensusParams(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -42923,9 +42921,9 @@ $root.tendermint = (function() {
                 ConsensusParams.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.ConsensusParams();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.ConsensusParams();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.block = $root.tendermint.abci.types.BlockParams.decode(reader, reader.uint32());
@@ -42972,17 +42970,17 @@ $root.tendermint = (function() {
                     if (typeof message !== "object" || message === null)
                         return "object expected";
                     if (message.block != null && message.hasOwnProperty("block")) {
-                        var error = $root.tendermint.abci.types.BlockParams.verify(message.block);
+                        let error = $root.tendermint.abci.types.BlockParams.verify(message.block);
                         if (error)
                             return "block." + error;
                     }
                     if (message.evidence != null && message.hasOwnProperty("evidence")) {
-                        var error = $root.tendermint.abci.types.EvidenceParams.verify(message.evidence);
+                        let error = $root.tendermint.abci.types.EvidenceParams.verify(message.evidence);
                         if (error)
                             return "evidence." + error;
                     }
                     if (message.validator != null && message.hasOwnProperty("validator")) {
-                        var error = $root.tendermint.abci.types.ValidatorParams.verify(message.validator);
+                        let error = $root.tendermint.abci.types.ValidatorParams.verify(message.validator);
                         if (error)
                             return "validator." + error;
                     }
@@ -43000,7 +42998,7 @@ $root.tendermint = (function() {
                 ConsensusParams.fromObject = function fromObject(object) {
                     if (object instanceof $root.tendermint.abci.types.ConsensusParams)
                         return object;
-                    var message = new $root.tendermint.abci.types.ConsensusParams();
+                    let message = new $root.tendermint.abci.types.ConsensusParams();
                     if (object.block != null) {
                         if (typeof object.block !== "object")
                             throw TypeError(".tendermint.abci.types.ConsensusParams.block: object expected");
@@ -43031,7 +43029,7 @@ $root.tendermint = (function() {
                 ConsensusParams.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.defaults) {
                         object.block = null;
                         object.evidence = null;
@@ -43080,7 +43078,7 @@ $root.tendermint = (function() {
                  */
                 function BlockParams(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -43159,9 +43157,9 @@ $root.tendermint = (function() {
                 BlockParams.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.BlockParams();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.BlockParams();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.maxBytes = reader.int64();
@@ -43224,7 +43222,7 @@ $root.tendermint = (function() {
                 BlockParams.fromObject = function fromObject(object) {
                     if (object instanceof $root.tendermint.abci.types.BlockParams)
                         return object;
-                    var message = new $root.tendermint.abci.types.BlockParams();
+                    let message = new $root.tendermint.abci.types.BlockParams();
                     if (object.maxBytes != null)
                         if ($util.Long)
                             (message.maxBytes = $util.Long.fromValue(object.maxBytes)).unsigned = false;
@@ -43258,15 +43256,15 @@ $root.tendermint = (function() {
                 BlockParams.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.defaults) {
                         if ($util.Long) {
-                            var long = new $util.Long(0, 0, false);
+                            let long = new $util.Long(0, 0, false);
                             object.maxBytes = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                         } else
                             object.maxBytes = options.longs === String ? "0" : 0;
                         if ($util.Long) {
-                            var long = new $util.Long(0, 0, false);
+                            let long = new $util.Long(0, 0, false);
                             object.maxGas = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                         } else
                             object.maxGas = options.longs === String ? "0" : 0;
@@ -43318,7 +43316,7 @@ $root.tendermint = (function() {
                  */
                 function EvidenceParams(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -43397,9 +43395,9 @@ $root.tendermint = (function() {
                 EvidenceParams.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.EvidenceParams();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.EvidenceParams();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.maxAgeNumBlocks = reader.int64();
@@ -43446,7 +43444,7 @@ $root.tendermint = (function() {
                         if (!$util.isInteger(message.maxAgeNumBlocks) && !(message.maxAgeNumBlocks && $util.isInteger(message.maxAgeNumBlocks.low) && $util.isInteger(message.maxAgeNumBlocks.high)))
                             return "maxAgeNumBlocks: integer|Long expected";
                     if (message.maxAgeDuration != null && message.hasOwnProperty("maxAgeDuration")) {
-                        var error = $root.google.protobuf.Duration.verify(message.maxAgeDuration);
+                        let error = $root.google.protobuf.Duration.verify(message.maxAgeDuration);
                         if (error)
                             return "maxAgeDuration." + error;
                     }
@@ -43464,7 +43462,7 @@ $root.tendermint = (function() {
                 EvidenceParams.fromObject = function fromObject(object) {
                     if (object instanceof $root.tendermint.abci.types.EvidenceParams)
                         return object;
-                    var message = new $root.tendermint.abci.types.EvidenceParams();
+                    let message = new $root.tendermint.abci.types.EvidenceParams();
                     if (object.maxAgeNumBlocks != null)
                         if ($util.Long)
                             (message.maxAgeNumBlocks = $util.Long.fromValue(object.maxAgeNumBlocks)).unsigned = false;
@@ -43494,10 +43492,10 @@ $root.tendermint = (function() {
                 EvidenceParams.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.defaults) {
                         if ($util.Long) {
-                            var long = new $util.Long(0, 0, false);
+                            let long = new $util.Long(0, 0, false);
                             object.maxAgeNumBlocks = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                         } else
                             object.maxAgeNumBlocks = options.longs === String ? "0" : 0;
@@ -43547,7 +43545,7 @@ $root.tendermint = (function() {
                 function ValidatorParams(properties) {
                     this.pubKeyTypes = [];
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -43585,7 +43583,7 @@ $root.tendermint = (function() {
                     if (!writer)
                         writer = $Writer.create();
                     if (message.pubKeyTypes != null && message.pubKeyTypes.length)
-                        for (var i = 0; i < message.pubKeyTypes.length; ++i)
+                        for (let i = 0; i < message.pubKeyTypes.length; ++i)
                             writer.uint32(/* id 1, wireType 2 =*/10).string(message.pubKeyTypes[i]);
                     return writer;
                 };
@@ -43617,9 +43615,9 @@ $root.tendermint = (function() {
                 ValidatorParams.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.ValidatorParams();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.ValidatorParams();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             if (!(message.pubKeyTypes && message.pubKeyTypes.length))
@@ -43664,7 +43662,7 @@ $root.tendermint = (function() {
                     if (message.pubKeyTypes != null && message.hasOwnProperty("pubKeyTypes")) {
                         if (!Array.isArray(message.pubKeyTypes))
                             return "pubKeyTypes: array expected";
-                        for (var i = 0; i < message.pubKeyTypes.length; ++i)
+                        for (let i = 0; i < message.pubKeyTypes.length; ++i)
                             if (!$util.isString(message.pubKeyTypes[i]))
                                 return "pubKeyTypes: string[] expected";
                     }
@@ -43682,12 +43680,12 @@ $root.tendermint = (function() {
                 ValidatorParams.fromObject = function fromObject(object) {
                     if (object instanceof $root.tendermint.abci.types.ValidatorParams)
                         return object;
-                    var message = new $root.tendermint.abci.types.ValidatorParams();
+                    let message = new $root.tendermint.abci.types.ValidatorParams();
                     if (object.pubKeyTypes) {
                         if (!Array.isArray(object.pubKeyTypes))
                             throw TypeError(".tendermint.abci.types.ValidatorParams.pubKeyTypes: array expected");
                         message.pubKeyTypes = [];
-                        for (var i = 0; i < object.pubKeyTypes.length; ++i)
+                        for (let i = 0; i < object.pubKeyTypes.length; ++i)
                             message.pubKeyTypes[i] = String(object.pubKeyTypes[i]);
                     }
                     return message;
@@ -43705,12 +43703,12 @@ $root.tendermint = (function() {
                 ValidatorParams.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.arrays || options.defaults)
                         object.pubKeyTypes = [];
                     if (message.pubKeyTypes && message.pubKeyTypes.length) {
                         object.pubKeyTypes = [];
-                        for (var j = 0; j < message.pubKeyTypes.length; ++j)
+                        for (let j = 0; j < message.pubKeyTypes.length; ++j)
                             object.pubKeyTypes[j] = message.pubKeyTypes[j];
                     }
                     return object;
@@ -43751,7 +43749,7 @@ $root.tendermint = (function() {
                 function LastCommitInfo(properties) {
                     this.votes = [];
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -43799,7 +43797,7 @@ $root.tendermint = (function() {
                     if (message.round != null && Object.hasOwnProperty.call(message, "round"))
                         writer.uint32(/* id 1, wireType 0 =*/8).int32(message.round);
                     if (message.votes != null && message.votes.length)
-                        for (var i = 0; i < message.votes.length; ++i)
+                        for (let i = 0; i < message.votes.length; ++i)
                             $root.tendermint.abci.types.VoteInfo.encode(message.votes[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
                     return writer;
                 };
@@ -43831,9 +43829,9 @@ $root.tendermint = (function() {
                 LastCommitInfo.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.LastCommitInfo();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.LastCommitInfo();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.round = reader.int32();
@@ -43884,8 +43882,8 @@ $root.tendermint = (function() {
                     if (message.votes != null && message.hasOwnProperty("votes")) {
                         if (!Array.isArray(message.votes))
                             return "votes: array expected";
-                        for (var i = 0; i < message.votes.length; ++i) {
-                            var error = $root.tendermint.abci.types.VoteInfo.verify(message.votes[i]);
+                        for (let i = 0; i < message.votes.length; ++i) {
+                            let error = $root.tendermint.abci.types.VoteInfo.verify(message.votes[i]);
                             if (error)
                                 return "votes." + error;
                         }
@@ -43904,14 +43902,14 @@ $root.tendermint = (function() {
                 LastCommitInfo.fromObject = function fromObject(object) {
                     if (object instanceof $root.tendermint.abci.types.LastCommitInfo)
                         return object;
-                    var message = new $root.tendermint.abci.types.LastCommitInfo();
+                    let message = new $root.tendermint.abci.types.LastCommitInfo();
                     if (object.round != null)
                         message.round = object.round | 0;
                     if (object.votes) {
                         if (!Array.isArray(object.votes))
                             throw TypeError(".tendermint.abci.types.LastCommitInfo.votes: array expected");
                         message.votes = [];
-                        for (var i = 0; i < object.votes.length; ++i) {
+                        for (let i = 0; i < object.votes.length; ++i) {
                             if (typeof object.votes[i] !== "object")
                                 throw TypeError(".tendermint.abci.types.LastCommitInfo.votes: object expected");
                             message.votes[i] = $root.tendermint.abci.types.VoteInfo.fromObject(object.votes[i]);
@@ -43932,7 +43930,7 @@ $root.tendermint = (function() {
                 LastCommitInfo.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.arrays || options.defaults)
                         object.votes = [];
                     if (options.defaults)
@@ -43941,7 +43939,7 @@ $root.tendermint = (function() {
                         object.round = message.round;
                     if (message.votes && message.votes.length) {
                         object.votes = [];
-                        for (var j = 0; j < message.votes.length; ++j)
+                        for (let j = 0; j < message.votes.length; ++j)
                             object.votes[j] = $root.tendermint.abci.types.VoteInfo.toObject(message.votes[j], options);
                     }
                     return object;
@@ -43982,7 +43980,7 @@ $root.tendermint = (function() {
                 function Event(properties) {
                     this.attributes = [];
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -44030,7 +44028,7 @@ $root.tendermint = (function() {
                     if (message.type != null && Object.hasOwnProperty.call(message, "type"))
                         writer.uint32(/* id 1, wireType 2 =*/10).string(message.type);
                     if (message.attributes != null && message.attributes.length)
-                        for (var i = 0; i < message.attributes.length; ++i)
+                        for (let i = 0; i < message.attributes.length; ++i)
                             $root.tendermint.libs.kv.Pair.encode(message.attributes[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
                     return writer;
                 };
@@ -44062,9 +44060,9 @@ $root.tendermint = (function() {
                 Event.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.Event();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.Event();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.type = reader.string();
@@ -44115,8 +44113,8 @@ $root.tendermint = (function() {
                     if (message.attributes != null && message.hasOwnProperty("attributes")) {
                         if (!Array.isArray(message.attributes))
                             return "attributes: array expected";
-                        for (var i = 0; i < message.attributes.length; ++i) {
-                            var error = $root.tendermint.libs.kv.Pair.verify(message.attributes[i]);
+                        for (let i = 0; i < message.attributes.length; ++i) {
+                            let error = $root.tendermint.libs.kv.Pair.verify(message.attributes[i]);
                             if (error)
                                 return "attributes." + error;
                         }
@@ -44135,14 +44133,14 @@ $root.tendermint = (function() {
                 Event.fromObject = function fromObject(object) {
                     if (object instanceof $root.tendermint.abci.types.Event)
                         return object;
-                    var message = new $root.tendermint.abci.types.Event();
+                    let message = new $root.tendermint.abci.types.Event();
                     if (object.type != null)
                         message.type = String(object.type);
                     if (object.attributes) {
                         if (!Array.isArray(object.attributes))
                             throw TypeError(".tendermint.abci.types.Event.attributes: array expected");
                         message.attributes = [];
-                        for (var i = 0; i < object.attributes.length; ++i) {
+                        for (let i = 0; i < object.attributes.length; ++i) {
                             if (typeof object.attributes[i] !== "object")
                                 throw TypeError(".tendermint.abci.types.Event.attributes: object expected");
                             message.attributes[i] = $root.tendermint.libs.kv.Pair.fromObject(object.attributes[i]);
@@ -44163,7 +44161,7 @@ $root.tendermint = (function() {
                 Event.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.arrays || options.defaults)
                         object.attributes = [];
                     if (options.defaults)
@@ -44172,7 +44170,7 @@ $root.tendermint = (function() {
                         object.type = message.type;
                     if (message.attributes && message.attributes.length) {
                         object.attributes = [];
-                        for (var j = 0; j < message.attributes.length; ++j)
+                        for (let j = 0; j < message.attributes.length; ++j)
                             object.attributes[j] = $root.tendermint.libs.kv.Pair.toObject(message.attributes[j], options);
                     }
                     return object;
@@ -44224,7 +44222,7 @@ $root.tendermint = (function() {
                  */
                 function Header(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -44423,9 +44421,9 @@ $root.tendermint = (function() {
                 Header.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.Header();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.Header();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.version = $root.tendermint.abci.types.Version.decode(reader, reader.uint32());
@@ -44505,7 +44503,7 @@ $root.tendermint = (function() {
                     if (typeof message !== "object" || message === null)
                         return "object expected";
                     if (message.version != null && message.hasOwnProperty("version")) {
-                        var error = $root.tendermint.abci.types.Version.verify(message.version);
+                        let error = $root.tendermint.abci.types.Version.verify(message.version);
                         if (error)
                             return "version." + error;
                     }
@@ -44516,12 +44514,12 @@ $root.tendermint = (function() {
                         if (!$util.isInteger(message.height) && !(message.height && $util.isInteger(message.height.low) && $util.isInteger(message.height.high)))
                             return "height: integer|Long expected";
                     if (message.time != null && message.hasOwnProperty("time")) {
-                        var error = $root.google.protobuf.Timestamp.verify(message.time);
+                        let error = $root.google.protobuf.Timestamp.verify(message.time);
                         if (error)
                             return "time." + error;
                     }
                     if (message.lastBlockId != null && message.hasOwnProperty("lastBlockId")) {
-                        var error = $root.tendermint.abci.types.BlockID.verify(message.lastBlockId);
+                        let error = $root.tendermint.abci.types.BlockID.verify(message.lastBlockId);
                         if (error)
                             return "lastBlockId." + error;
                     }
@@ -44566,7 +44564,7 @@ $root.tendermint = (function() {
                 Header.fromObject = function fromObject(object) {
                     if (object instanceof $root.tendermint.abci.types.Header)
                         return object;
-                    var message = new $root.tendermint.abci.types.Header();
+                    let message = new $root.tendermint.abci.types.Header();
                     if (object.version != null) {
                         if (typeof object.version !== "object")
                             throw TypeError(".tendermint.abci.types.Header.version: object expected");
@@ -44653,12 +44651,12 @@ $root.tendermint = (function() {
                 Header.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.defaults) {
                         object.version = null;
                         object.chainId = "";
                         if ($util.Long) {
-                            var long = new $util.Long(0, 0, false);
+                            let long = new $util.Long(0, 0, false);
                             object.height = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                         } else
                             object.height = options.longs === String ? "0" : 0;
@@ -44796,7 +44794,7 @@ $root.tendermint = (function() {
                  */
                 function Version(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -44875,9 +44873,9 @@ $root.tendermint = (function() {
                 Version.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.Version();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.Version();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.Block = reader.uint64();
@@ -44940,7 +44938,7 @@ $root.tendermint = (function() {
                 Version.fromObject = function fromObject(object) {
                     if (object instanceof $root.tendermint.abci.types.Version)
                         return object;
-                    var message = new $root.tendermint.abci.types.Version();
+                    let message = new $root.tendermint.abci.types.Version();
                     if (object.Block != null)
                         if ($util.Long)
                             (message.Block = $util.Long.fromValue(object.Block)).unsigned = true;
@@ -44974,15 +44972,15 @@ $root.tendermint = (function() {
                 Version.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.defaults) {
                         if ($util.Long) {
-                            var long = new $util.Long(0, 0, true);
+                            let long = new $util.Long(0, 0, true);
                             object.Block = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                         } else
                             object.Block = options.longs === String ? "0" : 0;
                         if ($util.Long) {
-                            var long = new $util.Long(0, 0, true);
+                            let long = new $util.Long(0, 0, true);
                             object.App = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                         } else
                             object.App = options.longs === String ? "0" : 0;
@@ -45034,7 +45032,7 @@ $root.tendermint = (function() {
                  */
                 function BlockID(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -45113,9 +45111,9 @@ $root.tendermint = (function() {
                 BlockID.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.BlockID();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.BlockID();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.hash = reader.bytes();
@@ -45162,7 +45160,7 @@ $root.tendermint = (function() {
                         if (!(message.hash && typeof message.hash.length === "number" || $util.isString(message.hash)))
                             return "hash: buffer expected";
                     if (message.partsHeader != null && message.hasOwnProperty("partsHeader")) {
-                        var error = $root.tendermint.abci.types.PartSetHeader.verify(message.partsHeader);
+                        let error = $root.tendermint.abci.types.PartSetHeader.verify(message.partsHeader);
                         if (error)
                             return "partsHeader." + error;
                     }
@@ -45180,7 +45178,7 @@ $root.tendermint = (function() {
                 BlockID.fromObject = function fromObject(object) {
                     if (object instanceof $root.tendermint.abci.types.BlockID)
                         return object;
-                    var message = new $root.tendermint.abci.types.BlockID();
+                    let message = new $root.tendermint.abci.types.BlockID();
                     if (object.hash != null)
                         if (typeof object.hash === "string")
                             $util.base64.decode(object.hash, message.hash = $util.newBuffer($util.base64.length(object.hash)), 0);
@@ -45206,7 +45204,7 @@ $root.tendermint = (function() {
                 BlockID.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.defaults) {
                         if (options.bytes === String)
                             object.hash = "";
@@ -45258,7 +45256,7 @@ $root.tendermint = (function() {
                  */
                 function PartSetHeader(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -45337,9 +45335,9 @@ $root.tendermint = (function() {
                 PartSetHeader.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.PartSetHeader();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.PartSetHeader();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.total = reader.int32();
@@ -45402,7 +45400,7 @@ $root.tendermint = (function() {
                 PartSetHeader.fromObject = function fromObject(object) {
                     if (object instanceof $root.tendermint.abci.types.PartSetHeader)
                         return object;
-                    var message = new $root.tendermint.abci.types.PartSetHeader();
+                    let message = new $root.tendermint.abci.types.PartSetHeader();
                     if (object.total != null)
                         message.total = object.total | 0;
                     if (object.hash != null)
@@ -45425,7 +45423,7 @@ $root.tendermint = (function() {
                 PartSetHeader.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.defaults) {
                         object.total = 0;
                         if (options.bytes === String)
@@ -45477,7 +45475,7 @@ $root.tendermint = (function() {
                  */
                 function Validator(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -45556,9 +45554,9 @@ $root.tendermint = (function() {
                 Validator.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.Validator();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.Validator();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.address = reader.bytes();
@@ -45621,7 +45619,7 @@ $root.tendermint = (function() {
                 Validator.fromObject = function fromObject(object) {
                     if (object instanceof $root.tendermint.abci.types.Validator)
                         return object;
-                    var message = new $root.tendermint.abci.types.Validator();
+                    let message = new $root.tendermint.abci.types.Validator();
                     if (object.address != null)
                         if (typeof object.address === "string")
                             $util.base64.decode(object.address, message.address = $util.newBuffer($util.base64.length(object.address)), 0);
@@ -45651,7 +45649,7 @@ $root.tendermint = (function() {
                 Validator.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.defaults) {
                         if (options.bytes === String)
                             object.address = "";
@@ -45661,7 +45659,7 @@ $root.tendermint = (function() {
                                 object.address = $util.newBuffer(object.address);
                         }
                         if ($util.Long) {
-                            var long = new $util.Long(0, 0, false);
+                            let long = new $util.Long(0, 0, false);
                             object.power = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                         } else
                             object.power = options.longs === String ? "0" : 0;
@@ -45710,7 +45708,7 @@ $root.tendermint = (function() {
                  */
                 function ValidatorUpdate(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -45789,9 +45787,9 @@ $root.tendermint = (function() {
                 ValidatorUpdate.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.ValidatorUpdate();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.ValidatorUpdate();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.pubKey = $root.tendermint.abci.types.PubKey.decode(reader, reader.uint32());
@@ -45835,7 +45833,7 @@ $root.tendermint = (function() {
                     if (typeof message !== "object" || message === null)
                         return "object expected";
                     if (message.pubKey != null && message.hasOwnProperty("pubKey")) {
-                        var error = $root.tendermint.abci.types.PubKey.verify(message.pubKey);
+                        let error = $root.tendermint.abci.types.PubKey.verify(message.pubKey);
                         if (error)
                             return "pubKey." + error;
                     }
@@ -45856,7 +45854,7 @@ $root.tendermint = (function() {
                 ValidatorUpdate.fromObject = function fromObject(object) {
                     if (object instanceof $root.tendermint.abci.types.ValidatorUpdate)
                         return object;
-                    var message = new $root.tendermint.abci.types.ValidatorUpdate();
+                    let message = new $root.tendermint.abci.types.ValidatorUpdate();
                     if (object.pubKey != null) {
                         if (typeof object.pubKey !== "object")
                             throw TypeError(".tendermint.abci.types.ValidatorUpdate.pubKey: object expected");
@@ -45886,11 +45884,11 @@ $root.tendermint = (function() {
                 ValidatorUpdate.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.defaults) {
                         object.pubKey = null;
                         if ($util.Long) {
-                            var long = new $util.Long(0, 0, false);
+                            let long = new $util.Long(0, 0, false);
                             object.power = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                         } else
                             object.power = options.longs === String ? "0" : 0;
@@ -45939,7 +45937,7 @@ $root.tendermint = (function() {
                  */
                 function VoteInfo(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -46018,9 +46016,9 @@ $root.tendermint = (function() {
                 VoteInfo.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.VoteInfo();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.VoteInfo();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.validator = $root.tendermint.abci.types.Validator.decode(reader, reader.uint32());
@@ -46064,7 +46062,7 @@ $root.tendermint = (function() {
                     if (typeof message !== "object" || message === null)
                         return "object expected";
                     if (message.validator != null && message.hasOwnProperty("validator")) {
-                        var error = $root.tendermint.abci.types.Validator.verify(message.validator);
+                        let error = $root.tendermint.abci.types.Validator.verify(message.validator);
                         if (error)
                             return "validator." + error;
                     }
@@ -46085,7 +46083,7 @@ $root.tendermint = (function() {
                 VoteInfo.fromObject = function fromObject(object) {
                     if (object instanceof $root.tendermint.abci.types.VoteInfo)
                         return object;
-                    var message = new $root.tendermint.abci.types.VoteInfo();
+                    let message = new $root.tendermint.abci.types.VoteInfo();
                     if (object.validator != null) {
                         if (typeof object.validator !== "object")
                             throw TypeError(".tendermint.abci.types.VoteInfo.validator: object expected");
@@ -46108,7 +46106,7 @@ $root.tendermint = (function() {
                 VoteInfo.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.defaults) {
                         object.validator = null;
                         object.signedLastBlock = false;
@@ -46154,7 +46152,7 @@ $root.tendermint = (function() {
                  */
                 function PubKey(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -46233,9 +46231,9 @@ $root.tendermint = (function() {
                 PubKey.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.PubKey();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.PubKey();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.type = reader.string();
@@ -46298,7 +46296,7 @@ $root.tendermint = (function() {
                 PubKey.fromObject = function fromObject(object) {
                     if (object instanceof $root.tendermint.abci.types.PubKey)
                         return object;
-                    var message = new $root.tendermint.abci.types.PubKey();
+                    let message = new $root.tendermint.abci.types.PubKey();
                     if (object.type != null)
                         message.type = String(object.type);
                     if (object.data != null)
@@ -46321,7 +46319,7 @@ $root.tendermint = (function() {
                 PubKey.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.defaults) {
                         object.type = "";
                         if (options.bytes === String)
@@ -46376,7 +46374,7 @@ $root.tendermint = (function() {
                  */
                 function Evidence(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -46485,9 +46483,9 @@ $root.tendermint = (function() {
                 Evidence.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.Evidence();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.abci.types.Evidence();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.type = reader.string();
@@ -46543,7 +46541,7 @@ $root.tendermint = (function() {
                         if (!$util.isString(message.type))
                             return "type: string expected";
                     if (message.validator != null && message.hasOwnProperty("validator")) {
-                        var error = $root.tendermint.abci.types.Validator.verify(message.validator);
+                        let error = $root.tendermint.abci.types.Validator.verify(message.validator);
                         if (error)
                             return "validator." + error;
                     }
@@ -46551,7 +46549,7 @@ $root.tendermint = (function() {
                         if (!$util.isInteger(message.height) && !(message.height && $util.isInteger(message.height.low) && $util.isInteger(message.height.high)))
                             return "height: integer|Long expected";
                     if (message.time != null && message.hasOwnProperty("time")) {
-                        var error = $root.google.protobuf.Timestamp.verify(message.time);
+                        let error = $root.google.protobuf.Timestamp.verify(message.time);
                         if (error)
                             return "time." + error;
                     }
@@ -46572,7 +46570,7 @@ $root.tendermint = (function() {
                 Evidence.fromObject = function fromObject(object) {
                     if (object instanceof $root.tendermint.abci.types.Evidence)
                         return object;
-                    var message = new $root.tendermint.abci.types.Evidence();
+                    let message = new $root.tendermint.abci.types.Evidence();
                     if (object.type != null)
                         message.type = String(object.type);
                     if (object.validator != null) {
@@ -46618,18 +46616,18 @@ $root.tendermint = (function() {
                 Evidence.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.defaults) {
                         object.type = "";
                         object.validator = null;
                         if ($util.Long) {
-                            var long = new $util.Long(0, 0, false);
+                            let long = new $util.Long(0, 0, false);
                             object.height = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                         } else
                             object.height = options.longs === String ? "0" : 0;
                         object.time = null;
                         if ($util.Long) {
-                            var long = new $util.Long(0, 0, false);
+                            let long = new $util.Long(0, 0, false);
                             object.totalVotingPower = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                         } else
                             object.totalVotingPower = options.longs === String ? "0" : 0;
@@ -47078,7 +47076,7 @@ $root.tendermint = (function() {
          * @memberof tendermint
          * @namespace
          */
-        var crypto = {};
+        const crypto = {};
 
         crypto.merkle = (function() {
 
@@ -47087,7 +47085,7 @@ $root.tendermint = (function() {
              * @memberof tendermint.crypto
              * @namespace
              */
-            var merkle = {};
+            const merkle = {};
 
             merkle.ProofOp = (function() {
 
@@ -47110,7 +47108,7 @@ $root.tendermint = (function() {
                  */
                 function ProofOp(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -47199,9 +47197,9 @@ $root.tendermint = (function() {
                 ProofOp.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.crypto.merkle.ProofOp();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.crypto.merkle.ProofOp();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.type = reader.string();
@@ -47270,7 +47268,7 @@ $root.tendermint = (function() {
                 ProofOp.fromObject = function fromObject(object) {
                     if (object instanceof $root.tendermint.crypto.merkle.ProofOp)
                         return object;
-                    var message = new $root.tendermint.crypto.merkle.ProofOp();
+                    let message = new $root.tendermint.crypto.merkle.ProofOp();
                     if (object.type != null)
                         message.type = String(object.type);
                     if (object.key != null)
@@ -47298,7 +47296,7 @@ $root.tendermint = (function() {
                 ProofOp.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.defaults) {
                         object.type = "";
                         if (options.bytes === String)
@@ -47359,7 +47357,7 @@ $root.tendermint = (function() {
                 function Proof(properties) {
                     this.ops = [];
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -47397,7 +47395,7 @@ $root.tendermint = (function() {
                     if (!writer)
                         writer = $Writer.create();
                     if (message.ops != null && message.ops.length)
-                        for (var i = 0; i < message.ops.length; ++i)
+                        for (let i = 0; i < message.ops.length; ++i)
                             $root.tendermint.crypto.merkle.ProofOp.encode(message.ops[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
                     return writer;
                 };
@@ -47429,9 +47427,9 @@ $root.tendermint = (function() {
                 Proof.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.crypto.merkle.Proof();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.crypto.merkle.Proof();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             if (!(message.ops && message.ops.length))
@@ -47476,8 +47474,8 @@ $root.tendermint = (function() {
                     if (message.ops != null && message.hasOwnProperty("ops")) {
                         if (!Array.isArray(message.ops))
                             return "ops: array expected";
-                        for (var i = 0; i < message.ops.length; ++i) {
-                            var error = $root.tendermint.crypto.merkle.ProofOp.verify(message.ops[i]);
+                        for (let i = 0; i < message.ops.length; ++i) {
+                            let error = $root.tendermint.crypto.merkle.ProofOp.verify(message.ops[i]);
                             if (error)
                                 return "ops." + error;
                         }
@@ -47496,12 +47494,12 @@ $root.tendermint = (function() {
                 Proof.fromObject = function fromObject(object) {
                     if (object instanceof $root.tendermint.crypto.merkle.Proof)
                         return object;
-                    var message = new $root.tendermint.crypto.merkle.Proof();
+                    let message = new $root.tendermint.crypto.merkle.Proof();
                     if (object.ops) {
                         if (!Array.isArray(object.ops))
                             throw TypeError(".tendermint.crypto.merkle.Proof.ops: array expected");
                         message.ops = [];
-                        for (var i = 0; i < object.ops.length; ++i) {
+                        for (let i = 0; i < object.ops.length; ++i) {
                             if (typeof object.ops[i] !== "object")
                                 throw TypeError(".tendermint.crypto.merkle.Proof.ops: object expected");
                             message.ops[i] = $root.tendermint.crypto.merkle.ProofOp.fromObject(object.ops[i]);
@@ -47522,12 +47520,12 @@ $root.tendermint = (function() {
                 Proof.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.arrays || options.defaults)
                         object.ops = [];
                     if (message.ops && message.ops.length) {
                         object.ops = [];
-                        for (var j = 0; j < message.ops.length; ++j)
+                        for (let j = 0; j < message.ops.length; ++j)
                             object.ops[j] = $root.tendermint.crypto.merkle.ProofOp.toObject(message.ops[j], options);
                     }
                     return object;
@@ -47560,7 +47558,7 @@ $root.tendermint = (function() {
          * @memberof tendermint
          * @namespace
          */
-        var libs = {};
+        const libs = {};
 
         libs.kv = (function() {
 
@@ -47569,7 +47567,7 @@ $root.tendermint = (function() {
              * @memberof tendermint.libs
              * @namespace
              */
-            var kv = {};
+            const kv = {};
 
             kv.Pair = (function() {
 
@@ -47591,7 +47589,7 @@ $root.tendermint = (function() {
                  */
                 function Pair(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -47670,9 +47668,9 @@ $root.tendermint = (function() {
                 Pair.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.libs.kv.Pair();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.libs.kv.Pair();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.key = reader.bytes();
@@ -47735,7 +47733,7 @@ $root.tendermint = (function() {
                 Pair.fromObject = function fromObject(object) {
                     if (object instanceof $root.tendermint.libs.kv.Pair)
                         return object;
-                    var message = new $root.tendermint.libs.kv.Pair();
+                    let message = new $root.tendermint.libs.kv.Pair();
                     if (object.key != null)
                         if (typeof object.key === "string")
                             $util.base64.decode(object.key, message.key = $util.newBuffer($util.base64.length(object.key)), 0);
@@ -47761,7 +47759,7 @@ $root.tendermint = (function() {
                 Pair.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.defaults) {
                         if (options.bytes === String)
                             object.key = "";
@@ -47819,7 +47817,7 @@ $root.tendermint = (function() {
                  */
                 function KI64Pair(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -47898,9 +47896,9 @@ $root.tendermint = (function() {
                 KI64Pair.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.libs.kv.KI64Pair();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.tendermint.libs.kv.KI64Pair();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.key = reader.bytes();
@@ -47963,7 +47961,7 @@ $root.tendermint = (function() {
                 KI64Pair.fromObject = function fromObject(object) {
                     if (object instanceof $root.tendermint.libs.kv.KI64Pair)
                         return object;
-                    var message = new $root.tendermint.libs.kv.KI64Pair();
+                    let message = new $root.tendermint.libs.kv.KI64Pair();
                     if (object.key != null)
                         if (typeof object.key === "string")
                             $util.base64.decode(object.key, message.key = $util.newBuffer($util.base64.length(object.key)), 0);
@@ -47993,7 +47991,7 @@ $root.tendermint = (function() {
                 KI64Pair.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.defaults) {
                         if (options.bytes === String)
                             object.key = "";
@@ -48003,7 +48001,7 @@ $root.tendermint = (function() {
                                 object.key = $util.newBuffer(object.key);
                         }
                         if ($util.Long) {
-                            var long = new $util.Long(0, 0, false);
+                            let long = new $util.Long(0, 0, false);
                             object.value = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                         } else
                             object.value = options.longs === String ? "0" : 0;
@@ -48041,14 +48039,14 @@ $root.tendermint = (function() {
     return tendermint;
 })();
 
-$root.google = (function() {
+export const google = $root.google = (() => {
 
     /**
      * Namespace google.
      * @exports google
      * @namespace
      */
-    var google = {};
+    const google = {};
 
     google.protobuf = (function() {
 
@@ -48057,7 +48055,7 @@ $root.google = (function() {
          * @memberof google
          * @namespace
          */
-        var protobuf = {};
+        const protobuf = {};
 
         protobuf.Any = (function() {
 
@@ -48079,7 +48077,7 @@ $root.google = (function() {
              */
             function Any(properties) {
                 if (properties)
-                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
                             this[keys[i]] = properties[keys[i]];
             }
@@ -48158,9 +48156,9 @@ $root.google = (function() {
             Any.decode = function decode(reader, length) {
                 if (!(reader instanceof $Reader))
                     reader = $Reader.create(reader);
-                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.Any();
+                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.Any();
                 while (reader.pos < end) {
-                    var tag = reader.uint32();
+                    let tag = reader.uint32();
                     switch (tag >>> 3) {
                     case 1:
                         message.type_url = reader.string();
@@ -48223,7 +48221,7 @@ $root.google = (function() {
             Any.fromObject = function fromObject(object) {
                 if (object instanceof $root.google.protobuf.Any)
                     return object;
-                var message = new $root.google.protobuf.Any();
+                let message = new $root.google.protobuf.Any();
                 if (object.type_url != null)
                     message.type_url = String(object.type_url);
                 if (object.value != null)
@@ -48246,7 +48244,7 @@ $root.google = (function() {
             Any.toObject = function toObject(message, options) {
                 if (!options)
                     options = {};
-                var object = {};
+                let object = {};
                 if (options.defaults) {
                     object.type_url = "";
                     if (options.bytes === String)
@@ -48298,7 +48296,7 @@ $root.google = (function() {
             function FileDescriptorSet(properties) {
                 this.file = [];
                 if (properties)
-                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
                             this[keys[i]] = properties[keys[i]];
             }
@@ -48336,7 +48334,7 @@ $root.google = (function() {
                 if (!writer)
                     writer = $Writer.create();
                 if (message.file != null && message.file.length)
-                    for (var i = 0; i < message.file.length; ++i)
+                    for (let i = 0; i < message.file.length; ++i)
                         $root.google.protobuf.FileDescriptorProto.encode(message.file[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
                 return writer;
             };
@@ -48368,9 +48366,9 @@ $root.google = (function() {
             FileDescriptorSet.decode = function decode(reader, length) {
                 if (!(reader instanceof $Reader))
                     reader = $Reader.create(reader);
-                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.FileDescriptorSet();
+                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.FileDescriptorSet();
                 while (reader.pos < end) {
-                    var tag = reader.uint32();
+                    let tag = reader.uint32();
                     switch (tag >>> 3) {
                     case 1:
                         if (!(message.file && message.file.length))
@@ -48415,8 +48413,8 @@ $root.google = (function() {
                 if (message.file != null && message.hasOwnProperty("file")) {
                     if (!Array.isArray(message.file))
                         return "file: array expected";
-                    for (var i = 0; i < message.file.length; ++i) {
-                        var error = $root.google.protobuf.FileDescriptorProto.verify(message.file[i]);
+                    for (let i = 0; i < message.file.length; ++i) {
+                        let error = $root.google.protobuf.FileDescriptorProto.verify(message.file[i]);
                         if (error)
                             return "file." + error;
                     }
@@ -48435,12 +48433,12 @@ $root.google = (function() {
             FileDescriptorSet.fromObject = function fromObject(object) {
                 if (object instanceof $root.google.protobuf.FileDescriptorSet)
                     return object;
-                var message = new $root.google.protobuf.FileDescriptorSet();
+                let message = new $root.google.protobuf.FileDescriptorSet();
                 if (object.file) {
                     if (!Array.isArray(object.file))
                         throw TypeError(".google.protobuf.FileDescriptorSet.file: array expected");
                     message.file = [];
-                    for (var i = 0; i < object.file.length; ++i) {
+                    for (let i = 0; i < object.file.length; ++i) {
                         if (typeof object.file[i] !== "object")
                             throw TypeError(".google.protobuf.FileDescriptorSet.file: object expected");
                         message.file[i] = $root.google.protobuf.FileDescriptorProto.fromObject(object.file[i]);
@@ -48461,12 +48459,12 @@ $root.google = (function() {
             FileDescriptorSet.toObject = function toObject(message, options) {
                 if (!options)
                     options = {};
-                var object = {};
+                let object = {};
                 if (options.arrays || options.defaults)
                     object.file = [];
                 if (message.file && message.file.length) {
                     object.file = [];
-                    for (var j = 0; j < message.file.length; ++j)
+                    for (let j = 0; j < message.file.length; ++j)
                         object.file[j] = $root.google.protobuf.FileDescriptorProto.toObject(message.file[j], options);
                 }
                 return object;
@@ -48523,7 +48521,7 @@ $root.google = (function() {
                 this.service = [];
                 this.extension = [];
                 if (properties)
-                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
                             this[keys[i]] = properties[keys[i]];
             }
@@ -48653,29 +48651,29 @@ $root.google = (function() {
                 if (message["package"] != null && Object.hasOwnProperty.call(message, "package"))
                     writer.uint32(/* id 2, wireType 2 =*/18).string(message["package"]);
                 if (message.dependency != null && message.dependency.length)
-                    for (var i = 0; i < message.dependency.length; ++i)
+                    for (let i = 0; i < message.dependency.length; ++i)
                         writer.uint32(/* id 3, wireType 2 =*/26).string(message.dependency[i]);
                 if (message.messageType != null && message.messageType.length)
-                    for (var i = 0; i < message.messageType.length; ++i)
+                    for (let i = 0; i < message.messageType.length; ++i)
                         $root.google.protobuf.DescriptorProto.encode(message.messageType[i], writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
                 if (message.enumType != null && message.enumType.length)
-                    for (var i = 0; i < message.enumType.length; ++i)
+                    for (let i = 0; i < message.enumType.length; ++i)
                         $root.google.protobuf.EnumDescriptorProto.encode(message.enumType[i], writer.uint32(/* id 5, wireType 2 =*/42).fork()).ldelim();
                 if (message.service != null && message.service.length)
-                    for (var i = 0; i < message.service.length; ++i)
+                    for (let i = 0; i < message.service.length; ++i)
                         $root.google.protobuf.ServiceDescriptorProto.encode(message.service[i], writer.uint32(/* id 6, wireType 2 =*/50).fork()).ldelim();
                 if (message.extension != null && message.extension.length)
-                    for (var i = 0; i < message.extension.length; ++i)
+                    for (let i = 0; i < message.extension.length; ++i)
                         $root.google.protobuf.FieldDescriptorProto.encode(message.extension[i], writer.uint32(/* id 7, wireType 2 =*/58).fork()).ldelim();
                 if (message.options != null && Object.hasOwnProperty.call(message, "options"))
                     $root.google.protobuf.FileOptions.encode(message.options, writer.uint32(/* id 8, wireType 2 =*/66).fork()).ldelim();
                 if (message.sourceCodeInfo != null && Object.hasOwnProperty.call(message, "sourceCodeInfo"))
                     $root.google.protobuf.SourceCodeInfo.encode(message.sourceCodeInfo, writer.uint32(/* id 9, wireType 2 =*/74).fork()).ldelim();
                 if (message.publicDependency != null && message.publicDependency.length)
-                    for (var i = 0; i < message.publicDependency.length; ++i)
+                    for (let i = 0; i < message.publicDependency.length; ++i)
                         writer.uint32(/* id 10, wireType 0 =*/80).int32(message.publicDependency[i]);
                 if (message.weakDependency != null && message.weakDependency.length)
-                    for (var i = 0; i < message.weakDependency.length; ++i)
+                    for (let i = 0; i < message.weakDependency.length; ++i)
                         writer.uint32(/* id 11, wireType 0 =*/88).int32(message.weakDependency[i]);
                 if (message.syntax != null && Object.hasOwnProperty.call(message, "syntax"))
                     writer.uint32(/* id 12, wireType 2 =*/98).string(message.syntax);
@@ -48709,9 +48707,9 @@ $root.google = (function() {
             FileDescriptorProto.decode = function decode(reader, length) {
                 if (!(reader instanceof $Reader))
                     reader = $Reader.create(reader);
-                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.FileDescriptorProto();
+                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.FileDescriptorProto();
                 while (reader.pos < end) {
-                    var tag = reader.uint32();
+                    let tag = reader.uint32();
                     switch (tag >>> 3) {
                     case 1:
                         message.name = reader.string();
@@ -48728,7 +48726,7 @@ $root.google = (function() {
                         if (!(message.publicDependency && message.publicDependency.length))
                             message.publicDependency = [];
                         if ((tag & 7) === 2) {
-                            var end2 = reader.uint32() + reader.pos;
+                            let end2 = reader.uint32() + reader.pos;
                             while (reader.pos < end2)
                                 message.publicDependency.push(reader.int32());
                         } else
@@ -48738,7 +48736,7 @@ $root.google = (function() {
                         if (!(message.weakDependency && message.weakDependency.length))
                             message.weakDependency = [];
                         if ((tag & 7) === 2) {
-                            var end2 = reader.uint32() + reader.pos;
+                            let end2 = reader.uint32() + reader.pos;
                             while (reader.pos < end2)
                                 message.weakDependency.push(reader.int32());
                         } else
@@ -48817,29 +48815,29 @@ $root.google = (function() {
                 if (message.dependency != null && message.hasOwnProperty("dependency")) {
                     if (!Array.isArray(message.dependency))
                         return "dependency: array expected";
-                    for (var i = 0; i < message.dependency.length; ++i)
+                    for (let i = 0; i < message.dependency.length; ++i)
                         if (!$util.isString(message.dependency[i]))
                             return "dependency: string[] expected";
                 }
                 if (message.publicDependency != null && message.hasOwnProperty("publicDependency")) {
                     if (!Array.isArray(message.publicDependency))
                         return "publicDependency: array expected";
-                    for (var i = 0; i < message.publicDependency.length; ++i)
+                    for (let i = 0; i < message.publicDependency.length; ++i)
                         if (!$util.isInteger(message.publicDependency[i]))
                             return "publicDependency: integer[] expected";
                 }
                 if (message.weakDependency != null && message.hasOwnProperty("weakDependency")) {
                     if (!Array.isArray(message.weakDependency))
                         return "weakDependency: array expected";
-                    for (var i = 0; i < message.weakDependency.length; ++i)
+                    for (let i = 0; i < message.weakDependency.length; ++i)
                         if (!$util.isInteger(message.weakDependency[i]))
                             return "weakDependency: integer[] expected";
                 }
                 if (message.messageType != null && message.hasOwnProperty("messageType")) {
                     if (!Array.isArray(message.messageType))
                         return "messageType: array expected";
-                    for (var i = 0; i < message.messageType.length; ++i) {
-                        var error = $root.google.protobuf.DescriptorProto.verify(message.messageType[i]);
+                    for (let i = 0; i < message.messageType.length; ++i) {
+                        let error = $root.google.protobuf.DescriptorProto.verify(message.messageType[i]);
                         if (error)
                             return "messageType." + error;
                     }
@@ -48847,8 +48845,8 @@ $root.google = (function() {
                 if (message.enumType != null && message.hasOwnProperty("enumType")) {
                     if (!Array.isArray(message.enumType))
                         return "enumType: array expected";
-                    for (var i = 0; i < message.enumType.length; ++i) {
-                        var error = $root.google.protobuf.EnumDescriptorProto.verify(message.enumType[i]);
+                    for (let i = 0; i < message.enumType.length; ++i) {
+                        let error = $root.google.protobuf.EnumDescriptorProto.verify(message.enumType[i]);
                         if (error)
                             return "enumType." + error;
                     }
@@ -48856,8 +48854,8 @@ $root.google = (function() {
                 if (message.service != null && message.hasOwnProperty("service")) {
                     if (!Array.isArray(message.service))
                         return "service: array expected";
-                    for (var i = 0; i < message.service.length; ++i) {
-                        var error = $root.google.protobuf.ServiceDescriptorProto.verify(message.service[i]);
+                    for (let i = 0; i < message.service.length; ++i) {
+                        let error = $root.google.protobuf.ServiceDescriptorProto.verify(message.service[i]);
                         if (error)
                             return "service." + error;
                     }
@@ -48865,19 +48863,19 @@ $root.google = (function() {
                 if (message.extension != null && message.hasOwnProperty("extension")) {
                     if (!Array.isArray(message.extension))
                         return "extension: array expected";
-                    for (var i = 0; i < message.extension.length; ++i) {
-                        var error = $root.google.protobuf.FieldDescriptorProto.verify(message.extension[i]);
+                    for (let i = 0; i < message.extension.length; ++i) {
+                        let error = $root.google.protobuf.FieldDescriptorProto.verify(message.extension[i]);
                         if (error)
                             return "extension." + error;
                     }
                 }
                 if (message.options != null && message.hasOwnProperty("options")) {
-                    var error = $root.google.protobuf.FileOptions.verify(message.options);
+                    let error = $root.google.protobuf.FileOptions.verify(message.options);
                     if (error)
                         return "options." + error;
                 }
                 if (message.sourceCodeInfo != null && message.hasOwnProperty("sourceCodeInfo")) {
-                    var error = $root.google.protobuf.SourceCodeInfo.verify(message.sourceCodeInfo);
+                    let error = $root.google.protobuf.SourceCodeInfo.verify(message.sourceCodeInfo);
                     if (error)
                         return "sourceCodeInfo." + error;
                 }
@@ -48898,7 +48896,7 @@ $root.google = (function() {
             FileDescriptorProto.fromObject = function fromObject(object) {
                 if (object instanceof $root.google.protobuf.FileDescriptorProto)
                     return object;
-                var message = new $root.google.protobuf.FileDescriptorProto();
+                let message = new $root.google.protobuf.FileDescriptorProto();
                 if (object.name != null)
                     message.name = String(object.name);
                 if (object["package"] != null)
@@ -48907,28 +48905,28 @@ $root.google = (function() {
                     if (!Array.isArray(object.dependency))
                         throw TypeError(".google.protobuf.FileDescriptorProto.dependency: array expected");
                     message.dependency = [];
-                    for (var i = 0; i < object.dependency.length; ++i)
+                    for (let i = 0; i < object.dependency.length; ++i)
                         message.dependency[i] = String(object.dependency[i]);
                 }
                 if (object.publicDependency) {
                     if (!Array.isArray(object.publicDependency))
                         throw TypeError(".google.protobuf.FileDescriptorProto.publicDependency: array expected");
                     message.publicDependency = [];
-                    for (var i = 0; i < object.publicDependency.length; ++i)
+                    for (let i = 0; i < object.publicDependency.length; ++i)
                         message.publicDependency[i] = object.publicDependency[i] | 0;
                 }
                 if (object.weakDependency) {
                     if (!Array.isArray(object.weakDependency))
                         throw TypeError(".google.protobuf.FileDescriptorProto.weakDependency: array expected");
                     message.weakDependency = [];
-                    for (var i = 0; i < object.weakDependency.length; ++i)
+                    for (let i = 0; i < object.weakDependency.length; ++i)
                         message.weakDependency[i] = object.weakDependency[i] | 0;
                 }
                 if (object.messageType) {
                     if (!Array.isArray(object.messageType))
                         throw TypeError(".google.protobuf.FileDescriptorProto.messageType: array expected");
                     message.messageType = [];
-                    for (var i = 0; i < object.messageType.length; ++i) {
+                    for (let i = 0; i < object.messageType.length; ++i) {
                         if (typeof object.messageType[i] !== "object")
                             throw TypeError(".google.protobuf.FileDescriptorProto.messageType: object expected");
                         message.messageType[i] = $root.google.protobuf.DescriptorProto.fromObject(object.messageType[i]);
@@ -48938,7 +48936,7 @@ $root.google = (function() {
                     if (!Array.isArray(object.enumType))
                         throw TypeError(".google.protobuf.FileDescriptorProto.enumType: array expected");
                     message.enumType = [];
-                    for (var i = 0; i < object.enumType.length; ++i) {
+                    for (let i = 0; i < object.enumType.length; ++i) {
                         if (typeof object.enumType[i] !== "object")
                             throw TypeError(".google.protobuf.FileDescriptorProto.enumType: object expected");
                         message.enumType[i] = $root.google.protobuf.EnumDescriptorProto.fromObject(object.enumType[i]);
@@ -48948,7 +48946,7 @@ $root.google = (function() {
                     if (!Array.isArray(object.service))
                         throw TypeError(".google.protobuf.FileDescriptorProto.service: array expected");
                     message.service = [];
-                    for (var i = 0; i < object.service.length; ++i) {
+                    for (let i = 0; i < object.service.length; ++i) {
                         if (typeof object.service[i] !== "object")
                             throw TypeError(".google.protobuf.FileDescriptorProto.service: object expected");
                         message.service[i] = $root.google.protobuf.ServiceDescriptorProto.fromObject(object.service[i]);
@@ -48958,7 +48956,7 @@ $root.google = (function() {
                     if (!Array.isArray(object.extension))
                         throw TypeError(".google.protobuf.FileDescriptorProto.extension: array expected");
                     message.extension = [];
-                    for (var i = 0; i < object.extension.length; ++i) {
+                    for (let i = 0; i < object.extension.length; ++i) {
                         if (typeof object.extension[i] !== "object")
                             throw TypeError(".google.protobuf.FileDescriptorProto.extension: object expected");
                         message.extension[i] = $root.google.protobuf.FieldDescriptorProto.fromObject(object.extension[i]);
@@ -48991,7 +48989,7 @@ $root.google = (function() {
             FileDescriptorProto.toObject = function toObject(message, options) {
                 if (!options)
                     options = {};
-                var object = {};
+                let object = {};
                 if (options.arrays || options.defaults) {
                     object.dependency = [];
                     object.messageType = [];
@@ -49014,27 +49012,27 @@ $root.google = (function() {
                     object["package"] = message["package"];
                 if (message.dependency && message.dependency.length) {
                     object.dependency = [];
-                    for (var j = 0; j < message.dependency.length; ++j)
+                    for (let j = 0; j < message.dependency.length; ++j)
                         object.dependency[j] = message.dependency[j];
                 }
                 if (message.messageType && message.messageType.length) {
                     object.messageType = [];
-                    for (var j = 0; j < message.messageType.length; ++j)
+                    for (let j = 0; j < message.messageType.length; ++j)
                         object.messageType[j] = $root.google.protobuf.DescriptorProto.toObject(message.messageType[j], options);
                 }
                 if (message.enumType && message.enumType.length) {
                     object.enumType = [];
-                    for (var j = 0; j < message.enumType.length; ++j)
+                    for (let j = 0; j < message.enumType.length; ++j)
                         object.enumType[j] = $root.google.protobuf.EnumDescriptorProto.toObject(message.enumType[j], options);
                 }
                 if (message.service && message.service.length) {
                     object.service = [];
-                    for (var j = 0; j < message.service.length; ++j)
+                    for (let j = 0; j < message.service.length; ++j)
                         object.service[j] = $root.google.protobuf.ServiceDescriptorProto.toObject(message.service[j], options);
                 }
                 if (message.extension && message.extension.length) {
                     object.extension = [];
-                    for (var j = 0; j < message.extension.length; ++j)
+                    for (let j = 0; j < message.extension.length; ++j)
                         object.extension[j] = $root.google.protobuf.FieldDescriptorProto.toObject(message.extension[j], options);
                 }
                 if (message.options != null && message.hasOwnProperty("options"))
@@ -49043,12 +49041,12 @@ $root.google = (function() {
                     object.sourceCodeInfo = $root.google.protobuf.SourceCodeInfo.toObject(message.sourceCodeInfo, options);
                 if (message.publicDependency && message.publicDependency.length) {
                     object.publicDependency = [];
-                    for (var j = 0; j < message.publicDependency.length; ++j)
+                    for (let j = 0; j < message.publicDependency.length; ++j)
                         object.publicDependency[j] = message.publicDependency[j];
                 }
                 if (message.weakDependency && message.weakDependency.length) {
                     object.weakDependency = [];
-                    for (var j = 0; j < message.weakDependency.length; ++j)
+                    for (let j = 0; j < message.weakDependency.length; ++j)
                         object.weakDependency[j] = message.weakDependency[j];
                 }
                 if (message.syntax != null && message.hasOwnProperty("syntax"))
@@ -49106,7 +49104,7 @@ $root.google = (function() {
                 this.reservedRange = [];
                 this.reservedName = [];
                 if (properties)
-                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
                             this[keys[i]] = properties[keys[i]];
             }
@@ -49218,30 +49216,30 @@ $root.google = (function() {
                 if (message.name != null && Object.hasOwnProperty.call(message, "name"))
                     writer.uint32(/* id 1, wireType 2 =*/10).string(message.name);
                 if (message.field != null && message.field.length)
-                    for (var i = 0; i < message.field.length; ++i)
+                    for (let i = 0; i < message.field.length; ++i)
                         $root.google.protobuf.FieldDescriptorProto.encode(message.field[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
                 if (message.nestedType != null && message.nestedType.length)
-                    for (var i = 0; i < message.nestedType.length; ++i)
+                    for (let i = 0; i < message.nestedType.length; ++i)
                         $root.google.protobuf.DescriptorProto.encode(message.nestedType[i], writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
                 if (message.enumType != null && message.enumType.length)
-                    for (var i = 0; i < message.enumType.length; ++i)
+                    for (let i = 0; i < message.enumType.length; ++i)
                         $root.google.protobuf.EnumDescriptorProto.encode(message.enumType[i], writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
                 if (message.extensionRange != null && message.extensionRange.length)
-                    for (var i = 0; i < message.extensionRange.length; ++i)
+                    for (let i = 0; i < message.extensionRange.length; ++i)
                         $root.google.protobuf.DescriptorProto.ExtensionRange.encode(message.extensionRange[i], writer.uint32(/* id 5, wireType 2 =*/42).fork()).ldelim();
                 if (message.extension != null && message.extension.length)
-                    for (var i = 0; i < message.extension.length; ++i)
+                    for (let i = 0; i < message.extension.length; ++i)
                         $root.google.protobuf.FieldDescriptorProto.encode(message.extension[i], writer.uint32(/* id 6, wireType 2 =*/50).fork()).ldelim();
                 if (message.options != null && Object.hasOwnProperty.call(message, "options"))
                     $root.google.protobuf.MessageOptions.encode(message.options, writer.uint32(/* id 7, wireType 2 =*/58).fork()).ldelim();
                 if (message.oneofDecl != null && message.oneofDecl.length)
-                    for (var i = 0; i < message.oneofDecl.length; ++i)
+                    for (let i = 0; i < message.oneofDecl.length; ++i)
                         $root.google.protobuf.OneofDescriptorProto.encode(message.oneofDecl[i], writer.uint32(/* id 8, wireType 2 =*/66).fork()).ldelim();
                 if (message.reservedRange != null && message.reservedRange.length)
-                    for (var i = 0; i < message.reservedRange.length; ++i)
+                    for (let i = 0; i < message.reservedRange.length; ++i)
                         $root.google.protobuf.DescriptorProto.ReservedRange.encode(message.reservedRange[i], writer.uint32(/* id 9, wireType 2 =*/74).fork()).ldelim();
                 if (message.reservedName != null && message.reservedName.length)
-                    for (var i = 0; i < message.reservedName.length; ++i)
+                    for (let i = 0; i < message.reservedName.length; ++i)
                         writer.uint32(/* id 10, wireType 2 =*/82).string(message.reservedName[i]);
                 return writer;
             };
@@ -49273,9 +49271,9 @@ $root.google = (function() {
             DescriptorProto.decode = function decode(reader, length) {
                 if (!(reader instanceof $Reader))
                     reader = $Reader.create(reader);
-                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.DescriptorProto();
+                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.DescriptorProto();
                 while (reader.pos < end) {
-                    var tag = reader.uint32();
+                    let tag = reader.uint32();
                     switch (tag >>> 3) {
                     case 1:
                         message.name = reader.string();
@@ -49364,8 +49362,8 @@ $root.google = (function() {
                 if (message.field != null && message.hasOwnProperty("field")) {
                     if (!Array.isArray(message.field))
                         return "field: array expected";
-                    for (var i = 0; i < message.field.length; ++i) {
-                        var error = $root.google.protobuf.FieldDescriptorProto.verify(message.field[i]);
+                    for (let i = 0; i < message.field.length; ++i) {
+                        let error = $root.google.protobuf.FieldDescriptorProto.verify(message.field[i]);
                         if (error)
                             return "field." + error;
                     }
@@ -49373,8 +49371,8 @@ $root.google = (function() {
                 if (message.extension != null && message.hasOwnProperty("extension")) {
                     if (!Array.isArray(message.extension))
                         return "extension: array expected";
-                    for (var i = 0; i < message.extension.length; ++i) {
-                        var error = $root.google.protobuf.FieldDescriptorProto.verify(message.extension[i]);
+                    for (let i = 0; i < message.extension.length; ++i) {
+                        let error = $root.google.protobuf.FieldDescriptorProto.verify(message.extension[i]);
                         if (error)
                             return "extension." + error;
                     }
@@ -49382,8 +49380,8 @@ $root.google = (function() {
                 if (message.nestedType != null && message.hasOwnProperty("nestedType")) {
                     if (!Array.isArray(message.nestedType))
                         return "nestedType: array expected";
-                    for (var i = 0; i < message.nestedType.length; ++i) {
-                        var error = $root.google.protobuf.DescriptorProto.verify(message.nestedType[i]);
+                    for (let i = 0; i < message.nestedType.length; ++i) {
+                        let error = $root.google.protobuf.DescriptorProto.verify(message.nestedType[i]);
                         if (error)
                             return "nestedType." + error;
                     }
@@ -49391,8 +49389,8 @@ $root.google = (function() {
                 if (message.enumType != null && message.hasOwnProperty("enumType")) {
                     if (!Array.isArray(message.enumType))
                         return "enumType: array expected";
-                    for (var i = 0; i < message.enumType.length; ++i) {
-                        var error = $root.google.protobuf.EnumDescriptorProto.verify(message.enumType[i]);
+                    for (let i = 0; i < message.enumType.length; ++i) {
+                        let error = $root.google.protobuf.EnumDescriptorProto.verify(message.enumType[i]);
                         if (error)
                             return "enumType." + error;
                     }
@@ -49400,8 +49398,8 @@ $root.google = (function() {
                 if (message.extensionRange != null && message.hasOwnProperty("extensionRange")) {
                     if (!Array.isArray(message.extensionRange))
                         return "extensionRange: array expected";
-                    for (var i = 0; i < message.extensionRange.length; ++i) {
-                        var error = $root.google.protobuf.DescriptorProto.ExtensionRange.verify(message.extensionRange[i]);
+                    for (let i = 0; i < message.extensionRange.length; ++i) {
+                        let error = $root.google.protobuf.DescriptorProto.ExtensionRange.verify(message.extensionRange[i]);
                         if (error)
                             return "extensionRange." + error;
                     }
@@ -49409,22 +49407,22 @@ $root.google = (function() {
                 if (message.oneofDecl != null && message.hasOwnProperty("oneofDecl")) {
                     if (!Array.isArray(message.oneofDecl))
                         return "oneofDecl: array expected";
-                    for (var i = 0; i < message.oneofDecl.length; ++i) {
-                        var error = $root.google.protobuf.OneofDescriptorProto.verify(message.oneofDecl[i]);
+                    for (let i = 0; i < message.oneofDecl.length; ++i) {
+                        let error = $root.google.protobuf.OneofDescriptorProto.verify(message.oneofDecl[i]);
                         if (error)
                             return "oneofDecl." + error;
                     }
                 }
                 if (message.options != null && message.hasOwnProperty("options")) {
-                    var error = $root.google.protobuf.MessageOptions.verify(message.options);
+                    let error = $root.google.protobuf.MessageOptions.verify(message.options);
                     if (error)
                         return "options." + error;
                 }
                 if (message.reservedRange != null && message.hasOwnProperty("reservedRange")) {
                     if (!Array.isArray(message.reservedRange))
                         return "reservedRange: array expected";
-                    for (var i = 0; i < message.reservedRange.length; ++i) {
-                        var error = $root.google.protobuf.DescriptorProto.ReservedRange.verify(message.reservedRange[i]);
+                    for (let i = 0; i < message.reservedRange.length; ++i) {
+                        let error = $root.google.protobuf.DescriptorProto.ReservedRange.verify(message.reservedRange[i]);
                         if (error)
                             return "reservedRange." + error;
                     }
@@ -49432,7 +49430,7 @@ $root.google = (function() {
                 if (message.reservedName != null && message.hasOwnProperty("reservedName")) {
                     if (!Array.isArray(message.reservedName))
                         return "reservedName: array expected";
-                    for (var i = 0; i < message.reservedName.length; ++i)
+                    for (let i = 0; i < message.reservedName.length; ++i)
                         if (!$util.isString(message.reservedName[i]))
                             return "reservedName: string[] expected";
                 }
@@ -49450,14 +49448,14 @@ $root.google = (function() {
             DescriptorProto.fromObject = function fromObject(object) {
                 if (object instanceof $root.google.protobuf.DescriptorProto)
                     return object;
-                var message = new $root.google.protobuf.DescriptorProto();
+                let message = new $root.google.protobuf.DescriptorProto();
                 if (object.name != null)
                     message.name = String(object.name);
                 if (object.field) {
                     if (!Array.isArray(object.field))
                         throw TypeError(".google.protobuf.DescriptorProto.field: array expected");
                     message.field = [];
-                    for (var i = 0; i < object.field.length; ++i) {
+                    for (let i = 0; i < object.field.length; ++i) {
                         if (typeof object.field[i] !== "object")
                             throw TypeError(".google.protobuf.DescriptorProto.field: object expected");
                         message.field[i] = $root.google.protobuf.FieldDescriptorProto.fromObject(object.field[i]);
@@ -49467,7 +49465,7 @@ $root.google = (function() {
                     if (!Array.isArray(object.extension))
                         throw TypeError(".google.protobuf.DescriptorProto.extension: array expected");
                     message.extension = [];
-                    for (var i = 0; i < object.extension.length; ++i) {
+                    for (let i = 0; i < object.extension.length; ++i) {
                         if (typeof object.extension[i] !== "object")
                             throw TypeError(".google.protobuf.DescriptorProto.extension: object expected");
                         message.extension[i] = $root.google.protobuf.FieldDescriptorProto.fromObject(object.extension[i]);
@@ -49477,7 +49475,7 @@ $root.google = (function() {
                     if (!Array.isArray(object.nestedType))
                         throw TypeError(".google.protobuf.DescriptorProto.nestedType: array expected");
                     message.nestedType = [];
-                    for (var i = 0; i < object.nestedType.length; ++i) {
+                    for (let i = 0; i < object.nestedType.length; ++i) {
                         if (typeof object.nestedType[i] !== "object")
                             throw TypeError(".google.protobuf.DescriptorProto.nestedType: object expected");
                         message.nestedType[i] = $root.google.protobuf.DescriptorProto.fromObject(object.nestedType[i]);
@@ -49487,7 +49485,7 @@ $root.google = (function() {
                     if (!Array.isArray(object.enumType))
                         throw TypeError(".google.protobuf.DescriptorProto.enumType: array expected");
                     message.enumType = [];
-                    for (var i = 0; i < object.enumType.length; ++i) {
+                    for (let i = 0; i < object.enumType.length; ++i) {
                         if (typeof object.enumType[i] !== "object")
                             throw TypeError(".google.protobuf.DescriptorProto.enumType: object expected");
                         message.enumType[i] = $root.google.protobuf.EnumDescriptorProto.fromObject(object.enumType[i]);
@@ -49497,7 +49495,7 @@ $root.google = (function() {
                     if (!Array.isArray(object.extensionRange))
                         throw TypeError(".google.protobuf.DescriptorProto.extensionRange: array expected");
                     message.extensionRange = [];
-                    for (var i = 0; i < object.extensionRange.length; ++i) {
+                    for (let i = 0; i < object.extensionRange.length; ++i) {
                         if (typeof object.extensionRange[i] !== "object")
                             throw TypeError(".google.protobuf.DescriptorProto.extensionRange: object expected");
                         message.extensionRange[i] = $root.google.protobuf.DescriptorProto.ExtensionRange.fromObject(object.extensionRange[i]);
@@ -49507,7 +49505,7 @@ $root.google = (function() {
                     if (!Array.isArray(object.oneofDecl))
                         throw TypeError(".google.protobuf.DescriptorProto.oneofDecl: array expected");
                     message.oneofDecl = [];
-                    for (var i = 0; i < object.oneofDecl.length; ++i) {
+                    for (let i = 0; i < object.oneofDecl.length; ++i) {
                         if (typeof object.oneofDecl[i] !== "object")
                             throw TypeError(".google.protobuf.DescriptorProto.oneofDecl: object expected");
                         message.oneofDecl[i] = $root.google.protobuf.OneofDescriptorProto.fromObject(object.oneofDecl[i]);
@@ -49522,7 +49520,7 @@ $root.google = (function() {
                     if (!Array.isArray(object.reservedRange))
                         throw TypeError(".google.protobuf.DescriptorProto.reservedRange: array expected");
                     message.reservedRange = [];
-                    for (var i = 0; i < object.reservedRange.length; ++i) {
+                    for (let i = 0; i < object.reservedRange.length; ++i) {
                         if (typeof object.reservedRange[i] !== "object")
                             throw TypeError(".google.protobuf.DescriptorProto.reservedRange: object expected");
                         message.reservedRange[i] = $root.google.protobuf.DescriptorProto.ReservedRange.fromObject(object.reservedRange[i]);
@@ -49532,7 +49530,7 @@ $root.google = (function() {
                     if (!Array.isArray(object.reservedName))
                         throw TypeError(".google.protobuf.DescriptorProto.reservedName: array expected");
                     message.reservedName = [];
-                    for (var i = 0; i < object.reservedName.length; ++i)
+                    for (let i = 0; i < object.reservedName.length; ++i)
                         message.reservedName[i] = String(object.reservedName[i]);
                 }
                 return message;
@@ -49550,7 +49548,7 @@ $root.google = (function() {
             DescriptorProto.toObject = function toObject(message, options) {
                 if (!options)
                     options = {};
-                var object = {};
+                let object = {};
                 if (options.arrays || options.defaults) {
                     object.field = [];
                     object.nestedType = [];
@@ -49569,44 +49567,44 @@ $root.google = (function() {
                     object.name = message.name;
                 if (message.field && message.field.length) {
                     object.field = [];
-                    for (var j = 0; j < message.field.length; ++j)
+                    for (let j = 0; j < message.field.length; ++j)
                         object.field[j] = $root.google.protobuf.FieldDescriptorProto.toObject(message.field[j], options);
                 }
                 if (message.nestedType && message.nestedType.length) {
                     object.nestedType = [];
-                    for (var j = 0; j < message.nestedType.length; ++j)
+                    for (let j = 0; j < message.nestedType.length; ++j)
                         object.nestedType[j] = $root.google.protobuf.DescriptorProto.toObject(message.nestedType[j], options);
                 }
                 if (message.enumType && message.enumType.length) {
                     object.enumType = [];
-                    for (var j = 0; j < message.enumType.length; ++j)
+                    for (let j = 0; j < message.enumType.length; ++j)
                         object.enumType[j] = $root.google.protobuf.EnumDescriptorProto.toObject(message.enumType[j], options);
                 }
                 if (message.extensionRange && message.extensionRange.length) {
                     object.extensionRange = [];
-                    for (var j = 0; j < message.extensionRange.length; ++j)
+                    for (let j = 0; j < message.extensionRange.length; ++j)
                         object.extensionRange[j] = $root.google.protobuf.DescriptorProto.ExtensionRange.toObject(message.extensionRange[j], options);
                 }
                 if (message.extension && message.extension.length) {
                     object.extension = [];
-                    for (var j = 0; j < message.extension.length; ++j)
+                    for (let j = 0; j < message.extension.length; ++j)
                         object.extension[j] = $root.google.protobuf.FieldDescriptorProto.toObject(message.extension[j], options);
                 }
                 if (message.options != null && message.hasOwnProperty("options"))
                     object.options = $root.google.protobuf.MessageOptions.toObject(message.options, options);
                 if (message.oneofDecl && message.oneofDecl.length) {
                     object.oneofDecl = [];
-                    for (var j = 0; j < message.oneofDecl.length; ++j)
+                    for (let j = 0; j < message.oneofDecl.length; ++j)
                         object.oneofDecl[j] = $root.google.protobuf.OneofDescriptorProto.toObject(message.oneofDecl[j], options);
                 }
                 if (message.reservedRange && message.reservedRange.length) {
                     object.reservedRange = [];
-                    for (var j = 0; j < message.reservedRange.length; ++j)
+                    for (let j = 0; j < message.reservedRange.length; ++j)
                         object.reservedRange[j] = $root.google.protobuf.DescriptorProto.ReservedRange.toObject(message.reservedRange[j], options);
                 }
                 if (message.reservedName && message.reservedName.length) {
                     object.reservedName = [];
-                    for (var j = 0; j < message.reservedName.length; ++j)
+                    for (let j = 0; j < message.reservedName.length; ++j)
                         object.reservedName[j] = message.reservedName[j];
                 }
                 return object;
@@ -49643,7 +49641,7 @@ $root.google = (function() {
                  */
                 function ExtensionRange(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -49722,9 +49720,9 @@ $root.google = (function() {
                 ExtensionRange.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.DescriptorProto.ExtensionRange();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.DescriptorProto.ExtensionRange();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.start = reader.int32();
@@ -49787,7 +49785,7 @@ $root.google = (function() {
                 ExtensionRange.fromObject = function fromObject(object) {
                     if (object instanceof $root.google.protobuf.DescriptorProto.ExtensionRange)
                         return object;
-                    var message = new $root.google.protobuf.DescriptorProto.ExtensionRange();
+                    let message = new $root.google.protobuf.DescriptorProto.ExtensionRange();
                     if (object.start != null)
                         message.start = object.start | 0;
                     if (object.end != null)
@@ -49807,7 +49805,7 @@ $root.google = (function() {
                 ExtensionRange.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.defaults) {
                         object.start = 0;
                         object.end = 0;
@@ -49853,7 +49851,7 @@ $root.google = (function() {
                  */
                 function ReservedRange(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -49932,9 +49930,9 @@ $root.google = (function() {
                 ReservedRange.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.DescriptorProto.ReservedRange();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.DescriptorProto.ReservedRange();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.start = reader.int32();
@@ -49997,7 +49995,7 @@ $root.google = (function() {
                 ReservedRange.fromObject = function fromObject(object) {
                     if (object instanceof $root.google.protobuf.DescriptorProto.ReservedRange)
                         return object;
-                    var message = new $root.google.protobuf.DescriptorProto.ReservedRange();
+                    let message = new $root.google.protobuf.DescriptorProto.ReservedRange();
                     if (object.start != null)
                         message.start = object.start | 0;
                     if (object.end != null)
@@ -50017,7 +50015,7 @@ $root.google = (function() {
                 ReservedRange.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.defaults) {
                         object.start = 0;
                         object.end = 0;
@@ -50074,7 +50072,7 @@ $root.google = (function() {
              */
             function FieldDescriptorProto(properties) {
                 if (properties)
-                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
                             this[keys[i]] = properties[keys[i]];
             }
@@ -50233,9 +50231,9 @@ $root.google = (function() {
             FieldDescriptorProto.decode = function decode(reader, length) {
                 if (!(reader instanceof $Reader))
                     reader = $Reader.create(reader);
-                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.FieldDescriptorProto();
+                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.FieldDescriptorProto();
                 while (reader.pos < end) {
-                    var tag = reader.uint32();
+                    let tag = reader.uint32();
                     switch (tag >>> 3) {
                     case 1:
                         message.name = reader.string();
@@ -50357,7 +50355,7 @@ $root.google = (function() {
                     if (!$util.isString(message.jsonName))
                         return "jsonName: string expected";
                 if (message.options != null && message.hasOwnProperty("options")) {
-                    var error = $root.google.protobuf.FieldOptions.verify(message.options);
+                    let error = $root.google.protobuf.FieldOptions.verify(message.options);
                     if (error)
                         return "options." + error;
                 }
@@ -50375,7 +50373,7 @@ $root.google = (function() {
             FieldDescriptorProto.fromObject = function fromObject(object) {
                 if (object instanceof $root.google.protobuf.FieldDescriptorProto)
                     return object;
-                var message = new $root.google.protobuf.FieldDescriptorProto();
+                let message = new $root.google.protobuf.FieldDescriptorProto();
                 if (object.name != null)
                     message.name = String(object.name);
                 if (object.number != null)
@@ -50498,7 +50496,7 @@ $root.google = (function() {
             FieldDescriptorProto.toObject = function toObject(message, options) {
                 if (!options)
                     options = {};
-                var object = {};
+                let object = {};
                 if (options.defaults) {
                     object.name = "";
                     object.extendee = "";
@@ -50569,7 +50567,7 @@ $root.google = (function() {
              * @property {number} TYPE_SINT64=18 TYPE_SINT64 value
              */
             FieldDescriptorProto.Type = (function() {
-                var valuesById = {}, values = Object.create(valuesById);
+                const valuesById = {}, values = Object.create(valuesById);
                 values[valuesById[1] = "TYPE_DOUBLE"] = 1;
                 values[valuesById[2] = "TYPE_FLOAT"] = 2;
                 values[valuesById[3] = "TYPE_INT64"] = 3;
@@ -50600,7 +50598,7 @@ $root.google = (function() {
              * @property {number} LABEL_REPEATED=3 LABEL_REPEATED value
              */
             FieldDescriptorProto.Label = (function() {
-                var valuesById = {}, values = Object.create(valuesById);
+                const valuesById = {}, values = Object.create(valuesById);
                 values[valuesById[1] = "LABEL_OPTIONAL"] = 1;
                 values[valuesById[2] = "LABEL_REQUIRED"] = 2;
                 values[valuesById[3] = "LABEL_REPEATED"] = 3;
@@ -50630,7 +50628,7 @@ $root.google = (function() {
              */
             function OneofDescriptorProto(properties) {
                 if (properties)
-                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
                             this[keys[i]] = properties[keys[i]];
             }
@@ -50709,9 +50707,9 @@ $root.google = (function() {
             OneofDescriptorProto.decode = function decode(reader, length) {
                 if (!(reader instanceof $Reader))
                     reader = $Reader.create(reader);
-                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.OneofDescriptorProto();
+                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.OneofDescriptorProto();
                 while (reader.pos < end) {
-                    var tag = reader.uint32();
+                    let tag = reader.uint32();
                     switch (tag >>> 3) {
                     case 1:
                         message.name = reader.string();
@@ -50758,7 +50756,7 @@ $root.google = (function() {
                     if (!$util.isString(message.name))
                         return "name: string expected";
                 if (message.options != null && message.hasOwnProperty("options")) {
-                    var error = $root.google.protobuf.OneofOptions.verify(message.options);
+                    let error = $root.google.protobuf.OneofOptions.verify(message.options);
                     if (error)
                         return "options." + error;
                 }
@@ -50776,7 +50774,7 @@ $root.google = (function() {
             OneofDescriptorProto.fromObject = function fromObject(object) {
                 if (object instanceof $root.google.protobuf.OneofDescriptorProto)
                     return object;
-                var message = new $root.google.protobuf.OneofDescriptorProto();
+                let message = new $root.google.protobuf.OneofDescriptorProto();
                 if (object.name != null)
                     message.name = String(object.name);
                 if (object.options != null) {
@@ -50799,7 +50797,7 @@ $root.google = (function() {
             OneofDescriptorProto.toObject = function toObject(message, options) {
                 if (!options)
                     options = {};
-                var object = {};
+                let object = {};
                 if (options.defaults) {
                     object.name = "";
                     object.options = null;
@@ -50847,7 +50845,7 @@ $root.google = (function() {
             function EnumDescriptorProto(properties) {
                 this.value = [];
                 if (properties)
-                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
                             this[keys[i]] = properties[keys[i]];
             }
@@ -50903,7 +50901,7 @@ $root.google = (function() {
                 if (message.name != null && Object.hasOwnProperty.call(message, "name"))
                     writer.uint32(/* id 1, wireType 2 =*/10).string(message.name);
                 if (message.value != null && message.value.length)
-                    for (var i = 0; i < message.value.length; ++i)
+                    for (let i = 0; i < message.value.length; ++i)
                         $root.google.protobuf.EnumValueDescriptorProto.encode(message.value[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
                 if (message.options != null && Object.hasOwnProperty.call(message, "options"))
                     $root.google.protobuf.EnumOptions.encode(message.options, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
@@ -50937,9 +50935,9 @@ $root.google = (function() {
             EnumDescriptorProto.decode = function decode(reader, length) {
                 if (!(reader instanceof $Reader))
                     reader = $Reader.create(reader);
-                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.EnumDescriptorProto();
+                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.EnumDescriptorProto();
                 while (reader.pos < end) {
-                    var tag = reader.uint32();
+                    let tag = reader.uint32();
                     switch (tag >>> 3) {
                     case 1:
                         message.name = reader.string();
@@ -50993,14 +50991,14 @@ $root.google = (function() {
                 if (message.value != null && message.hasOwnProperty("value")) {
                     if (!Array.isArray(message.value))
                         return "value: array expected";
-                    for (var i = 0; i < message.value.length; ++i) {
-                        var error = $root.google.protobuf.EnumValueDescriptorProto.verify(message.value[i]);
+                    for (let i = 0; i < message.value.length; ++i) {
+                        let error = $root.google.protobuf.EnumValueDescriptorProto.verify(message.value[i]);
                         if (error)
                             return "value." + error;
                     }
                 }
                 if (message.options != null && message.hasOwnProperty("options")) {
-                    var error = $root.google.protobuf.EnumOptions.verify(message.options);
+                    let error = $root.google.protobuf.EnumOptions.verify(message.options);
                     if (error)
                         return "options." + error;
                 }
@@ -51018,14 +51016,14 @@ $root.google = (function() {
             EnumDescriptorProto.fromObject = function fromObject(object) {
                 if (object instanceof $root.google.protobuf.EnumDescriptorProto)
                     return object;
-                var message = new $root.google.protobuf.EnumDescriptorProto();
+                let message = new $root.google.protobuf.EnumDescriptorProto();
                 if (object.name != null)
                     message.name = String(object.name);
                 if (object.value) {
                     if (!Array.isArray(object.value))
                         throw TypeError(".google.protobuf.EnumDescriptorProto.value: array expected");
                     message.value = [];
-                    for (var i = 0; i < object.value.length; ++i) {
+                    for (let i = 0; i < object.value.length; ++i) {
                         if (typeof object.value[i] !== "object")
                             throw TypeError(".google.protobuf.EnumDescriptorProto.value: object expected");
                         message.value[i] = $root.google.protobuf.EnumValueDescriptorProto.fromObject(object.value[i]);
@@ -51051,7 +51049,7 @@ $root.google = (function() {
             EnumDescriptorProto.toObject = function toObject(message, options) {
                 if (!options)
                     options = {};
-                var object = {};
+                let object = {};
                 if (options.arrays || options.defaults)
                     object.value = [];
                 if (options.defaults) {
@@ -51062,7 +51060,7 @@ $root.google = (function() {
                     object.name = message.name;
                 if (message.value && message.value.length) {
                     object.value = [];
-                    for (var j = 0; j < message.value.length; ++j)
+                    for (let j = 0; j < message.value.length; ++j)
                         object.value[j] = $root.google.protobuf.EnumValueDescriptorProto.toObject(message.value[j], options);
                 }
                 if (message.options != null && message.hasOwnProperty("options"))
@@ -51105,7 +51103,7 @@ $root.google = (function() {
              */
             function EnumValueDescriptorProto(properties) {
                 if (properties)
-                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
                             this[keys[i]] = properties[keys[i]];
             }
@@ -51194,9 +51192,9 @@ $root.google = (function() {
             EnumValueDescriptorProto.decode = function decode(reader, length) {
                 if (!(reader instanceof $Reader))
                     reader = $Reader.create(reader);
-                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.EnumValueDescriptorProto();
+                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.EnumValueDescriptorProto();
                 while (reader.pos < end) {
-                    var tag = reader.uint32();
+                    let tag = reader.uint32();
                     switch (tag >>> 3) {
                     case 1:
                         message.name = reader.string();
@@ -51249,7 +51247,7 @@ $root.google = (function() {
                     if (!$util.isInteger(message.number))
                         return "number: integer expected";
                 if (message.options != null && message.hasOwnProperty("options")) {
-                    var error = $root.google.protobuf.EnumValueOptions.verify(message.options);
+                    let error = $root.google.protobuf.EnumValueOptions.verify(message.options);
                     if (error)
                         return "options." + error;
                 }
@@ -51267,7 +51265,7 @@ $root.google = (function() {
             EnumValueDescriptorProto.fromObject = function fromObject(object) {
                 if (object instanceof $root.google.protobuf.EnumValueDescriptorProto)
                     return object;
-                var message = new $root.google.protobuf.EnumValueDescriptorProto();
+                let message = new $root.google.protobuf.EnumValueDescriptorProto();
                 if (object.name != null)
                     message.name = String(object.name);
                 if (object.number != null)
@@ -51292,7 +51290,7 @@ $root.google = (function() {
             EnumValueDescriptorProto.toObject = function toObject(message, options) {
                 if (!options)
                     options = {};
-                var object = {};
+                let object = {};
                 if (options.defaults) {
                     object.name = "";
                     object.number = 0;
@@ -51343,7 +51341,7 @@ $root.google = (function() {
             function ServiceDescriptorProto(properties) {
                 this.method = [];
                 if (properties)
-                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
                             this[keys[i]] = properties[keys[i]];
             }
@@ -51399,7 +51397,7 @@ $root.google = (function() {
                 if (message.name != null && Object.hasOwnProperty.call(message, "name"))
                     writer.uint32(/* id 1, wireType 2 =*/10).string(message.name);
                 if (message.method != null && message.method.length)
-                    for (var i = 0; i < message.method.length; ++i)
+                    for (let i = 0; i < message.method.length; ++i)
                         $root.google.protobuf.MethodDescriptorProto.encode(message.method[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
                 if (message.options != null && Object.hasOwnProperty.call(message, "options"))
                     $root.google.protobuf.ServiceOptions.encode(message.options, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
@@ -51433,9 +51431,9 @@ $root.google = (function() {
             ServiceDescriptorProto.decode = function decode(reader, length) {
                 if (!(reader instanceof $Reader))
                     reader = $Reader.create(reader);
-                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.ServiceDescriptorProto();
+                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.ServiceDescriptorProto();
                 while (reader.pos < end) {
-                    var tag = reader.uint32();
+                    let tag = reader.uint32();
                     switch (tag >>> 3) {
                     case 1:
                         message.name = reader.string();
@@ -51489,14 +51487,14 @@ $root.google = (function() {
                 if (message.method != null && message.hasOwnProperty("method")) {
                     if (!Array.isArray(message.method))
                         return "method: array expected";
-                    for (var i = 0; i < message.method.length; ++i) {
-                        var error = $root.google.protobuf.MethodDescriptorProto.verify(message.method[i]);
+                    for (let i = 0; i < message.method.length; ++i) {
+                        let error = $root.google.protobuf.MethodDescriptorProto.verify(message.method[i]);
                         if (error)
                             return "method." + error;
                     }
                 }
                 if (message.options != null && message.hasOwnProperty("options")) {
-                    var error = $root.google.protobuf.ServiceOptions.verify(message.options);
+                    let error = $root.google.protobuf.ServiceOptions.verify(message.options);
                     if (error)
                         return "options." + error;
                 }
@@ -51514,14 +51512,14 @@ $root.google = (function() {
             ServiceDescriptorProto.fromObject = function fromObject(object) {
                 if (object instanceof $root.google.protobuf.ServiceDescriptorProto)
                     return object;
-                var message = new $root.google.protobuf.ServiceDescriptorProto();
+                let message = new $root.google.protobuf.ServiceDescriptorProto();
                 if (object.name != null)
                     message.name = String(object.name);
                 if (object.method) {
                     if (!Array.isArray(object.method))
                         throw TypeError(".google.protobuf.ServiceDescriptorProto.method: array expected");
                     message.method = [];
-                    for (var i = 0; i < object.method.length; ++i) {
+                    for (let i = 0; i < object.method.length; ++i) {
                         if (typeof object.method[i] !== "object")
                             throw TypeError(".google.protobuf.ServiceDescriptorProto.method: object expected");
                         message.method[i] = $root.google.protobuf.MethodDescriptorProto.fromObject(object.method[i]);
@@ -51547,7 +51545,7 @@ $root.google = (function() {
             ServiceDescriptorProto.toObject = function toObject(message, options) {
                 if (!options)
                     options = {};
-                var object = {};
+                let object = {};
                 if (options.arrays || options.defaults)
                     object.method = [];
                 if (options.defaults) {
@@ -51558,7 +51556,7 @@ $root.google = (function() {
                     object.name = message.name;
                 if (message.method && message.method.length) {
                     object.method = [];
-                    for (var j = 0; j < message.method.length; ++j)
+                    for (let j = 0; j < message.method.length; ++j)
                         object.method[j] = $root.google.protobuf.MethodDescriptorProto.toObject(message.method[j], options);
                 }
                 if (message.options != null && message.hasOwnProperty("options"))
@@ -51604,7 +51602,7 @@ $root.google = (function() {
              */
             function MethodDescriptorProto(properties) {
                 if (properties)
-                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
                             this[keys[i]] = properties[keys[i]];
             }
@@ -51723,9 +51721,9 @@ $root.google = (function() {
             MethodDescriptorProto.decode = function decode(reader, length) {
                 if (!(reader instanceof $Reader))
                     reader = $Reader.create(reader);
-                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.MethodDescriptorProto();
+                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.MethodDescriptorProto();
                 while (reader.pos < end) {
-                    var tag = reader.uint32();
+                    let tag = reader.uint32();
                     switch (tag >>> 3) {
                     case 1:
                         message.name = reader.string();
@@ -51790,7 +51788,7 @@ $root.google = (function() {
                     if (!$util.isString(message.outputType))
                         return "outputType: string expected";
                 if (message.options != null && message.hasOwnProperty("options")) {
-                    var error = $root.google.protobuf.MethodOptions.verify(message.options);
+                    let error = $root.google.protobuf.MethodOptions.verify(message.options);
                     if (error)
                         return "options." + error;
                 }
@@ -51814,7 +51812,7 @@ $root.google = (function() {
             MethodDescriptorProto.fromObject = function fromObject(object) {
                 if (object instanceof $root.google.protobuf.MethodDescriptorProto)
                     return object;
-                var message = new $root.google.protobuf.MethodDescriptorProto();
+                let message = new $root.google.protobuf.MethodDescriptorProto();
                 if (object.name != null)
                     message.name = String(object.name);
                 if (object.inputType != null)
@@ -51845,7 +51843,7 @@ $root.google = (function() {
             MethodDescriptorProto.toObject = function toObject(message, options) {
                 if (!options)
                     options = {};
-                var object = {};
+                let object = {};
                 if (options.defaults) {
                     object.name = "";
                     object.inputType = "";
@@ -51949,7 +51947,7 @@ $root.google = (function() {
             function FileOptions(properties) {
                 this.uninterpretedOption = [];
                 if (properties)
-                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
                             this[keys[i]] = properties[keys[i]];
             }
@@ -52383,7 +52381,7 @@ $root.google = (function() {
                 if (message.csharpNamespace != null && Object.hasOwnProperty.call(message, "csharpNamespace"))
                     writer.uint32(/* id 37, wireType 2 =*/298).string(message.csharpNamespace);
                 if (message.uninterpretedOption != null && message.uninterpretedOption.length)
-                    for (var i = 0; i < message.uninterpretedOption.length; ++i)
+                    for (let i = 0; i < message.uninterpretedOption.length; ++i)
                         $root.google.protobuf.UninterpretedOption.encode(message.uninterpretedOption[i], writer.uint32(/* id 999, wireType 2 =*/7994).fork()).ldelim();
                 if (message[".gogoproto.goprotoGettersAll"] != null && Object.hasOwnProperty.call(message, ".gogoproto.goprotoGettersAll"))
                     writer.uint32(/* id 63001, wireType 0 =*/504008).bool(message[".gogoproto.goprotoGettersAll"]);
@@ -52479,9 +52477,9 @@ $root.google = (function() {
             FileOptions.decode = function decode(reader, length) {
                 if (!(reader instanceof $Reader))
                     reader = $Reader.create(reader);
-                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.FileOptions();
+                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.FileOptions();
                 while (reader.pos < end) {
-                    var tag = reader.uint32();
+                    let tag = reader.uint32();
                     switch (tag >>> 3) {
                     case 1:
                         message.javaPackage = reader.string();
@@ -52712,8 +52710,8 @@ $root.google = (function() {
                 if (message.uninterpretedOption != null && message.hasOwnProperty("uninterpretedOption")) {
                     if (!Array.isArray(message.uninterpretedOption))
                         return "uninterpretedOption: array expected";
-                    for (var i = 0; i < message.uninterpretedOption.length; ++i) {
-                        var error = $root.google.protobuf.UninterpretedOption.verify(message.uninterpretedOption[i]);
+                    for (let i = 0; i < message.uninterpretedOption.length; ++i) {
+                        let error = $root.google.protobuf.UninterpretedOption.verify(message.uninterpretedOption[i]);
                         if (error)
                             return "uninterpretedOption." + error;
                     }
@@ -52828,7 +52826,7 @@ $root.google = (function() {
             FileOptions.fromObject = function fromObject(object) {
                 if (object instanceof $root.google.protobuf.FileOptions)
                     return object;
-                var message = new $root.google.protobuf.FileOptions();
+                let message = new $root.google.protobuf.FileOptions();
                 if (object.javaPackage != null)
                     message.javaPackage = String(object.javaPackage);
                 if (object.javaOuterClassname != null)
@@ -52873,7 +52871,7 @@ $root.google = (function() {
                     if (!Array.isArray(object.uninterpretedOption))
                         throw TypeError(".google.protobuf.FileOptions.uninterpretedOption: array expected");
                     message.uninterpretedOption = [];
-                    for (var i = 0; i < object.uninterpretedOption.length; ++i) {
+                    for (let i = 0; i < object.uninterpretedOption.length; ++i) {
                         if (typeof object.uninterpretedOption[i] !== "object")
                             throw TypeError(".google.protobuf.FileOptions.uninterpretedOption: object expected");
                         message.uninterpretedOption[i] = $root.google.protobuf.UninterpretedOption.fromObject(object.uninterpretedOption[i]);
@@ -52958,7 +52956,7 @@ $root.google = (function() {
             FileOptions.toObject = function toObject(message, options) {
                 if (!options)
                     options = {};
-                var object = {};
+                let object = {};
                 if (options.arrays || options.defaults)
                     object.uninterpretedOption = [];
                 if (options.defaults) {
@@ -53039,7 +53037,7 @@ $root.google = (function() {
                     object.csharpNamespace = message.csharpNamespace;
                 if (message.uninterpretedOption && message.uninterpretedOption.length) {
                     object.uninterpretedOption = [];
-                    for (var j = 0; j < message.uninterpretedOption.length; ++j)
+                    for (let j = 0; j < message.uninterpretedOption.length; ++j)
                         object.uninterpretedOption[j] = $root.google.protobuf.UninterpretedOption.toObject(message.uninterpretedOption[j], options);
                 }
                 if (message[".gogoproto.goprotoGettersAll"] != null && message.hasOwnProperty(".gogoproto.goprotoGettersAll"))
@@ -53129,7 +53127,7 @@ $root.google = (function() {
              * @property {number} LITE_RUNTIME=3 LITE_RUNTIME value
              */
             FileOptions.OptimizeMode = (function() {
-                var valuesById = {}, values = Object.create(valuesById);
+                const valuesById = {}, values = Object.create(valuesById);
                 values[valuesById[1] = "SPEED"] = 1;
                 values[valuesById[2] = "CODE_SIZE"] = 2;
                 values[valuesById[3] = "LITE_RUNTIME"] = 3;
@@ -53191,7 +53189,7 @@ $root.google = (function() {
             function MessageOptions(properties) {
                 this.uninterpretedOption = [];
                 if (properties)
-                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
                             this[keys[i]] = properties[keys[i]];
             }
@@ -53493,7 +53491,7 @@ $root.google = (function() {
                 if (message.mapEntry != null && Object.hasOwnProperty.call(message, "mapEntry"))
                     writer.uint32(/* id 7, wireType 0 =*/56).bool(message.mapEntry);
                 if (message.uninterpretedOption != null && message.uninterpretedOption.length)
-                    for (var i = 0; i < message.uninterpretedOption.length; ++i)
+                    for (let i = 0; i < message.uninterpretedOption.length; ++i)
                         $root.google.protobuf.UninterpretedOption.encode(message.uninterpretedOption[i], writer.uint32(/* id 999, wireType 2 =*/7994).fork()).ldelim();
                 if (message[".gogoproto.goprotoGetters"] != null && Object.hasOwnProperty.call(message, ".gogoproto.goprotoGetters"))
                     writer.uint32(/* id 64001, wireType 0 =*/512008).bool(message[".gogoproto.goprotoGetters"]);
@@ -53581,9 +53579,9 @@ $root.google = (function() {
             MessageOptions.decode = function decode(reader, length) {
                 if (!(reader instanceof $Reader))
                     reader = $Reader.create(reader);
-                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.MessageOptions();
+                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.MessageOptions();
                 while (reader.pos < end) {
-                    var tag = reader.uint32();
+                    let tag = reader.uint32();
                     switch (tag >>> 3) {
                     case 1:
                         message.messageSetWireFormat = reader.bool();
@@ -53736,8 +53734,8 @@ $root.google = (function() {
                 if (message.uninterpretedOption != null && message.hasOwnProperty("uninterpretedOption")) {
                     if (!Array.isArray(message.uninterpretedOption))
                         return "uninterpretedOption: array expected";
-                    for (var i = 0; i < message.uninterpretedOption.length; ++i) {
-                        var error = $root.google.protobuf.UninterpretedOption.verify(message.uninterpretedOption[i]);
+                    for (let i = 0; i < message.uninterpretedOption.length; ++i) {
+                        let error = $root.google.protobuf.UninterpretedOption.verify(message.uninterpretedOption[i]);
                         if (error)
                             return "uninterpretedOption." + error;
                     }
@@ -53840,7 +53838,7 @@ $root.google = (function() {
             MessageOptions.fromObject = function fromObject(object) {
                 if (object instanceof $root.google.protobuf.MessageOptions)
                     return object;
-                var message = new $root.google.protobuf.MessageOptions();
+                let message = new $root.google.protobuf.MessageOptions();
                 if (object.messageSetWireFormat != null)
                     message.messageSetWireFormat = Boolean(object.messageSetWireFormat);
                 if (object.noStandardDescriptorAccessor != null)
@@ -53853,7 +53851,7 @@ $root.google = (function() {
                     if (!Array.isArray(object.uninterpretedOption))
                         throw TypeError(".google.protobuf.MessageOptions.uninterpretedOption: array expected");
                     message.uninterpretedOption = [];
-                    for (var i = 0; i < object.uninterpretedOption.length; ++i) {
+                    for (let i = 0; i < object.uninterpretedOption.length; ++i) {
                         if (typeof object.uninterpretedOption[i] !== "object")
                             throw TypeError(".google.protobuf.MessageOptions.uninterpretedOption: object expected");
                         message.uninterpretedOption[i] = $root.google.protobuf.UninterpretedOption.fromObject(object.uninterpretedOption[i]);
@@ -53930,7 +53928,7 @@ $root.google = (function() {
             MessageOptions.toObject = function toObject(message, options) {
                 if (!options)
                     options = {};
-                var object = {};
+                let object = {};
                 if (options.arrays || options.defaults)
                     object.uninterpretedOption = [];
                 if (options.defaults) {
@@ -53977,7 +53975,7 @@ $root.google = (function() {
                     object.mapEntry = message.mapEntry;
                 if (message.uninterpretedOption && message.uninterpretedOption.length) {
                     object.uninterpretedOption = [];
-                    for (var j = 0; j < message.uninterpretedOption.length; ++j)
+                    for (let j = 0; j < message.uninterpretedOption.length; ++j)
                         object.uninterpretedOption[j] = $root.google.protobuf.UninterpretedOption.toObject(message.uninterpretedOption[j], options);
                 }
                 if (message[".gogoproto.goprotoGetters"] != null && message.hasOwnProperty(".gogoproto.goprotoGetters"))
@@ -54093,7 +54091,7 @@ $root.google = (function() {
             function FieldOptions(properties) {
                 this.uninterpretedOption = [];
                 if (properties)
-                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
                             this[keys[i]] = properties[keys[i]];
             }
@@ -54303,7 +54301,7 @@ $root.google = (function() {
                 if (message.weak != null && Object.hasOwnProperty.call(message, "weak"))
                     writer.uint32(/* id 10, wireType 0 =*/80).bool(message.weak);
                 if (message.uninterpretedOption != null && message.uninterpretedOption.length)
-                    for (var i = 0; i < message.uninterpretedOption.length; ++i)
+                    for (let i = 0; i < message.uninterpretedOption.length; ++i)
                         $root.google.protobuf.UninterpretedOption.encode(message.uninterpretedOption[i], writer.uint32(/* id 999, wireType 2 =*/7994).fork()).ldelim();
                 if (message[".gogoproto.nullable"] != null && Object.hasOwnProperty.call(message, ".gogoproto.nullable"))
                     writer.uint32(/* id 65001, wireType 0 =*/520008).bool(message[".gogoproto.nullable"]);
@@ -54363,9 +54361,9 @@ $root.google = (function() {
             FieldOptions.decode = function decode(reader, length) {
                 if (!(reader instanceof $Reader))
                     reader = $Reader.create(reader);
-                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.FieldOptions();
+                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.FieldOptions();
                 while (reader.pos < end) {
-                    var tag = reader.uint32();
+                    let tag = reader.uint32();
                     switch (tag >>> 3) {
                     case 1:
                         message.ctype = reader.int32();
@@ -54500,8 +54498,8 @@ $root.google = (function() {
                 if (message.uninterpretedOption != null && message.hasOwnProperty("uninterpretedOption")) {
                     if (!Array.isArray(message.uninterpretedOption))
                         return "uninterpretedOption: array expected";
-                    for (var i = 0; i < message.uninterpretedOption.length; ++i) {
-                        var error = $root.google.protobuf.UninterpretedOption.verify(message.uninterpretedOption[i]);
+                    for (let i = 0; i < message.uninterpretedOption.length; ++i) {
+                        let error = $root.google.protobuf.UninterpretedOption.verify(message.uninterpretedOption[i]);
                         if (error)
                             return "uninterpretedOption." + error;
                     }
@@ -54562,7 +54560,7 @@ $root.google = (function() {
             FieldOptions.fromObject = function fromObject(object) {
                 if (object instanceof $root.google.protobuf.FieldOptions)
                     return object;
-                var message = new $root.google.protobuf.FieldOptions();
+                let message = new $root.google.protobuf.FieldOptions();
                 switch (object.ctype) {
                 case "STRING":
                 case 0:
@@ -54603,7 +54601,7 @@ $root.google = (function() {
                     if (!Array.isArray(object.uninterpretedOption))
                         throw TypeError(".google.protobuf.FieldOptions.uninterpretedOption: array expected");
                     message.uninterpretedOption = [];
-                    for (var i = 0; i < object.uninterpretedOption.length; ++i) {
+                    for (let i = 0; i < object.uninterpretedOption.length; ++i) {
                         if (typeof object.uninterpretedOption[i] !== "object")
                             throw TypeError(".google.protobuf.FieldOptions.uninterpretedOption: object expected");
                         message.uninterpretedOption[i] = $root.google.protobuf.UninterpretedOption.fromObject(object.uninterpretedOption[i]);
@@ -54652,7 +54650,7 @@ $root.google = (function() {
             FieldOptions.toObject = function toObject(message, options) {
                 if (!options)
                     options = {};
-                var object = {};
+                let object = {};
                 if (options.arrays || options.defaults)
                     object.uninterpretedOption = [];
                 if (options.defaults) {
@@ -54691,7 +54689,7 @@ $root.google = (function() {
                     object.weak = message.weak;
                 if (message.uninterpretedOption && message.uninterpretedOption.length) {
                     object.uninterpretedOption = [];
-                    for (var j = 0; j < message.uninterpretedOption.length; ++j)
+                    for (let j = 0; j < message.uninterpretedOption.length; ++j)
                         object.uninterpretedOption[j] = $root.google.protobuf.UninterpretedOption.toObject(message.uninterpretedOption[j], options);
                 }
                 if (message[".gogoproto.nullable"] != null && message.hasOwnProperty(".gogoproto.nullable"))
@@ -54745,7 +54743,7 @@ $root.google = (function() {
              * @property {number} STRING_PIECE=2 STRING_PIECE value
              */
             FieldOptions.CType = (function() {
-                var valuesById = {}, values = Object.create(valuesById);
+                const valuesById = {}, values = Object.create(valuesById);
                 values[valuesById[0] = "STRING"] = 0;
                 values[valuesById[1] = "CORD"] = 1;
                 values[valuesById[2] = "STRING_PIECE"] = 2;
@@ -54761,7 +54759,7 @@ $root.google = (function() {
              * @property {number} JS_NUMBER=2 JS_NUMBER value
              */
             FieldOptions.JSType = (function() {
-                var valuesById = {}, values = Object.create(valuesById);
+                const valuesById = {}, values = Object.create(valuesById);
                 values[valuesById[0] = "JS_NORMAL"] = 0;
                 values[valuesById[1] = "JS_STRING"] = 1;
                 values[valuesById[2] = "JS_NUMBER"] = 2;
@@ -54791,7 +54789,7 @@ $root.google = (function() {
             function OneofOptions(properties) {
                 this.uninterpretedOption = [];
                 if (properties)
-                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
                             this[keys[i]] = properties[keys[i]];
             }
@@ -54829,7 +54827,7 @@ $root.google = (function() {
                 if (!writer)
                     writer = $Writer.create();
                 if (message.uninterpretedOption != null && message.uninterpretedOption.length)
-                    for (var i = 0; i < message.uninterpretedOption.length; ++i)
+                    for (let i = 0; i < message.uninterpretedOption.length; ++i)
                         $root.google.protobuf.UninterpretedOption.encode(message.uninterpretedOption[i], writer.uint32(/* id 999, wireType 2 =*/7994).fork()).ldelim();
                 return writer;
             };
@@ -54861,9 +54859,9 @@ $root.google = (function() {
             OneofOptions.decode = function decode(reader, length) {
                 if (!(reader instanceof $Reader))
                     reader = $Reader.create(reader);
-                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.OneofOptions();
+                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.OneofOptions();
                 while (reader.pos < end) {
-                    var tag = reader.uint32();
+                    let tag = reader.uint32();
                     switch (tag >>> 3) {
                     case 999:
                         if (!(message.uninterpretedOption && message.uninterpretedOption.length))
@@ -54908,8 +54906,8 @@ $root.google = (function() {
                 if (message.uninterpretedOption != null && message.hasOwnProperty("uninterpretedOption")) {
                     if (!Array.isArray(message.uninterpretedOption))
                         return "uninterpretedOption: array expected";
-                    for (var i = 0; i < message.uninterpretedOption.length; ++i) {
-                        var error = $root.google.protobuf.UninterpretedOption.verify(message.uninterpretedOption[i]);
+                    for (let i = 0; i < message.uninterpretedOption.length; ++i) {
+                        let error = $root.google.protobuf.UninterpretedOption.verify(message.uninterpretedOption[i]);
                         if (error)
                             return "uninterpretedOption." + error;
                     }
@@ -54928,12 +54926,12 @@ $root.google = (function() {
             OneofOptions.fromObject = function fromObject(object) {
                 if (object instanceof $root.google.protobuf.OneofOptions)
                     return object;
-                var message = new $root.google.protobuf.OneofOptions();
+                let message = new $root.google.protobuf.OneofOptions();
                 if (object.uninterpretedOption) {
                     if (!Array.isArray(object.uninterpretedOption))
                         throw TypeError(".google.protobuf.OneofOptions.uninterpretedOption: array expected");
                     message.uninterpretedOption = [];
-                    for (var i = 0; i < object.uninterpretedOption.length; ++i) {
+                    for (let i = 0; i < object.uninterpretedOption.length; ++i) {
                         if (typeof object.uninterpretedOption[i] !== "object")
                             throw TypeError(".google.protobuf.OneofOptions.uninterpretedOption: object expected");
                         message.uninterpretedOption[i] = $root.google.protobuf.UninterpretedOption.fromObject(object.uninterpretedOption[i]);
@@ -54954,12 +54952,12 @@ $root.google = (function() {
             OneofOptions.toObject = function toObject(message, options) {
                 if (!options)
                     options = {};
-                var object = {};
+                let object = {};
                 if (options.arrays || options.defaults)
                     object.uninterpretedOption = [];
                 if (message.uninterpretedOption && message.uninterpretedOption.length) {
                     object.uninterpretedOption = [];
-                    for (var j = 0; j < message.uninterpretedOption.length; ++j)
+                    for (let j = 0; j < message.uninterpretedOption.length; ++j)
                         object.uninterpretedOption[j] = $root.google.protobuf.UninterpretedOption.toObject(message.uninterpretedOption[j], options);
                 }
                 return object;
@@ -55006,7 +55004,7 @@ $root.google = (function() {
             function EnumOptions(properties) {
                 this.uninterpretedOption = [];
                 if (properties)
-                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
                             this[keys[i]] = properties[keys[i]];
             }
@@ -55104,7 +55102,7 @@ $root.google = (function() {
                 if (message.deprecated != null && Object.hasOwnProperty.call(message, "deprecated"))
                     writer.uint32(/* id 3, wireType 0 =*/24).bool(message.deprecated);
                 if (message.uninterpretedOption != null && message.uninterpretedOption.length)
-                    for (var i = 0; i < message.uninterpretedOption.length; ++i)
+                    for (let i = 0; i < message.uninterpretedOption.length; ++i)
                         $root.google.protobuf.UninterpretedOption.encode(message.uninterpretedOption[i], writer.uint32(/* id 999, wireType 2 =*/7994).fork()).ldelim();
                 if (message[".gogoproto.goprotoEnumPrefix"] != null && Object.hasOwnProperty.call(message, ".gogoproto.goprotoEnumPrefix"))
                     writer.uint32(/* id 62001, wireType 0 =*/496008).bool(message[".gogoproto.goprotoEnumPrefix"]);
@@ -55146,9 +55144,9 @@ $root.google = (function() {
             EnumOptions.decode = function decode(reader, length) {
                 if (!(reader instanceof $Reader))
                     reader = $Reader.create(reader);
-                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.EnumOptions();
+                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.EnumOptions();
                 while (reader.pos < end) {
-                    var tag = reader.uint32();
+                    let tag = reader.uint32();
                     switch (tag >>> 3) {
                     case 2:
                         message.allowAlias = reader.bool();
@@ -55220,8 +55218,8 @@ $root.google = (function() {
                 if (message.uninterpretedOption != null && message.hasOwnProperty("uninterpretedOption")) {
                     if (!Array.isArray(message.uninterpretedOption))
                         return "uninterpretedOption: array expected";
-                    for (var i = 0; i < message.uninterpretedOption.length; ++i) {
-                        var error = $root.google.protobuf.UninterpretedOption.verify(message.uninterpretedOption[i]);
+                    for (let i = 0; i < message.uninterpretedOption.length; ++i) {
+                        let error = $root.google.protobuf.UninterpretedOption.verify(message.uninterpretedOption[i]);
                         if (error)
                             return "uninterpretedOption." + error;
                     }
@@ -55255,7 +55253,7 @@ $root.google = (function() {
             EnumOptions.fromObject = function fromObject(object) {
                 if (object instanceof $root.google.protobuf.EnumOptions)
                     return object;
-                var message = new $root.google.protobuf.EnumOptions();
+                let message = new $root.google.protobuf.EnumOptions();
                 if (object.allowAlias != null)
                     message.allowAlias = Boolean(object.allowAlias);
                 if (object.deprecated != null)
@@ -55264,7 +55262,7 @@ $root.google = (function() {
                     if (!Array.isArray(object.uninterpretedOption))
                         throw TypeError(".google.protobuf.EnumOptions.uninterpretedOption: array expected");
                     message.uninterpretedOption = [];
-                    for (var i = 0; i < object.uninterpretedOption.length; ++i) {
+                    for (let i = 0; i < object.uninterpretedOption.length; ++i) {
                         if (typeof object.uninterpretedOption[i] !== "object")
                             throw TypeError(".google.protobuf.EnumOptions.uninterpretedOption: object expected");
                         message.uninterpretedOption[i] = $root.google.protobuf.UninterpretedOption.fromObject(object.uninterpretedOption[i]);
@@ -55295,7 +55293,7 @@ $root.google = (function() {
             EnumOptions.toObject = function toObject(message, options) {
                 if (!options)
                     options = {};
-                var object = {};
+                let object = {};
                 if (options.arrays || options.defaults)
                     object.uninterpretedOption = [];
                 if (options.defaults) {
@@ -55313,7 +55311,7 @@ $root.google = (function() {
                     object.deprecated = message.deprecated;
                 if (message.uninterpretedOption && message.uninterpretedOption.length) {
                     object.uninterpretedOption = [];
-                    for (var j = 0; j < message.uninterpretedOption.length; ++j)
+                    for (let j = 0; j < message.uninterpretedOption.length; ++j)
                         object.uninterpretedOption[j] = $root.google.protobuf.UninterpretedOption.toObject(message.uninterpretedOption[j], options);
                 }
                 if (message[".gogoproto.goprotoEnumPrefix"] != null && message.hasOwnProperty(".gogoproto.goprotoEnumPrefix"))
@@ -55365,7 +55363,7 @@ $root.google = (function() {
             function EnumValueOptions(properties) {
                 this.uninterpretedOption = [];
                 if (properties)
-                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
                             this[keys[i]] = properties[keys[i]];
             }
@@ -55421,7 +55419,7 @@ $root.google = (function() {
                 if (message.deprecated != null && Object.hasOwnProperty.call(message, "deprecated"))
                     writer.uint32(/* id 1, wireType 0 =*/8).bool(message.deprecated);
                 if (message.uninterpretedOption != null && message.uninterpretedOption.length)
-                    for (var i = 0; i < message.uninterpretedOption.length; ++i)
+                    for (let i = 0; i < message.uninterpretedOption.length; ++i)
                         $root.google.protobuf.UninterpretedOption.encode(message.uninterpretedOption[i], writer.uint32(/* id 999, wireType 2 =*/7994).fork()).ldelim();
                 if (message[".gogoproto.enumvalueCustomname"] != null && Object.hasOwnProperty.call(message, ".gogoproto.enumvalueCustomname"))
                     writer.uint32(/* id 66001, wireType 2 =*/528010).string(message[".gogoproto.enumvalueCustomname"]);
@@ -55455,9 +55453,9 @@ $root.google = (function() {
             EnumValueOptions.decode = function decode(reader, length) {
                 if (!(reader instanceof $Reader))
                     reader = $Reader.create(reader);
-                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.EnumValueOptions();
+                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.EnumValueOptions();
                 while (reader.pos < end) {
-                    var tag = reader.uint32();
+                    let tag = reader.uint32();
                     switch (tag >>> 3) {
                     case 1:
                         message.deprecated = reader.bool();
@@ -55511,8 +55509,8 @@ $root.google = (function() {
                 if (message.uninterpretedOption != null && message.hasOwnProperty("uninterpretedOption")) {
                     if (!Array.isArray(message.uninterpretedOption))
                         return "uninterpretedOption: array expected";
-                    for (var i = 0; i < message.uninterpretedOption.length; ++i) {
-                        var error = $root.google.protobuf.UninterpretedOption.verify(message.uninterpretedOption[i]);
+                    for (let i = 0; i < message.uninterpretedOption.length; ++i) {
+                        let error = $root.google.protobuf.UninterpretedOption.verify(message.uninterpretedOption[i]);
                         if (error)
                             return "uninterpretedOption." + error;
                     }
@@ -55534,14 +55532,14 @@ $root.google = (function() {
             EnumValueOptions.fromObject = function fromObject(object) {
                 if (object instanceof $root.google.protobuf.EnumValueOptions)
                     return object;
-                var message = new $root.google.protobuf.EnumValueOptions();
+                let message = new $root.google.protobuf.EnumValueOptions();
                 if (object.deprecated != null)
                     message.deprecated = Boolean(object.deprecated);
                 if (object.uninterpretedOption) {
                     if (!Array.isArray(object.uninterpretedOption))
                         throw TypeError(".google.protobuf.EnumValueOptions.uninterpretedOption: array expected");
                     message.uninterpretedOption = [];
-                    for (var i = 0; i < object.uninterpretedOption.length; ++i) {
+                    for (let i = 0; i < object.uninterpretedOption.length; ++i) {
                         if (typeof object.uninterpretedOption[i] !== "object")
                             throw TypeError(".google.protobuf.EnumValueOptions.uninterpretedOption: object expected");
                         message.uninterpretedOption[i] = $root.google.protobuf.UninterpretedOption.fromObject(object.uninterpretedOption[i]);
@@ -55564,7 +55562,7 @@ $root.google = (function() {
             EnumValueOptions.toObject = function toObject(message, options) {
                 if (!options)
                     options = {};
-                var object = {};
+                let object = {};
                 if (options.arrays || options.defaults)
                     object.uninterpretedOption = [];
                 if (options.defaults) {
@@ -55575,7 +55573,7 @@ $root.google = (function() {
                     object.deprecated = message.deprecated;
                 if (message.uninterpretedOption && message.uninterpretedOption.length) {
                     object.uninterpretedOption = [];
-                    for (var j = 0; j < message.uninterpretedOption.length; ++j)
+                    for (let j = 0; j < message.uninterpretedOption.length; ++j)
                         object.uninterpretedOption[j] = $root.google.protobuf.UninterpretedOption.toObject(message.uninterpretedOption[j], options);
                 }
                 if (message[".gogoproto.enumvalueCustomname"] != null && message.hasOwnProperty(".gogoproto.enumvalueCustomname"))
@@ -55618,7 +55616,7 @@ $root.google = (function() {
             function ServiceOptions(properties) {
                 this.uninterpretedOption = [];
                 if (properties)
-                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
                             this[keys[i]] = properties[keys[i]];
             }
@@ -55666,7 +55664,7 @@ $root.google = (function() {
                 if (message.deprecated != null && Object.hasOwnProperty.call(message, "deprecated"))
                     writer.uint32(/* id 33, wireType 0 =*/264).bool(message.deprecated);
                 if (message.uninterpretedOption != null && message.uninterpretedOption.length)
-                    for (var i = 0; i < message.uninterpretedOption.length; ++i)
+                    for (let i = 0; i < message.uninterpretedOption.length; ++i)
                         $root.google.protobuf.UninterpretedOption.encode(message.uninterpretedOption[i], writer.uint32(/* id 999, wireType 2 =*/7994).fork()).ldelim();
                 return writer;
             };
@@ -55698,9 +55696,9 @@ $root.google = (function() {
             ServiceOptions.decode = function decode(reader, length) {
                 if (!(reader instanceof $Reader))
                     reader = $Reader.create(reader);
-                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.ServiceOptions();
+                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.ServiceOptions();
                 while (reader.pos < end) {
-                    var tag = reader.uint32();
+                    let tag = reader.uint32();
                     switch (tag >>> 3) {
                     case 33:
                         message.deprecated = reader.bool();
@@ -55751,8 +55749,8 @@ $root.google = (function() {
                 if (message.uninterpretedOption != null && message.hasOwnProperty("uninterpretedOption")) {
                     if (!Array.isArray(message.uninterpretedOption))
                         return "uninterpretedOption: array expected";
-                    for (var i = 0; i < message.uninterpretedOption.length; ++i) {
-                        var error = $root.google.protobuf.UninterpretedOption.verify(message.uninterpretedOption[i]);
+                    for (let i = 0; i < message.uninterpretedOption.length; ++i) {
+                        let error = $root.google.protobuf.UninterpretedOption.verify(message.uninterpretedOption[i]);
                         if (error)
                             return "uninterpretedOption." + error;
                     }
@@ -55771,14 +55769,14 @@ $root.google = (function() {
             ServiceOptions.fromObject = function fromObject(object) {
                 if (object instanceof $root.google.protobuf.ServiceOptions)
                     return object;
-                var message = new $root.google.protobuf.ServiceOptions();
+                let message = new $root.google.protobuf.ServiceOptions();
                 if (object.deprecated != null)
                     message.deprecated = Boolean(object.deprecated);
                 if (object.uninterpretedOption) {
                     if (!Array.isArray(object.uninterpretedOption))
                         throw TypeError(".google.protobuf.ServiceOptions.uninterpretedOption: array expected");
                     message.uninterpretedOption = [];
-                    for (var i = 0; i < object.uninterpretedOption.length; ++i) {
+                    for (let i = 0; i < object.uninterpretedOption.length; ++i) {
                         if (typeof object.uninterpretedOption[i] !== "object")
                             throw TypeError(".google.protobuf.ServiceOptions.uninterpretedOption: object expected");
                         message.uninterpretedOption[i] = $root.google.protobuf.UninterpretedOption.fromObject(object.uninterpretedOption[i]);
@@ -55799,7 +55797,7 @@ $root.google = (function() {
             ServiceOptions.toObject = function toObject(message, options) {
                 if (!options)
                     options = {};
-                var object = {};
+                let object = {};
                 if (options.arrays || options.defaults)
                     object.uninterpretedOption = [];
                 if (options.defaults)
@@ -55808,7 +55806,7 @@ $root.google = (function() {
                     object.deprecated = message.deprecated;
                 if (message.uninterpretedOption && message.uninterpretedOption.length) {
                     object.uninterpretedOption = [];
-                    for (var j = 0; j < message.uninterpretedOption.length; ++j)
+                    for (let j = 0; j < message.uninterpretedOption.length; ++j)
                         object.uninterpretedOption[j] = $root.google.protobuf.UninterpretedOption.toObject(message.uninterpretedOption[j], options);
                 }
                 return object;
@@ -55849,7 +55847,7 @@ $root.google = (function() {
             function MethodOptions(properties) {
                 this.uninterpretedOption = [];
                 if (properties)
-                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
                             this[keys[i]] = properties[keys[i]];
             }
@@ -55897,7 +55895,7 @@ $root.google = (function() {
                 if (message.deprecated != null && Object.hasOwnProperty.call(message, "deprecated"))
                     writer.uint32(/* id 33, wireType 0 =*/264).bool(message.deprecated);
                 if (message.uninterpretedOption != null && message.uninterpretedOption.length)
-                    for (var i = 0; i < message.uninterpretedOption.length; ++i)
+                    for (let i = 0; i < message.uninterpretedOption.length; ++i)
                         $root.google.protobuf.UninterpretedOption.encode(message.uninterpretedOption[i], writer.uint32(/* id 999, wireType 2 =*/7994).fork()).ldelim();
                 return writer;
             };
@@ -55929,9 +55927,9 @@ $root.google = (function() {
             MethodOptions.decode = function decode(reader, length) {
                 if (!(reader instanceof $Reader))
                     reader = $Reader.create(reader);
-                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.MethodOptions();
+                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.MethodOptions();
                 while (reader.pos < end) {
-                    var tag = reader.uint32();
+                    let tag = reader.uint32();
                     switch (tag >>> 3) {
                     case 33:
                         message.deprecated = reader.bool();
@@ -55982,8 +55980,8 @@ $root.google = (function() {
                 if (message.uninterpretedOption != null && message.hasOwnProperty("uninterpretedOption")) {
                     if (!Array.isArray(message.uninterpretedOption))
                         return "uninterpretedOption: array expected";
-                    for (var i = 0; i < message.uninterpretedOption.length; ++i) {
-                        var error = $root.google.protobuf.UninterpretedOption.verify(message.uninterpretedOption[i]);
+                    for (let i = 0; i < message.uninterpretedOption.length; ++i) {
+                        let error = $root.google.protobuf.UninterpretedOption.verify(message.uninterpretedOption[i]);
                         if (error)
                             return "uninterpretedOption." + error;
                     }
@@ -56002,14 +56000,14 @@ $root.google = (function() {
             MethodOptions.fromObject = function fromObject(object) {
                 if (object instanceof $root.google.protobuf.MethodOptions)
                     return object;
-                var message = new $root.google.protobuf.MethodOptions();
+                let message = new $root.google.protobuf.MethodOptions();
                 if (object.deprecated != null)
                     message.deprecated = Boolean(object.deprecated);
                 if (object.uninterpretedOption) {
                     if (!Array.isArray(object.uninterpretedOption))
                         throw TypeError(".google.protobuf.MethodOptions.uninterpretedOption: array expected");
                     message.uninterpretedOption = [];
-                    for (var i = 0; i < object.uninterpretedOption.length; ++i) {
+                    for (let i = 0; i < object.uninterpretedOption.length; ++i) {
                         if (typeof object.uninterpretedOption[i] !== "object")
                             throw TypeError(".google.protobuf.MethodOptions.uninterpretedOption: object expected");
                         message.uninterpretedOption[i] = $root.google.protobuf.UninterpretedOption.fromObject(object.uninterpretedOption[i]);
@@ -56030,7 +56028,7 @@ $root.google = (function() {
             MethodOptions.toObject = function toObject(message, options) {
                 if (!options)
                     options = {};
-                var object = {};
+                let object = {};
                 if (options.arrays || options.defaults)
                     object.uninterpretedOption = [];
                 if (options.defaults)
@@ -56039,7 +56037,7 @@ $root.google = (function() {
                     object.deprecated = message.deprecated;
                 if (message.uninterpretedOption && message.uninterpretedOption.length) {
                     object.uninterpretedOption = [];
-                    for (var j = 0; j < message.uninterpretedOption.length; ++j)
+                    for (let j = 0; j < message.uninterpretedOption.length; ++j)
                         object.uninterpretedOption[j] = $root.google.protobuf.UninterpretedOption.toObject(message.uninterpretedOption[j], options);
                 }
                 return object;
@@ -56085,7 +56083,7 @@ $root.google = (function() {
             function UninterpretedOption(properties) {
                 this.name = [];
                 if (properties)
-                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
                             this[keys[i]] = properties[keys[i]];
             }
@@ -56171,7 +56169,7 @@ $root.google = (function() {
                 if (!writer)
                     writer = $Writer.create();
                 if (message.name != null && message.name.length)
-                    for (var i = 0; i < message.name.length; ++i)
+                    for (let i = 0; i < message.name.length; ++i)
                         $root.google.protobuf.UninterpretedOption.NamePart.encode(message.name[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
                 if (message.identifierValue != null && Object.hasOwnProperty.call(message, "identifierValue"))
                     writer.uint32(/* id 3, wireType 2 =*/26).string(message.identifierValue);
@@ -56215,9 +56213,9 @@ $root.google = (function() {
             UninterpretedOption.decode = function decode(reader, length) {
                 if (!(reader instanceof $Reader))
                     reader = $Reader.create(reader);
-                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.UninterpretedOption();
+                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.UninterpretedOption();
                 while (reader.pos < end) {
-                    var tag = reader.uint32();
+                    let tag = reader.uint32();
                     switch (tag >>> 3) {
                     case 2:
                         if (!(message.name && message.name.length))
@@ -56280,8 +56278,8 @@ $root.google = (function() {
                 if (message.name != null && message.hasOwnProperty("name")) {
                     if (!Array.isArray(message.name))
                         return "name: array expected";
-                    for (var i = 0; i < message.name.length; ++i) {
-                        var error = $root.google.protobuf.UninterpretedOption.NamePart.verify(message.name[i]);
+                    for (let i = 0; i < message.name.length; ++i) {
+                        let error = $root.google.protobuf.UninterpretedOption.NamePart.verify(message.name[i]);
                         if (error)
                             return "name." + error;
                     }
@@ -56318,12 +56316,12 @@ $root.google = (function() {
             UninterpretedOption.fromObject = function fromObject(object) {
                 if (object instanceof $root.google.protobuf.UninterpretedOption)
                     return object;
-                var message = new $root.google.protobuf.UninterpretedOption();
+                let message = new $root.google.protobuf.UninterpretedOption();
                 if (object.name) {
                     if (!Array.isArray(object.name))
                         throw TypeError(".google.protobuf.UninterpretedOption.name: array expected");
                     message.name = [];
-                    for (var i = 0; i < object.name.length; ++i) {
+                    for (let i = 0; i < object.name.length; ++i) {
                         if (typeof object.name[i] !== "object")
                             throw TypeError(".google.protobuf.UninterpretedOption.name: object expected");
                         message.name[i] = $root.google.protobuf.UninterpretedOption.NamePart.fromObject(object.name[i]);
@@ -56373,18 +56371,18 @@ $root.google = (function() {
             UninterpretedOption.toObject = function toObject(message, options) {
                 if (!options)
                     options = {};
-                var object = {};
+                let object = {};
                 if (options.arrays || options.defaults)
                     object.name = [];
                 if (options.defaults) {
                     object.identifierValue = "";
                     if ($util.Long) {
-                        var long = new $util.Long(0, 0, true);
+                        let long = new $util.Long(0, 0, true);
                         object.positiveIntValue = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                     } else
                         object.positiveIntValue = options.longs === String ? "0" : 0;
                     if ($util.Long) {
-                        var long = new $util.Long(0, 0, false);
+                        let long = new $util.Long(0, 0, false);
                         object.negativeIntValue = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                     } else
                         object.negativeIntValue = options.longs === String ? "0" : 0;
@@ -56400,7 +56398,7 @@ $root.google = (function() {
                 }
                 if (message.name && message.name.length) {
                     object.name = [];
-                    for (var j = 0; j < message.name.length; ++j)
+                    for (let j = 0; j < message.name.length; ++j)
                         object.name[j] = $root.google.protobuf.UninterpretedOption.NamePart.toObject(message.name[j], options);
                 }
                 if (message.identifierValue != null && message.hasOwnProperty("identifierValue"))
@@ -56455,7 +56453,7 @@ $root.google = (function() {
                  */
                 function NamePart(properties) {
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -56532,9 +56530,9 @@ $root.google = (function() {
                 NamePart.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.UninterpretedOption.NamePart();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.UninterpretedOption.NamePart();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             message.namePart = reader.string();
@@ -56599,7 +56597,7 @@ $root.google = (function() {
                 NamePart.fromObject = function fromObject(object) {
                     if (object instanceof $root.google.protobuf.UninterpretedOption.NamePart)
                         return object;
-                    var message = new $root.google.protobuf.UninterpretedOption.NamePart();
+                    let message = new $root.google.protobuf.UninterpretedOption.NamePart();
                     if (object.namePart != null)
                         message.namePart = String(object.namePart);
                     if (object.isExtension != null)
@@ -56619,7 +56617,7 @@ $root.google = (function() {
                 NamePart.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.defaults) {
                         object.namePart = "";
                         object.isExtension = false;
@@ -56668,7 +56666,7 @@ $root.google = (function() {
             function SourceCodeInfo(properties) {
                 this.location = [];
                 if (properties)
-                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
                             this[keys[i]] = properties[keys[i]];
             }
@@ -56706,7 +56704,7 @@ $root.google = (function() {
                 if (!writer)
                     writer = $Writer.create();
                 if (message.location != null && message.location.length)
-                    for (var i = 0; i < message.location.length; ++i)
+                    for (let i = 0; i < message.location.length; ++i)
                         $root.google.protobuf.SourceCodeInfo.Location.encode(message.location[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
                 return writer;
             };
@@ -56738,9 +56736,9 @@ $root.google = (function() {
             SourceCodeInfo.decode = function decode(reader, length) {
                 if (!(reader instanceof $Reader))
                     reader = $Reader.create(reader);
-                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.SourceCodeInfo();
+                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.SourceCodeInfo();
                 while (reader.pos < end) {
-                    var tag = reader.uint32();
+                    let tag = reader.uint32();
                     switch (tag >>> 3) {
                     case 1:
                         if (!(message.location && message.location.length))
@@ -56785,8 +56783,8 @@ $root.google = (function() {
                 if (message.location != null && message.hasOwnProperty("location")) {
                     if (!Array.isArray(message.location))
                         return "location: array expected";
-                    for (var i = 0; i < message.location.length; ++i) {
-                        var error = $root.google.protobuf.SourceCodeInfo.Location.verify(message.location[i]);
+                    for (let i = 0; i < message.location.length; ++i) {
+                        let error = $root.google.protobuf.SourceCodeInfo.Location.verify(message.location[i]);
                         if (error)
                             return "location." + error;
                     }
@@ -56805,12 +56803,12 @@ $root.google = (function() {
             SourceCodeInfo.fromObject = function fromObject(object) {
                 if (object instanceof $root.google.protobuf.SourceCodeInfo)
                     return object;
-                var message = new $root.google.protobuf.SourceCodeInfo();
+                let message = new $root.google.protobuf.SourceCodeInfo();
                 if (object.location) {
                     if (!Array.isArray(object.location))
                         throw TypeError(".google.protobuf.SourceCodeInfo.location: array expected");
                     message.location = [];
-                    for (var i = 0; i < object.location.length; ++i) {
+                    for (let i = 0; i < object.location.length; ++i) {
                         if (typeof object.location[i] !== "object")
                             throw TypeError(".google.protobuf.SourceCodeInfo.location: object expected");
                         message.location[i] = $root.google.protobuf.SourceCodeInfo.Location.fromObject(object.location[i]);
@@ -56831,12 +56829,12 @@ $root.google = (function() {
             SourceCodeInfo.toObject = function toObject(message, options) {
                 if (!options)
                     options = {};
-                var object = {};
+                let object = {};
                 if (options.arrays || options.defaults)
                     object.location = [];
                 if (message.location && message.location.length) {
                     object.location = [];
-                    for (var j = 0; j < message.location.length; ++j)
+                    for (let j = 0; j < message.location.length; ++j)
                         object.location[j] = $root.google.protobuf.SourceCodeInfo.Location.toObject(message.location[j], options);
                 }
                 return object;
@@ -56879,7 +56877,7 @@ $root.google = (function() {
                     this.span = [];
                     this.leadingDetachedComments = [];
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -56950,13 +56948,13 @@ $root.google = (function() {
                         writer = $Writer.create();
                     if (message.path != null && message.path.length) {
                         writer.uint32(/* id 1, wireType 2 =*/10).fork();
-                        for (var i = 0; i < message.path.length; ++i)
+                        for (let i = 0; i < message.path.length; ++i)
                             writer.int32(message.path[i]);
                         writer.ldelim();
                     }
                     if (message.span != null && message.span.length) {
                         writer.uint32(/* id 2, wireType 2 =*/18).fork();
-                        for (var i = 0; i < message.span.length; ++i)
+                        for (let i = 0; i < message.span.length; ++i)
                             writer.int32(message.span[i]);
                         writer.ldelim();
                     }
@@ -56965,7 +56963,7 @@ $root.google = (function() {
                     if (message.trailingComments != null && Object.hasOwnProperty.call(message, "trailingComments"))
                         writer.uint32(/* id 4, wireType 2 =*/34).string(message.trailingComments);
                     if (message.leadingDetachedComments != null && message.leadingDetachedComments.length)
-                        for (var i = 0; i < message.leadingDetachedComments.length; ++i)
+                        for (let i = 0; i < message.leadingDetachedComments.length; ++i)
                             writer.uint32(/* id 6, wireType 2 =*/50).string(message.leadingDetachedComments[i]);
                     return writer;
                 };
@@ -56997,15 +56995,15 @@ $root.google = (function() {
                 Location.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.SourceCodeInfo.Location();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.SourceCodeInfo.Location();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             if (!(message.path && message.path.length))
                                 message.path = [];
                             if ((tag & 7) === 2) {
-                                var end2 = reader.uint32() + reader.pos;
+                                let end2 = reader.uint32() + reader.pos;
                                 while (reader.pos < end2)
                                     message.path.push(reader.int32());
                             } else
@@ -57015,7 +57013,7 @@ $root.google = (function() {
                             if (!(message.span && message.span.length))
                                 message.span = [];
                             if ((tag & 7) === 2) {
-                                var end2 = reader.uint32() + reader.pos;
+                                let end2 = reader.uint32() + reader.pos;
                                 while (reader.pos < end2)
                                     message.span.push(reader.int32());
                             } else
@@ -57070,14 +57068,14 @@ $root.google = (function() {
                     if (message.path != null && message.hasOwnProperty("path")) {
                         if (!Array.isArray(message.path))
                             return "path: array expected";
-                        for (var i = 0; i < message.path.length; ++i)
+                        for (let i = 0; i < message.path.length; ++i)
                             if (!$util.isInteger(message.path[i]))
                                 return "path: integer[] expected";
                     }
                     if (message.span != null && message.hasOwnProperty("span")) {
                         if (!Array.isArray(message.span))
                             return "span: array expected";
-                        for (var i = 0; i < message.span.length; ++i)
+                        for (let i = 0; i < message.span.length; ++i)
                             if (!$util.isInteger(message.span[i]))
                                 return "span: integer[] expected";
                     }
@@ -57090,7 +57088,7 @@ $root.google = (function() {
                     if (message.leadingDetachedComments != null && message.hasOwnProperty("leadingDetachedComments")) {
                         if (!Array.isArray(message.leadingDetachedComments))
                             return "leadingDetachedComments: array expected";
-                        for (var i = 0; i < message.leadingDetachedComments.length; ++i)
+                        for (let i = 0; i < message.leadingDetachedComments.length; ++i)
                             if (!$util.isString(message.leadingDetachedComments[i]))
                                 return "leadingDetachedComments: string[] expected";
                     }
@@ -57108,19 +57106,19 @@ $root.google = (function() {
                 Location.fromObject = function fromObject(object) {
                     if (object instanceof $root.google.protobuf.SourceCodeInfo.Location)
                         return object;
-                    var message = new $root.google.protobuf.SourceCodeInfo.Location();
+                    let message = new $root.google.protobuf.SourceCodeInfo.Location();
                     if (object.path) {
                         if (!Array.isArray(object.path))
                             throw TypeError(".google.protobuf.SourceCodeInfo.Location.path: array expected");
                         message.path = [];
-                        for (var i = 0; i < object.path.length; ++i)
+                        for (let i = 0; i < object.path.length; ++i)
                             message.path[i] = object.path[i] | 0;
                     }
                     if (object.span) {
                         if (!Array.isArray(object.span))
                             throw TypeError(".google.protobuf.SourceCodeInfo.Location.span: array expected");
                         message.span = [];
-                        for (var i = 0; i < object.span.length; ++i)
+                        for (let i = 0; i < object.span.length; ++i)
                             message.span[i] = object.span[i] | 0;
                     }
                     if (object.leadingComments != null)
@@ -57131,7 +57129,7 @@ $root.google = (function() {
                         if (!Array.isArray(object.leadingDetachedComments))
                             throw TypeError(".google.protobuf.SourceCodeInfo.Location.leadingDetachedComments: array expected");
                         message.leadingDetachedComments = [];
-                        for (var i = 0; i < object.leadingDetachedComments.length; ++i)
+                        for (let i = 0; i < object.leadingDetachedComments.length; ++i)
                             message.leadingDetachedComments[i] = String(object.leadingDetachedComments[i]);
                     }
                     return message;
@@ -57149,7 +57147,7 @@ $root.google = (function() {
                 Location.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.arrays || options.defaults) {
                         object.path = [];
                         object.span = [];
@@ -57161,12 +57159,12 @@ $root.google = (function() {
                     }
                     if (message.path && message.path.length) {
                         object.path = [];
-                        for (var j = 0; j < message.path.length; ++j)
+                        for (let j = 0; j < message.path.length; ++j)
                             object.path[j] = message.path[j];
                     }
                     if (message.span && message.span.length) {
                         object.span = [];
-                        for (var j = 0; j < message.span.length; ++j)
+                        for (let j = 0; j < message.span.length; ++j)
                             object.span[j] = message.span[j];
                     }
                     if (message.leadingComments != null && message.hasOwnProperty("leadingComments"))
@@ -57175,7 +57173,7 @@ $root.google = (function() {
                         object.trailingComments = message.trailingComments;
                     if (message.leadingDetachedComments && message.leadingDetachedComments.length) {
                         object.leadingDetachedComments = [];
-                        for (var j = 0; j < message.leadingDetachedComments.length; ++j)
+                        for (let j = 0; j < message.leadingDetachedComments.length; ++j)
                             object.leadingDetachedComments[j] = message.leadingDetachedComments[j];
                     }
                     return object;
@@ -57218,7 +57216,7 @@ $root.google = (function() {
             function GeneratedCodeInfo(properties) {
                 this.annotation = [];
                 if (properties)
-                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
                             this[keys[i]] = properties[keys[i]];
             }
@@ -57256,7 +57254,7 @@ $root.google = (function() {
                 if (!writer)
                     writer = $Writer.create();
                 if (message.annotation != null && message.annotation.length)
-                    for (var i = 0; i < message.annotation.length; ++i)
+                    for (let i = 0; i < message.annotation.length; ++i)
                         $root.google.protobuf.GeneratedCodeInfo.Annotation.encode(message.annotation[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
                 return writer;
             };
@@ -57288,9 +57286,9 @@ $root.google = (function() {
             GeneratedCodeInfo.decode = function decode(reader, length) {
                 if (!(reader instanceof $Reader))
                     reader = $Reader.create(reader);
-                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.GeneratedCodeInfo();
+                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.GeneratedCodeInfo();
                 while (reader.pos < end) {
-                    var tag = reader.uint32();
+                    let tag = reader.uint32();
                     switch (tag >>> 3) {
                     case 1:
                         if (!(message.annotation && message.annotation.length))
@@ -57335,8 +57333,8 @@ $root.google = (function() {
                 if (message.annotation != null && message.hasOwnProperty("annotation")) {
                     if (!Array.isArray(message.annotation))
                         return "annotation: array expected";
-                    for (var i = 0; i < message.annotation.length; ++i) {
-                        var error = $root.google.protobuf.GeneratedCodeInfo.Annotation.verify(message.annotation[i]);
+                    for (let i = 0; i < message.annotation.length; ++i) {
+                        let error = $root.google.protobuf.GeneratedCodeInfo.Annotation.verify(message.annotation[i]);
                         if (error)
                             return "annotation." + error;
                     }
@@ -57355,12 +57353,12 @@ $root.google = (function() {
             GeneratedCodeInfo.fromObject = function fromObject(object) {
                 if (object instanceof $root.google.protobuf.GeneratedCodeInfo)
                     return object;
-                var message = new $root.google.protobuf.GeneratedCodeInfo();
+                let message = new $root.google.protobuf.GeneratedCodeInfo();
                 if (object.annotation) {
                     if (!Array.isArray(object.annotation))
                         throw TypeError(".google.protobuf.GeneratedCodeInfo.annotation: array expected");
                     message.annotation = [];
-                    for (var i = 0; i < object.annotation.length; ++i) {
+                    for (let i = 0; i < object.annotation.length; ++i) {
                         if (typeof object.annotation[i] !== "object")
                             throw TypeError(".google.protobuf.GeneratedCodeInfo.annotation: object expected");
                         message.annotation[i] = $root.google.protobuf.GeneratedCodeInfo.Annotation.fromObject(object.annotation[i]);
@@ -57381,12 +57379,12 @@ $root.google = (function() {
             GeneratedCodeInfo.toObject = function toObject(message, options) {
                 if (!options)
                     options = {};
-                var object = {};
+                let object = {};
                 if (options.arrays || options.defaults)
                     object.annotation = [];
                 if (message.annotation && message.annotation.length) {
                     object.annotation = [];
-                    for (var j = 0; j < message.annotation.length; ++j)
+                    for (let j = 0; j < message.annotation.length; ++j)
                         object.annotation[j] = $root.google.protobuf.GeneratedCodeInfo.Annotation.toObject(message.annotation[j], options);
                 }
                 return object;
@@ -57426,7 +57424,7 @@ $root.google = (function() {
                 function Annotation(properties) {
                     this.path = [];
                     if (properties)
-                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                             if (properties[keys[i]] != null)
                                 this[keys[i]] = properties[keys[i]];
                 }
@@ -57489,7 +57487,7 @@ $root.google = (function() {
                         writer = $Writer.create();
                     if (message.path != null && message.path.length) {
                         writer.uint32(/* id 1, wireType 2 =*/10).fork();
-                        for (var i = 0; i < message.path.length; ++i)
+                        for (let i = 0; i < message.path.length; ++i)
                             writer.int32(message.path[i]);
                         writer.ldelim();
                     }
@@ -57529,15 +57527,15 @@ $root.google = (function() {
                 Annotation.decode = function decode(reader, length) {
                     if (!(reader instanceof $Reader))
                         reader = $Reader.create(reader);
-                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.GeneratedCodeInfo.Annotation();
+                    let end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.GeneratedCodeInfo.Annotation();
                     while (reader.pos < end) {
-                        var tag = reader.uint32();
+                        let tag = reader.uint32();
                         switch (tag >>> 3) {
                         case 1:
                             if (!(message.path && message.path.length))
                                 message.path = [];
                             if ((tag & 7) === 2) {
-                                var end2 = reader.uint32() + reader.pos;
+                                let end2 = reader.uint32() + reader.pos;
                                 while (reader.pos < end2)
                                     message.path.push(reader.int32());
                             } else
@@ -57590,7 +57588,7 @@ $root.google = (function() {
                     if (message.path != null && message.hasOwnProperty("path")) {
                         if (!Array.isArray(message.path))
                             return "path: array expected";
-                        for (var i = 0; i < message.path.length; ++i)
+                        for (let i = 0; i < message.path.length; ++i)
                             if (!$util.isInteger(message.path[i]))
                                 return "path: integer[] expected";
                     }
@@ -57617,12 +57615,12 @@ $root.google = (function() {
                 Annotation.fromObject = function fromObject(object) {
                     if (object instanceof $root.google.protobuf.GeneratedCodeInfo.Annotation)
                         return object;
-                    var message = new $root.google.protobuf.GeneratedCodeInfo.Annotation();
+                    let message = new $root.google.protobuf.GeneratedCodeInfo.Annotation();
                     if (object.path) {
                         if (!Array.isArray(object.path))
                             throw TypeError(".google.protobuf.GeneratedCodeInfo.Annotation.path: array expected");
                         message.path = [];
-                        for (var i = 0; i < object.path.length; ++i)
+                        for (let i = 0; i < object.path.length; ++i)
                             message.path[i] = object.path[i] | 0;
                     }
                     if (object.sourceFile != null)
@@ -57646,7 +57644,7 @@ $root.google = (function() {
                 Annotation.toObject = function toObject(message, options) {
                     if (!options)
                         options = {};
-                    var object = {};
+                    let object = {};
                     if (options.arrays || options.defaults)
                         object.path = [];
                     if (options.defaults) {
@@ -57656,7 +57654,7 @@ $root.google = (function() {
                     }
                     if (message.path && message.path.length) {
                         object.path = [];
-                        for (var j = 0; j < message.path.length; ++j)
+                        for (let j = 0; j < message.path.length; ++j)
                             object.path[j] = message.path[j];
                     }
                     if (message.sourceFile != null && message.hasOwnProperty("sourceFile"))
@@ -57705,7 +57703,7 @@ $root.google = (function() {
              */
             function Timestamp(properties) {
                 if (properties)
-                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
                             this[keys[i]] = properties[keys[i]];
             }
@@ -57784,9 +57782,9 @@ $root.google = (function() {
             Timestamp.decode = function decode(reader, length) {
                 if (!(reader instanceof $Reader))
                     reader = $Reader.create(reader);
-                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.Timestamp();
+                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.Timestamp();
                 while (reader.pos < end) {
-                    var tag = reader.uint32();
+                    let tag = reader.uint32();
                     switch (tag >>> 3) {
                     case 1:
                         message.seconds = reader.int64();
@@ -57849,7 +57847,7 @@ $root.google = (function() {
             Timestamp.fromObject = function fromObject(object) {
                 if (object instanceof $root.google.protobuf.Timestamp)
                     return object;
-                var message = new $root.google.protobuf.Timestamp();
+                let message = new $root.google.protobuf.Timestamp();
                 if (object.seconds != null)
                     if ($util.Long)
                         (message.seconds = $util.Long.fromValue(object.seconds)).unsigned = false;
@@ -57876,10 +57874,10 @@ $root.google = (function() {
             Timestamp.toObject = function toObject(message, options) {
                 if (!options)
                     options = {};
-                var object = {};
+                let object = {};
                 if (options.defaults) {
                     if ($util.Long) {
-                        var long = new $util.Long(0, 0, false);
+                        let long = new $util.Long(0, 0, false);
                         object.seconds = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                     } else
                         object.seconds = options.longs === String ? "0" : 0;
@@ -57929,7 +57927,7 @@ $root.google = (function() {
              */
             function Duration(properties) {
                 if (properties)
-                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                         if (properties[keys[i]] != null)
                             this[keys[i]] = properties[keys[i]];
             }
@@ -58008,9 +58006,9 @@ $root.google = (function() {
             Duration.decode = function decode(reader, length) {
                 if (!(reader instanceof $Reader))
                     reader = $Reader.create(reader);
-                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.Duration();
+                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.Duration();
                 while (reader.pos < end) {
-                    var tag = reader.uint32();
+                    let tag = reader.uint32();
                     switch (tag >>> 3) {
                     case 1:
                         message.seconds = reader.int64();
@@ -58073,7 +58071,7 @@ $root.google = (function() {
             Duration.fromObject = function fromObject(object) {
                 if (object instanceof $root.google.protobuf.Duration)
                     return object;
-                var message = new $root.google.protobuf.Duration();
+                let message = new $root.google.protobuf.Duration();
                 if (object.seconds != null)
                     if ($util.Long)
                         (message.seconds = $util.Long.fromValue(object.seconds)).unsigned = false;
@@ -58100,10 +58098,10 @@ $root.google = (function() {
             Duration.toObject = function toObject(message, options) {
                 if (!options)
                     options = {};
-                var object = {};
+                let object = {};
                 if (options.defaults) {
                     if ($util.Long) {
-                        var long = new $util.Long(0, 0, false);
+                        let long = new $util.Long(0, 0, false);
                         object.seconds = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                     } else
                         object.seconds = options.longs === String ? "0" : 0;
@@ -58139,4 +58137,4 @@ $root.google = (function() {
     return google;
 })();
 
-module.exports = $root;
+export { $root as default };

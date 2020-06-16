@@ -34,7 +34,7 @@
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js",
     "get-proto": "./scripts/get-proto.sh",
     "prepack-proto": "mkdir -p src/generated",
-    "pack-proto": "pbjs -t static-module -w commonjs -o src/generated/codecimpl.js ./proto/**/*.proto",
+    "pack-proto": "pbjs -t static-module --wrap commonjs --es6 -o src/generated/codecimpl.js ./proto/**/*.proto",
     "define-proto": "pbts src/generated/codecimpl.js -o src/generated/codecimpl.d.ts"
   },
   "devDependencies": {
