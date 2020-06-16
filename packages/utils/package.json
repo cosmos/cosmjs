@@ -27,6 +27,7 @@
     "format": "prettier --write --loglevel warn \"./src/**/*.ts\"",
     "format-text": "prettier --write --prose-wrap always --print-width 80 \"./*.md\"",
     "lint": "eslint --max-warnings 0 \"**/*.{js,ts}\"",
+    "lint-fix": "eslint --max-warnings 0 \"**/*.{js,ts}\" --fix",
     "move-types": "shx rm -r ./types/* && shx mv build/types/* ./types && rm -rf ./types/testdata && shx rm -f ./types/*.spec.d.ts",
     "format-types": "prettier --write --loglevel warn \"./types/**/*.d.ts\"",
     "build": "shx rm -rf ./build && tsc && yarn move-types && yarn format-types",
