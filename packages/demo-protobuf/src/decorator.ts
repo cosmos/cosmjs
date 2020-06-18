@@ -16,5 +16,13 @@ export function CosmosMessage(registry: Registry, typeUrl: string): TypeDecorato
 }
 
 export const CosmosField = {
-  String: (id: number) => Field.d(id, "string"),
+  Boolean: (id: number) => Field.d<boolean>(id, "bool"),
+
+  String: (id: number) => Field.d<string>(id, "string"),
+  Bytes: (id: number) => Field.d<Uint8Array>(id, "bytes"),
+
+  Int64: (id: number) => Field.d<number>(id, "int64"),
+  UInt64: (id: number) => Field.d<number>(id, "uint64"),
+
+  Repeated: (id: number) => Field.d<string[]>(id, "string", "repeated"),
 };
