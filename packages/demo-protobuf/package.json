@@ -33,9 +33,9 @@
     "test": "yarn build-or-skip && yarn test-node",
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js",
     "get-proto": "REF=master ./scripts/get-proto.sh",
-    "prepack-proto": "mkdir -p src/generated",
-    "pack-proto": "pbjs -t static-module -w commonjs -o src/generated/codecimpl.js --sparse --no-beautify --no-delimited --no-verify --no-convert ./proto/cosmos/cosmos-sdk/{x/bank/types/types.proto,types/types.proto,types/tx/types.proto,types/tx/signing/types.proto,third_party/proto/tendermint/**/*.proto,crypto/types/types.proto}",
-    "define-proto": "pbts src/generated/codecimpl.js -o src/generated/codecimpl.d.ts"
+    "predefine-proto": "mkdir -p src/generated && pbjs -t static-module -w commonjs -o src/generated/codecimpl.tmp.js --sparse --no-beautify --no-delimited --no-verify --no-convert ./proto/cosmos/cosmos-sdk/{x/bank/types/types.proto,types/types.proto,types/tx/types.proto,types/tx/signing/types.proto,third_party/proto/tendermint/**/*.proto,crypto/types/types.proto}",
+    "define-proto": "pbts src/generated/codecimpl.tmp.js -o src/generated/codecimpl.d.ts",
+    "postdefine-proto": "tsc --removeComments --outFile src/generated/codecimpl.js --allowJs src/generated/codecimpl.tmp.js && rm src/generated/codecimpl.tmp.js && prettier --write \"src/generated/codecimpl.*\""
   },
   "dependencies": {
     "protobufjs": "~6.9.0"
