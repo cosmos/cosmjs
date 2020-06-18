@@ -1,6 +1,6 @@
-import { Message } from "protobufjs";
+import { TypeDecorator } from "protobufjs";
 import { Registry } from "./registry";
-export declare const myRegistry: Registry;
-export declare class MsgDemo extends Message<{}> {
-  readonly example: string;
-}
+export declare function CosmosMessage(registry: Registry, typeUrl: string): TypeDecorator<any>;
+export declare const CosmosField: {
+  String: (id: number) => import("protobufjs").FieldDecorator;
+};
