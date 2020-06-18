@@ -45,7 +45,9 @@ $ cosmwasm-cli
 
 ```ts
 // Get account information
-const { account_number, sequence } = (await client.authAccounts(faucetAddress)).result.value;
+const { account_number, sequence } = (
+  await client.authAccounts(faucetAddress)
+).result.value;
 
 // Craft a send transaction
 const emptyAddress = Bech32.encode("cosmos", Random.getBytes(20));
@@ -84,13 +86,15 @@ const postResult = await client.postTx(signedTx);
 
 ## Extended helpers
 
-The above code shows you the use of the API and various objects and is a great way to learn
-how to embed cosmjs into your project. However, if you just want a cli to perform some
-quick queries on a chain, you can use an extended set of helpers:
+The above code shows you the use of the API and various objects and is a great
+way to learn how to embed cosmjs into your project. However, if you just want a
+cli to perform some quick queries on a chain, you can use an extended set of
+helpers:
 
 Start with `./bin/cosmwasm-cli --init examples/helpers.ts`
 
-(This points to the Demonet at https://lcd.demo-08.cosmwasm.com for ease of use. Other networks, look below)
+(This points to the Demonet at https://lcd.demo-08.cosmwasm.com for ease of use.
+Other networks, look below)
 
 Setup Account:
 
@@ -143,9 +147,10 @@ const fooAddr = foo.contractAddress;
 // we can also find this another way...
 const fooAddr2 = await client
   .getContracts(1)
-  .then((contracts) => contracts.filter((x) => x.label == "FOO").map((x) => x.address)[0])[
-  (fooAddr, fooAddr2)
-];
+  .then(
+    (contracts) =>
+      contracts.filter((x) => x.label == "FOO").map((x) => x.address)[0],
+  )[(fooAddr, fooAddr2)];
 
 // now we have some cash
 smartQuery(client, fooAddr, { balance: { address } });
@@ -166,17 +171,19 @@ Or just send tokens:
 ```ts
 client.getAccount(rcpt);
 
-const sent = await client.sendTokens(rcpt, [{ amount: "1234", denom: "ucosm" }]);
+const sent = await client.sendTokens(rcpt, [
+  { amount: "1234", denom: "ucosm" },
+]);
 sent;
 foo.logs[0].events[0];
 ```
 
 ### Use Custom Network
 
-All the network info can be configured inside the last argument to connect.
-To see how to connect to the Regen Testnet, try this. (Note you need to use `.editor`
-in the repl to allow multi-line commands. Alternative is to place entire `regenOptions`
-on one line.
+All the network info can be configured inside the last argument to connect. To
+see how to connect to the Regen Testnet, try this. (Note you need to use
+`.editor` in the repl to allow multi-line commands. Alternative is to place
+entire `regenOptions` on one line.
 
 Run `./bin/cosmwasm-cli --init examples/helpers.ts`
 
@@ -202,24 +209,28 @@ client.getAccount("xrn:1pdfr7xuckj6lhdphdde6peres9ufwgpsv87mag")
 client.getAccount()
 ```
 
-Hit the faucet with your address (in browser): https://regen.vitwit.com/faucet then continue in node
+Hit the faucet with your address (in browser): https://regen.vitwit.com/faucet
+then continue in node
 
 ```ts
 // should have tokens now
 client.getAccount();
 ```
 
-At this point you can continue all the other behaviors from above, looking at codes, etc.
-Do note that the ERC contract is code `5` on this network (instead of `1` above).
+At this point you can continue all the other behaviors from above, looking at
+codes, etc. Do note that the ERC contract is code `5` on this network (instead
+of `1` above).
 
 ### Importing keys from `wasmcli`
 
-If you are using the go commands and have tokens there, you may want to reuse the same account.
-(If you don't know what this is, just skip this section). You can reuse the mnemonic between the
-Go tooling and the Node.js tooling, but this violates all security protocols - only use this for
-testnets. In the future we will offer proper encrypted key management for cosmjs.
+If you are using the go commands and have tokens there, you may want to reuse
+the same account. (If you don't know what this is, just skip this section). You
+can reuse the mnemonic between the Go tooling and the Node.js tooling, but this
+violates all security protocols - only use this for testnets. In the future we
+will offer proper encrypted key management for cosmjs.
 
-(You can replace `wasmcli` with `xrncli` and use `regenOptions` if you wish to use that testnet)
+(You can replace `wasmcli` with `xrncli` and use `regenOptions` if you wish to
+use that testnet)
 
 Create a new key - note mnemonic and address
 
@@ -257,16 +268,16 @@ const { address, client } = await connect(mnemonic, regenOptions);
 address;
 ```
 
-Once you have access to the same key as in the cli, you can use those tokens to play with contracts.
+Once you have access to the same key as in the cli, you can use those tokens to
+play with contracts.
 
 ## Diving into Contracts
 
-Check out the [mask documentation](./MASK.md) to view how to use some custom helpers to upload code and use non-trivial contracts
-with proper types.
+Check out the [mask documentation](./MASK.md) to view how to use some custom
+helpers to upload code and use non-trivial contracts with proper types.
 
 ## License
 
-This package is part of the cosmjs repository, licensed under the Apache
-License 2.0 (see
-[NOTICE](https://github.com/CosmWasm/cosmjs/blob/master/NOTICE) and
+This package is part of the cosmjs repository, licensed under the Apache License
+2.0 (see [NOTICE](https://github.com/CosmWasm/cosmjs/blob/master/NOTICE) and
 [LICENSE](https://github.com/CosmWasm/cosmjs/blob/master/LICENSE)).
