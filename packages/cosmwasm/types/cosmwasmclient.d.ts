@@ -80,7 +80,7 @@ export interface Contract {
 }
 export interface ContractDetails extends Contract {
   /** Argument passed on initialization of the contract */
-  readonly initMsg: object;
+  readonly initMsg: Record<string, unknown>;
 }
 export interface BlockHeader {
   readonly version: {
@@ -163,6 +163,6 @@ export declare class CosmWasmClient {
    * Promise is rejected for invalid query format.
    * Promise is rejected for invalid response format.
    */
-  queryContractSmart(address: string, queryMsg: object): Promise<JsonObject>;
+  queryContractSmart(address: string, queryMsg: Record<string, unknown>): Promise<JsonObject>;
   private txsQuery;
 }

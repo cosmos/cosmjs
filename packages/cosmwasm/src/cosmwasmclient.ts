@@ -123,7 +123,7 @@ export interface Contract {
 
 export interface ContractDetails extends Contract {
   /** Argument passed on initialization of the contract */
-  readonly initMsg: object;
+  readonly initMsg: Record<string, unknown>;
 }
 
 export interface BlockHeader {
@@ -420,7 +420,7 @@ export class CosmWasmClient {
    * Promise is rejected for invalid query format.
    * Promise is rejected for invalid response format.
    */
-  public async queryContractSmart(address: string, queryMsg: object): Promise<JsonObject> {
+  public async queryContractSmart(address: string, queryMsg: Record<string, unknown>): Promise<JsonObject> {
     try {
       return await this.restClient.queryContractSmart(address, queryMsg);
     } catch (error) {

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
 import { assert, sleep } from "@cosmjs/utils";
 import { ReadonlyDate } from "readonly-date";
 
@@ -174,6 +173,7 @@ describe("RestClient", () => {
     it("works", async () => {
       pendingWithoutWasmd();
       const client = new RestClient(wasmd.endpoint);
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       const { node_info, application_version } = await client.nodeInfo();
 
       expect(node_info).toEqual({
@@ -249,9 +249,7 @@ describe("RestClient", () => {
           const sendMsg: MsgSend = {
             type: "cosmos-sdk/MsgSend",
             value: {
-              // eslint-disable-next-line @typescript-eslint/camelcase
               from_address: faucet.address,
-              // eslint-disable-next-line @typescript-eslint/camelcase
               to_address: recipient,
               amount: transferAmount,
             },
@@ -563,6 +561,7 @@ describe("RestClient", () => {
       };
 
       const client = new RestClient(wasmd.endpoint);
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       const { account_number, sequence } = (await client.authAccounts(faucet.address)).result.value;
 
       const signBytes = makeSignBytes([theMsg], fee, wasmd.chainId, memo, account_number, sequence);
@@ -681,6 +680,7 @@ describe("RestClient", () => {
       };
 
       const client = new RestClient(wasmd.endpoint);
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       const { account_number, sequence } = (await client.authAccounts(address1)).result.value;
 
       const signBytes = makeSignBytes([msg1, msg2], fee, wasmd.chainId, memo, account_number, sequence);

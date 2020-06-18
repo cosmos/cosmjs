@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
 import { parseAttribute, parseEvent, parseLog, parseLogs } from "./logs";
 
 describe("logs", () => {

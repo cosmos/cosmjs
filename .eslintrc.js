@@ -27,12 +27,38 @@ module.exports = {
     "no-shadow": "warn",
     "no-unused-vars": "off", // disabled in favour of @typescript-eslint/no-unused-vars, see https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-unused-vars.md
     "prefer-const": "warn",
-    "radix": ["warn", "always"],
+    radix: ["warn", "always"],
     "spaced-comment": ["warn", "always", { line: { markers: ["/ <reference"] } }],
     "import/no-cycle": "warn",
     "simple-import-sort/sort": "warn",
     "@typescript-eslint/await-thenable": "warn",
     "@typescript-eslint/explicit-function-return-type": ["warn", { allowExpressions: true }],
+    "@typescript-eslint/naming-convention": [
+      "warn",
+      { format: ["strictCamelCase"], selector: "default" },
+      {
+        selector: "property",
+        format: ["strictCamelCase", "snake_case"],
+      },
+      {
+        selector: "typeLike",
+        format: ["StrictPascalCase"],
+      },
+      {
+        selector: "enumMember",
+        format: ["StrictPascalCase"],
+      },
+      {
+        selector: "variable",
+        format: ["strictCamelCase"],
+        leadingUnderscore: "allow",
+      },
+      {
+        selector: "parameter",
+        format: ["strictCamelCase"],
+        leadingUnderscore: "allow",
+      },
+    ],
     "@typescript-eslint/no-dynamic-delete": "warn",
     "@typescript-eslint/no-empty-function": "off",
     "@typescript-eslint/no-empty-interface": "off",
@@ -48,6 +74,7 @@ module.exports = {
     {
       files: "**/*.js",
       rules: {
+        "@typescript-eslint/naming-convention": "off",
         "@typescript-eslint/no-var-requires": "off",
         "@typescript-eslint/explicit-function-return-type": "off",
       },
@@ -56,12 +83,6 @@ module.exports = {
       files: "**/*.spec.ts",
       rules: {
         "@typescript-eslint/no-non-null-assertion": "off",
-      },
-    },
-    {
-      files: "jasmine-testrunner.js",
-      rules: {
-        "@typescript-eslint/camelcase": ["error", { properties: "never" }],
       },
     },
   ],

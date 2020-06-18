@@ -22,7 +22,7 @@ export interface ContractInfo {
 }
 export interface ContractDetails extends ContractInfo {
   /** Argument passed on initialization of the contract */
-  readonly init_msg: object;
+  readonly init_msg: Record<string, unknown>;
 }
 export declare class RestClient extends BaseRestClient {
   /**
@@ -50,5 +50,5 @@ export declare class RestClient extends BaseRestClient {
    * Makes a smart query on the contract and parses the reponse as JSON.
    * Throws error if no such contract exists, the query format is invalid or the response is invalid.
    */
-  queryContractSmart(address: string, query: object): Promise<JsonObject>;
+  queryContractSmart(address: string, query: Record<string, unknown>): Promise<JsonObject>;
 }

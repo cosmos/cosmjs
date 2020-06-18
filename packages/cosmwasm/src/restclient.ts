@@ -44,7 +44,7 @@ export interface ContractInfo {
 
 export interface ContractDetails extends ContractInfo {
   /** Argument passed on initialization of the contract */
-  readonly init_msg: object;
+  readonly init_msg: Record<string, unknown>;
 }
 
 interface SmartQueryResponse {
@@ -140,7 +140,7 @@ export class RestClient extends BaseRestClient {
    * Makes a smart query on the contract and parses the reponse as JSON.
    * Throws error if no such contract exists, the query format is invalid or the response is invalid.
    */
-  public async queryContractSmart(address: string, query: object): Promise<JsonObject> {
+  public async queryContractSmart(address: string, query: Record<string, unknown>): Promise<JsonObject> {
     const encoded = toHex(toUtf8(JSON.stringify(query)));
     const path = `/wasm/contract/${address}/smart/${encoded}?encoding=hex`;
     const responseData = (await this.get(path)) as WasmResponse<SmartQueryResponse>;

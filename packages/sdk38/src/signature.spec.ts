@@ -11,7 +11,6 @@ describe("signature", () => {
         "1nUcIH0CLT0/nQ0mBTDrT6kMG20NY/PsH7P2gc4bpYNGLEYjBmdWevXUJouSE/9A/60QG9cYeqyTe5kFDeIPxQ==",
       );
       expect(encodeSecp256k1Signature(pubkey, signature)).toEqual({
-        // eslint-disable-next-line @typescript-eslint/camelcase
         pub_key: {
           type: "tendermint/PubKeySecp256k1",
           value: "AtQaCqFnshaZQp6rIkvAPyzThvCvXSDO+9AzbxVErqJP",
@@ -49,7 +48,6 @@ describe("signature", () => {
   describe("decodeSignature", () => {
     it("works for secp256k1", () => {
       const signature: StdSignature = {
-        // eslint-disable-next-line @typescript-eslint/camelcase
         pub_key: {
           type: "tendermint/PubKeySecp256k1",
           value: "AtQaCqFnshaZQp6rIkvAPyzThvCvXSDO+9AzbxVErqJP",

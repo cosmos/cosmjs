@@ -84,9 +84,7 @@ export class SigningCosmosClient extends CosmosClient {
     const sendMsg: MsgSend = {
       type: "cosmos-sdk/MsgSend",
       value: {
-        // eslint-disable-next-line @typescript-eslint/camelcase
         from_address: this.senderAddress,
-        // eslint-disable-next-line @typescript-eslint/camelcase
         to_address: recipientAddress,
         amount: transferAmount,
       },

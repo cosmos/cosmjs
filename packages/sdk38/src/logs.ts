@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
 import { isNonNullObject } from "@cosmjs/utils";
 
 export interface Attribute {
@@ -46,6 +45,7 @@ export function parseEvent(input: unknown): Event {
 
 export function parseLog(input: unknown): Log {
   if (!isNonNullObject(input)) throw new Error("Log must be a non-null object");
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   const { msg_index, log, events } = input as any;
   if (typeof msg_index !== "number") throw new Error("Log's msg_index must be a number");
   if (typeof log !== "string") throw new Error("Log's log must be a string");

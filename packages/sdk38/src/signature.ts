@@ -17,7 +17,6 @@ export function encodeSecp256k1Signature(pubkey: Uint8Array, signature: Uint8Arr
   }
 
   return {
-    // eslint-disable-next-line @typescript-eslint/camelcase
     pub_key: encodeSecp256k1Pubkey(pubkey),
     signature: toBase64(signature),
   };

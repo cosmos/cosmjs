@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
 import { assert, sleep } from "@cosmjs/utils";
 import { ReadonlyDate } from "readonly-date";
 

@@ -72,14 +72,14 @@ export declare class SigningCosmWasmClient extends CosmWasmClient {
   upload(wasmCode: Uint8Array, meta?: UploadMeta, memo?: string): Promise<UploadResult>;
   instantiate(
     codeId: number,
-    initMsg: object,
+    initMsg: Record<string, unknown>,
     label: string,
     memo?: string,
     transferAmount?: readonly Coin[],
   ): Promise<InstantiateResult>;
   execute(
     contractAddress: string,
-    handleMsg: object,
+    handleMsg: Record<string, unknown>,
     memo?: string,
     transferAmount?: readonly Coin[],
   ): Promise<ExecuteResult>;

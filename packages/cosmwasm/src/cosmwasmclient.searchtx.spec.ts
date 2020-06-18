@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
 import { Coin, coins, CosmosSdkTx, isMsgSend, makeSignBytes, MsgSend, Secp256k1Pen } from "@cosmjs/sdk38";
 import { assert, sleep } from "@cosmjs/utils";
 
@@ -85,9 +84,7 @@ describe("CosmWasmClient.searchTx", () => {
         const sendMsg: MsgSend = {
           type: "cosmos-sdk/MsgSend",
           value: {
-            // eslint-disable-next-line @typescript-eslint/camelcase
             from_address: alice.address0,
-            // eslint-disable-next-line @typescript-eslint/camelcase
             to_address: recipient,
             amount: transferAmount,
           },

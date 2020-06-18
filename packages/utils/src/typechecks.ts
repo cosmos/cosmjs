@@ -1,6 +1,7 @@
 /**
  * Checks if data is a non-null object (i.e. matches the TypeScript object type)
  */
+// eslint-disable-next-line @typescript-eslint/ban-types
 export function isNonNullObject(data: unknown): data is object {
   return typeof data === "object" && data !== null;
 }

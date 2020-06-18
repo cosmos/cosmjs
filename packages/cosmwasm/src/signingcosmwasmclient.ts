@@ -155,7 +155,6 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       type: "wasm/store-code",
       value: {
         sender: this.senderAddress,
-        // eslint-disable-next-line @typescript-eslint/camelcase
         wasm_byte_code: toBase64(compressed),
         source: source,
         builder: builder,
@@ -191,7 +190,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
 
   public async instantiate(
     codeId: number,
-    initMsg: object,
+    initMsg: Record<string, unknown>,
     label: string,
     memo = "",
     transferAmount?: readonly Coin[],
@@ -200,12 +199,9 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       type: "wasm/instantiate",
       value: {
         sender: this.senderAddress,
-        // eslint-disable-next-line @typescript-eslint/camelcase
         code_id: codeId.toString(),
         label: label,
-        // eslint-disable-next-line @typescript-eslint/camelcase
         init_msg: initMsg,
-        // eslint-disable-next-line @typescript-eslint/camelcase
         init_funds: transferAmount || [],
       },
     };
@@ -236,7 +232,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
 
   public async execute(
     contractAddress: string,
-    handleMsg: object,
+    handleMsg: Record<string, unknown>,
     memo = "",
     transferAmount?: readonly Coin[],
   ): Promise<ExecuteResult> {
@@ -246,7 +242,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
         sender: this.senderAddress,
         contract: contractAddress,
         msg: handleMsg,
-        // eslint-disable-next-line @typescript-eslint/camelcase
+
         sent_funds: transferAmount || [],
       },
     };
@@ -280,9 +276,8 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     const sendMsg: MsgSend = {
       type: "cosmos-sdk/MsgSend",
       value: {
-        // eslint-disable-next-line @typescript-eslint/camelcase
         from_address: this.senderAddress,
-        // eslint-disable-next-line @typescript-eslint/camelcase
+
         to_address: recipientAddress,
         amount: transferAmount,
       },

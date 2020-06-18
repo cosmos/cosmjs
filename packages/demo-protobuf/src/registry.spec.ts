@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
 import { assert } from "@cosmjs/utils";
 
 import { MsgDemo as MsgDemoType } from "./demo";

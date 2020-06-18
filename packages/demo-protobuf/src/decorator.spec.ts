@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
 import { assert } from "@cosmjs/utils";
 import { Message } from "protobufjs";
 

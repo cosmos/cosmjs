@@ -1,7 +1,9 @@
 // Global symbols in some environments
 // https://developer.mozilla.org/en-US/docs/Web/API/TextEncoder
 // https://developer.mozilla.org/en-US/docs/Web/API/TextDecoder
+// eslint-disable-next-line @typescript-eslint/naming-convention
 declare const TextEncoder: any | undefined;
+// eslint-disable-next-line @typescript-eslint/naming-convention
 declare const TextDecoder: any | undefined;
 
 function isValidUtf8(data: Uint8Array): boolean {

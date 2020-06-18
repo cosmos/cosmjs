@@ -8,6 +8,7 @@ export interface CreditRequestBodyData {
 }
 
 export class RequestParser {
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public static parseCreditBody(body: any): CreditRequestBodyData {
     const { address, ticker } = body;
 

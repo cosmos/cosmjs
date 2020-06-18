@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/camelcase */
+/* eslint-disable @typescript-eslint/naming-convention */
 import { Sha256 } from "@cosmjs/crypto";
 import { Bech32, fromAscii, fromBase64, fromHex, toAscii, toBase64, toHex } from "@cosmjs/encoding";
 import {
@@ -374,9 +374,7 @@ describe("RestClient", () => {
           const sendMsg: MsgSend = {
             type: "cosmos-sdk/MsgSend",
             value: {
-              // eslint-disable-next-line @typescript-eslint/camelcase
               from_address: alice.address0,
-              // eslint-disable-next-line @typescript-eslint/camelcase
               to_address: recipient,
               amount: transferAmount,
             },
