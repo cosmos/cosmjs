@@ -30,7 +30,8 @@ export class TsRepl {
     this.typeScriptService = register({
       project: tsconfigPath,
       ignoreDiagnostics: [
-        "1308", // TS1308: 'await' expression is only allowed within an async function.
+        "1375", // TS1375: 'await' expressions are only allowed at the top level of a file when that file is a module, but this file has no imports or exports. Consider adding an empty 'export {}' to make this file a module.
+        "1378", // TS1378: Top-level 'await' expressions are only allowed when the 'module' option is set to 'esnext' or 'system', and the 'target' option is set to 'es2017' or higher.
       ],
     });
     this.debuggingEnabled = debuggingEnabled;
