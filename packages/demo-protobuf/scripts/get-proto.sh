@@ -7,7 +7,9 @@ COSMOS_DIR="$PROTO_DIR/cosmos"
 COSMOS_SDK_DIR="$COSMOS_DIR/cosmos-sdk"
 ZIP_FILE="$COSMOS_DIR/tmp.zip"
 REF=${REF:-"master"}
-SUFFIX=${REF#v}
+SUFFIX=${REF}
+
+[[ $SUFFIX =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]] && SUFFIX=${SUFFIX#v}
 
 mkdir -p "$COSMOS_DIR"
 
