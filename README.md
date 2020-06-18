@@ -1,10 +1,10 @@
 # CosmJS
 
-CosmJS is the swiss army knife to power JavaScript based client solutions
+CosmJS is the Swiss Army knife to power JavaScript based client solutions
 ranging from Web apps/explorers over browser extensions to server-side clients
 like faucets/scrapers in the Cosmos ecosystem.
 
-"Cosm" stands for Cosmos and "JS" stands for _runs everywhere_ – we actually
+"Cosm" is short for Cosmos and "JS" is short for _runs everywhere_ – we actually
 develop in TypeScript.
 
 ## Packages
@@ -48,8 +48,8 @@ Currently the codebase supports the following runtime environments:
    [Edge Spartan](https://en.wikipedia.org/wiki/Microsoft_Edge#Development))
 3. Browser extensions (Chromium/Firefox)
 
-Our current JavaScript target standard is ES2017, giving us native async/wait
-support. We use WebAssembly to implement certain crypto.
+Our current JavaScript target standard is ES2017, giving us native async/await
+support. We use WebAssembly to implement certain cryptographic functions.
 
 We're happy to adjust this list according to users' needs as long as you don't
 ask for Internet Explorer support. If your environment does not support Wasm, we
