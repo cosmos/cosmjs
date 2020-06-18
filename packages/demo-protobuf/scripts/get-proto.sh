@@ -4,8 +4,14 @@ command -v shellcheck > /dev/null && shellcheck "$0"
 
 PROTO_DIR="./proto"
 COSMOS_DIR="$PROTO_DIR/cosmos"
+COSMOS_SDK_DIR="$COSMOS_DIR/cosmos-sdk"
+ZIP_FILE="$COSMOS_DIR/tmp.zip"
+REF=${REF:-"master"}
+SUFFIX=${REF#v}
 
-mkdir -p $COSMOS_DIR
+mkdir -p "$COSMOS_DIR"
 
-svn export "https://github.com/cosmos/cosmos-sdk/trunk" "$COSMOS_DIR/cosmos-sdk"
-# svn export "https://github.com/cosmos/cosmos-sdk/tags/v0.38.4" "$COSMOS_DIR/cosmos-sdk"
+wget -qO "$ZIP_FILE" "https://github.com/cosmos/cosmos-sdk/archive/$REF.zip" \
+&& unzip "$ZIP_FILE" -d "$COSMOS_DIR" \
+&& mv "$COSMOS_SDK_DIR-$SUFFIX" "$COSMOS_SDK_DIR" \
+&& rm "$ZIP_FILE"
