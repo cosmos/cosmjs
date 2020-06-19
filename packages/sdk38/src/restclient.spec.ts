@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { fromBase64 } from "@cosmjs/encoding";
 import { assert, sleep } from "@cosmjs/utils";
 import { ReadonlyDate } from "readonly-date";
 
@@ -523,7 +522,12 @@ describe("RestClient", () => {
     it("works for cosmoshub example", async () => {
       pendingWithoutWasmd();
       const client = new RestClient(wasmd.endpoint);
-      expect(await client.encodeTx(cosmoshub.tx)).toEqual(fromBase64(cosmoshub.tx_data));
+      const response = await client.encodeTx(cosmoshub.tx);
+      expect(response).toEqual(
+        jasmine.objectContaining({
+          tx: cosmoshub.tx_data,
+        }),
+      );
     });
   });
 

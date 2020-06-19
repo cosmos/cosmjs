@@ -125,6 +125,11 @@ export interface PostTxsResponse {
   /** The gas used by the execution */
   readonly gas_used?: string;
 }
+/** A reponse from the /txs/encode endpoint */
+export interface EncodeTxResponse {
+  /** base64-encoded amino-binary encoded representation */
+  readonly tx: string;
+}
 /**
  * The mode used to send transaction
  *
@@ -162,7 +167,7 @@ export declare class RestClient {
   txById(id: string): Promise<TxsResponse>;
   txsQuery(query: string): Promise<SearchTxsResponse>;
   /** returns the amino-encoding of the transaction performed by the server */
-  encodeTx(tx: CosmosSdkTx): Promise<Uint8Array>;
+  encodeTx(tx: CosmosSdkTx): Promise<EncodeTxResponse>;
   /**
    * Broadcasts a signed transaction to into the transaction pool.
    * Depending on the RestClient's broadcast mode, this might or might

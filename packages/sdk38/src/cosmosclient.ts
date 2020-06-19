@@ -181,8 +181,8 @@ export class CosmosClient {
    */
   public async getIdentifier(tx: CosmosSdkTx): Promise<string> {
     // We consult the REST API because we don't have a local amino encoder
-    const bytes = await this.restClient.encodeTx(tx);
-    const hash = new Sha256(bytes).digest();
+    const response = await this.restClient.encodeTx(tx);
+    const hash = new Sha256(fromBase64(response.tx)).digest();
     return toHex(hash).toUpperCase();
   }
 
