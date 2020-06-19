@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { assert, sleep } from "@cosmjs/utils";
 
-import { Coin } from "./coins";
+import { coins } from "./coins";
 import { CosmosClient, isPostTxFailure } from "./cosmosclient";
 import { makeSignBytes } from "./encoding";
 import { Secp256k1Pen } from "./pen";
@@ -39,12 +39,7 @@ describe("CosmosClient.searchTx", () => {
       {
         const memo = "Sending more than I can afford";
         const recipient = makeRandomAddress();
-        const transferAmount = [
-          {
-            denom: "ucosm",
-            amount: "123456700000000",
-          },
-        ];
+        const transferAmount = coins(123456700000000, "ucosm");
         const sendMsg: MsgSend = {
           type: "cosmos-sdk/MsgSend",
           value: {
@@ -56,12 +51,7 @@ describe("CosmosClient.searchTx", () => {
           },
         };
         const fee = {
-          amount: [
-            {
-              denom: "ucosm",
-              amount: "2000",
-            },
-          ],
+          amount: coins(2000, "ucosm"),
           gas: "80000", // 80k
         };
         const { accountNumber, sequence } = await client.getNonce();
@@ -92,11 +82,8 @@ describe("CosmosClient.searchTx", () => {
 
       {
         const recipient = makeRandomAddress();
-        const transferAmount: Coin = {
-          denom: "ucosm",
-          amount: "1234567",
-        };
-        const result = await client.sendTokens(recipient, [transferAmount]);
+        const transferAmount = coins(1234567, "ucosm");
+        const result = await client.sendTokens(recipient, transferAmount);
         await sleep(75); // wait until tx is indexed
         const txDetails = await new RestClient(wasmd.endpoint).txById(result.transactionHash);
         sendSuccessful = {
