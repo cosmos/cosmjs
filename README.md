@@ -55,6 +55,14 @@ We're happy to adjust this list according to users' needs as long as you don't
 ask for Internet Explorer support. If your environment does not support Wasm, we
 can work on a solution with swapable implementations.
 
+## Roadmap
+
+In addition to the
+[development board](https://github.com/orgs/CosmWasm/projects/2) and our
+[release milestones](https://github.com/CosmWasm/cosmjs/milestones), we maintain
+a higher level roadmap
+[in this Trello board](https://trello.com/b/vIW8awLl/cosmjs-roadmap).
+
 ## Development
 
 Requires Node 10+. For best results, use yarn. The basic commands are:
