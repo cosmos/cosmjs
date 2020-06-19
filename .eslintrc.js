@@ -25,6 +25,7 @@ module.exports = {
     "no-console": ["warn", { allow: ["error", "info", "warn"] }],
     "no-param-reassign": "warn",
     "no-shadow": "warn",
+    "no-unused-vars": "off", // disabled in favour of @typescript-eslint/no-unused-vars, see https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-unused-vars.md
     "prefer-const": "warn",
     "radix": ["warn", "always"],
     "spaced-comment": ["warn", "always", { line: { markers: ["/ <reference"] } }],
