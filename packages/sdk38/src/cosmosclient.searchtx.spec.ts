@@ -26,8 +26,8 @@ interface TestTxSend {
 }
 
 describe("CosmosClient.searchTx", () => {
-  let sendSuccessful: TestTxSend | undefined;
   let sendUnsuccessful: TestTxSend | undefined;
+  let sendSuccessful: TestTxSend | undefined;
 
   beforeAll(async () => {
     if (wasmdEnabled()) {
@@ -35,24 +35,6 @@ describe("CosmosClient.searchTx", () => {
       const client = new SigningCosmosClient(wasmd.endpoint, faucet.address, (signBytes) =>
         pen.sign(signBytes),
       );
-
-      {
-        const recipient = makeRandomAddress();
-        const transferAmount: Coin = {
-          denom: "ucosm",
-          amount: "1234567",
-        };
-        const result = await client.sendTokens(recipient, [transferAmount]);
-        await sleep(75); // wait until tx is indexed
-        const txDetails = await new RestClient(wasmd.endpoint).txById(result.transactionHash);
-        sendSuccessful = {
-          sender: faucet.address,
-          recipient: recipient,
-          hash: result.transactionHash,
-          height: Number.parseInt(txDetails.height, 10),
-          tx: txDetails.tx,
-        };
-      }
 
       {
         const memo = "Sending more than I can afford";
@@ -106,6 +88,24 @@ describe("CosmosClient.searchTx", () => {
             tx: tx,
           };
         }
+      }
+
+      {
+        const recipient = makeRandomAddress();
+        const transferAmount: Coin = {
+          denom: "ucosm",
+          amount: "1234567",
+        };
+        const result = await client.sendTokens(recipient, [transferAmount]);
+        await sleep(75); // wait until tx is indexed
+        const txDetails = await new RestClient(wasmd.endpoint).txById(result.transactionHash);
+        sendSuccessful = {
+          sender: faucet.address,
+          recipient: recipient,
+          hash: result.transactionHash,
+          height: Number.parseInt(txDetails.height, 10),
+          tx: txDetails.tx,
+        };
       }
     }
   });
