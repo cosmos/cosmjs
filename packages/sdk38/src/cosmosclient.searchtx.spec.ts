@@ -17,25 +17,17 @@ import {
 } from "./testutils.spec";
 import { CosmosSdkTx, isMsgSend, MsgSend } from "./types";
 
+interface TestTxSend {
+  readonly sender: string;
+  readonly recipient: string;
+  readonly hash: string;
+  readonly height: number;
+  readonly tx: CosmosSdkTx;
+}
+
 describe("CosmosClient.searchTx", () => {
-  let sendSuccessful:
-    | {
-        readonly sender: string;
-        readonly recipient: string;
-        readonly hash: string;
-        readonly height: number;
-        readonly tx: CosmosSdkTx;
-      }
-    | undefined;
-  let sendUnsuccessful:
-    | {
-        readonly sender: string;
-        readonly recipient: string;
-        readonly hash: string;
-        readonly height: number;
-        readonly tx: CosmosSdkTx;
-      }
-    | undefined;
+  let sendSuccessful: TestTxSend | undefined;
+  let sendUnsuccessful: TestTxSend | undefined;
 
   beforeAll(async () => {
     if (wasmdEnabled()) {
