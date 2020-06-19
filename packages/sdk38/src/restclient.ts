@@ -102,20 +102,6 @@ export interface AuthAccountsResponse {
   };
 }
 
-// Currently all wasm query responses return json-encoded strings...
-// later deprecate this and use the specific types for result
-// (assuming it is inlined, no second parse needed)
-type WasmResponse<T = string> = WasmSuccess<T> | WasmError;
-
-interface WasmSuccess<T = string> {
-  readonly height: string;
-  readonly result: T;
-}
-
-interface WasmError {
-  readonly error: string;
-}
-
 export interface TxsResponse {
   readonly height: string;
   readonly txhash: string;
