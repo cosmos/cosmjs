@@ -15,6 +15,7 @@ import {
   StdFee,
   StdSignature,
   StdTx,
+  TxsResponse,
 } from "@cosmjs/sdk38";
 import { assert, sleep } from "@cosmjs/utils";
 import { ReadonlyDate } from "readonly-date";
@@ -28,7 +29,7 @@ import {
   MsgInstantiateContract,
   MsgStoreCode,
 } from "./msgs";
-import { RestClient, TxsResponse } from "./restclient";
+import { RestClient } from "./restclient";
 import { SigningCosmWasmClient } from "./signingcosmwasmclient";
 import cosmoshub from "./testdata/cosmoshub.json";
 import {
