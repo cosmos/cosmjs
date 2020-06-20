@@ -1,11 +1,15 @@
 import { Coin } from "./coins";
 import { Msg } from "./msgs";
 
-/** An Amino/Cosmos SDK StdTx */
+/**
+ * A Cosmos SDK StdTx
+ *
+ * @see https://docs.cosmos.network/master/modules/auth/03_types.html#stdtx
+ */
 export interface StdTx {
-  readonly msg: ReadonlyArray<Msg>;
+  readonly msg: readonly Msg[];
   readonly fee: StdFee;
-  readonly signatures: ReadonlyArray<StdSignature>;
+  readonly signatures: readonly StdSignature[];
   readonly memo: string | undefined;
 }
 
