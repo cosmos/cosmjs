@@ -5,6 +5,7 @@ import { ReadonlyDate } from "readonly-date";
 import { CosmosClient, isPostTxFailure, PrivateCosmWasmClient } from "./cosmosclient";
 import { makeSignBytes } from "./encoding";
 import { findAttribute } from "./logs";
+import { MsgSend } from "./msgs";
 import { Secp256k1Pen } from "./pen";
 import cosmoshub from "./testdata/cosmoshub.json";
 import {
@@ -15,7 +16,7 @@ import {
   unused,
   wasmd,
 } from "./testutils.spec";
-import { MsgSend, StdFee } from "./types";
+import { StdFee } from "./types";
 
 const blockTime = 1_000; // ms
 

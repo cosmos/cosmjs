@@ -1,4 +1,5 @@
-import { Msg, StdFee } from "./types";
+import { Msg } from "./msgs";
+import { StdFee } from "./types";
 export declare function makeSignBytes(
   msgs: readonly Msg[],
   fee: StdFee,

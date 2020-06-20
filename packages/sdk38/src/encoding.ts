@@ -1,6 +1,7 @@
 import { toUtf8 } from "@cosmjs/encoding";
 
-import { Msg, StdFee } from "./types";
+import { Msg } from "./msgs";
+import { StdFee } from "./types";
 
 function sortJson(json: any): any {
   if (typeof json !== "object" || json === null) {

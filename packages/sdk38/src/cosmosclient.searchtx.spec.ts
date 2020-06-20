@@ -4,6 +4,7 @@ import { assert, sleep } from "@cosmjs/utils";
 import { Coin } from "./coins";
 import { CosmosClient, isPostTxFailure } from "./cosmosclient";
 import { makeSignBytes } from "./encoding";
+import { isMsgSend, MsgSend } from "./msgs";
 import { Secp256k1Pen } from "./pen";
 import { RestClient } from "./restclient";
 import { SigningCosmosClient } from "./signingcosmosclient";
@@ -15,7 +16,7 @@ import {
   wasmd,
   wasmdEnabled,
 } from "./testutils.spec";
-import { CosmosSdkTx, isMsgSend, MsgSend } from "./types";
+import { CosmosSdkTx } from "./types";
 
 describe("CosmosClient.searchTx", () => {
   let sendSuccessful:
