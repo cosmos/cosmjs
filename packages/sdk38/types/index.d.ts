@@ -28,7 +28,7 @@ export {
   SearchTxsResponse,
   TxsResponse,
 } from "./restclient";
-export { isMsgSend, Msg, MsgSend } from "./msgs";
+export { isMsgDelegate, isMsgSend, Msg, MsgDelegate, MsgSend } from "./msgs";
 export { Pen, Secp256k1Pen, makeCosmoshubPath } from "./pen";
 export { decodeBech32Pubkey, encodeBech32Pubkey, encodeSecp256k1Pubkey } from "./pubkey";
 export { findSequenceForSignedTx } from "./sequence";
