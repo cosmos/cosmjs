@@ -1,6 +1,15 @@
 import { Sha256 } from "@cosmjs/crypto";
 import { toBase64, toHex } from "@cosmjs/encoding";
-import { BroadcastMode, Coin, coins, makeSignBytes, MsgSend, StdFee, StdSignature } from "@cosmjs/sdk38";
+import {
+  BroadcastMode,
+  Coin,
+  coins,
+  makeSignBytes,
+  MsgSend,
+  StdFee,
+  StdSignature,
+  StdTx,
+} from "@cosmjs/sdk38";
 import pako from "pako";
 
 import { isValidBuilder } from "./builder";
@@ -157,7 +166,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     const chainId = await this.getChainId();
     const signBytes = makeSignBytes([storeCodeMsg], fee, chainId, memo, accountNumber, sequence);
     const signature = await this.signCallback(signBytes);
-    const signedTx = {
+    const signedTx: StdTx = {
       msg: [storeCodeMsg],
       fee: fee,
       memo: memo,
@@ -206,7 +215,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     const signBytes = makeSignBytes([instantiateMsg], fee, chainId, memo, accountNumber, sequence);
 
     const signature = await this.signCallback(signBytes);
-    const signedTx = {
+    const signedTx: StdTx = {
       msg: [instantiateMsg],
       fee: fee,
       memo: memo,
@@ -246,7 +255,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     const chainId = await this.getChainId();
     const signBytes = makeSignBytes([executeMsg], fee, chainId, memo, accountNumber, sequence);
     const signature = await this.signCallback(signBytes);
-    const signedTx = {
+    const signedTx: StdTx = {
       msg: [executeMsg],
       fee: fee,
       memo: memo,
@@ -283,7 +292,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     const chainId = await this.getChainId();
     const signBytes = makeSignBytes([sendMsg], fee, chainId, memo, accountNumber, sequence);
     const signature = await this.signCallback(signBytes);
-    const signedTx = {
+    const signedTx: StdTx = {
       msg: [sendMsg],
       fee: fee,
       memo: memo,

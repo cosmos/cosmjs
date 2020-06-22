@@ -3,7 +3,7 @@ import { Account, CosmosClient, GetNonceResult, PostTxResult } from "./cosmoscli
 import { makeSignBytes } from "./encoding";
 import { MsgSend } from "./msgs";
 import { BroadcastMode } from "./restclient";
-import { StdFee, StdSignature } from "./types";
+import { StdFee, StdSignature, StdTx } from "./types";
 
 export interface SigningCallback {
   (signBytes: Uint8Array): Promise<StdSignature>;
@@ -96,7 +96,7 @@ export class SigningCosmosClient extends CosmosClient {
     const chainId = await this.getChainId();
     const signBytes = makeSignBytes([sendMsg], fee, chainId, memo, accountNumber, sequence);
     const signature = await this.signCallback(signBytes);
-    const signedTx = {
+    const signedTx: StdTx = {
       msg: [sendMsg],
       fee: fee,
       memo: memo,
