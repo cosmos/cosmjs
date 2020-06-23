@@ -30,17 +30,16 @@ export interface AbciQueryResponse {
   readonly log?: string;
 }
 export interface BlockResponse {
-  readonly blockMeta: BlockMeta;
+  readonly blockId: BlockId;
   readonly block: Block;
 }
 export interface BlockResultsResponse {
   readonly height: number;
   readonly results: readonly TxData[];
-  readonly endBlock: {
-    readonly validatorUpdates: readonly Validator[];
-    readonly consensusUpdates?: ConsensusParams;
-    readonly tags?: readonly Tag[];
-  };
+  readonly validatorUpdates: readonly Validator[];
+  readonly consensusUpdates?: ConsensusParams;
+  readonly beginBlock?: readonly Tag[];
+  readonly endBlock?: readonly Tag[];
 }
 export interface BlockchainResponse {
   readonly lastHeight: number;
@@ -170,7 +169,7 @@ export interface Evidence {
 }
 export interface Commit {
   readonly blockId: BlockId;
-  readonly precommits: readonly Vote[];
+  readonly signatures: readonly ValidatorSignature[];
 }
 /**
  * raw values from https://github.com/tendermint/tendermint/blob/dfa9a9a30a666132425b29454e90a472aa579a48/types/vote.go#L44
@@ -201,8 +200,6 @@ export interface Header {
   readonly chainId: string;
   readonly height: number;
   readonly time: ReadonlyDateWithNanoseconds;
-  readonly numTxs: number;
-  readonly totalTxs: number;
   readonly lastBlockId: BlockId;
   readonly lastCommitHash: Uint8Array;
   readonly dataHash: Uint8Array;
@@ -258,5 +255,6 @@ export interface BlockGossipParams {
   readonly blockPartSizeBytes: number;
 }
 export interface EvidenceParams {
-  readonly maxAge: number;
+  readonly maxAgeNumBlocks: number;
+  readonly maxAgeDuration: number;
 }

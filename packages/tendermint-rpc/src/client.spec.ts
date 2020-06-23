@@ -179,7 +179,6 @@ function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor): void {
 
     // and let's query the block itself to see this transaction
     const block = await client.block(height);
-    expect(block.blockMeta.header.numTxs).toEqual(1);
     expect(block.block.txs.length).toEqual(1);
     expect(block.block.txs[0]).toEqual(tx);
 
@@ -255,9 +254,7 @@ function websocketTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, appCr
           expect(event.time.getTime()).toBeGreaterThan(testStart - 1000);
           // Tendermint clock is sometimes ahead of test clock. Add 10ms tolerance
           expect(event.time.getTime()).toBeLessThanOrEqual(ReadonlyDate.now() + 10);
-          expect(event.numTxs).toEqual(0);
           expect(event.lastBlockId).toBeTruthy();
-          expect(event.totalTxs).toBeGreaterThan(0);
 
           // merkle roots for proofs
           expect(event.appHash).toBeTruthy();
@@ -276,7 +273,6 @@ function websocketTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, appCr
             expect(events[1].chainId).toEqual(events[0].chainId);
             expect(events[1].height).toEqual(events[0].height + 1);
             expect(events[1].time.getTime()).toBeGreaterThan(events[0].time.getTime());
-            expect(events[1].totalTxs).toEqual(events[0].totalTxs);
 
             expect(events[1].appHash).toEqual(events[0].appHash);
             expect(events[1].consensusHash).toEqual(events[0].consensusHash);
@@ -315,9 +311,7 @@ function websocketTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, appCr
         expect(event.header.time.getTime()).toBeGreaterThan(testStart - 1000);
         // Tendermint clock is sometimes ahead of test clock. Add 10ms tolerance
         expect(event.header.time.getTime()).toBeLessThanOrEqual(ReadonlyDate.now() + 10);
-        expect(event.header.numTxs).toEqual(1);
         expect(event.header.lastBlockId).toBeTruthy();
-        expect(event.header.totalTxs).toBeGreaterThan(0);
 
         // merkle roots for proofs
         expect(event.header.appHash).toBeTruthy();
@@ -348,7 +342,6 @@ function websocketTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, appCr
     expect(events[1].header.height).toEqual(events[0].header.height + 1);
     expect(events[1].header.chainId).toEqual(events[0].header.chainId);
     expect(events[1].header.time.getTime()).toBeGreaterThan(events[0].header.time.getTime());
-    expect(events[1].header.totalTxs).toEqual(events[0].header.totalTxs + 1);
     expect(events[1].header.appHash).not.toEqual(events[0].header.appHash);
     expect(events[1].header.validatorsHash).toEqual(events[0].header.validatorsHash);
     // Block body

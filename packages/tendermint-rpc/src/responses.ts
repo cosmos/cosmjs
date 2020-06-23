@@ -35,18 +35,17 @@ export interface AbciQueryResponse {
 }
 
 export interface BlockResponse {
-  readonly blockMeta: BlockMeta;
+  readonly blockId: BlockId;
   readonly block: Block;
 }
 
 export interface BlockResultsResponse {
   readonly height: number;
   readonly results: readonly TxData[];
-  readonly endBlock: {
-    readonly validatorUpdates: readonly Validator[];
-    readonly consensusUpdates?: ConsensusParams;
-    readonly tags?: readonly Tag[];
-  };
+  readonly validatorUpdates: readonly Validator[];
+  readonly consensusUpdates?: ConsensusParams;
+  readonly beginBlock?: readonly Tag[];
+  readonly endBlock?: readonly Tag[];
 }
 
 export interface BlockchainResponse {
@@ -214,7 +213,7 @@ export interface Evidence {
 
 export interface Commit {
   readonly blockId: BlockId;
-  readonly precommits: readonly Vote[];
+  readonly signatures: readonly ValidatorSignature[];
 }
 
 /**
@@ -253,8 +252,6 @@ export interface Header {
   readonly chainId: string;
   readonly height: number;
   readonly time: ReadonlyDateWithNanoseconds;
-  readonly numTxs: number;
-  readonly totalTxs: number;
 
   // prev block info
   readonly lastBlockId: BlockId;
@@ -327,5 +324,6 @@ export interface BlockGossipParams {
 }
 
 export interface EvidenceParams {
-  readonly maxAge: number;
+  readonly maxAgeNumBlocks: number;
+  readonly maxAgeDuration: number;
 }
