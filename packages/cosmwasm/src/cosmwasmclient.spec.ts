@@ -210,7 +210,9 @@ describe("CosmWasmClient", () => {
       const sendMsg: MsgSend = {
         type: "cosmos-sdk/MsgSend",
         value: {
+          // eslint-disable-next-line @typescript-eslint/naming-convention
           from_address: alice.address0,
+          // eslint-disable-next-line @typescript-eslint/naming-convention
           to_address: makeRandomAddress(),
           amount: [
             {
@@ -343,6 +345,7 @@ describe("CosmWasmClient", () => {
           decimals: 5,
           name: "Hash token",
           symbol: "HASH",
+          // eslint-disable-next-line @typescript-eslint/naming-convention
           initial_balances: jasmine.arrayContaining([
             {
               address: alice.address0,

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { assert } from "@cosmjs/utils";
 import { Message } from "protobufjs";
 
@@ -11,14 +12,14 @@ describe("decorator demo", () => {
     const myRegistry = new Registry();
 
     @CosmosMessage(myRegistry, nestedTypeUrl)
-    class MsgNestedDemo extends Message<{}> {
+    class MsgNestedDemo extends Message {
       @CosmosField.String(1)
       public readonly foo?: string;
     }
 
     @CosmosMessage(myRegistry, typeUrl)
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    class MsgDemo extends Message<{}> {
+    class MsgDemo extends Message {
       @CosmosField.Boolean(1)
       public readonly booleanDemo?: boolean;
 

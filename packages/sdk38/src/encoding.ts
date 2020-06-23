@@ -27,7 +27,9 @@ function sortJson(json: any): any {
  * @see https://docs.cosmos.network/master/modules/auth/03_types.html#stdsigndoc
  */
 interface StdSignDoc {
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   readonly account_number: string;
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   readonly chain_id: string;
   readonly fee: StdFee;
   readonly memo: string;
@@ -44,7 +46,9 @@ export function makeSignBytes(
   sequence: number,
 ): Uint8Array {
   const signDoc: StdSignDoc = {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     account_number: accountNumber.toString(),
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     chain_id: chainId,
     fee: fee,
     memo: memo,

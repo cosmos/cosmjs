@@ -84,7 +84,9 @@ describe("CosmWasmClient.searchTx", () => {
         const sendMsg: MsgSend = {
           type: "cosmos-sdk/MsgSend",
           value: {
+            // eslint-disable-next-line @typescript-eslint/naming-convention
             from_address: alice.address0,
+            // eslint-disable-next-line @typescript-eslint/naming-convention
             to_address: recipient,
             amount: transferAmount,
           },
@@ -418,9 +420,12 @@ describe("CosmWasmClient.searchTx", () => {
         type: "wasm/instantiate",
         value: {
           sender: alice.address0,
+          // eslint-disable-next-line @typescript-eslint/naming-convention
           code_id: deployedErc20.codeId.toString(),
           label: "HASH",
+          // eslint-disable-next-line @typescript-eslint/naming-convention
           init_msg: jasmine.objectContaining({ symbol: "HASH" }),
+          // eslint-disable-next-line @typescript-eslint/naming-convention
           init_funds: [],
         },
       });

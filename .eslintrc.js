@@ -35,10 +35,9 @@ module.exports = {
     "@typescript-eslint/explicit-function-return-type": ["warn", { allowExpressions: true }],
     "@typescript-eslint/naming-convention": [
       "warn",
-      { format: ["strictCamelCase"], selector: "default" },
       {
-        selector: "property",
-        format: ["strictCamelCase", "snake_case"],
+        selector: "default",
+        format: ["strictCamelCase"],
       },
       {
         selector: "typeLike",

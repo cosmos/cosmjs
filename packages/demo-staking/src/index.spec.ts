@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { SigningCosmWasmClient } from "@cosmjs/cosmwasm";
 import { Coin, coins, makeCosmoshubPath, Secp256k1Pen } from "@cosmjs/sdk38";
 

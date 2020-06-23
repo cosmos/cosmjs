@@ -23,14 +23,13 @@ export { makeSignBytes } from "./encoding";
 export {
   AuthAccountsResponse,
   BlockResponse,
-  BroadcastMode,
   EncodeTxResponse,
   PostTxsResponse,
   NodeInfoResponse,
-  RestClient,
   SearchTxsResponse,
   TxsResponse,
-} from "./restclient";
+} from "./restapi";
+export { BroadcastMode, RestClient } from "./restclient";
 export { isMsgDelegate, isMsgSend, Msg, MsgDelegate, MsgSend } from "./msgs";
 export { Pen, Secp256k1Pen, makeCosmoshubPath } from "./pen";
 export { decodeBech32Pubkey, encodeBech32Pubkey, encodeSecp256k1Pubkey } from "./pubkey";

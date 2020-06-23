@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { assert, sleep } from "@cosmjs/utils";
 import { ReadonlyDate } from "readonly-date";
 
@@ -8,7 +9,8 @@ import { parseLogs } from "./logs";
 import { Msg, MsgSend } from "./msgs";
 import { makeCosmoshubPath, Secp256k1Pen } from "./pen";
 import { encodeBech32Pubkey } from "./pubkey";
-import { RestClient, TxsResponse } from "./restclient";
+import { TxsResponse } from "./restapi";
+import { RestClient } from "./restclient";
 import { SigningCosmosClient } from "./signingcosmosclient";
 import cosmoshub from "./testdata/cosmoshub.json";
 import {

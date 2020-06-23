@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { assert } from "@cosmjs/utils";
 import protobuf from "protobufjs";
 

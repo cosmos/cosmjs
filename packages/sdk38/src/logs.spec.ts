@@ -85,6 +85,7 @@ describe("logs", () => {
   describe("parseLog", () => {
     it("works", () => {
       const original = {
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         msg_index: 0,
         log: "",
         events: [
@@ -125,6 +126,7 @@ describe("logs", () => {
     it("works", () => {
       const original = [
         {
+          // eslint-disable-next-line @typescript-eslint/naming-convention
           msg_index: 0,
           log: "",
           events: [

@@ -155,6 +155,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       type: "wasm/store-code",
       value: {
         sender: this.senderAddress,
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         wasm_byte_code: toBase64(compressed),
         source: source,
         builder: builder,
@@ -199,9 +200,12 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       type: "wasm/instantiate",
       value: {
         sender: this.senderAddress,
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         code_id: codeId.toString(),
         label: label,
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         init_msg: initMsg,
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         init_funds: transferAmount || [],
       },
     };
@@ -242,7 +246,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
         sender: this.senderAddress,
         contract: contractAddress,
         msg: handleMsg,
-
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         sent_funds: transferAmount || [],
       },
     };
@@ -276,8 +280,9 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     const sendMsg: MsgSend = {
       type: "cosmos-sdk/MsgSend",
       value: {
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         from_address: this.senderAddress,
-
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         to_address: recipientAddress,
         amount: transferAmount,
       },

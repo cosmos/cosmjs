@@ -11,6 +11,7 @@ export interface Event {
 }
 
 export interface Log {
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   readonly msg_index: number;
   readonly log: string;
   readonly events: readonly Event[];
@@ -51,6 +52,7 @@ export function parseLog(input: unknown): Log {
   if (typeof log !== "string") throw new Error("Log's log must be a string");
   if (!Array.isArray(events)) throw new Error("Log's events must be an array");
   return {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     msg_index: msg_index,
     log: log,
     events: events.map(parseEvent),

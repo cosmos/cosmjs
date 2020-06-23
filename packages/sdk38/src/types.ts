@@ -31,6 +31,7 @@ export interface StdFee {
 }
 
 export interface StdSignature {
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   readonly pub_key: PubKey;
   readonly signature: string;
 }

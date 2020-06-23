@@ -22,6 +22,7 @@ export interface CodeInfo {
   /** Bech32 account address */
   readonly creator: string;
   /** Hex-encoded sha256 hash of the code stored here */
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   readonly data_hash: string;
   // TODO: these are not supported in current wasmd
   readonly source?: string;
@@ -36,6 +37,7 @@ export interface CodeDetails extends CodeInfo {
 // This is list view, without contract info
 export interface ContractInfo {
   readonly address: string;
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   readonly code_id: number;
   /** Bech32 account address */
   readonly creator: string;
@@ -44,6 +46,7 @@ export interface ContractInfo {
 
 export interface ContractDetails extends ContractInfo {
   /** Argument passed on initialization of the contract */
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   readonly init_msg: Record<string, unknown>;
 }
 

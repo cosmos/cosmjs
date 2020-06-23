@@ -11,6 +11,7 @@ export interface MsgStoreCode extends Msg {
     /** Bech32 account address */
     readonly sender: string;
     /** Base64 encoded Wasm */
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     readonly wasm_byte_code: string;
     /** A valid URI reference to the contract's source code. Can be empty. */
     readonly source: string;
@@ -30,11 +31,14 @@ export interface MsgInstantiateContract extends Msg {
     /** Bech32 account address */
     readonly sender: string;
     /** ID of the Wasm code that was uploaded before */
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     readonly code_id: string;
     /** Human-readable label for this contract */
     readonly label: string;
     /** Init message as JavaScript object */
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     readonly init_msg: any;
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     readonly init_funds: ReadonlyArray<Coin>;
   };
 }
@@ -53,6 +57,7 @@ export interface MsgExecuteContract extends Msg {
     readonly contract: string;
     /** Handle message as JavaScript object */
     readonly msg: any;
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     readonly sent_funds: ReadonlyArray<Coin>;
   };
 }
