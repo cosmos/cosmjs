@@ -29,6 +29,9 @@ export const cosmosField = {
   int64: (id: number): FieldDecorator => Field.d<number>(id, "int64"),
   uint64: (id: number): FieldDecorator => Field.d<number>(id, "uint64"),
 
-  repeatedString: (id: number): FieldDecorator => Field.d<string[]>(id, "string", "repeated"),
   nested: (id: number, ctor: Constructor<Message<{}>>): FieldDecorator => Field.d(id, ctor),
+
+  repeatedString: (id: number): FieldDecorator => Field.d<string[]>(id, "string", "repeated"),
+  repeatedNested: (id: number, ctor: Constructor<Message<{}>>): FieldDecorator =>
+    Field.d(id, ctor, "repeated"),
 };
