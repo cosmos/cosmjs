@@ -1,0 +1,46 @@
+{
+  "name": "@cosmjs/demo-protobuf",
+  "private": true,
+  "version": "0.20.0",
+  "description": "Utilities for Cosmos SDK 0.38",
+  "author": "Ethan Frey <ethanfrey@users.noreply.github.com>",
+  "license": "Apache-2.0",
+  "main": "build/index.js",
+  "types": "types/index.d.ts",
+  "files": [
+    "build/",
+    "types/",
+    "*.md",
+    "!*.spec.*",
+    "!**/testdata/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CosmWasm/cosmjs/tree/master/packages/demo-protobuf"
+  },
+  "scripts": {
+    "docs": "shx rm -rf docs && typedoc --options typedoc.js",
+    "format": "prettier --write --loglevel warn \"./src/**/*.ts\"",
+    "lint": "eslint --max-warnings 0 \"**/*.{js,ts}\"",
+    "lint-fix": "eslint --max-warnings 0 \"**/*.{js,ts}\" --fix",
+    "move-types": "shx rm -rf ./types/* && shx mv build/types/* ./types && rm -rf ./types/testdata && shx rm -f ./types/*.spec.d.ts",
+    "format-types": "prettier --write --loglevel warn \"./types/**/*.d.ts\"",
+    "build": "shx rm -rf ./build && tsc && shx mkdir -p build/generated && shx cp ./src/generated/*.js ./build/generated && shx mkdir -p ./build/types/generated && shx cp ./src/generated/*.d.ts ./build/types/generated && yarn move-types && yarn format-types",
+    "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build",
+    "test-node": "node jasmine-testrunner.js",
+    "test-firefox": "yarn pack-web && karma start --single-run --browsers Firefox",
+    "test-chrome": "yarn pack-web && karma start --single-run --browsers ChromeHeadless",
+    "test": "yarn build-or-skip && yarn test-node",
+    "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js",
+    "get-proto": "REF=master ./scripts/get-proto.sh",
+    "predefine-proto": "mkdir -p src/generated && pbjs -t static-module -w commonjs -o src/generated/codecimpl.tmp.js --sparse --no-beautify --no-delimited --no-verify --no-convert ./proto/cosmos/cosmos-sdk/{x/bank/types/types.proto,types/types.proto,types/tx/types.proto,types/tx/signing/types.proto,third_party/proto/tendermint/**/*.proto,crypto/types/types.proto}",
+    "define-proto": "pbts src/generated/codecimpl.tmp.js -o src/generated/codecimpl.d.ts && tsc --removeComments --outFile src/generated/codecimpl.js --allowJs src/generated/codecimpl.tmp.js && rm src/generated/codecimpl.tmp.js",
+    "postdefine-proto": "prettier --write \"src/generated/codecimpl.*\""
+  },
+  "dependencies": {
+    "protobufjs": "~6.9.0"
+  },
+  "devDependencies": {
+    "@cosmjs/utils": "^0.20.0"
+  }
+}

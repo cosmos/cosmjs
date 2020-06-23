@@ -6,4 +6,5 @@ dist/
 docs/
 examples/
 generated/
+proto/
 types/
