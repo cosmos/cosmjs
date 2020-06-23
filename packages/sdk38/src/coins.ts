@@ -1,3 +1,5 @@
+import { Uint53 } from "@cosmjs/math";
+
 export interface Coin {
   readonly denom: string;
   readonly amount: string;
@@ -5,7 +7,7 @@ export interface Coin {
 
 /** Creates a coin */
 export function coin(amount: number, denom: string): Coin {
-  return { amount: amount.toString(), denom: denom };
+  return { amount: new Uint53(amount).toString(), denom: denom };
 }
 
 /** Creates a list of coins with one element */
