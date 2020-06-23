@@ -15,15 +15,20 @@ export function CosmosMessage(registry: Registry, typeUrl: string): TypeDecorato
   };
 }
 
+/**
+ * Like PropertyDecorator from lib.es5.d.ts but without symbol support in propertyKey.
+ */
+export type FieldDecorator = (target: object, propertyKey: string) => void;
+
 export const CosmosField = {
-  Boolean: (id: number) => Field.d<boolean>(id, "bool"),
+  Boolean: (id: number): FieldDecorator => Field.d<boolean>(id, "bool"),
 
-  String: (id: number) => Field.d<string>(id, "string"),
-  Bytes: (id: number) => Field.d<Uint8Array>(id, "bytes"),
+  String: (id: number): FieldDecorator => Field.d<string>(id, "string"),
+  Bytes: (id: number): FieldDecorator => Field.d<Uint8Array>(id, "bytes"),
 
-  Int64: (id: number) => Field.d<number>(id, "int64"),
-  Uint64: (id: number) => Field.d<number>(id, "uint64"),
+  Int64: (id: number): FieldDecorator => Field.d<number>(id, "int64"),
+  Uint64: (id: number): FieldDecorator => Field.d<number>(id, "uint64"),
 
-  RepeatedString: (id: number) => Field.d<string[]>(id, "string", "repeated"),
-  Nested: (id: number, ctor: Constructor<Message<{}>>) => Field.d(id, ctor),
+  RepeatedString: (id: number): FieldDecorator => Field.d<string[]>(id, "string", "repeated"),
+  Nested: (id: number, ctor: Constructor<Message<{}>>): FieldDecorator => Field.d(id, ctor),
 };
