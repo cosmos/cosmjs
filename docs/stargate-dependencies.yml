@@ -6,8 +6,4 @@
 - "@cosmjs/proto-signing"
 
 "@cosmjs/proto-signing":
-- "protobufjs/minimal"
-
-"@cosmjs/proto-decorators":
-- "@cosmjs/proto-signing"
-- "protobufjs/light"
+- "protobufjs"
