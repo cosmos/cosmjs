@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { Coin, CosmosSdkTx, isMsgSend, makeSignBytes, MsgSend, Secp256k1Pen } from "@cosmjs/sdk38";
+import { Coin, coins, CosmosSdkTx, isMsgSend, makeSignBytes, MsgSend, Secp256k1Pen } from "@cosmjs/sdk38";
 import { assert, sleep } from "@cosmjs/utils";
 
 import { CosmWasmClient, isPostTxFailure } from "./cosmwasmclient";
@@ -16,29 +16,27 @@ import {
   wasmdEnabled,
 } from "./testutils.spec";
 
-type TestSendTx =
-  | {
-      readonly sender: string;
-      readonly recipient: string;
-      readonly hash: string;
-      readonly height: number;
-      readonly tx: CosmosSdkTx;
-    }
-  | undefined;
+interface TestTxSend {
+  readonly sender: string;
+  readonly recipient: string;
+  readonly hash: string;
+  readonly height: number;
+  readonly tx: CosmosSdkTx;
+}
+
+interface TestTxExecute {
+  readonly sender: string;
+  readonly contract: string;
+  readonly hash: string;
+  readonly height: number;
+  readonly tx: CosmosSdkTx;
+}
 
 describe("CosmWasmClient.searchTx", () => {
-  let sendSuccessful: TestSendTx;
-  let sendSelfSuccessful: TestSendTx;
-  let sendUnsuccessful: TestSendTx;
-  let postedExecute:
-    | {
-        readonly sender: string;
-        readonly contract: string;
-        readonly hash: string;
-        readonly height: number;
-        readonly tx: CosmosSdkTx;
-      }
-    | undefined;
+  let sendSuccessful: TestTxSend | undefined;
+  let sendSelfSuccessful: TestTxSend | undefined;
+  let sendUnsuccessful: TestTxSend | undefined;
+  let execute: TestTxExecute | undefined;
 
   beforeAll(async () => {
     if (wasmdEnabled()) {
@@ -49,11 +47,8 @@ describe("CosmWasmClient.searchTx", () => {
 
       {
         const recipient = makeRandomAddress();
-        const transferAmount: Coin = {
-          denom: "ucosm",
-          amount: "1234567",
-        };
-        const result = await client.sendTokens(recipient, [transferAmount]);
+        const transferAmount = coins(1234567, "ucosm");
+        const result = await client.sendTokens(recipient, transferAmount);
         await sleep(75); // wait until tx is indexed
         const txDetails = await new RestClient(wasmd.endpoint).txById(result.transactionHash);
         sendSuccessful = {
@@ -86,12 +81,7 @@ describe("CosmWasmClient.searchTx", () => {
       {
         const memo = "Sending more than I can afford";
         const recipient = makeRandomAddress();
-        const transferAmount = [
-          {
-            denom: "ucosm",
-            amount: "123456700000000",
-          },
-        ];
+        const transferAmount = coins(123456700000000, "ucosm");
         const sendMsg: MsgSend = {
           type: "cosmos-sdk/MsgSend",
           value: {
@@ -103,12 +93,7 @@ describe("CosmWasmClient.searchTx", () => {
           },
         };
         const fee = {
-          amount: [
-            {
-              denom: "ucosm",
-              amount: "2000",
-            },
-          ],
+          amount: coins(2000, "ucosm"),
           gas: "80000", // 80k
         };
         const { accountNumber, sequence } = await client.getNonce();
@@ -148,7 +133,7 @@ describe("CosmWasmClient.searchTx", () => {
         const result = await client.execute(hashInstance, msg);
         await sleep(75); // wait until tx is indexed
         const txDetails = await new RestClient(wasmd.endpoint).txById(result.transactionHash);
-        postedExecute = {
+        execute = {
           sender: alice.address0,
           contract: hashInstance,
           hash: result.transactionHash,
@@ -413,10 +398,10 @@ describe("CosmWasmClient.searchTx", () => {
 
     it("can search by message.contract_address", async () => {
       pendingWithoutWasmd();
-      assert(postedExecute, "value must be set in beforeAll()");
+      assert(execute, "value must be set in beforeAll()");
       const client = new CosmWasmClient(wasmd.endpoint);
       const results = await client.searchTx({
-        tags: [{ key: "message.contract_address", value: postedExecute.contract }],
+        tags: [{ key: "message.contract_address", value: execute.contract }],
       });
       expect(results.length).toBeGreaterThanOrEqual(1);
 
@@ -446,20 +431,20 @@ describe("CosmWasmClient.searchTx", () => {
       // Check details of most recent result
       expect(results[results.length - 1]).toEqual(
         jasmine.objectContaining({
-          height: postedExecute.height,
-          hash: postedExecute.hash,
-          tx: postedExecute.tx,
+          height: execute.height,
+          hash: execute.hash,
+          tx: execute.tx,
         }),
       );
     });
 
     it("can search by message.contract_address + message.action", async () => {
       pendingWithoutWasmd();
-      assert(postedExecute, "value must be set in beforeAll()");
+      assert(execute, "value must be set in beforeAll()");
       const client = new CosmWasmClient(wasmd.endpoint);
       const results = await client.searchTx({
         tags: [
-          { key: "message.contract_address", value: postedExecute.contract },
+          { key: "message.contract_address", value: execute.contract },
           { key: "message.action", value: "execute" },
         ],
       });
@@ -469,15 +454,15 @@ describe("CosmWasmClient.searchTx", () => {
       for (const result of results) {
         const msg = fromOneElementArray(result.tx.value.msg);
         assert(isMsgExecuteContract(msg), `${result.hash} (at ${result.height}) not an execute msg`);
-        expect(msg.value.contract).toEqual(postedExecute.contract);
+        expect(msg.value.contract).toEqual(execute.contract);
       }
 
       // Check details of most recent result
       expect(results[results.length - 1]).toEqual(
         jasmine.objectContaining({
-          height: postedExecute.height,
-          hash: postedExecute.hash,
-          tx: postedExecute.tx,
+          height: execute.height,
+          hash: execute.hash,
+          tx: execute.tx,
         }),
       );
     });

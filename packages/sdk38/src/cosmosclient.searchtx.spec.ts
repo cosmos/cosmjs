@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { assert, sleep } from "@cosmjs/utils";
 
-import { Coin } from "./coins";
+import { coins } from "./coins";
 import { CosmosClient, isPostTxFailure } from "./cosmosclient";
 import { makeSignBytes } from "./encoding";
 import { isMsgSend, MsgSend } from "./msgs";
@@ -18,25 +18,17 @@ import {
 } from "./testutils.spec";
 import { CosmosSdkTx } from "./types";
 
+interface TestTxSend {
+  readonly sender: string;
+  readonly recipient: string;
+  readonly hash: string;
+  readonly height: number;
+  readonly tx: CosmosSdkTx;
+}
+
 describe("CosmosClient.searchTx", () => {
-  let sendSuccessful:
-    | {
-        readonly sender: string;
-        readonly recipient: string;
-        readonly hash: string;
-        readonly height: number;
-        readonly tx: CosmosSdkTx;
-      }
-    | undefined;
-  let sendUnsuccessful:
-    | {
-        readonly sender: string;
-        readonly recipient: string;
-        readonly hash: string;
-        readonly height: number;
-        readonly tx: CosmosSdkTx;
-      }
-    | undefined;
+  let sendUnsuccessful: TestTxSend | undefined;
+  let sendSuccessful: TestTxSend | undefined;
 
   beforeAll(async () => {
     if (wasmdEnabled()) {
@@ -46,32 +38,9 @@ describe("CosmosClient.searchTx", () => {
       );
 
       {
-        const recipient = makeRandomAddress();
-        const transferAmount: Coin = {
-          denom: "ucosm",
-          amount: "1234567",
-        };
-        const result = await client.sendTokens(recipient, [transferAmount]);
-        await sleep(75); // wait until tx is indexed
-        const txDetails = await new RestClient(wasmd.endpoint).txById(result.transactionHash);
-        sendSuccessful = {
-          sender: faucet.address,
-          recipient: recipient,
-          hash: result.transactionHash,
-          height: Number.parseInt(txDetails.height, 10),
-          tx: txDetails.tx,
-        };
-      }
-
-      {
         const memo = "Sending more than I can afford";
         const recipient = makeRandomAddress();
-        const transferAmount = [
-          {
-            denom: "ucosm",
-            amount: "123456700000000",
-          },
-        ];
+        const transferAmount = coins(123456700000000, "ucosm");
         const sendMsg: MsgSend = {
           type: "cosmos-sdk/MsgSend",
           value: {
@@ -83,12 +52,7 @@ describe("CosmosClient.searchTx", () => {
           },
         };
         const fee = {
-          amount: [
-            {
-              denom: "ucosm",
-              amount: "2000",
-            },
-          ],
+          amount: coins(2000, "ucosm"),
           gas: "80000", // 80k
         };
         const { accountNumber, sequence } = await client.getNonce();
@@ -115,6 +79,21 @@ describe("CosmosClient.searchTx", () => {
             tx: tx,
           };
         }
+      }
+
+      {
+        const recipient = makeRandomAddress();
+        const transferAmount = coins(1234567, "ucosm");
+        const result = await client.sendTokens(recipient, transferAmount);
+        await sleep(75); // wait until tx is indexed
+        const txDetails = await new RestClient(wasmd.endpoint).txById(result.transactionHash);
+        sendSuccessful = {
+          sender: faucet.address,
+          recipient: recipient,
+          hash: result.transactionHash,
+          height: Number.parseInt(txDetails.height, 10),
+          tx: txDetails.tx,
+        };
       }
     }
   });
