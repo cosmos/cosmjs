@@ -85,9 +85,9 @@ describe("decorator demo", () => {
     expect(msgDemoDecoded.stringDemo).toEqual(msgDemoFields.stringDemo);
     // bytesDemo decodes to a Buffer in Node
     expect(Uint8Array.from(msgDemoDecoded.bytesDemo)).toEqual(msgDemoFields.bytesDemo);
-    // int64Demo and uint64Demo decode to Long
-    expect(msgDemoDecoded.int64Demo.toNumber()).toEqual(msgDemoFields.int64Demo);
-    expect(msgDemoDecoded.uint64Demo.toNumber()).toEqual(msgDemoFields.uint64Demo);
+    // int64Demo and uint64Demo decode to Long in Node
+    expect(Number(msgDemoDecoded.int64Demo)).toEqual(msgDemoFields.int64Demo);
+    expect(Number(msgDemoDecoded.uint64Demo)).toEqual(msgDemoFields.uint64Demo);
 
     expect(msgDemoDecoded.listDemo).toEqual(msgDemoFields.listDemo);
     expect(msgDemoDecoded.nestedDemo).toEqual(msgDemoFields.nestedDemo);
