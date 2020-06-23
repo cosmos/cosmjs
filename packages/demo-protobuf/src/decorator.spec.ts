@@ -35,7 +35,7 @@ describe("decorator demo", () => {
       @CosmosField.UInt64(5)
       public readonly uint64Demo?: number;
 
-      @CosmosField.Repeated(6)
+      @CosmosField.RepeatedString(6)
       public readonly listDemo?: readonly string[];
 
       @CosmosField.Nested(7, MsgNestedDemo)

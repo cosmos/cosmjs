@@ -8,9 +8,9 @@ function getTypeName(typeUrl: string): string {
 }
 
 export function CosmosMessage(registry: Registry, typeUrl: string): TypeDecorator<any> {
-  return (constructor: Constructor<Message<any>>) => {
+  return (ctor: Constructor<Message<any>>) => {
     const typeName = getTypeName(typeUrl);
-    const generatedType = util.decorateType(constructor, typeName);
+    const generatedType = util.decorateType(ctor, typeName);
     registry.register(typeUrl, generatedType);
   };
 }
@@ -24,6 +24,6 @@ export const CosmosField = {
   Int64: (id: number) => Field.d<number>(id, "int64"),
   UInt64: (id: number) => Field.d<number>(id, "uint64"),
 
-  Repeated: (id: number) => Field.d<string[]>(id, "string", "repeated"),
+  RepeatedString: (id: number) => Field.d<string[]>(id, "string", "repeated"),
   Nested: (id: number, ctor: Constructor<Message<{}>>) => Field.d(id, ctor),
 };

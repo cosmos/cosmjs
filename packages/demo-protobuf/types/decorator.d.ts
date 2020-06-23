@@ -7,6 +7,6 @@ export declare const CosmosField: {
   Bytes: (id: number) => import("protobufjs").FieldDecorator;
   Int64: (id: number) => import("protobufjs").FieldDecorator;
   UInt64: (id: number) => import("protobufjs").FieldDecorator;
-  Repeated: (id: number) => import("protobufjs").FieldDecorator;
+  RepeatedString: (id: number) => import("protobufjs").FieldDecorator;
   Nested: (id: number, ctor: Constructor<Message<{}>>) => import("protobufjs").FieldDecorator;
 };
