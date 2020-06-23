@@ -1,4 +1,4 @@
-export { v0_32 } from "./v0-32";
+export { v0_33 } from "./v0-33";
 export { Client } from "./client";
 export {
   AbciInfoRequest,

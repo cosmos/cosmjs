@@ -2,7 +2,7 @@
 // This module exposes translators for multiple tendermint versions
 // Pick a version that matches the server to properly encode the data types
 import { Adaptor } from "./adaptor";
-import { v0_32 } from "./v0-32";
+import { v0_33 } from "./v0-33";
 
 /**
  * Returns an Adaptor implementation for a given tendermint version.
@@ -11,8 +11,8 @@ import { v0_32 } from "./v0-32";
  * @param version full Tendermint version string, e.g. "0.20.1"
  */
 export function adaptorForVersion(version: string): Adaptor {
-  if (version.startsWith("0.32.")) {
-    return v0_32;
+  if (version.startsWith("0.33.")) {
+    return v0_33;
   } else {
     throw new Error(`Unsupported tendermint version: ${version}`);
   }
