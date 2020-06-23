@@ -7,8 +7,15 @@ import { Registry } from "./registry";
 
 describe("decorator demo", () => {
   it("works with a custom msg", () => {
+    const nestedTypeUrl = "/demo.MsgNestedDemo";
     const typeUrl = "/demo.MsgDemo";
     const myRegistry = new Registry();
+
+    @CosmosMessage(myRegistry, nestedTypeUrl)
+    class MsgNestedDemo extends Message<{}> {
+      @CosmosField.String(1)
+      public readonly foo?: string;
+    }
 
     @CosmosMessage(myRegistry, typeUrl)
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -30,11 +37,20 @@ describe("decorator demo", () => {
 
       @CosmosField.Repeated(6)
       public readonly listDemo?: readonly string[];
+
+      @CosmosField.Nested(7, MsgNestedDemo)
+      public readonly nestedDemo?: MsgNestedDemo;
     }
 
+    const MsgNestedDemoT = myRegistry.lookupType(nestedTypeUrl)!;
     const MsgDemoT = myRegistry.lookupType(typeUrl)!;
     const TxBody = myRegistry.lookupType("/cosmos.tx.TxBody")!;
     const Any = myRegistry.lookupType("/google.protobuf.Any")!;
+
+    const msgNestedDemoFields = {
+      foo: "bar",
+    };
+    const msgNestedDemo = MsgNestedDemoT.create(msgNestedDemoFields);
 
     const msgDemoFields = {
       booleanDemo: true,
@@ -43,6 +59,7 @@ describe("decorator demo", () => {
       int64Demo: -123,
       uint64Demo: 123,
       listDemo: ["this", "is", "a", "list"],
+      nestedDemo: msgNestedDemo,
     };
     const msgDemo = MsgDemoT.create(msgDemoFields);
     const msgDemoBytes = MsgDemoT.encode(msgDemo).finish();
@@ -73,5 +90,6 @@ describe("decorator demo", () => {
     expect(msgDemoDecoded.uint64Demo.toNumber()).toEqual(msgDemoFields.uint64Demo);
 
     expect(msgDemoDecoded.listDemo).toEqual(msgDemoFields.listDemo);
+    expect(msgDemoDecoded.nestedDemo).toEqual(msgDemoFields.nestedDemo);
   });
 });

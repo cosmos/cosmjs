@@ -1,4 +1,4 @@
-import { TypeDecorator } from "protobufjs";
+import { Constructor, Message, TypeDecorator } from "protobufjs";
 import { Registry } from "./registry";
 export declare function CosmosMessage(registry: Registry, typeUrl: string): TypeDecorator<any>;
 export declare const CosmosField: {
@@ -8,4 +8,5 @@ export declare const CosmosField: {
   Int64: (id: number) => import("protobufjs").FieldDecorator;
   UInt64: (id: number) => import("protobufjs").FieldDecorator;
   Repeated: (id: number) => import("protobufjs").FieldDecorator;
+  Nested: (id: number, ctor: Constructor<Message<{}>>) => import("protobufjs").FieldDecorator;
 };

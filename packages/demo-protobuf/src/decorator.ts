@@ -25,4 +25,5 @@ export const CosmosField = {
   UInt64: (id: number) => Field.d<number>(id, "uint64"),
 
   Repeated: (id: number) => Field.d<string[]>(id, "string", "repeated"),
+  Nested: (id: number, ctor: Constructor<Message<{}>>) => Field.d(id, ctor),
 };
