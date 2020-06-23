@@ -7,7 +7,7 @@ function getTypeName(typeUrl: string): string {
   return parts[parts.length - 1];
 }
 
-export function CosmosMessage(registry: Registry, typeUrl: string): TypeDecorator<any> {
+export function cosmosMessage(registry: Registry, typeUrl: string): TypeDecorator<any> {
   return (ctor: Constructor<Message<any>>) => {
     const typeName = getTypeName(typeUrl);
     const generatedType = util.decorateType(ctor, typeName);
@@ -20,15 +20,15 @@ export function CosmosMessage(registry: Registry, typeUrl: string): TypeDecorato
  */
 export type FieldDecorator = (target: object, propertyKey: string) => void;
 
-export const CosmosField = {
-  Boolean: (id: number): FieldDecorator => Field.d<boolean>(id, "bool"),
+export const cosmosField = {
+  boolean: (id: number): FieldDecorator => Field.d<boolean>(id, "bool"),
 
-  String: (id: number): FieldDecorator => Field.d<string>(id, "string"),
-  Bytes: (id: number): FieldDecorator => Field.d<Uint8Array>(id, "bytes"),
+  string: (id: number): FieldDecorator => Field.d<string>(id, "string"),
+  bytes: (id: number): FieldDecorator => Field.d<Uint8Array>(id, "bytes"),
 
-  Int64: (id: number): FieldDecorator => Field.d<number>(id, "int64"),
-  Uint64: (id: number): FieldDecorator => Field.d<number>(id, "uint64"),
+  int64: (id: number): FieldDecorator => Field.d<number>(id, "int64"),
+  uint64: (id: number): FieldDecorator => Field.d<number>(id, "uint64"),
 
-  RepeatedString: (id: number): FieldDecorator => Field.d<string[]>(id, "string", "repeated"),
-  Nested: (id: number, ctor: Constructor<Message<{}>>): FieldDecorator => Field.d(id, ctor),
+  repeatedString: (id: number): FieldDecorator => Field.d<string[]>(id, "string", "repeated"),
+  nested: (id: number, ctor: Constructor<Message<{}>>): FieldDecorator => Field.d(id, ctor),
 };
