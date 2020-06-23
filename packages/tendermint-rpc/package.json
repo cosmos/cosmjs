@@ -1,6 +1,6 @@
 {
-  "name": "@iov/tendermint-rpc",
-  "version": "2.3.2",
+  "name": "@cosmjs/tendermint-rpc",
+  "version": "0.20.0",
   "description": "Codec to encode/decode bns transactions and state objects",
   "author": "IOV SAS <admin@iov.one>",
   "license": "Apache-2.0",
