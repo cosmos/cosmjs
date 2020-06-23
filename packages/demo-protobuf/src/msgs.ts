@@ -22,6 +22,6 @@ export class MsgSend extends Message<{}> {
   @cosmosField.bytes(2)
   public readonly to_address?: Uint8Array;
 
-  @cosmosField.repeatedNested(3, Coin)
+  @cosmosField.repeatedMessage(3, Coin)
   public readonly amount?: readonly Coin[];
 }

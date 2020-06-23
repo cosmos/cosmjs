@@ -38,7 +38,7 @@ describe("decorator demo", () => {
       @cosmosField.repeatedString(6)
       public readonly listDemo?: readonly string[];
 
-      @cosmosField.nested(7, MsgNestedDemo)
+      @cosmosField.message(7, MsgNestedDemo)
       public readonly nestedDemo?: MsgNestedDemo;
     }
 

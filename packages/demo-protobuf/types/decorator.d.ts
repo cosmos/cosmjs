@@ -11,7 +11,7 @@ export declare const cosmosField: {
   bytes: (id: number) => FieldDecorator;
   int64: (id: number) => FieldDecorator;
   uint64: (id: number) => FieldDecorator;
-  nested: (id: number, ctor: Constructor<Message<{}>>) => FieldDecorator;
+  message: (id: number, ctor: Constructor<Message<{}>>) => FieldDecorator;
   repeatedString: (id: number) => FieldDecorator;
-  repeatedNested: (id: number, ctor: Constructor<Message<{}>>) => FieldDecorator;
+  repeatedMessage: (id: number, ctor: Constructor<Message<{}>>) => FieldDecorator;
 };
