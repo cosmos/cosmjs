@@ -1,6 +1,7 @@
 import { toUtf8 } from "@cosmjs/encoding";
 
-import { Msg, StdFee } from "./types";
+import { Msg } from "./msgs";
+import { StdFee } from "./types";
 
 function sortJson(json: any): any {
   if (typeof json !== "object" || json === null) {
@@ -20,7 +21,12 @@ function sortJson(json: any): any {
   return result;
 }
 
-interface SignJson {
+/**
+ * The document to be signed
+ *
+ * @see https://docs.cosmos.network/master/modules/auth/03_types.html#stdsigndoc
+ */
+interface StdSignDoc {
   readonly account_number: string;
   readonly chain_id: string;
   readonly fee: StdFee;
@@ -37,7 +43,7 @@ export function makeSignBytes(
   accountNumber: number,
   sequence: number,
 ): Uint8Array {
-  const signJson: SignJson = {
+  const signDoc: StdSignDoc = {
     // eslint-disable-next-line @typescript-eslint/camelcase
     account_number: accountNumber.toString(),
     // eslint-disable-next-line @typescript-eslint/camelcase
@@ -47,6 +53,6 @@ export function makeSignBytes(
     msgs: msgs,
     sequence: sequence.toString(),
   };
-  const signMsg = sortJson(signJson);
-  return toUtf8(JSON.stringify(signMsg));
+  const sortedSignDoc = sortJson(signDoc);
+  return toUtf8(JSON.stringify(sortedSignDoc));
 }

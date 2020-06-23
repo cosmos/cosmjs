@@ -6,6 +6,7 @@ import { rawSecp256k1PubkeyToAddress } from "./address";
 import { isPostTxFailure } from "./cosmosclient";
 import { makeSignBytes } from "./encoding";
 import { parseLogs } from "./logs";
+import { Msg, MsgSend } from "./msgs";
 import { makeCosmoshubPath, Secp256k1Pen } from "./pen";
 import { encodeBech32Pubkey } from "./pubkey";
 import { RestClient, TxsResponse } from "./restclient";
@@ -25,7 +26,7 @@ import {
   wasmd,
   wasmdEnabled,
 } from "./testutils.spec";
-import { Msg, MsgSend, StdFee, StdSignature, StdTx } from "./types";
+import { StdFee, StdSignature, StdTx } from "./types";
 
 const emptyAddress = "cosmos1ltkhnmdcqemmd2tkhnx7qx66tq7e0wykw2j85k";
 

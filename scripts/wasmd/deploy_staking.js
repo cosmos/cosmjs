@@ -17,7 +17,7 @@ const codeMeta = {
 };
 
 // To get the proper validator address, run the demo chain (./scripts/wasmd/start.sh), then run:
-//   curl http://localhost:1317/staking/validators | jq .result[0].operator_address
+//   curl http://localhost:1317/staking/validators | jq '.result[0].operator_address'
 const bounty = {
   label: "Bounty",
   initMsg: {
