@@ -32,7 +32,7 @@ describe("decorator demo", () => {
       @CosmosField.Int64(4)
       public readonly int64Demo?: number;
 
-      @CosmosField.UInt64(5)
+      @CosmosField.Uint64(5)
       public readonly uint64Demo?: number;
 
       @CosmosField.RepeatedString(6)
