@@ -41,6 +41,7 @@
     "protobufjs": "~6.9.0"
   },
   "devDependencies": {
+    "@cosmjs/encoding": "^0.20.0",
     "@cosmjs/utils": "^0.20.0"
   }
 }
