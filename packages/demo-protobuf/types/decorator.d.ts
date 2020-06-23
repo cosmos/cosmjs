@@ -1,12 +1,16 @@
 import { Constructor, Message, TypeDecorator } from "protobufjs";
 import { Registry } from "./registry";
-export declare function CosmosMessage(registry: Registry, typeUrl: string): TypeDecorator<any>;
-export declare const CosmosField: {
-  Boolean: (id: number) => import("protobufjs").FieldDecorator;
-  String: (id: number) => import("protobufjs").FieldDecorator;
-  Bytes: (id: number) => import("protobufjs").FieldDecorator;
-  Int64: (id: number) => import("protobufjs").FieldDecorator;
-  Uint64: (id: number) => import("protobufjs").FieldDecorator;
-  RepeatedString: (id: number) => import("protobufjs").FieldDecorator;
-  Nested: (id: number, ctor: Constructor<Message<{}>>) => import("protobufjs").FieldDecorator;
+export declare function cosmosMessage(registry: Registry, typeUrl: string): TypeDecorator<any>;
+/**
+ * Like PropertyDecorator from lib.es5.d.ts but without symbol support in propertyKey.
+ */
+export declare type FieldDecorator = (target: object, propertyKey: string) => void;
+export declare const cosmosField: {
+  boolean: (id: number) => FieldDecorator;
+  string: (id: number) => FieldDecorator;
+  bytes: (id: number) => FieldDecorator;
+  int64: (id: number) => FieldDecorator;
+  uint64: (id: number) => FieldDecorator;
+  repeatedString: (id: number) => FieldDecorator;
+  nested: (id: number, ctor: Constructor<Message<{}>>) => FieldDecorator;
 };

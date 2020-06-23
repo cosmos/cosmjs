@@ -7,7 +7,7 @@ function getTypeName(typeUrl: string): string {
   return parts[parts.length - 1];
 }
 
-export function CosmosMessage(registry: Registry, typeUrl: string): TypeDecorator<any> {
+export function cosmosMessage(registry: Registry, typeUrl: string): TypeDecorator<any> {
   return (ctor: Constructor<Message<any>>) => {
     const typeName = getTypeName(typeUrl);
     const generatedType = util.decorateType(ctor, typeName);
@@ -15,15 +15,20 @@ export function CosmosMessage(registry: Registry, typeUrl: string): TypeDecorato
   };
 }
 
-export const CosmosField = {
-  Boolean: (id: number) => Field.d<boolean>(id, "bool"),
+/**
+ * Like PropertyDecorator from lib.es5.d.ts but without symbol support in propertyKey.
+ */
+export type FieldDecorator = (target: object, propertyKey: string) => void;
 
-  String: (id: number) => Field.d<string>(id, "string"),
-  Bytes: (id: number) => Field.d<Uint8Array>(id, "bytes"),
+export const cosmosField = {
+  boolean: (id: number): FieldDecorator => Field.d<boolean>(id, "bool"),
 
-  Int64: (id: number) => Field.d<number>(id, "int64"),
-  Uint64: (id: number) => Field.d<number>(id, "uint64"),
+  string: (id: number): FieldDecorator => Field.d<string>(id, "string"),
+  bytes: (id: number): FieldDecorator => Field.d<Uint8Array>(id, "bytes"),
 
-  RepeatedString: (id: number) => Field.d<string[]>(id, "string", "repeated"),
-  Nested: (id: number, ctor: Constructor<Message<{}>>) => Field.d(id, ctor),
+  int64: (id: number): FieldDecorator => Field.d<number>(id, "int64"),
+  uint64: (id: number): FieldDecorator => Field.d<number>(id, "uint64"),
+
+  repeatedString: (id: number): FieldDecorator => Field.d<string[]>(id, "string", "repeated"),
+  nested: (id: number, ctor: Constructor<Message<{}>>): FieldDecorator => Field.d(id, ctor),
 };

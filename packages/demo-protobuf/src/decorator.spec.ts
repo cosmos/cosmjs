@@ -2,7 +2,7 @@
 import { assert } from "@cosmjs/utils";
 import { Message } from "protobufjs";
 
-import { CosmosField, CosmosMessage } from "./decorator";
+import { cosmosField, cosmosMessage } from "./decorator";
 import { Registry } from "./registry";
 
 describe("decorator demo", () => {
@@ -11,34 +11,34 @@ describe("decorator demo", () => {
     const typeUrl = "/demo.MsgDemo";
     const myRegistry = new Registry();
 
-    @CosmosMessage(myRegistry, nestedTypeUrl)
+    @cosmosMessage(myRegistry, nestedTypeUrl)
     class MsgNestedDemo extends Message<{}> {
-      @CosmosField.String(1)
+      @cosmosField.string(1)
       public readonly foo?: string;
     }
 
-    @CosmosMessage(myRegistry, typeUrl)
+    @cosmosMessage(myRegistry, typeUrl)
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     class MsgDemo extends Message<{}> {
-      @CosmosField.Boolean(1)
+      @cosmosField.boolean(1)
       public readonly booleanDemo?: boolean;
 
-      @CosmosField.String(2)
+      @cosmosField.string(2)
       public readonly stringDemo?: string;
 
-      @CosmosField.Bytes(3)
+      @cosmosField.bytes(3)
       public readonly bytesDemo?: Uint8Array;
 
-      @CosmosField.Int64(4)
+      @cosmosField.int64(4)
       public readonly int64Demo?: number;
 
-      @CosmosField.Uint64(5)
+      @cosmosField.uint64(5)
       public readonly uint64Demo?: number;
 
-      @CosmosField.RepeatedString(6)
+      @cosmosField.repeatedString(6)
       public readonly listDemo?: readonly string[];
 
-      @CosmosField.Nested(7, MsgNestedDemo)
+      @cosmosField.nested(7, MsgNestedDemo)
       public readonly nestedDemo?: MsgNestedDemo;
     }
 
