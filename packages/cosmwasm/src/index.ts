@@ -1,7 +1,7 @@
 import * as logs from "./logs";
 export { logs };
 
-export { RestClient, TxsResponse } from "./restclient";
+export { RestClient } from "./restclient";
 export {
   Account,
   Block,

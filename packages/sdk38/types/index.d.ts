@@ -22,6 +22,7 @@ export {
   AuthAccountsResponse,
   BlockResponse,
   BroadcastMode,
+  EncodeTxResponse,
   PostTxsResponse,
   NodeInfoResponse,
   RestClient,

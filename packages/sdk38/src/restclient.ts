@@ -1,4 +1,3 @@
-import { fromBase64 } from "@cosmjs/encoding";
 import { isNonNullObject } from "@cosmjs/utils";
 import axios, { AxiosError, AxiosInstance } from "axios";
 
@@ -147,8 +146,9 @@ export interface PostTxsResponse {
   readonly gas_used?: string;
 }
 
-interface EncodeTxResponse {
-  // base64-encoded amino-binary encoded representation
+/** A reponse from the /txs/encode endpoint */
+export interface EncodeTxResponse {
+  /** base64-encoded amino-binary encoded representation */
   readonly tx: string;
 }
 
@@ -289,12 +289,12 @@ export class RestClient {
   }
 
   /** returns the amino-encoding of the transaction performed by the server */
-  public async encodeTx(tx: CosmosSdkTx): Promise<Uint8Array> {
+  public async encodeTx(tx: CosmosSdkTx): Promise<EncodeTxResponse> {
     const responseData = await this.post("/txs/encode", tx);
     if (!responseData.tx) {
       throw new Error("Unexpected response data format");
     }
-    return fromBase64((responseData as EncodeTxResponse).tx);
+    return responseData as EncodeTxResponse;
   }
 
   /**

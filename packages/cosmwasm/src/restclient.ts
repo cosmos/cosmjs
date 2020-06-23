@@ -1,5 +1,5 @@
 import { fromBase64, fromUtf8, toHex, toUtf8 } from "@cosmjs/encoding";
-import { BroadcastMode, CosmosSdkTx, RestClient as BaseRestClient } from "@cosmjs/sdk38";
+import { BroadcastMode, RestClient as BaseRestClient } from "@cosmjs/sdk38";
 
 import { JsonObject, Model, parseWasmData, WasmData } from "./types";
 
@@ -15,23 +15,6 @@ interface WasmSuccess<T = string> {
 
 interface WasmError {
   readonly error: string;
-}
-
-export interface TxsResponse {
-  readonly height: string;
-  readonly txhash: string;
-  /** 🤷‍♂️ */
-  readonly codespace?: string;
-  /** Falsy when transaction execution succeeded. Contains error code on error. */
-  readonly code?: number;
-  readonly raw_log: string;
-  readonly logs?: object;
-  readonly tx: CosmosSdkTx;
-  /** The gas limit as set by the user */
-  readonly gas_wanted?: string;
-  /** The gas used by the execution */
-  readonly gas_used?: string;
-  readonly timestamp: string;
 }
 
 export interface CodeInfo {
