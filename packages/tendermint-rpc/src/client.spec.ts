@@ -22,7 +22,7 @@ function pendingWithoutTendermint(): void {
 
 async function tendermintSearchIndexUpdated(): Promise<void> {
   // Tendermint needs some time before a committed transaction is found in search
-  return sleep(50);
+  return sleep(75);
 }
 
 function buildKvTx(k: string, v: string): TxBytes {

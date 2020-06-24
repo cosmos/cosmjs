@@ -95,7 +95,7 @@ class RpcEventProducer implements Producer<SubscriptionEvent> {
     // Tendermint adds an "#event" suffix for events that follow a previous subscription
     // https://github.com/tendermint/tendermint/blob/v0.23.0/rpc/core/events.go#L107
     const idEventSubscription = responseStream
-      .filter((response) => response.id === `${this.request.id}#event`)
+      .filter((response) => response.id === this.request.id)
       .subscribe({
         next: (response) => {
           if (isJsonRpcErrorResponse(response)) {
@@ -191,7 +191,7 @@ export class WebsocketClient implements RpcStreamingClient {
       this.subscriptionStreams.set(query, stream);
     }
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return this.subscriptionStreams.get(query)!;
+    return this.subscriptionStreams.get(query)!.filter((response) => response.query !== undefined);
   }
 
   /**

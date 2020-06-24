@@ -33,7 +33,7 @@ docker run --rm \
   --user="$UID" \
   --name "$TENDERMINT_NAME" \
   -p "${TENDERMINT_PORT}:26657" -v "${TMP_DIR}:/tendermint" \
-  -e "TM_TX_INDEX_INDEX_ALL_TAGS=true" \
+  -e "TM_TX_INDEX_INDEX_ALL_KEYS=true" \
   "tendermint/tendermint:${TENDERMINT_VERSION}" node \
   --proxy_app=kvstore \
   --rpc.laddr=tcp://0.0.0.0:26657 \

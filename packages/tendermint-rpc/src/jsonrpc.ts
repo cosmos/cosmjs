@@ -1,16 +1,19 @@
 import { JsonRpcRequest } from "@iov/jsonrpc";
 
-const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+const numbers = "0123456789";
 
-/** generates a random alphanumeric character  */
-function randomChar(): string {
-  return alphabet[Math.floor(Math.random() * alphabet.length)];
+/** generates a random numeric character  */
+function randomNumericChar(): string {
+  return numbers[Math.floor(Math.random() * numbers.length)];
 }
 
-function randomId(): string {
-  return Array.from({ length: 12 })
-    .map(() => randomChar())
-    .join("");
+function randomId(): number {
+  return parseInt(
+    Array.from({ length: 12 })
+      .map(() => randomNumericChar())
+      .join(""),
+    10,
+  );
 }
 
 /** Creates a JSON-RPC request with random ID */

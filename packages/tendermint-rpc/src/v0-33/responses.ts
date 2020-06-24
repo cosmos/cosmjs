@@ -528,9 +528,9 @@ function decodeStatus(data: RpcStatusResponse): responses.StatusResponse {
 /**
  * Example data:
  * {
- *   "RootHash": "10A1A17D5F818099B5CAB5B91733A3CC27C0DB6CE2D571AC27FB970C314308BB",
- *   "Data": "ZVlERVhDV2lVNEUwPXhTUjc4Tmp2QkNVSg==",
- *   "Proof": {
+ *   "root_hash": "10A1A17D5F818099B5CAB5B91733A3CC27C0DB6CE2D571AC27FB970C314308BB",
+ *   "data": "ZVlERVhDV2lVNEUwPXhTUjc4Tmp2QkNVSg==",
+ *   "proof": {
  *     "total": "1",
  *     "index": "0",
  *     "leaf_hash": "EKGhfV+BgJm1yrW5FzOjzCfA22zi1XGsJ/uXDDFDCLs=",
@@ -539,9 +539,9 @@ function decodeStatus(data: RpcStatusResponse): responses.StatusResponse {
  * }
  */
 interface RpcTxProof {
-  readonly Data: Base64String;
-  readonly RootHash: HexString;
-  readonly Proof: {
+  readonly data: Base64String;
+  readonly root_hash: HexString;
+  readonly proof: {
     readonly total: IntegerString;
     readonly index: IntegerString;
     readonly leaf_hash: Base64String;
@@ -551,13 +551,13 @@ interface RpcTxProof {
 
 function decodeTxProof(data: RpcTxProof): responses.TxProof {
   return {
-    data: Base64.decode(assertNotEmpty(data.Data)),
-    rootHash: fromHex(assertNotEmpty(data.RootHash)),
+    data: Base64.decode(assertNotEmpty(data.data)),
+    rootHash: fromHex(assertNotEmpty(data.root_hash)),
     proof: {
-      total: Integer.parse(assertNotEmpty(data.Proof.total)),
-      index: Integer.parse(assertNotEmpty(data.Proof.index)),
-      leafHash: Base64.decode(assertNotEmpty(data.Proof.leaf_hash)),
-      aunts: assertArray(data.Proof.aunts).map(Base64.decode),
+      total: Integer.parse(assertNotEmpty(data.proof.total)),
+      index: Integer.parse(assertNotEmpty(data.proof.index)),
+      leafHash: Base64.decode(assertNotEmpty(data.proof.leaf_hash)),
+      aunts: assertArray(data.proof.aunts).map(Base64.decode),
     },
   };
 }
