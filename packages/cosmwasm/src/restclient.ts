@@ -39,6 +39,8 @@ export interface ContractInfo {
   readonly code_id: number;
   /** Bech32 account address */
   readonly creator: string;
+  /** Bech32-encoded admin address */
+  readonly admin?: string;
   readonly label: string;
 }
 

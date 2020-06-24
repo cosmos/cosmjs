@@ -424,9 +424,16 @@ describe("RestClient", () => {
       // check out info
       const myInfo = await client.getContractInfo(myAddress);
       assert(myInfo);
-      expect(myInfo.code_id).toEqual(codeId);
-      expect(myInfo.creator).toEqual(alice.address0);
-      expect((myInfo.init_msg as any).beneficiary).toEqual(beneficiaryAddress);
+      expect(myInfo).toEqual(
+        jasmine.objectContaining({
+          code_id: codeId,
+          creator: alice.address0,
+          init_msg: jasmine.objectContaining({
+            beneficiary: beneficiaryAddress,
+          }),
+        }),
+      );
+      expect(myInfo.admin).toBeUndefined();
 
       // make sure random addresses don't give useful info
       const nonExistentAddress = makeRandomAddress();
