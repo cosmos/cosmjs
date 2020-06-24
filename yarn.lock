@@ -251,16 +251,6 @@
     unique-filename "^1.1.1"
     which "^1.3.1"
 
-"@iov/socket@^2.3.2":
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/@iov/socket/-/socket-2.3.2.tgz#adc8ef389bafc5380e1c7415fb21f9a890d79195"
-  integrity sha512-LMIVGhYNvEdctHwjprVYv5QnDxXLNNZ9ASU0IRlsjHsMNR1Tcy+FsdqqQ5PJlW1r/r92dHLCfV9IKXucg/h8rQ==
-  dependencies:
-    "@iov/stream" "^2.3.2"
-    isomorphic-ws "^4.0.1"
-    ws "^6.2.0"
-    xstream "^11.10.0"
-
 "@iov/stream@^2.3.2":
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/@iov/stream/-/stream-2.3.2.tgz#472063f3a4fcd1e97de0ae99189f98b94825afac"
