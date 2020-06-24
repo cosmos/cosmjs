@@ -33,7 +33,7 @@ export const deployedErc20 = {
   codeId: 1,
   source: "https://crates.io/api/v1/crates/cw-erc20/0.4.0/download",
   builder: "cosmwasm/rust-optimizer:0.8.0",
-  checksum: "41b3bafd7f9a3870bbfb0a0620508df564c52499cdcdc67bf9df72262f3958a6",
+  checksum: "32c91a54f2f13a7349d82a742ef477124a03fbc680483758bf50b231cd2efecc",
   instances: [
     "cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5", // HASH
     "cosmos1hqrdl6wstt8qzshwc6mrumpjk9338k0lr4dqxd", // ISA
