@@ -68,6 +68,10 @@ export interface MsgUpdateAdmin extends Msg {
   };
 }
 
+export function isMsgUpdateAdmin(msg: Msg): msg is MsgUpdateAdmin {
+  return (msg as MsgUpdateAdmin).type === "wasm/update-contract-admin";
+}
+
 /**
  * Execute a smart contract.
  * This will trigger a call to the "handle" export.

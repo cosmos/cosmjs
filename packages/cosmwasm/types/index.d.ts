@@ -34,9 +34,11 @@ export {
   isMsgExecuteContract,
   isMsgInstantiateContract,
   isMsgMigrateContract,
+  isMsgUpdateAdmin,
   isMsgStoreCode,
   MsgExecuteContract,
   MsgInstantiateContract,
   MsgMigrateContract,
+  MsgUpdateAdmin,
   MsgStoreCode,
 } from "./msgs";

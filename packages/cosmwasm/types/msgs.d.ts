@@ -58,6 +58,7 @@ export interface MsgUpdateAdmin extends Msg {
     readonly new_admin: string | undefined;
   };
 }
+export declare function isMsgUpdateAdmin(msg: Msg): msg is MsgUpdateAdmin;
 /**
  * Execute a smart contract.
  * This will trigger a call to the "handle" export.
