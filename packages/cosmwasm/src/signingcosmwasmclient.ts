@@ -1,5 +1,6 @@
 import { Sha256 } from "@cosmjs/crypto";
 import { toBase64, toHex } from "@cosmjs/encoding";
+import { Uint53 } from "@cosmjs/math";
 import {
   BroadcastMode,
   Coin,
@@ -201,7 +202,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       value: {
         sender: this.senderAddress,
         // eslint-disable-next-line @typescript-eslint/camelcase
-        code_id: codeId.toString(),
+        code_id: new Uint53(codeId).toString(),
         label: label,
         // eslint-disable-next-line @typescript-eslint/camelcase
         init_msg: initMsg,
