@@ -115,6 +115,15 @@ export interface InstantiateResult {
   readonly transactionHash: string;
 }
 
+/**
+ * Result type of updateAdmin and clearAdmin
+ */
+export interface ChangeAdminResult {
+  readonly logs: readonly Log[];
+  /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
+  readonly transactionHash: string;
+}
+
 export interface ExecuteResult {
   readonly logs: readonly Log[];
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
@@ -256,7 +265,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     };
   }
 
-  public async updateAdmin(contractAddress: string, newAdmin: string, memo = ""): Promise<ExecuteResult> {
+  public async updateAdmin(contractAddress: string, newAdmin: string, memo = ""): Promise<ChangeAdminResult> {
     const updateAdminMsg: MsgUpdateAdmin = {
       type: "wasm/update-contract-admin",
       value: {

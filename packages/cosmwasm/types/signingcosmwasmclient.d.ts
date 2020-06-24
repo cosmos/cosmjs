@@ -53,6 +53,14 @@ export interface InstantiateResult {
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
 }
+/**
+ * Result type of updateAdmin and clearAdmin
+ */
+export interface ChangeAdminResult {
+  readonly logs: readonly Log[];
+  /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
+  readonly transactionHash: string;
+}
 export interface ExecuteResult {
   readonly logs: readonly Log[];
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
@@ -91,7 +99,7 @@ export declare class SigningCosmWasmClient extends CosmWasmClient {
     label: string,
     options?: InstantiateOptions,
   ): Promise<InstantiateResult>;
-  updateAdmin(contractAddress: string, newAdmin: string, memo?: string): Promise<ExecuteResult>;
+  updateAdmin(contractAddress: string, newAdmin: string, memo?: string): Promise<ChangeAdminResult>;
   execute(
     contractAddress: string,
     handleMsg: object,
