@@ -1,4 +1,4 @@
-import { JsonRpcRequest, JsonRpcSuccessResponse } from "@iov/jsonrpc";
+import { JsonRpcRequest, JsonRpcSuccessResponse } from "@cosmjs/json-rpc";
 import { Stream } from "xstream";
 /**
  * An event emitted from Tendermint after subscribing via RPC.

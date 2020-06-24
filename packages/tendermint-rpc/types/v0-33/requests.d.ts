@@ -1,4 +1,4 @@
-import { JsonRpcRequest } from "@iov/jsonrpc";
+import { JsonRpcRequest } from "@cosmjs/json-rpc";
 import * as requests from "../requests";
 export declare class Params {
   static encodeAbciInfo(req: requests.AbciInfoRequest): JsonRpcRequest;

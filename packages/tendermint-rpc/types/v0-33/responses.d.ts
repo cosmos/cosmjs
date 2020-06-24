@@ -1,4 +1,4 @@
-import { JsonRpcSuccessResponse } from "@iov/jsonrpc";
+import { JsonRpcSuccessResponse } from "@cosmjs/json-rpc";
 import * as responses from "../responses";
 import { SubscriptionEvent } from "../rpcclients";
 export declare class Responses {

@@ -1,5 +1,5 @@
 import { fromHex } from "@cosmjs/encoding";
-import { JsonRpcSuccessResponse } from "@iov/jsonrpc";
+import { JsonRpcSuccessResponse } from "@cosmjs/json-rpc";
 
 import {
   assertArray,

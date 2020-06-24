@@ -1,4 +1,4 @@
-import { JsonRpcId, JsonRpcRequest, JsonRpcResponse, JsonRpcSuccessResponse } from "@iov/jsonrpc";
+import { JsonRpcId, JsonRpcRequest, JsonRpcResponse, JsonRpcSuccessResponse } from "@cosmjs/json-rpc";
 import { Stream } from "xstream";
 import { RpcStreamingClient, SubscriptionEvent } from "./rpcclient";
 export declare class WebsocketClient implements RpcStreamingClient {

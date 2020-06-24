@@ -1,4 +1,4 @@
-import { JsonRpcRequest } from "@iov/jsonrpc";
+import { JsonRpcRequest } from "@cosmjs/json-rpc";
 
 const numbers = "0123456789";
 
