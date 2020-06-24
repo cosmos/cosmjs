@@ -19,6 +19,8 @@ on 2020-06-05.
 
 The code in packages/tendermint-rpc and scripts/tendermint was forked from the folders packages/iov-tendermint-rpc and scripts/tendermint respectively of https://github.com/iov-one/iov-core at tag v2.5.0 on 2020-06-15.
 
+The code in packages/json-rpc was forked from https://github.com/iov-one/iov-core/tree/v2.5.0/packages/iov-jsonrpc, with additional code from https://github.com/iov-one/iov-core/tree/v2.5.0/packages/iov-encoding on 2020-06-24.
+
 Copyright 2018-2020 IOV SAS
 Copyright 2020 Confio UO
 Copyright 2020 Simon Warta
