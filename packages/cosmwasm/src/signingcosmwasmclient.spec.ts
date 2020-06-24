@@ -1,6 +1,6 @@
 import { Sha256 } from "@cosmjs/crypto";
 import { toHex } from "@cosmjs/encoding";
-import { Coin, Secp256k1Pen } from "@cosmjs/sdk38";
+import { coin, coins, Secp256k1Pen } from "@cosmjs/sdk38";
 import { assert } from "@cosmjs/utils";
 
 import { isPostTxFailure, PrivateCosmWasmClient } from "./cosmwasmclient";
@@ -82,16 +82,7 @@ describe("SigningCosmWasmClient", () => {
       const client = new SigningCosmWasmClient(httpUrl, alice.address0, (signBytes) => pen.sign(signBytes));
       const { codeId } = await client.upload(getHackatom().data);
 
-      const transferAmount: readonly Coin[] = [
-        {
-          amount: "1234",
-          denom: "ucosm",
-        },
-        {
-          amount: "321",
-          denom: "ustake",
-        },
-      ];
+      const transferAmount = [coin(1234, "ucosm"), coin(321, "ustake")];
       const beneficiaryAddress = makeRandomAddress();
       const { contractAddress } = await client.instantiate(
         codeId,
@@ -143,16 +134,7 @@ describe("SigningCosmWasmClient", () => {
       const { codeId } = await client.upload(getHackatom().data);
 
       // instantiate
-      const transferAmount: readonly Coin[] = [
-        {
-          amount: "233444",
-          denom: "ucosm",
-        },
-        {
-          amount: "5454",
-          denom: "ustake",
-        },
-      ];
+      const transferAmount = [coin(233444, "ucosm"), coin(5454, "ustake")];
       const beneficiaryAddress = makeRandomAddress();
       const { contractAddress } = await client.instantiate(
         codeId,
@@ -191,12 +173,7 @@ describe("SigningCosmWasmClient", () => {
       const client = new SigningCosmWasmClient(httpUrl, alice.address0, (signBytes) => pen.sign(signBytes));
 
       // instantiate
-      const transferAmount: readonly Coin[] = [
-        {
-          amount: "7890",
-          denom: "ucosm",
-        },
-      ];
+      const transferAmount = coins(7890, "ucosm");
       const beneficiaryAddress = makeRandomAddress();
 
       // no tokens here
