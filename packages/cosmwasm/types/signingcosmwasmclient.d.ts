@@ -9,6 +9,8 @@ export interface FeeTable {
   readonly init: StdFee;
   readonly exec: StdFee;
   readonly send: StdFee;
+  /** Paid when setting the contract admin to a new address or unsetting it */
+  readonly changeAdmin: StdFee;
 }
 export interface UploadMeta {
   /** The source URL */
@@ -89,6 +91,7 @@ export declare class SigningCosmWasmClient extends CosmWasmClient {
     label: string,
     options?: InstantiateOptions,
   ): Promise<InstantiateResult>;
+  updateAdmin(contractAddress: string, newAdmin: string, memo?: string): Promise<ExecuteResult>;
   execute(
     contractAddress: string,
     handleMsg: object,

@@ -44,6 +44,23 @@ export interface MsgInstantiateContract extends Msg {
 }
 
 /**
+ * Update the admin of a contract
+ *
+ * @see https://github.com/CosmWasm/wasmd/blob/v0.9.0-alpha4/x/wasm/internal/types/msg.go#L231
+ */
+export interface MsgUpdateAdmin extends Msg {
+  readonly type: "wasm/update-contract-admin";
+  readonly value: {
+    /** Bech32-encoded sender address. This must be the old admin. */
+    readonly sender: string;
+    /** Bech32-encoded contract address to be updated */
+    readonly contract: string;
+    /** Bech32-encoded address of the new admin. Can be empty/undefined to clear. */
+    readonly new_admin: string;
+  };
+}
+
+/**
  * Execute a smart contract.
  * This will trigger a call to the "handle" export.
  *

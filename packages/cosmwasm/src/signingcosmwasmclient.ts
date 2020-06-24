@@ -23,7 +23,7 @@ import {
   PostTxResult,
 } from "./cosmwasmclient";
 import { findAttribute, Log } from "./logs";
-import { MsgExecuteContract, MsgInstantiateContract, MsgStoreCode } from "./msgs";
+import { MsgExecuteContract, MsgInstantiateContract, MsgStoreCode, MsgUpdateAdmin } from "./msgs";
 
 export interface SigningCallback {
   (signBytes: Uint8Array): Promise<StdSignature>;
@@ -34,6 +34,8 @@ export interface FeeTable {
   readonly init: StdFee;
   readonly exec: StdFee;
   readonly send: StdFee;
+  /** Paid when setting the contract admin to a new address or unsetting it */
+  readonly changeAdmin: StdFee;
 }
 
 function prepareBuilder(buider: string | undefined): string {
@@ -59,6 +61,10 @@ const defaultFees: FeeTable = {
     gas: "200000", // 200k
   },
   send: {
+    amount: coins(2000, "ucosm"),
+    gas: "80000", // 80k
+  },
+  changeAdmin: {
     amount: coins(2000, "ucosm"),
     gas: "80000", // 80k
   },
@@ -245,6 +251,38 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     const contractAddressAttr = findAttribute(result.logs, "message", "contract_address");
     return {
       contractAddress: contractAddressAttr.value,
+      logs: result.logs,
+      transactionHash: result.transactionHash,
+    };
+  }
+
+  public async updateAdmin(contractAddress: string, newAdmin: string, memo = ""): Promise<ExecuteResult> {
+    const updateAdminMsg: MsgUpdateAdmin = {
+      type: "wasm/update-contract-admin",
+      value: {
+        sender: this.senderAddress,
+        contract: contractAddress,
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        new_admin: newAdmin,
+      },
+    };
+    const fee = this.fees.changeAdmin;
+    const { accountNumber, sequence } = await this.getNonce();
+    const chainId = await this.getChainId();
+    const signBytes = makeSignBytes([updateAdminMsg], fee, chainId, memo, accountNumber, sequence);
+    const signature = await this.signCallback(signBytes);
+    const signedTx: StdTx = {
+      msg: [updateAdminMsg],
+      fee: fee,
+      memo: memo,
+      signatures: [signature],
+    };
+
+    const result = await this.postTx(signedTx);
+    if (isPostTxFailure(result)) {
+      throw new Error(createPostTxErrorMessage(result));
+    }
+    return {
       logs: result.logs,
       transactionHash: result.transactionHash,
     };
