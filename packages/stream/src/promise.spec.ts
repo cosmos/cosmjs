@@ -1,5 +1,3 @@
-// tslint:disable:readonly-array
-
 import { Producer, Stream } from "xstream";
 
 import { firstEvent, fromListPromise, toListPromise } from "./promise";

@@ -29,7 +29,6 @@ describe("DefaultValueProducer", () => {
     const producer = new DefaultValueProducer(42);
     const stream = Stream.createWithMemory(producer);
 
-    // tslint:disable-next-line:readonly-array
     const events: number[] = [];
     stream.addListener({
       next: (value) => {
@@ -68,7 +67,6 @@ describe("DefaultValueProducer", () => {
   });
 
   it("calls callbacks", async () => {
-    // tslint:disable-next-line:readonly-array
     const producerActive: boolean[] = [];
 
     const producer = new DefaultValueProducer(42, {

@@ -1,14 +1,3 @@
-/*
-This file maintains some stream helpers used in iov-bns, but which
-may be useful other places, and should consider to be moved.
-
-Reducer and related code works to maintain a current state
-materialized by reducing all events on a stream. Similar
-to ValueAndUpdate in keycontrol, but more general.
-*/
-
-// tslint:disable:readonly-keyword
-// tslint:disable:no-object-mutation
 import { Stream } from "xstream";
 
 export type ReducerFunc<T, U> = (acc: U, evt: T) => U;

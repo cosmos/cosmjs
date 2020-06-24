@@ -1,4 +1,3 @@
-// tslint:disable:readonly-array
 import { Producer, Stream, Subscription } from "xstream";
 
 /**
@@ -31,7 +30,6 @@ export function concat<T>(...streams: Stream<T>[]): Stream<T> {
       subscription.unsubscribe();
     }
 
-    // tslint:disable-next-line:no-object-mutation
     queues.length = 0;
     completedStreams.clear();
     activeStreamIndex = 0;

@@ -1,4 +1,3 @@
-// tslint:disable:readonly-array no-submodule-imports
 import { Producer, Stream } from "xstream";
 
 import { concat } from "./concat";

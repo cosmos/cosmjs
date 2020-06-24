@@ -12,9 +12,7 @@ export class DefaultValueProducer<T> implements Producer<T> {
   }
 
   private readonly callbacks: DefaultValueProducerCallsbacks | undefined;
-  // tslint:disable-next-line:readonly-keyword
   private internalValue: T;
-  // tslint:disable-next-line:readonly-keyword
   private listener: Listener<T> | undefined;
 
   public constructor(value: T, callbacks?: DefaultValueProducerCallsbacks) {
@@ -29,7 +27,6 @@ export class DefaultValueProducer<T> implements Producer<T> {
    * If not, just the current value is updated.
    */
   public update(value: T): void {
-    // tslint:disable-next-line:no-object-mutation
     this.internalValue = value;
     if (this.listener) {
       this.listener.next(value);
@@ -49,7 +46,6 @@ export class DefaultValueProducer<T> implements Producer<T> {
    * Called by the stream. Do not call this directly.
    */
   public start(listener: Listener<T>): void {
-    // tslint:disable-next-line:no-object-mutation
     this.listener = listener;
     listener.next(this.internalValue);
 
@@ -65,8 +61,6 @@ export class DefaultValueProducer<T> implements Producer<T> {
     if (this.callbacks) {
       this.callbacks.onStop();
     }
-
-    // tslint:disable-next-line:no-object-mutation
     this.listener = undefined;
   }
 }

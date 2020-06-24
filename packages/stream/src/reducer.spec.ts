@@ -1,4 +1,3 @@
-// tslint:disable:readonly-array
 import { Stream } from "xstream";
 
 import { asArray, countStream, lastValue } from "./reducer";
