@@ -22,6 +22,7 @@ export {
 export {
   ExecuteResult,
   FeeTable,
+  InstantiateOptions,
   InstantiateResult,
   SigningCallback,
   SigningCosmWasmClient,

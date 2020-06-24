@@ -87,6 +87,15 @@ export interface UploadResult {
   readonly transactionHash: string;
 }
 
+/**
+ * The options of an .instantiate() call.
+ * All properties are optional.
+ */
+export interface InstantiateOptions {
+  readonly memo?: string;
+  readonly transferAmount?: readonly Coin[];
+}
+
 export interface InstantiateResult {
   /** The address of the newly instantiated contract */
   readonly contractAddress: string;
@@ -194,8 +203,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     codeId: number,
     initMsg: object,
     label: string,
-    memo = "",
-    transferAmount?: readonly Coin[],
+    options: InstantiateOptions = {},
   ): Promise<InstantiateResult> {
     const instantiateMsg: MsgInstantiateContract = {
       type: "wasm/instantiate",
@@ -207,9 +215,10 @@ export class SigningCosmWasmClient extends CosmWasmClient {
         // eslint-disable-next-line @typescript-eslint/camelcase
         init_msg: initMsg,
         // eslint-disable-next-line @typescript-eslint/camelcase
-        init_funds: transferAmount || [],
+        init_funds: options.transferAmount || [],
       },
     };
+    const memo = options.memo || "";
     const fee = this.fees.init;
     const { accountNumber, sequence } = await this.getNonce();
     const chainId = await this.getChainId();

@@ -46,8 +46,9 @@ async function main() {
   console.info(`Upload succeeded. Receipt: ${JSON.stringify(uploadReceipt)}`);
 
   for (const { label, initMsg } of [bounty]) {
-    const memo = `Create an staking instance "${label}"`;
-    const { contractAddress } = await client.instantiate(uploadReceipt.codeId, initMsg, label, memo);
+    const { contractAddress } = await client.instantiate(uploadReceipt.codeId, initMsg, label, {
+      memo: `Create an staking instance "${label}"`,
+    });
     console.info(`Contract "${label}" instantiated at ${contractAddress}`);
   }
 }

@@ -134,8 +134,9 @@ async function main() {
   console.info(`Upload succeeded. Receipt: ${JSON.stringify(uploadReceipt)}`);
 
   for (const initMsg of [initMsgHash, initMsgIsa, initMsgJade]) {
-    const memo = `Create an ERC20 instance for ${initMsg.symbol}`;
-    const { contractAddress } = await client.instantiate(uploadReceipt.codeId, initMsg, initMsg.symbol, memo);
+    const { contractAddress } = await client.instantiate(uploadReceipt.codeId, initMsg, initMsg.symbol, {
+      memo: `Create an ERC20 instance for ${initMsg.symbol}`,
+    });
     console.info(`Contract instantiated for ${initMsg.symbol} at ${contractAddress}`);
   }
 }

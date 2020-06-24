@@ -91,8 +91,10 @@ describe("SigningCosmWasmClient", () => {
           beneficiary: beneficiaryAddress,
         },
         "My cool label",
-        "Let's see if the memo is used",
-        transferAmount,
+        {
+          memo: "Let's see if the memo is used",
+          transferAmount,
+        },
       );
 
       const rest = new RestClient(httpUrl);
@@ -143,8 +145,9 @@ describe("SigningCosmWasmClient", () => {
           beneficiary: beneficiaryAddress,
         },
         "amazing random contract",
-        undefined,
-        transferAmount,
+        {
+          transferAmount,
+        },
       );
 
       // execute

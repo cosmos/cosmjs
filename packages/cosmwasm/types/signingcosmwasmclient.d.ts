@@ -31,6 +31,14 @@ export interface UploadResult {
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
 }
+/**
+ * The options of an .instantiate() call.
+ * All properties are optional.
+ */
+export interface InstantiateOptions {
+  readonly memo?: string;
+  readonly transferAmount?: readonly Coin[];
+}
 export interface InstantiateResult {
   /** The address of the newly instantiated contract */
   readonly contractAddress: string;
@@ -74,8 +82,7 @@ export declare class SigningCosmWasmClient extends CosmWasmClient {
     codeId: number,
     initMsg: object,
     label: string,
-    memo?: string,
-    transferAmount?: readonly Coin[],
+    options?: InstantiateOptions,
   ): Promise<InstantiateResult>;
   execute(
     contractAddress: string,
