@@ -24,6 +24,7 @@ export {
   FeeTable,
   InstantiateOptions,
   InstantiateResult,
+  MigrateResult,
   SigningCallback,
   SigningCosmWasmClient,
   UploadMeta,
@@ -32,8 +33,10 @@ export {
 export {
   isMsgExecuteContract,
   isMsgInstantiateContract,
+  isMsgMigrateContract,
   isMsgStoreCode,
-  MsgStoreCode,
   MsgExecuteContract,
   MsgInstantiateContract,
+  MsgMigrateContract,
+  MsgStoreCode,
 } from "./msgs";

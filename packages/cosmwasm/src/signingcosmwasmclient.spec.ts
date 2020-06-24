@@ -217,6 +217,45 @@ describe("SigningCosmWasmClient", () => {
     });
   });
 
+  describe("migrate", () => {
+    it("can can migrate from one code ID to another", async () => {
+      pendingWithoutWasmd();
+      const pen = await Secp256k1Pen.fromMnemonic(alice.mnemonic);
+      const client = new SigningCosmWasmClient(httpUrl, alice.address0, (signBytes) => pen.sign(signBytes));
+      const { codeId: codeId1 } = await client.upload(getHackatom().data);
+      const { codeId: codeId2 } = await client.upload(getHackatom().data);
+
+      const beneficiaryAddress = makeRandomAddress();
+      const { contractAddress } = await client.instantiate(
+        codeId1,
+        {
+          verifier: alice.address0,
+          beneficiary: beneficiaryAddress,
+        },
+        "My cool label",
+        {
+          admin: alice.address0,
+        },
+      );
+
+      const rest = new RestClient(httpUrl);
+      const state1 = await rest.getContractInfo(contractAddress);
+      assert(state1);
+      expect(state1.admin).toEqual(alice.address0);
+
+      const newVerifier = makeRandomAddress();
+      await client.migrate(contractAddress, codeId2, { verifier: newVerifier });
+
+      const state2 = await rest.getContractInfo(contractAddress);
+      assert(state2);
+      expect(state2).toEqual({
+        ...state1,
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        code_id: codeId2,
+      });
+    });
+  });
+
   describe("execute", () => {
     it("works", async () => {
       pendingWithoutWasmd();

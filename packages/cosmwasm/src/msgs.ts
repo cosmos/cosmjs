@@ -79,6 +79,25 @@ export interface MsgExecuteContract extends Msg {
   };
 }
 
+/**
+ * Migrates a contract to a new Wasm code.
+ *
+ * @see https://github.com/CosmWasm/wasmd/blob/v0.9.0-alpha4/x/wasm/internal/types/msg.go#L195
+ */
+export interface MsgMigrateContract extends Msg {
+  readonly type: "wasm/migrate";
+  readonly value: {
+    /** Bech32 account address */
+    readonly sender: string;
+    /** Bech32 account address */
+    readonly contract: string;
+    /** The new code */
+    readonly code_id: string;
+    /** Migrate message as JavaScript object */
+    readonly msg: any;
+  };
+}
+
 export function isMsgStoreCode(msg: Msg): msg is MsgStoreCode {
   return (msg as MsgStoreCode).type === "wasm/store-code";
 }
@@ -89,4 +108,8 @@ export function isMsgInstantiateContract(msg: Msg): msg is MsgInstantiateContrac
 
 export function isMsgExecuteContract(msg: Msg): msg is MsgExecuteContract {
   return (msg as MsgExecuteContract).type === "wasm/execute";
+}
+
+export function isMsgMigrateContract(msg: Msg): msg is MsgMigrateContract {
+  return (msg as MsgMigrateContract).type === "wasm/migrate";
 }

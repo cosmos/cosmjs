@@ -8,6 +8,7 @@ export interface FeeTable {
   readonly upload: StdFee;
   readonly init: StdFee;
   readonly exec: StdFee;
+  readonly migrate: StdFee;
   readonly send: StdFee;
   /** Paid when setting the contract admin to a new address or unsetting it */
   readonly changeAdmin: StdFee;
@@ -61,6 +62,11 @@ export interface ChangeAdminResult {
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
 }
+export interface MigrateResult {
+  readonly logs: readonly Log[];
+  /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
+  readonly transactionHash: string;
+}
 export interface ExecuteResult {
   readonly logs: readonly Log[];
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
@@ -101,6 +107,7 @@ export declare class SigningCosmWasmClient extends CosmWasmClient {
   ): Promise<InstantiateResult>;
   updateAdmin(contractAddress: string, newAdmin: string, memo?: string): Promise<ChangeAdminResult>;
   clearAdmin(contractAddress: string, memo?: string): Promise<ChangeAdminResult>;
+  migrate(contractAddress: string, codeId: number, migrateMsg: object, memo?: string): Promise<MigrateResult>;
   execute(
     contractAddress: string,
     handleMsg: object,

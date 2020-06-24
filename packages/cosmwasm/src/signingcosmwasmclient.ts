@@ -23,7 +23,13 @@ import {
   PostTxResult,
 } from "./cosmwasmclient";
 import { findAttribute, Log } from "./logs";
-import { MsgExecuteContract, MsgInstantiateContract, MsgStoreCode, MsgUpdateAdmin } from "./msgs";
+import {
+  MsgExecuteContract,
+  MsgInstantiateContract,
+  MsgMigrateContract,
+  MsgStoreCode,
+  MsgUpdateAdmin,
+} from "./msgs";
 
 export interface SigningCallback {
   (signBytes: Uint8Array): Promise<StdSignature>;
@@ -33,6 +39,7 @@ export interface FeeTable {
   readonly upload: StdFee;
   readonly init: StdFee;
   readonly exec: StdFee;
+  readonly migrate: StdFee;
   readonly send: StdFee;
   /** Paid when setting the contract admin to a new address or unsetting it */
   readonly changeAdmin: StdFee;
@@ -55,6 +62,10 @@ const defaultFees: FeeTable = {
   init: {
     amount: coins(12500, "ucosm"),
     gas: "500000", // 500k
+  },
+  migrate: {
+    amount: coins(5000, "ucosm"),
+    gas: "200000", // 200k
   },
   exec: {
     amount: coins(5000, "ucosm"),
@@ -119,6 +130,12 @@ export interface InstantiateResult {
  * Result type of updateAdmin and clearAdmin
  */
 export interface ChangeAdminResult {
+  readonly logs: readonly Log[];
+  /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
+  readonly transactionHash: string;
+}
+
+export interface MigrateResult {
   readonly logs: readonly Log[];
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
@@ -314,6 +331,44 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     const signature = await this.signCallback(signBytes);
     const signedTx: StdTx = {
       msg: [updateAdminMsg],
+      fee: fee,
+      memo: memo,
+      signatures: [signature],
+    };
+
+    const result = await this.postTx(signedTx);
+    if (isPostTxFailure(result)) {
+      throw new Error(createPostTxErrorMessage(result));
+    }
+    return {
+      logs: result.logs,
+      transactionHash: result.transactionHash,
+    };
+  }
+
+  public async migrate(
+    contractAddress: string,
+    codeId: number,
+    migrateMsg: object,
+    memo = "",
+  ): Promise<MigrateResult> {
+    const msg: MsgMigrateContract = {
+      type: "wasm/migrate",
+      value: {
+        sender: this.senderAddress,
+        contract: contractAddress,
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        code_id: new Uint53(codeId).toString(),
+        msg: migrateMsg,
+      },
+    };
+    const fee = this.fees.migrate;
+    const { accountNumber, sequence } = await this.getNonce();
+    const chainId = await this.getChainId();
+    const signBytes = makeSignBytes([msg], fee, chainId, memo, accountNumber, sequence);
+    const signature = await this.signCallback(signBytes);
+    const signedTx: StdTx = {
+      msg: [msg],
       fee: fee,
       memo: memo,
       signatures: [signature],
