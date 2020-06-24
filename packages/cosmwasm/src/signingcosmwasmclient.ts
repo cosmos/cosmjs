@@ -113,7 +113,7 @@ export interface InstantiateOptions {
   readonly transferAmount?: readonly Coin[];
   /**
    * A bech32 encoded address of an admin account.
-   * Caution: an admin has the privillage to upgrade a contract. If this is not desired, do not set this value.
+   * Caution: an admin has the privilege to upgrade a contract. If this is not desired, do not set this value.
    */
   readonly admin?: string;
 }
