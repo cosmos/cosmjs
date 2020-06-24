@@ -18,6 +18,7 @@ export interface MsgStoreCode extends Msg {
     readonly builder: string;
   };
 }
+export declare function isMsgStoreCode(msg: Msg): msg is MsgStoreCode;
 /**
  * Creates an instance of contract that was uploaded before.
  * This will trigger a call to the "init" export.
@@ -40,6 +41,7 @@ export interface MsgInstantiateContract extends Msg {
     readonly admin?: string;
   };
 }
+export declare function isMsgInstantiateContract(msg: Msg): msg is MsgInstantiateContract;
 /**
  * Update the admin of a contract
  *
@@ -74,6 +76,7 @@ export interface MsgExecuteContract extends Msg {
     readonly sent_funds: ReadonlyArray<Coin>;
   };
 }
+export declare function isMsgExecuteContract(msg: Msg): msg is MsgExecuteContract;
 /**
  * Migrates a contract to a new Wasm code.
  *
@@ -92,7 +95,4 @@ export interface MsgMigrateContract extends Msg {
     readonly msg: any;
   };
 }
-export declare function isMsgStoreCode(msg: Msg): msg is MsgStoreCode;
-export declare function isMsgInstantiateContract(msg: Msg): msg is MsgInstantiateContract;
-export declare function isMsgExecuteContract(msg: Msg): msg is MsgExecuteContract;
 export declare function isMsgMigrateContract(msg: Msg): msg is MsgMigrateContract;

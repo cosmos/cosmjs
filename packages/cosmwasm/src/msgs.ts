@@ -20,6 +20,10 @@ export interface MsgStoreCode extends Msg {
   };
 }
 
+export function isMsgStoreCode(msg: Msg): msg is MsgStoreCode {
+  return (msg as MsgStoreCode).type === "wasm/store-code";
+}
+
 /**
  * Creates an instance of contract that was uploaded before.
  * This will trigger a call to the "init" export.
@@ -41,6 +45,10 @@ export interface MsgInstantiateContract extends Msg {
     /** Bech32-encoded admin address */
     readonly admin?: string;
   };
+}
+
+export function isMsgInstantiateContract(msg: Msg): msg is MsgInstantiateContract {
+  return (msg as MsgInstantiateContract).type === "wasm/instantiate";
 }
 
 /**
@@ -79,6 +87,10 @@ export interface MsgExecuteContract extends Msg {
   };
 }
 
+export function isMsgExecuteContract(msg: Msg): msg is MsgExecuteContract {
+  return (msg as MsgExecuteContract).type === "wasm/execute";
+}
+
 /**
  * Migrates a contract to a new Wasm code.
  *
@@ -96,18 +108,6 @@ export interface MsgMigrateContract extends Msg {
     /** Migrate message as JavaScript object */
     readonly msg: any;
   };
-}
-
-export function isMsgStoreCode(msg: Msg): msg is MsgStoreCode {
-  return (msg as MsgStoreCode).type === "wasm/store-code";
-}
-
-export function isMsgInstantiateContract(msg: Msg): msg is MsgInstantiateContract {
-  return (msg as MsgInstantiateContract).type === "wasm/instantiate";
-}
-
-export function isMsgExecuteContract(msg: Msg): msg is MsgExecuteContract {
-  return (msg as MsgExecuteContract).type === "wasm/execute";
 }
 
 export function isMsgMigrateContract(msg: Msg): msg is MsgMigrateContract {
