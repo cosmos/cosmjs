@@ -192,7 +192,7 @@ describe("RestClient", () => {
         client_name: "wasmcli",
         version: jasmine.stringMatching(semverMatcher),
         commit: jasmine.stringMatching(tendermintShortHashMatcher),
-        build_tags: "netgo,ledger",
+        build_tags: "netgo,ledger,muslc",
         go: jasmine.stringMatching(/^go version go1\.[0-9]+\.[0-9]+ linux\/amd64$/),
       });
     });
