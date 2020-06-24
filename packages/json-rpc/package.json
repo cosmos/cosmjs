@@ -1,8 +1,12 @@
 {
-  "name": "@iov/jsonrpc",
-  "version": "2.5.0",
+  "name": "@cosmjs/json-rpc",
+  "version": "0.20.0",
   "description": "Framework for implementing a JSON-RPC 2.0 API",
-  "author": "IOV SAS <admin@iov.one>",
+  "contributors": [
+    "IOV SAS <admin@iov.one>",
+    "Confio UO <hello@confio.tech>",
+    "Will Clark <willclarktech@users.noreply.github.com>"
+  ],
   "license": "Apache-2.0",
   "main": "build/index.js",
   "types": "types/index.d.ts",
@@ -15,14 +19,15 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/iov-one/iov-core/tree/master/packages/iov-jsonrpc"
+    "url": "https://github.com/CosmWasm/cosmjs/tree/master/packages/json-rpc"
   },
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
     "docs": "shx rm -rf docs && typedoc --options typedoc.js",
-    "lint": "eslint --max-warnings 0 \"**/*.{js,ts}\" && tslint -t verbose --project .",
+    "lint": "eslint --max-warnings 0 \"**/*.{js,ts}\"",
+    "lint-fix": "eslint --max-warnings 0 \"**/*.{js,ts}\" --fix",
     "format": "prettier --write --loglevel warn \"./src/**/*.ts\"",
     "test-node": "node jasmine-testrunner.js",
     "test-edge": "yarn pack-web && karma start --single-run --browsers Edge",
