@@ -1383,6 +1383,13 @@
   resolved "https://registry.yarnpkg.com/@types/unorm/-/unorm-1.3.28.tgz#580141162f2fd221faae2b2d68da6c839402c375"
   integrity sha512-l3uh18vcvkQ964HSK7Tx0YbhxN/Hj+k1w3nLT08n770lngqVKljmF7Ht4e7elFbx6L2WYse97whtpJOo8MHtxQ==
 
+"@types/ws@^6.0.1":
+  version "6.0.4"
+  resolved "https://registry.yarnpkg.com/@types/ws/-/ws-6.0.4.tgz#7797707c8acce8f76d8c34b370d4645b70421ff1"
+  integrity sha512-PpPrX7SZW9re6+Ha8ojZG4Se8AZXgf0GK6zmfqEuCsY49LFDNXO3SByp44X3dFEqtB73lkCDAdUazhAjVPiNwg==
+  dependencies:
+    "@types/node" "*"
+
 "@types/yargs-parser@*":
   version "15.0.0"
   resolved "https://registry.yarnpkg.com/@types/yargs-parser/-/yargs-parser-15.0.0.tgz#cb3f9f741869e20cce330ffbeb9271590483882d"
