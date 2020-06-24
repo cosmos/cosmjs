@@ -38,6 +38,11 @@ export interface UploadResult {
 export interface InstantiateOptions {
   readonly memo?: string;
   readonly transferAmount?: readonly Coin[];
+  /**
+   * A bech32 encoded address of an admin account.
+   * Caution: an admin has the privillage to upgrade a contract. If this is not desired, do not set this value.
+   */
+  readonly admin?: string;
 }
 export interface InstantiateResult {
   /** The address of the newly instantiated contract */

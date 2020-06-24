@@ -94,6 +94,11 @@ export interface UploadResult {
 export interface InstantiateOptions {
   readonly memo?: string;
   readonly transferAmount?: readonly Coin[];
+  /**
+   * A bech32 encoded address of an admin account.
+   * Caution: an admin has the privillage to upgrade a contract. If this is not desired, do not set this value.
+   */
+  readonly admin?: string;
 }
 
 export interface InstantiateResult {
@@ -216,6 +221,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
         init_msg: initMsg,
         // eslint-disable-next-line @typescript-eslint/camelcase
         init_funds: options.transferAmount || [],
+        admin: options.admin,
       },
     };
     const memo = options.memo || "";

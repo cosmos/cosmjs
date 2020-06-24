@@ -38,6 +38,8 @@ export interface MsgInstantiateContract extends Msg {
     /** Init message as JavaScript object */
     readonly init_msg: any;
     readonly init_funds: ReadonlyArray<Coin>;
+    /** Bech32-encoded admin address */
+    readonly admin?: string;
   };
 }
 

@@ -6,7 +6,7 @@ import { assert } from "@cosmjs/utils";
 import { isPostTxFailure, PrivateCosmWasmClient } from "./cosmwasmclient";
 import { RestClient } from "./restclient";
 import { SigningCosmWasmClient, UploadMeta } from "./signingcosmwasmclient";
-import { alice, getHackatom, makeRandomAddress, pendingWithoutWasmd } from "./testutils.spec";
+import { alice, getHackatom, makeRandomAddress, pendingWithoutWasmd, unused } from "./testutils.spec";
 
 const httpUrl = "http://localhost:1317";
 
@@ -100,6 +100,34 @@ describe("SigningCosmWasmClient", () => {
       const rest = new RestClient(httpUrl);
       const balance = (await rest.authAccounts(contractAddress)).result.value.coins;
       expect(balance).toEqual(transferAmount);
+    });
+
+    it("works with admin", async () => {
+      pendingWithoutWasmd();
+      const pen = await Secp256k1Pen.fromMnemonic(alice.mnemonic);
+      const client = new SigningCosmWasmClient(httpUrl, alice.address0, (signBytes) => pen.sign(signBytes));
+      const { codeId } = await client.upload(getHackatom().data);
+
+      const transferAmount = [coin(1234, "ucosm"), coin(321, "ustake")];
+      const beneficiaryAddress = makeRandomAddress();
+      const { contractAddress } = await client.instantiate(
+        codeId,
+        {
+          verifier: alice.address0,
+          beneficiary: beneficiaryAddress,
+        },
+        "My cool label",
+        {
+          memo: "Let's see if the memo is used",
+          transferAmount,
+          admin: unused.address,
+        },
+      );
+
+      const rest = new RestClient(httpUrl);
+      const contract = await rest.getContractInfo(contractAddress);
+      assert(contract);
+      expect(contract.admin).toEqual(unused.address);
     });
 
     it("can instantiate one code multiple times", async () => {
