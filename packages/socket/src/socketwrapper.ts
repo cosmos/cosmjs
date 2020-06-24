@@ -1,4 +1,3 @@
-// tslint:disable:readonly-keyword no-object-mutation
 import WebSocket from "isomorphic-ws";
 
 function environmentIsNodeJs(): boolean {

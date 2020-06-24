@@ -10,8 +10,6 @@ import { SocketWrapper, SocketWrapperMessageEvent } from "./socketwrapper";
 export class StreamingSocket {
   public readonly connected: Promise<void>;
   public readonly events: Stream<SocketWrapperMessageEvent>;
-
-  // tslint:disable-next-line:readonly-keyword
   private eventProducerListener: Listener<SocketWrapperMessageEvent> | undefined;
   private readonly socket: SocketWrapper;
 

@@ -9,7 +9,6 @@ let exec: Exec | undefined;
 let childProcessAvailable: boolean;
 
 try {
-  // tslint:disable-next-line:no-var-requires
   exec = require("child_process").exec;
   assert.strict(typeof exec === "function");
   childProcessAvailable = true;

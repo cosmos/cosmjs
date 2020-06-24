@@ -1,4 +1,3 @@
-// tslint:disable:no-object-mutation readonly-keyword
 import { ValueAndUpdates } from "@iov/stream";
 import { Listener, Producer, Stream } from "xstream";
 
