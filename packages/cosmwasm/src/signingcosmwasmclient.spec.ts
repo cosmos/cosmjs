@@ -108,7 +108,6 @@ describe("SigningCosmWasmClient", () => {
       const client = new SigningCosmWasmClient(httpUrl, alice.address0, (signBytes) => pen.sign(signBytes));
       const { codeId } = await client.upload(getHackatom().data);
 
-      const transferAmount = [coin(1234, "ucosm"), coin(321, "ustake")];
       const beneficiaryAddress = makeRandomAddress();
       const { contractAddress } = await client.instantiate(
         codeId,
@@ -117,11 +116,7 @@ describe("SigningCosmWasmClient", () => {
           beneficiary: beneficiaryAddress,
         },
         "My cool label",
-        {
-          memo: "Let's see if the memo is used",
-          transferAmount,
-          admin: unused.address,
-        },
+        { admin: unused.address },
       );
 
       const rest = new RestClient(httpUrl);
