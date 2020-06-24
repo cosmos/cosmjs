@@ -1,4 +1,4 @@
-import { toListPromise } from "@iov/stream";
+import { toListPromise } from "@cosmjs/stream";
 import { Stream } from "xstream";
 
 import { defaultInstance } from "../config.spec";
