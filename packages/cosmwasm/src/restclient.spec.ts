@@ -170,60 +170,6 @@ describe("RestClient", () => {
     expect(client).toBeTruthy();
   });
 
-  // The /auth endpoints
-
-  describe("authAccounts", () => {
-    it("works for unused account without pubkey", async () => {
-      pendingWithoutWasmd();
-      const client = new RestClient(wasmd.endpoint);
-      const { height, result } = await client.authAccounts(unused.address);
-      expect(height).toMatch(nonNegativeIntegerMatcher);
-      expect(result).toEqual({
-        type: "cosmos-sdk/Account",
-        value: {
-          address: unused.address,
-          public_key: "", // not known to the chain
-          coins: [
-            {
-              amount: "1000000000",
-              denom: "ucosm",
-            },
-            {
-              amount: "1000000000",
-              denom: "ustake",
-            },
-          ],
-          account_number: unused.accountNumber,
-          sequence: 0,
-        },
-      });
-    });
-
-    // This fails in the first test run if you forget to run `./scripts/wasmd/init.sh`
-    it("has correct pubkey for faucet", async () => {
-      pendingWithoutWasmd();
-      const client = new RestClient(wasmd.endpoint);
-      const { result } = await client.authAccounts(alice.address0);
-      expect(result.value).toEqual(
-        jasmine.objectContaining({
-          public_key: encodeBech32Pubkey(alice.pubkey0, "cosmospub"),
-        }),
-      );
-    });
-
-    // This property is used by CosmWasmClient.getAccount
-    it("returns empty address for non-existent account", async () => {
-      pendingWithoutWasmd();
-      const client = new RestClient(wasmd.endpoint);
-      const nonExistentAccount = makeRandomAddress();
-      const { result } = await client.authAccounts(nonExistentAccount);
-      expect(result).toEqual({
-        type: "cosmos-sdk/Account",
-        value: jasmine.objectContaining({ address: "" }),
-      });
-    });
-  });
-
   // The /blocks endpoints
 
   describe("blocksLatest", () => {
