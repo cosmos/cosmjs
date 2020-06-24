@@ -170,36 +170,6 @@ describe("RestClient", () => {
     expect(client).toBeTruthy();
   });
 
-  // The /node_info endpoint
-
-  describe("nodeInfo", () => {
-    it("works", async () => {
-      pendingWithoutWasmd();
-      const client = new RestClient(wasmd.endpoint);
-      const { node_info, application_version } = await client.nodeInfo();
-
-      expect(node_info).toEqual({
-        protocol_version: { p2p: "7", block: "10", app: "0" },
-        id: jasmine.stringMatching(tendermintShortHashMatcher),
-        listen_addr: "tcp://0.0.0.0:26656",
-        network: wasmd.chainId,
-        version: jasmine.stringMatching(/^0\.33\.[0-9]+$/),
-        channels: "4020212223303800",
-        moniker: wasmd.chainId,
-        other: { tx_index: "on", rpc_address: "tcp://0.0.0.0:26657" },
-      });
-      expect(application_version).toEqual({
-        name: "wasm",
-        server_name: "wasmd",
-        client_name: "wasmcli",
-        version: jasmine.stringMatching(semverMatcher),
-        commit: jasmine.stringMatching(tendermintShortHashMatcher),
-        build_tags: "netgo,ledger",
-        go: jasmine.stringMatching(/^go version go1\.[0-9]+\.[0-9]+ linux\/amd64$/),
-      });
-    });
-  });
-
   // The /txs endpoints
 
   describe("txById", () => {
