@@ -184,6 +184,39 @@ describe("SigningCosmWasmClient", () => {
     });
   });
 
+  describe("clearAdmin", () => {
+    it("can clear an admin", async () => {
+      pendingWithoutWasmd();
+      const pen = await Secp256k1Pen.fromMnemonic(alice.mnemonic);
+      const client = new SigningCosmWasmClient(httpUrl, alice.address0, (signBytes) => pen.sign(signBytes));
+      const { codeId } = await client.upload(getHackatom().data);
+
+      const beneficiaryAddress = makeRandomAddress();
+      const { contractAddress } = await client.instantiate(
+        codeId,
+        {
+          verifier: alice.address0,
+          beneficiary: beneficiaryAddress,
+        },
+        "My cool label",
+        {
+          admin: alice.address0,
+        },
+      );
+
+      const rest = new RestClient(httpUrl);
+      const state1 = await rest.getContractInfo(contractAddress);
+      assert(state1);
+      expect(state1.admin).toEqual(alice.address0);
+
+      await client.clearAdmin(contractAddress);
+
+      const state2 = await rest.getContractInfo(contractAddress);
+      assert(state2);
+      expect(state2.admin).toBeUndefined();
+    });
+  });
+
   describe("execute", () => {
     it("works", async () => {
       pendingWithoutWasmd();

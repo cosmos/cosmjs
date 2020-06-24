@@ -55,8 +55,8 @@ export interface MsgUpdateAdmin extends Msg {
     readonly sender: string;
     /** Bech32-encoded contract address to be updated */
     readonly contract: string;
-    /** Bech32-encoded address of the new admin. Can be empty/undefined to clear. */
-    readonly new_admin: string;
+    /** Bech32-encoded address of the new admin. Use undefined to clear the admin, making the contract immutable. */
+    readonly new_admin: string | undefined;
   };
 }
 

@@ -100,6 +100,7 @@ export declare class SigningCosmWasmClient extends CosmWasmClient {
     options?: InstantiateOptions,
   ): Promise<InstantiateResult>;
   updateAdmin(contractAddress: string, newAdmin: string, memo?: string): Promise<ChangeAdminResult>;
+  clearAdmin(contractAddress: string, memo?: string): Promise<ChangeAdminResult>;
   execute(
     contractAddress: string,
     handleMsg: object,

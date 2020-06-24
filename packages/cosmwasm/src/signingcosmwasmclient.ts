@@ -297,6 +297,38 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     };
   }
 
+  public async clearAdmin(contractAddress: string, memo = ""): Promise<ChangeAdminResult> {
+    const updateAdminMsg: MsgUpdateAdmin = {
+      type: "wasm/update-contract-admin",
+      value: {
+        sender: this.senderAddress,
+        contract: contractAddress,
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        new_admin: undefined,
+      },
+    };
+    const fee = this.fees.changeAdmin;
+    const { accountNumber, sequence } = await this.getNonce();
+    const chainId = await this.getChainId();
+    const signBytes = makeSignBytes([updateAdminMsg], fee, chainId, memo, accountNumber, sequence);
+    const signature = await this.signCallback(signBytes);
+    const signedTx: StdTx = {
+      msg: [updateAdminMsg],
+      fee: fee,
+      memo: memo,
+      signatures: [signature],
+    };
+
+    const result = await this.postTx(signedTx);
+    if (isPostTxFailure(result)) {
+      throw new Error(createPostTxErrorMessage(result));
+    }
+    return {
+      logs: result.logs,
+      transactionHash: result.transactionHash,
+    };
+  }
+
   public async execute(
     contractAddress: string,
     handleMsg: object,
