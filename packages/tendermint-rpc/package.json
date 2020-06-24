@@ -1,8 +1,8 @@
 {
   "name": "@cosmjs/tendermint-rpc",
   "version": "0.20.0",
-  "description": "Codec to encode/decode bns transactions and state objects",
-  "author": "IOV SAS <admin@iov.one>",
+  "description": "Tendermint RPC clients",
+  "author": "Ethan Frey <ethanfrey@users.noreply.github.com>",
   "license": "Apache-2.0",
   "main": "build/index.js",
   "types": "types/index.d.ts",
