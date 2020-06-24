@@ -19,8 +19,8 @@ export declare class QueueingStreamingSocket {
   private socket;
   private isProcessingQueue;
   private eventProducerListener;
-  private connectionStatusProducer;
-  private reconnectedHandler?;
+  private readonly connectionStatusProducer;
+  private readonly reconnectedHandler?;
   constructor(url: string, timeout?: number, reconnectedHandler?: () => void);
   connect(): void;
   disconnect(): void;
