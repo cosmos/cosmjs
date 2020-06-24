@@ -1,9 +1,10 @@
 import { Coin, Msg } from "@cosmjs/sdk38";
 
 /**
- * Uploads Wam code to the chain
+ * Uploads Wasm code to the chain.
+ * A numeric, auto-incrementing code ID will be generated as a result of the execution of this message.
  *
- * @see https://github.com/cosmwasm/wasmd/blob/9842678d89/x/wasm/internal/types/msg.go#L17
+ * @see https://github.com/CosmWasm/wasmd/blob/v0.9.0-alpha4/x/wasm/internal/types/msg.go#L34
  */
 export interface MsgStoreCode extends Msg {
   readonly type: "wasm/store-code";
@@ -21,8 +22,9 @@ export interface MsgStoreCode extends Msg {
 
 /**
  * Creates an instance of contract that was uploaded before.
+ * This will trigger a call to the "init" export.
  *
- * @see https://github.com/cosmwasm/wasmd/blob/9842678d89/x/wasm/internal/types/msg.go#L73
+ * @see https://github.com/CosmWasm/wasmd/blob/v0.9.0-alpha4/x/wasm/internal/types/msg.go#L104
  */
 export interface MsgInstantiateContract extends Msg {
   readonly type: "wasm/instantiate";
@@ -40,9 +42,10 @@ export interface MsgInstantiateContract extends Msg {
 }
 
 /**
- * Creates an instance of contract that was uploaded before.
+ * Execute a smart contract.
+ * This will trigger a call to the "handle" export.
  *
- * @see https://github.com/cosmwasm/wasmd/blob/9842678d89/x/wasm/internal/types/msg.go#L103
+ * @see https://github.com/CosmWasm/wasmd/blob/v0.9.0-alpha4/x/wasm/internal/types/msg.go#L158
  */
 export interface MsgExecuteContract extends Msg {
   readonly type: "wasm/execute";
