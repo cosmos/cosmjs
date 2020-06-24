@@ -2,7 +2,11 @@
   "name": "@cosmjs/tendermint-rpc",
   "version": "0.20.0",
   "description": "Tendermint RPC clients",
-  "author": "Ethan Frey <ethanfrey@users.noreply.github.com>",
+  "contributors": [
+    "IOV SAS <admin@iov.one>",
+    "Confio UO <hello@confio.tech>",
+    "Will Clark <willclarktech@users.noreply.github.com>"
+  ],
   "license": "Apache-2.0",
   "main": "build/index.js",
   "types": "types/index.d.ts",
@@ -15,7 +19,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/iov-one/iov-core/tree/master/packages/iov-tendermint-rpc"
+    "url": "https://github.com/CosmWasm/cosmjs/tree/master/packages/tendermint-rpc"
   },
   "publishConfig": {
     "access": "public"
@@ -23,6 +27,7 @@
   "scripts": {
     "docs": "shx rm -rf docs && typedoc --options typedoc.js",
     "lint": "eslint --max-warnings 0 \"**/*.{js,ts}\"",
+    "lint-fix": "eslint --max-warnings 0 \"**/*.{js,ts}\" --fix",
     "format": "prettier --write --loglevel warn \"./src/**/*.ts\"",
     "format-text": "prettier --write --prose-wrap always --print-width 80 \"./*.md\"",
     "test-node": "node jasmine-testrunner.js",
