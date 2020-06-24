@@ -197,7 +197,6 @@ export class Client {
   // starts with page 1 or whatever was provided (eg. to start on page 7)
   public async txSearchAll(params: requests.TxSearchParams): Promise<responses.TxSearchResponse> {
     let page = params.page || 1;
-    // tslint:disable-next-line:readonly-array
     const txs: responses.TxResponse[] = [];
     let done = false;
 

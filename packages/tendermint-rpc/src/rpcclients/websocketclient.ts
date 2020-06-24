@@ -1,4 +1,3 @@
-/* tslint:disable:readonly-keyword readonly-array no-object-mutation */
 import {
   isJsonRpcErrorResponse,
   JsonRpcId,

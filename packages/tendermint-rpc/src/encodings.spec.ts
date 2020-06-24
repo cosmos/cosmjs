@@ -27,7 +27,6 @@ describe("encodings", () => {
   describe("encodeTime", () => {
     it("works", () => {
       const readonlyDateWithNanoseconds = new ReadonlyDate(1464109200);
-      // tslint:disable-next-line:no-object-mutation
       (readonlyDateWithNanoseconds as any).nanoseconds = 666666;
       expect(encodeTime(readonlyDateWithNanoseconds)).toEqual(
         Uint8Array.from([0x08, 173, 174, 89, 0x10, 170, 220, 215, 95]),

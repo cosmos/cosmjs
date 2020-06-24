@@ -1,4 +1,3 @@
-// tslint:disable:readonly-array
 import { toAscii } from "@cosmjs/encoding";
 import { sleep } from "@cosmjs/utils";
 import { firstEvent, toListPromise } from "@iov/stream";

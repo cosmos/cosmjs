@@ -162,7 +162,6 @@ export class DateTime {
     const readonlyDate = fromRfc3339(dateTimeString);
     const nanosecondsMatch = dateTimeString.match(/\.(\d+)Z$/);
     const nanoseconds = nanosecondsMatch ? nanosecondsMatch[1].slice(3) : "";
-    // tslint:disable-next-line:no-object-mutation
     (readonlyDate as any).nanoseconds = parseInt(nanoseconds.padEnd(6, "0"), 10);
     return readonlyDate as ReadonlyDateWithNanoseconds;
   }
@@ -189,7 +188,7 @@ export function encodeString(s: string): Uint8Array {
 
 // See https://github.com/tendermint/go-amino/blob/v0.15.0/encoder.go#L79-L87
 export function encodeInt(n: number): Uint8Array {
-  // tslint:disable-next-line:no-bitwise
+  // eslint-disable-next-line no-bitwise
   return n >= 0x80 ? Uint8Array.from([(n & 0xff) | 0x80, ...encodeInt(n >> 7)]) : Uint8Array.from([n & 0xff]);
 }
 

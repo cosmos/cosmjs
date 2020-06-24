@@ -19,7 +19,6 @@ describe("Hasher", () => {
     // curl "http://localhost:11133/block"
     const blockId = fromHex("153C484DCBC33633F0616BC019388C93DEA94F7880627976F2BFE83749E062F7");
     const time = new ReadonlyDate("2020-06-23T13:54:15.4638668Z");
-    // tslint:disable-next-line:no-object-mutation
     (time as any).nanoseconds = 866800;
     const blockData = {
       version: {
@@ -58,7 +57,6 @@ describe("Hasher", () => {
     // curl "http://localhost:11133/block?height=13575"
     const blockId = fromHex("FF2995AF1F38B9A584077E53B5E144778718FB86539A51886A2C55F730403373");
     const time = new ReadonlyDate("2020-06-23T15:34:12.3232688Z");
-    // tslint:disable-next-line:no-object-mutation
     (time as any).nanoseconds = 268800;
     const blockData = {
       version: {

@@ -46,7 +46,6 @@ describe("WebsocketClient", () => {
     const req = createJsonRpcRequest("subscribe", { query: query });
     const headers = client.listen(req);
 
-    // tslint:disable-next-line:readonly-array
     const events: SubscriptionEvent[] = [];
 
     const sub = headers.subscribe({
@@ -109,7 +108,6 @@ describe("WebsocketClient", () => {
     const req = createJsonRpcRequest("subscribe", { query: query });
     const headers = client.listen(req);
 
-    // tslint:disable-next-line:readonly-array
     const events: SubscriptionEvent[] = [];
 
     const sub = headers.subscribe({
@@ -148,7 +146,6 @@ describe("WebsocketClient", () => {
     const req = createJsonRpcRequest("subscribe", { query: query });
     const headers = client.listen(req);
 
-    // tslint:disable-next-line:readonly-array
     const receivedEvents: SubscriptionEvent[] = [];
 
     setTimeout(() => client.disconnect(), 1500);
