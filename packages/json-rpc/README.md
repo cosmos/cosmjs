@@ -1,12 +1,12 @@
-# @iov/jsonrpc
+# @cosmjs/json-rpc
 
-[![npm version](https://img.shields.io/npm/v/@iov/jsonrpc.svg)](https://www.npmjs.com/package/@iov/jsonrpc)
+[![npm version](https://img.shields.io/npm/v/@cosmjs/json-rpc.svg)](https://www.npmjs.com/package/@cosmjs/json-rpc)
 
-This package provides a light framework for implementing a [JSON-RPC 2.0 API](https://www.jsonrpc.org/specification).
+This package provides a light framework for implementing a
+[JSON-RPC 2.0 API](https://www.jsonrpc.org/specification).
 
 ## License
 
-This package is part of the IOV-Core repository, licensed under the Apache
-License 2.0 (see
-[NOTICE](https://github.com/iov-one/iov-core/blob/master/NOTICE) and
-[LICENSE](https://github.com/iov-one/iov-core/blob/master/LICENSE)).
+This package is part of the cosmjs repository, licensed under the Apache License
+2.0 (see [NOTICE](https://github.com/CosmWasm/cosmjs/blob/master/NOTICE) and
+[LICENSE](https://github.com/CosmWasm/cosmjs/blob/master/LICENSE)).
