@@ -1,4 +1,4 @@
-import { DefaultValueProducer, ValueAndUpdates } from "@iov/stream";
+import { DefaultValueProducer, ValueAndUpdates } from "@cosmjs/stream";
 import { Listener, Producer, Stream } from "xstream";
 
 import { SocketWrapperMessageEvent } from "./socketwrapper";

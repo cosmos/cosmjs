@@ -1,4 +1,4 @@
-import { ValueAndUpdates } from "@iov/stream";
+import { ValueAndUpdates } from "@cosmjs/stream";
 import { Stream } from "xstream";
 import { SocketWrapperMessageEvent } from "./socketwrapper";
 export declare enum ConnectionStatus {
