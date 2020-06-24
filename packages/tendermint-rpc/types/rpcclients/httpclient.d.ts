@@ -1,4 +1,4 @@
-import { JsonRpcRequest, JsonRpcSuccessResponse } from "@iov/jsonrpc";
+import { JsonRpcRequest, JsonRpcSuccessResponse } from "@cosmjs/json-rpc";
 import { RpcClient } from "./rpcclient";
 export declare class HttpClient implements RpcClient {
   protected readonly url: string;
