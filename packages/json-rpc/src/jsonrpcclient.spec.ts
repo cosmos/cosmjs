@@ -17,13 +17,11 @@ function makeSimpleMessagingConnection(
 ): SimpleMessagingConnection<JsonRpcRequest, JsonRpcResponse> {
   const producer: Producer<JsonRpcResponse> = {
     start: (listener) => {
-      // tslint:disable-next-line:no-object-mutation
       worker.onmessage = (event) => {
         listener.next(parseJsonRpcResponse(event.data));
       };
     },
     stop: () => {
-      // tslint:disable-next-line:no-object-mutation
       worker.onmessage = null;
     },
   };
