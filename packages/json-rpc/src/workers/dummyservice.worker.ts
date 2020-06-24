@@ -2,8 +2,7 @@
 
 // for testing only
 
-import { isJsonCompatibleDictionary } from "@iov/encoding";
-
+import { isJsonCompatibleDictionary } from "../compatibility";
 import { parseJsonRpcId, parseJsonRpcRequest } from "../parse";
 import {
   jsonRpcCode,
