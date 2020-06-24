@@ -1,0 +1,44 @@
+{
+  "name": "@iov/jsonrpc",
+  "version": "2.5.0",
+  "description": "Framework for implementing a JSON-RPC 2.0 API",
+  "author": "IOV SAS <admin@iov.one>",
+  "license": "Apache-2.0",
+  "main": "build/index.js",
+  "types": "types/index.d.ts",
+  "files": [
+    "build/",
+    "types/",
+    "*.md",
+    "!*.spec.*",
+    "!**/testdata/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iov-one/iov-core/tree/master/packages/iov-jsonrpc"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "docs": "shx rm -rf docs && typedoc --options typedoc.js",
+    "lint": "eslint --max-warnings 0 \"**/*.{js,ts}\" && tslint -t verbose --project .",
+    "format": "prettier --write --loglevel warn \"./src/**/*.ts\"",
+    "test-node": "node jasmine-testrunner.js",
+    "test-edge": "yarn pack-web && karma start --single-run --browsers Edge",
+    "test-firefox": "yarn pack-web && karma start --single-run --browsers Firefox",
+    "test-chrome": "yarn pack-web && karma start --single-run --browsers ChromeHeadless",
+    "test-safari": "yarn pack-web && karma start --single-run --browsers Safari",
+    "test": "yarn build-or-skip && yarn test-node",
+    "move-types": "shx rm -r ./types/* && shx mv build/types/* ./types && rm -rf ./types/testdata && shx rm -f ./types/*.spec.d.ts",
+    "format-types": "prettier --write --loglevel warn \"./types/**/*.d.ts\"",
+    "build": "shx rm -rf ./build && tsc && tsc -p tsconfig.workers.json && yarn move-types && yarn format-types",
+    "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build",
+    "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
+  },
+  "dependencies": {
+    "@iov/encoding": "^2.5.0",
+    "@iov/stream": "^2.3.2",
+    "xstream": "^11.10.0"
+  }
+}
