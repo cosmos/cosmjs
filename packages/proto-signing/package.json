@@ -1,5 +1,5 @@
 {
-  "name": "@cosmjs/demo-protobuf",
+  "name": "@cosmjs/proto-signing",
   "private": true,
   "version": "0.20.0",
   "description": "Utilities for Cosmos SDK 0.38",
@@ -16,7 +16,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/CosmWasm/cosmjs/tree/master/packages/demo-protobuf"
+    "url": "https://github.com/CosmWasm/cosmjs/tree/master/packages/proto-signing"
   },
   "scripts": {
     "docs": "shx rm -rf docs && typedoc --options typedoc.js",

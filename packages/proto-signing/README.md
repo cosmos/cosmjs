@@ -1,4 +1,4 @@
-# @cosmjs/demo-protobuf
+# @cosmjs/proto-signing
 
 Demo package for protobufs with Cosmos SDK.
 
