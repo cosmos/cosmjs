@@ -298,6 +298,7 @@ describe("RestClient", () => {
       // execute
       {
         const result = await executeContract(client, pen, contractAddress, { release: {} });
+        expect(result.data).toEqual("F00BAA");
         expect(result.code).toBeFalsy();
         // console.log("Raw log:", result.logs);
         const logs = parseLogs(result.logs);
