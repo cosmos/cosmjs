@@ -1,6 +1,8 @@
-# @cosmjs/demo-protobuf
+# @cosmjs/sdk39
 
-Demo package for protobufs with Cosmos SDK.
+[![npm version](https://img.shields.io/npm/v/@cosmjs/sdk39.svg)](https://www.npmjs.com/package/@cosmjs/sdk39)
+
+A client library for the Cosmos SDK 0.39.
 
 ## License
 

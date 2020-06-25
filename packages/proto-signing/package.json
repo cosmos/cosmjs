@@ -1,9 +1,12 @@
 {
-  "name": "@cosmjs/demo-protobuf",
+  "name": "@cosmjs/proto-signing",
   "private": true,
   "version": "0.20.0",
-  "description": "Utilities for Cosmos SDK 0.38",
-  "author": "Ethan Frey <ethanfrey@users.noreply.github.com>",
+  "description": "Utilities for protobuf based signing (Cosmos SDK 0.39+)",
+  "contributors": [
+    "Will Clark <willclarktech@users.noreply.github.com>",
+    "Simon Warta <webmaster128@users.noreply.github.com>"
+  ],
   "license": "Apache-2.0",
   "main": "build/index.js",
   "types": "types/index.d.ts",
@@ -16,11 +19,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/CosmWasm/cosmjs/tree/master/packages/demo-protobuf"
+    "url": "https://github.com/CosmWasm/cosmjs/tree/master/packages/proto-signing"
   },
   "scripts": {
     "docs": "shx rm -rf docs && typedoc --options typedoc.js",
     "format": "prettier --write --loglevel warn \"./src/**/*.ts\"",
+    "format-text": "prettier --write --prose-wrap always --print-width 80 \"./*.md\"",
     "lint": "eslint --max-warnings 0 \"**/*.{js,ts}\"",
     "lint-fix": "eslint --max-warnings 0 \"**/*.{js,ts}\" --fix",
     "move-types": "shx rm -rf ./types/* && shx mv build/types/* ./types && rm -rf ./types/testdata && shx rm -f ./types/*.spec.d.ts",
