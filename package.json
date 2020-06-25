@@ -32,7 +32,6 @@
     "test-firefox": "lerna run test-firefox",
     "test-chrome": "lerna run test-chrome",
     "coverage": "lerna run coverage",
-    "coverage-html": "lerna run coverage-html",
     "build": "lerna run build",
     "docs": "lerna run docs"
   },
