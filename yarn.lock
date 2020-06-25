@@ -8680,13 +8680,6 @@ xstream@^11.10.0:
   dependencies:
     symbol-observable "1.2.0"
 
-xstream@^11.11.0:
-  version "11.11.0"
-  resolved "https://registry.yarnpkg.com/xstream/-/xstream-11.11.0.tgz#2c963cf0a6cb3eafecb57eaeae16c9850235b422"
-  integrity sha512-0zF3PLsHrmbToPBgX1jYZFNw+t5octSFJgVRH44HGlGBBjY7gscvDQOZvty8IQV15Snia1RcLPECWDfEaE4aXg==
-  dependencies:
-    symbol-observable "1.2.0"
-
 xtend@^4.0.0, xtend@~4.0.1:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/xtend/-/xtend-4.0.2.tgz#bb72779f5fa465186b1f438f674fa347fdb5db54"
