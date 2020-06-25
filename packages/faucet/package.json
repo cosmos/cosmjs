@@ -32,7 +32,8 @@
     "build": "shx rm -rf ./build && tsc",
     "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build",
     "test-node": "node jasmine-testrunner.js",
-    "test": "yarn build-or-skip && yarn test-node"
+    "test": "yarn build-or-skip && yarn test-node",
+    "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet"
   },
   "dependencies": {
     "@cosmjs/crypto": "^0.20.0",

@@ -18,7 +18,13 @@ jasmine.jasmine.DEFAULT_TIMEOUT_INTERVAL = 15 * 1000;
 
 // setup reporter
 const { SpecReporter } = require("jasmine-spec-reporter");
-const reporter = new SpecReporter({ ...defaultSpecReporterConfig });
+const reporter = new SpecReporter({
+  ...defaultSpecReporterConfig,
+  spec: {
+    ...defaultSpecReporterConfig.spec,
+    displaySuccessful: !process.argv.includes("--quiet"),
+  },
+});
 
 // initialize and execute
 jasmine.env.clearReporters();

@@ -35,6 +35,7 @@
     "test-firefox": "yarn pack-web && karma start --single-run --browsers Firefox",
     "test-chrome": "yarn pack-web && karma start --single-run --browsers ChromeHeadless",
     "test": "yarn build-or-skip && yarn test-node",
+    "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet",
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js",
     "get-proto": "REF=master ./scripts/get-proto.sh",
     "predefine-proto": "mkdir -p src/generated && pbjs -t static-module -w commonjs -o src/generated/codecimpl.tmp.js --sparse --no-beautify --no-delimited --no-verify --no-convert ./proto/cosmos/cosmos-sdk/{x/bank/types/types.proto,types/types.proto,types/tx/types.proto,types/tx/signing/types.proto,third_party/proto/tendermint/**/*.proto,crypto/types/types.proto}",
