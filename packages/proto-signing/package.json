@@ -2,8 +2,11 @@
   "name": "@cosmjs/proto-signing",
   "private": true,
   "version": "0.20.0",
-  "description": "Utilities for Cosmos SDK 0.38",
-  "author": "Ethan Frey <ethanfrey@users.noreply.github.com>",
+  "description": "Utilities for protobuf based signing (Cosmos SDK 0.39+)",
+  "contributors": [
+    "Will Clark <willclarktech@users.noreply.github.com>",
+    "Simon Warta <webmaster128@users.noreply.github.com>"
+  ],
   "license": "Apache-2.0",
   "main": "build/index.js",
   "types": "types/index.d.ts",
