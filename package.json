@@ -31,10 +31,12 @@
     "test": "lerna run test",
     "test-firefox": "lerna run test-firefox",
     "test-chrome": "lerna run test-chrome",
+    "coverage": "lerna run coverage",
     "build": "lerna run build",
     "docs": "lerna run docs"
   },
   "devDependencies": {
+    "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/jasmine": "^3.3.7",
     "@typescript-eslint/eslint-plugin": "^2.34.0",
     "@typescript-eslint/parser": "^2.34.0",
@@ -53,6 +55,7 @@
     "karma-jasmine": "^3",
     "karma-jasmine-html-reporter": "^1.4",
     "lerna": "^3.20.2",
+    "nyc": "^15.1.0",
     "prettier": "^2.0.5",
     "shx": "^0.3.2",
     "source-map-support": "^0.5.6",

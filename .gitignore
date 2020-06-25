@@ -17,3 +17,7 @@ node_modules/
 
 # demo mnemonics from cli
 *.key
+
+# Code coverage
+.nyc_output/
+coverage/
