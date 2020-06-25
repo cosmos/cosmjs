@@ -173,6 +173,7 @@ jobs:
     steps:
       - checkout
       - run: # start early for less wait time below
+          name: Start wasmd
           command: ./scripts/wasmd/start.sh
           background: true
       - attach_workspace:
@@ -207,7 +208,7 @@ jobs:
           paths:
             - ~/.cache/yarn
       - run:
-          name: Initialize blockchain (deploy contracts and friends)
+          name: Initialize wasmd (deploy contracts and friends)
           command: ./scripts/wasmd/init.sh
       - run:
           environment:
