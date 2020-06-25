@@ -1,6 +1,6 @@
 import { toAscii } from "@cosmjs/encoding";
+import { firstEvent, toListPromise } from "@cosmjs/stream";
 import { sleep } from "@cosmjs/utils";
-import { firstEvent, toListPromise } from "@iov/stream";
 import { ReadonlyDate } from "readonly-date";
 import { Stream } from "xstream";
 

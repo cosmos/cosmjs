@@ -1,7 +1,7 @@
 {
-  "name": "@cosmjs/socket",
+  "name": "@cosmjs/stream",
   "version": "0.20.0",
-  "description": "Utility functions for working with WebSockets",
+  "description": "Utility functions for producing and consuming streams",
   "contributors": [
     "IOV SAS <admin@iov.one>",
     "Confio UO <hello@confio.tech>",
@@ -19,7 +19,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/CosmWasm/cosmjs/tree/master/packages/socket"
+    "url": "https://github.com/CosmWasm/cosmjs/tree/master/packages/stream"
   },
   "publishConfig": {
     "access": "public"
@@ -44,12 +44,6 @@
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
   },
   "dependencies": {
-    "@cosmjs/stream": "^0.20.0",
-    "isomorphic-ws": "^4.0.1",
-    "ws": "^6.2.0",
     "xstream": "^11.10.0"
-  },
-  "devDependencies": {
-    "@types/ws": "^6.0.1"
   }
 }
