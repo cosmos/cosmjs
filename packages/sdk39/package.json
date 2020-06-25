@@ -1,0 +1,44 @@
+{
+  "name": "@cosmjs/sdk39",
+  "private": true,
+  "version": "0.20.0",
+  "description": "Utilities for Cosmos SDK 0.39",
+  "contributors": [
+    "Simon Warta <webmaster128@users.noreply.github.com>"
+  ],
+  "license": "Apache-2.0",
+  "main": "build/index.js",
+  "types": "types/index.d.ts",
+  "files": [
+    "build/",
+    "types/",
+    "*.md",
+    "!*.spec.*",
+    "!**/testdata/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CosmWasm/cosmjs/tree/master/packages/sdk39"
+  },
+  "scripts": {
+    "docs": "shx rm -rf docs && typedoc --options typedoc.js",
+    "format": "prettier --write --loglevel warn \"./src/**/*.ts\"",
+    "format-text": "prettier --write --prose-wrap always --print-width 80 \"./*.md\"",
+    "lint": "eslint --max-warnings 0 \"**/*.{js,ts}\"",
+    "lint-fix": "eslint --max-warnings 0 \"**/*.{js,ts}\" --fix",
+    "move-types": "shx rm -rf ./types/* && shx mv build/types/* ./types && rm -rf ./types/testdata && shx rm -f ./types/*.spec.d.ts",
+    "format-types": "prettier --write --loglevel warn \"./types/**/*.d.ts\"",
+    "build": "shx rm -rf ./build && tsc && yarn move-types && yarn format-types",
+    "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build",
+    "test-node": "node jasmine-testrunner.js",
+    "test-firefox": "yarn pack-web && karma start --single-run --browsers Firefox",
+    "test-chrome": "yarn pack-web && karma start --single-run --browsers ChromeHeadless",
+    "test": "yarn build-or-skip && yarn test-node",
+    "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
+  },
+  "dependencies": {
+    "@cosmjs/proto-signing": "^0.20.0",
+    "@cosmjs/tendermint-rpc": "^0.20.0"
+  },
+  "devDependencies": {}
+}
