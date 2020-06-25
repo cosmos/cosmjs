@@ -24,7 +24,8 @@
     "start": "yarn build-or-skip && ./bin/cosmwasm-cli",
     "selftest": "yarn build-or-skip && ./bin/cosmwasm-cli --selftest",
     "test-node": "node jasmine-testrunner.js",
-    "test": "yarn build-or-skip && yarn test-node"
+    "test": "yarn build-or-skip && yarn test-node",
+    "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet"
   },
   "bin": {
     "cosmwasm-cli": "bin/cosmwasm-cli"
