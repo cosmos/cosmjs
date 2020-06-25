@@ -55,126 +55,12 @@ jobs:
     steps:
       - checkout
       - run: # start early for less wait time below
-          command: ./scripts/wasmd/start.sh
-          background: true
-      - attach_workspace:
-          at: /tmp/builds
-      - run:
-          name: Merge build folders into project (merge with hardlinks)
-          command: cp --recursive --link /tmp/builds/* .
-      - run:
-          # The images ubuntu-1604:201903-01 comes with preinstalled nvm, which does not work well with non-login shells
-          name: Uninstall nvm
-          command: rm -rf "$NVM_DIR" ~/.npm ~/.bower
-      - run:
-          name: Install nodejs and yarn
-          command: |
-            curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
-            curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-            echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-            sudo apt update && sudo apt install nodejs yarn
-      - run:
-          name: Version information
-          command: echo "node $(node --version)"; echo "yarn $(yarn --version)"
-      - restore_cache:
-          name: Restore Yarn Package Cache
-          keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
-      - run:
-          name: Install Dependencies
-          command: yarn install --frozen-lockfile
-      - save_cache:
-          name: Save Yarn Package Cache
-          key: yarn-packages-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
-      - run:
-          name: Initialize blockchain (deploy contracts and friends)
-          command: ./scripts/wasmd/init.sh
-      - run:
-          environment:
-            WASMD_ENABLED: 1
-            SKIP_BUILD: 1
-          command: yarn test --stream
-      - run:
-          name: Run CLI selftest
-          working_directory: packages/cli
-          environment:
-            SKIP_BUILD: 1
-          command: yarn selftest
-      - run:
-          command: ./scripts/wasmd/stop.sh
-  test-chrome:
-    machine:
-      # We can't use a containerized environment since it requires remote docker to start custom containers.
-      # However, we can't access the remote docker's network from the primary container. This is a
-      # feature, as documented in https://circleci.com/docs/2.0/building-docker-images/#separation-of-environments
-      # As a consequence, we cannot use the circleci CLI for this job because "You cannot use the machine
-      # executor in local jobs." (https://circleci.com/docs/2.0/local-cli/#limitations-of-running-jobs-locally)
-      #
-      # Available images: https://circleci.com/docs/2.0/configuration-reference/#available-machine-images
-      image: ubuntu-1604:202004-01
-    steps:
-      - checkout
-      - run: # start early for less wait time below
-          command: ./scripts/wasmd/start.sh
-          background: true
-      - attach_workspace:
-          at: /tmp/builds
-      - run:
-          name: Merge build folders into project (merge with hardlinks)
-          command: cp --recursive --link /tmp/builds/* .
-      - run:
-          # The images ubuntu-1604:201903-01 comes with preinstalled nvm, which does not work well with non-login shells
-          name: Uninstall nvm
-          command: rm -rf "$NVM_DIR" ~/.npm ~/.bower
-      - run:
-          name: Install nodejs and yarn
-          command: |
-            curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
-            curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-            echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-            sudo apt update && sudo apt install nodejs yarn
-      - run:
-          name: Version information
-          command: echo "node $(node --version)"; echo "yarn $(yarn --version)"
-      - restore_cache:
-          name: Restore Yarn Package Cache
-          keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
-      - run:
-          name: Install Dependencies
-          command: yarn install --frozen-lockfile
-      - save_cache:
-          name: Save Yarn Package Cache
-          key: yarn-packages-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
-      - run:
-          name: Initialize blockchain (deploy contracts and friends)
-          command: ./scripts/wasmd/init.sh
-      - run:
-          environment:
-            WASMD_ENABLED: 1
-            SKIP_BUILD: 1
-          command: yarn test-chrome
-      - run:
-          command: ./scripts/wasmd/stop.sh
-  coverage:
-    machine:
-      # We can't use a containerized environment since it requires remote docker to start custom containers.
-      # However, we can't access the remote docker's network from the primary container. This is a
-      # feature, as documented in https://circleci.com/docs/2.0/building-docker-images/#separation-of-environments
-      # As a consequence, we cannot use the circleci CLI for this job because "You cannot use the machine
-      # executor in local jobs." (https://circleci.com/docs/2.0/local-cli/#limitations-of-running-jobs-locally)
-      #
-      # Available images: https://circleci.com/docs/2.0/configuration-reference/#available-machine-images
-      image: ubuntu-1604:202004-01
-    steps:
-      - checkout
-      - run: # start early for less wait time below
           name: Start wasmd
           command: ./scripts/wasmd/start.sh
+          background: true
+      - run:
+          name: Start Tendermint blockchains
+          command: ./scripts/tendermint/all_start.sh
           background: true
       - attach_workspace:
           at: /tmp/builds
@@ -211,8 +97,159 @@ jobs:
           name: Initialize wasmd (deploy contracts and friends)
           command: ./scripts/wasmd/init.sh
       - run:
+          name: Start socket server
+          command: ./scripts/socketserver/start.sh
+      - run:
           environment:
             WASMD_ENABLED: 1
+            TENDERMINT_ENABLED: 1
+            SOCKETSERVER_ENABLED: 1
+            SKIP_BUILD: 1
+          command: yarn test --stream
+      - run:
+          name: Run CLI selftest
+          working_directory: packages/cli
+          environment:
+            SKIP_BUILD: 1
+          command: yarn selftest
+      - run:
+          command: ./scripts/wasmd/stop.sh
+      - run:
+          command: ./scripts/tendermint/all_stop.sh
+      - run:
+          command: ./scripts/socketserver/stop.sh
+  test-chrome:
+    machine:
+      # We can't use a containerized environment since it requires remote docker to start custom containers.
+      # However, we can't access the remote docker's network from the primary container. This is a
+      # feature, as documented in https://circleci.com/docs/2.0/building-docker-images/#separation-of-environments
+      # As a consequence, we cannot use the circleci CLI for this job because "You cannot use the machine
+      # executor in local jobs." (https://circleci.com/docs/2.0/local-cli/#limitations-of-running-jobs-locally)
+      #
+      # Available images: https://circleci.com/docs/2.0/configuration-reference/#available-machine-images
+      image: ubuntu-1604:202004-01
+    steps:
+      - checkout
+      - run: # start early for less wait time below
+          name: Start wasmd
+          command: ./scripts/wasmd/start.sh
+          background: true
+      - run:
+          name: Start Tendermint blockchains
+          command: ./scripts/tendermint/all_start.sh
+          background: true
+      - attach_workspace:
+          at: /tmp/builds
+      - run:
+          name: Merge build folders into project (merge with hardlinks)
+          command: cp --recursive --link /tmp/builds/* .
+      - run:
+          # The images ubuntu-1604:201903-01 comes with preinstalled nvm, which does not work well with non-login shells
+          name: Uninstall nvm
+          command: rm -rf "$NVM_DIR" ~/.npm ~/.bower
+      - run:
+          name: Install nodejs and yarn
+          command: |
+            curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+            curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+            echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+            sudo apt update && sudo apt install nodejs yarn
+      - run:
+          name: Version information
+          command: echo "node $(node --version)"; echo "yarn $(yarn --version)"
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - run:
+          name: Initialize wasmd (deploy contracts and friends)
+          command: ./scripts/wasmd/init.sh
+      - run:
+          name: Start socket server
+          command: ./scripts/socketserver/start.sh
+      - run:
+          environment:
+            WASMD_ENABLED: 1
+            TENDERMINT_ENABLED: 1
+            SOCKETSERVER_ENABLED: 1
+            SKIP_BUILD: 1
+          command: yarn test-chrome
+      - run:
+          command: ./scripts/wasmd/stop.sh
+      - run:
+          command: ./scripts/tendermint/all_stop.sh
+      - run:
+          command: ./scripts/socketserver/stop.sh
+  coverage:
+    machine:
+      # We can't use a containerized environment since it requires remote docker to start custom containers.
+      # However, we can't access the remote docker's network from the primary container. This is a
+      # feature, as documented in https://circleci.com/docs/2.0/building-docker-images/#separation-of-environments
+      # As a consequence, we cannot use the circleci CLI for this job because "You cannot use the machine
+      # executor in local jobs." (https://circleci.com/docs/2.0/local-cli/#limitations-of-running-jobs-locally)
+      #
+      # Available images: https://circleci.com/docs/2.0/configuration-reference/#available-machine-images
+      image: ubuntu-1604:202004-01
+    steps:
+      - checkout
+      - run: # start early for less wait time below
+          name: Start wasmd
+          command: ./scripts/wasmd/start.sh
+          background: true
+      - run:
+          name: Start Tendermint blockchains
+          command: ./scripts/tendermint/all_start.sh
+          background: true
+      - attach_workspace:
+          at: /tmp/builds
+      - run:
+          name: Merge build folders into project (merge with hardlinks)
+          command: cp --recursive --link /tmp/builds/* .
+      - run:
+          # The images ubuntu-1604:201903-01 comes with preinstalled nvm, which does not work well with non-login shells
+          name: Uninstall nvm
+          command: rm -rf "$NVM_DIR" ~/.npm ~/.bower
+      - run:
+          name: Install nodejs and yarn
+          command: |
+            curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+            curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+            echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+            sudo apt update && sudo apt install nodejs yarn
+      - run:
+          name: Version information
+          command: echo "node $(node --version)"; echo "yarn $(yarn --version)"
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - run:
+          name: Initialize wasmd (deploy contracts and friends)
+          command: ./scripts/wasmd/init.sh
+      - run:
+          name: Start socket server
+          command: ./scripts/socketserver/start.sh
+      - run:
+          environment:
+            WASMD_ENABLED: 1
+            TENDERMINT_ENABLED: 1
+            SOCKETSERVER_ENABLED: 1
             SKIP_BUILD: 1
           command: yarn coverage
       - run:
@@ -220,6 +257,10 @@ jobs:
           command: npx codecov
       - run:
           command: ./scripts/wasmd/stop.sh
+      - run:
+          command: ./scripts/tendermint/all_stop.sh
+      - run:
+          command: ./scripts/socketserver/stop.sh
   lint:
     docker:
       - image: circleci/node:10

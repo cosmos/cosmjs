@@ -6,7 +6,7 @@ import {
   JsonRpcSuccessResponse,
   parseJsonRpcResponse,
 } from "@cosmjs/json-rpc";
-import { ConnectionStatus, ReconnectingSocket, SocketWrapperMessageEvent } from "@iov/socket";
+import { ConnectionStatus, ReconnectingSocket, SocketWrapperMessageEvent } from "@cosmjs/socket";
 import { firstEvent } from "@iov/stream";
 import { Listener, Producer, Stream, Subscription } from "xstream";
 

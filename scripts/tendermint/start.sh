@@ -41,3 +41,11 @@ docker run --rm \
   > "$LOGFILE" &
 
 echo "Tendermint running and logging into $LOGFILE"
+
+# Give REST server some time to come alive. No idea why this helps. Needed for CI.
+if [ -n "${CI:-}" ]; then
+  sleep 0.5
+
+  # Follow the logs in CI's background job
+  tail -f "$LOGFILE"
+fi
