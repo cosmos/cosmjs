@@ -215,6 +215,9 @@ jobs:
             SKIP_BUILD: 1
           command: yarn coverage
       - run:
+          name: Upload coverage report
+          command: npx codecov
+      - run:
           command: ./scripts/wasmd/stop.sh
   lint:
     docker:
