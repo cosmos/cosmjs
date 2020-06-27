@@ -31,11 +31,13 @@ export {
   UploadResult,
 } from "./signingcosmwasmclient";
 export {
+  isMsgClearAdmin,
   isMsgExecuteContract,
   isMsgInstantiateContract,
   isMsgMigrateContract,
   isMsgUpdateAdmin,
   isMsgStoreCode,
+  MsgClearAdmin,
   MsgExecuteContract,
   MsgInstantiateContract,
   MsgMigrateContract,

@@ -45,7 +45,7 @@ export declare function isMsgInstantiateContract(msg: Msg): msg is MsgInstantiat
 /**
  * Update the admin of a contract
  *
- * @see https://github.com/CosmWasm/wasmd/blob/v0.9.0-alpha4/x/wasm/internal/types/msg.go#L231
+ * @see https://github.com/CosmWasm/wasmd/blob/v0.9.0-beta/x/wasm/internal/types/msg.go#L231
  */
 export interface MsgUpdateAdmin extends Msg {
   readonly type: "wasm/update-contract-admin";
@@ -54,11 +54,26 @@ export interface MsgUpdateAdmin extends Msg {
     readonly sender: string;
     /** Bech32-encoded contract address to be updated */
     readonly contract: string;
-    /** Bech32-encoded address of the new admin. Use undefined to clear the admin, making the contract immutable. */
-    readonly new_admin: string | undefined;
+    /** Bech32-encoded address of the new admin */
+    readonly new_admin: string;
   };
 }
 export declare function isMsgUpdateAdmin(msg: Msg): msg is MsgUpdateAdmin;
+/**
+ * Clears the admin of a contract, making it immutable.
+ *
+ * @see https://github.com/CosmWasm/wasmd/blob/v0.9.0-beta/x/wasm/internal/types/msg.go#L269
+ */
+export interface MsgClearAdmin extends Msg {
+  readonly type: "wasm/clear-contract-admin";
+  readonly value: {
+    /** Bech32-encoded sender address. This must be the old admin. */
+    readonly sender: string;
+    /** Bech32-encoded contract address to be updated */
+    readonly contract: string;
+  };
+}
+export declare function isMsgClearAdmin(msg: Msg): msg is MsgClearAdmin;
 /**
  * Execute a smart contract.
  * This will trigger a call to the "handle" export.
