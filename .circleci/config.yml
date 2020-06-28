@@ -18,8 +18,11 @@ workflows:
 jobs:
   build:
     docker:
-      - image: circleci/node:10
+      - image: circleci/node:10-buster
     steps:
+      - run:
+          name: Install Git Large File Storage (LFS)
+          command: sudo apt-get install git-lfs
       - checkout
       - run:
           name: Version information
@@ -53,6 +56,11 @@ jobs:
       # Available images: https://circleci.com/docs/2.0/configuration-reference/#available-machine-images
       image: ubuntu-1604:202004-01
     steps:
+      - run:
+          name: Install Git Large File Storage (LFS)
+          command: |
+            wget -O "$HOME/git-lfs.deb" https://packagecloud.io/github/git-lfs/packages/ubuntu/xenial/git-lfs_2.11.0_amd64.deb/download.deb
+            sudo dpkg -i "$HOME/git-lfs.deb"
       - checkout
       - run: # start early for less wait time below
           name: Start wasmd
@@ -129,6 +137,11 @@ jobs:
       # Available images: https://circleci.com/docs/2.0/configuration-reference/#available-machine-images
       image: ubuntu-1604:202004-01
     steps:
+      - run:
+          name: Install Git Large File Storage (LFS)
+          command: |
+            wget -O "$HOME/git-lfs.deb" https://packagecloud.io/github/git-lfs/packages/ubuntu/xenial/git-lfs_2.11.0_amd64.deb/download.deb
+            sudo dpkg -i "$HOME/git-lfs.deb"
       - checkout
       - run: # start early for less wait time below
           name: Start wasmd
@@ -199,6 +212,11 @@ jobs:
       # Available images: https://circleci.com/docs/2.0/configuration-reference/#available-machine-images
       image: ubuntu-1604:202004-01
     steps:
+      - run:
+          name: Install Git Large File Storage (LFS)
+          command: |
+            wget -O "$HOME/git-lfs.deb" https://packagecloud.io/github/git-lfs/packages/ubuntu/xenial/git-lfs_2.11.0_amd64.deb/download.deb
+            sudo dpkg -i "$HOME/git-lfs.deb"
       - checkout
       - run: # start early for less wait time below
           name: Start wasmd
@@ -263,7 +281,7 @@ jobs:
           command: ./scripts/socketserver/stop.sh
   lint:
     docker:
-      - image: circleci/node:10
+      - image: circleci/node:10-buster
     steps:
       - checkout
       - run:
