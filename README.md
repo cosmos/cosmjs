@@ -31,12 +31,14 @@ package; right depends on left):
 
 ![CosmJS dependency tree](docs/cosmjs-tree.png)
 
+If this was not enough to scare you away, check out the version including app runtime dependencies: [cosmjs-tree-full.png](docs/cosmjs-tree-full.png).
+
 <!--
 Build with depsight (https://github.com/webmaster128/depsight), using:
 
-from_npm ~/cosmjs | depsight --exclude cosmjs-monorepo-root --format svg --output - | inkscape --pipe --export-width 3000 --export-filename cosmjs-tree.png
-
-optipng cosmjs-tree.png
+from_npm . | depsight --include "^@cosmjs" --format png --output docs/cosmjs-tree.png
+from_npm . | depsight --exclude cosmjs-monorepo-root --format png --output docs/cosmjs-tree-full.png
+optipng docs/cosmjs-tree*.png
 -->
 
 ### Supported JS environments
