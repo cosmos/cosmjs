@@ -3,6 +3,8 @@ import { Sha256 } from "@cosmjs/crypto";
 import { Bech32, fromAscii, fromBase64, fromHex, toAscii, toBase64, toHex } from "@cosmjs/encoding";
 import {
   Coin,
+  coin,
+  coins,
   makeSignBytes,
   Msg,
   Pen,
@@ -119,6 +121,7 @@ async function executeContract(
   client: RestClient,
   pen: Pen,
   contractAddress: string,
+  msg: object,
 ): Promise<PostTxsResponse> {
   const memo = "Time for action";
   const theMsg: MsgExecuteContract = {
@@ -126,17 +129,12 @@ async function executeContract(
     value: {
       sender: alice.address0,
       contract: contractAddress,
-      msg: { release: {} },
+      msg: msg,
       sent_funds: [],
     },
   };
   const fee: StdFee = {
-    amount: [
-      {
-        amount: "5000000",
-        denom: "ucosm",
-      },
-    ],
+    amount: coins(5000000, "ucosm"),
     gas: "89000000",
   };
 
@@ -261,16 +259,7 @@ describe("RestClient", () => {
       const pen = await Secp256k1Pen.fromMnemonic(alice.mnemonic);
       const client = new RestClient(wasmd.endpoint);
 
-      const transferAmount: readonly Coin[] = [
-        {
-          amount: "1234",
-          denom: "ucosm",
-        },
-        {
-          amount: "321",
-          denom: "ustake",
-        },
-      ];
+      const transferAmount = [coin(1234, "ucosm"), coin(321, "ustake")];
       const beneficiaryAddress = makeRandomAddress();
 
       let codeId: number;
@@ -308,7 +297,8 @@ describe("RestClient", () => {
 
       // execute
       {
-        const result = await executeContract(client, pen, contractAddress);
+        const result = await executeContract(client, pen, contractAddress, { release: {} });
+        expect(result.data).toEqual("F00BAA");
         expect(result.code).toBeFalsy();
         // console.log("Raw log:", result.logs);
         const logs = parseLogs(result.logs);
@@ -424,9 +414,16 @@ describe("RestClient", () => {
       // check out info
       const myInfo = await client.getContractInfo(myAddress);
       assert(myInfo);
-      expect(myInfo.code_id).toEqual(codeId);
-      expect(myInfo.creator).toEqual(alice.address0);
-      expect((myInfo.init_msg as any).beneficiary).toEqual(beneficiaryAddress);
+      expect(myInfo).toEqual(
+        jasmine.objectContaining({
+          code_id: codeId,
+          creator: alice.address0,
+          init_msg: jasmine.objectContaining({
+            beneficiary: beneficiaryAddress,
+          }),
+        }),
+      );
+      expect(myInfo.admin).toBeUndefined();
 
       // make sure random addresses don't give useful info
       const nonExistentAddress = makeRandomAddress();

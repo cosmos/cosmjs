@@ -8,7 +8,10 @@ export interface FeeTable {
   readonly upload: StdFee;
   readonly init: StdFee;
   readonly exec: StdFee;
+  readonly migrate: StdFee;
   readonly send: StdFee;
+  /** Paid when setting the contract admin to a new address or unsetting it */
+  readonly changeAdmin: StdFee;
 }
 export interface UploadMeta {
   /** The source URL */
@@ -31,9 +34,35 @@ export interface UploadResult {
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
 }
+/**
+ * The options of an .instantiate() call.
+ * All properties are optional.
+ */
+export interface InstantiateOptions {
+  readonly memo?: string;
+  readonly transferAmount?: readonly Coin[];
+  /**
+   * A bech32 encoded address of an admin account.
+   * Caution: an admin has the privilege to upgrade a contract. If this is not desired, do not set this value.
+   */
+  readonly admin?: string;
+}
 export interface InstantiateResult {
   /** The address of the newly instantiated contract */
   readonly contractAddress: string;
+  readonly logs: readonly Log[];
+  /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
+  readonly transactionHash: string;
+}
+/**
+ * Result type of updateAdmin and clearAdmin
+ */
+export interface ChangeAdminResult {
+  readonly logs: readonly Log[];
+  /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
+  readonly transactionHash: string;
+}
+export interface MigrateResult {
   readonly logs: readonly Log[];
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
@@ -74,9 +103,11 @@ export declare class SigningCosmWasmClient extends CosmWasmClient {
     codeId: number,
     initMsg: object,
     label: string,
-    memo?: string,
-    transferAmount?: readonly Coin[],
+    options?: InstantiateOptions,
   ): Promise<InstantiateResult>;
+  updateAdmin(contractAddress: string, newAdmin: string, memo?: string): Promise<ChangeAdminResult>;
+  clearAdmin(contractAddress: string, memo?: string): Promise<ChangeAdminResult>;
+  migrate(contractAddress: string, codeId: number, migrateMsg: object, memo?: string): Promise<MigrateResult>;
   execute(
     contractAddress: string,
     handleMsg: object,

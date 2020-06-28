@@ -4,6 +4,13 @@
 
 An SDK to build CosmWasm clients.
 
+## Compatibility
+
+| CosmJS | CosmWasm | x/wasm |
+| ------ | -------- | ------ |
+| 0.21   | 0.9      | 0.9    |
+| 0.20   | 0.8      | 0.8    |
+
 ## License
 
 This package is part of the cosmjs repository, licensed under the Apache License

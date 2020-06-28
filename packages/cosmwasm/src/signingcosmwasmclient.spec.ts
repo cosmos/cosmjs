@@ -1,12 +1,12 @@
 import { Sha256 } from "@cosmjs/crypto";
 import { toHex } from "@cosmjs/encoding";
-import { Coin, Secp256k1Pen } from "@cosmjs/sdk38";
+import { coin, coins, Secp256k1Pen } from "@cosmjs/sdk38";
 import { assert } from "@cosmjs/utils";
 
 import { isPostTxFailure, PrivateCosmWasmClient } from "./cosmwasmclient";
 import { RestClient } from "./restclient";
 import { SigningCosmWasmClient, UploadMeta } from "./signingcosmwasmclient";
-import { alice, getHackatom, makeRandomAddress, pendingWithoutWasmd } from "./testutils.spec";
+import { alice, getHackatom, makeRandomAddress, pendingWithoutWasmd, unused } from "./testutils.spec";
 
 const httpUrl = "http://localhost:1317";
 
@@ -82,16 +82,7 @@ describe("SigningCosmWasmClient", () => {
       const client = new SigningCosmWasmClient(httpUrl, alice.address0, (signBytes) => pen.sign(signBytes));
       const { codeId } = await client.upload(getHackatom().data);
 
-      const transferAmount: readonly Coin[] = [
-        {
-          amount: "1234",
-          denom: "ucosm",
-        },
-        {
-          amount: "321",
-          denom: "ustake",
-        },
-      ];
+      const transferAmount = [coin(1234, "ucosm"), coin(321, "ustake")];
       const beneficiaryAddress = makeRandomAddress();
       const { contractAddress } = await client.instantiate(
         codeId,
@@ -100,13 +91,38 @@ describe("SigningCosmWasmClient", () => {
           beneficiary: beneficiaryAddress,
         },
         "My cool label",
-        "Let's see if the memo is used",
-        transferAmount,
+        {
+          memo: "Let's see if the memo is used",
+          transferAmount,
+        },
       );
 
       const rest = new RestClient(httpUrl);
       const balance = (await rest.authAccounts(contractAddress)).result.value.coins;
       expect(balance).toEqual(transferAmount);
+    });
+
+    it("works with admin", async () => {
+      pendingWithoutWasmd();
+      const pen = await Secp256k1Pen.fromMnemonic(alice.mnemonic);
+      const client = new SigningCosmWasmClient(httpUrl, alice.address0, (signBytes) => pen.sign(signBytes));
+      const { codeId } = await client.upload(getHackatom().data);
+
+      const beneficiaryAddress = makeRandomAddress();
+      const { contractAddress } = await client.instantiate(
+        codeId,
+        {
+          verifier: alice.address0,
+          beneficiary: beneficiaryAddress,
+        },
+        "My cool label",
+        { admin: unused.address },
+      );
+
+      const rest = new RestClient(httpUrl);
+      const contract = await rest.getContractInfo(contractAddress);
+      assert(contract);
+      expect(contract.admin).toEqual(unused.address);
     });
 
     it("can instantiate one code multiple times", async () => {
@@ -135,6 +151,111 @@ describe("SigningCosmWasmClient", () => {
     });
   });
 
+  describe("updateAdmin", () => {
+    it("can update an admin", async () => {
+      pendingWithoutWasmd();
+      const pen = await Secp256k1Pen.fromMnemonic(alice.mnemonic);
+      const client = new SigningCosmWasmClient(httpUrl, alice.address0, (signBytes) => pen.sign(signBytes));
+      const { codeId } = await client.upload(getHackatom().data);
+
+      const beneficiaryAddress = makeRandomAddress();
+      const { contractAddress } = await client.instantiate(
+        codeId,
+        {
+          verifier: alice.address0,
+          beneficiary: beneficiaryAddress,
+        },
+        "My cool label",
+        {
+          admin: alice.address0,
+        },
+      );
+
+      const rest = new RestClient(httpUrl);
+      const state1 = await rest.getContractInfo(contractAddress);
+      assert(state1);
+      expect(state1.admin).toEqual(alice.address0);
+
+      await client.updateAdmin(contractAddress, unused.address);
+
+      const state2 = await rest.getContractInfo(contractAddress);
+      assert(state2);
+      expect(state2.admin).toEqual(unused.address);
+    });
+  });
+
+  describe("clearAdmin", () => {
+    it("can clear an admin", async () => {
+      pendingWithoutWasmd();
+      const pen = await Secp256k1Pen.fromMnemonic(alice.mnemonic);
+      const client = new SigningCosmWasmClient(httpUrl, alice.address0, (signBytes) => pen.sign(signBytes));
+      const { codeId } = await client.upload(getHackatom().data);
+
+      const beneficiaryAddress = makeRandomAddress();
+      const { contractAddress } = await client.instantiate(
+        codeId,
+        {
+          verifier: alice.address0,
+          beneficiary: beneficiaryAddress,
+        },
+        "My cool label",
+        {
+          admin: alice.address0,
+        },
+      );
+
+      const rest = new RestClient(httpUrl);
+      const state1 = await rest.getContractInfo(contractAddress);
+      assert(state1);
+      expect(state1.admin).toEqual(alice.address0);
+
+      await client.clearAdmin(contractAddress);
+
+      const state2 = await rest.getContractInfo(contractAddress);
+      assert(state2);
+      expect(state2.admin).toBeUndefined();
+    });
+  });
+
+  describe("migrate", () => {
+    it("can can migrate from one code ID to another", async () => {
+      pendingWithoutWasmd();
+      const pen = await Secp256k1Pen.fromMnemonic(alice.mnemonic);
+      const client = new SigningCosmWasmClient(httpUrl, alice.address0, (signBytes) => pen.sign(signBytes));
+      const { codeId: codeId1 } = await client.upload(getHackatom().data);
+      const { codeId: codeId2 } = await client.upload(getHackatom().data);
+
+      const beneficiaryAddress = makeRandomAddress();
+      const { contractAddress } = await client.instantiate(
+        codeId1,
+        {
+          verifier: alice.address0,
+          beneficiary: beneficiaryAddress,
+        },
+        "My cool label",
+        {
+          admin: alice.address0,
+        },
+      );
+
+      const rest = new RestClient(httpUrl);
+      const state1 = await rest.getContractInfo(contractAddress);
+      assert(state1);
+      expect(state1.admin).toEqual(alice.address0);
+
+      const newVerifier = makeRandomAddress();
+      await client.migrate(contractAddress, codeId2, { verifier: newVerifier });
+
+      const state2 = await rest.getContractInfo(contractAddress);
+      assert(state2);
+      expect(state2).toEqual({
+        ...state1,
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        code_id: codeId2,
+      });
+    });
+  });
+
   describe("execute", () => {
     it("works", async () => {
       pendingWithoutWasmd();
@@ -143,16 +264,7 @@ describe("SigningCosmWasmClient", () => {
       const { codeId } = await client.upload(getHackatom().data);
 
       // instantiate
-      const transferAmount: readonly Coin[] = [
-        {
-          amount: "233444",
-          denom: "ucosm",
-        },
-        {
-          amount: "5454",
-          denom: "ustake",
-        },
-      ];
+      const transferAmount = [coin(233444, "ucosm"), coin(5454, "ustake")];
       const beneficiaryAddress = makeRandomAddress();
       const { contractAddress } = await client.instantiate(
         codeId,
@@ -161,8 +273,9 @@ describe("SigningCosmWasmClient", () => {
           beneficiary: beneficiaryAddress,
         },
         "amazing random contract",
-        undefined,
-        transferAmount,
+        {
+          transferAmount,
+        },
       );
 
       // execute
@@ -191,12 +304,7 @@ describe("SigningCosmWasmClient", () => {
       const client = new SigningCosmWasmClient(httpUrl, alice.address0, (signBytes) => pen.sign(signBytes));
 
       // instantiate
-      const transferAmount: readonly Coin[] = [
-        {
-          amount: "7890",
-          denom: "ucosm",
-        },
-      ];
+      const transferAmount = coins(7890, "ucosm");
       const beneficiaryAddress = makeRandomAddress();
 
       // no tokens here

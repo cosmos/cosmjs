@@ -23,17 +23,25 @@ export {
 export {
   ExecuteResult,
   FeeTable,
+  InstantiateOptions,
   InstantiateResult,
+  MigrateResult,
   SigningCallback,
   SigningCosmWasmClient,
   UploadMeta,
   UploadResult,
 } from "./signingcosmwasmclient";
 export {
+  isMsgClearAdmin,
   isMsgExecuteContract,
   isMsgInstantiateContract,
+  isMsgMigrateContract,
+  isMsgUpdateAdmin,
   isMsgStoreCode,
-  MsgStoreCode,
+  MsgClearAdmin,
   MsgExecuteContract,
   MsgInstantiateContract,
+  MsgMigrateContract,
+  MsgUpdateAdmin,
+  MsgStoreCode,
 } from "./msgs";

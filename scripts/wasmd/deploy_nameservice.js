@@ -12,7 +12,7 @@ const alice = {
 };
 
 const codeMeta = {
-  source: "https://crates.io/api/v1/crates/cw-nameservice/0.4.0/download",
+  source: "https://crates.io/api/v1/crates/cw-nameservice/0.5.1/download",
   builder: "cosmwasm/rust-optimizer:0.8.0",
 };
 
@@ -44,8 +44,9 @@ async function main() {
   console.info(`Upload succeeded. Receipt: ${JSON.stringify(uploadReceipt)}`);
 
   for (const { label, initMsg } of [free, luxury]) {
-    const memo = `Create an nameservice instance "${label}"`;
-    const { contractAddress } = await client.instantiate(uploadReceipt.codeId, initMsg, label, memo);
+    const { contractAddress } = await client.instantiate(uploadReceipt.codeId, initMsg, label, {
+      memo: `Create an nameservice instance "${label}"`,
+    });
     console.info(`Contract "${label}" instantiated at ${contractAddress}`);
   }
 }

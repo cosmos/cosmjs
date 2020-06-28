@@ -22,7 +22,7 @@ const guest = {
 };
 
 const codeMeta = {
-  source: "https://crates.io/api/v1/crates/cw-erc20/0.4.0/download",
+  source: "https://crates.io/api/v1/crates/cw-erc20/0.5.1/download",
   builder: "cosmwasm/rust-optimizer:0.8.0",
 };
 
@@ -133,8 +133,9 @@ async function main() {
   console.info(`Upload succeeded. Receipt: ${JSON.stringify(uploadReceipt)}`);
 
   for (const initMsg of [initMsgHash, initMsgIsa, initMsgJade]) {
-    const memo = `Create an ERC20 instance for ${initMsg.symbol}`;
-    const { contractAddress } = await client.instantiate(uploadReceipt.codeId, initMsg, initMsg.symbol, memo);
+    const { contractAddress } = await client.instantiate(uploadReceipt.codeId, initMsg, initMsg.symbol, {
+      memo: `Create an ERC20 instance for ${initMsg.symbol}`,
+    });
     console.info(`Contract instantiated for ${initMsg.symbol} at ${contractAddress}`);
   }
 }

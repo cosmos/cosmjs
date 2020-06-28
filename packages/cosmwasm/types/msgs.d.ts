@@ -1,8 +1,9 @@
 import { Coin, Msg } from "@cosmjs/sdk38";
 /**
- * Uploads Wam code to the chain
+ * Uploads Wasm code to the chain.
+ * A numeric, auto-incrementing code ID will be generated as a result of the execution of this message.
  *
- * @see https://github.com/cosmwasm/wasmd/blob/9842678d89/x/wasm/internal/types/msg.go#L17
+ * @see https://github.com/CosmWasm/wasmd/blob/v0.9.0-alpha4/x/wasm/internal/types/msg.go#L34
  */
 export interface MsgStoreCode extends Msg {
   readonly type: "wasm/store-code";
@@ -17,10 +18,12 @@ export interface MsgStoreCode extends Msg {
     readonly builder: string;
   };
 }
+export declare function isMsgStoreCode(msg: Msg): msg is MsgStoreCode;
 /**
  * Creates an instance of contract that was uploaded before.
+ * This will trigger a call to the "init" export.
  *
- * @see https://github.com/cosmwasm/wasmd/blob/9842678d89/x/wasm/internal/types/msg.go#L73
+ * @see https://github.com/CosmWasm/wasmd/blob/v0.9.0-alpha4/x/wasm/internal/types/msg.go#L104
  */
 export interface MsgInstantiateContract extends Msg {
   readonly type: "wasm/instantiate";
@@ -34,12 +37,48 @@ export interface MsgInstantiateContract extends Msg {
     /** Init message as JavaScript object */
     readonly init_msg: any;
     readonly init_funds: ReadonlyArray<Coin>;
+    /** Bech32-encoded admin address */
+    readonly admin?: string;
   };
 }
+export declare function isMsgInstantiateContract(msg: Msg): msg is MsgInstantiateContract;
 /**
- * Creates an instance of contract that was uploaded before.
+ * Update the admin of a contract
  *
- * @see https://github.com/cosmwasm/wasmd/blob/9842678d89/x/wasm/internal/types/msg.go#L103
+ * @see https://github.com/CosmWasm/wasmd/blob/v0.9.0-beta/x/wasm/internal/types/msg.go#L231
+ */
+export interface MsgUpdateAdmin extends Msg {
+  readonly type: "wasm/update-contract-admin";
+  readonly value: {
+    /** Bech32-encoded sender address. This must be the old admin. */
+    readonly sender: string;
+    /** Bech32-encoded contract address to be updated */
+    readonly contract: string;
+    /** Bech32-encoded address of the new admin */
+    readonly new_admin: string;
+  };
+}
+export declare function isMsgUpdateAdmin(msg: Msg): msg is MsgUpdateAdmin;
+/**
+ * Clears the admin of a contract, making it immutable.
+ *
+ * @see https://github.com/CosmWasm/wasmd/blob/v0.9.0-beta/x/wasm/internal/types/msg.go#L269
+ */
+export interface MsgClearAdmin extends Msg {
+  readonly type: "wasm/clear-contract-admin";
+  readonly value: {
+    /** Bech32-encoded sender address. This must be the old admin. */
+    readonly sender: string;
+    /** Bech32-encoded contract address to be updated */
+    readonly contract: string;
+  };
+}
+export declare function isMsgClearAdmin(msg: Msg): msg is MsgClearAdmin;
+/**
+ * Execute a smart contract.
+ * This will trigger a call to the "handle" export.
+ *
+ * @see https://github.com/CosmWasm/wasmd/blob/v0.9.0-alpha4/x/wasm/internal/types/msg.go#L158
  */
 export interface MsgExecuteContract extends Msg {
   readonly type: "wasm/execute";
@@ -53,6 +92,23 @@ export interface MsgExecuteContract extends Msg {
     readonly sent_funds: ReadonlyArray<Coin>;
   };
 }
-export declare function isMsgStoreCode(msg: Msg): msg is MsgStoreCode;
-export declare function isMsgInstantiateContract(msg: Msg): msg is MsgInstantiateContract;
 export declare function isMsgExecuteContract(msg: Msg): msg is MsgExecuteContract;
+/**
+ * Migrates a contract to a new Wasm code.
+ *
+ * @see https://github.com/CosmWasm/wasmd/blob/v0.9.0-alpha4/x/wasm/internal/types/msg.go#L195
+ */
+export interface MsgMigrateContract extends Msg {
+  readonly type: "wasm/migrate";
+  readonly value: {
+    /** Bech32 account address */
+    readonly sender: string;
+    /** Bech32 account address */
+    readonly contract: string;
+    /** The new code */
+    readonly code_id: string;
+    /** Migrate message as JavaScript object */
+    readonly msg: any;
+  };
+}
+export declare function isMsgMigrateContract(msg: Msg): msg is MsgMigrateContract;
