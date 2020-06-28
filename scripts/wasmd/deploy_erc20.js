@@ -22,8 +22,7 @@ const guest = {
 };
 
 const codeMeta = {
-  // TODO: Update once final 0.9.0 compatible contract is published (https://github.com/CosmWasm/cosmwasm-examples/pull/77)
-  source: "https://crates.io/api/v1/crates/cw-erc20/0.4.0/download",
+  source: "https://crates.io/api/v1/crates/cw-erc20/0.5.1/download",
   builder: "cosmwasm/rust-optimizer:0.8.0",
 };
 
