@@ -31,7 +31,8 @@ package; right depends on left):
 
 ![CosmJS dependency tree](docs/cosmjs-tree.png)
 
-If this was not enough to scare you away, check out the version including app runtime dependencies: [cosmjs-tree-full.png](docs/cosmjs-tree-full.png).
+If this was not enough to scare you away, check out the version including app
+runtime dependencies: [cosmjs-tree-full.png](docs/cosmjs-tree-full.png).
 
 <!--
 Build with depsight (https://github.com/webmaster128/depsight), using:
