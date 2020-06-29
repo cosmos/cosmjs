@@ -76,9 +76,10 @@ jobs:
           name: Merge build folders into project (merge with hardlinks)
           command: cp --recursive --link /tmp/builds/* .
       - run:
-          # The images ubuntu-1604:201903-01 comes with preinstalled nvm, which does not work well with non-login shells
+          # The images ubuntu-1604 comes with preinstalled nvm, which does not work well with non-login shells
           name: Uninstall nvm
-          command: rm -rf "$NVM_DIR" ~/.npm ~/.bower
+          # Moving to trash is faster than deleting (gvfs-trash is not installed on this image)
+          command: mkdir -p ~/.local/share/Trash && mv "$NVM_DIR" ~/.npm ~/.local/share/Trash
       - run:
           name: Install nodejs
           command: |
@@ -160,9 +161,10 @@ jobs:
           name: Merge build folders into project (merge with hardlinks)
           command: cp --recursive --link /tmp/builds/* .
       - run:
-          # The images ubuntu-1604:201903-01 comes with preinstalled nvm, which does not work well with non-login shells
+          # The images ubuntu-1604 comes with preinstalled nvm, which does not work well with non-login shells
           name: Uninstall nvm
-          command: rm -rf "$NVM_DIR" ~/.npm ~/.bower
+          # Moving to trash is faster than deleting (gvfs-trash is not installed on this image)
+          command: mkdir -p ~/.local/share/Trash && mv "$NVM_DIR" ~/.npm ~/.local/share/Trash
       - run:
           name: Install nodejs
           command: |
@@ -238,9 +240,10 @@ jobs:
           name: Merge build folders into project (merge with hardlinks)
           command: cp --recursive --link /tmp/builds/* .
       - run:
-          # The images ubuntu-1604:201903-01 comes with preinstalled nvm, which does not work well with non-login shells
+          # The images ubuntu-1604 comes with preinstalled nvm, which does not work well with non-login shells
           name: Uninstall nvm
-          command: rm -rf "$NVM_DIR" ~/.npm ~/.bower
+          # Moving to trash is faster than deleting (gvfs-trash is not installed on this image)
+          command: mkdir -p ~/.local/share/Trash && mv "$NVM_DIR" ~/.npm ~/.local/share/Trash
       - run:
           name: Install nodejs
           command: |
