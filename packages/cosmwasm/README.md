@@ -6,10 +6,10 @@ An SDK to build CosmWasm clients.
 
 ## Compatibility
 
-| CosmJS | CosmWasm | x/wasm |
-| ------ | -------- | ------ |
-| 0.21   | 0.9      | 0.9    |
-| 0.20   | 0.8      | 0.8    |
+| CosmWasm | x/wasm | @cosmjs/cosmwasm |
+| -------- | ------ | ---------------- |
+| 0.9      | 0.9    | `^0.21.0`        |
+| 0.8      | 0.8    | `^0.20.1`        |
 
 ## License
 
