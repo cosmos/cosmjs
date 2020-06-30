@@ -6,18 +6,18 @@ import { Registry } from "./registry";
 
 describe("registry magic demo", () => {
   it("works with a custom msg", () => {
-    const nestedTypeUrl = "/demo.MsgNestedDemo";
-    const typeUrl = "/demo.MsgDemo";
+    const nestedTypeUrl = "/demo.MsgNestedMagic";
+    const typeUrl = "/demo.MsgMagic";
     const myRegistry = new Registry();
 
     @cosmosMessage(myRegistry, nestedTypeUrl)
-    class MsgNestedDemo extends Message<{}> {
+    class MsgNestedMagic extends Message<{}> {
       @cosmosField.string(1)
       public readonly foo?: string;
     }
 
     @cosmosMessage(myRegistry, typeUrl)
-    class MsgDemo extends Message<{}> {
+    class MsgMagic extends Message<{}> {
       @cosmosField.boolean(1)
       public readonly booleanDemo?: boolean;
 
@@ -36,8 +36,8 @@ describe("registry magic demo", () => {
       @cosmosField.repeatedString(6)
       public readonly listDemo?: readonly string[];
 
-      @cosmosField.message(7, MsgNestedDemo)
-      public readonly nestedDemo?: MsgNestedDemo;
+      @cosmosField.message(7, MsgNestedMagic)
+      public readonly nestedDemo?: MsgNestedMagic;
     }
 
     const msgNestedDemoFields = {
@@ -72,8 +72,8 @@ describe("registry magic demo", () => {
     expect(Number(txBodyDecoded.timeoutHeight)).toEqual(txBodyFields.timeoutHeight);
     expect(txBodyDecoded.extensionOptions).toEqual(txBodyFields.extensionOptions);
 
-    const msgDemoDecoded = txBodyDecoded.messages[0] as MsgDemo;
-    expect(msgDemoDecoded).toBeInstanceOf(MsgDemo);
+    const msgDemoDecoded = txBodyDecoded.messages[0] as MsgMagic;
+    expect(msgDemoDecoded).toBeInstanceOf(MsgMagic);
     expect(msgDemoDecoded.booleanDemo).toEqual(msgDemoFields.booleanDemo);
     expect(msgDemoDecoded.stringDemo).toEqual(msgDemoFields.stringDemo);
     // bytesDemo decodes to a Buffer in Node
@@ -83,7 +83,7 @@ describe("registry magic demo", () => {
     expect(Number(msgDemoDecoded.uint64Demo)).toEqual(msgDemoFields.uint64Demo);
     expect(msgDemoDecoded.listDemo).toEqual(msgDemoFields.listDemo);
 
-    expect(msgDemoDecoded.nestedDemo).toBeInstanceOf(MsgNestedDemo);
+    expect(msgDemoDecoded.nestedDemo).toBeInstanceOf(MsgNestedMagic);
     expect(msgDemoDecoded.nestedDemo!.foo).toEqual(msgDemoFields.nestedDemo.foo);
   });
 });
