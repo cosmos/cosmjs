@@ -31,7 +31,8 @@ package; right depends on left):
 
 ![CosmJS dependency tree](docs/cosmjs-tree.png)
 
-If this was not enough to scare you away, check out the version including app runtime dependencies: [cosmjs-tree-full.png](docs/cosmjs-tree-full.png).
+If this was not enough to scare you away, check out the version including app
+runtime dependencies: [cosmjs-tree-full.png](docs/cosmjs-tree-full.png).
 
 <!--
 Build with depsight (https://github.com/webmaster128/depsight), using:
@@ -67,30 +68,4 @@ a higher level roadmap
 
 ## Development
 
-Requires Node 10+. For best results, use yarn. The basic commands are:
-
-```sh
-yarn install
-
-# compile the code
-yarn build
-# run unit tests
-yarn test
-
-# format and lint the code
-yarn format && yarn lint
-```
-
-### Integration tests
-
-To run the entire test suite, you need to run a local blockchain to test
-against. We use [wasmd](https://github.com/CosmWasm/wasmd) for both CosmWasm
-tests and as a generic Cosmos SDK 0.38 blockchain. This should work on any
-Linux/OSX system with docker installed:
-
-```sh
-./scripts/wasmd/start.sh
-./scripts/wasmd/init.sh
-WASMD_ENABLED=1 yarn test
-./scripts/wasmd/stop.sh
-```
+See [HACKING.md](HACKING.md).
