@@ -5,7 +5,7 @@ describe("jsonrpc", () => {
     it("generates proper object with correct method", () => {
       const request = createJsonRpcRequest("do_something");
       expect(request.jsonrpc).toEqual("2.0");
-      expect(request.id.toString()).toMatch(/^[0-9]{10,12}$/);
+      expect(request.id.toString()).toMatch(/^[1-9]{12}$/);
       expect(request.method).toEqual("do_something");
     });
 
