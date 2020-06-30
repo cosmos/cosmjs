@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/cli",
-  "version": "0.20.0",
+  "version": "0.20.1",
   "description": "Command line interface",
   "contributors": [
     "IOV SAS <admin@iov.one>",
@@ -39,12 +39,12 @@
     "!**/testdata/"
   ],
   "dependencies": {
-    "@cosmjs/cosmwasm": "^0.20.0",
-    "@cosmjs/crypto": "^0.20.0",
-    "@cosmjs/encoding": "^0.20.0",
-    "@cosmjs/math": "^0.20.0",
-    "@cosmjs/sdk38": "^0.20.0",
-    "@cosmjs/utils": "^0.20.0",
+    "@cosmjs/cosmwasm": "^0.20.1",
+    "@cosmjs/crypto": "^0.20.1",
+    "@cosmjs/encoding": "^0.20.1",
+    "@cosmjs/math": "^0.20.1",
+    "@cosmjs/sdk38": "^0.20.1",
+    "@cosmjs/utils": "^0.20.1",
     "axios": "^0.19.2",
     "babylon": "^6.18.0",
     "colors": "^1.3.3",

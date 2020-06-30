@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/demo-staking",
-  "version": "0.20.0",
+  "version": "0.20.1",
   "description": "Demo interaction with the staking contract",
   "author": "Simon Warta <webmaster128@users.noreply.github.com>",
   "license": "Apache-2.0",
@@ -35,7 +35,7 @@
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
   },
   "dependencies": {
-    "@cosmjs/cosmwasm": "^0.20.0",
-    "@cosmjs/sdk38": "^0.20.0"
+    "@cosmjs/cosmwasm": "^0.20.1",
+    "@cosmjs/sdk38": "^0.20.1"
   }
 }
