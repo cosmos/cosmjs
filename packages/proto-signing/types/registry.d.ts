@@ -1,5 +1,5 @@
 import protobuf from "protobufjs";
-import { cosmos_sdk as cosmosSdk } from "./generated/codecimpl";
+import { cosmos_sdk as cosmosSdk, google } from "./generated/codecimpl";
 export interface GeneratedType {
   readonly create: (properties?: { [k: string]: any }) => any;
   readonly encode: (
@@ -24,8 +24,8 @@ export declare type TxBodyValue = {
   readonly messages: readonly EncodeObject[];
   readonly memo?: string;
   readonly timeoutHeight?: number;
-  readonly extensionOptions?: readonly any[];
-  readonly nonCriticalExtensionOptions?: readonly any[];
+  readonly extensionOptions?: google.protobuf.IAny[];
+  readonly nonCriticalExtensionOptions?: google.protobuf.IAny[];
 };
 export declare class Registry {
   private readonly types;

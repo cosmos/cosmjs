@@ -3,7 +3,11 @@ import { assert } from "@cosmjs/utils";
 import { Message } from "protobufjs";
 
 import { cosmosField, cosmosMessage } from "./decorator";
+import { cosmos_sdk as cosmosSdk, google } from "./generated/codecimpl";
 import { Registry } from "./registry";
+
+const { TxBody } = cosmosSdk.tx.v1;
+const { Any } = google.protobuf;
 
 describe("decorator demo", () => {
   it("works with a custom msg", () => {
@@ -44,8 +48,6 @@ describe("decorator demo", () => {
 
     const MsgNestedDemoT = myRegistry.lookupType(nestedTypeUrl)!;
     const MsgDemoT = myRegistry.lookupType(typeUrl)!;
-    const TxBody = myRegistry.lookupType("/cosmos.tx.TxBody")!;
-    const Any = myRegistry.lookupType("/google.protobuf.Any")!;
 
     const msgNestedDemoFields = {
       foo: "bar",

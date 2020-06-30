@@ -23,8 +23,8 @@ export type TxBodyValue = {
   readonly messages: readonly EncodeObject[];
   readonly memo?: string;
   readonly timeoutHeight?: number;
-  readonly extensionOptions?: readonly any[];
-  readonly nonCriticalExtensionOptions?: readonly any[];
+  readonly extensionOptions?: google.protobuf.IAny[];
+  readonly nonCriticalExtensionOptions?: google.protobuf.IAny[];
 };
 
 const defaultTypeUrls = {
@@ -38,12 +38,10 @@ export class Registry {
   private readonly types: Map<string, GeneratedType>;
 
   constructor(customTypes: Iterable<[string, GeneratedType]> = []) {
-    const { cosmosCoin, cosmosMsgSend, cosmosTxBody, googleAny } = defaultTypeUrls;
+    const { cosmosCoin, cosmosMsgSend } = defaultTypeUrls;
     this.types = new Map<string, GeneratedType>([
       [cosmosCoin, cosmosSdk.v1.Coin],
       [cosmosMsgSend, cosmosSdk.x.bank.v1.MsgSend],
-      [cosmosTxBody, cosmosSdk.tx.v1.TxBody],
-      [googleAny, google.protobuf.Any],
       ...customTypes,
     ]);
   }
@@ -74,8 +72,8 @@ export class Registry {
   }
 
   public encodeTxBody(txBodyFields: TxBodyValue): Uint8Array {
-    const TxBody = this.lookupTypeWithError(defaultTypeUrls.cosmosTxBody);
-    const Any = this.lookupTypeWithError(defaultTypeUrls.googleAny);
+    const { TxBody } = cosmosSdk.tx.v1;
+    const { Any } = google.protobuf;
 
     const wrappedMessages = txBodyFields.messages.map((message) => {
       const messageBytes = this.encode(message);
@@ -100,7 +98,7 @@ export class Registry {
   }
 
   public decodeTxBody(txBody: Uint8Array): cosmosSdk.tx.v1.TxBody {
-    const TxBody = this.lookupTypeWithError(defaultTypeUrls.cosmosTxBody);
+    const { TxBody } = cosmosSdk.tx.v1;
     const decodedTxBody = TxBody.decode(txBody);
 
     return {
