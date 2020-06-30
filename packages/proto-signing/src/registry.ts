@@ -68,7 +68,7 @@ export class Registry {
     }
     const type = this.lookupTypeWithError(typeUrl);
     const created = type.create(value);
-    return type.encode(created).finish();
+    return Uint8Array.from(type.encode(created).finish());
   }
 
   public encodeTxBody(txBodyFields: TxBodyValue): Uint8Array {
@@ -86,7 +86,7 @@ export class Registry {
       ...txBodyFields,
       messages: wrappedMessages,
     });
-    return TxBody.encode(txBody).finish();
+    return Uint8Array.from(TxBody.encode(txBody).finish());
   }
 
   public decode({ typeUrl, value }: DecodeObject): any {
@@ -94,7 +94,13 @@ export class Registry {
       return this.decodeTxBody(value);
     }
     const type = this.lookupTypeWithError(typeUrl);
-    return type.decode(value);
+    const decoded = type.decode(value);
+    Object.entries(decoded).forEach(([key, val]: [string, any]) => {
+      if (typeof Buffer !== "undefined" && typeof Buffer.isBuffer !== "undefined" && Buffer.isBuffer(val)) {
+        decoded[key] = Uint8Array.from(val);
+      }
+    });
+    return decoded;
   }
 
   public decodeTxBody(txBody: Uint8Array): cosmosSdk.tx.v1.TxBody {

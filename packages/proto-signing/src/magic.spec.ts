@@ -76,8 +76,7 @@ describe("registry magic demo", () => {
     expect(msgDemoDecoded).toBeInstanceOf(MsgMagic);
     expect(msgDemoDecoded.booleanDemo).toEqual(msgDemoFields.booleanDemo);
     expect(msgDemoDecoded.stringDemo).toEqual(msgDemoFields.stringDemo);
-    // bytesDemo decodes to a Buffer in Node
-    expect(Uint8Array.from(msgDemoDecoded.bytesDemo!)).toEqual(msgDemoFields.bytesDemo);
+    expect(msgDemoDecoded.bytesDemo).toEqual(msgDemoFields.bytesDemo);
     // int64Demo and uint64Demo decode to Long in Node
     expect(Number(msgDemoDecoded.int64Demo)).toEqual(msgDemoFields.int64Demo);
     expect(Number(msgDemoDecoded.uint64Demo)).toEqual(msgDemoFields.uint64Demo);
