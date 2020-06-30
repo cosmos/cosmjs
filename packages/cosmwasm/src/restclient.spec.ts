@@ -193,6 +193,7 @@ describe("RestClient", () => {
         init_msg: jasmine.objectContaining({ symbol: "JADE" }),
         label: "JADE",
         sender: alice.address0,
+        admin: alice.address1,
       });
     });
 
@@ -248,6 +249,7 @@ describe("RestClient", () => {
           init_msg: jasmine.objectContaining({ symbol: "JADE" }),
           label: "JADE",
           sender: alice.address0,
+          admin: alice.address1,
         });
       }
     });

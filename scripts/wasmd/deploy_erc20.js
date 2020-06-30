@@ -26,102 +26,111 @@ const codeMeta = {
   builder: "cosmwasm/rust-optimizer:0.8.0",
 };
 
-const initMsgHash = {
-  decimals: 5,
-  name: "Hash token",
-  symbol: "HASH",
-  initial_balances: [
-    {
-      address: alice.address0,
-      amount: "11",
-    },
-    {
-      address: alice.address1,
-      amount: "11",
-    },
-    {
-      address: alice.address2,
-      amount: "11",
-    },
-    {
-      address: alice.address3,
-      amount: "11",
-    },
-    {
-      address: alice.address4,
-      amount: "11",
-    },
-    {
-      address: unused.address,
-      amount: "12812345",
-    },
-    {
-      address: guest.address,
-      amount: "22004000000",
-    },
-  ],
+const initDataHash = {
+  admin: undefined,
+  initMsg: {
+    decimals: 5,
+    name: "Hash token",
+    symbol: "HASH",
+    initial_balances: [
+      {
+        address: alice.address0,
+        amount: "11",
+      },
+      {
+        address: alice.address1,
+        amount: "11",
+      },
+      {
+        address: alice.address2,
+        amount: "11",
+      },
+      {
+        address: alice.address3,
+        amount: "11",
+      },
+      {
+        address: alice.address4,
+        amount: "11",
+      },
+      {
+        address: unused.address,
+        amount: "12812345",
+      },
+      {
+        address: guest.address,
+        amount: "22004000000",
+      },
+    ],
+  },
 };
-const initMsgIsa = {
-  decimals: 0,
-  name: "Isa Token",
-  symbol: "ISA",
-  initial_balances: [
-    {
-      address: alice.address0,
-      amount: "999999999",
-    },
-    {
-      address: alice.address1,
-      amount: "999999999",
-    },
-    {
-      address: alice.address2,
-      amount: "999999999",
-    },
-    {
-      address: alice.address3,
-      amount: "999999999",
-    },
-    {
-      address: alice.address4,
-      amount: "999999999",
-    },
-    {
-      address: unused.address,
-      amount: "42",
-    },
-  ],
+const initDataIsa = {
+  admin: undefined,
+  initMsg: {
+    decimals: 0,
+    name: "Isa Token",
+    symbol: "ISA",
+    initial_balances: [
+      {
+        address: alice.address0,
+        amount: "999999999",
+      },
+      {
+        address: alice.address1,
+        amount: "999999999",
+      },
+      {
+        address: alice.address2,
+        amount: "999999999",
+      },
+      {
+        address: alice.address3,
+        amount: "999999999",
+      },
+      {
+        address: alice.address4,
+        amount: "999999999",
+      },
+      {
+        address: unused.address,
+        amount: "42",
+      },
+    ],
+  },
 };
-const initMsgJade = {
-  decimals: 18,
-  name: "Jade Token",
-  symbol: "JADE",
-  initial_balances: [
-    {
-      address: alice.address0,
-      amount: "189189189000000000000000000", // 189189189 JADE
-    },
-    {
-      address: alice.address1,
-      amount: "189189189000000000000000000", // 189189189 JADE
-    },
-    {
-      address: alice.address2,
-      amount: "189189189000000000000000000", // 189189189 JADE
-    },
-    {
-      address: alice.address3,
-      amount: "189189189000000000000000000", // 189189189 JADE
-    },
-    {
-      address: alice.address4,
-      amount: "189189189000000000000000000", // 189189189 JADE
-    },
-    {
-      address: guest.address,
-      amount: "189500000000000000000", // 189.5 JADE
-    },
-  ],
+const initDataJade = {
+  admin: alice.address1,
+  initMsg: {
+    decimals: 18,
+    name: "Jade Token",
+    symbol: "JADE",
+    initial_balances: [
+      {
+        address: alice.address0,
+        amount: "189189189000000000000000000", // 189189189 JADE
+      },
+      {
+        address: alice.address1,
+        amount: "189189189000000000000000000", // 189189189 JADE
+      },
+      {
+        address: alice.address2,
+        amount: "189189189000000000000000000", // 189189189 JADE
+      },
+      {
+        address: alice.address3,
+        amount: "189189189000000000000000000", // 189189189 JADE
+      },
+      {
+        address: alice.address4,
+        amount: "189189189000000000000000000", // 189189189 JADE
+      },
+      {
+        address: guest.address,
+        amount: "189500000000000000000", // 189.5 JADE
+      },
+    ],
+  },
 };
 
 async function main() {
@@ -132,9 +141,10 @@ async function main() {
   const uploadReceipt = await client.upload(wasm, codeMeta, "Upload ERC20 contract");
   console.info(`Upload succeeded. Receipt: ${JSON.stringify(uploadReceipt)}`);
 
-  for (const initMsg of [initMsgHash, initMsgIsa, initMsgJade]) {
+  for (const { initMsg, admin } of [initDataHash, initDataIsa, initDataJade]) {
     const { contractAddress } = await client.instantiate(uploadReceipt.codeId, initMsg, initMsg.symbol, {
       memo: `Create an ERC20 instance for ${initMsg.symbol}`,
+      admin: admin,
     });
     console.info(`Contract instantiated for ${initMsg.symbol} at ${contractAddress}`);
   }

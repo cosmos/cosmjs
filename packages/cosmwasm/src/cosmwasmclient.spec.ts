@@ -313,25 +313,28 @@ describe("CosmWasmClient", () => {
         address: "cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
         codeId: 1,
         creator: alice.address0,
+        admin: undefined,
         label: "HASH",
       });
       expect(isa).toEqual({
         address: "cosmos1hqrdl6wstt8qzshwc6mrumpjk9338k0lr4dqxd",
         codeId: 1,
         creator: alice.address0,
+        admin: undefined,
         label: "ISA",
       });
       expect(jade).toEqual({
         address: "cosmos18r5szma8hm93pvx6lwpjwyxruw27e0k5uw835c",
         codeId: 1,
         creator: alice.address0,
+        admin: alice.address1,
         label: "JADE",
       });
     });
   });
 
   describe("getContract", () => {
-    it("works for HASH instance", async () => {
+    it("works for instance without admin", async () => {
       pendingWithoutWasmd();
       const client = new CosmWasmClient(wasmd.endpoint);
       const hash = await client.getContract("cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5");
@@ -340,6 +343,7 @@ describe("CosmWasmClient", () => {
         codeId: 1,
         creator: alice.address0,
         label: "HASH",
+        admin: undefined,
         initMsg: {
           decimals: 5,
           name: "Hash token",
@@ -360,6 +364,19 @@ describe("CosmWasmClient", () => {
           ]),
         },
       });
+    });
+
+    it("works for instance with admin", async () => {
+      pendingWithoutWasmd();
+      const client = new CosmWasmClient(wasmd.endpoint);
+      const jade = await client.getContract("cosmos18r5szma8hm93pvx6lwpjwyxruw27e0k5uw835c");
+      expect(jade).toEqual(
+        jasmine.objectContaining({
+          address: "cosmos18r5szma8hm93pvx6lwpjwyxruw27e0k5uw835c",
+          label: "JADE",
+          admin: alice.address1,
+        }),
+      );
     });
   });
 

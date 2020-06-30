@@ -118,6 +118,8 @@ export interface Contract {
   readonly codeId: number;
   /** Bech32 account address */
   readonly creator: string;
+  /** Bech32-encoded admin address */
+  readonly admin: string | undefined;
   readonly label: string;
 }
 
@@ -380,6 +382,7 @@ export class CosmWasmClient {
         address: entry.address,
         codeId: entry.code_id,
         creator: entry.creator,
+        admin: entry.admin,
         label: entry.label,
       }),
     );
@@ -395,6 +398,7 @@ export class CosmWasmClient {
       address: result.address,
       codeId: result.code_id,
       creator: result.creator,
+      admin: result.admin,
       label: result.label,
       initMsg: result.init_msg,
     };

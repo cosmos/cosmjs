@@ -53,6 +53,10 @@ export const alice = {
     value: "A9cXhWb8ZpqCzkA8dQCPV29KdeRLV3rUYxrkHudLbQtS",
   },
   address0: "cosmos14qemq0vw6y3gc3u3e0aty2e764u4gs5le3hada",
+  address1: "cosmos1hhg2rlu9jscacku2wwckws7932qqqu8x3gfgw0",
+  address2: "cosmos1xv9tklw7d82sezh9haa573wufgy59vmwe6xxe5",
+  address3: "cosmos17yg9mssjenmc3jkqth6ulcwj9cxujrxxzezwta",
+  address4: "cosmos1f7j7ryulwjfe9ljplvhtcaxa6wqgula3etktce",
 };
 
 /** Unused account */
