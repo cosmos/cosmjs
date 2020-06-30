@@ -2,20 +2,17 @@
 import { assert } from "@cosmjs/utils";
 
 import { MsgDemo as MsgDemoType } from "./demo";
-import { cosmos_sdk as cosmosSdk } from "./generated/codecimpl";
+import { cosmos_sdk as cosmosSdk, google } from "./generated/codecimpl";
 import { Registry } from "./registry";
 
-type MsgDemo = {
-  readonly example: string;
-};
+const { TxBody } = cosmosSdk.tx.v1;
+const { Any } = google.protobuf;
 
 describe("registry demo", () => {
   it("works with a default msg", () => {
     const registry = new Registry();
     const Coin = registry.lookupType("/cosmos.Coin")!;
     const MsgSend = registry.lookupType("/cosmos.bank.MsgSend")!;
-    const TxBody = registry.lookupType("/cosmos.tx.TxBody")!;
-    const Any = registry.lookupType("/google.protobuf.Any")!;
 
     const coin = Coin.create({
       denom: "ucosm",
@@ -57,8 +54,6 @@ describe("registry demo", () => {
     const typeUrl = "/demo.MsgDemo";
     const registry = new Registry([[typeUrl, MsgDemoType]]);
     const MsgDemo = registry.lookupType(typeUrl)!;
-    const TxBody = registry.lookupType("/cosmos.tx.TxBody")!;
-    const Any = registry.lookupType("/google.protobuf.Any")!;
 
     const msgDemo = MsgDemo.create({
       example: "Some example text",

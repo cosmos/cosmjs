@@ -1,29 +1,23 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { assert } from "@cosmjs/utils";
 import { Message } from "protobufjs";
 
 import { cosmosField, cosmosMessage } from "./decorator";
-import { cosmos_sdk as cosmosSdk, google } from "./generated/codecimpl";
 import { Registry } from "./registry";
 
-const { TxBody } = cosmosSdk.tx.v1;
-const { Any } = google.protobuf;
-
-describe("decorator demo", () => {
+describe("registry magic demo", () => {
   it("works with a custom msg", () => {
-    const nestedTypeUrl = "/demo.MsgNestedDemo";
-    const typeUrl = "/demo.MsgDemo";
+    const nestedTypeUrl = "/demo.MsgNestedMagic";
+    const typeUrl = "/demo.MsgMagic";
     const myRegistry = new Registry();
 
     @cosmosMessage(myRegistry, nestedTypeUrl)
-    class MsgNestedDemo extends Message<{}> {
+    class MsgNestedMagic extends Message<{}> {
       @cosmosField.string(1)
       public readonly foo?: string;
     }
 
     @cosmosMessage(myRegistry, typeUrl)
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    class MsgDemo extends Message<{}> {
+    class MsgMagic extends Message<{}> {
       @cosmosField.boolean(1)
       public readonly booleanDemo?: boolean;
 
@@ -42,18 +36,13 @@ describe("decorator demo", () => {
       @cosmosField.repeatedString(6)
       public readonly listDemo?: readonly string[];
 
-      @cosmosField.message(7, MsgNestedDemo)
-      public readonly nestedDemo?: MsgNestedDemo;
+      @cosmosField.message(7, MsgNestedMagic)
+      public readonly nestedDemo?: MsgNestedMagic;
     }
-
-    const MsgNestedDemoT = myRegistry.lookupType(nestedTypeUrl)!;
-    const MsgDemoT = myRegistry.lookupType(typeUrl)!;
 
     const msgNestedDemoFields = {
       foo: "bar",
     };
-    const msgNestedDemo = MsgNestedDemoT.create(msgNestedDemoFields);
-
     const msgDemoFields = {
       booleanDemo: true,
       stringDemo: "example text",
@@ -61,37 +50,40 @@ describe("decorator demo", () => {
       int64Demo: -123,
       uint64Demo: 123,
       listDemo: ["this", "is", "a", "list"],
-      nestedDemo: msgNestedDemo,
+      nestedDemo: msgNestedDemoFields,
     };
-    const msgDemo = MsgDemoT.create(msgDemoFields);
-    const msgDemoBytes = MsgDemoT.encode(msgDemo).finish();
-    const msgDemoWrapped = Any.create({
-      type_url: typeUrl,
-      value: msgDemoBytes,
-    });
-    const txBody = TxBody.create({
-      messages: [msgDemoWrapped],
+    const txBodyFields = {
+      messages: [{ typeUrl: typeUrl, value: msgDemoFields }],
       memo: "Some memo",
       timeoutHeight: 9999,
       extensionOptions: [],
+    };
+    const txBodyBytes = myRegistry.encode({
+      typeUrl: "/cosmos.tx.TxBody",
+      value: txBodyFields,
     });
-    const txBodyBytes = TxBody.encode(txBody).finish();
 
-    const txBodyDecoded = TxBody.decode(txBodyBytes);
-    const msg = txBodyDecoded.messages[0];
-    assert(msg.type_url);
-    assert(msg.value);
+    const txBodyDecoded = myRegistry.decode({
+      typeUrl: "/cosmos.tx.TxBody",
+      value: txBodyBytes,
+    });
+    expect(txBodyDecoded.memo).toEqual(txBodyFields.memo);
+    // int64Demo and uint64Demo decode to Long in Node
+    expect(Number(txBodyDecoded.timeoutHeight)).toEqual(txBodyFields.timeoutHeight);
+    expect(txBodyDecoded.extensionOptions).toEqual(txBodyFields.extensionOptions);
 
-    const msgDemoDecoded = MsgDemoT.decode(msg.value);
+    const msgDemoDecoded = txBodyDecoded.messages[0] as MsgMagic;
+    expect(msgDemoDecoded).toBeInstanceOf(MsgMagic);
     expect(msgDemoDecoded.booleanDemo).toEqual(msgDemoFields.booleanDemo);
     expect(msgDemoDecoded.stringDemo).toEqual(msgDemoFields.stringDemo);
     // bytesDemo decodes to a Buffer in Node
-    expect(Uint8Array.from(msgDemoDecoded.bytesDemo)).toEqual(msgDemoFields.bytesDemo);
+    expect(Uint8Array.from(msgDemoDecoded.bytesDemo!)).toEqual(msgDemoFields.bytesDemo);
     // int64Demo and uint64Demo decode to Long in Node
     expect(Number(msgDemoDecoded.int64Demo)).toEqual(msgDemoFields.int64Demo);
     expect(Number(msgDemoDecoded.uint64Demo)).toEqual(msgDemoFields.uint64Demo);
-
     expect(msgDemoDecoded.listDemo).toEqual(msgDemoFields.listDemo);
-    expect(msgDemoDecoded.nestedDemo).toEqual(msgDemoFields.nestedDemo);
+
+    expect(msgDemoDecoded.nestedDemo).toBeInstanceOf(MsgNestedMagic);
+    expect(msgDemoDecoded.nestedDemo!.foo).toEqual(msgDemoFields.nestedDemo.foo);
   });
 });
