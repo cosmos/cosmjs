@@ -1,12 +1,15 @@
 import { JsonRpcRequest } from "@cosmjs/json-rpc";
 
-const numbers = "0123456789";
+const numbersWithoutZero = "123456789";
 
 /** generates a random numeric character  */
 function randomNumericChar(): string {
-  return numbers[Math.floor(Math.random() * numbers.length)];
+  return numbersWithoutZero[Math.floor(Math.random() * numbersWithoutZero.length)];
 }
 
+/**
+ * An (absolutely not cryptographically secure) random integer > 0.
+ */
 function randomId(): number {
   return parseInt(
     Array.from({ length: 12 })
