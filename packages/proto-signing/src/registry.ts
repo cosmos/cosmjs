@@ -9,23 +9,23 @@ export interface GeneratedType {
   readonly decode: (reader: protobuf.Reader | Uint8Array, length?: number) => any;
 }
 
-export type EncodeObject = {
+export interface EncodeObject {
   readonly typeUrl: string;
   readonly value: any;
-};
+}
 
-export type DecodeObject = {
+export interface DecodeObject {
   readonly typeUrl: string;
   readonly value: Uint8Array;
-};
+}
 
-export type TxBodyValue = {
+export interface TxBodyValue {
   readonly messages: readonly EncodeObject[];
   readonly memo?: string;
   readonly timeoutHeight?: number;
   readonly extensionOptions?: google.protobuf.IAny[];
   readonly nonCriticalExtensionOptions?: google.protobuf.IAny[];
-};
+}
 
 const defaultTypeUrls = {
   cosmosCoin: "/cosmos.Coin",

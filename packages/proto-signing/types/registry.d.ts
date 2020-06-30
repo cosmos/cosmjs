@@ -12,21 +12,21 @@ export interface GeneratedType {
   ) => protobuf.Writer;
   readonly decode: (reader: protobuf.Reader | Uint8Array, length?: number) => any;
 }
-export declare type EncodeObject = {
+export interface EncodeObject {
   readonly typeUrl: string;
   readonly value: any;
-};
-export declare type DecodeObject = {
+}
+export interface DecodeObject {
   readonly typeUrl: string;
   readonly value: Uint8Array;
-};
-export declare type TxBodyValue = {
+}
+export interface TxBodyValue {
   readonly messages: readonly EncodeObject[];
   readonly memo?: string;
   readonly timeoutHeight?: number;
   readonly extensionOptions?: google.protobuf.IAny[];
   readonly nonCriticalExtensionOptions?: google.protobuf.IAny[];
-};
+}
 export declare class Registry {
   private readonly types;
   constructor(customTypes?: Iterable<[string, GeneratedType]>);
