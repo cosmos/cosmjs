@@ -20,7 +20,7 @@ systems. Please see [this website](https://git-lfs.github.com/) for instructions
 how to install it.
 
 If you installed git-lfs after cloning this repo, use this command to replace
-the links with the original files: `git lfs checkout`.
+the links with the original files: `git lfs fetch && git lfs checkout`.
 
 To verify everything worked as expected, check if the testing contracts are
 correctly checked out:
@@ -77,6 +77,6 @@ After you modified a file, check if the linter is happy:
 ```sh
 yarn lint
 
-# or if you want liniting plus automatic fixing
+# or if you want linting plus automatic fixing
 yarn lint-fix
 ```
