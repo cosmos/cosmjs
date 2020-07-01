@@ -22,7 +22,7 @@ const free = {
 };
 
 const luxury = {
-  label: "Lux,ury",
+  label: "Luxury",
   initMsg: {
     purchase_price: {
       denom: "ucosm",
