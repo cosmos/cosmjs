@@ -47,10 +47,7 @@ export class TokenManager {
 
     const balanceAmount = account.balance.find((b) => b.denom === meta.denom);
 
-    const balance = balanceAmount
-      ? Decimal.fromAtomics(balanceAmount.amount, meta.fractionalDigits)
-      : Decimal.fromAtomics("0", 0);
-
+    const balance = Decimal.fromAtomics(balanceAmount ? balanceAmount.amount : "0", meta.fractionalDigits);
     const thresholdAmount = this.refillThreshold(tickerSymbol);
     const threshold = Decimal.fromAtomics(thresholdAmount.amount, meta.fractionalDigits);
 
