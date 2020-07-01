@@ -1,5 +1,5 @@
 import { TokenManager } from "./tokenmanager";
-import { TokenConfiguration } from "./types";
+import { MinimalAccount, TokenConfiguration } from "./types";
 
 const dummyConfig: TokenConfiguration = {
   bankTokens: [
@@ -136,6 +136,41 @@ describe("TokenManager", () => {
         amount: "110000",
         denom: "mtrash",
       });
+    });
+  });
+
+  describe("needsRefill", () => {
+    const tm = new TokenManager(dummyConfig);
+
+    it("works for sufficient/insufficient balance", () => {
+      const brokeAccount: MinimalAccount = {
+        address: "cosmos1rtfrpqt3yd7c8g73m9rsaen7fft0h52m3v9v5a",
+        balance: [
+          {
+            denom: "utokenz",
+            amount: "3",
+          },
+        ],
+      };
+      const richAccount: MinimalAccount = {
+        address: "cosmos1rtfrpqt3yd7c8g73m9rsaen7fft0h52m3v9v5a",
+        balance: [
+          {
+            denom: "utokenz",
+            amount: "3456789000000", // 3456789 TOKENZ
+          },
+        ],
+      };
+      expect(tm.needsRefill(brokeAccount, "TOKENZ")).toEqual(true);
+      expect(tm.needsRefill(richAccount, "TOKENZ")).toEqual(false);
+    });
+
+    it("works for missing balance", () => {
+      const emptyAccount: MinimalAccount = {
+        address: "cosmos1rtfrpqt3yd7c8g73m9rsaen7fft0h52m3v9v5a",
+        balance: [],
+      };
+      expect(tm.needsRefill(emptyAccount, "TOKENZ")).toEqual(true);
     });
   });
 });
