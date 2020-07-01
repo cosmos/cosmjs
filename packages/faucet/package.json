@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/faucet",
-  "version": "0.21.0",
+  "version": "0.21.1",
   "description": "The faucet",
   "author": "Ethan Frey <ethanfrey@users.noreply.github.com>",
   "license": "Apache-2.0",
@@ -36,11 +36,11 @@
     "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet"
   },
   "dependencies": {
-    "@cosmjs/crypto": "^0.21.0",
-    "@cosmjs/encoding": "^0.21.0",
-    "@cosmjs/math": "^0.21.0",
-    "@cosmjs/sdk38": "^0.21.0",
-    "@cosmjs/utils": "^0.21.0",
+    "@cosmjs/crypto": "^0.21.1",
+    "@cosmjs/encoding": "^0.21.1",
+    "@cosmjs/math": "^0.21.1",
+    "@cosmjs/sdk38": "^0.21.1",
+    "@cosmjs/utils": "^0.21.1",
     "@koa/cors": "^3.0.0",
     "koa": "^2.11.0",
     "koa-bodyparser": "^4.2.1"
