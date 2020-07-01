@@ -7,14 +7,14 @@ interface Options {
 };
 
 const defaultOptions: Options = {
-  httpUrl: "https://lcd.demo-08.cosmwasm.com",
+  httpUrl: "https://lcd.demo-09.cosmwasm.com",
   networkId: "testing",
   feeToken: "ucosm",
   gasPrice: 0.025,
   bech32prefix: "cosmos",
 }
 
-const defaultFaucetUrl = "https://faucet.demo-08.cosmwasm.com/credit";
+const defaultFaucetUrl = "https://faucet.demo-09.cosmwasm.com/credit";
 
 const buildFeeTable = (feeToken: string, gasPrice: number): FeeTable => {
   const stdFee = (gas: number, denom: string, price: number) => {
@@ -28,8 +28,10 @@ const buildFeeTable = (feeToken: string, gasPrice: number): FeeTable => {
   return {
     upload: stdFee(1000000, feeToken, gasPrice),
     init: stdFee(500000, feeToken, gasPrice),
+    migrate: stdFee(500000, feeToken, gasPrice),
     exec: stdFee(200000, feeToken, gasPrice),
     send: stdFee(80000, feeToken, gasPrice),
+    changeAdmin: stdFee(80000, feeToken, gasPrice),
   }
 };
 
