@@ -4,6 +4,7 @@ workflows:
   workflow:
     jobs:
       - build
+      - docs
       - lint
       - test:
           requires:
@@ -291,6 +292,28 @@ jobs:
           command: ./scripts/tendermint/all_stop.sh
       - run:
           command: ./scripts/socketserver/stop.sh
+  docs:
+    docker:
+      - image: circleci/node:10-buster
+    steps:
+      - checkout
+      - run:
+          name: Version information
+          command: echo "node $(node --version)"; echo "yarn $(yarn --version)"
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - run:
+          command: yarn docs
   lint:
     docker:
       - image: circleci/node:10-buster
