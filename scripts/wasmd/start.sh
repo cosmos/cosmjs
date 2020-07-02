@@ -2,6 +2,8 @@
 set -o errexit -o nounset -o pipefail
 command -v shellcheck > /dev/null && shellcheck "$0"
 
+REST_PORT_GUEST="1317"
+REST_PORT_HOST="1317"
 SCRIPT_DIR="$(realpath "$(dirname "$0")")"
 # shellcheck source=./env
 # shellcheck disable=SC1091
@@ -19,7 +21,7 @@ REST_SERVER_LOGFILE="$TMP_DIR/rest-server.log"
 docker volume rm -f wasmd_data
 docker run --rm \
   --name "$CONTAINER_NAME" \
-  -p 1317:1317 \
+  -p "$REST_PORT_HOST":"$REST_PORT_GUEST" \
   -p 26657:26657 \
   -p 26656:26656 \
   --mount type=bind,source="$SCRIPT_DIR/template",target=/template \
@@ -47,10 +49,10 @@ docker exec "$CONTAINER_NAME" \
   --node tcp://localhost:26657 \
   --trust-node \
   --cors \
-  --laddr tcp://0.0.0.0:1317 \
+  --laddr "tcp://0.0.0.0:$REST_PORT_GUEST" \
   > "$REST_SERVER_LOGFILE" &
 
-echo "rest server running on http://localhost:1317 and logging into $REST_SERVER_LOGFILE"
+echo "rest server running on http://localhost:$REST_PORT_HOST and logging into $REST_SERVER_LOGFILE"
 
 # Give REST server some time to come alive. No idea why this helps. Needed for CI.
 if [ -n "${CI:-}" ]; then
