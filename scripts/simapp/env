@@ -1,0 +1,4 @@
+# Choose from https://hub.docker.com/r/interchainio/cosmos-sdk/tags
+REPOSITORY="interchainio/cosmos-sdk"
+VERSION="july-2-2020"
+CONTAINER_NAME="simapp"
