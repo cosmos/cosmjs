@@ -313,7 +313,11 @@ jobs:
           paths:
             - ~/.cache/yarn
       - run:
+          name: Build package docs
           command: yarn docs
+      - run:
+          name: Copy docs into deployment folder
+          command: ./scripts/docs/copy_docs.sh
   lint:
     docker:
       - image: circleci/node:10-buster
