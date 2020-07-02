@@ -337,7 +337,8 @@ jobs:
           at: .
       - run:
           name: Deploy to GitHub pages
-          command: npx gh-pages --message "Update docs [skip ci]" --dist docs_deployment --user "CI deployment <ci@cosmwasm.com>" --repo "git@github.com:CosmWasm/cosmjs.git"
+          # Version pinned to 3.0.0 because of https://github.com/tschaub/gh-pages/issues/354
+          command: npx gh-pages@3.0.0 --message "Update docs [skip ci]" --dist docs_deployment --user "CI deployment <ci@cosmwasm.com>" --repo "git@github.com:CosmWasm/cosmjs.git"
   lint:
     docker:
       - image: circleci/node:10-buster
