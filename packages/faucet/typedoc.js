@@ -4,7 +4,6 @@ module.exports = {
   inputFiles: ["./src"],
   out: "docs",
   exclude: "**/*.spec.ts",
-  target: "es6",
   name: `${packageJson.name} Documentation`,
   readme: "README.md",
   mode: "file",
