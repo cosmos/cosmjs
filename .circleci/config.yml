@@ -335,6 +335,9 @@ jobs:
     steps:
       - attach_workspace:
           at: .
+      - add_ssh_keys:
+          fingerprints:
+            - "a7:b3:94:4a:9e:e1:30:fa:ca:22:d1:db:a1:78:d6:e4"
       - run:
           name: Add GitHub to known hosts
           command: |
