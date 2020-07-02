@@ -10,9 +10,9 @@ workflows:
             - docs-build
             - build
             - lint
-          # filters:
-          #   branches:
-          #     only: master
+          filters:
+            branches:
+              only: master
       - lint
       - test:
           requires:
