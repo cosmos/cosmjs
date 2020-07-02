@@ -76,8 +76,9 @@ as soon as there is
 
 ### Working with docker
 
-**Note:** The Dockerfile in this repo is for demonstration purposes only. If you chose to
-deploy the faucet via docker, make sure to copy the Dockerfile and keep it up-to-date.
+**Note:** The Dockerfile in this repo is for demonstration purposes only. If you
+chose to deploy the faucet via docker, make sure to copy the Dockerfile and keep
+it up-to-date.
 
 - Build an artifact (from monorepo root)
 
@@ -131,7 +132,6 @@ curl http://localhost:8000/status
 
 ## License
 
-This package is part of the cosmjs repository, licensed under the Apache
-License 2.0 (see
-[NOTICE](https://github.com/CosmWasm/cosmjs/blob/master/NOTICE) and
+This package is part of the cosmjs repository, licensed under the Apache License
+2.0 (see [NOTICE](https://github.com/CosmWasm/cosmjs/blob/master/NOTICE) and
 [LICENSE](https://github.com/CosmWasm/cosmjs/blob/master/LICENSE)).
