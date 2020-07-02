@@ -1,0 +1,801 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>@cosmjs/tendermint-rpc Documentation</title>
+	<meta name="description" content="Documentation for @cosmjs/tendermint-rpc Documentation">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">@cosmjs/tendermint-rpc Documentation</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1>@cosmjs/tendermint-rpc Documentation</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#cosmjstendermint-rpc" id="cosmjstendermint-rpc" style="color: inherit; text-decoration: none;">
+					<h1>@cosmjs/tendermint-rpc</h1>
+				</a>
+				<p><a href="https://www.npmjs.com/package/@cosmjs/tendermint-rpc"><img src="https://img.shields.io/npm/v/@cosmjs/tendermint-rpc.svg" alt="npm version"></a></p>
+				<p>This package provides a type-safe wrapper around
+					<a href="https://docs.tendermint.com/master/rpc/">Tendermint RPC</a>. Notably, all binary
+					data is passed in and out as <code>Uint8Array</code>, and this module is reponsible for the
+					hex/base64 encoding/decoding depending on the field and version of Tendermint.
+				Also handles converting numbers to and from strings.</p>
+				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+					<h2>License</h2>
+				</a>
+				<p>This package is part of the cosmjs repository, licensed under the Apache License
+					2.0 (see <a href="https://github.com/CosmWasm/cosmjs/blob/master/NOTICE">NOTICE</a> and
+				<a href="https://github.com/CosmWasm/cosmjs/blob/master/LICENSE">LICENSE</a>).</p>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-enum">
+						<a href="enums/method.html" class="tsd-kind-icon">Method</a>
+					</li>
+					<li class=" tsd-kind-enum">
+						<a href="enums/subscriptioneventtype.html" class="tsd-kind-icon">Subscription<wbr>Event<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-enum">
+						<a href="enums/votetype.html" class="tsd-kind-icon">Vote<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/base64.html" class="tsd-kind-icon">Base64</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/client.html" class="tsd-kind-icon">Client</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/datetime.html" class="tsd-kind-icon">Date<wbr>Time</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/hex.html" class="tsd-kind-icon">Hex</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/httpclient.html" class="tsd-kind-icon">Http<wbr>Client</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/integer.html" class="tsd-kind-icon">Integer</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/params.html" class="tsd-kind-icon">Params</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/responses.html" class="tsd-kind-icon">Responses</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/rpceventproducer.html" class="tsd-kind-icon">Rpc<wbr>Event<wbr>Producer</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/websocketclient.html" class="tsd-kind-icon">Websocket<wbr>Client</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/abciinforequest.html" class="tsd-kind-icon">Abci<wbr>Info<wbr>Request</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/abciinforesponse.html" class="tsd-kind-icon">Abci<wbr>Info<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/abciinforesult.html" class="tsd-kind-icon">Abci<wbr>Info<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/abciqueryparams.html" class="tsd-kind-icon">Abci<wbr>Query<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/abciqueryrequest.html" class="tsd-kind-icon">Abci<wbr>Query<wbr>Request</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/abciqueryresponse.html" class="tsd-kind-icon">Abci<wbr>Query<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/abciqueryresult.html" class="tsd-kind-icon">Abci<wbr>Query<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/adaptor.html" class="tsd-kind-icon">Adaptor</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/block.html" class="tsd-kind-icon">Block</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/blockgossipparams.html" class="tsd-kind-icon">Block<wbr>Gossip<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/blockid.html" class="tsd-kind-icon">Block<wbr>Id</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/blockmeta.html" class="tsd-kind-icon">Block<wbr>Meta</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/blockparams.html" class="tsd-kind-icon">Block<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/blockrequest.html" class="tsd-kind-icon">Block<wbr>Request</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/blockresponse.html" class="tsd-kind-icon">Block<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/blockresultsrequest.html" class="tsd-kind-icon">Block<wbr>Results<wbr>Request</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/blockresultsresponse.html" class="tsd-kind-icon">Block<wbr>Results<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/blockchainrequest.html" class="tsd-kind-icon">Blockchain<wbr>Request</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/blockchainrequestparams.html" class="tsd-kind-icon">Blockchain<wbr>Request<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/blockchainresponse.html" class="tsd-kind-icon">Blockchain<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/broadcasttxasyncresponse.html" class="tsd-kind-icon">Broadcast<wbr>TxAsync<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/broadcasttxcommitresponse.html" class="tsd-kind-icon">Broadcast<wbr>TxCommit<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/broadcasttxparams.html" class="tsd-kind-icon">Broadcast<wbr>TxParams</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/broadcasttxrequest.html" class="tsd-kind-icon">Broadcast<wbr>TxRequest</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/broadcasttxsyncresponse.html" class="tsd-kind-icon">Broadcast<wbr>TxSync<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/buildquerycomponents.html" class="tsd-kind-icon">Build<wbr>Query<wbr>Components</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/commit.html" class="tsd-kind-icon">Commit</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/commitrequest.html" class="tsd-kind-icon">Commit<wbr>Request</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/commitresponse.html" class="tsd-kind-icon">Commit<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/consensusparams.html" class="tsd-kind-icon">Consensus<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/event.html" class="tsd-kind-icon">Event</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/evidence.html" class="tsd-kind-icon">Evidence</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/evidenceparams.html" class="tsd-kind-icon">Evidence<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/genesisrequest.html" class="tsd-kind-icon">Genesis<wbr>Request</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/genesisresponse.html" class="tsd-kind-icon">Genesis<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/genesisresult.html" class="tsd-kind-icon">Genesis<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/header.html" class="tsd-kind-icon">Header</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/healthrequest.html" class="tsd-kind-icon">Health<wbr>Request</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/heightparam.html" class="tsd-kind-icon">Height<wbr>Param</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/lengther.html" class="tsd-kind-icon">Lengther</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/newblockevent.html" class="tsd-kind-icon">New<wbr>Block<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/newblockheaderevent.html" class="tsd-kind-icon">New<wbr>Block<wbr>Header<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/nodeinfo.html" class="tsd-kind-icon">Node<wbr>Info</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/querytag.html" class="tsd-kind-icon">Query<wbr>Tag</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/readonlydatewithnanoseconds.html" class="tsd-kind-icon">Readonly<wbr>Date<wbr>With<wbr>Nanoseconds</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rpcabciinforesponse.html" class="tsd-kind-icon">Rpc<wbr>Abci<wbr>Info<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rpcabciqueryparams.html" class="tsd-kind-icon">Rpc<wbr>Abci<wbr>Query<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rpcabciqueryresponse.html" class="tsd-kind-icon">Rpc<wbr>Abci<wbr>Query<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rpcblock.html" class="tsd-kind-icon">Rpc<wbr>Block</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rpcblockid.html" class="tsd-kind-icon">Rpc<wbr>Block<wbr>Id</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rpcblockmeta.html" class="tsd-kind-icon">Rpc<wbr>Block<wbr>Meta</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rpcblockparams.html" class="tsd-kind-icon">Rpc<wbr>Block<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rpcblockresponse.html" class="tsd-kind-icon">Rpc<wbr>Block<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rpcblockresultsresponse.html" class="tsd-kind-icon">Rpc<wbr>Block<wbr>Results<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rpcblockversion.html" class="tsd-kind-icon">Rpc<wbr>Block<wbr>Version</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rpcblockchainrequestparams.html" class="tsd-kind-icon">Rpc<wbr>Blockchain<wbr>Request<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rpcblockchainresponse.html" class="tsd-kind-icon">Rpc<wbr>Blockchain<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rpcbroadcasttxcommitresponse.html" class="tsd-kind-icon">Rpc<wbr>Broadcast<wbr>TxCommit<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rpcbroadcasttxparams.html" class="tsd-kind-icon">Rpc<wbr>Broadcast<wbr>TxParams</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rpcbroadcasttxsyncresponse.html" class="tsd-kind-icon">Rpc<wbr>Broadcast<wbr>TxSync<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rpcclient.html" class="tsd-kind-icon">Rpc<wbr>Client</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rpccommit.html" class="tsd-kind-icon">Rpc<wbr>Commit</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rpccommitresponse.html" class="tsd-kind-icon">Rpc<wbr>Commit<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rpcconsensusparams.html" class="tsd-kind-icon">Rpc<wbr>Consensus<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rpcevent.html" class="tsd-kind-icon">Rpc<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rpcevidence.html" class="tsd-kind-icon">Rpc<wbr>Evidence</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rpcevidenceparams.html" class="tsd-kind-icon">Rpc<wbr>Evidence<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rpcgenesisresponse.html" class="tsd-kind-icon">Rpc<wbr>Genesis<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rpcheader.html" class="tsd-kind-icon">Rpc<wbr>Header</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rpcheightparam.html" class="tsd-kind-icon">Rpc<wbr>Height<wbr>Param</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rpcnodeinfo.html" class="tsd-kind-icon">Rpc<wbr>Node<wbr>Info</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rpcpubkey.html" class="tsd-kind-icon">Rpc<wbr>Pubkey</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rpcstatusresponse.html" class="tsd-kind-icon">Rpc<wbr>Status<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rpcstreamingclient.html" class="tsd-kind-icon">Rpc<wbr>Streaming<wbr>Client</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rpcsyncinfo.html" class="tsd-kind-icon">Rpc<wbr>Sync<wbr>Info</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rpctag.html" class="tsd-kind-icon">Rpc<wbr>Tag</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rpctxdata.html" class="tsd-kind-icon">Rpc<wbr>TxData</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rpctxevent.html" class="tsd-kind-icon">Rpc<wbr>TxEvent</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rpctxparams.html" class="tsd-kind-icon">Rpc<wbr>TxParams</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rpctxproof.html" class="tsd-kind-icon">Rpc<wbr>TxProof</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rpctxresponse.html" class="tsd-kind-icon">Rpc<wbr>TxResponse</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rpctxsearchparams.html" class="tsd-kind-icon">Rpc<wbr>TxSearch<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rpctxsearchresponse.html" class="tsd-kind-icon">Rpc<wbr>TxSearch<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rpcvalidatordata.html" class="tsd-kind-icon">Rpc<wbr>Validator<wbr>Data</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rpcvalidatorgenesis.html" class="tsd-kind-icon">Rpc<wbr>Validator<wbr>Genesis</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rpcvalidatorinfo.html" class="tsd-kind-icon">Rpc<wbr>Validator<wbr>Info</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rpcvalidatorupdate.html" class="tsd-kind-icon">Rpc<wbr>Validator<wbr>Update</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rpcvalidatorsresponse.html" class="tsd-kind-icon">Rpc<wbr>Validators<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/statusrequest.html" class="tsd-kind-icon">Status<wbr>Request</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/statusresponse.html" class="tsd-kind-icon">Status<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/subscriberequest.html" class="tsd-kind-icon">Subscribe<wbr>Request</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/subscriptionevent.html" class="tsd-kind-icon">Subscription<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/syncinfo.html" class="tsd-kind-icon">Sync<wbr>Info</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/tag.html" class="tsd-kind-icon">Tag</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/txdata.html" class="tsd-kind-icon">Tx<wbr>Data</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/txevent.html" class="tsd-kind-icon">Tx<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/txparams.html" class="tsd-kind-icon">Tx<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/txproof.html" class="tsd-kind-icon">Tx<wbr>Proof</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/txrequest.html" class="tsd-kind-icon">Tx<wbr>Request</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/txresponse.html" class="tsd-kind-icon">Tx<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/txsearchparams.html" class="tsd-kind-icon">Tx<wbr>Search<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/txsearchrequest.html" class="tsd-kind-icon">Tx<wbr>Search<wbr>Request</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/txsearchresponse.html" class="tsd-kind-icon">Tx<wbr>Search<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/txsizeparams.html" class="tsd-kind-icon">Tx<wbr>Size<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/validator.html" class="tsd-kind-icon">Validator</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/validatored25519pubkey.html" class="tsd-kind-icon">Validator<wbr>Ed25519<wbr>Pubkey</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/validatored25519signature.html" class="tsd-kind-icon">Validator<wbr>Ed25519<wbr>Signature</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/validatorsrequest.html" class="tsd-kind-icon">Validators<wbr>Request</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/validatorsresponse.html" class="tsd-kind-icon">Validators<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/version.html" class="tsd-kind-icon">Version</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/vote.html" class="tsd-kind-icon">Vote</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#base64string" class="tsd-kind-icon">Base64<wbr>String</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#blockhash" class="tsd-kind-icon">Block<wbr>Hash</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#datetimestring" class="tsd-kind-icon">Date<wbr>Time<wbr>String</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="globals.html#decoder" class="tsd-kind-icon">Decoder</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="globals.html#encoder" class="tsd-kind-icon">Encoder</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#healthresponse" class="tsd-kind-icon">Health<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#hexstring" class="tsd-kind-icon">Hex<wbr>String</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#integerstring" class="tsd-kind-icon">Integer<wbr>String</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#ipportstring" class="tsd-kind-icon">Ip<wbr>Port<wbr>String</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#querystring" class="tsd-kind-icon">Query<wbr>String</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#request" class="tsd-kind-icon">Request</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#response" class="tsd-kind-icon">Response</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#rpcsignature" class="tsd-kind-icon">Rpc<wbr>Signature</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#txbytes" class="tsd-kind-icon">Tx<wbr>Bytes</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#txhash" class="tsd-kind-icon">Tx<wbr>Hash</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#validatorpubkey" class="tsd-kind-icon">Validator<wbr>Pubkey</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#validatorsignature" class="tsd-kind-icon">Validator<wbr>Signature</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#fetch" class="tsd-kind-icon">fetch</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#numberswithoutzero" class="tsd-kind-icon">numbers<wbr>Without<wbr>Zero</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#adaptorforversion" class="tsd-kind-icon">adaptor<wbr>For<wbr>Version</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#assertarray" class="tsd-kind-icon">assert<wbr>Array</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#assertboolean" class="tsd-kind-icon">assert<wbr>Boolean</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#assertnotempty" class="tsd-kind-icon">assert<wbr>Not<wbr>Empty</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#assertnumber" class="tsd-kind-icon">assert<wbr>Number</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#assertobject" class="tsd-kind-icon">assert<wbr>Object</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#assertset" class="tsd-kind-icon">assert<wbr>Set</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#broadcasttxcommitsuccess" class="tsd-kind-icon">broadcast<wbr>TxCommit<wbr>Success</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#broadcasttxsyncsuccess" class="tsd-kind-icon">broadcast<wbr>TxSync<wbr>Success</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#buildquery" class="tsd-kind-icon">build<wbr>Query</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#createjsonrpcrequest" class="tsd-kind-icon">create<wbr>Json<wbr>Rpc<wbr>Request</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#decodeabciinfo" class="tsd-kind-icon">decode<wbr>Abci<wbr>Info</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#decodeabciquery" class="tsd-kind-icon">decode<wbr>Abci<wbr>Query</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#decodeblock" class="tsd-kind-icon">decode<wbr>Block</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#decodeblockid" class="tsd-kind-icon">decode<wbr>Block<wbr>Id</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#decodeblockmeta" class="tsd-kind-icon">decode<wbr>Block<wbr>Meta</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#decodeblockparams" class="tsd-kind-icon">decode<wbr>Block<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#decodeblockresponse" class="tsd-kind-icon">decode<wbr>Block<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#decodeblockresults" class="tsd-kind-icon">decode<wbr>Block<wbr>Results</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#decodeblockversion" class="tsd-kind-icon">decode<wbr>Block<wbr>Version</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#decodeblockchain" class="tsd-kind-icon">decode<wbr>Blockchain</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#decodebroadcasttxcommit" class="tsd-kind-icon">decode<wbr>Broadcast<wbr>TxCommit</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#decodebroadcasttxsync" class="tsd-kind-icon">decode<wbr>Broadcast<wbr>TxSync</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#decodecommit" class="tsd-kind-icon">decode<wbr>Commit</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#decodecommitresponse" class="tsd-kind-icon">decode<wbr>Commit<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#decodeconsensusparams" class="tsd-kind-icon">decode<wbr>Consensus<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#decodeevent" class="tsd-kind-icon">decode<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#decodeevents" class="tsd-kind-icon">decode<wbr>Events</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#decodeevidence" class="tsd-kind-icon">decode<wbr>Evidence</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#decodeevidenceparams" class="tsd-kind-icon">decode<wbr>Evidence<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#decodeevidences" class="tsd-kind-icon">decode<wbr>Evidences</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#decodegenesis" class="tsd-kind-icon">decode<wbr>Genesis</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#decodeheader" class="tsd-kind-icon">decode<wbr>Header</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#decodenodeinfo" class="tsd-kind-icon">decode<wbr>Node<wbr>Info</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#decodepubkey" class="tsd-kind-icon">decode<wbr>Pubkey</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#decodesignature" class="tsd-kind-icon">decode<wbr>Signature</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#decodestatus" class="tsd-kind-icon">decode<wbr>Status</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#decodesyncinfo" class="tsd-kind-icon">decode<wbr>Sync<wbr>Info</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#decodetag" class="tsd-kind-icon">decode<wbr>Tag</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#decodetags" class="tsd-kind-icon">decode<wbr>Tags</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#decodetxdata" class="tsd-kind-icon">decode<wbr>TxData</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#decodetxevent" class="tsd-kind-icon">decode<wbr>TxEvent</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#decodetxproof" class="tsd-kind-icon">decode<wbr>TxProof</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#decodetxresponse" class="tsd-kind-icon">decode<wbr>TxResponse</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#decodetxsearch" class="tsd-kind-icon">decode<wbr>TxSearch</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#decodevalidatordata" class="tsd-kind-icon">decode<wbr>Validator<wbr>Data</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#decodevalidatorgenesis" class="tsd-kind-icon">decode<wbr>Validator<wbr>Genesis</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#decodevalidatorinfo" class="tsd-kind-icon">decode<wbr>Validator<wbr>Info</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#decodevalidatorupdate" class="tsd-kind-icon">decode<wbr>Validator<wbr>Update</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#decodevalidators" class="tsd-kind-icon">decode<wbr>Validators</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#defaulterrorhandler" class="tsd-kind-icon">default<wbr>Error<wbr>Handler</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#dictionarytostringmap" class="tsd-kind-icon">dictionary<wbr>ToString<wbr>Map</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#encodeabciqueryparams" class="tsd-kind-icon">encode<wbr>Abci<wbr>Query<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#encodeblockid" class="tsd-kind-icon">encode<wbr>Block<wbr>Id</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#encodeblockchainrequestparams" class="tsd-kind-icon">encode<wbr>Blockchain<wbr>Request<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#encodebroadcasttxparams" class="tsd-kind-icon">encode<wbr>Broadcast<wbr>TxParams</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#encodebytes" class="tsd-kind-icon">encode<wbr>Bytes</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#encodeheightparam" class="tsd-kind-icon">encode<wbr>Height<wbr>Param</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#encodeint" class="tsd-kind-icon">encode<wbr>Int</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#encodestring" class="tsd-kind-icon">encode<wbr>String</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#encodetime" class="tsd-kind-icon">encode<wbr>Time</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#encodetxparams" class="tsd-kind-icon">encode<wbr>TxParams</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#encodetxsearchparams" class="tsd-kind-icon">encode<wbr>TxSearch<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#encodeversion" class="tsd-kind-icon">encode<wbr>Version</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#filterbadstatus" class="tsd-kind-icon">filter<wbr>Bad<wbr>Status</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#getblockeventheight" class="tsd-kind-icon">get<wbr>Block<wbr>Event<wbr>Height</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#getheadereventheight" class="tsd-kind-icon">get<wbr>Header<wbr>Event<wbr>Height</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#getsplitpoint" class="tsd-kind-icon">get<wbr>Split<wbr>Point</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#gettxeventheight" class="tsd-kind-icon">get<wbr>TxEvent<wbr>Height</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#hasprotocol" class="tsd-kind-icon">has<wbr>Protocol</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#hashblock" class="tsd-kind-icon">hash<wbr>Block</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#hashinner" class="tsd-kind-icon">hash<wbr>Inner</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#hashleaf" class="tsd-kind-icon">hash<wbr>Leaf</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#hashtree" class="tsd-kind-icon">hash<wbr>Tree</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#hashtx" class="tsd-kind-icon">hash<wbr>Tx</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#http" class="tsd-kind-icon">http</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#instanceofrpcstreamingclient" class="tsd-kind-icon">instance<wbr>OfRpc<wbr>Streaming<wbr>Client</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#may" class="tsd-kind-icon">may</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#optional" class="tsd-kind-icon">optional</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#randomid" class="tsd-kind-icon">random<wbr>Id</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#randomnumericchar" class="tsd-kind-icon">random<wbr>Numeric<wbr>Char</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#tojsonrpcresponse" class="tsd-kind-icon">to<wbr>Json<wbr>Rpc<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-object-literal">
+						<a href="globals.html#v0_33" class="tsd-kind-icon">v0_<wbr>33</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

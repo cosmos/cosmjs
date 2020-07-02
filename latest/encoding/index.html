@@ -1,0 +1,165 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>@cosmjs/encoding Documentation</title>
+	<meta name="description" content="Documentation for @cosmjs/encoding Documentation">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">@cosmjs/encoding Documentation</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1>@cosmjs/encoding Documentation</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#cosmjsencoding" id="cosmjsencoding" style="color: inherit; text-decoration: none;">
+					<h1>@cosmjs/encoding</h1>
+				</a>
+				<p><a href="https://www.npmjs.com/package/@cosmjs/encoding"><img src="https://img.shields.io/npm/v/@cosmjs/encoding.svg" alt="npm version"></a></p>
+				<p>This package is an extension to the JavaScript standard library that is not
+					bound to blockchain products. It provides basic hex/base64/ascii encoding to
+					Uint8Array that doesn&#39;t rely on Buffer and also provides better error messages
+				on invalid input.</p>
+				<a href="#convert-between-bech32-and-hex-addresses" id="convert-between-bech32-and-hex-addresses" style="color: inherit; text-decoration: none;">
+					<h2>Convert between bech32 and hex addresses</h2>
+				</a>
+				<pre><code>&gt;&gt; Bech32.encode(<span class="hljs-string">&quot;tiov&quot;</span>, fromHex(<span class="hljs-string">&quot;1234ABCD0000AA0000FFFF0000AA00001234ABCD&quot;</span>))
+&#x27;tiov1zg62hngqqz4qqq8lluqqp2sqqqfrf27dzrrmea&#x27;
+&gt;&gt; toHex(Bech32.decode(<span class="hljs-string">&quot;tiov1zg62hngqqz4qqq8lluqqp2sqqqfrf27dzrrmea&quot;</span>).data)
+&#x27;<span class="hljs-number">1234</span>abcd<span class="hljs-number">0000</span>aa<span class="hljs-number">0000</span>ffff<span class="hljs-number">0000</span>aa<span class="hljs-number">00001234</span>abcd&#x27;</code></pre>
+				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+					<h2>License</h2>
+				</a>
+				<p>This package is part of the cosmjs repository, licensed under the Apache License
+					2.0 (see <a href="https://github.com/CosmWasm/cosmjs/blob/master/NOTICE">NOTICE</a> and
+				<a href="https://github.com/CosmWasm/cosmjs/blob/master/LICENSE">LICENSE</a>).</p>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-class">
+						<a href="classes/bech32.html" class="tsd-kind-icon">Bech32</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#textdecoder" class="tsd-kind-icon">Text<wbr>Decoder</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#textencoder" class="tsd-kind-icon">Text<wbr>Encoder</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#rfc3339matcher" class="tsd-kind-icon">rfc3339<wbr>Matcher</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#fromascii" class="tsd-kind-icon">from<wbr>Ascii</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#frombase64" class="tsd-kind-icon">from<wbr>Base64</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#fromhex" class="tsd-kind-icon">from<wbr>Hex</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#fromrfc3339" class="tsd-kind-icon">from<wbr>Rfc3339</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#fromutf8" class="tsd-kind-icon">from<wbr>Utf8</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#isvalidutf8" class="tsd-kind-icon">is<wbr>Valid<wbr>Utf8</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#padded" class="tsd-kind-icon">padded</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#toascii" class="tsd-kind-icon">to<wbr>Ascii</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#tobase64" class="tsd-kind-icon">to<wbr>Base64</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#tohex" class="tsd-kind-icon">to<wbr>Hex</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#torfc3339" class="tsd-kind-icon">to<wbr>Rfc3339</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#toutf8" class="tsd-kind-icon">to<wbr>Utf8</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
