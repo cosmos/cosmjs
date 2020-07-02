@@ -4,7 +4,15 @@ workflows:
   workflow:
     jobs:
       - build
-      - docs
+      - docs-build
+      - docs-deploy:
+          requires:
+            - docs-build
+            - build
+            - lint
+          # filters:
+          #   branches:
+          #     only: master
       - lint
       - test:
           requires:
@@ -292,7 +300,7 @@ jobs:
           command: ./scripts/tendermint/all_stop.sh
       - run:
           command: ./scripts/socketserver/stop.sh
-  docs:
+  docs-build:
     docker:
       - image: circleci/node:10-buster
     steps:
@@ -318,6 +326,18 @@ jobs:
       - run:
           name: Copy docs into deployment folder
           command: ./scripts/docs/copy_docs.sh
+      - persist_to_workspace:
+          root: .
+          paths: docs_deployment
+  docs-deploy:
+    docker:
+      - image: circleci/node:10-buster
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Deploy to GitHub pages
+          command: npx gh-pages --message "Update docs [skip ci]" --dist docs_deployment
   lint:
     docker:
       - image: circleci/node:10-buster
