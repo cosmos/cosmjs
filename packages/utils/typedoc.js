@@ -1,7 +1,7 @@
 const packageJson = require("./package.json");
 
 module.exports = {
-  src: ["./src"],
+  inputFiles: ["./src"],
   out: "docs",
   exclude: "**/*.spec.ts",
   target: "es6",
