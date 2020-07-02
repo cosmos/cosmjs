@@ -337,7 +337,7 @@ jobs:
           at: .
       - run:
           name: Deploy to GitHub pages
-          command: npx gh-pages --message "Update docs [skip ci]" --dist docs_deployment
+          command: npx gh-pages --message "Update docs [skip ci]" --dist docs_deployment --user "CI deployment <ci@cosmwasm.com>" --repo "git@github.com:CosmWasm/cosmjs.git"
   lint:
     docker:
       - image: circleci/node:10-buster
