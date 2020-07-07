@@ -7,7 +7,7 @@ import { isPostTxFailure } from "./cosmosclient";
 import { makeSignBytes } from "./encoding";
 import { LcdApiArray, LcdClient, normalizeArray } from "./lcdclient";
 import { parseLogs } from "./logs";
-import { Msg, MsgSend } from "./msgs";
+import { MsgSend } from "./msgs";
 import { makeCosmoshubPath, Secp256k1Pen } from "./pen";
 import { BroadcastMode, TxsResponse } from "./restclient";
 import { SigningCosmosClient } from "./signingcosmosclient";
@@ -15,13 +15,14 @@ import cosmoshub from "./testdata/cosmoshub.json";
 import {
   faucet,
   makeRandomAddress,
+  makeSignedTx,
   nonNegativeIntegerMatcher,
   pendingWithoutWasmd,
   tendermintIdMatcher,
   wasmd,
   wasmdEnabled,
 } from "./testutils.spec";
-import { StdFee, StdSignature, StdTx } from "./types";
+import { StdFee } from "./types";
 
 /** Deployed as part of scripts/wasmd/init.sh */
 export const deployedErc20 = {
@@ -35,15 +36,6 @@ export const deployedErc20 = {
     "cosmos18r5szma8hm93pvx6lwpjwyxruw27e0k5uw835c", // JADE
   ],
 };
-
-function makeSignedTx(firstMsg: Msg, fee: StdFee, memo: string, firstSignature: StdSignature): StdTx {
-  return {
-    msg: [firstMsg],
-    fee: fee,
-    memo: memo,
-    signatures: [firstSignature],
-  };
-}
 
 describe("LcdClient", () => {
   const defaultRecipientAddress = makeRandomAddress();

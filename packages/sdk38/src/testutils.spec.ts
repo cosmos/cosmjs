@@ -1,6 +1,9 @@
 import { Random } from "@cosmjs/crypto";
 import { Bech32 } from "@cosmjs/encoding";
 
+import { Msg } from "./msgs";
+import { StdFee, StdSignature, StdTx } from "./types";
+
 export function makeRandomAddress(): string {
   return Bech32.encode("cosmos", Random.getBytes(20));
 }
@@ -55,4 +58,13 @@ export function pendingWithoutWasmd(): void {
 export function fromOneElementArray<T>(elements: ArrayLike<T>): T {
   if (elements.length !== 1) throw new Error(`Expected exactly one element but got ${elements.length}`);
   return elements[0];
+}
+
+export function makeSignedTx(firstMsg: Msg, fee: StdFee, memo: string, firstSignature: StdSignature): StdTx {
+  return {
+    msg: [firstMsg],
+    fee: fee,
+    memo: memo,
+    signatures: [firstSignature],
+  };
 }

@@ -6,7 +6,7 @@ import { rawSecp256k1PubkeyToAddress } from "./address";
 import { isPostTxFailure } from "./cosmosclient";
 import { makeSignBytes } from "./encoding";
 import { parseLogs } from "./logs";
-import { Msg, MsgSend } from "./msgs";
+import { MsgSend } from "./msgs";
 import { makeCosmoshubPath, Secp256k1Pen } from "./pen";
 import { encodeBech32Pubkey } from "./pubkey";
 import { RestClient, TxsResponse } from "./restclient";
@@ -15,6 +15,7 @@ import cosmoshub from "./testdata/cosmoshub.json";
 import {
   faucet,
   makeRandomAddress,
+  makeSignedTx,
   nonNegativeIntegerMatcher,
   pendingWithoutWasmd,
   semverMatcher,
@@ -26,16 +27,7 @@ import {
   wasmd,
   wasmdEnabled,
 } from "./testutils.spec";
-import { StdFee, StdSignature, StdTx } from "./types";
-
-function makeSignedTx(firstMsg: Msg, fee: StdFee, memo: string, firstSignature: StdSignature): StdTx {
-  return {
-    msg: [firstMsg],
-    fee: fee,
-    memo: memo,
-    signatures: [firstSignature],
-  };
-}
+import { StdFee } from "./types";
 
 describe("RestClient", () => {
   const defaultRecipientAddress = makeRandomAddress();
