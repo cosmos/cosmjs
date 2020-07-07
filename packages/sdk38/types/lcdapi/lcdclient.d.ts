@@ -12,7 +12,7 @@ import {
 export declare type LcdApiArray<T> = readonly T[] | null;
 export declare function normalizeLcdApiArray<T>(backend: LcdApiArray<T>): readonly T[];
 export declare type LcdModule = Record<string, (...args: any[]) => any>;
-declare type LcdModuleSetup<M> = (base: LcdClient) => M;
+declare type LcdModuleSetup<M extends LcdModule> = (base: LcdClient) => M;
 export interface LcdClientBaseOptions {
   readonly apiUrl: string;
   readonly broadcastMode?: BroadcastMode;
