@@ -331,7 +331,7 @@ export class LcdClient {
 
   /**
    * Broadcasts a signed transaction to into the transaction pool.
-   * Depending on the RestClient's broadcast mode, this might or might
+   * Depending on the client's broadcast mode, this might or might
    * wait for checkTx or deliverTx to be executed before returning.
    *
    * @param tx a signed transaction as StdTx (i.e. not wrapped in type/value container)
