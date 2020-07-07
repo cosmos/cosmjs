@@ -25,7 +25,6 @@ export {
   BroadcastMode,
   EncodeTxResponse,
   LcdApiArray,
-  LcdExtension,
   LcdClient,
   NodeInfoResponse,
   normalizeLcdApiArray,

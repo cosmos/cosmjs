@@ -18,4 +18,4 @@ export {
   SearchTxsResponse,
   TxsResponse,
 } from "./base";
-export { LcdApiArray, LcdClient, LcdExtension, normalizeLcdApiArray } from "./lcdclient";
+export { LcdApiArray, LcdClient, normalizeLcdApiArray } from "./lcdclient";

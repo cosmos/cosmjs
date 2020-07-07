@@ -23,7 +23,7 @@ import {
 import { StdFee } from "../types";
 import { setupAuthExtension } from "./auth";
 import { TxsResponse } from "./base";
-import { LcdApiArray, LcdClient, LcdExtension, normalizeLcdApiArray } from "./lcdclient";
+import { LcdApiArray, LcdClient, normalizeLcdApiArray } from "./lcdclient";
 
 /** Deployed as part of scripts/wasmd/init.sh */
 export const deployedErc20 = {
@@ -79,7 +79,7 @@ describe("LcdClient", () => {
       return response.result;
     }
 
-    interface WasmExtension extends LcdExtension {
+    interface WasmExtension {
       wasm: {
         listCodeInfo: () => Promise<readonly CodeInfo[]>;
       };

@@ -1,4 +1,4 @@
-import { LcdClient, LcdExtension } from "@cosmjs/sdk38";
+import { LcdClient } from "@cosmjs/sdk38";
 import { JsonObject, Model } from "../types";
 export interface CodeInfo {
   readonly id: number;
@@ -40,7 +40,7 @@ export interface ContractDetails extends ContractInfo {
 /**
  * @see https://github.com/cosmwasm/wasmd/blob/master/x/wasm/client/rest/query.go#L19-L27
  */
-export interface WasmExtension extends LcdExtension {
+export interface WasmExtension {
   readonly wasm: {
     readonly listCodeInfo: () => Promise<readonly CodeInfo[]>;
     /**

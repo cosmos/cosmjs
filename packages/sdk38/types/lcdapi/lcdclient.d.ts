@@ -11,8 +11,7 @@ import {
 /** Unfortunately, Cosmos SDK encodes empty arrays as null */
 export declare type LcdApiArray<T> = readonly T[] | null;
 export declare function normalizeLcdApiArray<T>(backend: LcdApiArray<T>): readonly T[];
-export declare type LcdExtension = Record<string, Record<string, (...args: any[]) => any>>;
-declare type LcdExtensionSetup<P extends LcdExtension> = (base: LcdClient) => P;
+declare type LcdExtensionSetup<P> = (base: LcdClient) => P;
 export interface LcdClientBaseOptions {
   readonly apiUrl: string;
   readonly broadcastMode?: BroadcastMode;
@@ -33,30 +32,25 @@ export declare class LcdClient {
   /** Constructs an LCD client with 0 extensions */
   static withExtensions(options: LcdClientBaseOptions): LcdClient;
   /** Constructs an LCD client with 1 extension */
-  static withExtensions<A extends LcdExtension>(
+  static withExtensions<A extends object>(
     options: LcdClientBaseOptions,
     setupExtensionA: LcdExtensionSetup<A>,
   ): LcdClient & A;
   /** Constructs an LCD client with 2 extensions */
-  static withExtensions<A extends LcdExtension, B extends LcdExtension>(
+  static withExtensions<A extends object, B extends object>(
     options: LcdClientBaseOptions,
     setupExtensionA: LcdExtensionSetup<A>,
     setupExtensionB: LcdExtensionSetup<B>,
   ): LcdClient & A & B;
   /** Constructs an LCD client with 3 extensions */
-  static withExtensions<A extends LcdExtension, B extends LcdExtension, C extends LcdExtension>(
+  static withExtensions<A extends object, B extends object, C extends object>(
     options: LcdClientBaseOptions,
     setupExtensionA: LcdExtensionSetup<A>,
     setupExtensionB: LcdExtensionSetup<B>,
     setupExtensionC: LcdExtensionSetup<C>,
   ): LcdClient & A & B & C;
   /** Constructs an LCD client with 4 extensions */
-  static withExtensions<
-    A extends LcdExtension,
-    B extends LcdExtension,
-    C extends LcdExtension,
-    D extends LcdExtension
-  >(
+  static withExtensions<A extends object, B extends object, C extends object, D extends object>(
     options: LcdClientBaseOptions,
     setupExtensionA: LcdExtensionSetup<A>,
     setupExtensionB: LcdExtensionSetup<B>,
@@ -65,11 +59,11 @@ export declare class LcdClient {
   ): LcdClient & A & B & C & D;
   /** Constructs an LCD client with 5 extensions */
   static withExtensions<
-    A extends LcdExtension,
-    B extends LcdExtension,
-    C extends LcdExtension,
-    D extends LcdExtension,
-    E extends LcdExtension
+    A extends object,
+    B extends object,
+    C extends object,
+    D extends object,
+    E extends object
   >(
     options: LcdClientBaseOptions,
     setupExtensionA: LcdExtensionSetup<A>,
@@ -80,12 +74,12 @@ export declare class LcdClient {
   ): LcdClient & A & B & C & D & E;
   /** Constructs an LCD client with 6 extensions */
   static withExtensions<
-    A extends LcdExtension,
-    B extends LcdExtension,
-    C extends LcdExtension,
-    D extends LcdExtension,
-    E extends LcdExtension,
-    F extends LcdExtension
+    A extends object,
+    B extends object,
+    C extends object,
+    D extends object,
+    E extends object,
+    F extends object
   >(
     options: LcdClientBaseOptions,
     setupExtensionA: LcdExtensionSetup<A>,
@@ -97,13 +91,13 @@ export declare class LcdClient {
   ): LcdClient & A & B & C & D & E & F;
   /** Constructs an LCD client with 7 extensions */
   static withExtensions<
-    A extends LcdExtension,
-    B extends LcdExtension,
-    C extends LcdExtension,
-    D extends LcdExtension,
-    E extends LcdExtension,
-    F extends LcdExtension,
-    G extends LcdExtension
+    A extends object,
+    B extends object,
+    C extends object,
+    D extends object,
+    E extends object,
+    F extends object,
+    G extends object
   >(
     options: LcdClientBaseOptions,
     setupExtensionA: LcdExtensionSetup<A>,
@@ -116,14 +110,14 @@ export declare class LcdClient {
   ): LcdClient & A & B & C & D & E & F & G;
   /** Constructs an LCD client with 8 extensions */
   static withExtensions<
-    A extends LcdExtension,
-    B extends LcdExtension,
-    C extends LcdExtension,
-    D extends LcdExtension,
-    E extends LcdExtension,
-    F extends LcdExtension,
-    G extends LcdExtension,
-    H extends LcdExtension
+    A extends object,
+    B extends object,
+    C extends object,
+    D extends object,
+    E extends object,
+    F extends object,
+    G extends object,
+    H extends object
   >(
     options: LcdClientBaseOptions,
     setupExtensionA: LcdExtensionSetup<A>,
