@@ -2,17 +2,20 @@ import { Sha256 } from "@cosmjs/crypto";
 import { fromBase64, fromHex, toHex } from "@cosmjs/encoding";
 import { Uint53 } from "@cosmjs/math";
 import {
+  AuthExtension,
   BroadcastMode,
   Coin,
   CosmosSdkTx,
   decodeBech32Pubkey,
   IndexedTx,
+  LcdClient,
   PubKey,
+  setupAuthExtension,
   StdTx,
 } from "@cosmjs/sdk38";
 
+import { setupWasmExtension, WasmExtension } from "./lcdapi/wasm";
 import { Log, parseLogs } from "./logs";
-import { RestClient } from "./restclient";
 import { JsonObject } from "./types";
 
 export interface GetNonceResult {
@@ -160,11 +163,11 @@ export interface Block {
 
 /** Use for testing only */
 export interface PrivateCosmWasmClient {
-  readonly restClient: RestClient;
+  readonly lcdClient: LcdClient & AuthExtension & WasmExtension;
 }
 
 export class CosmWasmClient {
-  protected readonly restClient: RestClient;
+  protected readonly lcdClient: LcdClient & AuthExtension & WasmExtension;
   /** Any address the chain considers valid (valid bech32 with proper prefix) */
   protected anyValidAddress: string | undefined;
 
@@ -181,12 +184,16 @@ export class CosmWasmClient {
    * @param broadcastMode Defines at which point of the transaction processing the postTx method (i.e. transaction broadcasting) returns
    */
   public constructor(apiUrl: string, broadcastMode = BroadcastMode.Block) {
-    this.restClient = new RestClient(apiUrl, broadcastMode);
+    this.lcdClient = LcdClient.withExtensions(
+      { apiUrl: apiUrl, broadcastMode: broadcastMode },
+      setupAuthExtension,
+      setupWasmExtension,
+    );
   }
 
   public async getChainId(): Promise<string> {
     if (!this.chainId) {
-      const response = await this.restClient.nodeInfo();
+      const response = await this.lcdClient.nodeInfo();
       const chainId = response.node_info.network;
       if (!chainId) throw new Error("Chain ID must not be empty");
       this.chainId = chainId;
@@ -197,12 +204,12 @@ export class CosmWasmClient {
 
   public async getHeight(): Promise<number> {
     if (this.anyValidAddress) {
-      const { height } = await this.restClient.authAccounts(this.anyValidAddress);
+      const { height } = await this.lcdClient.auth.account(this.anyValidAddress);
       return parseInt(height, 10);
     } else {
       // Note: this gets inefficient when blocks contain a lot of transactions since it
       // requires downloading and deserializing all transactions in the block.
-      const latest = await this.restClient.blocksLatest();
+      const latest = await this.lcdClient.blocksLatest();
       return parseInt(latest.block.header.height, 10);
     }
   }
@@ -212,7 +219,7 @@ export class CosmWasmClient {
    */
   public async getIdentifier(tx: CosmosSdkTx): Promise<string> {
     // We consult the REST API because we don't have a local amino encoder
-    const response = await this.restClient.encodeTx(tx);
+    const response = await this.lcdClient.encodeTx(tx);
     const hash = new Sha256(fromBase64(response.tx)).digest();
     return toHex(hash).toUpperCase();
   }
@@ -238,7 +245,7 @@ export class CosmWasmClient {
   }
 
   public async getAccount(address: string): Promise<Account | undefined> {
-    const account = await this.restClient.authAccounts(address);
+    const account = await this.lcdClient.auth.account(address);
     const value = account.result.value;
     if (value.address === "") {
       return undefined;
@@ -261,7 +268,7 @@ export class CosmWasmClient {
    */
   public async getBlock(height?: number): Promise<Block> {
     const response =
-      height !== undefined ? await this.restClient.blocks(height) : await this.restClient.blocksLatest();
+      height !== undefined ? await this.lcdClient.blocks(height) : await this.lcdClient.blocksLatest();
 
     return {
       id: response.block_id.hash,
@@ -333,7 +340,7 @@ export class CosmWasmClient {
   }
 
   public async postTx(tx: StdTx): Promise<PostTxResult> {
-    const result = await this.restClient.postTx(tx);
+    const result = await this.lcdClient.postTx(tx);
     if (!result.txhash.match(/^([0-9A-F][0-9A-F])+$/)) {
       throw new Error("Received ill-formatted txhash. Must be non-empty upper-case hex");
     }
@@ -354,7 +361,7 @@ export class CosmWasmClient {
   }
 
   public async getCodes(): Promise<readonly Code[]> {
-    const result = await this.restClient.listCodeInfo();
+    const result = await this.lcdClient.wasm.listCodeInfo();
     return result.map(
       (entry): Code => {
         this.anyValidAddress = entry.creator;
@@ -373,7 +380,7 @@ export class CosmWasmClient {
     const cached = this.codesCache.get(codeId);
     if (cached) return cached;
 
-    const getCodeResult = await this.restClient.getCode(codeId);
+    const getCodeResult = await this.lcdClient.wasm.getCode(codeId);
     const codeDetails: CodeDetails = {
       id: getCodeResult.id,
       creator: getCodeResult.creator,
@@ -387,7 +394,7 @@ export class CosmWasmClient {
   }
 
   public async getContracts(codeId: number): Promise<readonly Contract[]> {
-    const result = await this.restClient.listContractsByCodeId(codeId);
+    const result = await this.lcdClient.wasm.listContractsByCodeId(codeId);
     return result.map(
       (entry): Contract => ({
         address: entry.address,
@@ -403,7 +410,7 @@ export class CosmWasmClient {
    * Throws an error if no contract was found at the address
    */
   public async getContract(address: string): Promise<ContractDetails> {
-    const result = await this.restClient.getContractInfo(address);
+    const result = await this.lcdClient.wasm.getContractInfo(address);
     if (!result) throw new Error(`No contract found at address "${address}"`);
     return {
       address: result.address,
@@ -425,7 +432,7 @@ export class CosmWasmClient {
     // just test contract existence
     const _info = await this.getContract(address);
 
-    return this.restClient.queryContractRaw(address, key);
+    return this.lcdClient.wasm.queryContractRaw(address, key);
   }
 
   /**
@@ -437,7 +444,7 @@ export class CosmWasmClient {
    */
   public async queryContractSmart(address: string, queryMsg: object): Promise<JsonObject> {
     try {
-      return await this.restClient.queryContractSmart(address, queryMsg);
+      return await this.lcdClient.wasm.queryContractSmart(address, queryMsg);
     } catch (error) {
       if (error instanceof Error) {
         if (error.message.startsWith("not found: contract")) {
@@ -454,7 +461,7 @@ export class CosmWasmClient {
   private async txsQuery(query: string): Promise<readonly IndexedTx[]> {
     // TODO: we need proper pagination support
     const limit = 100;
-    const result = await this.restClient.txsQuery(`${query}&limit=${limit}`);
+    const result = await this.lcdClient.txsQuery(`${query}&limit=${limit}`);
     const pages = parseInt(result.page_total, 10);
     if (pages > 1) {
       throw new Error(

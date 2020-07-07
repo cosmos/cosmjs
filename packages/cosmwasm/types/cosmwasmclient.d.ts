@@ -1,6 +1,15 @@
-import { BroadcastMode, Coin, CosmosSdkTx, IndexedTx, PubKey, StdTx } from "@cosmjs/sdk38";
+import {
+  AuthExtension,
+  BroadcastMode,
+  Coin,
+  CosmosSdkTx,
+  IndexedTx,
+  LcdClient,
+  PubKey,
+  StdTx,
+} from "@cosmjs/sdk38";
+import { WasmExtension } from "./lcdapi/wasm";
 import { Log } from "./logs";
-import { RestClient } from "./restclient";
 import { JsonObject } from "./types";
 export interface GetNonceResult {
   readonly accountNumber: number;
@@ -114,10 +123,10 @@ export interface Block {
 }
 /** Use for testing only */
 export interface PrivateCosmWasmClient {
-  readonly restClient: RestClient;
+  readonly lcdClient: LcdClient & AuthExtension & WasmExtension;
 }
 export declare class CosmWasmClient {
-  protected readonly restClient: RestClient;
+  protected readonly lcdClient: LcdClient & AuthExtension & WasmExtension;
   /** Any address the chain considers valid (valid bech32 with proper prefix) */
   protected anyValidAddress: string | undefined;
   private readonly codesCache;

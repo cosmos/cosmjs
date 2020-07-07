@@ -1,14 +1,18 @@
 import { Sha256 } from "@cosmjs/crypto";
 import { toHex } from "@cosmjs/encoding";
-import { coin, coins, Secp256k1Pen } from "@cosmjs/sdk38";
+import { AuthExtension, coin, coins, LcdClient, Secp256k1Pen, setupAuthExtension } from "@cosmjs/sdk38";
 import { assert } from "@cosmjs/utils";
 
 import { isPostTxFailure, PrivateCosmWasmClient } from "./cosmwasmclient";
-import { RestClient } from "./restclient";
+import { setupWasmExtension, WasmExtension } from "./lcdapi/wasm";
 import { SigningCosmWasmClient, UploadMeta } from "./signingcosmwasmclient";
 import { alice, getHackatom, makeRandomAddress, pendingWithoutWasmd, unused } from "./testutils.spec";
 
 const httpUrl = "http://localhost:1317";
+
+function makeWasmClient(apiUrl: string): LcdClient & AuthExtension & WasmExtension {
+  return LcdClient.withExtensions({ apiUrl }, setupAuthExtension, setupWasmExtension);
+}
 
 describe("SigningCosmWasmClient", () => {
   describe("makeReadOnly", () => {
@@ -26,8 +30,8 @@ describe("SigningCosmWasmClient", () => {
       const client = new SigningCosmWasmClient(httpUrl, alice.address0, (signBytes) => pen.sign(signBytes));
 
       const openedClient = (client as unknown) as PrivateCosmWasmClient;
-      const blockLatestSpy = spyOn(openedClient.restClient, "blocksLatest").and.callThrough();
-      const authAccountsSpy = spyOn(openedClient.restClient, "authAccounts").and.callThrough();
+      const blockLatestSpy = spyOn(openedClient.lcdClient, "blocksLatest").and.callThrough();
+      const authAccountsSpy = spyOn(openedClient.lcdClient.auth, "account").and.callThrough();
 
       const height = await client.getHeight();
       expect(height).toBeGreaterThan(0);
@@ -97,8 +101,8 @@ describe("SigningCosmWasmClient", () => {
         },
       );
 
-      const rest = new RestClient(httpUrl);
-      const balance = (await rest.authAccounts(contractAddress)).result.value.coins;
+      const lcdClient = makeWasmClient(httpUrl);
+      const balance = (await lcdClient.auth.account(contractAddress)).result.value.coins;
       expect(balance).toEqual(transferAmount);
     });
 
@@ -119,8 +123,8 @@ describe("SigningCosmWasmClient", () => {
         { admin: unused.address },
       );
 
-      const rest = new RestClient(httpUrl);
-      const contract = await rest.getContractInfo(contractAddress);
+      const lcdClient = makeWasmClient(httpUrl);
+      const contract = await lcdClient.wasm.getContractInfo(contractAddress);
       assert(contract);
       expect(contract.admin).toEqual(unused.address);
     });
@@ -171,14 +175,14 @@ describe("SigningCosmWasmClient", () => {
         },
       );
 
-      const rest = new RestClient(httpUrl);
-      const state1 = await rest.getContractInfo(contractAddress);
+      const lcdClient = makeWasmClient(httpUrl);
+      const state1 = await lcdClient.wasm.getContractInfo(contractAddress);
       assert(state1);
       expect(state1.admin).toEqual(alice.address0);
 
       await client.updateAdmin(contractAddress, unused.address);
 
-      const state2 = await rest.getContractInfo(contractAddress);
+      const state2 = await lcdClient.wasm.getContractInfo(contractAddress);
       assert(state2);
       expect(state2.admin).toEqual(unused.address);
     });
@@ -204,14 +208,14 @@ describe("SigningCosmWasmClient", () => {
         },
       );
 
-      const rest = new RestClient(httpUrl);
-      const state1 = await rest.getContractInfo(contractAddress);
+      const lcdClient = makeWasmClient(httpUrl);
+      const state1 = await lcdClient.wasm.getContractInfo(contractAddress);
       assert(state1);
       expect(state1.admin).toEqual(alice.address0);
 
       await client.clearAdmin(contractAddress);
 
-      const state2 = await rest.getContractInfo(contractAddress);
+      const state2 = await lcdClient.wasm.getContractInfo(contractAddress);
       assert(state2);
       expect(state2.admin).toBeUndefined();
     });
@@ -238,15 +242,15 @@ describe("SigningCosmWasmClient", () => {
         },
       );
 
-      const rest = new RestClient(httpUrl);
-      const state1 = await rest.getContractInfo(contractAddress);
+      const lcdClient = makeWasmClient(httpUrl);
+      const state1 = await lcdClient.wasm.getContractInfo(contractAddress);
       assert(state1);
       expect(state1.admin).toEqual(alice.address0);
 
       const newVerifier = makeRandomAddress();
       await client.migrate(contractAddress, codeId2, { verifier: newVerifier });
 
-      const state2 = await rest.getContractInfo(contractAddress);
+      const state2 = await lcdClient.wasm.getContractInfo(contractAddress);
       assert(state2);
       expect(state2).toEqual({
         ...state1,
@@ -289,10 +293,10 @@ describe("SigningCosmWasmClient", () => {
       });
 
       // Verify token transfer from contract to beneficiary
-      const rest = new RestClient(httpUrl);
-      const beneficiaryBalance = (await rest.authAccounts(beneficiaryAddress)).result.value.coins;
+      const lcdClient = makeWasmClient(httpUrl);
+      const beneficiaryBalance = (await lcdClient.auth.account(beneficiaryAddress)).result.value.coins;
       expect(beneficiaryBalance).toEqual(transferAmount);
-      const contractBalance = (await rest.authAccounts(contractAddress)).result.value.coins;
+      const contractBalance = (await lcdClient.auth.account(contractAddress)).result.value.coins;
       expect(contractBalance).toEqual([]);
     });
   });

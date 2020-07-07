@@ -1,10 +1,18 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { Coin, coins, CosmosSdkTx, isMsgSend, makeSignBytes, MsgSend, Secp256k1Pen } from "@cosmjs/sdk38";
+import {
+  Coin,
+  coins,
+  CosmosSdkTx,
+  isMsgSend,
+  LcdClient,
+  makeSignBytes,
+  MsgSend,
+  Secp256k1Pen,
+} from "@cosmjs/sdk38";
 import { assert, sleep } from "@cosmjs/utils";
 
 import { CosmWasmClient, isPostTxFailure } from "./cosmwasmclient";
 import { isMsgExecuteContract, isMsgInstantiateContract } from "./msgs";
-import { RestClient } from "./restclient";
 import { SigningCosmWasmClient } from "./signingcosmwasmclient";
 import {
   alice,
@@ -50,7 +58,7 @@ describe("CosmWasmClient.searchTx", () => {
         const transferAmount = coins(1234567, "ucosm");
         const result = await client.sendTokens(recipient, transferAmount);
         await sleep(75); // wait until tx is indexed
-        const txDetails = await new RestClient(wasmd.endpoint).txById(result.transactionHash);
+        const txDetails = await new LcdClient(wasmd.endpoint).txById(result.transactionHash);
         sendSuccessful = {
           sender: alice.address0,
           recipient: recipient,
@@ -68,7 +76,7 @@ describe("CosmWasmClient.searchTx", () => {
         };
         const result = await client.sendTokens(recipient, [transferAmount]);
         await sleep(75); // wait until tx is indexed
-        const txDetails = await new RestClient(wasmd.endpoint).txById(result.transactionHash);
+        const txDetails = await new LcdClient(wasmd.endpoint).txById(result.transactionHash);
         sendSelfSuccessful = {
           sender: alice.address0,
           recipient: recipient,
@@ -132,7 +140,7 @@ describe("CosmWasmClient.searchTx", () => {
         };
         const result = await client.execute(hashInstance, msg);
         await sleep(75); // wait until tx is indexed
-        const txDetails = await new RestClient(wasmd.endpoint).txById(result.transactionHash);
+        const txDetails = await new LcdClient(wasmd.endpoint).txById(result.transactionHash);
         execute = {
           sender: alice.address0,
           contract: hashInstance,
