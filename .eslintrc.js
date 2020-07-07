@@ -27,10 +27,11 @@ module.exports = {
     "no-shadow": "warn",
     "no-unused-vars": "off", // disabled in favour of @typescript-eslint/no-unused-vars, see https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-unused-vars.md
     "prefer-const": "warn",
-    "radix": ["warn", "always"],
+    radix: ["warn", "always"],
     "spaced-comment": ["warn", "always", { line: { markers: ["/ <reference"] } }],
     "import/no-cycle": "warn",
     "simple-import-sort/sort": "warn",
+    "@typescript-eslint/array-type": ["warn", { default: "array-simple" }],
     "@typescript-eslint/await-thenable": "warn",
     "@typescript-eslint/explicit-function-return-type": ["warn", { allowExpressions: true }],
     "@typescript-eslint/no-dynamic-delete": "warn",
