@@ -38,7 +38,7 @@ export class Faucet {
     apiUrl: string,
     addressPrefix: string,
     config: TokenConfiguration,
-    pens: readonly [string, Pen][],
+    pens: ReadonlyArray<[string, Pen]>,
     logging = false,
   ) {
     this.addressPrefix = addressPrefix;
@@ -64,7 +64,7 @@ export class Faucet {
   /**
    * Returns a list of ticker symbols of tokens owned by the the holder and configured in the faucet
    */
-  public async availableTokens(): Promise<ReadonlyArray<string>> {
+  public async availableTokens(): Promise<readonly string[]> {
     const holderAccount = await this.readOnlyClient.getAccount(this.holderAddress);
     const balance = holderAccount ? holderAccount.balance : [];
 
@@ -99,7 +99,7 @@ export class Faucet {
     return this.tokenConfig.bankTokens.map((token) => token.tickerSymbol);
   }
 
-  public async loadAccounts(): Promise<ReadonlyArray<MinimalAccount>> {
+  public async loadAccounts(): Promise<readonly MinimalAccount[]> {
     const addresses = [this.holderAddress, ...this.distributorAddresses];
 
     return Promise.all(

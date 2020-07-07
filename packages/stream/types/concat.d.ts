@@ -16,4 +16,4 @@ import { Stream } from "xstream";
  * differently than xstream's concat as discussed in https://github.com/staltz/xstream/issues/170.
  *
  */
-export declare function concat<T>(...streams: Stream<T>[]): Stream<T>;
+export declare function concat<T>(...streams: Array<Stream<T>>): Stream<T>;

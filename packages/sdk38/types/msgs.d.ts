@@ -11,7 +11,7 @@ export interface MsgSend extends Msg {
     readonly from_address: string;
     /** Bech32 account address */
     readonly to_address: string;
-    readonly amount: ReadonlyArray<Coin>;
+    readonly amount: readonly Coin[];
   };
 }
 export declare function isMsgSend(msg: Msg): msg is MsgSend;

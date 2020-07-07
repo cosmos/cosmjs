@@ -3,7 +3,7 @@ import { CosmosSdkTx, StdTx } from "./types";
 export interface CosmosSdkAccount {
   /** Bech32 account address */
   readonly address: string;
-  readonly coins: ReadonlyArray<Coin>;
+  readonly coins: readonly Coin[];
   /** Bech32 encoded pubkey */
   readonly public_key: string;
   readonly account_number: number;
@@ -69,7 +69,7 @@ interface Block {
   readonly header: BlockHeader;
   readonly data: {
     /** Array of base64 encoded transactions */
-    readonly txs: ReadonlyArray<string> | null;
+    readonly txs: readonly string[] | null;
   };
 }
 export interface BlockResponse {

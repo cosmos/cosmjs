@@ -21,7 +21,7 @@ export function debugAccount(account: MinimalAccount, tokens: TokenConfiguration
   return `${account.address}: ${debugBalance(account.balance, tokens)}`;
 }
 
-export function logAccountsState(accounts: ReadonlyArray<MinimalAccount>, tokens: TokenConfiguration): void {
+export function logAccountsState(accounts: readonly MinimalAccount[], tokens: TokenConfiguration): void {
   if (accounts.length < 2) {
     throw new Error("List of accounts must contain at least one token holder and one distributor");
   }

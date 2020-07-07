@@ -41,7 +41,7 @@ export interface MsgInstantiateContract extends Msg {
     readonly label: string;
     /** Init message as JavaScript object */
     readonly init_msg: any;
-    readonly init_funds: ReadonlyArray<Coin>;
+    readonly init_funds: readonly Coin[];
     /** Bech32-encoded admin address */
     readonly admin?: string;
   };
@@ -106,7 +106,7 @@ export interface MsgExecuteContract extends Msg {
     readonly contract: string;
     /** Handle message as JavaScript object */
     readonly msg: any;
-    readonly sent_funds: ReadonlyArray<Coin>;
+    readonly sent_funds: readonly Coin[];
   };
 }
 

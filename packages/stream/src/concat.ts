@@ -17,7 +17,7 @@ import { Producer, Stream, Subscription } from "xstream";
  * differently than xstream's concat as discussed in https://github.com/staltz/xstream/issues/170.
  *
  */
-export function concat<T>(...streams: Stream<T>[]): Stream<T> {
+export function concat<T>(...streams: Array<Stream<T>>): Stream<T> {
   const subscriptions = new Array<Subscription>();
   const queues = new Array<T[]>(); // one queue per stream
   const completedStreams = new Set<number>();

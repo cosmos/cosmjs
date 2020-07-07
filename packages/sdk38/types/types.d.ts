@@ -17,7 +17,7 @@ export interface CosmosSdkTx {
   readonly value: StdTx;
 }
 export interface StdFee {
-  readonly amount: ReadonlyArray<Coin>;
+  readonly amount: readonly Coin[];
   readonly gas: string;
 }
 export interface StdSignature {
