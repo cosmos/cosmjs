@@ -21,7 +21,7 @@ export function normalizeArray<T>(backend: LcdApiArray<T>): ReadonlyArray<T> {
   return backend || [];
 }
 
-type LcdModule = Record<string, () => any>;
+export type LcdModule = Record<string, (...args: any[]) => any>;
 
 type LcdModuleSetup<M> = (base: LcdClient) => M;
 
