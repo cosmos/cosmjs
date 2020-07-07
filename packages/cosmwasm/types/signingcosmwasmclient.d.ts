@@ -14,9 +14,18 @@ export interface FeeTable {
   readonly changeAdmin: StdFee;
 }
 export interface UploadMeta {
-  /** The source URL */
+  /**
+   * An URL to a .tar.gz archive of the source code of the contract, which can be used to reproducibly build the Wasm bytecode.
+   *
+   * @see https://github.com/CosmWasm/cosmwasm-verify
+   */
   readonly source?: string;
-  /** The builder tag */
+  /**
+   * A docker image (including version) to reproducibly build the Wasm bytecode from the source code.
+   *
+   * @example ```cosmwasm/rust-optimizer:0.8.0```
+   * @see https://github.com/CosmWasm/cosmwasm-verify
+   */
   readonly builder?: string;
 }
 export interface UploadResult {

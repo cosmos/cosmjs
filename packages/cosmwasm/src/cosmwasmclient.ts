@@ -104,7 +104,18 @@ export interface Code {
   readonly creator: string;
   /** Hex-encoded sha256 hash of the code stored here */
   readonly checksum: string;
+  /**
+   * An URL to a .tar.gz archive of the source code of the contract, which can be used to reproducibly build the Wasm bytecode.
+   *
+   * @see https://github.com/CosmWasm/cosmwasm-verify
+   */
   readonly source?: string;
+  /**
+   * A docker image (including version) to reproducibly build the Wasm bytecode from the source code.
+   *
+   * @example ```cosmwasm/rust-optimizer:0.8.0```
+   * @see https://github.com/CosmWasm/cosmwasm-verify
+   */
   readonly builder?: string;
 }
 
