@@ -120,33 +120,29 @@ describe("LcdClient", () => {
         };
       }
 
-      interface TotalSupplyReponse {
+      interface TotalSupplyAllReponse {
         readonly height: string;
         readonly result: LcdApiArray<Coin>;
       }
 
       // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-      function registerSupplyModule(base: LcdClient) {
+      function setupSupplyModule(base: LcdClient) {
         return {
-          totalSupply: async (): Promise<TotalSupplyReponse> => {
+          totalSupplyAll: async (): Promise<TotalSupplyAllReponse> => {
             const path = `/supply/total`;
-            return (await base.get(path)) as TotalSupplyReponse;
+            return (await base.get(path)) as TotalSupplyAllReponse;
           },
         };
       }
 
-      const client = LcdClient.withModules(
-        { apiUrl: wasmd.endpoint },
-        registerWasmModule,
-        registerSupplyModule,
-      );
+      const client = LcdClient.withModules({ apiUrl: wasmd.endpoint }, registerWasmModule, setupSupplyModule);
       const codes = await client.listCodeInfo();
       expect(codes.length).toBeGreaterThanOrEqual(3);
       expect(codes[0].id).toEqual(deployedErc20.codeId);
       expect(codes[0].data_hash).toEqual(deployedErc20.checksum.toUpperCase());
       expect(codes[0].builder).toEqual(deployedErc20.builder);
       expect(codes[0].source).toEqual(deployedErc20.source);
-      const supply = await client.totalSupply();
+      const supply = await client.totalSupplyAll();
       expect(supply).toEqual({
         height: jasmine.stringMatching(/^[0-9]+$/),
         result: [
