@@ -38,7 +38,7 @@ export class Faucet {
     apiUrl: string,
     addressPrefix: string,
     config: TokenConfiguration,
-    pens: ReadonlyArray<[string, Pen]>,
+    pens: ReadonlyArray<readonly [string, Pen]>,
     logging = false,
   ) {
     this.addressPrefix = addressPrefix;
