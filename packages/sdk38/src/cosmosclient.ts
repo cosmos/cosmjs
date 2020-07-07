@@ -3,10 +3,9 @@ import { fromBase64, fromHex, toHex } from "@cosmjs/encoding";
 import { Uint53 } from "@cosmjs/math";
 
 import { Coin } from "./coins";
-import { BroadcastMode } from "./lcdapi";
+import { BroadcastMode, LcdClient } from "./lcdapi";
 import { Log, parseLogs } from "./logs";
 import { decodeBech32Pubkey } from "./pubkey";
-import { RestClient } from "./restclient";
 import { CosmosSdkTx, PubKey, StdTx } from "./types";
 
 export interface GetNonceResult {
@@ -131,11 +130,11 @@ export interface Block {
 
 /** Use for testing only */
 export interface PrivateCosmWasmClient {
-  readonly restClient: RestClient;
+  readonly lcdClient: LcdClient;
 }
 
 export class CosmosClient {
-  protected readonly restClient: RestClient;
+  protected readonly lcdClient: LcdClient;
   /** Any address the chain considers valid (valid bech32 with proper prefix) */
   protected anyValidAddress: string | undefined;
 
@@ -151,12 +150,12 @@ export class CosmosClient {
    * @param broadcastMode Defines at which point of the transaction processing the postTx method (i.e. transaction broadcasting) returns
    */
   public constructor(apiUrl: string, broadcastMode = BroadcastMode.Block) {
-    this.restClient = new RestClient(apiUrl, broadcastMode);
+    this.lcdClient = new LcdClient(apiUrl, broadcastMode);
   }
 
   public async getChainId(): Promise<string> {
     if (!this.chainId) {
-      const response = await this.restClient.nodeInfo();
+      const response = await this.lcdClient.nodeInfo();
       const chainId = response.node_info.network;
       if (!chainId) throw new Error("Chain ID must not be empty");
       this.chainId = chainId;
@@ -167,12 +166,12 @@ export class CosmosClient {
 
   public async getHeight(): Promise<number> {
     if (this.anyValidAddress) {
-      const { height } = await this.restClient.authAccounts(this.anyValidAddress);
+      const { height } = await this.lcdClient.authAccounts(this.anyValidAddress);
       return parseInt(height, 10);
     } else {
       // Note: this gets inefficient when blocks contain a lot of transactions since it
       // requires downloading and deserializing all transactions in the block.
-      const latest = await this.restClient.blocksLatest();
+      const latest = await this.lcdClient.blocksLatest();
       return parseInt(latest.block.header.height, 10);
     }
   }
@@ -182,7 +181,7 @@ export class CosmosClient {
    */
   public async getIdentifier(tx: CosmosSdkTx): Promise<string> {
     // We consult the REST API because we don't have a local amino encoder
-    const response = await this.restClient.encodeTx(tx);
+    const response = await this.lcdClient.encodeTx(tx);
     const hash = new Sha256(fromBase64(response.tx)).digest();
     return toHex(hash).toUpperCase();
   }
@@ -208,7 +207,7 @@ export class CosmosClient {
   }
 
   public async getAccount(address: string): Promise<Account | undefined> {
-    const account = await this.restClient.authAccounts(address);
+    const account = await this.lcdClient.authAccounts(address);
     const value = account.result.value;
     if (value.address === "") {
       return undefined;
@@ -231,7 +230,7 @@ export class CosmosClient {
    */
   public async getBlock(height?: number): Promise<Block> {
     const response =
-      height !== undefined ? await this.restClient.blocks(height) : await this.restClient.blocksLatest();
+      height !== undefined ? await this.lcdClient.blocks(height) : await this.lcdClient.blocksLatest();
 
     return {
       id: response.block_id.hash,
@@ -288,7 +287,7 @@ export class CosmosClient {
   }
 
   public async postTx(tx: StdTx): Promise<PostTxResult> {
-    const result = await this.restClient.postTx(tx);
+    const result = await this.lcdClient.postTx(tx);
     if (!result.txhash.match(/^([0-9A-F][0-9A-F])+$/)) {
       throw new Error("Received ill-formatted txhash. Must be non-empty upper-case hex");
     }
@@ -311,7 +310,7 @@ export class CosmosClient {
   private async txsQuery(query: string): Promise<readonly IndexedTx[]> {
     // TODO: we need proper pagination support
     const limit = 100;
-    const result = await this.restClient.txsQuery(`${query}&limit=${limit}`);
+    const result = await this.lcdClient.txsQuery(`${query}&limit=${limit}`);
     const pages = parseInt(result.page_total, 10);
     if (pages > 1) {
       throw new Error(

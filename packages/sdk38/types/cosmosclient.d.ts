@@ -1,7 +1,6 @@
 import { Coin } from "./coins";
-import { BroadcastMode } from "./lcdapi";
+import { BroadcastMode, LcdClient } from "./lcdapi";
 import { Log } from "./logs";
-import { RestClient } from "./restclient";
 import { CosmosSdkTx, PubKey, StdTx } from "./types";
 export interface GetNonceResult {
   readonly accountNumber: number;
@@ -95,10 +94,10 @@ export interface Block {
 }
 /** Use for testing only */
 export interface PrivateCosmWasmClient {
-  readonly restClient: RestClient;
+  readonly lcdClient: LcdClient;
 }
 export declare class CosmosClient {
-  protected readonly restClient: RestClient;
+  protected readonly lcdClient: LcdClient;
   /** Any address the chain considers valid (valid bech32 with proper prefix) */
   protected anyValidAddress: string | undefined;
   private chainId;
