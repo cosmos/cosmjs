@@ -37,12 +37,12 @@ import {
   wasmd,
   wasmdEnabled,
 } from "../testutils.spec";
-import { setupWasmModule, WasmExtension } from "./wasm";
+import { setupWasmExtension, WasmExtension } from "./wasm";
 
 type WasmClient = LcdClient & AuthExtension & WasmExtension;
 
 function makeWasmClient(apiUrl: string): WasmClient {
-  return LcdClient.withExtensions({ apiUrl }, setupAuthExtension, setupWasmModule);
+  return LcdClient.withExtensions({ apiUrl }, setupAuthExtension, setupWasmExtension);
 }
 
 async function uploadContract(

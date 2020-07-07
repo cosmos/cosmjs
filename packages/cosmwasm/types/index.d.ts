@@ -1,5 +1,6 @@
 import * as logs from "./logs";
 export { logs };
+export { setupWasmExtension, WasmExtension } from "./lcdapi/wasm";
 export { RestClient } from "./restclient";
 export {
   Account,

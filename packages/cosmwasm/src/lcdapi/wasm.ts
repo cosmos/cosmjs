@@ -113,7 +113,7 @@ export interface WasmExtension {
   };
 }
 
-export function setupWasmModule(base: LcdClient): WasmExtension {
+export function setupWasmExtension(base: LcdClient): WasmExtension {
   return {
     wasm: {
       listCodeInfo: async () => {

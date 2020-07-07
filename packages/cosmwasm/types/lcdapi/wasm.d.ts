@@ -71,4 +71,4 @@ export interface WasmExtension {
     readonly queryContractSmart: (address: string, query: object) => Promise<JsonObject>;
   };
 }
-export declare function setupWasmModule(base: LcdClient): WasmExtension;
+export declare function setupWasmExtension(base: LcdClient): WasmExtension;
