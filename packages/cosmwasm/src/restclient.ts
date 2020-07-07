@@ -55,9 +55,9 @@ interface SmartQueryResponse {
 }
 
 /** Unfortunately, Cosmos SDK encodes empty arrays as null */
-type CosmosSdkArray<T> = ReadonlyArray<T> | null;
+type CosmosSdkArray<T> = readonly T[] | null;
 
-function normalizeArray<T>(backend: CosmosSdkArray<T>): ReadonlyArray<T> {
+function normalizeArray<T>(backend: CosmosSdkArray<T>): readonly T[] {
   return backend || [];
 }
 

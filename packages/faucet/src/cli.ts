@@ -1,6 +1,6 @@
 import { generate, help, start, version } from "./actions";
 
-export function main(args: ReadonlyArray<string>): void {
+export function main(args: readonly string[]): void {
   if (args.length < 1) {
     help();
     process.exit(1);

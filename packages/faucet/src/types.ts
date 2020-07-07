@@ -26,7 +26,7 @@ export interface BankTokenMeta {
 
 export interface TokenConfiguration {
   /** Supported tokens of the Cosmos SDK bank module */
-  readonly bankTokens: ReadonlyArray<BankTokenMeta>;
+  readonly bankTokens: readonly BankTokenMeta[];
 }
 
 export type MinimalAccount = Pick<Account, "address" | "balance">;

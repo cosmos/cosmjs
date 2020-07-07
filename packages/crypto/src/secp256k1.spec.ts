@@ -194,11 +194,11 @@ describe("Secp256k1", () => {
 
   it("verifies unnormalized pyca/cryptography signatures", async () => {
     // signatures are mixed lowS and non-lowS, prehash type is sha256
-    const data: readonly {
+    const data: ReadonlyArray<{
       readonly message: Uint8Array;
       readonly privkey: Uint8Array;
       readonly signature: Uint8Array;
-    }[] = [
+    }> = [
       {
         message: fromHex(
           "5c868fedb8026979ebd26f1ba07c27eedf4ff6d10443505a96ecaf21ba8c4f0937b3cd23ffdc3dd429d4cd1905fb8dbcceeff1350020e18b58d2ba70887baa3a9b783ad30d3fbf210331cdd7df8d77defa398cdacdfc2e359c7ba4cae46bb74401deb417f8b912a1aa966aeeba9c39c7dd22479ae2b30719dca2f2206c5eb4b7",
@@ -395,11 +395,11 @@ describe("Secp256k1", () => {
 
   it("matches normalized pyca/cryptography signatures", async () => {
     // signatures are normalized to lowS, prehash type is sha256
-    const data: readonly {
+    const data: ReadonlyArray<{
       readonly message: Uint8Array;
       readonly privkey: Uint8Array;
       readonly signature: Uint8Array;
-    }[] = [
+    }> = [
       {
         message: fromHex(
           "5c868fedb8026979ebd26f1ba07c27eedf4ff6d10443505a96ecaf21ba8c4f0937b3cd23ffdc3dd429d4cd1905fb8dbcceeff1350020e18b58d2ba70887baa3a9b783ad30d3fbf210331cdd7df8d77defa398cdacdfc2e359c7ba4cae46bb74401deb417f8b912a1aa966aeeba9c39c7dd22479ae2b30719dca2f2206c5eb4b7",

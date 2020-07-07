@@ -5,7 +5,7 @@ import * as constants from "../../constants";
 import { logAccountsState } from "../../debugging";
 import { Faucet } from "../../faucet";
 
-export async function start(args: ReadonlyArray<string>): Promise<void> {
+export async function start(args: readonly string[]): Promise<void> {
   if (args.length < 1) {
     throw Error(
       `Not enough arguments for action 'start'. See '${constants.binaryName} help' or README for arguments.`,

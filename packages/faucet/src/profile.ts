@@ -6,8 +6,8 @@ export async function createPens(
   addressPrefix: string,
   numberOfDistributors: number,
   logging = false,
-): Promise<readonly [string, Pen][]> {
-  const pens = new Array<[string, Pen]>();
+): Promise<ReadonlyArray<readonly [string, Pen]>> {
+  const pens = new Array<readonly [string, Pen]>();
 
   // first account is the token holder
   const numberOfIdentities = 1 + numberOfDistributors;

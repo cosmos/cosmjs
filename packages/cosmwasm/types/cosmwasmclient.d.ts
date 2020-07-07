@@ -9,7 +9,7 @@ export interface GetNonceResult {
 export interface Account {
   /** Bech32 account address */
   readonly address: string;
-  readonly balance: ReadonlyArray<Coin>;
+  readonly balance: readonly Coin[];
   readonly pubkey: PubKey | undefined;
   readonly accountNumber: number;
   readonly sequence: number;
@@ -44,10 +44,10 @@ export interface SearchBySentFromOrToQuery {
  * more powerful and slightly lower level than the other search options.
  */
 export interface SearchByTagsQuery {
-  readonly tags: readonly {
+  readonly tags: ReadonlyArray<{
     readonly key: string;
     readonly value: string;
-  }[];
+  }>;
 }
 export declare type SearchTxQuery =
   | SearchByIdQuery
@@ -99,7 +99,7 @@ export interface Block {
   readonly id: string;
   readonly header: BlockHeader;
   /** Array of raw transactions */
-  readonly txs: ReadonlyArray<Uint8Array>;
+  readonly txs: readonly Uint8Array[];
 }
 /** Use for testing only */
 export interface PrivateCosmWasmClient {
