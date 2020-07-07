@@ -1,5 +1,5 @@
 import { Coin } from "../coins";
-import { LcdApiArray, LcdClient, LcdModule } from "../lcdclient";
+import { LcdApiArray, LcdClient, LcdModule } from "./lcdclient";
 
 export interface TotalSupplyAllReponse {
   readonly height: string;

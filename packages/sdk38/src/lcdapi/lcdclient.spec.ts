@@ -1,17 +1,15 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { assert, sleep } from "@cosmjs/utils";
 
-import { rawSecp256k1PubkeyToAddress } from "./address";
-import { Coin } from "./coins";
-import { isPostTxFailure } from "./cosmosclient";
-import { makeSignBytes } from "./encoding";
-import { TxsResponse } from "./lcdapi";
-import { LcdApiArray, LcdClient, normalizeArray } from "./lcdclient";
-import { parseLogs } from "./logs";
-import { MsgSend } from "./msgs";
-import { makeCosmoshubPath, Secp256k1Pen } from "./pen";
-import { SigningCosmosClient } from "./signingcosmosclient";
-import cosmoshub from "./testdata/cosmoshub.json";
+import { rawSecp256k1PubkeyToAddress } from "../address";
+import { Coin } from "../coins";
+import { isPostTxFailure } from "../cosmosclient";
+import { makeSignBytes } from "../encoding";
+import { parseLogs } from "../logs";
+import { MsgSend } from "../msgs";
+import { makeCosmoshubPath, Secp256k1Pen } from "../pen";
+import { SigningCosmosClient } from "../signingcosmosclient";
+import cosmoshub from "../testdata/cosmoshub.json";
 import {
   faucet,
   makeRandomAddress,
@@ -21,8 +19,10 @@ import {
   tendermintIdMatcher,
   wasmd,
   wasmdEnabled,
-} from "./testutils.spec";
-import { StdFee } from "./types";
+} from "../testutils.spec";
+import { StdFee } from "../types";
+import { TxsResponse } from "./base";
+import { LcdApiArray, LcdClient, normalizeArray } from "./lcdclient";
 
 /** Deployed as part of scripts/wasmd/init.sh */
 export const deployedErc20 = {

@@ -1,5 +1,5 @@
-import { LcdClient } from "../lcdclient";
 import { pendingWithoutWasmd, wasmd } from "../testutils.spec";
+import { LcdClient } from "./lcdclient";
 import { setupSupplyModule } from "./supply";
 
 describe("supply", () => {

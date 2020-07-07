@@ -2,6 +2,7 @@
 import { assert, isNonNullObject } from "@cosmjs/utils";
 import axios, { AxiosError, AxiosInstance } from "axios";
 
+import { CosmosSdkTx, StdTx } from "../types";
 import {
   AuthAccountsResponse,
   BlockResponse,
@@ -11,8 +12,7 @@ import {
   PostTxsResponse,
   SearchTxsResponse,
   TxsResponse,
-} from "./lcdapi";
-import { CosmosSdkTx, StdTx } from "./types";
+} from "./base";
 
 /** Unfortunately, Cosmos SDK encodes empty arrays as null */
 export type LcdApiArray<T> = readonly T[] | null;
