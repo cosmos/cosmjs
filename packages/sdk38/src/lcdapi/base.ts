@@ -8,13 +8,13 @@ import { CosmosSdkTx } from "../types";
 export enum BroadcastMode {
   /** Return after tx commit */
   Block = "block",
-  /** Return afer CheckTx */
+  /** Return after CheckTx */
   Sync = "sync",
   /** Return right away */
   Async = "async",
 }
 
-/** A reponse from the /txs/encode endpoint */
+/** A response from the /txs/encode endpoint */
 export interface EncodeTxResponse {
   /** base64-encoded amino-binary encoded representation */
   readonly tx: string;

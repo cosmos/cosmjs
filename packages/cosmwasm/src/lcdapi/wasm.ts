@@ -106,7 +106,7 @@ export interface WasmExtension {
     readonly queryContractRaw: (address: string, key: Uint8Array) => Promise<Uint8Array | null>;
 
     /**
-     * Makes a smart query on the contract and parses the reponse as JSON.
+     * Makes a smart query on the contract and parses the response as JSON.
      * Throws error if no such contract exists, the query format is invalid or the response is invalid.
      */
     readonly queryContractSmart: (address: string, query: object) => Promise<JsonObject>;

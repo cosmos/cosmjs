@@ -153,7 +153,7 @@ export declare class LcdClient {
   /** returns the amino-encoding of the transaction performed by the server */
   encodeTx(tx: CosmosSdkTx): Promise<EncodeTxResponse>;
   /**
-   * Broadcasts a signed transaction to into the transaction pool.
+   * Broadcasts a signed transaction to the transaction pool.
    * Depending on the client's broadcast mode, this might or might
    * wait for checkTx or deliverTx to be executed before returning.
    *

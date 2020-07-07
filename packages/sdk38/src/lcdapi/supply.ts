@@ -1,12 +1,12 @@
 import { Coin } from "../coins";
 import { LcdApiArray, LcdClient } from "./lcdclient";
 
-export interface TotalSupplyAllReponse {
+export interface TotalSupplyAllResponse {
   readonly height: string;
   readonly result: LcdApiArray<Coin>;
 }
 
-export interface TotalSupplyReponse {
+export interface TotalSupplyResponse {
   readonly height: string;
   /** The amount */
   readonly result: string;
@@ -14,8 +14,8 @@ export interface TotalSupplyReponse {
 
 export interface SupplyExtension {
   readonly supply: {
-    readonly totalAll: () => Promise<TotalSupplyAllReponse>;
-    readonly total: (denom: string) => Promise<TotalSupplyReponse>;
+    readonly totalAll: () => Promise<TotalSupplyAllResponse>;
+    readonly total: (denom: string) => Promise<TotalSupplyResponse>;
   };
 }
 

@@ -117,7 +117,7 @@ describe("LcdClient", () => {
     it("works for two extensions", async () => {
       pendingWithoutWasmd();
 
-      interface TotalSupplyAllReponse {
+      interface TotalSupplyAllResponse {
         readonly height: string;
         readonly result: LcdApiArray<Coin>;
       }
@@ -126,9 +126,9 @@ describe("LcdClient", () => {
       function setupSupplyExtension(base: LcdClient) {
         return {
           supply: {
-            totalAll: async (): Promise<TotalSupplyAllReponse> => {
+            totalAll: async (): Promise<TotalSupplyAllResponse> => {
               const path = `/supply/total`;
-              return (await base.get(path)) as TotalSupplyAllReponse;
+              return (await base.get(path)) as TotalSupplyAllResponse;
             },
           },
         };
@@ -161,7 +161,7 @@ describe("LcdClient", () => {
       });
     });
 
-    it("can merge two extension into the same module", async () => {
+    it("can merge two extensions into the same module", async () => {
       pendingWithoutWasmd();
 
       // eslint-disable-next-line @typescript-eslint/explicit-function-return-type

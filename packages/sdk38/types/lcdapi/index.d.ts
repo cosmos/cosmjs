@@ -1,5 +1,5 @@
 export { AuthExtension, AuthAccountsResponse, setupAuthExtension } from "./auth";
-export { setupSupplyExtension, SupplyExtension, TotalSupplyAllReponse, TotalSupplyReponse } from "./supply";
+export { setupSupplyExtension, SupplyExtension, TotalSupplyAllResponse, TotalSupplyResponse } from "./supply";
 export {
   BlockResponse,
   BroadcastMode,
