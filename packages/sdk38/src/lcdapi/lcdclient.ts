@@ -64,31 +64,31 @@ function parseAxiosError(err: AxiosError): never {
  * @see https://cosmos.network/rpc
  */
 export class LcdClient {
-  /** Constructs an LCD client with 0 modules */
+  /** Constructs an LCD client with 0 extensions */
   public static withExtensions(options: LcdClientBaseOptions): LcdClient;
 
-  /** Constructs an LCD client with 1 module */
+  /** Constructs an LCD client with 1 extension */
   public static withExtensions<A extends LcdExtension>(
     options: LcdClientBaseOptions,
-    setupModuleA: LcdExtensionSetup<A>,
+    setupExtensionA: LcdExtensionSetup<A>,
   ): LcdClient & A;
 
-  /** Constructs an LCD client with 2 modules */
+  /** Constructs an LCD client with 2 extensions */
   public static withExtensions<A extends LcdExtension, B extends LcdExtension>(
     options: LcdClientBaseOptions,
-    setupModuleA: LcdExtensionSetup<A>,
-    setupModuleB: LcdExtensionSetup<B>,
+    setupExtensionA: LcdExtensionSetup<A>,
+    setupExtensionB: LcdExtensionSetup<B>,
   ): LcdClient & A & B;
 
-  /** Constructs an LCD client with 3 modules */
+  /** Constructs an LCD client with 3 extensions */
   public static withExtensions<A extends LcdExtension, B extends LcdExtension, C extends LcdExtension>(
     options: LcdClientBaseOptions,
-    setupModuleA: LcdExtensionSetup<A>,
-    setupModuleB: LcdExtensionSetup<B>,
-    setupModuleC: LcdExtensionSetup<C>,
+    setupExtensionA: LcdExtensionSetup<A>,
+    setupExtensionB: LcdExtensionSetup<B>,
+    setupExtensionC: LcdExtensionSetup<C>,
   ): LcdClient & A & B & C;
 
-  /** Constructs an LCD client with 4 modules */
+  /** Constructs an LCD client with 4 extensions */
   public static withExtensions<
     A extends LcdExtension,
     B extends LcdExtension,
@@ -96,13 +96,13 @@ export class LcdClient {
     D extends LcdExtension
   >(
     options: LcdClientBaseOptions,
-    setupModuleA: LcdExtensionSetup<A>,
-    setupModuleB: LcdExtensionSetup<B>,
-    setupModuleC: LcdExtensionSetup<C>,
-    setupModuleD: LcdExtensionSetup<D>,
+    setupExtensionA: LcdExtensionSetup<A>,
+    setupExtensionB: LcdExtensionSetup<B>,
+    setupExtensionC: LcdExtensionSetup<C>,
+    setupExtensionD: LcdExtensionSetup<D>,
   ): LcdClient & A & B & C & D;
 
-  /** Constructs an LCD client with 5 modules */
+  /** Constructs an LCD client with 5 extensions */
   public static withExtensions<
     A extends LcdExtension,
     B extends LcdExtension,
@@ -111,14 +111,14 @@ export class LcdClient {
     E extends LcdExtension
   >(
     options: LcdClientBaseOptions,
-    setupModuleA: LcdExtensionSetup<A>,
-    setupModuleB: LcdExtensionSetup<B>,
-    setupModuleC: LcdExtensionSetup<C>,
-    setupModuleD: LcdExtensionSetup<D>,
-    setupModuleE: LcdExtensionSetup<E>,
+    setupExtensionA: LcdExtensionSetup<A>,
+    setupExtensionB: LcdExtensionSetup<B>,
+    setupExtensionC: LcdExtensionSetup<C>,
+    setupExtensionD: LcdExtensionSetup<D>,
+    setupExtensionE: LcdExtensionSetup<E>,
   ): LcdClient & A & B & C & D & E;
 
-  /** Constructs an LCD client with 6 modules */
+  /** Constructs an LCD client with 6 extensions */
   public static withExtensions<
     A extends LcdExtension,
     B extends LcdExtension,
@@ -128,15 +128,15 @@ export class LcdClient {
     F extends LcdExtension
   >(
     options: LcdClientBaseOptions,
-    setupModuleA: LcdExtensionSetup<A>,
-    setupModuleB: LcdExtensionSetup<B>,
-    setupModuleC: LcdExtensionSetup<C>,
-    setupModuleD: LcdExtensionSetup<D>,
-    setupModuleE: LcdExtensionSetup<E>,
-    setupModuleF: LcdExtensionSetup<F>,
+    setupExtensionA: LcdExtensionSetup<A>,
+    setupExtensionB: LcdExtensionSetup<B>,
+    setupExtensionC: LcdExtensionSetup<C>,
+    setupExtensionD: LcdExtensionSetup<D>,
+    setupExtensionE: LcdExtensionSetup<E>,
+    setupExtensionF: LcdExtensionSetup<F>,
   ): LcdClient & A & B & C & D & E & F;
 
-  /** Constructs an LCD client with 7 modules */
+  /** Constructs an LCD client with 7 extensions */
   public static withExtensions<
     A extends LcdExtension,
     B extends LcdExtension,
@@ -147,16 +147,16 @@ export class LcdClient {
     G extends LcdExtension
   >(
     options: LcdClientBaseOptions,
-    setupModuleA: LcdExtensionSetup<A>,
-    setupModuleB: LcdExtensionSetup<B>,
-    setupModuleC: LcdExtensionSetup<C>,
-    setupModuleD: LcdExtensionSetup<D>,
-    setupModuleE: LcdExtensionSetup<E>,
-    setupModuleF: LcdExtensionSetup<F>,
-    setupModuleG: LcdExtensionSetup<G>,
+    setupExtensionA: LcdExtensionSetup<A>,
+    setupExtensionB: LcdExtensionSetup<B>,
+    setupExtensionC: LcdExtensionSetup<C>,
+    setupExtensionD: LcdExtensionSetup<D>,
+    setupExtensionE: LcdExtensionSetup<E>,
+    setupExtensionF: LcdExtensionSetup<F>,
+    setupExtensionG: LcdExtensionSetup<G>,
   ): LcdClient & A & B & C & D & E & F & G;
 
-  /** Constructs an LCD client with 8 modules */
+  /** Constructs an LCD client with 8 extensions */
   public static withExtensions<
     A extends LcdExtension,
     B extends LcdExtension,
@@ -168,14 +168,14 @@ export class LcdClient {
     H extends LcdExtension
   >(
     options: LcdClientBaseOptions,
-    setupModuleA: LcdExtensionSetup<A>,
-    setupModuleB: LcdExtensionSetup<B>,
-    setupModuleC: LcdExtensionSetup<C>,
-    setupModuleD: LcdExtensionSetup<D>,
-    setupModuleE: LcdExtensionSetup<E>,
-    setupModuleF: LcdExtensionSetup<F>,
-    setupModuleG: LcdExtensionSetup<G>,
-    setupModuleH: LcdExtensionSetup<H>,
+    setupExtensionA: LcdExtensionSetup<A>,
+    setupExtensionB: LcdExtensionSetup<B>,
+    setupExtensionC: LcdExtensionSetup<C>,
+    setupExtensionD: LcdExtensionSetup<D>,
+    setupExtensionE: LcdExtensionSetup<E>,
+    setupExtensionF: LcdExtensionSetup<F>,
+    setupExtensionG: LcdExtensionSetup<G>,
+    setupExtensionH: LcdExtensionSetup<H>,
   ): LcdClient & A & B & C & D & E & F & G & H;
 
   public static withExtensions<
@@ -189,31 +189,31 @@ export class LcdClient {
     H extends LcdExtension
   >(
     options: LcdClientBaseOptions,
-    setupModuleA?: LcdExtensionSetup<A>,
-    setupModuleB?: LcdExtensionSetup<B>,
-    setupModuleC?: LcdExtensionSetup<C>,
-    setupModuleD?: LcdExtensionSetup<D>,
-    setupModuleE?: LcdExtensionSetup<E>,
-    setupModuleF?: LcdExtensionSetup<F>,
-    setupModuleG?: LcdExtensionSetup<G>,
-    setupModuleH?: LcdExtensionSetup<H>,
+    setupExtensionA?: LcdExtensionSetup<A>,
+    setupExtensionB?: LcdExtensionSetup<B>,
+    setupExtensionC?: LcdExtensionSetup<C>,
+    setupExtensionD?: LcdExtensionSetup<D>,
+    setupExtensionE?: LcdExtensionSetup<E>,
+    setupExtensionF?: LcdExtensionSetup<F>,
+    setupExtensionG?: LcdExtensionSetup<G>,
+    setupExtensionH?: LcdExtensionSetup<H>,
   ): any {
     const client = new LcdClient(options.apiUrl, options.broadcastMode);
 
-    const modules = new Array<LcdExtension>();
-    if (setupModuleA) modules.push(setupModuleA(client));
-    if (setupModuleB) modules.push(setupModuleB(client));
-    if (setupModuleC) modules.push(setupModuleC(client));
-    if (setupModuleD) modules.push(setupModuleD(client));
-    if (setupModuleE) modules.push(setupModuleE(client));
-    if (setupModuleF) modules.push(setupModuleF(client));
-    if (setupModuleG) modules.push(setupModuleG(client));
-    if (setupModuleH) modules.push(setupModuleH(client));
-    for (const module of modules) {
-      assert(isNonNullObject(module), `Module must be a non-null object`);
-      for (const key in module) {
-        assert(typeof key == "string", `Found non-string module key: ${key}`);
-        (client as any)[key] = module[key];
+    const extensions = new Array<LcdExtension>();
+    if (setupExtensionA) extensions.push(setupExtensionA(client));
+    if (setupExtensionB) extensions.push(setupExtensionB(client));
+    if (setupExtensionC) extensions.push(setupExtensionC(client));
+    if (setupExtensionD) extensions.push(setupExtensionD(client));
+    if (setupExtensionE) extensions.push(setupExtensionE(client));
+    if (setupExtensionF) extensions.push(setupExtensionF(client));
+    if (setupExtensionG) extensions.push(setupExtensionG(client));
+    if (setupExtensionH) extensions.push(setupExtensionH(client));
+    for (const extension of extensions) {
+      assert(isNonNullObject(extension), `Extension must be a non-null object`);
+      for (const key in extension) {
+        assert(typeof key == "string", `Found non-string extension key: ${key}`);
+        (client as any)[key] = extension[key];
       }
     }
 
