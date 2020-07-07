@@ -180,6 +180,10 @@ export class LcdClient {
     for (const extension of extensions) {
       assert(isNonNullObject(extension), `Extension must be a non-null object`);
       for (const [moduleKey, moduleValue] of Object.entries(extension)) {
+        assert(
+          isNonNullObject(moduleValue),
+          `Module must be a non-null object. Found type ${typeof moduleValue} for module "${moduleKey}".`,
+        );
         const current = (client as any)[moduleKey] || {};
         (client as any)[moduleKey] = Object.assign(current, moduleValue);
       }
