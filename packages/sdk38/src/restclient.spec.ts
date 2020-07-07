@@ -28,8 +28,6 @@ import {
 } from "./testutils.spec";
 import { StdFee, StdSignature, StdTx } from "./types";
 
-const emptyAddress = "cosmos1ltkhnmdcqemmd2tkhnx7qx66tq7e0wykw2j85k";
-
 function makeSignedTx(firstMsg: Msg, fee: StdFee, memo: string, firstSignature: StdSignature): StdTx {
   return {
     msg: [firstMsg],
@@ -40,6 +38,8 @@ function makeSignedTx(firstMsg: Msg, fee: StdFee, memo: string, firstSignature: 
 }
 
 describe("RestClient", () => {
+  const defaultRecipientAddress = makeRandomAddress();
+
   it("can be constructed", () => {
     const client = new RestClient(wasmd.endpoint);
     expect(client).toBeTruthy();
@@ -542,7 +542,7 @@ describe("RestClient", () => {
         type: "cosmos-sdk/MsgSend",
         value: {
           from_address: faucet.address,
-          to_address: emptyAddress,
+          to_address: defaultRecipientAddress,
           amount: [
             {
               denom: "ucosm",
@@ -595,7 +595,7 @@ describe("RestClient", () => {
         type: "cosmos-sdk/MsgSend",
         value: {
           from_address: address1,
-          to_address: emptyAddress,
+          to_address: defaultRecipientAddress,
           amount: [
             {
               denom: "ucosm",
@@ -647,7 +647,7 @@ describe("RestClient", () => {
         type: "cosmos-sdk/MsgSend",
         value: {
           from_address: address1,
-          to_address: emptyAddress,
+          to_address: defaultRecipientAddress,
           amount: [
             {
               denom: "ucosm",
@@ -660,7 +660,7 @@ describe("RestClient", () => {
         type: "cosmos-sdk/MsgSend",
         value: {
           from_address: address1,
-          to_address: emptyAddress,
+          to_address: defaultRecipientAddress,
           amount: [
             {
               denom: "ucosm",
@@ -707,7 +707,7 @@ describe("RestClient", () => {
         type: "cosmos-sdk/MsgSend",
         value: {
           from_address: address1,
-          to_address: emptyAddress,
+          to_address: defaultRecipientAddress,
           amount: [
             {
               denom: "ucosm",
@@ -720,7 +720,7 @@ describe("RestClient", () => {
         type: "cosmos-sdk/MsgSend",
         value: {
           from_address: address2,
-          to_address: emptyAddress,
+          to_address: defaultRecipientAddress,
           amount: [
             {
               denom: "ucosm",
@@ -775,7 +775,7 @@ describe("RestClient", () => {
         type: "cosmos-sdk/MsgSend",
         value: {
           from_address: address1,
-          to_address: emptyAddress,
+          to_address: defaultRecipientAddress,
           amount: [
             {
               denom: "ucosm",
@@ -788,7 +788,7 @@ describe("RestClient", () => {
         type: "cosmos-sdk/MsgSend",
         value: {
           from_address: address2,
-          to_address: emptyAddress,
+          to_address: defaultRecipientAddress,
           amount: [
             {
               denom: "ucosm",
@@ -838,7 +838,7 @@ describe("RestClient", () => {
         type: "cosmos-sdk/MsgSend",
         value: {
           from_address: address1,
-          to_address: emptyAddress,
+          to_address: defaultRecipientAddress,
           amount: [
             {
               denom: "ucosm",
@@ -851,7 +851,7 @@ describe("RestClient", () => {
         type: "cosmos-sdk/MsgSend",
         value: {
           from_address: address2,
-          to_address: emptyAddress,
+          to_address: defaultRecipientAddress,
           amount: [
             {
               denom: "ucosm",
