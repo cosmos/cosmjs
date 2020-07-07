@@ -3,9 +3,10 @@ import { fromBase64, fromHex, toHex } from "@cosmjs/encoding";
 import { Uint53 } from "@cosmjs/math";
 
 import { Coin } from "./coins";
+import { BroadcastMode } from "./lcdapi";
 import { Log, parseLogs } from "./logs";
 import { decodeBech32Pubkey } from "./pubkey";
-import { BroadcastMode, RestClient } from "./restclient";
+import { RestClient } from "./restclient";
 import { CosmosSdkTx, PubKey, StdTx } from "./types";
 
 export interface GetNonceResult {

@@ -5,11 +5,12 @@ import { ReadonlyDate } from "readonly-date";
 import { rawSecp256k1PubkeyToAddress } from "./address";
 import { isPostTxFailure } from "./cosmosclient";
 import { makeSignBytes } from "./encoding";
+import { TxsResponse } from "./lcdapi";
 import { parseLogs } from "./logs";
 import { MsgSend } from "./msgs";
 import { makeCosmoshubPath, Secp256k1Pen } from "./pen";
 import { encodeBech32Pubkey } from "./pubkey";
-import { RestClient, TxsResponse } from "./restclient";
+import { RestClient } from "./restclient";
 import { SigningCosmosClient } from "./signingcosmosclient";
 import cosmoshub from "./testdata/cosmoshub.json";
 import {

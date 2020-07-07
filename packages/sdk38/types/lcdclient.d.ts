@@ -7,7 +7,7 @@ import {
   PostTxsResponse,
   SearchTxsResponse,
   TxsResponse,
-} from "./restclient";
+} from "./lcdapi";
 import { CosmosSdkTx, StdTx } from "./types";
 /** Unfortunately, Cosmos SDK encodes empty arrays as null */
 export declare type LcdApiArray<T> = ReadonlyArray<T> | null;

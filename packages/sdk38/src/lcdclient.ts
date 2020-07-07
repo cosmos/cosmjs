@@ -11,13 +11,13 @@ import {
   PostTxsResponse,
   SearchTxsResponse,
   TxsResponse,
-} from "./restclient";
+} from "./lcdapi";
 import { CosmosSdkTx, StdTx } from "./types";
 
 /** Unfortunately, Cosmos SDK encodes empty arrays as null */
-export type LcdApiArray<T> = ReadonlyArray<T> | null;
+export type LcdApiArray<T> = readonly T[] | null;
 
-export function normalizeArray<T>(backend: LcdApiArray<T>): ReadonlyArray<T> {
+export function normalizeArray<T>(backend: LcdApiArray<T>): readonly T[] {
   return backend || [];
 }
 

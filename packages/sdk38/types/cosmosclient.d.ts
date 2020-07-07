@@ -1,6 +1,7 @@
 import { Coin } from "./coins";
+import { BroadcastMode } from "./lcdapi";
 import { Log } from "./logs";
-import { BroadcastMode, RestClient } from "./restclient";
+import { RestClient } from "./restclient";
 import { CosmosSdkTx, PubKey, StdTx } from "./types";
 export interface GetNonceResult {
   readonly accountNumber: number;

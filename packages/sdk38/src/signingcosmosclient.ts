@@ -1,8 +1,8 @@
 import { Coin, coins } from "./coins";
 import { Account, CosmosClient, GetNonceResult, PostTxResult } from "./cosmosclient";
 import { makeSignBytes } from "./encoding";
+import { BroadcastMode } from "./lcdapi";
 import { MsgSend } from "./msgs";
-import { BroadcastMode } from "./restclient";
 import { StdFee, StdSignature, StdTx } from "./types";
 
 export interface SigningCallback {
