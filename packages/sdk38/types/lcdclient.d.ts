@@ -14,34 +14,34 @@ export declare type LcdApiArray<T> = ReadonlyArray<T> | null;
 export declare function normalizeArray<T>(backend: LcdApiArray<T>): ReadonlyArray<T>;
 declare type LcdModule = Record<string, () => any>;
 declare type LcdModuleSetup<M> = (base: LcdClient) => M;
+export interface LcdClientBaseOptions {
+  readonly apiUrl: string;
+  readonly broadcastMode?: BroadcastMode;
+}
 export declare class LcdClient {
   /** Constructs an LCD client with 0 modules */
-  static withModules(apiUrl: string, broadcastMode: BroadcastMode): LcdClient;
-  /** Constructs an LCD client with 1 modules */
+  static withModules(options: LcdClientBaseOptions): LcdClient;
+  /** Constructs an LCD client with 1 module */
   static withModules<A extends LcdModule>(
-    apiUrl: string,
-    broadcastMode: BroadcastMode,
+    options: LcdClientBaseOptions,
     setupModuleA: LcdModuleSetup<A>,
   ): LcdClient & A;
   /** Constructs an LCD client with 2 modules */
   static withModules<A extends LcdModule, B extends LcdModule>(
-    apiUrl: string,
-    broadcastMode: BroadcastMode,
+    options: LcdClientBaseOptions,
     setupModuleA: LcdModuleSetup<A>,
     setupModuleB: LcdModuleSetup<B>,
   ): LcdClient & A & B;
   /** Constructs an LCD client with 3 modules */
   static withModules<A extends LcdModule, B extends LcdModule, C extends LcdModule>(
-    apiUrl: string,
-    broadcastMode: BroadcastMode,
+    options: LcdClientBaseOptions,
     setupModuleA: LcdModuleSetup<A>,
     setupModuleB: LcdModuleSetup<B>,
     setupModuleC: LcdModuleSetup<C>,
   ): LcdClient & A & B & C;
   /** Constructs an LCD client with 4 modules */
   static withModules<A extends LcdModule, B extends LcdModule, C extends LcdModule, D extends LcdModule>(
-    apiUrl: string,
-    broadcastMode: BroadcastMode,
+    options: LcdClientBaseOptions,
     setupModuleA: LcdModuleSetup<A>,
     setupModuleB: LcdModuleSetup<B>,
     setupModuleC: LcdModuleSetup<C>,
@@ -55,8 +55,7 @@ export declare class LcdClient {
     D extends LcdModule,
     E extends LcdModule
   >(
-    apiUrl: string,
-    broadcastMode: BroadcastMode,
+    options: LcdClientBaseOptions,
     setupModuleA: LcdModuleSetup<A>,
     setupModuleB: LcdModuleSetup<B>,
     setupModuleC: LcdModuleSetup<C>,
@@ -72,8 +71,7 @@ export declare class LcdClient {
     E extends LcdModule,
     F extends LcdModule
   >(
-    apiUrl: string,
-    broadcastMode: BroadcastMode,
+    options: LcdClientBaseOptions,
     setupModuleA: LcdModuleSetup<A>,
     setupModuleB: LcdModuleSetup<B>,
     setupModuleC: LcdModuleSetup<C>,
@@ -91,8 +89,7 @@ export declare class LcdClient {
     F extends LcdModule,
     G extends LcdModule
   >(
-    apiUrl: string,
-    broadcastMode: BroadcastMode,
+    options: LcdClientBaseOptions,
     setupModuleA: LcdModuleSetup<A>,
     setupModuleB: LcdModuleSetup<B>,
     setupModuleC: LcdModuleSetup<C>,
@@ -112,8 +109,7 @@ export declare class LcdClient {
     G extends LcdModule,
     H extends LcdModule
   >(
-    apiUrl: string,
-    broadcastMode: BroadcastMode,
+    options: LcdClientBaseOptions,
     setupModuleA: LcdModuleSetup<A>,
     setupModuleB: LcdModuleSetup<B>,
     setupModuleC: LcdModuleSetup<C>,

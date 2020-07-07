@@ -25,6 +25,11 @@ type LcdModule = Record<string, () => any>;
 
 type LcdModuleSetup<M> = (base: LcdClient) => M;
 
+export interface LcdClientBaseOptions {
+  readonly apiUrl: string;
+  readonly broadcastMode?: BroadcastMode;
+}
+
 // We want to get message data from 500 errors
 // https://stackoverflow.com/questions/56577124/how-to-handle-500-error-message-with-axios
 // this should be chained to catch one error and throw a more informative one
@@ -49,27 +54,24 @@ function parseAxiosError(err: AxiosError): never {
 
 export class LcdClient {
   /** Constructs an LCD client with 0 modules */
-  public static withModules(apiUrl: string, broadcastMode: BroadcastMode): LcdClient;
+  public static withModules(options: LcdClientBaseOptions): LcdClient;
 
-  /** Constructs an LCD client with 1 modules */
+  /** Constructs an LCD client with 1 module */
   public static withModules<A extends LcdModule>(
-    apiUrl: string,
-    broadcastMode: BroadcastMode,
+    options: LcdClientBaseOptions,
     setupModuleA: LcdModuleSetup<A>,
   ): LcdClient & A;
 
   /** Constructs an LCD client with 2 modules */
   public static withModules<A extends LcdModule, B extends LcdModule>(
-    apiUrl: string,
-    broadcastMode: BroadcastMode,
+    options: LcdClientBaseOptions,
     setupModuleA: LcdModuleSetup<A>,
     setupModuleB: LcdModuleSetup<B>,
   ): LcdClient & A & B;
 
   /** Constructs an LCD client with 3 modules */
   public static withModules<A extends LcdModule, B extends LcdModule, C extends LcdModule>(
-    apiUrl: string,
-    broadcastMode: BroadcastMode,
+    options: LcdClientBaseOptions,
     setupModuleA: LcdModuleSetup<A>,
     setupModuleB: LcdModuleSetup<B>,
     setupModuleC: LcdModuleSetup<C>,
@@ -82,8 +84,7 @@ export class LcdClient {
     C extends LcdModule,
     D extends LcdModule
   >(
-    apiUrl: string,
-    broadcastMode: BroadcastMode,
+    options: LcdClientBaseOptions,
     setupModuleA: LcdModuleSetup<A>,
     setupModuleB: LcdModuleSetup<B>,
     setupModuleC: LcdModuleSetup<C>,
@@ -98,8 +99,7 @@ export class LcdClient {
     D extends LcdModule,
     E extends LcdModule
   >(
-    apiUrl: string,
-    broadcastMode: BroadcastMode,
+    options: LcdClientBaseOptions,
     setupModuleA: LcdModuleSetup<A>,
     setupModuleB: LcdModuleSetup<B>,
     setupModuleC: LcdModuleSetup<C>,
@@ -116,8 +116,7 @@ export class LcdClient {
     E extends LcdModule,
     F extends LcdModule
   >(
-    apiUrl: string,
-    broadcastMode: BroadcastMode,
+    options: LcdClientBaseOptions,
     setupModuleA: LcdModuleSetup<A>,
     setupModuleB: LcdModuleSetup<B>,
     setupModuleC: LcdModuleSetup<C>,
@@ -136,8 +135,7 @@ export class LcdClient {
     F extends LcdModule,
     G extends LcdModule
   >(
-    apiUrl: string,
-    broadcastMode: BroadcastMode,
+    options: LcdClientBaseOptions,
     setupModuleA: LcdModuleSetup<A>,
     setupModuleB: LcdModuleSetup<B>,
     setupModuleC: LcdModuleSetup<C>,
@@ -158,8 +156,7 @@ export class LcdClient {
     G extends LcdModule,
     H extends LcdModule
   >(
-    apiUrl: string,
-    broadcastMode: BroadcastMode,
+    options: LcdClientBaseOptions,
     setupModuleA: LcdModuleSetup<A>,
     setupModuleB: LcdModuleSetup<B>,
     setupModuleC: LcdModuleSetup<C>,
@@ -180,8 +177,7 @@ export class LcdClient {
     G extends LcdModule,
     H extends LcdModule
   >(
-    apiUrl: string,
-    broadcastMode: BroadcastMode,
+    options: LcdClientBaseOptions,
     setupModuleA?: LcdModuleSetup<A>,
     setupModuleB?: LcdModuleSetup<B>,
     setupModuleC?: LcdModuleSetup<C>,
@@ -191,7 +187,7 @@ export class LcdClient {
     setupModuleG?: LcdModuleSetup<G>,
     setupModuleH?: LcdModuleSetup<H>,
   ): any {
-    const client = new LcdClient(apiUrl, broadcastMode);
+    const client = new LcdClient(options.apiUrl, options.broadcastMode);
 
     const modules = new Array<LcdModule>();
     if (setupModuleA) modules.push(setupModuleA(client));

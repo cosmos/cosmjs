@@ -9,7 +9,7 @@ import { LcdApiArray, LcdClient, normalizeArray } from "./lcdclient";
 import { parseLogs } from "./logs";
 import { MsgSend } from "./msgs";
 import { makeCosmoshubPath, Secp256k1Pen } from "./pen";
-import { BroadcastMode, TxsResponse } from "./restclient";
+import { TxsResponse } from "./restclient";
 import { SigningCosmosClient } from "./signingcosmosclient";
 import cosmoshub from "./testdata/cosmoshub.json";
 import {
@@ -83,7 +83,7 @@ describe("LcdClient", () => {
     }
 
     it("works for no modules", async () => {
-      const client = LcdClient.withModules(wasmd.endpoint, BroadcastMode.Sync);
+      const client = LcdClient.withModules({ apiUrl: wasmd.endpoint });
       expect(client).toBeTruthy();
     });
 
@@ -99,7 +99,7 @@ describe("LcdClient", () => {
         };
       }
 
-      const client = LcdClient.withModules(wasmd.endpoint, BroadcastMode.Sync, wasmClientRegisterer);
+      const client = LcdClient.withModules({ apiUrl: wasmd.endpoint }, wasmClientRegisterer);
       const codes = await client.listCodeInfo();
       expect(codes.length).toBeGreaterThanOrEqual(3);
       expect(codes[0].id).toEqual(deployedErc20.codeId);
@@ -136,8 +136,7 @@ describe("LcdClient", () => {
       }
 
       const client = LcdClient.withModules(
-        wasmd.endpoint,
-        BroadcastMode.Sync,
+        { apiUrl: wasmd.endpoint },
         registerWasmModule,
         registerSupplyModule,
       );
