@@ -160,6 +160,41 @@ describe("LcdClient", () => {
         ],
       });
     });
+
+    it("can merge two extension into the same module", async () => {
+      pendingWithoutWasmd();
+
+      // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+      function setupSupplyExtensionBasic(base: LcdClient) {
+        return {
+          supply: {
+            totalAll: async () => {
+              const path = `/supply/total`;
+              return base.get(path);
+            },
+          },
+        };
+      }
+
+      // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+      function setupSupplyExtensionPremium(base: LcdClient) {
+        return {
+          supply: {
+            total: async (denom: string) => {
+              return base.get(`/supply/total/${denom}`);
+            },
+          },
+        };
+      }
+
+      const client = LcdClient.withExtensions(
+        { apiUrl: wasmd.endpoint },
+        setupSupplyExtensionBasic,
+        setupSupplyExtensionPremium,
+      );
+      expect(client.supply.totalAll).toEqual(jasmine.any(Function));
+      expect(client.supply.total).toEqual(jasmine.any(Function));
+    });
   });
 
   // The /txs endpoints
