@@ -23,8 +23,11 @@ export {
   BlockResponse,
   BroadcastMode,
   EncodeTxResponse,
-  PostTxsResponse,
+  LcdApiArray,
+  LcdClient,
+  LcdModule,
   NodeInfoResponse,
+  PostTxsResponse,
   SearchTxsResponse,
   TxsResponse,
 } from "./lcdapi";
