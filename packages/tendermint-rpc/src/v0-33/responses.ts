@@ -419,7 +419,9 @@ interface RpcGenesisResponse {
   readonly genesis_time: DateTimeString;
   readonly chain_id: string;
   readonly consensus_params: RpcConsensusParams;
-  readonly validators: readonly RpcValidatorGenesis[];
+  // The validators key is used to specify a set of validators for testnets or PoA blockchains.
+  // PoS blockchains use the app_state.genutil.gentxs field to stake and bond a number of validators in the first block.
+  readonly validators?: readonly RpcValidatorGenesis[];
   readonly app_hash: HexString;
   readonly app_state: {} | undefined;
 }
@@ -433,7 +435,7 @@ function decodeGenesis(data: RpcGenesisResponse): responses.GenesisResponse {
     genesisTime: DateTime.decode(assertNotEmpty(data.genesis_time)),
     chainId: assertNotEmpty(data.chain_id),
     consensusParams: decodeConsensusParams(data.consensus_params),
-    validators: assertArray(data.validators).map(decodeValidatorGenesis),
+    validators: data.validators ? assertArray(data.validators).map(decodeValidatorGenesis) : [],
     appHash: fromHex(assertSet(data.app_hash)), // empty string in kvstore app
     appState: data.app_state,
   };

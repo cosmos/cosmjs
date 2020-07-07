@@ -51,6 +51,14 @@ function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor): void {
     client.disconnect();
   });
 
+  it("can get genesis", async () => {
+    pendingWithoutTendermint();
+    const client = new Client(rpcFactory(), adaptor);
+    const genesis = await client.genesis();
+    expect(genesis).toBeTruthy();
+    client.disconnect();
+  });
+
   it("can post a transaction", async () => {
     pendingWithoutTendermint();
     const client = new Client(rpcFactory(), adaptor);
