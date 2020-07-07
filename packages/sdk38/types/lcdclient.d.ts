@@ -12,24 +12,117 @@ import { CosmosSdkTx, StdTx } from "./types";
 /** Unfortunately, Cosmos SDK encodes empty arrays as null */
 export declare type LcdApiArray<T> = ReadonlyArray<T> | null;
 export declare function normalizeArray<T>(backend: LcdApiArray<T>): ReadonlyArray<T>;
-declare type LcdClientModule = Record<string, () => any>;
-declare type LcdClientModuleRegisterer<M> = (base: LcdClient) => M;
+declare type LcdModule = Record<string, () => any>;
+declare type LcdModuleSetup<M> = (base: LcdClient) => M;
 export declare class LcdClient {
   /** Constructs an LCD client with 0 modules */
   static withModules(apiUrl: string, broadcastMode: BroadcastMode): LcdClient;
   /** Constructs an LCD client with 1 modules */
-  static withModules<A extends LcdClientModule>(
+  static withModules<A extends LcdModule>(
     apiUrl: string,
     broadcastMode: BroadcastMode,
-    moduleA: LcdClientModuleRegisterer<A>,
+    setupModuleA: LcdModuleSetup<A>,
   ): LcdClient & A;
   /** Constructs an LCD client with 2 modules */
-  static withModules<A extends LcdClientModule, B extends LcdClientModule>(
+  static withModules<A extends LcdModule, B extends LcdModule>(
     apiUrl: string,
     broadcastMode: BroadcastMode,
-    moduleA: LcdClientModuleRegisterer<A>,
-    moduleB: LcdClientModuleRegisterer<B>,
+    setupModuleA: LcdModuleSetup<A>,
+    setupModuleB: LcdModuleSetup<B>,
   ): LcdClient & A & B;
+  /** Constructs an LCD client with 3 modules */
+  static withModules<A extends LcdModule, B extends LcdModule, C extends LcdModule>(
+    apiUrl: string,
+    broadcastMode: BroadcastMode,
+    setupModuleA: LcdModuleSetup<A>,
+    setupModuleB: LcdModuleSetup<B>,
+    setupModuleC: LcdModuleSetup<C>,
+  ): LcdClient & A & B & C;
+  /** Constructs an LCD client with 4 modules */
+  static withModules<A extends LcdModule, B extends LcdModule, C extends LcdModule, D extends LcdModule>(
+    apiUrl: string,
+    broadcastMode: BroadcastMode,
+    setupModuleA: LcdModuleSetup<A>,
+    setupModuleB: LcdModuleSetup<B>,
+    setupModuleC: LcdModuleSetup<C>,
+    setupModuleD: LcdModuleSetup<D>,
+  ): LcdClient & A & B & C & D;
+  /** Constructs an LCD client with 5 modules */
+  static withModules<
+    A extends LcdModule,
+    B extends LcdModule,
+    C extends LcdModule,
+    D extends LcdModule,
+    E extends LcdModule
+  >(
+    apiUrl: string,
+    broadcastMode: BroadcastMode,
+    setupModuleA: LcdModuleSetup<A>,
+    setupModuleB: LcdModuleSetup<B>,
+    setupModuleC: LcdModuleSetup<C>,
+    setupModuleD: LcdModuleSetup<D>,
+    setupModuleE: LcdModuleSetup<E>,
+  ): LcdClient & A & B & C & D & E;
+  /** Constructs an LCD client with 6 modules */
+  static withModules<
+    A extends LcdModule,
+    B extends LcdModule,
+    C extends LcdModule,
+    D extends LcdModule,
+    E extends LcdModule,
+    F extends LcdModule
+  >(
+    apiUrl: string,
+    broadcastMode: BroadcastMode,
+    setupModuleA: LcdModuleSetup<A>,
+    setupModuleB: LcdModuleSetup<B>,
+    setupModuleC: LcdModuleSetup<C>,
+    setupModuleD: LcdModuleSetup<D>,
+    setupModuleE: LcdModuleSetup<E>,
+    setupModuleF: LcdModuleSetup<F>,
+  ): LcdClient & A & B & C & D & E & F;
+  /** Constructs an LCD client with 7 modules */
+  static withModules<
+    A extends LcdModule,
+    B extends LcdModule,
+    C extends LcdModule,
+    D extends LcdModule,
+    E extends LcdModule,
+    F extends LcdModule,
+    G extends LcdModule
+  >(
+    apiUrl: string,
+    broadcastMode: BroadcastMode,
+    setupModuleA: LcdModuleSetup<A>,
+    setupModuleB: LcdModuleSetup<B>,
+    setupModuleC: LcdModuleSetup<C>,
+    setupModuleD: LcdModuleSetup<D>,
+    setupModuleE: LcdModuleSetup<E>,
+    setupModuleF: LcdModuleSetup<F>,
+    setupModuleG: LcdModuleSetup<G>,
+  ): LcdClient & A & B & C & D & E & F & G;
+  /** Constructs an LCD client with 8 modules */
+  static withModules<
+    A extends LcdModule,
+    B extends LcdModule,
+    C extends LcdModule,
+    D extends LcdModule,
+    E extends LcdModule,
+    F extends LcdModule,
+    G extends LcdModule,
+    H extends LcdModule
+  >(
+    apiUrl: string,
+    broadcastMode: BroadcastMode,
+    setupModuleA: LcdModuleSetup<A>,
+    setupModuleB: LcdModuleSetup<B>,
+    setupModuleC: LcdModuleSetup<C>,
+    setupModuleD: LcdModuleSetup<D>,
+    setupModuleE: LcdModuleSetup<E>,
+    setupModuleF: LcdModuleSetup<F>,
+    setupModuleG: LcdModuleSetup<G>,
+    setupModuleH: LcdModuleSetup<H>,
+  ): LcdClient & A & B & C & D & E & F & G & H;
   private readonly client;
   private readonly broadcastMode;
   /**

@@ -21,9 +21,9 @@ export function normalizeArray<T>(backend: LcdApiArray<T>): ReadonlyArray<T> {
   return backend || [];
 }
 
-type LcdClientModule = Record<string, () => any>;
+type LcdModule = Record<string, () => any>;
 
-type LcdClientModuleRegisterer<M> = (base: LcdClient) => M;
+type LcdModuleSetup<M> = (base: LcdClient) => M;
 
 // We want to get message data from 500 errors
 // https://stackoverflow.com/questions/56577124/how-to-handle-500-error-message-with-axios
@@ -52,31 +52,156 @@ export class LcdClient {
   public static withModules(apiUrl: string, broadcastMode: BroadcastMode): LcdClient;
 
   /** Constructs an LCD client with 1 modules */
-  public static withModules<A extends LcdClientModule>(
+  public static withModules<A extends LcdModule>(
     apiUrl: string,
     broadcastMode: BroadcastMode,
-    moduleA: LcdClientModuleRegisterer<A>,
+    setupModuleA: LcdModuleSetup<A>,
   ): LcdClient & A;
 
   /** Constructs an LCD client with 2 modules */
-  public static withModules<A extends LcdClientModule, B extends LcdClientModule>(
+  public static withModules<A extends LcdModule, B extends LcdModule>(
     apiUrl: string,
     broadcastMode: BroadcastMode,
-    moduleA: LcdClientModuleRegisterer<A>,
-    moduleB: LcdClientModuleRegisterer<B>,
+    setupModuleA: LcdModuleSetup<A>,
+    setupModuleB: LcdModuleSetup<B>,
   ): LcdClient & A & B;
 
-  public static withModules<A extends LcdClientModule, B extends LcdClientModule>(
+  /** Constructs an LCD client with 3 modules */
+  public static withModules<A extends LcdModule, B extends LcdModule, C extends LcdModule>(
     apiUrl: string,
     broadcastMode: BroadcastMode,
-    moduleA?: LcdClientModuleRegisterer<A>,
-    moduleB?: LcdClientModuleRegisterer<B>,
+    setupModuleA: LcdModuleSetup<A>,
+    setupModuleB: LcdModuleSetup<B>,
+    setupModuleC: LcdModuleSetup<C>,
+  ): LcdClient & A & B & C;
+
+  /** Constructs an LCD client with 4 modules */
+  public static withModules<
+    A extends LcdModule,
+    B extends LcdModule,
+    C extends LcdModule,
+    D extends LcdModule
+  >(
+    apiUrl: string,
+    broadcastMode: BroadcastMode,
+    setupModuleA: LcdModuleSetup<A>,
+    setupModuleB: LcdModuleSetup<B>,
+    setupModuleC: LcdModuleSetup<C>,
+    setupModuleD: LcdModuleSetup<D>,
+  ): LcdClient & A & B & C & D;
+
+  /** Constructs an LCD client with 5 modules */
+  public static withModules<
+    A extends LcdModule,
+    B extends LcdModule,
+    C extends LcdModule,
+    D extends LcdModule,
+    E extends LcdModule
+  >(
+    apiUrl: string,
+    broadcastMode: BroadcastMode,
+    setupModuleA: LcdModuleSetup<A>,
+    setupModuleB: LcdModuleSetup<B>,
+    setupModuleC: LcdModuleSetup<C>,
+    setupModuleD: LcdModuleSetup<D>,
+    setupModuleE: LcdModuleSetup<E>,
+  ): LcdClient & A & B & C & D & E;
+
+  /** Constructs an LCD client with 6 modules */
+  public static withModules<
+    A extends LcdModule,
+    B extends LcdModule,
+    C extends LcdModule,
+    D extends LcdModule,
+    E extends LcdModule,
+    F extends LcdModule
+  >(
+    apiUrl: string,
+    broadcastMode: BroadcastMode,
+    setupModuleA: LcdModuleSetup<A>,
+    setupModuleB: LcdModuleSetup<B>,
+    setupModuleC: LcdModuleSetup<C>,
+    setupModuleD: LcdModuleSetup<D>,
+    setupModuleE: LcdModuleSetup<E>,
+    setupModuleF: LcdModuleSetup<F>,
+  ): LcdClient & A & B & C & D & E & F;
+
+  /** Constructs an LCD client with 7 modules */
+  public static withModules<
+    A extends LcdModule,
+    B extends LcdModule,
+    C extends LcdModule,
+    D extends LcdModule,
+    E extends LcdModule,
+    F extends LcdModule,
+    G extends LcdModule
+  >(
+    apiUrl: string,
+    broadcastMode: BroadcastMode,
+    setupModuleA: LcdModuleSetup<A>,
+    setupModuleB: LcdModuleSetup<B>,
+    setupModuleC: LcdModuleSetup<C>,
+    setupModuleD: LcdModuleSetup<D>,
+    setupModuleE: LcdModuleSetup<E>,
+    setupModuleF: LcdModuleSetup<F>,
+    setupModuleG: LcdModuleSetup<G>,
+  ): LcdClient & A & B & C & D & E & F & G;
+
+  /** Constructs an LCD client with 8 modules */
+  public static withModules<
+    A extends LcdModule,
+    B extends LcdModule,
+    C extends LcdModule,
+    D extends LcdModule,
+    E extends LcdModule,
+    F extends LcdModule,
+    G extends LcdModule,
+    H extends LcdModule
+  >(
+    apiUrl: string,
+    broadcastMode: BroadcastMode,
+    setupModuleA: LcdModuleSetup<A>,
+    setupModuleB: LcdModuleSetup<B>,
+    setupModuleC: LcdModuleSetup<C>,
+    setupModuleD: LcdModuleSetup<D>,
+    setupModuleE: LcdModuleSetup<E>,
+    setupModuleF: LcdModuleSetup<F>,
+    setupModuleG: LcdModuleSetup<G>,
+    setupModuleH: LcdModuleSetup<H>,
+  ): LcdClient & A & B & C & D & E & F & G & H;
+
+  public static withModules<
+    A extends LcdModule,
+    B extends LcdModule,
+    C extends LcdModule,
+    D extends LcdModule,
+    E extends LcdModule,
+    F extends LcdModule,
+    G extends LcdModule,
+    H extends LcdModule
+  >(
+    apiUrl: string,
+    broadcastMode: BroadcastMode,
+    setupModuleA?: LcdModuleSetup<A>,
+    setupModuleB?: LcdModuleSetup<B>,
+    setupModuleC?: LcdModuleSetup<C>,
+    setupModuleD?: LcdModuleSetup<D>,
+    setupModuleE?: LcdModuleSetup<E>,
+    setupModuleF?: LcdModuleSetup<F>,
+    setupModuleG?: LcdModuleSetup<G>,
+    setupModuleH?: LcdModuleSetup<H>,
   ): any {
     const client = new LcdClient(apiUrl, broadcastMode);
 
-    const modules = new Array<LcdClientModule>();
-    if (moduleA) modules.push(moduleA(client));
-    if (moduleB) modules.push(moduleB(client));
+    const modules = new Array<LcdModule>();
+    if (setupModuleA) modules.push(setupModuleA(client));
+    if (setupModuleB) modules.push(setupModuleB(client));
+    if (setupModuleC) modules.push(setupModuleC(client));
+    if (setupModuleD) modules.push(setupModuleD(client));
+    if (setupModuleE) modules.push(setupModuleE(client));
+    if (setupModuleF) modules.push(setupModuleF(client));
+    if (setupModuleG) modules.push(setupModuleG(client));
+    if (setupModuleH) modules.push(setupModuleH(client));
     for (const module of modules) {
       assert(isNonNullObject(module), `Module must be a non-null object`);
       for (const key in module) {
