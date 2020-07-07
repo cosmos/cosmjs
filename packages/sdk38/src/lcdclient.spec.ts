@@ -56,12 +56,9 @@ describe("LcdClient", () => {
       readonly builder?: string;
     }
 
-    // Currently all wasm query responses return json-encoded strings...
-    // later deprecate this and use the specific types for result
-    // (assuming it is inlined, no second parse needed)
-    type WasmResponse<T = string> = WasmSuccess<T> | WasmError;
+    type WasmResponse<T> = WasmSuccess<T> | WasmError;
 
-    interface WasmSuccess<T = string> {
+    interface WasmSuccess<T> {
       readonly height: string;
       readonly result: T;
     }
