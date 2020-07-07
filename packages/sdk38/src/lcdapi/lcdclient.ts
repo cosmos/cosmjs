@@ -171,37 +171,12 @@ export class LcdClient {
     setupExtensionH: LcdExtensionSetup<H>,
   ): LcdClient & A & B & C & D & E & F & G & H;
 
-  public static withExtensions<
-    A extends object,
-    B extends object,
-    C extends object,
-    D extends object,
-    E extends object,
-    F extends object,
-    G extends object,
-    H extends object
-  >(
+  public static withExtensions(
     options: LcdClientBaseOptions,
-    setupExtensionA?: LcdExtensionSetup<A>,
-    setupExtensionB?: LcdExtensionSetup<B>,
-    setupExtensionC?: LcdExtensionSetup<C>,
-    setupExtensionD?: LcdExtensionSetup<D>,
-    setupExtensionE?: LcdExtensionSetup<E>,
-    setupExtensionF?: LcdExtensionSetup<F>,
-    setupExtensionG?: LcdExtensionSetup<G>,
-    setupExtensionH?: LcdExtensionSetup<H>,
+    ...extensionSetups: Array<LcdExtensionSetup<object>>
   ): any {
     const client = new LcdClient(options.apiUrl, options.broadcastMode);
-
-    const extensions = new Array<object>();
-    if (setupExtensionA) extensions.push(setupExtensionA(client));
-    if (setupExtensionB) extensions.push(setupExtensionB(client));
-    if (setupExtensionC) extensions.push(setupExtensionC(client));
-    if (setupExtensionD) extensions.push(setupExtensionD(client));
-    if (setupExtensionE) extensions.push(setupExtensionE(client));
-    if (setupExtensionF) extensions.push(setupExtensionF(client));
-    if (setupExtensionG) extensions.push(setupExtensionG(client));
-    if (setupExtensionH) extensions.push(setupExtensionH(client));
+    const extensions = extensionSetups.map((setupExtension) => setupExtension(client));
     for (const extension of extensions) {
       assert(isNonNullObject(extension), `Extension must be a non-null object`);
       for (const [moduleKey, moduleValue] of Object.entries(extension)) {
@@ -209,7 +184,6 @@ export class LcdClient {
         (client as any)[moduleKey] = Object.assign(current, moduleValue);
       }
     }
-
     return client;
   }
 
