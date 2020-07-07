@@ -9,6 +9,9 @@ import {
   TxsResponse,
 } from "./lcdapi";
 import { CosmosSdkTx, StdTx } from "./types";
+/**
+ * @deprecated use LcdClient.
+ */
 export declare class RestClient {
   private readonly client;
   private readonly broadcastMode;

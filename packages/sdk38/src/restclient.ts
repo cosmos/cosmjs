@@ -35,6 +35,9 @@ function parseAxiosError(err: AxiosError): never {
   }
 }
 
+/**
+ * @deprecated use LcdClient.
+ */
 export class RestClient {
   private readonly client: AxiosInstance;
   private readonly broadcastMode: BroadcastMode;
