@@ -23,8 +23,6 @@ import {
 } from "./testutils.spec";
 import { StdFee, StdSignature, StdTx } from "./types";
 
-const emptyAddress = "cosmos1ltkhnmdcqemmd2tkhnx7qx66tq7e0wykw2j85k";
-
 /** Deployed as part of scripts/wasmd/init.sh */
 export const deployedErc20 = {
   codeId: 1,
@@ -48,6 +46,8 @@ function makeSignedTx(firstMsg: Msg, fee: StdFee, memo: string, firstSignature: 
 }
 
 describe("LcdClient", () => {
+  const defaultRecipientAddress = makeRandomAddress();
+
   it("can be constructed", () => {
     const client = new LcdClient(wasmd.endpoint);
     expect(client).toBeTruthy();
@@ -519,7 +519,7 @@ describe("LcdClient", () => {
         type: "cosmos-sdk/MsgSend",
         value: {
           from_address: faucet.address,
-          to_address: emptyAddress,
+          to_address: defaultRecipientAddress,
           amount: [
             {
               denom: "ucosm",
@@ -572,7 +572,7 @@ describe("LcdClient", () => {
         type: "cosmos-sdk/MsgSend",
         value: {
           from_address: address1,
-          to_address: emptyAddress,
+          to_address: defaultRecipientAddress,
           amount: [
             {
               denom: "ucosm",
@@ -624,7 +624,7 @@ describe("LcdClient", () => {
         type: "cosmos-sdk/MsgSend",
         value: {
           from_address: address1,
-          to_address: emptyAddress,
+          to_address: defaultRecipientAddress,
           amount: [
             {
               denom: "ucosm",
@@ -637,7 +637,7 @@ describe("LcdClient", () => {
         type: "cosmos-sdk/MsgSend",
         value: {
           from_address: address1,
-          to_address: emptyAddress,
+          to_address: defaultRecipientAddress,
           amount: [
             {
               denom: "ucosm",
@@ -684,7 +684,7 @@ describe("LcdClient", () => {
         type: "cosmos-sdk/MsgSend",
         value: {
           from_address: address1,
-          to_address: emptyAddress,
+          to_address: defaultRecipientAddress,
           amount: [
             {
               denom: "ucosm",
@@ -697,7 +697,7 @@ describe("LcdClient", () => {
         type: "cosmos-sdk/MsgSend",
         value: {
           from_address: address2,
-          to_address: emptyAddress,
+          to_address: defaultRecipientAddress,
           amount: [
             {
               denom: "ucosm",
@@ -752,7 +752,7 @@ describe("LcdClient", () => {
         type: "cosmos-sdk/MsgSend",
         value: {
           from_address: address1,
-          to_address: emptyAddress,
+          to_address: defaultRecipientAddress,
           amount: [
             {
               denom: "ucosm",
@@ -765,7 +765,7 @@ describe("LcdClient", () => {
         type: "cosmos-sdk/MsgSend",
         value: {
           from_address: address2,
-          to_address: emptyAddress,
+          to_address: defaultRecipientAddress,
           amount: [
             {
               denom: "ucosm",
@@ -815,7 +815,7 @@ describe("LcdClient", () => {
         type: "cosmos-sdk/MsgSend",
         value: {
           from_address: address1,
-          to_address: emptyAddress,
+          to_address: defaultRecipientAddress,
           amount: [
             {
               denom: "ucosm",
@@ -828,7 +828,7 @@ describe("LcdClient", () => {
         type: "cosmos-sdk/MsgSend",
         value: {
           from_address: address2,
-          to_address: emptyAddress,
+          to_address: defaultRecipientAddress,
           amount: [
             {
               denom: "ucosm",
