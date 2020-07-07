@@ -4,7 +4,6 @@ import axios, { AxiosError, AxiosInstance } from "axios";
 
 import { CosmosSdkTx, StdTx } from "../types";
 import {
-  AuthAccountsResponse,
   BlockResponse,
   BroadcastMode,
   EncodeTxResponse,
@@ -261,17 +260,6 @@ export class LcdClient {
       throw new Error("Received null response from server");
     }
     return data;
-  }
-
-  // The /auth endpoints
-
-  public async authAccounts(address: string): Promise<AuthAccountsResponse> {
-    const path = `/auth/accounts/${address}`;
-    const responseData = await this.get(path);
-    if (responseData.result.type !== "cosmos-sdk/Account") {
-      throw new Error("Unexpected response data format");
-    }
-    return responseData as AuthAccountsResponse;
   }
 
   // The /blocks endpoints

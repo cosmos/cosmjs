@@ -21,6 +21,7 @@ import {
   wasmdEnabled,
 } from "../testutils.spec";
 import { StdFee } from "../types";
+import { setupAuthModule } from "./auth";
 import { TxsResponse } from "./base";
 import { LcdApiArray, LcdClient, normalizeLcdApiArray } from "./lcdclient";
 
@@ -523,7 +524,7 @@ describe("LcdClient", () => {
         gas: "890000",
       };
 
-      const client = new LcdClient(wasmd.endpoint);
+      const client = LcdClient.withModules({ apiUrl: wasmd.endpoint }, setupAuthModule);
       const { account_number, sequence } = (await client.authAccounts(faucet.address)).result.value;
 
       const signBytes = makeSignBytes([theMsg], fee, wasmd.chainId, memo, account_number, sequence);
@@ -576,7 +577,7 @@ describe("LcdClient", () => {
         gas: "890000",
       };
 
-      const client = new LcdClient(wasmd.endpoint);
+      const client = LcdClient.withModules({ apiUrl: wasmd.endpoint }, setupAuthModule);
       const { account_number: an1, sequence: sequence1 } = (await client.authAccounts(address1)).result.value;
       const { account_number: an2, sequence: sequence2 } = (await client.authAccounts(address2)).result.value;
       const { account_number: an3, sequence: sequence3 } = (await client.authAccounts(address3)).result.value;
@@ -641,7 +642,7 @@ describe("LcdClient", () => {
         gas: "890000",
       };
 
-      const client = new LcdClient(wasmd.endpoint);
+      const client = LcdClient.withModules({ apiUrl: wasmd.endpoint }, setupAuthModule);
       const { account_number, sequence } = (await client.authAccounts(address1)).result.value;
 
       const signBytes = makeSignBytes([msg1, msg2], fee, wasmd.chainId, memo, account_number, sequence);
@@ -701,7 +702,7 @@ describe("LcdClient", () => {
         gas: "890000",
       };
 
-      const client = new LcdClient(wasmd.endpoint);
+      const client = LcdClient.withModules({ apiUrl: wasmd.endpoint }, setupAuthModule);
       const { account_number: an1, sequence: sequence1 } = (await client.authAccounts(address1)).result.value;
       const { account_number: an2, sequence: sequence2 } = (await client.authAccounts(address2)).result.value;
 
@@ -769,7 +770,7 @@ describe("LcdClient", () => {
         gas: "890000",
       };
 
-      const client = new LcdClient(wasmd.endpoint);
+      const client = LcdClient.withModules({ apiUrl: wasmd.endpoint }, setupAuthModule);
       const { account_number: an1, sequence: sequence1 } = (await client.authAccounts(address1)).result.value;
       const { account_number: an2, sequence: sequence2 } = (await client.authAccounts(address2)).result.value;
 
@@ -832,7 +833,7 @@ describe("LcdClient", () => {
         gas: "890000",
       };
 
-      const client = new LcdClient(wasmd.endpoint);
+      const client = LcdClient.withModules({ apiUrl: wasmd.endpoint }, setupAuthModule);
       const { account_number: an1, sequence: sequence1 } = (await client.authAccounts(address1)).result.value;
       const { account_number: an2, sequence: sequence2 } = (await client.authAccounts(address2)).result.value;
 

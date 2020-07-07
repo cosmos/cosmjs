@@ -1,6 +1,6 @@
-export { SupplyModule, TotalSupplyAllReponse, TotalSupplyReponse } from "./supply";
+export { AuthModule, AuthAccountsResponse, setupAuthModule } from "./auth";
+export { setupSupplyModule, SupplyModule, TotalSupplyAllReponse, TotalSupplyReponse } from "./supply";
 export {
-  AuthAccountsResponse,
   BlockResponse,
   BroadcastMode,
   EncodeTxResponse,

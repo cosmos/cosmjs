@@ -22,6 +22,7 @@ export {
 export { makeSignBytes } from "./encoding";
 export {
   AuthAccountsResponse,
+  AuthModule,
   BlockResponse,
   BroadcastMode,
   EncodeTxResponse,
@@ -32,6 +33,9 @@ export {
   normalizeLcdApiArray,
   PostTxsResponse,
   SearchTxsResponse,
+  setupAuthModule,
+  setupSupplyModule,
+  SupplyModule,
   TxsResponse,
 } from "./lcdapi";
 export { RestClient } from "./restclient";

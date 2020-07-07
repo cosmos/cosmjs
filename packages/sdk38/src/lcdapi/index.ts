@@ -2,14 +2,14 @@
 // Standard modules (see tracking issue https://github.com/CosmWasm/cosmjs/issues/276)
 //
 
-export { SupplyModule, TotalSupplyAllReponse, TotalSupplyReponse } from "./supply";
+export { AuthModule, AuthAccountsResponse, setupAuthModule } from "./auth";
+export { setupSupplyModule, SupplyModule, TotalSupplyAllReponse, TotalSupplyReponse } from "./supply";
 
 //
 // Base types
 //
 
 export {
-  AuthAccountsResponse,
   BlockResponse,
   BroadcastMode,
   EncodeTxResponse,

@@ -1,6 +1,5 @@
 import { CosmosSdkTx, StdTx } from "../types";
 import {
-  AuthAccountsResponse,
   BlockResponse,
   BroadcastMode,
   EncodeTxResponse,
@@ -147,7 +146,6 @@ export declare class LcdClient {
   constructor(apiUrl: string, broadcastMode?: BroadcastMode);
   get(path: string): Promise<any>;
   post(path: string, params: any): Promise<any>;
-  authAccounts(address: string): Promise<AuthAccountsResponse>;
   blocksLatest(): Promise<BlockResponse>;
   blocks(height: number): Promise<BlockResponse>;
   nodeInfo(): Promise<NodeInfoResponse>;
