@@ -5,7 +5,7 @@ import { rawSecp256k1PubkeyToAddress } from "./address";
 import { Coin } from "./coins";
 import { isPostTxFailure } from "./cosmosclient";
 import { makeSignBytes } from "./encoding";
-import { CosmosSdkArray, LcdClient, normalizeArray } from "./lcdclient";
+import { LcdApiArray, LcdClient, normalizeArray } from "./lcdclient";
 import { parseLogs } from "./logs";
 import { Msg, MsgSend } from "./msgs";
 import { makeCosmoshubPath, Secp256k1Pen } from "./pen";
@@ -104,7 +104,7 @@ describe("LcdClient", () => {
         return {
           listCodeInfo: async (): Promise<readonly CodeInfo[]> => {
             const path = `/wasm/code`;
-            const responseData = (await base.get(path)) as WasmResponse<CosmosSdkArray<CodeInfo>>;
+            const responseData = (await base.get(path)) as WasmResponse<LcdApiArray<CodeInfo>>;
             return normalizeArray(unwrapWasmResponse(responseData));
           },
         };
@@ -125,7 +125,7 @@ describe("LcdClient", () => {
         return {
           listCodeInfo: async (): Promise<readonly CodeInfo[]> => {
             const path = `/wasm/code`;
-            const responseData = (await base.get(path)) as WasmResponse<CosmosSdkArray<CodeInfo>>;
+            const responseData = (await base.get(path)) as WasmResponse<LcdApiArray<CodeInfo>>;
             return normalizeArray(unwrapWasmResponse(responseData));
           },
         };
@@ -133,7 +133,7 @@ describe("LcdClient", () => {
 
       interface TotalSupplyReponse {
         readonly height: string;
-        readonly result: CosmosSdkArray<Coin>;
+        readonly result: LcdApiArray<Coin>;
       }
 
       // eslint-disable-next-line @typescript-eslint/explicit-function-return-type

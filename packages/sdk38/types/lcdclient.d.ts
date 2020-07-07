@@ -10,8 +10,8 @@ import {
 } from "./restclient";
 import { CosmosSdkTx, StdTx } from "./types";
 /** Unfortunately, Cosmos SDK encodes empty arrays as null */
-export declare type CosmosSdkArray<T> = ReadonlyArray<T> | null;
-export declare function normalizeArray<T>(backend: CosmosSdkArray<T>): ReadonlyArray<T>;
+export declare type LcdApiArray<T> = ReadonlyArray<T> | null;
+export declare function normalizeArray<T>(backend: LcdApiArray<T>): ReadonlyArray<T>;
 declare type LcdClientModule = Record<string, () => any>;
 declare type LcdClientModuleRegisterer<M> = (base: LcdClient) => M;
 export declare class LcdClient {

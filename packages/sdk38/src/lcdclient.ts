@@ -15,9 +15,9 @@ import {
 import { CosmosSdkTx, StdTx } from "./types";
 
 /** Unfortunately, Cosmos SDK encodes empty arrays as null */
-export type CosmosSdkArray<T> = ReadonlyArray<T> | null;
+export type LcdApiArray<T> = ReadonlyArray<T> | null;
 
-export function normalizeArray<T>(backend: CosmosSdkArray<T>): ReadonlyArray<T> {
+export function normalizeArray<T>(backend: LcdApiArray<T>): ReadonlyArray<T> {
   return backend || [];
 }
 
