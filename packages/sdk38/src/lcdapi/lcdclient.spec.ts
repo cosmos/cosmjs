@@ -22,7 +22,7 @@ import {
 } from "../testutils.spec";
 import { StdFee } from "../types";
 import { TxsResponse } from "./base";
-import { LcdApiArray, LcdClient, normalizeArray } from "./lcdclient";
+import { LcdApiArray, LcdClient, normalizeLcdApiArray } from "./lcdclient";
 
 /** Deployed as part of scripts/wasmd/init.sh */
 export const deployedErc20 = {
@@ -94,7 +94,7 @@ describe("LcdClient", () => {
           listCodeInfo: async (): Promise<readonly CodeInfo[]> => {
             const path = `/wasm/code`;
             const responseData = (await base.get(path)) as WasmResponse<LcdApiArray<CodeInfo>>;
-            return normalizeArray(unwrapWasmResponse(responseData));
+            return normalizeLcdApiArray(unwrapWasmResponse(responseData));
           },
         };
       }
@@ -115,7 +115,7 @@ describe("LcdClient", () => {
           listCodeInfo: async (): Promise<readonly CodeInfo[]> => {
             const path = `/wasm/code`;
             const responseData = (await base.get(path)) as WasmResponse<LcdApiArray<CodeInfo>>;
-            return normalizeArray(unwrapWasmResponse(responseData));
+            return normalizeLcdApiArray(unwrapWasmResponse(responseData));
           },
         };
       }

@@ -17,7 +17,7 @@ import {
 /** Unfortunately, Cosmos SDK encodes empty arrays as null */
 export type LcdApiArray<T> = readonly T[] | null;
 
-export function normalizeArray<T>(backend: LcdApiArray<T>): readonly T[] {
+export function normalizeLcdApiArray<T>(backend: LcdApiArray<T>): readonly T[] {
   return backend || [];
 }
 

@@ -11,7 +11,7 @@ import {
 } from "./base";
 /** Unfortunately, Cosmos SDK encodes empty arrays as null */
 export declare type LcdApiArray<T> = readonly T[] | null;
-export declare function normalizeArray<T>(backend: LcdApiArray<T>): readonly T[];
+export declare function normalizeLcdApiArray<T>(backend: LcdApiArray<T>): readonly T[];
 export declare type LcdModule = Record<string, (...args: any[]) => any>;
 declare type LcdModuleSetup<M> = (base: LcdClient) => M;
 export interface LcdClientBaseOptions {

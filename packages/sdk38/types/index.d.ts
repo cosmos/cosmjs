@@ -27,6 +27,7 @@ export {
   LcdClient,
   LcdModule,
   NodeInfoResponse,
+  normalizeLcdApiArray,
   PostTxsResponse,
   SearchTxsResponse,
   TxsResponse,
