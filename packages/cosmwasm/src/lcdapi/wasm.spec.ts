@@ -70,7 +70,7 @@ async function uploadContract(
     gas: "89000000",
   };
 
-  const { account_number, sequence } = (await client.authAccounts(alice.address0)).result.value;
+  const { account_number, sequence } = (await client.auth.account(alice.address0)).result.value;
   const signBytes = makeSignBytes([theMsg], fee, wasmd.chainId, memo, account_number, sequence);
   const signature = await pen.sign(signBytes);
   const signedTx = makeSignedTx(theMsg, fee, memo, signature);
@@ -108,7 +108,7 @@ async function instantiateContract(
     gas: "89000000",
   };
 
-  const { account_number, sequence } = (await client.authAccounts(alice.address0)).result.value;
+  const { account_number, sequence } = (await client.auth.account(alice.address0)).result.value;
   const signBytes = makeSignBytes([theMsg], fee, wasmd.chainId, memo, account_number, sequence);
   const signature = await pen.sign(signBytes);
   const signedTx = makeSignedTx(theMsg, fee, memo, signature);
@@ -136,7 +136,7 @@ async function executeContract(
     gas: "89000000",
   };
 
-  const { account_number, sequence } = (await client.authAccounts(alice.address0)).result.value;
+  const { account_number, sequence } = (await client.auth.account(alice.address0)).result.value;
   const signBytes = makeSignBytes([theMsg], fee, wasmd.chainId, memo, account_number, sequence);
   const signature = await pen.sign(signBytes);
   const signedTx = makeSignedTx(theMsg, fee, memo, signature);
@@ -291,7 +291,7 @@ describe("wasm", () => {
         expect(amountAttr.value).toEqual("1234ucosm,321ustake");
         expect(result.data).toEqual(toHex(Bech32.decode(contractAddress).data).toUpperCase());
 
-        const balance = (await client.authAccounts(contractAddress)).result.value.coins;
+        const balance = (await client.auth.account(contractAddress)).result.value.coins;
         expect(balance).toEqual(transferAmount);
       }
 
@@ -311,9 +311,9 @@ describe("wasm", () => {
         });
 
         // Verify token transfer from contract to beneficiary
-        const beneficiaryBalance = (await client.authAccounts(beneficiaryAddress)).result.value.coins;
+        const beneficiaryBalance = (await client.auth.account(beneficiaryAddress)).result.value.coins;
         expect(beneficiaryBalance).toEqual(transferAmount);
-        const contractBalance = (await client.authAccounts(contractAddress)).result.value.coins;
+        const contractBalance = (await client.auth.account(contractAddress)).result.value.coins;
         expect(contractBalance).toEqual([]);
       }
     });
@@ -328,7 +328,7 @@ describe("wasm", () => {
       const client = makeWasmClient(wasmd.endpoint);
 
       // check with contracts were here first to compare
-      const existingInfos = await client.listCodeInfo();
+      const existingInfos = await client.wasm.listCodeInfo();
       existingInfos.forEach((val, idx) => expect(val.id).toEqual(idx + 1));
       const numExisting = existingInfos.length;
 
@@ -341,7 +341,7 @@ describe("wasm", () => {
       const codeId = Number.parseInt(codeIdAttr.value, 10);
 
       // ensure we were added to the end of the list
-      const newInfos = await client.listCodeInfo();
+      const newInfos = await client.wasm.listCodeInfo();
       expect(newInfos.length).toEqual(numExisting + 1);
       const lastInfo = newInfos[newInfos.length - 1];
       expect(lastInfo.id).toEqual(codeId);
@@ -356,7 +356,7 @@ describe("wasm", () => {
       expect(lastInfo.data_hash.toLowerCase()).toEqual(toHex(wasmHash));
 
       // download code and check against auto-gen
-      const { data } = await client.getCode(codeId);
+      const { data } = await client.wasm.getCode(codeId);
       expect(fromBase64(data)).toEqual(hackatom.data);
     });
 
@@ -374,7 +374,7 @@ describe("wasm", () => {
 
       // reuse an existing contract, or upload if needed
       let codeId: number;
-      const existingInfos = await client.listCodeInfo();
+      const existingInfos = await client.wasm.listCodeInfo();
       if (existingInfos.length > 0) {
         codeId = existingInfos[existingInfos.length - 1].id;
       } else {
@@ -386,7 +386,7 @@ describe("wasm", () => {
       }
 
       // create new instance and compare before and after
-      const existingContractsByCode = await client.listContractsByCodeId(codeId);
+      const existingContractsByCode = await client.wasm.listContractsByCodeId(codeId);
       for (const contract of existingContractsByCode) {
         expect(contract.address).toMatch(bech32AddressMatcher);
         expect(contract.code_id).toEqual(codeId);
@@ -400,7 +400,7 @@ describe("wasm", () => {
       const contractAddressAttr = findAttribute(logs, "message", "contract_address");
       const myAddress = contractAddressAttr.value;
 
-      const newContractsByCode = await client.listContractsByCodeId(codeId);
+      const newContractsByCode = await client.wasm.listContractsByCodeId(codeId);
       expect(newContractsByCode.length).toEqual(existingContractsByCode.length + 1);
       const newContract = newContractsByCode[newContractsByCode.length - 1];
       expect(newContract).toEqual(
@@ -412,7 +412,7 @@ describe("wasm", () => {
       );
 
       // check out info
-      const myInfo = await client.getContractInfo(myAddress);
+      const myInfo = await client.wasm.getContractInfo(myAddress);
       assert(myInfo);
       expect(myInfo).toEqual(
         jasmine.objectContaining({
@@ -427,7 +427,7 @@ describe("wasm", () => {
 
       // make sure random addresses don't give useful info
       const nonExistentAddress = makeRandomAddress();
-      expect(await client.getContractInfo(nonExistentAddress)).toBeNull();
+      expect(await client.wasm.getContractInfo(nonExistentAddress)).toBeNull();
     });
 
     describe("contract state", () => {
@@ -455,7 +455,7 @@ describe("wasm", () => {
         pendingWithoutWasmd();
 
         // get contract state
-        const state = await client.getAllContractState(contractAddress!);
+        const state = await client.wasm.getAllContractState(contractAddress!);
         expect(state.length).toEqual(1);
         const data = state[0];
         expect(data.key).toEqual(expectedKey);
@@ -464,7 +464,7 @@ describe("wasm", () => {
         expect(value.beneficiary).toBeDefined();
 
         // bad address is empty array
-        const noContractState = await client.getAllContractState(noContract);
+        const noContractState = await client.wasm.getAllContractState(noContract);
         expect(noContractState).toEqual([]);
       });
 
@@ -472,18 +472,18 @@ describe("wasm", () => {
         pendingWithoutWasmd();
 
         // query by one key
-        const raw = await client.queryContractRaw(contractAddress!, expectedKey);
+        const raw = await client.wasm.queryContractRaw(contractAddress!, expectedKey);
         assert(raw, "must get result");
         const model = JSON.parse(fromAscii(raw));
         expect(model.verifier).toBeDefined();
         expect(model.beneficiary).toBeDefined();
 
         // missing key is null
-        const missing = await client.queryContractRaw(contractAddress!, fromHex("cafe0dad"));
+        const missing = await client.wasm.queryContractRaw(contractAddress!, fromHex("cafe0dad"));
         expect(missing).toBeNull();
 
         // bad address is null
-        const noContractModel = await client.queryContractRaw(noContract, expectedKey);
+        const noContractModel = await client.wasm.queryContractRaw(noContract, expectedKey);
         expect(noContractModel).toBeNull();
       });
 
@@ -491,18 +491,18 @@ describe("wasm", () => {
         pendingWithoutWasmd();
 
         // we can query the verifier properly
-        const resultDocument = await client.queryContractSmart(contractAddress!, { verifier: {} });
+        const resultDocument = await client.wasm.queryContractSmart(contractAddress!, { verifier: {} });
         expect(resultDocument).toEqual({ verifier: alice.address0 });
 
         // invalid query syntax throws an error
-        await client.queryContractSmart(contractAddress!, { nosuchkey: {} }).then(
+        await client.wasm.queryContractSmart(contractAddress!, { nosuchkey: {} }).then(
           () => fail("shouldn't succeed"),
           (error) =>
             expect(error).toMatch(/query wasm contract failed: parsing hackatom::contract::QueryMsg/),
         );
 
         // invalid address throws an error
-        await client.queryContractSmart(noContract, { verifier: {} }).then(
+        await client.wasm.queryContractSmart(noContract, { verifier: {} }).then(
           () => fail("shouldn't succeed"),
           (error) => expect(error).toMatch("not found"),
         );

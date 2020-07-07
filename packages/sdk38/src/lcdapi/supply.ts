@@ -13,17 +13,21 @@ export interface TotalSupplyReponse {
 }
 
 export interface SupplyModule extends LcdModule {
-  readonly totalSupplyAll: () => Promise<TotalSupplyAllReponse>;
-  readonly totalSupply: (denom: string) => Promise<TotalSupplyReponse>;
+  readonly supply: {
+    readonly totalAll: () => Promise<TotalSupplyAllReponse>;
+    readonly total: (denom: string) => Promise<TotalSupplyReponse>;
+  };
 }
 
 export function setupSupplyModule(base: LcdClient): SupplyModule {
   return {
-    totalSupplyAll: async () => {
-      return base.get(`/supply/total`);
-    },
-    totalSupply: async (denom: string) => {
-      return base.get(`/supply/total/${denom}`);
+    supply: {
+      totalAll: async () => {
+        return base.get(`/supply/total`);
+      },
+      total: async (denom: string) => {
+        return base.get(`/supply/total/${denom}`);
+      },
     },
   };
 }

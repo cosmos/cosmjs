@@ -41,32 +41,34 @@ export interface ContractDetails extends ContractInfo {
  * @see https://github.com/cosmwasm/wasmd/blob/master/x/wasm/client/rest/query.go#L19-L27
  */
 export interface WasmModule extends LcdModule {
-  readonly listCodeInfo: () => Promise<readonly CodeInfo[]>;
-  /**
-   * Downloads the original wasm bytecode by code ID.
-   *
-   * Throws an error if no code with this id
-   */
-  readonly getCode: (id: number) => Promise<CodeDetails>;
-  readonly listContractsByCodeId: (id: number) => Promise<readonly ContractInfo[]>;
-  /**
-   * Returns null when contract was not found at this address.
-   */
-  readonly getContractInfo: (address: string) => Promise<ContractDetails | null>;
-  /**
-   * Returns all contract state.
-   * This is an empty array if no such contract, or contract has no data.
-   */
-  readonly getAllContractState: (address: string) => Promise<readonly Model[]>;
-  /**
-   * Returns the data at the key if present (unknown decoded json),
-   * or null if no data at this (contract address, key) pair
-   */
-  readonly queryContractRaw: (address: string, key: Uint8Array) => Promise<Uint8Array | null>;
-  /**
-   * Makes a smart query on the contract and parses the reponse as JSON.
-   * Throws error if no such contract exists, the query format is invalid or the response is invalid.
-   */
-  readonly queryContractSmart: (address: string, query: object) => Promise<JsonObject>;
+  readonly wasm: {
+    readonly listCodeInfo: () => Promise<readonly CodeInfo[]>;
+    /**
+     * Downloads the original wasm bytecode by code ID.
+     *
+     * Throws an error if no code with this id
+     */
+    readonly getCode: (id: number) => Promise<CodeDetails>;
+    readonly listContractsByCodeId: (id: number) => Promise<readonly ContractInfo[]>;
+    /**
+     * Returns null when contract was not found at this address.
+     */
+    readonly getContractInfo: (address: string) => Promise<ContractDetails | null>;
+    /**
+     * Returns all contract state.
+     * This is an empty array if no such contract, or contract has no data.
+     */
+    readonly getAllContractState: (address: string) => Promise<readonly Model[]>;
+    /**
+     * Returns the data at the key if present (unknown decoded json),
+     * or null if no data at this (contract address, key) pair
+     */
+    readonly queryContractRaw: (address: string, key: Uint8Array) => Promise<Uint8Array | null>;
+    /**
+     * Makes a smart query on the contract and parses the reponse as JSON.
+     * Throws error if no such contract exists, the query format is invalid or the response is invalid.
+     */
+    readonly queryContractSmart: (address: string, query: object) => Promise<JsonObject>;
+  };
 }
 export declare function setupWasmModule(base: LcdClient): WasmModule;

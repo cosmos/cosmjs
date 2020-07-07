@@ -166,7 +166,7 @@ export class CosmosClient {
 
   public async getHeight(): Promise<number> {
     if (this.anyValidAddress) {
-      const { height } = await this.lcdClient.authAccounts(this.anyValidAddress);
+      const { height } = await this.lcdClient.auth.account(this.anyValidAddress);
       return parseInt(height, 10);
     } else {
       // Note: this gets inefficient when blocks contain a lot of transactions since it
@@ -207,7 +207,7 @@ export class CosmosClient {
   }
 
   public async getAccount(address: string): Promise<Account | undefined> {
-    const account = await this.lcdClient.authAccounts(address);
+    const account = await this.lcdClient.auth.account(address);
     const value = account.result.value;
     if (value.address === "") {
       return undefined;

@@ -75,7 +75,7 @@ describe("CosmosClient", () => {
 
       const openedClient = (client as unknown) as PrivateCosmWasmClient;
       const blockLatestSpy = spyOn(openedClient.lcdClient, "blocksLatest").and.callThrough();
-      const authAccountsSpy = spyOn(openedClient.lcdClient, "authAccounts").and.callThrough();
+      const authAccountsSpy = spyOn(openedClient.lcdClient.auth, "account").and.callThrough();
 
       const height1 = await client.getHeight();
       expect(height1).toBeGreaterThan(0);

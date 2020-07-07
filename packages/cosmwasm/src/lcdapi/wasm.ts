@@ -76,82 +76,86 @@ function unwrapWasmResponse<T>(response: WasmResponse<T>): T {
  * @see https://github.com/cosmwasm/wasmd/blob/master/x/wasm/client/rest/query.go#L19-L27
  */
 export interface WasmModule extends LcdModule {
-  readonly listCodeInfo: () => Promise<readonly CodeInfo[]>;
+  readonly wasm: {
+    readonly listCodeInfo: () => Promise<readonly CodeInfo[]>;
 
-  /**
-   * Downloads the original wasm bytecode by code ID.
-   *
-   * Throws an error if no code with this id
-   */
-  readonly getCode: (id: number) => Promise<CodeDetails>;
+    /**
+     * Downloads the original wasm bytecode by code ID.
+     *
+     * Throws an error if no code with this id
+     */
+    readonly getCode: (id: number) => Promise<CodeDetails>;
 
-  readonly listContractsByCodeId: (id: number) => Promise<readonly ContractInfo[]>;
+    readonly listContractsByCodeId: (id: number) => Promise<readonly ContractInfo[]>;
 
-  /**
-   * Returns null when contract was not found at this address.
-   */
-  readonly getContractInfo: (address: string) => Promise<ContractDetails | null>;
+    /**
+     * Returns null when contract was not found at this address.
+     */
+    readonly getContractInfo: (address: string) => Promise<ContractDetails | null>;
 
-  /**
-   * Returns all contract state.
-   * This is an empty array if no such contract, or contract has no data.
-   */
-  readonly getAllContractState: (address: string) => Promise<readonly Model[]>;
+    /**
+     * Returns all contract state.
+     * This is an empty array if no such contract, or contract has no data.
+     */
+    readonly getAllContractState: (address: string) => Promise<readonly Model[]>;
 
-  /**
-   * Returns the data at the key if present (unknown decoded json),
-   * or null if no data at this (contract address, key) pair
-   */
-  readonly queryContractRaw: (address: string, key: Uint8Array) => Promise<Uint8Array | null>;
+    /**
+     * Returns the data at the key if present (unknown decoded json),
+     * or null if no data at this (contract address, key) pair
+     */
+    readonly queryContractRaw: (address: string, key: Uint8Array) => Promise<Uint8Array | null>;
 
-  /**
-   * Makes a smart query on the contract and parses the reponse as JSON.
-   * Throws error if no such contract exists, the query format is invalid or the response is invalid.
-   */
-  readonly queryContractSmart: (address: string, query: object) => Promise<JsonObject>;
+    /**
+     * Makes a smart query on the contract and parses the reponse as JSON.
+     * Throws error if no such contract exists, the query format is invalid or the response is invalid.
+     */
+    readonly queryContractSmart: (address: string, query: object) => Promise<JsonObject>;
+  };
 }
 
 export function setupWasmModule(base: LcdClient): WasmModule {
   return {
-    listCodeInfo: async () => {
-      const path = `/wasm/code`;
-      const responseData = (await base.get(path)) as WasmResponse<LcdApiArray<CodeInfo>>;
-      return normalizeLcdApiArray(unwrapWasmResponse(responseData));
-    },
-    getCode: async (id: number) => {
-      const path = `/wasm/code/${id}`;
-      const responseData = (await base.get(path)) as WasmResponse<CodeDetails>;
-      return unwrapWasmResponse(responseData);
-    },
-    listContractsByCodeId: async (id: number) => {
-      const path = `/wasm/code/${id}/contracts`;
-      const responseData = (await base.get(path)) as WasmResponse<LcdApiArray<ContractInfo>>;
-      return normalizeLcdApiArray(unwrapWasmResponse(responseData));
-    },
-    getContractInfo: async (address: string) => {
-      const path = `/wasm/contract/${address}`;
-      const response = (await base.get(path)) as WasmResponse<ContractDetails | null>;
-      return unwrapWasmResponse(response);
-    },
-    getAllContractState: async (address: string) => {
-      const path = `/wasm/contract/${address}/state`;
-      const responseData = (await base.get(path)) as WasmResponse<LcdApiArray<WasmData>>;
-      return normalizeLcdApiArray(unwrapWasmResponse(responseData)).map(parseWasmData);
-    },
-    queryContractRaw: async (address: string, key: Uint8Array) => {
-      const hexKey = toHex(key);
-      const path = `/wasm/contract/${address}/raw/${hexKey}?encoding=hex`;
-      const responseData = (await base.get(path)) as WasmResponse<WasmData[]>;
-      const data = unwrapWasmResponse(responseData);
-      return data.length === 0 ? null : fromBase64(data[0].val);
-    },
-    queryContractSmart: async (address: string, query: object) => {
-      const encoded = toHex(toUtf8(JSON.stringify(query)));
-      const path = `/wasm/contract/${address}/smart/${encoded}?encoding=hex`;
-      const responseData = (await base.get(path)) as WasmResponse<SmartQueryResponse>;
-      const result = unwrapWasmResponse(responseData);
-      // By convention, smart queries must return a valid JSON document (see https://github.com/CosmWasm/cosmwasm/issues/144)
-      return JSON.parse(fromUtf8(fromBase64(result.smart)));
+    wasm: {
+      listCodeInfo: async () => {
+        const path = `/wasm/code`;
+        const responseData = (await base.get(path)) as WasmResponse<LcdApiArray<CodeInfo>>;
+        return normalizeLcdApiArray(unwrapWasmResponse(responseData));
+      },
+      getCode: async (id: number) => {
+        const path = `/wasm/code/${id}`;
+        const responseData = (await base.get(path)) as WasmResponse<CodeDetails>;
+        return unwrapWasmResponse(responseData);
+      },
+      listContractsByCodeId: async (id: number) => {
+        const path = `/wasm/code/${id}/contracts`;
+        const responseData = (await base.get(path)) as WasmResponse<LcdApiArray<ContractInfo>>;
+        return normalizeLcdApiArray(unwrapWasmResponse(responseData));
+      },
+      getContractInfo: async (address: string) => {
+        const path = `/wasm/contract/${address}`;
+        const response = (await base.get(path)) as WasmResponse<ContractDetails | null>;
+        return unwrapWasmResponse(response);
+      },
+      getAllContractState: async (address: string) => {
+        const path = `/wasm/contract/${address}/state`;
+        const responseData = (await base.get(path)) as WasmResponse<LcdApiArray<WasmData>>;
+        return normalizeLcdApiArray(unwrapWasmResponse(responseData)).map(parseWasmData);
+      },
+      queryContractRaw: async (address: string, key: Uint8Array) => {
+        const hexKey = toHex(key);
+        const path = `/wasm/contract/${address}/raw/${hexKey}?encoding=hex`;
+        const responseData = (await base.get(path)) as WasmResponse<WasmData[]>;
+        const data = unwrapWasmResponse(responseData);
+        return data.length === 0 ? null : fromBase64(data[0].val);
+      },
+      queryContractSmart: async (address: string, query: object) => {
+        const encoded = toHex(toUtf8(JSON.stringify(query)));
+        const path = `/wasm/contract/${address}/smart/${encoded}?encoding=hex`;
+        const responseData = (await base.get(path)) as WasmResponse<SmartQueryResponse>;
+        const result = unwrapWasmResponse(responseData);
+        // By convention, smart queries must return a valid JSON document (see https://github.com/CosmWasm/cosmwasm/issues/144)
+        return JSON.parse(fromUtf8(fromBase64(result.smart)));
+      },
     },
   };
 }

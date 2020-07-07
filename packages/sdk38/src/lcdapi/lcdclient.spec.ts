@@ -23,7 +23,7 @@ import {
 import { StdFee } from "../types";
 import { setupAuthModule } from "./auth";
 import { TxsResponse } from "./base";
-import { LcdApiArray, LcdClient, normalizeLcdApiArray } from "./lcdclient";
+import { LcdApiArray, LcdClient, LcdModule, normalizeLcdApiArray } from "./lcdclient";
 
 /** Deployed as part of scripts/wasmd/init.sh */
 export const deployedErc20 = {
@@ -79,8 +79,22 @@ describe("LcdClient", () => {
       return response.result;
     }
 
-    interface WasmModule extends Record<string, () => any> {
-      listCodeInfo: () => Promise<readonly CodeInfo[]>;
+    interface WasmModule extends LcdModule {
+      wasm: {
+        listCodeInfo: () => Promise<readonly CodeInfo[]>;
+      };
+    }
+
+    function setupWasmModule(base: LcdClient): WasmModule {
+      return {
+        wasm: {
+          listCodeInfo: async (): Promise<readonly CodeInfo[]> => {
+            const path = `/wasm/code`;
+            const responseData = (await base.get(path)) as WasmResponse<LcdApiArray<CodeInfo>>;
+            return normalizeLcdApiArray(unwrapWasmResponse(responseData));
+          },
+        },
+      };
     }
 
     it("works for no modules", async () => {
@@ -90,18 +104,9 @@ describe("LcdClient", () => {
 
     it("works for one module", async () => {
       pendingWithoutWasmd();
-      function wasmClientRegisterer(base: LcdClient): WasmModule {
-        return {
-          listCodeInfo: async (): Promise<readonly CodeInfo[]> => {
-            const path = `/wasm/code`;
-            const responseData = (await base.get(path)) as WasmResponse<LcdApiArray<CodeInfo>>;
-            return normalizeLcdApiArray(unwrapWasmResponse(responseData));
-          },
-        };
-      }
 
-      const client = LcdClient.withModules({ apiUrl: wasmd.endpoint }, wasmClientRegisterer);
-      const codes = await client.listCodeInfo();
+      const client = LcdClient.withModules({ apiUrl: wasmd.endpoint }, setupWasmModule);
+      const codes = await client.wasm.listCodeInfo();
       expect(codes.length).toBeGreaterThanOrEqual(3);
       expect(codes[0].id).toEqual(deployedErc20.codeId);
       expect(codes[0].data_hash).toEqual(deployedErc20.checksum.toUpperCase());
@@ -111,15 +116,6 @@ describe("LcdClient", () => {
 
     it("works for two modules", async () => {
       pendingWithoutWasmd();
-      function registerWasmModule(base: LcdClient): WasmModule {
-        return {
-          listCodeInfo: async (): Promise<readonly CodeInfo[]> => {
-            const path = `/wasm/code`;
-            const responseData = (await base.get(path)) as WasmResponse<LcdApiArray<CodeInfo>>;
-            return normalizeLcdApiArray(unwrapWasmResponse(responseData));
-          },
-        };
-      }
 
       interface TotalSupplyAllReponse {
         readonly height: string;
@@ -129,21 +125,23 @@ describe("LcdClient", () => {
       // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
       function setupSupplyModule(base: LcdClient) {
         return {
-          totalSupplyAll: async (): Promise<TotalSupplyAllReponse> => {
-            const path = `/supply/total`;
-            return (await base.get(path)) as TotalSupplyAllReponse;
+          supply: {
+            totalAll: async (): Promise<TotalSupplyAllReponse> => {
+              const path = `/supply/total`;
+              return (await base.get(path)) as TotalSupplyAllReponse;
+            },
           },
         };
       }
 
-      const client = LcdClient.withModules({ apiUrl: wasmd.endpoint }, registerWasmModule, setupSupplyModule);
-      const codes = await client.listCodeInfo();
+      const client = LcdClient.withModules({ apiUrl: wasmd.endpoint }, setupWasmModule, setupSupplyModule);
+      const codes = await client.wasm.listCodeInfo();
       expect(codes.length).toBeGreaterThanOrEqual(3);
       expect(codes[0].id).toEqual(deployedErc20.codeId);
       expect(codes[0].data_hash).toEqual(deployedErc20.checksum.toUpperCase());
       expect(codes[0].builder).toEqual(deployedErc20.builder);
       expect(codes[0].source).toEqual(deployedErc20.source);
-      const supply = await client.totalSupplyAll();
+      const supply = await client.supply.totalAll();
       expect(supply).toEqual({
         height: jasmine.stringMatching(/^[0-9]+$/),
         result: [
@@ -525,7 +523,7 @@ describe("LcdClient", () => {
       };
 
       const client = LcdClient.withModules({ apiUrl: wasmd.endpoint }, setupAuthModule);
-      const { account_number, sequence } = (await client.authAccounts(faucet.address)).result.value;
+      const { account_number, sequence } = (await client.auth.account(faucet.address)).result.value;
 
       const signBytes = makeSignBytes([theMsg], fee, wasmd.chainId, memo, account_number, sequence);
       const signature = await pen.sign(signBytes);
@@ -578,9 +576,9 @@ describe("LcdClient", () => {
       };
 
       const client = LcdClient.withModules({ apiUrl: wasmd.endpoint }, setupAuthModule);
-      const { account_number: an1, sequence: sequence1 } = (await client.authAccounts(address1)).result.value;
-      const { account_number: an2, sequence: sequence2 } = (await client.authAccounts(address2)).result.value;
-      const { account_number: an3, sequence: sequence3 } = (await client.authAccounts(address3)).result.value;
+      const { account_number: an1, sequence: sequence1 } = (await client.auth.account(address1)).result.value;
+      const { account_number: an2, sequence: sequence2 } = (await client.auth.account(address2)).result.value;
+      const { account_number: an3, sequence: sequence3 } = (await client.auth.account(address3)).result.value;
 
       const signBytes1 = makeSignBytes([theMsg], fee, wasmd.chainId, memo, an1, sequence1);
       const signBytes2 = makeSignBytes([theMsg], fee, wasmd.chainId, memo, an2, sequence2);
@@ -643,7 +641,7 @@ describe("LcdClient", () => {
       };
 
       const client = LcdClient.withModules({ apiUrl: wasmd.endpoint }, setupAuthModule);
-      const { account_number, sequence } = (await client.authAccounts(address1)).result.value;
+      const { account_number, sequence } = (await client.auth.account(address1)).result.value;
 
       const signBytes = makeSignBytes([msg1, msg2], fee, wasmd.chainId, memo, account_number, sequence);
       const signature1 = await account1.sign(signBytes);
@@ -703,8 +701,8 @@ describe("LcdClient", () => {
       };
 
       const client = LcdClient.withModules({ apiUrl: wasmd.endpoint }, setupAuthModule);
-      const { account_number: an1, sequence: sequence1 } = (await client.authAccounts(address1)).result.value;
-      const { account_number: an2, sequence: sequence2 } = (await client.authAccounts(address2)).result.value;
+      const { account_number: an1, sequence: sequence1 } = (await client.auth.account(address1)).result.value;
+      const { account_number: an2, sequence: sequence2 } = (await client.auth.account(address2)).result.value;
 
       const signBytes1 = makeSignBytes([msg2, msg1], fee, wasmd.chainId, memo, an1, sequence1);
       const signBytes2 = makeSignBytes([msg2, msg1], fee, wasmd.chainId, memo, an2, sequence2);
@@ -771,8 +769,8 @@ describe("LcdClient", () => {
       };
 
       const client = LcdClient.withModules({ apiUrl: wasmd.endpoint }, setupAuthModule);
-      const { account_number: an1, sequence: sequence1 } = (await client.authAccounts(address1)).result.value;
-      const { account_number: an2, sequence: sequence2 } = (await client.authAccounts(address2)).result.value;
+      const { account_number: an1, sequence: sequence1 } = (await client.auth.account(address1)).result.value;
+      const { account_number: an2, sequence: sequence2 } = (await client.auth.account(address2)).result.value;
 
       const signBytes1 = makeSignBytes([msg1, msg2], fee, wasmd.chainId, memo, an1, sequence1);
       const signBytes2 = makeSignBytes([msg1, msg2], fee, wasmd.chainId, memo, an2, sequence2);
@@ -834,8 +832,8 @@ describe("LcdClient", () => {
       };
 
       const client = LcdClient.withModules({ apiUrl: wasmd.endpoint }, setupAuthModule);
-      const { account_number: an1, sequence: sequence1 } = (await client.authAccounts(address1)).result.value;
-      const { account_number: an2, sequence: sequence2 } = (await client.authAccounts(address2)).result.value;
+      const { account_number: an1, sequence: sequence1 } = (await client.auth.account(address1)).result.value;
+      const { account_number: an2, sequence: sequence2 } = (await client.auth.account(address2)).result.value;
 
       const signBytes1 = makeSignBytes([msg2, msg1], fee, wasmd.chainId, memo, an1, sequence1);
       const signBytes2 = makeSignBytes([msg2, msg1], fee, wasmd.chainId, memo, an2, sequence2);

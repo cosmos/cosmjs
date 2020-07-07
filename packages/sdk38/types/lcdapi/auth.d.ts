@@ -17,6 +17,8 @@ export interface AuthAccountsResponse {
   };
 }
 export interface AuthModule extends LcdModule {
-  readonly authAccounts: (address: string) => Promise<AuthAccountsResponse>;
+  readonly auth: {
+    readonly account: (address: string) => Promise<AuthAccountsResponse>;
+  };
 }
 export declare function setupAuthModule(base: LcdClient): AuthModule;

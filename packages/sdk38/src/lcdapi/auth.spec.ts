@@ -19,7 +19,7 @@ describe("auth", () => {
   it("works for unused account without pubkey", async () => {
     pendingWithoutWasmd();
     const client = makeAuthClient(wasmd.endpoint);
-    const { height, result } = await client.authAccounts(unused.address);
+    const { height, result } = await client.auth.account(unused.address);
     expect(height).toMatch(nonNegativeIntegerMatcher);
     expect(result).toEqual({
       type: "cosmos-sdk/Account",
@@ -46,7 +46,7 @@ describe("auth", () => {
   it("has correct pubkey for faucet", async () => {
     pendingWithoutWasmd();
     const client = makeAuthClient(wasmd.endpoint);
-    const { result } = await client.authAccounts(faucet.address);
+    const { result } = await client.auth.account(faucet.address);
     expect(result.value).toEqual(
       jasmine.objectContaining({
         public_key: encodeBech32Pubkey(faucet.pubkey, "cosmospub"),
@@ -59,7 +59,7 @@ describe("auth", () => {
     pendingWithoutWasmd();
     const client = makeAuthClient(wasmd.endpoint);
     const nonExistentAccount = makeRandomAddress();
-    const { result } = await client.authAccounts(nonExistentAccount);
+    const { result } = await client.auth.account(nonExistentAccount);
     expect(result).toEqual({
       type: "cosmos-sdk/Account",
       value: jasmine.objectContaining({ address: "" }),

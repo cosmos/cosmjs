@@ -20,18 +20,22 @@ export interface AuthAccountsResponse {
 }
 
 export interface AuthModule extends LcdModule {
-  readonly authAccounts: (address: string) => Promise<AuthAccountsResponse>;
+  readonly auth: {
+    readonly account: (address: string) => Promise<AuthAccountsResponse>;
+  };
 }
 
 export function setupAuthModule(base: LcdClient): AuthModule {
   return {
-    authAccounts: async (address: string) => {
-      const path = `/auth/accounts/${address}`;
-      const responseData = await base.get(path);
-      if (responseData.result.type !== "cosmos-sdk/Account") {
-        throw new Error("Unexpected response data format");
-      }
-      return responseData as AuthAccountsResponse;
+    auth: {
+      account: async (address: string) => {
+        const path = `/auth/accounts/${address}`;
+        const responseData = await base.get(path);
+        if (responseData.result.type !== "cosmos-sdk/Account") {
+          throw new Error("Unexpected response data format");
+        }
+        return responseData as AuthAccountsResponse;
+      },
     },
   };
 }

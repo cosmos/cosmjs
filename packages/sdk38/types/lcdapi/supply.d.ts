@@ -10,7 +10,9 @@ export interface TotalSupplyReponse {
   readonly result: string;
 }
 export interface SupplyModule extends LcdModule {
-  readonly totalSupplyAll: () => Promise<TotalSupplyAllReponse>;
-  readonly totalSupply: (denom: string) => Promise<TotalSupplyReponse>;
+  readonly supply: {
+    readonly totalAll: () => Promise<TotalSupplyAllReponse>;
+    readonly total: (denom: string) => Promise<TotalSupplyReponse>;
+  };
 }
 export declare function setupSupplyModule(base: LcdClient): SupplyModule;
