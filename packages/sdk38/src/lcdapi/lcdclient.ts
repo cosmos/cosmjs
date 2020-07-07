@@ -185,7 +185,10 @@ export class LcdClient {
           `Module must be a non-null object. Found type ${typeof moduleValue} for module "${moduleKey}".`,
         );
         const current = (client as any)[moduleKey] || {};
-        (client as any)[moduleKey] = Object.assign(current, moduleValue);
+        (client as any)[moduleKey] = {
+          ...current,
+          ...moduleValue,
+        };
       }
     }
     return client;
