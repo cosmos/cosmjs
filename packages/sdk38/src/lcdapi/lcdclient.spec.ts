@@ -97,12 +97,12 @@ describe("LcdClient", () => {
       };
     }
 
-    it("works for no modules", async () => {
+    it("works for no extension", async () => {
       const client = LcdClient.withExtensions({ apiUrl: wasmd.endpoint });
       expect(client).toBeTruthy();
     });
 
-    it("works for one module", async () => {
+    it("works for one extension", async () => {
       pendingWithoutWasmd();
 
       const client = LcdClient.withExtensions({ apiUrl: wasmd.endpoint }, setupWasmExtension);
@@ -114,7 +114,7 @@ describe("LcdClient", () => {
       expect(codes[0].source).toEqual(deployedErc20.source);
     });
 
-    it("works for two modules", async () => {
+    it("works for two extensions", async () => {
       pendingWithoutWasmd();
 
       interface TotalSupplyAllReponse {
@@ -123,7 +123,7 @@ describe("LcdClient", () => {
       }
 
       // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-      function setupSupplyModule(base: LcdClient) {
+      function setupSupplyExtension(base: LcdClient) {
         return {
           supply: {
             totalAll: async (): Promise<TotalSupplyAllReponse> => {
@@ -137,7 +137,7 @@ describe("LcdClient", () => {
       const client = LcdClient.withExtensions(
         { apiUrl: wasmd.endpoint },
         setupWasmExtension,
-        setupSupplyModule,
+        setupSupplyExtension,
       );
       const codes = await client.wasm.listCodeInfo();
       expect(codes.length).toBeGreaterThanOrEqual(3);
