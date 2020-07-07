@@ -1,5 +1,5 @@
 import { fromBase64, fromUtf8, toHex, toUtf8 } from "@cosmjs/encoding";
-import { LcdApiArray, LcdClient, LcdModule, normalizeLcdApiArray } from "@cosmjs/sdk38";
+import { LcdApiArray, LcdClient, LcdExtension, normalizeLcdApiArray } from "@cosmjs/sdk38";
 
 import { JsonObject, Model, parseWasmData, WasmData } from "../types";
 
@@ -75,7 +75,7 @@ function unwrapWasmResponse<T>(response: WasmResponse<T>): T {
 /**
  * @see https://github.com/cosmwasm/wasmd/blob/master/x/wasm/client/rest/query.go#L19-L27
  */
-export interface WasmModule extends LcdModule {
+export interface WasmExtension extends LcdExtension {
   readonly wasm: {
     readonly listCodeInfo: () => Promise<readonly CodeInfo[]>;
 
@@ -113,7 +113,7 @@ export interface WasmModule extends LcdModule {
   };
 }
 
-export function setupWasmModule(base: LcdClient): WasmModule {
+export function setupWasmModule(base: LcdClient): WasmExtension {
   return {
     wasm: {
       listCodeInfo: async () => {

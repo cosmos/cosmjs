@@ -2,7 +2,7 @@
 import { Sha256 } from "@cosmjs/crypto";
 import { Bech32, fromAscii, fromBase64, fromHex, toAscii, toBase64, toHex } from "@cosmjs/encoding";
 import {
-  AuthModule,
+  AuthExtension,
   Coin,
   coin,
   coins,
@@ -11,7 +11,7 @@ import {
   Pen,
   PostTxsResponse,
   Secp256k1Pen,
-  setupAuthModule,
+  setupAuthExtension,
   StdFee,
 } from "@cosmjs/sdk38";
 import { assert } from "@cosmjs/utils";
@@ -37,12 +37,12 @@ import {
   wasmd,
   wasmdEnabled,
 } from "../testutils.spec";
-import { setupWasmModule, WasmModule } from "./wasm";
+import { setupWasmModule, WasmExtension } from "./wasm";
 
-type WasmClient = LcdClient & AuthModule & WasmModule;
+type WasmClient = LcdClient & AuthExtension & WasmExtension;
 
 function makeWasmClient(apiUrl: string): WasmClient {
-  return LcdClient.withModules({ apiUrl }, setupAuthModule, setupWasmModule);
+  return LcdClient.withExtensions({ apiUrl }, setupAuthExtension, setupWasmModule);
 }
 
 async function uploadContract(

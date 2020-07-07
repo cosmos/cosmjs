@@ -21,9 +21,9 @@ import {
   wasmdEnabled,
 } from "../testutils.spec";
 import { StdFee } from "../types";
-import { setupAuthModule } from "./auth";
+import { setupAuthExtension } from "./auth";
 import { TxsResponse } from "./base";
-import { LcdApiArray, LcdClient, LcdModule, normalizeLcdApiArray } from "./lcdclient";
+import { LcdApiArray, LcdClient, LcdExtension, normalizeLcdApiArray } from "./lcdclient";
 
 /** Deployed as part of scripts/wasmd/init.sh */
 export const deployedErc20 = {
@@ -79,13 +79,13 @@ describe("LcdClient", () => {
       return response.result;
     }
 
-    interface WasmModule extends LcdModule {
+    interface WasmExtension extends LcdExtension {
       wasm: {
         listCodeInfo: () => Promise<readonly CodeInfo[]>;
       };
     }
 
-    function setupWasmModule(base: LcdClient): WasmModule {
+    function setupWasmExtension(base: LcdClient): WasmExtension {
       return {
         wasm: {
           listCodeInfo: async (): Promise<readonly CodeInfo[]> => {
@@ -98,14 +98,14 @@ describe("LcdClient", () => {
     }
 
     it("works for no modules", async () => {
-      const client = LcdClient.withModules({ apiUrl: wasmd.endpoint });
+      const client = LcdClient.withExtensions({ apiUrl: wasmd.endpoint });
       expect(client).toBeTruthy();
     });
 
     it("works for one module", async () => {
       pendingWithoutWasmd();
 
-      const client = LcdClient.withModules({ apiUrl: wasmd.endpoint }, setupWasmModule);
+      const client = LcdClient.withExtensions({ apiUrl: wasmd.endpoint }, setupWasmExtension);
       const codes = await client.wasm.listCodeInfo();
       expect(codes.length).toBeGreaterThanOrEqual(3);
       expect(codes[0].id).toEqual(deployedErc20.codeId);
@@ -134,7 +134,11 @@ describe("LcdClient", () => {
         };
       }
 
-      const client = LcdClient.withModules({ apiUrl: wasmd.endpoint }, setupWasmModule, setupSupplyModule);
+      const client = LcdClient.withExtensions(
+        { apiUrl: wasmd.endpoint },
+        setupWasmExtension,
+        setupSupplyModule,
+      );
       const codes = await client.wasm.listCodeInfo();
       expect(codes.length).toBeGreaterThanOrEqual(3);
       expect(codes[0].id).toEqual(deployedErc20.codeId);
@@ -522,7 +526,7 @@ describe("LcdClient", () => {
         gas: "890000",
       };
 
-      const client = LcdClient.withModules({ apiUrl: wasmd.endpoint }, setupAuthModule);
+      const client = LcdClient.withExtensions({ apiUrl: wasmd.endpoint }, setupAuthExtension);
       const { account_number, sequence } = (await client.auth.account(faucet.address)).result.value;
 
       const signBytes = makeSignBytes([theMsg], fee, wasmd.chainId, memo, account_number, sequence);
@@ -575,7 +579,7 @@ describe("LcdClient", () => {
         gas: "890000",
       };
 
-      const client = LcdClient.withModules({ apiUrl: wasmd.endpoint }, setupAuthModule);
+      const client = LcdClient.withExtensions({ apiUrl: wasmd.endpoint }, setupAuthExtension);
       const { account_number: an1, sequence: sequence1 } = (await client.auth.account(address1)).result.value;
       const { account_number: an2, sequence: sequence2 } = (await client.auth.account(address2)).result.value;
       const { account_number: an3, sequence: sequence3 } = (await client.auth.account(address3)).result.value;
@@ -640,7 +644,7 @@ describe("LcdClient", () => {
         gas: "890000",
       };
 
-      const client = LcdClient.withModules({ apiUrl: wasmd.endpoint }, setupAuthModule);
+      const client = LcdClient.withExtensions({ apiUrl: wasmd.endpoint }, setupAuthExtension);
       const { account_number, sequence } = (await client.auth.account(address1)).result.value;
 
       const signBytes = makeSignBytes([msg1, msg2], fee, wasmd.chainId, memo, account_number, sequence);
@@ -700,7 +704,7 @@ describe("LcdClient", () => {
         gas: "890000",
       };
 
-      const client = LcdClient.withModules({ apiUrl: wasmd.endpoint }, setupAuthModule);
+      const client = LcdClient.withExtensions({ apiUrl: wasmd.endpoint }, setupAuthExtension);
       const { account_number: an1, sequence: sequence1 } = (await client.auth.account(address1)).result.value;
       const { account_number: an2, sequence: sequence2 } = (await client.auth.account(address2)).result.value;
 
@@ -768,7 +772,7 @@ describe("LcdClient", () => {
         gas: "890000",
       };
 
-      const client = LcdClient.withModules({ apiUrl: wasmd.endpoint }, setupAuthModule);
+      const client = LcdClient.withExtensions({ apiUrl: wasmd.endpoint }, setupAuthExtension);
       const { account_number: an1, sequence: sequence1 } = (await client.auth.account(address1)).result.value;
       const { account_number: an2, sequence: sequence2 } = (await client.auth.account(address2)).result.value;
 
@@ -831,7 +835,7 @@ describe("LcdClient", () => {
         gas: "890000",
       };
 
-      const client = LcdClient.withModules({ apiUrl: wasmd.endpoint }, setupAuthModule);
+      const client = LcdClient.withExtensions({ apiUrl: wasmd.endpoint }, setupAuthExtension);
       const { account_number: an1, sequence: sequence1 } = (await client.auth.account(address1)).result.value;
       const { account_number: an2, sequence: sequence2 } = (await client.auth.account(address2)).result.value;
 

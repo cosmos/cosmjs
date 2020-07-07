@@ -1,5 +1,5 @@
 import { Coin } from "../coins";
-import { LcdClient, LcdModule } from "./lcdclient";
+import { LcdClient, LcdExtension } from "./lcdclient";
 
 export interface CosmosSdkAccount {
   /** Bech32 account address */
@@ -19,13 +19,13 @@ export interface AuthAccountsResponse {
   };
 }
 
-export interface AuthModule extends LcdModule {
+export interface AuthExtension extends LcdExtension {
   readonly auth: {
     readonly account: (address: string) => Promise<AuthAccountsResponse>;
   };
 }
 
-export function setupAuthModule(base: LcdClient): AuthModule {
+export function setupAuthExtension(base: LcdClient): AuthExtension {
   return {
     auth: {
       account: async (address: string) => {

@@ -1,13 +1,13 @@
 import { pendingWithoutWasmd, wasmd } from "../testutils.spec";
 import { LcdClient } from "./lcdclient";
-import { setupSupplyModule } from "./supply";
+import { setupSupplyExtension } from "./supply";
 
-describe("supply", () => {
+describe("SupplyExtension", () => {
   describe("totalAll", () => {
     it("works", async () => {
       pendingWithoutWasmd();
 
-      const client = LcdClient.withModules({ apiUrl: wasmd.endpoint }, setupSupplyModule);
+      const client = LcdClient.withExtensions({ apiUrl: wasmd.endpoint }, setupSupplyExtension);
       const supply = await client.supply.totalAll();
       expect(supply).toEqual({
         height: jasmine.stringMatching(/^[0-9]+$/),
@@ -29,7 +29,7 @@ describe("supply", () => {
     it("works", async () => {
       pendingWithoutWasmd();
 
-      const client = LcdClient.withModules({ apiUrl: wasmd.endpoint }, setupSupplyModule);
+      const client = LcdClient.withExtensions({ apiUrl: wasmd.endpoint }, setupSupplyExtension);
       const supply = await client.supply.total("ucosm");
       expect(supply).toEqual({
         height: jasmine.stringMatching(/^[0-9]+$/),

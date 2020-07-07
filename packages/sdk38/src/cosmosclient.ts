@@ -3,7 +3,7 @@ import { fromBase64, fromHex, toHex } from "@cosmjs/encoding";
 import { Uint53 } from "@cosmjs/math";
 
 import { Coin } from "./coins";
-import { AuthModule, BroadcastMode, LcdClient, setupAuthModule } from "./lcdapi";
+import { AuthExtension, BroadcastMode, LcdClient, setupAuthExtension } from "./lcdapi";
 import { Log, parseLogs } from "./logs";
 import { decodeBech32Pubkey } from "./pubkey";
 import { CosmosSdkTx, PubKey, StdTx } from "./types";
@@ -130,11 +130,11 @@ export interface Block {
 
 /** Use for testing only */
 export interface PrivateCosmWasmClient {
-  readonly lcdClient: LcdClient & AuthModule;
+  readonly lcdClient: LcdClient & AuthExtension;
 }
 
 export class CosmosClient {
-  protected readonly lcdClient: LcdClient & AuthModule;
+  protected readonly lcdClient: LcdClient & AuthExtension;
   /** Any address the chain considers valid (valid bech32 with proper prefix) */
   protected anyValidAddress: string | undefined;
 
@@ -150,7 +150,10 @@ export class CosmosClient {
    * @param broadcastMode Defines at which point of the transaction processing the postTx method (i.e. transaction broadcasting) returns
    */
   public constructor(apiUrl: string, broadcastMode = BroadcastMode.Block) {
-    this.lcdClient = LcdClient.withModules({ apiUrl: apiUrl, broadcastMode: broadcastMode }, setupAuthModule);
+    this.lcdClient = LcdClient.withExtensions(
+      { apiUrl: apiUrl, broadcastMode: broadcastMode },
+      setupAuthExtension,
+    );
   }
 
   public async getChainId(): Promise<string> {

@@ -8,14 +8,14 @@ import {
   unused,
   wasmd,
 } from "../testutils.spec";
-import { AuthModule, setupAuthModule } from "./auth";
+import { AuthExtension, setupAuthExtension } from "./auth";
 import { LcdClient } from "./lcdclient";
 
-function makeAuthClient(apiUrl: string): LcdClient & AuthModule {
-  return LcdClient.withModules({ apiUrl }, setupAuthModule);
+function makeAuthClient(apiUrl: string): LcdClient & AuthExtension {
+  return LcdClient.withExtensions({ apiUrl }, setupAuthExtension);
 }
 
-describe("auth", () => {
+describe("AuthExtension", () => {
   it("works for unused account without pubkey", async () => {
     pendingWithoutWasmd();
     const client = makeAuthClient(wasmd.endpoint);

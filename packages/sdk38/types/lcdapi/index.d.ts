@@ -1,5 +1,5 @@
-export { AuthModule, AuthAccountsResponse, setupAuthModule } from "./auth";
-export { setupSupplyModule, SupplyModule, TotalSupplyAllReponse, TotalSupplyReponse } from "./supply";
+export { AuthExtension, AuthAccountsResponse, setupAuthExtension } from "./auth";
+export { setupSupplyExtension, SupplyExtension, TotalSupplyAllReponse, TotalSupplyReponse } from "./supply";
 export {
   BlockResponse,
   BroadcastMode,
@@ -9,4 +9,4 @@ export {
   SearchTxsResponse,
   TxsResponse,
 } from "./base";
-export { LcdApiArray, LcdClient, LcdModule, normalizeLcdApiArray } from "./lcdclient";
+export { LcdApiArray, LcdClient, LcdExtension, normalizeLcdApiArray } from "./lcdclient";

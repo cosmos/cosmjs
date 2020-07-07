@@ -22,20 +22,20 @@ export {
 export { makeSignBytes } from "./encoding";
 export {
   AuthAccountsResponse,
-  AuthModule,
+  AuthExtension,
   BlockResponse,
   BroadcastMode,
   EncodeTxResponse,
   LcdApiArray,
+  LcdExtension,
   LcdClient,
-  LcdModule,
   NodeInfoResponse,
   normalizeLcdApiArray,
   PostTxsResponse,
   SearchTxsResponse,
-  setupAuthModule,
-  setupSupplyModule,
-  SupplyModule,
+  setupAuthExtension,
+  setupSupplyExtension,
+  SupplyExtension,
   TxsResponse,
 } from "./lcdapi";
 export { RestClient } from "./restclient";

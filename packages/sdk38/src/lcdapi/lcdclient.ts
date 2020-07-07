@@ -20,9 +20,9 @@ export function normalizeLcdApiArray<T>(backend: LcdApiArray<T>): readonly T[] {
   return backend || [];
 }
 
-export type LcdModule = Record<string, Record<string, (...args: any[]) => any>>;
+export type LcdExtension = Record<string, Record<string, (...args: any[]) => any>>;
 
-type LcdModuleSetup<M extends LcdModule> = (base: LcdClient) => M;
+type LcdExtensionSetup<P extends LcdExtension> = (base: LcdClient) => P;
 
 export interface LcdClientBaseOptions {
   readonly apiUrl: string;
@@ -65,142 +65,142 @@ function parseAxiosError(err: AxiosError): never {
  */
 export class LcdClient {
   /** Constructs an LCD client with 0 modules */
-  public static withModules(options: LcdClientBaseOptions): LcdClient;
+  public static withExtensions(options: LcdClientBaseOptions): LcdClient;
 
   /** Constructs an LCD client with 1 module */
-  public static withModules<A extends LcdModule>(
+  public static withExtensions<A extends LcdExtension>(
     options: LcdClientBaseOptions,
-    setupModuleA: LcdModuleSetup<A>,
+    setupModuleA: LcdExtensionSetup<A>,
   ): LcdClient & A;
 
   /** Constructs an LCD client with 2 modules */
-  public static withModules<A extends LcdModule, B extends LcdModule>(
+  public static withExtensions<A extends LcdExtension, B extends LcdExtension>(
     options: LcdClientBaseOptions,
-    setupModuleA: LcdModuleSetup<A>,
-    setupModuleB: LcdModuleSetup<B>,
+    setupModuleA: LcdExtensionSetup<A>,
+    setupModuleB: LcdExtensionSetup<B>,
   ): LcdClient & A & B;
 
   /** Constructs an LCD client with 3 modules */
-  public static withModules<A extends LcdModule, B extends LcdModule, C extends LcdModule>(
+  public static withExtensions<A extends LcdExtension, B extends LcdExtension, C extends LcdExtension>(
     options: LcdClientBaseOptions,
-    setupModuleA: LcdModuleSetup<A>,
-    setupModuleB: LcdModuleSetup<B>,
-    setupModuleC: LcdModuleSetup<C>,
+    setupModuleA: LcdExtensionSetup<A>,
+    setupModuleB: LcdExtensionSetup<B>,
+    setupModuleC: LcdExtensionSetup<C>,
   ): LcdClient & A & B & C;
 
   /** Constructs an LCD client with 4 modules */
-  public static withModules<
-    A extends LcdModule,
-    B extends LcdModule,
-    C extends LcdModule,
-    D extends LcdModule
+  public static withExtensions<
+    A extends LcdExtension,
+    B extends LcdExtension,
+    C extends LcdExtension,
+    D extends LcdExtension
   >(
     options: LcdClientBaseOptions,
-    setupModuleA: LcdModuleSetup<A>,
-    setupModuleB: LcdModuleSetup<B>,
-    setupModuleC: LcdModuleSetup<C>,
-    setupModuleD: LcdModuleSetup<D>,
+    setupModuleA: LcdExtensionSetup<A>,
+    setupModuleB: LcdExtensionSetup<B>,
+    setupModuleC: LcdExtensionSetup<C>,
+    setupModuleD: LcdExtensionSetup<D>,
   ): LcdClient & A & B & C & D;
 
   /** Constructs an LCD client with 5 modules */
-  public static withModules<
-    A extends LcdModule,
-    B extends LcdModule,
-    C extends LcdModule,
-    D extends LcdModule,
-    E extends LcdModule
+  public static withExtensions<
+    A extends LcdExtension,
+    B extends LcdExtension,
+    C extends LcdExtension,
+    D extends LcdExtension,
+    E extends LcdExtension
   >(
     options: LcdClientBaseOptions,
-    setupModuleA: LcdModuleSetup<A>,
-    setupModuleB: LcdModuleSetup<B>,
-    setupModuleC: LcdModuleSetup<C>,
-    setupModuleD: LcdModuleSetup<D>,
-    setupModuleE: LcdModuleSetup<E>,
+    setupModuleA: LcdExtensionSetup<A>,
+    setupModuleB: LcdExtensionSetup<B>,
+    setupModuleC: LcdExtensionSetup<C>,
+    setupModuleD: LcdExtensionSetup<D>,
+    setupModuleE: LcdExtensionSetup<E>,
   ): LcdClient & A & B & C & D & E;
 
   /** Constructs an LCD client with 6 modules */
-  public static withModules<
-    A extends LcdModule,
-    B extends LcdModule,
-    C extends LcdModule,
-    D extends LcdModule,
-    E extends LcdModule,
-    F extends LcdModule
+  public static withExtensions<
+    A extends LcdExtension,
+    B extends LcdExtension,
+    C extends LcdExtension,
+    D extends LcdExtension,
+    E extends LcdExtension,
+    F extends LcdExtension
   >(
     options: LcdClientBaseOptions,
-    setupModuleA: LcdModuleSetup<A>,
-    setupModuleB: LcdModuleSetup<B>,
-    setupModuleC: LcdModuleSetup<C>,
-    setupModuleD: LcdModuleSetup<D>,
-    setupModuleE: LcdModuleSetup<E>,
-    setupModuleF: LcdModuleSetup<F>,
+    setupModuleA: LcdExtensionSetup<A>,
+    setupModuleB: LcdExtensionSetup<B>,
+    setupModuleC: LcdExtensionSetup<C>,
+    setupModuleD: LcdExtensionSetup<D>,
+    setupModuleE: LcdExtensionSetup<E>,
+    setupModuleF: LcdExtensionSetup<F>,
   ): LcdClient & A & B & C & D & E & F;
 
   /** Constructs an LCD client with 7 modules */
-  public static withModules<
-    A extends LcdModule,
-    B extends LcdModule,
-    C extends LcdModule,
-    D extends LcdModule,
-    E extends LcdModule,
-    F extends LcdModule,
-    G extends LcdModule
+  public static withExtensions<
+    A extends LcdExtension,
+    B extends LcdExtension,
+    C extends LcdExtension,
+    D extends LcdExtension,
+    E extends LcdExtension,
+    F extends LcdExtension,
+    G extends LcdExtension
   >(
     options: LcdClientBaseOptions,
-    setupModuleA: LcdModuleSetup<A>,
-    setupModuleB: LcdModuleSetup<B>,
-    setupModuleC: LcdModuleSetup<C>,
-    setupModuleD: LcdModuleSetup<D>,
-    setupModuleE: LcdModuleSetup<E>,
-    setupModuleF: LcdModuleSetup<F>,
-    setupModuleG: LcdModuleSetup<G>,
+    setupModuleA: LcdExtensionSetup<A>,
+    setupModuleB: LcdExtensionSetup<B>,
+    setupModuleC: LcdExtensionSetup<C>,
+    setupModuleD: LcdExtensionSetup<D>,
+    setupModuleE: LcdExtensionSetup<E>,
+    setupModuleF: LcdExtensionSetup<F>,
+    setupModuleG: LcdExtensionSetup<G>,
   ): LcdClient & A & B & C & D & E & F & G;
 
   /** Constructs an LCD client with 8 modules */
-  public static withModules<
-    A extends LcdModule,
-    B extends LcdModule,
-    C extends LcdModule,
-    D extends LcdModule,
-    E extends LcdModule,
-    F extends LcdModule,
-    G extends LcdModule,
-    H extends LcdModule
+  public static withExtensions<
+    A extends LcdExtension,
+    B extends LcdExtension,
+    C extends LcdExtension,
+    D extends LcdExtension,
+    E extends LcdExtension,
+    F extends LcdExtension,
+    G extends LcdExtension,
+    H extends LcdExtension
   >(
     options: LcdClientBaseOptions,
-    setupModuleA: LcdModuleSetup<A>,
-    setupModuleB: LcdModuleSetup<B>,
-    setupModuleC: LcdModuleSetup<C>,
-    setupModuleD: LcdModuleSetup<D>,
-    setupModuleE: LcdModuleSetup<E>,
-    setupModuleF: LcdModuleSetup<F>,
-    setupModuleG: LcdModuleSetup<G>,
-    setupModuleH: LcdModuleSetup<H>,
+    setupModuleA: LcdExtensionSetup<A>,
+    setupModuleB: LcdExtensionSetup<B>,
+    setupModuleC: LcdExtensionSetup<C>,
+    setupModuleD: LcdExtensionSetup<D>,
+    setupModuleE: LcdExtensionSetup<E>,
+    setupModuleF: LcdExtensionSetup<F>,
+    setupModuleG: LcdExtensionSetup<G>,
+    setupModuleH: LcdExtensionSetup<H>,
   ): LcdClient & A & B & C & D & E & F & G & H;
 
-  public static withModules<
-    A extends LcdModule,
-    B extends LcdModule,
-    C extends LcdModule,
-    D extends LcdModule,
-    E extends LcdModule,
-    F extends LcdModule,
-    G extends LcdModule,
-    H extends LcdModule
+  public static withExtensions<
+    A extends LcdExtension,
+    B extends LcdExtension,
+    C extends LcdExtension,
+    D extends LcdExtension,
+    E extends LcdExtension,
+    F extends LcdExtension,
+    G extends LcdExtension,
+    H extends LcdExtension
   >(
     options: LcdClientBaseOptions,
-    setupModuleA?: LcdModuleSetup<A>,
-    setupModuleB?: LcdModuleSetup<B>,
-    setupModuleC?: LcdModuleSetup<C>,
-    setupModuleD?: LcdModuleSetup<D>,
-    setupModuleE?: LcdModuleSetup<E>,
-    setupModuleF?: LcdModuleSetup<F>,
-    setupModuleG?: LcdModuleSetup<G>,
-    setupModuleH?: LcdModuleSetup<H>,
+    setupModuleA?: LcdExtensionSetup<A>,
+    setupModuleB?: LcdExtensionSetup<B>,
+    setupModuleC?: LcdExtensionSetup<C>,
+    setupModuleD?: LcdExtensionSetup<D>,
+    setupModuleE?: LcdExtensionSetup<E>,
+    setupModuleF?: LcdExtensionSetup<F>,
+    setupModuleG?: LcdExtensionSetup<G>,
+    setupModuleH?: LcdExtensionSetup<H>,
   ): any {
     const client = new LcdClient(options.apiUrl, options.broadcastMode);
 
-    const modules = new Array<LcdModule>();
+    const modules = new Array<LcdExtension>();
     if (setupModuleA) modules.push(setupModuleA(client));
     if (setupModuleB) modules.push(setupModuleB(client));
     if (setupModuleC) modules.push(setupModuleC(client));
