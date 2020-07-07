@@ -52,6 +52,18 @@ function parseAxiosError(err: AxiosError): never {
   }
 }
 
+/**
+ * A client to the LCD's (light client daemon) API.
+ * This light client connects to Tendermint (i.e. the chain), encodes/decodes Amino data for us and provides a convenient JSON interface.
+ *
+ * This _JSON over HTTP_ API is sometimes referred to as "REST" or "RPC", which are both misleading terms
+ * for the same thing.
+ *
+ * Please note that the client to the LCD can not verify light client proofs. When using this,
+ * you need to trust the API provider as well as the network connection between client and API.
+ *
+ * @see https://cosmos.network/rpc
+ */
 export class LcdClient {
   /** Constructs an LCD client with 0 modules */
   public static withModules(options: LcdClientBaseOptions): LcdClient;
