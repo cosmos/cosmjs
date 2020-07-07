@@ -1,19 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { Sha256 } from "@cosmjs/crypto";
 import { Bech32, fromAscii, fromBase64, fromHex, toAscii, toBase64, toHex } from "@cosmjs/encoding";
-import {
-  Coin,
-  coin,
-  coins,
-  makeSignBytes,
-  Msg,
-  Pen,
-  PostTxsResponse,
-  Secp256k1Pen,
-  StdFee,
-  StdSignature,
-  StdTx,
-} from "@cosmjs/sdk38";
+import { Coin, coin, coins, makeSignBytes, Pen, PostTxsResponse, Secp256k1Pen, StdFee } from "@cosmjs/sdk38";
 import { assert } from "@cosmjs/utils";
 
 import { findAttribute, parseLogs } from "./logs";
@@ -33,19 +21,11 @@ import {
   fromOneElementArray,
   getHackatom,
   makeRandomAddress,
+  makeSignedTx,
   pendingWithoutWasmd,
   wasmd,
   wasmdEnabled,
 } from "./testutils.spec";
-
-function makeSignedTx(firstMsg: Msg, fee: StdFee, memo: string, firstSignature: StdSignature): StdTx {
-  return {
-    msg: [firstMsg],
-    fee: fee,
-    memo: memo,
-    signatures: [firstSignature],
-  };
-}
 
 async function uploadContract(
   client: RestClient,
