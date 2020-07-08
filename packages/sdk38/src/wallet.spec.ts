@@ -1,8 +1,8 @@
 import { Secp256k1, Secp256k1Signature, Sha256 } from "@cosmjs/crypto";
 import { fromHex, toAscii } from "@cosmjs/encoding";
 
-import { Secp256k1Pen } from "./pen";
 import { decodeSignature } from "./signature";
+import { Secp256k1Pen } from "./wallet";
 
 describe("Sec256k1Pen", () => {
   it("can be constructed", async () => {

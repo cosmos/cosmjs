@@ -6,7 +6,6 @@ import { CosmosClient, isPostTxFailure } from "./cosmosclient";
 import { makeSignBytes } from "./encoding";
 import { LcdClient } from "./lcdapi";
 import { isMsgSend, MsgSend } from "./msgs";
-import { Secp256k1Pen } from "./pen";
 import { SigningCosmosClient } from "./signingcosmosclient";
 import {
   faucet,
@@ -17,6 +16,7 @@ import {
   wasmdEnabled,
 } from "./testutils.spec";
 import { CosmosSdkTx } from "./types";
+import { Secp256k1Pen } from "./wallet";
 
 interface TestTxSend {
   readonly sender: string;

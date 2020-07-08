@@ -7,7 +7,6 @@ import { isPostTxFailure } from "../cosmosclient";
 import { makeSignBytes } from "../encoding";
 import { parseLogs } from "../logs";
 import { MsgSend } from "../msgs";
-import { makeCosmoshubPath, Secp256k1Pen } from "../pen";
 import { SigningCosmosClient } from "../signingcosmosclient";
 import cosmoshub from "../testdata/cosmoshub.json";
 import {
@@ -21,6 +20,7 @@ import {
   wasmdEnabled,
 } from "../testutils.spec";
 import { StdFee } from "../types";
+import { makeCosmoshubPath, Secp256k1Pen } from "../wallet";
 import { setupAuthExtension } from "./auth";
 import { TxsResponse } from "./base";
 import { LcdApiArray, LcdClient, normalizeLcdApiArray } from "./lcdclient";
