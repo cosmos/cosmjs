@@ -32,7 +32,7 @@ for package_dir in ./packages/*/ ; do
   if [ -d "$package_docs_src" ]; then
     mkdir -p "$package_docs_dest"
     echo "$package_basename: $package_docs_src -> $package_docs_dest"
-    cp -R "$package_docs_src/" "$package_docs_dest"
+    cp -R "$package_docs_src/"* "$package_docs_dest"
 
     echo "  <li><a href='./latest/$package_basename/index.html'>$package_name</a></li>" >> "$index"
   fi
