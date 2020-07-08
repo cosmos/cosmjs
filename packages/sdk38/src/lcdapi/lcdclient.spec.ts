@@ -1,200 +1,199 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { assert, sleep } from "@cosmjs/utils";
-import { ReadonlyDate } from "readonly-date";
 
-import { rawSecp256k1PubkeyToAddress } from "./address";
-import { isPostTxFailure } from "./cosmosclient";
-import { makeSignBytes } from "./encoding";
-import { parseLogs } from "./logs";
-import { Msg, MsgSend } from "./msgs";
-import { makeCosmoshubPath, Secp256k1Pen } from "./pen";
-import { encodeBech32Pubkey } from "./pubkey";
-import { RestClient, TxsResponse } from "./restclient";
-import { SigningCosmosClient } from "./signingcosmosclient";
-import cosmoshub from "./testdata/cosmoshub.json";
+import { rawSecp256k1PubkeyToAddress } from "../address";
+import { Coin } from "../coins";
+import { isPostTxFailure } from "../cosmosclient";
+import { makeSignBytes } from "../encoding";
+import { parseLogs } from "../logs";
+import { MsgSend } from "../msgs";
+import { makeCosmoshubPath, Secp256k1Pen } from "../pen";
+import { SigningCosmosClient } from "../signingcosmosclient";
+import cosmoshub from "../testdata/cosmoshub.json";
 import {
   faucet,
   makeRandomAddress,
+  makeSignedTx,
   nonNegativeIntegerMatcher,
   pendingWithoutWasmd,
-  semverMatcher,
-  tendermintAddressMatcher,
   tendermintIdMatcher,
-  tendermintOptionalIdMatcher,
-  tendermintShortHashMatcher,
-  unused,
   wasmd,
   wasmdEnabled,
-} from "./testutils.spec";
-import { StdFee, StdSignature, StdTx } from "./types";
+} from "../testutils.spec";
+import { StdFee } from "../types";
+import { setupAuthExtension } from "./auth";
+import { TxsResponse } from "./base";
+import { LcdApiArray, LcdClient, normalizeLcdApiArray } from "./lcdclient";
 
-const emptyAddress = "cosmos1ltkhnmdcqemmd2tkhnx7qx66tq7e0wykw2j85k";
+/** Deployed as part of scripts/wasmd/init.sh */
+export const deployedErc20 = {
+  codeId: 1,
+  source: "https://crates.io/api/v1/crates/cw-erc20/0.5.1/download",
+  builder: "cosmwasm/rust-optimizer:0.8.0",
+  checksum: "3e97bf88bd960fee5e5959c77b972eb2927690bc10160792741b174f105ec0c5",
+  instances: [
+    "cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5", // HASH
+    "cosmos1hqrdl6wstt8qzshwc6mrumpjk9338k0lr4dqxd", // ISA
+    "cosmos18r5szma8hm93pvx6lwpjwyxruw27e0k5uw835c", // JADE
+  ],
+};
 
-function makeSignedTx(firstMsg: Msg, fee: StdFee, memo: string, firstSignature: StdSignature): StdTx {
-  return {
-    msg: [firstMsg],
-    fee: fee,
-    memo: memo,
-    signatures: [firstSignature],
-  };
-}
+describe("LcdClient", () => {
+  const defaultRecipientAddress = makeRandomAddress();
 
-describe("RestClient", () => {
   it("can be constructed", () => {
-    const client = new RestClient(wasmd.endpoint);
+    const client = new LcdClient(wasmd.endpoint);
     expect(client).toBeTruthy();
   });
 
-  // The /auth endpoints
+  describe("withModules", () => {
+    interface CodeInfo {
+      readonly id: number;
+      /** Bech32 account address */
+      readonly creator: string;
+      /** Hex-encoded sha256 hash of the code stored here */
+      readonly data_hash: string;
+      readonly source?: string;
+      readonly builder?: string;
+    }
 
-  describe("authAccounts", () => {
-    it("works for unused account without pubkey", async () => {
-      pendingWithoutWasmd();
-      const client = new RestClient(wasmd.endpoint);
-      const { height, result } = await client.authAccounts(unused.address);
-      expect(height).toMatch(nonNegativeIntegerMatcher);
-      expect(result).toEqual({
-        type: "cosmos-sdk/Account",
-        value: {
-          address: unused.address,
-          public_key: "", // not known to the chain
-          coins: [
-            {
-              amount: "1000000000",
-              denom: "ucosm",
-            },
-            {
-              amount: "1000000000",
-              denom: "ustake",
-            },
-          ],
-          account_number: unused.accountNumber,
-          sequence: 0,
+    type WasmResponse<T> = WasmSuccess<T> | WasmError;
+
+    interface WasmSuccess<T> {
+      readonly height: string;
+      readonly result: T;
+    }
+
+    interface WasmError {
+      readonly error: string;
+    }
+
+    function isWasmError<T>(resp: WasmResponse<T>): resp is WasmError {
+      return (resp as WasmError).error !== undefined;
+    }
+
+    function unwrapWasmResponse<T>(response: WasmResponse<T>): T {
+      if (isWasmError(response)) {
+        throw new Error(response.error);
+      }
+      return response.result;
+    }
+
+    interface WasmExtension {
+      wasm: {
+        listCodeInfo: () => Promise<readonly CodeInfo[]>;
+      };
+    }
+
+    function setupWasmExtension(base: LcdClient): WasmExtension {
+      return {
+        wasm: {
+          listCodeInfo: async (): Promise<readonly CodeInfo[]> => {
+            const path = `/wasm/code`;
+            const responseData = (await base.get(path)) as WasmResponse<LcdApiArray<CodeInfo>>;
+            return normalizeLcdApiArray(unwrapWasmResponse(responseData));
+          },
         },
-      });
+      };
+    }
+
+    it("works for no extension", async () => {
+      const client = LcdClient.withExtensions({ apiUrl: wasmd.endpoint });
+      expect(client).toBeTruthy();
     });
 
-    // This fails in the first test run if you forget to run `./scripts/wasmd/init.sh`
-    it("has correct pubkey for faucet", async () => {
+    it("works for one extension", async () => {
       pendingWithoutWasmd();
-      const client = new RestClient(wasmd.endpoint);
-      const { result } = await client.authAccounts(faucet.address);
-      expect(result.value).toEqual(
-        jasmine.objectContaining({
-          public_key: encodeBech32Pubkey(faucet.pubkey, "cosmospub"),
-        }),
+
+      const client = LcdClient.withExtensions({ apiUrl: wasmd.endpoint }, setupWasmExtension);
+      const codes = await client.wasm.listCodeInfo();
+      expect(codes.length).toBeGreaterThanOrEqual(3);
+      expect(codes[0].id).toEqual(deployedErc20.codeId);
+      expect(codes[0].data_hash).toEqual(deployedErc20.checksum.toUpperCase());
+      expect(codes[0].builder).toEqual(deployedErc20.builder);
+      expect(codes[0].source).toEqual(deployedErc20.source);
+    });
+
+    it("works for two extensions", async () => {
+      pendingWithoutWasmd();
+
+      interface TotalSupplyAllResponse {
+        readonly height: string;
+        readonly result: LcdApiArray<Coin>;
+      }
+
+      // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+      function setupSupplyExtension(base: LcdClient) {
+        return {
+          supply: {
+            totalAll: async (): Promise<TotalSupplyAllResponse> => {
+              const path = `/supply/total`;
+              return (await base.get(path)) as TotalSupplyAllResponse;
+            },
+          },
+        };
+      }
+
+      const client = LcdClient.withExtensions(
+        { apiUrl: wasmd.endpoint },
+        setupWasmExtension,
+        setupSupplyExtension,
       );
-    });
-
-    // This property is used by CosmWasmClient.getAccount
-    it("returns empty address for non-existent account", async () => {
-      pendingWithoutWasmd();
-      const client = new RestClient(wasmd.endpoint);
-      const nonExistentAccount = makeRandomAddress();
-      const { result } = await client.authAccounts(nonExistentAccount);
-      expect(result).toEqual({
-        type: "cosmos-sdk/Account",
-        value: jasmine.objectContaining({ address: "" }),
+      const codes = await client.wasm.listCodeInfo();
+      expect(codes.length).toBeGreaterThanOrEqual(3);
+      expect(codes[0].id).toEqual(deployedErc20.codeId);
+      expect(codes[0].data_hash).toEqual(deployedErc20.checksum.toUpperCase());
+      expect(codes[0].builder).toEqual(deployedErc20.builder);
+      expect(codes[0].source).toEqual(deployedErc20.source);
+      const supply = await client.supply.totalAll();
+      expect(supply).toEqual({
+        height: jasmine.stringMatching(/^[0-9]+$/),
+        result: [
+          {
+            amount: jasmine.stringMatching(/^[0-9]+$/),
+            denom: "ucosm",
+          },
+          {
+            amount: jasmine.stringMatching(/^[0-9]+$/),
+            denom: "ustake",
+          },
+        ],
       });
     });
-  });
 
-  // The /blocks endpoints
-
-  describe("blocksLatest", () => {
-    it("works", async () => {
+    it("can merge two extensions into the same module", async () => {
       pendingWithoutWasmd();
-      const client = new RestClient(wasmd.endpoint);
-      const response = await client.blocksLatest();
 
-      // id
-      expect(response.block_id.hash).toMatch(tendermintIdMatcher);
+      // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+      function setupSupplyExtensionBasic(base: LcdClient) {
+        return {
+          supply: {
+            totalAll: async () => {
+              const path = `/supply/total`;
+              return base.get(path);
+            },
+          },
+        };
+      }
 
-      // header
-      expect(response.block.header.version).toEqual({ block: "10", app: "0" });
-      expect(parseInt(response.block.header.height, 10)).toBeGreaterThanOrEqual(1);
-      expect(response.block.header.chain_id).toEqual(wasmd.chainId);
-      expect(new ReadonlyDate(response.block.header.time).getTime()).toBeLessThan(ReadonlyDate.now());
-      expect(new ReadonlyDate(response.block.header.time).getTime()).toBeGreaterThanOrEqual(
-        ReadonlyDate.now() - 5_000,
+      // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+      function setupSupplyExtensionPremium(base: LcdClient) {
+        return {
+          supply: {
+            total: async (denom: string) => {
+              return base.get(`/supply/total/${denom}`);
+            },
+          },
+        };
+      }
+
+      const client = LcdClient.withExtensions(
+        { apiUrl: wasmd.endpoint },
+        setupSupplyExtensionBasic,
+        setupSupplyExtensionPremium,
       );
-      expect(response.block.header.last_commit_hash).toMatch(tendermintIdMatcher);
-      expect(response.block.header.last_block_id.hash).toMatch(tendermintIdMatcher);
-      expect(response.block.header.data_hash).toMatch(tendermintOptionalIdMatcher);
-      expect(response.block.header.validators_hash).toMatch(tendermintIdMatcher);
-      expect(response.block.header.next_validators_hash).toMatch(tendermintIdMatcher);
-      expect(response.block.header.consensus_hash).toMatch(tendermintIdMatcher);
-      expect(response.block.header.app_hash).toMatch(tendermintIdMatcher);
-      expect(response.block.header.last_results_hash).toMatch(tendermintOptionalIdMatcher);
-      expect(response.block.header.evidence_hash).toMatch(tendermintOptionalIdMatcher);
-      expect(response.block.header.proposer_address).toMatch(tendermintAddressMatcher);
-
-      // data
-      expect(response.block.data.txs === null || Array.isArray(response.block.data.txs)).toEqual(true);
-    });
-  });
-
-  describe("blocks", () => {
-    it("works for block by height", async () => {
-      pendingWithoutWasmd();
-      const client = new RestClient(wasmd.endpoint);
-      const height = parseInt((await client.blocksLatest()).block.header.height, 10);
-      const response = await client.blocks(height - 1);
-
-      // id
-      expect(response.block_id.hash).toMatch(tendermintIdMatcher);
-
-      // header
-      expect(response.block.header.version).toEqual({ block: "10", app: "0" });
-      expect(response.block.header.height).toEqual(`${height - 1}`);
-      expect(response.block.header.chain_id).toEqual(wasmd.chainId);
-      expect(new ReadonlyDate(response.block.header.time).getTime()).toBeLessThan(ReadonlyDate.now());
-      expect(new ReadonlyDate(response.block.header.time).getTime()).toBeGreaterThanOrEqual(
-        ReadonlyDate.now() - 5_000,
-      );
-      expect(response.block.header.last_commit_hash).toMatch(tendermintIdMatcher);
-      expect(response.block.header.last_block_id.hash).toMatch(tendermintIdMatcher);
-      expect(response.block.header.data_hash).toMatch(tendermintOptionalIdMatcher);
-      expect(response.block.header.validators_hash).toMatch(tendermintIdMatcher);
-      expect(response.block.header.next_validators_hash).toMatch(tendermintIdMatcher);
-      expect(response.block.header.consensus_hash).toMatch(tendermintIdMatcher);
-      expect(response.block.header.app_hash).toMatch(tendermintIdMatcher);
-      expect(response.block.header.last_results_hash).toMatch(tendermintOptionalIdMatcher);
-      expect(response.block.header.evidence_hash).toMatch(tendermintOptionalIdMatcher);
-      expect(response.block.header.proposer_address).toMatch(tendermintAddressMatcher);
-
-      // data
-      expect(response.block.data.txs === null || Array.isArray(response.block.data.txs)).toEqual(true);
-    });
-  });
-
-  // The /node_info endpoint
-
-  describe("nodeInfo", () => {
-    it("works", async () => {
-      pendingWithoutWasmd();
-      const client = new RestClient(wasmd.endpoint);
-      const { node_info, application_version } = await client.nodeInfo();
-
-      expect(node_info).toEqual({
-        protocol_version: { p2p: "7", block: "10", app: "0" },
-        id: jasmine.stringMatching(tendermintShortHashMatcher),
-        listen_addr: "tcp://0.0.0.0:26656",
-        network: wasmd.chainId,
-        version: jasmine.stringMatching(/^0\.33\.[0-9]+$/),
-        channels: "4020212223303800",
-        moniker: wasmd.chainId,
-        other: { tx_index: "on", rpc_address: "tcp://0.0.0.0:26657" },
-      });
-      expect(application_version).toEqual({
-        name: "wasm",
-        server_name: "wasmd",
-        client_name: "wasmcli",
-        version: jasmine.stringMatching(semverMatcher),
-        commit: jasmine.stringMatching(tendermintShortHashMatcher),
-        build_tags: "netgo,ledger,muslc",
-        go: jasmine.stringMatching(/^go version go1\.[0-9]+\.[0-9]+ linux\/amd64$/),
-      });
+      expect(client.supply.totalAll).toEqual(jasmine.any(Function));
+      expect(client.supply.total).toEqual(jasmine.any(Function));
     });
   });
 
@@ -292,7 +291,7 @@ describe("RestClient", () => {
     it("works for successful transaction", async () => {
       pendingWithoutWasmd();
       assert(successful);
-      const client = new RestClient(wasmd.endpoint);
+      const client = new LcdClient(wasmd.endpoint);
       const result = await client.txById(successful.hash);
       expect(result.height).toBeGreaterThanOrEqual(1);
       expect(result.txhash).toEqual(successful.hash);
@@ -328,7 +327,7 @@ describe("RestClient", () => {
     it("works for unsuccessful transaction", async () => {
       pendingWithoutWasmd();
       assert(unsuccessful);
-      const client = new RestClient(wasmd.endpoint);
+      const client = new LcdClient(wasmd.endpoint);
       const result = await client.txById(unsuccessful.hash);
       expect(result.height).toBeGreaterThanOrEqual(1);
       expect(result.txhash).toEqual(unsuccessful.hash);
@@ -367,7 +366,7 @@ describe("RestClient", () => {
         const result = await client.sendTokens(recipient, transferAmount);
 
         await sleep(75); // wait until tx is indexed
-        const txDetails = await new RestClient(wasmd.endpoint).txById(result.transactionHash);
+        const txDetails = await new LcdClient(wasmd.endpoint).txById(result.transactionHash);
         posted = {
           sender: faucet.address,
           recipient: recipient,
@@ -381,7 +380,7 @@ describe("RestClient", () => {
     it("can query transactions by height", async () => {
       pendingWithoutWasmd();
       assert(posted);
-      const client = new RestClient(wasmd.endpoint);
+      const client = new LcdClient(wasmd.endpoint);
       const result = await client.txsQuery(`tx.height=${posted.height}&limit=26`);
       expect(result).toEqual({
         count: jasmine.stringMatching(/^(1|2|3|4|5)$/), // 1-5 transactions as string
@@ -396,7 +395,7 @@ describe("RestClient", () => {
     it("can query transactions by ID", async () => {
       pendingWithoutWasmd();
       assert(posted);
-      const client = new RestClient(wasmd.endpoint);
+      const client = new LcdClient(wasmd.endpoint);
       const result = await client.txsQuery(`tx.hash=${posted.hash}&limit=26`);
       expect(result).toEqual({
         count: "1",
@@ -411,7 +410,7 @@ describe("RestClient", () => {
     it("can query transactions by sender", async () => {
       pendingWithoutWasmd();
       assert(posted);
-      const client = new RestClient(wasmd.endpoint);
+      const client = new LcdClient(wasmd.endpoint);
       const result = await client.txsQuery(`message.sender=${posted.sender}&limit=200`);
       expect(parseInt(result.count, 10)).toBeGreaterThanOrEqual(1);
       expect(parseInt(result.limit, 10)).toEqual(200);
@@ -425,7 +424,7 @@ describe("RestClient", () => {
     it("can query transactions by recipient", async () => {
       pendingWithoutWasmd();
       assert(posted);
-      const client = new RestClient(wasmd.endpoint);
+      const client = new LcdClient(wasmd.endpoint);
       const result = await client.txsQuery(`transfer.recipient=${posted.recipient}&limit=200`);
       expect(parseInt(result.count, 10)).toEqual(1);
       expect(parseInt(result.limit, 10)).toEqual(200);
@@ -440,7 +439,7 @@ describe("RestClient", () => {
       pending("This combination is broken 🤷‍♂️. Handle client-side at higher level.");
       pendingWithoutWasmd();
       assert(posted);
-      const client = new RestClient(wasmd.endpoint);
+      const client = new LcdClient(wasmd.endpoint);
       const hashQuery = `tx.hash=${posted.hash}`;
 
       {
@@ -467,7 +466,7 @@ describe("RestClient", () => {
     it("can filter by recipient and tx.minheight", async () => {
       pendingWithoutWasmd();
       assert(posted);
-      const client = new RestClient(wasmd.endpoint);
+      const client = new LcdClient(wasmd.endpoint);
       const recipientQuery = `transfer.recipient=${posted.recipient}`;
 
       {
@@ -494,7 +493,7 @@ describe("RestClient", () => {
     it("can filter by recipient and tx.maxheight", async () => {
       pendingWithoutWasmd();
       assert(posted);
-      const client = new RestClient(wasmd.endpoint);
+      const client = new LcdClient(wasmd.endpoint);
       const recipientQuery = `transfer.recipient=${posted.recipient}`;
 
       {
@@ -522,7 +521,7 @@ describe("RestClient", () => {
   describe("encodeTx", () => {
     it("works for cosmoshub example", async () => {
       pendingWithoutWasmd();
-      const client = new RestClient(wasmd.endpoint);
+      const client = new LcdClient(wasmd.endpoint);
       const response = await client.encodeTx(cosmoshub.tx);
       expect(response).toEqual(
         jasmine.objectContaining({
@@ -542,7 +541,7 @@ describe("RestClient", () => {
         type: "cosmos-sdk/MsgSend",
         value: {
           from_address: faucet.address,
-          to_address: emptyAddress,
+          to_address: defaultRecipientAddress,
           amount: [
             {
               denom: "ucosm",
@@ -562,8 +561,8 @@ describe("RestClient", () => {
         gas: "890000",
       };
 
-      const client = new RestClient(wasmd.endpoint);
-      const { account_number, sequence } = (await client.authAccounts(faucet.address)).result.value;
+      const client = LcdClient.withExtensions({ apiUrl: wasmd.endpoint }, setupAuthExtension);
+      const { account_number, sequence } = (await client.auth.account(faucet.address)).result.value;
 
       const signBytes = makeSignBytes([theMsg], fee, wasmd.chainId, memo, account_number, sequence);
       const signature = await pen.sign(signBytes);
@@ -595,7 +594,7 @@ describe("RestClient", () => {
         type: "cosmos-sdk/MsgSend",
         value: {
           from_address: address1,
-          to_address: emptyAddress,
+          to_address: defaultRecipientAddress,
           amount: [
             {
               denom: "ucosm",
@@ -615,10 +614,10 @@ describe("RestClient", () => {
         gas: "890000",
       };
 
-      const client = new RestClient(wasmd.endpoint);
-      const { account_number: an1, sequence: sequence1 } = (await client.authAccounts(address1)).result.value;
-      const { account_number: an2, sequence: sequence2 } = (await client.authAccounts(address2)).result.value;
-      const { account_number: an3, sequence: sequence3 } = (await client.authAccounts(address3)).result.value;
+      const client = LcdClient.withExtensions({ apiUrl: wasmd.endpoint }, setupAuthExtension);
+      const { account_number: an1, sequence: sequence1 } = (await client.auth.account(address1)).result.value;
+      const { account_number: an2, sequence: sequence2 } = (await client.auth.account(address2)).result.value;
+      const { account_number: an3, sequence: sequence3 } = (await client.auth.account(address3)).result.value;
 
       const signBytes1 = makeSignBytes([theMsg], fee, wasmd.chainId, memo, an1, sequence1);
       const signBytes2 = makeSignBytes([theMsg], fee, wasmd.chainId, memo, an2, sequence2);
@@ -647,7 +646,7 @@ describe("RestClient", () => {
         type: "cosmos-sdk/MsgSend",
         value: {
           from_address: address1,
-          to_address: emptyAddress,
+          to_address: defaultRecipientAddress,
           amount: [
             {
               denom: "ucosm",
@@ -660,7 +659,7 @@ describe("RestClient", () => {
         type: "cosmos-sdk/MsgSend",
         value: {
           from_address: address1,
-          to_address: emptyAddress,
+          to_address: defaultRecipientAddress,
           amount: [
             {
               denom: "ucosm",
@@ -680,8 +679,8 @@ describe("RestClient", () => {
         gas: "890000",
       };
 
-      const client = new RestClient(wasmd.endpoint);
-      const { account_number, sequence } = (await client.authAccounts(address1)).result.value;
+      const client = LcdClient.withExtensions({ apiUrl: wasmd.endpoint }, setupAuthExtension);
+      const { account_number, sequence } = (await client.auth.account(address1)).result.value;
 
       const signBytes = makeSignBytes([msg1, msg2], fee, wasmd.chainId, memo, account_number, sequence);
       const signature1 = await account1.sign(signBytes);
@@ -707,7 +706,7 @@ describe("RestClient", () => {
         type: "cosmos-sdk/MsgSend",
         value: {
           from_address: address1,
-          to_address: emptyAddress,
+          to_address: defaultRecipientAddress,
           amount: [
             {
               denom: "ucosm",
@@ -720,7 +719,7 @@ describe("RestClient", () => {
         type: "cosmos-sdk/MsgSend",
         value: {
           from_address: address2,
-          to_address: emptyAddress,
+          to_address: defaultRecipientAddress,
           amount: [
             {
               denom: "ucosm",
@@ -740,9 +739,9 @@ describe("RestClient", () => {
         gas: "890000",
       };
 
-      const client = new RestClient(wasmd.endpoint);
-      const { account_number: an1, sequence: sequence1 } = (await client.authAccounts(address1)).result.value;
-      const { account_number: an2, sequence: sequence2 } = (await client.authAccounts(address2)).result.value;
+      const client = LcdClient.withExtensions({ apiUrl: wasmd.endpoint }, setupAuthExtension);
+      const { account_number: an1, sequence: sequence1 } = (await client.auth.account(address1)).result.value;
+      const { account_number: an2, sequence: sequence2 } = (await client.auth.account(address2)).result.value;
 
       const signBytes1 = makeSignBytes([msg2, msg1], fee, wasmd.chainId, memo, an1, sequence1);
       const signBytes2 = makeSignBytes([msg2, msg1], fee, wasmd.chainId, memo, an2, sequence2);
@@ -775,7 +774,7 @@ describe("RestClient", () => {
         type: "cosmos-sdk/MsgSend",
         value: {
           from_address: address1,
-          to_address: emptyAddress,
+          to_address: defaultRecipientAddress,
           amount: [
             {
               denom: "ucosm",
@@ -788,7 +787,7 @@ describe("RestClient", () => {
         type: "cosmos-sdk/MsgSend",
         value: {
           from_address: address2,
-          to_address: emptyAddress,
+          to_address: defaultRecipientAddress,
           amount: [
             {
               denom: "ucosm",
@@ -808,9 +807,9 @@ describe("RestClient", () => {
         gas: "890000",
       };
 
-      const client = new RestClient(wasmd.endpoint);
-      const { account_number: an1, sequence: sequence1 } = (await client.authAccounts(address1)).result.value;
-      const { account_number: an2, sequence: sequence2 } = (await client.authAccounts(address2)).result.value;
+      const client = LcdClient.withExtensions({ apiUrl: wasmd.endpoint }, setupAuthExtension);
+      const { account_number: an1, sequence: sequence1 } = (await client.auth.account(address1)).result.value;
+      const { account_number: an2, sequence: sequence2 } = (await client.auth.account(address2)).result.value;
 
       const signBytes1 = makeSignBytes([msg1, msg2], fee, wasmd.chainId, memo, an1, sequence1);
       const signBytes2 = makeSignBytes([msg1, msg2], fee, wasmd.chainId, memo, an2, sequence2);
@@ -838,7 +837,7 @@ describe("RestClient", () => {
         type: "cosmos-sdk/MsgSend",
         value: {
           from_address: address1,
-          to_address: emptyAddress,
+          to_address: defaultRecipientAddress,
           amount: [
             {
               denom: "ucosm",
@@ -851,7 +850,7 @@ describe("RestClient", () => {
         type: "cosmos-sdk/MsgSend",
         value: {
           from_address: address2,
-          to_address: emptyAddress,
+          to_address: defaultRecipientAddress,
           amount: [
             {
               denom: "ucosm",
@@ -871,9 +870,9 @@ describe("RestClient", () => {
         gas: "890000",
       };
 
-      const client = new RestClient(wasmd.endpoint);
-      const { account_number: an1, sequence: sequence1 } = (await client.authAccounts(address1)).result.value;
-      const { account_number: an2, sequence: sequence2 } = (await client.authAccounts(address2)).result.value;
+      const client = LcdClient.withExtensions({ apiUrl: wasmd.endpoint }, setupAuthExtension);
+      const { account_number: an1, sequence: sequence1 } = (await client.auth.account(address1)).result.value;
+      const { account_number: an2, sequence: sequence2 } = (await client.auth.account(address2)).result.value;
 
       const signBytes1 = makeSignBytes([msg2, msg1], fee, wasmd.chainId, memo, an1, sequence1);
       const signBytes2 = makeSignBytes([msg2, msg1], fee, wasmd.chainId, memo, an2, sequence2);

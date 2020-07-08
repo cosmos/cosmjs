@@ -4,9 +4,9 @@ import { assert, sleep } from "@cosmjs/utils";
 import { coins } from "./coins";
 import { CosmosClient, isPostTxFailure } from "./cosmosclient";
 import { makeSignBytes } from "./encoding";
+import { LcdClient } from "./lcdapi";
 import { isMsgSend, MsgSend } from "./msgs";
 import { Secp256k1Pen } from "./pen";
-import { RestClient } from "./restclient";
 import { SigningCosmosClient } from "./signingcosmosclient";
 import {
   faucet,
@@ -86,7 +86,7 @@ describe("CosmosClient.searchTx", () => {
         const transferAmount = coins(1234567, "ucosm");
         const result = await client.sendTokens(recipient, transferAmount);
         await sleep(75); // wait until tx is indexed
-        const txDetails = await new RestClient(wasmd.endpoint).txById(result.transactionHash);
+        const txDetails = await new LcdClient(wasmd.endpoint).txById(result.transactionHash);
         sendSuccessful = {
           sender: faucet.address,
           recipient: recipient,

@@ -15,4 +15,4 @@ const faucetMnemonic =
 const faucetAddress = "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6";
 
 const pen = await Secp256k1Pen.fromMnemonic(faucetMnemonic);
-const client = new RestClient(defaultHttpUrl);
+const client = new LcdClient(defaultHttpUrl);

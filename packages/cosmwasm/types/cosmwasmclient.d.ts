@@ -1,6 +1,15 @@
-import { BroadcastMode, Coin, CosmosSdkTx, IndexedTx, PubKey, StdTx } from "@cosmjs/sdk38";
+import {
+  AuthExtension,
+  BroadcastMode,
+  Coin,
+  CosmosSdkTx,
+  IndexedTx,
+  LcdClient,
+  PubKey,
+  StdTx,
+} from "@cosmjs/sdk38";
+import { WasmExtension } from "./lcdapi/wasm";
 import { Log } from "./logs";
-import { RestClient } from "./restclient";
 import { JsonObject } from "./types";
 export interface GetNonceResult {
   readonly accountNumber: number;
@@ -64,7 +73,18 @@ export interface Code {
   readonly creator: string;
   /** Hex-encoded sha256 hash of the code stored here */
   readonly checksum: string;
+  /**
+   * An URL to a .tar.gz archive of the source code of the contract, which can be used to reproducibly build the Wasm bytecode.
+   *
+   * @see https://github.com/CosmWasm/cosmwasm-verify
+   */
   readonly source?: string;
+  /**
+   * A docker image (including version) to reproducibly build the Wasm bytecode from the source code.
+   *
+   * @example ```cosmwasm/rust-optimizer:0.8.0```
+   * @see https://github.com/CosmWasm/cosmwasm-verify
+   */
   readonly builder?: string;
 }
 export interface CodeDetails extends Code {
@@ -103,10 +123,10 @@ export interface Block {
 }
 /** Use for testing only */
 export interface PrivateCosmWasmClient {
-  readonly restClient: RestClient;
+  readonly lcdClient: LcdClient & AuthExtension & WasmExtension;
 }
 export declare class CosmWasmClient {
-  protected readonly restClient: RestClient;
+  protected readonly lcdClient: LcdClient & AuthExtension & WasmExtension;
   /** Any address the chain considers valid (valid bech32 with proper prefix) */
   protected anyValidAddress: string | undefined;
   private readonly codesCache;

@@ -22,15 +22,21 @@ export {
 export { makeSignBytes } from "./encoding";
 export {
   AuthAccountsResponse,
+  AuthExtension,
   BlockResponse,
   BroadcastMode,
   EncodeTxResponse,
-  PostTxsResponse,
+  LcdApiArray,
+  LcdClient,
   NodeInfoResponse,
-  RestClient,
+  normalizeLcdApiArray,
+  PostTxsResponse,
   SearchTxsResponse,
+  setupAuthExtension,
+  setupSupplyExtension,
+  SupplyExtension,
   TxsResponse,
-} from "./restclient";
+} from "./lcdapi";
 export { isMsgDelegate, isMsgSend, Msg, MsgDelegate, MsgSend } from "./msgs";
 export { Pen, Secp256k1Pen, makeCosmoshubPath } from "./pen";
 export { decodeBech32Pubkey, encodeBech32Pubkey, encodeSecp256k1Pubkey } from "./pubkey";

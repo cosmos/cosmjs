@@ -34,8 +34,8 @@ describe("SigningCosmosClient", () => {
       const client = new SigningCosmosClient(httpUrl, faucet.address, (signBytes) => pen.sign(signBytes));
 
       const openedClient = (client as unknown) as PrivateCosmWasmClient;
-      const blockLatestSpy = spyOn(openedClient.restClient, "blocksLatest").and.callThrough();
-      const authAccountsSpy = spyOn(openedClient.restClient, "authAccounts").and.callThrough();
+      const blockLatestSpy = spyOn(openedClient.lcdClient, "blocksLatest").and.callThrough();
+      const authAccountsSpy = spyOn(openedClient.lcdClient.auth, "account").and.callThrough();
 
       const height = await client.getHeight();
       expect(height).toBeGreaterThan(0);

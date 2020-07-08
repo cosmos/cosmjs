@@ -54,7 +54,7 @@ describe("CosmWasmClient", () => {
       pendingWithoutWasmd();
       const client = new CosmWasmClient(wasmd.endpoint);
       const openedClient = (client as unknown) as PrivateCosmWasmClient;
-      const getCodeSpy = spyOn(openedClient.restClient, "nodeInfo").and.callThrough();
+      const getCodeSpy = spyOn(openedClient.lcdClient, "nodeInfo").and.callThrough();
 
       expect(await client.getChainId()).toEqual(wasmd.chainId); // from network
       expect(await client.getChainId()).toEqual(wasmd.chainId); // from cache
@@ -68,7 +68,7 @@ describe("CosmWasmClient", () => {
       pendingWithoutWasmd();
       const client = new CosmWasmClient(wasmd.endpoint);
       const openedClient = (client as unknown) as PrivateCosmWasmClient;
-      const blockLatestSpy = spyOn(openedClient.restClient, "blocksLatest").and.callThrough();
+      const blockLatestSpy = spyOn(openedClient.lcdClient, "blocksLatest").and.callThrough();
 
       const height1 = await client.getHeight();
       expect(height1).toBeGreaterThan(0);
@@ -85,8 +85,8 @@ describe("CosmWasmClient", () => {
       const client = new CosmWasmClient(wasmd.endpoint);
 
       const openedClient = (client as unknown) as PrivateCosmWasmClient;
-      const blockLatestSpy = spyOn(openedClient.restClient, "blocksLatest").and.callThrough();
-      const authAccountsSpy = spyOn(openedClient.restClient, "authAccounts").and.callThrough();
+      const blockLatestSpy = spyOn(openedClient.lcdClient, "blocksLatest").and.callThrough();
+      const authAccountsSpy = spyOn(openedClient.lcdClient.auth, "account").and.callThrough();
 
       const height1 = await client.getHeight();
       expect(height1).toBeGreaterThan(0);
@@ -292,7 +292,7 @@ describe("CosmWasmClient", () => {
       pendingWithoutWasmd();
       const client = new CosmWasmClient(wasmd.endpoint);
       const openedClient = (client as unknown) as PrivateCosmWasmClient;
-      const getCodeSpy = spyOn(openedClient.restClient, "getCode").and.callThrough();
+      const getCodeSpy = spyOn(openedClient.lcdClient.wasm, "getCode").and.callThrough();
 
       const result1 = await client.getCodeDetails(deployedErc20.codeId); // from network
       const result2 = await client.getCodeDetails(deployedErc20.codeId); // from cache
