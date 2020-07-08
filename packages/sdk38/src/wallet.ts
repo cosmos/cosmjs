@@ -15,19 +15,30 @@ import { StdSignature } from "./types";
 
 export type PrehashType = "sha256" | "sha512" | null;
 
-/**
- * A pen is the most basic tool you can think of for signing. It works
- * everywhere and can be used intuitively by everyone. However, it does not
- * come with a great amount of features. End of semi suitable metaphor.
- *
- * This wraps a single keypair and allows for signing.
- *
- * Non-goals of this types are: multi account support, persistency, data migrations,
- * obfuscation of sensitive data.
- */
-export interface Pen {
+export type Algo = "secp256k1" | "ed25519" | "sr25519";
+
+export interface AccountData {
+  // bech32-encoded
+  readonly address: string;
+  readonly algo: Algo;
   readonly pubkey: Uint8Array;
-  readonly sign: (signBytes: Uint8Array, prehashType?: PrehashType) => Promise<StdSignature>;
+}
+
+export interface OfflineWallet {
+  /**
+   * Request access to the user's accounts. Wallet should ask the user to approve or deny access. Returns true if granted access or false if denied.
+   */
+  readonly enable: () => Promise<boolean>;
+
+  /**
+   * Get AccountData array from wallet. Rejects if not enabled.
+   */
+  readonly getAccounts: () => Promise<readonly AccountData[]>;
+
+  /**
+   * Request signature from whichever key corresponds to provided bech32-encoded address. Rejects if not enabled.
+   */
+  readonly sign: (address: string, message: Uint8Array, prehashType?: PrehashType) => Promise<StdSignature>;
 }
 
 function prehash(bytes: Uint8Array, type: PrehashType): Uint8Array {
@@ -57,36 +68,66 @@ export function makeCosmoshubPath(a: number): readonly Slip10RawIndex[] {
   ];
 }
 
-export class Secp256k1Pen implements Pen {
+export class Secp256k1OfflineWallet implements OfflineWallet {
   public static async fromMnemonic(
     mnemonic: string,
     hdPath: readonly Slip10RawIndex[] = makeCosmoshubPath(0),
-  ): Promise<Secp256k1Pen> {
+    prefix = "cosmos",
+  ): Promise<Secp256k1OfflineWallet> {
     const seed = await Bip39.mnemonicToSeed(new EnglishMnemonic(mnemonic));
     const { privkey } = Slip10.derivePath(Slip10Curve.Secp256k1, seed, hdPath);
     const uncompressed = (await Secp256k1.makeKeypair(privkey)).pubkey;
-    return new Secp256k1Pen(privkey, Secp256k1.compressPubkey(uncompressed));
+    return new Secp256k1OfflineWallet(privkey, Secp256k1.compressPubkey(uncompressed), prefix);
   }
 
   public readonly pubkey: Uint8Array;
   private readonly privkey: Uint8Array;
+  private readonly prefix: string;
+  private readonly algo: Algo = "secp256k1";
+  private enabled = false;
 
-  private constructor(privkey: Uint8Array, pubkey: Uint8Array) {
+  private constructor(privkey: Uint8Array, pubkey: Uint8Array, prefix: string) {
     this.privkey = privkey;
     this.pubkey = pubkey;
+    this.prefix = prefix;
   }
 
-  /**
-   * Creates and returns a signature
-   */
-  public async sign(signBytes: Uint8Array, prehashType: PrehashType = "sha256"): Promise<StdSignature> {
-    const message = prehash(signBytes, prehashType);
-    const signature = await Secp256k1.createSignature(message, this.privkey);
-    const fixedLengthSignature = new Uint8Array([...signature.r(32), ...signature.s(32)]);
-    return encodeSecp256k1Signature(this.pubkey, fixedLengthSignature);
+  public get address(): string {
+    return rawSecp256k1PubkeyToAddress(this.pubkey, this.prefix);
   }
 
-  public address(prefix: string): string {
-    return rawSecp256k1PubkeyToAddress(this.pubkey, prefix);
+  public async enable(): Promise<boolean> {
+    this.enabled = true;
+    return this.enabled;
+  }
+
+  public async getAccounts(): Promise<readonly AccountData[]> {
+    if (!this.enabled) {
+      throw new Error("Wallet not enabled");
+    }
+    return [
+      {
+        address: this.address,
+        algo: this.algo,
+        pubkey: this.pubkey,
+      },
+    ];
+  }
+
+  public async sign(
+    address: string,
+    message: Uint8Array,
+    prehashType: PrehashType = "sha256",
+  ): Promise<StdSignature> {
+    if (!this.enabled) {
+      throw new Error("Wallet not enabled");
+    }
+    if (address !== this.address) {
+      throw new Error(`Address ${address} not found in wallet`);
+    }
+    const hashedMessage = prehash(message, prehashType);
+    const signature = await Secp256k1.createSignature(hashedMessage, this.privkey);
+    const signatureBytes = new Uint8Array([...signature.r(32), ...signature.s(32)]);
+    return encodeSecp256k1Signature(this.pubkey, signatureBytes);
   }
 }

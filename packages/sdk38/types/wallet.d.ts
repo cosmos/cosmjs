@@ -1,33 +1,45 @@
 import { Slip10RawIndex } from "@cosmjs/crypto";
 import { StdSignature } from "./types";
 export declare type PrehashType = "sha256" | "sha512" | null;
-/**
- * A pen is the most basic tool you can think of for signing. It works
- * everywhere and can be used intuitively by everyone. However, it does not
- * come with a great amount of features. End of semi suitable metaphor.
- *
- * This wraps a single keypair and allows for signing.
- *
- * Non-goals of this types are: multi account support, persistency, data migrations,
- * obfuscation of sensitive data.
- */
-export interface Pen {
+export declare type Algo = "secp256k1" | "ed25519" | "sr25519";
+export interface AccountData {
+  readonly address: string;
+  readonly algo: Algo;
   readonly pubkey: Uint8Array;
-  readonly sign: (signBytes: Uint8Array, prehashType?: PrehashType) => Promise<StdSignature>;
+}
+export interface OfflineWallet {
+  /**
+   * Request access to the user's accounts. Wallet should ask the user to approve or deny access. Returns true if granted access or false if denied.
+   */
+  readonly enable: () => Promise<boolean>;
+  /**
+   * Get AccountData array from wallet. Rejects if not enabled.
+   */
+  readonly getAccounts: () => Promise<readonly AccountData[]>;
+  /**
+   * Request signature from whichever key corresponds to provided bech32-encoded address. Rejects if not enabled.
+   */
+  readonly sign: (address: string, message: Uint8Array, prehashType?: PrehashType) => Promise<StdSignature>;
 }
 /**
  * The Cosmoshub derivation path in the form `m/44'/118'/0'/0/a`
  * with 0-based account index `a`.
  */
 export declare function makeCosmoshubPath(a: number): readonly Slip10RawIndex[];
-export declare class Secp256k1Pen implements Pen {
-  static fromMnemonic(mnemonic: string, hdPath?: readonly Slip10RawIndex[]): Promise<Secp256k1Pen>;
+export declare class Secp256k1OfflineWallet implements OfflineWallet {
+  static fromMnemonic(
+    mnemonic: string,
+    hdPath?: readonly Slip10RawIndex[],
+    prefix?: string,
+  ): Promise<Secp256k1OfflineWallet>;
   readonly pubkey: Uint8Array;
   private readonly privkey;
+  private readonly prefix;
+  private readonly algo;
+  private enabled;
   private constructor();
-  /**
-   * Creates and returns a signature
-   */
-  sign(signBytes: Uint8Array, prehashType?: PrehashType): Promise<StdSignature>;
-  address(prefix: string): string;
+  get address(): string;
+  enable(): Promise<boolean>;
+  getAccounts(): Promise<readonly AccountData[]>;
+  sign(address: string, message: Uint8Array, prehashType?: PrehashType): Promise<StdSignature>;
 }

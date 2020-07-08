@@ -20,7 +20,7 @@ import {
   wasmdEnabled,
 } from "../testutils.spec";
 import { StdFee } from "../types";
-import { makeCosmoshubPath, Secp256k1Pen } from "../wallet";
+import { makeCosmoshubPath, Secp256k1OfflineWallet } from "../wallet";
 import { setupAuthExtension } from "./auth";
 import { TxsResponse } from "./base";
 import { LcdApiArray, LcdClient, normalizeLcdApiArray } from "./lcdclient";
@@ -217,9 +217,9 @@ describe("LcdClient", () => {
 
     beforeAll(async () => {
       if (wasmdEnabled()) {
-        const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-        const client = new SigningCosmosClient(wasmd.endpoint, faucet.address, (signBytes) =>
-          pen.sign(signBytes),
+        const wallet = await Secp256k1OfflineWallet.fromMnemonic(faucet.mnemonic);
+        const client = new SigningCosmosClient(wasmd.endpoint, faucet.address, async (signBytes) =>
+          wallet.sign(wallet.address, signBytes),
         );
 
         {
@@ -267,7 +267,7 @@ describe("LcdClient", () => {
           const { accountNumber, sequence } = await client.getNonce();
           const chainId = await client.getChainId();
           const signBytes = makeSignBytes([sendMsg], fee, chainId, memo, accountNumber, sequence);
-          const signature = await pen.sign(signBytes);
+          const signature = await wallet.sign(wallet.address, signBytes);
           const signedTx = {
             msg: [sendMsg],
             fee: fee,
@@ -351,9 +351,9 @@ describe("LcdClient", () => {
 
     beforeAll(async () => {
       if (wasmdEnabled()) {
-        const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-        const client = new SigningCosmosClient(wasmd.endpoint, faucet.address, (signBytes) =>
-          pen.sign(signBytes),
+        const wallet = await Secp256k1OfflineWallet.fromMnemonic(faucet.mnemonic);
+        const client = new SigningCosmosClient(wasmd.endpoint, faucet.address, async (signBytes) =>
+          wallet.sign(wallet.address, signBytes),
         );
 
         const recipient = makeRandomAddress();
@@ -534,7 +534,7 @@ describe("LcdClient", () => {
   describe("postTx", () => {
     it("can send tokens", async () => {
       pendingWithoutWasmd();
-      const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
+      const wallet = await Secp256k1OfflineWallet.fromMnemonic(faucet.mnemonic);
 
       const memo = "My first contract on chain";
       const theMsg: MsgSend = {
@@ -565,7 +565,7 @@ describe("LcdClient", () => {
       const { account_number, sequence } = (await client.auth.account(faucet.address)).result.value;
 
       const signBytes = makeSignBytes([theMsg], fee, wasmd.chainId, memo, account_number, sequence);
-      const signature = await pen.sign(signBytes);
+      const signature = await wallet.sign(wallet.address, signBytes);
       const signedTx = makeSignedTx(theMsg, fee, memo, signature);
       const result = await client.postTx(signedTx);
       expect(result.code).toBeUndefined();
@@ -582,9 +582,9 @@ describe("LcdClient", () => {
 
     it("can't send transaction with additional signatures", async () => {
       pendingWithoutWasmd();
-      const account1 = await Secp256k1Pen.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(0));
-      const account2 = await Secp256k1Pen.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(1));
-      const account3 = await Secp256k1Pen.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(2));
+      const account1 = await Secp256k1OfflineWallet.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(0));
+      const account2 = await Secp256k1OfflineWallet.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(1));
+      const account3 = await Secp256k1OfflineWallet.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(2));
       const address1 = rawSecp256k1PubkeyToAddress(account1.pubkey, "cosmos");
       const address2 = rawSecp256k1PubkeyToAddress(account2.pubkey, "cosmos");
       const address3 = rawSecp256k1PubkeyToAddress(account3.pubkey, "cosmos");
@@ -622,9 +622,9 @@ describe("LcdClient", () => {
       const signBytes1 = makeSignBytes([theMsg], fee, wasmd.chainId, memo, an1, sequence1);
       const signBytes2 = makeSignBytes([theMsg], fee, wasmd.chainId, memo, an2, sequence2);
       const signBytes3 = makeSignBytes([theMsg], fee, wasmd.chainId, memo, an3, sequence3);
-      const signature1 = await account1.sign(signBytes1);
-      const signature2 = await account2.sign(signBytes2);
-      const signature3 = await account3.sign(signBytes3);
+      const signature1 = await account1.sign(account1.address, signBytes1);
+      const signature2 = await account2.sign(account2.address, signBytes2);
+      const signature3 = await account3.sign(account3.address, signBytes3);
       const signedTx = {
         msg: [theMsg],
         fee: fee,
@@ -638,7 +638,7 @@ describe("LcdClient", () => {
 
     it("can send multiple messages with one signature", async () => {
       pendingWithoutWasmd();
-      const account1 = await Secp256k1Pen.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(0));
+      const account1 = await Secp256k1OfflineWallet.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(0));
       const address1 = rawSecp256k1PubkeyToAddress(account1.pubkey, "cosmos");
 
       const memo = "My first contract on chain";
@@ -683,7 +683,7 @@ describe("LcdClient", () => {
       const { account_number, sequence } = (await client.auth.account(address1)).result.value;
 
       const signBytes = makeSignBytes([msg1, msg2], fee, wasmd.chainId, memo, account_number, sequence);
-      const signature1 = await account1.sign(signBytes);
+      const signature1 = await account1.sign(account1.address, signBytes);
       const signedTx = {
         msg: [msg1, msg2],
         fee: fee,
@@ -696,8 +696,8 @@ describe("LcdClient", () => {
 
     it("can send multiple messages with multiple signatures", async () => {
       pendingWithoutWasmd();
-      const account1 = await Secp256k1Pen.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(0));
-      const account2 = await Secp256k1Pen.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(1));
+      const account1 = await Secp256k1OfflineWallet.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(0));
+      const account2 = await Secp256k1OfflineWallet.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(1));
       const address1 = rawSecp256k1PubkeyToAddress(account1.pubkey, "cosmos");
       const address2 = rawSecp256k1PubkeyToAddress(account2.pubkey, "cosmos");
 
@@ -745,8 +745,8 @@ describe("LcdClient", () => {
 
       const signBytes1 = makeSignBytes([msg2, msg1], fee, wasmd.chainId, memo, an1, sequence1);
       const signBytes2 = makeSignBytes([msg2, msg1], fee, wasmd.chainId, memo, an2, sequence2);
-      const signature1 = await account1.sign(signBytes1);
-      const signature2 = await account2.sign(signBytes2);
+      const signature1 = await account1.sign(account1.address, signBytes1);
+      const signature2 = await account2.sign(account2.address, signBytes2);
       const signedTx = {
         msg: [msg2, msg1],
         fee: fee,
@@ -764,8 +764,8 @@ describe("LcdClient", () => {
 
     it("can't send transaction with wrong signature order (1)", async () => {
       pendingWithoutWasmd();
-      const account1 = await Secp256k1Pen.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(0));
-      const account2 = await Secp256k1Pen.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(1));
+      const account1 = await Secp256k1OfflineWallet.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(0));
+      const account2 = await Secp256k1OfflineWallet.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(1));
       const address1 = rawSecp256k1PubkeyToAddress(account1.pubkey, "cosmos");
       const address2 = rawSecp256k1PubkeyToAddress(account2.pubkey, "cosmos");
 
@@ -813,8 +813,8 @@ describe("LcdClient", () => {
 
       const signBytes1 = makeSignBytes([msg1, msg2], fee, wasmd.chainId, memo, an1, sequence1);
       const signBytes2 = makeSignBytes([msg1, msg2], fee, wasmd.chainId, memo, an2, sequence2);
-      const signature1 = await account1.sign(signBytes1);
-      const signature2 = await account2.sign(signBytes2);
+      const signature1 = await account1.sign(account1.address, signBytes1);
+      const signature2 = await account2.sign(account2.address, signBytes2);
       const signedTx = {
         msg: [msg1, msg2],
         fee: fee,
@@ -827,8 +827,8 @@ describe("LcdClient", () => {
 
     it("can't send transaction with wrong signature order (2)", async () => {
       pendingWithoutWasmd();
-      const account1 = await Secp256k1Pen.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(0));
-      const account2 = await Secp256k1Pen.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(1));
+      const account1 = await Secp256k1OfflineWallet.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(0));
+      const account2 = await Secp256k1OfflineWallet.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(1));
       const address1 = rawSecp256k1PubkeyToAddress(account1.pubkey, "cosmos");
       const address2 = rawSecp256k1PubkeyToAddress(account2.pubkey, "cosmos");
 
@@ -876,8 +876,8 @@ describe("LcdClient", () => {
 
       const signBytes1 = makeSignBytes([msg2, msg1], fee, wasmd.chainId, memo, an1, sequence1);
       const signBytes2 = makeSignBytes([msg2, msg1], fee, wasmd.chainId, memo, an2, sequence2);
-      const signature1 = await account1.sign(signBytes1);
-      const signature2 = await account2.sign(signBytes2);
+      const signature1 = await account1.sign(account1.address, signBytes1);
+      const signature2 = await account2.sign(account2.address, signBytes2);
       const signedTx = {
         msg: [msg2, msg1],
         fee: fee,
