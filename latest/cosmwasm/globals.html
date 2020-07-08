@@ -67,7 +67,6 @@
 							<h3>Classes</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-class"><a href="classes/cosmwasmclient.html" class="tsd-kind-icon">Cosm<wbr>Wasm<wbr>Client</a></li>
-								<li class="tsd-kind-class"><a href="classes/restclient.html" class="tsd-kind-icon">Rest<wbr>Client</a></li>
 								<li class="tsd-kind-class"><a href="classes/signingcosmwasmclient.html" class="tsd-kind-icon">Signing<wbr>Cosm<wbr>Wasm<wbr>Client</a></li>
 							</ul>
 						</section>
@@ -114,13 +113,13 @@
 								<li class="tsd-kind-interface"><a href="interfaces/uploadresult.html" class="tsd-kind-icon">Upload<wbr>Result</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/wasmdata.html" class="tsd-kind-icon">Wasm<wbr>Data</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/wasmerror.html" class="tsd-kind-icon">Wasm<wbr>Error</a></li>
+								<li class="tsd-kind-interface"><a href="interfaces/wasmextension.html" class="tsd-kind-icon">Wasm<wbr>Extension</a></li>
 								<li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/wasmsuccess.html" class="tsd-kind-icon">Wasm<wbr>Success</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Type aliases</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-type-alias tsd-has-type-parameter"><a href="globals.html#cosmossdkarray" class="tsd-kind-icon">Cosmos<wbr>Sdk<wbr>Array</a></li>
 								<li class="tsd-kind-type-alias"><a href="globals.html#jsonobject" class="tsd-kind-icon">Json<wbr>Object</a></li>
 								<li class="tsd-kind-type-alias"><a href="globals.html#posttxresult" class="tsd-kind-icon">Post<wbr>TxResult</a></li>
 								<li class="tsd-kind-type-alias"><a href="globals.html#searchtxquery" class="tsd-kind-icon">Search<wbr>TxQuery</a></li>
@@ -152,13 +151,13 @@
 								<li class="tsd-kind-function"><a href="globals.html#issearchbytagsquery" class="tsd-kind-icon">is<wbr>Search<wbr>ByTags<wbr>Query</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#isvalidbuilder" class="tsd-kind-icon">is<wbr>Valid<wbr>Builder</a></li>
 								<li class="tsd-kind-function tsd-has-type-parameter"><a href="globals.html#iswasmerror" class="tsd-kind-icon">is<wbr>Wasm<wbr>Error</a></li>
-								<li class="tsd-kind-function tsd-has-type-parameter"><a href="globals.html#normalizearray" class="tsd-kind-icon">normalize<wbr>Array</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#parseattribute" class="tsd-kind-icon">parse<wbr>Attribute</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#parseevent" class="tsd-kind-icon">parse<wbr>Event</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#parselog" class="tsd-kind-icon">parse<wbr>Log</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#parselogs" class="tsd-kind-icon">parse<wbr>Logs</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#parsewasmdata" class="tsd-kind-icon">parse<wbr>Wasm<wbr>Data</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#preparebuilder" class="tsd-kind-icon">prepare<wbr>Builder</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#setupwasmextension" class="tsd-kind-icon">setup<wbr>Wasm<wbr>Extension</a></li>
 								<li class="tsd-kind-function tsd-has-type-parameter"><a href="globals.html#unwrapwasmresponse" class="tsd-kind-icon">unwrap<wbr>Wasm<wbr>Response</a></li>
 							</ul>
 						</section>
@@ -173,34 +172,13 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Type aliases</h2>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-has-type-parameter">
-					<a name="cosmossdkarray" class="tsd-anchor"></a>
-					<h3>Cosmos<wbr>Sdk<wbr>Array</h3>
-					<div class="tsd-signature tsd-kind-icon">Cosmos<wbr>Sdk<wbr>Array&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/restclient.ts#L58">cosmwasm/src/restclient.ts:58</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Unfortunately, Cosmos SDK encodes empty arrays as null</p>
-						</div>
-					</div>
-					<h4 class="tsd-type-parameters-title">Type parameters</h4>
-					<ul class="tsd-type-parameters">
-						<li>
-							<h4>T</h4>
-						</li>
-					</ul>
-				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias">
 					<a name="jsonobject" class="tsd-anchor"></a>
 					<h3>Json<wbr>Object</h3>
 					<div class="tsd-signature tsd-kind-icon">Json<wbr>Object<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/types.ts#L27">cosmwasm/src/types.ts:27</a></li>
+							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/types.ts#L27">src/types.ts:27</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -216,7 +194,7 @@
 					<div class="tsd-signature tsd-kind-icon">Post<wbr>TxResult<span class="tsd-signature-symbol">:</span> <a href="interfaces/posttxsuccess.html" class="tsd-signature-type">PostTxSuccess</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/posttxfailure.html" class="tsd-signature-type">PostTxFailure</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/cosmwasmclient.ts#L48">cosmwasm/src/cosmwasmclient.ts:48</a></li>
+							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/cosmwasmclient.ts#L51">src/cosmwasmclient.ts:51</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -226,7 +204,7 @@
 					<div class="tsd-signature tsd-kind-icon">Search<wbr>TxQuery<span class="tsd-signature-symbol">:</span> <a href="interfaces/searchbyidquery.html" class="tsd-signature-type">SearchByIdQuery</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/searchbyheightquery.html" class="tsd-signature-type">SearchByHeightQuery</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/searchbysentfromortoquery.html" class="tsd-signature-type">SearchBySentFromOrToQuery</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/searchbytagsquery.html" class="tsd-signature-type">SearchByTagsQuery</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/cosmwasmclient.ts#L74">cosmwasm/src/cosmwasmclient.ts:74</a></li>
+							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/cosmwasmclient.ts#L77">src/cosmwasmclient.ts:77</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -236,7 +214,7 @@
 					<div class="tsd-signature tsd-kind-icon">Wasm<wbr>Response&lt;T&gt;<span class="tsd-signature-symbol">:</span> <a href="interfaces/wasmsuccess.html" class="tsd-signature-type">WasmSuccess</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/wasmerror.html" class="tsd-signature-type">WasmError</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/restclient.ts#L9">cosmwasm/src/restclient.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/lcdapi/wasm.ts#L6">src/lcdapi/wasm.ts:6</a></li>
 						</ul>
 					</aside>
 					<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -255,7 +233,7 @@
 					<div class="tsd-signature tsd-kind-icon">builder<wbr>Max<wbr>Length<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">128</span><span class="tsd-signature-symbol"> = 128</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/builder.ts#L15">cosmwasm/src/builder.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/builder.ts#L15">src/builder.ts:15</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -270,7 +248,7 @@
 					<div class="tsd-signature tsd-kind-icon">docker<wbr>Image<wbr>Pattern<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">RegExp</span><span class="tsd-signature-symbol"> = new RegExp(&quot;^[a-z0-9][a-z0-9._-]*[a-z0-9](/[a-z0-9][a-z0-9._-]*[a-z0-9])+:[a-zA-Z0-9_][a-zA-Z0-9_.-]{0,127}$&quot;,)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/builder.ts#L10">cosmwasm/src/builder.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/builder.ts#L10">src/builder.ts:10</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -287,7 +265,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/signingcosmwasmclient.ts#L151">cosmwasm/src/signingcosmwasmclient.ts:151</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/signingcosmwasmclient.ts#L160">src/signingcosmwasmclient.ts:160</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -310,7 +288,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/logs.ts#L71">cosmwasm/src/logs.ts:71</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/logs.ts#L71">src/logs.ts:71</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -346,7 +324,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/msgs.ts#L90">cosmwasm/src/msgs.ts:90</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/msgs.ts#L90">src/msgs.ts:90</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -369,7 +347,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/msgs.ts#L113">cosmwasm/src/msgs.ts:113</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/msgs.ts#L113">src/msgs.ts:113</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -392,7 +370,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/msgs.ts#L50">cosmwasm/src/msgs.ts:50</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/msgs.ts#L50">src/msgs.ts:50</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -415,7 +393,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/msgs.ts#L136">cosmwasm/src/msgs.ts:136</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/msgs.ts#L136">src/msgs.ts:136</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -438,7 +416,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/msgs.ts#L23">cosmwasm/src/msgs.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/msgs.ts#L23">src/msgs.ts:23</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -461,7 +439,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/msgs.ts#L71">cosmwasm/src/msgs.ts:71</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/msgs.ts#L71">src/msgs.ts:71</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -484,7 +462,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/cosmwasmclient.ts#L50">cosmwasm/src/cosmwasmclient.ts:50</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/cosmwasmclient.ts#L53">src/cosmwasmclient.ts:53</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -507,7 +485,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/cosmwasmclient.ts#L84">cosmwasm/src/cosmwasmclient.ts:84</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/cosmwasmclient.ts#L87">src/cosmwasmclient.ts:87</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -530,7 +508,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/cosmwasmclient.ts#L80">cosmwasm/src/cosmwasmclient.ts:80</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/cosmwasmclient.ts#L83">src/cosmwasmclient.ts:83</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -553,7 +531,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/cosmwasmclient.ts#L88">cosmwasm/src/cosmwasmclient.ts:88</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/cosmwasmclient.ts#L91">src/cosmwasmclient.ts:91</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -576,7 +554,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/cosmwasmclient.ts#L92">cosmwasm/src/cosmwasmclient.ts:92</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/cosmwasmclient.ts#L95">src/cosmwasmclient.ts:95</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -599,7 +577,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/builder.ts#L17">cosmwasm/src/builder.ts:17</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/builder.ts#L17">src/builder.ts:17</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -622,7 +600,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/restclient.ts#L64">cosmwasm/src/restclient.ts:64</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/lcdapi/wasm.ts#L64">src/lcdapi/wasm.ts:64</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -641,35 +619,6 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-has-type-parameter">
-					<a name="normalizearray" class="tsd-anchor"></a>
-					<h3>normalize<wbr>Array</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">normalize<wbr>Array&lt;T&gt;<span class="tsd-signature-symbol">(</span>backend<span class="tsd-signature-symbol">: </span><a href="globals.html#cosmossdkarray" class="tsd-signature-type">CosmosSdkArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/restclient.ts#L60">cosmwasm/src/restclient.ts:60</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-type-parameters-title">Type parameters</h4>
-							<ul class="tsd-type-parameters">
-								<li>
-									<h4>T</h4>
-								</li>
-							</ul>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>backend: <a href="globals.html#cosmossdkarray" class="tsd-signature-type">CosmosSdkArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></h4>
-						</li>
-					</ul>
-				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function">
 					<a name="parseattribute" class="tsd-anchor"></a>
 					<h3>parse<wbr>Attribute</h3>
@@ -680,7 +629,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/logs.ts#L20">cosmwasm/src/logs.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/logs.ts#L20">src/logs.ts:20</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -703,7 +652,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/logs.ts#L34">cosmwasm/src/logs.ts:34</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/logs.ts#L34">src/logs.ts:34</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -726,7 +675,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/logs.ts#L47">cosmwasm/src/logs.ts:47</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/logs.ts#L47">src/logs.ts:47</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -749,7 +698,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/logs.ts#L60">cosmwasm/src/logs.ts:60</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/logs.ts#L60">src/logs.ts:60</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -772,7 +721,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/types.ts#L16">cosmwasm/src/types.ts:16</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/types.ts#L16">src/types.ts:16</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -803,7 +752,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/signingcosmwasmclient.ts#L49">cosmwasm/src/signingcosmwasmclient.ts:49</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/signingcosmwasmclient.ts#L49">src/signingcosmwasmclient.ts:49</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -813,6 +762,29 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="setupwasmextension" class="tsd-anchor"></a>
+					<h3>setup<wbr>Wasm<wbr>Extension</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">setup<wbr>Wasm<wbr>Extension<span class="tsd-signature-symbol">(</span>base<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">LcdClient</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="interfaces/wasmextension.html" class="tsd-signature-type">WasmExtension</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/lcdapi/wasm.ts#L116">src/lcdapi/wasm.ts:116</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>base: <span class="tsd-signature-type">LcdClient</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="interfaces/wasmextension.html" class="tsd-signature-type">WasmExtension</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -826,7 +798,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/restclient.ts#L68">cosmwasm/src/restclient.ts:68</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/lcdapi/wasm.ts#L68">src/lcdapi/wasm.ts:68</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -854,7 +826,7 @@
 					<div class="tsd-signature tsd-kind-icon">default<wbr>Fees<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/signingcosmwasmclient.ts#L58">cosmwasm/src/signingcosmwasmclient.ts:58</a></li>
+							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/signingcosmwasmclient.ts#L58">src/signingcosmwasmclient.ts:58</a></li>
 						</ul>
 					</aside>
 					<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-object-literal">
@@ -863,7 +835,7 @@
 						<div class="tsd-signature tsd-kind-icon">change<wbr>Admin<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/signingcosmwasmclient.ts#L79">cosmwasm/src/signingcosmwasmclient.ts:79</a></li>
+								<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/signingcosmwasmclient.ts#L79">src/signingcosmwasmclient.ts:79</a></li>
 							</ul>
 						</aside>
 						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -872,7 +844,7 @@
 							<div class="tsd-signature tsd-kind-icon">amount<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = coins(2000, &quot;ucosm&quot;)</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/signingcosmwasmclient.ts#L80">cosmwasm/src/signingcosmwasmclient.ts:80</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/signingcosmwasmclient.ts#L80">src/signingcosmwasmclient.ts:80</a></li>
 								</ul>
 							</aside>
 						</section>
@@ -882,7 +854,7 @@
 							<div class="tsd-signature tsd-kind-icon">gas<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;80000&quot;</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/signingcosmwasmclient.ts#L81">cosmwasm/src/signingcosmwasmclient.ts:81</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/signingcosmwasmclient.ts#L81">src/signingcosmwasmclient.ts:81</a></li>
 								</ul>
 							</aside>
 						</section>
@@ -893,7 +865,7 @@
 						<div class="tsd-signature tsd-kind-icon">exec<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/signingcosmwasmclient.ts#L71">cosmwasm/src/signingcosmwasmclient.ts:71</a></li>
+								<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/signingcosmwasmclient.ts#L71">src/signingcosmwasmclient.ts:71</a></li>
 							</ul>
 						</aside>
 						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -902,7 +874,7 @@
 							<div class="tsd-signature tsd-kind-icon">amount<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = coins(5000, &quot;ucosm&quot;)</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/signingcosmwasmclient.ts#L72">cosmwasm/src/signingcosmwasmclient.ts:72</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/signingcosmwasmclient.ts#L72">src/signingcosmwasmclient.ts:72</a></li>
 								</ul>
 							</aside>
 						</section>
@@ -912,7 +884,7 @@
 							<div class="tsd-signature tsd-kind-icon">gas<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;200000&quot;</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/signingcosmwasmclient.ts#L73">cosmwasm/src/signingcosmwasmclient.ts:73</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/signingcosmwasmclient.ts#L73">src/signingcosmwasmclient.ts:73</a></li>
 								</ul>
 							</aside>
 						</section>
@@ -923,7 +895,7 @@
 						<div class="tsd-signature tsd-kind-icon">init<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/signingcosmwasmclient.ts#L63">cosmwasm/src/signingcosmwasmclient.ts:63</a></li>
+								<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/signingcosmwasmclient.ts#L63">src/signingcosmwasmclient.ts:63</a></li>
 							</ul>
 						</aside>
 						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -932,7 +904,7 @@
 							<div class="tsd-signature tsd-kind-icon">amount<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = coins(12500, &quot;ucosm&quot;)</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/signingcosmwasmclient.ts#L64">cosmwasm/src/signingcosmwasmclient.ts:64</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/signingcosmwasmclient.ts#L64">src/signingcosmwasmclient.ts:64</a></li>
 								</ul>
 							</aside>
 						</section>
@@ -942,7 +914,7 @@
 							<div class="tsd-signature tsd-kind-icon">gas<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;500000&quot;</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/signingcosmwasmclient.ts#L65">cosmwasm/src/signingcosmwasmclient.ts:65</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/signingcosmwasmclient.ts#L65">src/signingcosmwasmclient.ts:65</a></li>
 								</ul>
 							</aside>
 						</section>
@@ -953,7 +925,7 @@
 						<div class="tsd-signature tsd-kind-icon">migrate<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/signingcosmwasmclient.ts#L67">cosmwasm/src/signingcosmwasmclient.ts:67</a></li>
+								<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/signingcosmwasmclient.ts#L67">src/signingcosmwasmclient.ts:67</a></li>
 							</ul>
 						</aside>
 						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -962,7 +934,7 @@
 							<div class="tsd-signature tsd-kind-icon">amount<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = coins(5000, &quot;ucosm&quot;)</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/signingcosmwasmclient.ts#L68">cosmwasm/src/signingcosmwasmclient.ts:68</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/signingcosmwasmclient.ts#L68">src/signingcosmwasmclient.ts:68</a></li>
 								</ul>
 							</aside>
 						</section>
@@ -972,7 +944,7 @@
 							<div class="tsd-signature tsd-kind-icon">gas<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;200000&quot;</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/signingcosmwasmclient.ts#L69">cosmwasm/src/signingcosmwasmclient.ts:69</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/signingcosmwasmclient.ts#L69">src/signingcosmwasmclient.ts:69</a></li>
 								</ul>
 							</aside>
 						</section>
@@ -983,7 +955,7 @@
 						<div class="tsd-signature tsd-kind-icon">send<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/signingcosmwasmclient.ts#L75">cosmwasm/src/signingcosmwasmclient.ts:75</a></li>
+								<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/signingcosmwasmclient.ts#L75">src/signingcosmwasmclient.ts:75</a></li>
 							</ul>
 						</aside>
 						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -992,7 +964,7 @@
 							<div class="tsd-signature tsd-kind-icon">amount<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = coins(2000, &quot;ucosm&quot;)</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/signingcosmwasmclient.ts#L76">cosmwasm/src/signingcosmwasmclient.ts:76</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/signingcosmwasmclient.ts#L76">src/signingcosmwasmclient.ts:76</a></li>
 								</ul>
 							</aside>
 						</section>
@@ -1002,7 +974,7 @@
 							<div class="tsd-signature tsd-kind-icon">gas<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;80000&quot;</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/signingcosmwasmclient.ts#L77">cosmwasm/src/signingcosmwasmclient.ts:77</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/signingcosmwasmclient.ts#L77">src/signingcosmwasmclient.ts:77</a></li>
 								</ul>
 							</aside>
 						</section>
@@ -1013,7 +985,7 @@
 						<div class="tsd-signature tsd-kind-icon">upload<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/signingcosmwasmclient.ts#L59">cosmwasm/src/signingcosmwasmclient.ts:59</a></li>
+								<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/signingcosmwasmclient.ts#L59">src/signingcosmwasmclient.ts:59</a></li>
 							</ul>
 						</aside>
 						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -1022,7 +994,7 @@
 							<div class="tsd-signature tsd-kind-icon">amount<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = coins(25000, &quot;ucosm&quot;)</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/signingcosmwasmclient.ts#L60">cosmwasm/src/signingcosmwasmclient.ts:60</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/signingcosmwasmclient.ts#L60">src/signingcosmwasmclient.ts:60</a></li>
 								</ul>
 							</aside>
 						</section>
@@ -1032,7 +1004,7 @@
 							<div class="tsd-signature tsd-kind-icon">gas<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;1000000&quot;</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6b81960/packages/cosmwasm/src/signingcosmwasmclient.ts#L61">cosmwasm/src/signingcosmwasmclient.ts:61</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6e3b0ba/packages/cosmwasm/src/signingcosmwasmclient.ts#L61">src/signingcosmwasmclient.ts:61</a></li>
 								</ul>
 							</aside>
 						</section>
@@ -1052,9 +1024,6 @@
 				<ul class="before-current">
 					<li class=" tsd-kind-class">
 						<a href="classes/cosmwasmclient.html" class="tsd-kind-icon">Cosm<wbr>Wasm<wbr>Client</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/restclient.html" class="tsd-kind-icon">Rest<wbr>Client</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/signingcosmwasmclient.html" class="tsd-kind-icon">Signing<wbr>Cosm<wbr>Wasm<wbr>Client</a>
@@ -1179,11 +1148,11 @@
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/wasmerror.html" class="tsd-kind-icon">Wasm<wbr>Error</a>
 					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/wasmextension.html" class="tsd-kind-icon">Wasm<wbr>Extension</a>
+					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
 						<a href="interfaces/wasmsuccess.html" class="tsd-kind-icon">Wasm<wbr>Success</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
-						<a href="globals.html#cosmossdkarray" class="tsd-kind-icon">Cosmos<wbr>Sdk<wbr>Array</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="globals.html#jsonobject" class="tsd-kind-icon">Json<wbr>Object</a>
@@ -1248,9 +1217,6 @@
 					<li class=" tsd-kind-function tsd-has-type-parameter">
 						<a href="globals.html#iswasmerror" class="tsd-kind-icon">is<wbr>Wasm<wbr>Error</a>
 					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#normalizearray" class="tsd-kind-icon">normalize<wbr>Array</a>
-					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#parseattribute" class="tsd-kind-icon">parse<wbr>Attribute</a>
 					</li>
@@ -1268,6 +1234,9 @@
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#preparebuilder" class="tsd-kind-icon">prepare<wbr>Builder</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#setupwasmextension" class="tsd-kind-icon">setup<wbr>Wasm<wbr>Extension</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
 						<a href="globals.html#unwrapwasmresponse" class="tsd-kind-icon">unwrap<wbr>Wasm<wbr>Response</a>
