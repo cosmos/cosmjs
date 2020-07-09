@@ -34,7 +34,11 @@ export {
   SearchTxsResponse,
   setupAuthExtension,
   setupBankExtension,
+  setupSlashingExtension,
   setupSupplyExtension,
+  SlashingExtension,
+  SlashingParametersResponse,
+  SlashingSigningInfosResponse,
   SupplyExtension,
   TxsResponse,
 } from "./lcdapi";
