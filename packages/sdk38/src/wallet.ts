@@ -26,11 +26,6 @@ export interface AccountData {
 
 export interface OfflineSigner {
   /**
-   * Request access to the user's accounts. Wallet should ask the user to approve or deny access. Returns true if granted access or false if denied.
-   */
-  readonly enable: () => Promise<boolean>;
-
-  /**
    * Get AccountData array from wallet. Rejects if not enabled.
    */
   readonly getAccounts: () => Promise<readonly AccountData[]>;
@@ -96,13 +91,16 @@ export class Secp256k1OfflineWallet implements OfflineSigner {
     return rawSecp256k1PubkeyToAddress(this.pubkey, this.prefix);
   }
 
-  public async enable(): Promise<boolean> {
+  /**
+   * Request access to the user's accounts. Some wallets will ask the user to approve or deny access. Returns true if granted access or false if denied.
+   */
+  private async enable(): Promise<boolean> {
     this.enabled = true;
     return this.enabled;
   }
 
   public async getAccounts(): Promise<readonly AccountData[]> {
-    if (!this.enabled) {
+    if (!this.enabled && !(await this.enable())) {
       throw new Error("Wallet not enabled");
     }
     return [
@@ -119,7 +117,7 @@ export class Secp256k1OfflineWallet implements OfflineSigner {
     message: Uint8Array,
     prehashType: PrehashType = "sha256",
   ): Promise<StdSignature> {
-    if (!this.enabled) {
+    if (!this.enabled && !(await this.enable())) {
       throw new Error("Wallet not enabled");
     }
     if (address !== this.address) {

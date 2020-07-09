@@ -78,7 +78,6 @@ export class SigningCosmosClient extends CosmosClient {
     transferAmount: readonly Coin[],
     memo = "",
   ): Promise<PostTxResult> {
-    await this.signer.enable();
     const sendMsg: MsgSend = {
       type: "cosmos-sdk/MsgSend",
       value: {

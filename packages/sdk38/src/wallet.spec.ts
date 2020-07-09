@@ -15,23 +15,15 @@ describe("Secp256k1OfflineWallet", () => {
     expect(wallet).toBeTruthy();
   });
 
-  describe("enable", () => {
-    it("resolves to true", async () => {
-      const wallet = await Secp256k1OfflineWallet.fromMnemonic(defaultMnemonic);
-      const enabled = await wallet.enable();
-      expect(enabled).toEqual(true);
-    });
-  });
-
   describe("getAccounts", () => {
     it("rejects if not enabled", async () => {
       const wallet = await Secp256k1OfflineWallet.fromMnemonic(defaultMnemonic);
+      spyOn(wallet as any, "enable").and.resolveTo(false);
       await expectAsync(wallet.getAccounts()).toBeRejectedWithError(/wallet not enabled/i);
     });
 
     it("resolves to a list of accounts if enabled", async () => {
       const wallet = await Secp256k1OfflineWallet.fromMnemonic(defaultMnemonic);
-      await wallet.enable();
       const accounts = await wallet.getAccounts();
       expect(accounts.length).toEqual(1);
       expect(accounts[0]).toEqual({
@@ -45,7 +37,6 @@ describe("Secp256k1OfflineWallet", () => {
       const wallet = await Secp256k1OfflineWallet.fromMnemonic(
         "oyster design unusual machine spread century engine gravity focus cave carry slot",
       );
-      await wallet.enable();
       const { address } = (await wallet.getAccounts())[0];
       expect(address).toEqual("cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u");
     });
@@ -54,13 +45,13 @@ describe("Secp256k1OfflineWallet", () => {
   describe("sign", () => {
     it("rejects if not enabled", async () => {
       const wallet = await Secp256k1OfflineWallet.fromMnemonic(defaultMnemonic);
+      spyOn(wallet as any, "enable").and.resolveTo(false);
       const message = toAscii("foo bar");
       await expectAsync(wallet.sign(defaultAddress, message)).toBeRejectedWithError(/wallet not enabled/i);
     });
 
     it("resolves to valid signature if enabled", async () => {
       const wallet = await Secp256k1OfflineWallet.fromMnemonic(defaultMnemonic);
-      await wallet.enable();
       const message = toAscii("foo bar");
       const signature = await wallet.sign(defaultAddress, message);
       const valid = await Secp256k1.verifySignature(

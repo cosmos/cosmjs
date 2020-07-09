@@ -217,7 +217,6 @@ describe("LcdClient", () => {
     beforeAll(async () => {
       if (wasmdEnabled()) {
         const wallet = await Secp256k1OfflineWallet.fromMnemonic(faucet.mnemonic);
-        await wallet.enable();
         const accounts = await wallet.getAccounts();
         const { address: walletAddress } = accounts[0];
         const client = new SigningCosmosClient(wasmd.endpoint, faucet.address, wallet);
@@ -533,7 +532,6 @@ describe("LcdClient", () => {
     it("can send tokens", async () => {
       pendingWithoutWasmd();
       const wallet = await Secp256k1OfflineWallet.fromMnemonic(faucet.mnemonic);
-      await wallet.enable();
       const accounts = await wallet.getAccounts();
       const { address: walletAddress } = accounts[0];
 
@@ -588,7 +586,6 @@ describe("LcdClient", () => {
       const account3 = await Secp256k1OfflineWallet.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(2));
       const [address1, address2, address3] = await Promise.all(
         [account1, account2, account3].map(async (wallet) => {
-          await wallet.enable();
           return (await wallet.getAccounts())[0].address;
         }),
       );
@@ -643,7 +640,6 @@ describe("LcdClient", () => {
     it("can send multiple messages with one signature", async () => {
       pendingWithoutWasmd();
       const wallet = await Secp256k1OfflineWallet.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(0));
-      await wallet.enable();
       const accounts = await wallet.getAccounts();
       const { address: walletAddress } = accounts[0];
 
@@ -706,7 +702,6 @@ describe("LcdClient", () => {
       const account2 = await Secp256k1OfflineWallet.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(1));
       const [address1, address2] = await Promise.all(
         [account1, account2].map(async (wallet) => {
-          await wallet.enable();
           return (await wallet.getAccounts())[0].address;
         }),
       );
@@ -778,7 +773,6 @@ describe("LcdClient", () => {
       const account2 = await Secp256k1OfflineWallet.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(1));
       const [address1, address2] = await Promise.all(
         [account1, account2].map(async (wallet) => {
-          await wallet.enable();
           return (await wallet.getAccounts())[0].address;
         }),
       );
@@ -845,7 +839,6 @@ describe("LcdClient", () => {
       const account2 = await Secp256k1OfflineWallet.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(1));
       const [address1, address2] = await Promise.all(
         [account1, account2].map(async (wallet) => {
-          await wallet.enable();
           return (await wallet.getAccounts())[0].address;
         }),
       );
