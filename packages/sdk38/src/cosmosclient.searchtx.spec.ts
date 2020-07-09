@@ -36,9 +36,7 @@ describe("CosmosClient.searchTx", () => {
       await wallet.enable();
       const accounts = await wallet.getAccounts();
       const { address: walletAddress } = accounts[0];
-      const client = new SigningCosmosClient(wasmd.endpoint, faucet.address, async (signBytes) =>
-        wallet.sign(walletAddress, signBytes),
-      );
+      const client = new SigningCosmosClient(wasmd.endpoint, faucet.address, wallet);
 
       {
         const memo = "Sending more than I can afford";

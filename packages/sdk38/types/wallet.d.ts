@@ -7,7 +7,7 @@ export interface AccountData {
   readonly algo: Algo;
   readonly pubkey: Uint8Array;
 }
-export interface OfflineWallet {
+export interface OfflineSigner {
   /**
    * Request access to the user's accounts. Wallet should ask the user to approve or deny access. Returns true if granted access or false if denied.
    */
@@ -26,7 +26,7 @@ export interface OfflineWallet {
  * with 0-based account index `a`.
  */
 export declare function makeCosmoshubPath(a: number): readonly Slip10RawIndex[];
-export declare class Secp256k1OfflineWallet implements OfflineWallet {
+export declare class Secp256k1OfflineWallet implements OfflineSigner {
   static fromMnemonic(
     mnemonic: string,
     hdPath?: readonly Slip10RawIndex[],
