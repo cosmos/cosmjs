@@ -1,4 +1,5 @@
 export { AuthExtension, AuthAccountsResponse, setupAuthExtension } from "./auth";
+export { BankBalancesResponse, BankExtension, setupBankExtension } from "./bank";
 export { setupSupplyExtension, SupplyExtension, TotalSupplyAllResponse, TotalSupplyResponse } from "./supply";
 export {
   BlockResponse,
