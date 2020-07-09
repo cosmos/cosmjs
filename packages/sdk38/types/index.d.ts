@@ -21,6 +21,8 @@ export { makeSignBytes } from "./encoding";
 export {
   AuthAccountsResponse,
   AuthExtension,
+  BankBalancesResponse,
+  BankExtension,
   BlockResponse,
   BroadcastMode,
   EncodeTxResponse,
@@ -31,6 +33,7 @@ export {
   PostTxsResponse,
   SearchTxsResponse,
   setupAuthExtension,
+  setupBankExtension,
   setupSupplyExtension,
   SupplyExtension,
   TxsResponse,
