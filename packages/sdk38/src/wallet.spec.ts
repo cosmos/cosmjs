@@ -16,12 +16,6 @@ describe("Secp256k1OfflineWallet", () => {
   });
 
   describe("getAccounts", () => {
-    it("rejects if not enabled", async () => {
-      const wallet = await Secp256k1OfflineWallet.fromMnemonic(defaultMnemonic);
-      spyOn(wallet as any, "enable").and.resolveTo(false);
-      await expectAsync(wallet.getAccounts()).toBeRejectedWithError(/wallet not enabled/i);
-    });
-
     it("resolves to a list of accounts if enabled", async () => {
       const wallet = await Secp256k1OfflineWallet.fromMnemonic(defaultMnemonic);
       const accounts = await wallet.getAccounts();
@@ -43,13 +37,6 @@ describe("Secp256k1OfflineWallet", () => {
   });
 
   describe("sign", () => {
-    it("rejects if not enabled", async () => {
-      const wallet = await Secp256k1OfflineWallet.fromMnemonic(defaultMnemonic);
-      spyOn(wallet as any, "enable").and.resolveTo(false);
-      const message = toAscii("foo bar");
-      await expectAsync(wallet.sign(defaultAddress, message)).toBeRejectedWithError(/wallet not enabled/i);
-    });
-
     it("resolves to valid signature if enabled", async () => {
       const wallet = await Secp256k1OfflineWallet.fromMnemonic(defaultMnemonic);
       const message = toAscii("foo bar");

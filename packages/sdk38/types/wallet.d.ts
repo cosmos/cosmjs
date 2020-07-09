@@ -32,13 +32,8 @@ export declare class Secp256k1OfflineWallet implements OfflineSigner {
   private readonly privkey;
   private readonly prefix;
   private readonly algo;
-  private enabled;
   private constructor();
   private get address();
-  /**
-   * Request access to the user's accounts. Some wallets will ask the user to approve or deny access. Returns true if granted access or false if denied.
-   */
-  private enable;
   getAccounts(): Promise<readonly AccountData[]>;
   sign(address: string, message: Uint8Array, prehashType?: PrehashType): Promise<StdSignature>;
 }

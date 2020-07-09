@@ -79,7 +79,6 @@ export class Secp256k1OfflineWallet implements OfflineSigner {
   private readonly privkey: Uint8Array;
   private readonly prefix: string;
   private readonly algo: Algo = "secp256k1";
-  private enabled = false;
 
   private constructor(privkey: Uint8Array, pubkey: Uint8Array, prefix: string) {
     this.privkey = privkey;
@@ -91,18 +90,7 @@ export class Secp256k1OfflineWallet implements OfflineSigner {
     return rawSecp256k1PubkeyToAddress(this.pubkey, this.prefix);
   }
 
-  /**
-   * Request access to the user's accounts. Some wallets will ask the user to approve or deny access. Returns true if granted access or false if denied.
-   */
-  private async enable(): Promise<boolean> {
-    this.enabled = true;
-    return this.enabled;
-  }
-
   public async getAccounts(): Promise<readonly AccountData[]> {
-    if (!this.enabled && !(await this.enable())) {
-      throw new Error("Wallet not enabled");
-    }
     return [
       {
         address: this.address,
@@ -117,9 +105,6 @@ export class Secp256k1OfflineWallet implements OfflineSigner {
     message: Uint8Array,
     prehashType: PrehashType = "sha256",
   ): Promise<StdSignature> {
-    if (!this.enabled && !(await this.enable())) {
-      throw new Error("Wallet not enabled");
-    }
     if (address !== this.address) {
       throw new Error(`Address ${address} not found in wallet`);
     }
