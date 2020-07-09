@@ -4,6 +4,12 @@
 
 export { AuthExtension, AuthAccountsResponse, setupAuthExtension } from "./auth";
 export { BankBalancesResponse, BankExtension, setupBankExtension } from "./bank";
+export {
+  setupSlashingExtension,
+  SlashingExtension,
+  SlashingParametersResponse,
+  SlashingSigningInfosResponse,
+} from "./slashing";
 export { setupSupplyExtension, SupplyExtension, TotalSupplyAllResponse, TotalSupplyResponse } from "./supply";
 
 //
