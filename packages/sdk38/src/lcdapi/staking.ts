@@ -21,7 +21,48 @@ export interface StakingParametersResponse {
 
 export interface StakingExtension {
   readonly staking: {
+    // Get all delegations from a delegator
+    // /staking/delegators/{delegatorAddr}/delegations
+
+    // Get all unbonding delegations from a delegator
+    // /staking/delegators/{delegatorAddr}/unbonding_delegations
+
+    // Get all staking txs (i.e msgs) from a delegator
+    // /staking/delegators/{delegatorAddr}/txs
+
+    // Query all validators that a delegator is bonded to
+    // /staking/delegators/{delegatorAddr}/validators
+
+    // Query a validator that a delegator is bonded to
+    // /staking/delegators/{delegatorAddr}/validators/{validatorAddr}
+
+    // Query a delegation between a delegator and a validator
+    // /staking/delegators/{delegatorAddr}/delegations/{validatorAddr}
+
+    // Query all unbonding delegations between a delegator and a validator
+    // /staking/delegators/{delegatorAddr}/unbonding_delegations/{validatorAddr}
+
+    // Query redelegations (filters in query params)
+    // /staking/redelegations
+
+    // Get all validators
+    // /staking/validators
+
+    // Get a single validator info
+    // /staking/validators/{validatorAddr}
+
+    // Get all delegations to a validator
+    // "/staking/validators/{validatorAddr}/delegations
+
+    // Get all unbonding delegations from a validator
+    // /staking/validators/{validatorAddr}/unbonding_delegations
+
+    // Get HistoricalInfo at a given height
+    // /staking/historical_info/{height}
+
+    /** Get the current state of the staking pool */
     readonly pool: () => Promise<StakingPoolResponse>;
+    /** Get the current staking parameter values */
     readonly parameters: () => Promise<StakingParametersResponse>;
   };
 }

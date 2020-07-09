@@ -18,7 +18,9 @@ export interface StakingParametersResponse {
 }
 export interface StakingExtension {
   readonly staking: {
+    /** Get the current state of the staking pool */
     readonly pool: () => Promise<StakingPoolResponse>;
+    /** Get the current staking parameter values */
     readonly parameters: () => Promise<StakingParametersResponse>;
   };
 }
