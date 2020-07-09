@@ -34,7 +34,7 @@ describe("CosmosClient.searchTx", () => {
     if (wasmdEnabled()) {
       const wallet = await Secp256k1OfflineWallet.fromMnemonic(faucet.mnemonic);
       const accounts = await wallet.getAccounts();
-      const { address: walletAddress } = accounts[0];
+      const [{ address: walletAddress }] = accounts;
       const client = new SigningCosmosClient(wasmd.endpoint, faucet.address, wallet);
 
       {

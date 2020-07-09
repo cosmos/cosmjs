@@ -195,7 +195,7 @@ describe("CosmosClient", () => {
       pendingWithoutWasmd();
       const wallet = await Secp256k1OfflineWallet.fromMnemonic(faucet.mnemonic);
       const accounts = await wallet.getAccounts();
-      const { address: walletAddress } = accounts[0];
+      const [{ address: walletAddress }] = accounts;
       const client = new CosmosClient(wasmd.endpoint);
 
       const memo = "My first contract on chain";

@@ -37,7 +37,7 @@ describe("Secp256k1OfflineWallet", () => {
       const wallet = await Secp256k1OfflineWallet.fromMnemonic(
         "oyster design unusual machine spread century engine gravity focus cave carry slot",
       );
-      const { address } = (await wallet.getAccounts())[0];
+      const [{ address }] = await wallet.getAccounts();
       expect(address).toEqual("cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u");
     });
   });
