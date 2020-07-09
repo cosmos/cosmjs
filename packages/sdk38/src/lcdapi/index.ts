@@ -42,6 +42,12 @@ export {
   SlashingParametersResponse,
   SlashingSigningInfosResponse,
 } from "./slashing";
+export {
+  setupStakingExtension,
+  StakingExtension,
+  StakingParametersResponse,
+  StakingPoolResponse,
+} from "./staking";
 export { setupSupplyExtension, SupplyExtension, TotalSupplyAllResponse, TotalSupplyResponse } from "./supply";
 
 //
