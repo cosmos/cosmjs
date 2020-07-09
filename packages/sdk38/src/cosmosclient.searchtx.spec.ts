@@ -33,8 +33,11 @@ describe("CosmosClient.searchTx", () => {
   beforeAll(async () => {
     if (wasmdEnabled()) {
       const wallet = await Secp256k1OfflineWallet.fromMnemonic(faucet.mnemonic);
+      await wallet.enable();
+      const accounts = await wallet.getAccounts();
+      const { address: walletAddress } = accounts[0];
       const client = new SigningCosmosClient(wasmd.endpoint, faucet.address, async (signBytes) =>
-        wallet.sign(wallet.address, signBytes),
+        wallet.sign(walletAddress, signBytes),
       );
 
       {
@@ -58,7 +61,7 @@ describe("CosmosClient.searchTx", () => {
         const { accountNumber, sequence } = await client.getNonce();
         const chainId = await client.getChainId();
         const signBytes = makeSignBytes([sendMsg], fee, chainId, memo, accountNumber, sequence);
-        const signature = await wallet.sign(wallet.address, signBytes);
+        const signature = await wallet.sign(walletAddress, signBytes);
         const tx: CosmosSdkTx = {
           type: "cosmos-sdk/StdTx",
           value: {

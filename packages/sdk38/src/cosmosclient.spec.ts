@@ -194,6 +194,9 @@ describe("CosmosClient", () => {
     it("works", async () => {
       pendingWithoutWasmd();
       const wallet = await Secp256k1OfflineWallet.fromMnemonic(faucet.mnemonic);
+      await wallet.enable();
+      const accounts = await wallet.getAccounts();
+      const { address: walletAddress } = accounts[0];
       const client = new CosmosClient(wasmd.endpoint);
 
       const memo = "My first contract on chain";
@@ -224,7 +227,7 @@ describe("CosmosClient", () => {
       const chainId = await client.getChainId();
       const { accountNumber, sequence } = await client.getNonce(faucet.address);
       const signBytes = makeSignBytes([sendMsg], fee, chainId, memo, accountNumber, sequence);
-      const signature = await wallet.sign(wallet.address, signBytes);
+      const signature = await wallet.sign(walletAddress, signBytes);
       const signedTx = {
         msg: [sendMsg],
         fee: fee,

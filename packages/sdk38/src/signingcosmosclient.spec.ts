@@ -22,8 +22,11 @@ describe("SigningCosmosClient", () => {
   describe("makeReadOnly", () => {
     it("can be constructed", async () => {
       const wallet = await Secp256k1OfflineWallet.fromMnemonic(faucet.mnemonic);
+      await wallet.enable();
+      const accounts = await wallet.getAccounts();
+      const { address } = accounts[0];
       const client = new SigningCosmosClient(httpUrl, faucet.address, async (signBytes) =>
-        wallet.sign(wallet.address, signBytes),
+        wallet.sign(address, signBytes),
       );
       expect(client).toBeTruthy();
     });
@@ -33,8 +36,11 @@ describe("SigningCosmosClient", () => {
     it("always uses authAccount implementation", async () => {
       pendingWithoutWasmd();
       const wallet = await Secp256k1OfflineWallet.fromMnemonic(faucet.mnemonic);
+      await wallet.enable();
+      const accounts = await wallet.getAccounts();
+      const { address } = accounts[0];
       const client = new SigningCosmosClient(httpUrl, faucet.address, async (signBytes) =>
-        wallet.sign(wallet.address, signBytes),
+        wallet.sign(address, signBytes),
       );
 
       const openedClient = (client as unknown) as PrivateCosmWasmClient;
@@ -53,8 +59,11 @@ describe("SigningCosmosClient", () => {
     it("works", async () => {
       pendingWithoutWasmd();
       const wallet = await Secp256k1OfflineWallet.fromMnemonic(faucet.mnemonic);
+      await wallet.enable();
+      const accounts = await wallet.getAccounts();
+      const { address } = accounts[0];
       const client = new SigningCosmosClient(httpUrl, faucet.address, async (signBytes) =>
-        wallet.sign(wallet.address, signBytes),
+        wallet.sign(address, signBytes),
       );
 
       // instantiate

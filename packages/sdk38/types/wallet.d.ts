@@ -32,13 +32,13 @@ export declare class Secp256k1OfflineWallet implements OfflineWallet {
     hdPath?: readonly Slip10RawIndex[],
     prefix?: string,
   ): Promise<Secp256k1OfflineWallet>;
-  readonly pubkey: Uint8Array;
+  private readonly pubkey;
   private readonly privkey;
   private readonly prefix;
   private readonly algo;
   private enabled;
   private constructor();
-  get address(): string;
+  private get address();
   enable(): Promise<boolean>;
   getAccounts(): Promise<readonly AccountData[]>;
   sign(address: string, message: Uint8Array, prehashType?: PrehashType): Promise<StdSignature>;

@@ -80,7 +80,7 @@ export class Secp256k1OfflineWallet implements OfflineWallet {
     return new Secp256k1OfflineWallet(privkey, Secp256k1.compressPubkey(uncompressed), prefix);
   }
 
-  public readonly pubkey: Uint8Array;
+  private readonly pubkey: Uint8Array;
   private readonly privkey: Uint8Array;
   private readonly prefix: string;
   private readonly algo: Algo = "secp256k1";
@@ -92,7 +92,7 @@ export class Secp256k1OfflineWallet implements OfflineWallet {
     this.prefix = prefix;
   }
 
-  public get address(): string {
+  private get address(): string {
     return rawSecp256k1PubkeyToAddress(this.pubkey, this.prefix);
   }
 
