@@ -9,6 +9,10 @@ export function makeRandomAddress(): string {
 }
 
 export const nonNegativeIntegerMatcher = /^[0-9]+$/;
+/** Matches decimals < 1.0 */
+export const smallDecimalMatcher = /^0\.[0-9]+$/;
+/** Matches decimals >= 1.0 */
+export const bigDecimalMatcher = /^[1-9][0-9]*\.[0-9]+$/;
 export const tendermintIdMatcher = /^[0-9A-F]{64}$/;
 export const tendermintOptionalIdMatcher = /^([0-9A-F]{64}|)$/;
 export const tendermintAddressMatcher = /^[0-9A-F]{40}$/;

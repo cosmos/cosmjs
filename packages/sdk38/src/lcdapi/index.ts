@@ -5,6 +5,13 @@
 export { AuthExtension, AuthAccountsResponse, setupAuthExtension } from "./auth";
 export { BankBalancesResponse, BankExtension, setupBankExtension } from "./bank";
 export {
+  MintAnnualProvisionsResponse,
+  MintExtension,
+  MintInflationResponse,
+  MintParametersResponse,
+  setupMintExtension,
+} from "./mint";
+export {
   setupSlashingExtension,
   SlashingExtension,
   SlashingParametersResponse,
