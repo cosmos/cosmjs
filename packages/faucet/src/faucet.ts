@@ -1,8 +1,8 @@
-import { CosmosClient, Pen, SigningCosmosClient } from "@cosmjs/sdk38";
+import { CosmosClient, OfflineSigner, SigningCosmosClient } from "@cosmjs/sdk38";
 import { sleep } from "@cosmjs/utils";
 
 import { debugAccount, logAccountsState, logSendJob } from "./debugging";
-import { createPens } from "./profile";
+import { createWallets } from "./profile";
 import { TokenManager } from "./tokenmanager";
 import { MinimalAccount, SendJob, TokenConfiguration } from "./types";
 
@@ -19,8 +19,8 @@ export class Faucet {
     numberOfDistributors: number,
     logging = false,
   ): Promise<Faucet> {
-    const pens = await createPens(mnemonic, addressPrefix, numberOfDistributors, logging);
-    return new Faucet(apiUrl, addressPrefix, config, pens, logging);
+    const wallets = await createWallets(mnemonic, addressPrefix, numberOfDistributors, logging);
+    return new Faucet(apiUrl, addressPrefix, config, wallets, logging);
   }
 
   public readonly addressPrefix: string;
@@ -38,7 +38,7 @@ export class Faucet {
     apiUrl: string,
     addressPrefix: string,
     config: TokenConfiguration,
-    pens: ReadonlyArray<readonly [string, Pen]>,
+    wallets: ReadonlyArray<readonly [string, OfflineSigner]>,
     logging = false,
   ) {
     this.addressPrefix = addressPrefix;
@@ -47,15 +47,13 @@ export class Faucet {
 
     this.readOnlyClient = new CosmosClient(apiUrl);
 
-    this.holderAddress = pens[0][0];
-    this.distributorAddresses = pens.slice(1).map((pair) => pair[0]);
+    this.holderAddress = wallets[0][0];
+    this.distributorAddresses = wallets.slice(1).map((pair) => pair[0]);
 
     // we need one client per sender
     const clients: { [senderAddress: string]: SigningCosmosClient } = {};
-    for (const [senderAddress, pen] of pens) {
-      clients[senderAddress] = new SigningCosmosClient(apiUrl, senderAddress, (signBytes) =>
-        pen.sign(signBytes),
-      );
+    for (const [senderAddress, wallet] of wallets) {
+      clients[senderAddress] = new SigningCosmosClient(apiUrl, senderAddress, wallet);
     }
     this.clients = clients;
     this.logging = logging;

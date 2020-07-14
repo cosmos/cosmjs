@@ -1,7 +1,7 @@
 import { Bip39, Random } from "@cosmjs/crypto";
 
 import * as constants from "../constants";
-import { createPens } from "../profile";
+import { createWallets } from "../profile";
 
 export async function generate(args: readonly string[]): Promise<void> {
   if (args.length < 1) {
@@ -16,5 +16,5 @@ export async function generate(args: readonly string[]): Promise<void> {
   console.info(`FAUCET_MNEMONIC="${mnemonic}"`);
 
   // Log the addresses
-  await createPens(mnemonic, chainId, constants.concurrency, true);
+  await createWallets(mnemonic, chainId, constants.concurrency, true);
 }
