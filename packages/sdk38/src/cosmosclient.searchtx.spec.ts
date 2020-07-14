@@ -16,7 +16,7 @@ import {
   wasmdEnabled,
 } from "./testutils.spec";
 import { CosmosSdkTx } from "./types";
-import { Secp256k1OfflineWallet } from "./wallet";
+import { Secp256k1Wallet } from "./wallet";
 
 interface TestTxSend {
   readonly sender: string;
@@ -32,7 +32,7 @@ describe("CosmosClient.searchTx", () => {
 
   beforeAll(async () => {
     if (wasmdEnabled()) {
-      const wallet = await Secp256k1OfflineWallet.fromMnemonic(faucet.mnemonic);
+      const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
       const accounts = await wallet.getAccounts();
       const [{ address: walletAddress }] = accounts;
       const client = new SigningCosmosClient(wasmd.endpoint, faucet.address, wallet);

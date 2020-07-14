@@ -16,7 +16,7 @@ import {
   wasmd,
 } from "./testutils.spec";
 import { StdFee } from "./types";
-import { Secp256k1OfflineWallet } from "./wallet";
+import { Secp256k1Wallet } from "./wallet";
 
 const blockTime = 1_000; // ms
 
@@ -193,7 +193,7 @@ describe("CosmosClient", () => {
   describe("postTx", () => {
     it("works", async () => {
       pendingWithoutWasmd();
-      const wallet = await Secp256k1OfflineWallet.fromMnemonic(faucet.mnemonic);
+      const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
       const accounts = await wallet.getAccounts();
       const [{ address: walletAddress }] = accounts;
       const client = new CosmosClient(wasmd.endpoint);

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { SigningCosmWasmClient } from "@cosmjs/cosmwasm";
-import { Coin, coins, makeCosmoshubPath, Secp256k1OfflineWallet } from "@cosmjs/sdk38";
+import { Coin, coins, makeCosmoshubPath, Secp256k1Wallet } from "@cosmjs/sdk38";
 
 import {
   BalanceResponse,
@@ -40,12 +40,12 @@ describe("Staking demo", () => {
   it("works", async () => {
     pendingWithoutWasmd();
     // The owner of the contract that will collect the tax
-    const ownerWallet = await Secp256k1OfflineWallet.fromMnemonic(alice.mnemonic);
+    const ownerWallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
     const [{ address: ownerAddress }] = await ownerWallet.getAccounts();
     const ownerClient = new SigningCosmWasmClient(httpUrl, ownerAddress, ownerWallet);
 
     // a user of the contract
-    const userWallet = await Secp256k1OfflineWallet.fromMnemonic(alice.mnemonic, makeCosmoshubPath(1));
+    const userWallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic, makeCosmoshubPath(1));
     const [{ address: userAddress }] = await userWallet.getAccounts();
     const userClient = new SigningCosmWasmClient(httpUrl, userAddress, userWallet, {
       exec: {

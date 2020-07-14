@@ -10,7 +10,7 @@ import {
   makeSignBytes,
   OfflineSigner,
   PostTxsResponse,
-  Secp256k1OfflineWallet,
+  Secp256k1Wallet,
   setupAuthExtension,
   StdFee,
 } from "@cosmjs/sdk38";
@@ -256,7 +256,7 @@ describe("wasm", () => {
   describe("postTx", () => {
     it("can upload, instantiate and execute wasm", async () => {
       pendingWithoutWasmd();
-      const wallet = await Secp256k1OfflineWallet.fromMnemonic(alice.mnemonic);
+      const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
       const client = makeWasmClient(wasmd.endpoint);
 
       const transferAmount = [coin(1234, "ucosm"), coin(321, "ustake")];
@@ -324,7 +324,7 @@ describe("wasm", () => {
   describe("query", () => {
     it("can list upload code", async () => {
       pendingWithoutWasmd();
-      const wallet = await Secp256k1OfflineWallet.fromMnemonic(alice.mnemonic);
+      const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
       const client = makeWasmClient(wasmd.endpoint);
 
       // check with contracts were here first to compare
@@ -362,7 +362,7 @@ describe("wasm", () => {
 
     it("can list contracts and get info", async () => {
       pendingWithoutWasmd();
-      const wallet = await Secp256k1OfflineWallet.fromMnemonic(alice.mnemonic);
+      const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
       const client = makeWasmClient(wasmd.endpoint);
       const beneficiaryAddress = makeRandomAddress();
       const transferAmount: readonly Coin[] = [
@@ -438,7 +438,7 @@ describe("wasm", () => {
 
       beforeAll(async () => {
         if (wasmdEnabled()) {
-          const wallet = await Secp256k1OfflineWallet.fromMnemonic(alice.mnemonic);
+          const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
           const uploadResult = await uploadContract(client, wallet, getHackatom());
           assert(!uploadResult.code);
           const uploadLogs = parseLogs(uploadResult.logs);

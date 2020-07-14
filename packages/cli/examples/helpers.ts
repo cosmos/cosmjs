@@ -52,7 +52,7 @@ const connect = async (
 }> => {
   const options: Options = { ...defaultOptions, ...opts };
   const feeTable = buildFeeTable(options.feeToken, options.gasPrice);
-  const wallet = await Secp256k1OfflineWallet.fromMnemonic(mnemonic);
+  const wallet = await Secp256k1Wallet.fromMnemonic(mnemonic);
   const [{ address }] = await wallet.getAccounts();
 
   const client = new SigningCosmWasmClient(options.httpUrl, address, wallet, feeTable);
@@ -92,7 +92,7 @@ const randomAddress = async (prefix: string): Promise<string> => {
 };
 
 const mnemonicToAddress = async (prefix: string, mnemonic: string): Promise<string> => {
-  const wallet = await Secp256k1OfflineWallet.fromMnemonic(mnemonic);
+  const wallet = await Secp256k1Wallet.fromMnemonic(mnemonic);
   const [{ address }] = await wallet.getAccounts();
   return address;
 };

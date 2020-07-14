@@ -4,7 +4,7 @@ import { Coin } from "./coins";
 import { isPostTxFailure, PrivateCosmWasmClient } from "./cosmosclient";
 import { SigningCosmosClient } from "./signingcosmosclient";
 import { makeRandomAddress, pendingWithoutWasmd } from "./testutils.spec";
-import { Secp256k1OfflineWallet } from "./wallet";
+import { Secp256k1Wallet } from "./wallet";
 
 const httpUrl = "http://localhost:1317";
 
@@ -21,7 +21,7 @@ const faucet = {
 describe("SigningCosmosClient", () => {
   describe("makeReadOnly", () => {
     it("can be constructed", async () => {
-      const wallet = await Secp256k1OfflineWallet.fromMnemonic(faucet.mnemonic);
+      const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
       const client = new SigningCosmosClient(httpUrl, faucet.address, wallet);
       expect(client).toBeTruthy();
     });
@@ -30,7 +30,7 @@ describe("SigningCosmosClient", () => {
   describe("getHeight", () => {
     it("always uses authAccount implementation", async () => {
       pendingWithoutWasmd();
-      const wallet = await Secp256k1OfflineWallet.fromMnemonic(faucet.mnemonic);
+      const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
       const client = new SigningCosmosClient(httpUrl, faucet.address, wallet);
 
       const openedClient = (client as unknown) as PrivateCosmWasmClient;
@@ -48,7 +48,7 @@ describe("SigningCosmosClient", () => {
   describe("sendTokens", () => {
     it("works", async () => {
       pendingWithoutWasmd();
-      const wallet = await Secp256k1OfflineWallet.fromMnemonic(faucet.mnemonic);
+      const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
       const client = new SigningCosmosClient(httpUrl, faucet.address, wallet);
 
       // instantiate

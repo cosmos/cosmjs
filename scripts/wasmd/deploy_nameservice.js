@@ -2,7 +2,7 @@
 
 /* eslint-disable @typescript-eslint/camelcase */
 const { SigningCosmWasmClient } = require("@cosmjs/cosmwasm");
-const { Secp256k1OfflineWallet } = require("@cosmjs/sdk38");
+const { Secp256k1Wallet } = require("@cosmjs/sdk38");
 const fs = require("fs");
 
 const httpUrl = "http://localhost:1317";
@@ -36,7 +36,7 @@ const luxury = {
 };
 
 async function main() {
-  const wallet = await Secp256k1OfflineWallet.fromMnemonic(alice.mnemonic);
+  const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
   const client = new SigningCosmWasmClient(httpUrl, alice.address0, wallet);
 
   const wasm = fs.readFileSync(__dirname + "/contracts/cw-nameservice.wasm");

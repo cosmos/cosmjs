@@ -1,4 +1,4 @@
-const wallet = await Secp256k1OfflineWallet.fromMnemonic(
+const wallet = await Secp256k1Wallet.fromMnemonic(
   "enlist hip relief stomach skate base shallow young switch frequent cry park",
 );
 const [{ address: senderAddress }] = await wallet.getAccounts();

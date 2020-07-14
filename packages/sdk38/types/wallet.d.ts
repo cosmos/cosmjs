@@ -22,12 +22,12 @@ export interface OfflineSigner {
  * with 0-based account index `a`.
  */
 export declare function makeCosmoshubPath(a: number): readonly Slip10RawIndex[];
-export declare class Secp256k1OfflineWallet implements OfflineSigner {
+export declare class Secp256k1Wallet implements OfflineSigner {
   static fromMnemonic(
     mnemonic: string,
     hdPath?: readonly Slip10RawIndex[],
     prefix?: string,
-  ): Promise<Secp256k1OfflineWallet>;
+  ): Promise<Secp256k1Wallet>;
   private readonly pubkey;
   private readonly privkey;
   private readonly prefix;

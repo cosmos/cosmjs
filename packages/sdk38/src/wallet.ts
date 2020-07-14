@@ -63,16 +63,16 @@ export function makeCosmoshubPath(a: number): readonly Slip10RawIndex[] {
   ];
 }
 
-export class Secp256k1OfflineWallet implements OfflineSigner {
+export class Secp256k1Wallet implements OfflineSigner {
   public static async fromMnemonic(
     mnemonic: string,
     hdPath: readonly Slip10RawIndex[] = makeCosmoshubPath(0),
     prefix = "cosmos",
-  ): Promise<Secp256k1OfflineWallet> {
+  ): Promise<Secp256k1Wallet> {
     const seed = await Bip39.mnemonicToSeed(new EnglishMnemonic(mnemonic));
     const { privkey } = Slip10.derivePath(Slip10Curve.Secp256k1, seed, hdPath);
     const uncompressed = (await Secp256k1.makeKeypair(privkey)).pubkey;
-    return new Secp256k1OfflineWallet(privkey, Secp256k1.compressPubkey(uncompressed), prefix);
+    return new Secp256k1Wallet(privkey, Secp256k1.compressPubkey(uncompressed), prefix);
   }
 
   private readonly pubkey: Uint8Array;
