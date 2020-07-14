@@ -97,10 +97,10 @@ export function main(originalArgs: readonly string[]): void {
         "MsgDelegate",
         "MsgSend",
         "LcdClient",
-        "Pen",
+        "OfflineSigner",
         "PubKey",
         "pubkeyToAddress",
-        "Secp256k1Pen",
+        "Secp256k1Wallet",
         "SigningCosmosClient",
         "StdFee",
         "StdTx",
@@ -145,11 +145,10 @@ export function main(originalArgs: readonly string[]): void {
       assert(Decimal.fromAtomics("12870000", 6).toString() === "12.87");
 
       const mnemonic = Bip39.encode(Random.getBytes(16)).toString();
-      const pen = await Secp256k1Pen.fromMnemonic(mnemonic, makeCosmoshubPath(0));
-      const pubkey = encodeSecp256k1Pubkey(pen.pubkey);
-      const address = pubkeyToAddress(pubkey, "cosmos");
+      const wallet = await Secp256k1Wallet.fromMnemonic(mnemonic, makeCosmoshubPath(0));
+      const [{ address }] = await wallet.getAccounts();
       const data = toAscii("foo bar");
-      const signature = await pen.sign(data);
+      const signature = await wallet.sign(address, data);
 
       console.info("Done testing, will exit now.");
       process.exit(0);

@@ -6,7 +6,6 @@ import { CosmosClient, isPostTxFailure } from "./cosmosclient";
 import { makeSignBytes } from "./encoding";
 import { LcdClient } from "./lcdapi";
 import { isMsgSend, MsgSend } from "./msgs";
-import { Secp256k1Pen } from "./pen";
 import { SigningCosmosClient } from "./signingcosmosclient";
 import {
   faucet,
@@ -17,6 +16,7 @@ import {
   wasmdEnabled,
 } from "./testutils.spec";
 import { CosmosSdkTx } from "./types";
+import { Secp256k1Wallet } from "./wallet";
 
 interface TestTxSend {
   readonly sender: string;
@@ -32,10 +32,10 @@ describe("CosmosClient.searchTx", () => {
 
   beforeAll(async () => {
     if (wasmdEnabled()) {
-      const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-      const client = new SigningCosmosClient(wasmd.endpoint, faucet.address, (signBytes) =>
-        pen.sign(signBytes),
-      );
+      const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
+      const accounts = await wallet.getAccounts();
+      const [{ address: walletAddress }] = accounts;
+      const client = new SigningCosmosClient(wasmd.endpoint, faucet.address, wallet);
 
       {
         const memo = "Sending more than I can afford";
@@ -58,7 +58,7 @@ describe("CosmosClient.searchTx", () => {
         const { accountNumber, sequence } = await client.getNonce();
         const chainId = await client.getChainId();
         const signBytes = makeSignBytes([sendMsg], fee, chainId, memo, accountNumber, sequence);
-        const signature = await pen.sign(signBytes);
+        const signature = await wallet.sign(walletAddress, signBytes);
         const tx: CosmosSdkTx = {
           type: "cosmos-sdk/StdTx",
           value: {

@@ -3,11 +3,8 @@ import { Account, CosmosClient, GetNonceResult, PostTxResult } from "./cosmoscli
 import { makeSignBytes } from "./encoding";
 import { BroadcastMode } from "./lcdapi";
 import { MsgSend } from "./msgs";
-import { StdFee, StdSignature, StdTx } from "./types";
-
-export interface SigningCallback {
-  (signBytes: Uint8Array): Promise<StdSignature>;
-}
+import { StdFee, StdTx } from "./types";
+import { OfflineSigner } from "./wallet";
 
 export interface FeeTable {
   readonly upload: StdFee;
@@ -38,7 +35,7 @@ const defaultFees: FeeTable = {
 export class SigningCosmosClient extends CosmosClient {
   public readonly senderAddress: string;
 
-  private readonly signCallback: SigningCallback;
+  private readonly signer: OfflineSigner;
   private readonly fees: FeeTable;
 
   /**
@@ -49,14 +46,14 @@ export class SigningCosmosClient extends CosmosClient {
    *
    * @param apiUrl The URL of a Cosmos SDK light client daemon API (sometimes called REST server or REST API)
    * @param senderAddress The address that will sign and send transactions using this instance
-   * @param signCallback An asynchonous callback to create a signature for a given transaction. This can be implemented using secure key stores that require user interaction.
+   * @param signer An implementation of OfflineSigner which can provide signatures for transactions, potentially requiring user input.
    * @param customFees The fees that are paid for transactions
    * @param broadcastMode Defines at which point of the transaction processing the postTx method (i.e. transaction broadcasting) returns
    */
   public constructor(
     apiUrl: string,
     senderAddress: string,
-    signCallback: SigningCallback,
+    signer: OfflineSigner,
     customFees?: Partial<FeeTable>,
     broadcastMode = BroadcastMode.Block,
   ) {
@@ -64,7 +61,7 @@ export class SigningCosmosClient extends CosmosClient {
     this.anyValidAddress = senderAddress;
 
     this.senderAddress = senderAddress;
-    this.signCallback = signCallback;
+    this.signer = signer;
     this.fees = { ...defaultFees, ...(customFees || {}) };
   }
 
@@ -95,7 +92,7 @@ export class SigningCosmosClient extends CosmosClient {
     const { accountNumber, sequence } = await this.getNonce();
     const chainId = await this.getChainId();
     const signBytes = makeSignBytes([sendMsg], fee, chainId, memo, accountNumber, sequence);
-    const signature = await this.signCallback(signBytes);
+    const signature = await this.signer.sign(this.senderAddress, signBytes);
     const signedTx: StdTx = {
       msg: [sendMsg],
       fee: fee,

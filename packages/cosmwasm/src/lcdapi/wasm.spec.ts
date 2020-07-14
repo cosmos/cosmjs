@@ -8,9 +8,9 @@ import {
   coins,
   LcdClient,
   makeSignBytes,
-  Pen,
+  OfflineSigner,
   PostTxsResponse,
-  Secp256k1Pen,
+  Secp256k1Wallet,
   setupAuthExtension,
   StdFee,
 } from "@cosmjs/sdk38";
@@ -47,7 +47,7 @@ function makeWasmClient(apiUrl: string): WasmClient {
 
 async function uploadContract(
   client: WasmClient,
-  pen: Pen,
+  signer: OfflineSigner,
   contract: ContractUploadInstructions,
 ): Promise<PostTxsResponse> {
   const memo = "My first contract on chain";
@@ -72,14 +72,14 @@ async function uploadContract(
 
   const { account_number, sequence } = (await client.auth.account(alice.address0)).result.value;
   const signBytes = makeSignBytes([theMsg], fee, wasmd.chainId, memo, account_number, sequence);
-  const signature = await pen.sign(signBytes);
+  const signature = await signer.sign(alice.address0, signBytes);
   const signedTx = makeSignedTx(theMsg, fee, memo, signature);
   return client.postTx(signedTx);
 }
 
 async function instantiateContract(
   client: WasmClient,
-  pen: Pen,
+  signer: OfflineSigner,
   codeId: number,
   beneficiaryAddress: string,
   transferAmount?: readonly Coin[],
@@ -110,14 +110,14 @@ async function instantiateContract(
 
   const { account_number, sequence } = (await client.auth.account(alice.address0)).result.value;
   const signBytes = makeSignBytes([theMsg], fee, wasmd.chainId, memo, account_number, sequence);
-  const signature = await pen.sign(signBytes);
+  const signature = await signer.sign(alice.address0, signBytes);
   const signedTx = makeSignedTx(theMsg, fee, memo, signature);
   return client.postTx(signedTx);
 }
 
 async function executeContract(
   client: WasmClient,
-  pen: Pen,
+  signer: OfflineSigner,
   contractAddress: string,
   msg: object,
 ): Promise<PostTxsResponse> {
@@ -138,7 +138,7 @@ async function executeContract(
 
   const { account_number, sequence } = (await client.auth.account(alice.address0)).result.value;
   const signBytes = makeSignBytes([theMsg], fee, wasmd.chainId, memo, account_number, sequence);
-  const signature = await pen.sign(signBytes);
+  const signature = await signer.sign(alice.address0, signBytes);
   const signedTx = makeSignedTx(theMsg, fee, memo, signature);
   return client.postTx(signedTx);
 }
@@ -256,7 +256,7 @@ describe("wasm", () => {
   describe("postTx", () => {
     it("can upload, instantiate and execute wasm", async () => {
       pendingWithoutWasmd();
-      const pen = await Secp256k1Pen.fromMnemonic(alice.mnemonic);
+      const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
       const client = makeWasmClient(wasmd.endpoint);
 
       const transferAmount = [coin(1234, "ucosm"), coin(321, "ustake")];
@@ -267,7 +267,7 @@ describe("wasm", () => {
       // upload
       {
         // console.log("Raw log:", result.raw_log);
-        const result = await uploadContract(client, pen, getHackatom());
+        const result = await uploadContract(client, wallet, getHackatom());
         expect(result.code).toBeFalsy();
         const logs = parseLogs(result.logs);
         const codeIdAttr = findAttribute(logs, "message", "code_id");
@@ -281,7 +281,7 @@ describe("wasm", () => {
 
       // instantiate
       {
-        const result = await instantiateContract(client, pen, codeId, beneficiaryAddress, transferAmount);
+        const result = await instantiateContract(client, wallet, codeId, beneficiaryAddress, transferAmount);
         expect(result.code).toBeFalsy();
         // console.log("Raw log:", result.raw_log);
         const logs = parseLogs(result.logs);
@@ -297,7 +297,7 @@ describe("wasm", () => {
 
       // execute
       {
-        const result = await executeContract(client, pen, contractAddress, { release: {} });
+        const result = await executeContract(client, wallet, contractAddress, { release: {} });
         expect(result.data).toEqual("F00BAA");
         expect(result.code).toBeFalsy();
         // console.log("Raw log:", result.logs);
@@ -324,7 +324,7 @@ describe("wasm", () => {
   describe("query", () => {
     it("can list upload code", async () => {
       pendingWithoutWasmd();
-      const pen = await Secp256k1Pen.fromMnemonic(alice.mnemonic);
+      const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
       const client = makeWasmClient(wasmd.endpoint);
 
       // check with contracts were here first to compare
@@ -334,7 +334,7 @@ describe("wasm", () => {
 
       // upload data
       const hackatom = getHackatom();
-      const result = await uploadContract(client, pen, hackatom);
+      const result = await uploadContract(client, wallet, hackatom);
       expect(result.code).toBeFalsy();
       const logs = parseLogs(result.logs);
       const codeIdAttr = findAttribute(logs, "message", "code_id");
@@ -362,7 +362,7 @@ describe("wasm", () => {
 
     it("can list contracts and get info", async () => {
       pendingWithoutWasmd();
-      const pen = await Secp256k1Pen.fromMnemonic(alice.mnemonic);
+      const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
       const client = makeWasmClient(wasmd.endpoint);
       const beneficiaryAddress = makeRandomAddress();
       const transferAmount: readonly Coin[] = [
@@ -378,7 +378,7 @@ describe("wasm", () => {
       if (existingInfos.length > 0) {
         codeId = existingInfos[existingInfos.length - 1].id;
       } else {
-        const uploadResult = await uploadContract(client, pen, getHackatom());
+        const uploadResult = await uploadContract(client, wallet, getHackatom());
         expect(uploadResult.code).toBeFalsy();
         const uploadLogs = parseLogs(uploadResult.logs);
         const codeIdAttr = findAttribute(uploadLogs, "message", "code_id");
@@ -394,7 +394,7 @@ describe("wasm", () => {
         expect(contract.label).toMatch(/^.+$/);
       }
 
-      const result = await instantiateContract(client, pen, codeId, beneficiaryAddress, transferAmount);
+      const result = await instantiateContract(client, wallet, codeId, beneficiaryAddress, transferAmount);
       expect(result.code).toBeFalsy();
       const logs = parseLogs(result.logs);
       const contractAddressAttr = findAttribute(logs, "message", "contract_address");
@@ -438,12 +438,12 @@ describe("wasm", () => {
 
       beforeAll(async () => {
         if (wasmdEnabled()) {
-          const pen = await Secp256k1Pen.fromMnemonic(alice.mnemonic);
-          const uploadResult = await uploadContract(client, pen, getHackatom());
+          const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
+          const uploadResult = await uploadContract(client, wallet, getHackatom());
           assert(!uploadResult.code);
           const uploadLogs = parseLogs(uploadResult.logs);
           const codeId = Number.parseInt(findAttribute(uploadLogs, "message", "code_id").value, 10);
-          const instantiateResult = await instantiateContract(client, pen, codeId, makeRandomAddress());
+          const instantiateResult = await instantiateContract(client, wallet, codeId, makeRandomAddress());
           assert(!instantiateResult.code);
           const instantiateLogs = parseLogs(instantiateResult.logs);
           const contractAddressAttr = findAttribute(instantiateLogs, "message", "contract_address");

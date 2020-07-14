@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { Sha256 } from "@cosmjs/crypto";
 import { Bech32, fromHex, fromUtf8, toAscii, toBase64 } from "@cosmjs/encoding";
-import { makeSignBytes, MsgSend, Secp256k1Pen, StdFee } from "@cosmjs/sdk38";
+import { makeSignBytes, MsgSend, Secp256k1Wallet, StdFee } from "@cosmjs/sdk38";
 import { assert, sleep } from "@cosmjs/utils";
 import { ReadonlyDate } from "readonly-date";
 
@@ -204,7 +204,7 @@ describe("CosmWasmClient", () => {
   describe("postTx", () => {
     it("works", async () => {
       pendingWithoutWasmd();
-      const pen = await Secp256k1Pen.fromMnemonic(alice.mnemonic);
+      const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
       const client = new CosmWasmClient(wasmd.endpoint);
 
       const memo = "My first contract on chain";
@@ -235,7 +235,7 @@ describe("CosmWasmClient", () => {
       const chainId = await client.getChainId();
       const { accountNumber, sequence } = await client.getNonce(alice.address0);
       const signBytes = makeSignBytes([sendMsg], fee, chainId, memo, accountNumber, sequence);
-      const signature = await pen.sign(signBytes);
+      const signature = await wallet.sign(alice.address0, signBytes);
       const signedTx = {
         msg: [sendMsg],
         fee: fee,
@@ -388,10 +388,8 @@ describe("CosmWasmClient", () => {
     beforeAll(async () => {
       if (wasmdEnabled()) {
         pendingWithoutWasmd();
-        const pen = await Secp256k1Pen.fromMnemonic(alice.mnemonic);
-        const client = new SigningCosmWasmClient(wasmd.endpoint, alice.address0, (signBytes) =>
-          pen.sign(signBytes),
-        );
+        const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
+        const client = new SigningCosmWasmClient(wasmd.endpoint, alice.address0, wallet);
         const { codeId } = await client.upload(getHackatom().data);
         const initMsg = { verifier: makeRandomAddress(), beneficiary: makeRandomAddress() };
         const { contractAddress } = await client.instantiate(codeId, initMsg, "random hackatom");
@@ -441,10 +439,8 @@ describe("CosmWasmClient", () => {
     beforeAll(async () => {
       if (wasmdEnabled()) {
         pendingWithoutWasmd();
-        const pen = await Secp256k1Pen.fromMnemonic(alice.mnemonic);
-        const client = new SigningCosmWasmClient(wasmd.endpoint, alice.address0, (signBytes) =>
-          pen.sign(signBytes),
-        );
+        const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
+        const client = new SigningCosmWasmClient(wasmd.endpoint, alice.address0, wallet);
         const { codeId } = await client.upload(getHackatom().data);
         const initMsg = { verifier: makeRandomAddress(), beneficiary: makeRandomAddress() };
         const { contractAddress } = await client.instantiate(codeId, initMsg, "a different hackatom");

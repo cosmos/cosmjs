@@ -6,7 +6,6 @@ import { CosmosClient, isPostTxFailure, PrivateCosmWasmClient } from "./cosmoscl
 import { makeSignBytes } from "./encoding";
 import { findAttribute } from "./logs";
 import { MsgSend } from "./msgs";
-import { Secp256k1Pen } from "./pen";
 import cosmoshub from "./testdata/cosmoshub.json";
 import {
   faucet,
@@ -17,6 +16,7 @@ import {
   wasmd,
 } from "./testutils.spec";
 import { StdFee } from "./types";
+import { Secp256k1Wallet } from "./wallet";
 
 const blockTime = 1_000; // ms
 
@@ -193,7 +193,9 @@ describe("CosmosClient", () => {
   describe("postTx", () => {
     it("works", async () => {
       pendingWithoutWasmd();
-      const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
+      const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
+      const accounts = await wallet.getAccounts();
+      const [{ address: walletAddress }] = accounts;
       const client = new CosmosClient(wasmd.endpoint);
 
       const memo = "My first contract on chain";
@@ -224,7 +226,7 @@ describe("CosmosClient", () => {
       const chainId = await client.getChainId();
       const { accountNumber, sequence } = await client.getNonce(faucet.address);
       const signBytes = makeSignBytes([sendMsg], fee, chainId, memo, accountNumber, sequence);
-      const signature = await pen.sign(signBytes);
+      const signature = await wallet.sign(walletAddress, signBytes);
       const signedTx = {
         msg: [sendMsg],
         fee: fee,

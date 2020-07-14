@@ -2,7 +2,7 @@
 
 /* eslint-disable @typescript-eslint/camelcase */
 const { SigningCosmWasmClient } = require("@cosmjs/cosmwasm");
-const { coins, Secp256k1Pen } = require("@cosmjs/sdk38");
+const { coins, Secp256k1Wallet } = require("@cosmjs/sdk38");
 const fs = require("fs");
 
 const httpUrl = "http://localhost:1317";
@@ -38,8 +38,8 @@ const fees = {
 };
 
 async function main() {
-  const pen = await Secp256k1Pen.fromMnemonic(alice.mnemonic);
-  const client = new SigningCosmWasmClient(httpUrl, alice.address0, (signBytes) => pen.sign(signBytes), fees);
+  const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
+  const client = new SigningCosmWasmClient(httpUrl, alice.address0, wallet, fees);
 
   const wasm = fs.readFileSync(__dirname + "/contracts/staking.wasm");
   const uploadReceipt = await client.upload(wasm, codeMeta, "Upload Staking code");

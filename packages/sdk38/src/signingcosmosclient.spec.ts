@@ -2,9 +2,9 @@ import { assert } from "@cosmjs/utils";
 
 import { Coin } from "./coins";
 import { isPostTxFailure, PrivateCosmWasmClient } from "./cosmosclient";
-import { Secp256k1Pen } from "./pen";
 import { SigningCosmosClient } from "./signingcosmosclient";
 import { makeRandomAddress, pendingWithoutWasmd } from "./testutils.spec";
+import { Secp256k1Wallet } from "./wallet";
 
 const httpUrl = "http://localhost:1317";
 
@@ -21,8 +21,8 @@ const faucet = {
 describe("SigningCosmosClient", () => {
   describe("makeReadOnly", () => {
     it("can be constructed", async () => {
-      const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-      const client = new SigningCosmosClient(httpUrl, faucet.address, (signBytes) => pen.sign(signBytes));
+      const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
+      const client = new SigningCosmosClient(httpUrl, faucet.address, wallet);
       expect(client).toBeTruthy();
     });
   });
@@ -30,8 +30,8 @@ describe("SigningCosmosClient", () => {
   describe("getHeight", () => {
     it("always uses authAccount implementation", async () => {
       pendingWithoutWasmd();
-      const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-      const client = new SigningCosmosClient(httpUrl, faucet.address, (signBytes) => pen.sign(signBytes));
+      const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
+      const client = new SigningCosmosClient(httpUrl, faucet.address, wallet);
 
       const openedClient = (client as unknown) as PrivateCosmWasmClient;
       const blockLatestSpy = spyOn(openedClient.lcdClient, "blocksLatest").and.callThrough();
@@ -48,8 +48,8 @@ describe("SigningCosmosClient", () => {
   describe("sendTokens", () => {
     it("works", async () => {
       pendingWithoutWasmd();
-      const pen = await Secp256k1Pen.fromMnemonic(faucet.mnemonic);
-      const client = new SigningCosmosClient(httpUrl, faucet.address, (signBytes) => pen.sign(signBytes));
+      const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
+      const client = new SigningCosmosClient(httpUrl, faucet.address, wallet);
 
       // instantiate
       const transferAmount: readonly Coin[] = [

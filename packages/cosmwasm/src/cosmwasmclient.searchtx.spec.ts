@@ -7,7 +7,7 @@ import {
   LcdClient,
   makeSignBytes,
   MsgSend,
-  Secp256k1Pen,
+  Secp256k1Wallet,
 } from "@cosmjs/sdk38";
 import { assert, sleep } from "@cosmjs/utils";
 
@@ -48,10 +48,8 @@ describe("CosmWasmClient.searchTx", () => {
 
   beforeAll(async () => {
     if (wasmdEnabled()) {
-      const pen = await Secp256k1Pen.fromMnemonic(alice.mnemonic);
-      const client = new SigningCosmWasmClient(wasmd.endpoint, alice.address0, (signBytes) =>
-        pen.sign(signBytes),
-      );
+      const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
+      const client = new SigningCosmWasmClient(wasmd.endpoint, alice.address0, wallet);
 
       {
         const recipient = makeRandomAddress();
@@ -107,7 +105,7 @@ describe("CosmWasmClient.searchTx", () => {
         const { accountNumber, sequence } = await client.getNonce();
         const chainId = await client.getChainId();
         const signBytes = makeSignBytes([sendMsg], fee, chainId, memo, accountNumber, sequence);
-        const signature = await pen.sign(signBytes);
+        const signature = await wallet.sign(alice.address0, signBytes);
         const tx: CosmosSdkTx = {
           type: "cosmos-sdk/StdTx",
           value: {

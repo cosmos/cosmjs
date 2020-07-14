@@ -2,7 +2,7 @@
 
 /* eslint-disable @typescript-eslint/camelcase */
 const { SigningCosmWasmClient } = require("@cosmjs/cosmwasm");
-const { Secp256k1Pen } = require("@cosmjs/sdk38");
+const { Secp256k1Wallet } = require("@cosmjs/sdk38");
 const fs = require("fs");
 
 const httpUrl = "http://localhost:1317";
@@ -134,8 +134,8 @@ const initDataJade = {
 };
 
 async function main() {
-  const pen = await Secp256k1Pen.fromMnemonic(alice.mnemonic);
-  const client = new SigningCosmWasmClient(httpUrl, alice.address0, (signBytes) => pen.sign(signBytes));
+  const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
+  const client = new SigningCosmWasmClient(httpUrl, alice.address0, wallet);
 
   const wasm = fs.readFileSync(__dirname + "/contracts/cw-erc20.wasm");
   const uploadReceipt = await client.upload(wasm, codeMeta, "Upload ERC20 contract");

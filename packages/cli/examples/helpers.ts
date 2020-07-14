@@ -4,7 +4,7 @@ interface Options {
   feeToken: string;
   gasPrice: number;
   bech32prefix: string;
-};
+}
 
 const defaultOptions: Options = {
   httpUrl: "https://lcd.demo-09.cosmwasm.com",
@@ -12,7 +12,7 @@ const defaultOptions: Options = {
   feeToken: "ucosm",
   gasPrice: 0.025,
   bech32prefix: "cosmos",
-}
+};
 
 const defaultFaucetUrl = "https://faucet.demo-09.cosmwasm.com/credit";
 
@@ -22,7 +22,7 @@ const buildFeeTable = (feeToken: string, gasPrice: number): FeeTable => {
     return {
       amount: [{ amount: amount.toString(), denom: denom }],
       gas: gas.toString(),
-    }
+    };
   };
 
   return {
@@ -32,7 +32,7 @@ const buildFeeTable = (feeToken: string, gasPrice: number): FeeTable => {
     exec: stdFee(200000, feeToken, gasPrice),
     send: stdFee(80000, feeToken, gasPrice),
     changeAdmin: stdFee(80000, feeToken, gasPrice),
-  }
+  };
 };
 
 // TODO: hit faucet
@@ -43,22 +43,20 @@ const buildFeeTable = (feeToken: string, gasPrice: number): FeeTable => {
 //   }
 // }
 
-const penAddress = (pen: Secp256k1Pen, prefix: string): string => {
-  const pubkey = encodeSecp256k1Pubkey(pen.pubkey);
-  return pubkeyToAddress(pubkey, prefix);
-}
-
-const connect = async (mnemonic: string, opts: Partial<Options>): Promise<{
-  client: SigningCosmWasmClient,
-  address: string,
+const connect = async (
+  mnemonic: string,
+  opts: Partial<Options>,
+): Promise<{
+  client: SigningCosmWasmClient;
+  address: string;
 }> => {
-  const options: Options = {...defaultOptions, ...opts};
+  const options: Options = { ...defaultOptions, ...opts };
   const feeTable = buildFeeTable(options.feeToken, options.gasPrice);
-  const pen = await Secp256k1Pen.fromMnemonic(mnemonic);
-  const address = penAddress(pen, options.bech32prefix);
+  const wallet = await Secp256k1Wallet.fromMnemonic(mnemonic);
+  const [{ address }] = await wallet.getAccounts();
 
-  const client = new SigningCosmWasmClient(options.httpUrl, address, signBytes => pen.sign(signBytes), feeTable);
-  return {client, address};
+  const client = new SigningCosmWasmClient(options.httpUrl, address, wallet, feeTable);
+  return { client, address };
 };
 
 // smartQuery assumes the content is proper JSON data and parses before returning it
@@ -80,32 +78,32 @@ const loadOrCreateMnemonic = (filename: string): string => {
     fs.writeFileSync(filename, mnemonic, "utf8");
     return mnemonic;
   }
-}
+};
 
 const hitFaucet = async (faucetUrl: string, address: string, ticker: string): Promise<void> => {
   const r = await axios.post(defaultFaucetUrl, { ticker, address });
   console.log(r.status);
   console.log(r.data);
-}
+};
 
 const randomAddress = async (prefix: string): Promise<string> => {
   const mnemonic = Bip39.encode(Random.getBytes(16)).toString();
   return mnemonicToAddress(prefix, mnemonic);
-}
+};
 
 const mnemonicToAddress = async (prefix: string, mnemonic: string): Promise<string> => {
-  const pen = await Secp256k1Pen.fromMnemonic(mnemonic);
-  const pubkey = encodeSecp256k1Pubkey(pen.pubkey);
-  return pubkeyToAddress(pubkey, prefix);
-}
+  const wallet = await Secp256k1Wallet.fromMnemonic(mnemonic);
+  const [{ address }] = await wallet.getAccounts();
+  return address;
+};
 
 const downloadWasm = async (url: string): Promise<Uint8Array> => {
-  const r = await axios.get(url, { responseType: "arraybuffer"});
+  const r = await axios.get(url, { responseType: "arraybuffer" });
   if (r.status !== 200) {
     throw new Error(`Download error: ${r.status}`);
   }
   return r.data;
-}
+};
 
-const getAttibute = (logs: readonly logs.Log[], key: string): string|undefined =>
-  logs[0].events[0].attributes.find(x => x.key == key)?.value
+const getAttibute = (logs: readonly logs.Log[], key: string): string | undefined =>
+  logs[0].events[0].attributes.find((x) => x.key == key)?.value;

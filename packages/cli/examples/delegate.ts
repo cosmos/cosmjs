@@ -1,5 +1,7 @@
-const pen = await Secp256k1Pen.fromMnemonic("enlist hip relief stomach skate base shallow young switch frequent cry park");
-const senderAddress = pen.address("cosmos");
+const wallet = await Secp256k1Wallet.fromMnemonic(
+  "enlist hip relief stomach skate base shallow young switch frequent cry park",
+);
+const [{ address: senderAddress }] = await wallet.getAccounts();
 
 const client = new CosmosClient("http://localhost:1317");
 
@@ -11,8 +13,8 @@ const msg: MsgDelegate = {
     //   curl http://localhost:1317/staking/validators | jq '.result[0].operator_address'
     validator_address: "cosmosvaloper1gjvanqxc774u6ed9thj4gpn9gj5zus5u32enqn",
     amount: coin(300000, "ustake"),
-  }
-}
+  },
+};
 const fee = {
   amount: coins(2000, "ucosm"),
   gas: "120000", // 120k
@@ -26,7 +28,7 @@ const { accountNumber, sequence } = await client.getNonce(senderAddress);
 console.log("Account/sequence:", accountNumber, sequence);
 
 const signBytes = makeSignBytes([msg], fee, chainId, memo, accountNumber, sequence);
-const signature = await pen.sign(signBytes);
+const signature = await wallet.sign(senderAddress, signBytes);
 const signedTx: StdTx = {
   msg: [msg],
   fee: fee,

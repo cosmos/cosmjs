@@ -1,10 +1,8 @@
 import { Coin } from "./coins";
 import { Account, CosmosClient, GetNonceResult, PostTxResult } from "./cosmosclient";
 import { BroadcastMode } from "./lcdapi";
-import { StdFee, StdSignature } from "./types";
-export interface SigningCallback {
-  (signBytes: Uint8Array): Promise<StdSignature>;
-}
+import { StdFee } from "./types";
+import { OfflineSigner } from "./wallet";
 export interface FeeTable {
   readonly upload: StdFee;
   readonly init: StdFee;
@@ -13,7 +11,7 @@ export interface FeeTable {
 }
 export declare class SigningCosmosClient extends CosmosClient {
   readonly senderAddress: string;
-  private readonly signCallback;
+  private readonly signer;
   private readonly fees;
   /**
    * Creates a new client with signing capability to interact with a CosmWasm blockchain. This is the bigger brother of CosmWasmClient.
@@ -23,14 +21,14 @@ export declare class SigningCosmosClient extends CosmosClient {
    *
    * @param apiUrl The URL of a Cosmos SDK light client daemon API (sometimes called REST server or REST API)
    * @param senderAddress The address that will sign and send transactions using this instance
-   * @param signCallback An asynchonous callback to create a signature for a given transaction. This can be implemented using secure key stores that require user interaction.
+   * @param signer An implementation of OfflineSigner which can provide signatures for transactions, potentially requiring user input.
    * @param customFees The fees that are paid for transactions
    * @param broadcastMode Defines at which point of the transaction processing the postTx method (i.e. transaction broadcasting) returns
    */
   constructor(
     apiUrl: string,
     senderAddress: string,
-    signCallback: SigningCallback,
+    signer: OfflineSigner,
     customFees?: Partial<FeeTable>,
     broadcastMode?: BroadcastMode,
   );
