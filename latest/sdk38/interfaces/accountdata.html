@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Pen | @cosmjs/sdk38 Documentation</title>
+	<title>AccountData | @cosmjs/sdk38 Documentation</title>
 	<meta name="description" content="Documentation for @cosmjs/sdk38 Documentation">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -52,40 +52,22 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="pen.html">Pen</a>
+					<a href="accountdata.html">AccountData</a>
 				</li>
 			</ul>
-			<h1>Interface Pen</h1>
+			<h1>Interface AccountData</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>A pen is the most basic tool you can think of for signing. It works
-							everywhere and can be used intuitively by everyone. However, it does not
-						come with a great amount of features. End of semi suitable metaphor.</p>
-					</div>
-					<p>This wraps a single keypair and allows for signing.</p>
-					<p>Non-goals of this types are: multi account support, persistency, data migrations,
-					obfuscation of sensitive data.</p>
-				</div>
-			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">Pen</span>
+						<span class="target">AccountData</span>
 					</li>
-				</ul>
-			</section>
-			<section class="tsd-panel">
-				<h3>Implemented by</h3>
-				<ul class="tsd-hierarchy">
-					<li><a href="../classes/secp256k1pen.html" class="tsd-signature-type">Secp256k1Pen</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -95,8 +77,9 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="pen.html#pubkey" class="tsd-kind-icon">pubkey</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="pen.html#sign" class="tsd-kind-icon">sign</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="accountdata.html#address" class="tsd-kind-icon">address</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="accountdata.html#algo" class="tsd-kind-icon">algo</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="accountdata.html#pubkey" class="tsd-kind-icon">pubkey</a></li>
 							</ul>
 						</section>
 					</div>
@@ -105,48 +88,34 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="address" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> address</h3>
+					<div class="tsd-signature tsd-kind-icon">address<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/33a721a/packages/sdk38/src/wallet.ts#L22">src/wallet.ts:22</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="algo" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> algo</h3>
+					<div class="tsd-signature tsd-kind-icon">algo<span class="tsd-signature-symbol">:</span> <a href="../globals.html#algo" class="tsd-signature-type">Algo</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/33a721a/packages/sdk38/src/wallet.ts#L23">src/wallet.ts:23</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="pubkey" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> pubkey</h3>
 					<div class="tsd-signature tsd-kind-icon">pubkey<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Uint8Array</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/9b45a6a/packages/sdk38/src/pen.ts#L29">src/pen.ts:29</a></li>
+							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/33a721a/packages/sdk38/src/wallet.ts#L24">src/wallet.ts:24</a></li>
 						</ul>
 					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="sign" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> sign</h3>
-					<div class="tsd-signature tsd-kind-icon">sign<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>signBytes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span>, prehashType<span class="tsd-signature-symbol">?: </span><a href="../globals.html#prehashtype" class="tsd-signature-type">PrehashType</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="stdsignature.html" class="tsd-signature-type">StdSignature</a><span class="tsd-signature-symbol">&gt;</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/9b45a6a/packages/sdk38/src/pen.ts#L30">src/pen.ts:30</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-signature">
-								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>signBytes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span>, prehashType<span class="tsd-signature-symbol">?: </span><a href="../globals.html#prehashtype" class="tsd-signature-type">PrehashType</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="stdsignature.html" class="tsd-signature-type">StdSignature</a><span class="tsd-signature-symbol">&gt;</span></li>
-								</ul>
-								<ul class="tsd-descriptions">
-									<li class="tsd-description">
-										<h4 class="tsd-parameters-title">Parameters</h4>
-										<ul class="tsd-parameters">
-											<li>
-												<h5>signBytes: <span class="tsd-signature-type">Uint8Array</span></h5>
-											</li>
-											<li>
-												<h5><span class="tsd-flag ts-flagOptional">Optional</span> prehashType: <a href="../globals.html#prehashtype" class="tsd-signature-type">PrehashType</a></h5>
-											</li>
-										</ul>
-										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="stdsignature.html" class="tsd-signature-type">StdSignature</a><span class="tsd-signature-symbol">&gt;</span></h4>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</div>
 				</section>
 			</section>
 		</div>
@@ -163,13 +132,16 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="pen.html" class="tsd-kind-icon">Pen</a>
+						<a href="accountdata.html" class="tsd-kind-icon">Account<wbr>Data</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="pen.html#pubkey" class="tsd-kind-icon">pubkey</a>
+								<a href="accountdata.html#address" class="tsd-kind-icon">address</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="pen.html#sign" class="tsd-kind-icon">sign</a>
+								<a href="accountdata.html#algo" class="tsd-kind-icon">algo</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="accountdata.html#pubkey" class="tsd-kind-icon">pubkey</a>
 							</li>
 						</ul>
 					</li>

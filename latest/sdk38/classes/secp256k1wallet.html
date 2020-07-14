@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Secp256k1Pen | @cosmjs/sdk38 Documentation</title>
+	<title>Secp256k1Wallet | @cosmjs/sdk38 Documentation</title>
 	<meta name="description" content="Documentation for @cosmjs/sdk38 Documentation">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -52,10 +52,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="secp256k1pen.html">Secp256k1Pen</a>
+					<a href="secp256k1wallet.html">Secp256k1Wallet</a>
 				</li>
 			</ul>
-			<h1>Class Secp256k1Pen</h1>
+			<h1>Class Secp256k1Wallet</h1>
 		</div>
 	</div>
 </header>
@@ -66,14 +66,14 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">Secp256k1Pen</span>
+						<span class="target">Secp256k1Wallet</span>
 					</li>
 				</ul>
 			</section>
 			<section class="tsd-panel">
 				<h3>Implements</h3>
 				<ul class="tsd-hierarchy">
-					<li><a href="../interfaces/pen.html" class="tsd-signature-type">Pen</a></li>
+					<li><a href="../interfaces/offlinesigner.html" class="tsd-signature-type">OfflineSigner</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -81,58 +81,32 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Properties</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="secp256k1pen.html#pubkey" class="tsd-kind-icon">pubkey</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="secp256k1pen.html#address" class="tsd-kind-icon">address</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="secp256k1pen.html#sign" class="tsd-kind-icon">sign</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="secp256k1pen.html#frommnemonic" class="tsd-kind-icon">from<wbr>Mnemonic</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="secp256k1wallet.html#getaccounts" class="tsd-kind-icon">get<wbr>Accounts</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="secp256k1wallet.html#sign" class="tsd-kind-icon">sign</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="secp256k1wallet.html#frommnemonic" class="tsd-kind-icon">from<wbr>Mnemonic</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="pubkey" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> pubkey</h3>
-					<div class="tsd-signature tsd-kind-icon">pubkey<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Uint8Array</span></div>
-					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/pen.html">Pen</a>.<a href="../interfaces/pen.html#pubkey">pubkey</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/9b45a6a/packages/sdk38/src/pen.ts#L71">src/pen.ts:71</a></li>
-						</ul>
-					</aside>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="address" class="tsd-anchor"></a>
-					<h3>address</h3>
+					<a name="getaccounts" class="tsd-anchor"></a>
+					<h3>get<wbr>Accounts</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">address<span class="tsd-signature-symbol">(</span>prefix<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Accounts<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">keyof </span><a href="../interfaces/accountdata.html" class="tsd-signature-type">AccountData</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/9b45a6a/packages/sdk38/src/pen.ts#L89">src/pen.ts:89</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/33a721a/packages/sdk38/src/wallet.ts#L93">src/wallet.ts:93</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>prefix: <span class="tsd-signature-type">string</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">keyof </span><a href="../interfaces/accountdata.html" class="tsd-signature-type">AccountData</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -140,24 +114,22 @@
 					<a name="sign" class="tsd-anchor"></a>
 					<h3>sign</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">sign<span class="tsd-signature-symbol">(</span>signBytes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span>, prehashType<span class="tsd-signature-symbol">?: </span><a href="../globals.html#prehashtype" class="tsd-signature-type">PrehashType</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/stdsignature.html" class="tsd-signature-type">StdSignature</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">sign<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span>, prehashType<span class="tsd-signature-symbol">?: </span><a href="../globals.html#prehashtype" class="tsd-signature-type">PrehashType</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/stdsignature.html" class="tsd-signature-type">StdSignature</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/9b45a6a/packages/sdk38/src/pen.ts#L82">src/pen.ts:82</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/33a721a/packages/sdk38/src/wallet.ts#L103">src/wallet.ts:103</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Creates and returns a signature</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>signBytes: <span class="tsd-signature-type">Uint8Array</span></h5>
+									<h5>address: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>message: <span class="tsd-signature-type">Uint8Array</span></h5>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> prehashType: <a href="../globals.html#prehashtype" class="tsd-signature-type">PrehashType</a><span class="tsd-signature-symbol"> = &quot;sha256&quot;</span></h5>
@@ -171,13 +143,13 @@
 					<a name="frommnemonic" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> from<wbr>Mnemonic</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">from<wbr>Mnemonic<span class="tsd-signature-symbol">(</span>mnemonic<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, hdPath<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">Slip10RawIndex</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="secp256k1pen.html" class="tsd-signature-type">Secp256k1Pen</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">from<wbr>Mnemonic<span class="tsd-signature-symbol">(</span>mnemonic<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, hdPath<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">Slip10RawIndex</span><span class="tsd-signature-symbol">[]</span>, prefix<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="secp256k1wallet.html" class="tsd-signature-type">Secp256k1Wallet</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/9b45a6a/packages/sdk38/src/pen.ts#L61">src/pen.ts:61</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/33a721a/packages/sdk38/src/wallet.ts#L67">src/wallet.ts:67</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -188,8 +160,11 @@
 								<li>
 									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> hdPath: <span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">Slip10RawIndex</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = makeCosmoshubPath(0)</span></h5>
 								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> prefix: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;cosmos&quot;</span></h5>
+								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="secp256k1pen.html" class="tsd-signature-type">Secp256k1Pen</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="secp256k1wallet.html" class="tsd-signature-type">Secp256k1Wallet</a><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -208,19 +183,16 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class">
-						<a href="secp256k1pen.html" class="tsd-kind-icon">Secp256k1<wbr>Pen</a>
+						<a href="secp256k1wallet.html" class="tsd-kind-icon">Secp256k1<wbr>Wallet</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="secp256k1pen.html#pubkey" class="tsd-kind-icon">pubkey</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="secp256k1wallet.html#getaccounts" class="tsd-kind-icon">get<wbr>Accounts</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="secp256k1pen.html#address" class="tsd-kind-icon">address</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="secp256k1pen.html#sign" class="tsd-kind-icon">sign</a>
+								<a href="secp256k1wallet.html#sign" class="tsd-kind-icon">sign</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="secp256k1pen.html#frommnemonic" class="tsd-kind-icon">from<wbr>Mnemonic</a>
+								<a href="secp256k1wallet.html#frommnemonic" class="tsd-kind-icon">from<wbr>Mnemonic</a>
 							</li>
 						</ul>
 					</li>
