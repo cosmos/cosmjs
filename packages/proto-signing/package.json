@@ -2,7 +2,7 @@
   "name": "@cosmjs/proto-signing",
   "private": true,
   "version": "0.21.1",
-  "description": "Utilities for protobuf based signing (Cosmos SDK 0.39+)",
+  "description": "Utilities for protobuf based signing (Cosmos SDK 0.40+)",
   "contributors": [
     "Will Clark <willclarktech@users.noreply.github.com>",
     "Simon Warta <webmaster128@users.noreply.github.com>"
