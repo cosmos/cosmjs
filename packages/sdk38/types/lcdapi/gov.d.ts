@@ -30,9 +30,26 @@ export declare type GovParametersByTypeResponse =
   | GovParametersDepositResponse
   | GovParametersTallyingResponse
   | GovParametersVotingResponse;
+export interface TallyResult {
+  readonly yes: string;
+  readonly abstain: string;
+  readonly no: string;
+  readonly no_with_veto: string;
+}
+export interface TextProposal {
+  readonly proposal_id: number;
+  readonly title: string;
+  readonly description: string;
+  readonly proposal_type: string;
+  readonly proposal_status: string;
+  readonly final_tally_result: TallyResult;
+  readonly submit_time: string;
+  readonly total_deposit: readonly Coin[];
+  readonly voting_start_time: string;
+}
 export interface GovProposalsResponse {
   readonly height: string;
-  readonly result: {};
+  readonly result: readonly TextProposal[];
 }
 export interface GovProposalsByIdResponse {
   readonly height: string;
@@ -65,6 +82,7 @@ export interface GovVotesByVoterResponse {
 export interface GovExtension {
   readonly gov: {
     readonly parametersByType: (parametersType: GovParametersType) => Promise<GovParametersByTypeResponse>;
+    readonly proposals: () => Promise<GovProposalsResponse>;
   };
 }
 export declare function setupGovExtension(base: LcdClient): GovExtension;

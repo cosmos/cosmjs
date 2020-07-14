@@ -51,4 +51,16 @@ describe("GovExtension", () => {
       });
     });
   });
+
+  describe("proposals", () => {
+    it("works", async () => {
+      pendingWithoutWasmd();
+      const client = makeGovClient(wasmd.endpoint);
+      const response = await client.gov.proposals();
+      expect(response).toEqual({
+        height: jasmine.stringMatching(nonNegativeIntegerMatcher),
+        result: [],
+      });
+    });
+  });
 });
