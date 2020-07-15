@@ -92,7 +92,7 @@ describe("ReconnectingSocket", () => {
 
   describe("reconnection", () => {
     const dirPath = "../../scripts/socketserver";
-    const PKILL_NO_PROCESSES_MATCHED = 1;
+    const codePkillNoProcessesMatched = 1;
     const startServerCmd = `${dirPath}/start.sh`;
     const stopServerCmd = `${dirPath}/stop.sh`;
 
@@ -101,7 +101,7 @@ describe("ReconnectingSocket", () => {
       pendingWithoutSocketServer();
 
       exec!(stopServerCmd, (stopError) => {
-        if (stopError && stopError.code !== PKILL_NO_PROCESSES_MATCHED) {
+        if (stopError && stopError.code !== codePkillNoProcessesMatched) {
           done.fail(stopError);
         }
 
@@ -164,7 +164,7 @@ describe("ReconnectingSocket", () => {
       setTimeout(
         () =>
           exec!(stopServerCmd, (stopError) => {
-            if (stopError && stopError.code !== PKILL_NO_PROCESSES_MATCHED) {
+            if (stopError && stopError.code !== codePkillNoProcessesMatched) {
               done.fail(stopError);
             }
 
