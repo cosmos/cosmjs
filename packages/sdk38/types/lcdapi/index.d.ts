@@ -1,6 +1,18 @@
 export { AuthExtension, AuthAccountsResponse, setupAuthExtension } from "./auth";
 export { BankBalancesResponse, BankExtension, setupBankExtension } from "./bank";
 export {
+  DistributionCommunityPoolResponse,
+  DistributionDelegatorRewardResponse,
+  DistributionDelegatorRewardsResponse,
+  DistributionExtension,
+  DistributionParametersResponse,
+  DistributionValidatorOutstandingRewardsResponse,
+  DistributionValidatorResponse,
+  DistributionValidatorRewardsResponse,
+  DistributionWithdrawAddressResponse,
+  setupDistributionExtension,
+} from "./distribution";
+export {
   GovExtension,
   GovParametersResponse,
   GovProposalsResponse,
