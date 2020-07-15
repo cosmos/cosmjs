@@ -7,6 +7,7 @@ import { makeSignBytes } from "../encoding";
 import { SigningCosmosClient } from "../signingcosmosclient";
 import {
   dateTimeStampMatcher,
+  faucet,
   nonNegativeIntegerMatcher,
   pendingWithoutWasmd,
   wasmd,
@@ -22,10 +23,6 @@ function makeGovClient(apiUrl: string): LcdClient & GovExtension {
 
 describe("GovExtension", () => {
   const httpUrl = "http://localhost:1317";
-  const alice = {
-    mnemonic: "enlist hip relief stomach skate base shallow young switch frequent cry park",
-    address0: "cosmos14qemq0vw6y3gc3u3e0aty2e764u4gs5le3hada",
-  };
   const defaultFee = {
     amount: coins(25000, "ucosm"),
     gas: "1500000", // 1.5 million
@@ -34,8 +31,8 @@ describe("GovExtension", () => {
 
   beforeAll(async () => {
     if (wasmdEnabled()) {
-      const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
-      const client = new SigningCosmosClient(httpUrl, alice.address0, wallet, {});
+      const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
+      const client = new SigningCosmosClient(httpUrl, faucet.address, wallet, {});
 
       const chainId = await client.getChainId();
       const proposalMsg = {
@@ -48,7 +45,7 @@ describe("GovExtension", () => {
               title: "Test Proposal",
             },
           },
-          proposer: alice.address0,
+          proposer: faucet.address,
           initial_deposit: coins(25000000, "ustake"),
         },
       };
@@ -62,7 +59,7 @@ describe("GovExtension", () => {
         proposalAccountNumber,
         proposalSequence,
       );
-      const proposalSignature = await wallet.sign(alice.address0, proposalSignBytes);
+      const proposalSignature = await wallet.sign(faucet.address, proposalSignBytes);
       const proposalTx = {
         msg: [proposalMsg],
         fee: defaultFee,
@@ -82,7 +79,7 @@ describe("GovExtension", () => {
         type: "cosmos-sdk/MsgVote",
         value: {
           proposal_id: proposalId,
-          voter: alice.address0,
+          voter: faucet.address,
           option: "Yes",
         },
       };
@@ -96,7 +93,7 @@ describe("GovExtension", () => {
         voteAccountNumber,
         voteSequence,
       );
-      const voteSignature = await wallet.sign(alice.address0, voteSignBytes);
+      const voteSignature = await wallet.sign(faucet.address, voteSignBytes);
       const voteTx = {
         msg: [voteMsg],
         fee: defaultFee,
@@ -217,7 +214,7 @@ describe("GovExtension", () => {
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: {
           proposal_id: proposalId,
-          proposer: alice.address0,
+          proposer: faucet.address,
         },
       });
     });
@@ -233,7 +230,7 @@ describe("GovExtension", () => {
         result: [
           {
             proposal_id: proposalId,
-            depositor: alice.address0,
+            depositor: faucet.address,
             amount: [{ denom: "ustake", amount: "25000000" }],
           },
         ],
@@ -245,12 +242,12 @@ describe("GovExtension", () => {
     it("works", async () => {
       pendingWithoutWasmd();
       const client = makeGovClient(wasmd.endpoint);
-      const response = await client.gov.deposit(proposalId, alice.address0);
+      const response = await client.gov.deposit(proposalId, faucet.address);
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: {
           proposal_id: proposalId,
-          depositor: alice.address0,
+          depositor: faucet.address,
           amount: [{ denom: "ustake", amount: "25000000" }],
         },
       });
@@ -284,7 +281,7 @@ describe("GovExtension", () => {
         result: [
           {
             proposal_id: proposalId,
-            voter: alice.address0,
+            voter: faucet.address,
             option: "Yes",
           },
         ],
@@ -296,11 +293,11 @@ describe("GovExtension", () => {
     it("works", async () => {
       pendingWithoutWasmd();
       const client = makeGovClient(wasmd.endpoint);
-      const response = await client.gov.vote(proposalId, alice.address0);
+      const response = await client.gov.vote(proposalId, faucet.address);
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: {
-          voter: alice.address0,
+          voter: faucet.address,
           proposal_id: proposalId,
           option: "Yes",
         },
