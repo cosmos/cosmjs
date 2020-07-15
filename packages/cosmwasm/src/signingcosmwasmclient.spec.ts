@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/camelcase */
+/* eslint-disable @typescript-eslint/naming-convention */
 import { Sha256 } from "@cosmjs/crypto";
 import { toHex } from "@cosmjs/encoding";
 import { AuthExtension, coin, coins, LcdClient, Secp256k1Wallet, setupAuthExtension } from "@cosmjs/sdk38";

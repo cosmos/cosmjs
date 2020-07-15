@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/camelcase */
+/* eslint-disable @typescript-eslint/naming-convention */
 // exported to access version-specific hashing
 export { v0_33 } from "./v0-33";
 

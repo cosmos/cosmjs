@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/camelcase */
+/* eslint-disable @typescript-eslint/naming-convention */
 import { toUtf8 } from "@cosmjs/encoding";
 
 import { Msg } from "./msgs";

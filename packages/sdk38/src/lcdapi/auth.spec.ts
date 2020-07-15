@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/camelcase */
+/* eslint-disable @typescript-eslint/naming-convention */
 import { encodeBech32Pubkey } from "../pubkey";
 import {
   faucet,

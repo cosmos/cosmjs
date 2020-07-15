@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/camelcase */
+/* eslint-disable @typescript-eslint/naming-convention */
 import { assert, sleep } from "@cosmjs/utils";
 
 import { Coin } from "../coins";

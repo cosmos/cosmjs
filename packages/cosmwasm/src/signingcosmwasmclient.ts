@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/camelcase */
+/* eslint-disable @typescript-eslint/naming-convention */
 import { Sha256 } from "@cosmjs/crypto";
 import { toBase64, toHex } from "@cosmjs/encoding";
 import { Uint53 } from "@cosmjs/math";

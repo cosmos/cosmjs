@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/camelcase */
+/* eslint-disable @typescript-eslint/naming-convention */
 // This module exposes translators for multiple tendermint versions
 // Pick a version that matches the server to properly encode the data types
 import { Adaptor } from "./adaptor";

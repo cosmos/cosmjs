@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/camelcase */
+/* eslint-disable @typescript-eslint/naming-convention */
 import { Coin, coins } from "./coins";
 import { Account, CosmosClient, GetNonceResult, PostTxResult } from "./cosmosclient";
 import { makeSignBytes } from "./encoding";

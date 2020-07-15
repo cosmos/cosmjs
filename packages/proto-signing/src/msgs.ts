@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { Message } from "protobufjs";
 
 import { cosmosField, cosmosMessage } from "./decorator";

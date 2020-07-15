@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/camelcase */
+/* eslint-disable @typescript-eslint/naming-convention */
 import { toAscii } from "@cosmjs/encoding";
 import { firstEvent, toListPromise } from "@cosmjs/stream";
 import { sleep } from "@cosmjs/utils";
