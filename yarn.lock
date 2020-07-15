@@ -6708,10 +6708,10 @@ proto-list@~1.2.1:
   resolved "https://registry.yarnpkg.com/proto-list/-/proto-list-1.2.4.tgz#212d5bfe1318306a420f6402b8e26ff39647a849"
   integrity sha1-IS1b/hMYMGpCD2QCuOJv85ZHqEk=
 
-protobufjs@~6.9.0:
-  version "6.9.0"
-  resolved "https://registry.yarnpkg.com/protobufjs/-/protobufjs-6.9.0.tgz#c08b2bf636682598e6fabbf0edb0b1256ff090bd"
-  integrity sha512-LlGVfEWDXoI/STstRDdZZKb/qusoAWUnmLg9R8OLSO473mBLWHowx8clbX5/+mKDEI+v7GzjoK9tRPZMMcoTrg==
+protobufjs@~6.10.0:
+  version "6.10.0"
+  resolved "https://registry.yarnpkg.com/protobufjs/-/protobufjs-6.10.0.tgz#b0698a2a91fc597e2dc625dcf3539ece9675c8fd"
+  integrity sha512-Hdz1+CXkrlmGDKkP6DczxysdnUyUuhM1mjeaydnBxOcjxQPbJldLZ8eGE1gX0UTsgv+0QkFfn6dioo5yt9XORw==
   dependencies:
     "@protobufjs/aspromise" "^1.1.2"
     "@protobufjs/base64" "^1.1.2"
