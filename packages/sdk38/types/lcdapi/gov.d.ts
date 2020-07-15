@@ -30,59 +30,85 @@ export declare type GovParametersByTypeResponse =
   | GovParametersDepositResponse
   | GovParametersTallyingResponse
   | GovParametersVotingResponse;
-export interface TallyResult {
+export interface Tally {
   readonly yes: string;
   readonly abstain: string;
   readonly no: string;
   readonly no_with_veto: string;
 }
-export interface TextProposal {
-  readonly proposal_id: number;
-  readonly title: string;
-  readonly description: string;
-  readonly proposal_type: string;
+export interface Proposal {
+  readonly id: string;
   readonly proposal_status: string;
-  readonly final_tally_result: TallyResult;
+  readonly final_tally_result: Tally;
   readonly submit_time: string;
   readonly total_deposit: readonly Coin[];
+  readonly deposit_end_time: string;
   readonly voting_start_time: string;
+  readonly voting_end_time: string;
+  readonly content: {
+    readonly type: string;
+    readonly value: {
+      readonly title: string;
+      readonly description: string;
+    };
+  };
 }
 export interface GovProposalsResponse {
   readonly height: string;
-  readonly result: readonly TextProposal[];
+  readonly result: readonly Proposal[];
 }
-export interface GovProposalsByIdResponse {
+export interface GovProposalResponse {
   readonly height: string;
-  readonly result: {};
+  readonly result: Proposal;
 }
 export interface GovProposerResponse {
   readonly height: string;
-  readonly result: {};
+  readonly result: {
+    readonly proposal_id: string;
+    readonly proposer: string;
+  };
+}
+export interface Deposit {
+  readonly amount: readonly Coin[];
+  readonly proposal_id: string;
+  readonly depositor: string;
 }
 export interface GovDepositsResponse {
   readonly height: string;
-  readonly result: {};
+  readonly result: readonly Deposit[];
 }
-export interface GovDepositsByDepositorResponse {
+export interface GovDepositResponse {
   readonly height: string;
-  readonly result: {};
+  readonly result: Deposit;
 }
 export interface GovTallyResponse {
   readonly height: string;
-  readonly result: {};
+  readonly result: Tally;
+}
+export interface Vote {
+  readonly voter: string;
+  readonly proposal_id: string;
+  readonly option: string;
 }
 export interface GovVotesResponse {
   readonly height: string;
-  readonly result: {};
+  readonly result: readonly Vote[];
 }
-export interface GovVotesByVoterResponse {
+export interface GovVoteResponse {
   readonly height: string;
-  readonly result: {};
+  readonly result: Vote;
 }
 export interface GovExtension {
   readonly gov: {
     readonly parametersByType: (parametersType: GovParametersType) => Promise<GovParametersByTypeResponse>;
     readonly proposals: () => Promise<GovProposalsResponse>;
+    readonly proposal: (proposalId: string) => Promise<GovProposalResponse>;
+    readonly proposer: (proposalId: string) => Promise<GovProposerResponse>;
+    readonly deposits: (proposalId: string) => Promise<GovDepositsResponse>;
+    readonly deposit: (proposalId: string, depositorAddress: string) => Promise<GovDepositResponse>;
+    readonly tally: (proposalId: string) => Promise<GovTallyResponse>;
+    readonly votes: (proposalId: string) => Promise<GovVotesResponse>;
+    readonly vote: (proposalId: string, voterAddress: string) => Promise<GovVoteResponse>;
   };
 }
 export declare function setupGovExtension(base: LcdClient): GovExtension;
