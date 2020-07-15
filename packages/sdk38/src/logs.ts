@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/camelcase */
+/* eslint-disable @typescript-eslint/naming-convention */
 import { isNonNullObject } from "@cosmjs/utils";
 
 export interface Attribute {

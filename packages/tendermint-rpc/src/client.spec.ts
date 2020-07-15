@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { toAscii } from "@cosmjs/encoding";
 import { firstEvent, toListPromise } from "@cosmjs/stream";
 import { sleep } from "@cosmjs/utils";
@@ -168,7 +169,6 @@ function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor): void {
     // tendermint, else you get empty results
     const query = buildQuery({ tags: [{ key: "app.key", value: find }] });
 
-    // eslint-disable-next-line @typescript-eslint/camelcase
     const s = await client.txSearch({ query: query, page: 1, per_page: 30 });
     // should find the tx
     expect(s.totalCount).toEqual(1);
@@ -217,19 +217,16 @@ function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor): void {
     await tendermintSearchIndexUpdated();
 
     // expect one page of results
-    // eslint-disable-next-line @typescript-eslint/camelcase
     const s1 = await client.txSearch({ query: query, page: 1, per_page: 2 });
     expect(s1.totalCount).toEqual(3);
     expect(s1.txs.length).toEqual(2);
 
     // second page
-    // eslint-disable-next-line @typescript-eslint/camelcase
     const s2 = await client.txSearch({ query: query, page: 2, per_page: 2 });
     expect(s2.totalCount).toEqual(3);
     expect(s2.txs.length).toEqual(1);
 
     // and all together now
-    // eslint-disable-next-line @typescript-eslint/camelcase
     const sall = await client.txSearchAll({ query: query, per_page: 2 });
     expect(sall.totalCount).toEqual(3);
     expect(sall.txs.length).toEqual(3);

@@ -33,7 +33,33 @@ module.exports = {
     "simple-import-sort/sort": "warn",
     "@typescript-eslint/array-type": ["warn", { default: "array-simple" }],
     "@typescript-eslint/await-thenable": "warn",
+    "@typescript-eslint/camelcase": "off", // deprecated in favour of @typescript-eslint/naming-convention, see https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/camelcase.md
     "@typescript-eslint/explicit-function-return-type": ["warn", { allowExpressions: true }],
+    "@typescript-eslint/naming-convention": [
+      "warn",
+      {
+        selector: "default",
+        format: ["strictCamelCase"],
+      },
+      {
+        selector: "typeLike",
+        format: ["StrictPascalCase"],
+      },
+      {
+        selector: "enumMember",
+        format: ["StrictPascalCase"],
+      },
+      {
+        selector: "variable",
+        format: ["strictCamelCase"],
+        leadingUnderscore: "allow",
+      },
+      {
+        selector: "parameter",
+        format: ["strictCamelCase"],
+        leadingUnderscore: "allow",
+      },
+    ],
     "@typescript-eslint/no-dynamic-delete": "warn",
     "@typescript-eslint/no-empty-function": "off",
     "@typescript-eslint/no-empty-interface": "off",
@@ -57,12 +83,6 @@ module.exports = {
       files: "**/*.spec.ts",
       rules: {
         "@typescript-eslint/no-non-null-assertion": "off",
-      },
-    },
-    {
-      files: "jasmine-testrunner.js",
-      rules: {
-        "@typescript-eslint/camelcase": ["error", { properties: "never" }],
       },
     },
   ],

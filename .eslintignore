@@ -8,3 +8,7 @@ examples/
 generated/
 proto/
 types/
+
+# Type definitions are never written by hand in this repo. Even when checked-in
+# as a source file, it is auto-generated stuff following other projects' rules.
+*.d.ts

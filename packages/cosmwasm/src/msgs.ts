@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { Coin, Msg } from "@cosmjs/sdk38";
 
 /**

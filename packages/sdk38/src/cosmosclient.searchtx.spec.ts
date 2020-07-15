@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/camelcase */
+/* eslint-disable @typescript-eslint/naming-convention */
 import { assert, sleep } from "@cosmjs/utils";
 
 import { coins } from "./coins";
@@ -44,9 +44,7 @@ describe("CosmosClient.searchTx", () => {
         const sendMsg: MsgSend = {
           type: "cosmos-sdk/MsgSend",
           value: {
-            // eslint-disable-next-line @typescript-eslint/camelcase
             from_address: faucet.address,
-            // eslint-disable-next-line @typescript-eslint/camelcase
             to_address: recipient,
             amount: transferAmount,
           },

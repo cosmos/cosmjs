@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/camelcase */
+/* eslint-disable @typescript-eslint/naming-convention */
 import {
   Coin,
   coins,
@@ -91,9 +91,7 @@ describe("CosmWasmClient.searchTx", () => {
         const sendMsg: MsgSend = {
           type: "cosmos-sdk/MsgSend",
           value: {
-            // eslint-disable-next-line @typescript-eslint/camelcase
             from_address: alice.address0,
-            // eslint-disable-next-line @typescript-eslint/camelcase
             to_address: recipient,
             amount: transferAmount,
           },

@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/camelcase */
+/* eslint-disable @typescript-eslint/naming-convention */
 import { parseAttribute, parseEvent, parseLog, parseLogs } from "./logs";
 
 describe("logs", () => {

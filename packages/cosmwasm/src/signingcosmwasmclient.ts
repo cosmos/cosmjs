@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { Sha256 } from "@cosmjs/crypto";
 import { toBase64, toHex } from "@cosmjs/encoding";
 import { Uint53 } from "@cosmjs/math";
@@ -213,7 +214,6 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       type: "wasm/store-code",
       value: {
         sender: this.senderAddress,
-        // eslint-disable-next-line @typescript-eslint/camelcase
         wasm_byte_code: toBase64(compressed),
         source: source,
         builder: builder,
@@ -257,12 +257,9 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       type: "wasm/instantiate",
       value: {
         sender: this.senderAddress,
-        // eslint-disable-next-line @typescript-eslint/camelcase
         code_id: new Uint53(codeId).toString(),
         label: label,
-        // eslint-disable-next-line @typescript-eslint/camelcase
         init_msg: initMsg,
-        // eslint-disable-next-line @typescript-eslint/camelcase
         init_funds: options.transferAmount || [],
         admin: options.admin,
       },
@@ -299,7 +296,6 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       value: {
         sender: this.senderAddress,
         contract: contractAddress,
-        // eslint-disable-next-line @typescript-eslint/camelcase
         new_admin: newAdmin,
       },
     };
@@ -366,7 +362,6 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       value: {
         sender: this.senderAddress,
         contract: contractAddress,
-        // eslint-disable-next-line @typescript-eslint/camelcase
         code_id: new Uint53(codeId).toString(),
         msg: migrateMsg,
       },
@@ -405,7 +400,6 @@ export class SigningCosmWasmClient extends CosmWasmClient {
         sender: this.senderAddress,
         contract: contractAddress,
         msg: handleMsg,
-        // eslint-disable-next-line @typescript-eslint/camelcase
         sent_funds: transferAmount || [],
       },
     };
@@ -439,9 +433,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     const sendMsg: MsgSend = {
       type: "cosmos-sdk/MsgSend",
       value: {
-        // eslint-disable-next-line @typescript-eslint/camelcase
         from_address: this.senderAddress,
-        // eslint-disable-next-line @typescript-eslint/camelcase
         to_address: recipientAddress,
         amount: transferAmount,
       },

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { Field, Root, Type } from "protobufjs";
 
 export const MsgDemo = new Type("MsgDemo").add(new Field("example", 1, "string"));

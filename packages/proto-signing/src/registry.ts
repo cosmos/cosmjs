@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/camelcase */
+/* eslint-disable @typescript-eslint/naming-convention */
 import protobuf from "protobufjs";
 
 import { cosmos_sdk as cosmosSdk, google } from "./generated/codecimpl";

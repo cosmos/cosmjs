@@ -1,4 +1,4 @@
-/* eslint-disable no-dupe-class-members */
+/* eslint-disable no-dupe-class-members, @typescript-eslint/naming-convention */
 import { assert, isNonNullObject } from "@cosmjs/utils";
 import axios, { AxiosError, AxiosInstance } from "axios";
 

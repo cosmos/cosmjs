@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { fromBase64, toBase64 } from "@cosmjs/encoding";
 
 import { encodeSecp256k1Pubkey } from "./pubkey";
@@ -17,7 +18,6 @@ export function encodeSecp256k1Signature(pubkey: Uint8Array, signature: Uint8Arr
   }
 
   return {
-    // eslint-disable-next-line @typescript-eslint/camelcase
     pub_key: encodeSecp256k1Pubkey(pubkey),
     signature: toBase64(signature),
   };

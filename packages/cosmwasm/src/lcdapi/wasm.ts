@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { fromBase64, fromUtf8, toHex, toUtf8 } from "@cosmjs/encoding";
 import { LcdApiArray, LcdClient, normalizeLcdApiArray } from "@cosmjs/sdk38";
 
