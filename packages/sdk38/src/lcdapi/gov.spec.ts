@@ -22,7 +22,6 @@ function makeGovClient(apiUrl: string): LcdClient & GovExtension {
 }
 
 describe("GovExtension", () => {
-  const httpUrl = "http://localhost:1317";
   const defaultFee = {
     amount: coins(25000, "ucosm"),
     gas: "1500000", // 1.5 million
@@ -32,7 +31,7 @@ describe("GovExtension", () => {
   beforeAll(async () => {
     if (wasmdEnabled()) {
       const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
-      const client = new SigningCosmosClient(httpUrl, faucet.address, wallet, {});
+      const client = new SigningCosmosClient(wasmd.endpoint, faucet.address, wallet, {});
 
       const chainId = await client.getChainId();
       const proposalMsg = {
