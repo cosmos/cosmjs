@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import { Sha256 } from "@cosmjs/crypto";
 import { toHex } from "@cosmjs/encoding";
 import { AuthExtension, coin, coins, LcdClient, Secp256k1Wallet, setupAuthExtension } from "@cosmjs/sdk38";
@@ -254,7 +255,6 @@ describe("SigningCosmWasmClient", () => {
       assert(state2);
       expect(state2).toEqual({
         ...state1,
-        // eslint-disable-next-line @typescript-eslint/camelcase
         code_id: codeId2,
       });
     });

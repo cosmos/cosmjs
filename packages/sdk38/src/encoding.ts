@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import { toUtf8 } from "@cosmjs/encoding";
 
 import { Msg } from "./msgs";
@@ -44,9 +45,7 @@ export function makeSignBytes(
   sequence: number,
 ): Uint8Array {
   const signDoc: StdSignDoc = {
-    // eslint-disable-next-line @typescript-eslint/camelcase
     account_number: accountNumber.toString(),
-    // eslint-disable-next-line @typescript-eslint/camelcase
     chain_id: chainId,
     fee: fee,
     memo: memo,

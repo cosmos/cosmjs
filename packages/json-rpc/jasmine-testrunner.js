@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+/* eslint-disable @typescript-eslint/camelcase */
 require("source-map-support").install();
 const defaultSpecReporterConfig = require("../../jasmine-spec-reporter.config.json");
 
