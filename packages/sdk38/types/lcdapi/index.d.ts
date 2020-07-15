@@ -2,7 +2,7 @@ export { AuthExtension, AuthAccountsResponse, setupAuthExtension } from "./auth"
 export { BankBalancesResponse, BankExtension, setupBankExtension } from "./bank";
 export {
   GovExtension,
-  GovParametersByTypeResponse,
+  GovParametersResponse,
   GovProposalsResponse,
   GovProposalResponse,
   GovProposerResponse,

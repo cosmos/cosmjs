@@ -31,7 +31,7 @@ export interface GovParametersVotingResponse {
   };
 }
 
-export type GovParametersByTypeResponse =
+export type GovParametersResponse =
   | GovParametersDepositResponse
   | GovParametersTallyingResponse
   | GovParametersVotingResponse;
@@ -118,7 +118,7 @@ export interface GovVoteResponse {
 
 export interface GovExtension {
   readonly gov: {
-    readonly parametersByType: (parametersType: GovParametersType) => Promise<GovParametersByTypeResponse>;
+    readonly parameters: (parametersType: GovParametersType) => Promise<GovParametersResponse>;
     readonly proposals: () => Promise<GovProposalsResponse>;
     readonly proposal: (proposalId: string) => Promise<GovProposalResponse>;
     readonly proposer: (proposalId: string) => Promise<GovProposerResponse>;
@@ -133,8 +133,7 @@ export interface GovExtension {
 export function setupGovExtension(base: LcdClient): GovExtension {
   return {
     gov: {
-      parametersByType: async (parametersType: GovParametersType) =>
-        base.get(`/gov/parameters/${parametersType}`),
+      parameters: async (parametersType: GovParametersType) => base.get(`/gov/parameters/${parametersType}`),
       proposals: async () => base.get("/gov/proposals"),
       proposal: async (proposalId: string) => base.get(`/gov/proposals/${proposalId}`),
       proposer: async (proposalId: string) => base.get(`/gov/proposals/${proposalId}/proposer`),

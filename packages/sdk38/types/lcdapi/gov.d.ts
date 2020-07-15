@@ -26,7 +26,7 @@ export interface GovParametersVotingResponse {
     readonly voting_period: string;
   };
 }
-export declare type GovParametersByTypeResponse =
+export declare type GovParametersResponse =
   | GovParametersDepositResponse
   | GovParametersTallyingResponse
   | GovParametersVotingResponse;
@@ -100,7 +100,7 @@ export interface GovVoteResponse {
 }
 export interface GovExtension {
   readonly gov: {
-    readonly parametersByType: (parametersType: GovParametersType) => Promise<GovParametersByTypeResponse>;
+    readonly parameters: (parametersType: GovParametersType) => Promise<GovParametersResponse>;
     readonly proposals: () => Promise<GovProposalsResponse>;
     readonly proposal: (proposalId: string) => Promise<GovProposalResponse>;
     readonly proposer: (proposalId: string) => Promise<GovProposerResponse>;

@@ -27,7 +27,7 @@ export {
   BroadcastMode,
   EncodeTxResponse,
   GovExtension,
-  GovParametersByTypeResponse,
+  GovParametersResponse,
   GovProposalsResponse,
   GovProposalResponse,
   GovProposerResponse,

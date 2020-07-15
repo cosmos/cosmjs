@@ -109,12 +109,12 @@ describe("GovExtension", () => {
     }
   });
 
-  describe("parametersByType", () => {
+  describe("parameters", () => {
     it("works for deposit", async () => {
       pendingWithoutWasmd();
       const client = makeGovClient(wasmd.endpoint);
       const paramsType = GovParametersType.Deposit;
-      const response = await client.gov.parametersByType(paramsType);
+      const response = await client.gov.parameters(paramsType);
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: {
@@ -128,7 +128,7 @@ describe("GovExtension", () => {
       pendingWithoutWasmd();
       const client = makeGovClient(wasmd.endpoint);
       const paramsType = GovParametersType.Tallying;
-      const response = await client.gov.parametersByType(paramsType);
+      const response = await client.gov.parameters(paramsType);
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: {
@@ -143,7 +143,7 @@ describe("GovExtension", () => {
       pendingWithoutWasmd();
       const client = makeGovClient(wasmd.endpoint);
       const paramsType = GovParametersType.Voting;
-      const response = await client.gov.parametersByType(paramsType);
+      const response = await client.gov.parameters(paramsType);
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: {
