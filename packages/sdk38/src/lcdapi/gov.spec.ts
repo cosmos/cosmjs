@@ -259,10 +259,10 @@ describe("GovExtension", () => {
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: {
-          yes: "0",
-          abstain: "0",
-          no: "0",
-          no_with_veto: "0",
+          yes: jasmine.stringMatching(nonNegativeIntegerMatcher),
+          abstain: jasmine.stringMatching(nonNegativeIntegerMatcher),
+          no: jasmine.stringMatching(nonNegativeIntegerMatcher),
+          no_with_veto: jasmine.stringMatching(nonNegativeIntegerMatcher),
         },
       });
     });

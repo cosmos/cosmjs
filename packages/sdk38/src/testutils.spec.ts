@@ -38,6 +38,8 @@ export const faucet = {
   address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
 };
 
+export const validatorAddress = "cosmosvaloper1gjvanqxc774u6ed9thj4gpn9gj5zus5u32enqn";
+
 /** Unused account */
 export const unused = {
   pubkey: {
