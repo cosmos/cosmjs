@@ -3,10 +3,10 @@ import { assert } from "@cosmjs/utils";
 import { Message } from "protobufjs";
 
 import { cosmosField, cosmosMessage } from "./decorator";
-import { cosmos_sdk as cosmosSdk, google } from "./generated/codecimpl";
+import { cosmos, google } from "./generated/codecimpl";
 import { Registry } from "./registry";
 
-const { TxBody } = cosmosSdk.tx.v1;
+const { TxBody } = cosmos.tx;
 const { Any } = google.protobuf;
 
 describe("decorator demo", () => {

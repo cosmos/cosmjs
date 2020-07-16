@@ -1,5 +1,5 @@
 import protobuf from "protobufjs";
-import { cosmos_sdk as cosmosSdk, google } from "./generated/codecimpl";
+import { cosmos, google } from "./generated/codecimpl";
 export interface GeneratedType {
   readonly create: (properties?: { [k: string]: any }) => any;
   readonly encode: (
@@ -36,5 +36,5 @@ export declare class Registry {
   encode({ typeUrl, value }: EncodeObject): Uint8Array;
   encodeTxBody(txBodyFields: TxBodyValue): Uint8Array;
   decode({ typeUrl, value }: DecodeObject): any;
-  decodeTxBody(txBody: Uint8Array): cosmosSdk.tx.v1.TxBody;
+  decodeTxBody(txBody: Uint8Array): cosmos.tx.TxBody;
 }

@@ -5,15 +5,15 @@ import protobuf from "protobufjs";
 import reflectionRoot from "./demo";
 import demoJson from "./demo.json";
 import demoProto from "./demo.proto";
-import { cosmos_sdk as cosmosSdk, google } from "./generated/codecimpl";
+import { cosmos, google } from "./generated/codecimpl";
 
 type MsgDemo = {
   readonly example: string;
 };
 
-const { Coin } = cosmosSdk.v1;
-const { TxBody } = cosmosSdk.tx.v1;
-const { MsgSend } = cosmosSdk.x.bank.v1;
+const { Coin } = cosmos;
+const { TxBody } = cosmos.tx;
+const { MsgSend } = cosmos.bank;
 const { Any } = google.protobuf;
 
 function getTypeName(typeUrl: string): string {
