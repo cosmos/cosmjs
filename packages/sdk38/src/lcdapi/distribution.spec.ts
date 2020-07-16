@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Bech32 } from "@cosmjs/encoding";
-import { sleep } from "@cosmjs/utils";
+import { assert, sleep } from "@cosmjs/utils";
 
 import { coin, coins } from "../coins";
 import { isPostTxFailure } from "../cosmosclient";
@@ -55,9 +55,7 @@ describe("DistributionExtension", () => {
       };
 
       const receipt = await client.postTx(tx);
-      if (isPostTxFailure(receipt)) {
-        throw new Error("Delegation failed");
-      }
+      assert(!isPostTxFailure(receipt));
 
       await sleep(75); // wait until transactions are indexed
     }
