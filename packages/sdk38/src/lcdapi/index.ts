@@ -5,6 +5,19 @@
 export { AuthExtension, AuthAccountsResponse, setupAuthExtension } from "./auth";
 export { BankBalancesResponse, BankExtension, setupBankExtension } from "./bank";
 export {
+  GovExtension,
+  GovParametersResponse,
+  GovProposalsResponse,
+  GovProposalResponse,
+  GovProposerResponse,
+  GovDepositsResponse,
+  GovDepositResponse,
+  GovTallyResponse,
+  GovVotesResponse,
+  GovVoteResponse,
+  setupGovExtension,
+} from "./gov";
+export {
   MintAnnualProvisionsResponse,
   MintExtension,
   MintInflationResponse,
