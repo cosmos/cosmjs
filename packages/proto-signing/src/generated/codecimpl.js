@@ -1,273 +1,462 @@
 "use strict";
+exports.__esModule = true;
+exports.google = exports.tendermint = exports.cosmos = void 0;
 var $protobuf = require("protobufjs/minimal");
 var $Reader = $protobuf.Reader,
   $Writer = $protobuf.Writer,
   $util = $protobuf.util;
 var $root = $protobuf.roots["default"] || ($protobuf.roots["default"] = {});
-$root.cosmos_sdk = (function () {
-  var cosmos_sdk = {};
-  cosmos_sdk.x = (function () {
-    var x = {};
-    x.bank = (function () {
-      var bank = {};
-      bank.v1 = (function () {
-        var v1 = {};
-        v1.MsgSend = (function () {
-          function MsgSend(p) {
-            this.amount = [];
-            if (p)
-              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-          }
-          MsgSend.prototype.fromAddress = $util.newBuffer([]);
-          MsgSend.prototype.toAddress = $util.newBuffer([]);
-          MsgSend.prototype.amount = $util.emptyArray;
-          MsgSend.create = function create(properties) {
-            return new MsgSend(properties);
-          };
-          MsgSend.encode = function encode(m, w) {
-            if (!w) w = $Writer.create();
-            if (m.fromAddress != null && Object.hasOwnProperty.call(m, "fromAddress"))
-              w.uint32(10).bytes(m.fromAddress);
-            if (m.toAddress != null && Object.hasOwnProperty.call(m, "toAddress"))
-              w.uint32(18).bytes(m.toAddress);
-            if (m.amount != null && m.amount.length) {
-              for (var i = 0; i < m.amount.length; ++i)
-                $root.cosmos_sdk.v1.Coin.encode(m.amount[i], w.uint32(26).fork()).ldelim();
-            }
-            return w;
-          };
-          MsgSend.decode = function decode(r, l) {
-            if (!(r instanceof $Reader)) r = $Reader.create(r);
-            var c = l === undefined ? r.len : r.pos + l,
-              m = new $root.cosmos_sdk.x.bank.v1.MsgSend();
-            while (r.pos < c) {
-              var t = r.uint32();
-              switch (t >>> 3) {
-                case 1:
-                  m.fromAddress = r.bytes();
-                  break;
-                case 2:
-                  m.toAddress = r.bytes();
-                  break;
-                case 3:
-                  if (!(m.amount && m.amount.length)) m.amount = [];
-                  m.amount.push($root.cosmos_sdk.v1.Coin.decode(r, r.uint32()));
-                  break;
-                default:
-                  r.skipType(t & 7);
-                  break;
-              }
-            }
-            return m;
-          };
-          return MsgSend;
-        })();
-        v1.Input = (function () {
-          function Input(p) {
-            this.coins = [];
-            if (p)
-              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-          }
-          Input.prototype.address = $util.newBuffer([]);
-          Input.prototype.coins = $util.emptyArray;
-          Input.create = function create(properties) {
-            return new Input(properties);
-          };
-          Input.encode = function encode(m, w) {
-            if (!w) w = $Writer.create();
-            if (m.address != null && Object.hasOwnProperty.call(m, "address")) w.uint32(10).bytes(m.address);
-            if (m.coins != null && m.coins.length) {
-              for (var i = 0; i < m.coins.length; ++i)
-                $root.cosmos_sdk.v1.Coin.encode(m.coins[i], w.uint32(18).fork()).ldelim();
-            }
-            return w;
-          };
-          Input.decode = function decode(r, l) {
-            if (!(r instanceof $Reader)) r = $Reader.create(r);
-            var c = l === undefined ? r.len : r.pos + l,
-              m = new $root.cosmos_sdk.x.bank.v1.Input();
-            while (r.pos < c) {
-              var t = r.uint32();
-              switch (t >>> 3) {
-                case 1:
-                  m.address = r.bytes();
-                  break;
-                case 2:
-                  if (!(m.coins && m.coins.length)) m.coins = [];
-                  m.coins.push($root.cosmos_sdk.v1.Coin.decode(r, r.uint32()));
-                  break;
-                default:
-                  r.skipType(t & 7);
-                  break;
-              }
-            }
-            return m;
-          };
-          return Input;
-        })();
-        v1.Output = (function () {
-          function Output(p) {
-            this.coins = [];
-            if (p)
-              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-          }
-          Output.prototype.address = $util.newBuffer([]);
-          Output.prototype.coins = $util.emptyArray;
-          Output.create = function create(properties) {
-            return new Output(properties);
-          };
-          Output.encode = function encode(m, w) {
-            if (!w) w = $Writer.create();
-            if (m.address != null && Object.hasOwnProperty.call(m, "address")) w.uint32(10).bytes(m.address);
-            if (m.coins != null && m.coins.length) {
-              for (var i = 0; i < m.coins.length; ++i)
-                $root.cosmos_sdk.v1.Coin.encode(m.coins[i], w.uint32(18).fork()).ldelim();
-            }
-            return w;
-          };
-          Output.decode = function decode(r, l) {
-            if (!(r instanceof $Reader)) r = $Reader.create(r);
-            var c = l === undefined ? r.len : r.pos + l,
-              m = new $root.cosmos_sdk.x.bank.v1.Output();
-            while (r.pos < c) {
-              var t = r.uint32();
-              switch (t >>> 3) {
-                case 1:
-                  m.address = r.bytes();
-                  break;
-                case 2:
-                  if (!(m.coins && m.coins.length)) m.coins = [];
-                  m.coins.push($root.cosmos_sdk.v1.Coin.decode(r, r.uint32()));
-                  break;
-                default:
-                  r.skipType(t & 7);
-                  break;
-              }
-            }
-            return m;
-          };
-          return Output;
-        })();
-        v1.MsgMultiSend = (function () {
-          function MsgMultiSend(p) {
-            this.inputs = [];
-            this.outputs = [];
-            if (p)
-              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-          }
-          MsgMultiSend.prototype.inputs = $util.emptyArray;
-          MsgMultiSend.prototype.outputs = $util.emptyArray;
-          MsgMultiSend.create = function create(properties) {
-            return new MsgMultiSend(properties);
-          };
-          MsgMultiSend.encode = function encode(m, w) {
-            if (!w) w = $Writer.create();
-            if (m.inputs != null && m.inputs.length) {
-              for (var i = 0; i < m.inputs.length; ++i)
-                $root.cosmos_sdk.x.bank.v1.Input.encode(m.inputs[i], w.uint32(10).fork()).ldelim();
-            }
-            if (m.outputs != null && m.outputs.length) {
-              for (var i = 0; i < m.outputs.length; ++i)
-                $root.cosmos_sdk.x.bank.v1.Output.encode(m.outputs[i], w.uint32(18).fork()).ldelim();
-            }
-            return w;
-          };
-          MsgMultiSend.decode = function decode(r, l) {
-            if (!(r instanceof $Reader)) r = $Reader.create(r);
-            var c = l === undefined ? r.len : r.pos + l,
-              m = new $root.cosmos_sdk.x.bank.v1.MsgMultiSend();
-            while (r.pos < c) {
-              var t = r.uint32();
-              switch (t >>> 3) {
-                case 1:
-                  if (!(m.inputs && m.inputs.length)) m.inputs = [];
-                  m.inputs.push($root.cosmos_sdk.x.bank.v1.Input.decode(r, r.uint32()));
-                  break;
-                case 2:
-                  if (!(m.outputs && m.outputs.length)) m.outputs = [];
-                  m.outputs.push($root.cosmos_sdk.x.bank.v1.Output.decode(r, r.uint32()));
-                  break;
-                default:
-                  r.skipType(t & 7);
-                  break;
-              }
-            }
-            return m;
-          };
-          return MsgMultiSend;
-        })();
-        v1.Supply = (function () {
-          function Supply(p) {
-            this.total = [];
-            if (p)
-              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-          }
-          Supply.prototype.total = $util.emptyArray;
-          Supply.create = function create(properties) {
-            return new Supply(properties);
-          };
-          Supply.encode = function encode(m, w) {
-            if (!w) w = $Writer.create();
-            if (m.total != null && m.total.length) {
-              for (var i = 0; i < m.total.length; ++i)
-                $root.cosmos_sdk.v1.Coin.encode(m.total[i], w.uint32(10).fork()).ldelim();
-            }
-            return w;
-          };
-          Supply.decode = function decode(r, l) {
-            if (!(r instanceof $Reader)) r = $Reader.create(r);
-            var c = l === undefined ? r.len : r.pos + l,
-              m = new $root.cosmos_sdk.x.bank.v1.Supply();
-            while (r.pos < c) {
-              var t = r.uint32();
-              switch (t >>> 3) {
-                case 1:
-                  if (!(m.total && m.total.length)) m.total = [];
-                  m.total.push($root.cosmos_sdk.v1.Coin.decode(r, r.uint32()));
-                  break;
-                default:
-                  r.skipType(t & 7);
-                  break;
-              }
-            }
-            return m;
-          };
-          return Supply;
-        })();
-        return v1;
-      })();
-      return bank;
-    })();
-    return x;
+exports.cosmos = $root.cosmos = (function () {
+  var cosmos = {};
+  cosmos.Coin = (function () {
+    function Coin(p) {
+      if (p)
+        for (var ks = Object.keys(p), i = 0; i < ks.length; ++i) if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+    }
+    Coin.prototype.denom = "";
+    Coin.prototype.amount = "";
+    Coin.create = function create(properties) {
+      return new Coin(properties);
+    };
+    Coin.encode = function encode(m, w) {
+      if (!w) w = $Writer.create();
+      if (m.denom != null && Object.hasOwnProperty.call(m, "denom")) w.uint32(10).string(m.denom);
+      if (m.amount != null && Object.hasOwnProperty.call(m, "amount")) w.uint32(18).string(m.amount);
+      return w;
+    };
+    Coin.decode = function decode(r, l) {
+      if (!(r instanceof $Reader)) r = $Reader.create(r);
+      var c = l === undefined ? r.len : r.pos + l,
+        m = new $root.cosmos.Coin();
+      while (r.pos < c) {
+        var t = r.uint32();
+        switch (t >>> 3) {
+          case 1:
+            m.denom = r.string();
+            break;
+          case 2:
+            m.amount = r.string();
+            break;
+          default:
+            r.skipType(t & 7);
+            break;
+        }
+      }
+      return m;
+    };
+    return Coin;
   })();
-  cosmos_sdk.v1 = (function () {
-    var v1 = {};
-    v1.Coin = (function () {
-      function Coin(p) {
+  cosmos.DecCoin = (function () {
+    function DecCoin(p) {
+      if (p)
+        for (var ks = Object.keys(p), i = 0; i < ks.length; ++i) if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+    }
+    DecCoin.prototype.denom = "";
+    DecCoin.prototype.amount = "";
+    DecCoin.create = function create(properties) {
+      return new DecCoin(properties);
+    };
+    DecCoin.encode = function encode(m, w) {
+      if (!w) w = $Writer.create();
+      if (m.denom != null && Object.hasOwnProperty.call(m, "denom")) w.uint32(10).string(m.denom);
+      if (m.amount != null && Object.hasOwnProperty.call(m, "amount")) w.uint32(18).string(m.amount);
+      return w;
+    };
+    DecCoin.decode = function decode(r, l) {
+      if (!(r instanceof $Reader)) r = $Reader.create(r);
+      var c = l === undefined ? r.len : r.pos + l,
+        m = new $root.cosmos.DecCoin();
+      while (r.pos < c) {
+        var t = r.uint32();
+        switch (t >>> 3) {
+          case 1:
+            m.denom = r.string();
+            break;
+          case 2:
+            m.amount = r.string();
+            break;
+          default:
+            r.skipType(t & 7);
+            break;
+        }
+      }
+      return m;
+    };
+    return DecCoin;
+  })();
+  cosmos.IntProto = (function () {
+    function IntProto(p) {
+      if (p)
+        for (var ks = Object.keys(p), i = 0; i < ks.length; ++i) if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+    }
+    IntProto.prototype.int = "";
+    IntProto.create = function create(properties) {
+      return new IntProto(properties);
+    };
+    IntProto.encode = function encode(m, w) {
+      if (!w) w = $Writer.create();
+      if (m.int != null && Object.hasOwnProperty.call(m, "int")) w.uint32(10).string(m.int);
+      return w;
+    };
+    IntProto.decode = function decode(r, l) {
+      if (!(r instanceof $Reader)) r = $Reader.create(r);
+      var c = l === undefined ? r.len : r.pos + l,
+        m = new $root.cosmos.IntProto();
+      while (r.pos < c) {
+        var t = r.uint32();
+        switch (t >>> 3) {
+          case 1:
+            m.int = r.string();
+            break;
+          default:
+            r.skipType(t & 7);
+            break;
+        }
+      }
+      return m;
+    };
+    return IntProto;
+  })();
+  cosmos.DecProto = (function () {
+    function DecProto(p) {
+      if (p)
+        for (var ks = Object.keys(p), i = 0; i < ks.length; ++i) if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+    }
+    DecProto.prototype.dec = "";
+    DecProto.create = function create(properties) {
+      return new DecProto(properties);
+    };
+    DecProto.encode = function encode(m, w) {
+      if (!w) w = $Writer.create();
+      if (m.dec != null && Object.hasOwnProperty.call(m, "dec")) w.uint32(10).string(m.dec);
+      return w;
+    };
+    DecProto.decode = function decode(r, l) {
+      if (!(r instanceof $Reader)) r = $Reader.create(r);
+      var c = l === undefined ? r.len : r.pos + l,
+        m = new $root.cosmos.DecProto();
+      while (r.pos < c) {
+        var t = r.uint32();
+        switch (t >>> 3) {
+          case 1:
+            m.dec = r.string();
+            break;
+          default:
+            r.skipType(t & 7);
+            break;
+        }
+      }
+      return m;
+    };
+    return DecProto;
+  })();
+  cosmos.ValAddresses = (function () {
+    function ValAddresses(p) {
+      this.addresses = [];
+      if (p)
+        for (var ks = Object.keys(p), i = 0; i < ks.length; ++i) if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+    }
+    ValAddresses.prototype.addresses = $util.emptyArray;
+    ValAddresses.create = function create(properties) {
+      return new ValAddresses(properties);
+    };
+    ValAddresses.encode = function encode(m, w) {
+      if (!w) w = $Writer.create();
+      if (m.addresses != null && m.addresses.length) {
+        for (var i = 0; i < m.addresses.length; ++i) w.uint32(10).bytes(m.addresses[i]);
+      }
+      return w;
+    };
+    ValAddresses.decode = function decode(r, l) {
+      if (!(r instanceof $Reader)) r = $Reader.create(r);
+      var c = l === undefined ? r.len : r.pos + l,
+        m = new $root.cosmos.ValAddresses();
+      while (r.pos < c) {
+        var t = r.uint32();
+        switch (t >>> 3) {
+          case 1:
+            if (!(m.addresses && m.addresses.length)) m.addresses = [];
+            m.addresses.push(r.bytes());
+            break;
+          default:
+            r.skipType(t & 7);
+            break;
+        }
+      }
+      return m;
+    };
+    return ValAddresses;
+  })();
+  cosmos.GasInfo = (function () {
+    function GasInfo(p) {
+      if (p)
+        for (var ks = Object.keys(p), i = 0; i < ks.length; ++i) if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+    }
+    GasInfo.prototype.gasWanted = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+    GasInfo.prototype.gasUsed = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+    GasInfo.create = function create(properties) {
+      return new GasInfo(properties);
+    };
+    GasInfo.encode = function encode(m, w) {
+      if (!w) w = $Writer.create();
+      if (m.gasWanted != null && Object.hasOwnProperty.call(m, "gasWanted")) w.uint32(8).uint64(m.gasWanted);
+      if (m.gasUsed != null && Object.hasOwnProperty.call(m, "gasUsed")) w.uint32(16).uint64(m.gasUsed);
+      return w;
+    };
+    GasInfo.decode = function decode(r, l) {
+      if (!(r instanceof $Reader)) r = $Reader.create(r);
+      var c = l === undefined ? r.len : r.pos + l,
+        m = new $root.cosmos.GasInfo();
+      while (r.pos < c) {
+        var t = r.uint32();
+        switch (t >>> 3) {
+          case 1:
+            m.gasWanted = r.uint64();
+            break;
+          case 2:
+            m.gasUsed = r.uint64();
+            break;
+          default:
+            r.skipType(t & 7);
+            break;
+        }
+      }
+      return m;
+    };
+    return GasInfo;
+  })();
+  cosmos.Result = (function () {
+    function Result(p) {
+      this.events = [];
+      if (p)
+        for (var ks = Object.keys(p), i = 0; i < ks.length; ++i) if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+    }
+    Result.prototype.data = $util.newBuffer([]);
+    Result.prototype.log = "";
+    Result.prototype.events = $util.emptyArray;
+    Result.create = function create(properties) {
+      return new Result(properties);
+    };
+    Result.encode = function encode(m, w) {
+      if (!w) w = $Writer.create();
+      if (m.data != null && Object.hasOwnProperty.call(m, "data")) w.uint32(10).bytes(m.data);
+      if (m.log != null && Object.hasOwnProperty.call(m, "log")) w.uint32(18).string(m.log);
+      if (m.events != null && m.events.length) {
+        for (var i = 0; i < m.events.length; ++i)
+          $root.tendermint.abci.types.Event.encode(m.events[i], w.uint32(26).fork()).ldelim();
+      }
+      return w;
+    };
+    Result.decode = function decode(r, l) {
+      if (!(r instanceof $Reader)) r = $Reader.create(r);
+      var c = l === undefined ? r.len : r.pos + l,
+        m = new $root.cosmos.Result();
+      while (r.pos < c) {
+        var t = r.uint32();
+        switch (t >>> 3) {
+          case 1:
+            m.data = r.bytes();
+            break;
+          case 2:
+            m.log = r.string();
+            break;
+          case 3:
+            if (!(m.events && m.events.length)) m.events = [];
+            m.events.push($root.tendermint.abci.types.Event.decode(r, r.uint32()));
+            break;
+          default:
+            r.skipType(t & 7);
+            break;
+        }
+      }
+      return m;
+    };
+    return Result;
+  })();
+  cosmos.SimulationResponse = (function () {
+    function SimulationResponse(p) {
+      if (p)
+        for (var ks = Object.keys(p), i = 0; i < ks.length; ++i) if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+    }
+    SimulationResponse.prototype.gasInfo = null;
+    SimulationResponse.prototype.result = null;
+    SimulationResponse.create = function create(properties) {
+      return new SimulationResponse(properties);
+    };
+    SimulationResponse.encode = function encode(m, w) {
+      if (!w) w = $Writer.create();
+      if (m.gasInfo != null && Object.hasOwnProperty.call(m, "gasInfo"))
+        $root.cosmos.GasInfo.encode(m.gasInfo, w.uint32(10).fork()).ldelim();
+      if (m.result != null && Object.hasOwnProperty.call(m, "result"))
+        $root.cosmos.Result.encode(m.result, w.uint32(18).fork()).ldelim();
+      return w;
+    };
+    SimulationResponse.decode = function decode(r, l) {
+      if (!(r instanceof $Reader)) r = $Reader.create(r);
+      var c = l === undefined ? r.len : r.pos + l,
+        m = new $root.cosmos.SimulationResponse();
+      while (r.pos < c) {
+        var t = r.uint32();
+        switch (t >>> 3) {
+          case 1:
+            m.gasInfo = $root.cosmos.GasInfo.decode(r, r.uint32());
+            break;
+          case 2:
+            m.result = $root.cosmos.Result.decode(r, r.uint32());
+            break;
+          default:
+            r.skipType(t & 7);
+            break;
+        }
+      }
+      return m;
+    };
+    return SimulationResponse;
+  })();
+  cosmos.MsgData = (function () {
+    function MsgData(p) {
+      if (p)
+        for (var ks = Object.keys(p), i = 0; i < ks.length; ++i) if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+    }
+    MsgData.prototype.msgType = "";
+    MsgData.prototype.data = $util.newBuffer([]);
+    MsgData.create = function create(properties) {
+      return new MsgData(properties);
+    };
+    MsgData.encode = function encode(m, w) {
+      if (!w) w = $Writer.create();
+      if (m.msgType != null && Object.hasOwnProperty.call(m, "msgType")) w.uint32(10).string(m.msgType);
+      if (m.data != null && Object.hasOwnProperty.call(m, "data")) w.uint32(18).bytes(m.data);
+      return w;
+    };
+    MsgData.decode = function decode(r, l) {
+      if (!(r instanceof $Reader)) r = $Reader.create(r);
+      var c = l === undefined ? r.len : r.pos + l,
+        m = new $root.cosmos.MsgData();
+      while (r.pos < c) {
+        var t = r.uint32();
+        switch (t >>> 3) {
+          case 1:
+            m.msgType = r.string();
+            break;
+          case 2:
+            m.data = r.bytes();
+            break;
+          default:
+            r.skipType(t & 7);
+            break;
+        }
+      }
+      return m;
+    };
+    return MsgData;
+  })();
+  cosmos.TxData = (function () {
+    function TxData(p) {
+      this.data = [];
+      if (p)
+        for (var ks = Object.keys(p), i = 0; i < ks.length; ++i) if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+    }
+    TxData.prototype.data = $util.emptyArray;
+    TxData.create = function create(properties) {
+      return new TxData(properties);
+    };
+    TxData.encode = function encode(m, w) {
+      if (!w) w = $Writer.create();
+      if (m.data != null && m.data.length) {
+        for (var i = 0; i < m.data.length; ++i)
+          $root.cosmos.MsgData.encode(m.data[i], w.uint32(10).fork()).ldelim();
+      }
+      return w;
+    };
+    TxData.decode = function decode(r, l) {
+      if (!(r instanceof $Reader)) r = $Reader.create(r);
+      var c = l === undefined ? r.len : r.pos + l,
+        m = new $root.cosmos.TxData();
+      while (r.pos < c) {
+        var t = r.uint32();
+        switch (t >>> 3) {
+          case 1:
+            if (!(m.data && m.data.length)) m.data = [];
+            m.data.push($root.cosmos.MsgData.decode(r, r.uint32()));
+            break;
+          default:
+            r.skipType(t & 7);
+            break;
+        }
+      }
+      return m;
+    };
+    return TxData;
+  })();
+  cosmos.bank = (function () {
+    var bank = {};
+    bank.Params = (function () {
+      function Params(p) {
+        this.sendEnabled = [];
         if (p)
           for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
             if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
       }
-      Coin.prototype.denom = "";
-      Coin.prototype.amount = "";
-      Coin.create = function create(properties) {
-        return new Coin(properties);
+      Params.prototype.sendEnabled = $util.emptyArray;
+      Params.prototype.defaultSendEnabled = false;
+      Params.create = function create(properties) {
+        return new Params(properties);
       };
-      Coin.encode = function encode(m, w) {
+      Params.encode = function encode(m, w) {
         if (!w) w = $Writer.create();
-        if (m.denom != null && Object.hasOwnProperty.call(m, "denom")) w.uint32(10).string(m.denom);
-        if (m.amount != null && Object.hasOwnProperty.call(m, "amount")) w.uint32(18).string(m.amount);
+        if (m.sendEnabled != null && m.sendEnabled.length) {
+          for (var i = 0; i < m.sendEnabled.length; ++i)
+            $root.cosmos.bank.SendEnabled.encode(m.sendEnabled[i], w.uint32(10).fork()).ldelim();
+        }
+        if (m.defaultSendEnabled != null && Object.hasOwnProperty.call(m, "defaultSendEnabled"))
+          w.uint32(16).bool(m.defaultSendEnabled);
         return w;
       };
-      Coin.decode = function decode(r, l) {
+      Params.decode = function decode(r, l) {
         if (!(r instanceof $Reader)) r = $Reader.create(r);
         var c = l === undefined ? r.len : r.pos + l,
-          m = new $root.cosmos_sdk.v1.Coin();
+          m = new $root.cosmos.bank.Params();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              if (!(m.sendEnabled && m.sendEnabled.length)) m.sendEnabled = [];
+              m.sendEnabled.push($root.cosmos.bank.SendEnabled.decode(r, r.uint32()));
+              break;
+            case 2:
+              m.defaultSendEnabled = r.bool();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return Params;
+    })();
+    bank.SendEnabled = (function () {
+      function SendEnabled(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      SendEnabled.prototype.denom = "";
+      SendEnabled.prototype.enabled = false;
+      SendEnabled.create = function create(properties) {
+        return new SendEnabled(properties);
+      };
+      SendEnabled.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.denom != null && Object.hasOwnProperty.call(m, "denom")) w.uint32(10).string(m.denom);
+        if (m.enabled != null && Object.hasOwnProperty.call(m, "enabled")) w.uint32(16).bool(m.enabled);
+        return w;
+      };
+      SendEnabled.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.cosmos.bank.SendEnabled();
         while (r.pos < c) {
           var t = r.uint32();
           switch (t >>> 3) {
@@ -275,7 +464,7 @@ $root.cosmos_sdk = (function () {
               m.denom = r.string();
               break;
             case 2:
-              m.amount = r.string();
+              m.enabled = r.bool();
               break;
             default:
               r.skipType(t & 7);
@@ -284,232 +473,49 @@ $root.cosmos_sdk = (function () {
         }
         return m;
       };
-      return Coin;
+      return SendEnabled;
     })();
-    v1.DecCoin = (function () {
-      function DecCoin(p) {
+    bank.MsgSend = (function () {
+      function MsgSend(p) {
+        this.amount = [];
         if (p)
           for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
             if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
       }
-      DecCoin.prototype.denom = "";
-      DecCoin.prototype.amount = "";
-      DecCoin.create = function create(properties) {
-        return new DecCoin(properties);
+      MsgSend.prototype.fromAddress = $util.newBuffer([]);
+      MsgSend.prototype.toAddress = $util.newBuffer([]);
+      MsgSend.prototype.amount = $util.emptyArray;
+      MsgSend.create = function create(properties) {
+        return new MsgSend(properties);
       };
-      DecCoin.encode = function encode(m, w) {
+      MsgSend.encode = function encode(m, w) {
         if (!w) w = $Writer.create();
-        if (m.denom != null && Object.hasOwnProperty.call(m, "denom")) w.uint32(10).string(m.denom);
-        if (m.amount != null && Object.hasOwnProperty.call(m, "amount")) w.uint32(18).string(m.amount);
+        if (m.fromAddress != null && Object.hasOwnProperty.call(m, "fromAddress"))
+          w.uint32(10).bytes(m.fromAddress);
+        if (m.toAddress != null && Object.hasOwnProperty.call(m, "toAddress"))
+          w.uint32(18).bytes(m.toAddress);
+        if (m.amount != null && m.amount.length) {
+          for (var i = 0; i < m.amount.length; ++i)
+            $root.cosmos.Coin.encode(m.amount[i], w.uint32(26).fork()).ldelim();
+        }
         return w;
       };
-      DecCoin.decode = function decode(r, l) {
+      MsgSend.decode = function decode(r, l) {
         if (!(r instanceof $Reader)) r = $Reader.create(r);
         var c = l === undefined ? r.len : r.pos + l,
-          m = new $root.cosmos_sdk.v1.DecCoin();
+          m = new $root.cosmos.bank.MsgSend();
         while (r.pos < c) {
           var t = r.uint32();
           switch (t >>> 3) {
             case 1:
-              m.denom = r.string();
+              m.fromAddress = r.bytes();
               break;
             case 2:
-              m.amount = r.string();
-              break;
-            default:
-              r.skipType(t & 7);
-              break;
-          }
-        }
-        return m;
-      };
-      return DecCoin;
-    })();
-    v1.IntProto = (function () {
-      function IntProto(p) {
-        if (p)
-          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-      }
-      IntProto.prototype.int = "";
-      IntProto.create = function create(properties) {
-        return new IntProto(properties);
-      };
-      IntProto.encode = function encode(m, w) {
-        if (!w) w = $Writer.create();
-        if (m.int != null && Object.hasOwnProperty.call(m, "int")) w.uint32(10).string(m.int);
-        return w;
-      };
-      IntProto.decode = function decode(r, l) {
-        if (!(r instanceof $Reader)) r = $Reader.create(r);
-        var c = l === undefined ? r.len : r.pos + l,
-          m = new $root.cosmos_sdk.v1.IntProto();
-        while (r.pos < c) {
-          var t = r.uint32();
-          switch (t >>> 3) {
-            case 1:
-              m.int = r.string();
-              break;
-            default:
-              r.skipType(t & 7);
-              break;
-          }
-        }
-        return m;
-      };
-      return IntProto;
-    })();
-    v1.DecProto = (function () {
-      function DecProto(p) {
-        if (p)
-          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-      }
-      DecProto.prototype.dec = "";
-      DecProto.create = function create(properties) {
-        return new DecProto(properties);
-      };
-      DecProto.encode = function encode(m, w) {
-        if (!w) w = $Writer.create();
-        if (m.dec != null && Object.hasOwnProperty.call(m, "dec")) w.uint32(10).string(m.dec);
-        return w;
-      };
-      DecProto.decode = function decode(r, l) {
-        if (!(r instanceof $Reader)) r = $Reader.create(r);
-        var c = l === undefined ? r.len : r.pos + l,
-          m = new $root.cosmos_sdk.v1.DecProto();
-        while (r.pos < c) {
-          var t = r.uint32();
-          switch (t >>> 3) {
-            case 1:
-              m.dec = r.string();
-              break;
-            default:
-              r.skipType(t & 7);
-              break;
-          }
-        }
-        return m;
-      };
-      return DecProto;
-    })();
-    v1.ValAddresses = (function () {
-      function ValAddresses(p) {
-        this.addresses = [];
-        if (p)
-          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-      }
-      ValAddresses.prototype.addresses = $util.emptyArray;
-      ValAddresses.create = function create(properties) {
-        return new ValAddresses(properties);
-      };
-      ValAddresses.encode = function encode(m, w) {
-        if (!w) w = $Writer.create();
-        if (m.addresses != null && m.addresses.length) {
-          for (var i = 0; i < m.addresses.length; ++i) w.uint32(10).bytes(m.addresses[i]);
-        }
-        return w;
-      };
-      ValAddresses.decode = function decode(r, l) {
-        if (!(r instanceof $Reader)) r = $Reader.create(r);
-        var c = l === undefined ? r.len : r.pos + l,
-          m = new $root.cosmos_sdk.v1.ValAddresses();
-        while (r.pos < c) {
-          var t = r.uint32();
-          switch (t >>> 3) {
-            case 1:
-              if (!(m.addresses && m.addresses.length)) m.addresses = [];
-              m.addresses.push(r.bytes());
-              break;
-            default:
-              r.skipType(t & 7);
-              break;
-          }
-        }
-        return m;
-      };
-      return ValAddresses;
-    })();
-    v1.GasInfo = (function () {
-      function GasInfo(p) {
-        if (p)
-          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-      }
-      GasInfo.prototype.gasWanted = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
-      GasInfo.prototype.gasUsed = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
-      GasInfo.create = function create(properties) {
-        return new GasInfo(properties);
-      };
-      GasInfo.encode = function encode(m, w) {
-        if (!w) w = $Writer.create();
-        if (m.gasWanted != null && Object.hasOwnProperty.call(m, "gasWanted"))
-          w.uint32(8).uint64(m.gasWanted);
-        if (m.gasUsed != null && Object.hasOwnProperty.call(m, "gasUsed")) w.uint32(16).uint64(m.gasUsed);
-        return w;
-      };
-      GasInfo.decode = function decode(r, l) {
-        if (!(r instanceof $Reader)) r = $Reader.create(r);
-        var c = l === undefined ? r.len : r.pos + l,
-          m = new $root.cosmos_sdk.v1.GasInfo();
-        while (r.pos < c) {
-          var t = r.uint32();
-          switch (t >>> 3) {
-            case 1:
-              m.gasWanted = r.uint64();
-              break;
-            case 2:
-              m.gasUsed = r.uint64();
-              break;
-            default:
-              r.skipType(t & 7);
-              break;
-          }
-        }
-        return m;
-      };
-      return GasInfo;
-    })();
-    v1.Result = (function () {
-      function Result(p) {
-        this.events = [];
-        if (p)
-          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-      }
-      Result.prototype.data = $util.newBuffer([]);
-      Result.prototype.log = "";
-      Result.prototype.events = $util.emptyArray;
-      Result.create = function create(properties) {
-        return new Result(properties);
-      };
-      Result.encode = function encode(m, w) {
-        if (!w) w = $Writer.create();
-        if (m.data != null && Object.hasOwnProperty.call(m, "data")) w.uint32(10).bytes(m.data);
-        if (m.log != null && Object.hasOwnProperty.call(m, "log")) w.uint32(18).string(m.log);
-        if (m.events != null && m.events.length) {
-          for (var i = 0; i < m.events.length; ++i)
-            $root.tendermint.abci.types.Event.encode(m.events[i], w.uint32(26).fork()).ldelim();
-        }
-        return w;
-      };
-      Result.decode = function decode(r, l) {
-        if (!(r instanceof $Reader)) r = $Reader.create(r);
-        var c = l === undefined ? r.len : r.pos + l,
-          m = new $root.cosmos_sdk.v1.Result();
-        while (r.pos < c) {
-          var t = r.uint32();
-          switch (t >>> 3) {
-            case 1:
-              m.data = r.bytes();
-              break;
-            case 2:
-              m.log = r.string();
+              m.toAddress = r.bytes();
               break;
             case 3:
-              if (!(m.events && m.events.length)) m.events = [];
-              m.events.push($root.tendermint.abci.types.Event.decode(r, r.uint32()));
+              if (!(m.amount && m.amount.length)) m.amount = [];
+              m.amount.push($root.cosmos.Coin.decode(r, r.uint32()));
               break;
             default:
               r.skipType(t & 7);
@@ -518,39 +524,42 @@ $root.cosmos_sdk = (function () {
         }
         return m;
       };
-      return Result;
+      return MsgSend;
     })();
-    v1.SimulationResponse = (function () {
-      function SimulationResponse(p) {
+    bank.Input = (function () {
+      function Input(p) {
+        this.coins = [];
         if (p)
           for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
             if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
       }
-      SimulationResponse.prototype.gasInfo = null;
-      SimulationResponse.prototype.result = null;
-      SimulationResponse.create = function create(properties) {
-        return new SimulationResponse(properties);
+      Input.prototype.address = $util.newBuffer([]);
+      Input.prototype.coins = $util.emptyArray;
+      Input.create = function create(properties) {
+        return new Input(properties);
       };
-      SimulationResponse.encode = function encode(m, w) {
+      Input.encode = function encode(m, w) {
         if (!w) w = $Writer.create();
-        if (m.gasInfo != null && Object.hasOwnProperty.call(m, "gasInfo"))
-          $root.cosmos_sdk.v1.GasInfo.encode(m.gasInfo, w.uint32(10).fork()).ldelim();
-        if (m.result != null && Object.hasOwnProperty.call(m, "result"))
-          $root.cosmos_sdk.v1.Result.encode(m.result, w.uint32(18).fork()).ldelim();
+        if (m.address != null && Object.hasOwnProperty.call(m, "address")) w.uint32(10).bytes(m.address);
+        if (m.coins != null && m.coins.length) {
+          for (var i = 0; i < m.coins.length; ++i)
+            $root.cosmos.Coin.encode(m.coins[i], w.uint32(18).fork()).ldelim();
+        }
         return w;
       };
-      SimulationResponse.decode = function decode(r, l) {
+      Input.decode = function decode(r, l) {
         if (!(r instanceof $Reader)) r = $Reader.create(r);
         var c = l === undefined ? r.len : r.pos + l,
-          m = new $root.cosmos_sdk.v1.SimulationResponse();
+          m = new $root.cosmos.bank.Input();
         while (r.pos < c) {
           var t = r.uint32();
           switch (t >>> 3) {
             case 1:
-              m.gasInfo = $root.cosmos_sdk.v1.GasInfo.decode(r, r.uint32());
+              m.address = r.bytes();
               break;
             case 2:
-              m.result = $root.cosmos_sdk.v1.Result.decode(r, r.uint32());
+              if (!(m.coins && m.coins.length)) m.coins = [];
+              m.coins.push($root.cosmos.Coin.decode(r, r.uint32()));
               break;
             default:
               r.skipType(t & 7);
@@ -559,37 +568,42 @@ $root.cosmos_sdk = (function () {
         }
         return m;
       };
-      return SimulationResponse;
+      return Input;
     })();
-    v1.MsgData = (function () {
-      function MsgData(p) {
+    bank.Output = (function () {
+      function Output(p) {
+        this.coins = [];
         if (p)
           for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
             if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
       }
-      MsgData.prototype.msgType = "";
-      MsgData.prototype.data = $util.newBuffer([]);
-      MsgData.create = function create(properties) {
-        return new MsgData(properties);
+      Output.prototype.address = $util.newBuffer([]);
+      Output.prototype.coins = $util.emptyArray;
+      Output.create = function create(properties) {
+        return new Output(properties);
       };
-      MsgData.encode = function encode(m, w) {
+      Output.encode = function encode(m, w) {
         if (!w) w = $Writer.create();
-        if (m.msgType != null && Object.hasOwnProperty.call(m, "msgType")) w.uint32(10).string(m.msgType);
-        if (m.data != null && Object.hasOwnProperty.call(m, "data")) w.uint32(18).bytes(m.data);
+        if (m.address != null && Object.hasOwnProperty.call(m, "address")) w.uint32(10).bytes(m.address);
+        if (m.coins != null && m.coins.length) {
+          for (var i = 0; i < m.coins.length; ++i)
+            $root.cosmos.Coin.encode(m.coins[i], w.uint32(18).fork()).ldelim();
+        }
         return w;
       };
-      MsgData.decode = function decode(r, l) {
+      Output.decode = function decode(r, l) {
         if (!(r instanceof $Reader)) r = $Reader.create(r);
         var c = l === undefined ? r.len : r.pos + l,
-          m = new $root.cosmos_sdk.v1.MsgData();
+          m = new $root.cosmos.bank.Output();
         while (r.pos < c) {
           var t = r.uint32();
           switch (t >>> 3) {
             case 1:
-              m.msgType = r.string();
+              m.address = r.bytes();
               break;
             case 2:
-              m.data = r.bytes();
+              if (!(m.coins && m.coins.length)) m.coins = [];
+              m.coins.push($root.cosmos.Coin.decode(r, r.uint32()));
               break;
             default:
               r.skipType(t & 7);
@@ -598,37 +612,47 @@ $root.cosmos_sdk = (function () {
         }
         return m;
       };
-      return MsgData;
+      return Output;
     })();
-    v1.TxData = (function () {
-      function TxData(p) {
-        this.data = [];
+    bank.MsgMultiSend = (function () {
+      function MsgMultiSend(p) {
+        this.inputs = [];
+        this.outputs = [];
         if (p)
           for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
             if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
       }
-      TxData.prototype.data = $util.emptyArray;
-      TxData.create = function create(properties) {
-        return new TxData(properties);
+      MsgMultiSend.prototype.inputs = $util.emptyArray;
+      MsgMultiSend.prototype.outputs = $util.emptyArray;
+      MsgMultiSend.create = function create(properties) {
+        return new MsgMultiSend(properties);
       };
-      TxData.encode = function encode(m, w) {
+      MsgMultiSend.encode = function encode(m, w) {
         if (!w) w = $Writer.create();
-        if (m.data != null && m.data.length) {
-          for (var i = 0; i < m.data.length; ++i)
-            $root.cosmos_sdk.v1.MsgData.encode(m.data[i], w.uint32(10).fork()).ldelim();
+        if (m.inputs != null && m.inputs.length) {
+          for (var i = 0; i < m.inputs.length; ++i)
+            $root.cosmos.bank.Input.encode(m.inputs[i], w.uint32(10).fork()).ldelim();
+        }
+        if (m.outputs != null && m.outputs.length) {
+          for (var i = 0; i < m.outputs.length; ++i)
+            $root.cosmos.bank.Output.encode(m.outputs[i], w.uint32(18).fork()).ldelim();
         }
         return w;
       };
-      TxData.decode = function decode(r, l) {
+      MsgMultiSend.decode = function decode(r, l) {
         if (!(r instanceof $Reader)) r = $Reader.create(r);
         var c = l === undefined ? r.len : r.pos + l,
-          m = new $root.cosmos_sdk.v1.TxData();
+          m = new $root.cosmos.bank.MsgMultiSend();
         while (r.pos < c) {
           var t = r.uint32();
           switch (t >>> 3) {
             case 1:
-              if (!(m.data && m.data.length)) m.data = [];
-              m.data.push($root.cosmos_sdk.v1.MsgData.decode(r, r.uint32()));
+              if (!(m.inputs && m.inputs.length)) m.inputs = [];
+              m.inputs.push($root.cosmos.bank.Input.decode(r, r.uint32()));
+              break;
+            case 2:
+              if (!(m.outputs && m.outputs.length)) m.outputs = [];
+              m.outputs.push($root.cosmos.bank.Output.decode(r, r.uint32()));
               break;
             default:
               r.skipType(t & 7);
@@ -637,54 +661,634 @@ $root.cosmos_sdk = (function () {
         }
         return m;
       };
-      return TxData;
+      return MsgMultiSend;
     })();
-    return v1;
+    bank.Supply = (function () {
+      function Supply(p) {
+        this.total = [];
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      Supply.prototype.total = $util.emptyArray;
+      Supply.create = function create(properties) {
+        return new Supply(properties);
+      };
+      Supply.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.total != null && m.total.length) {
+          for (var i = 0; i < m.total.length; ++i)
+            $root.cosmos.Coin.encode(m.total[i], w.uint32(10).fork()).ldelim();
+        }
+        return w;
+      };
+      Supply.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.cosmos.bank.Supply();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              if (!(m.total && m.total.length)) m.total = [];
+              m.total.push($root.cosmos.Coin.decode(r, r.uint32()));
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return Supply;
+    })();
+    return bank;
   })();
-  cosmos_sdk.tx = (function () {
+  cosmos.crypto = (function () {
+    var crypto = {};
+    crypto.PublicKey = (function () {
+      function PublicKey(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      PublicKey.prototype.secp256k1 = $util.newBuffer([]);
+      PublicKey.prototype.ed25519 = $util.newBuffer([]);
+      PublicKey.prototype.sr25519 = $util.newBuffer([]);
+      PublicKey.prototype.multisig = null;
+      PublicKey.prototype.secp256r1 = $util.newBuffer([]);
+      PublicKey.prototype.anyPubkey = null;
+      var $oneOfFields;
+      Object.defineProperty(PublicKey.prototype, "sum", {
+        get: $util.oneOfGetter(
+          ($oneOfFields = ["secp256k1", "ed25519", "sr25519", "multisig", "secp256r1", "anyPubkey"]),
+        ),
+        set: $util.oneOfSetter($oneOfFields),
+      });
+      PublicKey.create = function create(properties) {
+        return new PublicKey(properties);
+      };
+      PublicKey.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.secp256k1 != null && Object.hasOwnProperty.call(m, "secp256k1"))
+          w.uint32(10).bytes(m.secp256k1);
+        if (m.ed25519 != null && Object.hasOwnProperty.call(m, "ed25519")) w.uint32(18).bytes(m.ed25519);
+        if (m.sr25519 != null && Object.hasOwnProperty.call(m, "sr25519")) w.uint32(26).bytes(m.sr25519);
+        if (m.multisig != null && Object.hasOwnProperty.call(m, "multisig"))
+          $root.cosmos.crypto.PubKeyMultisigThreshold.encode(m.multisig, w.uint32(34).fork()).ldelim();
+        if (m.secp256r1 != null && Object.hasOwnProperty.call(m, "secp256r1"))
+          w.uint32(42).bytes(m.secp256r1);
+        if (m.anyPubkey != null && Object.hasOwnProperty.call(m, "anyPubkey"))
+          $root.google.protobuf.Any.encode(m.anyPubkey, w.uint32(122).fork()).ldelim();
+        return w;
+      };
+      PublicKey.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.cosmos.crypto.PublicKey();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.secp256k1 = r.bytes();
+              break;
+            case 2:
+              m.ed25519 = r.bytes();
+              break;
+            case 3:
+              m.sr25519 = r.bytes();
+              break;
+            case 4:
+              m.multisig = $root.cosmos.crypto.PubKeyMultisigThreshold.decode(r, r.uint32());
+              break;
+            case 5:
+              m.secp256r1 = r.bytes();
+              break;
+            case 15:
+              m.anyPubkey = $root.google.protobuf.Any.decode(r, r.uint32());
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return PublicKey;
+    })();
+    crypto.PubKeyMultisigThreshold = (function () {
+      function PubKeyMultisigThreshold(p) {
+        this.publicKeys = [];
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      PubKeyMultisigThreshold.prototype.threshold = 0;
+      PubKeyMultisigThreshold.prototype.publicKeys = $util.emptyArray;
+      PubKeyMultisigThreshold.create = function create(properties) {
+        return new PubKeyMultisigThreshold(properties);
+      };
+      PubKeyMultisigThreshold.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.threshold != null && Object.hasOwnProperty.call(m, "threshold"))
+          w.uint32(8).uint32(m.threshold);
+        if (m.publicKeys != null && m.publicKeys.length) {
+          for (var i = 0; i < m.publicKeys.length; ++i)
+            $root.cosmos.crypto.PublicKey.encode(m.publicKeys[i], w.uint32(18).fork()).ldelim();
+        }
+        return w;
+      };
+      PubKeyMultisigThreshold.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.cosmos.crypto.PubKeyMultisigThreshold();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.threshold = r.uint32();
+              break;
+            case 2:
+              if (!(m.publicKeys && m.publicKeys.length)) m.publicKeys = [];
+              m.publicKeys.push($root.cosmos.crypto.PublicKey.decode(r, r.uint32()));
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return PubKeyMultisigThreshold;
+    })();
+    crypto.MultiSignature = (function () {
+      function MultiSignature(p) {
+        this.signatures = [];
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      MultiSignature.prototype.signatures = $util.emptyArray;
+      MultiSignature.create = function create(properties) {
+        return new MultiSignature(properties);
+      };
+      MultiSignature.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.signatures != null && m.signatures.length) {
+          for (var i = 0; i < m.signatures.length; ++i) w.uint32(10).bytes(m.signatures[i]);
+        }
+        return w;
+      };
+      MultiSignature.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.cosmos.crypto.MultiSignature();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              if (!(m.signatures && m.signatures.length)) m.signatures = [];
+              m.signatures.push(r.bytes());
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return MultiSignature;
+    })();
+    crypto.CompactBitArray = (function () {
+      function CompactBitArray(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      CompactBitArray.prototype.extraBitsStored = 0;
+      CompactBitArray.prototype.elems = $util.newBuffer([]);
+      CompactBitArray.create = function create(properties) {
+        return new CompactBitArray(properties);
+      };
+      CompactBitArray.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.extraBitsStored != null && Object.hasOwnProperty.call(m, "extraBitsStored"))
+          w.uint32(8).uint32(m.extraBitsStored);
+        if (m.elems != null && Object.hasOwnProperty.call(m, "elems")) w.uint32(18).bytes(m.elems);
+        return w;
+      };
+      CompactBitArray.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.cosmos.crypto.CompactBitArray();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.extraBitsStored = r.uint32();
+              break;
+            case 2:
+              m.elems = r.bytes();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return CompactBitArray;
+    })();
+    return crypto;
+  })();
+  cosmos.tx = (function () {
     var tx = {};
-    tx.v1 = (function () {
-      var v1 = {};
-      v1.Tx = (function () {
-        function Tx(p) {
-          this.signatures = [];
+    tx.Tx = (function () {
+      function Tx(p) {
+        this.signatures = [];
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      Tx.prototype.body = null;
+      Tx.prototype.authInfo = null;
+      Tx.prototype.signatures = $util.emptyArray;
+      Tx.create = function create(properties) {
+        return new Tx(properties);
+      };
+      Tx.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.body != null && Object.hasOwnProperty.call(m, "body"))
+          $root.cosmos.tx.TxBody.encode(m.body, w.uint32(10).fork()).ldelim();
+        if (m.authInfo != null && Object.hasOwnProperty.call(m, "authInfo"))
+          $root.cosmos.tx.AuthInfo.encode(m.authInfo, w.uint32(18).fork()).ldelim();
+        if (m.signatures != null && m.signatures.length) {
+          for (var i = 0; i < m.signatures.length; ++i) w.uint32(26).bytes(m.signatures[i]);
+        }
+        return w;
+      };
+      Tx.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.cosmos.tx.Tx();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.body = $root.cosmos.tx.TxBody.decode(r, r.uint32());
+              break;
+            case 2:
+              m.authInfo = $root.cosmos.tx.AuthInfo.decode(r, r.uint32());
+              break;
+            case 3:
+              if (!(m.signatures && m.signatures.length)) m.signatures = [];
+              m.signatures.push(r.bytes());
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return Tx;
+    })();
+    tx.TxRaw = (function () {
+      function TxRaw(p) {
+        this.signatures = [];
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      TxRaw.prototype.bodyBytes = $util.newBuffer([]);
+      TxRaw.prototype.authInfoBytes = $util.newBuffer([]);
+      TxRaw.prototype.signatures = $util.emptyArray;
+      TxRaw.create = function create(properties) {
+        return new TxRaw(properties);
+      };
+      TxRaw.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.bodyBytes != null && Object.hasOwnProperty.call(m, "bodyBytes"))
+          w.uint32(10).bytes(m.bodyBytes);
+        if (m.authInfoBytes != null && Object.hasOwnProperty.call(m, "authInfoBytes"))
+          w.uint32(18).bytes(m.authInfoBytes);
+        if (m.signatures != null && m.signatures.length) {
+          for (var i = 0; i < m.signatures.length; ++i) w.uint32(26).bytes(m.signatures[i]);
+        }
+        return w;
+      };
+      TxRaw.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.cosmos.tx.TxRaw();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.bodyBytes = r.bytes();
+              break;
+            case 2:
+              m.authInfoBytes = r.bytes();
+              break;
+            case 3:
+              if (!(m.signatures && m.signatures.length)) m.signatures = [];
+              m.signatures.push(r.bytes());
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return TxRaw;
+    })();
+    tx.SignDoc = (function () {
+      function SignDoc(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      SignDoc.prototype.bodyBytes = $util.newBuffer([]);
+      SignDoc.prototype.authInfoBytes = $util.newBuffer([]);
+      SignDoc.prototype.chainId = "";
+      SignDoc.prototype.accountNumber = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+      SignDoc.prototype.accountSequence = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+      SignDoc.create = function create(properties) {
+        return new SignDoc(properties);
+      };
+      SignDoc.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.bodyBytes != null && Object.hasOwnProperty.call(m, "bodyBytes"))
+          w.uint32(10).bytes(m.bodyBytes);
+        if (m.authInfoBytes != null && Object.hasOwnProperty.call(m, "authInfoBytes"))
+          w.uint32(18).bytes(m.authInfoBytes);
+        if (m.chainId != null && Object.hasOwnProperty.call(m, "chainId")) w.uint32(26).string(m.chainId);
+        if (m.accountNumber != null && Object.hasOwnProperty.call(m, "accountNumber"))
+          w.uint32(32).uint64(m.accountNumber);
+        if (m.accountSequence != null && Object.hasOwnProperty.call(m, "accountSequence"))
+          w.uint32(40).uint64(m.accountSequence);
+        return w;
+      };
+      SignDoc.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.cosmos.tx.SignDoc();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.bodyBytes = r.bytes();
+              break;
+            case 2:
+              m.authInfoBytes = r.bytes();
+              break;
+            case 3:
+              m.chainId = r.string();
+              break;
+            case 4:
+              m.accountNumber = r.uint64();
+              break;
+            case 5:
+              m.accountSequence = r.uint64();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return SignDoc;
+    })();
+    tx.TxBody = (function () {
+      function TxBody(p) {
+        this.messages = [];
+        this.extensionOptions = [];
+        this.nonCriticalExtensionOptions = [];
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      TxBody.prototype.messages = $util.emptyArray;
+      TxBody.prototype.memo = "";
+      TxBody.prototype.timeoutHeight = $util.Long ? $util.Long.fromBits(0, 0, false) : 0;
+      TxBody.prototype.extensionOptions = $util.emptyArray;
+      TxBody.prototype.nonCriticalExtensionOptions = $util.emptyArray;
+      TxBody.create = function create(properties) {
+        return new TxBody(properties);
+      };
+      TxBody.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.messages != null && m.messages.length) {
+          for (var i = 0; i < m.messages.length; ++i)
+            $root.google.protobuf.Any.encode(m.messages[i], w.uint32(10).fork()).ldelim();
+        }
+        if (m.memo != null && Object.hasOwnProperty.call(m, "memo")) w.uint32(18).string(m.memo);
+        if (m.timeoutHeight != null && Object.hasOwnProperty.call(m, "timeoutHeight"))
+          w.uint32(24).int64(m.timeoutHeight);
+        if (m.extensionOptions != null && m.extensionOptions.length) {
+          for (var i = 0; i < m.extensionOptions.length; ++i)
+            $root.google.protobuf.Any.encode(m.extensionOptions[i], w.uint32(8186).fork()).ldelim();
+        }
+        if (m.nonCriticalExtensionOptions != null && m.nonCriticalExtensionOptions.length) {
+          for (var i = 0; i < m.nonCriticalExtensionOptions.length; ++i)
+            $root.google.protobuf.Any.encode(
+              m.nonCriticalExtensionOptions[i],
+              w.uint32(16378).fork(),
+            ).ldelim();
+        }
+        return w;
+      };
+      TxBody.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.cosmos.tx.TxBody();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              if (!(m.messages && m.messages.length)) m.messages = [];
+              m.messages.push($root.google.protobuf.Any.decode(r, r.uint32()));
+              break;
+            case 2:
+              m.memo = r.string();
+              break;
+            case 3:
+              m.timeoutHeight = r.int64();
+              break;
+            case 1023:
+              if (!(m.extensionOptions && m.extensionOptions.length)) m.extensionOptions = [];
+              m.extensionOptions.push($root.google.protobuf.Any.decode(r, r.uint32()));
+              break;
+            case 2047:
+              if (!(m.nonCriticalExtensionOptions && m.nonCriticalExtensionOptions.length))
+                m.nonCriticalExtensionOptions = [];
+              m.nonCriticalExtensionOptions.push($root.google.protobuf.Any.decode(r, r.uint32()));
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return TxBody;
+    })();
+    tx.AuthInfo = (function () {
+      function AuthInfo(p) {
+        this.signerInfos = [];
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      AuthInfo.prototype.signerInfos = $util.emptyArray;
+      AuthInfo.prototype.fee = null;
+      AuthInfo.create = function create(properties) {
+        return new AuthInfo(properties);
+      };
+      AuthInfo.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.signerInfos != null && m.signerInfos.length) {
+          for (var i = 0; i < m.signerInfos.length; ++i)
+            $root.cosmos.tx.SignerInfo.encode(m.signerInfos[i], w.uint32(10).fork()).ldelim();
+        }
+        if (m.fee != null && Object.hasOwnProperty.call(m, "fee"))
+          $root.cosmos.tx.Fee.encode(m.fee, w.uint32(18).fork()).ldelim();
+        return w;
+      };
+      AuthInfo.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.cosmos.tx.AuthInfo();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              if (!(m.signerInfos && m.signerInfos.length)) m.signerInfos = [];
+              m.signerInfos.push($root.cosmos.tx.SignerInfo.decode(r, r.uint32()));
+              break;
+            case 2:
+              m.fee = $root.cosmos.tx.Fee.decode(r, r.uint32());
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return AuthInfo;
+    })();
+    tx.SignerInfo = (function () {
+      function SignerInfo(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      SignerInfo.prototype.publicKey = null;
+      SignerInfo.prototype.modeInfo = null;
+      SignerInfo.create = function create(properties) {
+        return new SignerInfo(properties);
+      };
+      SignerInfo.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.publicKey != null && Object.hasOwnProperty.call(m, "publicKey"))
+          $root.cosmos.crypto.PublicKey.encode(m.publicKey, w.uint32(10).fork()).ldelim();
+        if (m.modeInfo != null && Object.hasOwnProperty.call(m, "modeInfo"))
+          $root.cosmos.tx.ModeInfo.encode(m.modeInfo, w.uint32(18).fork()).ldelim();
+        return w;
+      };
+      SignerInfo.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.cosmos.tx.SignerInfo();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.publicKey = $root.cosmos.crypto.PublicKey.decode(r, r.uint32());
+              break;
+            case 2:
+              m.modeInfo = $root.cosmos.tx.ModeInfo.decode(r, r.uint32());
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return SignerInfo;
+    })();
+    tx.ModeInfo = (function () {
+      function ModeInfo(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      ModeInfo.prototype.single = null;
+      ModeInfo.prototype.multi = null;
+      var $oneOfFields;
+      Object.defineProperty(ModeInfo.prototype, "sum", {
+        get: $util.oneOfGetter(($oneOfFields = ["single", "multi"])),
+        set: $util.oneOfSetter($oneOfFields),
+      });
+      ModeInfo.create = function create(properties) {
+        return new ModeInfo(properties);
+      };
+      ModeInfo.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.single != null && Object.hasOwnProperty.call(m, "single"))
+          $root.cosmos.tx.ModeInfo.Single.encode(m.single, w.uint32(10).fork()).ldelim();
+        if (m.multi != null && Object.hasOwnProperty.call(m, "multi"))
+          $root.cosmos.tx.ModeInfo.Multi.encode(m.multi, w.uint32(18).fork()).ldelim();
+        return w;
+      };
+      ModeInfo.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.cosmos.tx.ModeInfo();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.single = $root.cosmos.tx.ModeInfo.Single.decode(r, r.uint32());
+              break;
+            case 2:
+              m.multi = $root.cosmos.tx.ModeInfo.Multi.decode(r, r.uint32());
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      ModeInfo.Single = (function () {
+        function Single(p) {
           if (p)
             for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
               if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
         }
-        Tx.prototype.body = null;
-        Tx.prototype.authInfo = null;
-        Tx.prototype.signatures = $util.emptyArray;
-        Tx.create = function create(properties) {
-          return new Tx(properties);
+        Single.prototype.mode = 0;
+        Single.create = function create(properties) {
+          return new Single(properties);
         };
-        Tx.encode = function encode(m, w) {
+        Single.encode = function encode(m, w) {
           if (!w) w = $Writer.create();
-          if (m.body != null && Object.hasOwnProperty.call(m, "body"))
-            $root.cosmos_sdk.tx.v1.TxBody.encode(m.body, w.uint32(10).fork()).ldelim();
-          if (m.authInfo != null && Object.hasOwnProperty.call(m, "authInfo"))
-            $root.cosmos_sdk.tx.v1.AuthInfo.encode(m.authInfo, w.uint32(18).fork()).ldelim();
-          if (m.signatures != null && m.signatures.length) {
-            for (var i = 0; i < m.signatures.length; ++i) w.uint32(26).bytes(m.signatures[i]);
-          }
+          if (m.mode != null && Object.hasOwnProperty.call(m, "mode")) w.uint32(8).int32(m.mode);
           return w;
         };
-        Tx.decode = function decode(r, l) {
+        Single.decode = function decode(r, l) {
           if (!(r instanceof $Reader)) r = $Reader.create(r);
           var c = l === undefined ? r.len : r.pos + l,
-            m = new $root.cosmos_sdk.tx.v1.Tx();
+            m = new $root.cosmos.tx.ModeInfo.Single();
           while (r.pos < c) {
             var t = r.uint32();
             switch (t >>> 3) {
               case 1:
-                m.body = $root.cosmos_sdk.tx.v1.TxBody.decode(r, r.uint32());
-                break;
-              case 2:
-                m.authInfo = $root.cosmos_sdk.tx.v1.AuthInfo.decode(r, r.uint32());
-                break;
-              case 3:
-                if (!(m.signatures && m.signatures.length)) m.signatures = [];
-                m.signatures.push(r.bytes());
+                m.mode = r.int32();
                 break;
               default:
                 r.skipType(t & 7);
@@ -693,56 +1297,43 @@ $root.cosmos_sdk = (function () {
           }
           return m;
         };
-        return Tx;
+        return Single;
       })();
-      v1.SignDoc = (function () {
-        function SignDoc(p) {
+      ModeInfo.Multi = (function () {
+        function Multi(p) {
+          this.modeInfos = [];
           if (p)
             for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
               if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
         }
-        SignDoc.prototype.body = null;
-        SignDoc.prototype.authInfo = null;
-        SignDoc.prototype.chainId = "";
-        SignDoc.prototype.accountNumber = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
-        SignDoc.prototype.accountSequence = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
-        SignDoc.create = function create(properties) {
-          return new SignDoc(properties);
+        Multi.prototype.bitarray = null;
+        Multi.prototype.modeInfos = $util.emptyArray;
+        Multi.create = function create(properties) {
+          return new Multi(properties);
         };
-        SignDoc.encode = function encode(m, w) {
+        Multi.encode = function encode(m, w) {
           if (!w) w = $Writer.create();
-          if (m.body != null && Object.hasOwnProperty.call(m, "body"))
-            $root.cosmos_sdk.tx.v1.TxBody.encode(m.body, w.uint32(10).fork()).ldelim();
-          if (m.authInfo != null && Object.hasOwnProperty.call(m, "authInfo"))
-            $root.cosmos_sdk.tx.v1.AuthInfo.encode(m.authInfo, w.uint32(18).fork()).ldelim();
-          if (m.chainId != null && Object.hasOwnProperty.call(m, "chainId")) w.uint32(26).string(m.chainId);
-          if (m.accountNumber != null && Object.hasOwnProperty.call(m, "accountNumber"))
-            w.uint32(32).uint64(m.accountNumber);
-          if (m.accountSequence != null && Object.hasOwnProperty.call(m, "accountSequence"))
-            w.uint32(40).uint64(m.accountSequence);
+          if (m.bitarray != null && Object.hasOwnProperty.call(m, "bitarray"))
+            $root.cosmos.crypto.CompactBitArray.encode(m.bitarray, w.uint32(10).fork()).ldelim();
+          if (m.modeInfos != null && m.modeInfos.length) {
+            for (var i = 0; i < m.modeInfos.length; ++i)
+              $root.cosmos.tx.ModeInfo.encode(m.modeInfos[i], w.uint32(18).fork()).ldelim();
+          }
           return w;
         };
-        SignDoc.decode = function decode(r, l) {
+        Multi.decode = function decode(r, l) {
           if (!(r instanceof $Reader)) r = $Reader.create(r);
           var c = l === undefined ? r.len : r.pos + l,
-            m = new $root.cosmos_sdk.tx.v1.SignDoc();
+            m = new $root.cosmos.tx.ModeInfo.Multi();
           while (r.pos < c) {
             var t = r.uint32();
             switch (t >>> 3) {
               case 1:
-                m.body = $root.cosmos_sdk.tx.v1.TxBody.decode(r, r.uint32());
+                m.bitarray = $root.cosmos.crypto.CompactBitArray.decode(r, r.uint32());
                 break;
               case 2:
-                m.authInfo = $root.cosmos_sdk.tx.v1.AuthInfo.decode(r, r.uint32());
-                break;
-              case 3:
-                m.chainId = r.string();
-                break;
-              case 4:
-                m.accountNumber = r.uint64();
-                break;
-              case 5:
-                m.accountSequence = r.uint64();
+                if (!(m.modeInfos && m.modeInfos.length)) m.modeInfos = [];
+                m.modeInfos.push($root.cosmos.tx.ModeInfo.decode(r, r.uint32()));
                 break;
               default:
                 r.skipType(t & 7);
@@ -751,566 +1342,72 @@ $root.cosmos_sdk = (function () {
           }
           return m;
         };
-        return SignDoc;
+        return Multi;
       })();
-      v1.TxBody = (function () {
-        function TxBody(p) {
-          this.messages = [];
-          this.extensionOptions = [];
-          this.nonCriticalExtensionOptions = [];
-          if (p)
-            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      return ModeInfo;
+    })();
+    tx.Fee = (function () {
+      function Fee(p) {
+        this.amount = [];
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      Fee.prototype.amount = $util.emptyArray;
+      Fee.prototype.gasLimit = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+      Fee.create = function create(properties) {
+        return new Fee(properties);
+      };
+      Fee.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.amount != null && m.amount.length) {
+          for (var i = 0; i < m.amount.length; ++i)
+            $root.cosmos.Coin.encode(m.amount[i], w.uint32(10).fork()).ldelim();
         }
-        TxBody.prototype.messages = $util.emptyArray;
-        TxBody.prototype.memo = "";
-        TxBody.prototype.timeoutHeight = $util.Long ? $util.Long.fromBits(0, 0, false) : 0;
-        TxBody.prototype.extensionOptions = $util.emptyArray;
-        TxBody.prototype.nonCriticalExtensionOptions = $util.emptyArray;
-        TxBody.create = function create(properties) {
-          return new TxBody(properties);
-        };
-        TxBody.encode = function encode(m, w) {
-          if (!w) w = $Writer.create();
-          if (m.messages != null && m.messages.length) {
-            for (var i = 0; i < m.messages.length; ++i)
-              $root.google.protobuf.Any.encode(m.messages[i], w.uint32(10).fork()).ldelim();
+        if (m.gasLimit != null && Object.hasOwnProperty.call(m, "gasLimit")) w.uint32(16).uint64(m.gasLimit);
+        return w;
+      };
+      Fee.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.cosmos.tx.Fee();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              if (!(m.amount && m.amount.length)) m.amount = [];
+              m.amount.push($root.cosmos.Coin.decode(r, r.uint32()));
+              break;
+            case 2:
+              m.gasLimit = r.uint64();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
           }
-          if (m.memo != null && Object.hasOwnProperty.call(m, "memo")) w.uint32(18).string(m.memo);
-          if (m.timeoutHeight != null && Object.hasOwnProperty.call(m, "timeoutHeight"))
-            w.uint32(24).int64(m.timeoutHeight);
-          if (m.extensionOptions != null && m.extensionOptions.length) {
-            for (var i = 0; i < m.extensionOptions.length; ++i)
-              $root.google.protobuf.Any.encode(m.extensionOptions[i], w.uint32(8186).fork()).ldelim();
-          }
-          if (m.nonCriticalExtensionOptions != null && m.nonCriticalExtensionOptions.length) {
-            for (var i = 0; i < m.nonCriticalExtensionOptions.length; ++i)
-              $root.google.protobuf.Any.encode(
-                m.nonCriticalExtensionOptions[i],
-                w.uint32(16378).fork(),
-              ).ldelim();
-          }
-          return w;
-        };
-        TxBody.decode = function decode(r, l) {
-          if (!(r instanceof $Reader)) r = $Reader.create(r);
-          var c = l === undefined ? r.len : r.pos + l,
-            m = new $root.cosmos_sdk.tx.v1.TxBody();
-          while (r.pos < c) {
-            var t = r.uint32();
-            switch (t >>> 3) {
-              case 1:
-                if (!(m.messages && m.messages.length)) m.messages = [];
-                m.messages.push($root.google.protobuf.Any.decode(r, r.uint32()));
-                break;
-              case 2:
-                m.memo = r.string();
-                break;
-              case 3:
-                m.timeoutHeight = r.int64();
-                break;
-              case 1023:
-                if (!(m.extensionOptions && m.extensionOptions.length)) m.extensionOptions = [];
-                m.extensionOptions.push($root.google.protobuf.Any.decode(r, r.uint32()));
-                break;
-              case 2047:
-                if (!(m.nonCriticalExtensionOptions && m.nonCriticalExtensionOptions.length))
-                  m.nonCriticalExtensionOptions = [];
-                m.nonCriticalExtensionOptions.push($root.google.protobuf.Any.decode(r, r.uint32()));
-                break;
-              default:
-                r.skipType(t & 7);
-                break;
-            }
-          }
-          return m;
-        };
-        return TxBody;
-      })();
-      v1.AuthInfo = (function () {
-        function AuthInfo(p) {
-          this.signerInfos = [];
-          if (p)
-            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
         }
-        AuthInfo.prototype.signerInfos = $util.emptyArray;
-        AuthInfo.prototype.fee = null;
-        AuthInfo.create = function create(properties) {
-          return new AuthInfo(properties);
-        };
-        AuthInfo.encode = function encode(m, w) {
-          if (!w) w = $Writer.create();
-          if (m.signerInfos != null && m.signerInfos.length) {
-            for (var i = 0; i < m.signerInfos.length; ++i)
-              $root.cosmos_sdk.tx.v1.SignerInfo.encode(m.signerInfos[i], w.uint32(10).fork()).ldelim();
-          }
-          if (m.fee != null && Object.hasOwnProperty.call(m, "fee"))
-            $root.cosmos_sdk.tx.v1.Fee.encode(m.fee, w.uint32(18).fork()).ldelim();
-          return w;
-        };
-        AuthInfo.decode = function decode(r, l) {
-          if (!(r instanceof $Reader)) r = $Reader.create(r);
-          var c = l === undefined ? r.len : r.pos + l,
-            m = new $root.cosmos_sdk.tx.v1.AuthInfo();
-          while (r.pos < c) {
-            var t = r.uint32();
-            switch (t >>> 3) {
-              case 1:
-                if (!(m.signerInfos && m.signerInfos.length)) m.signerInfos = [];
-                m.signerInfos.push($root.cosmos_sdk.tx.v1.SignerInfo.decode(r, r.uint32()));
-                break;
-              case 2:
-                m.fee = $root.cosmos_sdk.tx.v1.Fee.decode(r, r.uint32());
-                break;
-              default:
-                r.skipType(t & 7);
-                break;
-            }
-          }
-          return m;
-        };
-        return AuthInfo;
-      })();
-      v1.SignerInfo = (function () {
-        function SignerInfo(p) {
-          if (p)
-            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-        }
-        SignerInfo.prototype.publicKey = null;
-        SignerInfo.prototype.modeInfo = null;
-        SignerInfo.create = function create(properties) {
-          return new SignerInfo(properties);
-        };
-        SignerInfo.encode = function encode(m, w) {
-          if (!w) w = $Writer.create();
-          if (m.publicKey != null && Object.hasOwnProperty.call(m, "publicKey"))
-            $root.google.protobuf.Any.encode(m.publicKey, w.uint32(10).fork()).ldelim();
-          if (m.modeInfo != null && Object.hasOwnProperty.call(m, "modeInfo"))
-            $root.cosmos_sdk.tx.v1.ModeInfo.encode(m.modeInfo, w.uint32(18).fork()).ldelim();
-          return w;
-        };
-        SignerInfo.decode = function decode(r, l) {
-          if (!(r instanceof $Reader)) r = $Reader.create(r);
-          var c = l === undefined ? r.len : r.pos + l,
-            m = new $root.cosmos_sdk.tx.v1.SignerInfo();
-          while (r.pos < c) {
-            var t = r.uint32();
-            switch (t >>> 3) {
-              case 1:
-                m.publicKey = $root.google.protobuf.Any.decode(r, r.uint32());
-                break;
-              case 2:
-                m.modeInfo = $root.cosmos_sdk.tx.v1.ModeInfo.decode(r, r.uint32());
-                break;
-              default:
-                r.skipType(t & 7);
-                break;
-            }
-          }
-          return m;
-        };
-        return SignerInfo;
-      })();
-      v1.ModeInfo = (function () {
-        function ModeInfo(p) {
-          if (p)
-            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-        }
-        ModeInfo.prototype.single = null;
-        ModeInfo.prototype.multi = null;
-        var $oneOfFields;
-        Object.defineProperty(ModeInfo.prototype, "sum", {
-          get: $util.oneOfGetter(($oneOfFields = ["single", "multi"])),
-          set: $util.oneOfSetter($oneOfFields),
-        });
-        ModeInfo.create = function create(properties) {
-          return new ModeInfo(properties);
-        };
-        ModeInfo.encode = function encode(m, w) {
-          if (!w) w = $Writer.create();
-          if (m.single != null && Object.hasOwnProperty.call(m, "single"))
-            $root.cosmos_sdk.tx.v1.ModeInfo.Single.encode(m.single, w.uint32(10).fork()).ldelim();
-          if (m.multi != null && Object.hasOwnProperty.call(m, "multi"))
-            $root.cosmos_sdk.tx.v1.ModeInfo.Multi.encode(m.multi, w.uint32(18).fork()).ldelim();
-          return w;
-        };
-        ModeInfo.decode = function decode(r, l) {
-          if (!(r instanceof $Reader)) r = $Reader.create(r);
-          var c = l === undefined ? r.len : r.pos + l,
-            m = new $root.cosmos_sdk.tx.v1.ModeInfo();
-          while (r.pos < c) {
-            var t = r.uint32();
-            switch (t >>> 3) {
-              case 1:
-                m.single = $root.cosmos_sdk.tx.v1.ModeInfo.Single.decode(r, r.uint32());
-                break;
-              case 2:
-                m.multi = $root.cosmos_sdk.tx.v1.ModeInfo.Multi.decode(r, r.uint32());
-                break;
-              default:
-                r.skipType(t & 7);
-                break;
-            }
-          }
-          return m;
-        };
-        ModeInfo.Single = (function () {
-          function Single(p) {
-            if (p)
-              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-          }
-          Single.prototype.mode = 0;
-          Single.create = function create(properties) {
-            return new Single(properties);
-          };
-          Single.encode = function encode(m, w) {
-            if (!w) w = $Writer.create();
-            if (m.mode != null && Object.hasOwnProperty.call(m, "mode")) w.uint32(8).int32(m.mode);
-            return w;
-          };
-          Single.decode = function decode(r, l) {
-            if (!(r instanceof $Reader)) r = $Reader.create(r);
-            var c = l === undefined ? r.len : r.pos + l,
-              m = new $root.cosmos_sdk.tx.v1.ModeInfo.Single();
-            while (r.pos < c) {
-              var t = r.uint32();
-              switch (t >>> 3) {
-                case 1:
-                  m.mode = r.int32();
-                  break;
-                default:
-                  r.skipType(t & 7);
-                  break;
-              }
-            }
-            return m;
-          };
-          return Single;
-        })();
-        ModeInfo.Multi = (function () {
-          function Multi(p) {
-            this.modeInfos = [];
-            if (p)
-              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-          }
-          Multi.prototype.bitarray = null;
-          Multi.prototype.modeInfos = $util.emptyArray;
-          Multi.create = function create(properties) {
-            return new Multi(properties);
-          };
-          Multi.encode = function encode(m, w) {
-            if (!w) w = $Writer.create();
-            if (m.bitarray != null && Object.hasOwnProperty.call(m, "bitarray"))
-              $root.cosmos_sdk.crypto.v1.CompactBitArray.encode(m.bitarray, w.uint32(10).fork()).ldelim();
-            if (m.modeInfos != null && m.modeInfos.length) {
-              for (var i = 0; i < m.modeInfos.length; ++i)
-                $root.cosmos_sdk.tx.v1.ModeInfo.encode(m.modeInfos[i], w.uint32(18).fork()).ldelim();
-            }
-            return w;
-          };
-          Multi.decode = function decode(r, l) {
-            if (!(r instanceof $Reader)) r = $Reader.create(r);
-            var c = l === undefined ? r.len : r.pos + l,
-              m = new $root.cosmos_sdk.tx.v1.ModeInfo.Multi();
-            while (r.pos < c) {
-              var t = r.uint32();
-              switch (t >>> 3) {
-                case 1:
-                  m.bitarray = $root.cosmos_sdk.crypto.v1.CompactBitArray.decode(r, r.uint32());
-                  break;
-                case 2:
-                  if (!(m.modeInfos && m.modeInfos.length)) m.modeInfos = [];
-                  m.modeInfos.push($root.cosmos_sdk.tx.v1.ModeInfo.decode(r, r.uint32()));
-                  break;
-                default:
-                  r.skipType(t & 7);
-                  break;
-              }
-            }
-            return m;
-          };
-          return Multi;
-        })();
-        return ModeInfo;
-      })();
-      v1.Fee = (function () {
-        function Fee(p) {
-          this.amount = [];
-          if (p)
-            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-        }
-        Fee.prototype.amount = $util.emptyArray;
-        Fee.prototype.gasLimit = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
-        Fee.create = function create(properties) {
-          return new Fee(properties);
-        };
-        Fee.encode = function encode(m, w) {
-          if (!w) w = $Writer.create();
-          if (m.amount != null && m.amount.length) {
-            for (var i = 0; i < m.amount.length; ++i)
-              $root.cosmos_sdk.v1.Coin.encode(m.amount[i], w.uint32(10).fork()).ldelim();
-          }
-          if (m.gasLimit != null && Object.hasOwnProperty.call(m, "gasLimit"))
-            w.uint32(16).uint64(m.gasLimit);
-          return w;
-        };
-        Fee.decode = function decode(r, l) {
-          if (!(r instanceof $Reader)) r = $Reader.create(r);
-          var c = l === undefined ? r.len : r.pos + l,
-            m = new $root.cosmos_sdk.tx.v1.Fee();
-          while (r.pos < c) {
-            var t = r.uint32();
-            switch (t >>> 3) {
-              case 1:
-                if (!(m.amount && m.amount.length)) m.amount = [];
-                m.amount.push($root.cosmos_sdk.v1.Coin.decode(r, r.uint32()));
-                break;
-              case 2:
-                m.gasLimit = r.uint64();
-                break;
-              default:
-                r.skipType(t & 7);
-                break;
-            }
-          }
-          return m;
-        };
-        return Fee;
-      })();
-      return v1;
+        return m;
+      };
+      return Fee;
     })();
     tx.signing = (function () {
       var signing = {};
-      signing.v1 = (function () {
-        var v1 = {};
-        v1.SignMode = (function () {
-          var valuesById = {},
-            values = Object.create(valuesById);
-          values[(valuesById[0] = "SIGN_MODE_UNSPECIFIED")] = 0;
-          values[(valuesById[1] = "SIGN_MODE_DIRECT")] = 1;
-          values[(valuesById[2] = "SIGN_MODE_TEXTUAL")] = 2;
-          values[(valuesById[127] = "SIGN_MODE_LEGACY_AMINO_JSON")] = 127;
-          return values;
-        })();
-        return v1;
+      signing.SignMode = (function () {
+        var valuesById = {},
+          values = Object.create(valuesById);
+        values[(valuesById[0] = "SIGN_MODE_UNSPECIFIED")] = 0;
+        values[(valuesById[1] = "SIGN_MODE_DIRECT")] = 1;
+        values[(valuesById[2] = "SIGN_MODE_TEXTUAL")] = 2;
+        values[(valuesById[127] = "SIGN_MODE_LEGACY_AMINO_JSON")] = 127;
+        return values;
       })();
       return signing;
     })();
     return tx;
   })();
-  cosmos_sdk.crypto = (function () {
-    var crypto = {};
-    crypto.v1 = (function () {
-      var v1 = {};
-      v1.PublicKey = (function () {
-        function PublicKey(p) {
-          if (p)
-            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-        }
-        PublicKey.prototype.secp256k1 = $util.newBuffer([]);
-        PublicKey.prototype.ed25519 = $util.newBuffer([]);
-        PublicKey.prototype.sr25519 = $util.newBuffer([]);
-        PublicKey.prototype.multisig = null;
-        PublicKey.prototype.secp256r1 = $util.newBuffer([]);
-        PublicKey.prototype.anyPubkey = null;
-        var $oneOfFields;
-        Object.defineProperty(PublicKey.prototype, "sum", {
-          get: $util.oneOfGetter(
-            ($oneOfFields = ["secp256k1", "ed25519", "sr25519", "multisig", "secp256r1", "anyPubkey"]),
-          ),
-          set: $util.oneOfSetter($oneOfFields),
-        });
-        PublicKey.create = function create(properties) {
-          return new PublicKey(properties);
-        };
-        PublicKey.encode = function encode(m, w) {
-          if (!w) w = $Writer.create();
-          if (m.secp256k1 != null && Object.hasOwnProperty.call(m, "secp256k1"))
-            w.uint32(10).bytes(m.secp256k1);
-          if (m.ed25519 != null && Object.hasOwnProperty.call(m, "ed25519")) w.uint32(18).bytes(m.ed25519);
-          if (m.sr25519 != null && Object.hasOwnProperty.call(m, "sr25519")) w.uint32(26).bytes(m.sr25519);
-          if (m.multisig != null && Object.hasOwnProperty.call(m, "multisig"))
-            $root.cosmos_sdk.crypto.v1.PubKeyMultisigThreshold.encode(
-              m.multisig,
-              w.uint32(34).fork(),
-            ).ldelim();
-          if (m.secp256r1 != null && Object.hasOwnProperty.call(m, "secp256r1"))
-            w.uint32(42).bytes(m.secp256r1);
-          if (m.anyPubkey != null && Object.hasOwnProperty.call(m, "anyPubkey"))
-            $root.google.protobuf.Any.encode(m.anyPubkey, w.uint32(122).fork()).ldelim();
-          return w;
-        };
-        PublicKey.decode = function decode(r, l) {
-          if (!(r instanceof $Reader)) r = $Reader.create(r);
-          var c = l === undefined ? r.len : r.pos + l,
-            m = new $root.cosmos_sdk.crypto.v1.PublicKey();
-          while (r.pos < c) {
-            var t = r.uint32();
-            switch (t >>> 3) {
-              case 1:
-                m.secp256k1 = r.bytes();
-                break;
-              case 2:
-                m.ed25519 = r.bytes();
-                break;
-              case 3:
-                m.sr25519 = r.bytes();
-                break;
-              case 4:
-                m.multisig = $root.cosmos_sdk.crypto.v1.PubKeyMultisigThreshold.decode(r, r.uint32());
-                break;
-              case 5:
-                m.secp256r1 = r.bytes();
-                break;
-              case 15:
-                m.anyPubkey = $root.google.protobuf.Any.decode(r, r.uint32());
-                break;
-              default:
-                r.skipType(t & 7);
-                break;
-            }
-          }
-          return m;
-        };
-        return PublicKey;
-      })();
-      v1.PubKeyMultisigThreshold = (function () {
-        function PubKeyMultisigThreshold(p) {
-          this.publicKeys = [];
-          if (p)
-            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-        }
-        PubKeyMultisigThreshold.prototype.threshold = 0;
-        PubKeyMultisigThreshold.prototype.publicKeys = $util.emptyArray;
-        PubKeyMultisigThreshold.create = function create(properties) {
-          return new PubKeyMultisigThreshold(properties);
-        };
-        PubKeyMultisigThreshold.encode = function encode(m, w) {
-          if (!w) w = $Writer.create();
-          if (m.threshold != null && Object.hasOwnProperty.call(m, "threshold"))
-            w.uint32(8).uint32(m.threshold);
-          if (m.publicKeys != null && m.publicKeys.length) {
-            for (var i = 0; i < m.publicKeys.length; ++i)
-              $root.cosmos_sdk.crypto.v1.PublicKey.encode(m.publicKeys[i], w.uint32(18).fork()).ldelim();
-          }
-          return w;
-        };
-        PubKeyMultisigThreshold.decode = function decode(r, l) {
-          if (!(r instanceof $Reader)) r = $Reader.create(r);
-          var c = l === undefined ? r.len : r.pos + l,
-            m = new $root.cosmos_sdk.crypto.v1.PubKeyMultisigThreshold();
-          while (r.pos < c) {
-            var t = r.uint32();
-            switch (t >>> 3) {
-              case 1:
-                m.threshold = r.uint32();
-                break;
-              case 2:
-                if (!(m.publicKeys && m.publicKeys.length)) m.publicKeys = [];
-                m.publicKeys.push($root.cosmos_sdk.crypto.v1.PublicKey.decode(r, r.uint32()));
-                break;
-              default:
-                r.skipType(t & 7);
-                break;
-            }
-          }
-          return m;
-        };
-        return PubKeyMultisigThreshold;
-      })();
-      v1.MultiSignature = (function () {
-        function MultiSignature(p) {
-          this.signatures = [];
-          if (p)
-            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-        }
-        MultiSignature.prototype.signatures = $util.emptyArray;
-        MultiSignature.create = function create(properties) {
-          return new MultiSignature(properties);
-        };
-        MultiSignature.encode = function encode(m, w) {
-          if (!w) w = $Writer.create();
-          if (m.signatures != null && m.signatures.length) {
-            for (var i = 0; i < m.signatures.length; ++i) w.uint32(10).bytes(m.signatures[i]);
-          }
-          return w;
-        };
-        MultiSignature.decode = function decode(r, l) {
-          if (!(r instanceof $Reader)) r = $Reader.create(r);
-          var c = l === undefined ? r.len : r.pos + l,
-            m = new $root.cosmos_sdk.crypto.v1.MultiSignature();
-          while (r.pos < c) {
-            var t = r.uint32();
-            switch (t >>> 3) {
-              case 1:
-                if (!(m.signatures && m.signatures.length)) m.signatures = [];
-                m.signatures.push(r.bytes());
-                break;
-              default:
-                r.skipType(t & 7);
-                break;
-            }
-          }
-          return m;
-        };
-        return MultiSignature;
-      })();
-      v1.CompactBitArray = (function () {
-        function CompactBitArray(p) {
-          if (p)
-            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-        }
-        CompactBitArray.prototype.extraBitsStored = 0;
-        CompactBitArray.prototype.elems = $util.newBuffer([]);
-        CompactBitArray.create = function create(properties) {
-          return new CompactBitArray(properties);
-        };
-        CompactBitArray.encode = function encode(m, w) {
-          if (!w) w = $Writer.create();
-          if (m.extraBitsStored != null && Object.hasOwnProperty.call(m, "extraBitsStored"))
-            w.uint32(8).uint32(m.extraBitsStored);
-          if (m.elems != null && Object.hasOwnProperty.call(m, "elems")) w.uint32(18).bytes(m.elems);
-          return w;
-        };
-        CompactBitArray.decode = function decode(r, l) {
-          if (!(r instanceof $Reader)) r = $Reader.create(r);
-          var c = l === undefined ? r.len : r.pos + l,
-            m = new $root.cosmos_sdk.crypto.v1.CompactBitArray();
-          while (r.pos < c) {
-            var t = r.uint32();
-            switch (t >>> 3) {
-              case 1:
-                m.extraBitsStored = r.uint32();
-                break;
-              case 2:
-                m.elems = r.bytes();
-                break;
-              default:
-                r.skipType(t & 7);
-                break;
-            }
-          }
-          return m;
-        };
-        return CompactBitArray;
-      })();
-      return v1;
-    })();
-    return crypto;
-  })();
-  return cosmos_sdk;
+  return cosmos;
 })();
-$root.tendermint = (function () {
+exports.tendermint = $root.tendermint = (function () {
   var tendermint = {};
   tendermint.abci = (function () {
     var abci = {};
@@ -3663,7 +3760,7 @@ $root.tendermint = (function () {
   })();
   return tendermint;
 })();
-$root.google = (function () {
+exports.google = $root.google = (function () {
   var google = {};
   google.protobuf = (function () {
     var protobuf = {};

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import protobuf from "protobufjs";
 
-import { cosmos_sdk as cosmosSdk, google } from "./generated/codecimpl";
+import { cosmos, google } from "./generated/codecimpl";
 
 export interface GeneratedType {
   readonly create: (properties?: { [k: string]: any }) => any;
@@ -40,8 +40,8 @@ export class Registry {
   constructor(customTypes: Iterable<[string, GeneratedType]> = []) {
     const { cosmosCoin, cosmosMsgSend } = defaultTypeUrls;
     this.types = new Map<string, GeneratedType>([
-      [cosmosCoin, cosmosSdk.v1.Coin],
-      [cosmosMsgSend, cosmosSdk.x.bank.v1.MsgSend],
+      [cosmosCoin, cosmos.Coin],
+      [cosmosMsgSend, cosmos.bank.MsgSend],
       ...customTypes,
     ]);
   }
@@ -72,7 +72,7 @@ export class Registry {
   }
 
   public encodeTxBody(txBodyFields: TxBodyValue): Uint8Array {
-    const { TxBody } = cosmosSdk.tx.v1;
+    const { TxBody } = cosmos.tx;
     const { Any } = google.protobuf;
 
     const wrappedMessages = txBodyFields.messages.map((message) => {
@@ -103,8 +103,8 @@ export class Registry {
     return decoded;
   }
 
-  public decodeTxBody(txBody: Uint8Array): cosmosSdk.tx.v1.TxBody {
-    const { TxBody } = cosmosSdk.tx.v1;
+  public decodeTxBody(txBody: Uint8Array): cosmos.tx.TxBody {
+    const { TxBody } = cosmos.tx;
     const decodedTxBody = TxBody.decode(txBody);
 
     return {

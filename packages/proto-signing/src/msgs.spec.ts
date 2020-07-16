@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { fromHex } from "@cosmjs/encoding";
 
-import { cosmos_sdk as cosmosSdk } from "./generated/codecimpl";
+import { cosmos } from "./generated/codecimpl";
 import { Coin, MsgSend } from "./msgs";
 
 describe("msgs", () => {
@@ -14,16 +14,16 @@ describe("msgs", () => {
     ];
     const donation = new MsgSend({ from_address: alice, to_address: bob, amount });
 
-    const expected = cosmosSdk.x.bank.v1.MsgSend.encode(
-      cosmosSdk.x.bank.v1.MsgSend.create({
+    const expected = cosmos.bank.MsgSend.encode(
+      cosmos.bank.MsgSend.create({
         fromAddress: alice,
         toAddress: bob,
         amount: [
-          cosmosSdk.v1.Coin.create({
+          cosmos.Coin.create({
             denom: "utoken",
             amount: "123",
           }),
-          cosmosSdk.v1.Coin.create({
+          cosmos.Coin.create({
             denom: "ustake",
             amount: "654",
           }),

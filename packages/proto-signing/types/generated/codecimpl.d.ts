@@ -1,1489 +1,1596 @@
 import * as $protobuf from "protobufjs";
-/** Namespace cosmos_sdk. */
-export namespace cosmos_sdk {
-  /** Namespace x. */
-  namespace x {
-    /** Namespace bank. */
-    namespace bank {
-      /** Namespace v1. */
-      namespace v1 {
-        /** Properties of a MsgSend. */
-        interface IMsgSend {
-          /** MsgSend fromAddress */
-          fromAddress?: Uint8Array | null;
+/** Namespace cosmos. */
+export namespace cosmos {
+  /** Properties of a Coin. */
+  interface ICoin {
+    /** Coin denom */
+    denom?: string | null;
 
-          /** MsgSend toAddress */
-          toAddress?: Uint8Array | null;
-
-          /** MsgSend amount */
-          amount?: cosmos_sdk.v1.ICoin[] | null;
-        }
-
-        /** Represents a MsgSend. */
-        class MsgSend implements IMsgSend {
-          /**
-           * Constructs a new MsgSend.
-           * @param [p] Properties to set
-           */
-          constructor(p?: cosmos_sdk.x.bank.v1.IMsgSend);
-
-          /** MsgSend fromAddress. */
-          public fromAddress: Uint8Array;
-
-          /** MsgSend toAddress. */
-          public toAddress: Uint8Array;
-
-          /** MsgSend amount. */
-          public amount: cosmos_sdk.v1.ICoin[];
-
-          /**
-           * Creates a new MsgSend instance using the specified properties.
-           * @param [properties] Properties to set
-           * @returns MsgSend instance
-           */
-          public static create(properties?: cosmos_sdk.x.bank.v1.IMsgSend): cosmos_sdk.x.bank.v1.MsgSend;
-
-          /**
-           * Encodes the specified MsgSend message. Does not implicitly {@link cosmos_sdk.x.bank.v1.MsgSend.verify|verify} messages.
-           * @param m MsgSend message or plain object to encode
-           * @param [w] Writer to encode to
-           * @returns Writer
-           */
-          public static encode(m: cosmos_sdk.x.bank.v1.IMsgSend, w?: $protobuf.Writer): $protobuf.Writer;
-
-          /**
-           * Decodes a MsgSend message from the specified reader or buffer.
-           * @param r Reader or buffer to decode from
-           * @param [l] Message length if known beforehand
-           * @returns MsgSend
-           * @throws {Error} If the payload is not a reader or valid buffer
-           * @throws {$protobuf.util.ProtocolError} If required fields are missing
-           */
-          public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos_sdk.x.bank.v1.MsgSend;
-        }
-
-        /** Properties of an Input. */
-        interface IInput {
-          /** Input address */
-          address?: Uint8Array | null;
-
-          /** Input coins */
-          coins?: cosmos_sdk.v1.ICoin[] | null;
-        }
-
-        /** Represents an Input. */
-        class Input implements IInput {
-          /**
-           * Constructs a new Input.
-           * @param [p] Properties to set
-           */
-          constructor(p?: cosmos_sdk.x.bank.v1.IInput);
-
-          /** Input address. */
-          public address: Uint8Array;
-
-          /** Input coins. */
-          public coins: cosmos_sdk.v1.ICoin[];
-
-          /**
-           * Creates a new Input instance using the specified properties.
-           * @param [properties] Properties to set
-           * @returns Input instance
-           */
-          public static create(properties?: cosmos_sdk.x.bank.v1.IInput): cosmos_sdk.x.bank.v1.Input;
-
-          /**
-           * Encodes the specified Input message. Does not implicitly {@link cosmos_sdk.x.bank.v1.Input.verify|verify} messages.
-           * @param m Input message or plain object to encode
-           * @param [w] Writer to encode to
-           * @returns Writer
-           */
-          public static encode(m: cosmos_sdk.x.bank.v1.IInput, w?: $protobuf.Writer): $protobuf.Writer;
-
-          /**
-           * Decodes an Input message from the specified reader or buffer.
-           * @param r Reader or buffer to decode from
-           * @param [l] Message length if known beforehand
-           * @returns Input
-           * @throws {Error} If the payload is not a reader or valid buffer
-           * @throws {$protobuf.util.ProtocolError} If required fields are missing
-           */
-          public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos_sdk.x.bank.v1.Input;
-        }
-
-        /** Properties of an Output. */
-        interface IOutput {
-          /** Output address */
-          address?: Uint8Array | null;
-
-          /** Output coins */
-          coins?: cosmos_sdk.v1.ICoin[] | null;
-        }
-
-        /** Represents an Output. */
-        class Output implements IOutput {
-          /**
-           * Constructs a new Output.
-           * @param [p] Properties to set
-           */
-          constructor(p?: cosmos_sdk.x.bank.v1.IOutput);
-
-          /** Output address. */
-          public address: Uint8Array;
-
-          /** Output coins. */
-          public coins: cosmos_sdk.v1.ICoin[];
-
-          /**
-           * Creates a new Output instance using the specified properties.
-           * @param [properties] Properties to set
-           * @returns Output instance
-           */
-          public static create(properties?: cosmos_sdk.x.bank.v1.IOutput): cosmos_sdk.x.bank.v1.Output;
-
-          /**
-           * Encodes the specified Output message. Does not implicitly {@link cosmos_sdk.x.bank.v1.Output.verify|verify} messages.
-           * @param m Output message or plain object to encode
-           * @param [w] Writer to encode to
-           * @returns Writer
-           */
-          public static encode(m: cosmos_sdk.x.bank.v1.IOutput, w?: $protobuf.Writer): $protobuf.Writer;
-
-          /**
-           * Decodes an Output message from the specified reader or buffer.
-           * @param r Reader or buffer to decode from
-           * @param [l] Message length if known beforehand
-           * @returns Output
-           * @throws {Error} If the payload is not a reader or valid buffer
-           * @throws {$protobuf.util.ProtocolError} If required fields are missing
-           */
-          public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos_sdk.x.bank.v1.Output;
-        }
-
-        /** Properties of a MsgMultiSend. */
-        interface IMsgMultiSend {
-          /** MsgMultiSend inputs */
-          inputs?: cosmos_sdk.x.bank.v1.IInput[] | null;
-
-          /** MsgMultiSend outputs */
-          outputs?: cosmos_sdk.x.bank.v1.IOutput[] | null;
-        }
-
-        /** Represents a MsgMultiSend. */
-        class MsgMultiSend implements IMsgMultiSend {
-          /**
-           * Constructs a new MsgMultiSend.
-           * @param [p] Properties to set
-           */
-          constructor(p?: cosmos_sdk.x.bank.v1.IMsgMultiSend);
-
-          /** MsgMultiSend inputs. */
-          public inputs: cosmos_sdk.x.bank.v1.IInput[];
-
-          /** MsgMultiSend outputs. */
-          public outputs: cosmos_sdk.x.bank.v1.IOutput[];
-
-          /**
-           * Creates a new MsgMultiSend instance using the specified properties.
-           * @param [properties] Properties to set
-           * @returns MsgMultiSend instance
-           */
-          public static create(
-            properties?: cosmos_sdk.x.bank.v1.IMsgMultiSend,
-          ): cosmos_sdk.x.bank.v1.MsgMultiSend;
-
-          /**
-           * Encodes the specified MsgMultiSend message. Does not implicitly {@link cosmos_sdk.x.bank.v1.MsgMultiSend.verify|verify} messages.
-           * @param m MsgMultiSend message or plain object to encode
-           * @param [w] Writer to encode to
-           * @returns Writer
-           */
-          public static encode(m: cosmos_sdk.x.bank.v1.IMsgMultiSend, w?: $protobuf.Writer): $protobuf.Writer;
-
-          /**
-           * Decodes a MsgMultiSend message from the specified reader or buffer.
-           * @param r Reader or buffer to decode from
-           * @param [l] Message length if known beforehand
-           * @returns MsgMultiSend
-           * @throws {Error} If the payload is not a reader or valid buffer
-           * @throws {$protobuf.util.ProtocolError} If required fields are missing
-           */
-          public static decode(
-            r: $protobuf.Reader | Uint8Array,
-            l?: number,
-          ): cosmos_sdk.x.bank.v1.MsgMultiSend;
-        }
-
-        /** Properties of a Supply. */
-        interface ISupply {
-          /** Supply total */
-          total?: cosmos_sdk.v1.ICoin[] | null;
-        }
-
-        /** Represents a Supply. */
-        class Supply implements ISupply {
-          /**
-           * Constructs a new Supply.
-           * @param [p] Properties to set
-           */
-          constructor(p?: cosmos_sdk.x.bank.v1.ISupply);
-
-          /** Supply total. */
-          public total: cosmos_sdk.v1.ICoin[];
-
-          /**
-           * Creates a new Supply instance using the specified properties.
-           * @param [properties] Properties to set
-           * @returns Supply instance
-           */
-          public static create(properties?: cosmos_sdk.x.bank.v1.ISupply): cosmos_sdk.x.bank.v1.Supply;
-
-          /**
-           * Encodes the specified Supply message. Does not implicitly {@link cosmos_sdk.x.bank.v1.Supply.verify|verify} messages.
-           * @param m Supply message or plain object to encode
-           * @param [w] Writer to encode to
-           * @returns Writer
-           */
-          public static encode(m: cosmos_sdk.x.bank.v1.ISupply, w?: $protobuf.Writer): $protobuf.Writer;
-
-          /**
-           * Decodes a Supply message from the specified reader or buffer.
-           * @param r Reader or buffer to decode from
-           * @param [l] Message length if known beforehand
-           * @returns Supply
-           * @throws {Error} If the payload is not a reader or valid buffer
-           * @throws {$protobuf.util.ProtocolError} If required fields are missing
-           */
-          public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos_sdk.x.bank.v1.Supply;
-        }
-      }
-    }
+    /** Coin amount */
+    amount?: string | null;
   }
 
-  /** Namespace v1. */
-  namespace v1 {
-    /** Properties of a Coin. */
-    interface ICoin {
-      /** Coin denom */
-      denom?: string | null;
-
-      /** Coin amount */
-      amount?: string | null;
-    }
-
-    /** Represents a Coin. */
-    class Coin implements ICoin {
-      /**
-       * Constructs a new Coin.
-       * @param [p] Properties to set
-       */
-      constructor(p?: cosmos_sdk.v1.ICoin);
-
-      /** Coin denom. */
-      public denom: string;
-
-      /** Coin amount. */
-      public amount: string;
-
-      /**
-       * Creates a new Coin instance using the specified properties.
-       * @param [properties] Properties to set
-       * @returns Coin instance
-       */
-      public static create(properties?: cosmos_sdk.v1.ICoin): cosmos_sdk.v1.Coin;
-
-      /**
-       * Encodes the specified Coin message. Does not implicitly {@link cosmos_sdk.v1.Coin.verify|verify} messages.
-       * @param m Coin message or plain object to encode
-       * @param [w] Writer to encode to
-       * @returns Writer
-       */
-      public static encode(m: cosmos_sdk.v1.ICoin, w?: $protobuf.Writer): $protobuf.Writer;
-
-      /**
-       * Decodes a Coin message from the specified reader or buffer.
-       * @param r Reader or buffer to decode from
-       * @param [l] Message length if known beforehand
-       * @returns Coin
-       * @throws {Error} If the payload is not a reader or valid buffer
-       * @throws {$protobuf.util.ProtocolError} If required fields are missing
-       */
-      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos_sdk.v1.Coin;
-    }
-
-    /** Properties of a DecCoin. */
-    interface IDecCoin {
-      /** DecCoin denom */
-      denom?: string | null;
-
-      /** DecCoin amount */
-      amount?: string | null;
-    }
-
-    /** Represents a DecCoin. */
-    class DecCoin implements IDecCoin {
-      /**
-       * Constructs a new DecCoin.
-       * @param [p] Properties to set
-       */
-      constructor(p?: cosmos_sdk.v1.IDecCoin);
-
-      /** DecCoin denom. */
-      public denom: string;
-
-      /** DecCoin amount. */
-      public amount: string;
-
-      /**
-       * Creates a new DecCoin instance using the specified properties.
-       * @param [properties] Properties to set
-       * @returns DecCoin instance
-       */
-      public static create(properties?: cosmos_sdk.v1.IDecCoin): cosmos_sdk.v1.DecCoin;
-
-      /**
-       * Encodes the specified DecCoin message. Does not implicitly {@link cosmos_sdk.v1.DecCoin.verify|verify} messages.
-       * @param m DecCoin message or plain object to encode
-       * @param [w] Writer to encode to
-       * @returns Writer
-       */
-      public static encode(m: cosmos_sdk.v1.IDecCoin, w?: $protobuf.Writer): $protobuf.Writer;
-
-      /**
-       * Decodes a DecCoin message from the specified reader or buffer.
-       * @param r Reader or buffer to decode from
-       * @param [l] Message length if known beforehand
-       * @returns DecCoin
-       * @throws {Error} If the payload is not a reader or valid buffer
-       * @throws {$protobuf.util.ProtocolError} If required fields are missing
-       */
-      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos_sdk.v1.DecCoin;
-    }
-
-    /** Properties of an IntProto. */
-    interface IIntProto {
-      /** IntProto int */
-      int?: string | null;
-    }
-
-    /** Represents an IntProto. */
-    class IntProto implements IIntProto {
-      /**
-       * Constructs a new IntProto.
-       * @param [p] Properties to set
-       */
-      constructor(p?: cosmos_sdk.v1.IIntProto);
-
-      /** IntProto int. */
-      public int: string;
-
-      /**
-       * Creates a new IntProto instance using the specified properties.
-       * @param [properties] Properties to set
-       * @returns IntProto instance
-       */
-      public static create(properties?: cosmos_sdk.v1.IIntProto): cosmos_sdk.v1.IntProto;
-
-      /**
-       * Encodes the specified IntProto message. Does not implicitly {@link cosmos_sdk.v1.IntProto.verify|verify} messages.
-       * @param m IntProto message or plain object to encode
-       * @param [w] Writer to encode to
-       * @returns Writer
-       */
-      public static encode(m: cosmos_sdk.v1.IIntProto, w?: $protobuf.Writer): $protobuf.Writer;
-
-      /**
-       * Decodes an IntProto message from the specified reader or buffer.
-       * @param r Reader or buffer to decode from
-       * @param [l] Message length if known beforehand
-       * @returns IntProto
-       * @throws {Error} If the payload is not a reader or valid buffer
-       * @throws {$protobuf.util.ProtocolError} If required fields are missing
-       */
-      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos_sdk.v1.IntProto;
-    }
-
-    /** Properties of a DecProto. */
-    interface IDecProto {
-      /** DecProto dec */
-      dec?: string | null;
-    }
-
-    /** Represents a DecProto. */
-    class DecProto implements IDecProto {
-      /**
-       * Constructs a new DecProto.
-       * @param [p] Properties to set
-       */
-      constructor(p?: cosmos_sdk.v1.IDecProto);
-
-      /** DecProto dec. */
-      public dec: string;
-
-      /**
-       * Creates a new DecProto instance using the specified properties.
-       * @param [properties] Properties to set
-       * @returns DecProto instance
-       */
-      public static create(properties?: cosmos_sdk.v1.IDecProto): cosmos_sdk.v1.DecProto;
-
-      /**
-       * Encodes the specified DecProto message. Does not implicitly {@link cosmos_sdk.v1.DecProto.verify|verify} messages.
-       * @param m DecProto message or plain object to encode
-       * @param [w] Writer to encode to
-       * @returns Writer
-       */
-      public static encode(m: cosmos_sdk.v1.IDecProto, w?: $protobuf.Writer): $protobuf.Writer;
-
-      /**
-       * Decodes a DecProto message from the specified reader or buffer.
-       * @param r Reader or buffer to decode from
-       * @param [l] Message length if known beforehand
-       * @returns DecProto
-       * @throws {Error} If the payload is not a reader or valid buffer
-       * @throws {$protobuf.util.ProtocolError} If required fields are missing
-       */
-      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos_sdk.v1.DecProto;
-    }
-
-    /** Properties of a ValAddresses. */
-    interface IValAddresses {
-      /** ValAddresses addresses */
-      addresses?: Uint8Array[] | null;
-    }
-
-    /** Represents a ValAddresses. */
-    class ValAddresses implements IValAddresses {
-      /**
-       * Constructs a new ValAddresses.
-       * @param [p] Properties to set
-       */
-      constructor(p?: cosmos_sdk.v1.IValAddresses);
-
-      /** ValAddresses addresses. */
-      public addresses: Uint8Array[];
-
-      /**
-       * Creates a new ValAddresses instance using the specified properties.
-       * @param [properties] Properties to set
-       * @returns ValAddresses instance
-       */
-      public static create(properties?: cosmos_sdk.v1.IValAddresses): cosmos_sdk.v1.ValAddresses;
-
-      /**
-       * Encodes the specified ValAddresses message. Does not implicitly {@link cosmos_sdk.v1.ValAddresses.verify|verify} messages.
-       * @param m ValAddresses message or plain object to encode
-       * @param [w] Writer to encode to
-       * @returns Writer
-       */
-      public static encode(m: cosmos_sdk.v1.IValAddresses, w?: $protobuf.Writer): $protobuf.Writer;
-
-      /**
-       * Decodes a ValAddresses message from the specified reader or buffer.
-       * @param r Reader or buffer to decode from
-       * @param [l] Message length if known beforehand
-       * @returns ValAddresses
-       * @throws {Error} If the payload is not a reader or valid buffer
-       * @throws {$protobuf.util.ProtocolError} If required fields are missing
-       */
-      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos_sdk.v1.ValAddresses;
-    }
-
-    /** Properties of a GasInfo. */
-    interface IGasInfo {
-      /** GasInfo gasWanted */
-      gasWanted?: number | Long | null;
-
-      /** GasInfo gasUsed */
-      gasUsed?: number | Long | null;
-    }
-
-    /** Represents a GasInfo. */
-    class GasInfo implements IGasInfo {
-      /**
-       * Constructs a new GasInfo.
-       * @param [p] Properties to set
-       */
-      constructor(p?: cosmos_sdk.v1.IGasInfo);
-
-      /** GasInfo gasWanted. */
-      public gasWanted: number | Long;
-
-      /** GasInfo gasUsed. */
-      public gasUsed: number | Long;
-
-      /**
-       * Creates a new GasInfo instance using the specified properties.
-       * @param [properties] Properties to set
-       * @returns GasInfo instance
-       */
-      public static create(properties?: cosmos_sdk.v1.IGasInfo): cosmos_sdk.v1.GasInfo;
-
-      /**
-       * Encodes the specified GasInfo message. Does not implicitly {@link cosmos_sdk.v1.GasInfo.verify|verify} messages.
-       * @param m GasInfo message or plain object to encode
-       * @param [w] Writer to encode to
-       * @returns Writer
-       */
-      public static encode(m: cosmos_sdk.v1.IGasInfo, w?: $protobuf.Writer): $protobuf.Writer;
-
-      /**
-       * Decodes a GasInfo message from the specified reader or buffer.
-       * @param r Reader or buffer to decode from
-       * @param [l] Message length if known beforehand
-       * @returns GasInfo
-       * @throws {Error} If the payload is not a reader or valid buffer
-       * @throws {$protobuf.util.ProtocolError} If required fields are missing
-       */
-      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos_sdk.v1.GasInfo;
-    }
-
-    /** Properties of a Result. */
-    interface IResult {
-      /** Result data */
-      data?: Uint8Array | null;
-
-      /** Result log */
-      log?: string | null;
-
-      /** Result events */
-      events?: tendermint.abci.types.IEvent[] | null;
-    }
-
-    /** Represents a Result. */
-    class Result implements IResult {
-      /**
-       * Constructs a new Result.
-       * @param [p] Properties to set
-       */
-      constructor(p?: cosmos_sdk.v1.IResult);
-
-      /** Result data. */
-      public data: Uint8Array;
-
-      /** Result log. */
-      public log: string;
-
-      /** Result events. */
-      public events: tendermint.abci.types.IEvent[];
-
-      /**
-       * Creates a new Result instance using the specified properties.
-       * @param [properties] Properties to set
-       * @returns Result instance
-       */
-      public static create(properties?: cosmos_sdk.v1.IResult): cosmos_sdk.v1.Result;
-
-      /**
-       * Encodes the specified Result message. Does not implicitly {@link cosmos_sdk.v1.Result.verify|verify} messages.
-       * @param m Result message or plain object to encode
-       * @param [w] Writer to encode to
-       * @returns Writer
-       */
-      public static encode(m: cosmos_sdk.v1.IResult, w?: $protobuf.Writer): $protobuf.Writer;
-
-      /**
-       * Decodes a Result message from the specified reader or buffer.
-       * @param r Reader or buffer to decode from
-       * @param [l] Message length if known beforehand
-       * @returns Result
-       * @throws {Error} If the payload is not a reader or valid buffer
-       * @throws {$protobuf.util.ProtocolError} If required fields are missing
-       */
-      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos_sdk.v1.Result;
-    }
-
-    /** Properties of a SimulationResponse. */
-    interface ISimulationResponse {
-      /** SimulationResponse gasInfo */
-      gasInfo?: cosmos_sdk.v1.IGasInfo | null;
-
-      /** SimulationResponse result */
-      result?: cosmos_sdk.v1.IResult | null;
-    }
-
-    /** Represents a SimulationResponse. */
-    class SimulationResponse implements ISimulationResponse {
-      /**
-       * Constructs a new SimulationResponse.
-       * @param [p] Properties to set
-       */
-      constructor(p?: cosmos_sdk.v1.ISimulationResponse);
-
-      /** SimulationResponse gasInfo. */
-      public gasInfo?: cosmos_sdk.v1.IGasInfo | null;
-
-      /** SimulationResponse result. */
-      public result?: cosmos_sdk.v1.IResult | null;
-
-      /**
-       * Creates a new SimulationResponse instance using the specified properties.
-       * @param [properties] Properties to set
-       * @returns SimulationResponse instance
-       */
-      public static create(properties?: cosmos_sdk.v1.ISimulationResponse): cosmos_sdk.v1.SimulationResponse;
-
-      /**
-       * Encodes the specified SimulationResponse message. Does not implicitly {@link cosmos_sdk.v1.SimulationResponse.verify|verify} messages.
-       * @param m SimulationResponse message or plain object to encode
-       * @param [w] Writer to encode to
-       * @returns Writer
-       */
-      public static encode(m: cosmos_sdk.v1.ISimulationResponse, w?: $protobuf.Writer): $protobuf.Writer;
-
-      /**
-       * Decodes a SimulationResponse message from the specified reader or buffer.
-       * @param r Reader or buffer to decode from
-       * @param [l] Message length if known beforehand
-       * @returns SimulationResponse
-       * @throws {Error} If the payload is not a reader or valid buffer
-       * @throws {$protobuf.util.ProtocolError} If required fields are missing
-       */
-      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos_sdk.v1.SimulationResponse;
-    }
-
-    /** Properties of a MsgData. */
-    interface IMsgData {
-      /** MsgData msgType */
-      msgType?: string | null;
-
-      /** MsgData data */
-      data?: Uint8Array | null;
-    }
-
-    /** Represents a MsgData. */
-    class MsgData implements IMsgData {
-      /**
-       * Constructs a new MsgData.
-       * @param [p] Properties to set
-       */
-      constructor(p?: cosmos_sdk.v1.IMsgData);
-
-      /** MsgData msgType. */
-      public msgType: string;
-
-      /** MsgData data. */
-      public data: Uint8Array;
-
-      /**
-       * Creates a new MsgData instance using the specified properties.
-       * @param [properties] Properties to set
-       * @returns MsgData instance
-       */
-      public static create(properties?: cosmos_sdk.v1.IMsgData): cosmos_sdk.v1.MsgData;
-
-      /**
-       * Encodes the specified MsgData message. Does not implicitly {@link cosmos_sdk.v1.MsgData.verify|verify} messages.
-       * @param m MsgData message or plain object to encode
-       * @param [w] Writer to encode to
-       * @returns Writer
-       */
-      public static encode(m: cosmos_sdk.v1.IMsgData, w?: $protobuf.Writer): $protobuf.Writer;
-
-      /**
-       * Decodes a MsgData message from the specified reader or buffer.
-       * @param r Reader or buffer to decode from
-       * @param [l] Message length if known beforehand
-       * @returns MsgData
-       * @throws {Error} If the payload is not a reader or valid buffer
-       * @throws {$protobuf.util.ProtocolError} If required fields are missing
-       */
-      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos_sdk.v1.MsgData;
-    }
-
-    /** Properties of a TxData. */
-    interface ITxData {
-      /** TxData data */
-      data?: cosmos_sdk.v1.IMsgData[] | null;
-    }
-
-    /** Represents a TxData. */
-    class TxData implements ITxData {
-      /**
-       * Constructs a new TxData.
-       * @param [p] Properties to set
-       */
-      constructor(p?: cosmos_sdk.v1.ITxData);
-
-      /** TxData data. */
-      public data: cosmos_sdk.v1.IMsgData[];
-
-      /**
-       * Creates a new TxData instance using the specified properties.
-       * @param [properties] Properties to set
-       * @returns TxData instance
-       */
-      public static create(properties?: cosmos_sdk.v1.ITxData): cosmos_sdk.v1.TxData;
-
-      /**
-       * Encodes the specified TxData message. Does not implicitly {@link cosmos_sdk.v1.TxData.verify|verify} messages.
-       * @param m TxData message or plain object to encode
-       * @param [w] Writer to encode to
-       * @returns Writer
-       */
-      public static encode(m: cosmos_sdk.v1.ITxData, w?: $protobuf.Writer): $protobuf.Writer;
-
-      /**
-       * Decodes a TxData message from the specified reader or buffer.
-       * @param r Reader or buffer to decode from
-       * @param [l] Message length if known beforehand
-       * @returns TxData
-       * @throws {Error} If the payload is not a reader or valid buffer
-       * @throws {$protobuf.util.ProtocolError} If required fields are missing
-       */
-      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos_sdk.v1.TxData;
-    }
+  /** Represents a Coin. */
+  class Coin implements ICoin {
+    /**
+     * Constructs a new Coin.
+     * @param [p] Properties to set
+     */
+    constructor(p?: cosmos.ICoin);
+
+    /** Coin denom. */
+    public denom: string;
+
+    /** Coin amount. */
+    public amount: string;
+
+    /**
+     * Creates a new Coin instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns Coin instance
+     */
+    public static create(properties?: cosmos.ICoin): cosmos.Coin;
+
+    /**
+     * Encodes the specified Coin message. Does not implicitly {@link cosmos.Coin.verify|verify} messages.
+     * @param m Coin message or plain object to encode
+     * @param [w] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(m: cosmos.ICoin, w?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes a Coin message from the specified reader or buffer.
+     * @param r Reader or buffer to decode from
+     * @param [l] Message length if known beforehand
+     * @returns Coin
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.Coin;
   }
 
-  /** Namespace tx. */
-  namespace tx {
-    /** Namespace v1. */
-    namespace v1 {
-      /** Properties of a Tx. */
-      interface ITx {
-        /** Tx body */
-        body?: cosmos_sdk.tx.v1.ITxBody | null;
-
-        /** Tx authInfo */
-        authInfo?: cosmos_sdk.tx.v1.IAuthInfo | null;
-
-        /** Tx signatures */
-        signatures?: Uint8Array[] | null;
-      }
-
-      /** Represents a Tx. */
-      class Tx implements ITx {
-        /**
-         * Constructs a new Tx.
-         * @param [p] Properties to set
-         */
-        constructor(p?: cosmos_sdk.tx.v1.ITx);
-
-        /** Tx body. */
-        public body?: cosmos_sdk.tx.v1.ITxBody | null;
-
-        /** Tx authInfo. */
-        public authInfo?: cosmos_sdk.tx.v1.IAuthInfo | null;
-
-        /** Tx signatures. */
-        public signatures: Uint8Array[];
-
-        /**
-         * Creates a new Tx instance using the specified properties.
-         * @param [properties] Properties to set
-         * @returns Tx instance
-         */
-        public static create(properties?: cosmos_sdk.tx.v1.ITx): cosmos_sdk.tx.v1.Tx;
-
-        /**
-         * Encodes the specified Tx message. Does not implicitly {@link cosmos_sdk.tx.v1.Tx.verify|verify} messages.
-         * @param m Tx message or plain object to encode
-         * @param [w] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(m: cosmos_sdk.tx.v1.ITx, w?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Decodes a Tx message from the specified reader or buffer.
-         * @param r Reader or buffer to decode from
-         * @param [l] Message length if known beforehand
-         * @returns Tx
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos_sdk.tx.v1.Tx;
-      }
-
-      /** Properties of a SignDoc. */
-      interface ISignDoc {
-        /** SignDoc body */
-        body?: cosmos_sdk.tx.v1.ITxBody | null;
-
-        /** SignDoc authInfo */
-        authInfo?: cosmos_sdk.tx.v1.IAuthInfo | null;
-
-        /** SignDoc chainId */
-        chainId?: string | null;
-
-        /** SignDoc accountNumber */
-        accountNumber?: number | Long | null;
-
-        /** SignDoc accountSequence */
-        accountSequence?: number | Long | null;
-      }
-
-      /** Represents a SignDoc. */
-      class SignDoc implements ISignDoc {
-        /**
-         * Constructs a new SignDoc.
-         * @param [p] Properties to set
-         */
-        constructor(p?: cosmos_sdk.tx.v1.ISignDoc);
-
-        /** SignDoc body. */
-        public body?: cosmos_sdk.tx.v1.ITxBody | null;
-
-        /** SignDoc authInfo. */
-        public authInfo?: cosmos_sdk.tx.v1.IAuthInfo | null;
-
-        /** SignDoc chainId. */
-        public chainId: string;
-
-        /** SignDoc accountNumber. */
-        public accountNumber: number | Long;
-
-        /** SignDoc accountSequence. */
-        public accountSequence: number | Long;
-
-        /**
-         * Creates a new SignDoc instance using the specified properties.
-         * @param [properties] Properties to set
-         * @returns SignDoc instance
-         */
-        public static create(properties?: cosmos_sdk.tx.v1.ISignDoc): cosmos_sdk.tx.v1.SignDoc;
-
-        /**
-         * Encodes the specified SignDoc message. Does not implicitly {@link cosmos_sdk.tx.v1.SignDoc.verify|verify} messages.
-         * @param m SignDoc message or plain object to encode
-         * @param [w] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(m: cosmos_sdk.tx.v1.ISignDoc, w?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Decodes a SignDoc message from the specified reader or buffer.
-         * @param r Reader or buffer to decode from
-         * @param [l] Message length if known beforehand
-         * @returns SignDoc
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos_sdk.tx.v1.SignDoc;
-      }
-
-      /** Properties of a TxBody. */
-      interface ITxBody {
-        /** TxBody messages */
-        messages?: google.protobuf.IAny[] | null;
-
-        /** TxBody memo */
-        memo?: string | null;
-
-        /** TxBody timeoutHeight */
-        timeoutHeight?: number | Long | null;
-
-        /** TxBody extensionOptions */
-        extensionOptions?: google.protobuf.IAny[] | null;
-
-        /** TxBody nonCriticalExtensionOptions */
-        nonCriticalExtensionOptions?: google.protobuf.IAny[] | null;
-      }
-
-      /** Represents a TxBody. */
-      class TxBody implements ITxBody {
-        /**
-         * Constructs a new TxBody.
-         * @param [p] Properties to set
-         */
-        constructor(p?: cosmos_sdk.tx.v1.ITxBody);
-
-        /** TxBody messages. */
-        public messages: google.protobuf.IAny[];
-
-        /** TxBody memo. */
-        public memo: string;
-
-        /** TxBody timeoutHeight. */
-        public timeoutHeight: number | Long;
-
-        /** TxBody extensionOptions. */
-        public extensionOptions: google.protobuf.IAny[];
-
-        /** TxBody nonCriticalExtensionOptions. */
-        public nonCriticalExtensionOptions: google.protobuf.IAny[];
-
-        /**
-         * Creates a new TxBody instance using the specified properties.
-         * @param [properties] Properties to set
-         * @returns TxBody instance
-         */
-        public static create(properties?: cosmos_sdk.tx.v1.ITxBody): cosmos_sdk.tx.v1.TxBody;
-
-        /**
-         * Encodes the specified TxBody message. Does not implicitly {@link cosmos_sdk.tx.v1.TxBody.verify|verify} messages.
-         * @param m TxBody message or plain object to encode
-         * @param [w] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(m: cosmos_sdk.tx.v1.ITxBody, w?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Decodes a TxBody message from the specified reader or buffer.
-         * @param r Reader or buffer to decode from
-         * @param [l] Message length if known beforehand
-         * @returns TxBody
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos_sdk.tx.v1.TxBody;
-      }
-
-      /** Properties of an AuthInfo. */
-      interface IAuthInfo {
-        /** AuthInfo signerInfos */
-        signerInfos?: cosmos_sdk.tx.v1.ISignerInfo[] | null;
-
-        /** AuthInfo fee */
-        fee?: cosmos_sdk.tx.v1.IFee | null;
-      }
-
-      /** Represents an AuthInfo. */
-      class AuthInfo implements IAuthInfo {
-        /**
-         * Constructs a new AuthInfo.
-         * @param [p] Properties to set
-         */
-        constructor(p?: cosmos_sdk.tx.v1.IAuthInfo);
-
-        /** AuthInfo signerInfos. */
-        public signerInfos: cosmos_sdk.tx.v1.ISignerInfo[];
-
-        /** AuthInfo fee. */
-        public fee?: cosmos_sdk.tx.v1.IFee | null;
-
-        /**
-         * Creates a new AuthInfo instance using the specified properties.
-         * @param [properties] Properties to set
-         * @returns AuthInfo instance
-         */
-        public static create(properties?: cosmos_sdk.tx.v1.IAuthInfo): cosmos_sdk.tx.v1.AuthInfo;
-
-        /**
-         * Encodes the specified AuthInfo message. Does not implicitly {@link cosmos_sdk.tx.v1.AuthInfo.verify|verify} messages.
-         * @param m AuthInfo message or plain object to encode
-         * @param [w] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(m: cosmos_sdk.tx.v1.IAuthInfo, w?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Decodes an AuthInfo message from the specified reader or buffer.
-         * @param r Reader or buffer to decode from
-         * @param [l] Message length if known beforehand
-         * @returns AuthInfo
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos_sdk.tx.v1.AuthInfo;
-      }
-
-      /** Properties of a SignerInfo. */
-      interface ISignerInfo {
-        /** SignerInfo publicKey */
-        publicKey?: google.protobuf.IAny | null;
-
-        /** SignerInfo modeInfo */
-        modeInfo?: cosmos_sdk.tx.v1.IModeInfo | null;
-      }
-
-      /** Represents a SignerInfo. */
-      class SignerInfo implements ISignerInfo {
-        /**
-         * Constructs a new SignerInfo.
-         * @param [p] Properties to set
-         */
-        constructor(p?: cosmos_sdk.tx.v1.ISignerInfo);
-
-        /** SignerInfo publicKey. */
-        public publicKey?: google.protobuf.IAny | null;
-
-        /** SignerInfo modeInfo. */
-        public modeInfo?: cosmos_sdk.tx.v1.IModeInfo | null;
-
-        /**
-         * Creates a new SignerInfo instance using the specified properties.
-         * @param [properties] Properties to set
-         * @returns SignerInfo instance
-         */
-        public static create(properties?: cosmos_sdk.tx.v1.ISignerInfo): cosmos_sdk.tx.v1.SignerInfo;
-
-        /**
-         * Encodes the specified SignerInfo message. Does not implicitly {@link cosmos_sdk.tx.v1.SignerInfo.verify|verify} messages.
-         * @param m SignerInfo message or plain object to encode
-         * @param [w] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(m: cosmos_sdk.tx.v1.ISignerInfo, w?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Decodes a SignerInfo message from the specified reader or buffer.
-         * @param r Reader or buffer to decode from
-         * @param [l] Message length if known beforehand
-         * @returns SignerInfo
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos_sdk.tx.v1.SignerInfo;
-      }
-
-      /** Properties of a ModeInfo. */
-      interface IModeInfo {
-        /** ModeInfo single */
-        single?: cosmos_sdk.tx.v1.ModeInfo.ISingle | null;
-
-        /** ModeInfo multi */
-        multi?: cosmos_sdk.tx.v1.ModeInfo.IMulti | null;
-      }
-
-      /** Represents a ModeInfo. */
-      class ModeInfo implements IModeInfo {
-        /**
-         * Constructs a new ModeInfo.
-         * @param [p] Properties to set
-         */
-        constructor(p?: cosmos_sdk.tx.v1.IModeInfo);
-
-        /** ModeInfo single. */
-        public single?: cosmos_sdk.tx.v1.ModeInfo.ISingle | null;
-
-        /** ModeInfo multi. */
-        public multi?: cosmos_sdk.tx.v1.ModeInfo.IMulti | null;
-
-        /** ModeInfo sum. */
-        public sum?: "single" | "multi";
-
-        /**
-         * Creates a new ModeInfo instance using the specified properties.
-         * @param [properties] Properties to set
-         * @returns ModeInfo instance
-         */
-        public static create(properties?: cosmos_sdk.tx.v1.IModeInfo): cosmos_sdk.tx.v1.ModeInfo;
-
-        /**
-         * Encodes the specified ModeInfo message. Does not implicitly {@link cosmos_sdk.tx.v1.ModeInfo.verify|verify} messages.
-         * @param m ModeInfo message or plain object to encode
-         * @param [w] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(m: cosmos_sdk.tx.v1.IModeInfo, w?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Decodes a ModeInfo message from the specified reader or buffer.
-         * @param r Reader or buffer to decode from
-         * @param [l] Message length if known beforehand
-         * @returns ModeInfo
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos_sdk.tx.v1.ModeInfo;
-      }
-
-      namespace ModeInfo {
-        /** Properties of a Single. */
-        interface ISingle {
-          /** Single mode */
-          mode?: cosmos_sdk.tx.signing.v1.SignMode | null;
-        }
-
-        /** Represents a Single. */
-        class Single implements ISingle {
-          /**
-           * Constructs a new Single.
-           * @param [p] Properties to set
-           */
-          constructor(p?: cosmos_sdk.tx.v1.ModeInfo.ISingle);
-
-          /** Single mode. */
-          public mode: cosmos_sdk.tx.signing.v1.SignMode;
-
-          /**
-           * Creates a new Single instance using the specified properties.
-           * @param [properties] Properties to set
-           * @returns Single instance
-           */
-          public static create(
-            properties?: cosmos_sdk.tx.v1.ModeInfo.ISingle,
-          ): cosmos_sdk.tx.v1.ModeInfo.Single;
-
-          /**
-           * Encodes the specified Single message. Does not implicitly {@link cosmos_sdk.tx.v1.ModeInfo.Single.verify|verify} messages.
-           * @param m Single message or plain object to encode
-           * @param [w] Writer to encode to
-           * @returns Writer
-           */
-          public static encode(m: cosmos_sdk.tx.v1.ModeInfo.ISingle, w?: $protobuf.Writer): $protobuf.Writer;
-
-          /**
-           * Decodes a Single message from the specified reader or buffer.
-           * @param r Reader or buffer to decode from
-           * @param [l] Message length if known beforehand
-           * @returns Single
-           * @throws {Error} If the payload is not a reader or valid buffer
-           * @throws {$protobuf.util.ProtocolError} If required fields are missing
-           */
-          public static decode(
-            r: $protobuf.Reader | Uint8Array,
-            l?: number,
-          ): cosmos_sdk.tx.v1.ModeInfo.Single;
-        }
-
-        /** Properties of a Multi. */
-        interface IMulti {
-          /** Multi bitarray */
-          bitarray?: cosmos_sdk.crypto.v1.ICompactBitArray | null;
-
-          /** Multi modeInfos */
-          modeInfos?: cosmos_sdk.tx.v1.IModeInfo[] | null;
-        }
-
-        /** Represents a Multi. */
-        class Multi implements IMulti {
-          /**
-           * Constructs a new Multi.
-           * @param [p] Properties to set
-           */
-          constructor(p?: cosmos_sdk.tx.v1.ModeInfo.IMulti);
-
-          /** Multi bitarray. */
-          public bitarray?: cosmos_sdk.crypto.v1.ICompactBitArray | null;
-
-          /** Multi modeInfos. */
-          public modeInfos: cosmos_sdk.tx.v1.IModeInfo[];
-
-          /**
-           * Creates a new Multi instance using the specified properties.
-           * @param [properties] Properties to set
-           * @returns Multi instance
-           */
-          public static create(
-            properties?: cosmos_sdk.tx.v1.ModeInfo.IMulti,
-          ): cosmos_sdk.tx.v1.ModeInfo.Multi;
-
-          /**
-           * Encodes the specified Multi message. Does not implicitly {@link cosmos_sdk.tx.v1.ModeInfo.Multi.verify|verify} messages.
-           * @param m Multi message or plain object to encode
-           * @param [w] Writer to encode to
-           * @returns Writer
-           */
-          public static encode(m: cosmos_sdk.tx.v1.ModeInfo.IMulti, w?: $protobuf.Writer): $protobuf.Writer;
-
-          /**
-           * Decodes a Multi message from the specified reader or buffer.
-           * @param r Reader or buffer to decode from
-           * @param [l] Message length if known beforehand
-           * @returns Multi
-           * @throws {Error} If the payload is not a reader or valid buffer
-           * @throws {$protobuf.util.ProtocolError} If required fields are missing
-           */
-          public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos_sdk.tx.v1.ModeInfo.Multi;
-        }
-      }
-
-      /** Properties of a Fee. */
-      interface IFee {
-        /** Fee amount */
-        amount?: cosmos_sdk.v1.ICoin[] | null;
-
-        /** Fee gasLimit */
-        gasLimit?: number | Long | null;
-      }
-
-      /** Represents a Fee. */
-      class Fee implements IFee {
-        /**
-         * Constructs a new Fee.
-         * @param [p] Properties to set
-         */
-        constructor(p?: cosmos_sdk.tx.v1.IFee);
-
-        /** Fee amount. */
-        public amount: cosmos_sdk.v1.ICoin[];
-
-        /** Fee gasLimit. */
-        public gasLimit: number | Long;
-
-        /**
-         * Creates a new Fee instance using the specified properties.
-         * @param [properties] Properties to set
-         * @returns Fee instance
-         */
-        public static create(properties?: cosmos_sdk.tx.v1.IFee): cosmos_sdk.tx.v1.Fee;
-
-        /**
-         * Encodes the specified Fee message. Does not implicitly {@link cosmos_sdk.tx.v1.Fee.verify|verify} messages.
-         * @param m Fee message or plain object to encode
-         * @param [w] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(m: cosmos_sdk.tx.v1.IFee, w?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Decodes a Fee message from the specified reader or buffer.
-         * @param r Reader or buffer to decode from
-         * @param [l] Message length if known beforehand
-         * @returns Fee
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos_sdk.tx.v1.Fee;
-      }
+  /** Properties of a DecCoin. */
+  interface IDecCoin {
+    /** DecCoin denom */
+    denom?: string | null;
+
+    /** DecCoin amount */
+    amount?: string | null;
+  }
+
+  /** Represents a DecCoin. */
+  class DecCoin implements IDecCoin {
+    /**
+     * Constructs a new DecCoin.
+     * @param [p] Properties to set
+     */
+    constructor(p?: cosmos.IDecCoin);
+
+    /** DecCoin denom. */
+    public denom: string;
+
+    /** DecCoin amount. */
+    public amount: string;
+
+    /**
+     * Creates a new DecCoin instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns DecCoin instance
+     */
+    public static create(properties?: cosmos.IDecCoin): cosmos.DecCoin;
+
+    /**
+     * Encodes the specified DecCoin message. Does not implicitly {@link cosmos.DecCoin.verify|verify} messages.
+     * @param m DecCoin message or plain object to encode
+     * @param [w] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(m: cosmos.IDecCoin, w?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes a DecCoin message from the specified reader or buffer.
+     * @param r Reader or buffer to decode from
+     * @param [l] Message length if known beforehand
+     * @returns DecCoin
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.DecCoin;
+  }
+
+  /** Properties of an IntProto. */
+  interface IIntProto {
+    /** IntProto int */
+    int?: string | null;
+  }
+
+  /** Represents an IntProto. */
+  class IntProto implements IIntProto {
+    /**
+     * Constructs a new IntProto.
+     * @param [p] Properties to set
+     */
+    constructor(p?: cosmos.IIntProto);
+
+    /** IntProto int. */
+    public int: string;
+
+    /**
+     * Creates a new IntProto instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns IntProto instance
+     */
+    public static create(properties?: cosmos.IIntProto): cosmos.IntProto;
+
+    /**
+     * Encodes the specified IntProto message. Does not implicitly {@link cosmos.IntProto.verify|verify} messages.
+     * @param m IntProto message or plain object to encode
+     * @param [w] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(m: cosmos.IIntProto, w?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes an IntProto message from the specified reader or buffer.
+     * @param r Reader or buffer to decode from
+     * @param [l] Message length if known beforehand
+     * @returns IntProto
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.IntProto;
+  }
+
+  /** Properties of a DecProto. */
+  interface IDecProto {
+    /** DecProto dec */
+    dec?: string | null;
+  }
+
+  /** Represents a DecProto. */
+  class DecProto implements IDecProto {
+    /**
+     * Constructs a new DecProto.
+     * @param [p] Properties to set
+     */
+    constructor(p?: cosmos.IDecProto);
+
+    /** DecProto dec. */
+    public dec: string;
+
+    /**
+     * Creates a new DecProto instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns DecProto instance
+     */
+    public static create(properties?: cosmos.IDecProto): cosmos.DecProto;
+
+    /**
+     * Encodes the specified DecProto message. Does not implicitly {@link cosmos.DecProto.verify|verify} messages.
+     * @param m DecProto message or plain object to encode
+     * @param [w] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(m: cosmos.IDecProto, w?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes a DecProto message from the specified reader or buffer.
+     * @param r Reader or buffer to decode from
+     * @param [l] Message length if known beforehand
+     * @returns DecProto
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.DecProto;
+  }
+
+  /** Properties of a ValAddresses. */
+  interface IValAddresses {
+    /** ValAddresses addresses */
+    addresses?: Uint8Array[] | null;
+  }
+
+  /** Represents a ValAddresses. */
+  class ValAddresses implements IValAddresses {
+    /**
+     * Constructs a new ValAddresses.
+     * @param [p] Properties to set
+     */
+    constructor(p?: cosmos.IValAddresses);
+
+    /** ValAddresses addresses. */
+    public addresses: Uint8Array[];
+
+    /**
+     * Creates a new ValAddresses instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns ValAddresses instance
+     */
+    public static create(properties?: cosmos.IValAddresses): cosmos.ValAddresses;
+
+    /**
+     * Encodes the specified ValAddresses message. Does not implicitly {@link cosmos.ValAddresses.verify|verify} messages.
+     * @param m ValAddresses message or plain object to encode
+     * @param [w] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(m: cosmos.IValAddresses, w?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes a ValAddresses message from the specified reader or buffer.
+     * @param r Reader or buffer to decode from
+     * @param [l] Message length if known beforehand
+     * @returns ValAddresses
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.ValAddresses;
+  }
+
+  /** Properties of a GasInfo. */
+  interface IGasInfo {
+    /** GasInfo gasWanted */
+    gasWanted?: number | Long | null;
+
+    /** GasInfo gasUsed */
+    gasUsed?: number | Long | null;
+  }
+
+  /** Represents a GasInfo. */
+  class GasInfo implements IGasInfo {
+    /**
+     * Constructs a new GasInfo.
+     * @param [p] Properties to set
+     */
+    constructor(p?: cosmos.IGasInfo);
+
+    /** GasInfo gasWanted. */
+    public gasWanted: number | Long;
+
+    /** GasInfo gasUsed. */
+    public gasUsed: number | Long;
+
+    /**
+     * Creates a new GasInfo instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns GasInfo instance
+     */
+    public static create(properties?: cosmos.IGasInfo): cosmos.GasInfo;
+
+    /**
+     * Encodes the specified GasInfo message. Does not implicitly {@link cosmos.GasInfo.verify|verify} messages.
+     * @param m GasInfo message or plain object to encode
+     * @param [w] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(m: cosmos.IGasInfo, w?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes a GasInfo message from the specified reader or buffer.
+     * @param r Reader or buffer to decode from
+     * @param [l] Message length if known beforehand
+     * @returns GasInfo
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.GasInfo;
+  }
+
+  /** Properties of a Result. */
+  interface IResult {
+    /** Result data */
+    data?: Uint8Array | null;
+
+    /** Result log */
+    log?: string | null;
+
+    /** Result events */
+    events?: tendermint.abci.types.IEvent[] | null;
+  }
+
+  /** Represents a Result. */
+  class Result implements IResult {
+    /**
+     * Constructs a new Result.
+     * @param [p] Properties to set
+     */
+    constructor(p?: cosmos.IResult);
+
+    /** Result data. */
+    public data: Uint8Array;
+
+    /** Result log. */
+    public log: string;
+
+    /** Result events. */
+    public events: tendermint.abci.types.IEvent[];
+
+    /**
+     * Creates a new Result instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns Result instance
+     */
+    public static create(properties?: cosmos.IResult): cosmos.Result;
+
+    /**
+     * Encodes the specified Result message. Does not implicitly {@link cosmos.Result.verify|verify} messages.
+     * @param m Result message or plain object to encode
+     * @param [w] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(m: cosmos.IResult, w?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes a Result message from the specified reader or buffer.
+     * @param r Reader or buffer to decode from
+     * @param [l] Message length if known beforehand
+     * @returns Result
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.Result;
+  }
+
+  /** Properties of a SimulationResponse. */
+  interface ISimulationResponse {
+    /** SimulationResponse gasInfo */
+    gasInfo?: cosmos.IGasInfo | null;
+
+    /** SimulationResponse result */
+    result?: cosmos.IResult | null;
+  }
+
+  /** Represents a SimulationResponse. */
+  class SimulationResponse implements ISimulationResponse {
+    /**
+     * Constructs a new SimulationResponse.
+     * @param [p] Properties to set
+     */
+    constructor(p?: cosmos.ISimulationResponse);
+
+    /** SimulationResponse gasInfo. */
+    public gasInfo?: cosmos.IGasInfo | null;
+
+    /** SimulationResponse result. */
+    public result?: cosmos.IResult | null;
+
+    /**
+     * Creates a new SimulationResponse instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns SimulationResponse instance
+     */
+    public static create(properties?: cosmos.ISimulationResponse): cosmos.SimulationResponse;
+
+    /**
+     * Encodes the specified SimulationResponse message. Does not implicitly {@link cosmos.SimulationResponse.verify|verify} messages.
+     * @param m SimulationResponse message or plain object to encode
+     * @param [w] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(m: cosmos.ISimulationResponse, w?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes a SimulationResponse message from the specified reader or buffer.
+     * @param r Reader or buffer to decode from
+     * @param [l] Message length if known beforehand
+     * @returns SimulationResponse
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.SimulationResponse;
+  }
+
+  /** Properties of a MsgData. */
+  interface IMsgData {
+    /** MsgData msgType */
+    msgType?: string | null;
+
+    /** MsgData data */
+    data?: Uint8Array | null;
+  }
+
+  /** Represents a MsgData. */
+  class MsgData implements IMsgData {
+    /**
+     * Constructs a new MsgData.
+     * @param [p] Properties to set
+     */
+    constructor(p?: cosmos.IMsgData);
+
+    /** MsgData msgType. */
+    public msgType: string;
+
+    /** MsgData data. */
+    public data: Uint8Array;
+
+    /**
+     * Creates a new MsgData instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns MsgData instance
+     */
+    public static create(properties?: cosmos.IMsgData): cosmos.MsgData;
+
+    /**
+     * Encodes the specified MsgData message. Does not implicitly {@link cosmos.MsgData.verify|verify} messages.
+     * @param m MsgData message or plain object to encode
+     * @param [w] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(m: cosmos.IMsgData, w?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes a MsgData message from the specified reader or buffer.
+     * @param r Reader or buffer to decode from
+     * @param [l] Message length if known beforehand
+     * @returns MsgData
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.MsgData;
+  }
+
+  /** Properties of a TxData. */
+  interface ITxData {
+    /** TxData data */
+    data?: cosmos.IMsgData[] | null;
+  }
+
+  /** Represents a TxData. */
+  class TxData implements ITxData {
+    /**
+     * Constructs a new TxData.
+     * @param [p] Properties to set
+     */
+    constructor(p?: cosmos.ITxData);
+
+    /** TxData data. */
+    public data: cosmos.IMsgData[];
+
+    /**
+     * Creates a new TxData instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns TxData instance
+     */
+    public static create(properties?: cosmos.ITxData): cosmos.TxData;
+
+    /**
+     * Encodes the specified TxData message. Does not implicitly {@link cosmos.TxData.verify|verify} messages.
+     * @param m TxData message or plain object to encode
+     * @param [w] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(m: cosmos.ITxData, w?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes a TxData message from the specified reader or buffer.
+     * @param r Reader or buffer to decode from
+     * @param [l] Message length if known beforehand
+     * @returns TxData
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.TxData;
+  }
+
+  /** Namespace bank. */
+  namespace bank {
+    /** Properties of a Params. */
+    interface IParams {
+      /** Params sendEnabled */
+      sendEnabled?: cosmos.bank.ISendEnabled[] | null;
+
+      /** Params defaultSendEnabled */
+      defaultSendEnabled?: boolean | null;
     }
 
-    /** Namespace signing. */
-    namespace signing {
-      /** Namespace v1. */
-      namespace v1 {
-        /** SignMode enum. */
-        enum SignMode {
-          SIGN_MODE_UNSPECIFIED = 0,
-          SIGN_MODE_DIRECT = 1,
-          SIGN_MODE_TEXTUAL = 2,
-          SIGN_MODE_LEGACY_AMINO_JSON = 127,
-        }
-      }
+    /** Represents a Params. */
+    class Params implements IParams {
+      /**
+       * Constructs a new Params.
+       * @param [p] Properties to set
+       */
+      constructor(p?: cosmos.bank.IParams);
+
+      /** Params sendEnabled. */
+      public sendEnabled: cosmos.bank.ISendEnabled[];
+
+      /** Params defaultSendEnabled. */
+      public defaultSendEnabled: boolean;
+
+      /**
+       * Creates a new Params instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns Params instance
+       */
+      public static create(properties?: cosmos.bank.IParams): cosmos.bank.Params;
+
+      /**
+       * Encodes the specified Params message. Does not implicitly {@link cosmos.bank.Params.verify|verify} messages.
+       * @param m Params message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: cosmos.bank.IParams, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a Params message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns Params
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.bank.Params;
+    }
+
+    /** Properties of a SendEnabled. */
+    interface ISendEnabled {
+      /** SendEnabled denom */
+      denom?: string | null;
+
+      /** SendEnabled enabled */
+      enabled?: boolean | null;
+    }
+
+    /** Represents a SendEnabled. */
+    class SendEnabled implements ISendEnabled {
+      /**
+       * Constructs a new SendEnabled.
+       * @param [p] Properties to set
+       */
+      constructor(p?: cosmos.bank.ISendEnabled);
+
+      /** SendEnabled denom. */
+      public denom: string;
+
+      /** SendEnabled enabled. */
+      public enabled: boolean;
+
+      /**
+       * Creates a new SendEnabled instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns SendEnabled instance
+       */
+      public static create(properties?: cosmos.bank.ISendEnabled): cosmos.bank.SendEnabled;
+
+      /**
+       * Encodes the specified SendEnabled message. Does not implicitly {@link cosmos.bank.SendEnabled.verify|verify} messages.
+       * @param m SendEnabled message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: cosmos.bank.ISendEnabled, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a SendEnabled message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns SendEnabled
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.bank.SendEnabled;
+    }
+
+    /** Properties of a MsgSend. */
+    interface IMsgSend {
+      /** MsgSend fromAddress */
+      fromAddress?: Uint8Array | null;
+
+      /** MsgSend toAddress */
+      toAddress?: Uint8Array | null;
+
+      /** MsgSend amount */
+      amount?: cosmos.ICoin[] | null;
+    }
+
+    /** Represents a MsgSend. */
+    class MsgSend implements IMsgSend {
+      /**
+       * Constructs a new MsgSend.
+       * @param [p] Properties to set
+       */
+      constructor(p?: cosmos.bank.IMsgSend);
+
+      /** MsgSend fromAddress. */
+      public fromAddress: Uint8Array;
+
+      /** MsgSend toAddress. */
+      public toAddress: Uint8Array;
+
+      /** MsgSend amount. */
+      public amount: cosmos.ICoin[];
+
+      /**
+       * Creates a new MsgSend instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns MsgSend instance
+       */
+      public static create(properties?: cosmos.bank.IMsgSend): cosmos.bank.MsgSend;
+
+      /**
+       * Encodes the specified MsgSend message. Does not implicitly {@link cosmos.bank.MsgSend.verify|verify} messages.
+       * @param m MsgSend message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: cosmos.bank.IMsgSend, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a MsgSend message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns MsgSend
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.bank.MsgSend;
+    }
+
+    /** Properties of an Input. */
+    interface IInput {
+      /** Input address */
+      address?: Uint8Array | null;
+
+      /** Input coins */
+      coins?: cosmos.ICoin[] | null;
+    }
+
+    /** Represents an Input. */
+    class Input implements IInput {
+      /**
+       * Constructs a new Input.
+       * @param [p] Properties to set
+       */
+      constructor(p?: cosmos.bank.IInput);
+
+      /** Input address. */
+      public address: Uint8Array;
+
+      /** Input coins. */
+      public coins: cosmos.ICoin[];
+
+      /**
+       * Creates a new Input instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns Input instance
+       */
+      public static create(properties?: cosmos.bank.IInput): cosmos.bank.Input;
+
+      /**
+       * Encodes the specified Input message. Does not implicitly {@link cosmos.bank.Input.verify|verify} messages.
+       * @param m Input message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: cosmos.bank.IInput, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes an Input message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns Input
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.bank.Input;
+    }
+
+    /** Properties of an Output. */
+    interface IOutput {
+      /** Output address */
+      address?: Uint8Array | null;
+
+      /** Output coins */
+      coins?: cosmos.ICoin[] | null;
+    }
+
+    /** Represents an Output. */
+    class Output implements IOutput {
+      /**
+       * Constructs a new Output.
+       * @param [p] Properties to set
+       */
+      constructor(p?: cosmos.bank.IOutput);
+
+      /** Output address. */
+      public address: Uint8Array;
+
+      /** Output coins. */
+      public coins: cosmos.ICoin[];
+
+      /**
+       * Creates a new Output instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns Output instance
+       */
+      public static create(properties?: cosmos.bank.IOutput): cosmos.bank.Output;
+
+      /**
+       * Encodes the specified Output message. Does not implicitly {@link cosmos.bank.Output.verify|verify} messages.
+       * @param m Output message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: cosmos.bank.IOutput, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes an Output message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns Output
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.bank.Output;
+    }
+
+    /** Properties of a MsgMultiSend. */
+    interface IMsgMultiSend {
+      /** MsgMultiSend inputs */
+      inputs?: cosmos.bank.IInput[] | null;
+
+      /** MsgMultiSend outputs */
+      outputs?: cosmos.bank.IOutput[] | null;
+    }
+
+    /** Represents a MsgMultiSend. */
+    class MsgMultiSend implements IMsgMultiSend {
+      /**
+       * Constructs a new MsgMultiSend.
+       * @param [p] Properties to set
+       */
+      constructor(p?: cosmos.bank.IMsgMultiSend);
+
+      /** MsgMultiSend inputs. */
+      public inputs: cosmos.bank.IInput[];
+
+      /** MsgMultiSend outputs. */
+      public outputs: cosmos.bank.IOutput[];
+
+      /**
+       * Creates a new MsgMultiSend instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns MsgMultiSend instance
+       */
+      public static create(properties?: cosmos.bank.IMsgMultiSend): cosmos.bank.MsgMultiSend;
+
+      /**
+       * Encodes the specified MsgMultiSend message. Does not implicitly {@link cosmos.bank.MsgMultiSend.verify|verify} messages.
+       * @param m MsgMultiSend message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: cosmos.bank.IMsgMultiSend, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a MsgMultiSend message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns MsgMultiSend
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.bank.MsgMultiSend;
+    }
+
+    /** Properties of a Supply. */
+    interface ISupply {
+      /** Supply total */
+      total?: cosmos.ICoin[] | null;
+    }
+
+    /** Represents a Supply. */
+    class Supply implements ISupply {
+      /**
+       * Constructs a new Supply.
+       * @param [p] Properties to set
+       */
+      constructor(p?: cosmos.bank.ISupply);
+
+      /** Supply total. */
+      public total: cosmos.ICoin[];
+
+      /**
+       * Creates a new Supply instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns Supply instance
+       */
+      public static create(properties?: cosmos.bank.ISupply): cosmos.bank.Supply;
+
+      /**
+       * Encodes the specified Supply message. Does not implicitly {@link cosmos.bank.Supply.verify|verify} messages.
+       * @param m Supply message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: cosmos.bank.ISupply, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a Supply message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns Supply
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.bank.Supply;
     }
   }
 
   /** Namespace crypto. */
   namespace crypto {
-    /** Namespace v1. */
-    namespace v1 {
-      /** Properties of a PublicKey. */
-      interface IPublicKey {
-        /** PublicKey secp256k1 */
-        secp256k1?: Uint8Array | null;
+    /** Properties of a PublicKey. */
+    interface IPublicKey {
+      /** PublicKey secp256k1 */
+      secp256k1?: Uint8Array | null;
 
-        /** PublicKey ed25519 */
-        ed25519?: Uint8Array | null;
+      /** PublicKey ed25519 */
+      ed25519?: Uint8Array | null;
 
-        /** PublicKey sr25519 */
-        sr25519?: Uint8Array | null;
+      /** PublicKey sr25519 */
+      sr25519?: Uint8Array | null;
 
-        /** PublicKey multisig */
-        multisig?: cosmos_sdk.crypto.v1.IPubKeyMultisigThreshold | null;
+      /** PublicKey multisig */
+      multisig?: cosmos.crypto.IPubKeyMultisigThreshold | null;
 
-        /** PublicKey secp256r1 */
-        secp256r1?: Uint8Array | null;
+      /** PublicKey secp256r1 */
+      secp256r1?: Uint8Array | null;
 
-        /** PublicKey anyPubkey */
-        anyPubkey?: google.protobuf.IAny | null;
+      /** PublicKey anyPubkey */
+      anyPubkey?: google.protobuf.IAny | null;
+    }
+
+    /** Represents a PublicKey. */
+    class PublicKey implements IPublicKey {
+      /**
+       * Constructs a new PublicKey.
+       * @param [p] Properties to set
+       */
+      constructor(p?: cosmos.crypto.IPublicKey);
+
+      /** PublicKey secp256k1. */
+      public secp256k1: Uint8Array;
+
+      /** PublicKey ed25519. */
+      public ed25519: Uint8Array;
+
+      /** PublicKey sr25519. */
+      public sr25519: Uint8Array;
+
+      /** PublicKey multisig. */
+      public multisig?: cosmos.crypto.IPubKeyMultisigThreshold | null;
+
+      /** PublicKey secp256r1. */
+      public secp256r1: Uint8Array;
+
+      /** PublicKey anyPubkey. */
+      public anyPubkey?: google.protobuf.IAny | null;
+
+      /** PublicKey sum. */
+      public sum?: "secp256k1" | "ed25519" | "sr25519" | "multisig" | "secp256r1" | "anyPubkey";
+
+      /**
+       * Creates a new PublicKey instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns PublicKey instance
+       */
+      public static create(properties?: cosmos.crypto.IPublicKey): cosmos.crypto.PublicKey;
+
+      /**
+       * Encodes the specified PublicKey message. Does not implicitly {@link cosmos.crypto.PublicKey.verify|verify} messages.
+       * @param m PublicKey message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: cosmos.crypto.IPublicKey, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a PublicKey message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns PublicKey
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.crypto.PublicKey;
+    }
+
+    /** Properties of a PubKeyMultisigThreshold. */
+    interface IPubKeyMultisigThreshold {
+      /** PubKeyMultisigThreshold threshold */
+      threshold?: number | null;
+
+      /** PubKeyMultisigThreshold publicKeys */
+      publicKeys?: cosmos.crypto.IPublicKey[] | null;
+    }
+
+    /** Represents a PubKeyMultisigThreshold. */
+    class PubKeyMultisigThreshold implements IPubKeyMultisigThreshold {
+      /**
+       * Constructs a new PubKeyMultisigThreshold.
+       * @param [p] Properties to set
+       */
+      constructor(p?: cosmos.crypto.IPubKeyMultisigThreshold);
+
+      /** PubKeyMultisigThreshold threshold. */
+      public threshold: number;
+
+      /** PubKeyMultisigThreshold publicKeys. */
+      public publicKeys: cosmos.crypto.IPublicKey[];
+
+      /**
+       * Creates a new PubKeyMultisigThreshold instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns PubKeyMultisigThreshold instance
+       */
+      public static create(
+        properties?: cosmos.crypto.IPubKeyMultisigThreshold,
+      ): cosmos.crypto.PubKeyMultisigThreshold;
+
+      /**
+       * Encodes the specified PubKeyMultisigThreshold message. Does not implicitly {@link cosmos.crypto.PubKeyMultisigThreshold.verify|verify} messages.
+       * @param m PubKeyMultisigThreshold message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: cosmos.crypto.IPubKeyMultisigThreshold, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a PubKeyMultisigThreshold message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns PubKeyMultisigThreshold
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(
+        r: $protobuf.Reader | Uint8Array,
+        l?: number,
+      ): cosmos.crypto.PubKeyMultisigThreshold;
+    }
+
+    /** Properties of a MultiSignature. */
+    interface IMultiSignature {
+      /** MultiSignature signatures */
+      signatures?: Uint8Array[] | null;
+    }
+
+    /** Represents a MultiSignature. */
+    class MultiSignature implements IMultiSignature {
+      /**
+       * Constructs a new MultiSignature.
+       * @param [p] Properties to set
+       */
+      constructor(p?: cosmos.crypto.IMultiSignature);
+
+      /** MultiSignature signatures. */
+      public signatures: Uint8Array[];
+
+      /**
+       * Creates a new MultiSignature instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns MultiSignature instance
+       */
+      public static create(properties?: cosmos.crypto.IMultiSignature): cosmos.crypto.MultiSignature;
+
+      /**
+       * Encodes the specified MultiSignature message. Does not implicitly {@link cosmos.crypto.MultiSignature.verify|verify} messages.
+       * @param m MultiSignature message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: cosmos.crypto.IMultiSignature, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a MultiSignature message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns MultiSignature
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.crypto.MultiSignature;
+    }
+
+    /** Properties of a CompactBitArray. */
+    interface ICompactBitArray {
+      /** CompactBitArray extraBitsStored */
+      extraBitsStored?: number | null;
+
+      /** CompactBitArray elems */
+      elems?: Uint8Array | null;
+    }
+
+    /** Represents a CompactBitArray. */
+    class CompactBitArray implements ICompactBitArray {
+      /**
+       * Constructs a new CompactBitArray.
+       * @param [p] Properties to set
+       */
+      constructor(p?: cosmos.crypto.ICompactBitArray);
+
+      /** CompactBitArray extraBitsStored. */
+      public extraBitsStored: number;
+
+      /** CompactBitArray elems. */
+      public elems: Uint8Array;
+
+      /**
+       * Creates a new CompactBitArray instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns CompactBitArray instance
+       */
+      public static create(properties?: cosmos.crypto.ICompactBitArray): cosmos.crypto.CompactBitArray;
+
+      /**
+       * Encodes the specified CompactBitArray message. Does not implicitly {@link cosmos.crypto.CompactBitArray.verify|verify} messages.
+       * @param m CompactBitArray message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: cosmos.crypto.ICompactBitArray, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a CompactBitArray message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns CompactBitArray
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.crypto.CompactBitArray;
+    }
+  }
+
+  /** Namespace tx. */
+  namespace tx {
+    /** Properties of a Tx. */
+    interface ITx {
+      /** Tx body */
+      body?: cosmos.tx.ITxBody | null;
+
+      /** Tx authInfo */
+      authInfo?: cosmos.tx.IAuthInfo | null;
+
+      /** Tx signatures */
+      signatures?: Uint8Array[] | null;
+    }
+
+    /** Represents a Tx. */
+    class Tx implements ITx {
+      /**
+       * Constructs a new Tx.
+       * @param [p] Properties to set
+       */
+      constructor(p?: cosmos.tx.ITx);
+
+      /** Tx body. */
+      public body?: cosmos.tx.ITxBody | null;
+
+      /** Tx authInfo. */
+      public authInfo?: cosmos.tx.IAuthInfo | null;
+
+      /** Tx signatures. */
+      public signatures: Uint8Array[];
+
+      /**
+       * Creates a new Tx instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns Tx instance
+       */
+      public static create(properties?: cosmos.tx.ITx): cosmos.tx.Tx;
+
+      /**
+       * Encodes the specified Tx message. Does not implicitly {@link cosmos.tx.Tx.verify|verify} messages.
+       * @param m Tx message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: cosmos.tx.ITx, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a Tx message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns Tx
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.tx.Tx;
+    }
+
+    /** Properties of a TxRaw. */
+    interface ITxRaw {
+      /** TxRaw bodyBytes */
+      bodyBytes?: Uint8Array | null;
+
+      /** TxRaw authInfoBytes */
+      authInfoBytes?: Uint8Array | null;
+
+      /** TxRaw signatures */
+      signatures?: Uint8Array[] | null;
+    }
+
+    /** Represents a TxRaw. */
+    class TxRaw implements ITxRaw {
+      /**
+       * Constructs a new TxRaw.
+       * @param [p] Properties to set
+       */
+      constructor(p?: cosmos.tx.ITxRaw);
+
+      /** TxRaw bodyBytes. */
+      public bodyBytes: Uint8Array;
+
+      /** TxRaw authInfoBytes. */
+      public authInfoBytes: Uint8Array;
+
+      /** TxRaw signatures. */
+      public signatures: Uint8Array[];
+
+      /**
+       * Creates a new TxRaw instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns TxRaw instance
+       */
+      public static create(properties?: cosmos.tx.ITxRaw): cosmos.tx.TxRaw;
+
+      /**
+       * Encodes the specified TxRaw message. Does not implicitly {@link cosmos.tx.TxRaw.verify|verify} messages.
+       * @param m TxRaw message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: cosmos.tx.ITxRaw, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a TxRaw message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns TxRaw
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.tx.TxRaw;
+    }
+
+    /** Properties of a SignDoc. */
+    interface ISignDoc {
+      /** SignDoc bodyBytes */
+      bodyBytes?: Uint8Array | null;
+
+      /** SignDoc authInfoBytes */
+      authInfoBytes?: Uint8Array | null;
+
+      /** SignDoc chainId */
+      chainId?: string | null;
+
+      /** SignDoc accountNumber */
+      accountNumber?: number | Long | null;
+
+      /** SignDoc accountSequence */
+      accountSequence?: number | Long | null;
+    }
+
+    /** Represents a SignDoc. */
+    class SignDoc implements ISignDoc {
+      /**
+       * Constructs a new SignDoc.
+       * @param [p] Properties to set
+       */
+      constructor(p?: cosmos.tx.ISignDoc);
+
+      /** SignDoc bodyBytes. */
+      public bodyBytes: Uint8Array;
+
+      /** SignDoc authInfoBytes. */
+      public authInfoBytes: Uint8Array;
+
+      /** SignDoc chainId. */
+      public chainId: string;
+
+      /** SignDoc accountNumber. */
+      public accountNumber: number | Long;
+
+      /** SignDoc accountSequence. */
+      public accountSequence: number | Long;
+
+      /**
+       * Creates a new SignDoc instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns SignDoc instance
+       */
+      public static create(properties?: cosmos.tx.ISignDoc): cosmos.tx.SignDoc;
+
+      /**
+       * Encodes the specified SignDoc message. Does not implicitly {@link cosmos.tx.SignDoc.verify|verify} messages.
+       * @param m SignDoc message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: cosmos.tx.ISignDoc, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a SignDoc message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns SignDoc
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.tx.SignDoc;
+    }
+
+    /** Properties of a TxBody. */
+    interface ITxBody {
+      /** TxBody messages */
+      messages?: google.protobuf.IAny[] | null;
+
+      /** TxBody memo */
+      memo?: string | null;
+
+      /** TxBody timeoutHeight */
+      timeoutHeight?: number | Long | null;
+
+      /** TxBody extensionOptions */
+      extensionOptions?: google.protobuf.IAny[] | null;
+
+      /** TxBody nonCriticalExtensionOptions */
+      nonCriticalExtensionOptions?: google.protobuf.IAny[] | null;
+    }
+
+    /** Represents a TxBody. */
+    class TxBody implements ITxBody {
+      /**
+       * Constructs a new TxBody.
+       * @param [p] Properties to set
+       */
+      constructor(p?: cosmos.tx.ITxBody);
+
+      /** TxBody messages. */
+      public messages: google.protobuf.IAny[];
+
+      /** TxBody memo. */
+      public memo: string;
+
+      /** TxBody timeoutHeight. */
+      public timeoutHeight: number | Long;
+
+      /** TxBody extensionOptions. */
+      public extensionOptions: google.protobuf.IAny[];
+
+      /** TxBody nonCriticalExtensionOptions. */
+      public nonCriticalExtensionOptions: google.protobuf.IAny[];
+
+      /**
+       * Creates a new TxBody instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns TxBody instance
+       */
+      public static create(properties?: cosmos.tx.ITxBody): cosmos.tx.TxBody;
+
+      /**
+       * Encodes the specified TxBody message. Does not implicitly {@link cosmos.tx.TxBody.verify|verify} messages.
+       * @param m TxBody message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: cosmos.tx.ITxBody, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a TxBody message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns TxBody
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.tx.TxBody;
+    }
+
+    /** Properties of an AuthInfo. */
+    interface IAuthInfo {
+      /** AuthInfo signerInfos */
+      signerInfos?: cosmos.tx.ISignerInfo[] | null;
+
+      /** AuthInfo fee */
+      fee?: cosmos.tx.IFee | null;
+    }
+
+    /** Represents an AuthInfo. */
+    class AuthInfo implements IAuthInfo {
+      /**
+       * Constructs a new AuthInfo.
+       * @param [p] Properties to set
+       */
+      constructor(p?: cosmos.tx.IAuthInfo);
+
+      /** AuthInfo signerInfos. */
+      public signerInfos: cosmos.tx.ISignerInfo[];
+
+      /** AuthInfo fee. */
+      public fee?: cosmos.tx.IFee | null;
+
+      /**
+       * Creates a new AuthInfo instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns AuthInfo instance
+       */
+      public static create(properties?: cosmos.tx.IAuthInfo): cosmos.tx.AuthInfo;
+
+      /**
+       * Encodes the specified AuthInfo message. Does not implicitly {@link cosmos.tx.AuthInfo.verify|verify} messages.
+       * @param m AuthInfo message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: cosmos.tx.IAuthInfo, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes an AuthInfo message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns AuthInfo
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.tx.AuthInfo;
+    }
+
+    /** Properties of a SignerInfo. */
+    interface ISignerInfo {
+      /** SignerInfo publicKey */
+      publicKey?: cosmos.crypto.IPublicKey | null;
+
+      /** SignerInfo modeInfo */
+      modeInfo?: cosmos.tx.IModeInfo | null;
+    }
+
+    /** Represents a SignerInfo. */
+    class SignerInfo implements ISignerInfo {
+      /**
+       * Constructs a new SignerInfo.
+       * @param [p] Properties to set
+       */
+      constructor(p?: cosmos.tx.ISignerInfo);
+
+      /** SignerInfo publicKey. */
+      public publicKey?: cosmos.crypto.IPublicKey | null;
+
+      /** SignerInfo modeInfo. */
+      public modeInfo?: cosmos.tx.IModeInfo | null;
+
+      /**
+       * Creates a new SignerInfo instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns SignerInfo instance
+       */
+      public static create(properties?: cosmos.tx.ISignerInfo): cosmos.tx.SignerInfo;
+
+      /**
+       * Encodes the specified SignerInfo message. Does not implicitly {@link cosmos.tx.SignerInfo.verify|verify} messages.
+       * @param m SignerInfo message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: cosmos.tx.ISignerInfo, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a SignerInfo message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns SignerInfo
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.tx.SignerInfo;
+    }
+
+    /** Properties of a ModeInfo. */
+    interface IModeInfo {
+      /** ModeInfo single */
+      single?: cosmos.tx.ModeInfo.ISingle | null;
+
+      /** ModeInfo multi */
+      multi?: cosmos.tx.ModeInfo.IMulti | null;
+    }
+
+    /** Represents a ModeInfo. */
+    class ModeInfo implements IModeInfo {
+      /**
+       * Constructs a new ModeInfo.
+       * @param [p] Properties to set
+       */
+      constructor(p?: cosmos.tx.IModeInfo);
+
+      /** ModeInfo single. */
+      public single?: cosmos.tx.ModeInfo.ISingle | null;
+
+      /** ModeInfo multi. */
+      public multi?: cosmos.tx.ModeInfo.IMulti | null;
+
+      /** ModeInfo sum. */
+      public sum?: "single" | "multi";
+
+      /**
+       * Creates a new ModeInfo instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns ModeInfo instance
+       */
+      public static create(properties?: cosmos.tx.IModeInfo): cosmos.tx.ModeInfo;
+
+      /**
+       * Encodes the specified ModeInfo message. Does not implicitly {@link cosmos.tx.ModeInfo.verify|verify} messages.
+       * @param m ModeInfo message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: cosmos.tx.IModeInfo, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a ModeInfo message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns ModeInfo
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.tx.ModeInfo;
+    }
+
+    namespace ModeInfo {
+      /** Properties of a Single. */
+      interface ISingle {
+        /** Single mode */
+        mode?: cosmos.tx.signing.SignMode | null;
       }
 
-      /** Represents a PublicKey. */
-      class PublicKey implements IPublicKey {
+      /** Represents a Single. */
+      class Single implements ISingle {
         /**
-         * Constructs a new PublicKey.
+         * Constructs a new Single.
          * @param [p] Properties to set
          */
-        constructor(p?: cosmos_sdk.crypto.v1.IPublicKey);
+        constructor(p?: cosmos.tx.ModeInfo.ISingle);
 
-        /** PublicKey secp256k1. */
-        public secp256k1: Uint8Array;
-
-        /** PublicKey ed25519. */
-        public ed25519: Uint8Array;
-
-        /** PublicKey sr25519. */
-        public sr25519: Uint8Array;
-
-        /** PublicKey multisig. */
-        public multisig?: cosmos_sdk.crypto.v1.IPubKeyMultisigThreshold | null;
-
-        /** PublicKey secp256r1. */
-        public secp256r1: Uint8Array;
-
-        /** PublicKey anyPubkey. */
-        public anyPubkey?: google.protobuf.IAny | null;
-
-        /** PublicKey sum. */
-        public sum?: "secp256k1" | "ed25519" | "sr25519" | "multisig" | "secp256r1" | "anyPubkey";
+        /** Single mode. */
+        public mode: cosmos.tx.signing.SignMode;
 
         /**
-         * Creates a new PublicKey instance using the specified properties.
+         * Creates a new Single instance using the specified properties.
          * @param [properties] Properties to set
-         * @returns PublicKey instance
+         * @returns Single instance
          */
-        public static create(properties?: cosmos_sdk.crypto.v1.IPublicKey): cosmos_sdk.crypto.v1.PublicKey;
+        public static create(properties?: cosmos.tx.ModeInfo.ISingle): cosmos.tx.ModeInfo.Single;
 
         /**
-         * Encodes the specified PublicKey message. Does not implicitly {@link cosmos_sdk.crypto.v1.PublicKey.verify|verify} messages.
-         * @param m PublicKey message or plain object to encode
+         * Encodes the specified Single message. Does not implicitly {@link cosmos.tx.ModeInfo.Single.verify|verify} messages.
+         * @param m Single message or plain object to encode
          * @param [w] Writer to encode to
          * @returns Writer
          */
-        public static encode(m: cosmos_sdk.crypto.v1.IPublicKey, w?: $protobuf.Writer): $protobuf.Writer;
+        public static encode(m: cosmos.tx.ModeInfo.ISingle, w?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Decodes a PublicKey message from the specified reader or buffer.
+         * Decodes a Single message from the specified reader or buffer.
          * @param r Reader or buffer to decode from
          * @param [l] Message length if known beforehand
-         * @returns PublicKey
+         * @returns Single
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos_sdk.crypto.v1.PublicKey;
+        public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.tx.ModeInfo.Single;
       }
 
-      /** Properties of a PubKeyMultisigThreshold. */
-      interface IPubKeyMultisigThreshold {
-        /** PubKeyMultisigThreshold threshold */
-        threshold?: number | null;
+      /** Properties of a Multi. */
+      interface IMulti {
+        /** Multi bitarray */
+        bitarray?: cosmos.crypto.ICompactBitArray | null;
 
-        /** PubKeyMultisigThreshold publicKeys */
-        publicKeys?: cosmos_sdk.crypto.v1.IPublicKey[] | null;
+        /** Multi modeInfos */
+        modeInfos?: cosmos.tx.IModeInfo[] | null;
       }
 
-      /** Represents a PubKeyMultisigThreshold. */
-      class PubKeyMultisigThreshold implements IPubKeyMultisigThreshold {
+      /** Represents a Multi. */
+      class Multi implements IMulti {
         /**
-         * Constructs a new PubKeyMultisigThreshold.
+         * Constructs a new Multi.
          * @param [p] Properties to set
          */
-        constructor(p?: cosmos_sdk.crypto.v1.IPubKeyMultisigThreshold);
+        constructor(p?: cosmos.tx.ModeInfo.IMulti);
 
-        /** PubKeyMultisigThreshold threshold. */
-        public threshold: number;
+        /** Multi bitarray. */
+        public bitarray?: cosmos.crypto.ICompactBitArray | null;
 
-        /** PubKeyMultisigThreshold publicKeys. */
-        public publicKeys: cosmos_sdk.crypto.v1.IPublicKey[];
+        /** Multi modeInfos. */
+        public modeInfos: cosmos.tx.IModeInfo[];
 
         /**
-         * Creates a new PubKeyMultisigThreshold instance using the specified properties.
+         * Creates a new Multi instance using the specified properties.
          * @param [properties] Properties to set
-         * @returns PubKeyMultisigThreshold instance
+         * @returns Multi instance
          */
-        public static create(
-          properties?: cosmos_sdk.crypto.v1.IPubKeyMultisigThreshold,
-        ): cosmos_sdk.crypto.v1.PubKeyMultisigThreshold;
+        public static create(properties?: cosmos.tx.ModeInfo.IMulti): cosmos.tx.ModeInfo.Multi;
 
         /**
-         * Encodes the specified PubKeyMultisigThreshold message. Does not implicitly {@link cosmos_sdk.crypto.v1.PubKeyMultisigThreshold.verify|verify} messages.
-         * @param m PubKeyMultisigThreshold message or plain object to encode
+         * Encodes the specified Multi message. Does not implicitly {@link cosmos.tx.ModeInfo.Multi.verify|verify} messages.
+         * @param m Multi message or plain object to encode
          * @param [w] Writer to encode to
          * @returns Writer
          */
-        public static encode(
-          m: cosmos_sdk.crypto.v1.IPubKeyMultisigThreshold,
-          w?: $protobuf.Writer,
-        ): $protobuf.Writer;
+        public static encode(m: cosmos.tx.ModeInfo.IMulti, w?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Decodes a PubKeyMultisigThreshold message from the specified reader or buffer.
+         * Decodes a Multi message from the specified reader or buffer.
          * @param r Reader or buffer to decode from
          * @param [l] Message length if known beforehand
-         * @returns PubKeyMultisigThreshold
+         * @returns Multi
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decode(
-          r: $protobuf.Reader | Uint8Array,
-          l?: number,
-        ): cosmos_sdk.crypto.v1.PubKeyMultisigThreshold;
+        public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.tx.ModeInfo.Multi;
       }
+    }
 
-      /** Properties of a MultiSignature. */
-      interface IMultiSignature {
-        /** MultiSignature signatures */
-        signatures?: Uint8Array[] | null;
-      }
+    /** Properties of a Fee. */
+    interface IFee {
+      /** Fee amount */
+      amount?: cosmos.ICoin[] | null;
 
-      /** Represents a MultiSignature. */
-      class MultiSignature implements IMultiSignature {
-        /**
-         * Constructs a new MultiSignature.
-         * @param [p] Properties to set
-         */
-        constructor(p?: cosmos_sdk.crypto.v1.IMultiSignature);
+      /** Fee gasLimit */
+      gasLimit?: number | Long | null;
+    }
 
-        /** MultiSignature signatures. */
-        public signatures: Uint8Array[];
+    /** Represents a Fee. */
+    class Fee implements IFee {
+      /**
+       * Constructs a new Fee.
+       * @param [p] Properties to set
+       */
+      constructor(p?: cosmos.tx.IFee);
 
-        /**
-         * Creates a new MultiSignature instance using the specified properties.
-         * @param [properties] Properties to set
-         * @returns MultiSignature instance
-         */
-        public static create(
-          properties?: cosmos_sdk.crypto.v1.IMultiSignature,
-        ): cosmos_sdk.crypto.v1.MultiSignature;
+      /** Fee amount. */
+      public amount: cosmos.ICoin[];
 
-        /**
-         * Encodes the specified MultiSignature message. Does not implicitly {@link cosmos_sdk.crypto.v1.MultiSignature.verify|verify} messages.
-         * @param m MultiSignature message or plain object to encode
-         * @param [w] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(m: cosmos_sdk.crypto.v1.IMultiSignature, w?: $protobuf.Writer): $protobuf.Writer;
+      /** Fee gasLimit. */
+      public gasLimit: number | Long;
 
-        /**
-         * Decodes a MultiSignature message from the specified reader or buffer.
-         * @param r Reader or buffer to decode from
-         * @param [l] Message length if known beforehand
-         * @returns MultiSignature
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(
-          r: $protobuf.Reader | Uint8Array,
-          l?: number,
-        ): cosmos_sdk.crypto.v1.MultiSignature;
-      }
+      /**
+       * Creates a new Fee instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns Fee instance
+       */
+      public static create(properties?: cosmos.tx.IFee): cosmos.tx.Fee;
 
-      /** Properties of a CompactBitArray. */
-      interface ICompactBitArray {
-        /** CompactBitArray extraBitsStored */
-        extraBitsStored?: number | null;
+      /**
+       * Encodes the specified Fee message. Does not implicitly {@link cosmos.tx.Fee.verify|verify} messages.
+       * @param m Fee message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: cosmos.tx.IFee, w?: $protobuf.Writer): $protobuf.Writer;
 
-        /** CompactBitArray elems */
-        elems?: Uint8Array | null;
-      }
+      /**
+       * Decodes a Fee message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns Fee
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.tx.Fee;
+    }
 
-      /** Represents a CompactBitArray. */
-      class CompactBitArray implements ICompactBitArray {
-        /**
-         * Constructs a new CompactBitArray.
-         * @param [p] Properties to set
-         */
-        constructor(p?: cosmos_sdk.crypto.v1.ICompactBitArray);
-
-        /** CompactBitArray extraBitsStored. */
-        public extraBitsStored: number;
-
-        /** CompactBitArray elems. */
-        public elems: Uint8Array;
-
-        /**
-         * Creates a new CompactBitArray instance using the specified properties.
-         * @param [properties] Properties to set
-         * @returns CompactBitArray instance
-         */
-        public static create(
-          properties?: cosmos_sdk.crypto.v1.ICompactBitArray,
-        ): cosmos_sdk.crypto.v1.CompactBitArray;
-
-        /**
-         * Encodes the specified CompactBitArray message. Does not implicitly {@link cosmos_sdk.crypto.v1.CompactBitArray.verify|verify} messages.
-         * @param m CompactBitArray message or plain object to encode
-         * @param [w] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(
-          m: cosmos_sdk.crypto.v1.ICompactBitArray,
-          w?: $protobuf.Writer,
-        ): $protobuf.Writer;
-
-        /**
-         * Decodes a CompactBitArray message from the specified reader or buffer.
-         * @param r Reader or buffer to decode from
-         * @param [l] Message length if known beforehand
-         * @returns CompactBitArray
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(
-          r: $protobuf.Reader | Uint8Array,
-          l?: number,
-        ): cosmos_sdk.crypto.v1.CompactBitArray;
+    /** Namespace signing. */
+    namespace signing {
+      /** SignMode enum. */
+      enum SignMode {
+        SIGN_MODE_UNSPECIFIED = 0,
+        SIGN_MODE_DIRECT = 1,
+        SIGN_MODE_TEXTUAL = 2,
+        SIGN_MODE_LEGACY_AMINO_JSON = 127,
       }
     }
   }

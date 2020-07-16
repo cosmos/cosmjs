@@ -2,10 +2,10 @@
 import { assert } from "@cosmjs/utils";
 
 import { MsgDemo as MsgDemoType } from "./demo";
-import { cosmos_sdk as cosmosSdk, google } from "./generated/codecimpl";
+import { cosmos, google } from "./generated/codecimpl";
 import { Registry } from "./registry";
 
-const { TxBody } = cosmosSdk.tx.v1;
+const { TxBody } = cosmos.tx;
 const { Any } = google.protobuf;
 
 describe("registry demo", () => {
@@ -22,7 +22,7 @@ describe("registry demo", () => {
       fromAddress: Uint8Array.from(Array.from({ length: 20 }, () => 1)),
       toAddress: Uint8Array.from(Array.from({ length: 20 }, () => 2)),
       amount: [coin],
-    }) as unknown) as cosmosSdk.x.bank.v1.MsgSend;
+    }) as unknown) as cosmos.bank.MsgSend;
     const msgSendBytes = MsgSend.encode(msgSend).finish();
     const msgSendWrapped = Any.create({
       type_url: "/cosmos.bank.MsgSend",
