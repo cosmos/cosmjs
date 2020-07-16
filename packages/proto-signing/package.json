@@ -40,7 +40,7 @@
     "preget-proto": "rm -rf proto",
     "get-proto": "REF=master ./scripts/get-proto.sh",
     "predefine-proto": "./scripts/predefine-proto.sh",
-    "define-proto": "pbts src/generated/codecimpl.tmp.js -o src/generated/codecimpl.d.ts && tsc --removeComments --outFile src/generated/codecimpl.js --allowJs src/generated/codecimpl.tmp.js && rm src/generated/codecimpl.tmp.js",
+    "define-proto": "./scripts/define-proto.sh",
     "postdefine-proto": "prettier --write \"src/generated/codecimpl.*\""
   },
   "dependencies": {
