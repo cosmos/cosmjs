@@ -37,8 +37,9 @@
     "test": "yarn build-or-skip && yarn test-node",
     "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet",
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js",
+    "preget-proto": "rm -rf proto",
     "get-proto": "REF=master ./scripts/get-proto.sh",
-    "predefine-proto": "mkdir -p src/generated && pbjs -t static-module -w commonjs -o src/generated/codecimpl.tmp.js --sparse --no-beautify --no-delimited --no-verify --no-convert ./proto/cosmos/cosmos-sdk/{x/bank/types/types.proto,types/types.proto,types/tx/types.proto,types/tx/signing/types.proto,third_party/proto/tendermint/**/*.proto,crypto/types/types.proto}",
+    "predefine-proto": "./scripts/predefine-proto.sh",
     "define-proto": "pbts src/generated/codecimpl.tmp.js -o src/generated/codecimpl.d.ts && tsc --removeComments --outFile src/generated/codecimpl.js --allowJs src/generated/codecimpl.tmp.js && rm src/generated/codecimpl.tmp.js",
     "postdefine-proto": "prettier --write \"src/generated/codecimpl.*\""
   },
