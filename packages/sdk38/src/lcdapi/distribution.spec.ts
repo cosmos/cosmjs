@@ -5,6 +5,7 @@ import { assert, sleep } from "@cosmjs/utils";
 import { coin, coins } from "../coins";
 import { isPostTxFailure } from "../cosmosclient";
 import { makeSignBytes } from "../encoding";
+import { MsgDelegate } from "../msgs";
 import { SigningCosmosClient } from "../signingcosmosclient";
 import {
   bigDecimalMatcher,
@@ -35,7 +36,7 @@ describe("DistributionExtension", () => {
       const client = new SigningCosmosClient(wasmd.endpoint, faucet.address, wallet, {});
 
       const chainId = await client.getChainId();
-      const msg = {
+      const msg: MsgDelegate = {
         type: "cosmos-sdk/MsgDelegate",
         value: {
           delegator_address: faucet.address,
