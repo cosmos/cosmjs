@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { sleep } from "@cosmjs/utils";
+import { assert, sleep } from "@cosmjs/utils";
 
 import { coins } from "../coins";
 import { isPostTxFailure } from "../cosmosclient";
@@ -67,9 +67,7 @@ describe("GovExtension", () => {
       };
 
       const proposalReceipt = await client.postTx(proposalTx);
-      if (isPostTxFailure(proposalReceipt)) {
-        throw new Error("Proposal submission failed");
-      }
+      assert(!isPostTxFailure(proposalReceipt));
       proposalId = proposalReceipt.logs[0].events
         .find(({ type }) => type === "submit_proposal")!
         .attributes.find(({ key }) => key === "proposal_id")!.value;
