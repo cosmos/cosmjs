@@ -211,7 +211,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
 
     const compressed = pako.gzip(wasmCode, { level: 9 });
     const storeCodeMsg: MsgStoreCode = {
-      type: "wasm/store-code",
+      type: "wasm/MsgStoreCode",
       value: {
         sender: this.senderAddress,
         wasm_byte_code: toBase64(compressed),
@@ -254,7 +254,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     options: InstantiateOptions = {},
   ): Promise<InstantiateResult> {
     const instantiateMsg: MsgInstantiateContract = {
-      type: "wasm/instantiate",
+      type: "wasm/MsgInstantiateContract",
       value: {
         sender: this.senderAddress,
         code_id: new Uint53(codeId).toString(),
@@ -292,7 +292,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
 
   public async updateAdmin(contractAddress: string, newAdmin: string, memo = ""): Promise<ChangeAdminResult> {
     const updateAdminMsg: MsgUpdateAdmin = {
-      type: "wasm/update-contract-admin",
+      type: "wasm/MsgUpdateAdmin",
       value: {
         sender: this.senderAddress,
         contract: contractAddress,
@@ -323,7 +323,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
 
   public async clearAdmin(contractAddress: string, memo = ""): Promise<ChangeAdminResult> {
     const clearAdminMsg: MsgClearAdmin = {
-      type: "wasm/clear-contract-admin",
+      type: "wasm/MsgClearAdmin",
       value: {
         sender: this.senderAddress,
         contract: contractAddress,
@@ -358,7 +358,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     memo = "",
   ): Promise<MigrateResult> {
     const msg: MsgMigrateContract = {
-      type: "wasm/migrate",
+      type: "wasm/MsgMigrateContract",
       value: {
         sender: this.senderAddress,
         contract: contractAddress,
@@ -395,7 +395,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     transferAmount?: readonly Coin[],
   ): Promise<ExecuteResult> {
     const executeMsg: MsgExecuteContract = {
-      type: "wasm/execute",
+      type: "wasm/MsgExecuteContract",
       value: {
         sender: this.senderAddress,
         contract: contractAddress,

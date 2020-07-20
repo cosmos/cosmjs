@@ -344,25 +344,6 @@ describe("CosmWasmClient", () => {
         creator: alice.address0,
         label: "HASH",
         admin: undefined,
-        initMsg: {
-          decimals: 5,
-          name: "Hash token",
-          symbol: "HASH",
-          initial_balances: jasmine.arrayContaining([
-            {
-              address: alice.address0,
-              amount: "11",
-            },
-            {
-              address: unused.address,
-              amount: "12812345",
-            },
-            {
-              address: guest.address,
-              amount: "22004000000",
-            },
-          ]),
-        },
       });
     });
 

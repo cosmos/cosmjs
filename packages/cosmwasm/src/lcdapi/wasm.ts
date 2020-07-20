@@ -52,9 +52,12 @@ export interface ContractInfo {
   readonly label: string;
 }
 
-export interface ContractDetails extends ContractInfo {
-  /** Argument passed on initialization of the contract */
-  readonly init_msg: object;
+// An entry in the contracts code/ migration history
+export interface ContractCodeHistoryEntry {
+  // operation can be "Init", "Migrate", "Genesis"
+  readonly operation: string;
+  readonly code_id: number;
+  readonly msg: object;
 }
 
 interface SmartQueryResponse {
@@ -92,7 +95,7 @@ export interface WasmExtension {
     /**
      * Returns null when contract was not found at this address.
      */
-    readonly getContractInfo: (address: string) => Promise<ContractDetails | null>;
+    readonly getContractInfo: (address: string) => Promise<ContractInfo | null>;
 
     /**
      * Returns all contract state.
@@ -111,6 +114,11 @@ export interface WasmExtension {
      * Throws error if no such contract exists, the query format is invalid or the response is invalid.
      */
     readonly queryContractSmart: (address: string, query: object) => Promise<JsonObject>;
+
+    /**
+     * Returns null when contract history was not found for this address.
+     */
+    readonly getContractCodeHistory: (address: string) => Promise<ContractCodeHistoryEntry[] | null>;
   };
 }
 
@@ -134,7 +142,12 @@ export function setupWasmExtension(base: LcdClient): WasmExtension {
       },
       getContractInfo: async (address: string) => {
         const path = `/wasm/contract/${address}`;
-        const response = (await base.get(path)) as WasmResponse<ContractDetails | null>;
+        const response = (await base.get(path)) as WasmResponse<ContractInfo | null>;
+        return unwrapWasmResponse(response);
+      },
+      getContractCodeHistory: async (address: string) => {
+        const path = `/wasm/contract/${address}/history`;
+        const response = (await base.get(path)) as WasmResponse<ContractCodeHistoryEntry[] | null>;
         return unwrapWasmResponse(response);
       },
       getAllContractState: async (address: string) => {

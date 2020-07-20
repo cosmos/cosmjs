@@ -9,7 +9,6 @@ export {
   Code,
   CodeDetails,
   Contract,
-  ContractDetails,
   CosmWasmClient,
   GetNonceResult,
   PostTxResult,

@@ -103,8 +103,12 @@
       "supply": []
     },
     "wasm": {
-      "codes": null,
-      "contracts": null
+      "params": {
+        "code_upload_access": {
+          "permission": "Everybody"
+        },
+        "instantiate_default_permission": "Everybody"
+      }
     },
     "auth": {
       "params": {
