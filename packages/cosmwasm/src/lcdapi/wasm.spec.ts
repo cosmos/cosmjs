@@ -52,7 +52,7 @@ async function uploadContract(
 ): Promise<PostTxsResponse> {
   const memo = "My first contract on chain";
   const theMsg: MsgStoreCode = {
-    type: "wasm/store-code",
+    type: "wasm/MsgStoreCode",
     value: {
       sender: alice.address0,
       wasm_byte_code: toBase64(contract.data),
@@ -86,7 +86,7 @@ async function instantiateContract(
 ): Promise<PostTxsResponse> {
   const memo = "Create an escrow instance";
   const theMsg: MsgInstantiateContract = {
-    type: "wasm/instantiate",
+    type: "wasm/MsgInstantiateContract",
     value: {
       sender: alice.address0,
       code_id: codeId.toString(),
@@ -123,7 +123,7 @@ async function executeContract(
 ): Promise<PostTxsResponse> {
   const memo = "Time for action";
   const theMsg: MsgExecuteContract = {
-    type: "wasm/execute",
+    type: "wasm/MsgExecuteContract",
     value: {
       sender: alice.address0,
       contract: contractAddress,
@@ -428,6 +428,56 @@ describe("wasm", () => {
       // make sure random addresses don't give useful info
       const nonExistentAddress = makeRandomAddress();
       expect(await client.wasm.getContractInfo(nonExistentAddress)).toBeNull();
+    });
+
+    it("can list contract history", async () => {
+      pendingWithoutWasmd();
+      const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
+      const client = makeWasmClient(wasmd.endpoint);
+      const beneficiaryAddress = makeRandomAddress();
+      const transferAmount: readonly Coin[] = [
+        {
+          amount: "707707",
+          denom: "ucosm",
+        },
+      ];
+
+      // reuse an existing contract, or upload if needed
+      let codeId: number;
+      const existingInfos = await client.wasm.listCodeInfo();
+      if (existingInfos.length > 0) {
+        codeId = existingInfos[existingInfos.length - 1].id;
+      } else {
+        const uploadResult = await uploadContract(client, wallet, getHackatom());
+        expect(uploadResult.code).toBeFalsy();
+        const uploadLogs = parseLogs(uploadResult.logs);
+        const codeIdAttr = findAttribute(uploadLogs, "message", "code_id");
+        codeId = Number.parseInt(codeIdAttr.value, 10);
+      }
+
+      // create new instance and compare before and after
+      const result = await instantiateContract(client, wallet, codeId, beneficiaryAddress, transferAmount);
+      expect(result.code).toBeFalsy();
+      const logs = parseLogs(result.logs);
+      const contractAddressAttr = findAttribute(logs, "message", "contract_address");
+      const myAddress = contractAddressAttr.value;
+
+      // check out history
+      const myHistory = await client.wasm.getContractCodeHistory(myAddress);
+      assert(myHistory);
+      expect(myHistory).toEqual(
+        jasmine.objectContaining({
+          codeId: codeId,
+          operation: "Init",
+          msg: {
+            verifier: alice.address0,
+            beneficiary: beneficiaryAddress,
+          },
+        }),
+      );
+      // make sure random addresses don't give useful info
+      const nonExistentAddress = makeRandomAddress();
+      expect(await client.wasm.getContractCodeHistory(nonExistentAddress)).toBeNull();
     });
 
     describe("contract state", () => {
