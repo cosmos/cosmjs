@@ -51,7 +51,7 @@
     "elliptic": "^6.4.0",
     "js-sha3": "^0.8.0",
     "libsodium-wrappers": "^0.7.6",
-    "pbkdf2": "^3.0.16",
+    "pbkdf2": "^3.1.1",
     "ripemd160": "^2.0.2",
     "sha.js": "^2.4.11",
     "type-tagger": "^1.0.0",
@@ -61,7 +61,7 @@
     "@types/bn.js": "^4.11.6",
     "@types/elliptic": "^6.4.12",
     "@types/libsodium-wrappers": "^0.7.7",
-    "@types/pbkdf2": "^3.0.0",
+    "@types/pbkdf2": "^3.1.0",
     "@types/ripemd160": "^2.0.0",
     "@types/sha.js": "^2.4.0",
     "@types/unorm": "^1.3.27"
