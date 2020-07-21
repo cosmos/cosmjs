@@ -1,4 +1,4 @@
-import { fromHex, toHex } from "@cosmjs/encoding";
+import { fromHex, toHex, toUtf8 } from "@cosmjs/encoding";
 import * as bip39 from "bip39";
 import { pbkdf2 } from "pbkdf2";
 import * as unorm from "unorm";
@@ -23,13 +23,13 @@ export class Bip39 {
   public static async mnemonicToSeed(mnemonic: EnglishMnemonic, password?: string): Promise<Uint8Array> {
     // reimplementation of bip39.mnemonicToSeed using the asynchronous
     // interface of https://www.npmjs.com/package/pbkdf2
-    const mnemonicBytes = Buffer.from(unorm.nfkd(mnemonic.toString()), "utf8");
+    const mnemonicBytes = toUtf8(unorm.nfkd(mnemonic.toString()));
     const salt = "mnemonic" + (password ? unorm.nfkd(password) : "");
-    const saltBytes = Buffer.from(salt, "utf8");
+    const saltBytes = toUtf8(salt);
     return this.pbkdf2(mnemonicBytes, saltBytes, 2048, 64, "sha512");
   }
 
-  // convert pbkdf2's calllback interface to Promise interface
+  // convert pbkdf2's callback interface to Promise interface
   private static async pbkdf2(
     secret: Uint8Array,
     salt: Uint8Array,
@@ -38,8 +38,7 @@ export class Bip39 {
     digest: string,
   ): Promise<Uint8Array> {
     return new Promise<any>((resolve, reject) => {
-      // TODO: Patch @types/pbkdf2 to allow Uint8Array as secret and salt argument
-      pbkdf2(Buffer.from(secret), Buffer.from(salt), iterations, keylen, digest, (err, derivedKey) => {
+      pbkdf2(secret, salt, iterations, keylen, digest, (err, derivedKey) => {
         if (err) {
           reject(err);
         } else {
