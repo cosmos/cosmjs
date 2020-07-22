@@ -1,16 +1,21 @@
 import { Coin } from "../coins";
 import { BlockHeader, SearchTxsResponse } from "./base";
 import { LcdClient } from "./lcdclient";
+/**
+ * Numeric bonding status
+ *
+ * @see https://github.com/cosmos/cosmos-sdk/blob/v0.38.5/types/staking.go#L43-L49
+ */
+export declare enum BondStatus {
+  Unbonded = 0,
+  Unbonding = 1,
+  Bonded = 2,
+}
 interface Validator {
   readonly operator_address: string;
   readonly consensus_pubkey: string;
   readonly jailed: boolean;
-  /**
-   * Numeric bonding status
-   *
-   * @see https://github.com/cosmos/cosmos-sdk/blob/v0.38.5/types/staking.go#L43-L49
-   */
-  readonly status: number;
+  readonly status: BondStatus;
   readonly tokens: string;
   readonly delegator_shares: string;
   readonly description: {

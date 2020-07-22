@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { assert, sleep } from "@cosmjs/utils";
 
 import { coin, coins } from "../coins";
@@ -5,7 +6,6 @@ import { isPostTxFailure } from "../cosmosclient";
 import { makeSignBytes } from "../encoding";
 import { MsgDelegate, MsgUndelegate } from "../msgs";
 import { SigningCosmosClient } from "../signingcosmosclient";
-/* eslint-disable @typescript-eslint/naming-convention */
 import {
   bigDecimalMatcher,
   dateTimeStampMatcher,
@@ -18,7 +18,7 @@ import {
 } from "../testutils.spec";
 import { Secp256k1Wallet } from "../wallet";
 import { LcdClient } from "./lcdclient";
-import { setupStakingExtension, StakingExtension } from "./staking";
+import { BondStatus, setupStakingExtension, StakingExtension } from "./staking";
 
 function makeStakingClient(apiUrl: string): LcdClient & StakingExtension {
   return LcdClient.withExtensions({ apiUrl }, setupStakingExtension);
@@ -46,7 +46,7 @@ describe("StakingExtension", () => {
           },
         };
         const memo = "Test delegation for wasmd";
-        const { accountNumber, sequence } = await client.getNonce();
+        const { accountNumber, sequence } = await client.getSequence();
         const signBytes = makeSignBytes([msg], defaultFee, chainId, memo, accountNumber, sequence);
         const signature = await wallet.sign(faucet.address, signBytes);
         const tx = {
@@ -69,7 +69,7 @@ describe("StakingExtension", () => {
           },
         };
         const memo = "Test undelegation for wasmd";
-        const { accountNumber, sequence } = await client.getNonce();
+        const { accountNumber, sequence } = await client.getSequence();
         const signBytes = makeSignBytes([msg], defaultFee, chainId, memo, accountNumber, sequence);
         const signature = await wallet.sign(faucet.address, signBytes);
         const tx = {
@@ -96,8 +96,8 @@ describe("StakingExtension", () => {
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: [
           {
-            delegator_address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
-            validator_address: "cosmosvaloper1gjvanqxc774u6ed9thj4gpn9gj5zus5u32enqn",
+            delegator_address: faucet.address,
+            validator_address: validatorAddress,
             shares: jasmine.stringMatching(bigDecimalMatcher),
             balance: { denom: "ustake", amount: jasmine.stringMatching(nonNegativeIntegerMatcher) },
           },
@@ -110,20 +110,23 @@ describe("StakingExtension", () => {
     it("works", async () => {
       pendingWithoutWasmd();
       const client = makeStakingClient(wasmd.endpoint);
-      const response = await client.staking.delegatorUnbondingDelegations(faucet.address);
-      expect(response.height).toMatch(nonNegativeIntegerMatcher);
-      expect(response.result.length).toEqual(1);
-      expect(response.result[0].delegator_address).toEqual("cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6");
-      expect(response.result[0].validator_address).toEqual(
-        "cosmosvaloper1gjvanqxc774u6ed9thj4gpn9gj5zus5u32enqn",
-      );
-      expect(response.result[0].entries.length).toBeGreaterThanOrEqual(1);
-      expect(response.result[0].entries[0]).toEqual({
-        creation_height: jasmine.stringMatching(nonNegativeIntegerMatcher),
-        completion_time: jasmine.stringMatching(dateTimeStampMatcher),
-        initial_balance: "100",
-        balance: "100",
-      });
+      const { height, result } = await client.staking.delegatorUnbondingDelegations(faucet.address);
+      expect(height).toMatch(nonNegativeIntegerMatcher);
+      assert(result);
+      expect(result).toEqual([
+        {
+          delegator_address: faucet.address,
+          validator_address: validatorAddress,
+          entries: jasmine.arrayContaining([
+            {
+              creation_height: jasmine.stringMatching(nonNegativeIntegerMatcher),
+              completion_time: jasmine.stringMatching(dateTimeStampMatcher),
+              initial_balance: "100",
+              balance: "100",
+            },
+          ]),
+        },
+      ]);
     });
   });
 
@@ -145,11 +148,11 @@ describe("StakingExtension", () => {
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: [
           {
-            operator_address: "cosmosvaloper1gjvanqxc774u6ed9thj4gpn9gj5zus5u32enqn",
+            operator_address: validatorAddress,
             consensus_pubkey:
               "cosmosvalconspub1zcjduepqau36ht2r742jh230pxlu4wjmwcmkwpeqava80acphsu87vt5xlpqx6g7qh",
             jailed: false,
-            status: 2,
+            status: BondStatus.Bonded,
             tokens: jasmine.stringMatching(nonNegativeIntegerMatcher),
             delegator_shares: jasmine.stringMatching(bigDecimalMatcher),
             description: {
@@ -184,11 +187,11 @@ describe("StakingExtension", () => {
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: {
-          operator_address: "cosmosvaloper1gjvanqxc774u6ed9thj4gpn9gj5zus5u32enqn",
+          operator_address: validatorAddress,
           consensus_pubkey:
             "cosmosvalconspub1zcjduepqau36ht2r742jh230pxlu4wjmwcmkwpeqava80acphsu87vt5xlpqx6g7qh",
           jailed: false,
-          status: 2,
+          status: BondStatus.Bonded,
           tokens: jasmine.stringMatching(nonNegativeIntegerMatcher),
           delegator_shares: jasmine.stringMatching(bigDecimalMatcher),
           description: {
@@ -235,18 +238,20 @@ describe("StakingExtension", () => {
     it("works", async () => {
       pendingWithoutWasmd();
       const client = makeStakingClient(wasmd.endpoint);
-      const response = await client.staking.unbondingDelegation(faucet.address, validatorAddress);
-      expect(response.height).toMatch(nonNegativeIntegerMatcher);
-      expect(response.result!.delegator_address).toEqual("cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6");
-      expect(response.result!.validator_address).toEqual(
-        "cosmosvaloper1gjvanqxc774u6ed9thj4gpn9gj5zus5u32enqn",
-      );
-      expect(response.result!.entries.length).toBeGreaterThanOrEqual(1);
-      expect(response.result!.entries[0]).toEqual({
-        creation_height: jasmine.stringMatching(nonNegativeIntegerMatcher),
-        completion_time: jasmine.stringMatching(dateTimeStampMatcher),
-        initial_balance: "100",
-        balance: "100",
+      const { height, result } = await client.staking.unbondingDelegation(faucet.address, validatorAddress);
+      expect(height).toMatch(nonNegativeIntegerMatcher);
+      assert(result);
+      expect(result).toEqual({
+        delegator_address: faucet.address,
+        validator_address: validatorAddress,
+        entries: jasmine.arrayContaining([
+          {
+            creation_height: jasmine.stringMatching(nonNegativeIntegerMatcher),
+            completion_time: jasmine.stringMatching(dateTimeStampMatcher),
+            initial_balance: "100",
+            balance: "100",
+          },
+        ]),
       });
     });
   });
@@ -273,11 +278,11 @@ describe("StakingExtension", () => {
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: [
           {
-            operator_address: "cosmosvaloper1gjvanqxc774u6ed9thj4gpn9gj5zus5u32enqn",
+            operator_address: validatorAddress,
             consensus_pubkey:
               "cosmosvalconspub1zcjduepqau36ht2r742jh230pxlu4wjmwcmkwpeqava80acphsu87vt5xlpqx6g7qh",
             jailed: false,
-            status: 2,
+            status: BondStatus.Bonded,
             tokens: jasmine.stringMatching(nonNegativeIntegerMatcher),
             delegator_shares: jasmine.stringMatching(bigDecimalMatcher),
             description: {
@@ -321,11 +326,11 @@ describe("StakingExtension", () => {
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: [
           {
-            operator_address: "cosmosvaloper1gjvanqxc774u6ed9thj4gpn9gj5zus5u32enqn",
+            operator_address: validatorAddress,
             consensus_pubkey:
               "cosmosvalconspub1zcjduepqau36ht2r742jh230pxlu4wjmwcmkwpeqava80acphsu87vt5xlpqx6g7qh",
             jailed: false,
-            status: 2,
+            status: BondStatus.Bonded,
             tokens: jasmine.stringMatching(nonNegativeIntegerMatcher),
             delegator_shares: jasmine.stringMatching(bigDecimalMatcher),
             description: {
@@ -360,11 +365,11 @@ describe("StakingExtension", () => {
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: {
-          operator_address: "cosmosvaloper1gjvanqxc774u6ed9thj4gpn9gj5zus5u32enqn",
+          operator_address: validatorAddress,
           consensus_pubkey:
             "cosmosvalconspub1zcjduepqau36ht2r742jh230pxlu4wjmwcmkwpeqava80acphsu87vt5xlpqx6g7qh",
           jailed: false,
-          status: 2,
+          status: BondStatus.Bonded,
           tokens: jasmine.stringMatching(nonNegativeIntegerMatcher),
           delegator_shares: jasmine.stringMatching(bigDecimalMatcher),
           description: {
@@ -399,14 +404,14 @@ describe("StakingExtension", () => {
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: [
           {
-            delegator_address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
-            validator_address: "cosmosvaloper1gjvanqxc774u6ed9thj4gpn9gj5zus5u32enqn",
+            delegator_address: faucet.address,
+            validator_address: validatorAddress,
             shares: jasmine.stringMatching(bigDecimalMatcher),
             balance: { denom: "ustake", amount: jasmine.stringMatching(nonNegativeIntegerMatcher) },
           },
           {
             delegator_address: "cosmos1gjvanqxc774u6ed9thj4gpn9gj5zus5u57dxvq",
-            validator_address: "cosmosvaloper1gjvanqxc774u6ed9thj4gpn9gj5zus5u32enqn",
+            validator_address: validatorAddress,
             shares: "250000000.000000000000000000",
             balance: { denom: "ustake", amount: "250000000" },
           },
@@ -419,20 +424,23 @@ describe("StakingExtension", () => {
     it("works", async () => {
       pendingWithoutWasmd();
       const client = makeStakingClient(wasmd.endpoint);
-      const response = await client.staking.validatorUnbondingDelegations(validatorAddress);
-      expect(response.height).toMatch(nonNegativeIntegerMatcher);
-      expect(response.result.length).toEqual(1);
-      expect(response.result[0].delegator_address).toEqual("cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6");
-      expect(response.result[0].validator_address).toEqual(
-        "cosmosvaloper1gjvanqxc774u6ed9thj4gpn9gj5zus5u32enqn",
-      );
-      expect(response.result[0].entries.length).toBeGreaterThanOrEqual(1);
-      expect(response.result[0].entries[0]).toEqual({
-        creation_height: jasmine.stringMatching(nonNegativeIntegerMatcher),
-        completion_time: jasmine.stringMatching(dateTimeStampMatcher),
-        initial_balance: "100",
-        balance: "100",
-      });
+      const { height, result } = await client.staking.validatorUnbondingDelegations(validatorAddress);
+      expect(height).toMatch(nonNegativeIntegerMatcher);
+      assert(result);
+      expect(result).toEqual([
+        {
+          delegator_address: faucet.address,
+          validator_address: validatorAddress,
+          entries: jasmine.arrayContaining([
+            {
+              creation_height: jasmine.stringMatching(nonNegativeIntegerMatcher),
+              completion_time: jasmine.stringMatching(dateTimeStampMatcher),
+              initial_balance: "100",
+              balance: "100",
+            },
+          ]),
+        },
+      ]);
     });
   });
 

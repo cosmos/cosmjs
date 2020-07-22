@@ -3,16 +3,22 @@ import { Coin } from "../coins";
 import { BlockHeader, SearchTxsResponse } from "./base";
 import { LcdClient } from "./lcdclient";
 
+/**
+ * Numeric bonding status
+ *
+ * @see https://github.com/cosmos/cosmos-sdk/blob/v0.38.5/types/staking.go#L43-L49
+ */
+export enum BondStatus {
+  Unbonded = 0,
+  Unbonding = 1,
+  Bonded = 2,
+}
+
 interface Validator {
   readonly operator_address: string;
   readonly consensus_pubkey: string;
   readonly jailed: boolean;
-  /**
-   * Numeric bonding status
-   *
-   * @see https://github.com/cosmos/cosmos-sdk/blob/v0.38.5/types/staking.go#L43-L49
-   */
-  readonly status: number;
+  readonly status: BondStatus;
   readonly tokens: string;
   readonly delegator_shares: string;
   readonly description: {
@@ -233,8 +239,7 @@ export function setupStakingExtension(base: LcdClient): StakingExtension {
       validators: async (params?: StakingValidatorsParams) => base.get(`/staking/validators`, params),
       validator: async (validatorAddress: string) => base.get(`/staking/validators/${validatorAddress}`),
       validatorDelegations: async (validatorAddress: string) =>
-        base.get(`/staking/validators/${validatorAddress}/delegations
-      `),
+        base.get(`/staking/validators/${validatorAddress}/delegations`),
       validatorUnbondingDelegations: async (validatorAddress: string) =>
         base.get(`/staking/validators/${validatorAddress}/unbonding_delegations`),
       historicalInfo: async (height: string) => base.get(`/staking/historical_info/${height}`),
