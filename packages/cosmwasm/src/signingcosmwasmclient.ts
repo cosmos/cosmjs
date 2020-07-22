@@ -196,8 +196,8 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     this.fees = { ...defaultFees, ...(customFees || {}) };
   }
 
-  public async getNonce(address?: string): Promise<GetNonceResult> {
-    return super.getNonce(address || this.senderAddress);
+  public async getSequence(address?: string): Promise<GetNonceResult> {
+    return super.getSequence(address || this.senderAddress);
   }
 
   public async getAccount(address?: string): Promise<Account | undefined> {
@@ -220,7 +220,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       },
     };
     const fee = this.fees.upload;
-    const { accountNumber, sequence } = await this.getNonce();
+    const { accountNumber, sequence } = await this.getSequence();
     const chainId = await this.getChainId();
     const signBytes = makeSignBytes([storeCodeMsg], fee, chainId, memo, accountNumber, sequence);
     const signature = await this.signer.sign(this.senderAddress, signBytes);
@@ -266,7 +266,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     };
     const memo = options.memo || "";
     const fee = this.fees.init;
-    const { accountNumber, sequence } = await this.getNonce();
+    const { accountNumber, sequence } = await this.getSequence();
     const chainId = await this.getChainId();
     const signBytes = makeSignBytes([instantiateMsg], fee, chainId, memo, accountNumber, sequence);
 
@@ -300,7 +300,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       },
     };
     const fee = this.fees.changeAdmin;
-    const { accountNumber, sequence } = await this.getNonce();
+    const { accountNumber, sequence } = await this.getSequence();
     const chainId = await this.getChainId();
     const signBytes = makeSignBytes([updateAdminMsg], fee, chainId, memo, accountNumber, sequence);
     const signature = await this.signer.sign(this.senderAddress, signBytes);
@@ -330,7 +330,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       },
     };
     const fee = this.fees.changeAdmin;
-    const { accountNumber, sequence } = await this.getNonce();
+    const { accountNumber, sequence } = await this.getSequence();
     const chainId = await this.getChainId();
     const signBytes = makeSignBytes([clearAdminMsg], fee, chainId, memo, accountNumber, sequence);
     const signature = await this.signer.sign(this.senderAddress, signBytes);
@@ -367,7 +367,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       },
     };
     const fee = this.fees.migrate;
-    const { accountNumber, sequence } = await this.getNonce();
+    const { accountNumber, sequence } = await this.getSequence();
     const chainId = await this.getChainId();
     const signBytes = makeSignBytes([msg], fee, chainId, memo, accountNumber, sequence);
     const signature = await this.signer.sign(this.senderAddress, signBytes);
@@ -404,7 +404,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       },
     };
     const fee = this.fees.exec;
-    const { accountNumber, sequence } = await this.getNonce();
+    const { accountNumber, sequence } = await this.getSequence();
     const chainId = await this.getChainId();
     const signBytes = makeSignBytes([executeMsg], fee, chainId, memo, accountNumber, sequence);
     const signature = await this.signer.sign(this.senderAddress, signBytes);
@@ -439,7 +439,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       },
     };
     const fee = this.fees.send;
-    const { accountNumber, sequence } = await this.getNonce();
+    const { accountNumber, sequence } = await this.getSequence();
     const chainId = await this.getChainId();
     const signBytes = makeSignBytes([sendMsg], fee, chainId, memo, accountNumber, sequence);
     const signature = await this.signer.sign(this.senderAddress, signBytes);

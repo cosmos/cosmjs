@@ -32,7 +32,7 @@ export declare class SigningCosmosClient extends CosmosClient {
     customFees?: Partial<FeeTable>,
     broadcastMode?: BroadcastMode,
   );
-  getNonce(address?: string): Promise<GetNonceResult>;
+  getSequence(address?: string): Promise<GetNonceResult>;
   getAccount(address?: string): Promise<Account | undefined>;
   sendTokens(recipientAddress: string, transferAmount: readonly Coin[], memo?: string): Promise<PostTxResult>;
 }

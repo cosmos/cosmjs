@@ -105,11 +105,11 @@ describe("CosmWasmClient", () => {
     });
   });
 
-  describe("getNonce", () => {
+  describe("getSequence", () => {
     it("works", async () => {
       pendingWithoutWasmd();
       const client = new CosmWasmClient(wasmd.endpoint);
-      expect(await client.getNonce(unused.address)).toEqual({
+      expect(await client.getSequence(unused.address)).toEqual({
         accountNumber: unused.accountNumber,
         sequence: unused.sequence,
       });
@@ -119,7 +119,7 @@ describe("CosmWasmClient", () => {
       pendingWithoutWasmd();
       const client = new CosmWasmClient(wasmd.endpoint);
       const missing = makeRandomAddress();
-      await client.getNonce(missing).then(
+      await client.getSequence(missing).then(
         () => fail("this must not succeed"),
         (error) => expect(error).toMatch(/account does not exist on chain/i),
       );
@@ -233,7 +233,7 @@ describe("CosmWasmClient", () => {
       };
 
       const chainId = await client.getChainId();
-      const { accountNumber, sequence } = await client.getNonce(alice.address0);
+      const { accountNumber, sequence } = await client.getSequence(alice.address0);
       const signBytes = makeSignBytes([sendMsg], fee, chainId, memo, accountNumber, sequence);
       const signature = await wallet.sign(alice.address0, signBytes);
       const signedTx = {

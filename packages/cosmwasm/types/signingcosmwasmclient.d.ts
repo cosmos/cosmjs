@@ -104,7 +104,7 @@ export declare class SigningCosmWasmClient extends CosmWasmClient {
     customFees?: Partial<FeeTable>,
     broadcastMode?: BroadcastMode,
   );
-  getNonce(address?: string): Promise<GetNonceResult>;
+  getSequence(address?: string): Promise<GetNonceResult>;
   getAccount(address?: string): Promise<Account | undefined>;
   /** Uploads code and returns a receipt, including the code ID */
   upload(wasmCode: Uint8Array, meta?: UploadMeta, memo?: string): Promise<UploadResult>;

@@ -231,7 +231,7 @@ export class CosmWasmClient {
    *
    * @param address returns data for this address. When unset, the client's sender adddress is used.
    */
-  public async getNonce(address: string): Promise<GetNonceResult> {
+  public async getSequence(address: string): Promise<GetNonceResult> {
     const account = await this.getAccount(address);
     if (!account) {
       throw new Error(
