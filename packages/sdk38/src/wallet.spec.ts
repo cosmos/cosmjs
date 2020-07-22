@@ -1,7 +1,7 @@
-import { Secp256k1, Secp256k1Signature, Sha256 } from "@cosmjs/crypto";
+import { Argon2idOptions, Secp256k1, Secp256k1Signature, Sha256 } from "@cosmjs/crypto";
 import { fromBase64, fromHex, toAscii } from "@cosmjs/encoding";
 
-import { base64Matcher } from "./testutils.spec";
+import { base64Matcher, hexMatcher } from "./testutils.spec";
 import { Secp256k1Wallet } from "./wallet";
 
 describe("Secp256k1Wallet", () => {
@@ -76,6 +76,50 @@ describe("Secp256k1Wallet", () => {
       expect(JSON.parse(serialized)).toEqual(
         jasmine.objectContaining({
           type: "v1",
+          kdf: {
+            algorithm: "argon2id",
+            params: {
+              outputLength: 32,
+              opsLimit: 20,
+              memLimitKib: 12 * 1024,
+            },
+          },
+          encryption: {
+            algorithm: "xchacha20poly1305-ietf",
+            params: {
+              nonce: jasmine.stringMatching(hexMatcher),
+            },
+          },
+          value: jasmine.stringMatching(base64Matcher),
+        }),
+      );
+    });
+  });
+
+  describe("saveWithEncryptionKey", () => {
+    it("can save with password", async () => {
+      const wallet = await Secp256k1Wallet.fromMnemonic(defaultMnemonic);
+
+      const key = fromHex("aabb221100aabb332211aabb33221100aabb221100aabb332211aabb33221100");
+      const customKdfParams: Argon2idOptions = {
+        outputLength: 32,
+        opsLimit: 321,
+        memLimitKib: 11 * 1024,
+      };
+      const serialized = await wallet.saveWithEncryptionKey(key, customKdfParams);
+      expect(JSON.parse(serialized)).toEqual(
+        jasmine.objectContaining({
+          type: "v1",
+          kdf: {
+            algorithm: "argon2id",
+            params: customKdfParams,
+          },
+          encryption: {
+            algorithm: "xchacha20poly1305-ietf",
+            params: {
+              nonce: jasmine.stringMatching(hexMatcher),
+            },
+          },
           value: jasmine.stringMatching(base64Matcher),
         }),
       );

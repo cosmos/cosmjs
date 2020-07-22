@@ -15,7 +15,6 @@ import {
   Xchacha20poly1305Ietf,
 } from "@cosmjs/crypto";
 import { toAscii, toBase64, toHex, toUtf8 } from "@cosmjs/encoding";
-import { isUint8Array } from "@cosmjs/utils";
 
 import { rawSecp256k1PubkeyToAddress } from "./address";
 import { encodeSecp256k1Signature } from "./signature";
@@ -81,12 +80,13 @@ const serializationType1 = "v1";
 const secp256k1WalletSalt = toAscii("Secp256k1Wallet1");
 
 /**
- * Not great but can be used on the main thread
+ * A KDF configuration that is not very strong but can be used on the main thread.
+ * It takes about 1 second in Node.js 12.15 and should have similar runtimes in other modern Wasm hosts.
  */
-const passwordHashingOptions: Argon2idOptions = {
+const basicPasswordHashingOptions: Argon2idOptions = {
   outputLength: 32,
-  opsLimit: 11,
-  memLimitKib: 8 * 1024,
+  opsLimit: 20,
+  memLimitKib: 12 * 1024,
 };
 
 const algorithmIdXchacha20poly1305Ietf = "xchacha20poly1305-ietf";
@@ -238,18 +238,28 @@ export class Secp256k1Wallet implements OfflineSigner {
   /**
    * Generates an encrypted serialization of this wallet.
    *
-   * @param secret If set to a string, a KDF runs internally. If set to an Uin8Array, this is used a the encryption key directly.
+   * @param password The user provided password used to generate an encryption key via a KDF.
+   *                 This is not normalized internally (see "Unicode normalization" to learn more).
    */
-  public async save(secret: string | Uint8Array): Promise<string> {
-    let encryptionKey: Uint8Array;
-    if (typeof secret === "string") {
-      encryptionKey = await Argon2id.execute(secret, secp256k1WalletSalt, passwordHashingOptions);
-    } else if (isUint8Array(secret)) {
-      encryptionKey = secret;
-    } else {
-      throw new Error("Unsupported type of encryption secret");
-    }
+  public async save(password: string): Promise<string> {
+    const kdfOption = basicPasswordHashingOptions;
+    const encryptionKey = await Argon2id.execute(password, secp256k1WalletSalt, kdfOption);
+    return this.saveWithEncryptionKey(encryptionKey, kdfOption);
+  }
 
+  /**
+   * Generates an encrypted serialization of this wallet.
+   *
+   * This is an advanced alternative of calling `save(password)` directly, which allows you to
+   * offload the KDF execution to an non-UI thread (e.g. in a WebWorker).
+   *
+   * The caller is responsible for ensuring the key was derived with the given kdf options. If this
+   * is not the case, the wallet cannot be restored with the original password.
+   */
+  public async saveWithEncryptionKey(
+    encryptionKey: Uint8Array,
+    kdfOptions: Argon2idOptions,
+  ): Promise<string> {
     const encrytedData: EncryptedSecp256k1WalletData = {
       mnemonic: this.mnemonic,
       accounts: this.accounts.map((account) => ({
@@ -264,7 +274,7 @@ export class Secp256k1Wallet implements OfflineSigner {
 
     const out: EncryptedSecp256k1Wallet = {
       type: serializationType1,
-      kdf: { algorithm: "scrypt", params: {} },
+      kdf: { algorithm: "argon2id", params: { ...kdfOptions } },
       encryption: {
         algorithm: algorithmIdXchacha20poly1305Ietf,
         params: {

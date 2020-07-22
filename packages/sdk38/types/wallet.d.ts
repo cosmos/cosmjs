@@ -1,4 +1,4 @@
-import { Slip10RawIndex } from "@cosmjs/crypto";
+import { Argon2idOptions, Slip10RawIndex } from "@cosmjs/crypto";
 import { StdSignature } from "./types";
 export declare type PrehashType = "sha256" | "sha512" | null;
 export declare type Algo = "secp256k1" | "ed25519" | "sr25519";
@@ -97,7 +97,18 @@ export declare class Secp256k1Wallet implements OfflineSigner {
   /**
    * Generates an encrypted serialization of this wallet.
    *
-   * @param secret If set to a string, a KDF runs internally. If set to an Uin8Array, this is used a the encryption key directly.
+   * @param password The user provided password used to generate an encryption key via a KDF.
+   *                 This is not normalized internally (see "Unicode normalization" to learn more).
    */
-  save(secret: string | Uint8Array): Promise<string>;
+  save(password: string): Promise<string>;
+  /**
+   * Generates an encrypted serialization of this wallet.
+   *
+   * This is an advanced alternative of calling `save(password)` directly, which allows you to
+   * offload the KDF execution to an non-UI thread (e.g. in a WebWorker).
+   *
+   * The caller is responsible for ensuring the key was derived with the given kdf options. If this
+   * is not the case, the wallet cannot be restored with the original password.
+   */
+  saveWithEncryptionKey(encryptionKey: Uint8Array, kdfOptions: Argon2idOptions): Promise<string>;
 }
