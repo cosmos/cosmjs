@@ -76,19 +76,22 @@ const serializationTypeV1 = "secp256k1wallet-v1";
 
 /**
  * A fixed salt is chosen to archive a deterministic password to key derivation.
- * This reduces the scope of a potential rainbow attack to all Secp256k1Wallet v1 users.
+ * This reduces the scope of a potential rainbow attack to all CosmJS users.
  * Must be 16 bytes due to implementation limitations.
  */
-export const secp256k1WalletSalt = toAscii("Secp256k1Wallet1");
+const cosmjsSalt = toAscii("The CosmJS salt.");
 
 /**
  * A KDF configuration that is not very strong but can be used on the main thread.
  * It takes about 1 second in Node.js 12.15 and should have similar runtimes in other modern Wasm hosts.
  */
-const basicPasswordHashingOptions: Argon2idOptions = {
-  outputLength: 32,
-  opsLimit: 20,
-  memLimitKib: 12 * 1024,
+const basicPasswordHashingOptions: KdfConfiguration = {
+  algorithm: "argon2id",
+  params: {
+    outputLength: 32,
+    opsLimit: 20,
+    memLimitKib: 12 * 1024,
+  },
 };
 
 const algorithmIdXchacha20poly1305Ietf = "xchacha20poly1305-ietf";
@@ -101,14 +104,7 @@ export interface Secp256k1WalletSerialization {
   /** A format+version identifier for this serialization format */
   readonly type: string;
   /** Information about the key derivation function (i.e. password to encrytion key) */
-  readonly kdf: {
-    /**
-     * An algorithm identifier, such as "argon2id" or "scrypt".
-     */
-    readonly algorithm: string;
-    /** A map of algorithm-specific parameters */
-    readonly params: Record<string, unknown>;
-  };
+  readonly kdf: KdfConfiguration;
   /** Information about the symmetric encryption */
   readonly encryption: {
     /**
@@ -135,19 +131,43 @@ export interface Secp256k1WalletData {
   }>;
 }
 
-function extractKdfParamsV1(document: any): Record<string, any> {
-  return document.kdf.params;
+function extractKdfConfigurationV1(document: any): KdfConfiguration {
+  return document.kdf;
 }
 
-export function extractKdfParams(serialization: string): Record<string, any> {
+export function extractKdfConfiguration(serialization: string): KdfConfiguration {
   const root = JSON.parse(serialization);
   if (!isNonNullObject(root)) throw new Error("Root document is not an object.");
 
   switch ((root as any).type) {
     case serializationTypeV1:
-      return extractKdfParamsV1(root);
+      return extractKdfConfigurationV1(root);
     default:
       throw new Error("Unsupported serialization type");
+  }
+}
+
+export interface KdfConfiguration {
+  /**
+   * An algorithm identifier, such as "argon2id" or "scrypt".
+   */
+  readonly algorithm: string;
+  /** A map of algorithm-specific parameters */
+  readonly params: Record<string, unknown>;
+}
+
+export async function executeKdf(password: string, configuration: KdfConfiguration): Promise<Uint8Array> {
+  switch (configuration.algorithm) {
+    case "argon2id": {
+      const { outputLength, opsLimit, memLimitKib } = configuration.params;
+      assert(typeof outputLength === "number");
+      assert(typeof opsLimit === "number");
+      assert(typeof memLimitKib === "number");
+      const options: Argon2idOptions = { outputLength, opsLimit, memLimitKib };
+      return Argon2id.execute(password, cosmjsSalt, options);
+    }
+    default:
+      throw new Error("Unsupported KDF algorithm");
   }
 }
 
@@ -250,7 +270,7 @@ export class Secp256k1Wallet implements OfflineSigner {
         switch (untypedRoot.kdf.algorithm) {
           case "argon2id": {
             const kdfOptions = untypedRoot.kdf.params;
-            encryptionKey = await Argon2id.execute(password, secp256k1WalletSalt, kdfOptions);
+            encryptionKey = await Argon2id.execute(password, cosmjsSalt, kdfOptions);
             break;
           }
           default:
@@ -333,9 +353,9 @@ export class Secp256k1Wallet implements OfflineSigner {
    *                 This is not normalized internally (see "Unicode normalization" to learn more).
    */
   public async serialize(password: string): Promise<string> {
-    const kdfOption = basicPasswordHashingOptions;
-    const encryptionKey = await Argon2id.execute(password, secp256k1WalletSalt, kdfOption);
-    return this.serializeWithEncryptionKey(encryptionKey, kdfOption);
+    const kdfConfiguration = basicPasswordHashingOptions;
+    const encryptionKey = await executeKdf(password, kdfConfiguration);
+    return this.serializeWithEncryptionKey(encryptionKey, kdfConfiguration);
   }
 
   /**
@@ -349,7 +369,7 @@ export class Secp256k1Wallet implements OfflineSigner {
    */
   public async serializeWithEncryptionKey(
     encryptionKey: Uint8Array,
-    kdfOptions: Argon2idOptions,
+    kdfConfiguration: KdfConfiguration,
   ): Promise<string> {
     const encrytedData: Secp256k1WalletData = {
       mnemonic: this.mnemonic,
@@ -365,7 +385,7 @@ export class Secp256k1Wallet implements OfflineSigner {
 
     const out: Secp256k1WalletSerialization = {
       type: serializationTypeV1,
-      kdf: { algorithm: "argon2id", params: { ...kdfOptions } },
+      kdf: kdfConfiguration,
       encryption: {
         algorithm: algorithmIdXchacha20poly1305Ietf,
         params: {

@@ -1,8 +1,8 @@
-import { Argon2id, Argon2idOptions, Secp256k1, Secp256k1Signature, Sha256 } from "@cosmjs/crypto";
+import { Secp256k1, Secp256k1Signature, Sha256 } from "@cosmjs/crypto";
 import { fromBase64, fromHex, toAscii } from "@cosmjs/encoding";
 
 import { base64Matcher, hexMatcher } from "./testutils.spec";
-import { extractKdfParams, Secp256k1Wallet, secp256k1WalletSalt } from "./wallet";
+import { executeKdf, extractKdfConfiguration, KdfConfiguration, Secp256k1Wallet } from "./wallet";
 
 describe("Secp256k1Wallet", () => {
   // m/44'/118'/0'/0/0
@@ -57,18 +57,21 @@ describe("Secp256k1Wallet", () => {
       let serialized: string;
       {
         const original = await Secp256k1Wallet.fromMnemonic(defaultMnemonic);
-        const anyKdfParams: Argon2idOptions = {
-          outputLength: 32,
-          opsLimit: 4,
-          memLimitKib: 3 * 1024,
+        const anyKdfParams: KdfConfiguration = {
+          algorithm: "argon2id",
+          params: {
+            outputLength: 32,
+            opsLimit: 4,
+            memLimitKib: 3 * 1024,
+          },
         };
-        const encryptionKey = await Argon2id.execute(password, secp256k1WalletSalt, anyKdfParams);
+        const encryptionKey = await executeKdf(password, anyKdfParams);
         serialized = await original.serializeWithEncryptionKey(encryptionKey, anyKdfParams);
       }
 
       {
-        const kdfOptions: any = extractKdfParams(serialized);
-        const encryptionKey = await Argon2id.execute(password, secp256k1WalletSalt, kdfOptions);
+        const kdfConfiguration = extractKdfConfiguration(serialized);
+        const encryptionKey = await executeKdf(password, kdfConfiguration);
         const deserialized = await Secp256k1Wallet.deserializeWithEncryptionKey(serialized, encryptionKey);
         expect(deserialized.mnemonic).toEqual(defaultMnemonic);
         expect(await deserialized.getAccounts()).toEqual([
@@ -149,19 +152,19 @@ describe("Secp256k1Wallet", () => {
       const wallet = await Secp256k1Wallet.fromMnemonic(defaultMnemonic);
 
       const key = fromHex("aabb221100aabb332211aabb33221100aabb221100aabb332211aabb33221100");
-      const customKdfParams: Argon2idOptions = {
-        outputLength: 32,
-        opsLimit: 321,
-        memLimitKib: 11 * 1024,
+      const customKdfConfiguration: KdfConfiguration = {
+        algorithm: "argon2id",
+        params: {
+          outputLength: 32,
+          opsLimit: 321,
+          memLimitKib: 11 * 1024,
+        },
       };
-      const serialized = await wallet.serializeWithEncryptionKey(key, customKdfParams);
+      const serialized = await wallet.serializeWithEncryptionKey(key, customKdfConfiguration);
       expect(JSON.parse(serialized)).toEqual(
         jasmine.objectContaining({
           type: "secp256k1wallet-v1",
-          kdf: {
-            algorithm: "argon2id",
-            params: customKdfParams,
-          },
+          kdf: customKdfConfiguration,
           encryption: {
             algorithm: "xchacha20poly1305-ietf",
             params: {

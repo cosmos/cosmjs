@@ -1,4 +1,4 @@
-import { Argon2idOptions, Slip10RawIndex } from "@cosmjs/crypto";
+import { Slip10RawIndex } from "@cosmjs/crypto";
 import { StdSignature } from "./types";
 export declare type PrehashType = "sha256" | "sha512" | null;
 export declare type Algo = "secp256k1" | "ed25519" | "sr25519";
@@ -23,12 +23,6 @@ export interface OfflineSigner {
  */
 export declare function makeCosmoshubPath(a: number): readonly Slip10RawIndex[];
 /**
- * A fixed salt is chosen to archive a deterministic password to key derivation.
- * This reduces the scope of a potential rainbow attack to all Secp256k1Wallet v1 users.
- * Must be 16 bytes due to implementation limitations.
- */
-export declare const secp256k1WalletSalt: Uint8Array;
-/**
  * This interface describes a JSON object holding the encrypted wallet and the meta data.
  * All fields in here must be JSON types.
  */
@@ -36,14 +30,7 @@ export interface Secp256k1WalletSerialization {
   /** A format+version identifier for this serialization format */
   readonly type: string;
   /** Information about the key derivation function (i.e. password to encrytion key) */
-  readonly kdf: {
-    /**
-     * An algorithm identifier, such as "argon2id" or "scrypt".
-     */
-    readonly algorithm: string;
-    /** A map of algorithm-specific parameters */
-    readonly params: Record<string, unknown>;
-  };
+  readonly kdf: KdfConfiguration;
   /** Information about the symmetric encryption */
   readonly encryption: {
     /**
@@ -68,7 +55,16 @@ export interface Secp256k1WalletData {
     readonly prefix: string;
   }>;
 }
-export declare function extractKdfParams(serialization: string): Record<string, any>;
+export declare function extractKdfConfiguration(serialization: string): KdfConfiguration;
+export interface KdfConfiguration {
+  /**
+   * An algorithm identifier, such as "argon2id" or "scrypt".
+   */
+  readonly algorithm: string;
+  /** A map of algorithm-specific parameters */
+  readonly params: Record<string, unknown>;
+}
+export declare function executeKdf(password: string, configuration: KdfConfiguration): Promise<Uint8Array>;
 export declare class Secp256k1Wallet implements OfflineSigner {
   /**
    * Restores a wallet from the given BIP39 mnemonic.
@@ -128,5 +124,5 @@ export declare class Secp256k1Wallet implements OfflineSigner {
    * The caller is responsible for ensuring the key was derived with the given kdf options. If this
    * is not the case, the wallet cannot be restored with the original password.
    */
-  serializeWithEncryptionKey(encryptionKey: Uint8Array, kdfOptions: Argon2idOptions): Promise<string>;
+  serializeWithEncryptionKey(encryptionKey: Uint8Array, kdfConfiguration: KdfConfiguration): Promise<string>;
 }
