@@ -3,11 +3,12 @@ import { assert, sleep } from "@cosmjs/utils";
 import { coin, coins } from "../coins";
 import { isPostTxFailure } from "../cosmosclient";
 import { makeSignBytes } from "../encoding";
-import { MsgDelegate } from "../msgs";
+import { MsgDelegate, MsgUndelegate } from "../msgs";
 import { SigningCosmosClient } from "../signingcosmosclient";
 /* eslint-disable @typescript-eslint/naming-convention */
 import {
   bigDecimalMatcher,
+  dateTimeStampMatcher,
   faucet,
   nonNegativeIntegerMatcher,
   pendingWithoutWasmd,
@@ -35,27 +36,52 @@ describe("StakingExtension", () => {
       const client = new SigningCosmosClient(wasmd.endpoint, faucet.address, wallet, {});
 
       const chainId = await client.getChainId();
-      const msg: MsgDelegate = {
-        type: "cosmos-sdk/MsgDelegate",
-        value: {
-          delegator_address: faucet.address,
-          validator_address: validatorAddress,
-          amount: coin(25000, "ustake"),
-        },
-      };
-      const memo = "Test delegation for wasmd";
-      const { accountNumber, sequence } = await client.getNonce();
-      const signBytes = makeSignBytes([msg], defaultFee, chainId, memo, accountNumber, sequence);
-      const signature = await wallet.sign(faucet.address, signBytes);
-      const tx = {
-        msg: [msg],
-        fee: defaultFee,
-        memo: memo,
-        signatures: [signature],
-      };
+      {
+        const msg: MsgDelegate = {
+          type: "cosmos-sdk/MsgDelegate",
+          value: {
+            delegator_address: faucet.address,
+            validator_address: validatorAddress,
+            amount: coin(25000, "ustake"),
+          },
+        };
+        const memo = "Test delegation for wasmd";
+        const { accountNumber, sequence } = await client.getNonce();
+        const signBytes = makeSignBytes([msg], defaultFee, chainId, memo, accountNumber, sequence);
+        const signature = await wallet.sign(faucet.address, signBytes);
+        const tx = {
+          msg: [msg],
+          fee: defaultFee,
+          memo: memo,
+          signatures: [signature],
+        };
 
-      const receipt = await client.postTx(tx);
-      assert(!isPostTxFailure(receipt));
+        const receipt = await client.postTx(tx);
+        assert(!isPostTxFailure(receipt));
+      }
+      {
+        const msg: MsgUndelegate = {
+          type: "cosmos-sdk/MsgUndelegate",
+          value: {
+            delegator_address: faucet.address,
+            validator_address: validatorAddress,
+            amount: coin(10000, "ustake"),
+          },
+        };
+        const memo = "Test undelegation for wasmd";
+        const { accountNumber, sequence } = await client.getNonce();
+        const signBytes = makeSignBytes([msg], defaultFee, chainId, memo, accountNumber, sequence);
+        const signature = await wallet.sign(faucet.address, signBytes);
+        const tx = {
+          msg: [msg],
+          fee: defaultFee,
+          memo: memo,
+          signatures: [signature],
+        };
+
+        const receipt = await client.postTx(tx);
+        assert(!isPostTxFailure(receipt));
+      }
 
       await sleep(75); // wait until transactions are indexed
     }
@@ -82,13 +108,21 @@ describe("StakingExtension", () => {
 
   describe("delegatorUnbondingDelegations", () => {
     it("works", async () => {
-      // TODO: Set up a result for this test
       pendingWithoutWasmd();
       const client = makeStakingClient(wasmd.endpoint);
       const response = await client.staking.delegatorUnbondingDelegations(faucet.address);
-      expect(response).toEqual({
-        height: jasmine.stringMatching(nonNegativeIntegerMatcher),
-        result: [],
+      expect(response.height).toMatch(nonNegativeIntegerMatcher);
+      expect(response.result.length).toEqual(1);
+      expect(response.result[0].delegator_address).toEqual("cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6");
+      expect(response.result[0].validator_address).toEqual(
+        "cosmosvaloper1gjvanqxc774u6ed9thj4gpn9gj5zus5u32enqn",
+      );
+      expect(response.result[0].entries.length).toBeGreaterThanOrEqual(1);
+      expect(response.result[0].entries[0]).toEqual({
+        creation_height: jasmine.stringMatching(nonNegativeIntegerMatcher),
+        completion_time: jasmine.stringMatching(dateTimeStampMatcher),
+        initial_balance: "10000",
+        balance: "10000",
       });
     });
   });
@@ -197,19 +231,22 @@ describe("StakingExtension", () => {
     });
   });
 
-  xdescribe("unbondingDelegation", () => {
+  describe("unbondingDelegation", () => {
     it("works", async () => {
-      // TODO: Set up a result for this test
       pendingWithoutWasmd();
       const client = makeStakingClient(wasmd.endpoint);
       const response = await client.staking.unbondingDelegation(faucet.address, validatorAddress);
-      expect(response).toEqual({
-        height: jasmine.stringMatching(nonNegativeIntegerMatcher),
-        result: {
-          delegator_address: faucet.address,
-          validator_address: validatorAddress,
-          entries: [],
-        },
+      expect(response.height).toMatch(nonNegativeIntegerMatcher);
+      expect(response.result!.delegator_address).toEqual("cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6");
+      expect(response.result!.validator_address).toEqual(
+        "cosmosvaloper1gjvanqxc774u6ed9thj4gpn9gj5zus5u32enqn",
+      );
+      expect(response.result!.entries.length).toBeGreaterThanOrEqual(1);
+      expect(response.result!.entries[0]).toEqual({
+        creation_height: jasmine.stringMatching(nonNegativeIntegerMatcher),
+        completion_time: jasmine.stringMatching(dateTimeStampMatcher),
+        initial_balance: "10000",
+        balance: "10000",
       });
     });
   });
@@ -383,9 +420,18 @@ describe("StakingExtension", () => {
       pendingWithoutWasmd();
       const client = makeStakingClient(wasmd.endpoint);
       const response = await client.staking.validatorUnbondingDelegations(validatorAddress);
-      expect(response).toEqual({
-        height: jasmine.stringMatching(nonNegativeIntegerMatcher),
-        result: [],
+      expect(response.height).toMatch(nonNegativeIntegerMatcher);
+      expect(response.result.length).toEqual(1);
+      expect(response.result[0].delegator_address).toEqual("cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6");
+      expect(response.result[0].validator_address).toEqual(
+        "cosmosvaloper1gjvanqxc774u6ed9thj4gpn9gj5zus5u32enqn",
+      );
+      expect(response.result[0].entries.length).toBeGreaterThanOrEqual(1);
+      expect(response.result[0].entries[0]).toEqual({
+        creation_height: jasmine.stringMatching(nonNegativeIntegerMatcher),
+        completion_time: jasmine.stringMatching(dateTimeStampMatcher),
+        initial_balance: "10000",
+        balance: "10000",
       });
     });
   });
@@ -422,7 +468,7 @@ describe("StakingExtension", () => {
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: {
-          not_bonded_tokens: "0",
+          not_bonded_tokens: jasmine.stringMatching(nonNegativeIntegerMatcher),
           bonded_tokens: jasmine.stringMatching(nonNegativeIntegerMatcher),
         },
       });

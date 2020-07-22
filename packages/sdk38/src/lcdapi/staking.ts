@@ -4,13 +4,6 @@ import { BlockHeader } from "../cosmosclient";
 import { SearchTxsResponse } from "./base";
 import { LcdClient } from "./lcdclient";
 
-export interface StakingValidatorsParams {
-  /** @see https://github.com/cosmos/cosmos-sdk/blob/v0.38.5/types/staking.go#L43-L49 */
-  readonly status?: "bonded" | "unbonded" | "unbonding";
-  readonly page?: number;
-  readonly limit?: number;
-}
-
 interface Validator {
   readonly operator_address: string;
   readonly consensus_pubkey: string;
@@ -58,8 +51,8 @@ export interface StakingDelegatorDelegationsResponse {
 interface UnbondingDelegationEntry {
   readonly creation_height: string;
   readonly completion_time: string;
-  readonly initial_balance: Coin;
-  readonly balance: Coin;
+  readonly initial_balance: string;
+  readonly balance: string;
 }
 
 interface UnbondingDelegation {
@@ -112,6 +105,13 @@ interface Redelegation {
 export interface StakingRedelegationsResponse {
   readonly height: string;
   readonly result: readonly Redelegation[];
+}
+
+export interface StakingValidatorsParams {
+  /** @see https://github.com/cosmos/cosmos-sdk/blob/v0.38.5/types/staking.go#L43-L49 */
+  readonly status?: "bonded" | "unbonded" | "unbonding";
+  readonly page?: number;
+  readonly limit?: number;
 }
 
 export interface StakingValidatorsResponse {
