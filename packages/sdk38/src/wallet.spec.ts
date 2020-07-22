@@ -69,10 +69,10 @@ describe("Secp256k1Wallet", () => {
     });
   });
 
-  describe("save", () => {
+  describe("serialize", () => {
     it("can save with password", async () => {
       const wallet = await Secp256k1Wallet.fromMnemonic(defaultMnemonic);
-      const serialized = await wallet.save("123");
+      const serialized = await wallet.serialize("123");
       expect(JSON.parse(serialized)).toEqual(
         jasmine.objectContaining({
           type: "v1",
@@ -96,7 +96,7 @@ describe("Secp256k1Wallet", () => {
     });
   });
 
-  describe("saveWithEncryptionKey", () => {
+  describe("serializeWithEncryptionKey", () => {
     it("can save with password", async () => {
       const wallet = await Secp256k1Wallet.fromMnemonic(defaultMnemonic);
 
@@ -106,7 +106,7 @@ describe("Secp256k1Wallet", () => {
         opsLimit: 321,
         memLimitKib: 11 * 1024,
       };
-      const serialized = await wallet.saveWithEncryptionKey(key, customKdfParams);
+      const serialized = await wallet.serializeWithEncryptionKey(key, customKdfParams);
       expect(JSON.parse(serialized)).toEqual(
         jasmine.objectContaining({
           type: "v1",
