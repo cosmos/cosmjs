@@ -63,7 +63,7 @@ interface BlockId {
   // }
 }
 
-interface BlockHeader {
+export interface BlockHeader {
   readonly version: {
     readonly block: string;
     readonly app: string;

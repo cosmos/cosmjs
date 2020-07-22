@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Coin } from "../coins";
-import { BlockHeader } from "../cosmosclient";
-import { SearchTxsResponse } from "./base";
+import { BlockHeader, SearchTxsResponse } from "./base";
 import { LcdClient } from "./lcdclient";
 
 interface Validator {

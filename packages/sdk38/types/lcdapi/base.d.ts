@@ -50,7 +50,7 @@ export interface NodeInfoResponse {
 interface BlockId {
   readonly hash: string;
 }
-interface BlockHeader {
+export interface BlockHeader {
   readonly version: {
     readonly block: string;
     readonly app: string;
