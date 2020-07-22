@@ -1,8 +1,8 @@
-import { Argon2idOptions, Secp256k1, Secp256k1Signature, Sha256 } from "@cosmjs/crypto";
+import { Argon2id, Argon2idOptions, Secp256k1, Secp256k1Signature, Sha256 } from "@cosmjs/crypto";
 import { fromBase64, fromHex, toAscii } from "@cosmjs/encoding";
 
 import { base64Matcher, hexMatcher } from "./testutils.spec";
-import { Secp256k1Wallet } from "./wallet";
+import { extractKdfParams, Secp256k1Wallet, secp256k1WalletSalt } from "./wallet";
 
 describe("Secp256k1Wallet", () => {
   // m/44'/118'/0'/0/0
@@ -31,6 +31,54 @@ describe("Secp256k1Wallet", () => {
       expect((await Secp256k1Wallet.generate(18)).mnemonic.split(" ").length).toEqual(18);
       expect((await Secp256k1Wallet.generate(21)).mnemonic.split(" ").length).toEqual(21);
       expect((await Secp256k1Wallet.generate(24)).mnemonic.split(" ").length).toEqual(24);
+    });
+  });
+
+  describe("deserialize", () => {
+    it("can restore", async () => {
+      const original = await Secp256k1Wallet.fromMnemonic(defaultMnemonic);
+      const password = "123";
+      const serialized = await original.serialize(password);
+      const deserialized = await Secp256k1Wallet.deserialize(serialized, password);
+      expect(deserialized.mnemonic).toEqual(defaultMnemonic);
+      expect(await deserialized.getAccounts()).toEqual([
+        {
+          algo: "secp256k1",
+          address: defaultAddress,
+          pubkey: defaultPubkey,
+        },
+      ]);
+    });
+  });
+
+  describe("deserializeWithEncryptionKey", () => {
+    it("can restore", async () => {
+      const password = "123";
+      let serialized: string;
+      {
+        const original = await Secp256k1Wallet.fromMnemonic(defaultMnemonic);
+        const anyKdfParams: Argon2idOptions = {
+          outputLength: 32,
+          opsLimit: 4,
+          memLimitKib: 3 * 1024,
+        };
+        const encryptionKey = await Argon2id.execute(password, secp256k1WalletSalt, anyKdfParams);
+        serialized = await original.serializeWithEncryptionKey(encryptionKey, anyKdfParams);
+      }
+
+      {
+        const kdfOptions: any = extractKdfParams(serialized);
+        const encryptionKey = await Argon2id.execute(password, secp256k1WalletSalt, kdfOptions);
+        const deserialized = await Secp256k1Wallet.deserializeWithEncryptionKey(serialized, encryptionKey);
+        expect(deserialized.mnemonic).toEqual(defaultMnemonic);
+        expect(await deserialized.getAccounts()).toEqual([
+          {
+            algo: "secp256k1",
+            address: defaultAddress,
+            pubkey: defaultPubkey,
+          },
+        ]);
+      }
     });
   });
 

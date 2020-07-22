@@ -11,10 +11,12 @@ import {
   Slip10,
   Slip10Curve,
   Slip10RawIndex,
+  stringToPath,
   xchacha20NonceLength,
   Xchacha20poly1305Ietf,
 } from "@cosmjs/crypto";
-import { toAscii, toBase64, toHex, toUtf8 } from "@cosmjs/encoding";
+import { fromBase64, fromHex, fromUtf8, toAscii, toBase64, toHex, toUtf8 } from "@cosmjs/encoding";
+import { assert, isNonNullObject } from "@cosmjs/utils";
 
 import { rawSecp256k1PubkeyToAddress } from "./address";
 import { encodeSecp256k1Signature } from "./signature";
@@ -77,7 +79,7 @@ const serializationType1 = "v1";
  * This reduces the scope of a potential rainbow attack to all Secp256k1Wallet v1 users.
  * Must be 16 bytes due to implementation limitations.
  */
-const secp256k1WalletSalt = toAscii("Secp256k1Wallet1");
+export const secp256k1WalletSalt = toAscii("Secp256k1Wallet1");
 
 /**
  * A KDF configuration that is not very strong but can be used on the main thread.
@@ -128,6 +130,22 @@ export interface EncryptedSecp256k1WalletData {
   }>;
 }
 
+function extractKdfParamsV1(document: any): Record<string, any> {
+  return document.kdf.params;
+}
+
+export function extractKdfParams(serialization: string): Record<string, any> {
+  const root = JSON.parse(serialization);
+  if (!isNonNullObject(root)) throw new Error("Root document is not an onject.");
+
+  switch ((root as any).type) {
+    case serializationType1:
+      return extractKdfParamsV1(root);
+    default:
+      throw new Error("Unsupported serialization type");
+  }
+}
+
 export class Secp256k1Wallet implements OfflineSigner {
   /**
    * Restores a wallet from the given BIP39 mnemonic.
@@ -170,6 +188,82 @@ export class Secp256k1Wallet implements OfflineSigner {
     const entropy = Random.getBytes(entropyLength);
     const mnemonic = Bip39.encode(entropy);
     return Secp256k1Wallet.fromMnemonic(mnemonic.toString(), hdPath, prefix);
+  }
+
+  public static async deserialize(serialization: string, password: string): Promise<Secp256k1Wallet> {
+    const root = JSON.parse(serialization);
+    if (!isNonNullObject(root)) throw new Error("Root document is not an onject.");
+    const untypedRoot: any = root;
+    switch (untypedRoot.type) {
+      case serializationType1: {
+        let encryptionKey: Uint8Array;
+        switch (untypedRoot.kdf.algorithm) {
+          case "argon2id": {
+            const kdfOptions = untypedRoot.kdf.params;
+            encryptionKey = await Argon2id.execute(password, secp256k1WalletSalt, kdfOptions);
+            break;
+          }
+          default:
+            throw new Error("Unsupported KDF algorithm");
+        }
+
+        const nonce = fromHex(untypedRoot.encryption.params.nonce);
+        const decryptedBytes = await Xchacha20poly1305Ietf.decrypt(
+          fromBase64(untypedRoot.value),
+          encryptionKey,
+          nonce,
+        );
+        const decryptedDocument = JSON.parse(fromUtf8(decryptedBytes));
+        const { mnemonic, accounts } = decryptedDocument;
+        assert(typeof mnemonic === "string");
+        if (!Array.isArray(accounts)) throw new Error("Property 'accounts' is not an array");
+        if (accounts.length !== 1) throw new Error("Property 'accounts' only supports one entry");
+        const account = accounts[0];
+        if (!isNonNullObject(account)) throw new Error("Account is not an onject.");
+        const { algo, hdPath, prefix } = account as any;
+        assert(algo === "secp256k1");
+        assert(typeof hdPath === "string");
+        assert(typeof prefix === "string");
+
+        return Secp256k1Wallet.fromMnemonic(mnemonic, stringToPath(hdPath), prefix);
+      }
+      default:
+        throw new Error("Unsupported serialization type");
+    }
+  }
+
+  public static async deserializeWithEncryptionKey(
+    serialization: string,
+    encryptionKey: Uint8Array,
+  ): Promise<Secp256k1Wallet> {
+    const root = JSON.parse(serialization);
+    if (!isNonNullObject(root)) throw new Error("Root document is not an onject.");
+    const untypedRoot: any = root;
+    switch (untypedRoot.type) {
+      case serializationType1: {
+        const nonce = fromHex(untypedRoot.encryption.params.nonce);
+        const decryptedBytes = await Xchacha20poly1305Ietf.decrypt(
+          fromBase64(untypedRoot.value),
+          encryptionKey,
+          nonce,
+        );
+        const decryptedDocument = JSON.parse(fromUtf8(decryptedBytes));
+        const { mnemonic, accounts } = decryptedDocument;
+        assert(typeof mnemonic === "string");
+        if (!Array.isArray(accounts)) throw new Error("Property 'accounts' is not an array");
+        if (accounts.length !== 1) throw new Error("Property 'accounts' only supports one entry");
+        const account = accounts[0];
+        if (!isNonNullObject(account)) throw new Error("Account is not an onject.");
+        const { algo, hdPath, prefix } = account as any;
+        assert(algo === "secp256k1");
+        assert(typeof hdPath === "string");
+        assert(typeof prefix === "string");
+
+        return Secp256k1Wallet.fromMnemonic(mnemonic, stringToPath(hdPath), prefix);
+      }
+      default:
+        throw new Error("Unsupported serialization type");
+    }
   }
 
   /** Base secret */

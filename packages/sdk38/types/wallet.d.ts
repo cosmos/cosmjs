@@ -23,6 +23,12 @@ export interface OfflineSigner {
  */
 export declare function makeCosmoshubPath(a: number): readonly Slip10RawIndex[];
 /**
+ * A fixed salt is chosen to archive a deterministic password to key derivation.
+ * This reduces the scope of a potential rainbow attack to all Secp256k1Wallet v1 users.
+ * Must be 16 bytes due to implementation limitations.
+ */
+export declare const secp256k1WalletSalt: Uint8Array;
+/**
  * This interface describes a JSON object holding the encrypted wallet and the meta data
  */
 export interface EncryptedSecp256k1Wallet {
@@ -57,6 +63,7 @@ export interface EncryptedSecp256k1WalletData {
     readonly prefix: string;
   }>;
 }
+export declare function extractKdfParams(serialization: string): Record<string, any>;
 export declare class Secp256k1Wallet implements OfflineSigner {
   /**
    * Restores a wallet from the given BIP39 mnemonic.
@@ -81,6 +88,11 @@ export declare class Secp256k1Wallet implements OfflineSigner {
     length?: 12 | 15 | 18 | 21 | 24,
     hdPath?: readonly Slip10RawIndex[],
     prefix?: string,
+  ): Promise<Secp256k1Wallet>;
+  static deserialize(serialization: string, password: string): Promise<Secp256k1Wallet>;
+  static deserializeWithEncryptionKey(
+    serialization: string,
+    encryptionKey: Uint8Array,
   ): Promise<Secp256k1Wallet>;
   /** Base secret */
   private readonly secret;
