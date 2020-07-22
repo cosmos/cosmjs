@@ -65,7 +65,7 @@ describe("StakingExtension", () => {
           value: {
             delegator_address: faucet.address,
             validator_address: validatorAddress,
-            amount: coin(10000, "ustake"),
+            amount: coin(100, "ustake"),
           },
         };
         const memo = "Test undelegation for wasmd";
@@ -121,8 +121,8 @@ describe("StakingExtension", () => {
       expect(response.result[0].entries[0]).toEqual({
         creation_height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         completion_time: jasmine.stringMatching(dateTimeStampMatcher),
-        initial_balance: "10000",
-        balance: "10000",
+        initial_balance: "100",
+        balance: "100",
       });
     });
   });
@@ -245,8 +245,8 @@ describe("StakingExtension", () => {
       expect(response.result!.entries[0]).toEqual({
         creation_height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         completion_time: jasmine.stringMatching(dateTimeStampMatcher),
-        initial_balance: "10000",
-        balance: "10000",
+        initial_balance: "100",
+        balance: "100",
       });
     });
   });
@@ -430,8 +430,8 @@ describe("StakingExtension", () => {
       expect(response.result[0].entries[0]).toEqual({
         creation_height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         completion_time: jasmine.stringMatching(dateTimeStampMatcher),
-        initial_balance: "10000",
-        balance: "10000",
+        initial_balance: "100",
+        balance: "100",
       });
     });
   });
@@ -441,7 +441,8 @@ describe("StakingExtension", () => {
       // TODO: Find a result for this test
       pendingWithoutWasmd();
       const client = makeStakingClient(wasmd.endpoint);
-      const response = await client.staking.historicalInfo("100");
+      const currentHeight = (await client.blocksLatest()).block.header.height;
+      const response = await client.staking.historicalInfo(currentHeight);
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: {
@@ -450,9 +451,21 @@ describe("StakingExtension", () => {
               block: "",
               app: "",
             },
-            height: 10,
-            chainId: "",
+            height: "",
+            chain_id: "",
             time: "",
+            last_commit_hash: "",
+            last_block_id: {
+              hash: "",
+            },
+            data_hash: "",
+            validators_hash: "",
+            next_validators_hash: "",
+            consensus_hash: "",
+            app_hash: "",
+            last_results_hash: "",
+            evidence_hash: "",
+            proposer_address: "",
           },
           validators: [],
         },
