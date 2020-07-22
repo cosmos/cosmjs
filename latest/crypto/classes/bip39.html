@@ -97,7 +97,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/1ae9ac2e/packages/crypto/src/bip39.ts#L19">crypto/src/bip39.ts:19</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/d86dd3ed/packages/crypto/src/bip39.ts#L34">crypto/src/bip39.ts:34</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -120,13 +120,54 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/1ae9ac2e/packages/crypto/src/bip39.ts#L9">crypto/src/bip39.ts:9</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/d86dd3ed/packages/crypto/src/bip39.ts#L24">crypto/src/bip39.ts:24</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Encodes raw entropy of length 16, 20, 24, 28 or 32 bytes as an English mnemonic between 12 and 24 words.</p>
+								</div>
+								<table>
+									<thead>
+										<tr>
+											<th>Entropy</th>
+											<th>Words</th>
+										</tr>
+									</thead>
+									<tbody><tr>
+											<td>128 bit (16 bytes)</td>
+											<td>12</td>
+										</tr>
+										<tr>
+											<td>160 bit (20 bytes)</td>
+											<td>15</td>
+										</tr>
+										<tr>
+											<td>192 bit (24 bytes)</td>
+											<td>18</td>
+										</tr>
+										<tr>
+											<td>224 bit (28 bytes)</td>
+											<td>21</td>
+										</tr>
+										<tr>
+											<td>256 bit (32 bytes)</td>
+											<td>24</td>
+										</tr>
+								</tbody></table>
+								<dl class="tsd-comment-tags">
+									<dt>see</dt>
+									<dd><p><a href="https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki#generating-the-mnemonic">https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki#generating-the-mnemonic</a></p>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>entropy: <span class="tsd-signature-type">Uint8Array</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The entropy to be encoded. This must be cryptographically secure.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="englishmnemonic.html" class="tsd-signature-type">EnglishMnemonic</a></h4>
@@ -143,7 +184,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/1ae9ac2e/packages/crypto/src/bip39.ts#L23">crypto/src/bip39.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/d86dd3ed/packages/crypto/src/bip39.ts#L38">crypto/src/bip39.ts:38</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -258,18 +299,6 @@
 					<li class=" tsd-kind-type-alias">
 						<a href="../globals.html#secp256k1keypair" class="tsd-kind-icon">Secp256k1<wbr>Keypair</a>
 					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="../globals.html#xchacha20poly1305ietfciphertext" class="tsd-kind-icon">Xchacha20poly1305<wbr>Ietf<wbr>Ciphertext</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="../globals.html#xchacha20poly1305ietfkey" class="tsd-kind-icon">Xchacha20poly1305<wbr>Ietf<wbr>Key</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="../globals.html#xchacha20poly1305ietfmessage" class="tsd-kind-icon">Xchacha20poly1305<wbr>Ietf<wbr>Message</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="../globals.html#xchacha20poly1305ietfnonce" class="tsd-kind-icon">Xchacha20poly1305<wbr>Ietf<wbr>Nonce</a>
-					</li>
 					<li class=" tsd-kind-variable">
 						<a href="../globals.html#dertaginteger" class="tsd-kind-icon">der<wbr>Tag<wbr>Integer</a>
 					</li>
@@ -284,6 +313,9 @@
 					</li>
 					<li class=" tsd-kind-variable">
 						<a href="../globals.html#window" class="tsd-kind-icon">window</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="../globals.html#xchacha20noncelength" class="tsd-kind-icon">xchacha20<wbr>Nonce<wbr>Length</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="../globals.html#pathtostring" class="tsd-kind-icon">path<wbr>ToString</a>
