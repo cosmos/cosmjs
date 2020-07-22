@@ -41,7 +41,7 @@ export function main(originalArgs: readonly string[]): void {
         "Contract",
         "ContractDetails",
         "CosmWasmClient",
-        "GetNonceResult",
+        "GetSequenceResult",
         "PostTxResult",
         "SearchByHeightQuery",
         "SearchByIdQuery",

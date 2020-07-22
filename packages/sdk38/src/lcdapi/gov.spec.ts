@@ -49,7 +49,7 @@ describe("GovExtension", () => {
         },
       };
       const proposalMemo = "Test proposal for wasmd";
-      const { accountNumber: proposalAccountNumber, sequence: proposalSequence } = await client.getNonce();
+      const { accountNumber: proposalAccountNumber, sequence: proposalSequence } = await client.getSequence();
       const proposalSignBytes = makeSignBytes(
         [proposalMsg],
         defaultFee,
@@ -81,7 +81,7 @@ describe("GovExtension", () => {
         },
       };
       const voteMemo = "Test vote for wasmd";
-      const { accountNumber: voteAccountNumber, sequence: voteSequence } = await client.getNonce();
+      const { accountNumber: voteAccountNumber, sequence: voteSequence } = await client.getSequence();
       const voteSignBytes = makeSignBytes(
         [voteMsg],
         defaultFee,

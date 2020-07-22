@@ -100,7 +100,7 @@ describe("CosmWasmClient.searchTx", () => {
           amount: coins(2000, "ucosm"),
           gas: "80000", // 80k
         };
-        const { accountNumber, sequence } = await client.getNonce();
+        const { accountNumber, sequence } = await client.getSequence();
         const chainId = await client.getChainId();
         const signBytes = makeSignBytes([sendMsg], fee, chainId, memo, accountNumber, sequence);
         const signature = await wallet.sign(alice.address0, signBytes);

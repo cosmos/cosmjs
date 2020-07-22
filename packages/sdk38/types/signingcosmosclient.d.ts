@@ -1,5 +1,5 @@
 import { Coin } from "./coins";
-import { Account, CosmosClient, GetNonceResult, PostTxResult } from "./cosmosclient";
+import { Account, CosmosClient, GetSequenceResult, PostTxResult } from "./cosmosclient";
 import { BroadcastMode } from "./lcdapi";
 import { StdFee } from "./types";
 import { OfflineSigner } from "./wallet";
@@ -32,7 +32,7 @@ export declare class SigningCosmosClient extends CosmosClient {
     customFees?: Partial<FeeTable>,
     broadcastMode?: BroadcastMode,
   );
-  getNonce(address?: string): Promise<GetNonceResult>;
+  getSequence(address?: string): Promise<GetSequenceResult>;
   getAccount(address?: string): Promise<Account | undefined>;
   sendTokens(recipientAddress: string, transferAmount: readonly Coin[], memo?: string): Promise<PostTxResult>;
 }

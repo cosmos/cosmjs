@@ -45,7 +45,7 @@ describe("DistributionExtension", () => {
         },
       };
       const memo = "Test delegation for wasmd";
-      const { accountNumber, sequence } = await client.getNonce();
+      const { accountNumber, sequence } = await client.getSequence();
       const signBytes = makeSignBytes([msg], defaultFee, chainId, memo, accountNumber, sequence);
       const signature = await wallet.sign(faucet.address, signBytes);
       const tx = {

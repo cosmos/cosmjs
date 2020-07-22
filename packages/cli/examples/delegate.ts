@@ -24,7 +24,7 @@ const memo = "Use your power wisely";
 const chainId = await client.getChainId();
 console.log("Connected to chain:", chainId);
 
-const { accountNumber, sequence } = await client.getNonce(senderAddress);
+const { accountNumber, sequence } = await client.getSequence(senderAddress);
 console.log("Account/sequence:", accountNumber, sequence);
 
 const signBytes = makeSignBytes([msg], fee, chainId, memo, accountNumber, sequence);
