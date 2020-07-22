@@ -5,10 +5,7 @@ export { Hmac } from "./hmac";
 export { Keccak256 } from "./keccak";
 export {
   Xchacha20poly1305Ietf,
-  Xchacha20poly1305IetfCiphertext,
-  Xchacha20poly1305IetfKey,
-  Xchacha20poly1305IetfMessage,
-  Xchacha20poly1305IetfNonce,
+  xchacha20NonceLength,
   Argon2id,
   Argon2idOptions,
   Ed25519,
