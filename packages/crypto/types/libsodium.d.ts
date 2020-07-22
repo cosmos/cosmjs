@@ -1,6 +1,19 @@
 export interface Argon2idOptions {
+  /** Output length in bytes */
   readonly outputLength: number;
+  /**
+   * An integer between 1 and 4294967295 representing the computational difficulty.
+   *
+   * @see https://libsodium.gitbook.io/doc/password_hashing/default_phf#key-derivation
+   */
   readonly opsLimit: number;
+  /**
+   * Memory limit measured in KiB (like argon2 command line tool)
+   *
+   * Note: only approximately 16 MiB of memory are available using the non-sumo version of libsodium.js
+   *
+   * @see https://libsodium.gitbook.io/doc/password_hashing/default_phf#key-derivation
+   */
   readonly memLimitKib: number;
 }
 export declare class Argon2id {
