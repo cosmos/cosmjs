@@ -10,9 +10,12 @@ describe("Secp256k1Wallet", () => {
   const defaultPubkey = fromHex("02baa4ef93f2ce84592a49b1d729c074eab640112522a7a89f7d03ebab21ded7b6");
   const defaultAddress = "cosmos1jhg0e7s6gn44tfc5k37kr04sznyhedtc9rzys5";
 
-  it("can be constructed", async () => {
-    const wallet = await Secp256k1Wallet.fromMnemonic(defaultMnemonic);
-    expect(wallet).toBeTruthy();
+  describe("fromMnemonic", () => {
+    it("works", async () => {
+      const wallet = await Secp256k1Wallet.fromMnemonic(defaultMnemonic);
+      expect(wallet).toBeTruthy();
+      expect(wallet.mnemonic).toEqual(defaultMnemonic);
+    });
   });
 
   describe("getAccounts", () => {

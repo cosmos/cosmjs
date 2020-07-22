@@ -65,25 +65,33 @@ export function makeCosmoshubPath(a: number): readonly Slip10RawIndex[] {
 
 export class Secp256k1Wallet implements OfflineSigner {
   public static async fromMnemonic(
-    mnemonic: string,
+    mnemonicInput: string,
     hdPath: readonly Slip10RawIndex[] = makeCosmoshubPath(0),
     prefix = "cosmos",
   ): Promise<Secp256k1Wallet> {
-    const seed = await Bip39.mnemonicToSeed(new EnglishMnemonic(mnemonic));
+    const mnemonic = new EnglishMnemonic(mnemonicInput);
+    const seed = await Bip39.mnemonicToSeed(mnemonic);
     const { privkey } = Slip10.derivePath(Slip10Curve.Secp256k1, seed, hdPath);
     const uncompressed = (await Secp256k1.makeKeypair(privkey)).pubkey;
-    return new Secp256k1Wallet(privkey, Secp256k1.compressPubkey(uncompressed), prefix);
+    return new Secp256k1Wallet(mnemonic, privkey, Secp256k1.compressPubkey(uncompressed), prefix);
   }
 
+
+  private readonly mnemonicData: EnglishMnemonic;
   private readonly pubkey: Uint8Array;
   private readonly privkey: Uint8Array;
   private readonly prefix: string;
   private readonly algo: Algo = "secp256k1";
 
-  private constructor(privkey: Uint8Array, pubkey: Uint8Array, prefix: string) {
+  private constructor(mnemonic: EnglishMnemonic, privkey: Uint8Array, pubkey: Uint8Array, prefix: string) {
+    this.mnemonicData = mnemonic;
     this.privkey = privkey;
     this.pubkey = pubkey;
     this.prefix = prefix;
+  }
+
+  public get mnemonic(): string {
+    return this.mnemonicData.toString();
   }
 
   private get address(): string {

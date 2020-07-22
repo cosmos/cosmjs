@@ -24,15 +24,17 @@ export interface OfflineSigner {
 export declare function makeCosmoshubPath(a: number): readonly Slip10RawIndex[];
 export declare class Secp256k1Wallet implements OfflineSigner {
   static fromMnemonic(
-    mnemonic: string,
+    mnemonicInput: string,
     hdPath?: readonly Slip10RawIndex[],
     prefix?: string,
   ): Promise<Secp256k1Wallet>;
+  private readonly mnemonicData;
   private readonly pubkey;
   private readonly privkey;
   private readonly prefix;
   private readonly algo;
   private constructor();
+  get mnemonic(): string;
   private get address();
   getAccounts(): Promise<readonly AccountData[]>;
   sign(address: string, message: Uint8Array, prehashType?: PrehashType): Promise<StdSignature>;
