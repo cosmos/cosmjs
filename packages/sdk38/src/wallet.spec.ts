@@ -123,7 +123,7 @@ describe("Secp256k1Wallet", () => {
       const serialized = await wallet.serialize("123");
       expect(JSON.parse(serialized)).toEqual(
         jasmine.objectContaining({
-          type: "v1",
+          type: "secp256k1wallet-v1",
           kdf: {
             algorithm: "argon2id",
             params: {
@@ -138,7 +138,7 @@ describe("Secp256k1Wallet", () => {
               nonce: jasmine.stringMatching(hexMatcher),
             },
           },
-          value: jasmine.stringMatching(base64Matcher),
+          data: jasmine.stringMatching(base64Matcher),
         }),
       );
     });
@@ -157,7 +157,7 @@ describe("Secp256k1Wallet", () => {
       const serialized = await wallet.serializeWithEncryptionKey(key, customKdfParams);
       expect(JSON.parse(serialized)).toEqual(
         jasmine.objectContaining({
-          type: "v1",
+          type: "secp256k1wallet-v1",
           kdf: {
             algorithm: "argon2id",
             params: customKdfParams,
@@ -168,7 +168,7 @@ describe("Secp256k1Wallet", () => {
               nonce: jasmine.stringMatching(hexMatcher),
             },
           },
-          value: jasmine.stringMatching(base64Matcher),
+          data: jasmine.stringMatching(base64Matcher),
         }),
       );
     });

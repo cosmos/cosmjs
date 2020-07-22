@@ -29,9 +29,10 @@ export declare function makeCosmoshubPath(a: number): readonly Slip10RawIndex[];
  */
 export declare const secp256k1WalletSalt: Uint8Array;
 /**
- * This interface describes a JSON object holding the encrypted wallet and the meta data
+ * This interface describes a JSON object holding the encrypted wallet and the meta data.
+ * All fields in here must be JSON types.
  */
-export interface EncryptedSecp256k1Wallet {
+export interface Secp256k1WalletSerialization {
   /** A format+version identifier for this serialization format */
   readonly type: string;
   /** Information about the key derivation function (i.e. password to encrytion key) */
@@ -52,10 +53,14 @@ export interface EncryptedSecp256k1Wallet {
     /** A map of algorithm-specific parameters */
     readonly params: Record<string, unknown>;
   };
-  /** base64 encoded enccrypted value */
-  readonly value: string;
+  /** An instance of Secp256k1WalletData, which is stringified, encrypted and base64 encoded. */
+  readonly data: string;
 }
-export interface EncryptedSecp256k1WalletData {
+/**
+ * The data of a wallet serialization that is encrypted.
+ * All fields in here must be JSON types.
+ */
+export interface Secp256k1WalletData {
   readonly mnemonic: string;
   readonly accounts: ReadonlyArray<{
     readonly algo: string;
@@ -94,6 +99,7 @@ export declare class Secp256k1Wallet implements OfflineSigner {
     serialization: string,
     encryptionKey: Uint8Array,
   ): Promise<Secp256k1Wallet>;
+  private static deserializeType1;
   /** Base secret */
   private readonly secret;
   /** Derivation instrations */

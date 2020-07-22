@@ -72,7 +72,7 @@ export function makeCosmoshubPath(a: number): readonly Slip10RawIndex[] {
   ];
 }
 
-const serializationType1 = "v1";
+const serializationTypeV1 = "secp256k1wallet-v1";
 
 /**
  * A fixed salt is chosen to archive a deterministic password to key derivation.
@@ -94,9 +94,10 @@ const basicPasswordHashingOptions: Argon2idOptions = {
 const algorithmIdXchacha20poly1305Ietf = "xchacha20poly1305-ietf";
 
 /**
- * This interface describes a JSON object holding the encrypted wallet and the meta data
+ * This interface describes a JSON object holding the encrypted wallet and the meta data.
+ * All fields in here must be JSON types.
  */
-export interface EncryptedSecp256k1Wallet {
+export interface Secp256k1WalletSerialization {
   /** A format+version identifier for this serialization format */
   readonly type: string;
   /** Information about the key derivation function (i.e. password to encrytion key) */
@@ -117,11 +118,15 @@ export interface EncryptedSecp256k1Wallet {
     /** A map of algorithm-specific parameters */
     readonly params: Record<string, unknown>;
   };
-  /** base64 encoded enccrypted value */
-  readonly value: string;
+  /** An instance of Secp256k1WalletData, which is stringified, encrypted and base64 encoded. */
+  readonly data: string;
 }
 
-export interface EncryptedSecp256k1WalletData {
+/**
+ * The data of a wallet serialization that is encrypted.
+ * All fields in here must be JSON types.
+ */
+export interface Secp256k1WalletData {
   readonly mnemonic: string;
   readonly accounts: ReadonlyArray<{
     readonly algo: string;
@@ -136,10 +141,10 @@ function extractKdfParamsV1(document: any): Record<string, any> {
 
 export function extractKdfParams(serialization: string): Record<string, any> {
   const root = JSON.parse(serialization);
-  if (!isNonNullObject(root)) throw new Error("Root document is not an onject.");
+  if (!isNonNullObject(root)) throw new Error("Root document is not an object.");
 
   switch ((root as any).type) {
-    case serializationType1:
+    case serializationTypeV1:
       return extractKdfParamsV1(root);
     default:
       throw new Error("Unsupported serialization type");
@@ -192,24 +197,27 @@ export class Secp256k1Wallet implements OfflineSigner {
 
   public static async deserialize(serialization: string, password: string): Promise<Secp256k1Wallet> {
     const root = JSON.parse(serialization);
-    if (!isNonNullObject(root)) throw new Error("Root document is not an onject.");
+    if (!isNonNullObject(root)) throw new Error("Root document is not an object.");
+    switch ((root as any).type) {
+      case serializationTypeV1:
+        return Secp256k1Wallet.deserializeType1(serialization, password);
+      default:
+        throw new Error("Unsupported serialization type");
+    }
+  }
+
+  public static async deserializeWithEncryptionKey(
+    serialization: string,
+    encryptionKey: Uint8Array,
+  ): Promise<Secp256k1Wallet> {
+    const root = JSON.parse(serialization);
+    if (!isNonNullObject(root)) throw new Error("Root document is not an object.");
     const untypedRoot: any = root;
     switch (untypedRoot.type) {
-      case serializationType1: {
-        let encryptionKey: Uint8Array;
-        switch (untypedRoot.kdf.algorithm) {
-          case "argon2id": {
-            const kdfOptions = untypedRoot.kdf.params;
-            encryptionKey = await Argon2id.execute(password, secp256k1WalletSalt, kdfOptions);
-            break;
-          }
-          default:
-            throw new Error("Unsupported KDF algorithm");
-        }
-
+      case serializationTypeV1: {
         const nonce = fromHex(untypedRoot.encryption.params.nonce);
         const decryptedBytes = await Xchacha20poly1305Ietf.decrypt(
-          fromBase64(untypedRoot.value),
+          fromBase64(untypedRoot.data),
           encryptionKey,
           nonce,
         );
@@ -219,7 +227,7 @@ export class Secp256k1Wallet implements OfflineSigner {
         if (!Array.isArray(accounts)) throw new Error("Property 'accounts' is not an array");
         if (accounts.length !== 1) throw new Error("Property 'accounts' only supports one entry");
         const account = accounts[0];
-        if (!isNonNullObject(account)) throw new Error("Account is not an onject.");
+        if (!isNonNullObject(account)) throw new Error("Account is not an object.");
         const { algo, hdPath, prefix } = account as any;
         assert(algo === "secp256k1");
         assert(typeof hdPath === "string");
@@ -232,34 +240,23 @@ export class Secp256k1Wallet implements OfflineSigner {
     }
   }
 
-  public static async deserializeWithEncryptionKey(
-    serialization: string,
-    encryptionKey: Uint8Array,
-  ): Promise<Secp256k1Wallet> {
+  private static async deserializeType1(serialization: string, password: string): Promise<Secp256k1Wallet> {
     const root = JSON.parse(serialization);
-    if (!isNonNullObject(root)) throw new Error("Root document is not an onject.");
+    if (!isNonNullObject(root)) throw new Error("Root document is not an object.");
     const untypedRoot: any = root;
     switch (untypedRoot.type) {
-      case serializationType1: {
-        const nonce = fromHex(untypedRoot.encryption.params.nonce);
-        const decryptedBytes = await Xchacha20poly1305Ietf.decrypt(
-          fromBase64(untypedRoot.value),
-          encryptionKey,
-          nonce,
-        );
-        const decryptedDocument = JSON.parse(fromUtf8(decryptedBytes));
-        const { mnemonic, accounts } = decryptedDocument;
-        assert(typeof mnemonic === "string");
-        if (!Array.isArray(accounts)) throw new Error("Property 'accounts' is not an array");
-        if (accounts.length !== 1) throw new Error("Property 'accounts' only supports one entry");
-        const account = accounts[0];
-        if (!isNonNullObject(account)) throw new Error("Account is not an onject.");
-        const { algo, hdPath, prefix } = account as any;
-        assert(algo === "secp256k1");
-        assert(typeof hdPath === "string");
-        assert(typeof prefix === "string");
-
-        return Secp256k1Wallet.fromMnemonic(mnemonic, stringToPath(hdPath), prefix);
+      case serializationTypeV1: {
+        let encryptionKey: Uint8Array;
+        switch (untypedRoot.kdf.algorithm) {
+          case "argon2id": {
+            const kdfOptions = untypedRoot.kdf.params;
+            encryptionKey = await Argon2id.execute(password, secp256k1WalletSalt, kdfOptions);
+            break;
+          }
+          default:
+            throw new Error("Unsupported KDF algorithm");
+        }
+        return Secp256k1Wallet.deserializeWithEncryptionKey(serialization, encryptionKey);
       }
       default:
         throw new Error("Unsupported serialization type");
@@ -354,7 +351,7 @@ export class Secp256k1Wallet implements OfflineSigner {
     encryptionKey: Uint8Array,
     kdfOptions: Argon2idOptions,
   ): Promise<string> {
-    const encrytedData: EncryptedSecp256k1WalletData = {
+    const encrytedData: Secp256k1WalletData = {
       mnemonic: this.mnemonic,
       accounts: this.accounts.map((account) => ({
         algo: account.algo,
@@ -366,8 +363,8 @@ export class Secp256k1Wallet implements OfflineSigner {
     const nonce = Random.getBytes(xchacha20NonceLength);
     const encrypted = await Xchacha20poly1305Ietf.encrypt(message, encryptionKey, nonce);
 
-    const out: EncryptedSecp256k1Wallet = {
-      type: serializationType1,
+    const out: Secp256k1WalletSerialization = {
+      type: serializationTypeV1,
       kdf: { algorithm: "argon2id", params: { ...kdfOptions } },
       encryption: {
         algorithm: algorithmIdXchacha20poly1305Ietf,
@@ -375,7 +372,7 @@ export class Secp256k1Wallet implements OfflineSigner {
           nonce: toHex(nonce),
         },
       },
-      value: toBase64(encrypted),
+      data: toBase64(encrypted),
     };
     return JSON.stringify(out);
   }
