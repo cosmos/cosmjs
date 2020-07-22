@@ -23,8 +23,15 @@ export interface OfflineSigner {
  */
 export declare function makeCosmoshubPath(a: number): readonly Slip10RawIndex[];
 export declare class Secp256k1Wallet implements OfflineSigner {
+  /**
+   * Restores a wallet from the given BIP39 mnemonic.
+   *
+   * @param mnemonic Any valid English mnemonic.
+   * @param hdPath The BIP-32/SLIP-10 derivation path. Defaults to the Cosmos Hub/ATOM path `m/44'/118'/0'/0/0`.
+   * @param prefix The bech32 address prefix (human readable part). Defaults to "cosmos".
+   */
   static fromMnemonic(
-    mnemonicInput: string,
+    mnemonic: string,
     hdPath?: readonly Slip10RawIndex[],
     prefix?: string,
   ): Promise<Secp256k1Wallet>;

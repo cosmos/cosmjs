@@ -65,16 +65,23 @@ export function makeCosmoshubPath(a: number): readonly Slip10RawIndex[] {
 }
 
 export class Secp256k1Wallet implements OfflineSigner {
+  /**
+   * Restores a wallet from the given BIP39 mnemonic.
+   *
+   * @param mnemonic Any valid English mnemonic.
+   * @param hdPath The BIP-32/SLIP-10 derivation path. Defaults to the Cosmos Hub/ATOM path `m/44'/118'/0'/0/0`.
+   * @param prefix The bech32 address prefix (human readable part). Defaults to "cosmos".
+   */
   public static async fromMnemonic(
-    mnemonicInput: string,
+    mnemonic: string,
     hdPath: readonly Slip10RawIndex[] = makeCosmoshubPath(0),
     prefix = "cosmos",
   ): Promise<Secp256k1Wallet> {
-    const mnemonic = new EnglishMnemonic(mnemonicInput);
-    const seed = await Bip39.mnemonicToSeed(mnemonic);
+    const mnemonicChecked = new EnglishMnemonic(mnemonic);
+    const seed = await Bip39.mnemonicToSeed(mnemonicChecked);
     const { privkey } = Slip10.derivePath(Slip10Curve.Secp256k1, seed, hdPath);
     const uncompressed = (await Secp256k1.makeKeypair(privkey)).pubkey;
-    return new Secp256k1Wallet(mnemonic, privkey, Secp256k1.compressPubkey(uncompressed), prefix);
+    return new Secp256k1Wallet(mnemonicChecked, privkey, Secp256k1.compressPubkey(uncompressed), prefix);
   }
 
   /**
