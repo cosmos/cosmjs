@@ -22,6 +22,41 @@ export interface OfflineSigner {
  * with 0-based account index `a`.
  */
 export declare function makeCosmoshubPath(a: number): readonly Slip10RawIndex[];
+/**
+ * This interface describes a JSON object holding the encrypted wallet and the meta data
+ */
+export interface EncryptedSecp256k1Wallet {
+  /** A format+version identifier for this serialization format */
+  readonly type: string;
+  /** Information about the key derivation function (i.e. password to encrytion key) */
+  readonly kdf: {
+    /**
+     * An algorithm identifier, such as "argon2id" or "scrypt".
+     */
+    readonly algorithm: string;
+    /** A map of algorithm-specific parameters */
+    readonly params: Record<string, unknown>;
+  };
+  /** Information about the symmetric encryption */
+  readonly encryption: {
+    /**
+     * An algorithm identifier, such as "xchacha20poly1305-ietf".
+     */
+    readonly algorithm: string;
+    /** A map of algorithm-specific parameters */
+    readonly params: Record<string, unknown>;
+  };
+  /** base64 encoded enccrypted value */
+  readonly value: string;
+}
+export interface EncryptedSecp256k1WalletData {
+  readonly mnemonic: string;
+  readonly accounts: ReadonlyArray<{
+    readonly algo: string;
+    readonly hdPath: string;
+    readonly prefix: string;
+  }>;
+}
 export declare class Secp256k1Wallet implements OfflineSigner {
   /**
    * Restores a wallet from the given BIP39 mnemonic.
@@ -47,14 +82,22 @@ export declare class Secp256k1Wallet implements OfflineSigner {
     hdPath?: readonly Slip10RawIndex[],
     prefix?: string,
   ): Promise<Secp256k1Wallet>;
-  private readonly mnemonicData;
+  /** Base secret */
+  private readonly secret;
+  /** Derivation instrations */
+  private readonly accounts;
+  /** Derived data */
   private readonly pubkey;
   private readonly privkey;
-  private readonly prefix;
-  private readonly algo;
   private constructor();
   get mnemonic(): string;
   private get address();
   getAccounts(): Promise<readonly AccountData[]>;
   sign(address: string, message: Uint8Array, prehashType?: PrehashType): Promise<StdSignature>;
+  /**
+   * Generates an encrypted serialization of this wallet.
+   *
+   * @param secret If set to a string, a KDF runs internally. If set to an Uin8Array, this is used a the encryption key directly.
+   */
+  save(secret: string | Uint8Array): Promise<string>;
 }

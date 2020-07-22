@@ -1,6 +1,7 @@
 import { Secp256k1, Secp256k1Signature, Sha256 } from "@cosmjs/crypto";
 import { fromBase64, fromHex, toAscii } from "@cosmjs/encoding";
 
+import { base64Matcher } from "./testutils.spec";
 import { Secp256k1Wallet } from "./wallet";
 
 describe("Secp256k1Wallet", () => {
@@ -65,6 +66,19 @@ describe("Secp256k1Wallet", () => {
         defaultPubkey,
       );
       expect(valid).toEqual(true);
+    });
+  });
+
+  describe("save", () => {
+    it("can save with password", async () => {
+      const wallet = await Secp256k1Wallet.fromMnemonic(defaultMnemonic);
+      const serialized = await wallet.save("123");
+      expect(JSON.parse(serialized)).toEqual(
+        jasmine.objectContaining({
+          type: "v1",
+          value: jasmine.stringMatching(base64Matcher),
+        }),
+      );
     });
   });
 });
