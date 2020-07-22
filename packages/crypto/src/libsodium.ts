@@ -91,6 +91,13 @@ export class Ed25519 {
   }
 }
 
+/**
+ * Nonce length in bytes for all flavours of XChaCha20.
+ *
+ * @see https://libsodium.gitbook.io/doc/advanced/stream_ciphers/xchacha20#notes
+ */
+export const xchacha20NonceLength = 24;
+
 export class Xchacha20poly1305Ietf {
   public static async encrypt(
     message: Xchacha20poly1305IetfMessage,

@@ -31,6 +31,12 @@ export declare class Ed25519 {
   static createSignature(message: Uint8Array, keyPair: Ed25519Keypair): Promise<Uint8Array>;
   static verifySignature(signature: Uint8Array, message: Uint8Array, pubkey: Uint8Array): Promise<boolean>;
 }
+/**
+ * Nonce length in bytes for all flavours of XChaCha20.
+ *
+ * @see https://libsodium.gitbook.io/doc/advanced/stream_ciphers/xchacha20#notes
+ */
+export declare const xchacha20NonceLength = 24;
 export declare class Xchacha20poly1305Ietf {
   static encrypt(
     message: Xchacha20poly1305IetfMessage,

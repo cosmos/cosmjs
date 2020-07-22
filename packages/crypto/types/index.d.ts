@@ -9,6 +9,7 @@ export {
   Xchacha20poly1305IetfKey,
   Xchacha20poly1305IetfMessage,
   Xchacha20poly1305IetfNonce,
+  xchacha20NonceLength,
   Argon2id,
   Argon2idOptions,
   Ed25519,
