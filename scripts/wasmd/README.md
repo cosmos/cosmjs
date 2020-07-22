@@ -118,7 +118,7 @@ You should get output matching the following:
    Pubkey 2: A6e9ElvKaM0DKWh1bIdK3bgB14dyEDgIXYMA0Lbs1GoQ<br>
    Pubkey 3: AkAK5PQaucieWMb0+tTRY01feYI+upRnoNK556eD0Ibb<br>
    Pubkey 4: A5HMVEAJsupdQWItbZv5Z1xZifDixQi6tjU/hJpZY1bF
-4. **Unused**: for testing account state; this account never changes balances or nonces<br>
+4. **Unused**: for testing account state; this account never changes balances or sequences<br>
    oyster design unusual machine spread century engine gravity focus cave carry slot<br>
    ArkCaFUJ/IH+vKBmNRCdUVl3mCAhbopk9jjW4Ko4OfRQ<br>
    cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u

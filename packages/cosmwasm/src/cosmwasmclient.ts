@@ -235,7 +235,7 @@ export class CosmWasmClient {
     const account = await this.getAccount(address);
     if (!account) {
       throw new Error(
-        "Account does not exist on chain. Send some tokens there before trying to query nonces.",
+        "Account does not exist on chain. Send some tokens there before trying to query sequence.",
       );
     }
     return {
