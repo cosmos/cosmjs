@@ -19,7 +19,7 @@ import { isValidBuilder } from "./builder";
 import {
   Account,
   CosmWasmClient,
-  GetNonceResult,
+  GetSequenceResult,
   isPostTxFailure,
   PostTxFailure,
   PostTxResult,
@@ -196,7 +196,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     this.fees = { ...defaultFees, ...(customFees || {}) };
   }
 
-  public async getSequence(address?: string): Promise<GetNonceResult> {
+  public async getSequence(address?: string): Promise<GetSequenceResult> {
     return super.getSequence(address || this.senderAddress);
   }
 

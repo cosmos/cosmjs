@@ -8,7 +8,7 @@ import { Log, parseLogs } from "./logs";
 import { decodeBech32Pubkey } from "./pubkey";
 import { CosmosSdkTx, PubKey, StdTx } from "./types";
 
-export interface GetNonceResult {
+export interface GetSequenceResult {
   readonly accountNumber: number;
   readonly sequence: number;
 }
@@ -196,7 +196,7 @@ export class CosmosClient {
    *
    * @param address returns data for this address. When unset, the client's sender adddress is used.
    */
-  public async getSequence(address: string): Promise<GetNonceResult> {
+  public async getSequence(address: string): Promise<GetSequenceResult> {
     const account = await this.getAccount(address);
     if (!account) {
       throw new Error(

@@ -1,5 +1,5 @@
 import { BroadcastMode, Coin, OfflineSigner, StdFee, StdSignature } from "@cosmjs/sdk38";
-import { Account, CosmWasmClient, GetNonceResult, PostTxResult } from "./cosmwasmclient";
+import { Account, CosmWasmClient, GetSequenceResult, PostTxResult } from "./cosmwasmclient";
 import { Log } from "./logs";
 export interface SigningCallback {
   (signBytes: Uint8Array): Promise<StdSignature>;
@@ -104,7 +104,7 @@ export declare class SigningCosmWasmClient extends CosmWasmClient {
     customFees?: Partial<FeeTable>,
     broadcastMode?: BroadcastMode,
   );
-  getSequence(address?: string): Promise<GetNonceResult>;
+  getSequence(address?: string): Promise<GetSequenceResult>;
   getAccount(address?: string): Promise<Account | undefined>;
   /** Uploads code and returns a receipt, including the code ID */
   upload(wasmCode: Uint8Array, meta?: UploadMeta, memo?: string): Promise<UploadResult>;

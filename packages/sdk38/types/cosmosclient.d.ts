@@ -2,7 +2,7 @@ import { Coin } from "./coins";
 import { AuthExtension, BroadcastMode, LcdClient } from "./lcdapi";
 import { Log } from "./logs";
 import { CosmosSdkTx, PubKey, StdTx } from "./types";
-export interface GetNonceResult {
+export interface GetSequenceResult {
   readonly accountNumber: number;
   readonly sequence: number;
 }
@@ -124,7 +124,7 @@ export declare class CosmosClient {
    *
    * @param address returns data for this address. When unset, the client's sender adddress is used.
    */
-  getSequence(address: string): Promise<GetNonceResult>;
+  getSequence(address: string): Promise<GetSequenceResult>;
   getAccount(address: string): Promise<Account | undefined>;
   /**
    * Gets block header and meta

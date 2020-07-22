@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Coin, coins } from "./coins";
-import { Account, CosmosClient, GetNonceResult, PostTxResult } from "./cosmosclient";
+import { Account, CosmosClient, GetSequenceResult, PostTxResult } from "./cosmosclient";
 import { makeSignBytes } from "./encoding";
 import { BroadcastMode } from "./lcdapi";
 import { MsgSend } from "./msgs";
@@ -66,7 +66,7 @@ export class SigningCosmosClient extends CosmosClient {
     this.fees = { ...defaultFees, ...(customFees || {}) };
   }
 
-  public async getSequence(address?: string): Promise<GetNonceResult> {
+  public async getSequence(address?: string): Promise<GetSequenceResult> {
     return super.getSequence(address || this.senderAddress);
   }
 

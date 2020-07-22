@@ -7,7 +7,7 @@ export {
   Block,
   BlockHeader,
   CosmosClient,
-  GetNonceResult,
+  GetSequenceResult,
   IndexedTx,
   PostTxResult,
   SearchByHeightQuery,

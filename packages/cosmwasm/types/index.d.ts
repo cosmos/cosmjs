@@ -10,7 +10,7 @@ export {
   Contract,
   ContractDetails,
   CosmWasmClient,
-  GetNonceResult,
+  GetSequenceResult,
   PostTxResult,
   SearchByHeightQuery,
   SearchByIdQuery,
