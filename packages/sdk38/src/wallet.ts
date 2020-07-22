@@ -1,6 +1,7 @@
 import {
   Bip39,
   EnglishMnemonic,
+  Random,
   Secp256k1,
   Sha256,
   Sha512,
@@ -76,6 +77,23 @@ export class Secp256k1Wallet implements OfflineSigner {
     return new Secp256k1Wallet(mnemonic, privkey, Secp256k1.compressPubkey(uncompressed), prefix);
   }
 
+  /**
+   * Generates a new wallet with a BIP39 mnemonic of the given length.
+   *
+   * @param length The number of words in the mnemonic (12, 15, 18, 21 or 24).
+   * @param hdPath The BIP-32/SLIP-10 derivation path. Defaults to the Cosmos Hub/ATOM path `m/44'/118'/0'/0/0`.
+   * @param prefix The bech32 address prefix (human readable part). Defaults to "cosmos".
+   */
+  public static async generate(
+    length: 12 | 15 | 18 | 21 | 24 = 12,
+    hdPath: readonly Slip10RawIndex[] = makeCosmoshubPath(0),
+    prefix = "cosmos",
+  ): Promise<Secp256k1Wallet> {
+    const entropyLength = 4 * Math.floor((11 * length) / 33);
+    const entropy = Random.getBytes(entropyLength);
+    const mnemonic = Bip39.encode(entropy);
+    return Secp256k1Wallet.fromMnemonic(mnemonic.toString(), hdPath, prefix);
+  }
 
   private readonly mnemonicData: EnglishMnemonic;
   private readonly pubkey: Uint8Array;

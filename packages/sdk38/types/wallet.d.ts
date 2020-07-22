@@ -28,6 +28,18 @@ export declare class Secp256k1Wallet implements OfflineSigner {
     hdPath?: readonly Slip10RawIndex[],
     prefix?: string,
   ): Promise<Secp256k1Wallet>;
+  /**
+   * Generates a new wallet with a BIP39 mnemonic of the given length.
+   *
+   * @param length The number of words in the mnemonic (12, 15, 18, 21 or 24).
+   * @param hdPath The BIP-32/SLIP-10 derivation path. Defaults to the Cosmos Hub/ATOM path `m/44'/118'/0'/0/0`.
+   * @param prefix The bech32 address prefix (human readable part). Defaults to "cosmos".
+   */
+  static generate(
+    length?: 12 | 15 | 18 | 21 | 24,
+    hdPath?: readonly Slip10RawIndex[],
+    prefix?: string,
+  ): Promise<Secp256k1Wallet>;
   private readonly mnemonicData;
   private readonly pubkey;
   private readonly privkey;

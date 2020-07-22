@@ -18,6 +18,21 @@ describe("Secp256k1Wallet", () => {
     });
   });
 
+  describe("generate", () => {
+    it("defaults to 12 words", async () => {
+      const wallet = await Secp256k1Wallet.generate();
+      expect(wallet.mnemonic.split(" ").length).toEqual(12);
+    });
+
+    it("can use different mnemonic lengths", async () => {
+      expect((await Secp256k1Wallet.generate(12)).mnemonic.split(" ").length).toEqual(12);
+      expect((await Secp256k1Wallet.generate(15)).mnemonic.split(" ").length).toEqual(15);
+      expect((await Secp256k1Wallet.generate(18)).mnemonic.split(" ").length).toEqual(18);
+      expect((await Secp256k1Wallet.generate(21)).mnemonic.split(" ").length).toEqual(21);
+      expect((await Secp256k1Wallet.generate(24)).mnemonic.split(" ").length).toEqual(24);
+    });
+  });
+
   describe("getAccounts", () => {
     it("resolves to a list of accounts if enabled", async () => {
       const wallet = await Secp256k1Wallet.fromMnemonic(defaultMnemonic);
