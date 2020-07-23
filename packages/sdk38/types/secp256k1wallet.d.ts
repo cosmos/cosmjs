@@ -65,7 +65,7 @@ export declare class Secp256k1Wallet implements OfflineSigner {
     serialization: string,
     encryptionKey: Uint8Array,
   ): Promise<Secp256k1Wallet>;
-  private static deserializeType1;
+  private static deserializeTypeV1;
   /** Base secret */
   private readonly secret;
   /** Derivation instruction */

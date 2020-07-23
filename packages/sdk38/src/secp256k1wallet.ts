@@ -82,8 +82,8 @@ export interface Secp256k1WalletData {
   }>;
 }
 
-function extractKdfConfigurationV1(document: any): KdfConfiguration {
-  return document.kdf;
+function extractKdfConfigurationV1(doc: any): KdfConfiguration {
+  return doc.kdf;
 }
 
 export function extractKdfConfiguration(serialization: string): KdfConfiguration {
@@ -147,7 +147,7 @@ export class Secp256k1Wallet implements OfflineSigner {
     if (!isNonNullObject(root)) throw new Error("Root document is not an object.");
     switch ((root as any).type) {
       case serializationTypeV1:
-        return Secp256k1Wallet.deserializeType1(serialization, password);
+        return Secp256k1Wallet.deserializeTypeV1(serialization, password);
       default:
         throw new Error("Unsupported serialization type");
     }
@@ -187,27 +187,21 @@ export class Secp256k1Wallet implements OfflineSigner {
     }
   }
 
-  private static async deserializeType1(serialization: string, password: string): Promise<Secp256k1Wallet> {
+  private static async deserializeTypeV1(serialization: string, password: string): Promise<Secp256k1Wallet> {
     const root = JSON.parse(serialization);
     if (!isNonNullObject(root)) throw new Error("Root document is not an object.");
     const untypedRoot: any = root;
-    switch (untypedRoot.type) {
-      case serializationTypeV1: {
-        let encryptionKey: Uint8Array;
-        switch (untypedRoot.kdf.algorithm) {
-          case "argon2id": {
-            const kdfOptions = untypedRoot.kdf.params;
-            encryptionKey = await Argon2id.execute(password, cosmjsSalt, kdfOptions);
-            break;
-          }
-          default:
-            throw new Error("Unsupported KDF algorithm");
-        }
-        return Secp256k1Wallet.deserializeWithEncryptionKey(serialization, encryptionKey);
+    let encryptionKey: Uint8Array;
+    switch (untypedRoot.kdf.algorithm) {
+      case "argon2id": {
+        const kdfOptions = untypedRoot.kdf.params;
+        encryptionKey = await Argon2id.execute(password, cosmjsSalt, kdfOptions);
+        break;
       }
       default:
-        throw new Error("Unsupported serialization type");
+        throw new Error("Unsupported KDF algorithm");
     }
+    return Secp256k1Wallet.deserializeWithEncryptionKey(serialization, encryptionKey);
   }
 
   /** Base secret */
@@ -298,7 +292,7 @@ export class Secp256k1Wallet implements OfflineSigner {
     encryptionKey: Uint8Array,
     kdfConfiguration: KdfConfiguration,
   ): Promise<string> {
-    const encrytedData: Secp256k1WalletData = {
+    const dataToEncrypt: Secp256k1WalletData = {
       mnemonic: this.mnemonic,
       accounts: this.accounts.map((account) => ({
         algo: account.algo,
@@ -306,9 +300,9 @@ export class Secp256k1Wallet implements OfflineSigner {
         prefix: account.prefix,
       })),
     };
-    const message = toUtf8(JSON.stringify(encrytedData));
+    const dataToEncryptRaw = toUtf8(JSON.stringify(dataToEncrypt));
     const nonce = Random.getBytes(xchacha20NonceLength);
-    const encrypted = await Xchacha20poly1305Ietf.encrypt(message, encryptionKey, nonce);
+    const encryptedData = await Xchacha20poly1305Ietf.encrypt(dataToEncryptRaw, encryptionKey, nonce);
 
     const out: Secp256k1WalletSerialization = {
       type: serializationTypeV1,
@@ -319,7 +313,7 @@ export class Secp256k1Wallet implements OfflineSigner {
           nonce: toHex(nonce),
         },
       },
-      data: toBase64(encrypted),
+      data: toBase64(encryptedData),
     };
     return JSON.stringify(out);
   }
