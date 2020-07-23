@@ -219,8 +219,8 @@ export class LcdClient {
     this.broadcastMode = broadcastMode;
   }
 
-  public async get(path: string): Promise<any> {
-    const { data } = await this.client.get(path).catch(parseAxiosError);
+  public async get(path: string, params?: Record<string, any>): Promise<any> {
+    const { data } = await this.client.get(path, { params }).catch(parseAxiosError);
     if (data === null) {
       throw new Error("Received null response from server");
     }

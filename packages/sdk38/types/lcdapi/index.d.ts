@@ -38,6 +38,25 @@ export {
   SlashingParametersResponse,
   SlashingSigningInfosResponse,
 } from "./slashing";
+export {
+  setupStakingExtension,
+  StakingDelegatorDelegationsResponse,
+  StakingDelegatorUnbondingDelegationsResponse,
+  StakingDelegatorTransactionsResponse,
+  StakingDelegatorValidatorsResponse,
+  StakingDelegatorValidatorResponse,
+  StakingDelegationResponse,
+  StakingUnbondingDelegationResponse,
+  StakingRedelegationsResponse,
+  StakingValidatorsResponse,
+  StakingValidatorResponse,
+  StakingValidatorDelegationsResponse,
+  StakingValidatorUnbondingDelegationsResponse,
+  StakingHistoricalInfoResponse,
+  StakingExtension,
+  StakingParametersResponse,
+  StakingPoolResponse,
+} from "./staking";
 export { setupSupplyExtension, SupplyExtension, TotalSupplyAllResponse, TotalSupplyResponse } from "./supply";
 export {
   BlockResponse,

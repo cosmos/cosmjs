@@ -16,6 +16,6 @@ docker run \
   --mount type=volume,source=wasmcli_data,target=/root/.wasmcli \
   -w "$HOME_DIR" \
   --env "HOME=$HOME_DIR" \
-  --net "container:$BLOCKCHAIN_CONTAINER_NAME" \
+  --net "container:$CONTAINER_NAME" \
   "$REPOSITORY:$VERSION" \
   wasmcli "$@"

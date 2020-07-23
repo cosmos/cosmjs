@@ -143,7 +143,7 @@ export declare class LcdClient {
    * @param broadcastMode Defines at which point of the transaction processing the postTx method (i.e. transaction broadcasting) returns
    */
   constructor(apiUrl: string, broadcastMode?: BroadcastMode);
-  get(path: string): Promise<any>;
+  get(path: string, params?: Record<string, any>): Promise<any>;
   post(path: string, params: any): Promise<any>;
   blocksLatest(): Promise<BlockResponse>;
   blocks(height: number): Promise<BlockResponse>;
