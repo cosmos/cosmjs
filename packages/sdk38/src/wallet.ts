@@ -1,6 +1,6 @@
 import {
   Argon2id,
-  Argon2idOptions,
+  isArgon2idOptions,
   Random,
   Sha256,
   Sha512,
@@ -9,7 +9,6 @@ import {
   Xchacha20poly1305Ietf,
 } from "@cosmjs/crypto";
 import { toAscii } from "@cosmjs/encoding";
-import { assert } from "@cosmjs/utils";
 
 import { StdSignature } from "./types";
 
@@ -82,11 +81,8 @@ export interface KdfConfiguration {
 export async function executeKdf(password: string, configuration: KdfConfiguration): Promise<Uint8Array> {
   switch (configuration.algorithm) {
     case "argon2id": {
-      const { outputLength, opsLimit, memLimitKib } = configuration.params;
-      assert(typeof outputLength === "number");
-      assert(typeof opsLimit === "number");
-      assert(typeof memLimitKib === "number");
-      const options: Argon2idOptions = { outputLength, opsLimit, memLimitKib };
+      const options = configuration.params;
+      if (!isArgon2idOptions(options)) throw new Error("Invalid format of argon2id params");
       return Argon2id.execute(password, cosmjsSalt, options);
     }
     default:

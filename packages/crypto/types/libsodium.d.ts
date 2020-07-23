@@ -16,6 +16,7 @@ export interface Argon2idOptions {
    */
   readonly memLimitKib: number;
 }
+export declare function isArgon2idOptions(thing: unknown): thing is Argon2idOptions;
 export declare class Argon2id {
   static execute(password: string, salt: Uint8Array, options: Argon2idOptions): Promise<Uint8Array>;
 }

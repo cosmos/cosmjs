@@ -8,6 +8,7 @@ export {
   xchacha20NonceLength,
   Argon2id,
   Argon2idOptions,
+  isArgon2idOptions,
   Ed25519,
   Ed25519Keypair,
 } from "./libsodium";

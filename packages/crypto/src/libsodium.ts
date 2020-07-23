@@ -3,6 +3,7 @@
 //
 // libsodium.js API: https://gist.github.com/webmaster128/b2dbe6d54d36dd168c9fabf441b9b09c
 
+import { isNonNullObject } from "@cosmjs/utils";
 import sodium from "libsodium-wrappers";
 
 export interface Argon2idOptions {
@@ -22,6 +23,14 @@ export interface Argon2idOptions {
    * @see https://libsodium.gitbook.io/doc/password_hashing/default_phf#key-derivation
    */
   readonly memLimitKib: number;
+}
+
+export function isArgon2idOptions(thing: unknown): thing is Argon2idOptions {
+  if (!isNonNullObject(thing)) return false;
+  if (typeof (thing as Argon2idOptions).outputLength !== "number") return false;
+  if (typeof (thing as Argon2idOptions).opsLimit !== "number") return false;
+  if (typeof (thing as Argon2idOptions).memLimitKib !== "number") return false;
+  return true;
 }
 
 export class Argon2id {
