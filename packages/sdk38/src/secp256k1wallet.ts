@@ -12,7 +12,7 @@ import {
   xchacha20NonceLength,
   Xchacha20poly1305Ietf,
 } from "@cosmjs/crypto";
-import { fromBase64, fromHex, fromUtf8, toAscii, toBase64, toHex, toUtf8 } from "@cosmjs/encoding";
+import { fromBase64, fromHex, fromUtf8, toBase64, toHex, toUtf8 } from "@cosmjs/encoding";
 import { assert, isNonNullObject } from "@cosmjs/utils";
 
 import { rawSecp256k1PubkeyToAddress } from "./address";
@@ -21,6 +21,7 @@ import { StdSignature } from "./types";
 import {
   AccountData,
   Algo,
+  cosmjsSalt,
   executeKdf,
   KdfConfiguration,
   makeCosmoshubPath,
@@ -30,13 +31,6 @@ import {
 } from "./wallet";
 
 const serializationTypeV1 = "secp256k1wallet-v1";
-
-/**
- * A fixed salt is chosen to archive a deterministic password to key derivation.
- * This reduces the scope of a potential rainbow attack to all CosmJS users.
- * Must be 16 bytes due to implementation limitations.
- */
-const cosmjsSalt = toAscii("The CosmJS salt.");
 
 /**
  * A KDF configuration that is not very strong but can be used on the main thread.

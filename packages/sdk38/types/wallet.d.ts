@@ -23,6 +23,12 @@ export declare function prehash(bytes: Uint8Array, type: PrehashType): Uint8Arra
  * with 0-based account index `a`.
  */
 export declare function makeCosmoshubPath(a: number): readonly Slip10RawIndex[];
+/**
+ * A fixed salt is chosen to archive a deterministic password to key derivation.
+ * This reduces the scope of a potential rainbow attack to all CosmJS users.
+ * Must be 16 bytes due to implementation limitations.
+ */
+export declare const cosmjsSalt: Uint8Array;
 export interface KdfConfiguration {
   /**
    * An algorithm identifier, such as "argon2id" or "scrypt".

@@ -59,7 +59,7 @@ export function makeCosmoshubPath(a: number): readonly Slip10RawIndex[] {
  * This reduces the scope of a potential rainbow attack to all CosmJS users.
  * Must be 16 bytes due to implementation limitations.
  */
-const cosmjsSalt = toAscii("The CosmJS salt.");
+export const cosmjsSalt = toAscii("The CosmJS salt.");
 
 export interface KdfConfiguration {
   /**
