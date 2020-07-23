@@ -8,7 +8,7 @@ import { AccountData, KdfConfiguration, OfflineSigner, PrehashType } from "./wal
 export interface Secp256k1WalletSerialization {
   /** A format+version identifier for this serialization format */
   readonly type: string;
-  /** Information about the key derivation function (i.e. password to encrytion key) */
+  /** Information about the key derivation function (i.e. password to encryption key) */
   readonly kdf: KdfConfiguration;
   /** Information about the symmetric encryption */
   readonly encryption: {
@@ -68,7 +68,7 @@ export declare class Secp256k1Wallet implements OfflineSigner {
   private static deserializeType1;
   /** Base secret */
   private readonly secret;
-  /** Derivation instrations */
+  /** Derivation instruction */
   private readonly accounts;
   /** Derived data */
   private readonly pubkey;
@@ -88,10 +88,10 @@ export declare class Secp256k1Wallet implements OfflineSigner {
   /**
    * Generates an encrypted serialization of this wallet.
    *
-   * This is an advanced alternative of calling `serialize(password)` directly, which allows you to
-   * offload the KDF execution to an non-UI thread (e.g. in a WebWorker).
+   * This is an advanced alternative to calling `serialize(password)` directly, which allows you to
+   * offload the KDF execution to a non-UI thread (e.g. in a WebWorker).
    *
-   * The caller is responsible for ensuring the key was derived with the given kdf options. If this
+   * The caller is responsible for ensuring the key was derived with the given KDF options. If this
    * is not the case, the wallet cannot be restored with the original password.
    */
   serializeWithEncryptionKey(encryptionKey: Uint8Array, kdfConfiguration: KdfConfiguration): Promise<string>;
