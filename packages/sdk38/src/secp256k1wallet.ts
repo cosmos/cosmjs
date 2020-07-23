@@ -8,9 +8,8 @@ import {
   Slip10Curve,
   Slip10RawIndex,
   stringToPath,
-  xchacha20NonceLength,
 } from "@cosmjs/crypto";
-import { fromBase64, fromUtf8, toBase64, toHex, toUtf8 } from "@cosmjs/encoding";
+import { fromBase64, fromUtf8, toBase64, toUtf8 } from "@cosmjs/encoding";
 import { assert, isNonNullObject } from "@cosmjs/utils";
 
 import { rawSecp256k1PubkeyToAddress } from "./address";
@@ -295,7 +294,6 @@ export class Secp256k1Wallet implements OfflineSigner {
 
     const encryptionConfiguration: EncryptionConfiguration = {
       algorithm: supportedAlgorithms.xchacha20poly1305Ietf,
-      params: { nonce: toHex(Random.getBytes(xchacha20NonceLength)) },
     };
     const encryptedData = await encrypt(dataToEncryptRaw, encryptionKey, encryptionConfiguration);
 

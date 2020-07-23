@@ -48,7 +48,7 @@ export interface EncryptionConfiguration {
    */
   readonly algorithm: string;
   /** A map of algorithm-specific parameters */
-  readonly params: Record<string, unknown>;
+  readonly params?: Record<string, unknown>;
 }
 export declare const supportedAlgorithms: {
   xchacha20poly1305Ietf: string;

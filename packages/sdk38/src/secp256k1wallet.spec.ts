@@ -2,7 +2,7 @@ import { Secp256k1, Secp256k1Signature, Sha256 } from "@cosmjs/crypto";
 import { fromBase64, fromHex, toAscii } from "@cosmjs/encoding";
 
 import { extractKdfConfiguration, Secp256k1Wallet } from "./secp256k1wallet";
-import { base64Matcher, hexMatcher } from "./testutils.spec";
+import { base64Matcher } from "./testutils.spec";
 import { executeKdf, KdfConfiguration } from "./wallet";
 
 describe("Secp256k1Wallet", () => {
@@ -137,9 +137,6 @@ describe("Secp256k1Wallet", () => {
         },
         encryption: {
           algorithm: "xchacha20poly1305-ietf",
-          params: {
-            nonce: jasmine.stringMatching(hexMatcher),
-          },
         },
         data: jasmine.stringMatching(base64Matcher),
       });
@@ -165,9 +162,6 @@ describe("Secp256k1Wallet", () => {
         kdf: customKdfConfiguration,
         encryption: {
           algorithm: "xchacha20poly1305-ietf",
-          params: {
-            nonce: jasmine.stringMatching(hexMatcher),
-          },
         },
         data: jasmine.stringMatching(base64Matcher),
       });

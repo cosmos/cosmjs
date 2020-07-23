@@ -1,12 +1,14 @@
 import {
   Argon2id,
   Argon2idOptions,
+  Random,
   Sha256,
   Sha512,
   Slip10RawIndex,
+  xchacha20NonceLength,
   Xchacha20poly1305Ietf,
 } from "@cosmjs/crypto";
-import { fromHex, toAscii } from "@cosmjs/encoding";
+import { toAscii } from "@cosmjs/encoding";
 import { assert } from "@cosmjs/utils";
 
 import { StdSignature } from "./types";
@@ -102,7 +104,7 @@ export interface EncryptionConfiguration {
    */
   readonly algorithm: string;
   /** A map of algorithm-specific parameters */
-  readonly params: Record<string, unknown>;
+  readonly params?: Record<string, unknown>;
 }
 
 export const supportedAlgorithms = {
@@ -116,8 +118,12 @@ export async function encrypt(
 ): Promise<Uint8Array> {
   switch (config.algorithm) {
     case supportedAlgorithms.xchacha20poly1305Ietf: {
-      const nonce = fromHex((config.params as any).nonce);
-      return Xchacha20poly1305Ietf.encrypt(plaintext, encryptionKey, nonce);
+      const nonce = Random.getBytes(xchacha20NonceLength);
+      // Prepend fixed-length nonce to ciphertext as suggested in the example from https://github.com/jedisct1/libsodium.js#api
+      return new Uint8Array([
+        ...nonce,
+        ...(await Xchacha20poly1305Ietf.encrypt(plaintext, encryptionKey, nonce)),
+      ]);
     }
     default:
       throw new Error(`Unsupported encryption algorithm: '${config.algorithm}'`);
@@ -131,8 +137,8 @@ export async function decrypt(
 ): Promise<Uint8Array> {
   switch (config.algorithm) {
     case supportedAlgorithms.xchacha20poly1305Ietf: {
-      const nonce = fromHex((config.params as any).nonce);
-      return Xchacha20poly1305Ietf.decrypt(ciphertext, encryptionKey, nonce);
+      const nonce = ciphertext.slice(0, xchacha20NonceLength);
+      return Xchacha20poly1305Ietf.decrypt(ciphertext.slice(xchacha20NonceLength), encryptionKey, nonce);
     }
     default:
       throw new Error(`Unsupported encryption algorithm: '${config.algorithm}'`);
