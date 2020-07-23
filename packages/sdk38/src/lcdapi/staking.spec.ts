@@ -444,40 +444,14 @@ describe("StakingExtension", () => {
     });
   });
 
-  xdescribe("historicalInfo", () => {
-    it("works", async () => {
-      // TODO: Find a result for this test
+  describe("historicalInfo", () => {
+    it("doesn't work yet", async () => {
       pendingWithoutWasmd();
       const client = makeStakingClient(wasmd.endpoint);
       const currentHeight = (await client.blocksLatest()).block.header.height;
-      const response = await client.staking.historicalInfo(currentHeight);
-      expect(response).toEqual({
-        height: jasmine.stringMatching(nonNegativeIntegerMatcher),
-        result: {
-          header: {
-            version: {
-              block: "",
-              app: "",
-            },
-            height: "",
-            chain_id: "",
-            time: "",
-            last_commit_hash: "",
-            last_block_id: {
-              hash: "",
-            },
-            data_hash: "",
-            validators_hash: "",
-            next_validators_hash: "",
-            consensus_hash: "",
-            app_hash: "",
-            last_results_hash: "",
-            evidence_hash: "",
-            proposer_address: "",
-          },
-          validators: [],
-        },
-      });
+      return expectAsync(client.staking.historicalInfo(currentHeight)).toBeRejectedWithError(
+        /no historical info found \(HTTP 400\)/i,
+      );
     });
   });
 
