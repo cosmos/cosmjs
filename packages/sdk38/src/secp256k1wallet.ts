@@ -9,9 +9,8 @@ import {
   Slip10RawIndex,
   stringToPath,
   xchacha20NonceLength,
-  Xchacha20poly1305Ietf,
 } from "@cosmjs/crypto";
-import { fromBase64, fromHex, fromUtf8, toBase64, toHex, toUtf8 } from "@cosmjs/encoding";
+import { fromBase64, fromUtf8, toBase64, toHex, toUtf8 } from "@cosmjs/encoding";
 import { assert, isNonNullObject } from "@cosmjs/utils";
 
 import { rawSecp256k1PubkeyToAddress } from "./address";
@@ -19,12 +18,16 @@ import { encodeSecp256k1Signature } from "./signature";
 import { StdSignature } from "./types";
 import {
   AccountData,
+  decrypt,
+  encrypt,
+  EncryptionConfiguration,
   executeKdf,
   KdfConfiguration,
   makeCosmoshubPath,
   OfflineSigner,
   prehash,
   PrehashType,
+  supportedAlgorithms,
 } from "./wallet";
 
 const serializationTypeV1 = "secp256k1wallet-v1";
@@ -42,8 +45,6 @@ const basicPasswordHashingOptions: KdfConfiguration = {
   },
 };
 
-const algorithmIdXchacha20poly1305Ietf = "xchacha20poly1305-ietf";
-
 /**
  * This interface describes a JSON object holding the encrypted wallet and the meta data.
  * All fields in here must be JSON types.
@@ -54,14 +55,7 @@ export interface Secp256k1WalletSerialization {
   /** Information about the key derivation function (i.e. password to encryption key) */
   readonly kdf: KdfConfiguration;
   /** Information about the symmetric encryption */
-  readonly encryption: {
-    /**
-     * An algorithm identifier, such as "xchacha20poly1305-ietf".
-     */
-    readonly algorithm: string;
-    /** A map of algorithm-specific parameters */
-    readonly params: Record<string, unknown>;
-  };
+  readonly encryption: EncryptionConfiguration;
   /** An instance of Secp256k1WalletData, which is stringified, encrypted and base64 encoded. */
   readonly data: string;
 }
@@ -179,11 +173,10 @@ export class Secp256k1Wallet implements OfflineSigner {
     const untypedRoot: any = root;
     switch (untypedRoot.type) {
       case serializationTypeV1: {
-        const nonce = fromHex(untypedRoot.encryption.params.nonce);
-        const decryptedBytes = await Xchacha20poly1305Ietf.decrypt(
+        const decryptedBytes = await decrypt(
           fromBase64(untypedRoot.data),
           encryptionKey,
-          nonce,
+          untypedRoot.encryption,
         );
         const decryptedDocument = JSON.parse(fromUtf8(decryptedBytes));
         const { mnemonic, accounts } = decryptedDocument;
@@ -299,18 +292,17 @@ export class Secp256k1Wallet implements OfflineSigner {
       ),
     };
     const dataToEncryptRaw = toUtf8(JSON.stringify(dataToEncrypt));
-    const nonce = Random.getBytes(xchacha20NonceLength);
-    const encryptedData = await Xchacha20poly1305Ietf.encrypt(dataToEncryptRaw, encryptionKey, nonce);
+
+    const encryptionConfiguration: EncryptionConfiguration = {
+      algorithm: supportedAlgorithms.xchacha20poly1305Ietf,
+      params: { nonce: toHex(Random.getBytes(xchacha20NonceLength)) },
+    };
+    const encryptedData = await encrypt(dataToEncryptRaw, encryptionKey, encryptionConfiguration);
 
     const out: Secp256k1WalletSerialization = {
       type: serializationTypeV1,
       kdf: kdfConfiguration,
-      encryption: {
-        algorithm: algorithmIdXchacha20poly1305Ietf,
-        params: {
-          nonce: toHex(nonce),
-        },
-      },
+      encryption: encryptionConfiguration,
       data: toBase64(encryptedData),
     };
     return JSON.stringify(out);

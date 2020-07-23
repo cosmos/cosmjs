@@ -1,6 +1,6 @@
 import { Slip10RawIndex } from "@cosmjs/crypto";
 import { StdSignature } from "./types";
-import { AccountData, KdfConfiguration, OfflineSigner, PrehashType } from "./wallet";
+import { AccountData, EncryptionConfiguration, KdfConfiguration, OfflineSigner, PrehashType } from "./wallet";
 /**
  * This interface describes a JSON object holding the encrypted wallet and the meta data.
  * All fields in here must be JSON types.
@@ -11,14 +11,7 @@ export interface Secp256k1WalletSerialization {
   /** Information about the key derivation function (i.e. password to encryption key) */
   readonly kdf: KdfConfiguration;
   /** Information about the symmetric encryption */
-  readonly encryption: {
-    /**
-     * An algorithm identifier, such as "xchacha20poly1305-ietf".
-     */
-    readonly algorithm: string;
-    /** A map of algorithm-specific parameters */
-    readonly params: Record<string, unknown>;
-  };
+  readonly encryption: EncryptionConfiguration;
   /** An instance of Secp256k1WalletData, which is stringified, encrypted and base64 encoded. */
   readonly data: string;
 }

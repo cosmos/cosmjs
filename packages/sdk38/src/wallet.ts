@@ -1,5 +1,12 @@
-import { Argon2id, Argon2idOptions, Sha256, Sha512, Slip10RawIndex } from "@cosmjs/crypto";
-import { toAscii } from "@cosmjs/encoding";
+import {
+  Argon2id,
+  Argon2idOptions,
+  Sha256,
+  Sha512,
+  Slip10RawIndex,
+  Xchacha20poly1305Ietf,
+} from "@cosmjs/crypto";
+import { fromHex, toAscii } from "@cosmjs/encoding";
 import { assert } from "@cosmjs/utils";
 
 import { StdSignature } from "./types";
@@ -82,5 +89,52 @@ export async function executeKdf(password: string, configuration: KdfConfigurati
     }
     default:
       throw new Error("Unsupported KDF algorithm");
+  }
+}
+
+/**
+ * Configuration how to encrypt data or how data was encrypted.
+ * This is stored as part of the wallet serialization and must only contain JSON types.
+ */
+export interface EncryptionConfiguration {
+  /**
+   * An algorithm identifier, such as "xchacha20poly1305-ietf".
+   */
+  readonly algorithm: string;
+  /** A map of algorithm-specific parameters */
+  readonly params: Record<string, unknown>;
+}
+
+export const supportedAlgorithms = {
+  xchacha20poly1305Ietf: "xchacha20poly1305-ietf",
+};
+
+export async function encrypt(
+  plaintext: Uint8Array,
+  encryptionKey: Uint8Array,
+  config: EncryptionConfiguration,
+): Promise<Uint8Array> {
+  switch (config.algorithm) {
+    case supportedAlgorithms.xchacha20poly1305Ietf: {
+      const nonce = fromHex((config.params as any).nonce);
+      return Xchacha20poly1305Ietf.encrypt(plaintext, encryptionKey, nonce);
+    }
+    default:
+      throw new Error(`Unsupported encryption algorithm: '${config.algorithm}'`);
+  }
+}
+
+export async function decrypt(
+  ciphertext: Uint8Array,
+  encryptionKey: Uint8Array,
+  config: EncryptionConfiguration,
+): Promise<Uint8Array> {
+  switch (config.algorithm) {
+    case supportedAlgorithms.xchacha20poly1305Ietf: {
+      const nonce = fromHex((config.params as any).nonce);
+      return Xchacha20poly1305Ietf.decrypt(ciphertext, encryptionKey, nonce);
+    }
+    default:
+      throw new Error(`Unsupported encryption algorithm: '${config.algorithm}'`);
   }
 }
