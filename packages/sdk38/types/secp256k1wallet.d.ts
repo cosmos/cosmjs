@@ -23,16 +23,20 @@ export interface Secp256k1WalletSerialization {
   readonly data: string;
 }
 /**
+ * Derivation information required to derive a keypair and an address from a mnemonic.
+ * All fields in here must be JSON types.
+ */
+interface Secp256k1DerivationJson {
+  readonly hdPath: string;
+  readonly prefix: string;
+}
+/**
  * The data of a wallet serialization that is encrypted.
  * All fields in here must be JSON types.
  */
 export interface Secp256k1WalletData {
   readonly mnemonic: string;
-  readonly accounts: ReadonlyArray<{
-    readonly algo: string;
-    readonly hdPath: string;
-    readonly prefix: string;
-  }>;
+  readonly accounts: readonly Secp256k1DerivationJson[];
 }
 export declare function extractKdfConfiguration(serialization: string): KdfConfiguration;
 export declare class Secp256k1Wallet implements OfflineSigner {
@@ -96,3 +100,4 @@ export declare class Secp256k1Wallet implements OfflineSigner {
    */
   serializeWithEncryptionKey(encryptionKey: Uint8Array, kdfConfiguration: KdfConfiguration): Promise<string>;
 }
+export {};

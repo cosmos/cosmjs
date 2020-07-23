@@ -20,7 +20,6 @@ import { encodeSecp256k1Signature } from "./signature";
 import { StdSignature } from "./types";
 import {
   AccountData,
-  Algo,
   cosmjsSalt,
   executeKdf,
   KdfConfiguration,
@@ -70,16 +69,28 @@ export interface Secp256k1WalletSerialization {
 }
 
 /**
+ * Derivation information required to derive a keypair and an address from a mnemonic.
+ * All fields in here must be JSON types.
+ */
+interface Secp256k1DerivationJson {
+  readonly hdPath: string;
+  readonly prefix: string;
+}
+
+function isSecp256k1DerivationJson(thing: unknown): thing is Secp256k1DerivationJson {
+  if (!isNonNullObject(thing)) return false;
+  if (typeof (thing as Secp256k1DerivationJson).hdPath !== "string") return false;
+  if (typeof (thing as Secp256k1DerivationJson).prefix !== "string") return false;
+  return true;
+}
+
+/**
  * The data of a wallet serialization that is encrypted.
  * All fields in here must be JSON types.
  */
 export interface Secp256k1WalletData {
   readonly mnemonic: string;
-  readonly accounts: ReadonlyArray<{
-    readonly algo: string;
-    readonly hdPath: string;
-    readonly prefix: string;
-  }>;
+  readonly accounts: readonly Secp256k1DerivationJson[];
 }
 
 function extractKdfConfigurationV1(doc: any): KdfConfiguration {
@@ -96,6 +107,14 @@ export function extractKdfConfiguration(serialization: string): KdfConfiguration
     default:
       throw new Error("Unsupported serialization type");
   }
+}
+
+/**
+ * Derivation information required to derive a keypair and an address from a mnemonic.
+ */
+interface Secp256k1Derivation {
+  readonly hdPath: readonly Slip10RawIndex[];
+  readonly prefix: string;
 }
 
 export class Secp256k1Wallet implements OfflineSigner {
@@ -174,13 +193,8 @@ export class Secp256k1Wallet implements OfflineSigner {
         if (!Array.isArray(accounts)) throw new Error("Property 'accounts' is not an array");
         if (accounts.length !== 1) throw new Error("Property 'accounts' only supports one entry");
         const account = accounts[0];
-        if (!isNonNullObject(account)) throw new Error("Account is not an object.");
-        const { algo, hdPath, prefix } = account as any;
-        assert(algo === "secp256k1");
-        assert(typeof hdPath === "string");
-        assert(typeof prefix === "string");
-
-        return Secp256k1Wallet.fromMnemonic(mnemonic, stringToPath(hdPath), prefix);
+        if (!isSecp256k1DerivationJson(account)) throw new Error("Account is not in the correct format.");
+        return Secp256k1Wallet.fromMnemonic(mnemonic, stringToPath(account.hdPath), account.prefix);
       }
       default:
         throw new Error("Unsupported serialization type");
@@ -207,11 +221,7 @@ export class Secp256k1Wallet implements OfflineSigner {
   /** Base secret */
   private readonly secret: EnglishMnemonic;
   /** Derivation instruction */
-  private readonly accounts: ReadonlyArray<{
-    readonly algo: Algo;
-    readonly hdPath: readonly Slip10RawIndex[];
-    readonly prefix: string;
-  }>;
+  private readonly accounts: readonly Secp256k1Derivation[];
   /** Derived data */
   private readonly pubkey: Uint8Array;
   private readonly privkey: Uint8Array;
@@ -226,7 +236,6 @@ export class Secp256k1Wallet implements OfflineSigner {
     this.secret = mnemonic;
     this.accounts = [
       {
-        algo: "secp256k1",
         hdPath: hdPath,
         prefix: prefix,
       },
@@ -246,8 +255,8 @@ export class Secp256k1Wallet implements OfflineSigner {
   public async getAccounts(): Promise<readonly AccountData[]> {
     return [
       {
+        algo: "secp256k1",
         address: this.address,
-        algo: this.accounts[0].algo,
         pubkey: this.pubkey,
       },
     ];
@@ -294,11 +303,12 @@ export class Secp256k1Wallet implements OfflineSigner {
   ): Promise<string> {
     const dataToEncrypt: Secp256k1WalletData = {
       mnemonic: this.mnemonic,
-      accounts: this.accounts.map((account) => ({
-        algo: account.algo,
-        hdPath: pathToString(account.hdPath),
-        prefix: account.prefix,
-      })),
+      accounts: this.accounts.map(
+        (account): Secp256k1DerivationJson => ({
+          hdPath: pathToString(account.hdPath),
+          prefix: account.prefix,
+        }),
+      ),
     };
     const dataToEncryptRaw = toUtf8(JSON.stringify(dataToEncrypt));
     const nonce = Random.getBytes(xchacha20NonceLength);
