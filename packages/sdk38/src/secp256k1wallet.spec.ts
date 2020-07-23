@@ -125,26 +125,24 @@ describe("Secp256k1Wallet", () => {
     it("can save with password", async () => {
       const wallet = await Secp256k1Wallet.fromMnemonic(defaultMnemonic);
       const serialized = await wallet.serialize("123");
-      expect(JSON.parse(serialized)).toEqual(
-        jasmine.objectContaining({
-          type: "secp256k1wallet-v1",
-          kdf: {
-            algorithm: "argon2id",
-            params: {
-              outputLength: 32,
-              opsLimit: 20,
-              memLimitKib: 12 * 1024,
-            },
+      expect(JSON.parse(serialized)).toEqual({
+        type: "secp256k1wallet-v1",
+        kdf: {
+          algorithm: "argon2id",
+          params: {
+            outputLength: 32,
+            opsLimit: 20,
+            memLimitKib: 12 * 1024,
           },
-          encryption: {
-            algorithm: "xchacha20poly1305-ietf",
-            params: {
-              nonce: jasmine.stringMatching(hexMatcher),
-            },
+        },
+        encryption: {
+          algorithm: "xchacha20poly1305-ietf",
+          params: {
+            nonce: jasmine.stringMatching(hexMatcher),
           },
-          data: jasmine.stringMatching(base64Matcher),
-        }),
-      );
+        },
+        data: jasmine.stringMatching(base64Matcher),
+      });
     });
   });
 
@@ -162,19 +160,17 @@ describe("Secp256k1Wallet", () => {
         },
       };
       const serialized = await wallet.serializeWithEncryptionKey(key, customKdfConfiguration);
-      expect(JSON.parse(serialized)).toEqual(
-        jasmine.objectContaining({
-          type: "secp256k1wallet-v1",
-          kdf: customKdfConfiguration,
-          encryption: {
-            algorithm: "xchacha20poly1305-ietf",
-            params: {
-              nonce: jasmine.stringMatching(hexMatcher),
-            },
+      expect(JSON.parse(serialized)).toEqual({
+        type: "secp256k1wallet-v1",
+        kdf: customKdfConfiguration,
+        encryption: {
+          algorithm: "xchacha20poly1305-ietf",
+          params: {
+            nonce: jasmine.stringMatching(hexMatcher),
           },
-          data: jasmine.stringMatching(base64Matcher),
-        }),
-      );
+        },
+        data: jasmine.stringMatching(base64Matcher),
+      });
     });
   });
 });
