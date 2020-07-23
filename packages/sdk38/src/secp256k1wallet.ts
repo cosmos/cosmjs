@@ -152,6 +152,12 @@ export class Secp256k1Wallet implements OfflineSigner {
     return Secp256k1Wallet.fromMnemonic(mnemonic.toString(), hdPath, prefix);
   }
 
+  /**
+   * Restores a wallet from an encrypted serialization.
+   *
+   * @param password The user provided password used to generate an encryption key via a KDF.
+   *                 This is not normalized internally (see "Unicode normalization" to learn more).
+   */
   public static async deserialize(serialization: string, password: string): Promise<Secp256k1Wallet> {
     const root = JSON.parse(serialization);
     if (!isNonNullObject(root)) throw new Error("Root document is not an object.");
@@ -163,6 +169,15 @@ export class Secp256k1Wallet implements OfflineSigner {
     }
   }
 
+  /**
+   * Restores a wallet from an encrypted serialization.
+   *
+   * This is an advanced alternative to calling `deserialize(serialization, password)` directly, which allows
+   * you to offload the KDF execution to a non-UI thread (e.g. in a WebWorker).
+   *
+   * The caller is responsible for ensuring the key was derived with the given KDF configuration. This can be
+   * done using `extractKdfConfiguration(serialization)` and `executeKdf(password, kdfConfiguration)` from this package.
+   */
   public static async deserializeWithEncryptionKey(
     serialization: string,
     encryptionKey: Uint8Array,
