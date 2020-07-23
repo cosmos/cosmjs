@@ -47,7 +47,6 @@ docker exec "$CONTAINER_NAME" \
   wasmcli rest-server \
   --node tcp://localhost:26657 \
   --trust-node \
-  --cors \
   --laddr "tcp://0.0.0.0:$REST_PORT_GUEST" \
   > "$REST_SERVER_LOGFILE" &
 
