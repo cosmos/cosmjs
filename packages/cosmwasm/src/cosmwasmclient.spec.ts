@@ -23,10 +23,6 @@ import {
 
 const blockTime = 1_000; // ms
 
-const guest = {
-  address: "cosmos17d0jcz59jf68g52vq38tuuncmwwjk42u6mcxej",
-};
-
 interface HackatomInstance {
   readonly initMsg: {
     readonly verifier: string;
