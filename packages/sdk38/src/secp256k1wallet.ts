@@ -1,5 +1,4 @@
 import {
-  Argon2id,
   Bip39,
   EnglishMnemonic,
   pathToString,
@@ -20,7 +19,6 @@ import { encodeSecp256k1Signature } from "./signature";
 import { StdSignature } from "./types";
 import {
   AccountData,
-  cosmjsSalt,
   executeKdf,
   KdfConfiguration,
   makeCosmoshubPath,
@@ -204,17 +202,7 @@ export class Secp256k1Wallet implements OfflineSigner {
   private static async deserializeTypeV1(serialization: string, password: string): Promise<Secp256k1Wallet> {
     const root = JSON.parse(serialization);
     if (!isNonNullObject(root)) throw new Error("Root document is not an object.");
-    const untypedRoot: any = root;
-    let encryptionKey: Uint8Array;
-    switch (untypedRoot.kdf.algorithm) {
-      case "argon2id": {
-        const kdfOptions = untypedRoot.kdf.params;
-        encryptionKey = await Argon2id.execute(password, cosmjsSalt, kdfOptions);
-        break;
-      }
-      default:
-        throw new Error("Unsupported KDF algorithm");
-    }
+    const encryptionKey = await executeKdf(password, (root as any).kdf);
     return Secp256k1Wallet.deserializeWithEncryptionKey(serialization, encryptionKey);
   }
 
