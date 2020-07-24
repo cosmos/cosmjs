@@ -39,7 +39,7 @@ export function main(originalArgs: readonly string[]): void {
         "Code",
         "CodeDetails",
         "Contract",
-        "ContractDetails",
+        "ContractCodeHistoryEntry",
         "CosmWasmClient",
         "GetSequenceResult",
         "SearchByHeightQuery",

@@ -401,6 +401,7 @@ export class CosmWasmClient {
       label: result.label,
     };
   }
+
   /**
    * Throws an error if no contract was found at the address
    */

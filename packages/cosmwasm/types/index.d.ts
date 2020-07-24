@@ -8,6 +8,7 @@ export {
   Code,
   CodeDetails,
   Contract,
+  ContractCodeHistoryEntry,
   CosmWasmClient,
   GetSequenceResult,
   SearchByHeightQuery,
