@@ -365,12 +365,7 @@ describe("wasm", () => {
       const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
       const client = makeWasmClient(wasmd.endpoint);
       const beneficiaryAddress = makeRandomAddress();
-      const transferAmount: readonly Coin[] = [
-        {
-          amount: "707707",
-          denom: "ucosm",
-        },
-      ];
+      const transferAmount = coins(707707, "ucosm");
 
       // reuse an existing contract, or upload if needed
       let codeId: number;
@@ -435,12 +430,7 @@ describe("wasm", () => {
       const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
       const client = makeWasmClient(wasmd.endpoint);
       const beneficiaryAddress = makeRandomAddress();
-      const transferAmount: readonly Coin[] = [
-        {
-          amount: "707707",
-          denom: "ucosm",
-        },
-      ];
+      const transferAmount = coins(707707, "ucosm");
 
       // reuse an existing contract, or upload if needed
       let codeId: number;
