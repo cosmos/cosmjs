@@ -58,6 +58,7 @@ async function uploadContract(
       wasm_byte_code: toBase64(contract.data),
       source: contract.source || "",
       builder: contract.builder || "",
+      instantiate_permission: null,
     },
   };
   const fee: StdFee = {
@@ -413,9 +414,6 @@ describe("wasm", () => {
         jasmine.objectContaining({
           code_id: codeId,
           creator: alice.address0,
-          init_msg: jasmine.objectContaining({
-            beneficiary: beneficiaryAddress,
-          }),
         }),
       );
       expect(myInfo.admin).toBeUndefined();
@@ -455,16 +453,14 @@ describe("wasm", () => {
       // check out history
       const myHistory = await client.wasm.getContractCodeHistory(myAddress);
       assert(myHistory);
-      expect(myHistory).toEqual(
-        jasmine.objectContaining({
-          codeId: codeId,
-          operation: "Init",
-          msg: {
-            verifier: alice.address0,
-            beneficiary: beneficiaryAddress,
-          },
-        }),
-      );
+      expect(myHistory).toContain({
+        code_id: codeId,
+        operation: "Init",
+        msg: {
+          verifier: alice.address0,
+          beneficiary: beneficiaryAddress,
+        },
+      });
       // make sure random addresses don't give useful info
       const nonExistentAddress = makeRandomAddress();
       expect(await client.wasm.getContractCodeHistory(nonExistentAddress)).toBeNull();

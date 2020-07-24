@@ -1,11 +1,17 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Coin, Msg } from "@cosmjs/sdk38";
 
+// TODO: implement
+/**
+ * @see https://github.com/CosmWasm/wasmd/blob/v0.10.0-alpha/x/wasm/internal/types/params.go#L68-L71
+ */
+export type AccessConfig = never;
+
 /**
  * Uploads Wasm code to the chain.
  * A numeric, auto-incrementing code ID will be generated as a result of the execution of this message.
  *
- * @see https://github.com/CosmWasm/wasmd/blob/v0.9.0-alpha4/x/wasm/internal/types/msg.go#L34
+ * @see https://github.com/CosmWasm/wasmd/blob/v0.10.0-alpha/x/wasm/internal/types/msg.go#L10-L20
  */
 export interface MsgStoreCode extends Msg {
   readonly type: "wasm/MsgStoreCode";
@@ -18,6 +24,7 @@ export interface MsgStoreCode extends Msg {
     readonly source: string;
     /** A docker tag. Can be empty. */
     readonly builder: string;
+    readonly instantiate_permission: AccessConfig | null;
   };
 }
 
