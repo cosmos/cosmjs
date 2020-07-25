@@ -14,8 +14,26 @@ export interface BaseAccount {
   readonly coins: readonly Coin[];
   /** Bech32 encoded pubkey */
   readonly public_key: string;
-  readonly account_number: number;
-  readonly sequence: number;
+  /**
+   * The account number assigned by the blockchain.
+   *
+   * This was string encoded in Cosmos SDK 0.37, changed to number in Cosmos SDK 0.38 ([1])
+   * and changed back to string in Cosmos SDK 0.39 ([2]).
+   *
+   * [1]: https://github.com/cosmos/cosmos-sdk/pull/5280
+   * [2]: https://github.com/cosmos/cosmos-sdk/pull/6749
+   */
+  readonly account_number: number | string;
+  /**
+   * The sequence number for replay protection.
+   *
+   * This was string encoded in Cosmos SDK 0.37, changed to number in Cosmos SDK 0.38 ([1])
+   * and changed back to string in Cosmos SDK 0.39 ([2]).
+   *
+   * [1]: https://github.com/cosmos/cosmos-sdk/pull/5280
+   * [2]: https://github.com/cosmos/cosmos-sdk/pull/6749
+   */
+  readonly sequence: number | string;
 }
 export interface AuthAccountsResponse {
   readonly height: string;

@@ -17,6 +17,9 @@
   `Secp256k1Pen` class in favour of `Secp256k1Wallet` which takes an
   `OfflineSigner` instead of a `SigningCallback`.
 - @cosmjs/sdk38: Rename `CosmosSdkAccount` to `BaseAccount` and export the type.
+- @cosmjs/sdk38: `BaseAccount` now uses `number | string` as the type for
+  `account_number` and `sequence`. The new helpers `uint64ToNumber` and
+  `uint64ToString` allow you to normalize the mixed input.
 - @cosmjs/math: Add missing integer check to `Uint64.fromNumber`. Before
   `Uint64.fromNumber(1.1)` produced some result.
 - @cosmjs/sdk38: Add `SigningCosmosClient.signAndPost` as a mid-level

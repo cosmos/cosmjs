@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { toUtf8 } from "@cosmjs/encoding";
 
+import { uint64ToString } from "./lcdapi";
 import { Msg } from "./msgs";
 import { StdFee } from "./types";
 
@@ -41,16 +42,16 @@ export function makeSignBytes(
   fee: StdFee,
   chainId: string,
   memo: string,
-  accountNumber: number,
-  sequence: number,
+  accountNumber: number | string,
+  sequence: number | string,
 ): Uint8Array {
   const signDoc: StdSignDoc = {
-    account_number: accountNumber.toString(),
+    account_number: uint64ToString(accountNumber),
     chain_id: chainId,
     fee: fee,
     memo: memo,
     msgs: msgs,
-    sequence: sequence.toString(),
+    sequence: uint64ToString(sequence),
   };
   const sortedSignDoc = sortJson(signDoc);
   return toUtf8(JSON.stringify(sortedSignDoc));
