@@ -78,6 +78,8 @@ export {
   StakingPoolResponse,
   SupplyExtension,
   TxsResponse,
+  uint64ToNumber,
+  uint64ToString,
 } from "./lcdapi";
 export { isMsgDelegate, isMsgSend, Msg, MsgDelegate, MsgSend } from "./msgs";
 export { decodeBech32Pubkey, encodeBech32Pubkey, encodeSecp256k1Pubkey } from "./pubkey";

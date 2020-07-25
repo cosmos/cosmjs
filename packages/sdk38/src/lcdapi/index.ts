@@ -77,3 +77,8 @@ export {
   TxsResponse,
 } from "./base";
 export { LcdApiArray, LcdClient, normalizeLcdApiArray } from "./lcdclient";
+
+//
+// Utils for interacting with the client/API
+//
+export { uint64ToNumber, uint64ToString } from "./utils";
