@@ -81,4 +81,4 @@ export { LcdApiArray, LcdClient, normalizeLcdApiArray } from "./lcdclient";
 //
 // Utils for interacting with the client/API
 //
-export { uint64ToNumber, uint64ToString } from "./utils";
+export { normalizePubkey, uint64ToNumber, uint64ToString } from "./utils";

@@ -1,4 +1,5 @@
-import { uint64ToNumber, uint64ToString } from "./utils";
+import { PubKey } from "../types";
+import { normalizePubkey, uint64ToNumber, uint64ToString } from "./utils";
 
 describe("utils", () => {
   describe("uint64ToNumber", () => {
@@ -62,6 +63,32 @@ describe("utils", () => {
       expect(() => uint64ToString("-1")).toThrow();
       expect(() => uint64ToString("1.1")).toThrow();
       expect(() => uint64ToString("18446744073709551616")).toThrow();
+    });
+  });
+
+  describe("normalizePubkey", () => {
+    it("interprets empty bech32 string as unset", () => {
+      expect(normalizePubkey("")).toBeNull();
+    });
+
+    it("decodes bech32 pubkey", () => {
+      const input = "cosmospub1addwnpepqd8sgxq7aw348ydctp3n5ajufgxp395hksxjzc6565yfp56scupfqhlgyg5";
+      expect(normalizePubkey(input)).toEqual({
+        type: "tendermint/PubKeySecp256k1",
+        value: "A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ",
+      });
+    });
+
+    it("interprets null as unset", () => {
+      expect(normalizePubkey(null)).toBeNull();
+    });
+
+    it("passes PubKey unchanged", () => {
+      const original: PubKey = {
+        type: "tendermint/PubKeySecp256k1",
+        value: "A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ",
+      };
+      expect(original).toEqual(original);
     });
   });
 });

@@ -61,6 +61,7 @@ export {
   MintParametersResponse,
   NodeInfoResponse,
   normalizeLcdApiArray,
+  normalizePubkey,
   PostTxsResponse,
   SearchTxsResponse,
   setupAuthExtension,
