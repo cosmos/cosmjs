@@ -28,6 +28,7 @@ export {
   AuthExtension,
   BankBalancesResponse,
   BankExtension,
+  BaseAccount,
   BlockResponse,
   BroadcastMode,
   DistributionCommunityPoolResponse,

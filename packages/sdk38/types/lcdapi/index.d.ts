@@ -1,4 +1,4 @@
-export { AuthExtension, AuthAccountsResponse, setupAuthExtension } from "./auth";
+export { AuthExtension, AuthAccountsResponse, BaseAccount, setupAuthExtension } from "./auth";
 export { BankBalancesResponse, BankExtension, setupBankExtension } from "./bank";
 export {
   DistributionCommunityPoolResponse,
