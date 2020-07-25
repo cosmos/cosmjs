@@ -11,3 +11,5 @@
 - @cosmjs/sdk38: Remove `Pen` type in favour of `OfflineSigner` and remove
   `Secp256k1Pen` class in favour of `Secp256k1Wallet` which takes an
   `OfflineSigner` instead of a `SigningCallback`.
+- @cosmjs/math: Add missing integer check to `Uint64.fromNumber`. Before
+  `Uint64.fromNumber(1.1)` produced some result.
