@@ -25,7 +25,7 @@ describe("AuthExtension", () => {
       type: "cosmos-sdk/Account",
       value: {
         address: unused.address,
-        public_key: "", // not known to the chain
+        public_key: null, // not known to the chain
         coins: [
           {
             amount: "1000000000",
@@ -36,14 +36,14 @@ describe("AuthExtension", () => {
             denom: "ustake",
           },
         ],
-        account_number: unused.accountNumber,
-        sequence: 0,
+        account_number: unused.accountNumber.toString(),
+        sequence: unused.sequence.toString(),
       },
     });
   });
 
   // This fails in the first test run if you forget to run `./scripts/wasmd/init.sh`
-  it("has correct pubkey for faucet", async () => {
+  xit("has correct pubkey for faucet", async () => {
     pendingWithoutWasmd();
     const client = makeAuthClient(wasmd.endpoint);
     const { result } = await client.auth.account(faucet.address);

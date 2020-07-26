@@ -10,6 +10,7 @@ import { SigningCosmosClient } from "../signingcosmosclient";
 import {
   bigDecimalMatcher,
   dateTimeStampMatcher,
+  delegatorAddress,
   faucet,
   nonNegativeIntegerMatcher,
   pendingWithoutWasmd,
@@ -29,6 +30,9 @@ describe("StakingExtension", () => {
     amount: coins(25000, "ucosm"),
     gas: "1500000", // 1.5 million
   };
+  const consensusPubkey =
+    "cosmosvalconspub1zcjduepq4stq4qg03lj68gx2lh2rpmnlcjtt0ejk0n6y3fv8kdkftcg79tmqkj9lqs";
+  const commissionUpdateTime = "2020-07-23T15:05:47.5072591Z";
 
   beforeAll(async () => {
     if (wasmdEnabled()) {
@@ -149,8 +153,7 @@ describe("StakingExtension", () => {
         result: [
           {
             operator_address: validatorAddress,
-            consensus_pubkey:
-              "cosmosvalconspub1zcjduepqau36ht2r742jh230pxlu4wjmwcmkwpeqava80acphsu87vt5xlpqx6g7qh",
+            consensus_pubkey: consensusPubkey,
             jailed: false,
             status: BondStatus.Bonded,
             tokens: jasmine.stringMatching(nonNegativeIntegerMatcher),
@@ -170,7 +173,7 @@ describe("StakingExtension", () => {
                 max_rate: "0.200000000000000000",
                 max_change_rate: "0.010000000000000000",
               },
-              update_time: "2020-06-03T06:01:17.4747987Z",
+              update_time: commissionUpdateTime,
             },
             min_self_delegation: "1",
           },
@@ -188,8 +191,7 @@ describe("StakingExtension", () => {
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: {
           operator_address: validatorAddress,
-          consensus_pubkey:
-            "cosmosvalconspub1zcjduepqau36ht2r742jh230pxlu4wjmwcmkwpeqava80acphsu87vt5xlpqx6g7qh",
+          consensus_pubkey: consensusPubkey,
           jailed: false,
           status: BondStatus.Bonded,
           tokens: jasmine.stringMatching(nonNegativeIntegerMatcher),
@@ -209,7 +211,7 @@ describe("StakingExtension", () => {
               max_rate: "0.200000000000000000",
               max_change_rate: "0.010000000000000000",
             },
-            update_time: "2020-06-03T06:01:17.4747987Z",
+            update_time: commissionUpdateTime,
           },
           min_self_delegation: "1",
         },
@@ -279,8 +281,7 @@ describe("StakingExtension", () => {
         result: [
           {
             operator_address: validatorAddress,
-            consensus_pubkey:
-              "cosmosvalconspub1zcjduepqau36ht2r742jh230pxlu4wjmwcmkwpeqava80acphsu87vt5xlpqx6g7qh",
+            consensus_pubkey: consensusPubkey,
             jailed: false,
             status: BondStatus.Bonded,
             tokens: jasmine.stringMatching(nonNegativeIntegerMatcher),
@@ -300,7 +301,7 @@ describe("StakingExtension", () => {
                 max_rate: "0.200000000000000000",
                 max_change_rate: "0.010000000000000000",
               },
-              update_time: "2020-06-03T06:01:17.4747987Z",
+              update_time: commissionUpdateTime,
             },
             min_self_delegation: "1",
           },
@@ -327,8 +328,7 @@ describe("StakingExtension", () => {
         result: [
           {
             operator_address: validatorAddress,
-            consensus_pubkey:
-              "cosmosvalconspub1zcjduepqau36ht2r742jh230pxlu4wjmwcmkwpeqava80acphsu87vt5xlpqx6g7qh",
+            consensus_pubkey: consensusPubkey,
             jailed: false,
             status: BondStatus.Bonded,
             tokens: jasmine.stringMatching(nonNegativeIntegerMatcher),
@@ -348,7 +348,7 @@ describe("StakingExtension", () => {
                 max_rate: "0.200000000000000000",
                 max_change_rate: "0.010000000000000000",
               },
-              update_time: "2020-06-03T06:01:17.4747987Z",
+              update_time: commissionUpdateTime,
             },
             min_self_delegation: "1",
           },
@@ -366,8 +366,7 @@ describe("StakingExtension", () => {
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: {
           operator_address: validatorAddress,
-          consensus_pubkey:
-            "cosmosvalconspub1zcjduepqau36ht2r742jh230pxlu4wjmwcmkwpeqava80acphsu87vt5xlpqx6g7qh",
+          consensus_pubkey: consensusPubkey,
           jailed: false,
           status: BondStatus.Bonded,
           tokens: jasmine.stringMatching(nonNegativeIntegerMatcher),
@@ -387,7 +386,7 @@ describe("StakingExtension", () => {
               max_rate: "0.200000000000000000",
               max_change_rate: "0.010000000000000000",
             },
-            update_time: "2020-06-03T06:01:17.4747987Z",
+            update_time: commissionUpdateTime,
           },
           min_self_delegation: "1",
         },
@@ -410,7 +409,7 @@ describe("StakingExtension", () => {
             balance: { denom: "ustake", amount: jasmine.stringMatching(nonNegativeIntegerMatcher) },
           },
           {
-            delegator_address: "cosmos1gjvanqxc774u6ed9thj4gpn9gj5zus5u57dxvq",
+            delegator_address: delegatorAddress,
             validator_address: validatorAddress,
             shares: "250000000.000000000000000000",
             balance: { denom: "ustake", amount: "250000000" },
