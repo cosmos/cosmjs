@@ -5,11 +5,11 @@ import {
   CosmosSdkTx,
   IndexedTx,
   LcdClient,
+  PostTxResult,
   PubKey,
   StdTx,
 } from "@cosmjs/sdk38";
 import { WasmExtension } from "./lcdapi/wasm";
-import { Log } from "./logs";
 import { JsonObject } from "./types";
 export interface GetSequenceResult {
   readonly accountNumber: number;
@@ -23,22 +23,6 @@ export interface Account {
   readonly accountNumber: number;
   readonly sequence: number;
 }
-export interface PostTxFailure {
-  /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
-  readonly transactionHash: string;
-  readonly height: number;
-  readonly code: number;
-  readonly rawLog: string;
-}
-export interface PostTxSuccess {
-  readonly logs: readonly Log[];
-  readonly rawLog: string;
-  /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
-  readonly transactionHash: string;
-  readonly data?: Uint8Array;
-}
-export declare type PostTxResult = PostTxSuccess | PostTxFailure;
-export declare function isPostTxFailure(postTxResult: PostTxResult): postTxResult is PostTxFailure;
 export interface SearchByIdQuery {
   readonly id: string;
 }

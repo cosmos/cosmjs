@@ -9,13 +9,14 @@ import {
   decodeBech32Pubkey,
   IndexedTx,
   LcdClient,
+  PostTxResult,
   PubKey,
   setupAuthExtension,
   StdTx,
 } from "@cosmjs/sdk38";
 
 import { setupWasmExtension, WasmExtension } from "./lcdapi/wasm";
-import { Log, parseLogs } from "./logs";
+import { parseLogs } from "./logs";
 import { JsonObject } from "./types";
 
 export interface GetSequenceResult {
@@ -30,28 +31,6 @@ export interface Account {
   readonly pubkey: PubKey | undefined;
   readonly accountNumber: number;
   readonly sequence: number;
-}
-
-export interface PostTxFailure {
-  /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
-  readonly transactionHash: string;
-  readonly height: number;
-  readonly code: number;
-  readonly rawLog: string;
-}
-
-export interface PostTxSuccess {
-  readonly logs: readonly Log[];
-  readonly rawLog: string;
-  /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
-  readonly transactionHash: string;
-  readonly data?: Uint8Array;
-}
-
-export type PostTxResult = PostTxSuccess | PostTxFailure;
-
-export function isPostTxFailure(postTxResult: PostTxResult): postTxResult is PostTxFailure {
-  return !!(postTxResult as PostTxFailure).code;
 }
 
 export interface SearchByIdQuery {

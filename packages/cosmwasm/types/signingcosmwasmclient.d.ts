@@ -1,5 +1,5 @@
-import { BroadcastMode, Coin, Msg, OfflineSigner, StdFee, StdSignature } from "@cosmjs/sdk38";
-import { Account, CosmWasmClient, GetSequenceResult, PostTxResult } from "./cosmwasmclient";
+import { BroadcastMode, Coin, Msg, OfflineSigner, PostTxResult, StdFee, StdSignature } from "@cosmjs/sdk38";
+import { Account, CosmWasmClient, GetSequenceResult } from "./cosmwasmclient";
 import { Log } from "./logs";
 export interface SigningCallback {
   (signBytes: Uint8Array): Promise<StdSignature>;

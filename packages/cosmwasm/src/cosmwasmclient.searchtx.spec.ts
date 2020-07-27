@@ -4,6 +4,7 @@ import {
   coins,
   CosmosSdkTx,
   isMsgSend,
+  isPostTxFailure,
   LcdClient,
   makeSignBytes,
   MsgSend,
@@ -11,7 +12,7 @@ import {
 } from "@cosmjs/sdk38";
 import { assert, sleep } from "@cosmjs/utils";
 
-import { CosmWasmClient, isPostTxFailure } from "./cosmwasmclient";
+import { CosmWasmClient } from "./cosmwasmclient";
 import { isMsgExecuteContract, isMsgInstantiateContract } from "./msgs";
 import { SigningCosmWasmClient } from "./signingcosmwasmclient";
 import {

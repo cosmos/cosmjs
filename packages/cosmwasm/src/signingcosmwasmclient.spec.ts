@@ -2,6 +2,7 @@
 import { Sha256 } from "@cosmjs/crypto";
 import { toHex } from "@cosmjs/encoding";
 import {
+  assertIsPostTxSuccess,
   AuthExtension,
   coin,
   coins,
@@ -12,7 +13,7 @@ import {
 } from "@cosmjs/sdk38";
 import { assert } from "@cosmjs/utils";
 
-import { isPostTxFailure, PrivateCosmWasmClient } from "./cosmwasmclient";
+import { PrivateCosmWasmClient } from "./cosmwasmclient";
 import { setupWasmExtension, WasmExtension } from "./lcdapi/wasm";
 import { SigningCosmWasmClient, UploadMeta } from "./signingcosmwasmclient";
 import {
@@ -332,7 +333,7 @@ describe("SigningCosmWasmClient", () => {
 
       // send
       const result = await client.sendTokens(beneficiaryAddress, transferAmount, "for dinner");
-      assert(!isPostTxFailure(result));
+      assertIsPostTxSuccess(result);
       const [firstLog] = result.logs;
       expect(firstLog).toBeTruthy();
 
@@ -362,7 +363,7 @@ describe("SigningCosmWasmClient", () => {
         gas: "120000", // 120k
       };
       const result = await client.signAndPost([msg], fee, "Use your power wisely");
-      assert(!isPostTxFailure(result));
+      assertIsPostTxSuccess(result);
     });
   });
 });

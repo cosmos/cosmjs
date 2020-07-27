@@ -8,6 +8,8 @@
 - @cosmjs/cosmwasm: Add `SigningCosmWasmClient.signAndPost` as a mid-level
   abstraction between `SigningCosmWasmClient.upload`/`.instantiate`/`.execute`
   and `.postTx`.
+- @cosmjs/cosmwasm: Use `*PostTx*` types and helpers from @cosmjs/sdk38. Remove
+  exported `PostTxResult`.
 - @cosmjs/sdk38: Rename `CosmosClient.getNonce` method to `.getSequence`.
 - @cosmjs/sdk38: Remove `RestClient` class in favour of new modular `LcdClient`
   class.
