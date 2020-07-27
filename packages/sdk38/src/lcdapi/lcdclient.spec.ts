@@ -16,6 +16,7 @@ import {
   nonNegativeIntegerMatcher,
   pendingWithoutWasmd,
   tendermintIdMatcher,
+  unused,
   wasmd,
   wasmdEnabled,
 } from "../testutils.spec";
@@ -23,20 +24,7 @@ import { StdFee } from "../types";
 import { makeCosmoshubPath } from "../wallet";
 import { setupAuthExtension } from "./auth";
 import { TxsResponse } from "./base";
-import { LcdApiArray, LcdClient, normalizeLcdApiArray } from "./lcdclient";
-
-/** Deployed as part of scripts/wasmd/init.sh */
-export const deployedErc20 = {
-  codeId: 1,
-  source: "https://crates.io/api/v1/crates/cw-erc20/0.5.1/download",
-  builder: "cosmwasm/rust-optimizer:0.8.0",
-  checksum: "3e97bf88bd960fee5e5959c77b972eb2927690bc10160792741b174f105ec0c5",
-  instances: [
-    "cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5", // HASH
-    "cosmos1hqrdl6wstt8qzshwc6mrumpjk9338k0lr4dqxd", // ISA
-    "cosmos18r5szma8hm93pvx6lwpjwyxruw27e0k5uw835c", // JADE
-  ],
-};
+import { LcdApiArray, LcdClient } from "./lcdclient";
 
 describe("LcdClient", () => {
   const defaultRecipientAddress = makeRandomAddress();
@@ -47,51 +35,39 @@ describe("LcdClient", () => {
   });
 
   describe("withModules", () => {
-    interface CodeInfo {
-      readonly id: number;
-      /** Bech32 account address */
-      readonly creator: string;
-      /** Hex-encoded sha256 hash of the code stored here */
-      readonly data_hash: string;
-      readonly source?: string;
-      readonly builder?: string;
-    }
-
-    type WasmResponse<T> = WasmSuccess<T> | WasmError;
-
-    interface WasmSuccess<T> {
+    interface TotalSupplyAllResponse {
       readonly height: string;
-      readonly result: T;
+      readonly result: LcdApiArray<Coin>;
     }
 
-    interface WasmError {
-      readonly error: string;
-    }
-
-    function isWasmError<T>(resp: WasmResponse<T>): resp is WasmError {
-      return (resp as WasmError).error !== undefined;
-    }
-
-    function unwrapWasmResponse<T>(response: WasmResponse<T>): T {
-      if (isWasmError(response)) {
-        throw new Error(response.error);
-      }
-      return response.result;
-    }
-
-    interface WasmExtension {
-      wasm: {
-        listCodeInfo: () => Promise<readonly CodeInfo[]>;
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+    function setupSupplyExtension(base: LcdClient) {
+      return {
+        supply: {
+          totalAll: async (): Promise<TotalSupplyAllResponse> => {
+            return base.get(`/supply/total`);
+          },
+        },
       };
     }
 
-    function setupWasmExtension(base: LcdClient): WasmExtension {
+    interface BankBalancesResponse {
+      readonly height: string;
+      readonly result: readonly Coin[];
+    }
+
+    interface BankExtension {
+      readonly bank: {
+        readonly balances: (address: string) => Promise<BankBalancesResponse>;
+      };
+    }
+
+    function setupBankExtension(base: LcdClient): BankExtension {
       return {
-        wasm: {
-          listCodeInfo: async (): Promise<readonly CodeInfo[]> => {
-            const path = `/wasm/code`;
-            const responseData = (await base.get(path)) as WasmResponse<LcdApiArray<CodeInfo>>;
-            return normalizeLcdApiArray(unwrapWasmResponse(responseData));
+        bank: {
+          balances: async (address: string) => {
+            const path = `/bank/balances/${address}`;
+            return base.get(path);
           },
         },
       };
@@ -105,57 +81,56 @@ describe("LcdClient", () => {
     it("works for one extension", async () => {
       pendingWithoutWasmd();
 
-      const client = LcdClient.withExtensions({ apiUrl: wasmd.endpoint }, setupWasmExtension);
-      const codes = await client.wasm.listCodeInfo();
-      expect(codes.length).toBeGreaterThanOrEqual(3);
-      expect(codes[0].id).toEqual(deployedErc20.codeId);
-      expect(codes[0].data_hash).toEqual(deployedErc20.checksum.toUpperCase());
-      expect(codes[0].builder).toEqual(deployedErc20.builder);
-      expect(codes[0].source).toEqual(deployedErc20.source);
+      const client = LcdClient.withExtensions({ apiUrl: wasmd.endpoint }, setupSupplyExtension);
+      const supply = await client.supply.totalAll();
+      expect(supply).toEqual({
+        height: jasmine.stringMatching(nonNegativeIntegerMatcher),
+        result: [
+          {
+            amount: jasmine.stringMatching(nonNegativeIntegerMatcher),
+            denom: "ucosm",
+          },
+          {
+            amount: jasmine.stringMatching(nonNegativeIntegerMatcher),
+            denom: "ustake",
+          },
+        ],
+      });
     });
 
     it("works for two extensions", async () => {
       pendingWithoutWasmd();
 
-      interface TotalSupplyAllResponse {
-        readonly height: string;
-        readonly result: LcdApiArray<Coin>;
-      }
-
-      // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-      function setupSupplyExtension(base: LcdClient) {
-        return {
-          supply: {
-            totalAll: async (): Promise<TotalSupplyAllResponse> => {
-              const path = `/supply/total`;
-              return (await base.get(path)) as TotalSupplyAllResponse;
-            },
-          },
-        };
-      }
-
       const client = LcdClient.withExtensions(
         { apiUrl: wasmd.endpoint },
-        setupWasmExtension,
         setupSupplyExtension,
+        setupBankExtension,
       );
-      const codes = await client.wasm.listCodeInfo();
-      expect(codes.length).toBeGreaterThanOrEqual(3);
-      expect(codes[0].id).toEqual(deployedErc20.codeId);
-      expect(codes[0].data_hash).toEqual(deployedErc20.checksum.toUpperCase());
-      expect(codes[0].builder).toEqual(deployedErc20.builder);
-      expect(codes[0].source).toEqual(deployedErc20.source);
       const supply = await client.supply.totalAll();
       expect(supply).toEqual({
-        height: jasmine.stringMatching(/^[0-9]+$/),
+        height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: [
           {
-            amount: jasmine.stringMatching(/^[0-9]+$/),
+            amount: jasmine.stringMatching(nonNegativeIntegerMatcher),
             denom: "ucosm",
           },
           {
-            amount: jasmine.stringMatching(/^[0-9]+$/),
+            amount: jasmine.stringMatching(nonNegativeIntegerMatcher),
             denom: "ustake",
+          },
+        ],
+      });
+      const balances = await client.bank.balances(unused.address);
+      expect(balances).toEqual({
+        height: jasmine.stringMatching(nonNegativeIntegerMatcher),
+        result: [
+          {
+            denom: "ucosm",
+            amount: "1000000000",
+          },
+          {
+            denom: "ustake",
+            amount: "1000000000",
           },
         ],
       });
