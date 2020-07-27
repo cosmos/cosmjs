@@ -40,8 +40,23 @@ export interface PostTxSuccess {
 
 export type PostTxResult = PostTxSuccess | PostTxFailure;
 
-export function isPostTxFailure(postTxResult: PostTxResult): postTxResult is PostTxFailure {
-  return !!(postTxResult as PostTxFailure).code;
+export function isPostTxFailure(result: PostTxResult): result is PostTxFailure {
+  return !!(result as PostTxFailure).code;
+}
+
+export function isPostTxSuccess(result: PostTxResult): result is PostTxSuccess {
+  return !isPostTxFailure(result);
+}
+
+/**
+ * Ensures the given result is a success. Throws a detailed error message otherwise.
+ */
+export function assertIsPostTxSuccess(result: PostTxResult): asserts result is PostTxSuccess {
+  if (isPostTxFailure(result)) {
+    throw new Error(
+      `Error when posting tx ${result.transactionHash} at height ${result.height}. Code: ${result.code}; Raw log: ${result.rawLog}`,
+    );
+  }
 }
 
 export interface SearchByIdQuery {

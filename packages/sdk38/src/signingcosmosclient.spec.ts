@@ -2,7 +2,7 @@
 import { assert } from "@cosmjs/utils";
 
 import { Coin, coin, coins } from "./coins";
-import { isPostTxFailure, PrivateCosmWasmClient } from "./cosmosclient";
+import { assertIsPostTxSuccess, PrivateCosmWasmClient } from "./cosmosclient";
 import { MsgDelegate } from "./msgs";
 import { SigningCosmosClient } from "./signingcosmosclient";
 import { makeRandomAddress, pendingWithoutWasmd, validatorAddress } from "./testutils.spec";
@@ -68,7 +68,7 @@ describe("SigningCosmosClient", () => {
 
       // send
       const result = await client.sendTokens(beneficiaryAddress, transferAmount, "for dinner");
-      assert(!isPostTxFailure(result));
+      assertIsPostTxSuccess(result);
       const [firstLog] = result.logs;
       expect(firstLog).toBeTruthy();
 
@@ -98,7 +98,7 @@ describe("SigningCosmosClient", () => {
         gas: "120000", // 120k
       };
       const result = await client.signAndPost([msg], fee, "Use your power wisely");
-      assert(!isPostTxFailure(result));
+      assertIsPostTxSuccess(result);
     });
   });
 });

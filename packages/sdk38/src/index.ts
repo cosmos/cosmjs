@@ -6,12 +6,17 @@ export { Coin, coin, coins } from "./coins";
 
 export {
   Account,
+  assertIsPostTxSuccess,
   Block,
   BlockHeader,
   CosmosClient,
   GetSequenceResult,
   IndexedTx,
+  isPostTxFailure,
+  isPostTxSuccess,
+  PostTxFailure,
   PostTxResult,
+  PostTxSuccess,
   SearchByHeightQuery,
   SearchByIdQuery,
   SearchBySentFromOrToQuery,

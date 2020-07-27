@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Bech32 } from "@cosmjs/encoding";
-import { assert, sleep } from "@cosmjs/utils";
+import { sleep } from "@cosmjs/utils";
 
 import { coin, coins } from "../coins";
-import { isPostTxFailure } from "../cosmosclient";
+import { assertIsPostTxSuccess } from "../cosmosclient";
 import { makeSignBytes } from "../encoding";
 import { MsgDelegate } from "../msgs";
 import { SigningCosmosClient } from "../signingcosmosclient";
@@ -55,8 +55,8 @@ describe("DistributionExtension", () => {
         signatures: [signature],
       };
 
-      const receipt = await client.postTx(tx);
-      assert(!isPostTxFailure(receipt));
+      const result = await client.postTx(tx);
+      assertIsPostTxSuccess(result);
 
       await sleep(75); // wait until transactions are indexed
     }

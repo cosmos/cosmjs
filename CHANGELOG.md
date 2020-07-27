@@ -18,3 +18,5 @@
   `Uint64.fromNumber(1.1)` produced some result.
 - @cosmjs/sdk38: Add `SigningCosmosClient.signAndPost` as a mid-level
   abstraction between `SigningCosmosClient.sendTokens` and `.postTx`.
+- @cosmjs/sdk38: Export `PostTxFailure`/`PostTxSuccess` and type checkers
+  `isPostTxFailure`/`isPostTxSuccess`; export `assertIsPostTxSuccess`.
