@@ -5,6 +5,9 @@
 - @cosmjs/cosmwasm: Rename `CosmWasmClient.getNonce` method to `.getSequence`.
 - @cosmjs/cosmwasm: Remove `RestClient` class in favour of new modular
   `LcdClient` class from @cosmjs/sdk38.
+- @cosmjs/cosmwasm: Add `SigningCosmWasmClient.signAndPost` as a mid-level
+  abstraction between `SigningCosmWasmClient.upload`/`.instantiate`/`.execute`
+  and `.postTx`.
 - @cosmjs/sdk38: Rename `CosmosClient.getNonce` method to `.getSequence`.
 - @cosmjs/sdk38: Remove `RestClient` class in favour of new modular `LcdClient`
   class.
