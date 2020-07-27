@@ -360,7 +360,7 @@ describe("SigningCosmWasmClient", () => {
       };
       const fee = {
         amount: coins(2000, "ucosm"),
-        gas: "120000", // 120k
+        gas: "180000", // 180k
       };
       const result = await client.signAndPost([msg], fee, "Use your power wisely");
       assertIsPostTxSuccess(result);
