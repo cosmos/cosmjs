@@ -402,7 +402,7 @@ describe("StakingExtension", () => {
       const response = await client.staking.validatorDelegations(validatorAddress);
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
-        result: [
+        result: jasmine.arrayContaining([
           {
             delegator_address: faucet.address,
             validator_address: validatorAddress,
@@ -415,7 +415,7 @@ describe("StakingExtension", () => {
             shares: "250000000.000000000000000000",
             balance: { denom: "ustake", amount: "250000000" },
           },
-        ],
+        ]),
       });
     });
   });
