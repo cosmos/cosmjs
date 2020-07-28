@@ -22,3 +22,8 @@
   abstraction between `SigningCosmosClient.sendTokens` and `.postTx`.
 - @cosmjs/sdk38: Export `PostTxFailure`/`PostTxSuccess` and type checkers
   `isPostTxFailure`/`isPostTxSuccess`; export `assertIsPostTxSuccess`.
+- @cosmjs/sdk38: `Secp256k1Wallet`s can now be generated randomly with
+  `Secp256k1Wallet.generate(n)` where `n` is 12, 15, 18, 21 or 24 mnemonic
+  words.
+- @cosmjs/sdk38: The new `Secp256k1Wallet.serialize` and `.deserialize` allow
+  encrypted serialization of the wallet.
