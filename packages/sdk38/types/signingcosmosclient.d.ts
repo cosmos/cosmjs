@@ -1,6 +1,7 @@
 import { Coin } from "./coins";
 import { Account, CosmosClient, GetSequenceResult, PostTxResult } from "./cosmosclient";
 import { BroadcastMode } from "./lcdapi";
+import { Msg } from "./msgs";
 import { StdFee } from "./types";
 import { OfflineSigner } from "./wallet";
 export interface FeeTable {
@@ -35,4 +36,9 @@ export declare class SigningCosmosClient extends CosmosClient {
   getSequence(address?: string): Promise<GetSequenceResult>;
   getAccount(address?: string): Promise<Account | undefined>;
   sendTokens(recipientAddress: string, transferAmount: readonly Coin[], memo?: string): Promise<PostTxResult>;
+  /**
+   * Gets account number and sequence from the API, creates a sign doc,
+   * creates a single signature, assembles the signed transaction and broadcasts it.
+   */
+  signAndPost(msgs: readonly Msg[], fee: StdFee, memo?: string): Promise<PostTxResult>;
 }

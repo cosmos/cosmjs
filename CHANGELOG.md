@@ -13,3 +13,5 @@
   `OfflineSigner` instead of a `SigningCallback`.
 - @cosmjs/math: Add missing integer check to `Uint64.fromNumber`. Before
   `Uint64.fromNumber(1.1)` produced some result.
+- @cosmjs/sdk38: Add `SigningCosmosClient.signAndPost` as a mid-level
+  abstraction between `SigningCosmosClient.sendTokens` and `.postTx`.
