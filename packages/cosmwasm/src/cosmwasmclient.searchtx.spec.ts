@@ -9,7 +9,7 @@ import {
   makeSignBytes,
   MsgSend,
   Secp256k1Wallet,
-} from "@cosmjs/sdk38";
+} from "@cosmjs/launchpad";
 import { assert, sleep } from "@cosmjs/utils";
 
 import { CosmWasmClient } from "./cosmwasmclient";
@@ -423,7 +423,7 @@ describe("CosmWasmClient.searchTx", () => {
       const first = fromOneElementArray(results[0].tx.value.msg);
       assert(isMsgInstantiateContract(first), "First contract search result must be an instantiation");
       expect(first).toEqual({
-        type: "wasm/instantiate",
+        type: "wasm/MsgInstantiateContract",
         value: {
           sender: alice.address0,
           code_id: deployedErc20.codeId.toString(),

@@ -2,7 +2,7 @@
 
 /* eslint-disable @typescript-eslint/naming-convention */
 const { SigningCosmWasmClient } = require("@cosmjs/cosmwasm");
-const { Secp256k1Wallet } = require("@cosmjs/sdk38");
+const { Secp256k1Wallet } = require("@cosmjs/launchpad");
 const fs = require("fs");
 
 const httpUrl = "http://localhost:1317";
@@ -22,8 +22,8 @@ const guest = {
 };
 
 const codeMeta = {
-  source: "https://crates.io/api/v1/crates/cw-erc20/0.5.1/download",
-  builder: "cosmwasm/rust-optimizer:0.8.0",
+  source: "https://crates.io/api/v1/crates/cw-erc20/not-yet-released/download",
+  builder: "cosmwasm/rust-optimizer:0.9.0",
 };
 
 const initDataHash = {

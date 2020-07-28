@@ -1,3 +1,0 @@
-chain-id = "testing"
-node = "tcp://localhost:46657"
-trust-node = true

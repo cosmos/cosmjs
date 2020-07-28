@@ -35,6 +35,6 @@
   },
   "dependencies": {
     "@cosmjs/cosmwasm": "^0.21.1",
-    "@cosmjs/sdk38": "^0.21.1"
+    "@cosmjs/launchpad": "^0.21.1"
   }
 }

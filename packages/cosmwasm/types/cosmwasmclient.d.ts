@@ -8,7 +8,7 @@ import {
   PostTxResult,
   PubKey,
   StdTx,
-} from "@cosmjs/sdk38";
+} from "@cosmjs/launchpad";
 import { WasmExtension } from "./lcdapi/wasm";
 import { JsonObject } from "./types";
 export interface GetSequenceResult {
@@ -84,9 +84,10 @@ export interface Contract {
   readonly admin: string | undefined;
   readonly label: string;
 }
-export interface ContractDetails extends Contract {
-  /** Argument passed on initialization of the contract */
-  readonly initMsg: object;
+export interface ContractCodeHistoryEntry {
+  readonly operation: string;
+  readonly codeId: number;
+  readonly msg: object;
 }
 export interface BlockHeader {
   readonly version: {
@@ -154,7 +155,11 @@ export declare class CosmWasmClient {
   /**
    * Throws an error if no contract was found at the address
    */
-  getContract(address: string): Promise<ContractDetails>;
+  getContract(address: string): Promise<Contract>;
+  /**
+   * Throws an error if no contract was found at the address
+   */
+  getContractCodeHistory(address: string): Promise<readonly ContractCodeHistoryEntry[]>;
   /**
    * Returns the data at the key if present (raw contract dependent storage data)
    * or null if no data at this key.

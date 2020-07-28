@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { SigningCosmWasmClient } from "@cosmjs/cosmwasm";
-import { Coin, coins, makeCosmoshubPath, Secp256k1Wallet } from "@cosmjs/sdk38";
+import { Coin, coins, makeCosmoshubPath, Secp256k1Wallet } from "@cosmjs/launchpad";
 
 import {
   BalanceResponse,
@@ -31,7 +31,7 @@ const params = {
   name: "Bounty",
   symbol: "BOUNTY",
   decimals: 3,
-  validator: "cosmosvaloper1gjvanqxc774u6ed9thj4gpn9gj5zus5u32enqn",
+  validator: "cosmosvaloper1fa7hj49pf8uzc4m0lw5swjhhl5th2484gvnlpv",
   exitTax: "0.005", // 0.5 %
   minWithdrawal: "700",
 };

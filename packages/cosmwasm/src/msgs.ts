@@ -1,14 +1,20 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Coin, Msg } from "@cosmjs/sdk38";
+import { Coin, Msg } from "@cosmjs/launchpad";
+
+// TODO: implement
+/**
+ * @see https://github.com/CosmWasm/wasmd/blob/v0.10.0-alpha/x/wasm/internal/types/params.go#L68-L71
+ */
+export type AccessConfig = never;
 
 /**
  * Uploads Wasm code to the chain.
  * A numeric, auto-incrementing code ID will be generated as a result of the execution of this message.
  *
- * @see https://github.com/CosmWasm/wasmd/blob/v0.9.0-alpha4/x/wasm/internal/types/msg.go#L34
+ * @see https://github.com/CosmWasm/wasmd/blob/v0.10.0-alpha/x/wasm/internal/types/msg.go#L10-L20
  */
 export interface MsgStoreCode extends Msg {
-  readonly type: "wasm/store-code";
+  readonly type: "wasm/MsgStoreCode";
   readonly value: {
     /** Bech32 account address */
     readonly sender: string;
@@ -18,11 +24,12 @@ export interface MsgStoreCode extends Msg {
     readonly source: string;
     /** A docker tag. Can be empty. */
     readonly builder: string;
+    readonly instantiate_permission?: AccessConfig;
   };
 }
 
 export function isMsgStoreCode(msg: Msg): msg is MsgStoreCode {
-  return (msg as MsgStoreCode).type === "wasm/store-code";
+  return (msg as MsgStoreCode).type === "wasm/MsgStoreCode";
 }
 
 /**
@@ -32,7 +39,7 @@ export function isMsgStoreCode(msg: Msg): msg is MsgStoreCode {
  * @see https://github.com/CosmWasm/wasmd/blob/v0.9.0-alpha4/x/wasm/internal/types/msg.go#L104
  */
 export interface MsgInstantiateContract extends Msg {
-  readonly type: "wasm/instantiate";
+  readonly type: "wasm/MsgInstantiateContract";
   readonly value: {
     /** Bech32 account address */
     readonly sender: string;
@@ -49,7 +56,7 @@ export interface MsgInstantiateContract extends Msg {
 }
 
 export function isMsgInstantiateContract(msg: Msg): msg is MsgInstantiateContract {
-  return (msg as MsgInstantiateContract).type === "wasm/instantiate";
+  return (msg as MsgInstantiateContract).type === "wasm/MsgInstantiateContract";
 }
 
 /**
@@ -58,7 +65,7 @@ export function isMsgInstantiateContract(msg: Msg): msg is MsgInstantiateContrac
  * @see https://github.com/CosmWasm/wasmd/blob/v0.9.0-beta/x/wasm/internal/types/msg.go#L231
  */
 export interface MsgUpdateAdmin extends Msg {
-  readonly type: "wasm/update-contract-admin";
+  readonly type: "wasm/MsgUpdateAdmin";
   readonly value: {
     /** Bech32-encoded sender address. This must be the old admin. */
     readonly sender: string;
@@ -70,7 +77,7 @@ export interface MsgUpdateAdmin extends Msg {
 }
 
 export function isMsgUpdateAdmin(msg: Msg): msg is MsgUpdateAdmin {
-  return (msg as MsgUpdateAdmin).type === "wasm/update-contract-admin";
+  return (msg as MsgUpdateAdmin).type === "wasm/MsgUpdateAdmin";
 }
 
 /**
@@ -79,7 +86,7 @@ export function isMsgUpdateAdmin(msg: Msg): msg is MsgUpdateAdmin {
  * @see https://github.com/CosmWasm/wasmd/blob/v0.9.0-beta/x/wasm/internal/types/msg.go#L269
  */
 export interface MsgClearAdmin extends Msg {
-  readonly type: "wasm/clear-contract-admin";
+  readonly type: "wasm/MsgClearAdmin";
   readonly value: {
     /** Bech32-encoded sender address. This must be the old admin. */
     readonly sender: string;
@@ -89,7 +96,7 @@ export interface MsgClearAdmin extends Msg {
 }
 
 export function isMsgClearAdmin(msg: Msg): msg is MsgClearAdmin {
-  return (msg as MsgClearAdmin).type === "wasm/clear-contract-admin";
+  return (msg as MsgClearAdmin).type === "wasm/MsgClearAdmin";
 }
 
 /**
@@ -99,7 +106,7 @@ export function isMsgClearAdmin(msg: Msg): msg is MsgClearAdmin {
  * @see https://github.com/CosmWasm/wasmd/blob/v0.9.0-alpha4/x/wasm/internal/types/msg.go#L158
  */
 export interface MsgExecuteContract extends Msg {
-  readonly type: "wasm/execute";
+  readonly type: "wasm/MsgExecuteContract";
   readonly value: {
     /** Bech32 account address */
     readonly sender: string;
@@ -112,7 +119,7 @@ export interface MsgExecuteContract extends Msg {
 }
 
 export function isMsgExecuteContract(msg: Msg): msg is MsgExecuteContract {
-  return (msg as MsgExecuteContract).type === "wasm/execute";
+  return (msg as MsgExecuteContract).type === "wasm/MsgExecuteContract";
 }
 
 /**
@@ -121,7 +128,7 @@ export function isMsgExecuteContract(msg: Msg): msg is MsgExecuteContract {
  * @see https://github.com/CosmWasm/wasmd/blob/v0.9.0-alpha4/x/wasm/internal/types/msg.go#L195
  */
 export interface MsgMigrateContract extends Msg {
-  readonly type: "wasm/migrate";
+  readonly type: "wasm/MsgMigrateContract";
   readonly value: {
     /** Bech32 account address */
     readonly sender: string;
@@ -135,5 +142,5 @@ export interface MsgMigrateContract extends Msg {
 }
 
 export function isMsgMigrateContract(msg: Msg): msg is MsgMigrateContract {
-  return (msg as MsgMigrateContract).type === "wasm/migrate";
+  return (msg as MsgMigrateContract).type === "wasm/MsgMigrateContract";
 }

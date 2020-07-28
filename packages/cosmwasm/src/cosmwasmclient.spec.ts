@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Sha256 } from "@cosmjs/crypto";
 import { Bech32, fromHex, fromUtf8, toAscii, toBase64 } from "@cosmjs/encoding";
-import { assertIsPostTxSuccess, makeSignBytes, MsgSend, Secp256k1Wallet, StdFee } from "@cosmjs/sdk38";
+import { assertIsPostTxSuccess, makeSignBytes, MsgSend, Secp256k1Wallet, StdFee } from "@cosmjs/launchpad";
 import { assert, sleep } from "@cosmjs/utils";
 import { ReadonlyDate } from "readonly-date";
 
@@ -22,10 +22,6 @@ import {
 } from "./testutils.spec";
 
 const blockTime = 1_000; // ms
-
-const guest = {
-  address: "cosmos17d0jcz59jf68g52vq38tuuncmwwjk42u6mcxej",
-};
 
 interface HackatomInstance {
   readonly initMsg: {
@@ -344,25 +340,6 @@ describe("CosmWasmClient", () => {
         creator: alice.address0,
         label: "HASH",
         admin: undefined,
-        initMsg: {
-          decimals: 5,
-          name: "Hash token",
-          symbol: "HASH",
-          initial_balances: jasmine.arrayContaining([
-            {
-              address: alice.address0,
-              amount: "11",
-            },
-            {
-              address: unused.address,
-              amount: "12812345",
-            },
-            {
-              address: guest.address,
-              amount: "22004000000",
-            },
-          ]),
-        },
       });
     });
 

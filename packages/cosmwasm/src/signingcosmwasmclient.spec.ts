@@ -10,7 +10,7 @@ import {
   MsgDelegate,
   Secp256k1Wallet,
   setupAuthExtension,
-} from "@cosmjs/sdk38";
+} from "@cosmjs/launchpad";
 import { assert } from "@cosmjs/utils";
 
 import { PrivateCosmWasmClient } from "./cosmwasmclient";

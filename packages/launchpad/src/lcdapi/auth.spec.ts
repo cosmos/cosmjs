@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { encodeBech32Pubkey } from "../pubkey";
 import {
   faucet,
   makeRandomAddress,
@@ -25,7 +24,7 @@ describe("AuthExtension", () => {
       type: "cosmos-sdk/Account",
       value: {
         address: unused.address,
-        public_key: "", // not known to the chain
+        public_key: null, // not known to the chain
         coins: [
           {
             amount: "1000000000",
@@ -36,8 +35,8 @@ describe("AuthExtension", () => {
             denom: "ustake",
           },
         ],
-        account_number: unused.accountNumber,
-        sequence: 0,
+        account_number: unused.accountNumber.toString(),
+        sequence: unused.sequence.toString(),
       },
     });
   });
@@ -49,7 +48,7 @@ describe("AuthExtension", () => {
     const { result } = await client.auth.account(faucet.address);
     expect(result.value).toEqual(
       jasmine.objectContaining({
-        public_key: encodeBech32Pubkey(faucet.pubkey, "cosmospub"),
+        public_key: faucet.pubkey,
       }),
     );
   });

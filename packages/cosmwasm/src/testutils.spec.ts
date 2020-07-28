@@ -1,6 +1,6 @@
 import { Random } from "@cosmjs/crypto";
 import { Bech32, fromBase64 } from "@cosmjs/encoding";
-import { Msg, StdFee, StdSignature, StdTx } from "@cosmjs/sdk38";
+import { Msg, StdFee, StdSignature, StdTx } from "@cosmjs/launchpad";
 
 import hackatom from "./testdata/contract.json";
 
@@ -32,9 +32,9 @@ export const bech32AddressMatcher = /^[\x21-\x7e]{1,83}1[02-9ac-hj-np-z]{38}$/;
 /** Deployed as part of scripts/wasmd/init.sh */
 export const deployedErc20 = {
   codeId: 1,
-  source: "https://crates.io/api/v1/crates/cw-erc20/0.5.1/download",
-  builder: "cosmwasm/rust-optimizer:0.8.0",
-  checksum: "3e97bf88bd960fee5e5959c77b972eb2927690bc10160792741b174f105ec0c5",
+  source: "https://crates.io/api/v1/crates/cw-erc20/not-yet-released/download",
+  builder: "cosmwasm/rust-optimizer:0.9.0",
+  checksum: "0f14abcc6fed08f2dd06896db974989db97dbcc6e8e30188b73fe5ab427c7785",
   instances: [
     "cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5", // HASH
     "cosmos1hqrdl6wstt8qzshwc6mrumpjk9338k0lr4dqxd", // ISA
@@ -47,7 +47,7 @@ export const wasmd = {
   chainId: "testing",
 };
 
-export const validatorAddress = "cosmosvaloper1gjvanqxc774u6ed9thj4gpn9gj5zus5u32enqn";
+export const validatorAddress = "cosmosvaloper1fa7hj49pf8uzc4m0lw5swjhhl5th2484gvnlpv";
 
 export const alice = {
   mnemonic: "enlist hip relief stomach skate base shallow young switch frequent cry park",

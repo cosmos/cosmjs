@@ -2,7 +2,7 @@
 
 /* eslint-disable @typescript-eslint/naming-convention */
 const { SigningCosmWasmClient } = require("@cosmjs/cosmwasm");
-const { coins, Secp256k1Wallet } = require("@cosmjs/sdk38");
+const { coins, Secp256k1Wallet } = require("@cosmjs/launchpad");
 const fs = require("fs");
 
 const httpUrl = "http://localhost:1317";
@@ -24,7 +24,7 @@ const bounty = {
     name: "Bounty",
     symbol: "BOUNTY",
     decimals: 3,
-    validator: "cosmosvaloper1gjvanqxc774u6ed9thj4gpn9gj5zus5u32enqn",
+    validator: "cosmosvaloper1fa7hj49pf8uzc4m0lw5swjhhl5th2484gvnlpv",
     exit_tax: "0.005", // 0.5 %
     min_withdrawal: "7",
   },

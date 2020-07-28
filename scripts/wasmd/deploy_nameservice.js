@@ -2,7 +2,7 @@
 
 /* eslint-disable @typescript-eslint/naming-convention */
 const { SigningCosmWasmClient } = require("@cosmjs/cosmwasm");
-const { Secp256k1Wallet } = require("@cosmjs/sdk38");
+const { Secp256k1Wallet } = require("@cosmjs/launchpad");
 const fs = require("fs");
 
 const httpUrl = "http://localhost:1317";
@@ -12,7 +12,7 @@ const alice = {
 };
 
 const codeMeta = {
-  source: "https://crates.io/api/v1/crates/cw-nameservice/0.5.1/download",
+  source: "https://crates.io/api/v1/crates/cw-nameservice/not-yet-released/download",
   builder: "cosmwasm/rust-optimizer:0.8.0",
 };
 

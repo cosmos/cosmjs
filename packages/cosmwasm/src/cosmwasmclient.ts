@@ -1,6 +1,5 @@
 import { Sha256 } from "@cosmjs/crypto";
 import { fromBase64, fromHex, toHex } from "@cosmjs/encoding";
-import { Uint53 } from "@cosmjs/math";
 import {
   AuthExtension,
   BroadcastMode,
@@ -14,7 +13,8 @@ import {
   setupAuthExtension,
   StdTx,
   uint64ToNumber,
-} from "@cosmjs/sdk38";
+} from "@cosmjs/launchpad";
+import { Uint53 } from "@cosmjs/math";
 
 import { setupWasmExtension, WasmExtension } from "./lcdapi/wasm";
 import { parseLogs } from "./logs";
@@ -117,9 +117,10 @@ export interface Contract {
   readonly label: string;
 }
 
-export interface ContractDetails extends Contract {
-  /** Argument passed on initialization of the contract */
-  readonly initMsg: object;
+export interface ContractCodeHistoryEntry {
+  readonly operation: string;
+  readonly codeId: number;
+  readonly msg: object;
 }
 
 export interface BlockHeader {
@@ -389,7 +390,7 @@ export class CosmWasmClient {
   /**
    * Throws an error if no contract was found at the address
    */
-  public async getContract(address: string): Promise<ContractDetails> {
+  public async getContract(address: string): Promise<Contract> {
     const result = await this.lcdClient.wasm.getContractInfo(address);
     if (!result) throw new Error(`No contract found at address "${address}"`);
     return {
@@ -398,8 +399,22 @@ export class CosmWasmClient {
       creator: result.creator,
       admin: result.admin,
       label: result.label,
-      initMsg: result.init_msg,
     };
+  }
+
+  /**
+   * Throws an error if no contract was found at the address
+   */
+  public async getContractCodeHistory(address: string): Promise<readonly ContractCodeHistoryEntry[]> {
+    const result = await this.lcdClient.wasm.getContractCodeHistory(address);
+    if (!result) throw new Error(`No contract history found for address "${address}"`);
+    return result.map(
+      (entry): ContractCodeHistoryEntry => ({
+        operation: entry.operation,
+        codeId: entry.code_id,
+        msg: entry.msg,
+      }),
+    );
   }
 
   /**

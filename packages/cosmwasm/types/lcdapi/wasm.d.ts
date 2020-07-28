@@ -1,4 +1,4 @@
-import { LcdClient } from "@cosmjs/sdk38";
+import { LcdClient } from "@cosmjs/launchpad";
 import { JsonObject, Model } from "../types";
 export interface CodeInfo {
   readonly id: number;
@@ -33,9 +33,10 @@ export interface ContractInfo {
   readonly admin?: string;
   readonly label: string;
 }
-export interface ContractDetails extends ContractInfo {
-  /** Argument passed on initialization of the contract */
-  readonly init_msg: object;
+export interface ContractCodeHistoryEntry {
+  readonly operation: string;
+  readonly code_id: number;
+  readonly msg: object;
 }
 /**
  * @see https://github.com/cosmwasm/wasmd/blob/master/x/wasm/client/rest/query.go#L19-L27
@@ -53,7 +54,7 @@ export interface WasmExtension {
     /**
      * Returns null when contract was not found at this address.
      */
-    readonly getContractInfo: (address: string) => Promise<ContractDetails | null>;
+    readonly getContractInfo: (address: string) => Promise<ContractInfo | null>;
     /**
      * Returns all contract state.
      * This is an empty array if no such contract, or contract has no data.
@@ -69,6 +70,10 @@ export interface WasmExtension {
      * Throws error if no such contract exists, the query format is invalid or the response is invalid.
      */
     readonly queryContractSmart: (address: string, query: object) => Promise<JsonObject>;
+    /**
+     * Returns null when contract history was not found for this address.
+     */
+    readonly getContractCodeHistory: (address: string) => Promise<ContractCodeHistoryEntry[] | null>;
   };
 }
 export declare function setupWasmExtension(base: LcdClient): WasmExtension;

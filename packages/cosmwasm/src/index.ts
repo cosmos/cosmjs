@@ -9,7 +9,7 @@ export {
   Code,
   CodeDetails,
   Contract,
-  ContractDetails,
+  ContractCodeHistoryEntry,
   CosmWasmClient,
   GetSequenceResult,
   SearchByHeightQuery,

@@ -39,7 +39,7 @@ export function main(originalArgs: readonly string[]): void {
         "Code",
         "CodeDetails",
         "Contract",
-        "ContractDetails",
+        "ContractCodeHistoryEntry",
         "CosmWasmClient",
         "GetSequenceResult",
         "SearchByHeightQuery",
@@ -78,9 +78,8 @@ export function main(originalArgs: readonly string[]): void {
       "@cosmjs/encoding",
       ["fromAscii", "fromBase64", "fromHex", "fromUtf8", "toAscii", "toBase64", "toHex", "toUtf8", "Bech32"],
     ],
-    ["@cosmjs/math", ["Decimal", "Int53", "Uint32", "Uint53", "Uint64"]],
     [
-      "@cosmjs/sdk38",
+      "@cosmjs/launchpad",
       [
         "coin",
         "coins",
@@ -106,6 +105,7 @@ export function main(originalArgs: readonly string[]): void {
         "StdTx",
       ],
     ],
+    ["@cosmjs/math", ["Decimal", "Int53", "Uint32", "Uint53", "Uint64"]],
     ["@cosmjs/utils", ["assert", "sleep"]],
   ]);
 
