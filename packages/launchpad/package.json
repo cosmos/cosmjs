@@ -1,8 +1,11 @@
 {
-  "name": "@cosmjs/sdk38",
+  "name": "@cosmjs/launchpad",
   "version": "0.21.1",
-  "description": "Utilities for Cosmos SDK 0.38",
-  "author": "Ethan Frey <ethanfrey@users.noreply.github.com>",
+  "description": "A client library for the Cosmos SDK 0.37 (cosmoshub-3), 0.38 and 0.39 (Launchpad)",
+  "contributors": [
+    "Ethan Frey <ethanfrey@users.noreply.github.com>",
+    "Simon Warta <webmaster128@users.noreply.github.com>"
+  ],
   "license": "Apache-2.0",
   "main": "build/index.js",
   "types": "types/index.d.ts",
@@ -15,7 +18,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/CosmWasm/cosmjs/tree/master/packages/sdk38"
+    "url": "https://github.com/CosmWasm/cosmjs/tree/master/packages/launchpad"
   },
   "publishConfig": {
     "access": "public"

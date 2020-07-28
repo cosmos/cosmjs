@@ -1,5 +1,5 @@
 import { pathToString } from "@cosmjs/crypto";
-import { makeCosmoshubPath, OfflineSigner, Secp256k1Wallet } from "@cosmjs/sdk38";
+import { makeCosmoshubPath, OfflineSigner, Secp256k1Wallet } from "@cosmjs/launchpad";
 
 export async function createWallets(
   mnemonic: string,

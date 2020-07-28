@@ -1,6 +1,5 @@
 import { Sha256 } from "@cosmjs/crypto";
 import { fromBase64, fromHex, toHex } from "@cosmjs/encoding";
-import { Uint53 } from "@cosmjs/math";
 import {
   AuthExtension,
   BroadcastMode,
@@ -14,7 +13,8 @@ import {
   setupAuthExtension,
   StdTx,
   uint64ToNumber,
-} from "@cosmjs/sdk38";
+} from "@cosmjs/launchpad";
+import { Uint53 } from "@cosmjs/math";
 
 import { setupWasmExtension, WasmExtension } from "./lcdapi/wasm";
 import { parseLogs } from "./logs";

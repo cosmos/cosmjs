@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Coin, Msg } from "@cosmjs/sdk38";
+import { Coin, Msg } from "@cosmjs/launchpad";
 
 // TODO: implement
 /**

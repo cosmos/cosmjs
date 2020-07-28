@@ -1,4 +1,4 @@
-import { Coin, Msg } from "@cosmjs/sdk38";
+import { Coin, Msg } from "@cosmjs/launchpad";
 /**
  * @see https://github.com/CosmWasm/wasmd/blob/v0.10.0-alpha/x/wasm/internal/types/params.go#L68-L71
  */

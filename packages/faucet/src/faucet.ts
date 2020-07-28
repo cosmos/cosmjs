@@ -1,4 +1,4 @@
-import { CosmosClient, OfflineSigner, SigningCosmosClient } from "@cosmjs/sdk38";
+import { CosmosClient, OfflineSigner, SigningCosmosClient } from "@cosmjs/launchpad";
 import { sleep } from "@cosmjs/utils";
 
 import { debugAccount, logAccountsState, logSendJob } from "./debugging";

@@ -8,7 +8,7 @@ import {
   PostTxResult,
   PubKey,
   StdTx,
-} from "@cosmjs/sdk38";
+} from "@cosmjs/launchpad";
 import { WasmExtension } from "./lcdapi/wasm";
 import { JsonObject } from "./types";
 export interface GetSequenceResult {

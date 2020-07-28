@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Sha256 } from "@cosmjs/crypto";
 import { Bech32, fromHex, fromUtf8, toAscii, toBase64 } from "@cosmjs/encoding";
-import { assertIsPostTxSuccess, makeSignBytes, MsgSend, Secp256k1Wallet, StdFee } from "@cosmjs/sdk38";
+import { assertIsPostTxSuccess, makeSignBytes, MsgSend, Secp256k1Wallet, StdFee } from "@cosmjs/launchpad";
 import { assert, sleep } from "@cosmjs/utils";
 import { ReadonlyDate } from "readonly-date";
 

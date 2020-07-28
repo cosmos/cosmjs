@@ -2,7 +2,7 @@
 
 /* eslint-disable @typescript-eslint/naming-convention */
 const { SigningCosmWasmClient } = require("@cosmjs/cosmwasm");
-const { coins, Secp256k1Wallet } = require("@cosmjs/sdk38");
+const { coins, Secp256k1Wallet } = require("@cosmjs/launchpad");
 const fs = require("fs");
 
 const httpUrl = "http://localhost:1317";

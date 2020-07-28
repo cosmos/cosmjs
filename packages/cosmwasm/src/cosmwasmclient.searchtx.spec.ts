@@ -9,7 +9,7 @@ import {
   makeSignBytes,
   MsgSend,
   Secp256k1Wallet,
-} from "@cosmjs/sdk38";
+} from "@cosmjs/launchpad";
 import { assert, sleep } from "@cosmjs/utils";
 
 import { CosmWasmClient } from "./cosmwasmclient";

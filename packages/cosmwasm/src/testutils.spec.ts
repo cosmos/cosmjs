@@ -1,6 +1,6 @@
 import { Random } from "@cosmjs/crypto";
 import { Bech32, fromBase64 } from "@cosmjs/encoding";
-import { Msg, StdFee, StdSignature, StdTx } from "@cosmjs/sdk38";
+import { Msg, StdFee, StdSignature, StdTx } from "@cosmjs/launchpad";
 
 import hackatom from "./testdata/contract.json";
 

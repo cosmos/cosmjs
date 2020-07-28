@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Sha256 } from "@cosmjs/crypto";
 import { toBase64, toHex } from "@cosmjs/encoding";
-import { Uint53 } from "@cosmjs/math";
 import {
   BroadcastMode,
   Coin,
@@ -16,7 +15,8 @@ import {
   StdFee,
   StdSignature,
   StdTx,
-} from "@cosmjs/sdk38";
+} from "@cosmjs/launchpad";
+import { Uint53 } from "@cosmjs/math";
 import pako from "pako";
 
 import { isValidBuilder } from "./builder";

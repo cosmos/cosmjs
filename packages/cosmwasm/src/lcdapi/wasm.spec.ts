@@ -13,7 +13,7 @@ import {
   Secp256k1Wallet,
   setupAuthExtension,
   StdFee,
-} from "@cosmjs/sdk38";
+} from "@cosmjs/launchpad";
 import { assert } from "@cosmjs/utils";
 
 import { findAttribute, parseLogs } from "../logs";
