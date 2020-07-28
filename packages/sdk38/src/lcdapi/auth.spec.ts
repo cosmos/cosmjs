@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { encodeBech32Pubkey } from "../pubkey";
 import {
   faucet,
   makeRandomAddress,
@@ -43,13 +42,13 @@ describe("AuthExtension", () => {
   });
 
   // This fails in the first test run if you forget to run `./scripts/wasmd/init.sh`
-  xit("has correct pubkey for faucet", async () => {
+  it("has correct pubkey for faucet", async () => {
     pendingWithoutWasmd();
     const client = makeAuthClient(wasmd.endpoint);
     const { result } = await client.auth.account(faucet.address);
     expect(result.value).toEqual(
       jasmine.objectContaining({
-        public_key: encodeBech32Pubkey(faucet.pubkey, "cosmospub"),
+        public_key: faucet.pubkey,
       }),
     );
   });
