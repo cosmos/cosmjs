@@ -133,6 +133,7 @@ async function executeContract(
 describe("WasmExtension", () => {
   const hackatom = getHackatom();
   let hackatomCodeId: number | undefined;
+  let hackatomContractAddress: string | undefined;
 
   beforeAll(async () => {
     if (wasmdEnabled()) {
@@ -142,6 +143,12 @@ describe("WasmExtension", () => {
       const logs = parseLogs(result.logs);
       const codeIdAttr = findAttribute(logs, "message", "code_id");
       hackatomCodeId = Number.parseInt(codeIdAttr.value, 10);
+
+      const instantiateResult = await instantiateContract(wallet, hackatomCodeId, makeRandomAddress());
+      assertIsPostTxSuccess(instantiateResult);
+      const instantiateLogs = parseLogs(instantiateResult.logs);
+      const contractAddressAttr = findAttribute(instantiateLogs, "message", "contract_address");
+      hackatomContractAddress = contractAddressAttr.value;
     }
   });
 
@@ -446,29 +453,13 @@ describe("WasmExtension", () => {
       const client = makeWasmClient(wasmd.endpoint);
       const noContract = makeRandomAddress();
       const expectedKey = toAscii("config");
-      let contractAddress: string | undefined;
-
-      beforeAll(async () => {
-        if (wasmdEnabled()) {
-          const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
-          const uploadResult = await uploadContract(wallet, getHackatom());
-          assertIsPostTxSuccess(uploadResult);
-          const uploadLogs = parseLogs(uploadResult.logs);
-          const codeId = Number.parseInt(findAttribute(uploadLogs, "message", "code_id").value, 10);
-          const instantiateResult = await instantiateContract(wallet, codeId, makeRandomAddress());
-          assertIsPostTxSuccess(instantiateResult);
-          const instantiateLogs = parseLogs(instantiateResult.logs);
-          const contractAddressAttr = findAttribute(instantiateLogs, "message", "contract_address");
-          contractAddress = contractAddressAttr.value;
-        }
-      });
 
       it("can get all state", async () => {
         pendingWithoutWasmd();
-        assert(contractAddress);
+        assert(hackatomContractAddress);
 
         // get contract state
-        const state = await client.wasm.getAllContractState(contractAddress);
+        const state = await client.wasm.getAllContractState(hackatomContractAddress);
         expect(state.length).toEqual(1);
         const data = state[0];
         expect(data.key).toEqual(expectedKey);
@@ -483,17 +474,17 @@ describe("WasmExtension", () => {
 
       it("can query by key", async () => {
         pendingWithoutWasmd();
-        assert(contractAddress);
+        assert(hackatomContractAddress);
 
         // query by one key
-        const raw = await client.wasm.queryContractRaw(contractAddress, expectedKey);
+        const raw = await client.wasm.queryContractRaw(hackatomContractAddress, expectedKey);
         assert(raw, "must get result");
         const model = JSON.parse(fromAscii(raw));
         expect(model.verifier).toBeDefined();
         expect(model.beneficiary).toBeDefined();
 
         // missing key is null
-        const missing = await client.wasm.queryContractRaw(contractAddress, fromHex("cafe0dad"));
+        const missing = await client.wasm.queryContractRaw(hackatomContractAddress, fromHex("cafe0dad"));
         expect(missing).toBeNull();
 
         // bad address is null
@@ -503,14 +494,16 @@ describe("WasmExtension", () => {
 
       it("can make smart queries", async () => {
         pendingWithoutWasmd();
-        assert(contractAddress);
+        assert(hackatomContractAddress);
 
         // we can query the verifier properly
-        const resultDocument = await client.wasm.queryContractSmart(contractAddress, { verifier: {} });
+        const resultDocument = await client.wasm.queryContractSmart(hackatomContractAddress, {
+          verifier: {},
+        });
         expect(resultDocument).toEqual({ verifier: alice.address0 });
 
         // invalid query syntax throws an error
-        await client.wasm.queryContractSmart(contractAddress, { nosuchkey: {} }).then(
+        await client.wasm.queryContractSmart(hackatomContractAddress, { nosuchkey: {} }).then(
           () => fail("shouldn't succeed"),
           (error) =>
             expect(error).toMatch(/query wasm contract failed: parsing hackatom::contract::QueryMsg/),
