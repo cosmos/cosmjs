@@ -54,8 +54,8 @@ export interface ContractInfo {
 
 // An entry in the contracts code/ migration history
 export interface ContractCodeHistoryEntry {
-  // operation can be "Init", "Migrate", "Genesis"
-  readonly operation: string;
+  /** The source of this history entry */
+  readonly operation: "Genesis" | "Init" | "Migrate";
   readonly code_id: number;
   readonly msg: object;
 }
