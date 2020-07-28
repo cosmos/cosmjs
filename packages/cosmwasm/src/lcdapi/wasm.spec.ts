@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Sha256 } from "@cosmjs/crypto";
-import { Bech32, fromAscii, fromBase64, fromHex, toAscii, toBase64, toHex } from "@cosmjs/encoding";
+import { Bech32, fromAscii, fromHex, fromUtf8, toAscii, toBase64, toHex } from "@cosmjs/encoding";
 import {
+  assertIsPostTxSuccess,
   AuthExtension,
   Coin,
   coin,
@@ -9,9 +10,11 @@ import {
   LcdClient,
   makeSignBytes,
   OfflineSigner,
+  PostTxResult,
   PostTxsResponse,
   Secp256k1Wallet,
   setupAuthExtension,
+  SigningCosmosClient,
   StdFee,
 } from "@cosmjs/launchpad";
 import { assert } from "@cosmjs/utils";
@@ -26,6 +29,7 @@ import {
 } from "../msgs";
 import {
   alice,
+  base64Matcher,
   bech32AddressMatcher,
   ContractUploadInstructions,
   deployedErc20,
@@ -46,10 +50,9 @@ function makeWasmClient(apiUrl: string): WasmClient {
 }
 
 async function uploadContract(
-  client: WasmClient,
   signer: OfflineSigner,
   contract: ContractUploadInstructions,
-): Promise<PostTxsResponse> {
+): Promise<PostTxResult> {
   const memo = "My first contract on chain";
   const theMsg: MsgStoreCode = {
     type: "wasm/MsgStoreCode",
@@ -61,29 +64,21 @@ async function uploadContract(
     },
   };
   const fee: StdFee = {
-    amount: [
-      {
-        amount: "5000000",
-        denom: "ucosm",
-      },
-    ],
+    amount: coins(5000000, "ucosm"),
     gas: "89000000",
   };
 
-  const { account_number, sequence } = (await client.auth.account(alice.address0)).result.value;
-  const signBytes = makeSignBytes([theMsg], fee, wasmd.chainId, memo, account_number, sequence);
-  const signature = await signer.sign(alice.address0, signBytes);
-  const signedTx = makeSignedTx(theMsg, fee, memo, signature);
-  return client.postTx(signedTx);
+  const firstAddress = (await signer.getAccounts())[0].address;
+  const client = new SigningCosmosClient(wasmd.endpoint, firstAddress, signer);
+  return client.signAndPost([theMsg], fee, memo);
 }
 
 async function instantiateContract(
-  client: WasmClient,
   signer: OfflineSigner,
   codeId: number,
   beneficiaryAddress: string,
   transferAmount?: readonly Coin[],
-): Promise<PostTxsResponse> {
+): Promise<PostTxResult> {
   const memo = "Create an escrow instance";
   const theMsg: MsgInstantiateContract = {
     type: "wasm/MsgInstantiateContract",
@@ -99,20 +94,13 @@ async function instantiateContract(
     },
   };
   const fee: StdFee = {
-    amount: [
-      {
-        amount: "5000000",
-        denom: "ucosm",
-      },
-    ],
+    amount: coins(5000000, "ucosm"),
     gas: "89000000",
   };
 
-  const { account_number, sequence } = (await client.auth.account(alice.address0)).result.value;
-  const signBytes = makeSignBytes([theMsg], fee, wasmd.chainId, memo, account_number, sequence);
-  const signature = await signer.sign(alice.address0, signBytes);
-  const signedTx = makeSignedTx(theMsg, fee, memo, signature);
-  return client.postTx(signedTx);
+  const firstAddress = (await signer.getAccounts())[0].address;
+  const client = new SigningCosmosClient(wasmd.endpoint, firstAddress, signer);
+  return client.signAndPost([theMsg], fee, memo);
 }
 
 async function executeContract(
@@ -143,10 +131,237 @@ async function executeContract(
   return client.postTx(signedTx);
 }
 
-describe("wasm", () => {
-  it("can be constructed", () => {
-    const client = makeWasmClient(wasmd.endpoint);
-    expect(client).toBeTruthy();
+describe("WasmExtension", () => {
+  const hackatom = getHackatom();
+  const hackatomConfigKey = toAscii("config");
+  let hackatomCodeId: number | undefined;
+  let hackatomContractAddress: string | undefined;
+
+  beforeAll(async () => {
+    if (wasmdEnabled()) {
+      const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
+      const result = await uploadContract(wallet, hackatom);
+      assertIsPostTxSuccess(result);
+      const logs = parseLogs(result.logs);
+      const codeIdAttr = findAttribute(logs, "message", "code_id");
+      hackatomCodeId = Number.parseInt(codeIdAttr.value, 10);
+
+      const instantiateResult = await instantiateContract(wallet, hackatomCodeId, makeRandomAddress());
+      assertIsPostTxSuccess(instantiateResult);
+      const instantiateLogs = parseLogs(instantiateResult.logs);
+      const contractAddressAttr = findAttribute(instantiateLogs, "message", "contract_address");
+      hackatomContractAddress = contractAddressAttr.value;
+    }
+  });
+
+  describe("listCodeInfo", () => {
+    it("has recently uploaded contract as last entry", async () => {
+      pendingWithoutWasmd();
+      assert(hackatomCodeId);
+      const client = makeWasmClient(wasmd.endpoint);
+      const codesList = await client.wasm.listCodeInfo();
+      const lastCode = codesList[codesList.length - 1];
+      expect(lastCode.id).toEqual(hackatomCodeId);
+      expect(lastCode.creator).toEqual(alice.address0);
+      expect(lastCode.source).toEqual(hackatom.source);
+      expect(lastCode.builder).toEqual(hackatom.builder);
+      expect(lastCode.data_hash.toLowerCase()).toEqual(toHex(new Sha256(hackatom.data).digest()));
+    });
+  });
+
+  describe("getCode", () => {
+    it("contains fill code information", async () => {
+      pendingWithoutWasmd();
+      assert(hackatomCodeId);
+      const client = makeWasmClient(wasmd.endpoint);
+      const code = await client.wasm.getCode(hackatomCodeId);
+      expect(code.id).toEqual(hackatomCodeId);
+      expect(code.creator).toEqual(alice.address0);
+      expect(code.source).toEqual(hackatom.source);
+      expect(code.builder).toEqual(hackatom.builder);
+      expect(code.data_hash.toLowerCase()).toEqual(toHex(new Sha256(hackatom.data).digest()));
+      expect(code.data).toEqual(toBase64(hackatom.data));
+    });
+  });
+
+  // TODO: move listContractsByCodeId tests out of here
+  describe("getContractInfo", () => {
+    it("works", async () => {
+      pendingWithoutWasmd();
+      assert(hackatomCodeId);
+      const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
+      const client = makeWasmClient(wasmd.endpoint);
+      const beneficiaryAddress = makeRandomAddress();
+      const transferAmount = coins(707707, "ucosm");
+
+      // create new instance and compare before and after
+      const existingContractsByCode = await client.wasm.listContractsByCodeId(hackatomCodeId);
+      for (const contract of existingContractsByCode) {
+        expect(contract.address).toMatch(bech32AddressMatcher);
+        expect(contract.code_id).toEqual(hackatomCodeId);
+        expect(contract.creator).toMatch(bech32AddressMatcher);
+        expect(contract.label).toMatch(/^.+$/);
+      }
+
+      const result = await instantiateContract(wallet, hackatomCodeId, beneficiaryAddress, transferAmount);
+      assertIsPostTxSuccess(result);
+      const logs = parseLogs(result.logs);
+      const contractAddressAttr = findAttribute(logs, "message", "contract_address");
+      const myAddress = contractAddressAttr.value;
+
+      const newContractsByCode = await client.wasm.listContractsByCodeId(hackatomCodeId);
+      expect(newContractsByCode.length).toEqual(existingContractsByCode.length + 1);
+      const newContract = newContractsByCode[newContractsByCode.length - 1];
+      expect(newContract).toEqual(
+        jasmine.objectContaining({
+          code_id: hackatomCodeId,
+          creator: alice.address0,
+          label: "my escrow",
+        }),
+      );
+
+      const info = await client.wasm.getContractInfo(myAddress);
+      assert(info);
+      expect(info).toEqual(
+        jasmine.objectContaining({
+          code_id: hackatomCodeId,
+          creator: alice.address0,
+          label: "my escrow",
+        }),
+      );
+      expect(info.admin).toBeUndefined();
+    });
+
+    it("returns null for non-existent address", async () => {
+      pendingWithoutWasmd();
+      assert(hackatomCodeId);
+      const client = makeWasmClient(wasmd.endpoint);
+      const nonExistentAddress = makeRandomAddress();
+      const info = await client.wasm.getContractInfo(nonExistentAddress);
+      expect(info).toBeNull();
+    });
+  });
+
+  describe("getContractCodeHistory", () => {
+    it("can list contract history", async () => {
+      pendingWithoutWasmd();
+      assert(hackatomCodeId);
+      const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
+      const client = makeWasmClient(wasmd.endpoint);
+      const beneficiaryAddress = makeRandomAddress();
+      const transferAmount = coins(707707, "ucosm");
+
+      // create new instance and compare before and after
+      const result = await instantiateContract(wallet, hackatomCodeId, beneficiaryAddress, transferAmount);
+      assertIsPostTxSuccess(result);
+      const logs = parseLogs(result.logs);
+      const contractAddressAttr = findAttribute(logs, "message", "contract_address");
+      const myAddress = contractAddressAttr.value;
+
+      const history = await client.wasm.getContractCodeHistory(myAddress);
+      assert(history);
+      expect(history).toContain({
+        code_id: hackatomCodeId,
+        operation: "Init",
+        msg: {
+          verifier: alice.address0,
+          beneficiary: beneficiaryAddress,
+        },
+      });
+    });
+
+    it("returns null for non-existent address", async () => {
+      pendingWithoutWasmd();
+      assert(hackatomCodeId);
+      const client = makeWasmClient(wasmd.endpoint);
+      const nonExistentAddress = makeRandomAddress();
+      const history = await client.wasm.getContractCodeHistory(nonExistentAddress);
+      expect(history).toBeNull();
+    });
+  });
+
+  describe("getAllContractState", () => {
+    it("can get all state", async () => {
+      pendingWithoutWasmd();
+      assert(hackatomContractAddress);
+      const client = makeWasmClient(wasmd.endpoint);
+      const state = await client.wasm.getAllContractState(hackatomContractAddress);
+      expect(state.length).toEqual(1);
+      const data = state[0];
+      expect(data.key).toEqual(hackatomConfigKey);
+      const value = JSON.parse(fromUtf8(data.val));
+      expect(value.verifier).toMatch(base64Matcher);
+      expect(value.beneficiary).toMatch(base64Matcher);
+    });
+
+    it("is empty for non-existent address", async () => {
+      const client = makeWasmClient(wasmd.endpoint);
+      const nonExistentAddress = makeRandomAddress();
+      const state = await client.wasm.getAllContractState(nonExistentAddress);
+      expect(state).toEqual([]);
+    });
+  });
+
+  describe("queryContractRaw", () => {
+    it("can query by key", async () => {
+      pendingWithoutWasmd();
+      assert(hackatomContractAddress);
+      const client = makeWasmClient(wasmd.endpoint);
+      const raw = await client.wasm.queryContractRaw(hackatomContractAddress, hackatomConfigKey);
+      assert(raw, "must get result");
+      const model = JSON.parse(fromAscii(raw));
+      expect(model.verifier).toMatch(base64Matcher);
+      expect(model.beneficiary).toMatch(base64Matcher);
+    });
+
+    it("returns null for missing key", async () => {
+      pendingWithoutWasmd();
+      assert(hackatomContractAddress);
+      const client = makeWasmClient(wasmd.endpoint);
+      const info = await client.wasm.queryContractRaw(hackatomContractAddress, fromHex("cafe0dad"));
+      expect(info).toBeNull();
+    });
+
+    it("returns null for non-existent address", async () => {
+      pendingWithoutWasmd();
+      const client = makeWasmClient(wasmd.endpoint);
+      const nonExistentAddress = makeRandomAddress();
+      const info = await client.wasm.queryContractRaw(nonExistentAddress, hackatomConfigKey);
+      expect(info).toBeNull();
+    });
+  });
+
+  describe("queryContractSmart", () => {
+    it("can make smart queries", async () => {
+      pendingWithoutWasmd();
+      assert(hackatomContractAddress);
+      const client = makeWasmClient(wasmd.endpoint);
+      const request = { verifier: {} };
+      const response = await client.wasm.queryContractSmart(hackatomContractAddress, request);
+      expect(response).toEqual({ verifier: alice.address0 });
+    });
+
+    it("throws for invalid query requests", async () => {
+      pendingWithoutWasmd();
+      assert(hackatomContractAddress);
+      const client = makeWasmClient(wasmd.endpoint);
+      const request = { nosuchkey: {} };
+      await client.wasm.queryContractSmart(hackatomContractAddress, request).then(
+        () => fail("shouldn't succeed"),
+        (error) => expect(error).toMatch(/query wasm contract failed: parsing hackatom::contract::QueryMsg/),
+      );
+    });
+
+    it("throws for non-existent address", async () => {
+      pendingWithoutWasmd();
+      const client = makeWasmClient(wasmd.endpoint);
+      const nonExistentAddress = makeRandomAddress();
+      const request = { verifier: {} };
+      await client.wasm.queryContractSmart(nonExistentAddress, request).then(
+        () => fail("shouldn't succeed"),
+        (error) => expect(error).toMatch("not found"),
+      );
+    });
   });
 
   describe("txsQuery", () => {
@@ -267,29 +482,29 @@ describe("wasm", () => {
       // upload
       {
         // console.log("Raw log:", result.raw_log);
-        const result = await uploadContract(client, wallet, getHackatom());
-        assert(!result.code);
+        const result = await uploadContract(wallet, getHackatom());
+        assertIsPostTxSuccess(result);
         const logs = parseLogs(result.logs);
         const codeIdAttr = findAttribute(logs, "message", "code_id");
         codeId = Number.parseInt(codeIdAttr.value, 10);
         expect(codeId).toBeGreaterThanOrEqual(1);
         expect(codeId).toBeLessThanOrEqual(200);
-        expect(result.data).toEqual(toHex(toAscii(`${codeId}`)).toUpperCase());
+        expect(result.data).toEqual(toAscii(`${codeId}`));
       }
 
       let contractAddress: string;
 
       // instantiate
       {
-        const result = await instantiateContract(client, wallet, codeId, beneficiaryAddress, transferAmount);
-        assert(!result.code);
+        const result = await instantiateContract(wallet, codeId, beneficiaryAddress, transferAmount);
+        assertIsPostTxSuccess(result);
         // console.log("Raw log:", result.raw_log);
         const logs = parseLogs(result.logs);
         const contractAddressAttr = findAttribute(logs, "message", "contract_address");
         contractAddress = contractAddressAttr.value;
         const amountAttr = findAttribute(logs, "transfer", "amount");
         expect(amountAttr.value).toEqual("1234ucosm,321ustake");
-        expect(result.data).toEqual(toHex(Bech32.decode(contractAddress).data).toUpperCase());
+        expect(result.data).toEqual(Bech32.decode(contractAddress).data);
 
         const balance = (await client.auth.account(contractAddress)).result.value.coins;
         expect(balance).toEqual(transferAmount);
@@ -316,235 +531,6 @@ describe("wasm", () => {
         const contractBalance = (await client.auth.account(contractAddress)).result.value.coins;
         expect(contractBalance).toEqual([]);
       }
-    });
-  });
-
-  // The /wasm endpoints
-
-  describe("query", () => {
-    it("can list upload code", async () => {
-      pendingWithoutWasmd();
-      const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
-      const client = makeWasmClient(wasmd.endpoint);
-
-      // check with contracts were here first to compare
-      const existingInfos = await client.wasm.listCodeInfo();
-      existingInfos.forEach((val, idx) => expect(val.id).toEqual(idx + 1));
-      const numExisting = existingInfos.length;
-
-      // upload data
-      const hackatom = getHackatom();
-      const result = await uploadContract(client, wallet, hackatom);
-      assert(!result.code);
-      const logs = parseLogs(result.logs);
-      const codeIdAttr = findAttribute(logs, "message", "code_id");
-      const codeId = Number.parseInt(codeIdAttr.value, 10);
-
-      // ensure we were added to the end of the list
-      const newInfos = await client.wasm.listCodeInfo();
-      expect(newInfos.length).toEqual(numExisting + 1);
-      const lastInfo = newInfos[newInfos.length - 1];
-      expect(lastInfo.id).toEqual(codeId);
-      expect(lastInfo.creator).toEqual(alice.address0);
-
-      // ensure metadata is present
-      expect(lastInfo.source).toEqual(hackatom.source);
-      expect(lastInfo.builder).toEqual(hackatom.builder);
-
-      // check code hash matches expectation
-      const wasmHash = new Sha256(hackatom.data).digest();
-      expect(lastInfo.data_hash.toLowerCase()).toEqual(toHex(wasmHash));
-
-      // download code and check against auto-gen
-      const { data } = await client.wasm.getCode(codeId);
-      expect(fromBase64(data)).toEqual(hackatom.data);
-    });
-
-    it("can list contracts and get info", async () => {
-      pendingWithoutWasmd();
-      const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
-      const client = makeWasmClient(wasmd.endpoint);
-      const beneficiaryAddress = makeRandomAddress();
-      const transferAmount = coins(707707, "ucosm");
-
-      // reuse an existing contract, or upload if needed
-      let codeId: number;
-      const existingInfos = await client.wasm.listCodeInfo();
-      if (existingInfos.length > 0) {
-        codeId = existingInfos[existingInfos.length - 1].id;
-      } else {
-        const uploadResult = await uploadContract(client, wallet, getHackatom());
-        assert(!uploadResult.code);
-        const uploadLogs = parseLogs(uploadResult.logs);
-        const codeIdAttr = findAttribute(uploadLogs, "message", "code_id");
-        codeId = Number.parseInt(codeIdAttr.value, 10);
-      }
-
-      // create new instance and compare before and after
-      const existingContractsByCode = await client.wasm.listContractsByCodeId(codeId);
-      for (const contract of existingContractsByCode) {
-        expect(contract.address).toMatch(bech32AddressMatcher);
-        expect(contract.code_id).toEqual(codeId);
-        expect(contract.creator).toMatch(bech32AddressMatcher);
-        expect(contract.label).toMatch(/^.+$/);
-      }
-
-      const result = await instantiateContract(client, wallet, codeId, beneficiaryAddress, transferAmount);
-      assert(!result.code);
-      const logs = parseLogs(result.logs);
-      const contractAddressAttr = findAttribute(logs, "message", "contract_address");
-      const myAddress = contractAddressAttr.value;
-
-      const newContractsByCode = await client.wasm.listContractsByCodeId(codeId);
-      expect(newContractsByCode.length).toEqual(existingContractsByCode.length + 1);
-      const newContract = newContractsByCode[newContractsByCode.length - 1];
-      expect(newContract).toEqual(
-        jasmine.objectContaining({
-          code_id: codeId,
-          creator: alice.address0,
-          label: "my escrow",
-        }),
-      );
-
-      // check out info
-      const myInfo = await client.wasm.getContractInfo(myAddress);
-      assert(myInfo);
-      expect(myInfo).toEqual(
-        jasmine.objectContaining({
-          code_id: codeId,
-          creator: alice.address0,
-        }),
-      );
-      expect(myInfo.admin).toBeUndefined();
-
-      // make sure random addresses don't give useful info
-      const nonExistentAddress = makeRandomAddress();
-      expect(await client.wasm.getContractInfo(nonExistentAddress)).toBeNull();
-    });
-
-    it("can list contract history", async () => {
-      pendingWithoutWasmd();
-      const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
-      const client = makeWasmClient(wasmd.endpoint);
-      const beneficiaryAddress = makeRandomAddress();
-      const transferAmount = coins(707707, "ucosm");
-
-      // reuse an existing contract, or upload if needed
-      let codeId: number;
-      const existingInfos = await client.wasm.listCodeInfo();
-      if (existingInfos.length > 0) {
-        codeId = existingInfos[existingInfos.length - 1].id;
-      } else {
-        const uploadResult = await uploadContract(client, wallet, getHackatom());
-        assert(!uploadResult.code);
-        const uploadLogs = parseLogs(uploadResult.logs);
-        const codeIdAttr = findAttribute(uploadLogs, "message", "code_id");
-        codeId = Number.parseInt(codeIdAttr.value, 10);
-      }
-
-      // create new instance and compare before and after
-      const result = await instantiateContract(client, wallet, codeId, beneficiaryAddress, transferAmount);
-      assert(!result.code);
-      const logs = parseLogs(result.logs);
-      const contractAddressAttr = findAttribute(logs, "message", "contract_address");
-      const myAddress = contractAddressAttr.value;
-
-      // check out history
-      const myHistory = await client.wasm.getContractCodeHistory(myAddress);
-      assert(myHistory);
-      expect(myHistory).toContain({
-        code_id: codeId,
-        operation: "Init",
-        msg: {
-          verifier: alice.address0,
-          beneficiary: beneficiaryAddress,
-        },
-      });
-      // make sure random addresses don't give useful info
-      const nonExistentAddress = makeRandomAddress();
-      expect(await client.wasm.getContractCodeHistory(nonExistentAddress)).toBeNull();
-    });
-
-    describe("contract state", () => {
-      const client = makeWasmClient(wasmd.endpoint);
-      const noContract = makeRandomAddress();
-      const expectedKey = toAscii("config");
-      let contractAddress: string | undefined;
-
-      beforeAll(async () => {
-        if (wasmdEnabled()) {
-          const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
-          const uploadResult = await uploadContract(client, wallet, getHackatom());
-          assert(!uploadResult.code);
-          const uploadLogs = parseLogs(uploadResult.logs);
-          const codeId = Number.parseInt(findAttribute(uploadLogs, "message", "code_id").value, 10);
-          const instantiateResult = await instantiateContract(client, wallet, codeId, makeRandomAddress());
-          assert(!instantiateResult.code);
-          const instantiateLogs = parseLogs(instantiateResult.logs);
-          const contractAddressAttr = findAttribute(instantiateLogs, "message", "contract_address");
-          contractAddress = contractAddressAttr.value;
-        }
-      });
-
-      it("can get all state", async () => {
-        pendingWithoutWasmd();
-        assert(contractAddress);
-
-        // get contract state
-        const state = await client.wasm.getAllContractState(contractAddress);
-        expect(state.length).toEqual(1);
-        const data = state[0];
-        expect(data.key).toEqual(expectedKey);
-        const value = JSON.parse(fromAscii(data.val));
-        expect(value.verifier).toBeDefined();
-        expect(value.beneficiary).toBeDefined();
-
-        // bad address is empty array
-        const noContractState = await client.wasm.getAllContractState(noContract);
-        expect(noContractState).toEqual([]);
-      });
-
-      it("can query by key", async () => {
-        pendingWithoutWasmd();
-        assert(contractAddress);
-
-        // query by one key
-        const raw = await client.wasm.queryContractRaw(contractAddress, expectedKey);
-        assert(raw, "must get result");
-        const model = JSON.parse(fromAscii(raw));
-        expect(model.verifier).toBeDefined();
-        expect(model.beneficiary).toBeDefined();
-
-        // missing key is null
-        const missing = await client.wasm.queryContractRaw(contractAddress, fromHex("cafe0dad"));
-        expect(missing).toBeNull();
-
-        // bad address is null
-        const noContractModel = await client.wasm.queryContractRaw(noContract, expectedKey);
-        expect(noContractModel).toBeNull();
-      });
-
-      it("can make smart queries", async () => {
-        pendingWithoutWasmd();
-        assert(contractAddress);
-
-        // we can query the verifier properly
-        const resultDocument = await client.wasm.queryContractSmart(contractAddress, { verifier: {} });
-        expect(resultDocument).toEqual({ verifier: alice.address0 });
-
-        // invalid query syntax throws an error
-        await client.wasm.queryContractSmart(contractAddress, { nosuchkey: {} }).then(
-          () => fail("shouldn't succeed"),
-          (error) =>
-            expect(error).toMatch(/query wasm contract failed: parsing hackatom::contract::QueryMsg/),
-        );
-
-        // invalid address throws an error
-        await client.wasm.queryContractSmart(noContract, { verifier: {} }).then(
-          () => fail("shouldn't succeed"),
-          (error) => expect(error).toMatch("not found"),
-        );
-      });
     });
   });
 });

@@ -10,6 +10,9 @@
   and `.postTx`.
 - @cosmjs/cosmwasm: Use `*PostTx*` types and helpers from @cosmjs/sdk38. Remove
   exported `PostTxResult`.
+- @cosmjs/cosmwasm: `ContractDetails` was removed in favour of just `Contract`.
+  The missing `init_msg` is now available via the contract's code history (see
+  `getContractCodeHistory`).
 - @cosmjs/sdk38: Rename `CosmosClient.getNonce` method to `.getSequence`.
 - @cosmjs/sdk38: Remove `RestClient` class in favour of new modular `LcdClient`
   class.

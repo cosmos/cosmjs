@@ -118,7 +118,8 @@ export interface Contract {
 }
 
 export interface ContractCodeHistoryEntry {
-  readonly operation: string;
+  /** The source of this history entry */
+  readonly operation: "Genesis" | "Init" | "Migrate";
   readonly codeId: number;
   readonly msg: object;
 }
