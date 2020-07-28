@@ -77,6 +77,11 @@
 						</tr>
 					</thead>
 					<tbody><tr>
+							<td>0.10</td>
+							<td>0.10</td>
+							<td><code>^0.22.0</code></td>
+						</tr>
+						<tr>
 							<td>0.9</td>
 							<td>0.9</td>
 							<td><code>^0.21.0</code></td>
@@ -87,6 +92,13 @@
 							<td><code>^0.20.1</code></td>
 						</tr>
 				</tbody></table>
+				<a href="#development" id="development" style="color: inherit; text-decoration: none;">
+					<h2>Development</h2>
+				</a>
+				<p>Updating Hackatom development contract in <code>src/testdata/contract.json</code>:</p>
+				<pre><code class="language-sh"><span class="hljs-built_in">cd</span> packages/cosmwasm
+<span class="hljs-built_in">export</span> HACKATOM_URL=https://github.com/CosmWasm/cosmwasm/releases/download/v0.10.0-alpha2/hackatom.wasm
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;{\&quot;// source\&quot;: \&quot;<span class="hljs-variable">$HACKATOM_URL</span>\&quot;, \&quot;data\&quot;: \&quot;<span class="hljs-subst">$(curl -sS  --location $HACKATOM_URL | base64)</span>\&quot; }&quot;</span> | jq &gt; src/testdata/contract.json</code></pre>
 				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
 					<h2>License</h2>
 				</a>
@@ -139,7 +151,7 @@
 						<a href="interfaces/contract.html" class="tsd-kind-icon">Contract</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="interfaces/contractdetails.html" class="tsd-kind-icon">Contract<wbr>Details</a>
+						<a href="interfaces/contractcodehistoryentry.html" class="tsd-kind-icon">Contract<wbr>Code<wbr>History<wbr>Entry</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/contractinfo.html" class="tsd-kind-icon">Contract<wbr>Info</a>
@@ -230,6 +242,9 @@
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
 						<a href="interfaces/wasmsuccess.html" class="tsd-kind-icon">Wasm<wbr>Success</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#accessconfig" class="tsd-kind-icon">Access<wbr>Config</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="globals.html#jsonobject" class="tsd-kind-icon">Json<wbr>Object</a>

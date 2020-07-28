@@ -1,0 +1,479 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Secp256k1Wallet | @cosmjs/launchpad Documentation</title>
+	<meta name="description" content="Documentation for @cosmjs/launchpad Documentation">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">@cosmjs/launchpad Documentation</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../globals.html">Globals</a>
+				</li>
+				<li>
+					<a href="secp256k1wallet.html">Secp256k1Wallet</a>
+				</li>
+			</ul>
+			<h1>Class Secp256k1Wallet</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="target">Secp256k1Wallet</span>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel">
+				<h3>Implements</h3>
+				<ul class="tsd-hierarchy">
+					<li><a href="../interfaces/offlinesigner.html" class="tsd-signature-type">OfflineSigner</a></li>
+				</ul>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Accessors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="secp256k1wallet.html#mnemonic" class="tsd-kind-icon">mnemonic</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="secp256k1wallet.html#getaccounts" class="tsd-kind-icon">get<wbr>Accounts</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="secp256k1wallet.html#serialize" class="tsd-kind-icon">serialize</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="secp256k1wallet.html#serializewithencryptionkey" class="tsd-kind-icon">serialize<wbr>With<wbr>Encryption<wbr>Key</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="secp256k1wallet.html#sign" class="tsd-kind-icon">sign</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="secp256k1wallet.html#deserialize" class="tsd-kind-icon">deserialize</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="secp256k1wallet.html#deserializewithencryptionkey" class="tsd-kind-icon">deserialize<wbr>With<wbr>Encryption<wbr>Key</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="secp256k1wallet.html#frommnemonic" class="tsd-kind-icon">from<wbr>Mnemonic</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="secp256k1wallet.html#generate" class="tsd-kind-icon">generate</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Accessors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="mnemonic" class="tsd-anchor"></a>
+					<h3>mnemonic</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> mnemonic<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/19e47d3e/packages/launchpad/src/secp256k1wallet.ts#L242">src/secp256k1wallet.ts:242</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getaccounts" class="tsd-anchor"></a>
+					<h3>get<wbr>Accounts</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Accounts<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">keyof </span><a href="../interfaces/accountdata.html" class="tsd-signature-type">AccountData</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/19e47d3e/packages/launchpad/src/secp256k1wallet.ts#L250">src/secp256k1wallet.ts:250</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">keyof </span><a href="../interfaces/accountdata.html" class="tsd-signature-type">AccountData</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="serialize" class="tsd-anchor"></a>
+					<h3>serialize</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">serialize<span class="tsd-signature-symbol">(</span>password<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/19e47d3e/packages/launchpad/src/secp256k1wallet.ts#L280">src/secp256k1wallet.ts:280</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Generates an encrypted serialization of this wallet.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>password: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The user provided password used to generate an encryption key via a KDF.
+										This is not normalized internally (see &quot;Unicode normalization&quot; to learn more).</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="serializewithencryptionkey" class="tsd-anchor"></a>
+					<h3>serialize<wbr>With<wbr>Encryption<wbr>Key</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">serialize<wbr>With<wbr>Encryption<wbr>Key<span class="tsd-signature-symbol">(</span>encryptionKey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span>, kdfConfiguration<span class="tsd-signature-symbol">: </span><a href="../interfaces/kdfconfiguration.html" class="tsd-signature-type">KdfConfiguration</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/19e47d3e/packages/launchpad/src/secp256k1wallet.ts#L295">src/secp256k1wallet.ts:295</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Generates an encrypted serialization of this wallet.</p>
+								</div>
+								<p>This is an advanced alternative to calling <code>serialize(password)</code> directly, which allows you to
+								offload the KDF execution to a non-UI thread (e.g. in a WebWorker).</p>
+								<p>The caller is responsible for ensuring the key was derived with the given KDF options. If this
+								is not the case, the wallet cannot be restored with the original password.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>encryptionKey: <span class="tsd-signature-type">Uint8Array</span></h5>
+								</li>
+								<li>
+									<h5>kdfConfiguration: <a href="../interfaces/kdfconfiguration.html" class="tsd-signature-type">KdfConfiguration</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="sign" class="tsd-anchor"></a>
+					<h3>sign</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">sign<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span>, prehashType<span class="tsd-signature-symbol">?: </span><a href="../globals.html#prehashtype" class="tsd-signature-type">PrehashType</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/stdsignature.html" class="tsd-signature-type">StdSignature</a><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/19e47d3e/packages/launchpad/src/secp256k1wallet.ts#L260">src/secp256k1wallet.ts:260</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>address: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>message: <span class="tsd-signature-type">Uint8Array</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> prehashType: <a href="../globals.html#prehashtype" class="tsd-signature-type">PrehashType</a><span class="tsd-signature-symbol"> = &quot;sha256&quot;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/stdsignature.html" class="tsd-signature-type">StdSignature</a><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="deserialize" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> deserialize</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">deserialize<span class="tsd-signature-symbol">(</span>serialization<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, password<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="secp256k1wallet.html" class="tsd-signature-type">Secp256k1Wallet</a><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/19e47d3e/packages/launchpad/src/secp256k1wallet.ts#L161">src/secp256k1wallet.ts:161</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Restores a wallet from an encrypted serialization.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>serialization: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>password: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The user provided password used to generate an encryption key via a KDF.
+										This is not normalized internally (see &quot;Unicode normalization&quot; to learn more).</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="secp256k1wallet.html" class="tsd-signature-type">Secp256k1Wallet</a><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="deserializewithencryptionkey" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> deserialize<wbr>With<wbr>Encryption<wbr>Key</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">deserialize<wbr>With<wbr>Encryption<wbr>Key<span class="tsd-signature-symbol">(</span>serialization<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, encryptionKey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="secp256k1wallet.html" class="tsd-signature-type">Secp256k1Wallet</a><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/19e47d3e/packages/launchpad/src/secp256k1wallet.ts#L181">src/secp256k1wallet.ts:181</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Restores a wallet from an encrypted serialization.</p>
+								</div>
+								<p>This is an advanced alternative to calling <code>deserialize(serialization, password)</code> directly, which allows
+								you to offload the KDF execution to a non-UI thread (e.g. in a WebWorker).</p>
+								<p>The caller is responsible for ensuring the key was derived with the given KDF configuration. This can be
+								done using <code>extractKdfConfiguration(serialization)</code> and <code>executeKdf(password, kdfConfiguration)</code> from this package.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>serialization: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>encryptionKey: <span class="tsd-signature-type">Uint8Array</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="secp256k1wallet.html" class="tsd-signature-type">Secp256k1Wallet</a><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="frommnemonic" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> from<wbr>Mnemonic</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">from<wbr>Mnemonic<span class="tsd-signature-symbol">(</span>mnemonic<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, hdPath<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">Slip10RawIndex</span><span class="tsd-signature-symbol">[]</span>, prefix<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="secp256k1wallet.html" class="tsd-signature-type">Secp256k1Wallet</a><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/19e47d3e/packages/launchpad/src/secp256k1wallet.ts#L119">src/secp256k1wallet.ts:119</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Restores a wallet from the given BIP39 mnemonic.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>mnemonic: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Any valid English mnemonic.</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> hdPath: <span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">Slip10RawIndex</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = makeCosmoshubPath(0)</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The BIP-32/SLIP-10 derivation path. Defaults to the Cosmos Hub/ATOM path <code>m/44&#39;/118&#39;/0&#39;/0/0</code>.</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> prefix: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;cosmos&quot;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The bech32 address prefix (human readable part). Defaults to &quot;cosmos&quot;.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="secp256k1wallet.html" class="tsd-signature-type">Secp256k1Wallet</a><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="generate" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> generate</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">generate<span class="tsd-signature-symbol">(</span>length<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">12</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">15</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">18</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">21</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">24</span>, hdPath<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">Slip10RawIndex</span><span class="tsd-signature-symbol">[]</span>, prefix<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="secp256k1wallet.html" class="tsd-signature-type">Secp256k1Wallet</a><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/19e47d3e/packages/launchpad/src/secp256k1wallet.ts#L144">src/secp256k1wallet.ts:144</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Generates a new wallet with a BIP39 mnemonic of the given length.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> length: <span class="tsd-signature-type">12</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">15</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">18</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">21</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">24</span><span class="tsd-signature-symbol"> = 12</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The number of words in the mnemonic (12, 15, 18, 21 or 24).</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> hdPath: <span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">Slip10RawIndex</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = makeCosmoshubPath(0)</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The BIP-32/SLIP-10 derivation path. Defaults to the Cosmos Hub/ATOM path <code>m/44&#39;/118&#39;/0&#39;/0/0</code>.</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> prefix: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;cosmos&quot;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The bech32 address prefix (human readable part). Defaults to &quot;cosmos&quot;.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="secp256k1wallet.html" class="tsd-signature-type">Secp256k1Wallet</a><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="../globals.html"><em>Globals</em></a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class">
+						<a href="secp256k1wallet.html" class="tsd-kind-icon">Secp256k1<wbr>Wallet</a>
+						<ul>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="secp256k1wallet.html#mnemonic" class="tsd-kind-icon">mnemonic</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="secp256k1wallet.html#getaccounts" class="tsd-kind-icon">get<wbr>Accounts</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="secp256k1wallet.html#serialize" class="tsd-kind-icon">serialize</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="secp256k1wallet.html#serializewithencryptionkey" class="tsd-kind-icon">serialize<wbr>With<wbr>Encryption<wbr>Key</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="secp256k1wallet.html#sign" class="tsd-kind-icon">sign</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="secp256k1wallet.html#deserialize" class="tsd-kind-icon">deserialize</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="secp256k1wallet.html#deserializewithencryptionkey" class="tsd-kind-icon">deserialize<wbr>With<wbr>Encryption<wbr>Key</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="secp256k1wallet.html#frommnemonic" class="tsd-kind-icon">from<wbr>Mnemonic</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="secp256k1wallet.html#generate" class="tsd-kind-icon">generate</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

@@ -70,7 +70,7 @@
 					</div>
 					<dl class="tsd-comment-tags">
 						<dt>see</dt>
-						<dd><p><a href="https://github.com/CosmWasm/wasmd/blob/v0.9.0-alpha4/x/wasm/internal/types/msg.go#L34">https://github.com/CosmWasm/wasmd/blob/v0.9.0-alpha4/x/wasm/internal/types/msg.go#L34</a></p>
+						<dd><p><a href="https://github.com/CosmWasm/wasmd/blob/v0.10.0-alpha/x/wasm/internal/types/msg.go#L10-L20">https://github.com/CosmWasm/wasmd/blob/v0.10.0-alpha/x/wasm/internal/types/msg.go#L10-L20</a></p>
 						</dd>
 					</dl>
 				</div>
@@ -107,22 +107,22 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
 					<a name="type" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> type</h3>
-					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"wasm/store-code"</span></div>
+					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"wasm/MsgStoreCode"</span></div>
 					<aside class="tsd-sources">
 						<p>Overrides Msg.type</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/63cbc42f/packages/cosmwasm/src/msgs.ts#L11">src/msgs.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/19e47d3e/packages/cosmwasm/src/msgs.ts#L17">src/msgs.ts:17</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
 					<a name="value" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> value</h3>
-					<div class="tsd-signature tsd-kind-icon">value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>builder<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>sender<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>source<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>wasm_byte_code<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span></div>
+					<div class="tsd-signature tsd-kind-icon">value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>builder<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>instantiate_permission<span class="tsd-signature-symbol">?: </span><a href="../globals.html#accessconfig" class="tsd-signature-type">AccessConfig</a><span class="tsd-signature-symbol">; </span>sender<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>source<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>wasm_byte_code<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<p>Overrides Msg.value</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/63cbc42f/packages/cosmwasm/src/msgs.ts#L12">src/msgs.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/19e47d3e/packages/cosmwasm/src/msgs.ts#L18">src/msgs.ts:18</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -135,6 +135,9 @@
 										<p>A docker tag. Can be empty.</p>
 									</div>
 								</div>
+							</li>
+							<li class="tsd-parameter">
+								<h5><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> instantiate_<wbr>permission<span class="tsd-signature-symbol">?: </span><a href="../globals.html#accessconfig" class="tsd-signature-type">AccessConfig</a></h5>
 							</li>
 							<li class="tsd-parameter">
 								<h5><span class="tsd-flag ts-flagReadonly">Readonly</span> sender<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
