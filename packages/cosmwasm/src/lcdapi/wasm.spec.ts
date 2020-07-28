@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Sha256 } from "@cosmjs/crypto";
-import { Bech32, fromAscii, fromBase64, fromHex, toAscii, toBase64, toHex } from "@cosmjs/encoding";
+import { Bech32, fromAscii, fromHex, toAscii, toBase64, toHex } from "@cosmjs/encoding";
 import {
   AuthExtension,
   Coin,
@@ -143,10 +143,50 @@ async function executeContract(
   return client.postTx(signedTx);
 }
 
-describe("wasm", () => {
-  it("can be constructed", () => {
-    const client = makeWasmClient(wasmd.endpoint);
-    expect(client).toBeTruthy();
+describe("WasmExtension", () => {
+  const hackatom = getHackatom();
+  let hackatomCodeId: number | undefined;
+
+  beforeAll(async () => {
+    if (wasmdEnabled()) {
+      const client = makeWasmClient(wasmd.endpoint);
+      const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
+      const result = await uploadContract(client, wallet, hackatom);
+      assert(!result.code);
+      const logs = parseLogs(result.logs);
+      const codeIdAttr = findAttribute(logs, "message", "code_id");
+      hackatomCodeId = Number.parseInt(codeIdAttr.value, 10);
+    }
+  });
+
+  describe("listCodeInfo", () => {
+    it("has recently uploaded contract as last entry", async () => {
+      pendingWithoutWasmd();
+      assert(hackatomCodeId);
+      const client = makeWasmClient(wasmd.endpoint);
+      const codesList = await client.wasm.listCodeInfo();
+      const lastCode = codesList[codesList.length - 1];
+      expect(lastCode.id).toEqual(hackatomCodeId);
+      expect(lastCode.creator).toEqual(alice.address0);
+      expect(lastCode.source).toEqual(hackatom.source);
+      expect(lastCode.builder).toEqual(hackatom.builder);
+      expect(lastCode.data_hash.toLowerCase()).toEqual(toHex(new Sha256(hackatom.data).digest()));
+    });
+  });
+
+  describe("getCode", () => {
+    it("contains fill code information", async () => {
+      pendingWithoutWasmd();
+      assert(hackatomCodeId);
+      const client = makeWasmClient(wasmd.endpoint);
+      const code = await client.wasm.getCode(hackatomCodeId);
+      expect(code.id).toEqual(hackatomCodeId);
+      expect(code.creator).toEqual(alice.address0);
+      expect(code.source).toEqual(hackatom.source);
+      expect(code.builder).toEqual(hackatom.builder);
+      expect(code.data_hash.toLowerCase()).toEqual(toHex(new Sha256(hackatom.data).digest()));
+      expect(code.data).toEqual(toBase64(hackatom.data));
+    });
   });
 
   describe("txsQuery", () => {
@@ -319,47 +359,7 @@ describe("wasm", () => {
     });
   });
 
-  // The /wasm endpoints
-
   describe("query", () => {
-    it("can list upload code", async () => {
-      pendingWithoutWasmd();
-      const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
-      const client = makeWasmClient(wasmd.endpoint);
-
-      // check with contracts were here first to compare
-      const existingInfos = await client.wasm.listCodeInfo();
-      existingInfos.forEach((val, idx) => expect(val.id).toEqual(idx + 1));
-      const numExisting = existingInfos.length;
-
-      // upload data
-      const hackatom = getHackatom();
-      const result = await uploadContract(client, wallet, hackatom);
-      assert(!result.code);
-      const logs = parseLogs(result.logs);
-      const codeIdAttr = findAttribute(logs, "message", "code_id");
-      const codeId = Number.parseInt(codeIdAttr.value, 10);
-
-      // ensure we were added to the end of the list
-      const newInfos = await client.wasm.listCodeInfo();
-      expect(newInfos.length).toEqual(numExisting + 1);
-      const lastInfo = newInfos[newInfos.length - 1];
-      expect(lastInfo.id).toEqual(codeId);
-      expect(lastInfo.creator).toEqual(alice.address0);
-
-      // ensure metadata is present
-      expect(lastInfo.source).toEqual(hackatom.source);
-      expect(lastInfo.builder).toEqual(hackatom.builder);
-
-      // check code hash matches expectation
-      const wasmHash = new Sha256(hackatom.data).digest();
-      expect(lastInfo.data_hash.toLowerCase()).toEqual(toHex(wasmHash));
-
-      // download code and check against auto-gen
-      const { data } = await client.wasm.getCode(codeId);
-      expect(fromBase64(data)).toEqual(hackatom.data);
-    });
-
     it("can list contracts and get info", async () => {
       pendingWithoutWasmd();
       const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
