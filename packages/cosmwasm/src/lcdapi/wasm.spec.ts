@@ -253,6 +253,50 @@ describe("WasmExtension", () => {
     });
   });
 
+  describe("getContractCodeHistory", () => {
+    it("can list contract history", async () => {
+      pendingWithoutWasmd();
+      assert(hackatomCodeId);
+      const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
+      const client = makeWasmClient(wasmd.endpoint);
+      const beneficiaryAddress = makeRandomAddress();
+      const transferAmount = coins(707707, "ucosm");
+
+      // create new instance and compare before and after
+      const result = await instantiateContract(
+        client,
+        wallet,
+        hackatomCodeId,
+        beneficiaryAddress,
+        transferAmount,
+      );
+      assert(!result.code);
+      const logs = parseLogs(result.logs);
+      const contractAddressAttr = findAttribute(logs, "message", "contract_address");
+      const myAddress = contractAddressAttr.value;
+
+      const history = await client.wasm.getContractCodeHistory(myAddress);
+      assert(history);
+      expect(history).toContain({
+        code_id: hackatomCodeId,
+        operation: "Init",
+        msg: {
+          verifier: alice.address0,
+          beneficiary: beneficiaryAddress,
+        },
+      });
+    });
+
+    it("returns null for non-existent address", async () => {
+      pendingWithoutWasmd();
+      assert(hackatomCodeId);
+      const client = makeWasmClient(wasmd.endpoint);
+      const nonExistentAddress = makeRandomAddress();
+      const history = await client.wasm.getContractCodeHistory(nonExistentAddress);
+      expect(history).toBeNull();
+    });
+  });
+
   describe("txsQuery", () => {
     it("can query by tags (module + code_id)", async () => {
       pendingWithoutWasmd();
@@ -424,49 +468,6 @@ describe("WasmExtension", () => {
   });
 
   describe("query", () => {
-    it("can list contract history", async () => {
-      pendingWithoutWasmd();
-      const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
-      const client = makeWasmClient(wasmd.endpoint);
-      const beneficiaryAddress = makeRandomAddress();
-      const transferAmount = coins(707707, "ucosm");
-
-      // reuse an existing contract, or upload if needed
-      let codeId: number;
-      const existingInfos = await client.wasm.listCodeInfo();
-      if (existingInfos.length > 0) {
-        codeId = existingInfos[existingInfos.length - 1].id;
-      } else {
-        const uploadResult = await uploadContract(client, wallet, getHackatom());
-        assert(!uploadResult.code);
-        const uploadLogs = parseLogs(uploadResult.logs);
-        const codeIdAttr = findAttribute(uploadLogs, "message", "code_id");
-        codeId = Number.parseInt(codeIdAttr.value, 10);
-      }
-
-      // create new instance and compare before and after
-      const result = await instantiateContract(client, wallet, codeId, beneficiaryAddress, transferAmount);
-      assert(!result.code);
-      const logs = parseLogs(result.logs);
-      const contractAddressAttr = findAttribute(logs, "message", "contract_address");
-      const myAddress = contractAddressAttr.value;
-
-      // check out history
-      const myHistory = await client.wasm.getContractCodeHistory(myAddress);
-      assert(myHistory);
-      expect(myHistory).toContain({
-        code_id: codeId,
-        operation: "Init",
-        msg: {
-          verifier: alice.address0,
-          beneficiary: beneficiaryAddress,
-        },
-      });
-      // make sure random addresses don't give useful info
-      const nonExistentAddress = makeRandomAddress();
-      expect(await client.wasm.getContractCodeHistory(nonExistentAddress)).toBeNull();
-    });
-
     describe("contract state", () => {
       const client = makeWasmClient(wasmd.endpoint);
       const noContract = makeRandomAddress();
