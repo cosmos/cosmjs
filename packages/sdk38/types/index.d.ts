@@ -83,4 +83,5 @@ export { findSequenceForSignedTx } from "./sequence";
 export { encodeSecp256k1Signature, decodeSignature } from "./signature";
 export { FeeTable, SigningCosmosClient } from "./signingcosmosclient";
 export { isStdTx, pubkeyType, CosmosSdkTx, PubKey, StdFee, StdSignature, StdTx } from "./types";
-export { OfflineSigner, Secp256k1Wallet, makeCosmoshubPath } from "./wallet";
+export { OfflineSigner, makeCosmoshubPath } from "./wallet";
+export { Secp256k1Wallet } from "./secp256k1wallet";

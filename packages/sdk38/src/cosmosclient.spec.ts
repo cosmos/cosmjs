@@ -6,6 +6,7 @@ import { assertIsPostTxSuccess, CosmosClient, PrivateCosmWasmClient } from "./co
 import { makeSignBytes } from "./encoding";
 import { findAttribute } from "./logs";
 import { MsgSend } from "./msgs";
+import { Secp256k1Wallet } from "./secp256k1wallet";
 import cosmoshub from "./testdata/cosmoshub.json";
 import {
   faucet,
@@ -16,7 +17,6 @@ import {
   wasmd,
 } from "./testutils.spec";
 import { StdFee } from "./types";
-import { Secp256k1Wallet } from "./wallet";
 
 const blockTime = 1_000; // ms
 
