@@ -6,9 +6,9 @@ import {
   BroadcastMode,
   Coin,
   CosmosSdkTx,
-  decodeBech32Pubkey,
   IndexedTx,
   LcdClient,
+  normalizePubkey,
   PostTxResult,
   PubKey,
   setupAuthExtension,
@@ -234,7 +234,7 @@ export class CosmWasmClient {
       return {
         address: value.address,
         balance: value.coins,
-        pubkey: value.public_key ? decodeBech32Pubkey(value.public_key) : undefined,
+        pubkey: normalizePubkey(value.public_key) || undefined,
         accountNumber: uint64ToNumber(value.account_number),
         sequence: uint64ToNumber(value.sequence),
       };

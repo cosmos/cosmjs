@@ -20,6 +20,9 @@
 - @cosmjs/sdk38: `BaseAccount` now uses `number | string` as the type for
   `account_number` and `sequence`. The new helpers `uint64ToNumber` and
   `uint64ToString` allow you to normalize the mixed input.
+- @cosmjs/sdk38: `BaseAccount` now uses `string | PubKey | null` as the type for
+  `public_key`. The new helper `normalizePubkey` allows you to normalize the
+  mixed input.
 - @cosmjs/math: Add missing integer check to `Uint64.fromNumber`. Before
   `Uint64.fromNumber(1.1)` produced some result.
 - @cosmjs/sdk38: Add `SigningCosmosClient.signAndPost` as a mid-level

@@ -1,4 +1,5 @@
 import { Coin } from "../coins";
+import { PubKey } from "../types";
 import { LcdClient } from "./lcdclient";
 /**
  * A Cosmos SDK base account.
@@ -12,8 +13,17 @@ export interface BaseAccount {
   /** Bech32 account address */
   readonly address: string;
   readonly coins: readonly Coin[];
-  /** Bech32 encoded pubkey */
-  readonly public_key: string;
+  /**
+   * The public key of the account. This is not available on-chain as long as the account
+   * did not send a transaction.
+   *
+   * This was a type/value object in Cosmos SDK 0.37, changed to bech32 in Cosmos SDK 0.38 ([1])
+   * and changed back to type/value object in Cosmos SDK 0.39 ([2]).
+   *
+   * [1]: https://github.com/cosmos/cosmos-sdk/pull/5280
+   * [2]: https://github.com/cosmos/cosmos-sdk/pull/6749
+   */
+  readonly public_key: string | PubKey | null;
   /**
    * The account number assigned by the blockchain.
    *
