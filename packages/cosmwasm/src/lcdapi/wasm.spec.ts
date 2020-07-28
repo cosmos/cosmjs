@@ -331,6 +331,39 @@ describe("WasmExtension", () => {
     });
   });
 
+  describe("queryContractSmart", () => {
+    it("can make smart queries", async () => {
+      pendingWithoutWasmd();
+      assert(hackatomContractAddress);
+      const client = makeWasmClient(wasmd.endpoint);
+      const request = { verifier: {} };
+      const response = await client.wasm.queryContractSmart(hackatomContractAddress, request);
+      expect(response).toEqual({ verifier: alice.address0 });
+    });
+
+    it("throws for invalid query requests", async () => {
+      pendingWithoutWasmd();
+      assert(hackatomContractAddress);
+      const client = makeWasmClient(wasmd.endpoint);
+      const request = { nosuchkey: {} };
+      await client.wasm.queryContractSmart(hackatomContractAddress, request).then(
+        () => fail("shouldn't succeed"),
+        (error) => expect(error).toMatch(/query wasm contract failed: parsing hackatom::contract::QueryMsg/),
+      );
+    });
+
+    it("throws for non-existent address", async () => {
+      pendingWithoutWasmd();
+      const client = makeWasmClient(wasmd.endpoint);
+      const nonExistentAddress = makeRandomAddress();
+      const request = { verifier: {} };
+      await client.wasm.queryContractSmart(nonExistentAddress, request).then(
+        () => fail("shouldn't succeed"),
+        (error) => expect(error).toMatch("not found"),
+      );
+    });
+  });
+
   describe("txsQuery", () => {
     it("can query by tags (module + code_id)", async () => {
       pendingWithoutWasmd();
@@ -498,37 +531,6 @@ describe("WasmExtension", () => {
         const contractBalance = (await client.auth.account(contractAddress)).result.value.coins;
         expect(contractBalance).toEqual([]);
       }
-    });
-  });
-
-  describe("query", () => {
-    describe("contract state", () => {
-      const client = makeWasmClient(wasmd.endpoint);
-      const noContract = makeRandomAddress();
-
-      it("can make smart queries", async () => {
-        pendingWithoutWasmd();
-        assert(hackatomContractAddress);
-
-        // we can query the verifier properly
-        const resultDocument = await client.wasm.queryContractSmart(hackatomContractAddress, {
-          verifier: {},
-        });
-        expect(resultDocument).toEqual({ verifier: alice.address0 });
-
-        // invalid query syntax throws an error
-        await client.wasm.queryContractSmart(hackatomContractAddress, { nosuchkey: {} }).then(
-          () => fail("shouldn't succeed"),
-          (error) =>
-            expect(error).toMatch(/query wasm contract failed: parsing hackatom::contract::QueryMsg/),
-        );
-
-        // invalid address throws an error
-        await client.wasm.queryContractSmart(noContract, { verifier: {} }).then(
-          () => fail("shouldn't succeed"),
-          (error) => expect(error).toMatch("not found"),
-        );
-      });
     });
   });
 });
