@@ -30,6 +30,7 @@ export {
   AuthExtension,
   BankBalancesResponse,
   BankExtension,
+  BaseAccount,
   BlockResponse,
   BroadcastMode,
   DistributionCommunityPoolResponse,
@@ -60,6 +61,7 @@ export {
   MintParametersResponse,
   NodeInfoResponse,
   normalizeLcdApiArray,
+  normalizePubkey,
   PostTxsResponse,
   SearchTxsResponse,
   setupAuthExtension,
@@ -78,6 +80,8 @@ export {
   StakingPoolResponse,
   SupplyExtension,
   TxsResponse,
+  uint64ToNumber,
+  uint64ToString,
 } from "./lcdapi";
 export { isMsgDelegate, isMsgSend, Msg, MsgDelegate, MsgSend } from "./msgs";
 export { decodeBech32Pubkey, encodeBech32Pubkey, encodeSecp256k1Pubkey } from "./pubkey";

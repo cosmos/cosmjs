@@ -2,7 +2,7 @@
 // Standard modules (see tracking issue https://github.com/CosmWasm/cosmjs/issues/276)
 //
 
-export { AuthExtension, AuthAccountsResponse, setupAuthExtension } from "./auth";
+export { AuthExtension, AuthAccountsResponse, BaseAccount, setupAuthExtension } from "./auth";
 export { BankBalancesResponse, BankExtension, setupBankExtension } from "./bank";
 export {
   DistributionCommunityPoolResponse,
@@ -77,3 +77,8 @@ export {
   TxsResponse,
 } from "./base";
 export { LcdApiArray, LcdClient, normalizeLcdApiArray } from "./lcdclient";
+
+//
+// Utils for interacting with the client/API
+//
+export { normalizePubkey, uint64ToNumber, uint64ToString } from "./utils";

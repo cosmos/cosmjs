@@ -5,6 +5,6 @@ export declare function makeSignBytes(
   fee: StdFee,
   chainId: string,
   memo: string,
-  accountNumber: number,
-  sequence: number,
+  accountNumber: number | string,
+  sequence: number | string,
 ): Uint8Array;

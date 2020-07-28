@@ -3,9 +3,15 @@ import { fromBase64, fromHex, toHex } from "@cosmjs/encoding";
 import { Uint53 } from "@cosmjs/math";
 
 import { Coin } from "./coins";
-import { AuthExtension, BroadcastMode, LcdClient, setupAuthExtension } from "./lcdapi";
+import {
+  AuthExtension,
+  BroadcastMode,
+  LcdClient,
+  normalizePubkey,
+  setupAuthExtension,
+  uint64ToNumber,
+} from "./lcdapi";
 import { Log, parseLogs } from "./logs";
-import { decodeBech32Pubkey } from "./pubkey";
 import { CosmosSdkTx, PubKey, StdTx } from "./types";
 
 export interface GetSequenceResult {
@@ -234,9 +240,9 @@ export class CosmosClient {
       return {
         address: value.address,
         balance: value.coins,
-        pubkey: value.public_key ? decodeBech32Pubkey(value.public_key) : undefined,
-        accountNumber: value.account_number,
-        sequence: value.sequence,
+        pubkey: normalizePubkey(value.public_key) || undefined,
+        accountNumber: uint64ToNumber(value.account_number),
+        sequence: uint64ToNumber(value.sequence),
       };
     }
   }
