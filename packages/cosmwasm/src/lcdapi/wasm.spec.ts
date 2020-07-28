@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Sha256 } from "@cosmjs/crypto";
-import { Bech32, fromAscii, fromHex, toAscii, toBase64, toHex } from "@cosmjs/encoding";
+import { Bech32, fromAscii, fromHex, fromUtf8, toAscii, toBase64, toHex } from "@cosmjs/encoding";
 import {
   assertIsPostTxSuccess,
   AuthExtension,
@@ -29,6 +29,7 @@ import {
 } from "../msgs";
 import {
   alice,
+  base64Matcher,
   bech32AddressMatcher,
   ContractUploadInstructions,
   deployedErc20,
@@ -132,6 +133,7 @@ async function executeContract(
 
 describe("WasmExtension", () => {
   const hackatom = getHackatom();
+  const hackatomConfigKey = toAscii("config");
   let hackatomCodeId: number | undefined;
   let hackatomContractAddress: string | undefined;
 
@@ -275,6 +277,28 @@ describe("WasmExtension", () => {
       const nonExistentAddress = makeRandomAddress();
       const history = await client.wasm.getContractCodeHistory(nonExistentAddress);
       expect(history).toBeNull();
+    });
+  });
+
+  describe("getAllContractState", () => {
+    it("can get all state", async () => {
+      pendingWithoutWasmd();
+      assert(hackatomContractAddress);
+      const client = makeWasmClient(wasmd.endpoint);
+      const state = await client.wasm.getAllContractState(hackatomContractAddress);
+      expect(state.length).toEqual(1);
+      const data = state[0];
+      expect(data.key).toEqual(hackatomConfigKey);
+      const value = JSON.parse(fromUtf8(data.val));
+      expect(value.verifier).toMatch(base64Matcher);
+      expect(value.beneficiary).toMatch(base64Matcher);
+    });
+
+    it("is empty for non-existent address", async () => {
+      const client = makeWasmClient(wasmd.endpoint);
+      const nonExistentAddress = makeRandomAddress();
+      const state = await client.wasm.getAllContractState(nonExistentAddress);
+      expect(state).toEqual([]);
     });
   });
 
@@ -452,32 +476,13 @@ describe("WasmExtension", () => {
     describe("contract state", () => {
       const client = makeWasmClient(wasmd.endpoint);
       const noContract = makeRandomAddress();
-      const expectedKey = toAscii("config");
-
-      it("can get all state", async () => {
-        pendingWithoutWasmd();
-        assert(hackatomContractAddress);
-
-        // get contract state
-        const state = await client.wasm.getAllContractState(hackatomContractAddress);
-        expect(state.length).toEqual(1);
-        const data = state[0];
-        expect(data.key).toEqual(expectedKey);
-        const value = JSON.parse(fromAscii(data.val));
-        expect(value.verifier).toBeDefined();
-        expect(value.beneficiary).toBeDefined();
-
-        // bad address is empty array
-        const noContractState = await client.wasm.getAllContractState(noContract);
-        expect(noContractState).toEqual([]);
-      });
 
       it("can query by key", async () => {
         pendingWithoutWasmd();
         assert(hackatomContractAddress);
 
         // query by one key
-        const raw = await client.wasm.queryContractRaw(hackatomContractAddress, expectedKey);
+        const raw = await client.wasm.queryContractRaw(hackatomContractAddress, hackatomConfigKey);
         assert(raw, "must get result");
         const model = JSON.parse(fromAscii(raw));
         expect(model.verifier).toBeDefined();
@@ -488,7 +493,7 @@ describe("WasmExtension", () => {
         expect(missing).toBeNull();
 
         // bad address is null
-        const noContractModel = await client.wasm.queryContractRaw(noContract, expectedKey);
+        const noContractModel = await client.wasm.queryContractRaw(noContract, hackatomConfigKey);
         expect(noContractModel).toBeNull();
       });
 

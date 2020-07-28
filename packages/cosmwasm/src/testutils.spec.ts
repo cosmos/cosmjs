@@ -25,7 +25,8 @@ export function makeRandomAddress(): string {
 }
 
 export const tendermintIdMatcher = /^[0-9A-F]{64}$/;
-
+/** @see https://rgxdb.com/r/1NUN74O6 */
+export const base64Matcher = /^(?:[a-zA-Z0-9+/]{4})*(?:|(?:[a-zA-Z0-9+/]{3}=)|(?:[a-zA-Z0-9+/]{2}==)|(?:[a-zA-Z0-9+/]{1}===))$/;
 // https://github.com/bitcoin/bips/blob/master/bip-0173.mediawiki#bech32
 export const bech32AddressMatcher = /^[\x21-\x7e]{1,83}1[02-9ac-hj-np-z]{38}$/;
 
