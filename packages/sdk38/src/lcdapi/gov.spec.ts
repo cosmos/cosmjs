@@ -4,6 +4,7 @@ import { sleep } from "@cosmjs/utils";
 import { coins } from "../coins";
 import { assertIsPostTxSuccess } from "../cosmosclient";
 import { makeSignBytes } from "../encoding";
+import { Secp256k1Wallet } from "../secp256k1wallet";
 import { SigningCosmosClient } from "../signingcosmosclient";
 import {
   dateTimeStampMatcher,
@@ -13,7 +14,6 @@ import {
   wasmd,
   wasmdEnabled,
 } from "../testutils.spec";
-import { Secp256k1Wallet } from "../wallet";
 import { GovExtension, GovParametersType, setupGovExtension } from "./gov";
 import { LcdClient } from "./lcdclient";
 

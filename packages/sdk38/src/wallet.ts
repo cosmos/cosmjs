@@ -1,16 +1,15 @@
 import {
-  Bip39,
-  EnglishMnemonic,
-  Secp256k1,
+  Argon2id,
+  isArgon2idOptions,
+  Random,
   Sha256,
   Sha512,
-  Slip10,
-  Slip10Curve,
   Slip10RawIndex,
+  xchacha20NonceLength,
+  Xchacha20poly1305Ietf,
 } from "@cosmjs/crypto";
+import { toAscii } from "@cosmjs/encoding";
 
-import { rawSecp256k1PubkeyToAddress } from "./address";
-import { encodeSecp256k1Signature } from "./signature";
 import { StdSignature } from "./types";
 
 export type PrehashType = "sha256" | "sha512" | null;
@@ -36,7 +35,7 @@ export interface OfflineSigner {
   readonly sign: (address: string, message: Uint8Array, prehashType?: PrehashType) => Promise<StdSignature>;
 }
 
-function prehash(bytes: Uint8Array, type: PrehashType): Uint8Array {
+export function prehash(bytes: Uint8Array, type: PrehashType): Uint8Array {
   switch (type) {
     case null:
       return new Uint8Array([...bytes]);
@@ -63,54 +62,81 @@ export function makeCosmoshubPath(a: number): readonly Slip10RawIndex[] {
   ];
 }
 
-export class Secp256k1Wallet implements OfflineSigner {
-  public static async fromMnemonic(
-    mnemonic: string,
-    hdPath: readonly Slip10RawIndex[] = makeCosmoshubPath(0),
-    prefix = "cosmos",
-  ): Promise<Secp256k1Wallet> {
-    const seed = await Bip39.mnemonicToSeed(new EnglishMnemonic(mnemonic));
-    const { privkey } = Slip10.derivePath(Slip10Curve.Secp256k1, seed, hdPath);
-    const uncompressed = (await Secp256k1.makeKeypair(privkey)).pubkey;
-    return new Secp256k1Wallet(privkey, Secp256k1.compressPubkey(uncompressed), prefix);
-  }
+/**
+ * A fixed salt is chosen to archive a deterministic password to key derivation.
+ * This reduces the scope of a potential rainbow attack to all CosmJS users.
+ * Must be 16 bytes due to implementation limitations.
+ */
+export const cosmjsSalt = toAscii("The CosmJS salt.");
 
-  private readonly pubkey: Uint8Array;
-  private readonly privkey: Uint8Array;
-  private readonly prefix: string;
-  private readonly algo: Algo = "secp256k1";
+export interface KdfConfiguration {
+  /**
+   * An algorithm identifier, such as "argon2id" or "scrypt".
+   */
+  readonly algorithm: string;
+  /** A map of algorithm-specific parameters */
+  readonly params: Record<string, unknown>;
+}
 
-  private constructor(privkey: Uint8Array, pubkey: Uint8Array, prefix: string) {
-    this.privkey = privkey;
-    this.pubkey = pubkey;
-    this.prefix = prefix;
-  }
-
-  private get address(): string {
-    return rawSecp256k1PubkeyToAddress(this.pubkey, this.prefix);
-  }
-
-  public async getAccounts(): Promise<readonly AccountData[]> {
-    return [
-      {
-        address: this.address,
-        algo: this.algo,
-        pubkey: this.pubkey,
-      },
-    ];
-  }
-
-  public async sign(
-    address: string,
-    message: Uint8Array,
-    prehashType: PrehashType = "sha256",
-  ): Promise<StdSignature> {
-    if (address !== this.address) {
-      throw new Error(`Address ${address} not found in wallet`);
+export async function executeKdf(password: string, configuration: KdfConfiguration): Promise<Uint8Array> {
+  switch (configuration.algorithm) {
+    case "argon2id": {
+      const options = configuration.params;
+      if (!isArgon2idOptions(options)) throw new Error("Invalid format of argon2id params");
+      return Argon2id.execute(password, cosmjsSalt, options);
     }
-    const hashedMessage = prehash(message, prehashType);
-    const signature = await Secp256k1.createSignature(hashedMessage, this.privkey);
-    const signatureBytes = new Uint8Array([...signature.r(32), ...signature.s(32)]);
-    return encodeSecp256k1Signature(this.pubkey, signatureBytes);
+    default:
+      throw new Error("Unsupported KDF algorithm");
+  }
+}
+
+/**
+ * Configuration how to encrypt data or how data was encrypted.
+ * This is stored as part of the wallet serialization and must only contain JSON types.
+ */
+export interface EncryptionConfiguration {
+  /**
+   * An algorithm identifier, such as "xchacha20poly1305-ietf".
+   */
+  readonly algorithm: string;
+  /** A map of algorithm-specific parameters */
+  readonly params?: Record<string, unknown>;
+}
+
+export const supportedAlgorithms = {
+  xchacha20poly1305Ietf: "xchacha20poly1305-ietf",
+};
+
+export async function encrypt(
+  plaintext: Uint8Array,
+  encryptionKey: Uint8Array,
+  config: EncryptionConfiguration,
+): Promise<Uint8Array> {
+  switch (config.algorithm) {
+    case supportedAlgorithms.xchacha20poly1305Ietf: {
+      const nonce = Random.getBytes(xchacha20NonceLength);
+      // Prepend fixed-length nonce to ciphertext as suggested in the example from https://github.com/jedisct1/libsodium.js#api
+      return new Uint8Array([
+        ...nonce,
+        ...(await Xchacha20poly1305Ietf.encrypt(plaintext, encryptionKey, nonce)),
+      ]);
+    }
+    default:
+      throw new Error(`Unsupported encryption algorithm: '${config.algorithm}'`);
+  }
+}
+
+export async function decrypt(
+  ciphertext: Uint8Array,
+  encryptionKey: Uint8Array,
+  config: EncryptionConfiguration,
+): Promise<Uint8Array> {
+  switch (config.algorithm) {
+    case supportedAlgorithms.xchacha20poly1305Ietf: {
+      const nonce = ciphertext.slice(0, xchacha20NonceLength);
+      return Xchacha20poly1305Ietf.decrypt(ciphertext.slice(xchacha20NonceLength), encryptionKey, nonce);
+    }
+    default:
+      throw new Error(`Unsupported encryption algorithm: '${config.algorithm}'`);
   }
 }

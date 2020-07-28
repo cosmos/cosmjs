@@ -4,9 +4,9 @@ import { assert } from "@cosmjs/utils";
 import { Coin, coin, coins } from "./coins";
 import { assertIsPostTxSuccess, PrivateCosmWasmClient } from "./cosmosclient";
 import { MsgDelegate } from "./msgs";
+import { Secp256k1Wallet } from "./secp256k1wallet";
 import { SigningCosmosClient } from "./signingcosmosclient";
 import { makeRandomAddress, pendingWithoutWasmd, validatorAddress } from "./testutils.spec";
-import { Secp256k1Wallet } from "./wallet";
 
 const httpUrl = "http://localhost:1317";
 

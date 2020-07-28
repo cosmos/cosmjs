@@ -5,6 +5,7 @@ import { coin, coins } from "../coins";
 import { assertIsPostTxSuccess } from "../cosmosclient";
 import { makeSignBytes } from "../encoding";
 import { MsgDelegate, MsgUndelegate } from "../msgs";
+import { Secp256k1Wallet } from "../secp256k1wallet";
 import { SigningCosmosClient } from "../signingcosmosclient";
 import {
   bigDecimalMatcher,
@@ -16,7 +17,6 @@ import {
   wasmd,
   wasmdEnabled,
 } from "../testutils.spec";
-import { Secp256k1Wallet } from "../wallet";
 import { LcdClient } from "./lcdclient";
 import { BondStatus, setupStakingExtension, StakingExtension } from "./staking";
 
