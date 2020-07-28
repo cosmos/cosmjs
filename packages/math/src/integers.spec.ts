@@ -380,12 +380,11 @@ describe("Integers", () => {
         expect(() => Uint64.fromNumber(Number.NaN)).toThrowError(/input is not a number/i);
 
         // not an integer
-        expect(() => Uint64.fromNumber(Number.NEGATIVE_INFINITY)).toThrowError(
-          /input is not a safe integer/i,
-        );
-        expect(() => Uint64.fromNumber(Number.POSITIVE_INFINITY)).toThrowError(
-          /input is not a safe integer/i,
-        );
+        expect(() => Uint64.fromNumber(1.1)).toThrowError(/input is not an integer/i);
+        expect(() => Uint64.fromNumber(Number.NEGATIVE_INFINITY)).toThrowError(/input is not an integer/i);
+        expect(() => Uint64.fromNumber(Number.POSITIVE_INFINITY)).toThrowError(/input is not an integer/i);
+
+        // not a safe integer
         expect(() => Uint64.fromNumber(Number.MAX_SAFE_INTEGER + 1)).toThrowError(
           /input is not a safe integer/i,
         );

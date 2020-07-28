@@ -173,6 +173,10 @@ export class Uint64 implements Integer, WithByteConverters {
       throw new Error("Input is not a number");
     }
 
+    if (!Number.isInteger(input)) {
+      throw new Error("Input is not an integer");
+    }
+
     let bigint: BN;
     try {
       bigint = new BN(input);
