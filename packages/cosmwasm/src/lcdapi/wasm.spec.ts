@@ -58,7 +58,6 @@ async function uploadContract(
       wasm_byte_code: toBase64(contract.data),
       source: contract.source || "",
       builder: contract.builder || "",
-      instantiate_permission: null,
     },
   };
   const fee: StdFee = {

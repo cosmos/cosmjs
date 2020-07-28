@@ -214,7 +214,6 @@ export class SigningCosmWasmClient extends CosmWasmClient {
         wasm_byte_code: toBase64(compressed),
         source: source,
         builder: builder,
-        instantiate_permission: null,
       },
     };
     const result = await this.signAndPost([storeCodeMsg], this.fees.upload, memo);

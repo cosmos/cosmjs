@@ -12,7 +12,7 @@ const alice = {
 };
 
 const codeMeta = {
-  source: "https://crates.io/api/v1/crates/cw-nameservice/0.5.1/download",
+  source: "https://crates.io/api/v1/crates/cw-nameservice/not-yet-released/download",
   builder: "cosmwasm/rust-optimizer:0.8.0",
 };
 

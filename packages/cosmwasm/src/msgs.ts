@@ -24,7 +24,7 @@ export interface MsgStoreCode extends Msg {
     readonly source: string;
     /** A docker tag. Can be empty. */
     readonly builder: string;
-    readonly instantiate_permission: AccessConfig | null;
+    readonly instantiate_permission?: AccessConfig;
   };
 }
 
