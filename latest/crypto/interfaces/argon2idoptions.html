@@ -93,9 +93,20 @@
 					<div class="tsd-signature tsd-kind-icon">mem<wbr>Limit<wbr>Kib<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/a475bce2/packages/crypto/src/libsodium.ts#L15">crypto/src/libsodium.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/63cbc42f/packages/crypto/src/libsodium.ts#L25">crypto/src/libsodium.ts:25</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Memory limit measured in KiB (like argon2 command line tool)</p>
+						</div>
+						<p>Note: only approximately 16 MiB of memory are available using the non-sumo version of libsodium.js</p>
+						<dl class="tsd-comment-tags">
+							<dt>see</dt>
+							<dd><p><a href="https://libsodium.gitbook.io/doc/password_hashing/default_phf#key-derivation">https://libsodium.gitbook.io/doc/password_hashing/default_phf#key-derivation</a></p>
+							</dd>
+						</dl>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="opslimit" class="tsd-anchor"></a>
@@ -103,9 +114,19 @@
 					<div class="tsd-signature tsd-kind-icon">ops<wbr>Limit<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/a475bce2/packages/crypto/src/libsodium.ts#L12">crypto/src/libsodium.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/63cbc42f/packages/crypto/src/libsodium.ts#L17">crypto/src/libsodium.ts:17</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>An integer between 1 and 4294967295 representing the computational difficulty.</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>see</dt>
+							<dd><p><a href="https://libsodium.gitbook.io/doc/password_hashing/default_phf#key-derivation">https://libsodium.gitbook.io/doc/password_hashing/default_phf#key-derivation</a></p>
+							</dd>
+						</dl>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="outputlength" class="tsd-anchor"></a>
@@ -113,9 +134,14 @@
 					<div class="tsd-signature tsd-kind-icon">output<wbr>Length<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/a475bce2/packages/crypto/src/libsodium.ts#L10">crypto/src/libsodium.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/63cbc42f/packages/crypto/src/libsodium.ts#L11">crypto/src/libsodium.ts:11</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Output length in bytes</p>
+						</div>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -233,6 +259,9 @@
 					</li>
 					<li class=" tsd-kind-variable">
 						<a href="../globals.html#xchacha20noncelength" class="tsd-kind-icon">xchacha20<wbr>Nonce<wbr>Length</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#isargon2idoptions" class="tsd-kind-icon">is<wbr>Argon2id<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="../globals.html#pathtostring" class="tsd-kind-icon">path<wbr>ToString</a>
