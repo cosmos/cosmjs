@@ -56,6 +56,10 @@ export interface WasmExtension {
      */
     readonly getContractInfo: (address: string) => Promise<ContractInfo | null>;
     /**
+     * Returns null when contract history was not found for this address.
+     */
+    readonly getContractCodeHistory: (address: string) => Promise<ContractCodeHistoryEntry[] | null>;
+    /**
      * Returns all contract state.
      * This is an empty array if no such contract, or contract has no data.
      */
@@ -70,10 +74,6 @@ export interface WasmExtension {
      * Throws error if no such contract exists, the query format is invalid or the response is invalid.
      */
     readonly queryContractSmart: (address: string, query: object) => Promise<JsonObject>;
-    /**
-     * Returns null when contract history was not found for this address.
-     */
-    readonly getContractCodeHistory: (address: string) => Promise<ContractCodeHistoryEntry[] | null>;
   };
 }
 export declare function setupWasmExtension(base: LcdClient): WasmExtension;
