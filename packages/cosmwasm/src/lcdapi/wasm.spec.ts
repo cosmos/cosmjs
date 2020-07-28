@@ -302,6 +302,35 @@ describe("WasmExtension", () => {
     });
   });
 
+  describe("queryContractRaw", () => {
+    it("can query by key", async () => {
+      pendingWithoutWasmd();
+      assert(hackatomContractAddress);
+      const client = makeWasmClient(wasmd.endpoint);
+      const raw = await client.wasm.queryContractRaw(hackatomContractAddress, hackatomConfigKey);
+      assert(raw, "must get result");
+      const model = JSON.parse(fromAscii(raw));
+      expect(model.verifier).toMatch(base64Matcher);
+      expect(model.beneficiary).toMatch(base64Matcher);
+    });
+
+    it("returns null for missing key", async () => {
+      pendingWithoutWasmd();
+      assert(hackatomContractAddress);
+      const client = makeWasmClient(wasmd.endpoint);
+      const info = await client.wasm.queryContractRaw(hackatomContractAddress, fromHex("cafe0dad"));
+      expect(info).toBeNull();
+    });
+
+    it("returns null for non-existent address", async () => {
+      pendingWithoutWasmd();
+      const client = makeWasmClient(wasmd.endpoint);
+      const nonExistentAddress = makeRandomAddress();
+      const info = await client.wasm.queryContractRaw(nonExistentAddress, hackatomConfigKey);
+      expect(info).toBeNull();
+    });
+  });
+
   describe("txsQuery", () => {
     it("can query by tags (module + code_id)", async () => {
       pendingWithoutWasmd();
@@ -476,26 +505,6 @@ describe("WasmExtension", () => {
     describe("contract state", () => {
       const client = makeWasmClient(wasmd.endpoint);
       const noContract = makeRandomAddress();
-
-      it("can query by key", async () => {
-        pendingWithoutWasmd();
-        assert(hackatomContractAddress);
-
-        // query by one key
-        const raw = await client.wasm.queryContractRaw(hackatomContractAddress, hackatomConfigKey);
-        assert(raw, "must get result");
-        const model = JSON.parse(fromAscii(raw));
-        expect(model.verifier).toBeDefined();
-        expect(model.beneficiary).toBeDefined();
-
-        // missing key is null
-        const missing = await client.wasm.queryContractRaw(hackatomContractAddress, fromHex("cafe0dad"));
-        expect(missing).toBeNull();
-
-        // bad address is null
-        const noContractModel = await client.wasm.queryContractRaw(noContract, hackatomConfigKey);
-        expect(noContractModel).toBeNull();
-      });
 
       it("can make smart queries", async () => {
         pendingWithoutWasmd();
