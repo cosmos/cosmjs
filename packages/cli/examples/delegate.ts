@@ -17,7 +17,7 @@ const msg: MsgDelegate = {
 };
 const fee = {
   amount: coins(2000, "ucosm"),
-  gas: "120000", // 120k
+  gas: "180000", // 180k
 };
 const memo = "Use your power wisely";
 

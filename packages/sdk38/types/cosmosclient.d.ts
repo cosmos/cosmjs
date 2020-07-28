@@ -29,7 +29,12 @@ export interface PostTxSuccess {
   readonly data?: Uint8Array;
 }
 export declare type PostTxResult = PostTxSuccess | PostTxFailure;
-export declare function isPostTxFailure(postTxResult: PostTxResult): postTxResult is PostTxFailure;
+export declare function isPostTxFailure(result: PostTxResult): result is PostTxFailure;
+export declare function isPostTxSuccess(result: PostTxResult): result is PostTxSuccess;
+/**
+ * Ensures the given result is a success. Throws a detailed error message otherwise.
+ */
+export declare function assertIsPostTxSuccess(result: PostTxResult): asserts result is PostTxSuccess;
 export interface SearchByIdQuery {
   readonly id: string;
 }

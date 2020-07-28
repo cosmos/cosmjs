@@ -3,7 +3,7 @@ import { Coin, coins } from "./coins";
 import { Account, CosmosClient, GetSequenceResult, PostTxResult } from "./cosmosclient";
 import { makeSignBytes } from "./encoding";
 import { BroadcastMode } from "./lcdapi";
-import { MsgSend } from "./msgs";
+import { Msg, MsgSend } from "./msgs";
 import { StdFee, StdTx } from "./types";
 import { OfflineSigner } from "./wallet";
 
@@ -87,18 +87,24 @@ export class SigningCosmosClient extends CosmosClient {
         amount: transferAmount,
       },
     };
-    const fee = this.fees.send;
+    return this.signAndPost([sendMsg], this.fees.send, memo);
+  }
+
+  /**
+   * Gets account number and sequence from the API, creates a sign doc,
+   * creates a single signature, assembles the signed transaction and broadcasts it.
+   */
+  public async signAndPost(msgs: readonly Msg[], fee: StdFee, memo = ""): Promise<PostTxResult> {
     const { accountNumber, sequence } = await this.getSequence();
     const chainId = await this.getChainId();
-    const signBytes = makeSignBytes([sendMsg], fee, chainId, memo, accountNumber, sequence);
+    const signBytes = makeSignBytes(msgs, fee, chainId, memo, accountNumber, sequence);
     const signature = await this.signer.sign(this.senderAddress, signBytes);
     const signedTx: StdTx = {
-      msg: [sendMsg],
+      msg: msgs,
       fee: fee,
       memo: memo,
       signatures: [signature],
     };
-
     return this.postTx(signedTx);
   }
 }

@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { assert, sleep } from "@cosmjs/utils";
+import { sleep } from "@cosmjs/utils";
 import { ReadonlyDate } from "readonly-date";
 
-import { CosmosClient, isPostTxFailure, PrivateCosmWasmClient } from "./cosmosclient";
+import { assertIsPostTxSuccess, CosmosClient, PrivateCosmWasmClient } from "./cosmosclient";
 import { makeSignBytes } from "./encoding";
 import { findAttribute } from "./logs";
 import { MsgSend } from "./msgs";
@@ -234,7 +234,7 @@ describe("CosmosClient", () => {
         signatures: [signature],
       };
       const txResult = await client.postTx(signedTx);
-      assert(!isPostTxFailure(txResult));
+      assertIsPostTxSuccess(txResult);
       const { logs, transactionHash } = txResult;
       const amountAttr = findAttribute(logs, "transfer", "amount");
       expect(amountAttr.value).toEqual("1234567ucosm");

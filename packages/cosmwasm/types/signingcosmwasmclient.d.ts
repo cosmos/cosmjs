@@ -1,5 +1,5 @@
-import { BroadcastMode, Coin, OfflineSigner, StdFee, StdSignature } from "@cosmjs/sdk38";
-import { Account, CosmWasmClient, GetSequenceResult, PostTxResult } from "./cosmwasmclient";
+import { BroadcastMode, Coin, Msg, OfflineSigner, PostTxResult, StdFee, StdSignature } from "@cosmjs/sdk38";
+import { Account, CosmWasmClient, GetSequenceResult } from "./cosmwasmclient";
 import { Log } from "./logs";
 export interface SigningCallback {
   (signBytes: Uint8Array): Promise<StdSignature>;
@@ -124,4 +124,9 @@ export declare class SigningCosmWasmClient extends CosmWasmClient {
     transferAmount?: readonly Coin[],
   ): Promise<ExecuteResult>;
   sendTokens(recipientAddress: string, transferAmount: readonly Coin[], memo?: string): Promise<PostTxResult>;
+  /**
+   * Gets account number and sequence from the API, creates a sign doc,
+   * creates a single signature, assembles the signed transaction and broadcasts it.
+   */
+  signAndPost(msgs: readonly Msg[], fee: StdFee, memo?: string): Promise<PostTxResult>;
 }

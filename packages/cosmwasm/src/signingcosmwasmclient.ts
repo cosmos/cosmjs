@@ -6,9 +6,13 @@ import {
   BroadcastMode,
   Coin,
   coins,
+  isPostTxFailure,
   makeSignBytes,
+  Msg,
   MsgSend,
   OfflineSigner,
+  PostTxFailure,
+  PostTxResult,
   StdFee,
   StdSignature,
   StdTx,
@@ -16,14 +20,7 @@ import {
 import pako from "pako";
 
 import { isValidBuilder } from "./builder";
-import {
-  Account,
-  CosmWasmClient,
-  GetSequenceResult,
-  isPostTxFailure,
-  PostTxFailure,
-  PostTxResult,
-} from "./cosmwasmclient";
+import { Account, CosmWasmClient, GetSequenceResult } from "./cosmwasmclient";
 import { findAttribute, Log } from "./logs";
 import {
   MsgClearAdmin,
@@ -219,19 +216,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
         builder: builder,
       },
     };
-    const fee = this.fees.upload;
-    const { accountNumber, sequence } = await this.getSequence();
-    const chainId = await this.getChainId();
-    const signBytes = makeSignBytes([storeCodeMsg], fee, chainId, memo, accountNumber, sequence);
-    const signature = await this.signer.sign(this.senderAddress, signBytes);
-    const signedTx: StdTx = {
-      msg: [storeCodeMsg],
-      fee: fee,
-      memo: memo,
-      signatures: [signature],
-    };
-
-    const result = await this.postTx(signedTx);
+    const result = await this.signAndPost([storeCodeMsg], this.fees.upload, memo);
     if (isPostTxFailure(result)) {
       throw new Error(createPostTxErrorMessage(result));
     }
@@ -264,21 +249,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
         admin: options.admin,
       },
     };
-    const memo = options.memo || "";
-    const fee = this.fees.init;
-    const { accountNumber, sequence } = await this.getSequence();
-    const chainId = await this.getChainId();
-    const signBytes = makeSignBytes([instantiateMsg], fee, chainId, memo, accountNumber, sequence);
-
-    const signature = await this.signer.sign(this.senderAddress, signBytes);
-    const signedTx: StdTx = {
-      msg: [instantiateMsg],
-      fee: fee,
-      memo: memo,
-      signatures: [signature],
-    };
-
-    const result = await this.postTx(signedTx);
+    const result = await this.signAndPost([instantiateMsg], this.fees.init, options.memo);
     if (isPostTxFailure(result)) {
       throw new Error(createPostTxErrorMessage(result));
     }
@@ -299,19 +270,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
         new_admin: newAdmin,
       },
     };
-    const fee = this.fees.changeAdmin;
-    const { accountNumber, sequence } = await this.getSequence();
-    const chainId = await this.getChainId();
-    const signBytes = makeSignBytes([updateAdminMsg], fee, chainId, memo, accountNumber, sequence);
-    const signature = await this.signer.sign(this.senderAddress, signBytes);
-    const signedTx: StdTx = {
-      msg: [updateAdminMsg],
-      fee: fee,
-      memo: memo,
-      signatures: [signature],
-    };
-
-    const result = await this.postTx(signedTx);
+    const result = await this.signAndPost([updateAdminMsg], this.fees.changeAdmin, memo);
     if (isPostTxFailure(result)) {
       throw new Error(createPostTxErrorMessage(result));
     }
@@ -329,19 +288,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
         contract: contractAddress,
       },
     };
-    const fee = this.fees.changeAdmin;
-    const { accountNumber, sequence } = await this.getSequence();
-    const chainId = await this.getChainId();
-    const signBytes = makeSignBytes([clearAdminMsg], fee, chainId, memo, accountNumber, sequence);
-    const signature = await this.signer.sign(this.senderAddress, signBytes);
-    const signedTx: StdTx = {
-      msg: [clearAdminMsg],
-      fee: fee,
-      memo: memo,
-      signatures: [signature],
-    };
-
-    const result = await this.postTx(signedTx);
+    const result = await this.signAndPost([clearAdminMsg], this.fees.changeAdmin, memo);
     if (isPostTxFailure(result)) {
       throw new Error(createPostTxErrorMessage(result));
     }
@@ -366,19 +313,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
         msg: migrateMsg,
       },
     };
-    const fee = this.fees.migrate;
-    const { accountNumber, sequence } = await this.getSequence();
-    const chainId = await this.getChainId();
-    const signBytes = makeSignBytes([msg], fee, chainId, memo, accountNumber, sequence);
-    const signature = await this.signer.sign(this.senderAddress, signBytes);
-    const signedTx: StdTx = {
-      msg: [msg],
-      fee: fee,
-      memo: memo,
-      signatures: [signature],
-    };
-
-    const result = await this.postTx(signedTx);
+    const result = await this.signAndPost([msg], this.fees.migrate, memo);
     if (isPostTxFailure(result)) {
       throw new Error(createPostTxErrorMessage(result));
     }
@@ -403,19 +338,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
         sent_funds: transferAmount || [],
       },
     };
-    const fee = this.fees.exec;
-    const { accountNumber, sequence } = await this.getSequence();
-    const chainId = await this.getChainId();
-    const signBytes = makeSignBytes([executeMsg], fee, chainId, memo, accountNumber, sequence);
-    const signature = await this.signer.sign(this.senderAddress, signBytes);
-    const signedTx: StdTx = {
-      msg: [executeMsg],
-      fee: fee,
-      memo: memo,
-      signatures: [signature],
-    };
-
-    const result = await this.postTx(signedTx);
+    const result = await this.signAndPost([executeMsg], this.fees.exec, memo);
     if (isPostTxFailure(result)) {
       throw new Error(createPostTxErrorMessage(result));
     }
@@ -438,18 +361,24 @@ export class SigningCosmWasmClient extends CosmWasmClient {
         amount: transferAmount,
       },
     };
-    const fee = this.fees.send;
+    return this.signAndPost([sendMsg], this.fees.send, memo);
+  }
+
+  /**
+   * Gets account number and sequence from the API, creates a sign doc,
+   * creates a single signature, assembles the signed transaction and broadcasts it.
+   */
+  public async signAndPost(msgs: readonly Msg[], fee: StdFee, memo = ""): Promise<PostTxResult> {
     const { accountNumber, sequence } = await this.getSequence();
     const chainId = await this.getChainId();
-    const signBytes = makeSignBytes([sendMsg], fee, chainId, memo, accountNumber, sequence);
+    const signBytes = makeSignBytes(msgs, fee, chainId, memo, accountNumber, sequence);
     const signature = await this.signer.sign(this.senderAddress, signBytes);
     const signedTx: StdTx = {
-      msg: [sendMsg],
+      msg: msgs,
       fee: fee,
       memo: memo,
       signatures: [signature],
     };
-
     return this.postTx(signedTx);
   }
 }

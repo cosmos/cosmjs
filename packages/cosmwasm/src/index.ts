@@ -12,7 +12,6 @@ export {
   ContractDetails,
   CosmWasmClient,
   GetSequenceResult,
-  PostTxResult,
   SearchByHeightQuery,
   SearchByIdQuery,
   SearchBySentFromOrToQuery,

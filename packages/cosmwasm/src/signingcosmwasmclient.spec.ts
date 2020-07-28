@@ -1,13 +1,29 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Sha256 } from "@cosmjs/crypto";
 import { toHex } from "@cosmjs/encoding";
-import { AuthExtension, coin, coins, LcdClient, Secp256k1Wallet, setupAuthExtension } from "@cosmjs/sdk38";
+import {
+  assertIsPostTxSuccess,
+  AuthExtension,
+  coin,
+  coins,
+  LcdClient,
+  MsgDelegate,
+  Secp256k1Wallet,
+  setupAuthExtension,
+} from "@cosmjs/sdk38";
 import { assert } from "@cosmjs/utils";
 
-import { isPostTxFailure, PrivateCosmWasmClient } from "./cosmwasmclient";
+import { PrivateCosmWasmClient } from "./cosmwasmclient";
 import { setupWasmExtension, WasmExtension } from "./lcdapi/wasm";
 import { SigningCosmWasmClient, UploadMeta } from "./signingcosmwasmclient";
-import { alice, getHackatom, makeRandomAddress, pendingWithoutWasmd, unused } from "./testutils.spec";
+import {
+  alice,
+  getHackatom,
+  makeRandomAddress,
+  pendingWithoutWasmd,
+  unused,
+  validatorAddress,
+} from "./testutils.spec";
 
 const httpUrl = "http://localhost:1317";
 
@@ -317,7 +333,7 @@ describe("SigningCosmWasmClient", () => {
 
       // send
       const result = await client.sendTokens(beneficiaryAddress, transferAmount, "for dinner");
-      assert(!isPostTxFailure(result));
+      assertIsPostTxSuccess(result);
       const [firstLog] = result.logs;
       expect(firstLog).toBeTruthy();
 
@@ -325,6 +341,29 @@ describe("SigningCosmWasmClient", () => {
       const after = await client.getAccount(beneficiaryAddress);
       assert(after);
       expect(after.balance).toEqual(transferAmount);
+    });
+  });
+
+  describe("signAndPost", () => {
+    it("works", async () => {
+      pendingWithoutWasmd();
+      const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
+      const client = new SigningCosmWasmClient(httpUrl, alice.address0, wallet);
+
+      const msg: MsgDelegate = {
+        type: "cosmos-sdk/MsgDelegate",
+        value: {
+          delegator_address: alice.address0,
+          validator_address: validatorAddress,
+          amount: coin(1234, "ustake"),
+        },
+      };
+      const fee = {
+        amount: coins(2000, "ucosm"),
+        gas: "180000", // 180k
+      };
+      const result = await client.signAndPost([msg], fee, "Use your power wisely");
+      assertIsPostTxSuccess(result);
     });
   });
 });

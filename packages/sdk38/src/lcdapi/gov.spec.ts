@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { assert, sleep } from "@cosmjs/utils";
+import { sleep } from "@cosmjs/utils";
 
 import { coins } from "../coins";
-import { isPostTxFailure } from "../cosmosclient";
+import { assertIsPostTxSuccess } from "../cosmosclient";
 import { makeSignBytes } from "../encoding";
 import { SigningCosmosClient } from "../signingcosmosclient";
 import {
@@ -66,9 +66,9 @@ describe("GovExtension", () => {
         signatures: [proposalSignature],
       };
 
-      const proposalReceipt = await client.postTx(proposalTx);
-      assert(!isPostTxFailure(proposalReceipt));
-      proposalId = proposalReceipt.logs[0].events
+      const proposalResult = await client.postTx(proposalTx);
+      assertIsPostTxSuccess(proposalResult);
+      proposalId = proposalResult.logs[0].events
         .find(({ type }) => type === "submit_proposal")!
         .attributes.find(({ key }) => key === "proposal_id")!.value;
 

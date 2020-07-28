@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { assert } from "@cosmjs/utils";
 
-import { Coin } from "./coins";
-import { isPostTxFailure, PrivateCosmWasmClient } from "./cosmosclient";
+import { Coin, coin, coins } from "./coins";
+import { assertIsPostTxSuccess, PrivateCosmWasmClient } from "./cosmosclient";
+import { MsgDelegate } from "./msgs";
 import { SigningCosmosClient } from "./signingcosmosclient";
-import { makeRandomAddress, pendingWithoutWasmd } from "./testutils.spec";
+import { makeRandomAddress, pendingWithoutWasmd, validatorAddress } from "./testutils.spec";
 import { Secp256k1Wallet } from "./wallet";
 
 const httpUrl = "http://localhost:1317";
@@ -66,7 +68,7 @@ describe("SigningCosmosClient", () => {
 
       // send
       const result = await client.sendTokens(beneficiaryAddress, transferAmount, "for dinner");
-      assert(!isPostTxFailure(result));
+      assertIsPostTxSuccess(result);
       const [firstLog] = result.logs;
       expect(firstLog).toBeTruthy();
 
@@ -74,6 +76,29 @@ describe("SigningCosmosClient", () => {
       const after = await client.getAccount(beneficiaryAddress);
       assert(after);
       expect(after.balance).toEqual(transferAmount);
+    });
+  });
+
+  describe("signAndPost", () => {
+    it("works", async () => {
+      pendingWithoutWasmd();
+      const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
+      const client = new SigningCosmosClient(httpUrl, faucet.address, wallet);
+
+      const msg: MsgDelegate = {
+        type: "cosmos-sdk/MsgDelegate",
+        value: {
+          delegator_address: faucet.address,
+          validator_address: validatorAddress,
+          amount: coin(1234, "ustake"),
+        },
+      };
+      const fee = {
+        amount: coins(2000, "ucosm"),
+        gas: "180000", // 180k
+      };
+      const result = await client.signAndPost([msg], fee, "Use your power wisely");
+      assertIsPostTxSuccess(result);
     });
   });
 });
