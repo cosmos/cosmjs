@@ -5,10 +5,11 @@ command -v shellcheck > /dev/null && shellcheck "$0"
 PASSWORD=${PASSWORD:-1234567890}
 STAKE=${STAKE_TOKEN:-ustake}
 FEE=${FEE_TOKEN:-ucosm}
-CHAIN_ID=${CHAIN_ID:-testing}
+CHAIN_ID=${CHAIN_ID:-simd-testing}
+MONIKER=${MONIKER:-simd-moniker}
 
 echo "Creating genesis ..."
-simd init --chain-id "$CHAIN_ID" "$CHAIN_ID"
+simd init --chain-id "$CHAIN_ID" "$MONIKER"
 sed -i "s/\"stake\"/\"$STAKE\"/" "$HOME"/.simapp/config/genesis.json # staking/governance token is hardcoded in config, change this
 
 echo "Setting up validator ..."
