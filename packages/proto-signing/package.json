@@ -1,7 +1,7 @@
 {
   "name": "@cosmjs/proto-signing",
   "private": true,
-  "version": "0.22.0-alpha.0",
+  "version": "0.22.0-alpha.1",
   "description": "Utilities for protobuf based signing (Cosmos SDK 0.40+)",
   "contributors": [
     "Will Clark <willclarktech@users.noreply.github.com>",
@@ -47,7 +47,7 @@
     "protobufjs": "~6.10.0"
   },
   "devDependencies": {
-    "@cosmjs/encoding": "^0.22.0-alpha.0",
-    "@cosmjs/utils": "^0.22.0-alpha.0"
+    "@cosmjs/encoding": "^0.22.0-alpha.1",
+    "@cosmjs/utils": "^0.22.0-alpha.1"
   }
 }
