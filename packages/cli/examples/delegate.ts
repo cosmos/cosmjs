@@ -11,7 +11,7 @@ const msg: MsgDelegate = {
     delegator_address: senderAddress,
     // To get the proper validator address, start the demo chain (./scripts/wasmd/start.sh), then run:
     //   curl http://localhost:1317/staking/validators | jq '.result[0].operator_address'
-    validator_address: "cosmosvaloper1fa7hj49pf8uzc4m0lw5swjhhl5th2484gvnlpv",
+    validator_address: "cosmosvaloper1e9zn2ueue2m0edjhmsgsf03yfcmeg7m7xh5xu5",
     amount: coin(300000, "ustake"),
   },
 };

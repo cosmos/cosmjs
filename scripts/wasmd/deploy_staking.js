@@ -24,7 +24,7 @@ const bounty = {
     name: "Bounty",
     symbol: "BOUNTY",
     decimals: 3,
-    validator: "cosmosvaloper1fa7hj49pf8uzc4m0lw5swjhhl5th2484gvnlpv",
+    validator: "cosmosvaloper1e9zn2ueue2m0edjhmsgsf03yfcmeg7m7xh5xu5",
     exit_tax: "0.005", // 0.5 %
     min_withdrawal: "7",
   },

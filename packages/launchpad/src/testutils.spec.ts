@@ -29,6 +29,9 @@ export const bech32AddressMatcher = /^[\x21-\x7e]{1,83}1[02-9ac-hj-np-z]{38}$/;
 export const wasmd = {
   endpoint: "http://localhost:1317",
   chainId: "testing",
+  moniker: "node001",
+  commissionUpdateTime: "2020-07-30T07:56:51.316162Z",
+  consensusPubkey: "cosmosvalconspub1zcjduepquk9s489p8l40yvq9er07tfjzkpm4ku4wphhz6567793dsjmdec4suucg87",
 };
 
 export const faucet = {
@@ -41,8 +44,8 @@ export const faucet = {
   address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
 };
 
-export const validatorAddress = "cosmosvaloper1fa7hj49pf8uzc4m0lw5swjhhl5th2484gvnlpv";
-export const delegatorAddress = "cosmos1fa7hj49pf8uzc4m0lw5swjhhl5th2484dc82dl";
+export const validatorAddress = "cosmosvaloper1e9zn2ueue2m0edjhmsgsf03yfcmeg7m7xh5xu5";
+export const delegatorAddress = "cosmos1e9zn2ueue2m0edjhmsgsf03yfcmeg7m7rrqns8";
 
 /** Unused account */
 export const unused = {

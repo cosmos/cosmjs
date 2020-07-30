@@ -7,7 +7,7 @@
           "type": "cosmos-sdk/Account",
           "value": {
             "account_number": "0",
-            "address": "cosmos1fa7hj49pf8uzc4m0lw5swjhhl5th2484dc82dl",
+            "address": "cosmos1e9zn2ueue2m0edjhmsgsf03yfcmeg7m7rrqns8",
             "coins": [
               {
                 "amount": "1000000000",
@@ -397,7 +397,7 @@
               "amount": [],
               "gas": "200000"
             },
-            "memo": "63e5ed7f6afb5c13f0f3b72c40a9625cfe2367cc@172.17.0.2:26656",
+            "memo": "edd6e4f7ff8ce0ebfd3a88f76d996a2b3adb786b@172.17.0.2:26656",
             "msg": [
               {
                 "type": "cosmos-sdk/MsgCreateValidator",
@@ -407,17 +407,17 @@
                     "max_rate": "0.200000000000000000",
                     "rate": "0.100000000000000000"
                   },
-                  "delegator_address": "cosmos1fa7hj49pf8uzc4m0lw5swjhhl5th2484dc82dl",
+                  "delegator_address": "cosmos1e9zn2ueue2m0edjhmsgsf03yfcmeg7m7rrqns8",
                   "description": {
                     "details": "",
                     "identity": "",
-                    "moniker": "testing",
+                    "moniker": "node001",
                     "security_contact": "",
                     "website": ""
                   },
                   "min_self_delegation": "1",
-                  "pubkey": "cosmosvalconspub1zcjduepq4stq4qg03lj68gx2lh2rpmnlcjtt0ejk0n6y3fv8kdkftcg79tmqkj9lqs",
-                  "validator_address": "cosmosvaloper1fa7hj49pf8uzc4m0lw5swjhhl5th2484gvnlpv",
+                  "pubkey": "cosmosvalconspub1zcjduepquk9s489p8l40yvq9er07tfjzkpm4ku4wphhz6567793dsjmdec4suucg87",
+                  "validator_address": "cosmosvaloper1e9zn2ueue2m0edjhmsgsf03yfcmeg7m7xh5xu5",
                   "value": {
                     "amount": "250000000",
                     "denom": "ustake"
@@ -429,9 +429,9 @@
               {
                 "pub_key": {
                   "type": "tendermint/PubKeySecp256k1",
-                  "value": "A86IqNk0TzElybtbOZvBzSBWHCXqyiwpeGue3urj7htq"
+                  "value": "A6DsnJxw+OqoKXTT9DPV+h258al6Ct8gdvxXf4WWPYOs"
                 },
-                "signature": "1B0LMHhTYx8TjYLTYHEWsScwNsmuYhGW1drBjHIAcK1I7lDPsS7j6mR4zi8h60pA8o3dntd4QyaAKrkkeso0nw=="
+                "signature": "Tz843oatU3VdE959b4+VRQQNhqH7Na+tS8rhnbJ6Xgglm0LboI/Q1Qh38OF070HYVn3Qu89nKTPPUOlf6GejIQ=="
               }
             ]
           }
@@ -533,5 +533,5 @@
       ]
     }
   },
-  "genesis_time": "2020-07-23T15:05:47.5072591Z"
+  "genesis_time": "2020-07-30T07:56:51.316162Z"
 }
