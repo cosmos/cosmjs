@@ -135,7 +135,7 @@ interface Any {
 }
 
 /** Supports submitting arbitrary evidence */
-export interface MsgSubmitEvidence {
+export interface MsgSubmitEvidence extends Msg {
   readonly type: "cosmos-sdk/MsgSubmitEvidence";
   readonly value: {
     /** Bech32 account address */
@@ -151,7 +151,7 @@ export function isMsgSubmitEvidence(msg: Msg): msg is MsgSubmitEvidence {
 // gov - https://github.com/cosmos/cosmos-sdk/blob/efa73c7edb31a7bd65786501da213b294f89267a/proto/cosmos/gov/gov.proto
 
 /** Supports submitting arbitrary proposal content. */
-export interface MsgSubmitProposal {
+export interface MsgSubmitProposal extends Msg {
   readonly type: "cosmos-sdk/MsgSubmitProposal";
   readonly value: {
     readonly content: Any;
@@ -174,7 +174,7 @@ enum VoteOption {
 }
 
 /** Casts a vote */
-export interface MsgVote {
+export interface MsgVote extends Msg {
   readonly type: "cosmos-sdk/MsgVote";
   readonly value: {
     readonly proposal_id: number;
@@ -189,7 +189,7 @@ export function isMsgVote(msg: Msg): msg is MsgVote {
 }
 
 /** Submits a deposit to an existing proposal */
-export interface MsgDeposit {
+export interface MsgDeposit extends Msg {
   readonly type: "cosmos-sdk/MsgDeposit";
   readonly value: {
     readonly proposal_id: number;
@@ -212,7 +212,7 @@ export function isMsgDeposit(msg: Msg): msg is MsgDeposit {
 // slashing - see https://github.com/cosmos/cosmos-sdk/blob/efa73c7/proto/cosmos/slashing/slashing.proto
 
 /** Unjails a jailed validator */
-export interface MsgUnjail {
+export interface MsgUnjail extends Msg {
   readonly type: "cosmos-sdk/MsgUnjail";
   readonly value: {
     /** Bech32 account address */
@@ -243,7 +243,7 @@ interface Description {
 }
 
 /** Creates a new validator. */
-export interface MsgCreateValidator {
+export interface MsgCreateValidator extends Msg {
   readonly type: "cosmos-sdk/MsgCreateValidator";
   readonly value: {
     readonly description: Description;
@@ -264,7 +264,7 @@ export function isMsgCreateValidator(msg: Msg): msg is MsgCreateValidator {
 }
 
 /** Edits an existing validator. */
-export interface MsgEditValidator {
+export interface MsgEditValidator extends Msg {
   readonly type: "cosmos-sdk/MsgEditValidator";
   readonly value: {
     readonly description: Description;
@@ -300,7 +300,7 @@ export function isMsgDelegate(msg: Msg): msg is MsgDelegate {
 }
 
 /** Performs a redelegation from a delegate and source validator to a destination validator */
-export interface MsgBeginRedelegate {
+export interface MsgBeginRedelegate extends Msg {
   readonly type: "cosmos-sdk/MsgBeginRedelegate";
   readonly value: {
     /** Bech32 encoded delegator address */
@@ -318,7 +318,7 @@ export function isMsgBeginRedelegate(msg: Msg): msg is MsgBeginRedelegate {
 }
 
 /** Performs an undelegation from a delegate and a validator */
-export interface MsgUndelegate {
+export interface MsgUndelegate extends Msg {
   readonly type: "cosmos-sdk/MsgUndelegate";
   readonly value: {
     /** Bech32 encoded delegator address */
