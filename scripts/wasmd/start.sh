@@ -13,7 +13,7 @@ source "$SCRIPT_DIR"/env
 
 echo "$CONTAINER_NAME"
 
-TMP_DIR=$(mktemp -d "${TMPDIR:-/tmp}/gaia.XXXXXXXXX")
+TMP_DIR=$(mktemp -d "${TMPDIR:-/tmp}/wasmd.XXXXXXXXX")
 chmod 777 "$TMP_DIR"
 echo "Using temporary dir $TMP_DIR"
 WASMD_LOGFILE="$TMP_DIR/wasmd.log"
