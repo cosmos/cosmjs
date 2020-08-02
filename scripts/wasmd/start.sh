@@ -11,8 +11,6 @@ SCRIPT_DIR="$(realpath "$(dirname "$0")")"
 # shellcheck disable=SC1091
 source "$SCRIPT_DIR"/env
 
-echo "$CONTAINER_NAME"
-
 TMP_DIR=$(mktemp -d "${TMPDIR:-/tmp}/wasmd.XXXXXXXXX")
 chmod 777 "$TMP_DIR"
 echo "Using temporary dir $TMP_DIR"
