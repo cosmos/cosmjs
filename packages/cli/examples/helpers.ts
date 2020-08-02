@@ -7,14 +7,14 @@ interface Options {
 }
 
 const defaultOptions: Options = {
-  httpUrl: "https://lcd.demo-09.cosmwasm.com",
+  httpUrl: "https://lcd.demo-10.cosmwasm.com",
   networkId: "testing",
   feeToken: "ucosm",
   gasPrice: 0.025,
   bech32prefix: "cosmos",
 };
 
-const defaultFaucetUrl = "https://faucet.demo-09.cosmwasm.com/credit";
+const defaultFaucetUrl = "https://faucet.demo-10.cosmwasm.com/credit";
 
 const buildFeeTable = (feeToken: string, gasPrice: number): FeeTable => {
   const stdFee = (gas: number, denom: string, price: number) => {
