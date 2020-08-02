@@ -14,6 +14,7 @@ sed -i "s/\"stake\"/\"$STAKE\"/" "$HOME"/.simapp/config/genesis.json # staking/g
 
 echo "Setting up validator ..."
 if ! simd keys show validator; then
+  echo "Validator does not yet exist. Creating it ..."
   (echo "$PASSWORD"; echo "$PASSWORD") | simd keys add validator
 fi
 # hardcode the validator account for this instance
