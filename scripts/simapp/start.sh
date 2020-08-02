@@ -15,12 +15,16 @@ echo "Using temporary dir $TMP_DIR"
 SIMD_LOGFILE="$TMP_DIR/simd.log"
 PORT=26657
 
+# Use a fresh volume for every start
+docker volume rm -f simapp_data
+
 docker run --rm \
   --name "$CONTAINER_NAME" \
   -p "$PORT:$PORT" \
-  --mount type=bind,source="$SCRIPT_DIR/template",target=/root \
+  --mount type=bind,source="$SCRIPT_DIR/template",target=/template \
+  --mount type=volume,source=simapp_data,target=/root \
   "$REPOSITORY:$VERSION" \
-  ./run_simd.sh \
+  /template/run_simd.sh \
   > "$SIMD_LOGFILE" &
 
 echo "simd running on http://localhost:$PORT and logging into $SIMD_LOGFILE"

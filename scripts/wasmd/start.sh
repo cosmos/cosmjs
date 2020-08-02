@@ -17,9 +17,11 @@ echo "Using temporary dir $TMP_DIR"
 WASMD_LOGFILE="$TMP_DIR/wasmd.log"
 REST_SERVER_LOGFILE="$TMP_DIR/rest-server.log"
 
+# Use a fresh volume for every start
+docker volume rm -f wasmd_data
+
 # This starts up wasmd
 # The Tendermint port (26657) and the p2p port (26656) are not exposed since we don't need for testing
-docker volume rm -f wasmd_data
 docker run --rm \
   --name "$CONTAINER_NAME" \
   -p "$REST_PORT_HOST":"$REST_PORT_GUEST" \
