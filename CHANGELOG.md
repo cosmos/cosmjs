@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## 0.23.0 (unreleased)
+
+- @cosmjs/cosmwasm: Rename `CosmWasmClient.postTx` method to `.broadcastTx`.
+- @cosmjs/cosmwasm: Rename `SigningCosmWasmClient.signAndPost` method to
+  `.signAndBroadcast`.
+- @cosmjs/launchpad: Rename `CosmosClient.postTx` method to `.broadcastTx`.
+- @cosmjs/launchpad: Rename `SigningCosmosClient.signAndPost` method to
+  `.signAndBroadcast`.
+- @cosmjs/launchpad: Rename `PostTx`-related types to `BroadcastTxResult`,
+  `BroadcastTxSuccess` and `BroadcastTxFailure` respectively, as well as helper
+  functions `isBroadcastTxFailure`, `isBroadcastTxSuccess` and
+  `assertIsBroadcastTxSuccess`.
+
 ## 0.22.0 (2020-08-03)
 
 - @cosmjs/cli: Now supports HTTPs URLs for `--init` code sources.
