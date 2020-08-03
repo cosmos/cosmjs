@@ -1,3 +1,4 @@
+import axios from "axios";
 import * as fs from "fs";
 import { join } from "path";
 import yargs from "yargs";
@@ -6,12 +7,18 @@ import { TsRepl } from "./tsrepl";
 
 import colors = require("colors/safe");
 
-export function main(originalArgs: readonly string[]): void {
+export async function main(originalArgs: readonly string[]): Promise<void> {
   const args = yargs
     .options({
       // User options (we get --help and --version for free)
       init: {
-        describe: "Read initial TypeScript code from files",
+        describe:
+          "Read initial TypeScript code from the given sources. This can be URLs (supported schemes: https) or local file paths.",
+        type: "array",
+      },
+      code: {
+        describe:
+          "Add initial TypeScript code from the argument. All code arguments are processed after all init arguments.",
         type: "array",
       },
       // Maintainer options
@@ -24,7 +31,7 @@ export function main(originalArgs: readonly string[]): void {
         type: "boolean",
       },
     })
-    .group(["init", "help", "version"], "User options")
+    .group(["init", "code", "help", "version"], "User options")
     .group(["debug", "selftest"], "Maintainer options")
     .parse(originalArgs);
 
@@ -155,9 +162,21 @@ export function main(originalArgs: readonly string[]): void {
   }
 
   if (args.init) {
-    for (const path of args.init.map((arg) => arg.toString())) {
-      if (args.debug) console.info(`Adding file: '${path}' ...`);
-      init += fs.readFileSync(path, "utf8") + "\n";
+    for (const source of args.init.map((arg) => arg.toString())) {
+      if (args.debug) console.info(`Adding code from: '${source}' ...`);
+      if (source.startsWith("https://")) {
+        const response = await axios.get(source);
+        init += response.data + "\n";
+      } else {
+        init += fs.readFileSync(source, "utf8") + "\n";
+      }
+    }
+  }
+
+  if (args.code) {
+    for (const code of args.code.map((arg) => arg.toString())) {
+      if (args.debug) console.info(`Adding code: '${code}' ...`);
+      init += `${code}\n`;
     }
   }
 
