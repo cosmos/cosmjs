@@ -13,7 +13,6 @@ import {
   PostTxFailure,
   PostTxResult,
   StdFee,
-  StdSignature,
   StdTx,
 } from "@cosmjs/launchpad";
 import { Uint53 } from "@cosmjs/math";
@@ -30,10 +29,6 @@ import {
   MsgStoreCode,
   MsgUpdateAdmin,
 } from "./msgs";
-
-export interface SigningCallback {
-  (signBytes: Uint8Array): Promise<StdSignature>;
-}
 
 export interface FeeTable {
   readonly upload: StdFee;

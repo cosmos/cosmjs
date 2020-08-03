@@ -13,6 +13,8 @@
 - @cosmjs/cosmwasm: `ContractDetails` was removed in favour of just `Contract`.
   The missing `init_msg` is now available via the contract's code history (see
   `getContractCodeHistory`).
+- @cosmjs/cosmwasm: Remove `SigningCallback` in favour of the `OfflineSigner`
+  interface.
 - @cosmjs/sdk38: Rename `CosmosClient.getNonce` method to `.getSequence`.
 - @cosmjs/sdk38: Remove `RestClient` class in favour of new modular `LcdClient`
   class.

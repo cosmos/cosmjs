@@ -52,7 +52,6 @@ export function main(originalArgs: readonly string[]): void {
         "ExecuteResult",
         "FeeTable",
         "InstantiateResult",
-        "SigningCallback",
         "SigningCosmWasmClient",
         "UploadMeta",
         "UploadResult",

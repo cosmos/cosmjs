@@ -1,17 +1,6 @@
-import {
-  BroadcastMode,
-  Coin,
-  Msg,
-  OfflineSigner,
-  PostTxResult,
-  StdFee,
-  StdSignature,
-} from "@cosmjs/launchpad";
+import { BroadcastMode, Coin, Msg, OfflineSigner, PostTxResult, StdFee } from "@cosmjs/launchpad";
 import { Account, CosmWasmClient, GetSequenceResult } from "./cosmwasmclient";
 import { Log } from "./logs";
-export interface SigningCallback {
-  (signBytes: Uint8Array): Promise<StdSignature>;
-}
 export interface FeeTable {
   readonly upload: StdFee;
   readonly init: StdFee;
