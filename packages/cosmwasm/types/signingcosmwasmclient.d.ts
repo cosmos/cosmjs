@@ -1,6 +1,9 @@
 import { BroadcastMode, Coin, Msg, OfflineSigner, PostTxResult, StdFee } from "@cosmjs/launchpad";
 import { Account, CosmWasmClient, GetSequenceResult } from "./cosmwasmclient";
 import { Log } from "./logs";
+/**
+ * Those fees are used by the higher level methods of SigningCosmWasmClient
+ */
 export interface FeeTable {
   readonly upload: StdFee;
   readonly init: StdFee;

@@ -30,6 +30,9 @@ import {
   MsgUpdateAdmin,
 } from "./msgs";
 
+/**
+ * Those fees are used by the higher level methods of SigningCosmWasmClient
+ */
 export interface FeeTable {
   readonly upload: StdFee;
   readonly init: StdFee;
