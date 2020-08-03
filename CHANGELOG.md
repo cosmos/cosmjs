@@ -2,6 +2,7 @@
 
 ## HEAD
 
+- @cosmjs/cli: Now supports HTTPs URLs for `--init` code sources.
 - @cosmjs/cosmwasm: Rename `CosmWasmClient.getNonce` method to `.getSequence`.
 - @cosmjs/cosmwasm: Remove `RestClient` class in favour of new modular
   `LcdClient` class from @cosmjs/sdk38.
