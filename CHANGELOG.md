@@ -41,3 +41,4 @@
   encrypted serialization of the wallet.
 - @cosmjs/sdk38: Remove the obsolete `upload`, `init`, `exec` properties from
   `FeeTable`. @cosmjs/cosmwasm has its own `FeeTable` with those properties.
+- @cosmjs/sdk38: Rename package to @cosmjs/launchpad.
