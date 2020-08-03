@@ -39,3 +39,5 @@
   words.
 - @cosmjs/sdk38: The new `Secp256k1Wallet.serialize` and `.deserialize` allow
   encrypted serialization of the wallet.
+- @cosmjs/sdk38: Remove the obsolete `upload`, `init`, `exec` properties from
+  `FeeTable`. @cosmjs/cosmwasm has its own `FeeTable` with those properties.

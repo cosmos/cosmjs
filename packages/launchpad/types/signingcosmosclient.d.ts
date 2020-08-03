@@ -4,10 +4,10 @@ import { BroadcastMode } from "./lcdapi";
 import { Msg } from "./msgs";
 import { StdFee } from "./types";
 import { OfflineSigner } from "./wallet";
+/**
+ * Those fees are used by the higher level methods of SigningCosmosClient
+ */
 export interface FeeTable {
-  readonly upload: StdFee;
-  readonly init: StdFee;
-  readonly exec: StdFee;
   readonly send: StdFee;
 }
 export declare class SigningCosmosClient extends CosmosClient {
