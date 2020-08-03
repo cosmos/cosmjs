@@ -2,7 +2,7 @@
 import { assert, sleep } from "@cosmjs/utils";
 
 import { coins } from "./coins";
-import { CosmosClient, isPostTxFailure } from "./cosmosclient";
+import { CosmosClient, isBroadcastTxFailure } from "./cosmosclient";
 import { makeSignBytes } from "./encoding";
 import { LcdClient } from "./lcdapi";
 import { isMsgSend, MsgSend } from "./msgs";
@@ -67,8 +67,8 @@ describe("CosmosClient.searchTx", () => {
           },
         };
         const transactionId = await client.getIdentifier(tx);
-        const result = await client.postTx(tx.value);
-        if (isPostTxFailure(result)) {
+        const result = await client.broadcastTx(tx.value);
+        if (isBroadcastTxFailure(result)) {
           sendUnsuccessful = {
             sender: faucet.address,
             recipient: recipient,

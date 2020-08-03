@@ -36,5 +36,5 @@ const signedTx: StdTx = {
   signatures: [signature],
 };
 
-const result = await client.postTx(signedTx);
-console.log("Post result:", result);
+const result = await client.broadcastTx(signedTx);
+console.log("Broadcast result:", result);

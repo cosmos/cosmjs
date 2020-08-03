@@ -1,11 +1,11 @@
 import {
   AuthExtension,
   BroadcastMode,
+  BroadcastTxResult,
   Coin,
   CosmosSdkTx,
   IndexedTx,
   LcdClient,
-  PostTxResult,
   PubKey,
   StdTx,
 } from "@cosmjs/launchpad";
@@ -124,7 +124,7 @@ export declare class CosmWasmClient {
    * for the lifetime of your application. When switching backends, a new instance must be created.
    *
    * @param apiUrl The URL of a Cosmos SDK light client daemon API (sometimes called REST server or REST API)
-   * @param broadcastMode Defines at which point of the transaction processing the postTx method (i.e. transaction broadcasting) returns
+   * @param broadcastMode Defines at which point of the transaction processing the broadcastTx method returns
    */
   constructor(apiUrl: string, broadcastMode?: BroadcastMode);
   getChainId(): Promise<string>;
@@ -149,7 +149,7 @@ export declare class CosmWasmClient {
    */
   getBlock(height?: number): Promise<Block>;
   searchTx(query: SearchTxQuery, filter?: SearchTxFilter): Promise<readonly IndexedTx[]>;
-  postTx(tx: StdTx): Promise<PostTxResult>;
+  broadcastTx(tx: StdTx): Promise<BroadcastTxResult>;
   getCodes(): Promise<readonly Code[]>;
   getCodeDetails(codeId: number): Promise<CodeDetails>;
   getContracts(codeId: number): Promise<readonly Contract[]>;

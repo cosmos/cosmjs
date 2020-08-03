@@ -74,7 +74,7 @@ export class Faucet {
   }
 
   /**
-   * Creates and posts a send transaction. Then waits until the transaction is in a block.
+   * Creates and broadcasts a send transaction. Then waits until the transaction is in a block.
    */
   public async send(job: SendJob): Promise<void> {
     await this.clients[job.sender].sendTokens(job.recipient, [job.amount], "Make love, not war");

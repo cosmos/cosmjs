@@ -2,9 +2,9 @@ import { CosmosSdkTx, StdTx } from "../types";
 import {
   BlockResponse,
   BroadcastMode,
+  BroadcastTxsResponse,
   EncodeTxResponse,
   NodeInfoResponse,
-  PostTxsResponse,
   SearchTxsResponse,
   TxsResponse,
 } from "./base";
@@ -140,7 +140,7 @@ export declare class LcdClient {
    * in higher level components. Feel free to raise an issue in this case.
    *
    * @param apiUrl The URL of a Cosmos SDK light client daemon API (sometimes called REST server or REST API)
-   * @param broadcastMode Defines at which point of the transaction processing the postTx method (i.e. transaction broadcasting) returns
+   * @param broadcastMode Defines at which point of the transaction processing the broadcastTx method returns
    */
   constructor(apiUrl: string, broadcastMode?: BroadcastMode);
   get(path: string, params?: Record<string, any>): Promise<any>;
@@ -159,6 +159,6 @@ export declare class LcdClient {
    *
    * @param tx a signed transaction as StdTx (i.e. not wrapped in type/value container)
    */
-  postTx(tx: StdTx): Promise<PostTxsResponse>;
+  broadcastTx(tx: StdTx): Promise<BroadcastTxsResponse>;
 }
 export {};

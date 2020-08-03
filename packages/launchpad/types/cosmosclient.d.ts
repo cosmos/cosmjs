@@ -14,27 +14,29 @@ export interface Account {
   readonly accountNumber: number;
   readonly sequence: number;
 }
-export interface PostTxFailure {
+export interface BroadcastTxFailure {
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
   readonly height: number;
   readonly code: number;
   readonly rawLog: string;
 }
-export interface PostTxSuccess {
+export interface BroadcastTxSuccess {
   readonly logs: readonly Log[];
   readonly rawLog: string;
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
   readonly data?: Uint8Array;
 }
-export declare type PostTxResult = PostTxSuccess | PostTxFailure;
-export declare function isPostTxFailure(result: PostTxResult): result is PostTxFailure;
-export declare function isPostTxSuccess(result: PostTxResult): result is PostTxSuccess;
+export declare type BroadcastTxResult = BroadcastTxSuccess | BroadcastTxFailure;
+export declare function isBroadcastTxFailure(result: BroadcastTxResult): result is BroadcastTxFailure;
+export declare function isBroadcastTxSuccess(result: BroadcastTxResult): result is BroadcastTxSuccess;
 /**
  * Ensures the given result is a success. Throws a detailed error message otherwise.
  */
-export declare function assertIsPostTxSuccess(result: PostTxResult): asserts result is PostTxSuccess;
+export declare function assertIsBroadcastTxSuccess(
+  result: BroadcastTxResult,
+): asserts result is BroadcastTxSuccess;
 export interface SearchByIdQuery {
   readonly id: string;
 }
@@ -113,7 +115,7 @@ export declare class CosmosClient {
    * for the lifetime of your application. When switching backends, a new instance must be created.
    *
    * @param apiUrl The URL of a Cosmos SDK light client daemon API (sometimes called REST server or REST API)
-   * @param broadcastMode Defines at which point of the transaction processing the postTx method (i.e. transaction broadcasting) returns
+   * @param broadcastMode Defines at which point of the transaction processing the broadcastTx method returns
    */
   constructor(apiUrl: string, broadcastMode?: BroadcastMode);
   getChainId(): Promise<string>;
@@ -138,6 +140,6 @@ export declare class CosmosClient {
    */
   getBlock(height?: number): Promise<Block>;
   searchTx(query: SearchTxQuery, filter?: SearchTxFilter): Promise<readonly IndexedTx[]>;
-  postTx(tx: StdTx): Promise<PostTxResult>;
+  broadcastTx(tx: StdTx): Promise<BroadcastTxResult>;
   private txsQuery;
 }

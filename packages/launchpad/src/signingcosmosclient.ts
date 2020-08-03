@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Coin, coins } from "./coins";
-import { Account, CosmosClient, GetSequenceResult, PostTxResult } from "./cosmosclient";
+import { Account, BroadcastTxResult, CosmosClient, GetSequenceResult } from "./cosmosclient";
 import { makeSignBytes } from "./encoding";
 import { BroadcastMode } from "./lcdapi";
 import { Msg, MsgSend } from "./msgs";
@@ -28,7 +28,7 @@ export class SigningCosmosClient extends CosmosClient {
   private readonly fees: FeeTable;
 
   /**
-   * Creates a new client with signing capability to interact with a CosmWasm blockchain. This is the bigger brother of CosmWasmClient.
+   * Creates a new client with signing capability to interact with a Cosmos SDK blockchain. This is the bigger brother of CosmosClient.
    *
    * This instance does a lot of caching. In order to benefit from that you should try to use one instance
    * for the lifetime of your application. When switching backends, a new instance must be created.
@@ -37,7 +37,7 @@ export class SigningCosmosClient extends CosmosClient {
    * @param senderAddress The address that will sign and send transactions using this instance
    * @param signer An implementation of OfflineSigner which can provide signatures for transactions, potentially requiring user input.
    * @param customFees The fees that are paid for transactions
-   * @param broadcastMode Defines at which point of the transaction processing the postTx method (i.e. transaction broadcasting) returns
+   * @param broadcastMode Defines at which point of the transaction processing the broadcastTx method returns
    */
   public constructor(
     apiUrl: string,
@@ -66,7 +66,7 @@ export class SigningCosmosClient extends CosmosClient {
     recipientAddress: string,
     transferAmount: readonly Coin[],
     memo = "",
-  ): Promise<PostTxResult> {
+  ): Promise<BroadcastTxResult> {
     const sendMsg: MsgSend = {
       type: "cosmos-sdk/MsgSend",
       value: {
@@ -75,14 +75,14 @@ export class SigningCosmosClient extends CosmosClient {
         amount: transferAmount,
       },
     };
-    return this.signAndPost([sendMsg], this.fees.send, memo);
+    return this.signAndBroadcast([sendMsg], this.fees.send, memo);
   }
 
   /**
    * Gets account number and sequence from the API, creates a sign doc,
    * creates a single signature, assembles the signed transaction and broadcasts it.
    */
-  public async signAndPost(msgs: readonly Msg[], fee: StdFee, memo = ""): Promise<PostTxResult> {
+  public async signAndBroadcast(msgs: readonly Msg[], fee: StdFee, memo = ""): Promise<BroadcastTxResult> {
     const { accountNumber, sequence } = await this.getSequence();
     const chainId = await this.getChainId();
     const signBytes = makeSignBytes(msgs, fee, chainId, memo, accountNumber, sequence);
@@ -93,6 +93,6 @@ export class SigningCosmosClient extends CosmosClient {
       memo: memo,
       signatures: [signature],
     };
-    return this.postTx(signedTx);
+    return this.broadcastTx(signedTx);
   }
 }

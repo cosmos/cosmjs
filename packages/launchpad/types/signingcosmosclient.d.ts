@@ -1,5 +1,5 @@
 import { Coin } from "./coins";
-import { Account, CosmosClient, GetSequenceResult, PostTxResult } from "./cosmosclient";
+import { Account, BroadcastTxResult, CosmosClient, GetSequenceResult } from "./cosmosclient";
 import { BroadcastMode } from "./lcdapi";
 import { Msg } from "./msgs";
 import { StdFee } from "./types";
@@ -15,7 +15,7 @@ export declare class SigningCosmosClient extends CosmosClient {
   private readonly signer;
   private readonly fees;
   /**
-   * Creates a new client with signing capability to interact with a CosmWasm blockchain. This is the bigger brother of CosmWasmClient.
+   * Creates a new client with signing capability to interact with a Cosmos SDK blockchain. This is the bigger brother of CosmosClient.
    *
    * This instance does a lot of caching. In order to benefit from that you should try to use one instance
    * for the lifetime of your application. When switching backends, a new instance must be created.
@@ -24,7 +24,7 @@ export declare class SigningCosmosClient extends CosmosClient {
    * @param senderAddress The address that will sign and send transactions using this instance
    * @param signer An implementation of OfflineSigner which can provide signatures for transactions, potentially requiring user input.
    * @param customFees The fees that are paid for transactions
-   * @param broadcastMode Defines at which point of the transaction processing the postTx method (i.e. transaction broadcasting) returns
+   * @param broadcastMode Defines at which point of the transaction processing the broadcastTx method returns
    */
   constructor(
     apiUrl: string,
@@ -35,10 +35,14 @@ export declare class SigningCosmosClient extends CosmosClient {
   );
   getSequence(address?: string): Promise<GetSequenceResult>;
   getAccount(address?: string): Promise<Account | undefined>;
-  sendTokens(recipientAddress: string, transferAmount: readonly Coin[], memo?: string): Promise<PostTxResult>;
+  sendTokens(
+    recipientAddress: string,
+    transferAmount: readonly Coin[],
+    memo?: string,
+  ): Promise<BroadcastTxResult>;
   /**
    * Gets account number and sequence from the API, creates a sign doc,
    * creates a single signature, assembles the signed transaction and broadcasts it.
    */
-  signAndPost(msgs: readonly Msg[], fee: StdFee, memo?: string): Promise<PostTxResult>;
+  signAndBroadcast(msgs: readonly Msg[], fee: StdFee, memo?: string): Promise<BroadcastTxResult>;
 }

@@ -6,9 +6,9 @@ import { CosmosSdkTx, StdTx } from "../types";
 import {
   BlockResponse,
   BroadcastMode,
+  BroadcastTxsResponse,
   EncodeTxResponse,
   NodeInfoResponse,
-  PostTxsResponse,
   SearchTxsResponse,
   TxsResponse,
 } from "./base";
@@ -206,7 +206,7 @@ export class LcdClient {
    * in higher level components. Feel free to raise an issue in this case.
    *
    * @param apiUrl The URL of a Cosmos SDK light client daemon API (sometimes called REST server or REST API)
-   * @param broadcastMode Defines at which point of the transaction processing the postTx method (i.e. transaction broadcasting) returns
+   * @param broadcastMode Defines at which point of the transaction processing the broadcastTx method returns
    */
   public constructor(apiUrl: string, broadcastMode = BroadcastMode.Block) {
     const headers = {
@@ -298,7 +298,7 @@ export class LcdClient {
    *
    * @param tx a signed transaction as StdTx (i.e. not wrapped in type/value container)
    */
-  public async postTx(tx: StdTx): Promise<PostTxsResponse> {
+  public async broadcastTx(tx: StdTx): Promise<BroadcastTxsResponse> {
     const params = {
       tx: tx,
       mode: this.broadcastMode,
@@ -307,6 +307,6 @@ export class LcdClient {
     if (!responseData.txhash) {
       throw new Error("Unexpected response data format");
     }
-    return responseData as PostTxsResponse;
+    return responseData as BroadcastTxsResponse;
   }
 }

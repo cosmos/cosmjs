@@ -3,12 +3,12 @@ import { fromBase64, fromHex, toHex } from "@cosmjs/encoding";
 import {
   AuthExtension,
   BroadcastMode,
+  BroadcastTxResult,
   Coin,
   CosmosSdkTx,
   IndexedTx,
   LcdClient,
   normalizePubkey,
-  PostTxResult,
   PubKey,
   setupAuthExtension,
   StdTx,
@@ -163,7 +163,7 @@ export class CosmWasmClient {
    * for the lifetime of your application. When switching backends, a new instance must be created.
    *
    * @param apiUrl The URL of a Cosmos SDK light client daemon API (sometimes called REST server or REST API)
-   * @param broadcastMode Defines at which point of the transaction processing the postTx method (i.e. transaction broadcasting) returns
+   * @param broadcastMode Defines at which point of the transaction processing the broadcastTx method returns
    */
   public constructor(apiUrl: string, broadcastMode = BroadcastMode.Block) {
     this.lcdClient = LcdClient.withExtensions(
@@ -321,8 +321,8 @@ export class CosmWasmClient {
     return filtered;
   }
 
-  public async postTx(tx: StdTx): Promise<PostTxResult> {
-    const result = await this.lcdClient.postTx(tx);
+  public async broadcastTx(tx: StdTx): Promise<BroadcastTxResult> {
+    const result = await this.lcdClient.broadcastTx(tx);
     if (!result.txhash.match(/^([0-9A-F][0-9A-F])+$/)) {
       throw new Error("Received ill-formatted txhash. Must be non-empty upper-case hex");
     }

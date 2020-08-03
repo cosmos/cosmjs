@@ -1,4 +1,4 @@
-import { BroadcastMode, Coin, Msg, OfflineSigner, PostTxResult, StdFee } from "@cosmjs/launchpad";
+import { BroadcastMode, BroadcastTxResult, Coin, Msg, OfflineSigner, StdFee } from "@cosmjs/launchpad";
 import { Account, CosmWasmClient, GetSequenceResult } from "./cosmwasmclient";
 import { Log } from "./logs";
 /**
@@ -95,7 +95,7 @@ export declare class SigningCosmWasmClient extends CosmWasmClient {
    * @param senderAddress The address that will sign and send transactions using this instance
    * @param signer An implementation of OfflineSigner which can provide signatures for transactions, potentially requiring user input.
    * @param customFees The fees that are paid for transactions
-   * @param broadcastMode Defines at which point of the transaction processing the postTx method (i.e. transaction broadcasting) returns
+   * @param broadcastMode Defines at which point of the transaction processing the broadcastTx method returns
    */
   constructor(
     apiUrl: string,
@@ -123,10 +123,14 @@ export declare class SigningCosmWasmClient extends CosmWasmClient {
     memo?: string,
     transferAmount?: readonly Coin[],
   ): Promise<ExecuteResult>;
-  sendTokens(recipientAddress: string, transferAmount: readonly Coin[], memo?: string): Promise<PostTxResult>;
+  sendTokens(
+    recipientAddress: string,
+    transferAmount: readonly Coin[],
+    memo?: string,
+  ): Promise<BroadcastTxResult>;
   /**
    * Gets account number and sequence from the API, creates a sign doc,
    * creates a single signature, assembles the signed transaction and broadcasts it.
    */
-  signAndPost(msgs: readonly Msg[], fee: StdFee, memo?: string): Promise<PostTxResult>;
+  signAndBroadcast(msgs: readonly Msg[], fee: StdFee, memo?: string): Promise<BroadcastTxResult>;
 }

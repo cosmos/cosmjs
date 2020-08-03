@@ -28,7 +28,7 @@ export interface Account {
   readonly sequence: number;
 }
 
-export interface PostTxFailure {
+export interface BroadcastTxFailure {
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
   readonly height: number;
@@ -36,7 +36,7 @@ export interface PostTxFailure {
   readonly rawLog: string;
 }
 
-export interface PostTxSuccess {
+export interface BroadcastTxSuccess {
   readonly logs: readonly Log[];
   readonly rawLog: string;
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
@@ -44,23 +44,23 @@ export interface PostTxSuccess {
   readonly data?: Uint8Array;
 }
 
-export type PostTxResult = PostTxSuccess | PostTxFailure;
+export type BroadcastTxResult = BroadcastTxSuccess | BroadcastTxFailure;
 
-export function isPostTxFailure(result: PostTxResult): result is PostTxFailure {
-  return !!(result as PostTxFailure).code;
+export function isBroadcastTxFailure(result: BroadcastTxResult): result is BroadcastTxFailure {
+  return !!(result as BroadcastTxFailure).code;
 }
 
-export function isPostTxSuccess(result: PostTxResult): result is PostTxSuccess {
-  return !isPostTxFailure(result);
+export function isBroadcastTxSuccess(result: BroadcastTxResult): result is BroadcastTxSuccess {
+  return !isBroadcastTxFailure(result);
 }
 
 /**
  * Ensures the given result is a success. Throws a detailed error message otherwise.
  */
-export function assertIsPostTxSuccess(result: PostTxResult): asserts result is PostTxSuccess {
-  if (isPostTxFailure(result)) {
+export function assertIsBroadcastTxSuccess(result: BroadcastTxResult): asserts result is BroadcastTxSuccess {
+  if (isBroadcastTxFailure(result)) {
     throw new Error(
-      `Error when posting tx ${result.transactionHash} at height ${result.height}. Code: ${result.code}; Raw log: ${result.rawLog}`,
+      `Error when broadcasting tx ${result.transactionHash} at height ${result.height}. Code: ${result.code}; Raw log: ${result.rawLog}`,
     );
   }
 }
@@ -168,7 +168,7 @@ export class CosmosClient {
    * for the lifetime of your application. When switching backends, a new instance must be created.
    *
    * @param apiUrl The URL of a Cosmos SDK light client daemon API (sometimes called REST server or REST API)
-   * @param broadcastMode Defines at which point of the transaction processing the postTx method (i.e. transaction broadcasting) returns
+   * @param broadcastMode Defines at which point of the transaction processing the broadcastTx method returns
    */
   public constructor(apiUrl: string, broadcastMode = BroadcastMode.Block) {
     this.lcdClient = LcdClient.withExtensions(
@@ -310,8 +310,8 @@ export class CosmosClient {
     return filtered;
   }
 
-  public async postTx(tx: StdTx): Promise<PostTxResult> {
-    const result = await this.lcdClient.postTx(tx);
+  public async broadcastTx(tx: StdTx): Promise<BroadcastTxResult> {
+    const result = await this.lcdClient.broadcastTx(tx);
     if (!result.txhash.match(/^([0-9A-F][0-9A-F])+$/)) {
       throw new Error("Received ill-formatted txhash. Must be non-empty upper-case hex");
     }

@@ -2,7 +2,7 @@
 import { assert, sleep } from "@cosmjs/utils";
 
 import { Coin } from "../coins";
-import { isPostTxFailure } from "../cosmosclient";
+import { isBroadcastTxFailure } from "../cosmosclient";
 import { makeSignBytes } from "../encoding";
 import { parseLogs } from "../logs";
 import { MsgSend } from "../msgs";
@@ -248,8 +248,8 @@ describe("LcdClient", () => {
             signatures: [signature],
           };
           const transactionId = await client.getIdentifier({ type: "cosmos-sdk/StdTx", value: signedTx });
-          const result = await client.postTx(signedTx);
-          assert(isPostTxFailure(result));
+          const result = await client.broadcastTx(signedTx);
+          assert(isBroadcastTxFailure(result));
           unsuccessful = {
             sender: faucet.address,
             recipient: recipient,
@@ -312,7 +312,7 @@ describe("LcdClient", () => {
   });
 
   describe("txsQuery", () => {
-    let posted:
+    let broadcasted:
       | {
           readonly sender: string;
           readonly recipient: string;
@@ -338,7 +338,7 @@ describe("LcdClient", () => {
 
         await sleep(75); // wait until tx is indexed
         const txDetails = await new LcdClient(wasmd.endpoint).txById(result.transactionHash);
-        posted = {
+        broadcasted = {
           sender: faucet.address,
           recipient: recipient,
           hash: result.transactionHash,
@@ -350,68 +350,68 @@ describe("LcdClient", () => {
 
     it("can query transactions by height", async () => {
       pendingWithoutWasmd();
-      assert(posted);
+      assert(broadcasted);
       const client = new LcdClient(wasmd.endpoint);
-      const result = await client.txsQuery(`tx.height=${posted.height}&limit=26`);
+      const result = await client.txsQuery(`tx.height=${broadcasted.height}&limit=26`);
       expect(result).toEqual({
         count: jasmine.stringMatching(/^(1|2|3|4|5)$/), // 1-5 transactions as string
         limit: "26",
         page_number: "1",
         page_total: "1",
         total_count: jasmine.stringMatching(/^(1|2|3|4|5)$/), // 1-5 transactions as string
-        txs: jasmine.arrayContaining([posted.tx]),
+        txs: jasmine.arrayContaining([broadcasted.tx]),
       });
     });
 
     it("can query transactions by ID", async () => {
       pendingWithoutWasmd();
-      assert(posted);
+      assert(broadcasted);
       const client = new LcdClient(wasmd.endpoint);
-      const result = await client.txsQuery(`tx.hash=${posted.hash}&limit=26`);
+      const result = await client.txsQuery(`tx.hash=${broadcasted.hash}&limit=26`);
       expect(result).toEqual({
         count: "1",
         limit: "26",
         page_number: "1",
         page_total: "1",
         total_count: "1",
-        txs: [posted.tx],
+        txs: [broadcasted.tx],
       });
     });
 
     it("can query transactions by sender", async () => {
       pendingWithoutWasmd();
-      assert(posted);
+      assert(broadcasted);
       const client = new LcdClient(wasmd.endpoint);
-      const result = await client.txsQuery(`message.sender=${posted.sender}&limit=200`);
+      const result = await client.txsQuery(`message.sender=${broadcasted.sender}&limit=200`);
       expect(parseInt(result.count, 10)).toBeGreaterThanOrEqual(1);
       expect(parseInt(result.limit, 10)).toEqual(200);
       expect(parseInt(result.page_number, 10)).toEqual(1);
       expect(parseInt(result.page_total, 10)).toEqual(1);
       expect(parseInt(result.total_count, 10)).toBeGreaterThanOrEqual(1);
       expect(result.txs.length).toBeGreaterThanOrEqual(1);
-      expect(result.txs[result.txs.length - 1]).toEqual(posted.tx);
+      expect(result.txs[result.txs.length - 1]).toEqual(broadcasted.tx);
     });
 
     it("can query transactions by recipient", async () => {
       pendingWithoutWasmd();
-      assert(posted);
+      assert(broadcasted);
       const client = new LcdClient(wasmd.endpoint);
-      const result = await client.txsQuery(`transfer.recipient=${posted.recipient}&limit=200`);
+      const result = await client.txsQuery(`transfer.recipient=${broadcasted.recipient}&limit=200`);
       expect(parseInt(result.count, 10)).toEqual(1);
       expect(parseInt(result.limit, 10)).toEqual(200);
       expect(parseInt(result.page_number, 10)).toEqual(1);
       expect(parseInt(result.page_total, 10)).toEqual(1);
       expect(parseInt(result.total_count, 10)).toEqual(1);
       expect(result.txs.length).toBeGreaterThanOrEqual(1);
-      expect(result.txs[result.txs.length - 1]).toEqual(posted.tx);
+      expect(result.txs[result.txs.length - 1]).toEqual(broadcasted.tx);
     });
 
     it("can filter by tx.hash and tx.minheight", async () => {
       pending("This combination is broken 🤷‍♂️. Handle client-side at higher level.");
       pendingWithoutWasmd();
-      assert(posted);
+      assert(broadcasted);
       const client = new LcdClient(wasmd.endpoint);
-      const hashQuery = `tx.hash=${posted.hash}`;
+      const hashQuery = `tx.hash=${broadcasted.hash}`;
 
       {
         const { count } = await client.txsQuery(`${hashQuery}&tx.minheight=0`);
@@ -419,26 +419,26 @@ describe("LcdClient", () => {
       }
 
       {
-        const { count } = await client.txsQuery(`${hashQuery}&tx.minheight=${posted.height - 1}`);
+        const { count } = await client.txsQuery(`${hashQuery}&tx.minheight=${broadcasted.height - 1}`);
         expect(count).toEqual("1");
       }
 
       {
-        const { count } = await client.txsQuery(`${hashQuery}&tx.minheight=${posted.height}`);
+        const { count } = await client.txsQuery(`${hashQuery}&tx.minheight=${broadcasted.height}`);
         expect(count).toEqual("1");
       }
 
       {
-        const { count } = await client.txsQuery(`${hashQuery}&tx.minheight=${posted.height + 1}`);
+        const { count } = await client.txsQuery(`${hashQuery}&tx.minheight=${broadcasted.height + 1}`);
         expect(count).toEqual("0");
       }
     });
 
     it("can filter by recipient and tx.minheight", async () => {
       pendingWithoutWasmd();
-      assert(posted);
+      assert(broadcasted);
       const client = new LcdClient(wasmd.endpoint);
-      const recipientQuery = `transfer.recipient=${posted.recipient}`;
+      const recipientQuery = `transfer.recipient=${broadcasted.recipient}`;
 
       {
         const { count } = await client.txsQuery(`${recipientQuery}&tx.minheight=0`);
@@ -446,26 +446,26 @@ describe("LcdClient", () => {
       }
 
       {
-        const { count } = await client.txsQuery(`${recipientQuery}&tx.minheight=${posted.height - 1}`);
+        const { count } = await client.txsQuery(`${recipientQuery}&tx.minheight=${broadcasted.height - 1}`);
         expect(count).toEqual("1");
       }
 
       {
-        const { count } = await client.txsQuery(`${recipientQuery}&tx.minheight=${posted.height}`);
+        const { count } = await client.txsQuery(`${recipientQuery}&tx.minheight=${broadcasted.height}`);
         expect(count).toEqual("1");
       }
 
       {
-        const { count } = await client.txsQuery(`${recipientQuery}&tx.minheight=${posted.height + 1}`);
+        const { count } = await client.txsQuery(`${recipientQuery}&tx.minheight=${broadcasted.height + 1}`);
         expect(count).toEqual("0");
       }
     });
 
     it("can filter by recipient and tx.maxheight", async () => {
       pendingWithoutWasmd();
-      assert(posted);
+      assert(broadcasted);
       const client = new LcdClient(wasmd.endpoint);
-      const recipientQuery = `transfer.recipient=${posted.recipient}`;
+      const recipientQuery = `transfer.recipient=${broadcasted.recipient}`;
 
       {
         const { count } = await client.txsQuery(`${recipientQuery}&tx.maxheight=9999999999999`);
@@ -473,17 +473,17 @@ describe("LcdClient", () => {
       }
 
       {
-        const { count } = await client.txsQuery(`${recipientQuery}&tx.maxheight=${posted.height + 1}`);
+        const { count } = await client.txsQuery(`${recipientQuery}&tx.maxheight=${broadcasted.height + 1}`);
         expect(count).toEqual("1");
       }
 
       {
-        const { count } = await client.txsQuery(`${recipientQuery}&tx.maxheight=${posted.height}`);
+        const { count } = await client.txsQuery(`${recipientQuery}&tx.maxheight=${broadcasted.height}`);
         expect(count).toEqual("1");
       }
 
       {
-        const { count } = await client.txsQuery(`${recipientQuery}&tx.maxheight=${posted.height - 1}`);
+        const { count } = await client.txsQuery(`${recipientQuery}&tx.maxheight=${broadcasted.height - 1}`);
         expect(count).toEqual("0");
       }
     });
@@ -502,7 +502,7 @@ describe("LcdClient", () => {
     });
   });
 
-  describe("postTx", () => {
+  describe("broadcastTx", () => {
     it("can send tokens", async () => {
       pendingWithoutWasmd();
       const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
@@ -540,7 +540,7 @@ describe("LcdClient", () => {
       const signBytes = makeSignBytes([theMsg], fee, wasmd.chainId, memo, account_number, sequence);
       const signature = await wallet.sign(walletAddress, signBytes);
       const signedTx = makeSignedTx(theMsg, fee, memo, signature);
-      const result = await client.postTx(signedTx);
+      const result = await client.broadcastTx(signedTx);
       expect(result.code).toBeUndefined();
       expect(result).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
@@ -606,9 +606,9 @@ describe("LcdClient", () => {
         memo: memo,
         signatures: [signature1, signature2, signature3],
       };
-      const postResult = await client.postTx(signedTx);
-      expect(postResult.code).toEqual(4);
-      expect(postResult.raw_log).toContain("wrong number of signers");
+      const broadcastResult = await client.broadcastTx(signedTx);
+      expect(broadcastResult.code).toEqual(4);
+      expect(broadcastResult.raw_log).toContain("wrong number of signers");
     });
 
     it("can send multiple messages with one signature", async () => {
@@ -666,8 +666,8 @@ describe("LcdClient", () => {
         memo: memo,
         signatures: [signature1],
       };
-      const postResult = await client.postTx(signedTx);
-      expect(postResult.code).toBeUndefined();
+      const broadcastResult = await client.broadcastTx(signedTx);
+      expect(broadcastResult.code).toBeUndefined();
     });
 
     it("can send multiple messages with multiple signatures", async () => {
@@ -732,11 +732,11 @@ describe("LcdClient", () => {
         memo: memo,
         signatures: [signature2, signature1],
       };
-      const postResult = await client.postTx(signedTx);
-      expect(postResult.code).toBeUndefined();
+      const broadcastResult = await client.broadcastTx(signedTx);
+      expect(broadcastResult.code).toBeUndefined();
 
       await sleep(500);
-      const searched = await client.txsQuery(`tx.hash=${postResult.txhash}`);
+      const searched = await client.txsQuery(`tx.hash=${broadcastResult.txhash}`);
       expect(searched.txs.length).toEqual(1);
       expect(searched.txs[0].tx.value.signatures).toEqual([signature2, signature1]);
     });
@@ -803,8 +803,8 @@ describe("LcdClient", () => {
         memo: memo,
         signatures: [signature2, signature1],
       };
-      const postResult = await client.postTx(signedTx);
-      expect(postResult.code).toEqual(8);
+      const broadcastResult = await client.broadcastTx(signedTx);
+      expect(broadcastResult.code).toEqual(8);
     });
 
     it("can't send transaction with wrong signature order (2)", async () => {
@@ -869,8 +869,8 @@ describe("LcdClient", () => {
         memo: memo,
         signatures: [signature1, signature2],
       };
-      const postResult = await client.postTx(signedTx);
-      expect(postResult.code).toEqual(8);
+      const broadcastResult = await client.broadcastTx(signedTx);
+      expect(broadcastResult.code).toEqual(8);
     });
   });
 });

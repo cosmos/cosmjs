@@ -2,7 +2,7 @@
 import { assert, sleep } from "@cosmjs/utils";
 
 import { coin, coins } from "../coins";
-import { assertIsPostTxSuccess } from "../cosmosclient";
+import { assertIsBroadcastTxSuccess } from "../cosmosclient";
 import { makeSignBytes } from "../encoding";
 import { MsgDelegate, MsgUndelegate } from "../msgs";
 import { Secp256k1Wallet } from "../secp256k1wallet";
@@ -57,8 +57,8 @@ describe("StakingExtension", () => {
           signatures: [signature],
         };
 
-        const result = await client.postTx(tx);
-        assertIsPostTxSuccess(result);
+        const result = await client.broadcastTx(tx);
+        assertIsBroadcastTxSuccess(result);
       }
       {
         const msg: MsgUndelegate = {
@@ -80,8 +80,8 @@ describe("StakingExtension", () => {
           signatures: [signature],
         };
 
-        const result = await client.postTx(tx);
-        assertIsPostTxSuccess(result);
+        const result = await client.broadcastTx(tx);
+        assertIsBroadcastTxSuccess(result);
       }
 
       await sleep(75); // wait until transactions are indexed
