@@ -7,26 +7,14 @@ import { Msg, MsgSend } from "./msgs";
 import { StdFee, StdTx } from "./types";
 import { OfflineSigner } from "./wallet";
 
+/**
+ * Those fees are used by the higher level methods of SigningCosmosClient
+ */
 export interface FeeTable {
-  readonly upload: StdFee;
-  readonly init: StdFee;
-  readonly exec: StdFee;
   readonly send: StdFee;
 }
 
 const defaultFees: FeeTable = {
-  upload: {
-    amount: coins(25000, "ucosm"),
-    gas: "1000000", // one million
-  },
-  init: {
-    amount: coins(12500, "ucosm"),
-    gas: "500000", // 500k
-  },
-  exec: {
-    amount: coins(5000, "ucosm"),
-    gas: "200000", // 200k
-  },
   send: {
     amount: coins(2000, "ucosm"),
     gas: "80000", // 80k

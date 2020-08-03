@@ -24,7 +24,6 @@ export {
   InstantiateOptions,
   InstantiateResult,
   MigrateResult,
-  SigningCallback,
   SigningCosmWasmClient,
   UploadMeta,
   UploadResult,

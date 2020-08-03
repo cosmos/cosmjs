@@ -13,6 +13,8 @@
 - @cosmjs/cosmwasm: `ContractDetails` was removed in favour of just `Contract`.
   The missing `init_msg` is now available via the contract's code history (see
   `getContractCodeHistory`).
+- @cosmjs/cosmwasm: Remove `SigningCallback` in favour of the `OfflineSigner`
+  interface.
 - @cosmjs/sdk38: Rename `CosmosClient.getNonce` method to `.getSequence`.
 - @cosmjs/sdk38: Remove `RestClient` class in favour of new modular `LcdClient`
   class.
@@ -37,3 +39,6 @@
   words.
 - @cosmjs/sdk38: The new `Secp256k1Wallet.serialize` and `.deserialize` allow
   encrypted serialization of the wallet.
+- @cosmjs/sdk38: Remove the obsolete `upload`, `init`, `exec` properties from
+  `FeeTable`. @cosmjs/cosmwasm has its own `FeeTable` with those properties.
+- @cosmjs/sdk38: Rename package to @cosmjs/launchpad.
