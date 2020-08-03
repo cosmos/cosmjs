@@ -14,6 +14,11 @@ export function main(originalArgs: readonly string[]): void {
         describe: "Read initial TypeScript code from files",
         type: "array",
       },
+      code: {
+        describe:
+          "Add initial TypeScript code from the argument. All code arguments are processed after all init arguments.",
+        type: "array",
+      },
       // Maintainer options
       debug: {
         describe: "Enable debugging",
@@ -24,7 +29,7 @@ export function main(originalArgs: readonly string[]): void {
         type: "boolean",
       },
     })
-    .group(["init", "help", "version"], "User options")
+    .group(["init", "code", "help", "version"], "User options")
     .group(["debug", "selftest"], "Maintainer options")
     .parse(originalArgs);
 
@@ -159,6 +164,13 @@ export function main(originalArgs: readonly string[]): void {
     for (const path of args.init.map((arg) => arg.toString())) {
       if (args.debug) console.info(`Adding file: '${path}' ...`);
       init += fs.readFileSync(path, "utf8") + "\n";
+    }
+  }
+
+  if (args.code) {
+    for (const code of args.code.map((arg) => arg.toString())) {
+      if (args.debug) console.info(`Adding code: '${code}' ...`);
+      init += `${code}\n`;
     }
   }
 

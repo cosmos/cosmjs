@@ -5,5 +5,5 @@ for (let i of [0, 1, 2, 3, 4]) {
   const wallet = await Secp256k1Wallet.fromMnemonic(mnemonic, makeCosmoshubPath(i), "cosmos");
   const [{ address, pubkey }] = await wallet.getAccounts();
   console.info(`Address ${i}: ${address}`);
-  console.info(`Pubkey ${i}: ${pubkey}`);
+  console.info(`Pubkey ${i}: ${toBase64(pubkey)}`);
 }

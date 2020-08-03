@@ -3,5 +3,5 @@ const wallet = await Secp256k1Wallet.fromMnemonic(mnemonic);
 const [{ address, pubkey }] = await wallet.getAccounts();
 
 console.info("mnemonic:", mnemonic);
-console.info("pubkey:", pubkey);
+console.info("pubkey:", encodeSecp256k1Pubkey(pubkey));
 console.info("address:", address);
