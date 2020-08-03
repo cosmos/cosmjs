@@ -2,7 +2,7 @@
 import { assert } from "@cosmjs/utils";
 
 import { Coin, coin, coins } from "./coins";
-import { assertIsPostTxSuccess, PrivateCosmWasmClient } from "./cosmosclient";
+import { assertIsBroadcastTxSuccess, PrivateCosmWasmClient } from "./cosmosclient";
 import { MsgDelegate } from "./msgs";
 import { Secp256k1Wallet } from "./secp256k1wallet";
 import { SigningCosmosClient } from "./signingcosmosclient";
@@ -68,7 +68,7 @@ describe("SigningCosmosClient", () => {
 
       // send
       const result = await client.sendTokens(beneficiaryAddress, transferAmount, "for dinner");
-      assertIsPostTxSuccess(result);
+      assertIsBroadcastTxSuccess(result);
       const [firstLog] = result.logs;
       expect(firstLog).toBeTruthy();
 
@@ -79,7 +79,7 @@ describe("SigningCosmosClient", () => {
     });
   });
 
-  describe("signAndPost", () => {
+  describe("signAndBroadcast", () => {
     it("works", async () => {
       pendingWithoutWasmd();
       const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
@@ -97,8 +97,8 @@ describe("SigningCosmosClient", () => {
         amount: coins(2000, "ucosm"),
         gas: "180000", // 180k
       };
-      const result = await client.signAndPost([msg], fee, "Use your power wisely");
-      assertIsPostTxSuccess(result);
+      const result = await client.signAndBroadcast([msg], fee, "Use your power wisely");
+      assertIsBroadcastTxSuccess(result);
     });
   });
 });

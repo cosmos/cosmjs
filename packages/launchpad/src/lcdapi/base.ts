@@ -126,7 +126,7 @@ export interface SearchTxsResponse {
   readonly txs: readonly TxsResponse[];
 }
 
-export interface PostTxsResponse {
+export interface BroadcastTxsResponse {
   readonly height: string;
   readonly txhash: string;
   readonly code?: number;

@@ -2,7 +2,7 @@
 import { sleep } from "@cosmjs/utils";
 
 import { coins } from "../coins";
-import { assertIsPostTxSuccess } from "../cosmosclient";
+import { assertIsBroadcastTxSuccess } from "../cosmosclient";
 import { makeSignBytes } from "../encoding";
 import { Secp256k1Wallet } from "../secp256k1wallet";
 import { SigningCosmosClient } from "../signingcosmosclient";
@@ -66,8 +66,8 @@ describe("GovExtension", () => {
         signatures: [proposalSignature],
       };
 
-      const proposalResult = await client.postTx(proposalTx);
-      assertIsPostTxSuccess(proposalResult);
+      const proposalResult = await client.broadcastTx(proposalTx);
+      assertIsBroadcastTxSuccess(proposalResult);
       proposalId = proposalResult.logs[0].events
         .find(({ type }) => type === "submit_proposal")!
         .attributes.find(({ key }) => key === "proposal_id")!.value;
@@ -97,7 +97,7 @@ describe("GovExtension", () => {
         memo: voteMemo,
         signatures: [voteSignature],
       };
-      await client.postTx(voteTx);
+      await client.broadcastTx(voteTx);
 
       await sleep(75); // wait until transactions are indexed
     }

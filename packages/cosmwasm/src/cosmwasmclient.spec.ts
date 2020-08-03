@@ -1,7 +1,13 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Sha256 } from "@cosmjs/crypto";
 import { Bech32, fromHex, fromUtf8, toAscii, toBase64 } from "@cosmjs/encoding";
-import { assertIsPostTxSuccess, makeSignBytes, MsgSend, Secp256k1Wallet, StdFee } from "@cosmjs/launchpad";
+import {
+  assertIsBroadcastTxSuccess,
+  makeSignBytes,
+  MsgSend,
+  Secp256k1Wallet,
+  StdFee,
+} from "@cosmjs/launchpad";
 import { assert, sleep } from "@cosmjs/utils";
 import { ReadonlyDate } from "readonly-date";
 
@@ -197,7 +203,7 @@ describe("CosmWasmClient", () => {
     });
   });
 
-  describe("postTx", () => {
+  describe("broadcastTx", () => {
     it("works", async () => {
       pendingWithoutWasmd();
       const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
@@ -238,8 +244,8 @@ describe("CosmWasmClient", () => {
         memo: memo,
         signatures: [signature],
       };
-      const result = await client.postTx(signedTx);
-      assertIsPostTxSuccess(result);
+      const result = await client.broadcastTx(signedTx);
+      assertIsBroadcastTxSuccess(result);
       const { logs, transactionHash } = result;
       const amountAttr = findAttribute(logs, "transfer", "amount");
       expect(amountAttr.value).toEqual("1234567ucosm");

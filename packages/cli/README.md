@@ -81,7 +81,7 @@ const signedTx: StdTx = {
   memo: memo,
   signatures: [signature],
 };
-const postResult = await client.postTx(signedTx);
+const broadcastResult = await client.broadcastTx(signedTx);
 ```
 
 ## Extended helpers

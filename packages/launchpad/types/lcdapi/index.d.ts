@@ -62,7 +62,7 @@ export {
   BlockResponse,
   BroadcastMode,
   EncodeTxResponse,
-  PostTxsResponse,
+  BroadcastTxsResponse,
   NodeInfoResponse,
   SearchTxsResponse,
   TxsResponse,

@@ -3,15 +3,15 @@ import { Sha256 } from "@cosmjs/crypto";
 import { toBase64, toHex } from "@cosmjs/encoding";
 import {
   BroadcastMode,
+  BroadcastTxFailure,
+  BroadcastTxResult,
   Coin,
   coins,
-  isPostTxFailure,
+  isBroadcastTxFailure,
   makeSignBytes,
   Msg,
   MsgSend,
   OfflineSigner,
-  PostTxFailure,
-  PostTxResult,
   StdFee,
   StdTx,
 } from "@cosmjs/launchpad";
@@ -154,8 +154,8 @@ export interface ExecuteResult {
   readonly transactionHash: string;
 }
 
-function createPostTxErrorMessage(result: PostTxFailure): string {
-  return `Error when posting tx ${result.transactionHash} at height ${result.height}. Code: ${result.code}; Raw log: ${result.rawLog}`;
+function createBroadcastTxErrorMessage(result: BroadcastTxFailure): string {
+  return `Error when broadcasting tx ${result.transactionHash} at height ${result.height}. Code: ${result.code}; Raw log: ${result.rawLog}`;
 }
 
 export class SigningCosmWasmClient extends CosmWasmClient {
@@ -174,7 +174,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
    * @param senderAddress The address that will sign and send transactions using this instance
    * @param signer An implementation of OfflineSigner which can provide signatures for transactions, potentially requiring user input.
    * @param customFees The fees that are paid for transactions
-   * @param broadcastMode Defines at which point of the transaction processing the postTx method (i.e. transaction broadcasting) returns
+   * @param broadcastMode Defines at which point of the transaction processing the broadcastTx method returns
    */
   public constructor(
     apiUrl: string,
@@ -214,9 +214,9 @@ export class SigningCosmWasmClient extends CosmWasmClient {
         builder: builder,
       },
     };
-    const result = await this.signAndPost([storeCodeMsg], this.fees.upload, memo);
-    if (isPostTxFailure(result)) {
-      throw new Error(createPostTxErrorMessage(result));
+    const result = await this.signAndBroadcast([storeCodeMsg], this.fees.upload, memo);
+    if (isBroadcastTxFailure(result)) {
+      throw new Error(createBroadcastTxErrorMessage(result));
     }
     const codeIdAttr = findAttribute(result.logs, "message", "code_id");
     return {
@@ -247,9 +247,9 @@ export class SigningCosmWasmClient extends CosmWasmClient {
         admin: options.admin,
       },
     };
-    const result = await this.signAndPost([instantiateMsg], this.fees.init, options.memo);
-    if (isPostTxFailure(result)) {
-      throw new Error(createPostTxErrorMessage(result));
+    const result = await this.signAndBroadcast([instantiateMsg], this.fees.init, options.memo);
+    if (isBroadcastTxFailure(result)) {
+      throw new Error(createBroadcastTxErrorMessage(result));
     }
     const contractAddressAttr = findAttribute(result.logs, "message", "contract_address");
     return {
@@ -268,9 +268,9 @@ export class SigningCosmWasmClient extends CosmWasmClient {
         new_admin: newAdmin,
       },
     };
-    const result = await this.signAndPost([updateAdminMsg], this.fees.changeAdmin, memo);
-    if (isPostTxFailure(result)) {
-      throw new Error(createPostTxErrorMessage(result));
+    const result = await this.signAndBroadcast([updateAdminMsg], this.fees.changeAdmin, memo);
+    if (isBroadcastTxFailure(result)) {
+      throw new Error(createBroadcastTxErrorMessage(result));
     }
     return {
       logs: result.logs,
@@ -286,9 +286,9 @@ export class SigningCosmWasmClient extends CosmWasmClient {
         contract: contractAddress,
       },
     };
-    const result = await this.signAndPost([clearAdminMsg], this.fees.changeAdmin, memo);
-    if (isPostTxFailure(result)) {
-      throw new Error(createPostTxErrorMessage(result));
+    const result = await this.signAndBroadcast([clearAdminMsg], this.fees.changeAdmin, memo);
+    if (isBroadcastTxFailure(result)) {
+      throw new Error(createBroadcastTxErrorMessage(result));
     }
     return {
       logs: result.logs,
@@ -311,9 +311,9 @@ export class SigningCosmWasmClient extends CosmWasmClient {
         msg: migrateMsg,
       },
     };
-    const result = await this.signAndPost([msg], this.fees.migrate, memo);
-    if (isPostTxFailure(result)) {
-      throw new Error(createPostTxErrorMessage(result));
+    const result = await this.signAndBroadcast([msg], this.fees.migrate, memo);
+    if (isBroadcastTxFailure(result)) {
+      throw new Error(createBroadcastTxErrorMessage(result));
     }
     return {
       logs: result.logs,
@@ -336,9 +336,9 @@ export class SigningCosmWasmClient extends CosmWasmClient {
         sent_funds: transferAmount || [],
       },
     };
-    const result = await this.signAndPost([executeMsg], this.fees.exec, memo);
-    if (isPostTxFailure(result)) {
-      throw new Error(createPostTxErrorMessage(result));
+    const result = await this.signAndBroadcast([executeMsg], this.fees.exec, memo);
+    if (isBroadcastTxFailure(result)) {
+      throw new Error(createBroadcastTxErrorMessage(result));
     }
     return {
       logs: result.logs,
@@ -350,7 +350,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     recipientAddress: string,
     transferAmount: readonly Coin[],
     memo = "",
-  ): Promise<PostTxResult> {
+  ): Promise<BroadcastTxResult> {
     const sendMsg: MsgSend = {
       type: "cosmos-sdk/MsgSend",
       value: {
@@ -359,14 +359,14 @@ export class SigningCosmWasmClient extends CosmWasmClient {
         amount: transferAmount,
       },
     };
-    return this.signAndPost([sendMsg], this.fees.send, memo);
+    return this.signAndBroadcast([sendMsg], this.fees.send, memo);
   }
 
   /**
    * Gets account number and sequence from the API, creates a sign doc,
    * creates a single signature, assembles the signed transaction and broadcasts it.
    */
-  public async signAndPost(msgs: readonly Msg[], fee: StdFee, memo = ""): Promise<PostTxResult> {
+  public async signAndBroadcast(msgs: readonly Msg[], fee: StdFee, memo = ""): Promise<BroadcastTxResult> {
     const { accountNumber, sequence } = await this.getSequence();
     const chainId = await this.getChainId();
     const signBytes = makeSignBytes(msgs, fee, chainId, memo, accountNumber, sequence);
@@ -377,6 +377,6 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       memo: memo,
       signatures: [signature],
     };
-    return this.postTx(signedTx);
+    return this.broadcastTx(signedTx);
   }
 }

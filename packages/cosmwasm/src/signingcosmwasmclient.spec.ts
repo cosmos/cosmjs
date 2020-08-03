@@ -2,7 +2,7 @@
 import { Sha256 } from "@cosmjs/crypto";
 import { toHex } from "@cosmjs/encoding";
 import {
-  assertIsPostTxSuccess,
+  assertIsBroadcastTxSuccess,
   AuthExtension,
   coin,
   coins,
@@ -333,7 +333,7 @@ describe("SigningCosmWasmClient", () => {
 
       // send
       const result = await client.sendTokens(beneficiaryAddress, transferAmount, "for dinner");
-      assertIsPostTxSuccess(result);
+      assertIsBroadcastTxSuccess(result);
       const [firstLog] = result.logs;
       expect(firstLog).toBeTruthy();
 
@@ -344,7 +344,7 @@ describe("SigningCosmWasmClient", () => {
     });
   });
 
-  describe("signAndPost", () => {
+  describe("signAndBroadcast", () => {
     it("works", async () => {
       pendingWithoutWasmd();
       const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
@@ -362,8 +362,8 @@ describe("SigningCosmWasmClient", () => {
         amount: coins(2000, "ucosm"),
         gas: "180000", // 180k
       };
-      const result = await client.signAndPost([msg], fee, "Use your power wisely");
-      assertIsPostTxSuccess(result);
+      const result = await client.signAndBroadcast([msg], fee, "Use your power wisely");
+      assertIsBroadcastTxSuccess(result);
     });
   });
 });

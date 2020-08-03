@@ -3,7 +3,12 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 const { Random } = require("@cosmjs/crypto");
 const { Bech32 } = require("@cosmjs/encoding");
-const { coins, Secp256k1Wallet, SigningCosmosClient, assertIsPostTxSuccess } = require("@cosmjs/launchpad");
+const {
+  coins,
+  Secp256k1Wallet,
+  SigningCosmosClient,
+  assertIsBroadcastTxSuccess,
+} = require("@cosmjs/launchpad");
 
 const httpUrl = "http://localhost:1317";
 const faucet = {
@@ -19,7 +24,7 @@ async function main() {
   const amount = coins(226644, "ucosm");
   const memo = "Ensure chain has my pubkey";
   const sendResult = await client.sendTokens(recipient, amount, memo);
-  assertIsPostTxSuccess(sendResult);
+  assertIsBroadcastTxSuccess(sendResult);
 }
 
 main().then(

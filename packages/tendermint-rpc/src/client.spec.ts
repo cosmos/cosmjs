@@ -60,7 +60,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor): void {
     client.disconnect();
   });
 
-  it("can post a transaction", async () => {
+  it("can broadcast a transaction", async () => {
     pendingWithoutTendermint();
     const client = new Client(rpcFactory(), adaptor);
     const tx = buildKvTx(randomString(), randomString());

@@ -2,16 +2,16 @@
 import { Sha256 } from "@cosmjs/crypto";
 import { Bech32, fromAscii, fromHex, fromUtf8, toAscii, toBase64, toHex } from "@cosmjs/encoding";
 import {
-  assertIsPostTxSuccess,
+  assertIsBroadcastTxSuccess,
   AuthExtension,
+  BroadcastTxResult,
+  BroadcastTxsResponse,
   Coin,
   coin,
   coins,
   LcdClient,
   makeSignBytes,
   OfflineSigner,
-  PostTxResult,
-  PostTxsResponse,
   Secp256k1Wallet,
   setupAuthExtension,
   SigningCosmosClient,
@@ -52,7 +52,7 @@ function makeWasmClient(apiUrl: string): WasmClient {
 async function uploadContract(
   signer: OfflineSigner,
   contract: ContractUploadInstructions,
-): Promise<PostTxResult> {
+): Promise<BroadcastTxResult> {
   const memo = "My first contract on chain";
   const theMsg: MsgStoreCode = {
     type: "wasm/MsgStoreCode",
@@ -70,7 +70,7 @@ async function uploadContract(
 
   const firstAddress = (await signer.getAccounts())[0].address;
   const client = new SigningCosmosClient(wasmd.endpoint, firstAddress, signer);
-  return client.signAndPost([theMsg], fee, memo);
+  return client.signAndBroadcast([theMsg], fee, memo);
 }
 
 async function instantiateContract(
@@ -78,7 +78,7 @@ async function instantiateContract(
   codeId: number,
   beneficiaryAddress: string,
   transferAmount?: readonly Coin[],
-): Promise<PostTxResult> {
+): Promise<BroadcastTxResult> {
   const memo = "Create an escrow instance";
   const theMsg: MsgInstantiateContract = {
     type: "wasm/MsgInstantiateContract",
@@ -100,7 +100,7 @@ async function instantiateContract(
 
   const firstAddress = (await signer.getAccounts())[0].address;
   const client = new SigningCosmosClient(wasmd.endpoint, firstAddress, signer);
-  return client.signAndPost([theMsg], fee, memo);
+  return client.signAndBroadcast([theMsg], fee, memo);
 }
 
 async function executeContract(
@@ -108,7 +108,7 @@ async function executeContract(
   signer: OfflineSigner,
   contractAddress: string,
   msg: object,
-): Promise<PostTxsResponse> {
+): Promise<BroadcastTxsResponse> {
   const memo = "Time for action";
   const theMsg: MsgExecuteContract = {
     type: "wasm/MsgExecuteContract",
@@ -128,7 +128,7 @@ async function executeContract(
   const signBytes = makeSignBytes([theMsg], fee, wasmd.chainId, memo, account_number, sequence);
   const signature = await signer.sign(alice.address0, signBytes);
   const signedTx = makeSignedTx(theMsg, fee, memo, signature);
-  return client.postTx(signedTx);
+  return client.broadcastTx(signedTx);
 }
 
 describe("WasmExtension", () => {
@@ -141,13 +141,13 @@ describe("WasmExtension", () => {
     if (wasmdEnabled()) {
       const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
       const result = await uploadContract(wallet, hackatom);
-      assertIsPostTxSuccess(result);
+      assertIsBroadcastTxSuccess(result);
       const logs = parseLogs(result.logs);
       const codeIdAttr = findAttribute(logs, "message", "code_id");
       hackatomCodeId = Number.parseInt(codeIdAttr.value, 10);
 
       const instantiateResult = await instantiateContract(wallet, hackatomCodeId, makeRandomAddress());
-      assertIsPostTxSuccess(instantiateResult);
+      assertIsBroadcastTxSuccess(instantiateResult);
       const instantiateLogs = parseLogs(instantiateResult.logs);
       const contractAddressAttr = findAttribute(instantiateLogs, "message", "contract_address");
       hackatomContractAddress = contractAddressAttr.value;
@@ -204,7 +204,7 @@ describe("WasmExtension", () => {
       }
 
       const result = await instantiateContract(wallet, hackatomCodeId, beneficiaryAddress, transferAmount);
-      assertIsPostTxSuccess(result);
+      assertIsBroadcastTxSuccess(result);
       const logs = parseLogs(result.logs);
       const contractAddressAttr = findAttribute(logs, "message", "contract_address");
       const myAddress = contractAddressAttr.value;
@@ -253,7 +253,7 @@ describe("WasmExtension", () => {
 
       // create new instance and compare before and after
       const result = await instantiateContract(wallet, hackatomCodeId, beneficiaryAddress, transferAmount);
-      assertIsPostTxSuccess(result);
+      assertIsBroadcastTxSuccess(result);
       const logs = parseLogs(result.logs);
       const contractAddressAttr = findAttribute(logs, "message", "contract_address");
       const myAddress = contractAddressAttr.value;
@@ -468,7 +468,7 @@ describe("WasmExtension", () => {
     });
   });
 
-  describe("postTx", () => {
+  describe("broadcastTx", () => {
     it("can upload, instantiate and execute wasm", async () => {
       pendingWithoutWasmd();
       const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
@@ -483,7 +483,7 @@ describe("WasmExtension", () => {
       {
         // console.log("Raw log:", result.raw_log);
         const result = await uploadContract(wallet, getHackatom());
-        assertIsPostTxSuccess(result);
+        assertIsBroadcastTxSuccess(result);
         const logs = parseLogs(result.logs);
         const codeIdAttr = findAttribute(logs, "message", "code_id");
         codeId = Number.parseInt(codeIdAttr.value, 10);
@@ -497,7 +497,7 @@ describe("WasmExtension", () => {
       // instantiate
       {
         const result = await instantiateContract(wallet, codeId, beneficiaryAddress, transferAmount);
-        assertIsPostTxSuccess(result);
+        assertIsBroadcastTxSuccess(result);
         // console.log("Raw log:", result.raw_log);
         const logs = parseLogs(result.logs);
         const contractAddressAttr = findAttribute(logs, "message", "contract_address");

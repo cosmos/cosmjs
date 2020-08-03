@@ -2,7 +2,7 @@
 import { sleep } from "@cosmjs/utils";
 import { ReadonlyDate } from "readonly-date";
 
-import { assertIsPostTxSuccess, CosmosClient, PrivateCosmWasmClient } from "./cosmosclient";
+import { assertIsBroadcastTxSuccess, CosmosClient, PrivateCosmWasmClient } from "./cosmosclient";
 import { makeSignBytes } from "./encoding";
 import { findAttribute } from "./logs";
 import { MsgSend } from "./msgs";
@@ -190,7 +190,7 @@ describe("CosmosClient", () => {
     });
   });
 
-  describe("postTx", () => {
+  describe("broadcastTx", () => {
     it("works", async () => {
       pendingWithoutWasmd();
       const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
@@ -233,8 +233,8 @@ describe("CosmosClient", () => {
         memo: memo,
         signatures: [signature],
       };
-      const txResult = await client.postTx(signedTx);
-      assertIsPostTxSuccess(txResult);
+      const txResult = await client.broadcastTx(signedTx);
+      assertIsBroadcastTxSuccess(txResult);
       const { logs, transactionHash } = txResult;
       const amountAttr = findAttribute(logs, "transfer", "amount");
       expect(amountAttr.value).toEqual("1234567ucosm");

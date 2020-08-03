@@ -3,8 +3,8 @@ import {
   Coin,
   coins,
   CosmosSdkTx,
+  isBroadcastTxFailure,
   isMsgSend,
-  isPostTxFailure,
   LcdClient,
   makeSignBytes,
   MsgSend,
@@ -115,8 +115,8 @@ describe("CosmWasmClient.searchTx", () => {
           },
         };
         const transactionId = await client.getIdentifier(tx);
-        const result = await client.postTx(tx.value);
-        if (isPostTxFailure(result)) {
+        const result = await client.broadcastTx(tx.value);
+        if (isBroadcastTxFailure(result)) {
           sendUnsuccessful = {
             sender: alice.address0,
             recipient: recipient,
