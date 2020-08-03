@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## HEAD
+## 0.22.0 (2020-08-03)
 
 - @cosmjs/cli: Now supports HTTPs URLs for `--init` code sources.
 - @cosmjs/cli: Now supports adding code directly via `--code`.
