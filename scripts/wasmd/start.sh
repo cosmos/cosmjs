@@ -2,27 +2,28 @@
 set -o errexit -o nounset -o pipefail
 command -v shellcheck > /dev/null && shellcheck "$0"
 
-REST_PORT_GUEST="1317"
-REST_PORT_HOST="1317"
+LCD_API_PORT_GUEST="1317"
+LCD_API_PORT_HOST="1317"
+# Tendermint port (26657) and p2p port (26656) are not exposed since we don't need them for testing
+
 SCRIPT_DIR="$(realpath "$(dirname "$0")")"
 # shellcheck source=./env
 # shellcheck disable=SC1091
 source "$SCRIPT_DIR"/env
 
-echo "$CONTAINER_NAME"
-
-TMP_DIR=$(mktemp -d "${TMPDIR:-/tmp}/gaia.XXXXXXXXX")
+TMP_DIR=$(mktemp -d "${TMPDIR:-/tmp}/wasmd.XXXXXXXXX")
 chmod 777 "$TMP_DIR"
 echo "Using temporary dir $TMP_DIR"
 WASMD_LOGFILE="$TMP_DIR/wasmd.log"
 REST_SERVER_LOGFILE="$TMP_DIR/rest-server.log"
 
-# This starts up wasmd
-# The Tendermint port (26657) and the p2p port (26656) are not exposed since we don't need for testing
+# Use a fresh volume for every start
 docker volume rm -f wasmd_data
+
+# This starts up wasmd
 docker run --rm \
   --name "$CONTAINER_NAME" \
-  -p "$REST_PORT_HOST":"$REST_PORT_GUEST" \
+  -p "$LCD_API_PORT_HOST":"$LCD_API_PORT_GUEST" \
   --mount type=bind,source="$SCRIPT_DIR/template",target=/template \
   --mount type=volume,source=wasmd_data,target=/root \
   "$REPOSITORY:$VERSION" \
@@ -48,10 +49,10 @@ docker exec "$CONTAINER_NAME" \
   --node tcp://localhost:26657 \
   --trust-node \
   --unsafe-cors \
-  --laddr "tcp://0.0.0.0:$REST_PORT_GUEST" \
+  --laddr "tcp://0.0.0.0:$LCD_API_PORT_GUEST" \
   > "$REST_SERVER_LOGFILE" &
 
-echo "rest server running on http://localhost:$REST_PORT_HOST and logging into $REST_SERVER_LOGFILE"
+echo "rest server running on http://localhost:$LCD_API_PORT_HOST and logging into $REST_SERVER_LOGFILE"
 
 # Give REST server some time to come alive. No idea why this helps. Needed for CI.
 if [ -n "${CI:-}" ]; then
