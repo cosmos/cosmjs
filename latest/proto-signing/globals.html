@@ -66,8 +66,8 @@
 						<section class="tsd-index-section ">
 							<h3>Classes</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-class"><a href="classes/coin.html" class="tsd-kind-icon">Coin</a></li>
-								<li class="tsd-kind-class"><a href="classes/msgsend.html" class="tsd-kind-icon">Msg<wbr>Send</a></li>
+								<li class="tsd-kind-class tsd-has-type-parameter"><a href="classes/coin.html" class="tsd-kind-icon">Coin</a></li>
+								<li class="tsd-kind-class tsd-has-type-parameter"><a href="classes/msgsend.html" class="tsd-kind-icon">Msg<wbr>Send</a></li>
 								<li class="tsd-kind-class"><a href="classes/registry.html" class="tsd-kind-icon">Registry</a></li>
 							</ul>
 						</section>
@@ -117,10 +117,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-type-alias">
 					<a name="fielddecorator" class="tsd-anchor"></a>
 					<h3>Field<wbr>Decorator</h3>
-					<div class="tsd-signature tsd-kind-icon">Field<wbr>Decorator<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>target<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span>, propertyKey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
+					<div class="tsd-signature tsd-kind-icon">Field<wbr>Decorator<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>target<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, propertyKey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/0a483e13/packages/proto-signing/src/decorator.ts#L21">packages/proto-signing/src/decorator.ts:21</a></li>
+							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/26bbfce6/packages/proto-signing/src/decorator.ts#L21">packages/proto-signing/src/decorator.ts:21</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -133,14 +133,14 @@
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter-signature">
 								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>target<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span>, propertyKey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>target<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, propertyKey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 								</ul>
 								<ul class="tsd-descriptions">
 									<li class="tsd-description">
 										<h4 class="tsd-parameters-title">Parameters</h4>
 										<ul class="tsd-parameters">
 											<li>
-												<h5>target: <span class="tsd-signature-type">object</span></h5>
+												<h5>target: <span class="tsd-signature-type">any</span></h5>
 											</li>
 											<li>
 												<h5>propertyKey: <span class="tsd-signature-type">string</span></h5>
@@ -162,7 +162,7 @@
 					<div class="tsd-signature tsd-kind-icon">Msg<wbr>Demo<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Type</span><span class="tsd-signature-symbol"> = new Type(&quot;MsgDemo&quot;).add(new Field(&quot;example&quot;, 1, &quot;string&quot;))</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/0a483e13/packages/proto-signing/src/demo.ts#L4">packages/proto-signing/src/demo.ts:4</a></li>
+							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/26bbfce6/packages/proto-signing/src/demo.ts#L4">packages/proto-signing/src/demo.ts:4</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -172,7 +172,7 @@
 					<div class="tsd-signature tsd-kind-icon">default<wbr>Registry<span class="tsd-signature-symbol">:</span> <a href="classes/registry.html" class="tsd-signature-type">Registry</a><span class="tsd-signature-symbol"> = new Registry()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/0a483e13/packages/proto-signing/src/msgs.ts#L7">packages/proto-signing/src/msgs.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/26bbfce6/packages/proto-signing/src/msgs.ts#L7">packages/proto-signing/src/msgs.ts:7</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -182,7 +182,7 @@
 					<div class="tsd-signature tsd-kind-icon">proto<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &#x60;syntax &#x3D; &quot;proto3&quot;;package demo;message MsgDemo {string example &#x3D; 1;}&#x60;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/0a483e13/packages/proto-signing/src/demo.proto.ts#L3">packages/proto-signing/src/demo.proto.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/26bbfce6/packages/proto-signing/src/demo.proto.ts#L3">packages/proto-signing/src/demo.proto.ts:3</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -192,7 +192,7 @@
 					<div class="tsd-signature tsd-kind-icon">root<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Namespace</span><span class="tsd-signature-symbol"> = new Root().define(&quot;demo&quot;).add(MsgDemo)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/0a483e13/packages/proto-signing/src/demo.ts#L6">packages/proto-signing/src/demo.ts:6</a></li>
+							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/26bbfce6/packages/proto-signing/src/demo.ts#L6">packages/proto-signing/src/demo.ts:6</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -209,7 +209,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/0a483e13/packages/proto-signing/src/decorator.ts#L10">packages/proto-signing/src/decorator.ts:10</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/26bbfce6/packages/proto-signing/src/decorator.ts#L10">packages/proto-signing/src/decorator.ts:10</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -235,7 +235,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/0a483e13/packages/proto-signing/src/decorator.ts#L5">packages/proto-signing/src/decorator.ts:5</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/26bbfce6/packages/proto-signing/src/decorator.ts#L5">packages/proto-signing/src/decorator.ts:5</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -257,7 +257,7 @@
 					<div class="tsd-signature tsd-kind-icon">cosmos<wbr>Field<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/0a483e13/packages/proto-signing/src/decorator.ts#L23">packages/proto-signing/src/decorator.ts:23</a></li>
+							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/26bbfce6/packages/proto-signing/src/decorator.ts#L23">packages/proto-signing/src/decorator.ts:23</a></li>
 						</ul>
 					</aside>
 					<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-object-literal">
@@ -270,7 +270,7 @@
 							<li class="tsd-description">
 								<aside class="tsd-sources">
 									<ul>
-										<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/0a483e13/packages/proto-signing/src/decorator.ts#L24">packages/proto-signing/src/decorator.ts:24</a></li>
+										<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/26bbfce6/packages/proto-signing/src/decorator.ts#L24">packages/proto-signing/src/decorator.ts:24</a></li>
 									</ul>
 								</aside>
 								<h4 class="tsd-parameters-title">Parameters</h4>
@@ -293,7 +293,7 @@
 							<li class="tsd-description">
 								<aside class="tsd-sources">
 									<ul>
-										<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/0a483e13/packages/proto-signing/src/decorator.ts#L27">packages/proto-signing/src/decorator.ts:27</a></li>
+										<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/26bbfce6/packages/proto-signing/src/decorator.ts#L27">packages/proto-signing/src/decorator.ts:27</a></li>
 									</ul>
 								</aside>
 								<h4 class="tsd-parameters-title">Parameters</h4>
@@ -316,7 +316,7 @@
 							<li class="tsd-description">
 								<aside class="tsd-sources">
 									<ul>
-										<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/0a483e13/packages/proto-signing/src/decorator.ts#L29">packages/proto-signing/src/decorator.ts:29</a></li>
+										<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/26bbfce6/packages/proto-signing/src/decorator.ts#L29">packages/proto-signing/src/decorator.ts:29</a></li>
 									</ul>
 								</aside>
 								<h4 class="tsd-parameters-title">Parameters</h4>
@@ -333,13 +333,13 @@
 						<a name="cosmosfield.message" class="tsd-anchor"></a>
 						<h3>message</h3>
 						<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-object-literal">
-							<li class="tsd-signature tsd-kind-icon">message<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, ctor<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Constructor</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Message</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="globals.html#fielddecorator" class="tsd-signature-type">FieldDecorator</a></li>
+							<li class="tsd-signature tsd-kind-icon">message<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, ctor<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Constructor</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Message</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="globals.html#fielddecorator" class="tsd-signature-type">FieldDecorator</a></li>
 						</ul>
 						<ul class="tsd-descriptions">
 							<li class="tsd-description">
 								<aside class="tsd-sources">
 									<ul>
-										<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/0a483e13/packages/proto-signing/src/decorator.ts#L32">packages/proto-signing/src/decorator.ts:32</a></li>
+										<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/26bbfce6/packages/proto-signing/src/decorator.ts#L32">packages/proto-signing/src/decorator.ts:32</a></li>
 									</ul>
 								</aside>
 								<h4 class="tsd-parameters-title">Parameters</h4>
@@ -348,7 +348,7 @@
 										<h5>id: <span class="tsd-signature-type">number</span></h5>
 									</li>
 									<li>
-										<h5>ctor: <span class="tsd-signature-type">Constructor</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Message</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h5>
+										<h5>ctor: <span class="tsd-signature-type">Constructor</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Message</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									</li>
 								</ul>
 								<h4 class="tsd-returns-title">Returns <a href="globals.html#fielddecorator" class="tsd-signature-type">FieldDecorator</a></h4>
@@ -359,13 +359,13 @@
 						<a name="cosmosfield.repeatedmessage" class="tsd-anchor"></a>
 						<h3>repeated<wbr>Message</h3>
 						<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-object-literal">
-							<li class="tsd-signature tsd-kind-icon">repeated<wbr>Message<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, ctor<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Constructor</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Message</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="globals.html#fielddecorator" class="tsd-signature-type">FieldDecorator</a></li>
+							<li class="tsd-signature tsd-kind-icon">repeated<wbr>Message<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, ctor<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Constructor</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Message</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="globals.html#fielddecorator" class="tsd-signature-type">FieldDecorator</a></li>
 						</ul>
 						<ul class="tsd-descriptions">
 							<li class="tsd-description">
 								<aside class="tsd-sources">
 									<ul>
-										<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/0a483e13/packages/proto-signing/src/decorator.ts#L35">packages/proto-signing/src/decorator.ts:35</a></li>
+										<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/26bbfce6/packages/proto-signing/src/decorator.ts#L35">packages/proto-signing/src/decorator.ts:35</a></li>
 									</ul>
 								</aside>
 								<h4 class="tsd-parameters-title">Parameters</h4>
@@ -374,7 +374,7 @@
 										<h5>id: <span class="tsd-signature-type">number</span></h5>
 									</li>
 									<li>
-										<h5>ctor: <span class="tsd-signature-type">Constructor</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Message</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h5>
+										<h5>ctor: <span class="tsd-signature-type">Constructor</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Message</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									</li>
 								</ul>
 								<h4 class="tsd-returns-title">Returns <a href="globals.html#fielddecorator" class="tsd-signature-type">FieldDecorator</a></h4>
@@ -391,7 +391,7 @@
 							<li class="tsd-description">
 								<aside class="tsd-sources">
 									<ul>
-										<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/0a483e13/packages/proto-signing/src/decorator.ts#L34">packages/proto-signing/src/decorator.ts:34</a></li>
+										<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/26bbfce6/packages/proto-signing/src/decorator.ts#L34">packages/proto-signing/src/decorator.ts:34</a></li>
 									</ul>
 								</aside>
 								<h4 class="tsd-parameters-title">Parameters</h4>
@@ -414,7 +414,7 @@
 							<li class="tsd-description">
 								<aside class="tsd-sources">
 									<ul>
-										<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/0a483e13/packages/proto-signing/src/decorator.ts#L26">packages/proto-signing/src/decorator.ts:26</a></li>
+										<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/26bbfce6/packages/proto-signing/src/decorator.ts#L26">packages/proto-signing/src/decorator.ts:26</a></li>
 									</ul>
 								</aside>
 								<h4 class="tsd-parameters-title">Parameters</h4>
@@ -437,7 +437,7 @@
 							<li class="tsd-description">
 								<aside class="tsd-sources">
 									<ul>
-										<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/0a483e13/packages/proto-signing/src/decorator.ts#L30">packages/proto-signing/src/decorator.ts:30</a></li>
+										<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/26bbfce6/packages/proto-signing/src/decorator.ts#L30">packages/proto-signing/src/decorator.ts:30</a></li>
 									</ul>
 								</aside>
 								<h4 class="tsd-parameters-title">Parameters</h4>
@@ -457,7 +457,7 @@
 					<div class="tsd-signature tsd-kind-icon">default<wbr>Type<wbr>Urls<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/0a483e13/packages/proto-signing/src/registry.ts#L30">packages/proto-signing/src/registry.ts:30</a></li>
+							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/26bbfce6/packages/proto-signing/src/registry.ts#L30">packages/proto-signing/src/registry.ts:30</a></li>
 						</ul>
 					</aside>
 					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -466,7 +466,7 @@
 						<div class="tsd-signature tsd-kind-icon">cosmos<wbr>Coin<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;/cosmos.Coin&quot;</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/0a483e13/packages/proto-signing/src/registry.ts#L31">packages/proto-signing/src/registry.ts:31</a></li>
+								<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/26bbfce6/packages/proto-signing/src/registry.ts#L31">packages/proto-signing/src/registry.ts:31</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -476,7 +476,7 @@
 						<div class="tsd-signature tsd-kind-icon">cosmos<wbr>Msg<wbr>Send<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;/cosmos.bank.MsgSend&quot;</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/0a483e13/packages/proto-signing/src/registry.ts#L32">packages/proto-signing/src/registry.ts:32</a></li>
+								<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/26bbfce6/packages/proto-signing/src/registry.ts#L32">packages/proto-signing/src/registry.ts:32</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -486,7 +486,7 @@
 						<div class="tsd-signature tsd-kind-icon">cosmos<wbr>TxBody<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;/cosmos.tx.TxBody&quot;</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/0a483e13/packages/proto-signing/src/registry.ts#L33">packages/proto-signing/src/registry.ts:33</a></li>
+								<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/26bbfce6/packages/proto-signing/src/registry.ts#L33">packages/proto-signing/src/registry.ts:33</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -496,7 +496,7 @@
 						<div class="tsd-signature tsd-kind-icon">google<wbr>Any<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;/google.protobuf.Any&quot;</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/0a483e13/packages/proto-signing/src/registry.ts#L34">packages/proto-signing/src/registry.ts:34</a></li>
+								<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/26bbfce6/packages/proto-signing/src/registry.ts#L34">packages/proto-signing/src/registry.ts:34</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -513,10 +513,10 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class">
+					<li class=" tsd-kind-class tsd-has-type-parameter">
 						<a href="classes/coin.html" class="tsd-kind-icon">Coin</a>
 					</li>
-					<li class=" tsd-kind-class">
+					<li class=" tsd-kind-class tsd-has-type-parameter">
 						<a href="classes/msgsend.html" class="tsd-kind-icon">Msg<wbr>Send</a>
 					</li>
 					<li class=" tsd-kind-class">
