@@ -6,6 +6,9 @@
 - @cosmjs/cosmwasm: Rename `SigningCosmWasmClient.signAndPost` method to
   `.signAndBroadcast`.
 - @cosmjs/demo-staking: Remove package and supporting scripts.
+- @cosmjs/encoding: Add `limit` parameter to `Bech32.encode` and `.decode`. The
+  new default limit for decoding is infinity (was 90 before). Set it to 90 to
+  create a strict decoder.
 - @cosmjs/launchpad: Rename `CosmosClient.postTx` method to `.broadcastTx`.
 - @cosmjs/launchpad: Rename `SigningCosmosClient.signAndPost` method to
   `.signAndBroadcast`.
