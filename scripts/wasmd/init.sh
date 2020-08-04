@@ -26,4 +26,3 @@ SCRIPT_DIR="$(realpath "$(dirname "$0")")"
 )
 "$SCRIPT_DIR/deploy_erc20.js"
 "$SCRIPT_DIR/deploy_nameservice.js"
-"$SCRIPT_DIR/deploy_staking.js"
