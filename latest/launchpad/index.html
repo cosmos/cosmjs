@@ -68,6 +68,260 @@
 					(Launchpad). See the article
 					<a href="https://blog.cosmos.network/launchpad-a-pre-stargate-stable-version-of-the-cosmos-sdk-e0c58d8c4e24">Launchpad — A pre-stargate stable version of the Cosmos SDK</a>
 				to learn more about launchpad.</p>
+				<a href="#cosmos-sdk-module-support" id="cosmos-sdk-module-support" style="color: inherit; text-decoration: none;">
+					<h2>Cosmos SDK module support</h2>
+				</a>
+				<p>This client library supports connecting to standard Cosmos SDK modules as well
+				as custom modules. The modularity has two sides that are handled separately:</p>
+				<ul>
+					<li>Queries are for reading data from the chain;</li>
+					<li>Messages are for writing data to chain as part of the transaction signing.</li>
+				</ul>
+				<a href="#query-support" id="query-support" style="color: inherit; text-decoration: none;">
+					<h3>Query support</h3>
+				</a>
+				<p>@cosmjs/launchpad now has a flexible
+					<a href="https://cosmwasm.github.io/cosmjs/latest/launchpad/classes/lcdclient.html">LcdClient</a>,
+					which can be extended with all the standard Cosmos SDK modules in a type-safe
+				way. With</p>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { LcdClient } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@cosmjs/launchpad&quot;</span>;
+
+<span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> LcdClient(apiUrl);
+<span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> client.nodeInfo();</code></pre>
+				<p>you only get access to blocks, transaction lists and node info. In order to sign
+				transactions, you need to setup the auth extension with:</p>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { LcdClient, setupAuthExtension } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@cosmjs/launchpad&quot;</span>;
+
+<span class="hljs-keyword">const</span> client = LcdClient.withExtensions({ apiUrl }, setupAuthExtension);
+<span class="hljs-keyword">const</span> { account_number, sequence } = (
+  <span class="hljs-keyword">await</span> client.auth.account(myAddress)
+).result.value;</code></pre>
+				<p>A full client can use all of the following extensions:</p>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> {
+  LcdClient,
+  setupAuthExtension,
+  setupBankExtension,
+  setupDistributionExtension,
+  setupGovExtension,
+  setupMintExtension,
+  setupSlashingExtension,
+  setupStakingExtension,
+  setupSupplyExtension,
+} <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@cosmjs/launchpad&quot;</span>;
+
+<span class="hljs-keyword">const</span> client = LcdClient.withExtensions(
+  { apiUrl },
+  setupAuthExtension,
+  setupBankExtension,
+  setupDistributionExtension,
+  setupGovExtension,
+  setupMintExtension,
+  setupSlashingExtension,
+  setupStakingExtension,
+  setupSupplyExtension,
+);
+
+<span class="hljs-comment">// Example queries</span>
+<span class="hljs-keyword">const</span> balances = <span class="hljs-keyword">await</span> client.bank.balances(myAddress);
+<span class="hljs-keyword">const</span> distParameters = <span class="hljs-keyword">await</span> client.distribution.parameters();
+<span class="hljs-keyword">const</span> proposals = <span class="hljs-keyword">await</span> client.gov.proposals();
+<span class="hljs-keyword">const</span> inflation = <span class="hljs-keyword">await</span> client.mint.inflation();
+<span class="hljs-keyword">const</span> signingInfos = <span class="hljs-keyword">await</span> client.slashing.signingInfos();
+<span class="hljs-keyword">const</span> redelegations = <span class="hljs-keyword">await</span> client.staking.redelegations();
+<span class="hljs-keyword">const</span> supply = <span class="hljs-keyword">await</span> client.supply.totalAll();</code></pre>
+				<a href="#messages-suppport" id="messages-suppport" style="color: inherit; text-decoration: none;">
+					<h3>Messages suppport</h3>
+				</a>
+				<p>Every Amino-JSON compatible message can be used for the
+					<a href="https://cosmwasm.github.io/cosmjs/latest/launchpad/interfaces/msg.html">Msg</a>
+				interface like this:</p>
+				<pre><code class="language-ts"><span class="hljs-keyword">const</span> voteMsg: Msg = {
+  <span class="hljs-keyword">type</span>: <span class="hljs-string">&quot;cosmos-sdk/MsgVote&quot;</span>,
+  value: {
+    proposal_id: proposalId,
+    voter: faucet.address,
+    option: <span class="hljs-string">&quot;Yes&quot;</span>,
+  },
+};</code></pre>
+				<p>This is most flexible since you are not restricted to known messages, but gives
+					you very little type safety. For improved type safety, we added TypeScript
+				definitions for all common Cosmos SDK messages:</p>
+				<ul>
+					<li>MsgSend</li>
+					<li>MsgMultiSend</li>
+					<li>MsgVerifyInvariant</li>
+					<li>MsgSetWithdrawAddress</li>
+					<li>MsgWithdrawDelegatorReward</li>
+					<li>MsgWithdrawValidatorCommission</li>
+					<li>MsgFundCommunityPool</li>
+					<li>MsgSubmitEvidence</li>
+					<li>MsgSubmitProposal</li>
+					<li>MsgVote</li>
+					<li>MsgDeposit</li>
+					<li>MsgUnjail</li>
+					<li>MsgCreateValidator</li>
+					<li>MsgEditValidator</li>
+					<li>MsgDelegate</li>
+					<li>MsgBeginRedelegate</li>
+					<li>MsgUndelegate</li>
+				</ul>
+				<p>Those can be signed and broadcast the manual way or by using a higher level
+				<a href="https://cosmwasm.github.io/cosmjs/latest/launchpad/classes/signingcosmosclient.html">SigningCosmosClient</a>:</p>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> {
+  coins,
+  MsgSubmitProposal,
+  OfflineSigner,
+  PostTxResult,
+  SigningCosmosClient,
+  StdFee,
+} <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@cosmjs/launchpad&quot;</span>;
+
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">publishProposal</span>(<span class="hljs-params">
+  apiUrl: <span class="hljs-built_in">string</span>,
+  signer: OfflineSigner,
+</span>): <span class="hljs-title">Promise</span>&lt;<span class="hljs-title">PostTxResult</span>&gt; </span>{
+  <span class="hljs-keyword">const</span> [{ address: authorAddress }] = <span class="hljs-keyword">await</span> signer.getAccounts();
+
+  <span class="hljs-keyword">const</span> memo = <span class="hljs-string">&quot;My first proposal on chain&quot;</span>;
+  <span class="hljs-keyword">const</span> msg: MsgSubmitProposal = {
+    <span class="hljs-keyword">type</span>: <span class="hljs-string">&quot;cosmos-sdk/MsgSubmitProposal&quot;</span>,
+    value: {
+      content: {
+        <span class="hljs-keyword">type</span>: <span class="hljs-string">&quot;cosmos-sdk/TextProposal&quot;</span>,
+        value: {
+          description:
+            <span class="hljs-string">&quot;This proposal proposes to test whether this proposal passes&quot;</span>,
+          title: <span class="hljs-string">&quot;Test Proposal&quot;</span>,
+        },
+      },
+      proposer: authorAddress,
+      initial_deposit: coins(<span class="hljs-number">25000000</span>, <span class="hljs-string">&quot;ustake&quot;</span>),
+    },
+  };
+  <span class="hljs-keyword">const</span> fee: StdFee = {
+    amount: coins(<span class="hljs-number">5000000</span>, <span class="hljs-string">&quot;ucosm&quot;</span>),
+    gas: <span class="hljs-string">&quot;89000000&quot;</span>,
+  };
+
+  <span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> SigningCosmosClient(apiUrl, authorAddress, signer);
+  <span class="hljs-keyword">return</span> client.signAndPost([msg], fee, memo);
+}</code></pre>
+				<a href="#custom-modules" id="custom-modules" style="color: inherit; text-decoration: none;">
+					<h3>Custom modules</h3>
+				</a>
+				<p>Both query and message support is implemented in a decentralized fashion, which
+					allows applications to add their extensions without changing CosmJS. As an
+				example we show how to build a client for a blockchain with a wasm module:</p>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { MsgExecuteContract, setupWasmExtension } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@cosmjs/cosmwasm&quot;</span>;
+<span class="hljs-keyword">import</span> {
+  assertIsPostTxSuccess,
+  LcdClient,
+  makeSignBytes,
+  setupAuthExtension,
+  StdFee,
+  StdTx,
+} <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@cosmjs/launchpad&quot;</span>;
+
+<span class="hljs-keyword">const</span> client = LcdClient.withExtensions(
+  { apiUrl },
+  setupAuthExtension,
+  <span class="hljs-comment">// 👇 this extension can come from a chain-specific package or the application itself</span>
+  setupWasmExtension,
+);
+
+<span class="hljs-comment">// 👇 this message type can come from a chain-specific package or the application itself</span>
+<span class="hljs-keyword">const</span> msg: MsgExecuteContract = {
+  <span class="hljs-keyword">type</span>: <span class="hljs-string">&quot;wasm/MsgExecuteContract&quot;</span>,
+  value: {
+    sender: myAddress,
+    contract: contractAddress,
+    msg: wasmMsg,
+    sent_funds: [],
+  },
+};
+
+<span class="hljs-keyword">const</span> fee: StdFee = {
+  amount: coins(<span class="hljs-number">5000000</span>, <span class="hljs-string">&quot;ucosm&quot;</span>),
+  gas: <span class="hljs-string">&quot;89000000&quot;</span>,
+};
+<span class="hljs-keyword">const</span> memo = <span class="hljs-string">&quot;Time for action&quot;</span>;
+<span class="hljs-keyword">const</span> { account_number, sequence } = (
+  <span class="hljs-keyword">await</span> client.auth.account(myAddress)
+).result.value;
+<span class="hljs-keyword">const</span> signBytes = makeSignBytes(
+  [msg],
+  fee,
+  apiUrl,
+  memo,
+  account_number,
+  sequence,
+);
+<span class="hljs-keyword">const</span> signature = <span class="hljs-keyword">await</span> signer.sign(myAddress, signBytes);
+<span class="hljs-keyword">const</span> signedTx: StdTx = {
+  msg: [msg],
+  fee: fee,
+  memo: memo,
+  signatures: [signature],
+};
+<span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> client.postTx(signedTx);
+assertIsPostTxSuccess(result);</code></pre>
+				<a href="#secure-key-storage" id="secure-key-storage" style="color: inherit; text-decoration: none;">
+					<h2>Secure key storage</h2>
+				</a>
+				<p><a href="https://cosmwasm.github.io/cosmjs/latest/launchpad/classes/secp256k1wallet.html">Secp256k1Wallet</a>
+					supports securely encrypted serialization/deserialization using Argon2 for key
+					derivation and XChaCha20Poly1305 for authenticated encryption. It can be used as
+				easily as:</p>
+				<pre><code class="language-ts"><span class="hljs-comment">// generate an 18 word mnemonic</span>
+<span class="hljs-keyword">const</span> wallet = <span class="hljs-keyword">await</span> Secp256k1Wallet.generate(<span class="hljs-number">18</span>);
+<span class="hljs-keyword">const</span> serialized = <span class="hljs-keyword">await</span> original.serialize(<span class="hljs-string">&quot;my password&quot;</span>);
+
+<span class="hljs-comment">// serialized is encrypted and can now be stored in an application-specific way</span>
+
+<span class="hljs-keyword">const</span> restored = <span class="hljs-keyword">await</span> Secp256k1Wallet.deserialize(serialized, <span class="hljs-string">&quot;my password&quot;</span>);</code></pre>
+				<p>If you want to use really strong KDF parameters in a user interface, you should
+					offload the KDF execution to a separate thread in order to avoid freezing the
+				UI. This can be done in the advanced mode:</p>
+				<p><strong>Session 1 (main thread)</strong></p>
+				<pre><code class="language-ts"><span class="hljs-keyword">const</span> wallet = <span class="hljs-keyword">await</span> Secp256k1Wallet.generate(<span class="hljs-number">18</span>);</code></pre>
+				<p><strong>Session 1 (WebWorker)</strong></p>
+				<p>This operation can now run a couple of seconds without freezing the UI.</p>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { executeKdf } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@cosmjs/launchpad&quot;</span>;
+
+<span class="hljs-comment">// pass password to the worker</span>
+
+<span class="hljs-keyword">const</span> strongKdfParams: KdfConfiguration = {
+  algorithm: <span class="hljs-string">&quot;argon2id&quot;</span>,
+  params: {
+    outputLength: <span class="hljs-number">32</span>,
+    opsLimit: <span class="hljs-number">5000</span>,
+    memLimitKib: <span class="hljs-number">15</span> * <span class="hljs-number">1024</span>,
+  },
+};
+<span class="hljs-keyword">const</span> encryptionKey = <span class="hljs-keyword">await</span> executeKdf(password, strongKdfParams);
+
+<span class="hljs-comment">// pass encryptionKey to the main thread</span></code></pre>
+				<p><strong>Session 1 (main thread)</strong></p>
+				<pre><code class="language-ts"><span class="hljs-keyword">const</span> serialized = <span class="hljs-keyword">await</span> wallet.serializeWithEncryptionKey(
+  encryptionKey,
+  anyKdfParams,
+);</code></pre>
+				<p><strong>Session 2 (WebWorker)</strong></p>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { executeKdf, extractKdfConfiguration } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@cosmjs/launchpad&quot;</span>;
+
+<span class="hljs-comment">// pass serialized and password to the worker</span>
+
+<span class="hljs-keyword">const</span> kdfConfiguration = extractKdfConfiguration(serialized);
+<span class="hljs-keyword">const</span> encryptionKey = <span class="hljs-keyword">await</span> executeKdf(password, kdfConfiguration);
+
+<span class="hljs-comment">// pass encryptionKey to the main thread</span></code></pre>
+				<p><strong>Session 2 (main thead)</strong></p>
+				<pre><code class="language-ts"><span class="hljs-keyword">const</span> restored = <span class="hljs-keyword">await</span> Secp256k1Wallet.deserializeWithEncryptionKey(
+  serialized,
+  encryptionKey,
+);
+
+<span class="hljs-comment">// use restored for signing</span></code></pre>
 				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
 					<h2>License</h2>
 				</a>
