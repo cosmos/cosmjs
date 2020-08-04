@@ -5,6 +5,7 @@
 - @cosmjs/cosmwasm: Rename `CosmWasmClient.postTx` method to `.broadcastTx`.
 - @cosmjs/cosmwasm: Rename `SigningCosmWasmClient.signAndPost` method to
   `.signAndBroadcast`.
+- @cosmjs/demo-staking: Remove package and supporting scripts.
 - @cosmjs/launchpad: Rename `CosmosClient.postTx` method to `.broadcastTx`.
 - @cosmjs/launchpad: Rename `SigningCosmosClient.signAndPost` method to
   `.signAndBroadcast`.
