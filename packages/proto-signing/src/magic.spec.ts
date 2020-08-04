@@ -11,13 +11,13 @@ describe("registry magic demo", () => {
     const myRegistry = new Registry();
 
     @cosmosMessage(myRegistry, nestedTypeUrl)
-    class MsgNestedMagic extends Message<{}> {
+    class MsgNestedMagic extends Message {
       @cosmosField.string(1)
       public readonly foo?: string;
     }
 
     @cosmosMessage(myRegistry, typeUrl)
-    class MsgMagic extends Message<{}> {
+    class MsgMagic extends Message {
       @cosmosField.boolean(1)
       public readonly booleanDemo?: boolean;
 

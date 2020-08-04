@@ -1,4 +1,4 @@
-/* eslint-disable no-dupe-class-members, @typescript-eslint/naming-convention */
+/* eslint-disable no-dupe-class-members, @typescript-eslint/ban-types, @typescript-eslint/naming-convention */
 import { assert, isNonNullObject } from "@cosmjs/utils";
 import axios, { AxiosError, AxiosInstance } from "axios";
 
@@ -227,6 +227,7 @@ export class LcdClient {
     return data;
   }
 
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public async post(path: string, params: any): Promise<any> {
     if (!isNonNullObject(params)) throw new Error("Got unexpected type of params. Expected object.");
     const { data } = await this.client.post(path, params).catch(parseAxiosError);

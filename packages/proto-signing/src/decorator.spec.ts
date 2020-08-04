@@ -16,14 +16,14 @@ describe("decorator demo", () => {
     const myRegistry = new Registry();
 
     @cosmosMessage(myRegistry, nestedTypeUrl)
-    class MsgNestedDemo extends Message<{}> {
+    class MsgNestedDemo extends Message {
       @cosmosField.string(1)
       public readonly foo?: string;
     }
 
     @cosmosMessage(myRegistry, typeUrl)
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    class MsgDemo extends Message<{}> {
+    class MsgDemo extends Message {
       @cosmosField.boolean(1)
       public readonly booleanDemo?: boolean;
 

@@ -37,7 +37,7 @@ export interface ContractCodeHistoryEntry {
   /** The source of this history entry */
   readonly operation: "Genesis" | "Init" | "Migrate";
   readonly code_id: number;
-  readonly msg: object;
+  readonly msg: Record<string, unknown>;
 }
 /**
  * @see https://github.com/cosmwasm/wasmd/blob/master/x/wasm/client/rest/query.go#L19-L27
@@ -74,7 +74,7 @@ export interface WasmExtension {
      * Makes a smart query on the contract and parses the response as JSON.
      * Throws error if no such contract exists, the query format is invalid or the response is invalid.
      */
-    readonly queryContractSmart: (address: string, query: object) => Promise<JsonObject>;
+    readonly queryContractSmart: (address: string, query: Record<string, unknown>) => Promise<JsonObject>;
   };
 }
 export declare function setupWasmExtension(base: LcdClient): WasmExtension;

@@ -88,7 +88,7 @@ export interface ContractCodeHistoryEntry {
   /** The source of this history entry */
   readonly operation: "Genesis" | "Init" | "Migrate";
   readonly codeId: number;
-  readonly msg: object;
+  readonly msg: Record<string, unknown>;
 }
 export interface BlockHeader {
   readonly version: {
@@ -175,6 +175,6 @@ export declare class CosmWasmClient {
    * Promise is rejected for invalid query format.
    * Promise is rejected for invalid response format.
    */
-  queryContractSmart(address: string, queryMsg: object): Promise<JsonObject>;
+  queryContractSmart(address: string, queryMsg: Record<string, unknown>): Promise<JsonObject>;
   private txsQuery;
 }

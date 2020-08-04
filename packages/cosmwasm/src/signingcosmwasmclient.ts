@@ -232,7 +232,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
 
   public async instantiate(
     codeId: number,
-    initMsg: object,
+    initMsg: Record<string, unknown>,
     label: string,
     options: InstantiateOptions = {},
   ): Promise<InstantiateResult> {
@@ -299,7 +299,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   public async migrate(
     contractAddress: string,
     codeId: number,
-    migrateMsg: object,
+    migrateMsg: Record<string, unknown>,
     memo = "",
   ): Promise<MigrateResult> {
     const msg: MsgMigrateContract = {
@@ -323,7 +323,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
 
   public async execute(
     contractAddress: string,
-    handleMsg: object,
+    handleMsg: Record<string, unknown>,
     memo = "",
     transferAmount?: readonly Coin[],
   ): Promise<ExecuteResult> {

@@ -59,11 +59,6 @@ const connect = async (
   return { client, address };
 };
 
-// smartQuery assumes the content is proper JSON data and parses before returning it
-async function smartQuery(client: CosmWasmClient, addr: string, query: object): Promise<any> {
-  return client.queryContractSmart(addr, query);
-}
-
 // loadOrCreateMnemonic will try to load a mnemonic from the file.
 // If missing, it will generate a random one and save to the file.
 //

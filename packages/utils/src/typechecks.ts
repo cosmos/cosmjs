@@ -6,6 +6,7 @@
  *
  * @see https://www.typescriptlang.org/docs/handbook/basic-types.html#object
  */
+// eslint-disable-next-line @typescript-eslint/ban-types
 export function isNonNullObject(data: unknown): data is object {
   return typeof data === "object" && data !== null;
 }

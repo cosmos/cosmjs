@@ -11,7 +11,7 @@ module.exports = {
     project: "./tsconfig.json",
     tsconfigRootDir: __dirname,
   },
-  plugins: ["@typescript-eslint", "prettier", "simple-import-sort", "import", "functional"],
+  plugins: ["@typescript-eslint", "prettier", "simple-import-sort", "import"],
   extends: [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
@@ -33,7 +33,7 @@ module.exports = {
     "simple-import-sort/sort": "warn",
     "@typescript-eslint/array-type": ["warn", { default: "array-simple" }],
     "@typescript-eslint/await-thenable": "warn",
-    "@typescript-eslint/camelcase": "off", // deprecated in favour of @typescript-eslint/naming-convention, see https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/camelcase.md
+    "@typescript-eslint/ban-types": "warn",
     "@typescript-eslint/explicit-function-return-type": ["warn", { allowExpressions: true }],
     "@typescript-eslint/naming-convention": [
       "warn",
@@ -69,7 +69,6 @@ module.exports = {
     "@typescript-eslint/no-unnecessary-type-assertion": "warn",
     "@typescript-eslint/no-use-before-define": "warn",
     "@typescript-eslint/prefer-readonly": "warn",
-    "functional/no-method-signature": "warn",
   },
   overrides: [
     {

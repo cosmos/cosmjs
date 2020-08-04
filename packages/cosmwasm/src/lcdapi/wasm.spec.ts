@@ -107,7 +107,7 @@ async function executeContract(
   client: WasmClient,
   signer: OfflineSigner,
   contractAddress: string,
-  msg: object,
+  msg: Record<string, unknown>,
 ): Promise<BroadcastTxsResponse> {
   const memo = "Time for action";
   const theMsg: MsgExecuteContract = {

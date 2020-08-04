@@ -57,7 +57,7 @@ export interface ContractCodeHistoryEntry {
   /** The source of this history entry */
   readonly operation: "Genesis" | "Init" | "Migrate";
   readonly code_id: number;
-  readonly msg: object;
+  readonly msg: Record<string, unknown>;
 }
 
 interface SmartQueryResponse {
@@ -118,7 +118,7 @@ export interface WasmExtension {
      * Makes a smart query on the contract and parses the response as JSON.
      * Throws error if no such contract exists, the query format is invalid or the response is invalid.
      */
-    readonly queryContractSmart: (address: string, query: object) => Promise<JsonObject>;
+    readonly queryContractSmart: (address: string, query: Record<string, unknown>) => Promise<JsonObject>;
   };
 }
 
@@ -162,7 +162,7 @@ export function setupWasmExtension(base: LcdClient): WasmExtension {
         const data = unwrapWasmResponse(responseData);
         return data.length === 0 ? null : fromBase64(data[0].val);
       },
-      queryContractSmart: async (address: string, query: object) => {
+      queryContractSmart: async (address: string, query: Record<string, unknown>) => {
         const encoded = toHex(toUtf8(JSON.stringify(query)));
         const path = `/wasm/contract/${address}/smart/${encoded}?encoding=hex`;
         const responseData = (await base.get(path)) as WasmResponse<SmartQueryResponse>;
