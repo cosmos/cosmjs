@@ -11,7 +11,7 @@ module.exports = {
     project: "./tsconfig.json",
     tsconfigRootDir: __dirname,
   },
-  plugins: ["@typescript-eslint", "prettier", "simple-import-sort", "import", "functional"],
+  plugins: ["@typescript-eslint", "prettier", "simple-import-sort", "import"],
   extends: [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
@@ -69,7 +69,6 @@ module.exports = {
     "@typescript-eslint/no-unnecessary-type-assertion": "warn",
     "@typescript-eslint/no-use-before-define": "warn",
     "@typescript-eslint/prefer-readonly": "warn",
-    "functional/no-method-signature": "warn",
   },
   overrides: [
     {
