@@ -125,7 +125,7 @@ info;
 info.initMsg;
 
 // see your balance here
-smartQuery(client, addr, { balance: { address } });
+client.queryContractSmart(addr, { balance: { address } });
 ```
 
 Instantiate and use ERC20 contract:
@@ -153,17 +153,17 @@ const fooAddr2 = await client
   )[(fooAddr, fooAddr2)];
 
 // now we have some cash
-smartQuery(client, fooAddr, { balance: { address } });
+client.queryContractSmart(fooAddr, { balance: { address } });
 
 const rcpt = await randomAddress("cosmos");
 rcpt;
-smartQuery(client, fooAddr, { balance: { address: rcpt } });
+client.queryContractSmart(fooAddr, { balance: { address: rcpt } });
 
 const execMsg = { transfer: { recipient: rcpt, amount: "808" } };
 const exec = await client.execute(fooAddr, execMsg);
 exec;
 exec.logs[0].events[0];
-smartQuery(client, fooAddr, { balance: { address: rcpt } });
+client.queryContractSmart(fooAddr, { balance: { address: rcpt } });
 ```
 
 Or just send tokens:

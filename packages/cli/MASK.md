@@ -85,10 +85,10 @@ const ercs = await client.getContracts(ercId);
 const foo = ercs.filter((x) => x.label == "FOO").map((x) => x.address)[0];
 
 // send some erc tokens to the mask as before
-smartQuery(client, foo, { balance: { address: mask } });
+client.queryContractSmart(foo, { balance: { address: mask } });
 const ercMsg = { transfer: { recipient: mask, amount: "800000" } };
 client.execute(foo, ercMsg);
-smartQuery(client, foo, { balance: { address: mask } });
+client.queryContractSmart(foo, { balance: { address: mask } });
 ```
 
 ## Usage
@@ -117,8 +117,8 @@ client.getAccount(mask);
 And call the ERC20 contract from it:
 
 ```ts
-smartQuery(client, foo, { balance: { address: rand } });
-smartQuery(client, foo, { balance: { address: mask } });
+client.queryContractSmart(foo, { balance: { address: rand } });
+client.queryContractSmart(foo, { balance: { address: mask } });
 
 const callContract: HandleMsg = {
   reflectmsg: {
@@ -128,8 +128,8 @@ const callContract: HandleMsg = {
   },
 };
 client.execute(mask, callContract);
-smartQuery(client, foo, { balance: { address: rand } });
-smartQuery(client, foo, { balance: { address: mask } });
+client.queryContractSmart(foo, { balance: { address: rand } });
+client.queryContractSmart(foo, { balance: { address: mask } });
 ```
 
 ### Staking via OpaqueMsg
@@ -241,17 +241,17 @@ aliceClient.getAccount();
 
 // now, transfer ownership of the mask
 const query: QueryMsg = { owner: {} };
-smartQuery(client, mask, query);
+client.queryContractSmart(mask, query);
 const transferMsg: HandleMsg = { changeowner: { owner: alice } };
 client.execute(mask, transferMsg);
-smartQuery(client, mask, query);
+client.queryContractSmart(mask, query);
 ```
 
 From now own, alice can control the mask, not me.... And she can extract the
 erc20 tokens or anything else the mask controls
 
 ```ts
-smartQuery(client, foo, { balance: { address: alice } });
+client.queryContractSmart(foo, { balance: { address: alice } });
 
 const withdraw: HandleMsg = {
   reflectmsg: {
@@ -264,7 +264,7 @@ const withdraw: HandleMsg = {
 client.execute(mask, withdraw);
 // this will succeed (alice)
 aliceClient.execute(mask, withdraw);
-smartQuery(client, foo, { balance: { address: alice } });
+client.queryContractSmart(foo, { balance: { address: alice } });
 ```
 
 Please explore the use-cases of the Mask. More than a production-ready contract
