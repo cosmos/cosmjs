@@ -33,7 +33,7 @@ module.exports = {
     "simple-import-sort/sort": "warn",
     "@typescript-eslint/array-type": ["warn", { default: "array-simple" }],
     "@typescript-eslint/await-thenable": "warn",
-    "@typescript-eslint/camelcase": "off", // deprecated in favour of @typescript-eslint/naming-convention, see https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/camelcase.md
+    "@typescript-eslint/ban-types": "warn",
     "@typescript-eslint/explicit-function-return-type": ["warn", { allowExpressions: true }],
     "@typescript-eslint/naming-convention": [
       "warn",

@@ -424,7 +424,7 @@ interface RpcGenesisResponse {
   // PoS blockchains use the app_state.genutil.gentxs field to stake and bond a number of validators in the first block.
   readonly validators?: readonly RpcValidatorGenesis[];
   readonly app_hash: HexString;
-  readonly app_state: {} | undefined;
+  readonly app_state: Record<string, unknown> | undefined;
 }
 
 interface GenesisResult {
@@ -476,7 +476,7 @@ interface RpcNodeInfo {
    *   "rpc_address":"tcp://0.0.0.0:26657"
    * }
    */
-  readonly other: object;
+  readonly other: Record<string, unknown>;
 }
 
 function decodeNodeInfo(data: RpcNodeInfo): responses.NodeInfo {

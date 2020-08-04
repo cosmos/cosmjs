@@ -124,10 +124,10 @@ export function may<T, U>(transform: (val: T) => U, value: T | null | undefined)
   return value === undefined || value === null ? undefined : transform(value);
 }
 
-export function dictionaryToStringMap(obj: any): Map<string, string> {
+export function dictionaryToStringMap(obj: Record<string, unknown>): Map<string, string> {
   const out = new Map<string, string>();
   for (const key of Object.keys(obj)) {
-    const value: unknown = obj[key];
+    const value = obj[key];
     if (typeof value !== "string") {
       throw new Error("Found dictionary value of type other than string");
     }

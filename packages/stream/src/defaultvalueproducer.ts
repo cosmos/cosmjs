@@ -36,6 +36,7 @@ export class DefaultValueProducer<T> implements Producer<T> {
   /**
    * Produce an error
    */
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public error(error: any): void {
     if (this.listener) {
       this.listener.error(error);

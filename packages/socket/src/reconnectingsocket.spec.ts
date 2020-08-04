@@ -9,6 +9,7 @@ let exec: Exec | undefined;
 let childProcessAvailable: boolean;
 
 try {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   exec = require("child_process").exec;
   assert.strict(typeof exec === "function");
   childProcessAvailable = true;

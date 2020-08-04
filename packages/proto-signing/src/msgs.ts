@@ -7,7 +7,7 @@ import { Registry } from "./registry";
 export const defaultRegistry = new Registry();
 
 @cosmosMessage(defaultRegistry, "/cosmos.Coin")
-export class Coin extends Message<{}> {
+export class Coin extends Message {
   @cosmosField.string(1)
   public readonly denom?: string;
 
@@ -16,7 +16,7 @@ export class Coin extends Message<{}> {
 }
 
 @cosmosMessage(defaultRegistry, "/cosmos.bank.MsgSend")
-export class MsgSend extends Message<{}> {
+export class MsgSend extends Message {
   @cosmosField.bytes(1)
   public readonly from_address?: Uint8Array;
 
