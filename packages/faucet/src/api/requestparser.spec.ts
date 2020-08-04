@@ -7,6 +7,18 @@ describe("RequestParser", () => {
   });
 
   it("throws for invalid credit requests", () => {
+    // body not a dictionary
+    {
+      expect(() => RequestParser.parseCreditBody("foo")).toThrowError(/Request body must be a dictionary./i);
+      expect(() => RequestParser.parseCreditBody(null)).toThrowError(/Request body must be a dictionary./i);
+      expect(() => RequestParser.parseCreditBody(42)).toThrowError(/Request body must be a dictionary./i);
+      expect(() => RequestParser.parseCreditBody([])).toThrowError(/Request body must be a dictionary./i);
+      expect(() => RequestParser.parseCreditBody(true)).toThrowError(/Request body must be a dictionary./i);
+      expect(() => RequestParser.parseCreditBody(undefined)).toThrowError(
+        /Request body must be a dictionary./i,
+      );
+    }
+
     // address unset
     {
       const body = { ticker: "TKN" };
