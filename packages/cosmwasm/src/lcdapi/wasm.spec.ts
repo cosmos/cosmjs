@@ -295,6 +295,7 @@ describe("WasmExtension", () => {
     });
 
     it("is empty for non-existent address", async () => {
+      pendingWithoutWasmd();
       const client = makeWasmClient(wasmd.endpoint);
       const nonExistentAddress = makeRandomAddress();
       const state = await client.wasm.getAllContractState(nonExistentAddress);
