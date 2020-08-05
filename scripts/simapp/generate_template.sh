@@ -9,8 +9,10 @@ source "$SCRIPT_DIR"/env
 
 rm -rf "$SCRIPT_DIR/template"
 mkdir "$SCRIPT_DIR/template"
-cp setup.sh "$SCRIPT_DIR/template/" && chmod +x "$SCRIPT_DIR/template/setup.sh"
-cp run_simd.sh "$SCRIPT_DIR/template/" && chmod +x "$SCRIPT_DIR/template/run_simd.sh"
+cp setup.sh "$SCRIPT_DIR/template/"
+chmod +x "$SCRIPT_DIR/template/setup.sh"
+cp run_simd.sh "$SCRIPT_DIR/template/"
+chmod +x "$SCRIPT_DIR/template/run_simd.sh"
 
 # The usage of the accounts below is documented in README.md of this directory
 docker run --rm \
