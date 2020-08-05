@@ -9,7 +9,7 @@ TENDERMINT_PROTO_DIR="$ROOT_PROTO_DIR/third_party/proto/tendermint"
 GOOGLE_PROTO_DIR="$ROOT_PROTO_DIR/third_party/proto/google"
 
 mkdir -p "$GENERATED_DIR"
-pbjs \
+yarn pbjs \
   -t static-module \
   --es6 \
   -w commonjs \

@@ -8,7 +8,7 @@ DEFINITIONS_FILE="$TMP_DIR/codecimpl.d.ts"
 OUTPUT_DIR="./src/generated/"
 
 
-pbts "$JS_SOURCE_FILE" -o "$DEFINITIONS_FILE"
-tsc --removeComments --outDir "$OUTPUT_DIR" --allowJs "$JS_SOURCE_FILE"
+yarn pbts "$JS_SOURCE_FILE" -o "$DEFINITIONS_FILE"
+yarn tsc --removeComments --outDir "$OUTPUT_DIR" --allowJs "$JS_SOURCE_FILE"
 cp "$DEFINITIONS_FILE" "$OUTPUT_DIR"
 rm "$DEFINITIONS_FILE" "$JS_SOURCE_FILE"
