@@ -389,6 +389,229 @@ exports.cosmos = $root.cosmos = (function () {
     };
     return TxData;
   })();
+  cosmos.TxResponse = (function () {
+    function TxResponse(p) {
+      this.logs = [];
+      if (p)
+        for (var ks = Object.keys(p), i = 0; i < ks.length; ++i) if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+    }
+    TxResponse.prototype.height = $util.Long ? $util.Long.fromBits(0, 0, false) : 0;
+    TxResponse.prototype.txhash = "";
+    TxResponse.prototype.codespace = "";
+    TxResponse.prototype.code = 0;
+    TxResponse.prototype.data = "";
+    TxResponse.prototype.rawLog = "";
+    TxResponse.prototype.logs = $util.emptyArray;
+    TxResponse.prototype.info = "";
+    TxResponse.prototype.gasWanted = $util.Long ? $util.Long.fromBits(0, 0, false) : 0;
+    TxResponse.prototype.gasUsed = $util.Long ? $util.Long.fromBits(0, 0, false) : 0;
+    TxResponse.prototype.tx = null;
+    TxResponse.prototype.timestamp = "";
+    TxResponse.create = function create(properties) {
+      return new TxResponse(properties);
+    };
+    TxResponse.encode = function encode(m, w) {
+      if (!w) w = $Writer.create();
+      if (m.height != null && Object.hasOwnProperty.call(m, "height")) w.uint32(8).int64(m.height);
+      if (m.txhash != null && Object.hasOwnProperty.call(m, "txhash")) w.uint32(18).string(m.txhash);
+      if (m.codespace != null && Object.hasOwnProperty.call(m, "codespace")) w.uint32(26).string(m.codespace);
+      if (m.code != null && Object.hasOwnProperty.call(m, "code")) w.uint32(32).uint32(m.code);
+      if (m.data != null && Object.hasOwnProperty.call(m, "data")) w.uint32(42).string(m.data);
+      if (m.rawLog != null && Object.hasOwnProperty.call(m, "rawLog")) w.uint32(50).string(m.rawLog);
+      if (m.logs != null && m.logs.length) {
+        for (var i = 0; i < m.logs.length; ++i)
+          $root.cosmos.ABCIMessageLog.encode(m.logs[i], w.uint32(58).fork()).ldelim();
+      }
+      if (m.info != null && Object.hasOwnProperty.call(m, "info")) w.uint32(66).string(m.info);
+      if (m.gasWanted != null && Object.hasOwnProperty.call(m, "gasWanted")) w.uint32(72).int64(m.gasWanted);
+      if (m.gasUsed != null && Object.hasOwnProperty.call(m, "gasUsed")) w.uint32(80).int64(m.gasUsed);
+      if (m.tx != null && Object.hasOwnProperty.call(m, "tx"))
+        $root.google.protobuf.Any.encode(m.tx, w.uint32(90).fork()).ldelim();
+      if (m.timestamp != null && Object.hasOwnProperty.call(m, "timestamp")) w.uint32(98).string(m.timestamp);
+      return w;
+    };
+    TxResponse.decode = function decode(r, l) {
+      if (!(r instanceof $Reader)) r = $Reader.create(r);
+      var c = l === undefined ? r.len : r.pos + l,
+        m = new $root.cosmos.TxResponse();
+      while (r.pos < c) {
+        var t = r.uint32();
+        switch (t >>> 3) {
+          case 1:
+            m.height = r.int64();
+            break;
+          case 2:
+            m.txhash = r.string();
+            break;
+          case 3:
+            m.codespace = r.string();
+            break;
+          case 4:
+            m.code = r.uint32();
+            break;
+          case 5:
+            m.data = r.string();
+            break;
+          case 6:
+            m.rawLog = r.string();
+            break;
+          case 7:
+            if (!(m.logs && m.logs.length)) m.logs = [];
+            m.logs.push($root.cosmos.ABCIMessageLog.decode(r, r.uint32()));
+            break;
+          case 8:
+            m.info = r.string();
+            break;
+          case 9:
+            m.gasWanted = r.int64();
+            break;
+          case 10:
+            m.gasUsed = r.int64();
+            break;
+          case 11:
+            m.tx = $root.google.protobuf.Any.decode(r, r.uint32());
+            break;
+          case 12:
+            m.timestamp = r.string();
+            break;
+          default:
+            r.skipType(t & 7);
+            break;
+        }
+      }
+      return m;
+    };
+    return TxResponse;
+  })();
+  cosmos.ABCIMessageLog = (function () {
+    function ABCIMessageLog(p) {
+      this.events = [];
+      if (p)
+        for (var ks = Object.keys(p), i = 0; i < ks.length; ++i) if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+    }
+    ABCIMessageLog.prototype.msgIndex = 0;
+    ABCIMessageLog.prototype.log = "";
+    ABCIMessageLog.prototype.events = $util.emptyArray;
+    ABCIMessageLog.create = function create(properties) {
+      return new ABCIMessageLog(properties);
+    };
+    ABCIMessageLog.encode = function encode(m, w) {
+      if (!w) w = $Writer.create();
+      if (m.msgIndex != null && Object.hasOwnProperty.call(m, "msgIndex")) w.uint32(8).uint32(m.msgIndex);
+      if (m.log != null && Object.hasOwnProperty.call(m, "log")) w.uint32(18).string(m.log);
+      if (m.events != null && m.events.length) {
+        for (var i = 0; i < m.events.length; ++i)
+          $root.cosmos.StringEvent.encode(m.events[i], w.uint32(26).fork()).ldelim();
+      }
+      return w;
+    };
+    ABCIMessageLog.decode = function decode(r, l) {
+      if (!(r instanceof $Reader)) r = $Reader.create(r);
+      var c = l === undefined ? r.len : r.pos + l,
+        m = new $root.cosmos.ABCIMessageLog();
+      while (r.pos < c) {
+        var t = r.uint32();
+        switch (t >>> 3) {
+          case 1:
+            m.msgIndex = r.uint32();
+            break;
+          case 2:
+            m.log = r.string();
+            break;
+          case 3:
+            if (!(m.events && m.events.length)) m.events = [];
+            m.events.push($root.cosmos.StringEvent.decode(r, r.uint32()));
+            break;
+          default:
+            r.skipType(t & 7);
+            break;
+        }
+      }
+      return m;
+    };
+    return ABCIMessageLog;
+  })();
+  cosmos.StringEvent = (function () {
+    function StringEvent(p) {
+      this.attributes = [];
+      if (p)
+        for (var ks = Object.keys(p), i = 0; i < ks.length; ++i) if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+    }
+    StringEvent.prototype.type = "";
+    StringEvent.prototype.attributes = $util.emptyArray;
+    StringEvent.create = function create(properties) {
+      return new StringEvent(properties);
+    };
+    StringEvent.encode = function encode(m, w) {
+      if (!w) w = $Writer.create();
+      if (m.type != null && Object.hasOwnProperty.call(m, "type")) w.uint32(10).string(m.type);
+      if (m.attributes != null && m.attributes.length) {
+        for (var i = 0; i < m.attributes.length; ++i)
+          $root.cosmos.Attribute.encode(m.attributes[i], w.uint32(18).fork()).ldelim();
+      }
+      return w;
+    };
+    StringEvent.decode = function decode(r, l) {
+      if (!(r instanceof $Reader)) r = $Reader.create(r);
+      var c = l === undefined ? r.len : r.pos + l,
+        m = new $root.cosmos.StringEvent();
+      while (r.pos < c) {
+        var t = r.uint32();
+        switch (t >>> 3) {
+          case 1:
+            m.type = r.string();
+            break;
+          case 2:
+            if (!(m.attributes && m.attributes.length)) m.attributes = [];
+            m.attributes.push($root.cosmos.Attribute.decode(r, r.uint32()));
+            break;
+          default:
+            r.skipType(t & 7);
+            break;
+        }
+      }
+      return m;
+    };
+    return StringEvent;
+  })();
+  cosmos.Attribute = (function () {
+    function Attribute(p) {
+      if (p)
+        for (var ks = Object.keys(p), i = 0; i < ks.length; ++i) if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+    }
+    Attribute.prototype.key = "";
+    Attribute.prototype.value = "";
+    Attribute.create = function create(properties) {
+      return new Attribute(properties);
+    };
+    Attribute.encode = function encode(m, w) {
+      if (!w) w = $Writer.create();
+      if (m.key != null && Object.hasOwnProperty.call(m, "key")) w.uint32(10).string(m.key);
+      if (m.value != null && Object.hasOwnProperty.call(m, "value")) w.uint32(18).string(m.value);
+      return w;
+    };
+    Attribute.decode = function decode(r, l) {
+      if (!(r instanceof $Reader)) r = $Reader.create(r);
+      var c = l === undefined ? r.len : r.pos + l,
+        m = new $root.cosmos.Attribute();
+      while (r.pos < c) {
+        var t = r.uint32();
+        switch (t >>> 3) {
+          case 1:
+            m.key = r.string();
+            break;
+          case 2:
+            m.value = r.string();
+            break;
+          default:
+            r.skipType(t & 7);
+            break;
+        }
+      }
+      return m;
+    };
+    return Attribute;
+  })();
   cosmos.bank = (function () {
     var bank = {};
     bank.Params = (function () {
@@ -701,6 +924,109 @@ exports.cosmos = $root.cosmos = (function () {
         return m;
       };
       return Supply;
+    })();
+    bank.DenomUnits = (function () {
+      function DenomUnits(p) {
+        this.aliases = [];
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      DenomUnits.prototype.denom = "";
+      DenomUnits.prototype.exponent = 0;
+      DenomUnits.prototype.aliases = $util.emptyArray;
+      DenomUnits.create = function create(properties) {
+        return new DenomUnits(properties);
+      };
+      DenomUnits.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.denom != null && Object.hasOwnProperty.call(m, "denom")) w.uint32(10).string(m.denom);
+        if (m.exponent != null && Object.hasOwnProperty.call(m, "exponent")) w.uint32(16).uint32(m.exponent);
+        if (m.aliases != null && m.aliases.length) {
+          for (var i = 0; i < m.aliases.length; ++i) w.uint32(26).string(m.aliases[i]);
+        }
+        return w;
+      };
+      DenomUnits.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.cosmos.bank.DenomUnits();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.denom = r.string();
+              break;
+            case 2:
+              m.exponent = r.uint32();
+              break;
+            case 3:
+              if (!(m.aliases && m.aliases.length)) m.aliases = [];
+              m.aliases.push(r.string());
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return DenomUnits;
+    })();
+    bank.Metadata = (function () {
+      function Metadata(p) {
+        this.denomUnits = [];
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      Metadata.prototype.description = "";
+      Metadata.prototype.denomUnits = $util.emptyArray;
+      Metadata.prototype.base = "";
+      Metadata.prototype.display = "";
+      Metadata.create = function create(properties) {
+        return new Metadata(properties);
+      };
+      Metadata.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.description != null && Object.hasOwnProperty.call(m, "description"))
+          w.uint32(10).string(m.description);
+        if (m.denomUnits != null && m.denomUnits.length) {
+          for (var i = 0; i < m.denomUnits.length; ++i)
+            $root.cosmos.bank.DenomUnits.encode(m.denomUnits[i], w.uint32(18).fork()).ldelim();
+        }
+        if (m.base != null && Object.hasOwnProperty.call(m, "base")) w.uint32(26).string(m.base);
+        if (m.display != null && Object.hasOwnProperty.call(m, "display")) w.uint32(34).string(m.display);
+        return w;
+      };
+      Metadata.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.cosmos.bank.Metadata();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.description = r.string();
+              break;
+            case 2:
+              if (!(m.denomUnits && m.denomUnits.length)) m.denomUnits = [];
+              m.denomUnits.push($root.cosmos.bank.DenomUnits.decode(r, r.uint32()));
+              break;
+            case 3:
+              m.base = r.string();
+              break;
+            case 4:
+              m.display = r.string();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return Metadata;
     })();
     return bank;
   })();
@@ -1400,6 +1726,229 @@ exports.cosmos = $root.cosmos = (function () {
         values[(valuesById[2] = "SIGN_MODE_TEXTUAL")] = 2;
         values[(valuesById[127] = "SIGN_MODE_LEGACY_AMINO_JSON")] = 127;
         return values;
+      })();
+      signing.SignatureDescriptors = (function () {
+        function SignatureDescriptors(p) {
+          this.signatures = [];
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        SignatureDescriptors.prototype.signatures = $util.emptyArray;
+        SignatureDescriptors.create = function create(properties) {
+          return new SignatureDescriptors(properties);
+        };
+        SignatureDescriptors.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.signatures != null && m.signatures.length) {
+            for (var i = 0; i < m.signatures.length; ++i)
+              $root.cosmos.tx.signing.SignatureDescriptor.encode(
+                m.signatures[i],
+                w.uint32(10).fork(),
+              ).ldelim();
+          }
+          return w;
+        };
+        SignatureDescriptors.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.tx.signing.SignatureDescriptors();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                if (!(m.signatures && m.signatures.length)) m.signatures = [];
+                m.signatures.push($root.cosmos.tx.signing.SignatureDescriptor.decode(r, r.uint32()));
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return SignatureDescriptors;
+      })();
+      signing.SignatureDescriptor = (function () {
+        function SignatureDescriptor(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        SignatureDescriptor.prototype.publicKey = null;
+        SignatureDescriptor.prototype.data = null;
+        SignatureDescriptor.create = function create(properties) {
+          return new SignatureDescriptor(properties);
+        };
+        SignatureDescriptor.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.publicKey != null && Object.hasOwnProperty.call(m, "publicKey"))
+            $root.cosmos.crypto.PublicKey.encode(m.publicKey, w.uint32(10).fork()).ldelim();
+          if (m.data != null && Object.hasOwnProperty.call(m, "data"))
+            $root.cosmos.tx.signing.SignatureDescriptor.Data.encode(m.data, w.uint32(18).fork()).ldelim();
+          return w;
+        };
+        SignatureDescriptor.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.tx.signing.SignatureDescriptor();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.publicKey = $root.cosmos.crypto.PublicKey.decode(r, r.uint32());
+                break;
+              case 2:
+                m.data = $root.cosmos.tx.signing.SignatureDescriptor.Data.decode(r, r.uint32());
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        SignatureDescriptor.Data = (function () {
+          function Data(p) {
+            if (p)
+              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+          }
+          Data.prototype.single = null;
+          Data.prototype.multi = null;
+          var $oneOfFields;
+          Object.defineProperty(Data.prototype, "sum", {
+            get: $util.oneOfGetter(($oneOfFields = ["single", "multi"])),
+            set: $util.oneOfSetter($oneOfFields),
+          });
+          Data.create = function create(properties) {
+            return new Data(properties);
+          };
+          Data.encode = function encode(m, w) {
+            if (!w) w = $Writer.create();
+            if (m.single != null && Object.hasOwnProperty.call(m, "single"))
+              $root.cosmos.tx.signing.SignatureDescriptor.Data.Single.encode(
+                m.single,
+                w.uint32(10).fork(),
+              ).ldelim();
+            if (m.multi != null && Object.hasOwnProperty.call(m, "multi"))
+              $root.cosmos.tx.signing.SignatureDescriptor.Data.Multi.encode(
+                m.multi,
+                w.uint32(18).fork(),
+              ).ldelim();
+            return w;
+          };
+          Data.decode = function decode(r, l) {
+            if (!(r instanceof $Reader)) r = $Reader.create(r);
+            var c = l === undefined ? r.len : r.pos + l,
+              m = new $root.cosmos.tx.signing.SignatureDescriptor.Data();
+            while (r.pos < c) {
+              var t = r.uint32();
+              switch (t >>> 3) {
+                case 1:
+                  m.single = $root.cosmos.tx.signing.SignatureDescriptor.Data.Single.decode(r, r.uint32());
+                  break;
+                case 2:
+                  m.multi = $root.cosmos.tx.signing.SignatureDescriptor.Data.Multi.decode(r, r.uint32());
+                  break;
+                default:
+                  r.skipType(t & 7);
+                  break;
+              }
+            }
+            return m;
+          };
+          Data.Single = (function () {
+            function Single(p) {
+              if (p)
+                for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+                  if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+            }
+            Single.prototype.mode = 0;
+            Single.prototype.signature = $util.newBuffer([]);
+            Single.create = function create(properties) {
+              return new Single(properties);
+            };
+            Single.encode = function encode(m, w) {
+              if (!w) w = $Writer.create();
+              if (m.mode != null && Object.hasOwnProperty.call(m, "mode")) w.uint32(8).int32(m.mode);
+              if (m.signature != null && Object.hasOwnProperty.call(m, "signature"))
+                w.uint32(18).bytes(m.signature);
+              return w;
+            };
+            Single.decode = function decode(r, l) {
+              if (!(r instanceof $Reader)) r = $Reader.create(r);
+              var c = l === undefined ? r.len : r.pos + l,
+                m = new $root.cosmos.tx.signing.SignatureDescriptor.Data.Single();
+              while (r.pos < c) {
+                var t = r.uint32();
+                switch (t >>> 3) {
+                  case 1:
+                    m.mode = r.int32();
+                    break;
+                  case 2:
+                    m.signature = r.bytes();
+                    break;
+                  default:
+                    r.skipType(t & 7);
+                    break;
+                }
+              }
+              return m;
+            };
+            return Single;
+          })();
+          Data.Multi = (function () {
+            function Multi(p) {
+              this.signatures = [];
+              if (p)
+                for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+                  if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+            }
+            Multi.prototype.bitarray = null;
+            Multi.prototype.signatures = $util.emptyArray;
+            Multi.create = function create(properties) {
+              return new Multi(properties);
+            };
+            Multi.encode = function encode(m, w) {
+              if (!w) w = $Writer.create();
+              if (m.bitarray != null && Object.hasOwnProperty.call(m, "bitarray"))
+                $root.cosmos.crypto.CompactBitArray.encode(m.bitarray, w.uint32(10).fork()).ldelim();
+              if (m.signatures != null && m.signatures.length) {
+                for (var i = 0; i < m.signatures.length; ++i)
+                  $root.cosmos.tx.signing.SignatureDescriptor.Data.encode(
+                    m.signatures[i],
+                    w.uint32(18).fork(),
+                  ).ldelim();
+              }
+              return w;
+            };
+            Multi.decode = function decode(r, l) {
+              if (!(r instanceof $Reader)) r = $Reader.create(r);
+              var c = l === undefined ? r.len : r.pos + l,
+                m = new $root.cosmos.tx.signing.SignatureDescriptor.Data.Multi();
+              while (r.pos < c) {
+                var t = r.uint32();
+                switch (t >>> 3) {
+                  case 1:
+                    m.bitarray = $root.cosmos.crypto.CompactBitArray.decode(r, r.uint32());
+                    break;
+                  case 2:
+                    if (!(m.signatures && m.signatures.length)) m.signatures = [];
+                    m.signatures.push($root.cosmos.tx.signing.SignatureDescriptor.Data.decode(r, r.uint32()));
+                    break;
+                  default:
+                    r.skipType(t & 7);
+                    break;
+                }
+              }
+              return m;
+            };
+            return Multi;
+          })();
+          return Data;
+        })();
+        return SignatureDescriptor;
       })();
       return signing;
     })();
