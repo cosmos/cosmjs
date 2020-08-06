@@ -44,4 +44,20 @@ function inline_jq() {
   fi
 }
 
-inline_jq "$SCRIPT_DIR/template/.simapp/config/genesis.json" -S
+(
+  cd "$SCRIPT_DIR"
+
+  # Sort genesis
+  inline_jq "template/.simapp/config/genesis.json" -S
+
+  # Custom settings in config.toml
+  sed -i "" \
+    -e 's/^timeout_propose =.*$/timeout_propose = "300ms"/' \
+    -e 's/^timeout_propose_delta =.*$/timeout_propose_delta = "100ms"/' \
+    -e 's/^timeout_prevote =.*$/timeout_prevote = "300ms"/' \
+    -e 's/^timeout_prevote_delta =.*$/timeout_prevote_delta = "100ms"/' \
+    -e 's/^timeout_precommit =.*$/timeout_precommit = "300ms"/' \
+    -e 's/^timeout_precommit_delta =.*$/timeout_precommit_delta = "100ms"/' \
+    -e 's/^timeout_commit =.*$/timeout_commit = "1s"/' \
+    "template/.simapp/config/config.toml"
+)
