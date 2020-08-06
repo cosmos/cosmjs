@@ -1,6 +1,6 @@
 /// <reference types="long" />
-import { Message } from "protobufjs";
 import { Registry } from "@cosmjs/proto-signing";
+import { Message } from "protobufjs";
 export declare const defaultRegistry: Registry;
 export declare class Coin extends Message {
   readonly denom?: string;

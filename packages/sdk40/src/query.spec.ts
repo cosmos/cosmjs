@@ -4,7 +4,7 @@ import { Secp256k1Wallet } from "@cosmjs/launchpad";
 import { Client } from "@cosmjs/tendermint-rpc";
 import Long from "long";
 
-import { proveAccount, proveBalance } from "./query";
+import { getAccount, getBalance } from "./query";
 import { BaseAccount } from "./structs";
 
 export function pendingWithoutSimapp(): void {
@@ -32,7 +32,7 @@ describe("query account", () => {
     const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
     const [{ address }] = await wallet.getAccounts();
 
-    const envelope = await proveAccount(client, address);
+    const envelope = await getAccount(client, address);
 
     expect(envelope.type_url).toEqual("/cosmos.auth.BaseAccount");
     const account = BaseAccount.decode(envelope.value);
@@ -50,7 +50,7 @@ describe("query account", () => {
     const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
     const [{ address }] = await wallet.getAccounts();
 
-    const balance = await proveBalance(client, address, "ucosm");
+    const balance = await getBalance(client, address, "ucosm");
     expect(balance.denom).toEqual("ucosm");
     expect(balance.amount).toEqual("1000000000");
   });
