@@ -1,0 +1,1 @@
+export { decodeAny } from "./any";
