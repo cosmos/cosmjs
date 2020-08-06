@@ -1,10 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Message } from "protobufjs";
 
-import { cosmosField, registered } from "./decorator";
-import { defaultRegistry } from "./msgs";
+import { cosmosField } from "./decorator";
 
-@registered(defaultRegistry, "/cosmos.auth.BaseAccount")
 export class BaseAccount extends Message {
   @cosmosField.bytes(1)
   public readonly address?: Uint8Array;
