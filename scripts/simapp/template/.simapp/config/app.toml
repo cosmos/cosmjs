@@ -78,7 +78,7 @@ global-labels = [
 [api]
 
 # Enable defines if the API server should be enabled.
-enable = false
+enable = true
 
 # Swagger defines if swagger documentation should automatically be registered.
 swagger = false
@@ -99,4 +99,4 @@ rpc-write-timeout = 0
 rpc-max-body-bytes = 1000000
 
 # EnableUnsafeCORS defines if CORS should be enabled (unsafe - use it at your own risk)
-enabled-unsafe-cors = false
+enabled-unsafe-cors = true

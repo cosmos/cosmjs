@@ -60,4 +60,10 @@ function inline_jq() {
     -e 's/^timeout_precommit_delta =.*$/timeout_precommit_delta = "100ms"/' \
     -e 's/^timeout_commit =.*$/timeout_commit = "1s"/' \
     "template/.simapp/config/config.toml"
+
+  # Custom settings app.toml
+  sed -i "" \
+    -e 's/^enable =.*$/enable = true/' \
+    -e 's/^enabled-unsafe-cors =.*$/enabled-unsafe-cors = true/' \
+    "template/.simapp/config/app.toml"
 )
