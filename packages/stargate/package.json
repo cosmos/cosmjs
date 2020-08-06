@@ -38,7 +38,9 @@
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
   },
   "dependencies": {
+    "@cosmjs/encoding": "^0.22.0",
     "@cosmjs/proto-signing": "^0.22.0",
-    "@cosmjs/tendermint-rpc": "^0.22.0"
+    "@cosmjs/tendermint-rpc": "^0.22.0",
+    "@cosmjs/utils": "^0.22.0"
   }
 }

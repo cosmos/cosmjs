@@ -1,5 +1,5 @@
 import { StargateClient } from "./stargateclient";
-import { pendingWithoutSimapp, simapp } from "./testutils.spec";
+import { pendingWithoutSimapp, simapp, unused } from "./testutils.spec";
 
 describe("StargateClient", () => {
   describe("connect", () => {
@@ -7,6 +7,19 @@ describe("StargateClient", () => {
       pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrl);
       expect(client).toBeTruthy();
+      client.disconnect();
+    });
+  });
+
+  describe("getSequence", () => {
+    it("works for unused account", async () => {
+      pendingWithoutSimapp();
+      const client = await StargateClient.connect(simapp.tendermintUrl);
+
+      const { accountNumber, sequence } = await client.getSequence(unused.address);
+      expect(accountNumber).toEqual(unused.accountNumber);
+      expect(sequence).toEqual(unused.sequence);
+
       client.disconnect();
     });
   });
