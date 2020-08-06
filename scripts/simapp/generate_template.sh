@@ -31,3 +31,17 @@ docker run --rm \
 if [ ! -x "$SCRIPT_DIR/template/.simapp/config/gentx" ]; then
   sudo chown -R "$(id -u):$(id -g)" "$SCRIPT_DIR/template"
 fi
+
+function inline_jq() {
+  IN_OUT_PATH="$1"
+  shift
+  TMP_DIR=$(mktemp -d "${TMPDIR:-/tmp}/inline_jq.XXXXXXXXX")
+  TMP_FILE="$TMP_DIR/$(basename "$IN_OUT_PATH")"
+  jq "$@" < "$IN_OUT_PATH" > "$TMP_FILE"
+  if ! mv "$TMP_FILE" "$IN_OUT_PATH" ; then
+    >&2 echo "Temp file '$TMP_FILE' could not be deleted. If it contains sensitive data, you might want to delete it manually."
+    exit 3
+  fi
+}
+
+inline_jq "$SCRIPT_DIR/template/.simapp/config/genesis.json" -S
