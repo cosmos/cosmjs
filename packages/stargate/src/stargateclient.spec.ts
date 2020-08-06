@@ -23,4 +23,34 @@ describe("StargateClient", () => {
       client.disconnect();
     });
   });
+
+  describe("getBalance", () => {
+    it("works for different existing balances", async () => {
+      pendingWithoutSimapp();
+      const client = await StargateClient.connect(simapp.tendermintUrl);
+
+      const response1 = await client.getBalance(unused.address, "ucosm");
+      expect(response1).toEqual({
+        amount: "1000000000",
+        denom: "ucosm",
+      });
+      const response2 = await client.getBalance(unused.address, "ustake");
+      expect(response2).toEqual({
+        amount: "1000000000",
+        denom: "ustake",
+      });
+
+      client.disconnect();
+    });
+
+    it("returns null for non-existent balance", async () => {
+      pendingWithoutSimapp();
+      const client = await StargateClient.connect(simapp.tendermintUrl);
+
+      const response = await client.getBalance(unused.address, "gintonic");
+      expect(response).toBeNull();
+
+      client.disconnect();
+    });
+  });
 });

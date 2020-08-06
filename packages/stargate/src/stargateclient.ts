@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Bech32, toHex } from "@cosmjs/encoding";
+import { Bech32, toAscii, toHex } from "@cosmjs/encoding";
 import { Uint64 } from "@cosmjs/math";
-import { BaseAccount, decodeAny } from "@cosmjs/proto-signing";
+import { BaseAccount, Coin, decodeAny } from "@cosmjs/proto-signing";
 import { Client as TendermintClient } from "@cosmjs/tendermint-rpc";
 import { assert } from "@cosmjs/utils";
 import Long from "long";
@@ -46,6 +46,37 @@ export class StargateClient {
       }
       default:
         throw new Error(`Unsupported type: ${typeUrl}`);
+    }
+  }
+
+  public async getBalance(
+    address: string,
+    searchDenom: string,
+  ): Promise<{
+    readonly denom: string;
+    readonly amount: string;
+  } | null> {
+    // balance key is a bit tricker, using some prefix stores
+    // https://github.com/cosmwasm/cosmos-sdk/blob/80f7ff62f79777a487d0c7a53c64b0f7e43c47b9/x/bank/keeper/view.go#L74-L77
+    // ("balances", binAddress, denom)
+    // it seem like prefix stores just do a dumb concat with the keys (no tricks to avoid overlap)
+    // https://github.com/cosmos/cosmos-sdk/blob/2879c0702c87dc9dd828a8c42b9224dc054e28ad/store/prefix/store.go#L61-L64
+    // https://github.com/cosmos/cosmos-sdk/blob/2879c0702c87dc9dd828a8c42b9224dc054e28ad/store/prefix/store.go#L37-L43
+    const binAddress = Bech32.decode(address).data;
+    const bankKey = Uint8Array.from([...toAscii("balances"), ...binAddress, ...toAscii(searchDenom)]);
+
+    const responseData = await this.queryVerified("bank", bankKey);
+    const { amount, denom } = Coin.decode(responseData);
+    assert(amount !== undefined);
+    assert(denom !== undefined);
+
+    if (denom === "") {
+      return null;
+    } else {
+      return {
+        amount: amount,
+        denom: denom,
+      };
     }
   }
 

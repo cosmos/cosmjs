@@ -7,6 +7,13 @@ export declare class StargateClient {
   static connect(endpoint: string): Promise<StargateClient>;
   private constructor();
   getSequence(address: string): Promise<GetSequenceResult>;
+  getBalance(
+    address: string,
+    searchDenom: string,
+  ): Promise<{
+    readonly denom: string;
+    readonly amount: string;
+  } | null>;
   disconnect(): void;
   private queryVerified;
 }
