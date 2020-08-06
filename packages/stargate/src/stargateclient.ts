@@ -1,10 +1,14 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Bech32, toAscii, toHex } from "@cosmjs/encoding";
+import { Coin } from "@cosmjs/launchpad";
 import { Uint64 } from "@cosmjs/math";
-import { BaseAccount, Coin, decodeAny } from "@cosmjs/proto-signing";
+import * as proto from "@cosmjs/proto-signing";
 import { Client as TendermintClient } from "@cosmjs/tendermint-rpc";
 import { assertDefined } from "@cosmjs/utils";
 import Long from "long";
+
+import { BaseAccount } from "./query/accounts";
+import { QueryAllBalancesRequest, QueryAllBalancesResponse } from "./query/allbalances";
 
 export interface GetSequenceResult {
   readonly accountNumber: number;
@@ -13,6 +17,15 @@ export interface GetSequenceResult {
 
 function uint64FromProto(input: number | Long): Uint64 {
   return Uint64.fromString(input.toString());
+}
+
+function coinFromProto(input: proto.Coin): Coin {
+  assertDefined(input.amount);
+  assertDefined(input.denom);
+  return {
+    amount: input.amount,
+    denom: input.denom,
+  };
 }
 
 export class StargateClient {
@@ -33,7 +46,7 @@ export class StargateClient {
     const accountKey = Uint8Array.from([0x01, ...binAddress]);
     const responseData = await this.queryVerified("acc", accountKey);
 
-    const { typeUrl, value } = decodeAny(responseData);
+    const { typeUrl, value } = proto.decodeAny(responseData);
     switch (typeUrl) {
       case "/cosmos.auth.BaseAccount": {
         const { account_number, sequence } = BaseAccount.decode(value);
@@ -49,13 +62,7 @@ export class StargateClient {
     }
   }
 
-  public async getBalance(
-    address: string,
-    searchDenom: string,
-  ): Promise<{
-    readonly denom: string;
-    readonly amount: string;
-  } | null> {
+  public async getBalance(address: string, searchDenom: string): Promise<Coin | null> {
     // balance key is a bit tricker, using some prefix stores
     // https://github.com/cosmwasm/cosmos-sdk/blob/80f7ff62f79777a487d0c7a53c64b0f7e43c47b9/x/bank/keeper/view.go#L74-L77
     // ("balances", binAddress, denom)
@@ -66,7 +73,7 @@ export class StargateClient {
     const bankKey = Uint8Array.from([...toAscii("balances"), ...binAddress, ...toAscii(searchDenom)]);
 
     const responseData = await this.queryVerified("bank", bankKey);
-    const { amount, denom } = Coin.decode(responseData);
+    const { amount, denom } = proto.Coin.decode(responseData);
     assertDefined(amount);
     assertDefined(denom);
 
@@ -78,6 +85,20 @@ export class StargateClient {
         denom: denom,
       };
     }
+  }
+
+  /**
+   * Queries all balances for all denoms that belong to this address.
+   *
+   * Uses the grpc queries (which iterates over the store internally), and we cannot get
+   * proofs from such a method.
+   */
+  public async getAllBalancesUnverified(address: string): Promise<readonly Coin[]> {
+    const path = "/cosmos.bank.Query/AllBalances";
+    const request = QueryAllBalancesRequest.encode({ address: Bech32.decode(address).data }).finish();
+    const responseData = await this.queryUnverified(path, request);
+    const response = QueryAllBalancesResponse.decode(responseData);
+    return (response.balances || []).map(coinFromProto);
   }
 
   public disconnect(): void {
@@ -104,6 +125,20 @@ export class StargateClient {
 
     // TODO: implement proof verification
     // https://github.com/CosmWasm/cosmjs/issues/347
+
+    return response.value;
+  }
+
+  private async queryUnverified(path: string, request: Uint8Array): Promise<Uint8Array> {
+    const response = await this.tmClient.abciQuery({
+      path: path,
+      data: request,
+      prove: false,
+    });
+
+    if (response.code) {
+      throw new Error(`Query failed with (${response.code}): ${response.log}`);
+    }
 
     return response.value;
   }

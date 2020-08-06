@@ -1,5 +1,5 @@
 import { StargateClient } from "./stargateclient";
-import { pendingWithoutSimapp, simapp, unused } from "./testutils.spec";
+import { nonExistentAddress, pendingWithoutSimapp, simapp, unused } from "./testutils.spec";
 
 describe("StargateClient", () => {
   describe("connect", () => {
@@ -51,6 +51,42 @@ describe("StargateClient", () => {
       expect(response).toBeNull();
 
       client.disconnect();
+    });
+
+    it("returns null for non-existent address", async () => {
+      pendingWithoutSimapp();
+      const client = await StargateClient.connect(simapp.tendermintUrl);
+
+      const response = await client.getBalance(nonExistentAddress, simapp.denomFee);
+      expect(response).toBeNull();
+
+      client.disconnect();
+    });
+  });
+
+  describe("getAllBalancesUnverified", () => {
+    it("returns all balances for unused account", async () => {
+      pendingWithoutSimapp();
+      const client = await StargateClient.connect(simapp.tendermintUrl);
+
+      const balances = await client.getAllBalancesUnverified(unused.address);
+      expect(balances).toEqual([
+        {
+          amount: unused.balanceFee,
+          denom: simapp.denomFee,
+        },
+        {
+          amount: unused.balanceStaking,
+          denom: simapp.denomStaking,
+        },
+      ]);
+    });
+
+    it("returns an empty list for non-existent account", async () => {
+      pendingWithoutSimapp();
+      const client = await StargateClient.connect(simapp.tendermintUrl);
+      const balances = await client.getAllBalancesUnverified(nonExistentAddress);
+      expect(balances).toEqual([]);
     });
   });
 });

@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import { cosmosField } from "@cosmjs/proto-signing";
 import { Message } from "protobufjs";
-
-import { cosmosField } from "./decorator";
 
 export class BaseAccount extends Message {
   @cosmosField.bytes(1)
