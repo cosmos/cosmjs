@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Message } from "protobufjs";
 
-import { cosmosField, cosmosMessage } from "./decorator";
+import { cosmosField, registered } from "./decorator";
 import { Registry } from "./registry";
 
 export const defaultRegistry = new Registry();
 
-@cosmosMessage(defaultRegistry, "/cosmos.Coin")
+@registered(defaultRegistry, "/cosmos.Coin")
 export class Coin extends Message {
   @cosmosField.string(1)
   public readonly denom?: string;
@@ -15,7 +15,7 @@ export class Coin extends Message {
   public readonly amount?: string;
 }
 
-@cosmosMessage(defaultRegistry, "/cosmos.bank.MsgSend")
+@registered(defaultRegistry, "/cosmos.bank.MsgSend")
 export class MsgSend extends Message {
   @cosmosField.bytes(1)
   public readonly from_address?: Uint8Array;

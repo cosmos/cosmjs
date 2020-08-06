@@ -1,6 +1,10 @@
 import { Constructor, Message, TypeDecorator } from "protobufjs";
 import { Registry } from "./registry";
-export declare function cosmosMessage(registry: Registry, typeUrl: string): TypeDecorator<any>;
+/**
+ * A class decorator to register this type under the given type URL
+ * in the given registry.
+ */
+export declare function registered(registry: Registry, typeUrl: string): TypeDecorator<any>;
 /**
  * Like PropertyDecorator from lib.es5.d.ts but without symbol support in propertyKey.
  */

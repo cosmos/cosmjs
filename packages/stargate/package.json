@@ -1,5 +1,5 @@
 {
-  "name": "@cosmjs/sdk40",
+  "name": "@cosmjs/stargate",
   "private": true,
   "version": "0.22.0",
   "description": "Utilities for Cosmos SDK 0.40",
@@ -18,7 +18,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/CosmWasm/cosmjs/tree/master/packages/sdk40"
+    "url": "https://github.com/CosmWasm/cosmjs/tree/master/packages/stargate"
   },
   "scripts": {
     "docs": "typedoc --options typedoc.js",
@@ -38,7 +38,10 @@
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
   },
   "dependencies": {
+    "@cosmjs/encoding": "^0.22.0",
+    "@cosmjs/math": "^0.22.0",
     "@cosmjs/proto-signing": "^0.22.0",
-    "@cosmjs/tendermint-rpc": "^0.22.0"
+    "@cosmjs/tendermint-rpc": "^0.22.0",
+    "@cosmjs/utils": "^0.22.0"
   }
 }

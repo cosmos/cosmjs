@@ -43,7 +43,7 @@ inter-block-cache = true
 
 [telemetry]
 
-# Prefixed with keys to separate services
+# Prefixed with keys to separate services.
 service-name = ""
 
 # Enabled enables the application telemetry functionality. When enabled,
@@ -51,13 +51,13 @@ service-name = ""
 # other sinks such as Prometheus.
 enabled = false
 
-# Enable prefixing gauge values with hostname
+# Enable prefixing gauge values with hostname.
 enable-hostname = false
 
-# Enable adding hostname to labels
+# Enable adding hostname to labels.
 enable-hostname-label = false
 
-# Enable adding service to labels
+# Enable adding service to labels.
 enable-service-label = false
 
 # PrometheusRetentionTime, when positive, enables a Prometheus metrics sink.
@@ -83,20 +83,32 @@ enable = true
 # Swagger defines if swagger documentation should automatically be registered.
 swagger = false
 
-# Address defines the API server to listen on
+# Address defines the API server to listen on.
 address = "tcp://0.0.0.0:1317"
 
-# MaxOpenConnections defines the number of maximum open connections
+# MaxOpenConnections defines the number of maximum open connections.
 max-open-connections = 1000
 
-# RPCReadTimeout defines the Tendermint RPC read timeout (in seconds)
+# RPCReadTimeout defines the Tendermint RPC read timeout (in seconds).
 rpc-read-timeout = 10
 
-# RPCWriteTimeout defines the Tendermint RPC write timeout (in seconds)
+# RPCWriteTimeout defines the Tendermint RPC write timeout (in seconds).
 rpc-write-timeout = 0
 
-# RPCMaxBodyBytes defines the Tendermint maximum response body (in bytes)
+# RPCMaxBodyBytes defines the Tendermint maximum response body (in bytes).
 rpc-max-body-bytes = 1000000
 
-# EnableUnsafeCORS defines if CORS should be enabled (unsafe - use it at your own risk)
+# EnableUnsafeCORS defines if CORS should be enabled (unsafe - use it at your own risk).
 enabled-unsafe-cors = true
+
+###############################################################################
+###                           gRPC Configuration                            ###
+###############################################################################
+
+[grpc]
+
+# Enable defines if the gRPC server should be enabled.
+enable = true
+
+# Address defines the gRPC server address to bind to.
+address = "0.0.0.0:9090"
