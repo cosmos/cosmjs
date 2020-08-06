@@ -1,14 +1,11 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+import { Bech32 } from "@cosmjs/encoding";
+import { Secp256k1Wallet } from "@cosmjs/launchpad";
+import { Client } from "@cosmjs/tendermint-rpc";
 import Long from "long";
 
-/* eslint-disable @typescript-eslint/naming-convention */
-import { Bech32, toAscii } from "@cosmjs/encoding";
-import { Secp256k1Wallet } from "@cosmjs/launchpad";
-import { cosmos, google } from "@cosmjs/proto-signing";
-import { Client } from "@cosmjs/tendermint-rpc";
-import { assert } from "@cosmjs/utils";
-
 import { proveAccount, proveBalance } from "./query";
-import { BaseAccount, Coin } from "./structs";
+import { BaseAccount } from "./structs";
 
 export function pendingWithoutSimapp(): void {
   if (!process.env.SIMAPP_ENABLED) {

@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Message } from "protobufjs";
-
 import { cosmosField, cosmosMessage, Registry } from "@cosmjs/proto-signing";
+import { Message } from "protobufjs";
 
 export const defaultRegistry = new Registry();
 
