@@ -63,4 +63,30 @@ describe("StargateClient", () => {
       client.disconnect();
     });
   });
+
+  describe("getUnverifiedAllBalances", () => {
+    it("returns all balances for unused account", async () => {
+      pendingWithoutSimapp();
+      const client = await StargateClient.connect(simapp.tendermintUrl);
+
+      const balances = await client.getUnverifiedAllBalances(unused.address);
+      expect(balances).toEqual([
+        {
+          amount: unused.balanceFee,
+          denom: simapp.denomFee,
+        },
+        {
+          amount: unused.balanceStaking,
+          denom: simapp.denomStaking,
+        },
+      ]);
+    });
+
+    it("returns an empty list for non-existent account", async () => {
+      pendingWithoutSimapp();
+      const client = await StargateClient.connect(simapp.tendermintUrl);
+      const balances = await client.getUnverifiedAllBalances(nonExistentAddress);
+      expect(balances).toEqual([]);
+    });
+  });
 });

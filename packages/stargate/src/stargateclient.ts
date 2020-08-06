@@ -8,6 +8,7 @@ import { assertDefined } from "@cosmjs/utils";
 import Long from "long";
 
 import { BaseAccount } from "./query/accounts";
+import { QueryAllBalancesRequest, QueryAllBalancesResponse } from "./query/allbalances";
 
 export interface GetSequenceResult {
   readonly accountNumber: number;
@@ -75,6 +76,38 @@ export class StargateClient {
         denom: denom,
       };
     }
+  }
+
+  /**
+   * Queries all balances for all denoms that belong to this address.
+   *
+   * Uses the grpc queries (which iterates over the store internally), and we cannot get
+   * proofs from such a method.
+   */
+  public async getUnverifiedAllBalances(address: string): Promise<readonly Coin[]> {
+    const path = "/cosmos.bank.Query/AllBalances";
+    const request = QueryAllBalancesRequest.encode({ address: Bech32.decode(address).data }).finish();
+    const response = await this.tmClient.abciQuery({
+      path: path,
+      data: request,
+      prove: false,
+    });
+
+    if (response.code) {
+      throw new Error(`Query failed with (${response.code}): ${response.log}`);
+    }
+
+    const result = QueryAllBalancesResponse.decode(response.value);
+    return (result.balances || []).map(
+      (balance): Coin => {
+        assertDefined(balance.amount);
+        assertDefined(balance.denom);
+        return {
+          amount: balance.amount,
+          denom: balance.denom,
+        };
+      },
+    );
   }
 
   public disconnect(): void {
