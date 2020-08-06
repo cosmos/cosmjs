@@ -3,7 +3,7 @@ import { Bech32, toAscii, toHex } from "@cosmjs/encoding";
 import { Uint64 } from "@cosmjs/math";
 import { BaseAccount, Coin, decodeAny } from "@cosmjs/proto-signing";
 import { Client as TendermintClient } from "@cosmjs/tendermint-rpc";
-import { assert } from "@cosmjs/utils";
+import { assertDefined } from "@cosmjs/utils";
 import Long from "long";
 
 export interface GetSequenceResult {
@@ -37,8 +37,8 @@ export class StargateClient {
     switch (typeUrl) {
       case "/cosmos.auth.BaseAccount": {
         const { account_number, sequence } = BaseAccount.decode(value);
-        assert(account_number !== undefined);
-        assert(sequence !== undefined);
+        assertDefined(account_number);
+        assertDefined(sequence);
         return {
           accountNumber: uint64FromProto(account_number).toNumber(),
           sequence: uint64FromProto(sequence).toNumber(),
@@ -67,8 +67,8 @@ export class StargateClient {
 
     const responseData = await this.queryVerified("bank", bankKey);
     const { amount, denom } = Coin.decode(responseData);
-    assert(amount !== undefined);
-    assert(denom !== undefined);
+    assertDefined(amount);
+    assertDefined(denom);
 
     if (denom === "") {
       return null;
