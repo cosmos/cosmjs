@@ -78,6 +78,7 @@
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="stargateclient.html#disconnect" class="tsd-kind-icon">disconnect</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="stargateclient.html#getallbalancesunverified" class="tsd-kind-icon">get<wbr>All<wbr>Balances<wbr>Unverified</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="stargateclient.html#getbalance" class="tsd-kind-icon">get<wbr>Balance</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="stargateclient.html#getsequence" class="tsd-kind-icon">get<wbr>Sequence</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="stargateclient.html#connect" class="tsd-kind-icon">connect</a></li>
@@ -98,7 +99,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6f58e7c3/packages/stargate/src/stargateclient.ts#L83">src/stargateclient.ts:83</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/0cb2c9fa/packages/stargate/src/stargateclient.ts#L104">packages/stargate/src/stargateclient.ts:104</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -106,16 +107,46 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="getbalance" class="tsd-anchor"></a>
-					<h3>get<wbr>Balance</h3>
+					<a name="getallbalancesunverified" class="tsd-anchor"></a>
+					<h3>get<wbr>All<wbr>Balances<wbr>Unverified</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Balance<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, searchDenom<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span>amount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>denom<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>All<wbr>Balances<wbr>Unverified<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6f58e7c3/packages/stargate/src/stargateclient.ts#L52">src/stargateclient.ts:52</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/0cb2c9fa/packages/stargate/src/stargateclient.ts#L96">packages/stargate/src/stargateclient.ts:96</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Queries all balances for all denoms that belong to this address.</p>
+								</div>
+								<p>Uses the grpc queries (which iterates over the store internally), and we cannot get
+								proofs from such a method.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>address: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getbalance" class="tsd-anchor"></a>
+					<h3>get<wbr>Balance</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Balance<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, searchDenom<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/0cb2c9fa/packages/stargate/src/stargateclient.ts#L65">packages/stargate/src/stargateclient.ts:65</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -127,7 +158,7 @@
 									<h5>searchDenom: <span class="tsd-signature-type">string</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span>amount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>denom<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -141,7 +172,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6f58e7c3/packages/stargate/src/stargateclient.ts#L30">src/stargateclient.ts:30</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/0cb2c9fa/packages/stargate/src/stargateclient.ts#L43">packages/stargate/src/stargateclient.ts:43</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -164,7 +195,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/6f58e7c3/packages/stargate/src/stargateclient.ts#L21">src/stargateclient.ts:21</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/0cb2c9fa/packages/stargate/src/stargateclient.ts#L34">packages/stargate/src/stargateclient.ts:34</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -189,6 +220,21 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="baseaccount.html" class="tsd-kind-icon">Base<wbr>Account</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="pagerequest.html" class="tsd-kind-icon">Page<wbr>Request</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="pageresponse.html" class="tsd-kind-icon">Page<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="queryallbalancesrequest.html" class="tsd-kind-icon">Query<wbr>All<wbr>Balances<wbr>Request</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="queryallbalancesresponse.html" class="tsd-kind-icon">Query<wbr>All<wbr>Balances<wbr>Response</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class">
@@ -196,6 +242,9 @@
 						<ul>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="stargateclient.html#disconnect" class="tsd-kind-icon">disconnect</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="stargateclient.html#getallbalancesunverified" class="tsd-kind-icon">get<wbr>All<wbr>Balances<wbr>Unverified</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="stargateclient.html#getbalance" class="tsd-kind-icon">get<wbr>Balance</a>
@@ -214,6 +263,9 @@
 						<a href="../interfaces/getsequenceresult.html" class="tsd-kind-icon">Get<wbr>Sequence<wbr>Result</a>
 					</li>
 					<li class=" tsd-kind-function">
+						<a href="../globals.html#coinfromproto" class="tsd-kind-icon">coin<wbr>From<wbr>Proto</a>
+					</li>
+					<li class=" tsd-kind-function">
 						<a href="../globals.html#uint64fromproto" class="tsd-kind-icon">uint64<wbr>From<wbr>Proto</a>
 					</li>
 				</ul>
@@ -226,10 +278,16 @@
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
 			</ul>
 			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
