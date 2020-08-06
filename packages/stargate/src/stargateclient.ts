@@ -87,18 +87,9 @@ export class StargateClient {
   public async getUnverifiedAllBalances(address: string): Promise<readonly Coin[]> {
     const path = "/cosmos.bank.Query/AllBalances";
     const request = QueryAllBalancesRequest.encode({ address: Bech32.decode(address).data }).finish();
-    const response = await this.tmClient.abciQuery({
-      path: path,
-      data: request,
-      prove: false,
-    });
-
-    if (response.code) {
-      throw new Error(`Query failed with (${response.code}): ${response.log}`);
-    }
-
-    const result = QueryAllBalancesResponse.decode(response.value);
-    return (result.balances || []).map(
+    const responseData = await this.queryUnverified(path, request);
+    const response = QueryAllBalancesResponse.decode(responseData);
+    return (response.balances || []).map(
       (balance): Coin => {
         assertDefined(balance.amount);
         assertDefined(balance.denom);
@@ -134,6 +125,20 @@ export class StargateClient {
 
     // TODO: implement proof verification
     // https://github.com/CosmWasm/cosmjs/issues/347
+
+    return response.value;
+  }
+
+  private async queryUnverified(path: string, request: Uint8Array): Promise<Uint8Array> {
+    const response = await this.tmClient.abciQuery({
+      path: path,
+      data: request,
+      prove: false,
+    });
+
+    if (response.code) {
+      throw new Error(`Query failed with (${response.code}): ${response.log}`);
+    }
 
     return response.value;
   }

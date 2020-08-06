@@ -18,4 +18,5 @@ export declare class StargateClient {
   getUnverifiedAllBalances(address: string): Promise<readonly Coin[]>;
   disconnect(): void;
   private queryVerified;
+  private queryUnverified;
 }
