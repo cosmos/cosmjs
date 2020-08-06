@@ -7,7 +7,11 @@ function getTypeName(typeUrl: string): string {
   return parts[parts.length - 1];
 }
 
-export function cosmosMessage(registry: Registry, typeUrl: string): TypeDecorator<any> {
+/**
+ * A class decorator to register this type under the given type URL
+ * in the given registry.
+ */
+export function registered(registry: Registry, typeUrl: string): TypeDecorator<any> {
   return (ctor: Constructor<Message<any>>) => {
     const typeName = getTypeName(typeUrl);
     const generatedType = util.decorateType(ctor, typeName);

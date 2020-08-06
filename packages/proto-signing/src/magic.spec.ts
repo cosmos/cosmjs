@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Message } from "protobufjs";
 
-import { cosmosField, cosmosMessage } from "./decorator";
+import { cosmosField, registered } from "./decorator";
 import { Registry } from "./registry";
 
 describe("registry magic demo", () => {
@@ -10,13 +10,13 @@ describe("registry magic demo", () => {
     const typeUrl = "/demo.MsgMagic";
     const myRegistry = new Registry();
 
-    @cosmosMessage(myRegistry, nestedTypeUrl)
+    @registered(myRegistry, nestedTypeUrl)
     class MsgNestedMagic extends Message {
       @cosmosField.string(1)
       public readonly foo?: string;
     }
 
-    @cosmosMessage(myRegistry, typeUrl)
+    @registered(myRegistry, typeUrl)
     class MsgMagic extends Message {
       @cosmosField.boolean(1)
       public readonly booleanDemo?: boolean;

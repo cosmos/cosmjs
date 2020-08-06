@@ -2,7 +2,7 @@
 import { assert } from "@cosmjs/utils";
 import { Message } from "protobufjs";
 
-import { cosmosField, cosmosMessage } from "./decorator";
+import { cosmosField, registered } from "./decorator";
 import { cosmos, google } from "./generated/codecimpl";
 import { Registry } from "./registry";
 
@@ -15,13 +15,13 @@ describe("decorator demo", () => {
     const typeUrl = "/demo.MsgDemo";
     const myRegistry = new Registry();
 
-    @cosmosMessage(myRegistry, nestedTypeUrl)
+    @registered(myRegistry, nestedTypeUrl)
     class MsgNestedDemo extends Message {
       @cosmosField.string(1)
       public readonly foo?: string;
     }
 
-    @cosmosMessage(myRegistry, typeUrl)
+    @registered(myRegistry, typeUrl)
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     class MsgDemo extends Message {
       @cosmosField.boolean(1)
