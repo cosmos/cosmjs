@@ -2,6 +2,7 @@
 set -o errexit -o nounset -o pipefail
 command -v shellcheck > /dev/null && shellcheck "$0"
 
+# Please keep this in sync with the Ports overview in HACKING.md
 TENDERMINT_PORT_GUEST="26657"
 TENDERMINT_PORT_HOST="26657"
 API_PORT_GUEST="1317"

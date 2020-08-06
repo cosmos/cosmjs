@@ -2,9 +2,10 @@
 set -o errexit -o nounset -o pipefail
 command -v shellcheck > /dev/null && shellcheck "$0"
 
+# Please keep this in sync with the Ports overview in HACKING.md
+# Tendermint port (26657) and p2p port (26656) are not exposed since we don't need them for testing
 LCD_API_PORT_GUEST="1317"
 LCD_API_PORT_HOST="1317"
-# Tendermint port (26657) and p2p port (26656) are not exposed since we don't need them for testing
 
 SCRIPT_DIR="$(realpath "$(dirname "$0")")"
 # shellcheck source=./env

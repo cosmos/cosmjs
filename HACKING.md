@@ -80,3 +80,19 @@ yarn lint
 # or if you want linting plus automatic fixing
 yarn lint-fix
 ```
+
+## Ports
+
+In the `scripts/` folder, a bunch of blockchains and other backend systems are
+started for testing purposes. Some ports need to be changed from the default in
+order to avoid conflicts. Here is an overview of the ports used:
+
+| Port  | Application           | Usage                                                                                 |
+| ----- | --------------------- | ------------------------------------------------------------------------------------- |
+| 1317  | wasmd LCD API         | @cosmjs/launchpad and @cosmjs/cosmwasm tests                                          |
+| 1318  | simapp API            | Manual Stargate debugging                                                             |
+| 4444  | sockertserver         | @cosmjs/sockets tests                                                                 |
+| 4445  | sockertserver slow    | @cosmjs/sockets tests                                                                 |
+| 11133 | Tendermint 0.33 RPC   | @cosmjs/tendermint-rpc tests                                                          |
+| 11134 | Tendermint 0.34 RPC   | @cosmjs/tendermint-rpc tests ([soon™](https://github.com/CosmWasm/cosmjs/issues/344)) |
+| 26657 | simapp Tendermint RPC | Stargate client tests                                                                 |
