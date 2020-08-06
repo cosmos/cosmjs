@@ -12,3 +12,14 @@ export declare class BaseAccount extends Message {
   readonly account_number?: Long | number;
   readonly sequence?: Long | number;
 }
+export declare class PageResponse extends Message {
+  readonly next_key?: Uint8Array;
+  readonly total?: Long | number;
+}
+export declare class QueryAllBalancesRequest extends Message {
+  readonly address?: Uint8Array;
+}
+export declare class QueryAllBalancesResponse extends Message {
+  readonly balances?: readonly Coin[];
+  readonly pagination?: Uint8Array;
+}

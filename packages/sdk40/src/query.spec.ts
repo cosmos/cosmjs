@@ -4,7 +4,7 @@ import { Secp256k1Wallet } from "@cosmjs/launchpad";
 import { Client } from "@cosmjs/tendermint-rpc";
 import Long from "long";
 
-import { getAccount, getBalance } from "./query";
+import { getAccount, getBalance, getUnverifiedAllBalances } from "./query";
 import { BaseAccount } from "./structs";
 
 export function pendingWithoutSimapp(): void {
@@ -53,5 +53,21 @@ describe("query account", () => {
     const balance = await getBalance(client, address, "ucosm");
     expect(balance.denom).toEqual("ucosm");
     expect(balance.amount).toEqual("1000000000");
+  });
+
+  it("gets all balances for genesis account using grpc types", async () => {
+    pendingWithoutSimapp();
+    const tendermintUrl = "localhost:26657";
+    const client = await Client.connect(tendermintUrl);
+
+    const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
+    const [{ address }] = await wallet.getAccounts();
+
+    const balance = await getUnverifiedAllBalances(client, address);
+    expect(balance.length).toEqual(2);
+    expect(balance[0].denom).toEqual("ucosm");
+    expect(balance[0].amount).toEqual("1000000000");
+    expect(balance[1].denom).toEqual("ustake");
+    expect(balance[1].amount).toEqual("1000000000");
   });
 });

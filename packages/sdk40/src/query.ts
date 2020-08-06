@@ -2,7 +2,7 @@ import { Bech32, toAscii, toHex } from "@cosmjs/encoding";
 import { google } from "@cosmjs/proto-signing";
 import { Client } from "@cosmjs/tendermint-rpc";
 
-import { Coin } from "./structs";
+import { Coin, QueryAllBalancesRequest, QueryAllBalancesResponse } from "./structs";
 
 // getByKey will use a raw (storename, key) pair to query state
 // and verify the merkle proof against the header
@@ -60,4 +60,24 @@ export async function getBalance(client: Client, address: string, denom: string)
   // (when the client does light-client header verification, this will be fully proven)
   const response = await getByKey(client, "bank", bankKey);
   return Coin.decode(response);
+}
+
+// this use the grpc queries (which iterates over the store internally), and we cannot get
+// proofs from such a method.
+// It returns all balances for all denoms that belong to this address
+export async function getUnverifiedAllBalances(client: Client, address: string): Promise<readonly Coin[]> {
+  const path = "/cosmos.bank.Query/AllBalances";
+  const request = QueryAllBalancesRequest.encode({ address: Bech32.decode(address).data }).finish();
+  const resp = await client.abciQuery({
+    path: path,
+    data: request,
+    prove: false,
+  });
+
+  if (resp.code) {
+    throw new Error(`Query failed with (${resp.code}): ${resp.log}`);
+  }
+
+  const result = QueryAllBalancesResponse.decode(resp.value);
+  return result.balances || [];
 }
