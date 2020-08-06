@@ -39,6 +39,7 @@
   },
   "dependencies": {
     "@cosmjs/encoding": "^0.22.0",
+    "@cosmjs/launchpad": "^0.22.0",
     "@cosmjs/math": "^0.22.0",
     "@cosmjs/proto-signing": "^0.22.0",
     "@cosmjs/tendermint-rpc": "^0.22.0",

@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Bech32, toAscii, toHex } from "@cosmjs/encoding";
+import { Coin } from "@cosmjs/launchpad";
 import { Uint64 } from "@cosmjs/math";
-import { BaseAccount, Coin, decodeAny } from "@cosmjs/proto-signing";
+import * as proto from "@cosmjs/proto-signing";
 import { Client as TendermintClient } from "@cosmjs/tendermint-rpc";
 import { assertDefined } from "@cosmjs/utils";
 import Long from "long";
@@ -33,10 +34,10 @@ export class StargateClient {
     const accountKey = Uint8Array.from([0x01, ...binAddress]);
     const responseData = await this.queryVerified("acc", accountKey);
 
-    const { typeUrl, value } = decodeAny(responseData);
+    const { typeUrl, value } = proto.decodeAny(responseData);
     switch (typeUrl) {
       case "/cosmos.auth.BaseAccount": {
-        const { account_number, sequence } = BaseAccount.decode(value);
+        const { account_number, sequence } = proto.BaseAccount.decode(value);
         assertDefined(account_number);
         assertDefined(sequence);
         return {
@@ -49,13 +50,7 @@ export class StargateClient {
     }
   }
 
-  public async getBalance(
-    address: string,
-    searchDenom: string,
-  ): Promise<{
-    readonly denom: string;
-    readonly amount: string;
-  } | null> {
+  public async getBalance(address: string, searchDenom: string): Promise<Coin | null> {
     // balance key is a bit tricker, using some prefix stores
     // https://github.com/cosmwasm/cosmos-sdk/blob/80f7ff62f79777a487d0c7a53c64b0f7e43c47b9/x/bank/keeper/view.go#L74-L77
     // ("balances", binAddress, denom)
@@ -66,7 +61,7 @@ export class StargateClient {
     const bankKey = Uint8Array.from([...toAscii("balances"), ...binAddress, ...toAscii(searchDenom)]);
 
     const responseData = await this.queryVerified("bank", bankKey);
-    const { amount, denom } = Coin.decode(responseData);
+    const { amount, denom } = proto.Coin.decode(responseData);
     assertDefined(amount);
     assertDefined(denom);
 
