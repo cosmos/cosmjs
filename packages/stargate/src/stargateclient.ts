@@ -19,6 +19,15 @@ function uint64FromProto(input: number | Long): Uint64 {
   return Uint64.fromString(input.toString());
 }
 
+function coinFromProto(input: proto.Coin): Coin {
+  assertDefined(input.amount);
+  assertDefined(input.denom);
+  return {
+    amount: input.amount,
+    denom: input.denom,
+  };
+}
+
 export class StargateClient {
   private readonly tmClient: TendermintClient;
 
@@ -89,16 +98,7 @@ export class StargateClient {
     const request = QueryAllBalancesRequest.encode({ address: Bech32.decode(address).data }).finish();
     const responseData = await this.queryUnverified(path, request);
     const response = QueryAllBalancesResponse.decode(responseData);
-    return (response.balances || []).map(
-      (balance): Coin => {
-        assertDefined(balance.amount);
-        assertDefined(balance.denom);
-        return {
-          amount: balance.amount,
-          denom: balance.denom,
-        };
-      },
-    );
+    return (response.balances || []).map(coinFromProto);
   }
 
   public disconnect(): void {
