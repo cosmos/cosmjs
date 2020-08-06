@@ -4,6 +4,8 @@ command -v shellcheck > /dev/null && shellcheck "$0"
 
 TENDERMINT_PORT_GUEST="26657"
 TENDERMINT_PORT_HOST="26657"
+API_PORT_GUEST="1317"
+API_PORT_HOST="1318"
 
 SCRIPT_DIR="$(realpath "$(dirname "$0")")"
 # shellcheck source=./env
@@ -21,6 +23,7 @@ docker volume rm -f simapp_data
 docker run --rm \
   --name "$CONTAINER_NAME" \
   -p "$TENDERMINT_PORT_HOST":"$TENDERMINT_PORT_GUEST" \
+  -p "$API_PORT_HOST":"$API_PORT_GUEST" \
   --mount type=bind,source="$SCRIPT_DIR/template",target=/template \
   --mount type=volume,source=simapp_data,target=/root \
   "$REPOSITORY:$VERSION" \
