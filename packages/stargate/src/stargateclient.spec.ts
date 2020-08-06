@@ -64,12 +64,12 @@ describe("StargateClient", () => {
     });
   });
 
-  describe("getUnverifiedAllBalances", () => {
+  describe("getAllBalancesUnverified", () => {
     it("returns all balances for unused account", async () => {
       pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrl);
 
-      const balances = await client.getUnverifiedAllBalances(unused.address);
+      const balances = await client.getAllBalancesUnverified(unused.address);
       expect(balances).toEqual([
         {
           amount: unused.balanceFee,
@@ -85,7 +85,7 @@ describe("StargateClient", () => {
     it("returns an empty list for non-existent account", async () => {
       pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrl);
-      const balances = await client.getUnverifiedAllBalances(nonExistentAddress);
+      const balances = await client.getAllBalancesUnverified(nonExistentAddress);
       expect(balances).toEqual([]);
     });
   });

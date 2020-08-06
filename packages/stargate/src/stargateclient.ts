@@ -93,7 +93,7 @@ export class StargateClient {
    * Uses the grpc queries (which iterates over the store internally), and we cannot get
    * proofs from such a method.
    */
-  public async getUnverifiedAllBalances(address: string): Promise<readonly Coin[]> {
+  public async getAllBalancesUnverified(address: string): Promise<readonly Coin[]> {
     const path = "/cosmos.bank.Query/AllBalances";
     const request = QueryAllBalancesRequest.encode({ address: Bech32.decode(address).data }).finish();
     const responseData = await this.queryUnverified(path, request);

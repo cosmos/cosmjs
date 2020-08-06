@@ -15,7 +15,7 @@ export declare class StargateClient {
    * Uses the grpc queries (which iterates over the store internally), and we cannot get
    * proofs from such a method.
    */
-  getUnverifiedAllBalances(address: string): Promise<readonly Coin[]>;
+  getAllBalancesUnverified(address: string): Promise<readonly Coin[]>;
   disconnect(): void;
   private queryVerified;
   private queryUnverified;
