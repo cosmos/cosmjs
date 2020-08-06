@@ -7,6 +7,8 @@ import { Client as TendermintClient } from "@cosmjs/tendermint-rpc";
 import { assertDefined } from "@cosmjs/utils";
 import Long from "long";
 
+import { BaseAccount } from "./query/accounts";
+
 export interface GetSequenceResult {
   readonly accountNumber: number;
   readonly sequence: number;
@@ -37,7 +39,7 @@ export class StargateClient {
     const { typeUrl, value } = proto.decodeAny(responseData);
     switch (typeUrl) {
       case "/cosmos.auth.BaseAccount": {
-        const { account_number, sequence } = proto.BaseAccount.decode(value);
+        const { account_number, sequence } = BaseAccount.decode(value);
         assertDefined(account_number);
         assertDefined(sequence);
         return {

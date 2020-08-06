@@ -4,6 +4,7 @@
     "baseUrl": ".",
     "outDir": "build",
     "declarationDir": "build/types",
+    "experimentalDecorators": true,
     "rootDir": "src"
   },
   "include": [
