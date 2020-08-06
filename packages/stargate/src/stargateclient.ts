@@ -1,12 +1,18 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Bech32 } from "@cosmjs/encoding";
+import { Uint64 } from "@cosmjs/math";
 import { BaseAccount, decodeAny } from "@cosmjs/proto-signing";
 import { Client as TendermintClient } from "@cosmjs/tendermint-rpc";
 import { assert } from "@cosmjs/utils";
+import Long from "long";
 
 export interface GetSequenceResult {
   readonly accountNumber: number;
   readonly sequence: number;
+}
+
+function uint64FromProto(input: number | Long): Uint64 {
+  return Uint64.fromString(input.toString());
 }
 
 export class StargateClient {
@@ -43,8 +49,8 @@ export class StargateClient {
         assert(account_number !== undefined);
         assert(sequence !== undefined);
         return {
-          accountNumber: typeof account_number === "number" ? account_number : account_number.toNumber(),
-          sequence: typeof sequence === "number" ? sequence : sequence.toNumber(),
+          accountNumber: uint64FromProto(account_number).toNumber(),
+          sequence: uint64FromProto(sequence).toNumber(),
         };
       }
 
