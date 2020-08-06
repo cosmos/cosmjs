@@ -6,7 +6,7 @@
         {
           "type": "cosmos-sdk/BaseAccount",
           "value": {
-            "address": "cosmos1320amqmuysc88vuf6unrdprft0kvqdshapg46s"
+            "address": "cosmos1lv5lq7qjr42attsdma622whwa7v0rc2d4pful8"
           }
         },
         {
@@ -130,7 +130,7 @@
               "denom": "ucosm"
             },
             {
-              "amount": "1000000000",
+              "amount": "10000000",
               "denom": "ustake"
             }
           ]
@@ -143,7 +143,7 @@
               "denom": "ucosm"
             },
             {
-              "amount": "1000000000",
+              "amount": "10000000",
               "denom": "ustake"
             }
           ]
@@ -156,7 +156,7 @@
               "denom": "ucosm"
             },
             {
-              "amount": "1000000000",
+              "amount": "10000000",
               "denom": "ustake"
             }
           ]
@@ -169,7 +169,7 @@
               "denom": "ucosm"
             },
             {
-              "amount": "1000000000",
+              "amount": "10000000",
               "denom": "ustake"
             }
           ]
@@ -182,7 +182,7 @@
               "denom": "ucosm"
             },
             {
-              "amount": "1000000000",
+              "amount": "10000000",
               "denom": "ustake"
             }
           ]
@@ -195,7 +195,7 @@
               "denom": "ucosm"
             },
             {
-              "amount": "1000000000",
+              "amount": "10000000",
               "denom": "ustake"
             }
           ]
@@ -208,20 +208,7 @@
               "denom": "ucosm"
             },
             {
-              "amount": "1000000000",
-              "denom": "ustake"
-            }
-          ]
-        },
-        {
-          "address": "cosmos1320amqmuysc88vuf6unrdprft0kvqdshapg46s",
-          "coins": [
-            {
-              "amount": "1000000000",
-              "denom": "ucosm"
-            },
-            {
-              "amount": "1000000000",
+              "amount": "10000000",
               "denom": "ustake"
             }
           ]
@@ -234,7 +221,7 @@
               "denom": "ucosm"
             },
             {
-              "amount": "1000000000",
+              "amount": "10000000",
               "denom": "ustake"
             }
           ]
@@ -247,7 +234,7 @@
               "denom": "ucosm"
             },
             {
-              "amount": "1000000000",
+              "amount": "10000000",
               "denom": "ustake"
             }
           ]
@@ -260,7 +247,7 @@
               "denom": "ucosm"
             },
             {
-              "amount": "1000000000",
+              "amount": "10000000",
               "denom": "ustake"
             }
           ]
@@ -273,7 +260,7 @@
               "denom": "ucosm"
             },
             {
-              "amount": "1000000000",
+              "amount": "10000000",
               "denom": "ustake"
             }
           ]
@@ -286,7 +273,7 @@
               "denom": "ucosm"
             },
             {
-              "amount": "1000000000",
+              "amount": "10000000",
               "denom": "ustake"
             }
           ]
@@ -299,7 +286,7 @@
               "denom": "ucosm"
             },
             {
-              "amount": "1000000000",
+              "amount": "10000000",
               "denom": "ustake"
             }
           ]
@@ -312,7 +299,7 @@
               "denom": "ucosm"
             },
             {
-              "amount": "1000000000",
+              "amount": "10000000",
               "denom": "ustake"
             }
           ]
@@ -325,7 +312,7 @@
               "denom": "ucosm"
             },
             {
-              "amount": "1000000000",
+              "amount": "10000000",
               "denom": "ustake"
             }
           ]
@@ -338,7 +325,7 @@
               "denom": "ucosm"
             },
             {
-              "amount": "1000000000",
+              "amount": "10000000",
               "denom": "ustake"
             }
           ]
@@ -351,7 +338,20 @@
               "denom": "ucosm"
             },
             {
+              "amount": "10000000",
+              "denom": "ustake"
+            }
+          ]
+        },
+        {
+          "address": "cosmos1lv5lq7qjr42attsdma622whwa7v0rc2d4pful8",
+          "coins": [
+            {
               "amount": "1000000000",
+              "denom": "ucosm"
+            },
+            {
+              "amount": "10000000",
               "denom": "ustake"
             }
           ]
@@ -407,13 +407,13 @@
                   }
                 },
                 "public_key": {
-                  "secp256k1": "AmT77hhRkycGp9kUxEwOhlHsNl6owW7X7g+nJtrFTlQO"
+                  "secp256k1": "A7bPBNzzcLkg9D6sSUIpq6qOhtWTKnJELef/5yZfr4xH"
                 }
               }
             ]
           },
           "body": {
-            "memo": "dc544239a7cbbf5cdde8bbde243fcd9a4195eb70@172.17.0.2:26656",
+            "memo": "d593cd9e2f88b70d57ffc8c28768b555b9acb5fc@172.17.0.3:26656",
             "messages": [
               {
                 "@type": "/cosmos.staking.MsgCreateValidator",
@@ -422,22 +422,22 @@
                   "max_rate": "0.200000000000000000",
                   "rate": "0.100000000000000000"
                 },
-                "delegator_address": "cosmos1320amqmuysc88vuf6unrdprft0kvqdshapg46s",
+                "delegator_address": "cosmos1lv5lq7qjr42attsdma622whwa7v0rc2d4pful8",
                 "description": {
                   "moniker": "simd-moniker"
                 },
                 "min_self_delegation": "1",
-                "pubkey": "cosmosvalconspub1zcjduepqeg7s6rcwmnsquupys6a8cd4402drnvzyv84nfakvyzdgzz6qzumqkavfer",
-                "validator_address": "cosmosvaloper1320amqmuysc88vuf6unrdprft0kvqdshc4uqkr",
+                "pubkey": "cosmosvalconspub1zcjduepqv3sruyer5xmurpxyptu4ll3efjan3lmaajf3fxg9axe895ppj9kqtyk2vf",
+                "validator_address": "cosmosvaloper1lv5lq7qjr42attsdma622whwa7v0rc2ds4afn5",
                 "value": {
-                  "amount": "250000000",
+                  "amount": "3000000",
                   "denom": "ustake"
                 }
               }
             ]
           },
           "signatures": [
-            "yqsTm7NZStlzxEUnVQCFxZErdba2r5Slf2/Gf/DTpSNUg+EzhUqWD75c9ynAXPgDz4XSP9ys7PCATegvACkxEQ=="
+            "5gBipu7M14zMjn2t6pBxM+DprcDR44RW4Eylc1wVp4Ikem0duRVnvWDE+B0gZ9+LY0QrgPcEmm6aXzPGiN3SKQ=="
           ]
         }
       ]
@@ -547,5 +547,5 @@
       ]
     }
   },
-  "genesis_time": "2020-08-05T10:19:46.2922652Z"
+  "genesis_time": "2020-08-06T13:08:49.5288713Z"
 }

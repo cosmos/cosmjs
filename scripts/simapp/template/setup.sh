@@ -3,10 +3,15 @@ set -o errexit -o nounset
 command -v shellcheck > /dev/null && shellcheck "$0"
 
 PASSWORD=${PASSWORD:-1234567890}
-STAKE=${STAKE_TOKEN:-ustake}
-FEE=${FEE_TOKEN:-ucosm}
 CHAIN_ID=${CHAIN_ID:-simd-testing}
 MONIKER=${MONIKER:-simd-moniker}
+
+# The staking and the fee tokens. The supply of the staking token is low compared to the fee token (factor 100).
+STAKE=${STAKE_TOKEN:-ustake}
+FEE=${FEE_TOKEN:-ucosm}
+
+# 10 STAKE and 1000 COSM
+START_BALANCE="10000000$STAKE,1000000000$FEE"
 
 echo "Creating genesis ..."
 simd init --chain-id "$CHAIN_ID" "$MONIKER"
@@ -18,15 +23,16 @@ if ! simd keys show validator 2> /dev/null; then
   (echo "$PASSWORD"; echo "$PASSWORD") | simd keys add validator
 fi
 # hardcode the validator account for this instance
-echo "$PASSWORD" | simd add-genesis-account validator "1000000000$STAKE,1000000000$FEE"
+echo "$PASSWORD" | simd add-genesis-account validator "$START_BALANCE"
 
 echo "Setting up accounts ..."
 # (optionally) add a few more genesis accounts
 for addr in "$@"; do
   echo "$addr"
-  simd add-genesis-account "$addr" "1000000000$STAKE,1000000000$FEE"
+  simd add-genesis-account "$addr" "$START_BALANCE"
 done
 
 echo "Creating genesis tx ..."
-(echo "$PASSWORD"; echo "$PASSWORD"; echo "$PASSWORD") | simd gentx validator --offline --amount "250000000$STAKE" --chain-id "$CHAIN_ID" --moniker="$MONIKER"
+SELF_DELEGATION="3000000$STAKE" # 3 STAKE (leads to a voting power of 3)
+(echo "$PASSWORD"; echo "$PASSWORD"; echo "$PASSWORD") | simd gentx validator --offline --amount "$SELF_DELEGATION" --chain-id "$CHAIN_ID" --moniker="$MONIKER"
 simd collect-gentxs
