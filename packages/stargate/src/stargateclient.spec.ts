@@ -29,15 +29,15 @@ describe("StargateClient", () => {
       pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrl);
 
-      const response1 = await client.getBalance(unused.address, "ucosm");
+      const response1 = await client.getBalance(unused.address, simapp.denomFee);
       expect(response1).toEqual({
-        amount: "1000000000",
-        denom: "ucosm",
+        amount: unused.balanceFee,
+        denom: simapp.denomFee,
       });
-      const response2 = await client.getBalance(unused.address, "ustake");
+      const response2 = await client.getBalance(unused.address, simapp.denomStaking);
       expect(response2).toEqual({
-        amount: "1000000000",
-        denom: "ustake",
+        amount: unused.balanceStaking,
+        denom: simapp.denomStaking,
       });
 
       client.disconnect();

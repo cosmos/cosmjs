@@ -7,6 +7,8 @@ export function pendingWithoutSimapp(): void {
 export const simapp = {
   tendermintUrl: "localhost:26657",
   chainId: "simd-testing",
+  denomStaking: "ustake",
+  denomFee: "ucosm",
 };
 
 /** Unused account */
@@ -18,4 +20,6 @@ export const unused = {
   address: "cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u",
   accountNumber: 16,
   sequence: 0,
+  balanceStaking: "10000000", // 10 STAKE
+  balanceFee: "1000000000", // 1000 COSM
 };
