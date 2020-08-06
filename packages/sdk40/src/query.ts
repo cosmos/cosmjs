@@ -44,7 +44,7 @@ export async function getAccount(client: Client, address: string): Promise<googl
   return google.protobuf.Any.decode(response);
 }
 
-export async function getBalance(client: Client, address: string, denom: string): Promise<Coin> {
+export async function getBalance(client: Client, address: string, denom: string): Promise<Coin | undefined> {
   const binAddress = Bech32.decode(address).data;
 
   // balance key is a bit tricker, using some prefix stores
@@ -59,6 +59,9 @@ export async function getBalance(client: Client, address: string, denom: string)
   // and verify the merkle proof against the header
   // (when the client does light-client header verification, this will be fully proven)
   const response = await getByKey(client, "bank", bankKey);
+  if (response.length === 0) {
+    return undefined;
+  }
   return Coin.decode(response);
 }
 

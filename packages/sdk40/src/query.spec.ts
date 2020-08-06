@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Bech32 } from "@cosmjs/encoding";
-import { Secp256k1Wallet } from "@cosmjs/launchpad";
 import { Client } from "@cosmjs/tendermint-rpc";
+import { assert } from "@cosmjs/utils";
 import Long from "long";
 
 import { getAccount, getBalance, getUnverifiedAllBalances } from "./query";
@@ -23,14 +23,14 @@ const faucet = {
   address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
 };
 
+const missingAddress = "cosmos1p79apjaufyphcmsn4g07cynqf0wyjuezqu84hd";
+
 describe("query account", () => {
   it("decode account data for a genesis account", async () => {
     pendingWithoutSimapp();
     const tendermintUrl = "localhost:26657";
     const client = await Client.connect(tendermintUrl);
-
-    const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
-    const [{ address }] = await wallet.getAccounts();
+    const address = faucet.address;
 
     const envelope = await getAccount(client, address);
 
@@ -46,22 +46,39 @@ describe("query account", () => {
     pendingWithoutSimapp();
     const tendermintUrl = "localhost:26657";
     const client = await Client.connect(tendermintUrl);
-
-    const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
-    const [{ address }] = await wallet.getAccounts();
+    const address = faucet.address;
 
     const balance = await getBalance(client, address, "ucosm");
+    assert(balance !== undefined);
     expect(balance.denom).toEqual("ucosm");
     expect(balance.amount).toEqual("1000000000");
+  });
+
+  it("get empty balance for a genesis account with non-existent denom", async () => {
+    pendingWithoutSimapp();
+    const tendermintUrl = "localhost:26657";
+    const client = await Client.connect(tendermintUrl);
+    const address = faucet.address;
+
+    const balance = await getBalance(client, address, "umuon");
+    expect(balance).toBeUndefined();
+  });
+
+  it("get empty balance for a missing account", async () => {
+    pendingWithoutSimapp();
+    const tendermintUrl = "localhost:26657";
+    const client = await Client.connect(tendermintUrl);
+    const address = missingAddress;
+
+    const balance = await getBalance(client, address, "ucosm");
+    expect(balance).toBeUndefined();
   });
 
   it("gets all balances for genesis account using grpc types", async () => {
     pendingWithoutSimapp();
     const tendermintUrl = "localhost:26657";
     const client = await Client.connect(tendermintUrl);
-
-    const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
-    const [{ address }] = await wallet.getAccounts();
+    const address = faucet.address;
 
     const balance = await getUnverifiedAllBalances(client, address);
     expect(balance.length).toEqual(2);
@@ -69,5 +86,15 @@ describe("query account", () => {
     expect(balance[0].amount).toEqual("1000000000");
     expect(balance[1].denom).toEqual("ustake");
     expect(balance[1].amount).toEqual("1000000000");
+  });
+
+  it("gets all balances for missing account using grpc types", async () => {
+    pendingWithoutSimapp();
+    const tendermintUrl = "localhost:26657";
+    const client = await Client.connect(tendermintUrl);
+    const address = missingAddress;
+
+    const balance = await getUnverifiedAllBalances(client, address);
+    expect(balance.length).toEqual(0);
   });
 });
