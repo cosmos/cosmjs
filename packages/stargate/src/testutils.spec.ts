@@ -23,3 +23,5 @@ export const unused = {
   balanceStaking: "10000000", // 10 STAKE
   balanceFee: "1000000000", // 1000 COSM
 };
+
+export const nonExistentAddress = "cosmos1p79apjaufyphcmsn4g07cynqf0wyjuezqu84hd";
