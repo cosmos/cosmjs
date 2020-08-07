@@ -4,7 +4,7 @@ import { Coin } from "@cosmjs/launchpad";
 import { Uint64 } from "@cosmjs/math";
 import * as proto from "@cosmjs/proto-signing";
 import { Client as TendermintClient } from "@cosmjs/tendermint-rpc";
-import { assertDefined } from "@cosmjs/utils";
+import { arrayContentEquals, assertDefined } from "@cosmjs/utils";
 import Long from "long";
 
 import { BaseAccount } from "./query/accounts";
@@ -118,8 +118,7 @@ export class StargateClient {
       throw new Error(`Query failed with (${response.code}): ${response.log}`);
     }
 
-    // TODO: better way to compare?
-    if (toHex(response.key) !== toHex(key)) {
+    if (!arrayContentEquals(response.key, key)) {
       throw new Error(`Response key ${toHex(response.key)} doesn't match query key ${toHex(key)}`);
     }
 
