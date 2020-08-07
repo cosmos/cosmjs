@@ -16,6 +16,7 @@
   `BroadcastTxSuccess` and `BroadcastTxFailure` respectively, as well as helper
   functions `isBroadcastTxFailure`, `isBroadcastTxSuccess` and
   `assertIsBroadcastTxSuccess`.
+- @cosmjs/utils: Add `arrayContentEquals`.
 
 ## 0.22.0 (2020-08-03)
 
