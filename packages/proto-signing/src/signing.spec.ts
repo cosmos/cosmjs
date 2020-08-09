@@ -2,6 +2,7 @@
 import { Bech32, fromBase64, fromHex, toHex } from "@cosmjs/encoding";
 import { Secp256k1Wallet } from "@cosmjs/launchpad";
 
+import { omitDefault } from "./adr27";
 import { cosmos } from "./generated/codecimpl";
 import { defaultRegistry } from "./msgs";
 import { Registry, TxBodyValue } from "./registry";
@@ -29,7 +30,7 @@ const faucet = {
 // simd tx bank send --sign-mode direct --chain-id simd-testing testgen cosmos1qypqxpq9qcrsszg2pvxq6rs0zqg3yyc5lzv7xu 1234567ucosm -b block
 const testVectors = [
   {
-    sequenceNumber: undefined, // Go doesn’t encode 0
+    sequenceNumber: 0,
     signedTxBytes:
       "0a580a560a142f636f736d6f732e62616e6b2e4d736753656e64123e0a140d82b1e7c96dbfa42462fe612932e6bff111d51b12140102030405060708090a0b0c0d0e0f10111213141a100a0575636f736d12073132333435363712330a2b0a230a21034f04181eeba35391b858633a765c4a0c189697b40d216354d50890d350c7029012040a020801120410c09a0c1a40692d88f681d5d69924a53668e8ecec535ca0ca170d1febfb1dd87de9959b07340427d6bba22526d6c30cc622f27dc5eb1ce04cfc0ff98716154066ec69db62e5",
     signBytes:
@@ -149,11 +150,11 @@ describe("signing demo", () => {
     await Promise.all(
       testVectors.map(async ({ sequenceNumber, signBytes, signedTxBytes }) => {
         const signDoc = SignDoc.create({
-          bodyBytes: txBodyBytes,
-          authInfoBytes: authInfoBytes,
-          chainId: chainId,
-          accountNumber: accountNumber,
-          accountSequence: sequenceNumber,
+          bodyBytes: omitDefault(txBodyBytes),
+          authInfoBytes: omitDefault(authInfoBytes),
+          chainId: omitDefault(chainId),
+          accountNumber: omitDefault(accountNumber),
+          accountSequence: omitDefault(sequenceNumber),
         });
         const signDocBytes = Uint8Array.from(SignDoc.encode(signDoc).finish());
         expect(toHex(signDocBytes)).toEqual(signBytes);
