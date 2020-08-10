@@ -1,4 +1,3 @@
-import { pubkeyType } from "@cosmjs/launchpad";
 import { assert } from "@cosmjs/utils";
 
 import { StargateClient } from "./stargateclient";
@@ -39,10 +38,7 @@ describe("StargateClient", () => {
       assert(account);
       expect(account).toEqual({
         address: validator.address,
-        pubkey: {
-          type: pubkeyType.secp256k1,
-          value: validator.pubkey,
-        },
+        pubkey: validator.pubkey,
         accountNumber: validator.accountNumber,
         sequence: validator.sequence,
       });
