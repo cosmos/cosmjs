@@ -2,7 +2,7 @@
 import { Bech32, fromBase64, fromHex, toHex } from "@cosmjs/encoding";
 import { Secp256k1Wallet } from "@cosmjs/launchpad";
 
-import { omitDefault } from "./adr27";
+import { omitDefaults } from "./adr27";
 import { cosmos } from "./generated/codecimpl";
 import { defaultRegistry } from "./msgs";
 import { Registry, TxBodyValue } from "./registry";
@@ -149,13 +149,15 @@ describe("signing demo", () => {
 
     await Promise.all(
       testVectors.map(async ({ sequenceNumber, signBytes, signedTxBytes }) => {
-        const signDoc = SignDoc.create({
-          bodyBytes: omitDefault(txBodyBytes),
-          authInfoBytes: omitDefault(authInfoBytes),
-          chainId: omitDefault(chainId),
-          accountNumber: omitDefault(accountNumber),
-          accountSequence: omitDefault(sequenceNumber),
-        });
+        const signDoc = SignDoc.create(
+          omitDefaults({
+            bodyBytes: txBodyBytes,
+            authInfoBytes: authInfoBytes,
+            chainId: chainId,
+            accountNumber: accountNumber,
+            accountSequence: sequenceNumber,
+          }),
+        );
         const signDocBytes = Uint8Array.from(SignDoc.encode(signDoc).finish());
         expect(toHex(signDocBytes)).toEqual(signBytes);
 
