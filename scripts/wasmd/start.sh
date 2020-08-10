@@ -55,8 +55,8 @@ docker exec "$CONTAINER_NAME" \
 
 echo "rest server running on http://localhost:$LCD_API_PORT_HOST and logging into $REST_SERVER_LOGFILE"
 
-# Give REST server some time to come alive. No idea why this helps. Needed for CI.
 if [ -n "${CI:-}" ]; then
+  # Give process some time to come alive. No idea why this helps. Needed for CI.
   sleep 0.5
 
   # Follow the logs in CI's background job
