@@ -62,6 +62,9 @@ export function encodeBech32Pubkey(pubkey: PubKey, prefix: string): string {
     case pubkeyType.secp256k1:
       aminoPrefix = pubkeyAminoPrefixSecp256k1;
       break;
+    case pubkeyType.ed25519:
+      aminoPrefix = pubkeyAminoPrefixEd25519;
+      break;
     default:
       throw new Error("Unsupported pubkey type");
   }

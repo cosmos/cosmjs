@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.22.1 (unreleased)
+
+- @cosmjs/launchpad: Add ed25519 support to `encodeBech32Pubkey`.
+
 ## 0.22.0 (2020-08-03)
 
 - @cosmjs/cli: Now supports HTTPs URLs for `--init` code sources.

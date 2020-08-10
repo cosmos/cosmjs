@@ -51,5 +51,17 @@ describe("pubkey", () => {
         "cosmospub1addwnpepqd8sgxq7aw348ydctp3n5ajufgxp395hksxjzc6565yfp56scupfqhlgyg5",
       );
     });
+
+    it("works for ed25519", () => {
+      // Decoded from http://localhost:26657/validators
+      // Encoded from `corald tendermint show-validator`
+      const pubkey: PubKey = {
+        type: "tendermint/PubKeyEd25519",
+        value: "YZHlYxP5R6olj3Tj3f7VgkQE5VaOvv9G0jKATqdQsqI=",
+      };
+      expect(encodeBech32Pubkey(pubkey, "coralvalconspub")).toEqual(
+        "coralvalconspub1zcjduepqvxg72ccnl9r65fv0wn3amlk4sfzqfe2k36l073kjx2qyaf6sk23qw7j8wq",
+      );
+    });
   });
 });
