@@ -1,4 +1,5 @@
 import { Coin, PubKey } from "@cosmjs/launchpad";
+import { Client as TendermintClient } from "@cosmjs/tendermint-rpc";
 export interface Account {
   /** Bech32 account address */
   readonly address: string;
@@ -10,10 +11,16 @@ export interface SequenceResponse {
   readonly accountNumber: number;
   readonly sequence: number;
 }
+/** Use for testing only */
+export interface PrivateStargateClient {
+  readonly tmClient: TendermintClient;
+}
 export declare class StargateClient {
   private readonly tmClient;
+  private chainId;
   static connect(endpoint: string): Promise<StargateClient>;
   private constructor();
+  getChainId(): Promise<string>;
   getAccount(searchAddress: string): Promise<Account | null>;
   getSequence(address: string): Promise<SequenceResponse | null>;
   getBalance(address: string, searchDenom: string): Promise<Coin | null>;
