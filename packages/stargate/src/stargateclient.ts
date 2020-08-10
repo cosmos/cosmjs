@@ -26,6 +26,18 @@ function uint64FromProto(input: number | Long): Uint64 {
   return Uint64.fromString(input.toString());
 }
 
+function decodeBaseAccount(data: Uint8Array, prefix: string): Account {
+  const { address, pubKey, accountNumber, sequence } = cosmos.auth.BaseAccount.decode(data);
+  // Pubkey is still Amino-encoded in BaseAccount (https://github.com/cosmos/cosmos-sdk/issues/6886)
+  const pubkey = pubKey.length ? decodeAminoPubkey(pubKey) : null;
+  return {
+    address: Bech32.encode(prefix, address),
+    pubkey: pubkey,
+    accountNumber: uint64FromProto(accountNumber).toNumber(),
+    sequence: uint64FromProto(sequence).toNumber(),
+  };
+}
+
 function coinFromProto(input: cosmos.ICoin): Coin {
   assertDefined(input.amount);
   assertDefined(input.denom);
@@ -60,15 +72,7 @@ export class StargateClient {
     const { typeUrl, value } = decodeAny(responseData);
     switch (typeUrl) {
       case "/cosmos.auth.BaseAccount": {
-        const { address, pubKey, accountNumber, sequence } = cosmos.auth.BaseAccount.decode(value);
-        // Pubkey is still Amino-encoded in BaseAccount (https://github.com/cosmos/cosmos-sdk/issues/6886)
-        const pubkey = pubKey.length ? decodeAminoPubkey(pubKey) : null;
-        return {
-          address: Bech32.encode(prefix, address),
-          pubkey: pubkey,
-          accountNumber: uint64FromProto(accountNumber).toNumber(),
-          sequence: uint64FromProto(sequence).toNumber(),
-        };
+        return decodeBaseAccount(value, prefix);
       }
       default:
         throw new Error(`Unsupported type: '${typeUrl}'`);
