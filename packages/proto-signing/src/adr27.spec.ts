@@ -1,7 +1,7 @@
 import { fromHex } from "@cosmjs/encoding";
 import { parse } from "protobufjs";
 
-import { omitDefault } from "./adr27";
+import { omitDefault, omitDefaults } from "./adr27";
 
 describe("adr27", () => {
   describe("omitDefault", () => {
@@ -45,6 +45,94 @@ describe("adr27", () => {
       const Review = parse(proto).root.lookupEnum("blog.Review");
       expect(omitDefault(Review.values["ACCEPTED"])).toEqual(Review.values["ACCEPTED"]);
       expect(omitDefault(Review.values["UNSPECIFIED"])).toEqual(null);
+    });
+  });
+
+  describe("omitDefaults", () => {
+    it("works for scalars", () => {
+      expect(omitDefaults("abc")).toEqual("abc");
+      expect(omitDefaults("")).toEqual(null);
+
+      expect(omitDefaults(fromHex("ab"))).toEqual(fromHex("ab"));
+      expect(omitDefaults(fromHex(""))).toEqual(null);
+
+      expect(omitDefaults(123)).toEqual(123);
+      expect(omitDefaults(0)).toEqual(null);
+
+      expect(omitDefaults(1.234)).toEqual(1.234);
+      expect(omitDefaults(0.0)).toEqual(null);
+    });
+
+    it("works for repeaded", () => {
+      expect(omitDefaults(["a", "b", "c"])).toEqual(["a", "b", "c"]);
+      expect(omitDefaults([])).toEqual(null);
+    });
+
+    it("works for enums", () => {
+      const proto = `
+        package blog;
+        syntax = "proto3";
+
+        enum Review {
+          UNSPECIFIED = 0;
+          ACCEPTED = 1;
+          REJECTED = 2;
+        };
+      `;
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      const Review = parse(proto).root.lookupEnum("blog.Review");
+      expect(omitDefaults(Review.values["ACCEPTED"])).toEqual(Review.values["ACCEPTED"]);
+      expect(omitDefaults(Review.values["UNSPECIFIED"])).toEqual(null);
+    });
+
+    it("works for objects", () => {
+      // empty
+      expect(omitDefaults({})).toEqual({});
+
+      // simple
+      expect(
+        omitDefaults({
+          a: "foo",
+          b: "",
+          c: 100,
+          d: 0,
+        }),
+      ).toEqual({
+        a: "foo",
+        b: null,
+        c: 100,
+        d: null,
+      });
+
+      // nested
+
+      expect(
+        omitDefaults({
+          a: {
+            x: "foo",
+            y: "",
+          },
+          b: {
+            x: {
+              o: 1.2,
+              p: false,
+              q: 0,
+            },
+          },
+        }),
+      ).toEqual({
+        a: {
+          x: "foo",
+          y: null,
+        },
+        b: {
+          x: {
+            o: 1.2,
+            p: null,
+            q: null,
+          },
+        },
+      });
     });
 
     it("can be used to reproduce ADR 027 test vector", () => {
@@ -93,18 +181,20 @@ describe("adr27", () => {
       );
 
       const serialization = Uint8Array.from(
-        Article.encode({
-          title: omitDefault("The world needs change"),
-          description: omitDefault(""),
-          created: omitDefault(1596806111080),
-          updated: omitDefault(0),
-          public: omitDefault(true),
-          promoted: omitDefault(false),
-          type: omitDefault(Type.values["NEWS"]),
-          review: omitDefault(Review.values["UNSPECIFIED"]),
-          comments: omitDefault(["Nice one", "Thank you"]),
-          backlinks: omitDefault([]),
-        }).finish(),
+        Article.encode(
+          omitDefaults({
+            title: "The world needs change",
+            description: "",
+            created: 1596806111080,
+            updated: 0,
+            public: true,
+            promoted: false,
+            type: Type.values["NEWS"],
+            review: Review.values["UNSPECIFIED"],
+            comments: ["Nice one", "Thank you"],
+            backlinks: [],
+          }),
+        ).finish(),
       );
       expect(serialization).toEqual(expected);
     });
