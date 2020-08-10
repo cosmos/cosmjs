@@ -46,6 +46,12 @@ describe("adr27", () => {
       expect(omitDefault(Review.values["ACCEPTED"])).toEqual(Review.values["ACCEPTED"]);
       expect(omitDefault(Review.values["UNSPECIFIED"])).toEqual(null);
     });
+
+    it("works for unset", () => {
+      // null and undefined both represent unset in protobuf.js serialization
+      expect(omitDefault(undefined)).toEqual(null);
+      expect(omitDefault(null)).toEqual(null);
+    });
   });
 
   describe("omitDefaults", () => {
@@ -83,6 +89,12 @@ describe("adr27", () => {
       const Review = parse(proto).root.lookupEnum("blog.Review");
       expect(omitDefaults(Review.values["ACCEPTED"])).toEqual(Review.values["ACCEPTED"]);
       expect(omitDefaults(Review.values["UNSPECIFIED"])).toEqual(null);
+    });
+
+    it("works for unset", () => {
+      // null and undefined both represent unset in protobuf.js serialization
+      expect(omitDefaults(undefined)).toEqual(null);
+      expect(omitDefaults(null)).toEqual(null);
     });
 
     it("works for objects", () => {
