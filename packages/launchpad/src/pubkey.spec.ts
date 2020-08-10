@@ -39,6 +39,18 @@ describe("pubkey", () => {
         value: "A6lihrEs3PEFCu8m01ebcas3KjEVAjDIEmU7P9ED3PFx",
       });
     });
+
+    it("works for ed25519", () => {
+      // Encoded from `corald tendermint show-validator`
+      // Decoded from http://localhost:26657/validators
+      const decoded = decodeBech32Pubkey(
+        "coralvalconspub1zcjduepqvxg72ccnl9r65fv0wn3amlk4sfzqfe2k36l073kjx2qyaf6sk23qw7j8wq",
+      );
+      expect(decoded).toEqual({
+        type: "tendermint/PubKeyEd25519",
+        value: "YZHlYxP5R6olj3Tj3f7VgkQE5VaOvv9G0jKATqdQsqI=",
+      });
+    });
   });
 
   describe("encodeBech32Pubkey", () => {
