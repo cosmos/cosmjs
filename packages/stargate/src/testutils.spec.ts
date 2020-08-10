@@ -24,4 +24,13 @@ export const unused = {
   balanceFee: "1000000000", // 1000 COSM
 };
 
+export const validator = {
+  /** From first gentx's auth_info.signer_infos in scripts/simapp/template/.simapp/config/genesis.json */
+  pubkey: "AnFadRAdh6Fl7robHe8jywDMKSWQQjB7SlpoqGsX9Ghw",
+  /** delegator_address from /cosmos.staking.MsgCreateValidator in scripts/simapp/template/.simapp/config/genesis.json */
+  address: "cosmos12gm9sa666hywxu9nzzmp7hyl7a55hvg769w2kz",
+  accountNumber: 0,
+  sequence: 1,
+};
+
 export const nonExistentAddress = "cosmos1p79apjaufyphcmsn4g07cynqf0wyjuezqu84hd";

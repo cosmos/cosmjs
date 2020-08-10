@@ -21,9 +21,7 @@ const pubkeyAminoPrefixEd25519 = fromHex("1624de6420");
 const pubkeyAminoPrefixSr25519 = fromHex("0dfb1005");
 const pubkeyAminoPrefixLength = pubkeyAminoPrefixSecp256k1.length;
 
-export function decodeBech32Pubkey(bechEncoded: string): PubKey {
-  const { data } = Bech32.decode(bechEncoded);
-
+export function decodeAminoPubkey(data: Uint8Array): PubKey {
   const aminoPrefix = data.slice(0, pubkeyAminoPrefixLength);
   const rest = data.slice(pubkeyAminoPrefixLength);
   if (equal(aminoPrefix, pubkeyAminoPrefixSecp256k1)) {
@@ -53,6 +51,11 @@ export function decodeBech32Pubkey(bechEncoded: string): PubKey {
   } else {
     throw new Error("Unsupported Pubkey type. Amino prefix: " + toHex(aminoPrefix));
   }
+}
+
+export function decodeBech32Pubkey(bechEncoded: string): PubKey {
+  const { data } = Bech32.decode(bechEncoded);
+  return decodeAminoPubkey(data);
 }
 
 export function encodeBech32Pubkey(pubkey: PubKey, prefix: string): string {

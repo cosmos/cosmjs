@@ -1,7 +1,8 @@
+import { pubkeyType } from "@cosmjs/launchpad";
 import { assert } from "@cosmjs/utils";
 
 import { StargateClient } from "./stargateclient";
-import { nonExistentAddress, pendingWithoutSimapp, simapp, unused } from "./testutils.spec";
+import { nonExistentAddress, pendingWithoutSimapp, simapp, unused, validator } from "./testutils.spec";
 
 describe("StargateClient", () => {
   describe("connect", () => {
@@ -25,6 +26,25 @@ describe("StargateClient", () => {
         pubkey: null,
         accountNumber: unused.accountNumber,
         sequence: unused.sequence,
+      });
+
+      client.disconnect();
+    });
+
+    it("works for account with pubkey and non-zero sequence", async () => {
+      pendingWithoutSimapp();
+      const client = await StargateClient.connect(simapp.tendermintUrl);
+
+      const account = await client.getAccount(validator.address);
+      assert(account);
+      expect(account).toEqual({
+        address: validator.address,
+        pubkey: {
+          type: pubkeyType.secp256k1,
+          value: validator.pubkey,
+        },
+        accountNumber: validator.accountNumber,
+        sequence: validator.sequence,
       });
 
       client.disconnect();

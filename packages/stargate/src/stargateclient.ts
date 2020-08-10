@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Bech32, toAscii, toHex } from "@cosmjs/encoding";
-import { Coin, encodeSecp256k1Pubkey, PubKey } from "@cosmjs/launchpad";
+import { Coin, decodeAminoPubkey, PubKey } from "@cosmjs/launchpad";
 import { Uint64 } from "@cosmjs/math";
 import { decodeAny } from "@cosmjs/proto-signing";
 import { Client as TendermintClient } from "@cosmjs/tendermint-rpc";
@@ -61,9 +61,11 @@ export class StargateClient {
     switch (typeUrl) {
       case "/cosmos.auth.BaseAccount": {
         const { address, pubKey, accountNumber, sequence } = cosmos.auth.BaseAccount.decode(value);
+        // Pubkey is still Amino-encoded in BaseAccount (https://github.com/cosmos/cosmos-sdk/issues/6886)
+        const pubkey = pubKey.length ? decodeAminoPubkey(pubKey) : null;
         return {
           address: Bech32.encode(prefix, address),
-          pubkey: pubKey.length ? encodeSecp256k1Pubkey(pubKey) : null,
+          pubkey: pubkey,
           accountNumber: uint64FromProto(accountNumber).toNumber(),
           sequence: uint64FromProto(sequence).toNumber(),
         };
