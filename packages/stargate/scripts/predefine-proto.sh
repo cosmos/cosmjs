@@ -20,8 +20,10 @@ yarn pbjs \
   --no-verify \
   --no-convert \
   "$COSMOS_PROTO_DIR/cosmos.proto" \
-  "$COSMOS_PROTO_DIR/bank/bank.proto" \
+  "$COSMOS_PROTO_DIR/auth/{auth,query}.proto" \
+  "$COSMOS_PROTO_DIR/bank/{bank,query}.proto" \
   "$COSMOS_PROTO_DIR/crypto/crypto.proto" \
+  "$COSMOS_PROTO_DIR/query/pagination.proto" \
   "$COSMOS_PROTO_DIR/tx/tx.proto" \
   "$COSMOS_PROTO_DIR/tx/signing/signing.proto" \
   "$TENDERMINT_PROTO_DIR/abci/types/types.proto" \

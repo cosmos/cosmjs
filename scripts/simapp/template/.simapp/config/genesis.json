@@ -6,7 +6,7 @@
         {
           "type": "cosmos-sdk/BaseAccount",
           "value": {
-            "address": "cosmos1lv5lq7qjr42attsdma622whwa7v0rc2d4pful8"
+            "address": "cosmos12gm9sa666hywxu9nzzmp7hyl7a55hvg769w2kz"
           }
         },
         {
@@ -163,6 +163,19 @@
         },
         {
           "address": "cosmos1f7j7ryulwjfe9ljplvhtcaxa6wqgula3etktce",
+          "coins": [
+            {
+              "amount": "1000000000",
+              "denom": "ucosm"
+            },
+            {
+              "amount": "10000000",
+              "denom": "ustake"
+            }
+          ]
+        },
+        {
+          "address": "cosmos12gm9sa666hywxu9nzzmp7hyl7a55hvg769w2kz",
           "coins": [
             {
               "amount": "1000000000",
@@ -342,19 +355,6 @@
               "denom": "ustake"
             }
           ]
-        },
-        {
-          "address": "cosmos1lv5lq7qjr42attsdma622whwa7v0rc2d4pful8",
-          "coins": [
-            {
-              "amount": "1000000000",
-              "denom": "ucosm"
-            },
-            {
-              "amount": "10000000",
-              "denom": "ustake"
-            }
-          ]
         }
       ],
       "denom_metadata": null,
@@ -407,13 +407,13 @@
                   }
                 },
                 "public_key": {
-                  "secp256k1": "A7bPBNzzcLkg9D6sSUIpq6qOhtWTKnJELef/5yZfr4xH"
+                  "secp256k1": "AnFadRAdh6Fl7robHe8jywDMKSWQQjB7SlpoqGsX9Ghw"
                 }
               }
             ]
           },
           "body": {
-            "memo": "d593cd9e2f88b70d57ffc8c28768b555b9acb5fc@172.17.0.3:26656",
+            "memo": "b02715f69ce88507acaa543f7de0d3f7e6cd20f8@172.17.0.2:26656",
             "messages": [
               {
                 "@type": "/cosmos.staking.MsgCreateValidator",
@@ -422,13 +422,13 @@
                   "max_rate": "0.200000000000000000",
                   "rate": "0.100000000000000000"
                 },
-                "delegator_address": "cosmos1lv5lq7qjr42attsdma622whwa7v0rc2d4pful8",
+                "delegator_address": "cosmos12gm9sa666hywxu9nzzmp7hyl7a55hvg769w2kz",
                 "description": {
                   "moniker": "simd-moniker"
                 },
                 "min_self_delegation": "1",
-                "pubkey": "cosmosvalconspub1zcjduepqv3sruyer5xmurpxyptu4ll3efjan3lmaajf3fxg9axe895ppj9kqtyk2vf",
-                "validator_address": "cosmosvaloper1lv5lq7qjr42attsdma622whwa7v0rc2ds4afn5",
+                "pubkey": "cosmosvalconspub1zcjduepqcf6dt4wct4uk93lu0nc4vp8x8le8tqfe3wcmys53jn6lfa3fqvwsqktz95",
+                "validator_address": "cosmosvaloper12gm9sa666hywxu9nzzmp7hyl7a55hvg7l36l63",
                 "value": {
                   "amount": "3000000",
                   "denom": "ustake"
@@ -437,7 +437,7 @@
             ]
           },
           "signatures": [
-            "5gBipu7M14zMjn2t6pBxM+DprcDR44RW4Eylc1wVp4Ikem0duRVnvWDE+B0gZ9+LY0QrgPcEmm6aXzPGiN3SKQ=="
+            "VdidVRYryEAL1v3bMIyHpwswMVSPJncCoC+7+VJdKwR5e8ymOeY+qG7q0QVcWj2x1Z72fw5O5w58anw9msnmzg=="
           ]
         }
       ]
@@ -476,8 +476,7 @@
       },
       "client_genesis": {
         "clients": [],
-        "clients_consensus": [],
-        "create_localhost": true
+        "clients_consensus": []
       },
       "connection_genesis": {
         "client_connection_paths": [],
@@ -547,5 +546,5 @@
       ]
     }
   },
-  "genesis_time": "2020-08-06T13:08:49.5288713Z"
+  "genesis_time": "2020-08-10T04:34:53.3772058Z"
 }
