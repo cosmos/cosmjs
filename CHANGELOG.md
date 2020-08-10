@@ -2,6 +2,7 @@
 
 ## 0.22.1 (unreleased)
 
+- @cosmjs/cli: Import `encodeBech32Pubkey` and `decodeBech32Pubkey` by default.
 - @cosmjs/launchpad: Add ed25519 support to `encodeBech32Pubkey`.
 
 ## 0.22.0 (2020-08-03)

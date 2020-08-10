@@ -89,6 +89,8 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
       [
         "coin",
         "coins",
+        "decodeBech32Pubkey",
+        "encodeBech32Pubkey",
         "encodeSecp256k1Pubkey",
         "encodeSecp256k1Signature",
         "logs",
@@ -155,6 +157,9 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
       const [{ address }] = await wallet.getAccounts();
       const data = toAscii("foo bar");
       const signature = await wallet.sign(address, data);
+
+      const bechPubkey = "coralvalconspub1zcjduepqvxg72ccnl9r65fv0wn3amlk4sfzqfe2k36l073kjx2qyaf6sk23qw7j8wq";
+      assert(encodeBech32Pubkey(decodeBech32Pubkey(bechPubkey), "coralvalconspub") == bechPubkey);
 
       console.info("Done testing, will exit now.");
       process.exit(0);
