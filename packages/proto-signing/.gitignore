@@ -1,5 +1,7 @@
 build/
 dist/
 docs/
+
+# protobuf code generation
 proto/
 tmp/
