@@ -79,8 +79,8 @@ export class StargateClient {
     const account = await this.getAccount(address);
     if (account) {
       return {
-        accountNumber: uint64FromProto(account.accountNumber).toNumber(),
-        sequence: uint64FromProto(account.sequence).toNumber(),
+        accountNumber: account.accountNumber,
+        sequence: account.sequence,
       };
     } else {
       return null;
