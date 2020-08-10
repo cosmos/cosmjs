@@ -612,6 +612,337 @@ exports.cosmos = $root.cosmos = (function () {
     };
     return Attribute;
   })();
+  cosmos.auth = (function () {
+    var auth = {};
+    auth.BaseAccount = (function () {
+      function BaseAccount(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      BaseAccount.prototype.address = $util.newBuffer([]);
+      BaseAccount.prototype.pubKey = $util.newBuffer([]);
+      BaseAccount.prototype.accountNumber = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+      BaseAccount.prototype.sequence = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+      BaseAccount.create = function create(properties) {
+        return new BaseAccount(properties);
+      };
+      BaseAccount.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.address != null && Object.hasOwnProperty.call(m, "address")) w.uint32(10).bytes(m.address);
+        if (m.pubKey != null && Object.hasOwnProperty.call(m, "pubKey")) w.uint32(18).bytes(m.pubKey);
+        if (m.accountNumber != null && Object.hasOwnProperty.call(m, "accountNumber"))
+          w.uint32(24).uint64(m.accountNumber);
+        if (m.sequence != null && Object.hasOwnProperty.call(m, "sequence")) w.uint32(32).uint64(m.sequence);
+        return w;
+      };
+      BaseAccount.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.cosmos.auth.BaseAccount();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.address = r.bytes();
+              break;
+            case 2:
+              m.pubKey = r.bytes();
+              break;
+            case 3:
+              m.accountNumber = r.uint64();
+              break;
+            case 4:
+              m.sequence = r.uint64();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return BaseAccount;
+    })();
+    auth.ModuleAccount = (function () {
+      function ModuleAccount(p) {
+        this.permissions = [];
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      ModuleAccount.prototype.baseAccount = null;
+      ModuleAccount.prototype.name = "";
+      ModuleAccount.prototype.permissions = $util.emptyArray;
+      ModuleAccount.create = function create(properties) {
+        return new ModuleAccount(properties);
+      };
+      ModuleAccount.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.baseAccount != null && Object.hasOwnProperty.call(m, "baseAccount"))
+          $root.cosmos.auth.BaseAccount.encode(m.baseAccount, w.uint32(10).fork()).ldelim();
+        if (m.name != null && Object.hasOwnProperty.call(m, "name")) w.uint32(18).string(m.name);
+        if (m.permissions != null && m.permissions.length) {
+          for (var i = 0; i < m.permissions.length; ++i) w.uint32(26).string(m.permissions[i]);
+        }
+        return w;
+      };
+      ModuleAccount.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.cosmos.auth.ModuleAccount();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.baseAccount = $root.cosmos.auth.BaseAccount.decode(r, r.uint32());
+              break;
+            case 2:
+              m.name = r.string();
+              break;
+            case 3:
+              if (!(m.permissions && m.permissions.length)) m.permissions = [];
+              m.permissions.push(r.string());
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return ModuleAccount;
+    })();
+    auth.Params = (function () {
+      function Params(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      Params.prototype.maxMemoCharacters = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+      Params.prototype.txSigLimit = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+      Params.prototype.txSizeCostPerByte = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+      Params.prototype.sigVerifyCostEd25519 = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+      Params.prototype.sigVerifyCostSecp256k1 = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+      Params.create = function create(properties) {
+        return new Params(properties);
+      };
+      Params.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.maxMemoCharacters != null && Object.hasOwnProperty.call(m, "maxMemoCharacters"))
+          w.uint32(8).uint64(m.maxMemoCharacters);
+        if (m.txSigLimit != null && Object.hasOwnProperty.call(m, "txSigLimit"))
+          w.uint32(16).uint64(m.txSigLimit);
+        if (m.txSizeCostPerByte != null && Object.hasOwnProperty.call(m, "txSizeCostPerByte"))
+          w.uint32(24).uint64(m.txSizeCostPerByte);
+        if (m.sigVerifyCostEd25519 != null && Object.hasOwnProperty.call(m, "sigVerifyCostEd25519"))
+          w.uint32(32).uint64(m.sigVerifyCostEd25519);
+        if (m.sigVerifyCostSecp256k1 != null && Object.hasOwnProperty.call(m, "sigVerifyCostSecp256k1"))
+          w.uint32(40).uint64(m.sigVerifyCostSecp256k1);
+        return w;
+      };
+      Params.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.cosmos.auth.Params();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.maxMemoCharacters = r.uint64();
+              break;
+            case 2:
+              m.txSigLimit = r.uint64();
+              break;
+            case 3:
+              m.txSizeCostPerByte = r.uint64();
+              break;
+            case 4:
+              m.sigVerifyCostEd25519 = r.uint64();
+              break;
+            case 5:
+              m.sigVerifyCostSecp256k1 = r.uint64();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return Params;
+    })();
+    auth.Query = (function () {
+      function Query(rpcImpl, requestDelimited, responseDelimited) {
+        $protobuf.rpc.Service.call(this, rpcImpl, requestDelimited, responseDelimited);
+      }
+      (Query.prototype = Object.create($protobuf.rpc.Service.prototype)).constructor = Query;
+      Query.create = function create(rpcImpl, requestDelimited, responseDelimited) {
+        return new this(rpcImpl, requestDelimited, responseDelimited);
+      };
+      Object.defineProperty(
+        (Query.prototype.account = function account(request, callback) {
+          return this.rpcCall(
+            account,
+            $root.cosmos.auth.QueryAccountRequest,
+            $root.cosmos.auth.QueryAccountResponse,
+            request,
+            callback,
+          );
+        }),
+        "name",
+        { value: "Account" },
+      );
+      Object.defineProperty(
+        (Query.prototype.params = function params(request, callback) {
+          return this.rpcCall(
+            params,
+            $root.cosmos.auth.QueryParamsRequest,
+            $root.cosmos.auth.QueryParamsResponse,
+            request,
+            callback,
+          );
+        }),
+        "name",
+        { value: "Params" },
+      );
+      return Query;
+    })();
+    auth.QueryAccountRequest = (function () {
+      function QueryAccountRequest(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      QueryAccountRequest.prototype.address = $util.newBuffer([]);
+      QueryAccountRequest.create = function create(properties) {
+        return new QueryAccountRequest(properties);
+      };
+      QueryAccountRequest.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.address != null && Object.hasOwnProperty.call(m, "address")) w.uint32(10).bytes(m.address);
+        return w;
+      };
+      QueryAccountRequest.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.cosmos.auth.QueryAccountRequest();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.address = r.bytes();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return QueryAccountRequest;
+    })();
+    auth.QueryAccountResponse = (function () {
+      function QueryAccountResponse(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      QueryAccountResponse.prototype.account = null;
+      QueryAccountResponse.create = function create(properties) {
+        return new QueryAccountResponse(properties);
+      };
+      QueryAccountResponse.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.account != null && Object.hasOwnProperty.call(m, "account"))
+          $root.google.protobuf.Any.encode(m.account, w.uint32(10).fork()).ldelim();
+        return w;
+      };
+      QueryAccountResponse.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.cosmos.auth.QueryAccountResponse();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.account = $root.google.protobuf.Any.decode(r, r.uint32());
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return QueryAccountResponse;
+    })();
+    auth.QueryParamsRequest = (function () {
+      function QueryParamsRequest(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      QueryParamsRequest.create = function create(properties) {
+        return new QueryParamsRequest(properties);
+      };
+      QueryParamsRequest.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        return w;
+      };
+      QueryParamsRequest.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.cosmos.auth.QueryParamsRequest();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return QueryParamsRequest;
+    })();
+    auth.QueryParamsResponse = (function () {
+      function QueryParamsResponse(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      QueryParamsResponse.prototype.params = null;
+      QueryParamsResponse.create = function create(properties) {
+        return new QueryParamsResponse(properties);
+      };
+      QueryParamsResponse.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.params != null && Object.hasOwnProperty.call(m, "params"))
+          $root.cosmos.auth.Params.encode(m.params, w.uint32(10).fork()).ldelim();
+        return w;
+      };
+      QueryParamsResponse.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.cosmos.auth.QueryParamsResponse();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.params = $root.cosmos.auth.Params.decode(r, r.uint32());
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return QueryParamsResponse;
+    })();
+    return auth;
+  })();
   cosmos.bank = (function () {
     var bank = {};
     bank.Params = (function () {
@@ -1028,6 +1359,364 @@ exports.cosmos = $root.cosmos = (function () {
       };
       return Metadata;
     })();
+    bank.Query = (function () {
+      function Query(rpcImpl, requestDelimited, responseDelimited) {
+        $protobuf.rpc.Service.call(this, rpcImpl, requestDelimited, responseDelimited);
+      }
+      (Query.prototype = Object.create($protobuf.rpc.Service.prototype)).constructor = Query;
+      Query.create = function create(rpcImpl, requestDelimited, responseDelimited) {
+        return new this(rpcImpl, requestDelimited, responseDelimited);
+      };
+      Object.defineProperty(
+        (Query.prototype.balance = function balance(request, callback) {
+          return this.rpcCall(
+            balance,
+            $root.cosmos.bank.QueryBalanceRequest,
+            $root.cosmos.bank.QueryBalanceResponse,
+            request,
+            callback,
+          );
+        }),
+        "name",
+        { value: "Balance" },
+      );
+      Object.defineProperty(
+        (Query.prototype.allBalances = function allBalances(request, callback) {
+          return this.rpcCall(
+            allBalances,
+            $root.cosmos.bank.QueryAllBalancesRequest,
+            $root.cosmos.bank.QueryAllBalancesResponse,
+            request,
+            callback,
+          );
+        }),
+        "name",
+        { value: "AllBalances" },
+      );
+      Object.defineProperty(
+        (Query.prototype.totalSupply = function totalSupply(request, callback) {
+          return this.rpcCall(
+            totalSupply,
+            $root.cosmos.bank.QueryTotalSupplyRequest,
+            $root.cosmos.bank.QueryTotalSupplyResponse,
+            request,
+            callback,
+          );
+        }),
+        "name",
+        { value: "TotalSupply" },
+      );
+      Object.defineProperty(
+        (Query.prototype.supplyOf = function supplyOf(request, callback) {
+          return this.rpcCall(
+            supplyOf,
+            $root.cosmos.bank.QuerySupplyOfRequest,
+            $root.cosmos.bank.QuerySupplyOfResponse,
+            request,
+            callback,
+          );
+        }),
+        "name",
+        { value: "SupplyOf" },
+      );
+      return Query;
+    })();
+    bank.QueryBalanceRequest = (function () {
+      function QueryBalanceRequest(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      QueryBalanceRequest.prototype.address = $util.newBuffer([]);
+      QueryBalanceRequest.prototype.denom = "";
+      QueryBalanceRequest.create = function create(properties) {
+        return new QueryBalanceRequest(properties);
+      };
+      QueryBalanceRequest.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.address != null && Object.hasOwnProperty.call(m, "address")) w.uint32(10).bytes(m.address);
+        if (m.denom != null && Object.hasOwnProperty.call(m, "denom")) w.uint32(18).string(m.denom);
+        return w;
+      };
+      QueryBalanceRequest.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.cosmos.bank.QueryBalanceRequest();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.address = r.bytes();
+              break;
+            case 2:
+              m.denom = r.string();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return QueryBalanceRequest;
+    })();
+    bank.QueryBalanceResponse = (function () {
+      function QueryBalanceResponse(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      QueryBalanceResponse.prototype.balance = null;
+      QueryBalanceResponse.create = function create(properties) {
+        return new QueryBalanceResponse(properties);
+      };
+      QueryBalanceResponse.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.balance != null && Object.hasOwnProperty.call(m, "balance"))
+          $root.cosmos.Coin.encode(m.balance, w.uint32(10).fork()).ldelim();
+        return w;
+      };
+      QueryBalanceResponse.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.cosmos.bank.QueryBalanceResponse();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.balance = $root.cosmos.Coin.decode(r, r.uint32());
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return QueryBalanceResponse;
+    })();
+    bank.QueryAllBalancesRequest = (function () {
+      function QueryAllBalancesRequest(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      QueryAllBalancesRequest.prototype.address = $util.newBuffer([]);
+      QueryAllBalancesRequest.prototype.pagination = null;
+      QueryAllBalancesRequest.create = function create(properties) {
+        return new QueryAllBalancesRequest(properties);
+      };
+      QueryAllBalancesRequest.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.address != null && Object.hasOwnProperty.call(m, "address")) w.uint32(10).bytes(m.address);
+        if (m.pagination != null && Object.hasOwnProperty.call(m, "pagination"))
+          $root.cosmos.query.PageRequest.encode(m.pagination, w.uint32(18).fork()).ldelim();
+        return w;
+      };
+      QueryAllBalancesRequest.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.cosmos.bank.QueryAllBalancesRequest();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.address = r.bytes();
+              break;
+            case 2:
+              m.pagination = $root.cosmos.query.PageRequest.decode(r, r.uint32());
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return QueryAllBalancesRequest;
+    })();
+    bank.QueryAllBalancesResponse = (function () {
+      function QueryAllBalancesResponse(p) {
+        this.balances = [];
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      QueryAllBalancesResponse.prototype.balances = $util.emptyArray;
+      QueryAllBalancesResponse.prototype.pagination = null;
+      QueryAllBalancesResponse.create = function create(properties) {
+        return new QueryAllBalancesResponse(properties);
+      };
+      QueryAllBalancesResponse.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.balances != null && m.balances.length) {
+          for (var i = 0; i < m.balances.length; ++i)
+            $root.cosmos.Coin.encode(m.balances[i], w.uint32(10).fork()).ldelim();
+        }
+        if (m.pagination != null && Object.hasOwnProperty.call(m, "pagination"))
+          $root.cosmos.query.PageResponse.encode(m.pagination, w.uint32(18).fork()).ldelim();
+        return w;
+      };
+      QueryAllBalancesResponse.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.cosmos.bank.QueryAllBalancesResponse();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              if (!(m.balances && m.balances.length)) m.balances = [];
+              m.balances.push($root.cosmos.Coin.decode(r, r.uint32()));
+              break;
+            case 2:
+              m.pagination = $root.cosmos.query.PageResponse.decode(r, r.uint32());
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return QueryAllBalancesResponse;
+    })();
+    bank.QueryTotalSupplyRequest = (function () {
+      function QueryTotalSupplyRequest(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      QueryTotalSupplyRequest.create = function create(properties) {
+        return new QueryTotalSupplyRequest(properties);
+      };
+      QueryTotalSupplyRequest.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        return w;
+      };
+      QueryTotalSupplyRequest.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.cosmos.bank.QueryTotalSupplyRequest();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return QueryTotalSupplyRequest;
+    })();
+    bank.QueryTotalSupplyResponse = (function () {
+      function QueryTotalSupplyResponse(p) {
+        this.supply = [];
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      QueryTotalSupplyResponse.prototype.supply = $util.emptyArray;
+      QueryTotalSupplyResponse.create = function create(properties) {
+        return new QueryTotalSupplyResponse(properties);
+      };
+      QueryTotalSupplyResponse.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.supply != null && m.supply.length) {
+          for (var i = 0; i < m.supply.length; ++i)
+            $root.cosmos.Coin.encode(m.supply[i], w.uint32(10).fork()).ldelim();
+        }
+        return w;
+      };
+      QueryTotalSupplyResponse.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.cosmos.bank.QueryTotalSupplyResponse();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              if (!(m.supply && m.supply.length)) m.supply = [];
+              m.supply.push($root.cosmos.Coin.decode(r, r.uint32()));
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return QueryTotalSupplyResponse;
+    })();
+    bank.QuerySupplyOfRequest = (function () {
+      function QuerySupplyOfRequest(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      QuerySupplyOfRequest.prototype.denom = "";
+      QuerySupplyOfRequest.create = function create(properties) {
+        return new QuerySupplyOfRequest(properties);
+      };
+      QuerySupplyOfRequest.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.denom != null && Object.hasOwnProperty.call(m, "denom")) w.uint32(10).string(m.denom);
+        return w;
+      };
+      QuerySupplyOfRequest.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.cosmos.bank.QuerySupplyOfRequest();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.denom = r.string();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return QuerySupplyOfRequest;
+    })();
+    bank.QuerySupplyOfResponse = (function () {
+      function QuerySupplyOfResponse(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      QuerySupplyOfResponse.prototype.amount = null;
+      QuerySupplyOfResponse.create = function create(properties) {
+        return new QuerySupplyOfResponse(properties);
+      };
+      QuerySupplyOfResponse.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.amount != null && Object.hasOwnProperty.call(m, "amount"))
+          $root.cosmos.Coin.encode(m.amount, w.uint32(10).fork()).ldelim();
+        return w;
+      };
+      QuerySupplyOfResponse.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.cosmos.bank.QuerySupplyOfResponse();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.amount = $root.cosmos.Coin.decode(r, r.uint32());
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return QuerySupplyOfResponse;
+    })();
     return bank;
   })();
   cosmos.crypto = (function () {
@@ -1226,6 +1915,99 @@ exports.cosmos = $root.cosmos = (function () {
       return CompactBitArray;
     })();
     return crypto;
+  })();
+  cosmos.query = (function () {
+    var query = {};
+    query.PageRequest = (function () {
+      function PageRequest(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      PageRequest.prototype.key = $util.newBuffer([]);
+      PageRequest.prototype.offset = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+      PageRequest.prototype.limit = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+      PageRequest.prototype.countTotal = false;
+      PageRequest.create = function create(properties) {
+        return new PageRequest(properties);
+      };
+      PageRequest.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.key != null && Object.hasOwnProperty.call(m, "key")) w.uint32(10).bytes(m.key);
+        if (m.offset != null && Object.hasOwnProperty.call(m, "offset")) w.uint32(16).uint64(m.offset);
+        if (m.limit != null && Object.hasOwnProperty.call(m, "limit")) w.uint32(24).uint64(m.limit);
+        if (m.countTotal != null && Object.hasOwnProperty.call(m, "countTotal"))
+          w.uint32(32).bool(m.countTotal);
+        return w;
+      };
+      PageRequest.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.cosmos.query.PageRequest();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.key = r.bytes();
+              break;
+            case 2:
+              m.offset = r.uint64();
+              break;
+            case 3:
+              m.limit = r.uint64();
+              break;
+            case 4:
+              m.countTotal = r.bool();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return PageRequest;
+    })();
+    query.PageResponse = (function () {
+      function PageResponse(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      PageResponse.prototype.nextKey = $util.newBuffer([]);
+      PageResponse.prototype.total = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+      PageResponse.create = function create(properties) {
+        return new PageResponse(properties);
+      };
+      PageResponse.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.nextKey != null && Object.hasOwnProperty.call(m, "nextKey")) w.uint32(10).bytes(m.nextKey);
+        if (m.total != null && Object.hasOwnProperty.call(m, "total")) w.uint32(16).uint64(m.total);
+        return w;
+      };
+      PageResponse.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.cosmos.query.PageResponse();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.nextKey = r.bytes();
+              break;
+            case 2:
+              m.total = r.uint64();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return PageResponse;
+    })();
+    return query;
   })();
   cosmos.tx = (function () {
     var tx = {};

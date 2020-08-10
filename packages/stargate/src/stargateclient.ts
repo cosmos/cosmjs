@@ -2,13 +2,12 @@
 import { Bech32, toAscii, toHex } from "@cosmjs/encoding";
 import { Coin } from "@cosmjs/launchpad";
 import { Uint64 } from "@cosmjs/math";
-import * as proto from "@cosmjs/proto-signing";
+import { decodeAny } from "@cosmjs/proto-signing";
 import { Client as TendermintClient } from "@cosmjs/tendermint-rpc";
-import { arrayContentEquals, assertDefined } from "@cosmjs/utils";
+import { arrayContentEquals, assert, assertDefined } from "@cosmjs/utils";
 import Long from "long";
 
-import { BaseAccount } from "./query/accounts";
-import { QueryAllBalancesRequest, QueryAllBalancesResponse } from "./query/allbalances";
+import { cosmos } from "./generated/codecimpl";
 
 export interface GetSequenceResult {
   readonly accountNumber: number;
@@ -19,9 +18,11 @@ function uint64FromProto(input: number | Long): Uint64 {
   return Uint64.fromString(input.toString());
 }
 
-function coinFromProto(input: proto.Coin): Coin {
+function coinFromProto(input: cosmos.ICoin): Coin {
   assertDefined(input.amount);
   assertDefined(input.denom);
+  assert(input.amount !== null);
+  assert(input.denom !== null);
   return {
     amount: input.amount,
     denom: input.denom,
@@ -46,14 +47,12 @@ export class StargateClient {
     const accountKey = Uint8Array.from([0x01, ...binAddress]);
     const responseData = await this.queryVerified("acc", accountKey);
 
-    const { typeUrl, value } = proto.decodeAny(responseData);
+    const { typeUrl, value } = decodeAny(responseData);
     switch (typeUrl) {
       case "/cosmos.auth.BaseAccount": {
-        const { account_number, sequence } = BaseAccount.decode(value);
-        assertDefined(account_number);
-        assertDefined(sequence);
+        const { accountNumber, sequence } = cosmos.auth.BaseAccount.decode(value);
         return {
-          accountNumber: uint64FromProto(account_number).toNumber(),
+          accountNumber: uint64FromProto(accountNumber).toNumber(),
           sequence: uint64FromProto(sequence).toNumber(),
         };
       }
@@ -73,10 +72,7 @@ export class StargateClient {
     const bankKey = Uint8Array.from([...toAscii("balances"), ...binAddress, ...toAscii(searchDenom)]);
 
     const responseData = await this.queryVerified("bank", bankKey);
-    const { amount, denom } = proto.Coin.decode(responseData);
-    assertDefined(amount);
-    assertDefined(denom);
-
+    const { amount, denom } = cosmos.Coin.decode(responseData);
     if (denom === "") {
       return null;
     } else {
@@ -95,10 +91,12 @@ export class StargateClient {
    */
   public async getAllBalancesUnverified(address: string): Promise<readonly Coin[]> {
     const path = "/cosmos.bank.Query/AllBalances";
-    const request = QueryAllBalancesRequest.encode({ address: Bech32.decode(address).data }).finish();
+    const request = cosmos.bank.QueryAllBalancesRequest.encode({
+      address: Bech32.decode(address).data,
+    }).finish();
     const responseData = await this.queryUnverified(path, request);
-    const response = QueryAllBalancesResponse.decode(responseData);
-    return (response.balances || []).map(coinFromProto);
+    const response = cosmos.bank.QueryAllBalancesResponse.decode(responseData);
+    return response.balances.map(coinFromProto);
   }
 
   public disconnect(): void {
