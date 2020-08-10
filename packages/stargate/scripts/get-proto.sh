@@ -13,7 +13,7 @@ SUFFIX=${REF}
 
 mkdir -p "$COSMOS_DIR"
 
-wget -qO "$ZIP_FILE" "https://github.com/cosmos/cosmos-sdk/archive/$REF.zip" \
-  && unzip "$ZIP_FILE" "*.proto" -d "$COSMOS_DIR" \
-  && mv "$COSMOS_SDK_DIR-$SUFFIX" "$COSMOS_SDK_DIR" \
-  && rm "$ZIP_FILE"
+wget -qO "$ZIP_FILE" "https://github.com/cosmos/cosmos-sdk/archive/$REF.zip"
+unzip "$ZIP_FILE" "*.proto" -d "$COSMOS_DIR"
+mv "$COSMOS_SDK_DIR-$SUFFIX" "$COSMOS_SDK_DIR"
+rm "$ZIP_FILE"
