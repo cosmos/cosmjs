@@ -82,7 +82,7 @@ export {
   uint64ToString,
 } from "./lcdapi";
 export { isMsgDelegate, isMsgSend, Msg, MsgDelegate, MsgSend } from "./msgs";
-export { decodeBech32Pubkey, encodeBech32Pubkey, encodeSecp256k1Pubkey } from "./pubkey";
+export { decodeAminoPubkey, decodeBech32Pubkey, encodeBech32Pubkey, encodeSecp256k1Pubkey } from "./pubkey";
 export { findSequenceForSignedTx } from "./sequence";
 export { encodeSecp256k1Signature, decodeSignature } from "./signature";
 export { FeeTable, SigningCosmosClient } from "./signingcosmosclient";
