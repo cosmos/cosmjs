@@ -21,6 +21,7 @@ export declare class StargateClient {
   static connect(endpoint: string): Promise<StargateClient>;
   private constructor();
   getChainId(): Promise<string>;
+  getHeight(): Promise<number>;
   getAccount(searchAddress: string): Promise<Account | null>;
   getSequence(address: string): Promise<SequenceResponse | null>;
   getBalance(address: string, searchDenom: string): Promise<Coin | null>;

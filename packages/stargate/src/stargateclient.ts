@@ -78,6 +78,11 @@ export class StargateClient {
     return this.chainId;
   }
 
+  public async getHeight(): Promise<number> {
+    const status = await this.tmClient.status();
+    return status.syncInfo.latestBlockHeight;
+  }
+
   public async getAccount(searchAddress: string): Promise<Account | null> {
     const { prefix, data: binAddress } = Bech32.decode(searchAddress);
     // https://github.com/cosmos/cosmos-sdk/blob/8cab43c8120fec5200c3459cbf4a92017bb6f287/x/auth/types/keys.go#L29-L32
