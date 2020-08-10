@@ -1,3 +1,5 @@
+import { assert } from "@cosmjs/utils";
+
 import { StargateClient } from "./stargateclient";
 import { nonExistentAddress, pendingWithoutSimapp, simapp, unused } from "./testutils.spec";
 
@@ -11,14 +13,55 @@ describe("StargateClient", () => {
     });
   });
 
+  describe("getAccount", () => {
+    it("works for unused account", async () => {
+      pendingWithoutSimapp();
+      const client = await StargateClient.connect(simapp.tendermintUrl);
+
+      const account = await client.getAccount(unused.address);
+      assert(account);
+      expect(account).toEqual({
+        address: unused.address,
+        pubkey: null,
+        accountNumber: unused.accountNumber,
+        sequence: unused.sequence,
+      });
+
+      client.disconnect();
+    });
+
+    it("returns null for non-existent address", async () => {
+      pendingWithoutSimapp();
+      const client = await StargateClient.connect(simapp.tendermintUrl);
+
+      const account = await client.getAccount(nonExistentAddress);
+      expect(account).toBeNull();
+
+      client.disconnect();
+    });
+  });
+
   describe("getSequence", () => {
     it("works for unused account", async () => {
       pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrl);
 
-      const { accountNumber, sequence } = await client.getSequence(unused.address);
-      expect(accountNumber).toEqual(unused.accountNumber);
-      expect(sequence).toEqual(unused.sequence);
+      const account = await client.getSequence(unused.address);
+      assert(account);
+      expect(account).toEqual({
+        accountNumber: unused.accountNumber,
+        sequence: unused.sequence,
+      });
+
+      client.disconnect();
+    });
+
+    it("returns null for non-existent address", async () => {
+      pendingWithoutSimapp();
+      const client = await StargateClient.connect(simapp.tendermintUrl);
+
+      const account = await client.getSequence(nonExistentAddress);
+      expect(account).toBeNull();
 
       client.disconnect();
     });

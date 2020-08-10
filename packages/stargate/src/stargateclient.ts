@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Bech32, toAscii, toHex } from "@cosmjs/encoding";
-import { Coin } from "@cosmjs/launchpad";
+import { Coin, encodeSecp256k1Pubkey, PubKey } from "@cosmjs/launchpad";
 import { Uint64 } from "@cosmjs/math";
 import { decodeAny } from "@cosmjs/proto-signing";
 import { Client as TendermintClient } from "@cosmjs/tendermint-rpc";
@@ -9,7 +9,15 @@ import Long from "long";
 
 import { cosmos } from "./generated/codecimpl";
 
-export interface GetSequenceResult {
+export interface Account {
+  /** Bech32 account address */
+  readonly address: string;
+  readonly pubkey: PubKey | null;
+  readonly accountNumber: number;
+  readonly sequence: number;
+}
+
+export interface SequenceResponse {
   readonly accountNumber: number;
   readonly sequence: number;
 }
@@ -41,23 +49,39 @@ export class StargateClient {
     this.tmClient = tmClient;
   }
 
-  public async getSequence(address: string): Promise<GetSequenceResult> {
-    const binAddress = Bech32.decode(address).data;
+  public async getAccount(searchAddress: string): Promise<Account | null> {
+    const { prefix, data: binAddress } = Bech32.decode(searchAddress);
     // https://github.com/cosmos/cosmos-sdk/blob/8cab43c8120fec5200c3459cbf4a92017bb6f287/x/auth/types/keys.go#L29-L32
     const accountKey = Uint8Array.from([0x01, ...binAddress]);
     const responseData = await this.queryVerified("acc", accountKey);
 
+    if (responseData.length === 0) return null;
+
     const { typeUrl, value } = decodeAny(responseData);
     switch (typeUrl) {
       case "/cosmos.auth.BaseAccount": {
-        const { accountNumber, sequence } = cosmos.auth.BaseAccount.decode(value);
+        const { address, pubKey, accountNumber, sequence } = cosmos.auth.BaseAccount.decode(value);
         return {
+          address: Bech32.encode(prefix, address),
+          pubkey: pubKey.length ? encodeSecp256k1Pubkey(pubKey) : null,
           accountNumber: uint64FromProto(accountNumber).toNumber(),
           sequence: uint64FromProto(sequence).toNumber(),
         };
       }
       default:
-        throw new Error(`Unsupported type: ${typeUrl}`);
+        throw new Error(`Unsupported type: '${typeUrl}'`);
+    }
+  }
+
+  public async getSequence(address: string): Promise<SequenceResponse | null> {
+    const account = await this.getAccount(address);
+    if (account) {
+      return {
+        accountNumber: uint64FromProto(account.accountNumber).toNumber(),
+        sequence: uint64FromProto(account.sequence).toNumber(),
+      };
+    } else {
+      return null;
     }
   }
 
