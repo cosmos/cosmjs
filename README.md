@@ -1,4 +1,4 @@
-# CosmJS
+<h1><p align="center"><img alt="CosmJS" src="docs/logo-vertical-light.png" width="180" /></p></h1>
 
 CosmJS is the Swiss Army knife to power JavaScript based client solutions
 ranging from Web apps/explorers over browser extensions to server-side clients
