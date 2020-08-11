@@ -11,6 +11,28 @@ export interface SequenceResponse {
   readonly accountNumber: number;
   readonly sequence: number;
 }
+export interface BroadcastTxFailure {
+  readonly height: number;
+  readonly code: number;
+  readonly transactionHash: string;
+  readonly rawLog?: string;
+  readonly data?: Uint8Array;
+}
+export interface BroadcastTxSuccess {
+  readonly height: number;
+  readonly transactionHash: string;
+  readonly rawLog?: string;
+  readonly data?: Uint8Array;
+}
+export declare type BroadcastTxResponse = BroadcastTxSuccess | BroadcastTxFailure;
+export declare function isBroadcastTxFailure(result: BroadcastTxResponse): result is BroadcastTxFailure;
+export declare function isBroadcastTxSuccess(result: BroadcastTxResponse): result is BroadcastTxSuccess;
+/**
+ * Ensures the given result is a success. Throws a detailed error message otherwise.
+ */
+export declare function assertIsBroadcastTxSuccess(
+  result: BroadcastTxResponse,
+): asserts result is BroadcastTxSuccess;
 /** Use for testing only */
 export interface PrivateStargateClient {
   readonly tmClient: TendermintClient;
@@ -33,6 +55,7 @@ export declare class StargateClient {
    */
   getAllBalancesUnverified(address: string): Promise<readonly Coin[]>;
   disconnect(): void;
+  broadcastTx(tx: Uint8Array): Promise<BroadcastTxResponse>;
   private queryVerified;
   private queryUnverified;
 }

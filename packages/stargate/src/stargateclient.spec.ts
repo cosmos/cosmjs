@@ -1,7 +1,23 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+import { Bech32, fromBase64 } from "@cosmjs/encoding";
+import { Secp256k1Wallet } from "@cosmjs/launchpad";
+import { makeSignBytes, omitDefaults, Registry } from "@cosmjs/proto-signing";
 import { assert, sleep } from "@cosmjs/utils";
 
-import { PrivateStargateClient, StargateClient } from "./stargateclient";
-import { nonExistentAddress, pendingWithoutSimapp, simapp, unused, validator } from "./testutils.spec";
+import { cosmos } from "./generated/codecimpl";
+import { assertIsBroadcastTxSuccess, PrivateStargateClient, StargateClient } from "./stargateclient";
+import {
+  faucet,
+  makeRandomAddressBytes,
+  nonExistentAddress,
+  pendingWithoutSimapp,
+  simapp,
+  unused,
+  validator,
+} from "./testutils.spec";
+
+const { AuthInfo, SignDoc, Tx, TxBody } = cosmos.tx;
+const { PublicKey } = cosmos.crypto;
 
 describe("StargateClient", () => {
   describe("connect", () => {
@@ -180,6 +196,81 @@ describe("StargateClient", () => {
       const client = await StargateClient.connect(simapp.tendermintUrl);
       const balances = await client.getAllBalancesUnverified(nonExistentAddress);
       expect(balances).toEqual([]);
+    });
+  });
+
+  describe("broadcastTx", () => {
+    it("broadcasts a transaction", async () => {
+      pendingWithoutSimapp();
+      const client = await StargateClient.connect(simapp.tendermintUrl);
+      const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
+      const [{ address, pubkey: pubkeyBytes }] = await wallet.getAccounts();
+      const publicKey = PublicKey.create({ secp256k1: pubkeyBytes });
+      const registry = new Registry();
+      const txBodyFields = {
+        typeUrl: "/cosmos.tx.TxBody",
+        value: {
+          messages: [
+            {
+              typeUrl: "/cosmos.bank.MsgSend",
+              value: {
+                fromAddress: Bech32.decode(address).data,
+                toAddress: makeRandomAddressBytes(),
+                amount: [
+                  {
+                    denom: "ucosm",
+                    amount: "1234567",
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      };
+      const txBodyBytes = registry.encode(txBodyFields);
+      const txBody = TxBody.decode(txBodyBytes);
+      const authInfo = {
+        signerInfos: [
+          {
+            publicKey: publicKey,
+            modeInfo: {
+              single: {
+                mode: cosmos.tx.signing.SignMode.SIGN_MODE_DIRECT,
+              },
+            },
+          },
+        ],
+        fee: {
+          gasLimit: 200000,
+        },
+      };
+      const authInfoBytes = Uint8Array.from(AuthInfo.encode(authInfo).finish());
+
+      const chainId = await client.getChainId();
+      const { accountNumber, sequence } = (await client.getSequence(address))!;
+      const signDoc = SignDoc.create(
+        omitDefaults({
+          bodyBytes: txBodyBytes,
+          authInfoBytes: authInfoBytes,
+          chainId: chainId,
+          accountNumber: accountNumber,
+          accountSequence: sequence,
+        }),
+      );
+      const signDocBytes = makeSignBytes(signDoc);
+      const signature = await wallet.sign(address, signDocBytes);
+      const txRaw = Tx.create({
+        body: txBody,
+        authInfo: authInfo,
+        signatures: [fromBase64(signature.signature)],
+      });
+      const txRawBytes = Uint8Array.from(Tx.encode(txRaw).finish());
+      const txResult = await client.broadcastTx(txRawBytes);
+      assertIsBroadcastTxSuccess(txResult);
+
+      const { rawLog, transactionHash } = txResult;
+      expect(rawLog).toMatch(/{"key":"amount","value":"1234567ucosm"}/);
+      expect(transactionHash).toMatch(/^[0-9A-F]{64}$/);
     });
   });
 });
