@@ -1,6 +1,6 @@
-import { assert } from "@cosmjs/utils";
+import { assert, sleep } from "@cosmjs/utils";
 
-import { StargateClient } from "./stargateclient";
+import { PrivateStargateClient, StargateClient } from "./stargateclient";
 import { nonExistentAddress, pendingWithoutSimapp, simapp, unused, validator } from "./testutils.spec";
 
 describe("StargateClient", () => {
@@ -10,6 +10,40 @@ describe("StargateClient", () => {
       const client = await StargateClient.connect(simapp.tendermintUrl);
       expect(client).toBeTruthy();
       client.disconnect();
+    });
+  });
+
+  describe("getChainId", () => {
+    it("works", async () => {
+      pendingWithoutSimapp();
+      const client = await StargateClient.connect(simapp.tendermintUrl);
+      expect(await client.getChainId()).toEqual(simapp.chainId);
+    });
+
+    it("caches chain ID", async () => {
+      pendingWithoutSimapp();
+      const client = await StargateClient.connect(simapp.tendermintUrl);
+      const openedClient = (client as unknown) as PrivateStargateClient;
+      const getCodeSpy = spyOn(openedClient.tmClient, "status").and.callThrough();
+
+      expect(await client.getChainId()).toEqual(simapp.chainId); // from network
+      expect(await client.getChainId()).toEqual(simapp.chainId); // from cache
+
+      expect(getCodeSpy).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe("getHeight", () => {
+    it("works", async () => {
+      pendingWithoutSimapp();
+      const client = await StargateClient.connect(simapp.tendermintUrl);
+
+      const height1 = await client.getHeight();
+      expect(height1).toBeGreaterThan(0);
+      await sleep(simapp.blockTime * 1.4); // tolerate chain being 40% slower than expected
+      const height2 = await client.getHeight();
+      expect(height2).toBeGreaterThanOrEqual(height1 + 1);
+      expect(height2).toBeLessThanOrEqual(height1 + 2);
     });
   });
 

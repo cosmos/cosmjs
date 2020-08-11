@@ -9,6 +9,7 @@ export const simapp = {
   chainId: "simd-testing",
   denomStaking: "ustake",
   denomFee: "ucosm",
+  blockTime: 1_000, // ms
 };
 
 /** Unused account */

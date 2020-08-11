@@ -49,8 +49,14 @@ function coinFromProto(input: cosmos.ICoin): Coin {
   };
 }
 
+/** Use for testing only */
+export interface PrivateStargateClient {
+  readonly tmClient: TendermintClient;
+}
+
 export class StargateClient {
   private readonly tmClient: TendermintClient;
+  private chainId: string | undefined;
 
   public static async connect(endpoint: string): Promise<StargateClient> {
     const tmClient = await TendermintClient.connect(endpoint);
@@ -59,6 +65,22 @@ export class StargateClient {
 
   private constructor(tmClient: TendermintClient) {
     this.tmClient = tmClient;
+  }
+
+  public async getChainId(): Promise<string> {
+    if (!this.chainId) {
+      const response = await this.tmClient.status();
+      const chainId = response.nodeInfo.network;
+      if (!chainId) throw new Error("Chain ID must not be empty");
+      this.chainId = chainId;
+    }
+
+    return this.chainId;
+  }
+
+  public async getHeight(): Promise<number> {
+    const status = await this.tmClient.status();
+    return status.syncInfo.latestBlockHeight;
   }
 
   public async getAccount(searchAddress: string): Promise<Account | null> {
