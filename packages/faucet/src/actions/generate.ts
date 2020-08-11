@@ -4,17 +4,15 @@ import * as constants from "../constants";
 import { createWallets } from "../profile";
 
 export async function generate(args: readonly string[]): Promise<void> {
-  if (args.length < 1) {
-    throw Error(
-      `Not enough arguments for action 'generate'. See '${constants.binaryName} help' or README for arguments.`,
+  if (args.length > 0) {
+    console.warn(
+      `Warning: ${constants.binaryName} generate does not require positional arguments anymore. Use env variables FAUCET_ADDRESS_PREFIX or FAUCET_CONCURRENCY to configure how accounts are created.`,
     );
   }
-
-  const chainId = args[0];
 
   const mnemonic = Bip39.encode(Random.getBytes(16)).toString();
   console.info(`FAUCET_MNEMONIC="${mnemonic}"`);
 
   // Log the addresses
-  await createWallets(mnemonic, chainId, constants.concurrency, true);
+  await createWallets(mnemonic, constants.addressPrefix, constants.concurrency, true);
 }

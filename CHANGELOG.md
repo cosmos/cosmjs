@@ -7,6 +7,9 @@
 - @cosmjs/launchpad: Add ed25519 support to `encodeBech32Pubkey`.
 - @cosmjs/launchpad: Add `encodeAminoPubkey` and `decodeAminoPubkey`.
 - @cosmjs/utils: Add `arrayContentEquals`.
+- @cosmjs/faucet: Add config variables `FAUCET_ADDRESS_PREFIX` and
+  `FAUCET_TOKENS`.
+- @cosmjs/faucet: Remove broken chain ID from `cosmwasm-faucet generate`.
 
 ## 0.22.0 (2020-08-03)
 

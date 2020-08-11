@@ -4,7 +4,7 @@ import { CosmosClient } from "@cosmjs/launchpad";
 import { assert } from "@cosmjs/utils";
 
 import { Faucet } from "./faucet";
-import { TokenConfiguration } from "./types";
+import { TokenConfiguration } from "./tokenmanager";
 
 function pendingWithoutWasmd(): void {
   if (!process.env.WASMD_ENABLED) {

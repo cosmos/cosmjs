@@ -1,7 +1,8 @@
 import { Coin } from "@cosmjs/launchpad";
 import { Decimal } from "@cosmjs/math";
 
-import { MinimalAccount, SendJob, TokenConfiguration } from "./types";
+import { TokenConfiguration } from "./tokenmanager";
+import { MinimalAccount, SendJob } from "./types";
 
 /** A string representation of a coin in a human-readable format that can change at any time */
 function debugCoin(coin: Coin, tokens: TokenConfiguration): string {
