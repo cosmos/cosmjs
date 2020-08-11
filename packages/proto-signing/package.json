@@ -48,6 +48,7 @@
   },
   "devDependencies": {
     "@cosmjs/encoding": "^0.22.1",
+    "@cosmjs/launchpad": "^0.22.1",
     "@cosmjs/utils": "^0.22.1"
   }
 }
