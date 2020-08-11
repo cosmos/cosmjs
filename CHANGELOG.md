@@ -4,6 +4,7 @@
 
 - @cosmjs/faucet: Log errors for failed send transactions.
 - @cosmjs/faucet: Add config variable `FAUCET_MEMO`.
+- @cosmjs/launchpad: Add `parseCoins` helper.
 
 ## 0.22.1 (2020-08-11)
 

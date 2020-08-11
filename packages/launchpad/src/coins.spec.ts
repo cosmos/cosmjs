@@ -1,4 +1,4 @@
-import { coin, coins } from "./coins";
+import { coin, coins, parseCoins } from "./coins";
 
 describe("coins", () => {
   describe("coin", () => {
@@ -30,6 +30,78 @@ describe("coins", () => {
   describe("coins", () => {
     it("returns one element array of coin", () => {
       expect(coins(123, "utoken")).toEqual([{ amount: "123", denom: "utoken" }]);
+    });
+  });
+
+  describe("parseCoins", () => {
+    it("works for empty", () => {
+      expect(parseCoins("")).toEqual([]);
+    });
+
+    it("works for one element", () => {
+      expect(parseCoins("7643ureef")).toEqual([
+        {
+          amount: "7643",
+          denom: "ureef",
+        },
+      ]);
+    });
+
+    it("works for two", () => {
+      expect(parseCoins("819966000ucosm,700000000ustake")).toEqual([
+        {
+          amount: "819966000",
+          denom: "ucosm",
+        },
+        {
+          amount: "700000000",
+          denom: "ustake",
+        },
+      ]);
+    });
+
+    it("ignores empty elements", () => {
+      // start
+      expect(parseCoins(",819966000ucosm,700000000ustake")).toEqual([
+        {
+          amount: "819966000",
+          denom: "ucosm",
+        },
+        {
+          amount: "700000000",
+          denom: "ustake",
+        },
+      ]);
+      // middle
+      expect(parseCoins("819966000ucosm,,700000000ustake")).toEqual([
+        {
+          amount: "819966000",
+          denom: "ucosm",
+        },
+        {
+          amount: "700000000",
+          denom: "ustake",
+        },
+      ]);
+      // end
+      expect(parseCoins("819966000ucosm,700000000ustake,")).toEqual([
+        {
+          amount: "819966000",
+          denom: "ucosm",
+        },
+        {
+          amount: "700000000",
+          denom: "ustake",
+        },
+      ]);
+    });
+
+    it("throws for invalid inputs", () => {
+      // denom missing
+      expect(() => parseCoins("3456")).toThrowError(/invalid coin string/i);
+
+      // amount missing
+      expect(() => parseCoins("ucosm")).toThrowError(/invalid coin string/i);
     });
   });
 });
