@@ -23,7 +23,7 @@ export async function start(args: readonly string[]): Promise<void> {
   const faucet = await Faucet.make(
     blockchainBaseUrl,
     constants.addressPrefix,
-    constants.developmentTokenConfig,
+    constants.tokenConfig,
     constants.mnemonic,
     constants.concurrency,
     true,
@@ -31,7 +31,7 @@ export async function start(args: readonly string[]): Promise<void> {
   const chainTokens = faucet.loadTokenTickers();
   console.info("Chain tokens:", chainTokens);
   const accounts = await faucet.loadAccounts();
-  logAccountsState(accounts, constants.developmentTokenConfig);
+  logAccountsState(accounts, constants.tokenConfig);
   let availableTokens = await faucet.availableTokens();
   console.info("Available tokens:", availableTokens);
   setInterval(async () => {

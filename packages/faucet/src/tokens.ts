@@ -23,7 +23,7 @@ const parseBankTokenPattern = /^([a-zA-Z]{2,20})=10\^([0-9]+)([a-zA-Z]{2,20})$/;
 export function parseBankToken(input: string): BankTokenMeta {
   const match = input.replace(/\s/g, "").match(parseBankTokenPattern);
   if (!match) {
-    throw new Error("Token could not be parsed. Format: DISPLAY=10^DIGITSbase, e.g. ATOM=10^6uatom");
+    throw new Error("Token could not be parsed. Format: {DISPLAY}=10^{DIGITS}{base}, e.g. ATOM=10^6uatom");
   }
   return {
     tickerSymbol: match[1],

@@ -2,7 +2,8 @@
 
 ## 0.22.1 (unreleased)
 
-- @cosmjs/faucet: Add config variable `FAUCET_ADDRESS_PREFIX`.
+- @cosmjs/faucet: Add config variables `FAUCET_ADDRESS_PREFIX` and
+  `FAUCET_TOKENS`.
 - @cosmjs/faucet: Remove broken chain ID from `cosmwasm-faucet generate`.
 
 ## 0.22.0 (2020-08-03)
