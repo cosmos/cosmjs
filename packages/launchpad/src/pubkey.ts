@@ -1,5 +1,5 @@
 import { Bech32, fromBase64, fromHex, toBase64, toHex } from "@cosmjs/encoding";
-import equal from "fast-deep-equal";
+import { arrayContentEquals } from "@cosmjs/utils";
 
 import { PubKey, pubkeyType } from "./types";
 
@@ -27,7 +27,7 @@ const pubkeyAminoPrefixLength = pubkeyAminoPrefixSecp256k1.length;
 export function decodeAminoPubkey(data: Uint8Array): PubKey {
   const aminoPrefix = data.slice(0, pubkeyAminoPrefixLength);
   const rest = data.slice(pubkeyAminoPrefixLength);
-  if (equal(aminoPrefix, pubkeyAminoPrefixSecp256k1)) {
+  if (arrayContentEquals(aminoPrefix, pubkeyAminoPrefixSecp256k1)) {
     if (rest.length !== 33) {
       throw new Error("Invalid rest data length. Expected 33 bytes (compressed secp256k1 pubkey).");
     }
@@ -35,7 +35,7 @@ export function decodeAminoPubkey(data: Uint8Array): PubKey {
       type: pubkeyType.secp256k1,
       value: toBase64(rest),
     };
-  } else if (equal(aminoPrefix, pubkeyAminoPrefixEd25519)) {
+  } else if (arrayContentEquals(aminoPrefix, pubkeyAminoPrefixEd25519)) {
     if (rest.length !== 32) {
       throw new Error("Invalid rest data length. Expected 32 bytes (Ed25519 pubkey).");
     }
@@ -43,7 +43,7 @@ export function decodeAminoPubkey(data: Uint8Array): PubKey {
       type: pubkeyType.ed25519,
       value: toBase64(rest),
     };
-  } else if (equal(aminoPrefix, pubkeyAminoPrefixSr25519)) {
+  } else if (arrayContentEquals(aminoPrefix, pubkeyAminoPrefixSr25519)) {
     if (rest.length !== 32) {
       throw new Error("Invalid rest data length. Expected 32 bytes (Sr25519 pubkey).");
     }

@@ -44,7 +44,6 @@
     "@cosmjs/math": "^0.22.0",
     "@cosmjs/utils": "^0.22.0",
     "axios": "^0.19.0",
-    "fast-deep-equal": "^3.1.1",
     "pako": "^1.0.11"
   },
   "devDependencies": {
