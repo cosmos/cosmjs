@@ -4,6 +4,7 @@
 
 - @cosmjs/cli: Import `encodeBech32Pubkey` and `decodeBech32Pubkey` by default.
 - @cosmjs/launchpad: Add ed25519 support to `encodeBech32Pubkey`.
+- @cosmjs/launchpad: Add `encodeAminoPubkey` and `decodeAminoPubkey`.
 
 ## 0.22.0 (2020-08-03)
 

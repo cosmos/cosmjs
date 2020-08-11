@@ -22,14 +22,9 @@ const pubkeyAminoPrefixSr25519 = fromHex("0dfb1005");
 const pubkeyAminoPrefixLength = pubkeyAminoPrefixSecp256k1.length;
 
 /**
- * Decodes a bech32 pubkey to Amino binary, which is then decoded to a type/value object.
- * The bech32 prefix is ignored and discareded.
- *
- * @param bechEncoded the bech32 encoded pubkey
+ * Decodes a pubkey in the Amino binary format to a type/value object.
  */
-export function decodeBech32Pubkey(bechEncoded: string): PubKey {
-  const { data } = Bech32.decode(bechEncoded);
-
+export function decodeAminoPubkey(data: Uint8Array): PubKey {
   const aminoPrefix = data.slice(0, pubkeyAminoPrefixLength);
   const rest = data.slice(pubkeyAminoPrefixLength);
   if (equal(aminoPrefix, pubkeyAminoPrefixSecp256k1)) {
@@ -62,12 +57,20 @@ export function decodeBech32Pubkey(bechEncoded: string): PubKey {
 }
 
 /**
- * Encodes a public key to binary Amino and then to bech32.
+ * Decodes a bech32 pubkey to Amino binary, which is then decoded to a type/value object.
+ * The bech32 prefix is ignored and discareded.
  *
- * @param pubkey the public key to encode
- * @param prefix the bech32 prefix (human readable part)
+ * @param bechEncoded the bech32 encoded pubkey
  */
-export function encodeBech32Pubkey(pubkey: PubKey, prefix: string): string {
+export function decodeBech32Pubkey(bechEncoded: string): PubKey {
+  const { data } = Bech32.decode(bechEncoded);
+  return decodeAminoPubkey(data);
+}
+
+/**
+ * Encodes a public key to binary Amino.
+ */
+export function encodeAminoPubkey(pubkey: PubKey): Uint8Array {
   let aminoPrefix: Uint8Array;
   switch (pubkey.type) {
     // Note: please don't add cases here without writing additional unit tests
@@ -80,7 +83,15 @@ export function encodeBech32Pubkey(pubkey: PubKey, prefix: string): string {
     default:
       throw new Error("Unsupported pubkey type");
   }
+  return new Uint8Array([...aminoPrefix, ...fromBase64(pubkey.value)]);
+}
 
-  const data = new Uint8Array([...aminoPrefix, ...fromBase64(pubkey.value)]);
-  return Bech32.encode(prefix, data);
+/**
+ * Encodes a public key to binary Amino and then to bech32.
+ *
+ * @param pubkey the public key to encode
+ * @param prefix the bech32 prefix (human readable part)
+ */
+export function encodeBech32Pubkey(pubkey: PubKey, prefix: string): string {
+  return Bech32.encode(prefix, encodeAminoPubkey(pubkey));
 }

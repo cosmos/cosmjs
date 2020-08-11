@@ -1,6 +1,12 @@
-import { fromBase64 } from "@cosmjs/encoding";
+import { Bech32, fromBase64 } from "@cosmjs/encoding";
 
-import { decodeBech32Pubkey, encodeBech32Pubkey, encodeSecp256k1Pubkey } from "./pubkey";
+import {
+  decodeAminoPubkey,
+  decodeBech32Pubkey,
+  encodeAminoPubkey,
+  encodeBech32Pubkey,
+  encodeSecp256k1Pubkey,
+} from "./pubkey";
 import { PubKey } from "./types";
 
 describe("pubkey", () => {
@@ -18,6 +24,30 @@ describe("pubkey", () => {
         "BE8EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQE7WHpoHoNswYeoFkuYpYSKK4mzFzMV/dB0DVAy4lnNU=",
       );
       expect(() => encodeSecp256k1Pubkey(pubkey)).toThrowError(/public key must be compressed secp256k1/i);
+    });
+  });
+
+  describe("decodeAminoPubkey", () => {
+    it("works for secp256k1", () => {
+      const amino = Bech32.decode(
+        "cosmospub1addwnpepqd8sgxq7aw348ydctp3n5ajufgxp395hksxjzc6565yfp56scupfqhlgyg5",
+      ).data;
+      expect(decodeAminoPubkey(amino)).toEqual({
+        type: "tendermint/PubKeySecp256k1",
+        value: "A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ",
+      });
+    });
+
+    it("works for ed25519", () => {
+      // Encoded from `corald tendermint show-validator`
+      // Decoded from http://localhost:26657/validators
+      const amino = Bech32.decode(
+        "coralvalconspub1zcjduepqvxg72ccnl9r65fv0wn3amlk4sfzqfe2k36l073kjx2qyaf6sk23qw7j8wq",
+      ).data;
+      expect(decodeAminoPubkey(amino)).toEqual({
+        type: "tendermint/PubKeyEd25519",
+        value: "YZHlYxP5R6olj3Tj3f7VgkQE5VaOvv9G0jKATqdQsqI=",
+      });
     });
   });
 
@@ -50,6 +80,32 @@ describe("pubkey", () => {
         type: "tendermint/PubKeyEd25519",
         value: "YZHlYxP5R6olj3Tj3f7VgkQE5VaOvv9G0jKATqdQsqI=",
       });
+    });
+  });
+
+  describe("encodeAminoPubkey", () => {
+    it("works for secp256k1", () => {
+      const pubkey: PubKey = {
+        type: "tendermint/PubKeySecp256k1",
+        value: "A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ",
+      };
+      const expected = Bech32.decode(
+        "cosmospub1addwnpepqd8sgxq7aw348ydctp3n5ajufgxp395hksxjzc6565yfp56scupfqhlgyg5",
+      ).data;
+      expect(encodeAminoPubkey(pubkey)).toEqual(expected);
+    });
+
+    it("works for ed25519", () => {
+      // Decoded from http://localhost:26657/validators
+      // Encoded from `corald tendermint show-validator`
+      const pubkey: PubKey = {
+        type: "tendermint/PubKeyEd25519",
+        value: "YZHlYxP5R6olj3Tj3f7VgkQE5VaOvv9G0jKATqdQsqI=",
+      };
+      const expected = Bech32.decode(
+        "coralvalconspub1zcjduepqvxg72ccnl9r65fv0wn3amlk4sfzqfe2k36l073kjx2qyaf6sk23qw7j8wq",
+      ).data;
+      expect(encodeAminoPubkey(pubkey)).toEqual(expected);
     });
   });
 
