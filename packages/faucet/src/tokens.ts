@@ -1,3 +1,5 @@
+import { Uint53 } from "@cosmjs/math";
+
 export interface BankTokenMeta {
   readonly denom: string;
   /**
@@ -14,4 +16,27 @@ export interface BankTokenMeta {
    * the last 18 digits are the fractional part and the rest the wole part.
    */
   readonly fractionalDigits: number;
+}
+
+const parseBankTokenPattern = /^([a-zA-Z]{2,20})=10\^([0-9]+)([a-zA-Z]{2,20})$/;
+
+export function parseBankToken(input: string): BankTokenMeta {
+  const match = input.match(parseBankTokenPattern);
+  if (!match) {
+    throw new Error("Token could not be parsed. Format: DISPLAY=10^DIGITSbase, e.g. ATOM=10^6uatom");
+  }
+  return {
+    tickerSymbol: match[1],
+    fractionalDigits: Uint53.fromString(match[2]).toNumber(),
+    denom: match[3],
+  };
+}
+
+export function parseBankTokens(input: string): BankTokenMeta[] {
+  return input
+    .trim()
+    .split(",")
+    .map((part) => part.trim())
+    .filter((part) => part !== "")
+    .map((part) => parseBankToken(part));
 }
