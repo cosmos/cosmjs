@@ -119,7 +119,7 @@ export class Faucet {
 
   public async refill(): Promise<void> {
     if (this.logging) {
-      console.info(`Connected to network: ${this.readOnlyClient.getChainId()}`);
+      console.info(`Connected to network: ${await this.readOnlyClient.getChainId()}`);
       console.info(`Tokens on network: ${this.loadTokenTickers().join(", ")}`);
     }
 

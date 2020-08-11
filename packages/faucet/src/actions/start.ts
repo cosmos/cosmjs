@@ -45,4 +45,5 @@ export async function start(args: readonly string[]): Promise<void> {
   console.info("Creating webserver ...");
   const server = new Webserver(faucet, { nodeUrl: blockchainBaseUrl, chainId: chainId });
   server.start(constants.port);
+  console.info(`Try "curl -sS http://localhost:${constants.port}/status | jq" to check the status.`);
 }
