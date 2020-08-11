@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/faucet",
-  "version": "0.22.1",
+  "version": "0.22.2",
   "description": "The faucet",
   "author": "Ethan Frey <ethanfrey@users.noreply.github.com>",
   "license": "Apache-2.0",
@@ -36,11 +36,11 @@
     "start-coralnet": "FAUCET_ADDRESS_PREFIX=coral FAUCET_TOKENS=\"SHELL=10^6ushell, REEF=10^6ureef\" FAUCET_CREDIT_AMOUNT_SHELL=10 FAUCET_CREDIT_AMOUNT_REEF=2 FAUCET_CONCURRENCY=3 FAUCET_MNEMONIC=\"economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone\" ./bin/cosmwasm-faucet start \"https://lcd.coralnet.cosmwasm.com\""
   },
   "dependencies": {
-    "@cosmjs/crypto": "^0.22.1",
-    "@cosmjs/encoding": "^0.22.1",
-    "@cosmjs/launchpad": "^0.22.1",
-    "@cosmjs/math": "^0.22.1",
-    "@cosmjs/utils": "^0.22.1",
+    "@cosmjs/crypto": "^0.22.2",
+    "@cosmjs/encoding": "^0.22.2",
+    "@cosmjs/launchpad": "^0.22.2",
+    "@cosmjs/math": "^0.22.2",
+    "@cosmjs/utils": "^0.22.2",
     "@koa/cors": "^3.0.0",
     "koa": "^2.11.0",
     "koa-bodyparser": "^4.2.1"
