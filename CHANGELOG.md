@@ -16,7 +16,17 @@
   `BroadcastTxSuccess` and `BroadcastTxFailure` respectively, as well as helper
   functions `isBroadcastTxFailure`, `isBroadcastTxSuccess` and
   `assertIsBroadcastTxSuccess`.
+
+## 0.22.1 (2020-08-11)
+
+- @cosmjs/cli: Import `encodeAminoPubkey`, `encodeBech32Pubkey`,
+  `decodeAminoPubkey` and `decodeBech32Pubkey` by default.
+- @cosmjs/launchpad: Add ed25519 support to `encodeBech32Pubkey`.
+- @cosmjs/launchpad: Add `encodeAminoPubkey` and `decodeAminoPubkey`.
 - @cosmjs/utils: Add `arrayContentEquals`.
+- @cosmjs/faucet: Add config variables `FAUCET_ADDRESS_PREFIX` and
+  `FAUCET_TOKENS`.
+- @cosmjs/faucet: Remove broken chain ID from `cosmwasm-faucet generate`.
 
 ## 0.22.0 (2020-08-03)
 

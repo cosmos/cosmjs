@@ -1,7 +1,7 @@
 {
   "name": "@cosmjs/stargate",
   "private": true,
-  "version": "0.22.0",
+  "version": "0.22.1",
   "description": "Utilities for Cosmos SDK 0.40",
   "contributors": [
     "Simon Warta <webmaster128@users.noreply.github.com>"
@@ -43,12 +43,12 @@
     "postdefine-proto": "prettier --write \"src/generated/codecimpl.*\""
   },
   "dependencies": {
-    "@cosmjs/encoding": "^0.22.0",
-    "@cosmjs/launchpad": "^0.22.0",
-    "@cosmjs/math": "^0.22.0",
-    "@cosmjs/proto-signing": "^0.22.0",
-    "@cosmjs/tendermint-rpc": "^0.22.0",
-    "@cosmjs/utils": "^0.22.0",
+    "@cosmjs/encoding": "^0.22.1",
+    "@cosmjs/launchpad": "^0.22.1",
+    "@cosmjs/math": "^0.22.1",
+    "@cosmjs/proto-signing": "^0.22.1",
+    "@cosmjs/tendermint-rpc": "^0.22.1",
+    "@cosmjs/utils": "^0.22.1",
     "protobufjs": "~6.10.0"
   }
 }

@@ -1,9 +1,9 @@
 import { CosmosClient } from "@cosmjs/launchpad";
 
-import { Webserver } from "../../api/webserver";
-import * as constants from "../../constants";
-import { logAccountsState } from "../../debugging";
-import { Faucet } from "../../faucet";
+import { Webserver } from "../api/webserver";
+import * as constants from "../constants";
+import { logAccountsState } from "../debugging";
+import { Faucet } from "../faucet";
 
 export async function start(args: readonly string[]): Promise<void> {
   if (args.length < 1) {
@@ -23,7 +23,7 @@ export async function start(args: readonly string[]): Promise<void> {
   const faucet = await Faucet.make(
     blockchainBaseUrl,
     constants.addressPrefix,
-    constants.developmentTokenConfig,
+    constants.tokenConfig,
     constants.mnemonic,
     constants.concurrency,
     true,
@@ -31,7 +31,7 @@ export async function start(args: readonly string[]): Promise<void> {
   const chainTokens = faucet.loadTokenTickers();
   console.info("Chain tokens:", chainTokens);
   const accounts = await faucet.loadAccounts();
-  logAccountsState(accounts, constants.developmentTokenConfig);
+  logAccountsState(accounts, constants.tokenConfig);
   let availableTokens = await faucet.availableTokens();
   console.info("Available tokens:", availableTokens);
   setInterval(async () => {
@@ -45,4 +45,5 @@ export async function start(args: readonly string[]): Promise<void> {
   console.info("Creating webserver ...");
   const server = new Webserver(faucet, { nodeUrl: blockchainBaseUrl, chainId: chainId });
   server.start(constants.port);
+  console.info(`Try "curl -sS http://localhost:${constants.port}/status | jq" to check the status.`);
 }
