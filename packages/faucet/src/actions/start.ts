@@ -1,9 +1,9 @@
 import { CosmosClient } from "@cosmjs/launchpad";
 
-import { Webserver } from "../../api/webserver";
-import * as constants from "../../constants";
-import { logAccountsState } from "../../debugging";
-import { Faucet } from "../../faucet";
+import { Webserver } from "../api/webserver";
+import * as constants from "../constants";
+import { logAccountsState } from "../debugging";
+import { Faucet } from "../faucet";
 
 export async function start(args: readonly string[]): Promise<void> {
   if (args.length < 1) {
