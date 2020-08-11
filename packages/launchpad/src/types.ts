@@ -37,7 +37,7 @@ export interface StdSignature {
 }
 
 export interface PubKey {
-  // type is one of the strings defined in pubkeyTypes
+  // type is one of the strings defined in pubkeyType
   // I don't use a string literal union here as that makes trouble with json test data:
   // https://github.com/CosmWasm/cosmjs/pull/44#pullrequestreview-353280504
   readonly type: string;
@@ -54,5 +54,3 @@ export const pubkeyType = {
   /** @see https://github.com/tendermint/tendermint/blob/v0.33.0/crypto/sr25519/codec.go#L12 */
   sr25519: "tendermint/PubKeySr25519" as const,
 };
-
-export const pubkeyTypes: readonly string[] = [pubkeyType.secp256k1, pubkeyType.ed25519, pubkeyType.sr25519];
