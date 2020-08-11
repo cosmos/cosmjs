@@ -1,6 +1,7 @@
-import { CosmosClient, OfflineSigner, SigningCosmosClient, assertIsPostTxSuccess } from "@cosmjs/launchpad";
+import { assertIsPostTxSuccess, CosmosClient, OfflineSigner, SigningCosmosClient } from "@cosmjs/launchpad";
 import { sleep } from "@cosmjs/utils";
 
+import * as constants from "./constants";
 import { debugAccount, logAccountsState, logSendJob } from "./debugging";
 import { createWallets } from "./profile";
 import { TokenConfiguration, TokenManager } from "./tokenmanager";
@@ -78,7 +79,7 @@ export class Faucet {
    * Throws an error if the transaction failed.
    */
   public async send(job: SendJob): Promise<void> {
-    const result = await this.clients[job.sender].sendTokens(job.recipient, [job.amount], "Make love, not war");
+    const result = await this.clients[job.sender].sendTokens(job.recipient, [job.amount], constants.memo);
     assertIsPostTxSuccess(result);
   }
 

@@ -3,6 +3,7 @@
 ## 0.22.2 (2020-08-11)
 
 - @cosmjs/faucet: Log errors for failed send transactions.
+- @cosmjs/faucet: Add config variable `FAUCET_MEMO`.
 
 ## 0.22.1 (2020-08-11)
 
