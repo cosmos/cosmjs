@@ -11,7 +11,6 @@ help      Shows a help text and exits
 version   Prints the version and exits
 
 generate  Generates a random mnemonic, shows derived faucet addresses and exits
-           1  Chain ID
 
 start     Starts the faucet
            1  Node base URL, e.g. http://localhost:1317
