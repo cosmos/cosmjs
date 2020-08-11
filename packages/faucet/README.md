@@ -47,6 +47,9 @@ Environment variables
 FAUCET_CONCURRENCY        Number of distributor accounts. Defaults to 5.
 FAUCET_PORT               Port of the webserver. Defaults to 8000.
 FAUCET_MEMO               Memo for send transactions. Defaults to unset.
+FAUCET_FEE                Fee for send transactions as a comma separated list,
+                          e.g. "200ushell,30ureef". Defaults to "2000ucosm".
+FAUCET_GAS                Gas for send transactions. Defaults to 80000.
 FAUCET_MNEMONIC           Secret mnemonic that serves as the base secret for the
                           faucet HD accounts
 FAUCET_ADDRESS_PREFIX     The bech32 address prefix. Defaults to "cosmos".
