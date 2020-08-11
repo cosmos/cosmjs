@@ -198,7 +198,7 @@ describe("CosmosClient", () => {
       const [{ address: walletAddress }] = accounts;
       const client = new CosmosClient(wasmd.endpoint);
 
-      const memo = "My first contract on chain";
+      const memo = "Test send";
       const sendMsg: MsgSend = {
         type: "cosmos-sdk/MsgSend",
         value: {
