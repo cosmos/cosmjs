@@ -9,6 +9,14 @@ describe("tokens", () => {
         denom: "ucosm",
       });
     });
+
+    it("allows using whitespace", () => {
+      expect(parseBankToken("COSM = 10^6 ucosm")).toEqual({
+        tickerSymbol: "COSM",
+        fractionalDigits: 6,
+        denom: "ucosm",
+      });
+    });
   });
 
   describe("parseBankTokens", () => {

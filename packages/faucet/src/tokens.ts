@@ -21,7 +21,7 @@ export interface BankTokenMeta {
 const parseBankTokenPattern = /^([a-zA-Z]{2,20})=10\^([0-9]+)([a-zA-Z]{2,20})$/;
 
 export function parseBankToken(input: string): BankTokenMeta {
-  const match = input.match(parseBankTokenPattern);
+  const match = input.replace(/\s/g, "").match(parseBankTokenPattern);
   if (!match) {
     throw new Error("Token could not be parsed. Format: DISPLAY=10^DIGITSbase, e.g. ATOM=10^6uatom");
   }
@@ -36,7 +36,6 @@ export function parseBankTokens(input: string): BankTokenMeta[] {
   return input
     .trim()
     .split(",")
-    .map((part) => part.trim())
-    .filter((part) => part !== "")
+    .filter((part) => part.trim() !== "")
     .map((part) => parseBankToken(part));
 }
