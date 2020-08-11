@@ -41,10 +41,10 @@ export function omitDefaults(input: any): any {
 
   // Object
   if (isNonNullObject(input)) {
-    return Object.keys(input).reduce(
-      (accumulator, key) => ({
+    return Object.entries(input).reduce(
+      (accumulator, [key, value]) => ({
         ...accumulator,
-        [key]: omitDefaults((input as any)[key]),
+        [key]: omitDefaults(value),
       }),
       {},
     );
