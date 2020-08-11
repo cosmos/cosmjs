@@ -25,7 +25,7 @@ describe("adr27", () => {
       expect(omitDefault(0.0)).toEqual(null);
     });
 
-    it("works for repeaded", () => {
+    it("works for repeated", () => {
       expect(omitDefault(["a", "b", "c"])).toEqual(["a", "b", "c"]);
       expect(omitDefault([])).toEqual(null);
     });
@@ -69,7 +69,7 @@ describe("adr27", () => {
       expect(omitDefaults(0.0)).toEqual(null);
     });
 
-    it("works for repeaded", () => {
+    it("works for repeated", () => {
       expect(omitDefaults(["a", "b", "c"])).toEqual(["a", "b", "c"]);
       expect(omitDefaults([])).toEqual(null);
     });
