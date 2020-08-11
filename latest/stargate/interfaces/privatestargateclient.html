@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>DistributionCommunityPoolResponse | @cosmjs/launchpad Documentation</title>
-	<meta name="description" content="Documentation for @cosmjs/launchpad Documentation">
+	<title>PrivateStargateClient | @cosmjs/stargate Documentation</title>
+	<meta name="description" content="Documentation for @cosmjs/stargate Documentation">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
 </head>
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">@cosmjs/launchpad Documentation</a>
+					<a href="../index.html" class="title">@cosmjs/stargate Documentation</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -52,21 +52,28 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="distributioncommunitypoolresponse.html">DistributionCommunityPoolResponse</a>
+					<a href="privatestargateclient.html">PrivateStargateClient</a>
 				</li>
 			</ul>
-			<h1>Interface DistributionCommunityPoolResponse</h1>
+			<h1>Interface PrivateStargateClient</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Use for testing only</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">DistributionCommunityPoolResponse</span>
+						<span class="target">PrivateStargateClient</span>
 					</li>
 				</ul>
 			</section>
@@ -77,8 +84,7 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="distributioncommunitypoolresponse.html#height" class="tsd-kind-icon">height</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="distributioncommunitypoolresponse.html#result" class="tsd-kind-icon">result</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="privatestargateclient.html#tmclient" class="tsd-kind-icon">tm<wbr>Client</a></li>
 							</ul>
 						</section>
 					</div>
@@ -87,22 +93,12 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="height" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> height</h3>
-					<div class="tsd-signature tsd-kind-icon">height<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="tmclient" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> tm<wbr>Client</h3>
+					<div class="tsd-signature tsd-kind-icon">tm<wbr>Client<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TendermintClient</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/a1fa442e/packages/launchpad/src/lcdapi/distribution.ts#L58">src/lcdapi/distribution.ts:58</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="result" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> result</h3>
-					<div class="tsd-signature tsd-kind-icon">result<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">keyof </span><a href="coin.html" class="tsd-signature-type">Coin</a><span class="tsd-signature-symbol">[]</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/a1fa442e/packages/launchpad/src/lcdapi/distribution.ts#L59">src/lcdapi/distribution.ts:59</a></li>
+							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/a1fa442e/packages/stargate/src/stargateclient.ts#L54">src/stargateclient.ts:54</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -118,21 +114,36 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-class">
+						<a href="../classes/stargateclient.html" class="tsd-kind-icon">Stargate<wbr>Client</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="account.html" class="tsd-kind-icon">Account</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="distributioncommunitypoolresponse.html" class="tsd-kind-icon">Distribution<wbr>Community<wbr>Pool<wbr>Response</a>
+						<a href="privatestargateclient.html" class="tsd-kind-icon">Private<wbr>Stargate<wbr>Client</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="distributioncommunitypoolresponse.html#height" class="tsd-kind-icon">height</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="distributioncommunitypoolresponse.html#result" class="tsd-kind-icon">result</a>
+								<a href="privatestargateclient.html#tmclient" class="tsd-kind-icon">tm<wbr>Client</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-interface">
+						<a href="sequenceresponse.html" class="tsd-kind-icon">Sequence<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#coinfromproto" class="tsd-kind-icon">coin<wbr>From<wbr>Proto</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#decodebaseaccount" class="tsd-kind-icon">decode<wbr>Base<wbr>Account</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#uint64fromproto" class="tsd-kind-icon">uint64<wbr>From<wbr>Proto</a>
+					</li>
 				</ul>
 			</nav>
 		</div>
@@ -143,18 +154,10 @@
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
-			</ul>
-			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
