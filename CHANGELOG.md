@@ -2,7 +2,8 @@
 
 ## 0.22.1 (unreleased)
 
-- @cosmjs/cli: Import `encodeBech32Pubkey` and `decodeBech32Pubkey` by default.
+- @cosmjs/cli: Import `encodeAminoPubkey`, `encodeBech32Pubkey`,
+  `decodeAminoPubkey` and `decodeBech32Pubkey` by default.
 - @cosmjs/launchpad: Add ed25519 support to `encodeBech32Pubkey`.
 - @cosmjs/launchpad: Add `encodeAminoPubkey` and `decodeAminoPubkey`.
 - @cosmjs/utils: Add `arrayContentEquals`.

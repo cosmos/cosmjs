@@ -89,7 +89,9 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
       [
         "coin",
         "coins",
+        "decodeAminoPubkey",
         "decodeBech32Pubkey",
+        "encodeAminoPubkey",
         "encodeBech32Pubkey",
         "encodeSecp256k1Pubkey",
         "encodeSecp256k1Signature",
@@ -114,7 +116,7 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
       ],
     ],
     ["@cosmjs/math", ["Decimal", "Int53", "Uint32", "Uint53", "Uint64"]],
-    ["@cosmjs/utils", ["assert", "sleep"]],
+    ["@cosmjs/utils", ["assert", "arrayContentEquals", "sleep"]],
   ]);
 
   console.info(colors.green("Initializing session for you. Have fun!"));
@@ -160,6 +162,9 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
 
       const bechPubkey = "coralvalconspub1zcjduepqvxg72ccnl9r65fv0wn3amlk4sfzqfe2k36l073kjx2qyaf6sk23qw7j8wq";
       assert(encodeBech32Pubkey(decodeBech32Pubkey(bechPubkey), "coralvalconspub") == bechPubkey);
+
+      const aminoPubkey = fromHex("eb5ae98721034f04181eeba35391b858633a765c4a0c189697b40d216354d50890d350c70290");
+      assert(arrayContentEquals(encodeAminoPubkey(decodeAminoPubkey(aminoPubkey)), aminoPubkey));
 
       console.info("Done testing, will exit now.");
       process.exit(0);
