@@ -1,4 +1,4 @@
-import { CosmosClient, OfflineSigner, SigningCosmosClient } from "@cosmjs/launchpad";
+import { CosmosClient, OfflineSigner, SigningCosmosClient, assertIsPostTxSuccess } from "@cosmjs/launchpad";
 import { sleep } from "@cosmjs/utils";
 
 import { debugAccount, logAccountsState, logSendJob } from "./debugging";
@@ -74,10 +74,12 @@ export class Faucet {
   }
 
   /**
-   * Creates and posts a send transaction. Then waits until the transaction is in a block.
+   * Creates and broadcasts a send transaction. Then waits until the transaction is in a block.
+   * Throws an error if the transaction failed.
    */
   public async send(job: SendJob): Promise<void> {
-    await this.clients[job.sender].sendTokens(job.recipient, [job.amount], "Make love, not war");
+    const result = await this.clients[job.sender].sendTokens(job.recipient, [job.amount], "Make love, not war");
+    assertIsPostTxSuccess(result);
   }
 
   /** Use one of the distributor accounts to send tokend to user */
@@ -155,7 +157,12 @@ export class Faucet {
     if (jobs.length > 0) {
       for (const job of jobs) {
         if (this.logging) logSendJob(job, this.tokenConfig);
-        await this.send(job);
+        // don't crash faucet when one send fails
+        try {
+          await this.send(job);
+        } catch (error) {
+          console.error(error);
+        }
         await sleep(75);
       }
 
