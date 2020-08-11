@@ -21,6 +21,12 @@ const pubkeyAminoPrefixEd25519 = fromHex("1624de6420");
 const pubkeyAminoPrefixSr25519 = fromHex("0dfb1005");
 const pubkeyAminoPrefixLength = pubkeyAminoPrefixSecp256k1.length;
 
+/**
+ * Decodes a bech32 pubkey to Amino binary, which is then decoded to a type/value object.
+ * The bech32 prefix is ignored and discareded.
+ *
+ * @param bechEncoded the bech32 encoded pubkey
+ */
 export function decodeBech32Pubkey(bechEncoded: string): PubKey {
   const { data } = Bech32.decode(bechEncoded);
 
@@ -55,6 +61,12 @@ export function decodeBech32Pubkey(bechEncoded: string): PubKey {
   }
 }
 
+/**
+ * Encodes a public key to binary Amino and then to bech32.
+ *
+ * @param pubkey the public key to encode
+ * @param prefix the bech32 prefix (human readable part)
+ */
 export function encodeBech32Pubkey(pubkey: PubKey, prefix: string): string {
   let aminoPrefix: Uint8Array;
   switch (pubkey.type) {
