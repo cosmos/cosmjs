@@ -3,8 +3,8 @@ import { sleep } from "@cosmjs/utils";
 
 import { debugAccount, logAccountsState, logSendJob } from "./debugging";
 import { createWallets } from "./profile";
-import { TokenManager } from "./tokenmanager";
-import { MinimalAccount, SendJob, TokenConfiguration } from "./types";
+import { TokenConfiguration, TokenManager } from "./tokenmanager";
+import { MinimalAccount, SendJob } from "./types";
 
 function isDefined<X>(value: X | undefined): value is X {
   return value !== undefined;

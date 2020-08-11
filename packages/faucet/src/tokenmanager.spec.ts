@@ -1,5 +1,5 @@
-import { TokenManager } from "./tokenmanager";
-import { MinimalAccount, TokenConfiguration } from "./types";
+import { TokenConfiguration, TokenManager } from "./tokenmanager";
+import { MinimalAccount } from "./types";
 
 const dummyConfig: TokenConfiguration = {
   bankTokens: [

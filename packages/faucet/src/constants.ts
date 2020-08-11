@@ -1,4 +1,4 @@
-import { TokenConfiguration } from "./types";
+import { TokenConfiguration } from "./tokenmanager";
 
 export const binaryName = "cosmwasm-faucet";
 export const concurrency: number = Number.parseInt(process.env.FAUCET_CONCURRENCY || "", 10) || 5;
