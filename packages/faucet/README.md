@@ -49,6 +49,7 @@ FAUCET_CONCURRENCY        Number of distributor accounts. Defaults to 5.
 FAUCET_PORT               Port of the webserver. Defaults to 8000.
 FAUCET_MNEMONIC           Secret mnemonic that serves as the base secret for the
                           faucet HD accounts
+FAUCET_ADDRESS_PREFIX     The bech32 address prefix. Defaults to "cosmos".
 FAUCET_CREDIT_AMOUNT_TKN  Send this amount of TKN to a user requesting TKN. TKN is
                           a placeholder for the token ticker. Defaults to 10.
 FAUCET_REFILL_FACTOR      Send factor times credit amount on refilling. Defauls to 8.

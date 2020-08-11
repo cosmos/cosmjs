@@ -22,7 +22,7 @@
     "access": "public"
   },
   "scripts": {
-    "dev-start": "FAUCET_CREDIT_AMOUNT_COSM=10 FAUCET_CREDIT_AMOUNT_STAKE=5 FAUCET_CONCURRENCY=3 FAUCET_MNEMONIC=\"economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone\" ./bin/cosmwasm-faucet start \"http://localhost:1317\"",
+    "dev-start": "yarn start-dev",
     "format": "prettier --write --loglevel warn \"./src/**/*.ts\"",
     "format-text": "prettier --write --prose-wrap always --print-width 80 \"./*.md\"",
     "lint": "eslint --max-warnings 0 \"**/*.{js,ts}\"",
@@ -31,7 +31,9 @@
     "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build",
     "test-node": "node jasmine-testrunner.js",
     "test": "yarn build-or-skip && yarn test-node",
-    "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet"
+    "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet",
+    "start-dev": "FAUCET_CREDIT_AMOUNT_COSM=10 FAUCET_CREDIT_AMOUNT_STAKE=5 FAUCET_CONCURRENCY=3 FAUCET_MNEMONIC=\"economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone\" ./bin/cosmwasm-faucet start \"http://localhost:1317\"",
+    "start-coralnet": "FAUCET_ADDRESS_PREFIX=coral FAUCET_CREDIT_AMOUNT_SHELL=10 FAUCET_CONCURRENCY=3 FAUCET_MNEMONIC=\"economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone\" ./bin/cosmwasm-faucet start \"https://lcd.coralnet.cosmwasm.com\""
   },
   "dependencies": {
     "@cosmjs/crypto": "^0.22.0",

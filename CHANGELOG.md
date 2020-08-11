@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.22.1 (unreleased)
+
+- @cosmjs/faucet: Add config variable `FAUCET_ADDRESS_PREFIX`.
+
 ## 0.22.0 (2020-08-03)
 
 - @cosmjs/cli: Now supports HTTPs URLs for `--init` code sources.
