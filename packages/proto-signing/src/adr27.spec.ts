@@ -25,6 +25,11 @@ describe("adr27", () => {
       expect(omitDefault(0.0)).toEqual(null);
     });
 
+    it("works for booleans", () => {
+      expect(omitDefault(true)).toEqual(true);
+      expect(omitDefault(false)).toEqual(null);
+    });
+
     it("works for repeated", () => {
       expect(omitDefault(["a", "b", "c"])).toEqual(["a", "b", "c"]);
       expect(omitDefault([])).toEqual(null);
@@ -67,6 +72,9 @@ describe("adr27", () => {
 
       expect(omitDefaults(1.234)).toEqual(1.234);
       expect(omitDefaults(0.0)).toEqual(null);
+
+      expect(omitDefaults(true)).toEqual(true);
+      expect(omitDefaults(false)).toEqual(null);
     });
 
     it("works for repeated", () => {
