@@ -6,6 +6,7 @@ import { QueryClient } from "../queryclient";
 export interface BankExtension {
   readonly bank: {
     readonly balance: (address: string, denom: string) => Promise<cosmos.ICoin>;
+    readonly balances: (address: string) => Promise<cosmos.ICoin[]>;
   };
 }
 
@@ -23,6 +24,15 @@ export function setupBankExtension(base: QueryClient): BankExtension {
         const bankKey = Uint8Array.from([...toAscii("balances"), ...binAddress, ...toAscii(denom)]);
         const responseData = await base.queryVerified("bank", bankKey);
         return cosmos.Coin.decode(responseData);
+      },
+      balances: async (address: string) => {
+        const path = "/cosmos.bank.Query/AllBalances";
+        const request = cosmos.bank.QueryAllBalancesRequest.encode({
+          address: Bech32.decode(address).data,
+        }).finish();
+        const responseData = await base.queryUnverified(path, request);
+        const response = cosmos.bank.QueryAllBalancesResponse.decode(responseData);
+        return response.balances;
       },
     },
   };

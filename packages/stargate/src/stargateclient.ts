@@ -208,13 +208,8 @@ export class StargateClient {
    * proofs from such a method.
    */
   public async getAllBalancesUnverified(address: string): Promise<readonly Coin[]> {
-    const path = "/cosmos.bank.Query/AllBalances";
-    const request = cosmos.bank.QueryAllBalancesRequest.encode({
-      address: Bech32.decode(address).data,
-    }).finish();
-    const responseData = await this.queryClient.queryUnverified(path, request);
-    const response = cosmos.bank.QueryAllBalancesResponse.decode(responseData);
-    return response.balances.map(coinFromProto);
+    const balances = await this.queryClient.bank.balances(address);
+    return balances.map(coinFromProto);
   }
 
   public async searchTx(query: SearchTxQuery, filter: SearchTxFilter = {}): Promise<readonly IndexedTx[]> {
