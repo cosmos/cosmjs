@@ -3,7 +3,7 @@ import { Bech32, toAscii, toHex } from "@cosmjs/encoding";
 import { Coin, decodeAminoPubkey, PubKey } from "@cosmjs/launchpad";
 import { Uint64 } from "@cosmjs/math";
 import { decodeAny } from "@cosmjs/proto-signing";
-import { Client as TendermintClient } from "@cosmjs/tendermint-rpc";
+import { broadcastTxCommitSuccess, Client as TendermintClient } from "@cosmjs/tendermint-rpc";
 import { arrayContentEquals, assert, assertDefined } from "@cosmjs/utils";
 import Long from "long";
 
@@ -20,6 +20,44 @@ export interface Account {
 export interface SequenceResponse {
   readonly accountNumber: number;
   readonly sequence: number;
+}
+
+export interface BroadcastTxFailure {
+  readonly height: number;
+  readonly code: number;
+  readonly transactionHash: string;
+  readonly rawLog?: string;
+  readonly data?: Uint8Array;
+}
+
+export interface BroadcastTxSuccess {
+  readonly height: number;
+  readonly transactionHash: string;
+  readonly rawLog?: string;
+  readonly data?: Uint8Array;
+}
+
+export type BroadcastTxResponse = BroadcastTxSuccess | BroadcastTxFailure;
+
+export function isBroadcastTxFailure(result: BroadcastTxResponse): result is BroadcastTxFailure {
+  return !!(result as BroadcastTxFailure).code;
+}
+
+export function isBroadcastTxSuccess(result: BroadcastTxResponse): result is BroadcastTxSuccess {
+  return !isBroadcastTxFailure(result);
+}
+
+/**
+ * Ensures the given result is a success. Throws a detailed error message otherwise.
+ */
+export function assertIsBroadcastTxSuccess(
+  result: BroadcastTxResponse,
+): asserts result is BroadcastTxSuccess {
+  if (isBroadcastTxFailure(result)) {
+    throw new Error(
+      `Error when broadcasting tx ${result.transactionHash} at height ${result.height}. Code: ${result.code}; Raw log: ${result.rawLog}`,
+    );
+  }
 }
 
 function uint64FromProto(input: number | Long): Uint64 {
@@ -153,6 +191,24 @@ export class StargateClient {
 
   public disconnect(): void {
     this.tmClient.disconnect();
+  }
+
+  public async broadcastTx(tx: Uint8Array): Promise<BroadcastTxResponse> {
+    const response = await this.tmClient.broadcastTxCommit({ tx });
+    return broadcastTxCommitSuccess(response)
+      ? {
+          height: response.height,
+          transactionHash: toHex(response.hash).toUpperCase(),
+          rawLog: response.deliverTx?.log,
+          data: response.deliverTx?.data,
+        }
+      : {
+          height: response.height,
+          code: response.checkTx.code,
+          transactionHash: toHex(response.hash).toUpperCase(),
+          rawLog: response.checkTx.log,
+          data: response.checkTx.data,
+        };
   }
 
   private async queryVerified(store: string, key: Uint8Array): Promise<Uint8Array> {

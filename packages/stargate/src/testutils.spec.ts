@@ -1,7 +1,13 @@
+import { Random } from "@cosmjs/crypto";
+
 export function pendingWithoutSimapp(): void {
   if (!process.env.SIMAPP_ENABLED) {
     return pending("Set SIMAPP_ENABLED to enable Simapp based tests");
   }
+}
+
+export function makeRandomAddressBytes(): Uint8Array {
+  return Random.getBytes(20);
 }
 
 export const simapp = {
@@ -10,6 +16,16 @@ export const simapp = {
   denomStaking: "ustake",
   denomFee: "ucosm",
   blockTime: 1_000, // ms
+};
+
+export const faucet = {
+  mnemonic:
+    "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone",
+  pubkey0: {
+    type: "tendermint/PubKeySecp256k1",
+    value: "A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ",
+  },
+  address0: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
 };
 
 /** Unused account */

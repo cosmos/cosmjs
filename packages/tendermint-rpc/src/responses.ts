@@ -69,20 +69,20 @@ export function broadcastTxSyncSuccess(res: BroadcastTxSyncResponse): boolean {
 }
 
 export interface BroadcastTxCommitResponse {
-  readonly height?: number;
+  readonly height: number;
   readonly hash: TxHash;
   readonly checkTx: TxData;
   readonly deliverTx?: TxData;
 }
 
 /**
- * Returns true iff transaction made it sucessfully into a block
- * (i.e. sucess in `check_tx` and `deliver_tx` field)
+ * Returns true iff transaction made it successfully into a block
+ * (i.e. success in `check_tx` and `deliver_tx` field)
  */
-export function broadcastTxCommitSuccess(res: BroadcastTxCommitResponse): boolean {
+export function broadcastTxCommitSuccess(response: BroadcastTxCommitResponse): boolean {
   // code must be 0 on success
   // deliverTx may be present but empty on failure
-  return res.checkTx.code === 0 && !!res.deliverTx && res.deliverTx.code === 0;
+  return response.checkTx.code === 0 && !!response.deliverTx && response.deliverTx.code === 0;
 }
 
 export interface CommitResponse {

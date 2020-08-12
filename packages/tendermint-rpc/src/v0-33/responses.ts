@@ -345,7 +345,7 @@ function decodeBroadcastTxSync(data: RpcBroadcastTxSyncResponse): responses.Broa
 }
 
 interface RpcBroadcastTxCommitResponse {
-  readonly height?: IntegerString;
+  readonly height: IntegerString;
   readonly hash: HexString;
   readonly check_tx: RpcTxData;
   readonly deliver_tx?: RpcTxData;
@@ -353,7 +353,7 @@ interface RpcBroadcastTxCommitResponse {
 
 function decodeBroadcastTxCommit(data: RpcBroadcastTxCommitResponse): responses.BroadcastTxCommitResponse {
   return {
-    height: may(Integer.parse, data.height),
+    height: Integer.parse(data.height),
     hash: fromHex(assertNotEmpty(data.hash)) as TxHash,
     checkTx: decodeTxData(assertObject(data.check_tx)),
     deliverTx: may(decodeTxData, data.deliver_tx),
