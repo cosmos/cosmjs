@@ -7,7 +7,8 @@ import { QueryClient } from "../queryclient";
  * Use this to convert a protobuf.js class to the interface (e.g. Coin to ICoin)
  * in a ways that makes Jasmine's toEqual happy.
  */
-function toObject<I extends O, O>(thing: I): O {
+// eslint-disable-next-line @typescript-eslint/ban-types
+function toObject<I extends object>(thing: I): Omit<I, never> {
   return { ...thing };
 }
 
@@ -15,7 +16,7 @@ export interface BankExtension {
   readonly bank: {
     readonly balance: (address: string, denom: string) => Promise<cosmos.ICoin | null>;
     readonly unverified: {
-      readonly balances: (address: string) => Promise<cosmos.ICoin[]>;
+      readonly allBalances: (address: string) => Promise<cosmos.ICoin[]>;
     };
   };
 }
@@ -47,9 +48,9 @@ export function setupBankExtension(base: QueryClient): BankExtension {
         return responseData.length ? toObject(cosmos.Coin.decode(responseData)) : null;
       },
       unverified: {
-        balances: async (address: string) => {
-          const response = await queryService.allBalances({ address: Bech32.decode(address).data });
-          return response.balances;
+        allBalances: async (address: string) => {
+          const { balances } = await queryService.allBalances({ address: Bech32.decode(address).data });
+          return balances.map(toObject);
         },
       },
     },

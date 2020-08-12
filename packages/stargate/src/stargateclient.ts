@@ -204,7 +204,7 @@ export class StargateClient {
    * proofs from such a method.
    */
   public async getAllBalancesUnverified(address: string): Promise<readonly Coin[]> {
-    const balances = await this.queryClient.bank.unverified.balances(address);
+    const balances = await this.queryClient.bank.unverified.allBalances(address);
     return balances.map(coinFromProto);
   }
 

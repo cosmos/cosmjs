@@ -44,4 +44,31 @@ describe("BankExtension", () => {
       expect(response).toBeNull();
     });
   });
+
+  describe("allBalances", () => {
+    it("returns all balances for unused account", async () => {
+      pendingWithoutSimapp();
+      const client = await makeBankClient(simapp.tendermintUrl);
+
+      const balances = await client.bank.unverified.allBalances(unused.address);
+      expect(balances).toEqual([
+        {
+          amount: unused.balanceFee,
+          denom: simapp.denomFee,
+        },
+        {
+          amount: unused.balanceStaking,
+          denom: simapp.denomStaking,
+        },
+      ]);
+    });
+
+    it("returns an empty list for non-existent account", async () => {
+      pendingWithoutSimapp();
+      const client = await makeBankClient(simapp.tendermintUrl);
+
+      const balances = await client.bank.unverified.allBalances(nonExistentAddress);
+      expect(balances).toEqual([]);
+    });
+  });
 });
