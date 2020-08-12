@@ -1398,7 +1398,7 @@ exports.cosmos = $root.cosmos = (function () {
       }
       TxBody.prototype.messages = $util.emptyArray;
       TxBody.prototype.memo = "";
-      TxBody.prototype.timeoutHeight = $util.Long ? $util.Long.fromBits(0, 0, false) : 0;
+      TxBody.prototype.timeoutHeight = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
       TxBody.prototype.extensionOptions = $util.emptyArray;
       TxBody.prototype.nonCriticalExtensionOptions = $util.emptyArray;
       TxBody.create = function create(properties) {
@@ -1412,7 +1412,7 @@ exports.cosmos = $root.cosmos = (function () {
         }
         if (m.memo != null && Object.hasOwnProperty.call(m, "memo")) w.uint32(18).string(m.memo);
         if (m.timeoutHeight != null && Object.hasOwnProperty.call(m, "timeoutHeight"))
-          w.uint32(24).int64(m.timeoutHeight);
+          w.uint32(24).uint64(m.timeoutHeight);
         if (m.extensionOptions != null && m.extensionOptions.length) {
           for (var i = 0; i < m.extensionOptions.length; ++i)
             $root.google.protobuf.Any.encode(m.extensionOptions[i], w.uint32(8186).fork()).ldelim();
@@ -1441,7 +1441,7 @@ exports.cosmos = $root.cosmos = (function () {
               m.memo = r.string();
               break;
             case 3:
-              m.timeoutHeight = r.int64();
+              m.timeoutHeight = r.uint64();
               break;
             case 1023:
               if (!(m.extensionOptions && m.extensionOptions.length)) m.extensionOptions = [];
