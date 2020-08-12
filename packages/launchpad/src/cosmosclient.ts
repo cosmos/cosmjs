@@ -91,19 +91,19 @@ export type SearchTxQuery =
   | SearchBySentFromOrToQuery
   | SearchByTagsQuery;
 
-function isSearchByIdQuery(query: SearchTxQuery): query is SearchByIdQuery {
+export function isSearchByIdQuery(query: SearchTxQuery): query is SearchByIdQuery {
   return (query as SearchByIdQuery).id !== undefined;
 }
 
-function isSearchByHeightQuery(query: SearchTxQuery): query is SearchByHeightQuery {
+export function isSearchByHeightQuery(query: SearchTxQuery): query is SearchByHeightQuery {
   return (query as SearchByHeightQuery).height !== undefined;
 }
 
-function isSearchBySentFromOrToQuery(query: SearchTxQuery): query is SearchBySentFromOrToQuery {
+export function isSearchBySentFromOrToQuery(query: SearchTxQuery): query is SearchBySentFromOrToQuery {
   return (query as SearchBySentFromOrToQuery).sentFromOrTo !== undefined;
 }
 
-function isSearchByTagsQuery(query: SearchTxQuery): query is SearchByTagsQuery {
+export function isSearchByTagsQuery(query: SearchTxQuery): query is SearchByTagsQuery {
   return (query as SearchByTagsQuery).tags !== undefined;
 }
 
