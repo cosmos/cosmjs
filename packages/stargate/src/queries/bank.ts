@@ -3,9 +3,17 @@ import { Bech32, toAscii } from "@cosmjs/encoding";
 import { cosmos } from "../generated/codecimpl";
 import { QueryClient } from "../queryclient";
 
+/**
+ * Use this to convert a protobuf.js class to the interface (e.g. Coin to ICoin)
+ * in a ways that makes Jasmine's toEqual happy.
+ */
+function toObject<I extends O, O>(thing: I): O {
+  return { ...thing };
+}
+
 export interface BankExtension {
   readonly bank: {
-    readonly balance: (address: string, denom: string) => Promise<cosmos.ICoin>;
+    readonly balance: (address: string, denom: string) => Promise<cosmos.ICoin | null>;
     readonly unverified: {
       readonly balances: (address: string) => Promise<cosmos.ICoin[]>;
     };
@@ -36,7 +44,7 @@ export function setupBankExtension(base: QueryClient): BankExtension {
         const binAddress = Bech32.decode(address).data;
         const bankKey = Uint8Array.from([...toAscii("balances"), ...binAddress, ...toAscii(denom)]);
         const responseData = await base.queryVerified("bank", bankKey);
-        return cosmos.Coin.decode(responseData);
+        return responseData.length ? toObject(cosmos.Coin.decode(responseData)) : null;
       },
       unverified: {
         balances: async (address: string) => {

@@ -194,11 +194,7 @@ export class StargateClient {
 
   public async getBalance(address: string, searchDenom: string): Promise<Coin | null> {
     const balance = await this.queryClient.bank.balance(address, searchDenom);
-    if (!balance?.denom) {
-      return null;
-    } else {
-      return coinFromProto(balance);
-    }
+    return balance ? coinFromProto(balance) : null;
   }
 
   /**
