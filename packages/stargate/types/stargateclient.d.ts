@@ -1,4 +1,4 @@
-import { Coin, PubKey } from "@cosmjs/launchpad";
+import { Block, Coin, PubKey } from "@cosmjs/launchpad";
 import { Client as TendermintClient } from "@cosmjs/tendermint-rpc";
 export interface Account {
   /** Bech32 account address */
@@ -46,6 +46,7 @@ export declare class StargateClient {
   getHeight(): Promise<number>;
   getAccount(searchAddress: string): Promise<Account | null>;
   getSequence(address: string): Promise<SequenceResponse | null>;
+  getBlock(height?: number): Promise<Block>;
   getBalance(address: string, searchDenom: string): Promise<Coin | null>;
   /**
    * Queries all balances for all denoms that belong to this address.

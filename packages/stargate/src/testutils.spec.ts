@@ -54,3 +54,5 @@ export const validator = {
 };
 
 export const nonExistentAddress = "cosmos1p79apjaufyphcmsn4g07cynqf0wyjuezqu84hd";
+
+export const tendermintIdMatcher = /^[0-9A-F]{64}$/;

@@ -3,6 +3,7 @@ import { Bech32, fromBase64 } from "@cosmjs/encoding";
 import { Secp256k1Wallet } from "@cosmjs/launchpad";
 import { makeSignBytes, omitDefaults, Registry } from "@cosmjs/proto-signing";
 import { assert, sleep } from "@cosmjs/utils";
+import { ReadonlyDate } from "readonly-date";
 
 import { cosmos } from "./generated/codecimpl";
 import { assertIsBroadcastTxSuccess, PrivateStargateClient, StargateClient } from "./stargateclient";
@@ -12,6 +13,7 @@ import {
   nonExistentAddress,
   pendingWithoutSimapp,
   simapp,
+  tendermintIdMatcher,
   unused,
   validator,
 } from "./testutils.spec";
@@ -130,6 +132,53 @@ describe("StargateClient", () => {
       expect(account).toBeNull();
 
       client.disconnect();
+    });
+  });
+
+  describe("getBlock", () => {
+    it("works for latest block", async () => {
+      pendingWithoutSimapp();
+      const client = await StargateClient.connect(simapp.tendermintUrl);
+      const response = await client.getBlock();
+
+      expect(response).toEqual(
+        jasmine.objectContaining({
+          id: jasmine.stringMatching(tendermintIdMatcher),
+          header: jasmine.objectContaining({
+            chainId: await client.getChainId(),
+          }),
+          txs: [],
+        }),
+      );
+
+      expect(response.header.height).toBeGreaterThanOrEqual(1);
+      expect(new ReadonlyDate(response.header.time).getTime()).toBeLessThan(ReadonlyDate.now());
+      expect(new ReadonlyDate(response.header.time).getTime()).toBeGreaterThanOrEqual(
+        ReadonlyDate.now() - 5_000,
+      );
+    });
+
+    it("works for block by height", async () => {
+      pendingWithoutSimapp();
+      const client = await StargateClient.connect(simapp.tendermintUrl);
+      const height = (await client.getBlock()).header.height;
+      const response = await client.getBlock(height - 1);
+
+      expect(response).toEqual(
+        jasmine.objectContaining({
+          id: jasmine.stringMatching(tendermintIdMatcher),
+          header: jasmine.objectContaining({
+            height: height - 1,
+            chainId: await client.getChainId(),
+          }),
+          txs: [],
+        }),
+      );
+
+      expect(new ReadonlyDate(response.header.time).getTime()).toBeLessThan(ReadonlyDate.now());
+      expect(new ReadonlyDate(response.header.time).getTime()).toBeGreaterThanOrEqual(
+        ReadonlyDate.now() - 5_000,
+      );
     });
   });
 

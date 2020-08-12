@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Bech32, toAscii, toHex } from "@cosmjs/encoding";
-import { Coin, decodeAminoPubkey, PubKey } from "@cosmjs/launchpad";
-import { Uint64 } from "@cosmjs/math";
+import { Block, Coin, decodeAminoPubkey, PubKey } from "@cosmjs/launchpad";
+import { Uint53, Uint64 } from "@cosmjs/math";
 import { decodeAny } from "@cosmjs/proto-signing";
 import { broadcastTxCommitSuccess, Client as TendermintClient } from "@cosmjs/tendermint-rpc";
 import { arrayContentEquals, assert, assertDefined } from "@cosmjs/utils";
@@ -149,6 +149,23 @@ export class StargateClient {
     } else {
       return null;
     }
+  }
+
+  public async getBlock(height?: number): Promise<Block> {
+    const response = await this.tmClient.block(height);
+    return {
+      id: toHex(response.blockId.hash).toUpperCase(),
+      header: {
+        version: {
+          block: new Uint53(response.block.header.version.block).toString(),
+          app: new Uint53(response.block.header.version.app).toString(),
+        },
+        height: response.block.header.height,
+        chainId: response.block.header.chainId,
+        time: response.block.header.time.toISOString(),
+      },
+      txs: response.block.txs,
+    };
   }
 
   public async getBalance(address: string, searchDenom: string): Promise<Coin | null> {
