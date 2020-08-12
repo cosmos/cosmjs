@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>SequenceResponse | @cosmjs/stargate Documentation</title>
+	<title>BroadcastTxSuccess | @cosmjs/stargate Documentation</title>
 	<meta name="description" content="Documentation for @cosmjs/stargate Documentation">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -52,10 +52,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="sequenceresponse.html">SequenceResponse</a>
+					<a href="broadcasttxsuccess.html">BroadcastTxSuccess</a>
 				</li>
 			</ul>
-			<h1>Interface SequenceResponse</h1>
+			<h1>Interface BroadcastTxSuccess</h1>
 		</div>
 	</div>
 </header>
@@ -66,7 +66,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">SequenceResponse</span>
+						<span class="target">BroadcastTxSuccess</span>
 					</li>
 				</ul>
 			</section>
@@ -77,8 +77,10 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="sequenceresponse.html#accountnumber" class="tsd-kind-icon">account<wbr>Number</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="sequenceresponse.html#sequence" class="tsd-kind-icon">sequence</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="broadcasttxsuccess.html#data" class="tsd-kind-icon">data</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="broadcasttxsuccess.html#height" class="tsd-kind-icon">height</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="broadcasttxsuccess.html#rawlog" class="tsd-kind-icon">raw<wbr>Log</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="broadcasttxsuccess.html#transactionhash" class="tsd-kind-icon">transaction<wbr>Hash</a></li>
 							</ul>
 						</section>
 					</div>
@@ -87,22 +89,42 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="accountnumber" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> account<wbr>Number</h3>
-					<div class="tsd-signature tsd-kind-icon">account<wbr>Number<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<a name="data" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> data</h3>
+					<div class="tsd-signature tsd-kind-icon">data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Uint8Array</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/f969e661/packages/stargate/src/stargateclient.ts#L21">src/stargateclient.ts:21</a></li>
+							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/f969e661/packages/stargate/src/stargateclient.ts#L37">src/stargateclient.ts:37</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="sequence" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> sequence</h3>
-					<div class="tsd-signature tsd-kind-icon">sequence<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<a name="height" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> height</h3>
+					<div class="tsd-signature tsd-kind-icon">height<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/f969e661/packages/stargate/src/stargateclient.ts#L22">src/stargateclient.ts:22</a></li>
+							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/f969e661/packages/stargate/src/stargateclient.ts#L34">src/stargateclient.ts:34</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="rawlog" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> raw<wbr>Log</h3>
+					<div class="tsd-signature tsd-kind-icon">raw<wbr>Log<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/f969e661/packages/stargate/src/stargateclient.ts#L36">src/stargateclient.ts:36</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="transactionhash" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> transaction<wbr>Hash</h3>
+					<div class="tsd-signature tsd-kind-icon">transaction<wbr>Hash<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/f969e661/packages/stargate/src/stargateclient.ts#L35">src/stargateclient.ts:35</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -127,27 +149,33 @@
 					<li class=" tsd-kind-interface">
 						<a href="broadcasttxfailure.html" class="tsd-kind-icon">Broadcast<wbr>TxFailure</a>
 					</li>
-					<li class=" tsd-kind-interface">
-						<a href="broadcasttxsuccess.html" class="tsd-kind-icon">Broadcast<wbr>TxSuccess</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="privatestargateclient.html" class="tsd-kind-icon">Private<wbr>Stargate<wbr>Client</a>
-					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="sequenceresponse.html" class="tsd-kind-icon">Sequence<wbr>Response</a>
+						<a href="broadcasttxsuccess.html" class="tsd-kind-icon">Broadcast<wbr>TxSuccess</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="sequenceresponse.html#accountnumber" class="tsd-kind-icon">account<wbr>Number</a>
+								<a href="broadcasttxsuccess.html#data" class="tsd-kind-icon">data</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="sequenceresponse.html#sequence" class="tsd-kind-icon">sequence</a>
+								<a href="broadcasttxsuccess.html#height" class="tsd-kind-icon">height</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="broadcasttxsuccess.html#rawlog" class="tsd-kind-icon">raw<wbr>Log</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="broadcasttxsuccess.html#transactionhash" class="tsd-kind-icon">transaction<wbr>Hash</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-interface">
+						<a href="privatestargateclient.html" class="tsd-kind-icon">Private<wbr>Stargate<wbr>Client</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="sequenceresponse.html" class="tsd-kind-icon">Sequence<wbr>Response</a>
+					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="../globals.html#broadcasttxresponse" class="tsd-kind-icon">Broadcast<wbr>TxResponse</a>
 					</li>

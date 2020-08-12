@@ -73,15 +73,26 @@
 							<h3>Interfaces</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-interface"><a href="interfaces/account.html" class="tsd-kind-icon">Account</a></li>
+								<li class="tsd-kind-interface"><a href="interfaces/broadcasttxfailure.html" class="tsd-kind-icon">Broadcast<wbr>TxFailure</a></li>
+								<li class="tsd-kind-interface"><a href="interfaces/broadcasttxsuccess.html" class="tsd-kind-icon">Broadcast<wbr>TxSuccess</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/privatestargateclient.html" class="tsd-kind-icon">Private<wbr>Stargate<wbr>Client</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/sequenceresponse.html" class="tsd-kind-icon">Sequence<wbr>Response</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
+							<h3>Type aliases</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-type-alias"><a href="globals.html#broadcasttxresponse" class="tsd-kind-icon">Broadcast<wbr>TxResponse</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-function"><a href="globals.html#assertisbroadcasttxsuccess" class="tsd-kind-icon">assert<wbr>IsBroadcast<wbr>TxSuccess</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#coinfromproto" class="tsd-kind-icon">coin<wbr>From<wbr>Proto</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#decodebaseaccount" class="tsd-kind-icon">decode<wbr>Base<wbr>Account</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#isbroadcasttxfailure" class="tsd-kind-icon">is<wbr>Broadcast<wbr>TxFailure</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#isbroadcasttxsuccess" class="tsd-kind-icon">is<wbr>Broadcast<wbr>TxSuccess</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#uint64fromproto" class="tsd-kind-icon">uint64<wbr>From<wbr>Proto</a></li>
 							</ul>
 						</section>
@@ -89,7 +100,48 @@
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Type aliases</h2>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias">
+					<a name="broadcasttxresponse" class="tsd-anchor"></a>
+					<h3>Broadcast<wbr>TxResponse</h3>
+					<div class="tsd-signature tsd-kind-icon">Broadcast<wbr>TxResponse<span class="tsd-signature-symbol">:</span> <a href="interfaces/broadcasttxsuccess.html" class="tsd-signature-type">BroadcastTxSuccess</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/broadcasttxfailure.html" class="tsd-signature-type">BroadcastTxFailure</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/f969e661/packages/stargate/src/stargateclient.ts#L40">src/stargateclient.ts:40</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="assertisbroadcasttxsuccess" class="tsd-anchor"></a>
+					<h3>assert<wbr>IsBroadcast<wbr>TxSuccess</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">assert<wbr>IsBroadcast<wbr>TxSuccess<span class="tsd-signature-symbol">(</span>result<span class="tsd-signature-symbol">: </span><a href="globals.html#broadcasttxresponse" class="tsd-signature-type">BroadcastTxResponse</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">asserts</span><span class="tsd-signature-type">result</span><span class="tsd-signature-symbol"> is </span><span class="tsd-signature-type">BroadcastTxSuccess</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/f969e661/packages/stargate/src/stargateclient.ts#L53">src/stargateclient.ts:53</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Ensures the given result is a success. Throws a detailed error message otherwise.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>result: <a href="globals.html#broadcasttxresponse" class="tsd-signature-type">BroadcastTxResponse</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">asserts</span><span class="tsd-signature-type">result</span><span class="tsd-signature-symbol"> is </span><span class="tsd-signature-type">BroadcastTxSuccess</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function">
 					<a name="coinfromproto" class="tsd-anchor"></a>
 					<h3>coin<wbr>From<wbr>Proto</h3>
@@ -100,7 +152,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/5e89405f/packages/stargate/src/stargateclient.ts#L41">src/stargateclient.ts:41</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/f969e661/packages/stargate/src/stargateclient.ts#L79">src/stargateclient.ts:79</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -123,7 +175,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/5e89405f/packages/stargate/src/stargateclient.ts#L29">src/stargateclient.ts:29</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/f969e661/packages/stargate/src/stargateclient.ts#L67">src/stargateclient.ts:67</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -140,6 +192,52 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="isbroadcasttxfailure" class="tsd-anchor"></a>
+					<h3>is<wbr>Broadcast<wbr>TxFailure</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">is<wbr>Broadcast<wbr>TxFailure<span class="tsd-signature-symbol">(</span>result<span class="tsd-signature-symbol">: </span><a href="globals.html#broadcasttxresponse" class="tsd-signature-type">BroadcastTxResponse</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">result</span><span class="tsd-signature-symbol"> is </span><span class="tsd-signature-type">BroadcastTxFailure</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/f969e661/packages/stargate/src/stargateclient.ts#L42">src/stargateclient.ts:42</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>result: <a href="globals.html#broadcasttxresponse" class="tsd-signature-type">BroadcastTxResponse</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">result</span><span class="tsd-signature-symbol"> is </span><span class="tsd-signature-type">BroadcastTxFailure</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="isbroadcasttxsuccess" class="tsd-anchor"></a>
+					<h3>is<wbr>Broadcast<wbr>TxSuccess</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">is<wbr>Broadcast<wbr>TxSuccess<span class="tsd-signature-symbol">(</span>result<span class="tsd-signature-symbol">: </span><a href="globals.html#broadcasttxresponse" class="tsd-signature-type">BroadcastTxResponse</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">result</span><span class="tsd-signature-symbol"> is </span><span class="tsd-signature-type">BroadcastTxSuccess</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/f969e661/packages/stargate/src/stargateclient.ts#L46">src/stargateclient.ts:46</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>result: <a href="globals.html#broadcasttxresponse" class="tsd-signature-type">BroadcastTxResponse</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">result</span><span class="tsd-signature-symbol"> is </span><span class="tsd-signature-type">BroadcastTxSuccess</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
 					<a name="uint64fromproto" class="tsd-anchor"></a>
 					<h3>uint64<wbr>From<wbr>Proto</h3>
 					<ul class="tsd-signatures tsd-kind-function">
@@ -149,7 +247,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/5e89405f/packages/stargate/src/stargateclient.ts#L25">src/stargateclient.ts:25</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/f969e661/packages/stargate/src/stargateclient.ts#L63">src/stargateclient.ts:63</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -181,16 +279,34 @@
 						<a href="interfaces/account.html" class="tsd-kind-icon">Account</a>
 					</li>
 					<li class=" tsd-kind-interface">
+						<a href="interfaces/broadcasttxfailure.html" class="tsd-kind-icon">Broadcast<wbr>TxFailure</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/broadcasttxsuccess.html" class="tsd-kind-icon">Broadcast<wbr>TxSuccess</a>
+					</li>
+					<li class=" tsd-kind-interface">
 						<a href="interfaces/privatestargateclient.html" class="tsd-kind-icon">Private<wbr>Stargate<wbr>Client</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/sequenceresponse.html" class="tsd-kind-icon">Sequence<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#broadcasttxresponse" class="tsd-kind-icon">Broadcast<wbr>TxResponse</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#assertisbroadcasttxsuccess" class="tsd-kind-icon">assert<wbr>IsBroadcast<wbr>TxSuccess</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#coinfromproto" class="tsd-kind-icon">coin<wbr>From<wbr>Proto</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#decodebaseaccount" class="tsd-kind-icon">decode<wbr>Base<wbr>Account</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#isbroadcasttxfailure" class="tsd-kind-icon">is<wbr>Broadcast<wbr>TxFailure</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#isbroadcasttxsuccess" class="tsd-kind-icon">is<wbr>Broadcast<wbr>TxSuccess</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#uint64fromproto" class="tsd-kind-icon">uint64<wbr>From<wbr>Proto</a>
