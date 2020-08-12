@@ -6,6 +6,7 @@ import { omitDefaults } from "./adr27";
 import { cosmos } from "./generated/codecimpl";
 import { defaultRegistry } from "./msgs";
 import { Registry, TxBodyValue } from "./registry";
+import { makeSignBytes } from "./signing";
 
 const { AuthInfo, SignDoc, Tx, TxBody } = cosmos.tx;
 const { PublicKey } = cosmos.crypto;
@@ -158,7 +159,7 @@ describe("signing demo", () => {
             accountSequence: sequenceNumber,
           }),
         );
-        const signDocBytes = Uint8Array.from(SignDoc.encode(signDoc).finish());
+        const signDocBytes = makeSignBytes(signDoc);
         expect(toHex(signDocBytes)).toEqual(signBytes);
 
         const signature = await wallet.sign(address, signDocBytes);
