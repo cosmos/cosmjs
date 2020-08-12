@@ -55,16 +55,16 @@ export interface BroadcastTxSyncResponse extends TxData {
  */
 export declare function broadcastTxSyncSuccess(res: BroadcastTxSyncResponse): boolean;
 export interface BroadcastTxCommitResponse {
-  readonly height?: number;
+  readonly height: number;
   readonly hash: TxHash;
   readonly checkTx: TxData;
   readonly deliverTx?: TxData;
 }
 /**
- * Returns true iff transaction made it sucessfully into a block
- * (i.e. sucess in `check_tx` and `deliver_tx` field)
+ * Returns true iff transaction made it successfully into a block
+ * (i.e. success in `check_tx` and `deliver_tx` field)
  */
-export declare function broadcastTxCommitSuccess(res: BroadcastTxCommitResponse): boolean;
+export declare function broadcastTxCommitSuccess(response: BroadcastTxCommitResponse): boolean;
 export interface CommitResponse {
   readonly header: Header;
   readonly commit: Commit;
