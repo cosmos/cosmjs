@@ -194,7 +194,7 @@ export class StargateClient {
 
   public async getBalance(address: string, searchDenom: string): Promise<Coin | null> {
     const balance = await this.queryClient.bank.balance(address, searchDenom);
-    if (!balance.denom) {
+    if (!balance?.denom) {
       return null;
     } else {
       return coinFromProto(balance);
@@ -208,7 +208,7 @@ export class StargateClient {
    * proofs from such a method.
    */
   public async getAllBalancesUnverified(address: string): Promise<readonly Coin[]> {
-    const balances = await this.queryClient.bank.balances(address);
+    const balances = await this.queryClient.bank.unverified.balances(address);
     return balances.map(coinFromProto);
   }
 
