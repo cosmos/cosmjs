@@ -145,19 +145,21 @@ describe("CosmosClient", () => {
       const client = new CosmosClient(wasmd.endpoint);
       const response = await client.getBlock();
 
-      // id
-      expect(response.id).toMatch(tendermintIdMatcher);
+      expect(response).toEqual(
+        jasmine.objectContaining({
+          id: jasmine.stringMatching(tendermintIdMatcher),
+          header: jasmine.objectContaining({
+            chainId: await client.getChainId(),
+          }),
+          txs: [],
+        }),
+      );
 
-      // header
       expect(response.header.height).toBeGreaterThanOrEqual(1);
-      expect(response.header.chainId).toEqual(await client.getChainId());
       expect(new ReadonlyDate(response.header.time).getTime()).toBeLessThan(ReadonlyDate.now());
       expect(new ReadonlyDate(response.header.time).getTime()).toBeGreaterThanOrEqual(
         ReadonlyDate.now() - 5_000,
       );
-
-      // txs
-      expect(Array.isArray(response.txs)).toEqual(true);
     });
 
     it("works for block by height", async () => {
@@ -166,19 +168,21 @@ describe("CosmosClient", () => {
       const height = (await client.getBlock()).header.height;
       const response = await client.getBlock(height - 1);
 
-      // id
-      expect(response.id).toMatch(tendermintIdMatcher);
+      expect(response).toEqual(
+        jasmine.objectContaining({
+          id: jasmine.stringMatching(tendermintIdMatcher),
+          header: jasmine.objectContaining({
+            height: height - 1,
+            chainId: await client.getChainId(),
+          }),
+          txs: [],
+        }),
+      );
 
-      // header
-      expect(response.header.height).toEqual(height - 1);
-      expect(response.header.chainId).toEqual(await client.getChainId());
       expect(new ReadonlyDate(response.header.time).getTime()).toBeLessThan(ReadonlyDate.now());
       expect(new ReadonlyDate(response.header.time).getTime()).toBeGreaterThanOrEqual(
         ReadonlyDate.now() - 5_000,
       );
-
-      // txs
-      expect(Array.isArray(response.txs)).toEqual(true);
     });
   });
 
