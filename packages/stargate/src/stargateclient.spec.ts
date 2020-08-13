@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Bech32, fromBase64 } from "@cosmjs/encoding";
 import { Secp256k1Wallet } from "@cosmjs/launchpad";
-import { makeSignBytes, omitDefaults, Registry } from "@cosmjs/proto-signing";
+import { makeSignBytes, Registry } from "@cosmjs/proto-signing";
 import { assert, sleep } from "@cosmjs/utils";
 import Long from "long";
 import { ReadonlyDate } from "readonly-date";
@@ -19,7 +19,7 @@ import {
   validator,
 } from "./testutils.spec";
 
-const { AuthInfo, SignDoc, Tx, TxBody } = cosmos.tx;
+const { AuthInfo, Tx, TxBody } = cosmos.tx;
 const { PublicKey } = cosmos.crypto;
 
 describe("StargateClient", () => {
@@ -298,16 +298,7 @@ describe("StargateClient", () => {
 
       const chainId = await client.getChainId();
       const { accountNumber, sequence } = (await client.getSequence(address))!;
-      const signDoc = SignDoc.create(
-        omitDefaults({
-          bodyBytes: txBodyBytes,
-          authInfoBytes: authInfoBytes,
-          chainId: chainId,
-          accountNumber: accountNumber,
-          accountSequence: sequence,
-        }),
-      );
-      const signDocBytes = makeSignBytes(signDoc);
+      const signDocBytes = makeSignBytes(txBodyBytes, authInfoBytes, chainId, accountNumber, sequence);
       const signature = await wallet.sign(address, signDocBytes);
       const txRaw = Tx.create({
         body: txBody,

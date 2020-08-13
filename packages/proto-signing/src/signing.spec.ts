@@ -2,13 +2,12 @@
 import { Bech32, fromBase64, fromHex, toHex } from "@cosmjs/encoding";
 import { Secp256k1Wallet } from "@cosmjs/launchpad";
 
-import { omitDefaults } from "./adr27";
 import { cosmos } from "./generated/codecimpl";
 import { defaultRegistry } from "./msgs";
 import { Registry, TxBodyValue } from "./registry";
 import { makeSignBytes } from "./signing";
 
-const { AuthInfo, SignDoc, Tx, TxBody } = cosmos.tx;
+const { AuthInfo, Tx, TxBody } = cosmos.tx;
 const { PublicKey } = cosmos.crypto;
 
 export function pendingWithoutSimapp(): void {
@@ -149,17 +148,8 @@ describe("signing demo", () => {
     const accountNumber = 1;
 
     await Promise.all(
-      testVectors.map(async ({ sequenceNumber, signBytes, signedTxBytes }) => {
-        const signDoc = SignDoc.create(
-          omitDefaults({
-            bodyBytes: txBodyBytes,
-            authInfoBytes: authInfoBytes,
-            chainId: chainId,
-            accountNumber: accountNumber,
-            accountSequence: sequenceNumber,
-          }),
-        );
-        const signDocBytes = makeSignBytes(signDoc);
+      testVectors.map(async ({ sequenceNumber: sequence, signBytes, signedTxBytes }) => {
+        const signDocBytes = makeSignBytes(txBodyBytes, authInfoBytes, chainId, accountNumber, sequence);
         expect(toHex(signDocBytes)).toEqual(signBytes);
 
         const signature = await wallet.sign(address, signDocBytes);
