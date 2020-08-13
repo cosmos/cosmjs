@@ -1,4 +1,5 @@
 import { toAscii } from "@cosmjs/encoding";
+import { assert } from "@cosmjs/utils";
 
 import { cosmos } from "../generated/codecimpl";
 import { QueryClient } from "../queryclient";
@@ -8,6 +9,7 @@ export interface BankExtension {
   readonly bank: {
     readonly balance: (address: string, denom: string) => Promise<cosmos.ICoin | null>;
     readonly unverified: {
+      readonly balance: (address: string, denom: string) => Promise<cosmos.ICoin>;
       readonly allBalances: (address: string) => Promise<cosmos.ICoin[]>;
     };
   };
@@ -39,6 +41,11 @@ export function setupBankExtension(base: QueryClient): BankExtension {
         return responseData.length ? toObject(cosmos.Coin.decode(responseData)) : null;
       },
       unverified: {
+        balance: async (address: string, denom: string) => {
+          const { balance } = await queryService.balance({ address: toAccAddress(address), denom: denom });
+          assert(balance);
+          return toObject(balance);
+        },
         allBalances: async (address: string) => {
           const { balances } = await queryService.allBalances({ address: toAccAddress(address) });
           return balances.map(toObject);

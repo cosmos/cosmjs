@@ -4,6 +4,7 @@ export interface BankExtension {
   readonly bank: {
     readonly balance: (address: string, denom: string) => Promise<cosmos.ICoin | null>;
     readonly unverified: {
+      readonly balance: (address: string, denom: string) => Promise<cosmos.ICoin>;
       readonly allBalances: (address: string) => Promise<cosmos.ICoin[]>;
     };
   };

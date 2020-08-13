@@ -45,30 +45,72 @@ describe("BankExtension", () => {
     });
   });
 
-  describe("allBalances", () => {
-    it("returns all balances for unused account", async () => {
-      pendingWithoutSimapp();
-      const client = await makeBankClient(simapp.tendermintUrl);
+  describe("unverified", () => {
+    describe("balance", () => {
+      it("works for different existing balances", async () => {
+        pendingWithoutSimapp();
+        const client = await makeBankClient(simapp.tendermintUrl);
 
-      const balances = await client.bank.unverified.allBalances(unused.address);
-      expect(balances).toEqual([
-        {
+        const response1 = await client.bank.unverified.balance(unused.address, simapp.denomFee);
+        expect(response1).toEqual({
           amount: unused.balanceFee,
           denom: simapp.denomFee,
-        },
-        {
+        });
+        const response2 = await client.bank.unverified.balance(unused.address, simapp.denomStaking);
+        expect(response2).toEqual({
           amount: unused.balanceStaking,
           denom: simapp.denomStaking,
-        },
-      ]);
+        });
+      });
+
+      it("returns zero for non-existent balance", async () => {
+        pendingWithoutSimapp();
+        const client = await makeBankClient(simapp.tendermintUrl);
+
+        const response = await client.bank.unverified.balance(unused.address, "gintonic");
+        expect(response).toEqual({
+          amount: "0",
+          denom: "gintonic",
+        });
+      });
+
+      it("returns zero for non-existent address", async () => {
+        pendingWithoutSimapp();
+        const client = await makeBankClient(simapp.tendermintUrl);
+
+        const response = await client.bank.unverified.balance(nonExistentAddress, simapp.denomFee);
+        expect(response).toEqual({
+          amount: "0",
+          denom: simapp.denomFee,
+        });
+      });
     });
 
-    it("returns an empty list for non-existent account", async () => {
-      pendingWithoutSimapp();
-      const client = await makeBankClient(simapp.tendermintUrl);
+    describe("allBalances", () => {
+      it("returns all balances for unused account", async () => {
+        pendingWithoutSimapp();
+        const client = await makeBankClient(simapp.tendermintUrl);
 
-      const balances = await client.bank.unverified.allBalances(nonExistentAddress);
-      expect(balances).toEqual([]);
+        const balances = await client.bank.unverified.allBalances(unused.address);
+        expect(balances).toEqual([
+          {
+            amount: unused.balanceFee,
+            denom: simapp.denomFee,
+          },
+          {
+            amount: unused.balanceStaking,
+            denom: simapp.denomStaking,
+          },
+        ]);
+      });
+
+      it("returns an empty list for non-existent account", async () => {
+        pendingWithoutSimapp();
+        const client = await makeBankClient(simapp.tendermintUrl);
+
+        const balances = await client.bank.unverified.allBalances(nonExistentAddress);
+        expect(balances).toEqual([]);
+      });
     });
   });
 });
