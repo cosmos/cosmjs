@@ -1,13 +1,33 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Bech32, toAscii, toHex } from "@cosmjs/encoding";
-import { Block, Coin, decodeAminoPubkey, PubKey } from "@cosmjs/launchpad";
+import {
+  Block,
+  Coin,
+  decodeAminoPubkey,
+  isSearchByHeightQuery,
+  isSearchByIdQuery,
+  PubKey,
+  SearchTxFilter,
+  SearchTxQuery,
+} from "@cosmjs/launchpad";
 import { Uint53, Uint64 } from "@cosmjs/math";
 import { decodeAny } from "@cosmjs/proto-signing";
-import { broadcastTxCommitSuccess, Client as TendermintClient } from "@cosmjs/tendermint-rpc";
+import { broadcastTxCommitSuccess, Client as TendermintClient, QueryString } from "@cosmjs/tendermint-rpc";
 import { arrayContentEquals, assert, assertDefined } from "@cosmjs/utils";
 import Long from "long";
 
 import { cosmos } from "./generated/codecimpl";
+
+/** A transaction that is indexed as part of the transaction history */
+export interface IndexedTx {
+  readonly height: number;
+  /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
+  readonly hash: string;
+  /** Transaction execution error code. 0 on success. */
+  readonly code: number;
+  readonly rawLog: string;
+  readonly tx: Uint8Array;
+}
 
 export interface Account {
   /** Bech32 account address */
@@ -206,25 +226,57 @@ export class StargateClient {
     return response.balances.map(coinFromProto);
   }
 
+  public async searchTx(query: SearchTxQuery, filter: SearchTxFilter = {}): Promise<readonly IndexedTx[]> {
+    const minHeight = filter.minHeight || 0;
+    const maxHeight = filter.maxHeight || Number.MAX_SAFE_INTEGER;
+
+    if (maxHeight < minHeight) return []; // optional optimization
+
+    let txs: readonly IndexedTx[];
+
+    if (isSearchByIdQuery(query)) {
+      txs = await this.txsQuery(`tx.hash='${query.id}'`);
+    } else if (isSearchByHeightQuery(query)) {
+      txs =
+        query.height >= minHeight && query.height <= maxHeight
+          ? await this.txsQuery(`tx.height=${query.height}`)
+          : [];
+    } else {
+      throw new Error("Unknown query type");
+    }
+
+    const filtered = txs.filter((tx) => tx.height >= minHeight && tx.height <= maxHeight);
+    return filtered;
+  }
+
   public disconnect(): void {
     this.tmClient.disconnect();
   }
 
   public async broadcastTx(tx: Uint8Array): Promise<BroadcastTxResponse> {
     const response = await this.tmClient.broadcastTxCommit({ tx });
-    return broadcastTxCommitSuccess(response)
+    if (broadcastTxCommitSuccess(response)) {
+      return {
+        height: response.height,
+        transactionHash: toHex(response.hash).toUpperCase(),
+        rawLog: response.deliverTx?.log,
+        data: response.deliverTx?.data,
+      };
+    }
+    return response.checkTx.code !== 0
       ? {
-          height: response.height,
-          transactionHash: toHex(response.hash).toUpperCase(),
-          rawLog: response.deliverTx?.log,
-          data: response.deliverTx?.data,
-        }
-      : {
           height: response.height,
           code: response.checkTx.code,
           transactionHash: toHex(response.hash).toUpperCase(),
           rawLog: response.checkTx.log,
           data: response.checkTx.data,
+        }
+      : {
+          height: response.height,
+          code: response.deliverTx?.code,
+          transactionHash: toHex(response.hash).toUpperCase(),
+          rawLog: response.deliverTx?.log,
+          data: response.deliverTx?.data,
         };
   }
 
@@ -263,5 +315,21 @@ export class StargateClient {
     }
 
     return response.value;
+  }
+
+  private async txsQuery(query: string): Promise<readonly IndexedTx[]> {
+    const params = {
+      query: query as QueryString,
+    };
+    const results = await this.tmClient.txSearchAll(params);
+    return results.txs.map((tx) => {
+      return {
+        height: tx.height,
+        hash: toHex(tx.hash).toUpperCase(),
+        code: tx.result.code,
+        rawLog: tx.result.log || "",
+        tx: tx.tx,
+      };
+    });
   }
 }

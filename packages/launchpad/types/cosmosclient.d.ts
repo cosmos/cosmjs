@@ -61,6 +61,10 @@ export declare type SearchTxQuery =
   | SearchByHeightQuery
   | SearchBySentFromOrToQuery
   | SearchByTagsQuery;
+export declare function isSearchByIdQuery(query: SearchTxQuery): query is SearchByIdQuery;
+export declare function isSearchByHeightQuery(query: SearchTxQuery): query is SearchByHeightQuery;
+export declare function isSearchBySentFromOrToQuery(query: SearchTxQuery): query is SearchBySentFromOrToQuery;
+export declare function isSearchByTagsQuery(query: SearchTxQuery): query is SearchByTagsQuery;
 export interface SearchTxFilter {
   readonly minHeight?: number;
   readonly maxHeight?: number;

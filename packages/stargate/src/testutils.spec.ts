@@ -1,13 +1,22 @@
 import { Random } from "@cosmjs/crypto";
+import { Bech32 } from "@cosmjs/encoding";
+
+export function simappEnabled(): boolean {
+  return !!process.env.SIMAPP_ENABLED;
+}
 
 export function pendingWithoutSimapp(): void {
-  if (!process.env.SIMAPP_ENABLED) {
+  if (!simappEnabled()) {
     return pending("Set SIMAPP_ENABLED to enable Simapp based tests");
   }
 }
 
 export function makeRandomAddressBytes(): Uint8Array {
   return Random.getBytes(20);
+}
+
+export function makeRandomAddress(): string {
+  return Bech32.encode("cosmos", makeRandomAddressBytes());
 }
 
 export const simapp = {

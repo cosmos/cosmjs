@@ -23,6 +23,10 @@ export {
   SearchByTagsQuery,
   SearchTxQuery,
   SearchTxFilter,
+  isSearchByHeightQuery,
+  isSearchByIdQuery,
+  isSearchBySentFromOrToQuery,
+  isSearchByTagsQuery,
 } from "./cosmosclient";
 export { makeSignBytes } from "./encoding";
 export {

@@ -147,7 +147,7 @@ describe("StargateClient", () => {
           header: jasmine.objectContaining({
             chainId: await client.getChainId(),
           }),
-          txs: [],
+          txs: jasmine.arrayContaining([]),
         }),
       );
 
@@ -171,7 +171,7 @@ describe("StargateClient", () => {
             height: height - 1,
             chainId: await client.getChainId(),
           }),
-          txs: [],
+          txs: jasmine.arrayContaining([]),
         }),
       );
 
