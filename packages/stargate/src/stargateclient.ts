@@ -12,8 +12,7 @@ import {
 } from "@cosmjs/launchpad";
 import { Uint53, Uint64 } from "@cosmjs/math";
 import { decodeAny } from "@cosmjs/proto-signing";
-import { broadcastTxCommitSuccess, Client as TendermintClient } from "@cosmjs/tendermint-rpc";
-import { QueryString } from "@cosmjs/tendermint-rpc/types/requests";
+import { broadcastTxCommitSuccess, Client as TendermintClient, QueryString } from "@cosmjs/tendermint-rpc";
 import { arrayContentEquals, assert, assertDefined } from "@cosmjs/utils";
 import Long from "long";
 
