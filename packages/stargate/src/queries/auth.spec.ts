@@ -22,6 +22,7 @@ describe("AuthExtension", () => {
 
       const account = await client.auth.account(unused.address);
       assert(account);
+
       expect(account).toEqual({
         address: toAccAddress(unused.address),
         // pubKey not set

@@ -15,7 +15,7 @@ import { broadcastTxCommitSuccess, Client as TendermintClient, QueryString } fro
 import { assert, assertDefined } from "@cosmjs/utils";
 import Long from "long";
 
-import { cosmos } from "./generated/codecimpl";
+import { cosmos } from "./codec";
 import { AuthExtension, BankExtension, QueryClient, setupAuthExtension, setupBankExtension } from "./queries";
 
 /** A transaction that is indexed as part of the transaction history */

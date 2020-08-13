@@ -1,6 +1,6 @@
 import { assert } from "@cosmjs/utils";
 
-import { cosmos, google } from "../generated/codecimpl";
+import { cosmos, google } from "../codec";
 import { QueryClient } from "./queryclient";
 import { toAccAddress, toObject } from "./utils";
 

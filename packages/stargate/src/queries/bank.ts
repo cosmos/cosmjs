@@ -1,7 +1,7 @@
 import { toAscii } from "@cosmjs/encoding";
 import { assert } from "@cosmjs/utils";
 
-import { cosmos } from "../generated/codecimpl";
+import { cosmos } from "../codec";
 import { QueryClient } from "./queryclient";
 import { toAccAddress, toObject } from "./utils";
 

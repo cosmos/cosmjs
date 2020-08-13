@@ -19,6 +19,7 @@ yarn pbjs \
   --no-delimited \
   --no-verify \
   --no-convert \
+  --force-long \
   "$COSMOS_PROTO_DIR/cosmos.proto" \
   "$COSMOS_PROTO_DIR/auth/{auth,query}.proto" \
   "$COSMOS_PROTO_DIR/bank/{bank,query}.proto" \

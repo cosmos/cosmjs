@@ -1,4 +1,4 @@
-import { cosmos } from "../generated/codecimpl";
+import { cosmos } from "../codec";
 import { QueryClient } from "./queryclient";
 export interface AuthExtension {
   readonly auth: {
