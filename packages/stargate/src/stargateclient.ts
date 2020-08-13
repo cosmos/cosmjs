@@ -17,7 +17,7 @@ import { assert, assertDefined } from "@cosmjs/utils";
 import Long from "long";
 
 import { cosmos } from "./generated/codecimpl";
-import { BankExtension, setupBankExtension } from "./queries/bank";
+import { BankExtension, setupBankExtension } from "./queries";
 import { QueryClient } from "./queryclient";
 
 /** A transaction that is indexed as part of the transaction history */

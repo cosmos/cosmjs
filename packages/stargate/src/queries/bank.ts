@@ -1,16 +1,8 @@
-import { Bech32, toAscii } from "@cosmjs/encoding";
+import { toAscii } from "@cosmjs/encoding";
 
 import { cosmos } from "../generated/codecimpl";
 import { QueryClient } from "../queryclient";
-
-/**
- * Use this to convert a protobuf.js class to the interface (e.g. Coin to ICoin)
- * in a ways that makes Jasmine's toEqual happy.
- */
-// eslint-disable-next-line @typescript-eslint/ban-types
-function toObject<I extends object>(thing: I): Omit<I, never> {
-  return { ...thing };
-}
+import { toAccAddress, toObject } from "./utils";
 
 export interface BankExtension {
   readonly bank: {
@@ -42,14 +34,13 @@ export function setupBankExtension(base: QueryClient): BankExtension {
         // it seem like prefix stores just do a dumb concat with the keys (no tricks to avoid overlap)
         // https://github.com/cosmos/cosmos-sdk/blob/2879c0702c87dc9dd828a8c42b9224dc054e28ad/store/prefix/store.go#L61-L64
         // https://github.com/cosmos/cosmos-sdk/blob/2879c0702c87dc9dd828a8c42b9224dc054e28ad/store/prefix/store.go#L37-L43
-        const binAddress = Bech32.decode(address).data;
-        const bankKey = Uint8Array.from([...toAscii("balances"), ...binAddress, ...toAscii(denom)]);
-        const responseData = await base.queryVerified("bank", bankKey);
+        const key = Uint8Array.from([...toAscii("balances"), ...toAccAddress(address), ...toAscii(denom)]);
+        const responseData = await base.queryVerified("bank", key);
         return responseData.length ? toObject(cosmos.Coin.decode(responseData)) : null;
       },
       unverified: {
         allBalances: async (address: string) => {
-          const { balances } = await queryService.allBalances({ address: Bech32.decode(address).data });
+          const { balances } = await queryService.allBalances({ address: toAccAddress(address) });
           return balances.map(toObject);
         },
       },
