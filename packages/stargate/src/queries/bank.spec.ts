@@ -1,7 +1,13 @@
 import { Client as TendermintClient } from "@cosmjs/tendermint-rpc";
 
 import { QueryClient } from "../queryclient";
-import { nonExistentAddress, pendingWithoutSimapp, simapp, unused } from "../testutils.spec";
+import {
+  nonExistentAddress,
+  nonNegativeIntegerMatcher,
+  pendingWithoutSimapp,
+  simapp,
+  unused,
+} from "../testutils.spec";
 import { BankExtension, setupBankExtension } from "./bank";
 
 async function makeBankClient(rpcUrl: string): Promise<QueryClient & BankExtension> {
@@ -110,6 +116,25 @@ describe("BankExtension", () => {
 
         const balances = await client.bank.unverified.allBalances(nonExistentAddress);
         expect(balances).toEqual([]);
+      });
+    });
+
+    describe("totalSupply", () => {
+      it("works", async () => {
+        pendingWithoutSimapp();
+        const client = await makeBankClient(simapp.tendermintUrl);
+
+        const response = await client.bank.unverified.totalSupply();
+        expect(response).toEqual([
+          {
+            amount: "18000000000",
+            denom: simapp.denomFee,
+          },
+          {
+            amount: jasmine.stringMatching(nonNegativeIntegerMatcher),
+            denom: simapp.denomStaking,
+          },
+        ]);
       });
     });
   });
