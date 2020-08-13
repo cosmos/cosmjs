@@ -66,6 +66,7 @@
 						<section class="tsd-index-section ">
 							<h3>Classes</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-class"><a href="classes/queryclient.html" class="tsd-kind-icon">Query<wbr>Client</a></li>
 								<li class="tsd-kind-class"><a href="classes/stargateclient.html" class="tsd-kind-icon">Stargate<wbr>Client</a></li>
 							</ul>
 						</section>
@@ -73,6 +74,8 @@
 							<h3>Interfaces</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-interface"><a href="interfaces/account.html" class="tsd-kind-icon">Account</a></li>
+								<li class="tsd-kind-interface"><a href="interfaces/authextension.html" class="tsd-kind-icon">Auth<wbr>Extension</a></li>
+								<li class="tsd-kind-interface"><a href="interfaces/bankextension.html" class="tsd-kind-icon">Bank<wbr>Extension</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/broadcasttxfailure.html" class="tsd-kind-icon">Broadcast<wbr>TxFailure</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/broadcasttxsuccess.html" class="tsd-kind-icon">Broadcast<wbr>TxSuccess</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/indexedtx.html" class="tsd-kind-icon">Indexed<wbr>Tx</a></li>
@@ -84,16 +87,21 @@
 							<h3>Type aliases</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-type-alias"><a href="globals.html#broadcasttxresponse" class="tsd-kind-icon">Broadcast<wbr>TxResponse</a></li>
+								<li class="tsd-kind-type-alias tsd-has-type-parameter"><a href="globals.html#queryextensionsetup" class="tsd-kind-icon">Query<wbr>Extension<wbr>Setup</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-function"><a href="globals.html#accountfromproto" class="tsd-kind-icon">account<wbr>From<wbr>Proto</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#assertisbroadcasttxsuccess" class="tsd-kind-icon">assert<wbr>IsBroadcast<wbr>TxSuccess</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#coinfromproto" class="tsd-kind-icon">coin<wbr>From<wbr>Proto</a></li>
-								<li class="tsd-kind-function"><a href="globals.html#decodebaseaccount" class="tsd-kind-icon">decode<wbr>Base<wbr>Account</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#isbroadcasttxfailure" class="tsd-kind-icon">is<wbr>Broadcast<wbr>TxFailure</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#isbroadcasttxsuccess" class="tsd-kind-icon">is<wbr>Broadcast<wbr>TxSuccess</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#setupauthextension" class="tsd-kind-icon">setup<wbr>Auth<wbr>Extension</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#setupbankextension" class="tsd-kind-icon">setup<wbr>Bank<wbr>Extension</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#toaccaddress" class="tsd-kind-icon">to<wbr>Acc<wbr>Address</a></li>
+								<li class="tsd-kind-function tsd-has-type-parameter"><a href="globals.html#toobject" class="tsd-kind-icon">to<wbr>Object</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#uint64fromproto" class="tsd-kind-icon">uint64<wbr>From<wbr>Proto</a></li>
 							</ul>
 						</section>
@@ -108,13 +116,76 @@
 					<div class="tsd-signature tsd-kind-icon">Broadcast<wbr>TxResponse<span class="tsd-signature-symbol">:</span> <a href="interfaces/broadcasttxsuccess.html" class="tsd-signature-type">BroadcastTxSuccess</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/broadcasttxfailure.html" class="tsd-signature-type">BroadcastTxFailure</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/54357fa7/packages/stargate/src/stargateclient.ts#L60">src/stargateclient.ts:60</a></li>
+							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/9ea47287/packages/stargate/src/stargateclient.ts#L60">src/stargateclient.ts:60</a></li>
 						</ul>
 					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-has-type-parameter">
+					<a name="queryextensionsetup" class="tsd-anchor"></a>
+					<h3>Query<wbr>Extension<wbr>Setup</h3>
+					<div class="tsd-signature tsd-kind-icon">Query<wbr>Extension<wbr>Setup&lt;P&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>base<span class="tsd-signature-symbol">: </span><a href="classes/queryclient.html" class="tsd-signature-type">QueryClient</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">P</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/9ea47287/packages/stargate/src/queries/queryclient.ts#L6">src/queries/queryclient.ts:6</a></li>
+						</ul>
+					</aside>
+					<h4 class="tsd-type-parameters-title">Type parameters</h4>
+					<ul class="tsd-type-parameters">
+						<li>
+							<h4>P</h4>
+						</li>
+					</ul>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-signature">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>base<span class="tsd-signature-symbol">: </span><a href="classes/queryclient.html" class="tsd-signature-type">QueryClient</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">P</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>base: <a href="classes/queryclient.html" class="tsd-signature-type">QueryClient</a></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">P</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="accountfromproto" class="tsd-anchor"></a>
+					<h3>account<wbr>From<wbr>Proto</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">account<wbr>From<wbr>Proto<span class="tsd-signature-symbol">(</span>input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IBaseAccount</span>, prefix<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="interfaces/account.html" class="tsd-signature-type">Account</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/9ea47287/packages/stargate/src/stargateclient.ts#L88">src/stargateclient.ts:88</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>input: <span class="tsd-signature-type">IBaseAccount</span></h5>
+								</li>
+								<li>
+									<h5>prefix: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="interfaces/account.html" class="tsd-signature-type">Account</a></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function">
 					<a name="assertisbroadcasttxsuccess" class="tsd-anchor"></a>
 					<h3>assert<wbr>IsBroadcast<wbr>TxSuccess</h3>
@@ -125,7 +196,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/54357fa7/packages/stargate/src/stargateclient.ts#L73">src/stargateclient.ts:73</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/9ea47287/packages/stargate/src/stargateclient.ts#L73">src/stargateclient.ts:73</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -153,7 +224,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/54357fa7/packages/stargate/src/stargateclient.ts#L99">src/stargateclient.ts:99</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/9ea47287/packages/stargate/src/stargateclient.ts#L101">src/stargateclient.ts:101</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -167,32 +238,6 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function">
-					<a name="decodebaseaccount" class="tsd-anchor"></a>
-					<h3>decode<wbr>Base<wbr>Account</h3>
-					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">decode<wbr>Base<wbr>Account<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span>, prefix<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="interfaces/account.html" class="tsd-signature-type">Account</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/54357fa7/packages/stargate/src/stargateclient.ts#L87">src/stargateclient.ts:87</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>data: <span class="tsd-signature-type">Uint8Array</span></h5>
-								</li>
-								<li>
-									<h5>prefix: <span class="tsd-signature-type">string</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="interfaces/account.html" class="tsd-signature-type">Account</a></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function">
 					<a name="isbroadcasttxfailure" class="tsd-anchor"></a>
 					<h3>is<wbr>Broadcast<wbr>TxFailure</h3>
 					<ul class="tsd-signatures tsd-kind-function">
@@ -202,7 +247,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/54357fa7/packages/stargate/src/stargateclient.ts#L62">src/stargateclient.ts:62</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/9ea47287/packages/stargate/src/stargateclient.ts#L62">src/stargateclient.ts:62</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -225,7 +270,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/54357fa7/packages/stargate/src/stargateclient.ts#L66">src/stargateclient.ts:66</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/9ea47287/packages/stargate/src/stargateclient.ts#L66">src/stargateclient.ts:66</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -239,22 +284,133 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function">
-					<a name="uint64fromproto" class="tsd-anchor"></a>
-					<h3>uint64<wbr>From<wbr>Proto</h3>
+					<a name="setupauthextension" class="tsd-anchor"></a>
+					<h3>setup<wbr>Auth<wbr>Extension</h3>
 					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">uint64<wbr>From<wbr>Proto<span class="tsd-signature-symbol">(</span>input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Long</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint64</span></li>
+						<li class="tsd-signature tsd-kind-icon">setup<wbr>Auth<wbr>Extension<span class="tsd-signature-symbol">(</span>base<span class="tsd-signature-symbol">: </span><a href="classes/queryclient.html" class="tsd-signature-type">QueryClient</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="interfaces/authextension.html" class="tsd-signature-type">AuthExtension</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/54357fa7/packages/stargate/src/stargateclient.ts#L83">src/stargateclient.ts:83</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/9ea47287/packages/stargate/src/queries/auth.ts#L16">src/queries/auth.ts:16</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>input: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Long</span></h5>
+									<h5>base: <a href="classes/queryclient.html" class="tsd-signature-type">QueryClient</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="interfaces/authextension.html" class="tsd-signature-type">AuthExtension</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="setupbankextension" class="tsd-anchor"></a>
+					<h3>setup<wbr>Bank<wbr>Extension</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">setup<wbr>Bank<wbr>Extension<span class="tsd-signature-symbol">(</span>base<span class="tsd-signature-symbol">: </span><a href="classes/queryclient.html" class="tsd-signature-type">QueryClient</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="interfaces/bankextension.html" class="tsd-signature-type">BankExtension</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/9ea47287/packages/stargate/src/queries/bank.ts#L20">src/queries/bank.ts:20</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>base: <a href="classes/queryclient.html" class="tsd-signature-type">QueryClient</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="interfaces/bankextension.html" class="tsd-signature-type">BankExtension</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="toaccaddress" class="tsd-anchor"></a>
+					<h3>to<wbr>Acc<wbr>Address</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">to<wbr>Acc<wbr>Address<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/9ea47287/packages/stargate/src/queries/utils.ts#L8">src/queries/utils.ts:8</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Takes a bech32 encoded address and returns the data part. The prefix is ignored and discarded.
+										This is called AccAddress in Cosmos SDK, which is basically an alias for raw binary data.
+									The result is typically 20 bytes long but not restricted to that.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>address: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Uint8Array</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-has-type-parameter">
+					<a name="toobject" class="tsd-anchor"></a>
+					<h3>to<wbr>Object</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">to<wbr>Object&lt;I&gt;<span class="tsd-signature-symbol">(</span>thing<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">I</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Omit</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">I</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/9ea47287/packages/stargate/src/queries/utils.ts#L17">src/queries/utils.ts:17</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Use this to convert a protobuf.js class to the interface (e.g. Coin to ICoin)
+									in a ways that makes Jasmine&#39;s toEqual happy.</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>I<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>thing: <span class="tsd-signature-type">I</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Omit</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">I</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="uint64fromproto" class="tsd-anchor"></a>
+					<h3>uint64<wbr>From<wbr>Proto</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">uint64<wbr>From<wbr>Proto<span class="tsd-signature-symbol">(</span>input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Long</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint64</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/9ea47287/packages/stargate/src/stargateclient.ts#L83">src/stargateclient.ts:83</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>input: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Long</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Uint64</span></h4>
@@ -274,10 +430,19 @@
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-class">
+						<a href="classes/queryclient.html" class="tsd-kind-icon">Query<wbr>Client</a>
+					</li>
+					<li class=" tsd-kind-class">
 						<a href="classes/stargateclient.html" class="tsd-kind-icon">Stargate<wbr>Client</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/account.html" class="tsd-kind-icon">Account</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/authextension.html" class="tsd-kind-icon">Auth<wbr>Extension</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/bankextension.html" class="tsd-kind-icon">Bank<wbr>Extension</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/broadcasttxfailure.html" class="tsd-kind-icon">Broadcast<wbr>TxFailure</a>
@@ -297,6 +462,12 @@
 					<li class=" tsd-kind-type-alias">
 						<a href="globals.html#broadcasttxresponse" class="tsd-kind-icon">Broadcast<wbr>TxResponse</a>
 					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="globals.html#queryextensionsetup" class="tsd-kind-icon">Query<wbr>Extension<wbr>Setup</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#accountfromproto" class="tsd-kind-icon">account<wbr>From<wbr>Proto</a>
+					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#assertisbroadcasttxsuccess" class="tsd-kind-icon">assert<wbr>IsBroadcast<wbr>TxSuccess</a>
 					</li>
@@ -304,13 +475,22 @@
 						<a href="globals.html#coinfromproto" class="tsd-kind-icon">coin<wbr>From<wbr>Proto</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="globals.html#decodebaseaccount" class="tsd-kind-icon">decode<wbr>Base<wbr>Account</a>
-					</li>
-					<li class=" tsd-kind-function">
 						<a href="globals.html#isbroadcasttxfailure" class="tsd-kind-icon">is<wbr>Broadcast<wbr>TxFailure</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#isbroadcasttxsuccess" class="tsd-kind-icon">is<wbr>Broadcast<wbr>TxSuccess</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#setupauthextension" class="tsd-kind-icon">setup<wbr>Auth<wbr>Extension</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#setupbankextension" class="tsd-kind-icon">setup<wbr>Bank<wbr>Extension</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#toaccaddress" class="tsd-kind-icon">to<wbr>Acc<wbr>Address</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#toobject" class="tsd-kind-icon">to<wbr>Object</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#uint64fromproto" class="tsd-kind-icon">uint64<wbr>From<wbr>Proto</a>
@@ -325,10 +505,11 @@
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
