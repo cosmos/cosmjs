@@ -42,7 +42,7 @@
     "get-proto": "REF=20c80cfd44a068a592148d648c50de3459fd6295 ./scripts/get-proto.sh",
     "predefine-proto": "./scripts/predefine-proto.sh",
     "define-proto": "./scripts/define-proto.sh",
-    "postdefine-proto": "prettier --write \"src/generated/codecimpl.*\""
+    "postdefine-proto": "prettier --write \"src/codec/generated/codecimpl.*\""
   },
   "dependencies": {
     "@cosmjs/encoding": "^0.22.1",
