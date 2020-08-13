@@ -1,6 +1,5 @@
 import { Client as TendermintClient } from "@cosmjs/tendermint-rpc";
 
-import { QueryClient } from "../queryclient";
 import {
   nonExistentAddress,
   nonNegativeIntegerMatcher,
@@ -9,6 +8,7 @@ import {
   unused,
 } from "../testutils.spec";
 import { BankExtension, setupBankExtension } from "./bank";
+import { QueryClient } from "./queryclient";
 
 async function makeBankClient(rpcUrl: string): Promise<QueryClient & BankExtension> {
   // TODO: tmClient is not owned by QueryClient but should be disconnected somehow (once we use WebSockets)

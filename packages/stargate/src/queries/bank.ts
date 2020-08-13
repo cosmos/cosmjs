@@ -2,7 +2,7 @@ import { toAscii } from "@cosmjs/encoding";
 import { assert } from "@cosmjs/utils";
 
 import { cosmos } from "../generated/codecimpl";
-import { QueryClient } from "../queryclient";
+import { QueryClient } from "./queryclient";
 import { toAccAddress, toObject } from "./utils";
 
 export interface BankExtension {
