@@ -1,13 +1,13 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.google = exports.tendermint = exports.cosmos = void 0;
 var $protobuf = require("protobufjs/minimal");
-var $Reader = $protobuf.Reader,
+const $Reader = $protobuf.Reader,
   $Writer = $protobuf.Writer,
   $util = $protobuf.util;
-var $root = $protobuf.roots["default"] || ($protobuf.roots["default"] = {});
-exports.cosmos = $root.cosmos = (function () {
-  var cosmos = {};
+const $root = $protobuf.roots["default"] || ($protobuf.roots["default"] = {});
+exports.cosmos = $root.cosmos = (() => {
+  const cosmos = {};
   cosmos.Coin = (function () {
     function Coin(p) {
       if (p)
@@ -613,7 +613,7 @@ exports.cosmos = $root.cosmos = (function () {
     return Attribute;
   })();
   cosmos.bank = (function () {
-    var bank = {};
+    const bank = {};
     bank.Params = (function () {
       function Params(p) {
         this.sendEnabled = [];
@@ -1031,7 +1031,7 @@ exports.cosmos = $root.cosmos = (function () {
     return bank;
   })();
   cosmos.crypto = (function () {
-    var crypto = {};
+    const crypto = {};
     crypto.PublicKey = (function () {
       function PublicKey(p) {
         if (p)
@@ -1044,7 +1044,7 @@ exports.cosmos = $root.cosmos = (function () {
       PublicKey.prototype.multisig = null;
       PublicKey.prototype.secp256r1 = $util.newBuffer([]);
       PublicKey.prototype.anyPubkey = null;
-      var $oneOfFields;
+      let $oneOfFields;
       Object.defineProperty(PublicKey.prototype, "sum", {
         get: $util.oneOfGetter(
           ($oneOfFields = ["secp256k1", "ed25519", "sr25519", "multisig", "secp256r1", "anyPubkey"]),
@@ -1228,7 +1228,7 @@ exports.cosmos = $root.cosmos = (function () {
     return crypto;
   })();
   cosmos.tx = (function () {
-    var tx = {};
+    const tx = {};
     tx.Tx = (function () {
       function Tx(p) {
         this.signatures = [];
@@ -1555,7 +1555,7 @@ exports.cosmos = $root.cosmos = (function () {
       }
       ModeInfo.prototype.single = null;
       ModeInfo.prototype.multi = null;
-      var $oneOfFields;
+      let $oneOfFields;
       Object.defineProperty(ModeInfo.prototype, "sum", {
         get: $util.oneOfGetter(($oneOfFields = ["single", "multi"])),
         set: $util.oneOfSetter($oneOfFields),
@@ -1717,9 +1717,9 @@ exports.cosmos = $root.cosmos = (function () {
       return Fee;
     })();
     tx.signing = (function () {
-      var signing = {};
+      const signing = {};
       signing.SignMode = (function () {
-        var valuesById = {},
+        const valuesById = {},
           values = Object.create(valuesById);
         values[(valuesById[0] = "SIGN_MODE_UNSPECIFIED")] = 0;
         values[(valuesById[1] = "SIGN_MODE_DIRECT")] = 1;
@@ -1816,7 +1816,7 @@ exports.cosmos = $root.cosmos = (function () {
           }
           Data.prototype.single = null;
           Data.prototype.multi = null;
-          var $oneOfFields;
+          let $oneOfFields;
           Object.defineProperty(Data.prototype, "sum", {
             get: $util.oneOfGetter(($oneOfFields = ["single", "multi"])),
             set: $util.oneOfSetter($oneOfFields),
@@ -1956,12 +1956,12 @@ exports.cosmos = $root.cosmos = (function () {
   })();
   return cosmos;
 })();
-exports.tendermint = $root.tendermint = (function () {
-  var tendermint = {};
+exports.tendermint = $root.tendermint = (() => {
+  const tendermint = {};
   tendermint.abci = (function () {
-    var abci = {};
+    const abci = {};
     abci.types = (function () {
-      var types = {};
+      const types = {};
       types.Request = (function () {
         function Request(p) {
           if (p)
@@ -1979,7 +1979,7 @@ exports.tendermint = $root.tendermint = (function () {
         Request.prototype.deliverTx = null;
         Request.prototype.endBlock = null;
         Request.prototype.commit = null;
-        var $oneOfFields;
+        let $oneOfFields;
         Object.defineProperty(Request.prototype, "value", {
           get: $util.oneOfGetter(
             ($oneOfFields = [
@@ -2401,7 +2401,7 @@ exports.tendermint = $root.tendermint = (function () {
         return RequestBeginBlock;
       })();
       types.CheckTxType = (function () {
-        var valuesById = {},
+        const valuesById = {},
           values = Object.create(valuesById);
         values[(valuesById[0] = "New")] = 0;
         values[(valuesById[1] = "Recheck")] = 1;
@@ -2561,7 +2561,7 @@ exports.tendermint = $root.tendermint = (function () {
         Response.prototype.deliverTx = null;
         Response.prototype.endBlock = null;
         Response.prototype.commit = null;
-        var $oneOfFields;
+        let $oneOfFields;
         Object.defineProperty(Response.prototype, "value", {
           get: $util.oneOfGetter(
             ($oneOfFields = [
@@ -4131,9 +4131,9 @@ exports.tendermint = $root.tendermint = (function () {
     return abci;
   })();
   tendermint.crypto = (function () {
-    var crypto = {};
+    const crypto = {};
     crypto.merkle = (function () {
-      var merkle = {};
+      const merkle = {};
       merkle.ProofOp = (function () {
         function ProofOp(p) {
           if (p)
@@ -4222,9 +4222,9 @@ exports.tendermint = $root.tendermint = (function () {
     return crypto;
   })();
   tendermint.libs = (function () {
-    var libs = {};
+    const libs = {};
     libs.kv = (function () {
-      var kv = {};
+      const kv = {};
       kv.Pair = (function () {
         function Pair(p) {
           if (p)
@@ -4309,10 +4309,10 @@ exports.tendermint = $root.tendermint = (function () {
   })();
   return tendermint;
 })();
-exports.google = $root.google = (function () {
-  var google = {};
+exports.google = $root.google = (() => {
+  const google = {};
   google.protobuf = (function () {
-    var protobuf = {};
+    const protobuf = {};
     protobuf.Any = (function () {
       function Any(p) {
         if (p)
