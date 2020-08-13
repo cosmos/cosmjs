@@ -12,6 +12,7 @@ export interface BankExtension {
       readonly balance: (address: string, denom: string) => Promise<cosmos.ICoin>;
       readonly allBalances: (address: string) => Promise<cosmos.ICoin[]>;
       readonly totalSupply: () => Promise<cosmos.ICoin[]>;
+      readonly supplyOf: (denom: string) => Promise<cosmos.ICoin>;
     };
   };
 }
@@ -54,6 +55,11 @@ export function setupBankExtension(base: QueryClient): BankExtension {
         totalSupply: async () => {
           const { supply } = await queryService.totalSupply({});
           return supply.map(toObject);
+        },
+        supplyOf: async (denom: string) => {
+          const { amount } = await queryService.supplyOf({ denom: denom });
+          assert(amount);
+          return toObject(amount);
         },
       },
     },

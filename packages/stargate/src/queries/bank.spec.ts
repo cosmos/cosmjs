@@ -137,5 +137,29 @@ describe("BankExtension", () => {
         ]);
       });
     });
+
+    describe("supplyOf", () => {
+      it("works for existing denom", async () => {
+        pendingWithoutSimapp();
+        const client = await makeBankClient(simapp.tendermintUrl);
+
+        const response = await client.bank.unverified.supplyOf(simapp.denomFee);
+        expect(response).toEqual({
+          amount: "18000000000",
+          denom: simapp.denomFee,
+        });
+      });
+
+      it("returns zero for non-existent denom", async () => {
+        pendingWithoutSimapp();
+        const client = await makeBankClient(simapp.tendermintUrl);
+
+        const response = await client.bank.unverified.supplyOf("gintonic");
+        expect(response).toEqual({
+          amount: "0",
+          denom: "gintonic",
+        });
+      });
+    });
   });
 });
