@@ -30,3 +30,7 @@ yarn pbjs \
   "$TENDERMINT_PROTO_DIR/crypto/merkle/merkle.proto" \
   "$TENDERMINT_PROTO_DIR/libs/kv/types.proto" \
   "$GOOGLE_PROTO_DIR/protobuf/any.proto"
+
+# Work around https://github.com/protobufjs/protobuf.js/issues/1477
+# shellcheck disable=SC2016
+sed -i "" -e 's/^const \$root =.*$/const \$root = {};/' "$GENERATED_DIR/codecimpl.js"

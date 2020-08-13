@@ -5,7 +5,7 @@ var $protobuf = require("protobufjs/minimal");
 const $Reader = $protobuf.Reader,
   $Writer = $protobuf.Writer,
   $util = $protobuf.util;
-const $root = $protobuf.roots["default"] || ($protobuf.roots["default"] = {});
+const $root = {};
 exports.cosmos = $root.cosmos = (() => {
   const cosmos = {};
   cosmos.Coin = (function () {
