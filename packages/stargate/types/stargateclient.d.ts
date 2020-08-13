@@ -1,5 +1,15 @@
-import { Block, Coin, PubKey } from "@cosmjs/launchpad";
+import { Block, Coin, PubKey, SearchTxFilter, SearchTxQuery } from "@cosmjs/launchpad";
 import { Client as TendermintClient } from "@cosmjs/tendermint-rpc";
+/** A transaction that is indexed as part of the transaction history */
+export interface IndexedTx {
+  readonly height: number;
+  /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
+  readonly hash: string;
+  /** Transaction execution error code. 0 on success. */
+  readonly code: number;
+  readonly rawLog: string;
+  readonly tx: Uint8Array;
+}
 export interface Account {
   /** Bech32 account address */
   readonly address: string;
@@ -55,8 +65,10 @@ export declare class StargateClient {
    * proofs from such a method.
    */
   getAllBalancesUnverified(address: string): Promise<readonly Coin[]>;
+  searchTx(query: SearchTxQuery, filter?: SearchTxFilter): Promise<readonly IndexedTx[]>;
   disconnect(): void;
   broadcastTx(tx: Uint8Array): Promise<BroadcastTxResponse>;
   private queryVerified;
   private queryUnverified;
+  private txsQuery;
 }
