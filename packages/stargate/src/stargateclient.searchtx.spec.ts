@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Bech32, fromBase64 } from "@cosmjs/encoding";
 import { Coin, coins, Secp256k1Wallet } from "@cosmjs/launchpad";
-import { makeSignBytes, omitDefaults, Registry } from "@cosmjs/proto-signing";
+import { makeSignBytes, Registry } from "@cosmjs/proto-signing";
 import { assert } from "@cosmjs/utils";
 import Long from "long";
 
@@ -14,7 +14,7 @@ import {
 } from "./stargateclient";
 import { faucet, makeRandomAddress, pendingWithoutSimapp, simapp, simappEnabled } from "./testutils.spec";
 
-const { AuthInfo, SignDoc, Tx, TxBody } = cosmos.tx;
+const { AuthInfo, Tx, TxBody } = cosmos.tx;
 const { PublicKey } = cosmos.crypto;
 
 interface TestTxSend {
@@ -76,16 +76,7 @@ async function sendTokens(
 
   const { accountNumber, sequence } = (await client.getSequence(walletAddress))!;
   const chainId = await client.getChainId();
-  const signDoc = SignDoc.create(
-    omitDefaults({
-      bodyBytes: txBodyBytes,
-      authInfoBytes: authInfoBytes,
-      chainId: chainId,
-      accountNumber: accountNumber,
-      accountSequence: sequence,
-    }),
-  );
-  const signDocBytes = makeSignBytes(signDoc);
+  const signDocBytes = makeSignBytes(txBodyBytes, authInfoBytes, chainId, accountNumber, sequence);
   const signature = await wallet.sign(walletAddress, signDocBytes);
   const txRaw = Tx.create({
     body: txBody,
