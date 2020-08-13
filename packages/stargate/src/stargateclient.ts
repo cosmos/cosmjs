@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Bech32, toAscii, toHex } from "@cosmjs/encoding";
+import { Bech32, toHex } from "@cosmjs/encoding";
 import {
   Block,
   Coin,
@@ -11,12 +11,12 @@ import {
   SearchTxQuery,
 } from "@cosmjs/launchpad";
 import { Uint53, Uint64 } from "@cosmjs/math";
-import { decodeAny } from "@cosmjs/proto-signing";
 import { broadcastTxCommitSuccess, Client as TendermintClient, QueryString } from "@cosmjs/tendermint-rpc";
-import { arrayContentEquals, assert, assertDefined } from "@cosmjs/utils";
+import { assert, assertDefined } from "@cosmjs/utils";
 import Long from "long";
 
-import { cosmos } from "./generated/codecimpl";
+import { cosmos } from "./codec";
+import { AuthExtension, BankExtension, QueryClient, setupAuthExtension, setupBankExtension } from "./queries";
 
 /** A transaction that is indexed as part of the transaction history */
 export interface IndexedTx {
@@ -80,14 +80,16 @@ export function assertIsBroadcastTxSuccess(
   }
 }
 
-function uint64FromProto(input: number | Long): Uint64 {
+function uint64FromProto(input: number | Long | null | undefined): Uint64 {
+  if (!input) return Uint64.fromNumber(0);
   return Uint64.fromString(input.toString());
 }
 
-function decodeBaseAccount(data: Uint8Array, prefix: string): Account {
-  const { address, pubKey, accountNumber, sequence } = cosmos.auth.BaseAccount.decode(data);
+function accountFromProto(input: cosmos.auth.IBaseAccount, prefix: string): Account {
+  const { address, pubKey, accountNumber, sequence } = input;
   // Pubkey is still Amino-encoded in BaseAccount (https://github.com/cosmos/cosmos-sdk/issues/6886)
-  const pubkey = pubKey.length ? decodeAminoPubkey(pubKey) : null;
+  const pubkey = pubKey && pubKey.length ? decodeAminoPubkey(pubKey) : null;
+  assert(address);
   return {
     address: Bech32.encode(prefix, address),
     pubkey: pubkey,
@@ -114,6 +116,7 @@ export interface PrivateStargateClient {
 
 export class StargateClient {
   private readonly tmClient: TendermintClient;
+  private readonly queryClient: QueryClient & AuthExtension & BankExtension;
   private chainId: string | undefined;
 
   public static async connect(endpoint: string): Promise<StargateClient> {
@@ -123,6 +126,7 @@ export class StargateClient {
 
   private constructor(tmClient: TendermintClient) {
     this.tmClient = tmClient;
+    this.queryClient = QueryClient.withExtensions(tmClient, setupAuthExtension, setupBankExtension);
   }
 
   public async getChainId(): Promise<string> {
@@ -142,21 +146,10 @@ export class StargateClient {
   }
 
   public async getAccount(searchAddress: string): Promise<Account | null> {
-    const { prefix, data: binAddress } = Bech32.decode(searchAddress);
-    // https://github.com/cosmos/cosmos-sdk/blob/8cab43c8120fec5200c3459cbf4a92017bb6f287/x/auth/types/keys.go#L29-L32
-    const accountKey = Uint8Array.from([0x01, ...binAddress]);
-    const responseData = await this.queryVerified("acc", accountKey);
+    const { prefix } = Bech32.decode(searchAddress);
 
-    if (responseData.length === 0) return null;
-
-    const { typeUrl, value } = decodeAny(responseData);
-    switch (typeUrl) {
-      case "/cosmos.auth.BaseAccount": {
-        return decodeBaseAccount(value, prefix);
-      }
-      default:
-        throw new Error(`Unsupported type: '${typeUrl}'`);
-    }
+    const account = await this.queryClient.auth.account(searchAddress);
+    return account ? accountFromProto(account, prefix) : null;
   }
 
   public async getSequence(address: string): Promise<SequenceResponse | null> {
@@ -189,25 +182,8 @@ export class StargateClient {
   }
 
   public async getBalance(address: string, searchDenom: string): Promise<Coin | null> {
-    // balance key is a bit tricker, using some prefix stores
-    // https://github.com/cosmwasm/cosmos-sdk/blob/80f7ff62f79777a487d0c7a53c64b0f7e43c47b9/x/bank/keeper/view.go#L74-L77
-    // ("balances", binAddress, denom)
-    // it seem like prefix stores just do a dumb concat with the keys (no tricks to avoid overlap)
-    // https://github.com/cosmos/cosmos-sdk/blob/2879c0702c87dc9dd828a8c42b9224dc054e28ad/store/prefix/store.go#L61-L64
-    // https://github.com/cosmos/cosmos-sdk/blob/2879c0702c87dc9dd828a8c42b9224dc054e28ad/store/prefix/store.go#L37-L43
-    const binAddress = Bech32.decode(address).data;
-    const bankKey = Uint8Array.from([...toAscii("balances"), ...binAddress, ...toAscii(searchDenom)]);
-
-    const responseData = await this.queryVerified("bank", bankKey);
-    const { amount, denom } = cosmos.Coin.decode(responseData);
-    if (denom === "") {
-      return null;
-    } else {
-      return {
-        amount: amount,
-        denom: denom,
-      };
-    }
+    const balance = await this.queryClient.bank.balance(address, searchDenom);
+    return balance ? coinFromProto(balance) : null;
   }
 
   /**
@@ -217,13 +193,8 @@ export class StargateClient {
    * proofs from such a method.
    */
   public async getAllBalancesUnverified(address: string): Promise<readonly Coin[]> {
-    const path = "/cosmos.bank.Query/AllBalances";
-    const request = cosmos.bank.QueryAllBalancesRequest.encode({
-      address: Bech32.decode(address).data,
-    }).finish();
-    const responseData = await this.queryUnverified(path, request);
-    const response = cosmos.bank.QueryAllBalancesResponse.decode(responseData);
-    return response.balances.map(coinFromProto);
+    const balances = await this.queryClient.bank.unverified.allBalances(address);
+    return balances.map(coinFromProto);
   }
 
   public async searchTx(query: SearchTxQuery, filter: SearchTxFilter = {}): Promise<readonly IndexedTx[]> {
@@ -278,43 +249,6 @@ export class StargateClient {
           rawLog: response.deliverTx?.log,
           data: response.deliverTx?.data,
         };
-  }
-
-  private async queryVerified(store: string, key: Uint8Array): Promise<Uint8Array> {
-    const response = await this.tmClient.abciQuery({
-      // we need the StoreKey for the module, not the module name
-      // https://github.com/cosmos/cosmos-sdk/blob/8cab43c8120fec5200c3459cbf4a92017bb6f287/x/auth/types/keys.go#L12
-      path: `/store/${store}/key`,
-      data: key,
-      prove: true,
-    });
-
-    if (response.code) {
-      throw new Error(`Query failed with (${response.code}): ${response.log}`);
-    }
-
-    if (!arrayContentEquals(response.key, key)) {
-      throw new Error(`Response key ${toHex(response.key)} doesn't match query key ${toHex(key)}`);
-    }
-
-    // TODO: implement proof verification
-    // https://github.com/CosmWasm/cosmjs/issues/347
-
-    return response.value;
-  }
-
-  private async queryUnverified(path: string, request: Uint8Array): Promise<Uint8Array> {
-    const response = await this.tmClient.abciQuery({
-      path: path,
-      data: request,
-      prove: false,
-    });
-
-    if (response.code) {
-      throw new Error(`Query failed with (${response.code}): ${response.log}`);
-    }
-
-    return response.value;
   }
 
   private async txsQuery(query: string): Promise<readonly IndexedTx[]> {

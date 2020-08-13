@@ -19,6 +19,7 @@
     "format-text": "prettier --write --prose-wrap always --print-width 80 \"./*.md\"",
     "lint": "eslint --max-warnings 0 \"**/*.{js,ts}\"",
     "lint-fix": "eslint --max-warnings 0 \"**/*.{js,ts}\" --fix",
+    "prebuild": "shx rm -rf ./build",
     "build": "tsc",
     "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build",
     "start": "yarn build-or-skip && ./bin/cosmwasm-cli",

@@ -3,9 +3,10 @@ import { Bech32, fromBase64 } from "@cosmjs/encoding";
 import { Secp256k1Wallet } from "@cosmjs/launchpad";
 import { makeSignBytes, omitDefaults, Registry } from "@cosmjs/proto-signing";
 import { assert, sleep } from "@cosmjs/utils";
+import Long from "long";
 import { ReadonlyDate } from "readonly-date";
 
-import { cosmos } from "./generated/codecimpl";
+import { cosmos } from "./codec";
 import { assertIsBroadcastTxSuccess, PrivateStargateClient, StargateClient } from "./stargateclient";
 import {
   faucet,
@@ -290,7 +291,7 @@ describe("StargateClient", () => {
           },
         ],
         fee: {
-          gasLimit: 200000,
+          gasLimit: Long.fromNumber(200000),
         },
       };
       const authInfoBytes = Uint8Array.from(AuthInfo.encode(authInfo).finish());

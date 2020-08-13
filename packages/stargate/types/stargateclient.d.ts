@@ -49,6 +49,7 @@ export interface PrivateStargateClient {
 }
 export declare class StargateClient {
   private readonly tmClient;
+  private readonly queryClient;
   private chainId;
   static connect(endpoint: string): Promise<StargateClient>;
   private constructor();
@@ -68,7 +69,5 @@ export declare class StargateClient {
   searchTx(query: SearchTxQuery, filter?: SearchTxFilter): Promise<readonly IndexedTx[]>;
   disconnect(): void;
   broadcastTx(tx: Uint8Array): Promise<BroadcastTxResponse>;
-  private queryVerified;
-  private queryUnverified;
   private txsQuery;
 }

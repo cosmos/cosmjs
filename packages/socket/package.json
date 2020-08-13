@@ -39,7 +39,9 @@
     "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet",
     "move-types": "shx rm -r ./types/* && shx mv build/types/* ./types && rm -rf ./types/testdata && shx rm -f ./types/*.spec.d.ts",
     "format-types": "prettier --write --loglevel warn \"./types/**/*.d.ts\"",
-    "build": "shx rm -rf ./build && tsc && yarn move-types && yarn format-types",
+    "prebuild": "shx rm -rf ./build",
+    "build": "tsc",
+    "postbuild": "yarn move-types && yarn format-types",
     "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build",
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
   },

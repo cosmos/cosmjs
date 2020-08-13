@@ -3,8 +3,9 @@ import { Bech32, fromBase64 } from "@cosmjs/encoding";
 import { Coin, coins, Secp256k1Wallet } from "@cosmjs/launchpad";
 import { makeSignBytes, omitDefaults, Registry } from "@cosmjs/proto-signing";
 import { assert } from "@cosmjs/utils";
+import Long from "long";
 
-import { cosmos } from "./generated/codecimpl";
+import { cosmos } from "./codec";
 import {
   BroadcastTxResponse,
   isBroadcastTxFailure,
@@ -68,7 +69,7 @@ async function sendTokens(
       },
     ],
     fee: {
-      gasLimit: 200000,
+      gasLimit: Long.fromNumber(200000),
     },
   };
   const authInfoBytes = Uint8Array.from(AuthInfo.encode(authInfo).finish());
