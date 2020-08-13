@@ -30,7 +30,7 @@ const faucet = {
 // simd tx bank send --sign-mode direct --chain-id simd-testing testgen cosmos1qypqxpq9qcrsszg2pvxq6rs0zqg3yyc5lzv7xu 1234567ucosm -b block
 const testVectors = [
   {
-    sequenceNumber: 0,
+    sequence: 0,
     signedTxBytes:
       "0a580a560a142f636f736d6f732e62616e6b2e4d736753656e64123e0a140d82b1e7c96dbfa42462fe612932e6bff111d51b12140102030405060708090a0b0c0d0e0f10111213141a100a0575636f736d12073132333435363712330a2b0a230a21034f04181eeba35391b858633a765c4a0c189697b40d216354d50890d350c7029012040a020801120410c09a0c1a40692d88f681d5d69924a53668e8ecec535ca0ca170d1febfb1dd87de9959b07340427d6bba22526d6c30cc622f27dc5eb1ce04cfc0ff98716154066ec69db62e5",
     signBytes:
@@ -40,7 +40,7 @@ const testVectors = [
   },
 
   {
-    sequenceNumber: 1,
+    sequence: 1,
     signedTxBytes:
       "0a580a560a142f636f736d6f732e62616e6b2e4d736753656e64123e0a140d82b1e7c96dbfa42462fe612932e6bff111d51b12140102030405060708090a0b0c0d0e0f10111213141a100a0575636f736d12073132333435363712330a2b0a230a21034f04181eeba35391b858633a765c4a0c189697b40d216354d50890d350c7029012040a020801120410c09a0c1a40811c3c7dd85b1478b15e3cc710503045559d805d2bf538e5015dbcd868a440a94c7fc0b12b755a838cc3f9b8245d9f926e0432d07ee97557cff7c50c73f64a58",
     signBytes:
@@ -50,7 +50,7 @@ const testVectors = [
   },
 
   {
-    sequenceNumber: 2,
+    sequence: 2,
     signedTxBytes:
       "0a580a560a142f636f736d6f732e62616e6b2e4d736753656e64123e0a140d82b1e7c96dbfa42462fe612932e6bff111d51b12140102030405060708090a0b0c0d0e0f10111213141a100a0575636f736d12073132333435363712330a2b0a230a21034f04181eeba35391b858633a765c4a0c189697b40d216354d50890d350c7029012040a020801120410c09a0c1a405e2e11567c181db4f38788ff6d417b1f7d147f3d6bd8274989bf181c35b3fb97218f64172030dd5a84dd38933765609d70771cbba60168d8ded611f14ec4fb12",
     signBytes:
@@ -148,7 +148,7 @@ describe("signing demo", () => {
     const accountNumber = 1;
 
     await Promise.all(
-      testVectors.map(async ({ sequenceNumber: sequence, signBytes, signedTxBytes }) => {
+      testVectors.map(async ({ sequence, signBytes, signedTxBytes }) => {
         const signDocBytes = makeSignBytes(txBodyBytes, authInfoBytes, chainId, accountNumber, sequence);
         expect(toHex(signDocBytes)).toEqual(signBytes);
 
