@@ -38,7 +38,7 @@
     "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet",
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js",
     "preget-proto": "rm -rf proto",
-    "get-proto": "REF=9ae17669d6715a84c20d52e10e2232be9f467360 ./scripts/get-proto.sh",
+    "get-proto": "REF=20c80cfd44a068a592148d648c50de3459fd6295 ./scripts/get-proto.sh",
     "predefine-proto": "./scripts/predefine-proto.sh",
     "define-proto": "./scripts/define-proto.sh",
     "postdefine-proto": "prettier --write \"src/generated/codecimpl.*\""
