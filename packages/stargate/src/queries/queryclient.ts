@@ -1,5 +1,5 @@
 /* eslint-disable no-dupe-class-members, @typescript-eslint/ban-types, @typescript-eslint/naming-convention */
-import { ics23, verifyExistence } from "@confio/ics23";
+import { ics23, verifyExistence, verifyNonExistence } from "@confio/ics23";
 import { fromAscii, toHex } from "@cosmjs/encoding";
 import { Client as TendermintClient } from "@cosmjs/tendermint-rpc";
 import { arrayContentEquals, assert, isNonNullObject } from "@cosmjs/utils";
@@ -220,20 +220,30 @@ export class QueryClient {
       throw new Error(`Proven store "${store}" different than queried store ${fromAscii(storeOp.key)}`);
     }
 
-    assert(response.height);
-    assert(response.height > 0);
-
-    // parse proofs
-    const subProof = ics23.CommitmentProof.decode(subOp.data);
-    assert(subProof.exist);
-    assert(subProof.exist.value);
-
+    // this must always be existence, if the store is not a typo
     const storeProof = ics23.CommitmentProof.decode(storeOp.data);
     assert(storeProof.exist);
     assert(storeProof.exist.value);
 
-    // the subproof must map the desired key to the "value" of the storeProof
-    verifyExistence(subProof.exist, IavlSpec, storeProof.exist.value, key, response.value);
+    // this may be exist or non-exist, depends on response
+    const subProof = ics23.CommitmentProof.decode(subOp.data);
+
+    if (!response.value || response.value.length === 0) {
+      // non-existence check
+      assert(subProof.nonexist);
+      // the subproof must map the desired key to the "value" of the storeProof
+      verifyNonExistence(subProof.nonexist, IavlSpec, storeProof.exist.value, key);
+    } else {
+      // existence check
+      assert(subProof.exist);
+      assert(subProof.exist.value);
+      // the subproof must map the desired key to the "value" of the storeProof
+      verifyExistence(subProof.exist, IavlSpec, storeProof.exist.value, key, response.value);
+    }
+
+    // make sure we have a valid height to get the headers
+    assert(response.height);
+    assert(response.height > 0);
 
     // the storeproof must may it's declared value (root of subProof) to the appHash
     // TODO
