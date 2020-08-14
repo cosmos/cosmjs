@@ -1,6 +1,15 @@
 import { JsonRpcSuccessResponse } from "@cosmjs/json-rpc";
+import { Base64String } from "../encodings";
 import * as responses from "../responses";
 import { SubscriptionEvent } from "../rpcclients";
+export interface RpcProofOp {
+  readonly type: string;
+  readonly key: Base64String;
+  readonly data: Base64String;
+}
+export interface RpcQueryProof {
+  readonly ops: readonly RpcProofOp[];
+}
 export declare class Responses {
   static decodeAbciInfo(response: JsonRpcSuccessResponse): responses.AbciInfoResponse;
   static decodeAbciQuery(response: JsonRpcSuccessResponse): responses.AbciQueryResponse;

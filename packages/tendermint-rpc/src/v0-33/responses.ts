@@ -25,6 +25,7 @@ import * as responses from "../responses";
 import { SubscriptionEvent } from "../rpcclients";
 import { IpPortString, TxBytes, TxHash, ValidatorPubkey, ValidatorSignature } from "../types";
 import { hashTx } from "./hasher";
+import { isArgon2idOptions } from "@cosmjs/crypto";
 
 interface AbciInfoResult {
   readonly response: RpcAbciInfoResponse;
@@ -48,10 +49,30 @@ interface AbciQueryResult {
   readonly response: RpcAbciQueryResponse;
 }
 
+export interface RpcProofOp {
+  readonly type: string;
+  readonly key: Base64String;
+  readonly data: Base64String;
+}
+
+export interface RpcQueryProof {
+  readonly ops: readonly RpcProofOp[];
+}
+
+function decodeQueryProof(data: RpcQueryProof): responses.QueryProof {
+  return {
+    ops: data.ops.map((op) => ({
+      type: op.type,
+      key: Base64.decode(op.key),
+      data: Base64.decode(op.data),
+    })),
+  };
+}
+
 interface RpcAbciQueryResponse {
   readonly key: Base64String;
   readonly value?: Base64String;
-  readonly proof?: Base64String;
+  readonly proof?: RpcQueryProof;
   readonly height?: IntegerString;
   readonly index?: IntegerString;
   readonly code?: IntegerString; // only for errors
@@ -62,7 +83,7 @@ function decodeAbciQuery(data: RpcAbciQueryResponse): responses.AbciQueryRespons
   return {
     key: Base64.decode(optional(data.key, "" as Base64String)),
     value: Base64.decode(optional(data.value, "" as Base64String)),
-    // proof: may(Base64.decode, data.proof),
+    proof: may(decodeQueryProof, data.proof),
     height: may(Integer.parse, data.height),
     code: may(Integer.parse, data.code),
     index: may(Integer.parse, data.index),
