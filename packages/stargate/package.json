@@ -46,13 +46,13 @@
   },
   "dependencies": {
     "@confio/ics23": "^0.6.0",
-    "@cosmjs/encoding": "^0.22.2",
-    "@cosmjs/launchpad": "^0.22.2",
-    "@cosmjs/math": "^0.22.2",
-    "@cosmjs/proto-signing": "^0.22.2",
-    "@cosmjs/stream": "^0.22.2",
-    "@cosmjs/tendermint-rpc": "^0.22.2",
-    "@cosmjs/utils": "^0.22.2",
+    "@cosmjs/encoding": "^0.22.1",
+    "@cosmjs/launchpad": "^0.22.1",
+    "@cosmjs/math": "^0.22.1",
+    "@cosmjs/proto-signing": "^0.22.1",
+    "@cosmjs/stream": "^0.22.1",
+    "@cosmjs/tendermint-rpc": "^0.22.1",
+    "@cosmjs/utils": "^0.22.1",
     "protobufjs": "~6.10.0"
   }
 }
