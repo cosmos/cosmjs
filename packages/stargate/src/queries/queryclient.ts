@@ -1,5 +1,5 @@
 /* eslint-disable no-dupe-class-members, @typescript-eslint/ban-types, @typescript-eslint/naming-convention */
-import { toHex } from "@cosmjs/encoding";
+import { toHex, fromAscii } from "@cosmjs/encoding";
 import { Client as TendermintClient } from "@cosmjs/tendermint-rpc";
 import { arrayContentEquals, assert, isNonNullObject } from "@cosmjs/utils";
 
@@ -162,6 +162,26 @@ export class QueryClient {
     }
 
     assert(response.proof);
+    if (response.proof.ops.length !== 2) {
+      throw new Error(`Expected 2 proof ops, got ${response.proof.ops.length}. Are you using stargate?`);
+    }
+
+    const subProof = response.proof.ops[0];
+    if (subProof.type !== "ics23:iavl") {
+      throw new Error(`Sub-proof expected to be ics23:iavl, got "${subProof.type}`);
+    }
+    if (!arrayContentEquals(key, subProof.key)) {
+      throw new Error(`Proven key different than queried key.\nQuery: ${toHex(key)}\nProven: ${toHex(subProof.key)}`);
+    }
+    console.log(`Proof: ${toHex(subProof.data)}`);
+
+    const storeProof = response.proof.ops[1];
+    if (storeProof.type !== "ics23:simple") {
+      throw new Error(`Store-proof expected to be ics23:simple, got "${storeProof.type}`);
+    }
+    if (store !== fromAscii(storeProof.key)) {
+      throw new Error(`Proven store "${store}" different than queried store ${fromAscii(storeProof.key)}`);
+    }
 
     // TODO: implement proof verification
     // https://github.com/CosmWasm/cosmjs/issues/347
