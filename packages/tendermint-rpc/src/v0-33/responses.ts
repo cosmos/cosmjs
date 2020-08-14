@@ -25,7 +25,6 @@ import * as responses from "../responses";
 import { SubscriptionEvent } from "../rpcclients";
 import { IpPortString, TxBytes, TxHash, ValidatorPubkey, ValidatorSignature } from "../types";
 import { hashTx } from "./hasher";
-import { isArgon2idOptions } from "@cosmjs/crypto";
 
 interface AbciInfoResult {
   readonly response: RpcAbciInfoResponse;
