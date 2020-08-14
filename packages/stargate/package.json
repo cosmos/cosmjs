@@ -50,6 +50,7 @@
     "@cosmjs/launchpad": "^0.22.2",
     "@cosmjs/math": "^0.22.2",
     "@cosmjs/proto-signing": "^0.22.2",
+    "@cosmjs/stream": "^0.22.2",
     "@cosmjs/tendermint-rpc": "^0.22.2",
     "@cosmjs/utils": "^0.22.2",
     "protobufjs": "~6.10.0"
