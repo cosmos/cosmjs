@@ -1,7 +1,43 @@
 /* eslint-disable no-dupe-class-members, @typescript-eslint/ban-types, @typescript-eslint/naming-convention */
-import { toHex, fromAscii } from "@cosmjs/encoding";
+import { ics23, verifyExistence } from "@confio/ics23";
+import { fromAscii, toHex } from "@cosmjs/encoding";
 import { Client as TendermintClient } from "@cosmjs/tendermint-rpc";
 import { arrayContentEquals, assert, isNonNullObject } from "@cosmjs/utils";
+
+// TODO: import these from @confio/ics23 when exported
+export const IavlSpec: ics23.IProofSpec = {
+  leafSpec: {
+    prefix: Uint8Array.from([0]),
+    hash: ics23.HashOp.SHA256,
+    prehashValue: ics23.HashOp.SHA256,
+    prehashKey: ics23.HashOp.NO_HASH,
+    length: ics23.LengthOp.VAR_PROTO,
+  },
+  innerSpec: {
+    childOrder: [0, 1],
+    minPrefixLength: 4,
+    maxPrefixLength: 12,
+    childSize: 33,
+    hash: ics23.HashOp.SHA256,
+  },
+};
+
+export const TendermintSpec: ics23.IProofSpec = {
+  leafSpec: {
+    prefix: Uint8Array.from([0]),
+    hash: ics23.HashOp.SHA256,
+    prehashValue: ics23.HashOp.SHA256,
+    prehashKey: ics23.HashOp.NO_HASH,
+    length: ics23.LengthOp.VAR_PROTO,
+  },
+  innerSpec: {
+    childOrder: [0, 1],
+    minPrefixLength: 1,
+    maxPrefixLength: 1,
+    childSize: 32,
+    hash: ics23.HashOp.SHA256,
+  },
+};
 
 type QueryExtensionSetup<P> = (base: QueryClient) => P;
 
@@ -166,25 +202,46 @@ export class QueryClient {
       throw new Error(`Expected 2 proof ops, got ${response.proof.ops.length}. Are you using stargate?`);
     }
 
-    const subProof = response.proof.ops[0];
-    if (subProof.type !== "ics23:iavl") {
-      throw new Error(`Sub-proof expected to be ics23:iavl, got "${subProof.type}`);
+    const subOp = response.proof.ops[0];
+    if (subOp.type !== "ics23:iavl") {
+      throw new Error(`Sub-proof expected to be ics23:iavl, got "${subOp.type}`);
     }
-    if (!arrayContentEquals(key, subProof.key)) {
-      throw new Error(`Proven key different than queried key.\nQuery: ${toHex(key)}\nProven: ${toHex(subProof.key)}`);
-    }
-    console.log(`Proof: ${toHex(subProof.data)}`);
-
-    const storeProof = response.proof.ops[1];
-    if (storeProof.type !== "ics23:simple") {
-      throw new Error(`Store-proof expected to be ics23:simple, got "${storeProof.type}`);
-    }
-    if (store !== fromAscii(storeProof.key)) {
-      throw new Error(`Proven store "${store}" different than queried store ${fromAscii(storeProof.key)}`);
+    if (!arrayContentEquals(key, subOp.key)) {
+      throw new Error(
+        `Proven key different than queried key.\nQuery: ${toHex(key)}\nProven: ${toHex(subOp.key)}`,
+      );
     }
 
-    // TODO: implement proof verification
-    // https://github.com/CosmWasm/cosmjs/issues/347
+    const storeOp = response.proof.ops[1];
+    if (storeOp.type !== "ics23:simple") {
+      throw new Error(`Store-proof expected to be ics23:simple, got "${storeOp.type}`);
+    }
+    if (store !== fromAscii(storeOp.key)) {
+      throw new Error(`Proven store "${store}" different than queried store ${fromAscii(storeOp.key)}`);
+    }
+
+    assert(response.height);
+    assert(response.height > 0);
+
+    // parse proofs
+    const subProof = ics23.CommitmentProof.decode(subOp.data);
+    assert(subProof.exist);
+    assert(subProof.exist.value);
+
+    const storeProof = ics23.CommitmentProof.decode(storeOp.data);
+    assert(storeProof.exist);
+    assert(storeProof.exist.value);
+
+    // the subproof must map the desired key to the "value" of the storeProof
+    verifyExistence(subProof.exist, IavlSpec, storeProof.exist.value, key, response.value);
+
+    // the storeproof must may it's declared value (root of subProof) to the appHash
+    // TODO
+    // // get the header for height + 1
+    // await sleep(5000); // TODO: we can do better
+    // // TODO: why don't we expose the header query, just height?
+    // const header = await this.tmClient.block(response.height+1);
+    // verifyExistence(storeProof.exist, TendermintSpec, header.block.header.appHash, toAscii(store), storeProof.exist.value!);
 
     return response.value;
   }
