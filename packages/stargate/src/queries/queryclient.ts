@@ -161,6 +161,8 @@ export class QueryClient {
       throw new Error(`Response key ${toHex(response.key)} doesn't match query key ${toHex(key)}`);
     }
 
+    assert(response.proof);
+
     // TODO: implement proof verification
     // https://github.com/CosmWasm/cosmjs/issues/347
 
