@@ -1,6 +1,7 @@
 /* eslint-disable no-dupe-class-members, @typescript-eslint/ban-types, @typescript-eslint/naming-convention */
 import { ics23, verifyExistence, verifyNonExistence } from "@confio/ics23";
-import { fromAscii, toHex } from "@cosmjs/encoding";
+import { fromAscii, toAscii, toHex } from "@cosmjs/encoding";
+import { firstEvent } from "@cosmjs/stream";
 import { Client as TendermintClient } from "@cosmjs/tendermint-rpc";
 import { arrayContentEquals, assert, isNonNullObject } from "@cosmjs/utils";
 
@@ -241,17 +242,18 @@ export class QueryClient {
       verifyExistence(subProof.exist, IavlSpec, storeProof.exist.value, key, response.value);
     }
 
-    // make sure we have a valid height to get the headers
+    // the storeproof must map it's declared value (root of subProof) to the appHash of the next block
     assert(response.height);
-    assert(response.height > 0);
+    if (response.height == 0) {
+      throw new Error("Query returned height 0, cannot prove it");
+    }
+    // get the header for height+1
+    const header = await firstEvent(this.tmClient.subscribeNewBlockHeader());
+    if (header.height !== response.height + 1) {
+      throw new Error(`Query returned height ${response.height}, but next header was ${header.height}`);
+    }
 
-    // the storeproof must may it's declared value (root of subProof) to the appHash
-    // TODO
-    // // get the header for height + 1
-    // await sleep(5000); // TODO: we can do better
-    // // TODO: why don't we expose the header query, just height?
-    // const header = await this.tmClient.block(response.height+1);
-    // verifyExistence(storeProof.exist, TendermintSpec, header.block.header.appHash, toAscii(store), storeProof.exist.value!);
+    verifyExistence(storeProof.exist, TendermintSpec, header.appHash, toAscii(store), storeProof.exist.value);
 
     return response.value;
   }

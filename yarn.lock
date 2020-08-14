@@ -186,6 +186,13 @@
     ripemd160 "^2.0.2"
     sha.js "^2.4.11"
 
+"@cosmjs/stream@^0.22.2":
+  version "0.22.2"
+  resolved "https://registry.yarnpkg.com/@cosmjs/stream/-/stream-0.22.2.tgz#060c00374d06586a23b53f1f3a7f0bd4aa98557d"
+  integrity sha512-X3EG8HNn3nW+2iXjff6r8a77crermJ/aSijLxzw1in9+hipF6hG4UmSxN14knSPF6lfqSp80oFoKR6GT1/2r5w==
+  dependencies:
+    xstream "^11.10.0"
+
 "@evocateur/libnpmaccess@^3.1.2":
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/@evocateur/libnpmaccess/-/libnpmaccess-3.1.2.tgz#ecf7f6ce6b004e9f942b098d92200be4a4b1c845"
