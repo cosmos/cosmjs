@@ -1,44 +1,9 @@
 /* eslint-disable no-dupe-class-members, @typescript-eslint/ban-types, @typescript-eslint/naming-convention */
-import { ics23, verifyExistence, verifyNonExistence } from "@confio/ics23";
+import { iavlSpec, ics23, tendermintSpec, verifyExistence, verifyNonExistence } from "@confio/ics23";
 import { fromAscii, toAscii, toHex } from "@cosmjs/encoding";
 import { firstEvent } from "@cosmjs/stream";
 import { Client as TendermintClient } from "@cosmjs/tendermint-rpc";
 import { arrayContentEquals, assert, isNonNullObject } from "@cosmjs/utils";
-
-// TODO: import these from @confio/ics23 when exported
-export const IavlSpec: ics23.IProofSpec = {
-  leafSpec: {
-    prefix: Uint8Array.from([0]),
-    hash: ics23.HashOp.SHA256,
-    prehashValue: ics23.HashOp.SHA256,
-    prehashKey: ics23.HashOp.NO_HASH,
-    length: ics23.LengthOp.VAR_PROTO,
-  },
-  innerSpec: {
-    childOrder: [0, 1],
-    minPrefixLength: 4,
-    maxPrefixLength: 12,
-    childSize: 33,
-    hash: ics23.HashOp.SHA256,
-  },
-};
-
-export const TendermintSpec: ics23.IProofSpec = {
-  leafSpec: {
-    prefix: Uint8Array.from([0]),
-    hash: ics23.HashOp.SHA256,
-    prehashValue: ics23.HashOp.SHA256,
-    prehashKey: ics23.HashOp.NO_HASH,
-    length: ics23.LengthOp.VAR_PROTO,
-  },
-  innerSpec: {
-    childOrder: [0, 1],
-    minPrefixLength: 1,
-    maxPrefixLength: 1,
-    childSize: 32,
-    hash: ics23.HashOp.SHA256,
-  },
-};
 
 type QueryExtensionSetup<P> = (base: QueryClient) => P;
 
@@ -233,13 +198,13 @@ export class QueryClient {
       // non-existence check
       assert(subProof.nonexist);
       // the subproof must map the desired key to the "value" of the storeProof
-      verifyNonExistence(subProof.nonexist, IavlSpec, storeProof.exist.value, key);
+      verifyNonExistence(subProof.nonexist, iavlSpec, storeProof.exist.value, key);
     } else {
       // existence check
       assert(subProof.exist);
       assert(subProof.exist.value);
       // the subproof must map the desired key to the "value" of the storeProof
-      verifyExistence(subProof.exist, IavlSpec, storeProof.exist.value, key, response.value);
+      verifyExistence(subProof.exist, iavlSpec, storeProof.exist.value, key, response.value);
     }
 
     // the storeproof must map it's declared value (root of subProof) to the appHash of the next block
@@ -253,7 +218,7 @@ export class QueryClient {
       throw new Error(`Query returned height ${response.height}, but next header was ${header.height}`);
     }
 
-    verifyExistence(storeProof.exist, TendermintSpec, header.appHash, toAscii(store), storeProof.exist.value);
+    verifyExistence(storeProof.exist, tendermintSpec, header.appHash, toAscii(store), storeProof.exist.value);
 
     return response.value;
   }
