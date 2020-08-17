@@ -2,7 +2,7 @@
 import { iavlSpec, ics23, tendermintSpec, verifyExistence, verifyNonExistence } from "@confio/ics23";
 import { fromAscii, toAscii, toHex } from "@cosmjs/encoding";
 import { firstEvent } from "@cosmjs/stream";
-import { Client as TendermintClient } from "@cosmjs/tendermint-rpc";
+import { Client as TendermintClient, ProofOp } from "@cosmjs/tendermint-rpc";
 import { arrayContentEquals, assert, isNonNullObject } from "@cosmjs/utils";
 
 type QueryExtensionSetup<P> = (base: QueryClient) => P;
@@ -168,32 +168,14 @@ export class QueryClient {
       throw new Error(`Expected 2 proof ops, got ${response.proof.ops.length}. Are you using stargate?`);
     }
 
-    const subOp = response.proof.ops[0];
-    if (subOp.type !== "ics23:iavl") {
-      throw new Error(`Sub-proof expected to be ics23:iavl, got "${subOp.type}`);
-    }
-    if (!arrayContentEquals(key, subOp.key)) {
-      throw new Error(
-        `Proven key different than queried key.\nQuery: ${toHex(key)}\nProven: ${toHex(subOp.key)}`,
-      );
-    }
-
-    const storeOp = response.proof.ops[1];
-    if (storeOp.type !== "ics23:simple") {
-      throw new Error(`Store-proof expected to be ics23:simple, got "${storeOp.type}`);
-    }
-    if (store !== fromAscii(storeOp.key)) {
-      throw new Error(`Proven store "${store}" different than queried store ${fromAscii(storeOp.key)}`);
-    }
+    const subProof = checkAndParseOp(response.proof.ops[0], "ics23:iavl", key);
+    const storeProof = checkAndParseOp(response.proof.ops[1], "ics23:simple", toAscii(store));
 
     // this must always be existence, if the store is not a typo
-    const storeProof = ics23.CommitmentProof.decode(storeOp.data);
     assert(storeProof.exist);
     assert(storeProof.exist.value);
 
     // this may be exist or non-exist, depends on response
-    const subProof = ics23.CommitmentProof.decode(subOp.data);
-
     if (!response.value || response.value.length === 0) {
       // non-existence check
       assert(subProof.nonexist);
@@ -236,4 +218,16 @@ export class QueryClient {
 
     return response.value;
   }
+}
+
+function checkAndParseOp(op: ProofOp, kind: string, key: Uint8Array): ics23.CommitmentProof {
+  if (op.type !== kind) {
+    throw new Error(`Op expected to be ${kind}, got "${op.type}`);
+  }
+  if (!arrayContentEquals(key, op.key)) {
+    throw new Error(
+      `Proven key different than queried key.\nQuery: ${toHex(key)}\nProven: ${toHex(op.key)}`,
+    );
+  }
+  return ics23.CommitmentProof.decode(op.data);
 }
