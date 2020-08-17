@@ -227,8 +227,12 @@ export class QueryClient {
     if (height == 0) {
       throw new Error("Query returned height 0, cannot prove it");
     }
-    // get the header for height+1
+
+    // get the header for height+1 with events
     const header = await firstEvent(this.tmClient.subscribeNewBlockHeader());
+    // alternate non-websocket query (fails with error as it is the future)
+    // const header = (await this.tmClient.blockchain(height+1, height+1)).blockMetas[0].header;
+
     if (header.height !== height + 1) {
       throw new Error(`Query returned height ${height}, but next header was ${header.height}`);
     }
