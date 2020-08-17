@@ -12,6 +12,7 @@ import { tendermintInstances } from "./config.spec";
 import { buildQuery } from "./requests";
 import * as responses from "./responses";
 import { HttpClient, RpcClient, WebsocketClient } from "./rpcclients";
+import { chainIdMatcher } from "./testutil.spec";
 import { TxBytes } from "./types";
 
 function tendermintEnabled(): boolean {
@@ -140,6 +141,81 @@ function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor): void {
       expect(status.validatorInfo.votingPower).toBeGreaterThan(0);
       expect(status.syncInfo.catchingUp).toEqual(false);
       expect(status.syncInfo.latestBlockHeight).toBeGreaterThanOrEqual(1);
+
+      client.disconnect();
+    });
+  });
+
+  describe("blockchain", () => {
+    it("returns latest in descending order by default", async () => {
+      pendingWithoutTendermint();
+      const client = new Client(rpcFactory(), adaptor);
+
+      // Run in parallel to increase chance there is no block between the calls
+      const [status, blockchain] = await Promise.all([client.status(), client.blockchain()]);
+      const height = status.syncInfo.latestBlockHeight;
+
+      expect(blockchain.lastHeight).toEqual(height);
+      expect(blockchain.blockMetas.length).toBeGreaterThanOrEqual(3);
+      expect(blockchain.blockMetas[0].header.height).toEqual(height);
+      expect(blockchain.blockMetas[1].header.height).toEqual(height - 1);
+      expect(blockchain.blockMetas[2].header.height).toEqual(height - 2);
+
+      client.disconnect();
+    });
+
+    it("can limit by maxHeight", async () => {
+      pendingWithoutTendermint();
+      const client = new Client(rpcFactory(), adaptor);
+
+      const height = (await client.status()).syncInfo.latestBlockHeight;
+      const blockchain = await client.blockchain(undefined, height - 1);
+      expect(blockchain.lastHeight).toEqual(height);
+      expect(blockchain.blockMetas.length).toBeGreaterThanOrEqual(2);
+      expect(blockchain.blockMetas[0].header.height).toEqual(height - 1); // upper limit included
+      expect(blockchain.blockMetas[1].header.height).toEqual(height - 2);
+
+      client.disconnect();
+    });
+
+    it("can limit by minHeight and maxHeight", async () => {
+      pendingWithoutTendermint();
+      const client = new Client(rpcFactory(), adaptor);
+
+      const height = (await client.status()).syncInfo.latestBlockHeight;
+      const blockchain = await client.blockchain(height - 2, height - 1);
+      expect(blockchain.lastHeight).toEqual(height);
+      expect(blockchain.blockMetas.length).toEqual(2);
+      expect(blockchain.blockMetas[0].header.height).toEqual(height - 1); // upper limit included
+      expect(blockchain.blockMetas[1].header.height).toEqual(height - 2); // lower limit included
+
+      client.disconnect();
+    });
+
+    it("contains all the info", async () => {
+      pendingWithoutTendermint();
+      const client = new Client(rpcFactory(), adaptor);
+
+      const height = (await client.status()).syncInfo.latestBlockHeight;
+      const blockchain = await client.blockchain(height - 1, height - 1);
+
+      expect(blockchain.lastHeight).toEqual(height);
+      expect(blockchain.blockMetas.length).toBeGreaterThanOrEqual(1);
+      const meta = blockchain.blockMetas[0];
+
+      // TODO: check all the fields
+      expect(meta).toEqual({
+        blockId: jasmine.objectContaining({}),
+        // block_size: jasmine.stringMatching(nonNegativeIntegerMatcher),
+        // num_txs: jasmine.stringMatching(nonNegativeIntegerMatcher),
+        header: jasmine.objectContaining({
+          version: {
+            block: 10,
+            app: 1,
+          },
+          chainId: jasmine.stringMatching(chainIdMatcher),
+        }),
+      });
 
       client.disconnect();
     });
@@ -280,7 +356,7 @@ function websocketTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, appCr
       expect(stream).toBeTruthy();
       const subscription = stream.subscribe({
         next: (event) => {
-          expect(event.chainId).toMatch(/^[-a-zA-Z0-9]{3,30}$/);
+          expect(event.chainId).toMatch(chainIdMatcher);
           expect(event.height).toBeGreaterThan(0);
           // seems that tendermint just guarantees within the last second for timestamp
           expect(event.time.getTime()).toBeGreaterThan(testStart - 1000);
@@ -337,7 +413,7 @@ function websocketTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, appCr
     const stream = client.subscribeNewBlock();
     const subscription = stream.subscribe({
       next: (event) => {
-        expect(event.header.chainId).toMatch(/^[-a-zA-Z0-9]{3,30}$/);
+        expect(event.header.chainId).toMatch(chainIdMatcher);
         expect(event.header.height).toBeGreaterThan(0);
         // seems that tendermint just guarantees within the last second for timestamp
         expect(event.header.time.getTime()).toBeGreaterThan(testStart - 1000);

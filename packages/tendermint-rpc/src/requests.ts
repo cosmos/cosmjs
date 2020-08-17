@@ -10,6 +10,7 @@ export enum Method {
   AbciInfo = "abci_info",
   AbciQuery = "abci_query",
   Block = "block",
+  /** Get block headers for minHeight <= height <= maxHeight. */
   Blockchain = "blockchain",
   BlockResults = "block_results",
   BroadcastTxAsync = "broadcast_tx_async",
@@ -84,6 +85,7 @@ export interface BlockchainRequest {
   readonly method: Method.Blockchain;
   readonly params: BlockchainRequestParams;
 }
+
 export interface BlockchainRequestParams {
   readonly minHeight?: number;
   readonly maxHeight?: number;

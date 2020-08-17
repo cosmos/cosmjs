@@ -15,6 +15,9 @@ export declare class Client {
   abciQuery(params: requests.AbciQueryParams): Promise<responses.AbciQueryResponse>;
   block(height?: number): Promise<responses.BlockResponse>;
   blockResults(height?: number): Promise<responses.BlockResultsResponse>;
+  /**
+   * Get block headers for minHeight <= height <= maxHeight.
+   */
   blockchain(minHeight?: number, maxHeight?: number): Promise<responses.BlockchainResponse>;
   /**
    * Broadcast transaction to mempool and wait for response

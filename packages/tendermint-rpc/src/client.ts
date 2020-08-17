@@ -74,6 +74,9 @@ export class Client {
     return this.doCall(query, this.p.encodeBlockResults, this.r.decodeBlockResults);
   }
 
+  /**
+   * Get block headers for minHeight <= height <= maxHeight.
+   */
   public async blockchain(minHeight?: number, maxHeight?: number): Promise<responses.BlockchainResponse> {
     const query: requests.BlockchainRequest = {
       method: requests.Method.Blockchain,
