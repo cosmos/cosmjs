@@ -17,6 +17,13 @@
   functions `isBroadcastTxFailure`, `isBroadcastTxSuccess` and
   `assertIsBroadcastTxSuccess`.
 
+## 0.22.2 (2020-08-11)
+
+- @cosmjs/faucet: Log errors for failed send transactions.
+- @cosmjs/faucet: Add config variable `FAUCET_MEMO`.
+- @cosmjs/faucet: Add config variables `FAUCET_FEE` and `FAUCET_GAS`.
+- @cosmjs/launchpad: Add `parseCoins` helper.
+
 ## 0.22.1 (2020-08-11)
 
 - @cosmjs/cli: Import `encodeAminoPubkey`, `encodeBech32Pubkey`,

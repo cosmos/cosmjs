@@ -1,6 +1,13 @@
-import { CosmosClient, OfflineSigner, SigningCosmosClient } from "@cosmjs/launchpad";
+import {
+  assertIsBroadcastTxSuccess,
+  CosmosClient,
+  FeeTable,
+  OfflineSigner,
+  SigningCosmosClient,
+} from "@cosmjs/launchpad";
 import { sleep } from "@cosmjs/utils";
 
+import * as constants from "./constants";
 import { debugAccount, logAccountsState, logSendJob } from "./debugging";
 import { createWallets } from "./profile";
 import { TokenConfiguration, TokenManager } from "./tokenmanager";
@@ -50,10 +57,17 @@ export class Faucet {
     this.holderAddress = wallets[0][0];
     this.distributorAddresses = wallets.slice(1).map((pair) => pair[0]);
 
+    const fees: Partial<FeeTable> = {
+      send: {
+        amount: constants.fee,
+        gas: constants.gas,
+      },
+    };
+
     // we need one client per sender
     const clients: { [senderAddress: string]: SigningCosmosClient } = {};
     for (const [senderAddress, wallet] of wallets) {
-      clients[senderAddress] = new SigningCosmosClient(apiUrl, senderAddress, wallet);
+      clients[senderAddress] = new SigningCosmosClient(apiUrl, senderAddress, wallet, fees);
     }
     this.clients = clients;
     this.logging = logging;
@@ -75,9 +89,11 @@ export class Faucet {
 
   /**
    * Creates and broadcasts a send transaction. Then waits until the transaction is in a block.
+   * Throws an error if the transaction failed.
    */
   public async send(job: SendJob): Promise<void> {
-    await this.clients[job.sender].sendTokens(job.recipient, [job.amount], "Make love, not war");
+    const result = await this.clients[job.sender].sendTokens(job.recipient, [job.amount], constants.memo);
+    assertIsBroadcastTxSuccess(result);
   }
 
   /** Use one of the distributor accounts to send tokend to user */
@@ -155,7 +171,12 @@ export class Faucet {
     if (jobs.length > 0) {
       for (const job of jobs) {
         if (this.logging) logSendJob(job, this.tokenConfig);
-        await this.send(job);
+        // don't crash faucet when one send fails
+        try {
+          await this.send(job);
+        } catch (error) {
+          console.error(error);
+        }
         await sleep(75);
       }
 
