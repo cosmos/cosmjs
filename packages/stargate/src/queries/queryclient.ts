@@ -1,11 +1,21 @@
 /* eslint-disable no-dupe-class-members, @typescript-eslint/ban-types, @typescript-eslint/naming-convention */
 import { iavlSpec, ics23, tendermintSpec, verifyExistence, verifyNonExistence } from "@confio/ics23";
-import { fromAscii, toAscii, toHex } from "@cosmjs/encoding";
+import { toAscii, toHex } from "@cosmjs/encoding";
 import { firstEvent } from "@cosmjs/stream";
-import { Client as TendermintClient, ProofOp } from "@cosmjs/tendermint-rpc";
+import { Client as TendermintClient, Header, ProofOp } from "@cosmjs/tendermint-rpc";
 import { arrayContentEquals, assert, isNonNullObject } from "@cosmjs/utils";
 
 type QueryExtensionSetup<P> = (base: QueryClient) => P;
+
+function checkAndParseOp(op: ProofOp, kind: string, key: Uint8Array): ics23.CommitmentProof {
+  if (op.type !== kind) {
+    throw new Error(`Op expected to be ${kind}, got "${op.type}`);
+  }
+  if (!arrayContentEquals(key, op.key)) {
+    throw new Error(`Proven key different than queried key.\nQuery: ${toHex(key)}\nProven: ${toHex(op.key)}`);
+  }
+  return ics23.CommitmentProof.decode(op.data);
+}
 
 export class QueryClient {
   /** Constructs a QueryClient with 0 extensions */
@@ -190,16 +200,7 @@ export class QueryClient {
     }
 
     // the storeproof must map it's declared value (root of subProof) to the appHash of the next block
-    assert(response.height);
-    if (response.height == 0) {
-      throw new Error("Query returned height 0, cannot prove it");
-    }
-    // get the header for height+1
-    const header = await firstEvent(this.tmClient.subscribeNewBlockHeader());
-    if (header.height !== response.height + 1) {
-      throw new Error(`Query returned height ${response.height}, but next header was ${header.height}`);
-    }
-
+    const header = await this.getNextHeader(response.height);
     verifyExistence(storeProof.exist, tendermintSpec, header.appHash, toAscii(store), storeProof.exist.value);
 
     return response.value;
@@ -218,16 +219,19 @@ export class QueryClient {
 
     return response.value;
   }
-}
 
-function checkAndParseOp(op: ProofOp, kind: string, key: Uint8Array): ics23.CommitmentProof {
-  if (op.type !== kind) {
-    throw new Error(`Op expected to be ${kind}, got "${op.type}`);
+  // this must return the header for height+1
+  // throws an error if height is 0 or undefined
+  private async getNextHeader(height?: number): Promise<Header> {
+    assert(height);
+    if (height == 0) {
+      throw new Error("Query returned height 0, cannot prove it");
+    }
+    // get the header for height+1
+    const header = await firstEvent(this.tmClient.subscribeNewBlockHeader());
+    if (header.height !== height + 1) {
+      throw new Error(`Query returned height ${height}, but next header was ${header.height}`);
+    }
+    return header;
   }
-  if (!arrayContentEquals(key, op.key)) {
-    throw new Error(
-      `Proven key different than queried key.\nQuery: ${toHex(key)}\nProven: ${toHex(op.key)}`,
-    );
-  }
-  return ics23.CommitmentProof.decode(op.data);
 }
