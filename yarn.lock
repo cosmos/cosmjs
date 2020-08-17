@@ -177,21 +177,14 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@confio/ics23@^0.6.0":
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/@confio/ics23/-/ics23-0.6.0.tgz#8c3e6508159bdbee02b12beeee9b369ea68ef6ba"
-  integrity sha512-P/NcAO3pz7xXg4cpwaKRUIN4PuOOxwY94n7WD+wod7UG5YlMLzb8Upv6nZo9/brnKXW4gXB2DccLTtV0Um1Wvw==
+"@confio/ics23@^0.6.3":
+  version "0.6.3"
+  resolved "https://registry.yarnpkg.com/@confio/ics23/-/ics23-0.6.3.tgz#d27da1efca21253dee1b7d038913d72a99a17ca1"
+  integrity sha512-SQDH9tTzXIbC1AVTrjL7BEXfsYwERXNOB7F995LhfJDrP44cC5sl3Prh+lkfKOjn1jkgxknVUyaGx3tMG88gjQ==
   dependencies:
     protobufjs "^6.8.8"
     ripemd160 "^2.0.2"
     sha.js "^2.4.11"
-
-"@cosmjs/stream@^0.22.2":
-  version "0.22.2"
-  resolved "https://registry.yarnpkg.com/@cosmjs/stream/-/stream-0.22.2.tgz#060c00374d06586a23b53f1f3a7f0bd4aa98557d"
-  integrity sha512-X3EG8HNn3nW+2iXjff6r8a77crermJ/aSijLxzw1in9+hipF6hG4UmSxN14knSPF6lfqSp80oFoKR6GT1/2r5w==
-  dependencies:
-    xstream "^11.10.0"
 
 "@evocateur/libnpmaccess@^3.1.2":
   version "3.1.2"

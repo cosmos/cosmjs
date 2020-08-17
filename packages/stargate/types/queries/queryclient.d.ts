@@ -1,7 +1,4 @@
-import { ics23 } from "@confio/ics23";
 import { Client as TendermintClient } from "@cosmjs/tendermint-rpc";
-export declare const IavlSpec: ics23.IProofSpec;
-export declare const TendermintSpec: ics23.IProofSpec;
 declare type QueryExtensionSetup<P> = (base: QueryClient) => P;
 export declare class QueryClient {
   /** Constructs a QueryClient with 0 extensions */
