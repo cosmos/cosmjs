@@ -124,6 +124,18 @@ export class Decimal {
     return new Decimal(sum.toString(), this.fractionalDigits);
   }
 
+  /**
+   * a.multiply(b) returns a*b.
+   *
+   * Both values need to have the same fractional digits.
+   */
+  public multiply(b: Decimal): Decimal {
+    if (this.fractionalDigits !== b.fractionalDigits) throw new Error("Fractional digits do not match");
+    const factor = new BN(10).pow(new BN(this.data.fractionalDigits));
+    const product = this.data.atomics.mul(new BN(b.atomics)).div(factor);
+    return new Decimal(product.toString(), this.fractionalDigits);
+  }
+
   public equals(b: Decimal): boolean {
     return Decimal.compare(this, b) === 0;
   }

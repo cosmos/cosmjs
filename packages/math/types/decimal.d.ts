@@ -24,6 +24,12 @@ export declare class Decimal {
    * Both values need to have the same fractional digits.
    */
   plus(b: Decimal): Decimal;
+  /**
+   * a.multiply(b) returns a*b.
+   *
+   * Both values need to have the same fractional digits.
+   */
+  multiply(b: Decimal): Decimal;
   equals(b: Decimal): boolean;
   isLessThan(b: Decimal): boolean;
   isLessThanOrEqual(b: Decimal): boolean;
