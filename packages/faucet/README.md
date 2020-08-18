@@ -23,13 +23,13 @@ FAUCET_CREDIT_AMOUNT_COSM=10 \
   FAUCET_CREDIT_AMOUNT_STAKE=5 \
   FAUCET_CONCURRENCY=3 \
   FAUCET_MNEMONIC="economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone" \
-  ./bin/cosmwasm-faucet start "http://localhost:1317"
+  ./bin/cosmos-faucet start "http://localhost:1317"
 ```
 
 ## Usage
 
 ```
-Usage: cosmwasm-faucet action [arguments...]
+Usage: cosmos-faucet action [arguments...]
 
 Positional arguments per action are listed below. Arguments in parentheses are optional.
 
@@ -70,7 +70,7 @@ The faucet uses standard HD paths for each blockchain, e.g.
 ```
 IOV        m/44'/234'/a'
 Lisk       m/44'/134'/a'
-CosmWasm   m/44'/118'/0'/0/a
+Cosmos     m/44'/118'/0'/0/a
 ```
 
 where `a` is a 0-based index of the account. Account 0 is the token holder and
@@ -91,14 +91,14 @@ it up-to-date.
 
 ```sh
 cd docs
-docker build -t local-cosmwasm-faucet:manual --file faucet.Dockerfile .
+docker build -t local-cosmos-faucet:manual --file faucet.Dockerfile .
 ```
 
 - Version and help
 
 ```sh
-docker run --read-only --rm local-cosmwasm-faucet:manual version
-docker run --read-only --rm local-cosmwasm-faucet:manual help
+docker run --read-only --rm local-cosmos-faucet:manual version
+docker run --read-only --rm local-cosmos-faucet:manual help
 ```
 
 - Run faucet locally
@@ -110,7 +110,7 @@ DOCKER_HOST_IP=$(docker run --read-only --rm alpine ip route | awk 'NR==1 {print
   -e FAUCET_MNEMONIC \
   -e FAUCET_CONCURRENCY \
   -p 8000:8000 \
-  local-cosmwasm-faucet:manual \
+  local-cosmos-faucet:manual \
   start "http://$DOCKER_HOST_IP:1317"
 ```
 

@@ -3,7 +3,7 @@ import { Coin, parseCoins } from "@cosmjs/launchpad";
 import { TokenConfiguration } from "./tokenmanager";
 import { parseBankTokens } from "./tokens";
 
-export const binaryName = "cosmwasm-faucet";
+export const binaryName = "cosmos-faucet";
 export const memo: string | undefined = process.env.FAUCET_MEMO;
 export const fee: readonly Coin[] = parseCoins(process.env.FAUCET_FEE || "2000ucosm");
 export const gas: string = process.env.FAUCET_GAS || "80000";
