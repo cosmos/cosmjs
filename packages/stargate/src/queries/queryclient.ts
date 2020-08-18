@@ -246,26 +246,19 @@ export class QueryClient {
       }
     }
 
-    if (!nextHeader) {
+    while (!nextHeader) {
       // start from current height to avoid backend error for minHeight in the future
-      let header = (await this.tmClient.blockchain(height, searchHeight)).blockMetas
+      const correctHeader = (await this.tmClient.blockchain(height, searchHeight)).blockMetas
         .map((meta) => meta.header)
         .find((h) => h.height === searchHeight);
-      while (!header) {
+      if (correctHeader) {
+        nextHeader = correctHeader;
+      } else {
         await sleep(1000);
-        header = (await this.tmClient.blockchain(height, searchHeight)).blockMetas
-          .map((meta) => meta.header)
-          .find((h) => h.height === searchHeight);
       }
-      nextHeader = header;
     }
 
-    if (nextHeader.height !== searchHeight) {
-      throw new Error(
-        `Query requires header at height ${searchHeight} for proof verification, but next header was ${nextHeader.height}`,
-      );
-    }
-
+    assert(nextHeader.height === searchHeight, "Got wrong header. This is a bug in the logic above.");
     return nextHeader;
   }
 }
