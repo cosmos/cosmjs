@@ -3,13 +3,13 @@
 # This file will be outdated very soon, but should work as a template for your custom docker setup.
 
 # Coose from https://hub.docker.com/_/node/
-FROM node:12.14.1-alpine
+FROM node:12.18.3-alpine
 
-RUN yarn global add @cosmjs/faucet@0.0.8
+RUN yarn global add @cosmjs/faucet@0.23.0
 
 # Check it exists
-RUN /usr/local/bin/cosmwasm-faucet version
+RUN /usr/local/bin/cosmos-faucet version
 
 EXPOSE 8000
-ENTRYPOINT ["/usr/local/bin/cosmwasm-faucet"]
+ENTRYPOINT ["/usr/local/bin/cosmos-faucet"]
 CMD [""]

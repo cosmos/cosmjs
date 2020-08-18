@@ -28,6 +28,7 @@
 - @cosmjs/tendermint-rpc: Change type of `GenesisResponse.appState` to
   `Record<string, unknown> | undefined`.
 - @cosmjs/utils: Add `assertDefined`.
+- @cosmjs/faucet: Rename binary from `cosmwasm-faucet` to `cosmos-faucet`.
 
 ## 0.22.2 (2020-08-11)
 
