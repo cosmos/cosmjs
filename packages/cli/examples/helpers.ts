@@ -16,8 +16,8 @@ const defaultOptions: Options = {
 
 const defaultFaucetUrl = "https://faucet.demo-10.cosmwasm.com/credit";
 
-const buildFeeTable = (feeToken: string, gasPrice: number): FeeTable => {
-  const stdFee = (gas: number, denom: string, price: number) => {
+const buildFeeTable = (feeToken: string, gasPrice: number): CosmWasmFeeTable => {
+  const calculateFee = (gas: number, denom: string, price: number) => {
     const amount = Math.floor(gas * price);
     return {
       amount: [{ amount: amount.toString(), denom: denom }],
@@ -26,12 +26,12 @@ const buildFeeTable = (feeToken: string, gasPrice: number): FeeTable => {
   };
 
   return {
-    upload: stdFee(1000000, feeToken, gasPrice),
-    init: stdFee(500000, feeToken, gasPrice),
-    migrate: stdFee(500000, feeToken, gasPrice),
-    exec: stdFee(200000, feeToken, gasPrice),
-    send: stdFee(80000, feeToken, gasPrice),
-    changeAdmin: stdFee(80000, feeToken, gasPrice),
+    upload: calculateFee(1000000, feeToken, gasPrice),
+    init: calculateFee(500000, feeToken, gasPrice),
+    migrate: calculateFee(500000, feeToken, gasPrice),
+    exec: calculateFee(200000, feeToken, gasPrice),
+    send: calculateFee(80000, feeToken, gasPrice),
+    changeAdmin: calculateFee(80000, feeToken, gasPrice),
   };
 };
 
@@ -51,11 +51,11 @@ const connect = async (
   address: string;
 }> => {
   const options: Options = { ...defaultOptions, ...opts };
-  const feeTable = buildFeeTable(options.feeToken, options.gasPrice);
+  const gasPrice = GasPrice.fromString(`${options.gasPrice}${options.feeToken}`);
   const wallet = await Secp256k1Wallet.fromMnemonic(mnemonic);
   const [{ address }] = await wallet.getAccounts();
 
-  const client = new SigningCosmWasmClient(options.httpUrl, address, wallet, feeTable);
+  const client = new SigningCosmWasmClient(options.httpUrl, address, wallet, gasPrice);
   return { client, address };
 };
 
