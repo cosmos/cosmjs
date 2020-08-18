@@ -5,6 +5,10 @@
 - @cosmjs/cosmwasm: Rename `CosmWasmClient.postTx` method to `.broadcastTx`.
 - @cosmjs/cosmwasm: Rename `SigningCosmWasmClient.signAndPost` method to
   `.signAndBroadcast`.
+- @cosmjs/cosmwasm: Use stricter type `Record<string, unknown>` for smart query,
+  init, migrate and handle messages (in `WasmExtension.wasm.queryContractSmart`,
+  `CosmWasmClient.queryContractSmart`, `SigningCosmWasmClient.instantiate`,
+  `SigningCosmWasmClient.migrate`, `SigningCosmWasmClient.execute`).
 - @cosmjs/demo-staking: Remove package and supporting scripts.
 - @cosmjs/encoding: Add `limit` parameter to `Bech32.encode` and `.decode`. The
   new default limit for decoding is infinity (was 90 before). Set it to 90 to
@@ -16,6 +20,14 @@
   `BroadcastTxSuccess` and `BroadcastTxFailure` respectively, as well as helper
   functions `isBroadcastTxFailure`, `isBroadcastTxSuccess` and
   `assertIsBroadcastTxSuccess`.
+- @cosmjs/launchpad: Export `isSearchByIdQuery`, `isSearchByHeightQuery`,
+  `isSearchBySentFromOrToQuery` and `isSearchByTagsQuery`.
+- @cosmjs/launchpad: Change type of `TxsResponse.logs` and
+  `BroadcastTxsResponse.logs` to `unknown[]`.
+- @cosmjs/tendermint-rpc: Make `BroadcastTxCommitResponse.height` non-optional.
+- @cosmjs/tendermint-rpc: Change type of `GenesisResponse.appState` to
+  `Record<string, unknown> | undefined`.
+- @cosmjs/utils: Add `assertDefined`.
 
 ## 0.22.2 (2020-08-11)
 
