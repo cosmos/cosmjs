@@ -178,6 +178,20 @@ function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor): void {
       client.disconnect();
     });
 
+    it("works with maxHeight in the future", async () => {
+      pendingWithoutTendermint();
+      const client = new Client(rpcFactory(), adaptor);
+
+      const height = (await client.status()).syncInfo.latestBlockHeight;
+      const blockchain = await client.blockchain(undefined, height + 20);
+      expect(blockchain.lastHeight).toEqual(height);
+      expect(blockchain.blockMetas.length).toBeGreaterThanOrEqual(2);
+      expect(blockchain.blockMetas[0].header.height).toEqual(height);
+      expect(blockchain.blockMetas[1].header.height).toEqual(height - 1);
+
+      client.disconnect();
+    });
+
     it("can limit by minHeight and maxHeight", async () => {
       pendingWithoutTendermint();
       const client = new Client(rpcFactory(), adaptor);
