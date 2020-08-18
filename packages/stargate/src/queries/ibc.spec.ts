@@ -113,5 +113,45 @@ describe("IbcExtension", () => {
         tmClient.disconnect();
       });
     });
+
+    // Queries for ibc.connection
+
+    describe("connection", () => {
+      it("can be called", async () => {
+        pending("Fails with 'Query failed with (1): internal'. Make it work.");
+        pendingWithoutSimapp();
+        const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+
+        const response = await client.ibc.unverified.connection("foo");
+        expect(response).toBeTruthy(); // TODO: implement checks
+
+        tmClient.disconnect();
+      });
+    });
+
+    describe("connections", () => {
+      it("can be called", async () => {
+        pendingWithoutSimapp();
+        const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+
+        const response = await client.ibc.unverified.connections();
+        expect(response).toBeTruthy(); // TODO: implement checks
+
+        tmClient.disconnect();
+      });
+    });
+
+    describe("clientConnections", () => {
+      it("can be called", async () => {
+        pending("Fails with 'Query failed with (1): internal'. Make it work.");
+        pendingWithoutSimapp();
+        const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+
+        const response = await client.ibc.unverified.clientConnections();
+        expect(response).toBeTruthy(); // TODO: implement checks
+
+        tmClient.disconnect();
+      });
+    });
   });
 });

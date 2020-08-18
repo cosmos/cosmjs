@@ -11,6 +11,9 @@ export interface IbcExtension {
       readonly packetAcknowledgement: () => Promise<ibc.channel.IQueryPacketAcknowledgementResponse>;
       readonly unrelayedPackets: () => Promise<ibc.channel.IQueryUnrelayedPacketsResponse>;
       readonly nextSequenceReceive: () => Promise<ibc.channel.IQueryNextSequenceReceiveResponse>;
+      readonly connection: (connectionId: string) => Promise<ibc.connection.IQueryConnectionResponse>;
+      readonly connections: () => Promise<ibc.connection.IQueryConnectionsResponse>;
+      readonly clientConnections: () => Promise<ibc.connection.IQueryClientConnectionsResponse>;
     };
   };
 }
