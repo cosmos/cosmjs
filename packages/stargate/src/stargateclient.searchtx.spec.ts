@@ -2,7 +2,7 @@
 import { Bech32, fromBase64 } from "@cosmjs/encoding";
 import { Coin, coins, Secp256k1Wallet } from "@cosmjs/launchpad";
 import { makeSignBytes, Registry } from "@cosmjs/proto-signing";
-import { assert } from "@cosmjs/utils";
+import { assert, sleep } from "@cosmjs/utils";
 import Long from "long";
 
 import { cosmos } from "./codec";
@@ -138,6 +138,8 @@ describe("StargateClient.searchTx", () => {
           tx: successfulResult.tx,
         };
       }
+
+      await sleep(75); // wait until transactions are indexed
     }
   });
 
