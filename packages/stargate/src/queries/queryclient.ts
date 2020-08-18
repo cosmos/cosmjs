@@ -230,7 +230,7 @@ export class QueryClient {
     }
 
     const searchHeight = height + 1;
-    let nextHeader: Header;
+    let nextHeader: Header | undefined;
     let headersSubscription: Stream<NewBlockHeaderEvent> | undefined;
     try {
       headersSubscription = this.tmClient.subscribeNewBlockHeader();
@@ -239,9 +239,14 @@ export class QueryClient {
     }
 
     if (headersSubscription) {
-      // get the header for height+1
-      nextHeader = await firstEvent(headersSubscription); // TODO: fall back on polling if this returns a too high header
-    } else {
+      const firstHeader = await firstEvent(headersSubscription);
+      // The first header we get might not be n+1 but n+2 or even higher. In such cases we fall back on a query.
+      if (firstHeader.height === searchHeight) {
+        nextHeader = firstHeader;
+      }
+    }
+
+    if (!nextHeader) {
       // start from current height to avoid backend error for minHeight in the future
       let header = (await this.tmClient.blockchain(height, searchHeight)).blockMetas
         .map((meta) => meta.header)
