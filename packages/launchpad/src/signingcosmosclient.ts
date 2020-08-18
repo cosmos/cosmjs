@@ -15,7 +15,7 @@ export interface FeeTable extends Record<string, StdFee> {
   readonly send: StdFee;
 }
 
-const defaultGasPrice = new GasPrice(0.025, "ucosm");
+const defaultGasPrice = GasPrice.fromString("0.025ucosm");
 const defaultGasLimits: GasLimits<FeeTable> = { send: 80000 };
 
 /** Use for testing only */

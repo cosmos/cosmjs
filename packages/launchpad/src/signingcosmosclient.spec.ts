@@ -31,7 +31,7 @@ describe("SigningCosmosClient", () => {
 
     it("can be constructed with custom gas price", async () => {
       const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
-      const gasPrice = new GasPrice(3.14, "utest");
+      const gasPrice = GasPrice.fromString("3.14utest");
       const client = new SigningCosmosClient(httpUrl, faucet.address, wallet, gasPrice);
       const openedClient = (client as unknown) as PrivateSigningCosmosClient;
       expect(openedClient.fees).toEqual({
@@ -69,7 +69,7 @@ describe("SigningCosmosClient", () => {
 
     it("can be constructed with custom gas price and gas limits", async () => {
       const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
-      const gasPrice = new GasPrice(3.14, "utest");
+      const gasPrice = GasPrice.fromString("3.14utest");
       const gasLimits = {
         send: 160000,
       };
