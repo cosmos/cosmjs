@@ -1,10 +1,20 @@
-import { BroadcastMode, BroadcastTxResult, Coin, Msg, OfflineSigner, StdFee } from "@cosmjs/launchpad";
+import {
+  BroadcastMode,
+  BroadcastTxResult,
+  Coin,
+  FeeTable,
+  GasLimits,
+  GasPrice,
+  Msg,
+  OfflineSigner,
+  StdFee,
+} from "@cosmjs/launchpad";
 import { Account, CosmWasmClient, GetSequenceResult } from "./cosmwasmclient";
 import { Log } from "./logs";
 /**
- * Those fees are used by the higher level methods of SigningCosmWasmClient
+ * These fees are used by the higher level methods of SigningCosmWasmClient
  */
-export interface FeeTable {
+export interface CosmWasmFeeTable extends FeeTable {
   readonly upload: StdFee;
   readonly init: StdFee;
   readonly exec: StdFee;
@@ -81,6 +91,10 @@ export interface ExecuteResult {
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
 }
+/** Use for testing only */
+export interface PrivateSigningCosmWasmClient {
+  readonly fees: CosmWasmFeeTable;
+}
 export declare class SigningCosmWasmClient extends CosmWasmClient {
   readonly senderAddress: string;
   private readonly signer;
@@ -94,14 +108,16 @@ export declare class SigningCosmWasmClient extends CosmWasmClient {
    * @param apiUrl The URL of a Cosmos SDK light client daemon API (sometimes called REST server or REST API)
    * @param senderAddress The address that will sign and send transactions using this instance
    * @param signer An implementation of OfflineSigner which can provide signatures for transactions, potentially requiring user input.
-   * @param customFees The fees that are paid for transactions
+   * @param gasPrice The price paid per unit of gas
+   * @param gasLimits Custom overrides for gas limits related to specific transaction types
    * @param broadcastMode Defines at which point of the transaction processing the broadcastTx method returns
    */
   constructor(
     apiUrl: string,
     senderAddress: string,
     signer: OfflineSigner,
-    customFees?: Partial<FeeTable>,
+    gasPrice?: GasPrice,
+    gasLimits?: Partial<GasLimits<CosmWasmFeeTable>>,
     broadcastMode?: BroadcastMode,
   );
   getSequence(address?: string): Promise<GetSequenceResult>;

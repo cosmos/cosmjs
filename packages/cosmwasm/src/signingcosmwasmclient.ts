@@ -5,8 +5,11 @@ import {
   BroadcastMode,
   BroadcastTxFailure,
   BroadcastTxResult,
+  buildFeeTable,
   Coin,
-  coins,
+  FeeTable,
+  GasLimits,
+  GasPrice,
   isBroadcastTxFailure,
   makeSignBytes,
   Msg,
@@ -31,9 +34,9 @@ import {
 } from "./msgs";
 
 /**
- * Those fees are used by the higher level methods of SigningCosmWasmClient
+ * These fees are used by the higher level methods of SigningCosmWasmClient
  */
-export interface FeeTable {
+export interface CosmWasmFeeTable extends FeeTable {
   readonly upload: StdFee;
   readonly init: StdFee;
   readonly exec: StdFee;
@@ -52,31 +55,14 @@ function prepareBuilder(buider: string | undefined): string {
   }
 }
 
-const defaultFees: FeeTable = {
-  upload: {
-    amount: coins(25000, "ucosm"),
-    gas: "1000000", // one million
-  },
-  init: {
-    amount: coins(12500, "ucosm"),
-    gas: "500000", // 500k
-  },
-  migrate: {
-    amount: coins(5000, "ucosm"),
-    gas: "200000", // 200k
-  },
-  exec: {
-    amount: coins(5000, "ucosm"),
-    gas: "200000", // 200k
-  },
-  send: {
-    amount: coins(2000, "ucosm"),
-    gas: "80000", // 80k
-  },
-  changeAdmin: {
-    amount: coins(2000, "ucosm"),
-    gas: "80000", // 80k
-  },
+const defaultGasPrice = GasPrice.fromString("0.025ucosm");
+const defaultGasLimits: GasLimits<CosmWasmFeeTable> = {
+  upload: 1000000,
+  init: 500000,
+  migrate: 200000,
+  exec: 200000,
+  send: 80000,
+  changeAdmin: 80000,
 };
 
 export interface UploadMeta {
@@ -158,6 +144,11 @@ function createBroadcastTxErrorMessage(result: BroadcastTxFailure): string {
   return `Error when broadcasting tx ${result.transactionHash} at height ${result.height}. Code: ${result.code}; Raw log: ${result.rawLog}`;
 }
 
+/** Use for testing only */
+export interface PrivateSigningCosmWasmClient {
+  readonly fees: CosmWasmFeeTable;
+}
+
 export class SigningCosmWasmClient extends CosmWasmClient {
   public readonly senderAddress: string;
 
@@ -173,22 +164,23 @@ export class SigningCosmWasmClient extends CosmWasmClient {
    * @param apiUrl The URL of a Cosmos SDK light client daemon API (sometimes called REST server or REST API)
    * @param senderAddress The address that will sign and send transactions using this instance
    * @param signer An implementation of OfflineSigner which can provide signatures for transactions, potentially requiring user input.
-   * @param customFees The fees that are paid for transactions
+   * @param gasPrice The price paid per unit of gas
+   * @param gasLimits Custom overrides for gas limits related to specific transaction types
    * @param broadcastMode Defines at which point of the transaction processing the broadcastTx method returns
    */
   public constructor(
     apiUrl: string,
     senderAddress: string,
     signer: OfflineSigner,
-    customFees?: Partial<FeeTable>,
+    gasPrice: GasPrice = defaultGasPrice,
+    gasLimits: Partial<GasLimits<CosmWasmFeeTable>> = {},
     broadcastMode = BroadcastMode.Block,
   ) {
     super(apiUrl, broadcastMode);
     this.anyValidAddress = senderAddress;
-
     this.senderAddress = senderAddress;
     this.signer = signer;
-    this.fees = { ...defaultFees, ...(customFees || {}) };
+    this.fees = buildFeeTable<CosmWasmFeeTable>(gasPrice, defaultGasLimits, gasLimits);
   }
 
   public async getSequence(address?: string): Promise<GetSequenceResult> {
