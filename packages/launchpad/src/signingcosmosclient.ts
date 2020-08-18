@@ -8,18 +8,48 @@ import { StdFee, StdTx } from "./types";
 import { OfflineSigner } from "./wallet";
 
 /**
- * Those fees are used by the higher level methods of SigningCosmosClient
+ * These fees are used by the higher level methods of SigningCosmosClient
  */
 export interface FeeTable {
   readonly send: StdFee;
 }
 
-const defaultFees: FeeTable = {
-  send: {
-    amount: coins(2000, "ucosm"),
-    gas: "80000", // 80k
-  },
+export class GasPrice {
+  readonly amount: number;
+  readonly denom: string;
+
+  constructor(amount: number, denom: string) {
+    this.amount = amount;
+    this.denom = denom;
+  }
+}
+
+export type GasLimits = {
+  readonly [key in keyof FeeTable]: number;
 };
+
+function calculateFee(gasLimit: number, denom: string, price: number): StdFee {
+  const amount = Math.ceil(price * gasLimit);
+  return {
+    amount: coins(amount, denom),
+    gas: gasLimit.toString(),
+  };
+}
+
+function buildFeeTable({ denom, amount }: GasPrice, gasLimits: GasLimits): FeeTable {
+  return Object.entries(gasLimits).reduce((feeTable, [type, gasLimit]) => {
+    if (gasLimit === undefined) {
+      return feeTable;
+    }
+    return {
+      ...feeTable,
+      [type]: calculateFee(gasLimit, denom, amount),
+    };
+  }, {} as FeeTable);
+}
+
+const defaultGasPrice: GasPrice = new GasPrice(0.025, "ucosm");
+const defaultGasLimits: GasLimits = { send: 80000 };
 
 export class SigningCosmosClient extends CosmosClient {
   public readonly senderAddress: string;
@@ -36,14 +66,16 @@ export class SigningCosmosClient extends CosmosClient {
    * @param apiUrl The URL of a Cosmos SDK light client daemon API (sometimes called REST server or REST API)
    * @param senderAddress The address that will sign and send transactions using this instance
    * @param signer An implementation of OfflineSigner which can provide signatures for transactions, potentially requiring user input.
-   * @param customFees The fees that are paid for transactions
+   * @param gasPrice The price paid per unit of gas
+   * @param gasLimits Custom overrides for gas limits related to specific transaction types
    * @param broadcastMode Defines at which point of the transaction processing the broadcastTx method returns
    */
   public constructor(
     apiUrl: string,
     senderAddress: string,
     signer: OfflineSigner,
-    customFees?: Partial<FeeTable>,
+    gasPrice: GasPrice = defaultGasPrice,
+    gasLimits?: Partial<GasLimits>,
     broadcastMode = BroadcastMode.Block,
   ) {
     super(apiUrl, broadcastMode);
@@ -51,7 +83,12 @@ export class SigningCosmosClient extends CosmosClient {
 
     this.senderAddress = senderAddress;
     this.signer = signer;
-    this.fees = { ...defaultFees, ...(customFees || {}) };
+
+    const mergedGasLimits = {
+      ...defaultGasLimits,
+      ...gasLimits,
+    };
+    this.fees = buildFeeTable(gasPrice, mergedGasLimits);
   }
 
   public async getSequence(address?: string): Promise<GetSequenceResult> {
