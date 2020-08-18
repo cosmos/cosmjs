@@ -150,7 +150,7 @@ export interface Block {
 }
 
 /** Use for testing only */
-export interface PrivateCosmWasmClient {
+export interface PrivateCosmosClient {
   readonly lcdClient: LcdClient & AuthExtension;
 }
 

@@ -2,7 +2,7 @@
 import { assert } from "@cosmjs/utils";
 
 import { Coin, coin, coins } from "./coins";
-import { assertIsBroadcastTxSuccess, PrivateCosmWasmClient } from "./cosmosclient";
+import { assertIsBroadcastTxSuccess, PrivateCosmosClient } from "./cosmosclient";
 import { MsgDelegate } from "./msgs";
 import { Secp256k1Wallet } from "./secp256k1wallet";
 import { SigningCosmosClient } from "./signingcosmosclient";
@@ -35,7 +35,7 @@ describe("SigningCosmosClient", () => {
       const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
       const client = new SigningCosmosClient(httpUrl, faucet.address, wallet);
 
-      const openedClient = (client as unknown) as PrivateCosmWasmClient;
+      const openedClient = (client as unknown) as PrivateCosmosClient;
       const blockLatestSpy = spyOn(openedClient.lcdClient, "blocksLatest").and.callThrough();
       const authAccountsSpy = spyOn(openedClient.lcdClient.auth, "account").and.callThrough();
 
