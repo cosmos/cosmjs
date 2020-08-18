@@ -3303,6 +3303,3687 @@ export namespace cosmos {
   }
 }
 
+/** Namespace ibc. */
+export namespace ibc {
+  /** Namespace channel. */
+  namespace channel {
+    /** Properties of a MsgChannelOpenInit. */
+    interface IMsgChannelOpenInit {
+      /** MsgChannelOpenInit portId */
+      portId?: string | null;
+
+      /** MsgChannelOpenInit channelId */
+      channelId?: string | null;
+
+      /** MsgChannelOpenInit channel */
+      channel?: ibc.channel.IChannel | null;
+
+      /** MsgChannelOpenInit signer */
+      signer?: Uint8Array | null;
+    }
+
+    /** Represents a MsgChannelOpenInit. */
+    class MsgChannelOpenInit implements IMsgChannelOpenInit {
+      /**
+       * Constructs a new MsgChannelOpenInit.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.channel.IMsgChannelOpenInit);
+
+      /** MsgChannelOpenInit portId. */
+      public portId: string;
+
+      /** MsgChannelOpenInit channelId. */
+      public channelId: string;
+
+      /** MsgChannelOpenInit channel. */
+      public channel?: ibc.channel.IChannel | null;
+
+      /** MsgChannelOpenInit signer. */
+      public signer: Uint8Array;
+
+      /**
+       * Creates a new MsgChannelOpenInit instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns MsgChannelOpenInit instance
+       */
+      public static create(properties?: ibc.channel.IMsgChannelOpenInit): ibc.channel.MsgChannelOpenInit;
+
+      /**
+       * Encodes the specified MsgChannelOpenInit message. Does not implicitly {@link ibc.channel.MsgChannelOpenInit.verify|verify} messages.
+       * @param m MsgChannelOpenInit message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: ibc.channel.IMsgChannelOpenInit, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a MsgChannelOpenInit message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns MsgChannelOpenInit
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): ibc.channel.MsgChannelOpenInit;
+    }
+
+    /** Properties of a MsgChannelOpenTry. */
+    interface IMsgChannelOpenTry {
+      /** MsgChannelOpenTry portId */
+      portId?: string | null;
+
+      /** MsgChannelOpenTry channelId */
+      channelId?: string | null;
+
+      /** MsgChannelOpenTry channel */
+      channel?: ibc.channel.IChannel | null;
+
+      /** MsgChannelOpenTry counterpartyVersion */
+      counterpartyVersion?: string | null;
+
+      /** MsgChannelOpenTry proofInit */
+      proofInit?: Uint8Array | null;
+
+      /** MsgChannelOpenTry proofHeight */
+      proofHeight?: Long | null;
+
+      /** MsgChannelOpenTry signer */
+      signer?: Uint8Array | null;
+    }
+
+    /** Represents a MsgChannelOpenTry. */
+    class MsgChannelOpenTry implements IMsgChannelOpenTry {
+      /**
+       * Constructs a new MsgChannelOpenTry.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.channel.IMsgChannelOpenTry);
+
+      /** MsgChannelOpenTry portId. */
+      public portId: string;
+
+      /** MsgChannelOpenTry channelId. */
+      public channelId: string;
+
+      /** MsgChannelOpenTry channel. */
+      public channel?: ibc.channel.IChannel | null;
+
+      /** MsgChannelOpenTry counterpartyVersion. */
+      public counterpartyVersion: string;
+
+      /** MsgChannelOpenTry proofInit. */
+      public proofInit: Uint8Array;
+
+      /** MsgChannelOpenTry proofHeight. */
+      public proofHeight: Long;
+
+      /** MsgChannelOpenTry signer. */
+      public signer: Uint8Array;
+
+      /**
+       * Creates a new MsgChannelOpenTry instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns MsgChannelOpenTry instance
+       */
+      public static create(properties?: ibc.channel.IMsgChannelOpenTry): ibc.channel.MsgChannelOpenTry;
+
+      /**
+       * Encodes the specified MsgChannelOpenTry message. Does not implicitly {@link ibc.channel.MsgChannelOpenTry.verify|verify} messages.
+       * @param m MsgChannelOpenTry message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: ibc.channel.IMsgChannelOpenTry, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a MsgChannelOpenTry message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns MsgChannelOpenTry
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): ibc.channel.MsgChannelOpenTry;
+    }
+
+    /** Properties of a MsgChannelOpenAck. */
+    interface IMsgChannelOpenAck {
+      /** MsgChannelOpenAck portId */
+      portId?: string | null;
+
+      /** MsgChannelOpenAck channelId */
+      channelId?: string | null;
+
+      /** MsgChannelOpenAck counterpartyVersion */
+      counterpartyVersion?: string | null;
+
+      /** MsgChannelOpenAck proofTry */
+      proofTry?: Uint8Array | null;
+
+      /** MsgChannelOpenAck proofHeight */
+      proofHeight?: Long | null;
+
+      /** MsgChannelOpenAck signer */
+      signer?: Uint8Array | null;
+    }
+
+    /** Represents a MsgChannelOpenAck. */
+    class MsgChannelOpenAck implements IMsgChannelOpenAck {
+      /**
+       * Constructs a new MsgChannelOpenAck.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.channel.IMsgChannelOpenAck);
+
+      /** MsgChannelOpenAck portId. */
+      public portId: string;
+
+      /** MsgChannelOpenAck channelId. */
+      public channelId: string;
+
+      /** MsgChannelOpenAck counterpartyVersion. */
+      public counterpartyVersion: string;
+
+      /** MsgChannelOpenAck proofTry. */
+      public proofTry: Uint8Array;
+
+      /** MsgChannelOpenAck proofHeight. */
+      public proofHeight: Long;
+
+      /** MsgChannelOpenAck signer. */
+      public signer: Uint8Array;
+
+      /**
+       * Creates a new MsgChannelOpenAck instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns MsgChannelOpenAck instance
+       */
+      public static create(properties?: ibc.channel.IMsgChannelOpenAck): ibc.channel.MsgChannelOpenAck;
+
+      /**
+       * Encodes the specified MsgChannelOpenAck message. Does not implicitly {@link ibc.channel.MsgChannelOpenAck.verify|verify} messages.
+       * @param m MsgChannelOpenAck message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: ibc.channel.IMsgChannelOpenAck, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a MsgChannelOpenAck message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns MsgChannelOpenAck
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): ibc.channel.MsgChannelOpenAck;
+    }
+
+    /** Properties of a MsgChannelOpenConfirm. */
+    interface IMsgChannelOpenConfirm {
+      /** MsgChannelOpenConfirm portId */
+      portId?: string | null;
+
+      /** MsgChannelOpenConfirm channelId */
+      channelId?: string | null;
+
+      /** MsgChannelOpenConfirm proofAck */
+      proofAck?: Uint8Array | null;
+
+      /** MsgChannelOpenConfirm proofHeight */
+      proofHeight?: Long | null;
+
+      /** MsgChannelOpenConfirm signer */
+      signer?: Uint8Array | null;
+    }
+
+    /** Represents a MsgChannelOpenConfirm. */
+    class MsgChannelOpenConfirm implements IMsgChannelOpenConfirm {
+      /**
+       * Constructs a new MsgChannelOpenConfirm.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.channel.IMsgChannelOpenConfirm);
+
+      /** MsgChannelOpenConfirm portId. */
+      public portId: string;
+
+      /** MsgChannelOpenConfirm channelId. */
+      public channelId: string;
+
+      /** MsgChannelOpenConfirm proofAck. */
+      public proofAck: Uint8Array;
+
+      /** MsgChannelOpenConfirm proofHeight. */
+      public proofHeight: Long;
+
+      /** MsgChannelOpenConfirm signer. */
+      public signer: Uint8Array;
+
+      /**
+       * Creates a new MsgChannelOpenConfirm instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns MsgChannelOpenConfirm instance
+       */
+      public static create(
+        properties?: ibc.channel.IMsgChannelOpenConfirm,
+      ): ibc.channel.MsgChannelOpenConfirm;
+
+      /**
+       * Encodes the specified MsgChannelOpenConfirm message. Does not implicitly {@link ibc.channel.MsgChannelOpenConfirm.verify|verify} messages.
+       * @param m MsgChannelOpenConfirm message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: ibc.channel.IMsgChannelOpenConfirm, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a MsgChannelOpenConfirm message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns MsgChannelOpenConfirm
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): ibc.channel.MsgChannelOpenConfirm;
+    }
+
+    /** Properties of a MsgChannelCloseInit. */
+    interface IMsgChannelCloseInit {
+      /** MsgChannelCloseInit portId */
+      portId?: string | null;
+
+      /** MsgChannelCloseInit channelId */
+      channelId?: string | null;
+
+      /** MsgChannelCloseInit signer */
+      signer?: Uint8Array | null;
+    }
+
+    /** Represents a MsgChannelCloseInit. */
+    class MsgChannelCloseInit implements IMsgChannelCloseInit {
+      /**
+       * Constructs a new MsgChannelCloseInit.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.channel.IMsgChannelCloseInit);
+
+      /** MsgChannelCloseInit portId. */
+      public portId: string;
+
+      /** MsgChannelCloseInit channelId. */
+      public channelId: string;
+
+      /** MsgChannelCloseInit signer. */
+      public signer: Uint8Array;
+
+      /**
+       * Creates a new MsgChannelCloseInit instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns MsgChannelCloseInit instance
+       */
+      public static create(properties?: ibc.channel.IMsgChannelCloseInit): ibc.channel.MsgChannelCloseInit;
+
+      /**
+       * Encodes the specified MsgChannelCloseInit message. Does not implicitly {@link ibc.channel.MsgChannelCloseInit.verify|verify} messages.
+       * @param m MsgChannelCloseInit message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: ibc.channel.IMsgChannelCloseInit, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a MsgChannelCloseInit message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns MsgChannelCloseInit
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): ibc.channel.MsgChannelCloseInit;
+    }
+
+    /** Properties of a MsgChannelCloseConfirm. */
+    interface IMsgChannelCloseConfirm {
+      /** MsgChannelCloseConfirm portId */
+      portId?: string | null;
+
+      /** MsgChannelCloseConfirm channelId */
+      channelId?: string | null;
+
+      /** MsgChannelCloseConfirm proofInit */
+      proofInit?: Uint8Array | null;
+
+      /** MsgChannelCloseConfirm proofHeight */
+      proofHeight?: Long | null;
+
+      /** MsgChannelCloseConfirm signer */
+      signer?: Uint8Array | null;
+    }
+
+    /** Represents a MsgChannelCloseConfirm. */
+    class MsgChannelCloseConfirm implements IMsgChannelCloseConfirm {
+      /**
+       * Constructs a new MsgChannelCloseConfirm.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.channel.IMsgChannelCloseConfirm);
+
+      /** MsgChannelCloseConfirm portId. */
+      public portId: string;
+
+      /** MsgChannelCloseConfirm channelId. */
+      public channelId: string;
+
+      /** MsgChannelCloseConfirm proofInit. */
+      public proofInit: Uint8Array;
+
+      /** MsgChannelCloseConfirm proofHeight. */
+      public proofHeight: Long;
+
+      /** MsgChannelCloseConfirm signer. */
+      public signer: Uint8Array;
+
+      /**
+       * Creates a new MsgChannelCloseConfirm instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns MsgChannelCloseConfirm instance
+       */
+      public static create(
+        properties?: ibc.channel.IMsgChannelCloseConfirm,
+      ): ibc.channel.MsgChannelCloseConfirm;
+
+      /**
+       * Encodes the specified MsgChannelCloseConfirm message. Does not implicitly {@link ibc.channel.MsgChannelCloseConfirm.verify|verify} messages.
+       * @param m MsgChannelCloseConfirm message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: ibc.channel.IMsgChannelCloseConfirm, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a MsgChannelCloseConfirm message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns MsgChannelCloseConfirm
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): ibc.channel.MsgChannelCloseConfirm;
+    }
+
+    /** Properties of a MsgRecvPacket. */
+    interface IMsgRecvPacket {
+      /** MsgRecvPacket packet */
+      packet?: ibc.channel.IPacket | null;
+
+      /** MsgRecvPacket proof */
+      proof?: Uint8Array | null;
+
+      /** MsgRecvPacket proofHeight */
+      proofHeight?: Long | null;
+
+      /** MsgRecvPacket signer */
+      signer?: Uint8Array | null;
+    }
+
+    /** Represents a MsgRecvPacket. */
+    class MsgRecvPacket implements IMsgRecvPacket {
+      /**
+       * Constructs a new MsgRecvPacket.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.channel.IMsgRecvPacket);
+
+      /** MsgRecvPacket packet. */
+      public packet?: ibc.channel.IPacket | null;
+
+      /** MsgRecvPacket proof. */
+      public proof: Uint8Array;
+
+      /** MsgRecvPacket proofHeight. */
+      public proofHeight: Long;
+
+      /** MsgRecvPacket signer. */
+      public signer: Uint8Array;
+
+      /**
+       * Creates a new MsgRecvPacket instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns MsgRecvPacket instance
+       */
+      public static create(properties?: ibc.channel.IMsgRecvPacket): ibc.channel.MsgRecvPacket;
+
+      /**
+       * Encodes the specified MsgRecvPacket message. Does not implicitly {@link ibc.channel.MsgRecvPacket.verify|verify} messages.
+       * @param m MsgRecvPacket message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: ibc.channel.IMsgRecvPacket, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a MsgRecvPacket message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns MsgRecvPacket
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): ibc.channel.MsgRecvPacket;
+    }
+
+    /** Properties of a MsgTimeout. */
+    interface IMsgTimeout {
+      /** MsgTimeout packet */
+      packet?: ibc.channel.IPacket | null;
+
+      /** MsgTimeout proof */
+      proof?: Uint8Array | null;
+
+      /** MsgTimeout proofHeight */
+      proofHeight?: Long | null;
+
+      /** MsgTimeout nextSequenceRecv */
+      nextSequenceRecv?: Long | null;
+
+      /** MsgTimeout signer */
+      signer?: Uint8Array | null;
+    }
+
+    /** Represents a MsgTimeout. */
+    class MsgTimeout implements IMsgTimeout {
+      /**
+       * Constructs a new MsgTimeout.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.channel.IMsgTimeout);
+
+      /** MsgTimeout packet. */
+      public packet?: ibc.channel.IPacket | null;
+
+      /** MsgTimeout proof. */
+      public proof: Uint8Array;
+
+      /** MsgTimeout proofHeight. */
+      public proofHeight: Long;
+
+      /** MsgTimeout nextSequenceRecv. */
+      public nextSequenceRecv: Long;
+
+      /** MsgTimeout signer. */
+      public signer: Uint8Array;
+
+      /**
+       * Creates a new MsgTimeout instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns MsgTimeout instance
+       */
+      public static create(properties?: ibc.channel.IMsgTimeout): ibc.channel.MsgTimeout;
+
+      /**
+       * Encodes the specified MsgTimeout message. Does not implicitly {@link ibc.channel.MsgTimeout.verify|verify} messages.
+       * @param m MsgTimeout message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: ibc.channel.IMsgTimeout, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a MsgTimeout message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns MsgTimeout
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): ibc.channel.MsgTimeout;
+    }
+
+    /** Properties of a MsgAcknowledgement. */
+    interface IMsgAcknowledgement {
+      /** MsgAcknowledgement packet */
+      packet?: ibc.channel.IPacket | null;
+
+      /** MsgAcknowledgement acknowledgement */
+      acknowledgement?: Uint8Array | null;
+
+      /** MsgAcknowledgement proof */
+      proof?: Uint8Array | null;
+
+      /** MsgAcknowledgement proofHeight */
+      proofHeight?: Long | null;
+
+      /** MsgAcknowledgement signer */
+      signer?: Uint8Array | null;
+    }
+
+    /** Represents a MsgAcknowledgement. */
+    class MsgAcknowledgement implements IMsgAcknowledgement {
+      /**
+       * Constructs a new MsgAcknowledgement.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.channel.IMsgAcknowledgement);
+
+      /** MsgAcknowledgement packet. */
+      public packet?: ibc.channel.IPacket | null;
+
+      /** MsgAcknowledgement acknowledgement. */
+      public acknowledgement: Uint8Array;
+
+      /** MsgAcknowledgement proof. */
+      public proof: Uint8Array;
+
+      /** MsgAcknowledgement proofHeight. */
+      public proofHeight: Long;
+
+      /** MsgAcknowledgement signer. */
+      public signer: Uint8Array;
+
+      /**
+       * Creates a new MsgAcknowledgement instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns MsgAcknowledgement instance
+       */
+      public static create(properties?: ibc.channel.IMsgAcknowledgement): ibc.channel.MsgAcknowledgement;
+
+      /**
+       * Encodes the specified MsgAcknowledgement message. Does not implicitly {@link ibc.channel.MsgAcknowledgement.verify|verify} messages.
+       * @param m MsgAcknowledgement message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: ibc.channel.IMsgAcknowledgement, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a MsgAcknowledgement message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns MsgAcknowledgement
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): ibc.channel.MsgAcknowledgement;
+    }
+
+    /** Properties of a Channel. */
+    interface IChannel {
+      /** Channel state */
+      state?: ibc.channel.State | null;
+
+      /** Channel ordering */
+      ordering?: ibc.channel.Order | null;
+
+      /** Channel counterparty */
+      counterparty?: ibc.channel.ICounterparty | null;
+
+      /** Channel connectionHops */
+      connectionHops?: string[] | null;
+
+      /** Channel version */
+      version?: string | null;
+    }
+
+    /** Represents a Channel. */
+    class Channel implements IChannel {
+      /**
+       * Constructs a new Channel.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.channel.IChannel);
+
+      /** Channel state. */
+      public state: ibc.channel.State;
+
+      /** Channel ordering. */
+      public ordering: ibc.channel.Order;
+
+      /** Channel counterparty. */
+      public counterparty?: ibc.channel.ICounterparty | null;
+
+      /** Channel connectionHops. */
+      public connectionHops: string[];
+
+      /** Channel version. */
+      public version: string;
+
+      /**
+       * Creates a new Channel instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns Channel instance
+       */
+      public static create(properties?: ibc.channel.IChannel): ibc.channel.Channel;
+
+      /**
+       * Encodes the specified Channel message. Does not implicitly {@link ibc.channel.Channel.verify|verify} messages.
+       * @param m Channel message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: ibc.channel.IChannel, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a Channel message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns Channel
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): ibc.channel.Channel;
+    }
+
+    /** Properties of an IdentifiedChannel. */
+    interface IIdentifiedChannel {
+      /** IdentifiedChannel state */
+      state?: ibc.channel.State | null;
+
+      /** IdentifiedChannel ordering */
+      ordering?: ibc.channel.Order | null;
+
+      /** IdentifiedChannel counterparty */
+      counterparty?: ibc.channel.ICounterparty | null;
+
+      /** IdentifiedChannel connectionHops */
+      connectionHops?: string[] | null;
+
+      /** IdentifiedChannel version */
+      version?: string | null;
+
+      /** IdentifiedChannel portId */
+      portId?: string | null;
+
+      /** IdentifiedChannel channelId */
+      channelId?: string | null;
+    }
+
+    /** Represents an IdentifiedChannel. */
+    class IdentifiedChannel implements IIdentifiedChannel {
+      /**
+       * Constructs a new IdentifiedChannel.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.channel.IIdentifiedChannel);
+
+      /** IdentifiedChannel state. */
+      public state: ibc.channel.State;
+
+      /** IdentifiedChannel ordering. */
+      public ordering: ibc.channel.Order;
+
+      /** IdentifiedChannel counterparty. */
+      public counterparty?: ibc.channel.ICounterparty | null;
+
+      /** IdentifiedChannel connectionHops. */
+      public connectionHops: string[];
+
+      /** IdentifiedChannel version. */
+      public version: string;
+
+      /** IdentifiedChannel portId. */
+      public portId: string;
+
+      /** IdentifiedChannel channelId. */
+      public channelId: string;
+
+      /**
+       * Creates a new IdentifiedChannel instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns IdentifiedChannel instance
+       */
+      public static create(properties?: ibc.channel.IIdentifiedChannel): ibc.channel.IdentifiedChannel;
+
+      /**
+       * Encodes the specified IdentifiedChannel message. Does not implicitly {@link ibc.channel.IdentifiedChannel.verify|verify} messages.
+       * @param m IdentifiedChannel message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: ibc.channel.IIdentifiedChannel, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes an IdentifiedChannel message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns IdentifiedChannel
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): ibc.channel.IdentifiedChannel;
+    }
+
+    /** State enum. */
+    enum State {
+      STATE_UNINITIALIZED_UNSPECIFIED = 0,
+      STATE_INIT = 1,
+      STATE_TRYOPEN = 2,
+      STATE_OPEN = 3,
+      STATE_CLOSED = 4,
+    }
+
+    /** Order enum. */
+    enum Order {
+      ORDER_NONE_UNSPECIFIED = 0,
+      ORDER_UNORDERED = 1,
+      ORDER_ORDERED = 2,
+    }
+
+    /** Properties of a Counterparty. */
+    interface ICounterparty {
+      /** Counterparty portId */
+      portId?: string | null;
+
+      /** Counterparty channelId */
+      channelId?: string | null;
+    }
+
+    /** Represents a Counterparty. */
+    class Counterparty implements ICounterparty {
+      /**
+       * Constructs a new Counterparty.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.channel.ICounterparty);
+
+      /** Counterparty portId. */
+      public portId: string;
+
+      /** Counterparty channelId. */
+      public channelId: string;
+
+      /**
+       * Creates a new Counterparty instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns Counterparty instance
+       */
+      public static create(properties?: ibc.channel.ICounterparty): ibc.channel.Counterparty;
+
+      /**
+       * Encodes the specified Counterparty message. Does not implicitly {@link ibc.channel.Counterparty.verify|verify} messages.
+       * @param m Counterparty message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: ibc.channel.ICounterparty, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a Counterparty message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns Counterparty
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): ibc.channel.Counterparty;
+    }
+
+    /** Properties of a Packet. */
+    interface IPacket {
+      /** Packet sequence */
+      sequence?: Long | null;
+
+      /** Packet sourcePort */
+      sourcePort?: string | null;
+
+      /** Packet sourceChannel */
+      sourceChannel?: string | null;
+
+      /** Packet destinationPort */
+      destinationPort?: string | null;
+
+      /** Packet destinationChannel */
+      destinationChannel?: string | null;
+
+      /** Packet data */
+      data?: Uint8Array | null;
+
+      /** Packet timeoutHeight */
+      timeoutHeight?: Long | null;
+
+      /** Packet timeoutTimestamp */
+      timeoutTimestamp?: Long | null;
+    }
+
+    /** Represents a Packet. */
+    class Packet implements IPacket {
+      /**
+       * Constructs a new Packet.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.channel.IPacket);
+
+      /** Packet sequence. */
+      public sequence: Long;
+
+      /** Packet sourcePort. */
+      public sourcePort: string;
+
+      /** Packet sourceChannel. */
+      public sourceChannel: string;
+
+      /** Packet destinationPort. */
+      public destinationPort: string;
+
+      /** Packet destinationChannel. */
+      public destinationChannel: string;
+
+      /** Packet data. */
+      public data: Uint8Array;
+
+      /** Packet timeoutHeight. */
+      public timeoutHeight: Long;
+
+      /** Packet timeoutTimestamp. */
+      public timeoutTimestamp: Long;
+
+      /**
+       * Creates a new Packet instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns Packet instance
+       */
+      public static create(properties?: ibc.channel.IPacket): ibc.channel.Packet;
+
+      /**
+       * Encodes the specified Packet message. Does not implicitly {@link ibc.channel.Packet.verify|verify} messages.
+       * @param m Packet message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: ibc.channel.IPacket, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a Packet message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns Packet
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): ibc.channel.Packet;
+    }
+
+    /** Properties of a PacketAckCommitment. */
+    interface IPacketAckCommitment {
+      /** PacketAckCommitment portId */
+      portId?: string | null;
+
+      /** PacketAckCommitment channelId */
+      channelId?: string | null;
+
+      /** PacketAckCommitment sequence */
+      sequence?: Long | null;
+
+      /** PacketAckCommitment hash */
+      hash?: Uint8Array | null;
+    }
+
+    /** Represents a PacketAckCommitment. */
+    class PacketAckCommitment implements IPacketAckCommitment {
+      /**
+       * Constructs a new PacketAckCommitment.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.channel.IPacketAckCommitment);
+
+      /** PacketAckCommitment portId. */
+      public portId: string;
+
+      /** PacketAckCommitment channelId. */
+      public channelId: string;
+
+      /** PacketAckCommitment sequence. */
+      public sequence: Long;
+
+      /** PacketAckCommitment hash. */
+      public hash: Uint8Array;
+
+      /**
+       * Creates a new PacketAckCommitment instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns PacketAckCommitment instance
+       */
+      public static create(properties?: ibc.channel.IPacketAckCommitment): ibc.channel.PacketAckCommitment;
+
+      /**
+       * Encodes the specified PacketAckCommitment message. Does not implicitly {@link ibc.channel.PacketAckCommitment.verify|verify} messages.
+       * @param m PacketAckCommitment message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: ibc.channel.IPacketAckCommitment, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a PacketAckCommitment message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns PacketAckCommitment
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): ibc.channel.PacketAckCommitment;
+    }
+
+    /** Represents a Query */
+    class Query extends $protobuf.rpc.Service {
+      /**
+       * Constructs a new Query service.
+       * @param rpcImpl RPC implementation
+       * @param [requestDelimited=false] Whether requests are length-delimited
+       * @param [responseDelimited=false] Whether responses are length-delimited
+       */
+      constructor(rpcImpl: $protobuf.RPCImpl, requestDelimited?: boolean, responseDelimited?: boolean);
+
+      /**
+       * Creates new Query service using the specified rpc implementation.
+       * @param rpcImpl RPC implementation
+       * @param [requestDelimited=false] Whether requests are length-delimited
+       * @param [responseDelimited=false] Whether responses are length-delimited
+       * @returns RPC service. Useful where requests and/or responses are streamed.
+       */
+      public static create(
+        rpcImpl: $protobuf.RPCImpl,
+        requestDelimited?: boolean,
+        responseDelimited?: boolean,
+      ): Query;
+
+      /**
+       * Calls Channel.
+       * @param request QueryChannelRequest message or plain object
+       * @param callback Node-style callback called with the error, if any, and QueryChannelResponse
+       */
+      public channel(
+        request: ibc.channel.IQueryChannelRequest,
+        callback: ibc.channel.Query.ChannelCallback,
+      ): void;
+
+      /**
+       * Calls Channel.
+       * @param request QueryChannelRequest message or plain object
+       * @returns Promise
+       */
+      public channel(request: ibc.channel.IQueryChannelRequest): Promise<ibc.channel.QueryChannelResponse>;
+
+      /**
+       * Calls Channels.
+       * @param request QueryChannelsRequest message or plain object
+       * @param callback Node-style callback called with the error, if any, and QueryChannelsResponse
+       */
+      public channels(
+        request: ibc.channel.IQueryChannelsRequest,
+        callback: ibc.channel.Query.ChannelsCallback,
+      ): void;
+
+      /**
+       * Calls Channels.
+       * @param request QueryChannelsRequest message or plain object
+       * @returns Promise
+       */
+      public channels(request: ibc.channel.IQueryChannelsRequest): Promise<ibc.channel.QueryChannelsResponse>;
+
+      /**
+       * Calls ConnectionChannels.
+       * @param request QueryConnectionChannelsRequest message or plain object
+       * @param callback Node-style callback called with the error, if any, and QueryConnectionChannelsResponse
+       */
+      public connectionChannels(
+        request: ibc.channel.IQueryConnectionChannelsRequest,
+        callback: ibc.channel.Query.ConnectionChannelsCallback,
+      ): void;
+
+      /**
+       * Calls ConnectionChannels.
+       * @param request QueryConnectionChannelsRequest message or plain object
+       * @returns Promise
+       */
+      public connectionChannels(
+        request: ibc.channel.IQueryConnectionChannelsRequest,
+      ): Promise<ibc.channel.QueryConnectionChannelsResponse>;
+
+      /**
+       * Calls PacketCommitment.
+       * @param request QueryPacketCommitmentRequest message or plain object
+       * @param callback Node-style callback called with the error, if any, and QueryPacketCommitmentResponse
+       */
+      public packetCommitment(
+        request: ibc.channel.IQueryPacketCommitmentRequest,
+        callback: ibc.channel.Query.PacketCommitmentCallback,
+      ): void;
+
+      /**
+       * Calls PacketCommitment.
+       * @param request QueryPacketCommitmentRequest message or plain object
+       * @returns Promise
+       */
+      public packetCommitment(
+        request: ibc.channel.IQueryPacketCommitmentRequest,
+      ): Promise<ibc.channel.QueryPacketCommitmentResponse>;
+
+      /**
+       * Calls PacketCommitments.
+       * @param request QueryPacketCommitmentsRequest message or plain object
+       * @param callback Node-style callback called with the error, if any, and QueryPacketCommitmentsResponse
+       */
+      public packetCommitments(
+        request: ibc.channel.IQueryPacketCommitmentsRequest,
+        callback: ibc.channel.Query.PacketCommitmentsCallback,
+      ): void;
+
+      /**
+       * Calls PacketCommitments.
+       * @param request QueryPacketCommitmentsRequest message or plain object
+       * @returns Promise
+       */
+      public packetCommitments(
+        request: ibc.channel.IQueryPacketCommitmentsRequest,
+      ): Promise<ibc.channel.QueryPacketCommitmentsResponse>;
+
+      /**
+       * Calls PacketAcknowledgement.
+       * @param request QueryPacketAcknowledgementRequest message or plain object
+       * @param callback Node-style callback called with the error, if any, and QueryPacketAcknowledgementResponse
+       */
+      public packetAcknowledgement(
+        request: ibc.channel.IQueryPacketAcknowledgementRequest,
+        callback: ibc.channel.Query.PacketAcknowledgementCallback,
+      ): void;
+
+      /**
+       * Calls PacketAcknowledgement.
+       * @param request QueryPacketAcknowledgementRequest message or plain object
+       * @returns Promise
+       */
+      public packetAcknowledgement(
+        request: ibc.channel.IQueryPacketAcknowledgementRequest,
+      ): Promise<ibc.channel.QueryPacketAcknowledgementResponse>;
+
+      /**
+       * Calls UnrelayedPackets.
+       * @param request QueryUnrelayedPacketsRequest message or plain object
+       * @param callback Node-style callback called with the error, if any, and QueryUnrelayedPacketsResponse
+       */
+      public unrelayedPackets(
+        request: ibc.channel.IQueryUnrelayedPacketsRequest,
+        callback: ibc.channel.Query.UnrelayedPacketsCallback,
+      ): void;
+
+      /**
+       * Calls UnrelayedPackets.
+       * @param request QueryUnrelayedPacketsRequest message or plain object
+       * @returns Promise
+       */
+      public unrelayedPackets(
+        request: ibc.channel.IQueryUnrelayedPacketsRequest,
+      ): Promise<ibc.channel.QueryUnrelayedPacketsResponse>;
+
+      /**
+       * Calls NextSequenceReceive.
+       * @param request QueryNextSequenceReceiveRequest message or plain object
+       * @param callback Node-style callback called with the error, if any, and QueryNextSequenceReceiveResponse
+       */
+      public nextSequenceReceive(
+        request: ibc.channel.IQueryNextSequenceReceiveRequest,
+        callback: ibc.channel.Query.NextSequenceReceiveCallback,
+      ): void;
+
+      /**
+       * Calls NextSequenceReceive.
+       * @param request QueryNextSequenceReceiveRequest message or plain object
+       * @returns Promise
+       */
+      public nextSequenceReceive(
+        request: ibc.channel.IQueryNextSequenceReceiveRequest,
+      ): Promise<ibc.channel.QueryNextSequenceReceiveResponse>;
+    }
+
+    namespace Query {
+      /**
+       * Callback as used by {@link ibc.channel.Query#channel}.
+       * @param error Error, if any
+       * @param [response] QueryChannelResponse
+       */
+      type ChannelCallback = (error: Error | null, response?: ibc.channel.QueryChannelResponse) => void;
+
+      /**
+       * Callback as used by {@link ibc.channel.Query#channels}.
+       * @param error Error, if any
+       * @param [response] QueryChannelsResponse
+       */
+      type ChannelsCallback = (error: Error | null, response?: ibc.channel.QueryChannelsResponse) => void;
+
+      /**
+       * Callback as used by {@link ibc.channel.Query#connectionChannels}.
+       * @param error Error, if any
+       * @param [response] QueryConnectionChannelsResponse
+       */
+      type ConnectionChannelsCallback = (
+        error: Error | null,
+        response?: ibc.channel.QueryConnectionChannelsResponse,
+      ) => void;
+
+      /**
+       * Callback as used by {@link ibc.channel.Query#packetCommitment}.
+       * @param error Error, if any
+       * @param [response] QueryPacketCommitmentResponse
+       */
+      type PacketCommitmentCallback = (
+        error: Error | null,
+        response?: ibc.channel.QueryPacketCommitmentResponse,
+      ) => void;
+
+      /**
+       * Callback as used by {@link ibc.channel.Query#packetCommitments}.
+       * @param error Error, if any
+       * @param [response] QueryPacketCommitmentsResponse
+       */
+      type PacketCommitmentsCallback = (
+        error: Error | null,
+        response?: ibc.channel.QueryPacketCommitmentsResponse,
+      ) => void;
+
+      /**
+       * Callback as used by {@link ibc.channel.Query#packetAcknowledgement}.
+       * @param error Error, if any
+       * @param [response] QueryPacketAcknowledgementResponse
+       */
+      type PacketAcknowledgementCallback = (
+        error: Error | null,
+        response?: ibc.channel.QueryPacketAcknowledgementResponse,
+      ) => void;
+
+      /**
+       * Callback as used by {@link ibc.channel.Query#unrelayedPackets}.
+       * @param error Error, if any
+       * @param [response] QueryUnrelayedPacketsResponse
+       */
+      type UnrelayedPacketsCallback = (
+        error: Error | null,
+        response?: ibc.channel.QueryUnrelayedPacketsResponse,
+      ) => void;
+
+      /**
+       * Callback as used by {@link ibc.channel.Query#nextSequenceReceive}.
+       * @param error Error, if any
+       * @param [response] QueryNextSequenceReceiveResponse
+       */
+      type NextSequenceReceiveCallback = (
+        error: Error | null,
+        response?: ibc.channel.QueryNextSequenceReceiveResponse,
+      ) => void;
+    }
+
+    /** Properties of a QueryChannelRequest. */
+    interface IQueryChannelRequest {
+      /** QueryChannelRequest portId */
+      portId?: string | null;
+
+      /** QueryChannelRequest channelId */
+      channelId?: string | null;
+    }
+
+    /** Represents a QueryChannelRequest. */
+    class QueryChannelRequest implements IQueryChannelRequest {
+      /**
+       * Constructs a new QueryChannelRequest.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.channel.IQueryChannelRequest);
+
+      /** QueryChannelRequest portId. */
+      public portId: string;
+
+      /** QueryChannelRequest channelId. */
+      public channelId: string;
+
+      /**
+       * Creates a new QueryChannelRequest instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns QueryChannelRequest instance
+       */
+      public static create(properties?: ibc.channel.IQueryChannelRequest): ibc.channel.QueryChannelRequest;
+
+      /**
+       * Encodes the specified QueryChannelRequest message. Does not implicitly {@link ibc.channel.QueryChannelRequest.verify|verify} messages.
+       * @param m QueryChannelRequest message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: ibc.channel.IQueryChannelRequest, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a QueryChannelRequest message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns QueryChannelRequest
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): ibc.channel.QueryChannelRequest;
+    }
+
+    /** Properties of a QueryChannelResponse. */
+    interface IQueryChannelResponse {
+      /** QueryChannelResponse channel */
+      channel?: ibc.channel.IChannel | null;
+
+      /** QueryChannelResponse proof */
+      proof?: Uint8Array | null;
+
+      /** QueryChannelResponse proofPath */
+      proofPath?: string | null;
+
+      /** QueryChannelResponse proofHeight */
+      proofHeight?: Long | null;
+    }
+
+    /** Represents a QueryChannelResponse. */
+    class QueryChannelResponse implements IQueryChannelResponse {
+      /**
+       * Constructs a new QueryChannelResponse.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.channel.IQueryChannelResponse);
+
+      /** QueryChannelResponse channel. */
+      public channel?: ibc.channel.IChannel | null;
+
+      /** QueryChannelResponse proof. */
+      public proof: Uint8Array;
+
+      /** QueryChannelResponse proofPath. */
+      public proofPath: string;
+
+      /** QueryChannelResponse proofHeight. */
+      public proofHeight: Long;
+
+      /**
+       * Creates a new QueryChannelResponse instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns QueryChannelResponse instance
+       */
+      public static create(properties?: ibc.channel.IQueryChannelResponse): ibc.channel.QueryChannelResponse;
+
+      /**
+       * Encodes the specified QueryChannelResponse message. Does not implicitly {@link ibc.channel.QueryChannelResponse.verify|verify} messages.
+       * @param m QueryChannelResponse message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: ibc.channel.IQueryChannelResponse, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a QueryChannelResponse message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns QueryChannelResponse
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): ibc.channel.QueryChannelResponse;
+    }
+
+    /** Properties of a QueryChannelsRequest. */
+    interface IQueryChannelsRequest {
+      /** QueryChannelsRequest pagination */
+      pagination?: cosmos.query.IPageRequest | null;
+    }
+
+    /** Represents a QueryChannelsRequest. */
+    class QueryChannelsRequest implements IQueryChannelsRequest {
+      /**
+       * Constructs a new QueryChannelsRequest.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.channel.IQueryChannelsRequest);
+
+      /** QueryChannelsRequest pagination. */
+      public pagination?: cosmos.query.IPageRequest | null;
+
+      /**
+       * Creates a new QueryChannelsRequest instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns QueryChannelsRequest instance
+       */
+      public static create(properties?: ibc.channel.IQueryChannelsRequest): ibc.channel.QueryChannelsRequest;
+
+      /**
+       * Encodes the specified QueryChannelsRequest message. Does not implicitly {@link ibc.channel.QueryChannelsRequest.verify|verify} messages.
+       * @param m QueryChannelsRequest message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: ibc.channel.IQueryChannelsRequest, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a QueryChannelsRequest message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns QueryChannelsRequest
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): ibc.channel.QueryChannelsRequest;
+    }
+
+    /** Properties of a QueryChannelsResponse. */
+    interface IQueryChannelsResponse {
+      /** QueryChannelsResponse channels */
+      channels?: ibc.channel.IIdentifiedChannel[] | null;
+
+      /** QueryChannelsResponse pagination */
+      pagination?: cosmos.query.IPageResponse | null;
+
+      /** QueryChannelsResponse height */
+      height?: Long | null;
+    }
+
+    /** Represents a QueryChannelsResponse. */
+    class QueryChannelsResponse implements IQueryChannelsResponse {
+      /**
+       * Constructs a new QueryChannelsResponse.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.channel.IQueryChannelsResponse);
+
+      /** QueryChannelsResponse channels. */
+      public channels: ibc.channel.IIdentifiedChannel[];
+
+      /** QueryChannelsResponse pagination. */
+      public pagination?: cosmos.query.IPageResponse | null;
+
+      /** QueryChannelsResponse height. */
+      public height: Long;
+
+      /**
+       * Creates a new QueryChannelsResponse instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns QueryChannelsResponse instance
+       */
+      public static create(
+        properties?: ibc.channel.IQueryChannelsResponse,
+      ): ibc.channel.QueryChannelsResponse;
+
+      /**
+       * Encodes the specified QueryChannelsResponse message. Does not implicitly {@link ibc.channel.QueryChannelsResponse.verify|verify} messages.
+       * @param m QueryChannelsResponse message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: ibc.channel.IQueryChannelsResponse, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a QueryChannelsResponse message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns QueryChannelsResponse
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): ibc.channel.QueryChannelsResponse;
+    }
+
+    /** Properties of a QueryConnectionChannelsRequest. */
+    interface IQueryConnectionChannelsRequest {
+      /** QueryConnectionChannelsRequest connection */
+      connection?: string | null;
+
+      /** QueryConnectionChannelsRequest pagination */
+      pagination?: cosmos.query.IPageRequest | null;
+    }
+
+    /** Represents a QueryConnectionChannelsRequest. */
+    class QueryConnectionChannelsRequest implements IQueryConnectionChannelsRequest {
+      /**
+       * Constructs a new QueryConnectionChannelsRequest.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.channel.IQueryConnectionChannelsRequest);
+
+      /** QueryConnectionChannelsRequest connection. */
+      public connection: string;
+
+      /** QueryConnectionChannelsRequest pagination. */
+      public pagination?: cosmos.query.IPageRequest | null;
+
+      /**
+       * Creates a new QueryConnectionChannelsRequest instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns QueryConnectionChannelsRequest instance
+       */
+      public static create(
+        properties?: ibc.channel.IQueryConnectionChannelsRequest,
+      ): ibc.channel.QueryConnectionChannelsRequest;
+
+      /**
+       * Encodes the specified QueryConnectionChannelsRequest message. Does not implicitly {@link ibc.channel.QueryConnectionChannelsRequest.verify|verify} messages.
+       * @param m QueryConnectionChannelsRequest message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(
+        m: ibc.channel.IQueryConnectionChannelsRequest,
+        w?: $protobuf.Writer,
+      ): $protobuf.Writer;
+
+      /**
+       * Decodes a QueryConnectionChannelsRequest message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns QueryConnectionChannelsRequest
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(
+        r: $protobuf.Reader | Uint8Array,
+        l?: number,
+      ): ibc.channel.QueryConnectionChannelsRequest;
+    }
+
+    /** Properties of a QueryConnectionChannelsResponse. */
+    interface IQueryConnectionChannelsResponse {
+      /** QueryConnectionChannelsResponse channels */
+      channels?: ibc.channel.IIdentifiedChannel[] | null;
+
+      /** QueryConnectionChannelsResponse pagination */
+      pagination?: cosmos.query.IPageResponse | null;
+
+      /** QueryConnectionChannelsResponse height */
+      height?: Long | null;
+    }
+
+    /** Represents a QueryConnectionChannelsResponse. */
+    class QueryConnectionChannelsResponse implements IQueryConnectionChannelsResponse {
+      /**
+       * Constructs a new QueryConnectionChannelsResponse.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.channel.IQueryConnectionChannelsResponse);
+
+      /** QueryConnectionChannelsResponse channels. */
+      public channels: ibc.channel.IIdentifiedChannel[];
+
+      /** QueryConnectionChannelsResponse pagination. */
+      public pagination?: cosmos.query.IPageResponse | null;
+
+      /** QueryConnectionChannelsResponse height. */
+      public height: Long;
+
+      /**
+       * Creates a new QueryConnectionChannelsResponse instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns QueryConnectionChannelsResponse instance
+       */
+      public static create(
+        properties?: ibc.channel.IQueryConnectionChannelsResponse,
+      ): ibc.channel.QueryConnectionChannelsResponse;
+
+      /**
+       * Encodes the specified QueryConnectionChannelsResponse message. Does not implicitly {@link ibc.channel.QueryConnectionChannelsResponse.verify|verify} messages.
+       * @param m QueryConnectionChannelsResponse message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(
+        m: ibc.channel.IQueryConnectionChannelsResponse,
+        w?: $protobuf.Writer,
+      ): $protobuf.Writer;
+
+      /**
+       * Decodes a QueryConnectionChannelsResponse message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns QueryConnectionChannelsResponse
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(
+        r: $protobuf.Reader | Uint8Array,
+        l?: number,
+      ): ibc.channel.QueryConnectionChannelsResponse;
+    }
+
+    /** Properties of a QueryPacketCommitmentRequest. */
+    interface IQueryPacketCommitmentRequest {
+      /** QueryPacketCommitmentRequest portId */
+      portId?: string | null;
+
+      /** QueryPacketCommitmentRequest channelId */
+      channelId?: string | null;
+
+      /** QueryPacketCommitmentRequest sequence */
+      sequence?: Long | null;
+    }
+
+    /** Represents a QueryPacketCommitmentRequest. */
+    class QueryPacketCommitmentRequest implements IQueryPacketCommitmentRequest {
+      /**
+       * Constructs a new QueryPacketCommitmentRequest.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.channel.IQueryPacketCommitmentRequest);
+
+      /** QueryPacketCommitmentRequest portId. */
+      public portId: string;
+
+      /** QueryPacketCommitmentRequest channelId. */
+      public channelId: string;
+
+      /** QueryPacketCommitmentRequest sequence. */
+      public sequence: Long;
+
+      /**
+       * Creates a new QueryPacketCommitmentRequest instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns QueryPacketCommitmentRequest instance
+       */
+      public static create(
+        properties?: ibc.channel.IQueryPacketCommitmentRequest,
+      ): ibc.channel.QueryPacketCommitmentRequest;
+
+      /**
+       * Encodes the specified QueryPacketCommitmentRequest message. Does not implicitly {@link ibc.channel.QueryPacketCommitmentRequest.verify|verify} messages.
+       * @param m QueryPacketCommitmentRequest message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(
+        m: ibc.channel.IQueryPacketCommitmentRequest,
+        w?: $protobuf.Writer,
+      ): $protobuf.Writer;
+
+      /**
+       * Decodes a QueryPacketCommitmentRequest message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns QueryPacketCommitmentRequest
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(
+        r: $protobuf.Reader | Uint8Array,
+        l?: number,
+      ): ibc.channel.QueryPacketCommitmentRequest;
+    }
+
+    /** Properties of a QueryPacketCommitmentResponse. */
+    interface IQueryPacketCommitmentResponse {
+      /** QueryPacketCommitmentResponse commitment */
+      commitment?: Uint8Array | null;
+
+      /** QueryPacketCommitmentResponse proof */
+      proof?: Uint8Array | null;
+
+      /** QueryPacketCommitmentResponse proofPath */
+      proofPath?: string | null;
+
+      /** QueryPacketCommitmentResponse proofHeight */
+      proofHeight?: Long | null;
+    }
+
+    /** Represents a QueryPacketCommitmentResponse. */
+    class QueryPacketCommitmentResponse implements IQueryPacketCommitmentResponse {
+      /**
+       * Constructs a new QueryPacketCommitmentResponse.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.channel.IQueryPacketCommitmentResponse);
+
+      /** QueryPacketCommitmentResponse commitment. */
+      public commitment: Uint8Array;
+
+      /** QueryPacketCommitmentResponse proof. */
+      public proof: Uint8Array;
+
+      /** QueryPacketCommitmentResponse proofPath. */
+      public proofPath: string;
+
+      /** QueryPacketCommitmentResponse proofHeight. */
+      public proofHeight: Long;
+
+      /**
+       * Creates a new QueryPacketCommitmentResponse instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns QueryPacketCommitmentResponse instance
+       */
+      public static create(
+        properties?: ibc.channel.IQueryPacketCommitmentResponse,
+      ): ibc.channel.QueryPacketCommitmentResponse;
+
+      /**
+       * Encodes the specified QueryPacketCommitmentResponse message. Does not implicitly {@link ibc.channel.QueryPacketCommitmentResponse.verify|verify} messages.
+       * @param m QueryPacketCommitmentResponse message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(
+        m: ibc.channel.IQueryPacketCommitmentResponse,
+        w?: $protobuf.Writer,
+      ): $protobuf.Writer;
+
+      /**
+       * Decodes a QueryPacketCommitmentResponse message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns QueryPacketCommitmentResponse
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(
+        r: $protobuf.Reader | Uint8Array,
+        l?: number,
+      ): ibc.channel.QueryPacketCommitmentResponse;
+    }
+
+    /** Properties of a QueryPacketCommitmentsRequest. */
+    interface IQueryPacketCommitmentsRequest {
+      /** QueryPacketCommitmentsRequest portId */
+      portId?: string | null;
+
+      /** QueryPacketCommitmentsRequest channelId */
+      channelId?: string | null;
+
+      /** QueryPacketCommitmentsRequest pagination */
+      pagination?: cosmos.query.IPageRequest | null;
+    }
+
+    /** Represents a QueryPacketCommitmentsRequest. */
+    class QueryPacketCommitmentsRequest implements IQueryPacketCommitmentsRequest {
+      /**
+       * Constructs a new QueryPacketCommitmentsRequest.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.channel.IQueryPacketCommitmentsRequest);
+
+      /** QueryPacketCommitmentsRequest portId. */
+      public portId: string;
+
+      /** QueryPacketCommitmentsRequest channelId. */
+      public channelId: string;
+
+      /** QueryPacketCommitmentsRequest pagination. */
+      public pagination?: cosmos.query.IPageRequest | null;
+
+      /**
+       * Creates a new QueryPacketCommitmentsRequest instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns QueryPacketCommitmentsRequest instance
+       */
+      public static create(
+        properties?: ibc.channel.IQueryPacketCommitmentsRequest,
+      ): ibc.channel.QueryPacketCommitmentsRequest;
+
+      /**
+       * Encodes the specified QueryPacketCommitmentsRequest message. Does not implicitly {@link ibc.channel.QueryPacketCommitmentsRequest.verify|verify} messages.
+       * @param m QueryPacketCommitmentsRequest message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(
+        m: ibc.channel.IQueryPacketCommitmentsRequest,
+        w?: $protobuf.Writer,
+      ): $protobuf.Writer;
+
+      /**
+       * Decodes a QueryPacketCommitmentsRequest message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns QueryPacketCommitmentsRequest
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(
+        r: $protobuf.Reader | Uint8Array,
+        l?: number,
+      ): ibc.channel.QueryPacketCommitmentsRequest;
+    }
+
+    /** Properties of a QueryPacketCommitmentsResponse. */
+    interface IQueryPacketCommitmentsResponse {
+      /** QueryPacketCommitmentsResponse commitments */
+      commitments?: ibc.channel.IPacketAckCommitment[] | null;
+
+      /** QueryPacketCommitmentsResponse pagination */
+      pagination?: cosmos.query.IPageResponse | null;
+
+      /** QueryPacketCommitmentsResponse height */
+      height?: Long | null;
+    }
+
+    /** Represents a QueryPacketCommitmentsResponse. */
+    class QueryPacketCommitmentsResponse implements IQueryPacketCommitmentsResponse {
+      /**
+       * Constructs a new QueryPacketCommitmentsResponse.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.channel.IQueryPacketCommitmentsResponse);
+
+      /** QueryPacketCommitmentsResponse commitments. */
+      public commitments: ibc.channel.IPacketAckCommitment[];
+
+      /** QueryPacketCommitmentsResponse pagination. */
+      public pagination?: cosmos.query.IPageResponse | null;
+
+      /** QueryPacketCommitmentsResponse height. */
+      public height: Long;
+
+      /**
+       * Creates a new QueryPacketCommitmentsResponse instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns QueryPacketCommitmentsResponse instance
+       */
+      public static create(
+        properties?: ibc.channel.IQueryPacketCommitmentsResponse,
+      ): ibc.channel.QueryPacketCommitmentsResponse;
+
+      /**
+       * Encodes the specified QueryPacketCommitmentsResponse message. Does not implicitly {@link ibc.channel.QueryPacketCommitmentsResponse.verify|verify} messages.
+       * @param m QueryPacketCommitmentsResponse message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(
+        m: ibc.channel.IQueryPacketCommitmentsResponse,
+        w?: $protobuf.Writer,
+      ): $protobuf.Writer;
+
+      /**
+       * Decodes a QueryPacketCommitmentsResponse message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns QueryPacketCommitmentsResponse
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(
+        r: $protobuf.Reader | Uint8Array,
+        l?: number,
+      ): ibc.channel.QueryPacketCommitmentsResponse;
+    }
+
+    /** Properties of a QueryPacketAcknowledgementRequest. */
+    interface IQueryPacketAcknowledgementRequest {
+      /** QueryPacketAcknowledgementRequest portId */
+      portId?: string | null;
+
+      /** QueryPacketAcknowledgementRequest channelId */
+      channelId?: string | null;
+
+      /** QueryPacketAcknowledgementRequest sequence */
+      sequence?: Long | null;
+    }
+
+    /** Represents a QueryPacketAcknowledgementRequest. */
+    class QueryPacketAcknowledgementRequest implements IQueryPacketAcknowledgementRequest {
+      /**
+       * Constructs a new QueryPacketAcknowledgementRequest.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.channel.IQueryPacketAcknowledgementRequest);
+
+      /** QueryPacketAcknowledgementRequest portId. */
+      public portId: string;
+
+      /** QueryPacketAcknowledgementRequest channelId. */
+      public channelId: string;
+
+      /** QueryPacketAcknowledgementRequest sequence. */
+      public sequence: Long;
+
+      /**
+       * Creates a new QueryPacketAcknowledgementRequest instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns QueryPacketAcknowledgementRequest instance
+       */
+      public static create(
+        properties?: ibc.channel.IQueryPacketAcknowledgementRequest,
+      ): ibc.channel.QueryPacketAcknowledgementRequest;
+
+      /**
+       * Encodes the specified QueryPacketAcknowledgementRequest message. Does not implicitly {@link ibc.channel.QueryPacketAcknowledgementRequest.verify|verify} messages.
+       * @param m QueryPacketAcknowledgementRequest message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(
+        m: ibc.channel.IQueryPacketAcknowledgementRequest,
+        w?: $protobuf.Writer,
+      ): $protobuf.Writer;
+
+      /**
+       * Decodes a QueryPacketAcknowledgementRequest message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns QueryPacketAcknowledgementRequest
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(
+        r: $protobuf.Reader | Uint8Array,
+        l?: number,
+      ): ibc.channel.QueryPacketAcknowledgementRequest;
+    }
+
+    /** Properties of a QueryPacketAcknowledgementResponse. */
+    interface IQueryPacketAcknowledgementResponse {
+      /** QueryPacketAcknowledgementResponse acknowledgement */
+      acknowledgement?: Uint8Array | null;
+
+      /** QueryPacketAcknowledgementResponse proof */
+      proof?: Uint8Array | null;
+
+      /** QueryPacketAcknowledgementResponse proofPath */
+      proofPath?: string | null;
+
+      /** QueryPacketAcknowledgementResponse proofHeight */
+      proofHeight?: Long | null;
+    }
+
+    /** Represents a QueryPacketAcknowledgementResponse. */
+    class QueryPacketAcknowledgementResponse implements IQueryPacketAcknowledgementResponse {
+      /**
+       * Constructs a new QueryPacketAcknowledgementResponse.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.channel.IQueryPacketAcknowledgementResponse);
+
+      /** QueryPacketAcknowledgementResponse acknowledgement. */
+      public acknowledgement: Uint8Array;
+
+      /** QueryPacketAcknowledgementResponse proof. */
+      public proof: Uint8Array;
+
+      /** QueryPacketAcknowledgementResponse proofPath. */
+      public proofPath: string;
+
+      /** QueryPacketAcknowledgementResponse proofHeight. */
+      public proofHeight: Long;
+
+      /**
+       * Creates a new QueryPacketAcknowledgementResponse instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns QueryPacketAcknowledgementResponse instance
+       */
+      public static create(
+        properties?: ibc.channel.IQueryPacketAcknowledgementResponse,
+      ): ibc.channel.QueryPacketAcknowledgementResponse;
+
+      /**
+       * Encodes the specified QueryPacketAcknowledgementResponse message. Does not implicitly {@link ibc.channel.QueryPacketAcknowledgementResponse.verify|verify} messages.
+       * @param m QueryPacketAcknowledgementResponse message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(
+        m: ibc.channel.IQueryPacketAcknowledgementResponse,
+        w?: $protobuf.Writer,
+      ): $protobuf.Writer;
+
+      /**
+       * Decodes a QueryPacketAcknowledgementResponse message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns QueryPacketAcknowledgementResponse
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(
+        r: $protobuf.Reader | Uint8Array,
+        l?: number,
+      ): ibc.channel.QueryPacketAcknowledgementResponse;
+    }
+
+    /** Properties of a QueryUnrelayedPacketsRequest. */
+    interface IQueryUnrelayedPacketsRequest {
+      /** QueryUnrelayedPacketsRequest portId */
+      portId?: string | null;
+
+      /** QueryUnrelayedPacketsRequest channelId */
+      channelId?: string | null;
+
+      /** QueryUnrelayedPacketsRequest packetCommitmentSequences */
+      packetCommitmentSequences?: Long[] | null;
+
+      /** QueryUnrelayedPacketsRequest acknowledgements */
+      acknowledgements?: boolean | null;
+    }
+
+    /** Represents a QueryUnrelayedPacketsRequest. */
+    class QueryUnrelayedPacketsRequest implements IQueryUnrelayedPacketsRequest {
+      /**
+       * Constructs a new QueryUnrelayedPacketsRequest.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.channel.IQueryUnrelayedPacketsRequest);
+
+      /** QueryUnrelayedPacketsRequest portId. */
+      public portId: string;
+
+      /** QueryUnrelayedPacketsRequest channelId. */
+      public channelId: string;
+
+      /** QueryUnrelayedPacketsRequest packetCommitmentSequences. */
+      public packetCommitmentSequences: Long[];
+
+      /** QueryUnrelayedPacketsRequest acknowledgements. */
+      public acknowledgements: boolean;
+
+      /**
+       * Creates a new QueryUnrelayedPacketsRequest instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns QueryUnrelayedPacketsRequest instance
+       */
+      public static create(
+        properties?: ibc.channel.IQueryUnrelayedPacketsRequest,
+      ): ibc.channel.QueryUnrelayedPacketsRequest;
+
+      /**
+       * Encodes the specified QueryUnrelayedPacketsRequest message. Does not implicitly {@link ibc.channel.QueryUnrelayedPacketsRequest.verify|verify} messages.
+       * @param m QueryUnrelayedPacketsRequest message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(
+        m: ibc.channel.IQueryUnrelayedPacketsRequest,
+        w?: $protobuf.Writer,
+      ): $protobuf.Writer;
+
+      /**
+       * Decodes a QueryUnrelayedPacketsRequest message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns QueryUnrelayedPacketsRequest
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(
+        r: $protobuf.Reader | Uint8Array,
+        l?: number,
+      ): ibc.channel.QueryUnrelayedPacketsRequest;
+    }
+
+    /** Properties of a QueryUnrelayedPacketsResponse. */
+    interface IQueryUnrelayedPacketsResponse {
+      /** QueryUnrelayedPacketsResponse sequences */
+      sequences?: Long[] | null;
+
+      /** QueryUnrelayedPacketsResponse height */
+      height?: Long | null;
+    }
+
+    /** Represents a QueryUnrelayedPacketsResponse. */
+    class QueryUnrelayedPacketsResponse implements IQueryUnrelayedPacketsResponse {
+      /**
+       * Constructs a new QueryUnrelayedPacketsResponse.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.channel.IQueryUnrelayedPacketsResponse);
+
+      /** QueryUnrelayedPacketsResponse sequences. */
+      public sequences: Long[];
+
+      /** QueryUnrelayedPacketsResponse height. */
+      public height: Long;
+
+      /**
+       * Creates a new QueryUnrelayedPacketsResponse instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns QueryUnrelayedPacketsResponse instance
+       */
+      public static create(
+        properties?: ibc.channel.IQueryUnrelayedPacketsResponse,
+      ): ibc.channel.QueryUnrelayedPacketsResponse;
+
+      /**
+       * Encodes the specified QueryUnrelayedPacketsResponse message. Does not implicitly {@link ibc.channel.QueryUnrelayedPacketsResponse.verify|verify} messages.
+       * @param m QueryUnrelayedPacketsResponse message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(
+        m: ibc.channel.IQueryUnrelayedPacketsResponse,
+        w?: $protobuf.Writer,
+      ): $protobuf.Writer;
+
+      /**
+       * Decodes a QueryUnrelayedPacketsResponse message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns QueryUnrelayedPacketsResponse
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(
+        r: $protobuf.Reader | Uint8Array,
+        l?: number,
+      ): ibc.channel.QueryUnrelayedPacketsResponse;
+    }
+
+    /** Properties of a QueryNextSequenceReceiveRequest. */
+    interface IQueryNextSequenceReceiveRequest {
+      /** QueryNextSequenceReceiveRequest portId */
+      portId?: string | null;
+
+      /** QueryNextSequenceReceiveRequest channelId */
+      channelId?: string | null;
+    }
+
+    /** Represents a QueryNextSequenceReceiveRequest. */
+    class QueryNextSequenceReceiveRequest implements IQueryNextSequenceReceiveRequest {
+      /**
+       * Constructs a new QueryNextSequenceReceiveRequest.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.channel.IQueryNextSequenceReceiveRequest);
+
+      /** QueryNextSequenceReceiveRequest portId. */
+      public portId: string;
+
+      /** QueryNextSequenceReceiveRequest channelId. */
+      public channelId: string;
+
+      /**
+       * Creates a new QueryNextSequenceReceiveRequest instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns QueryNextSequenceReceiveRequest instance
+       */
+      public static create(
+        properties?: ibc.channel.IQueryNextSequenceReceiveRequest,
+      ): ibc.channel.QueryNextSequenceReceiveRequest;
+
+      /**
+       * Encodes the specified QueryNextSequenceReceiveRequest message. Does not implicitly {@link ibc.channel.QueryNextSequenceReceiveRequest.verify|verify} messages.
+       * @param m QueryNextSequenceReceiveRequest message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(
+        m: ibc.channel.IQueryNextSequenceReceiveRequest,
+        w?: $protobuf.Writer,
+      ): $protobuf.Writer;
+
+      /**
+       * Decodes a QueryNextSequenceReceiveRequest message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns QueryNextSequenceReceiveRequest
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(
+        r: $protobuf.Reader | Uint8Array,
+        l?: number,
+      ): ibc.channel.QueryNextSequenceReceiveRequest;
+    }
+
+    /** Properties of a QueryNextSequenceReceiveResponse. */
+    interface IQueryNextSequenceReceiveResponse {
+      /** QueryNextSequenceReceiveResponse nextSequenceReceive */
+      nextSequenceReceive?: Long | null;
+
+      /** QueryNextSequenceReceiveResponse proof */
+      proof?: Uint8Array | null;
+
+      /** QueryNextSequenceReceiveResponse proofPath */
+      proofPath?: string | null;
+
+      /** QueryNextSequenceReceiveResponse proofHeight */
+      proofHeight?: Long | null;
+    }
+
+    /** Represents a QueryNextSequenceReceiveResponse. */
+    class QueryNextSequenceReceiveResponse implements IQueryNextSequenceReceiveResponse {
+      /**
+       * Constructs a new QueryNextSequenceReceiveResponse.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.channel.IQueryNextSequenceReceiveResponse);
+
+      /** QueryNextSequenceReceiveResponse nextSequenceReceive. */
+      public nextSequenceReceive: Long;
+
+      /** QueryNextSequenceReceiveResponse proof. */
+      public proof: Uint8Array;
+
+      /** QueryNextSequenceReceiveResponse proofPath. */
+      public proofPath: string;
+
+      /** QueryNextSequenceReceiveResponse proofHeight. */
+      public proofHeight: Long;
+
+      /**
+       * Creates a new QueryNextSequenceReceiveResponse instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns QueryNextSequenceReceiveResponse instance
+       */
+      public static create(
+        properties?: ibc.channel.IQueryNextSequenceReceiveResponse,
+      ): ibc.channel.QueryNextSequenceReceiveResponse;
+
+      /**
+       * Encodes the specified QueryNextSequenceReceiveResponse message. Does not implicitly {@link ibc.channel.QueryNextSequenceReceiveResponse.verify|verify} messages.
+       * @param m QueryNextSequenceReceiveResponse message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(
+        m: ibc.channel.IQueryNextSequenceReceiveResponse,
+        w?: $protobuf.Writer,
+      ): $protobuf.Writer;
+
+      /**
+       * Decodes a QueryNextSequenceReceiveResponse message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns QueryNextSequenceReceiveResponse
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(
+        r: $protobuf.Reader | Uint8Array,
+        l?: number,
+      ): ibc.channel.QueryNextSequenceReceiveResponse;
+    }
+
+    /** Properties of a QueryChannelClientStateRequest. */
+    interface IQueryChannelClientStateRequest {
+      /** QueryChannelClientStateRequest portId */
+      portId?: string | null;
+
+      /** QueryChannelClientStateRequest channelId */
+      channelId?: string | null;
+    }
+
+    /** Represents a QueryChannelClientStateRequest. */
+    class QueryChannelClientStateRequest implements IQueryChannelClientStateRequest {
+      /**
+       * Constructs a new QueryChannelClientStateRequest.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.channel.IQueryChannelClientStateRequest);
+
+      /** QueryChannelClientStateRequest portId. */
+      public portId: string;
+
+      /** QueryChannelClientStateRequest channelId. */
+      public channelId: string;
+
+      /**
+       * Creates a new QueryChannelClientStateRequest instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns QueryChannelClientStateRequest instance
+       */
+      public static create(
+        properties?: ibc.channel.IQueryChannelClientStateRequest,
+      ): ibc.channel.QueryChannelClientStateRequest;
+
+      /**
+       * Encodes the specified QueryChannelClientStateRequest message. Does not implicitly {@link ibc.channel.QueryChannelClientStateRequest.verify|verify} messages.
+       * @param m QueryChannelClientStateRequest message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(
+        m: ibc.channel.IQueryChannelClientStateRequest,
+        w?: $protobuf.Writer,
+      ): $protobuf.Writer;
+
+      /**
+       * Decodes a QueryChannelClientStateRequest message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns QueryChannelClientStateRequest
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(
+        r: $protobuf.Reader | Uint8Array,
+        l?: number,
+      ): ibc.channel.QueryChannelClientStateRequest;
+    }
+
+    /** Properties of a QueryChannelConsensusStateRequest. */
+    interface IQueryChannelConsensusStateRequest {
+      /** QueryChannelConsensusStateRequest portId */
+      portId?: string | null;
+
+      /** QueryChannelConsensusStateRequest channelId */
+      channelId?: string | null;
+    }
+
+    /** Represents a QueryChannelConsensusStateRequest. */
+    class QueryChannelConsensusStateRequest implements IQueryChannelConsensusStateRequest {
+      /**
+       * Constructs a new QueryChannelConsensusStateRequest.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.channel.IQueryChannelConsensusStateRequest);
+
+      /** QueryChannelConsensusStateRequest portId. */
+      public portId: string;
+
+      /** QueryChannelConsensusStateRequest channelId. */
+      public channelId: string;
+
+      /**
+       * Creates a new QueryChannelConsensusStateRequest instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns QueryChannelConsensusStateRequest instance
+       */
+      public static create(
+        properties?: ibc.channel.IQueryChannelConsensusStateRequest,
+      ): ibc.channel.QueryChannelConsensusStateRequest;
+
+      /**
+       * Encodes the specified QueryChannelConsensusStateRequest message. Does not implicitly {@link ibc.channel.QueryChannelConsensusStateRequest.verify|verify} messages.
+       * @param m QueryChannelConsensusStateRequest message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(
+        m: ibc.channel.IQueryChannelConsensusStateRequest,
+        w?: $protobuf.Writer,
+      ): $protobuf.Writer;
+
+      /**
+       * Decodes a QueryChannelConsensusStateRequest message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns QueryChannelConsensusStateRequest
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(
+        r: $protobuf.Reader | Uint8Array,
+        l?: number,
+      ): ibc.channel.QueryChannelConsensusStateRequest;
+    }
+  }
+
+  /** Namespace commitment. */
+  namespace commitment {
+    /** Properties of a MerkleRoot. */
+    interface IMerkleRoot {
+      /** MerkleRoot hash */
+      hash?: Uint8Array | null;
+    }
+
+    /** Represents a MerkleRoot. */
+    class MerkleRoot implements IMerkleRoot {
+      /**
+       * Constructs a new MerkleRoot.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.commitment.IMerkleRoot);
+
+      /** MerkleRoot hash. */
+      public hash: Uint8Array;
+
+      /**
+       * Creates a new MerkleRoot instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns MerkleRoot instance
+       */
+      public static create(properties?: ibc.commitment.IMerkleRoot): ibc.commitment.MerkleRoot;
+
+      /**
+       * Encodes the specified MerkleRoot message. Does not implicitly {@link ibc.commitment.MerkleRoot.verify|verify} messages.
+       * @param m MerkleRoot message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: ibc.commitment.IMerkleRoot, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a MerkleRoot message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns MerkleRoot
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): ibc.commitment.MerkleRoot;
+    }
+
+    /** Properties of a MerklePrefix. */
+    interface IMerklePrefix {
+      /** MerklePrefix keyPrefix */
+      keyPrefix?: Uint8Array | null;
+    }
+
+    /** Represents a MerklePrefix. */
+    class MerklePrefix implements IMerklePrefix {
+      /**
+       * Constructs a new MerklePrefix.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.commitment.IMerklePrefix);
+
+      /** MerklePrefix keyPrefix. */
+      public keyPrefix: Uint8Array;
+
+      /**
+       * Creates a new MerklePrefix instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns MerklePrefix instance
+       */
+      public static create(properties?: ibc.commitment.IMerklePrefix): ibc.commitment.MerklePrefix;
+
+      /**
+       * Encodes the specified MerklePrefix message. Does not implicitly {@link ibc.commitment.MerklePrefix.verify|verify} messages.
+       * @param m MerklePrefix message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: ibc.commitment.IMerklePrefix, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a MerklePrefix message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns MerklePrefix
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): ibc.commitment.MerklePrefix;
+    }
+
+    /** Properties of a MerklePath. */
+    interface IMerklePath {
+      /** MerklePath keyPath */
+      keyPath?: ibc.commitment.IKeyPath | null;
+    }
+
+    /** Represents a MerklePath. */
+    class MerklePath implements IMerklePath {
+      /**
+       * Constructs a new MerklePath.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.commitment.IMerklePath);
+
+      /** MerklePath keyPath. */
+      public keyPath?: ibc.commitment.IKeyPath | null;
+
+      /**
+       * Creates a new MerklePath instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns MerklePath instance
+       */
+      public static create(properties?: ibc.commitment.IMerklePath): ibc.commitment.MerklePath;
+
+      /**
+       * Encodes the specified MerklePath message. Does not implicitly {@link ibc.commitment.MerklePath.verify|verify} messages.
+       * @param m MerklePath message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: ibc.commitment.IMerklePath, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a MerklePath message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns MerklePath
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): ibc.commitment.MerklePath;
+    }
+
+    /** Properties of a MerkleProof. */
+    interface IMerkleProof {
+      /** MerkleProof proof */
+      proof?: tendermint.crypto.merkle.IProof | null;
+    }
+
+    /** Represents a MerkleProof. */
+    class MerkleProof implements IMerkleProof {
+      /**
+       * Constructs a new MerkleProof.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.commitment.IMerkleProof);
+
+      /** MerkleProof proof. */
+      public proof?: tendermint.crypto.merkle.IProof | null;
+
+      /**
+       * Creates a new MerkleProof instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns MerkleProof instance
+       */
+      public static create(properties?: ibc.commitment.IMerkleProof): ibc.commitment.MerkleProof;
+
+      /**
+       * Encodes the specified MerkleProof message. Does not implicitly {@link ibc.commitment.MerkleProof.verify|verify} messages.
+       * @param m MerkleProof message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: ibc.commitment.IMerkleProof, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a MerkleProof message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns MerkleProof
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): ibc.commitment.MerkleProof;
+    }
+
+    /** Properties of a KeyPath. */
+    interface IKeyPath {
+      /** KeyPath keys */
+      keys?: ibc.commitment.IKey[] | null;
+    }
+
+    /** Represents a KeyPath. */
+    class KeyPath implements IKeyPath {
+      /**
+       * Constructs a new KeyPath.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.commitment.IKeyPath);
+
+      /** KeyPath keys. */
+      public keys: ibc.commitment.IKey[];
+
+      /**
+       * Creates a new KeyPath instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns KeyPath instance
+       */
+      public static create(properties?: ibc.commitment.IKeyPath): ibc.commitment.KeyPath;
+
+      /**
+       * Encodes the specified KeyPath message. Does not implicitly {@link ibc.commitment.KeyPath.verify|verify} messages.
+       * @param m KeyPath message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: ibc.commitment.IKeyPath, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a KeyPath message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns KeyPath
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): ibc.commitment.KeyPath;
+    }
+
+    /** Properties of a Key. */
+    interface IKey {
+      /** Key name */
+      name?: Uint8Array | null;
+
+      /** Key enc */
+      enc?: ibc.commitment.KeyEncoding | null;
+    }
+
+    /** Represents a Key. */
+    class Key implements IKey {
+      /**
+       * Constructs a new Key.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.commitment.IKey);
+
+      /** Key name. */
+      public name: Uint8Array;
+
+      /** Key enc. */
+      public enc: ibc.commitment.KeyEncoding;
+
+      /**
+       * Creates a new Key instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns Key instance
+       */
+      public static create(properties?: ibc.commitment.IKey): ibc.commitment.Key;
+
+      /**
+       * Encodes the specified Key message. Does not implicitly {@link ibc.commitment.Key.verify|verify} messages.
+       * @param m Key message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: ibc.commitment.IKey, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a Key message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns Key
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): ibc.commitment.Key;
+    }
+
+    /** KeyEncoding enum. */
+    enum KeyEncoding {
+      KEY_ENCODING_URL_UNSPECIFIED = 0,
+      KEY_ENCODING_HEX = 1,
+    }
+  }
+
+  /** Namespace connection. */
+  namespace connection {
+    /** Properties of a MsgConnectionOpenInit. */
+    interface IMsgConnectionOpenInit {
+      /** MsgConnectionOpenInit clientId */
+      clientId?: string | null;
+
+      /** MsgConnectionOpenInit connectionId */
+      connectionId?: string | null;
+
+      /** MsgConnectionOpenInit counterparty */
+      counterparty?: ibc.connection.ICounterparty | null;
+
+      /** MsgConnectionOpenInit signer */
+      signer?: Uint8Array | null;
+    }
+
+    /** Represents a MsgConnectionOpenInit. */
+    class MsgConnectionOpenInit implements IMsgConnectionOpenInit {
+      /**
+       * Constructs a new MsgConnectionOpenInit.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.connection.IMsgConnectionOpenInit);
+
+      /** MsgConnectionOpenInit clientId. */
+      public clientId: string;
+
+      /** MsgConnectionOpenInit connectionId. */
+      public connectionId: string;
+
+      /** MsgConnectionOpenInit counterparty. */
+      public counterparty?: ibc.connection.ICounterparty | null;
+
+      /** MsgConnectionOpenInit signer. */
+      public signer: Uint8Array;
+
+      /**
+       * Creates a new MsgConnectionOpenInit instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns MsgConnectionOpenInit instance
+       */
+      public static create(
+        properties?: ibc.connection.IMsgConnectionOpenInit,
+      ): ibc.connection.MsgConnectionOpenInit;
+
+      /**
+       * Encodes the specified MsgConnectionOpenInit message. Does not implicitly {@link ibc.connection.MsgConnectionOpenInit.verify|verify} messages.
+       * @param m MsgConnectionOpenInit message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: ibc.connection.IMsgConnectionOpenInit, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a MsgConnectionOpenInit message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns MsgConnectionOpenInit
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(
+        r: $protobuf.Reader | Uint8Array,
+        l?: number,
+      ): ibc.connection.MsgConnectionOpenInit;
+    }
+
+    /** Properties of a MsgConnectionOpenTry. */
+    interface IMsgConnectionOpenTry {
+      /** MsgConnectionOpenTry clientId */
+      clientId?: string | null;
+
+      /** MsgConnectionOpenTry connectionId */
+      connectionId?: string | null;
+
+      /** MsgConnectionOpenTry counterparty */
+      counterparty?: ibc.connection.ICounterparty | null;
+
+      /** MsgConnectionOpenTry counterpartyVersions */
+      counterpartyVersions?: string[] | null;
+
+      /** MsgConnectionOpenTry proofInit */
+      proofInit?: Uint8Array | null;
+
+      /** MsgConnectionOpenTry proofHeight */
+      proofHeight?: Long | null;
+
+      /** MsgConnectionOpenTry proofConsensus */
+      proofConsensus?: Uint8Array | null;
+
+      /** MsgConnectionOpenTry consensusHeight */
+      consensusHeight?: Long | null;
+
+      /** MsgConnectionOpenTry signer */
+      signer?: Uint8Array | null;
+    }
+
+    /** Represents a MsgConnectionOpenTry. */
+    class MsgConnectionOpenTry implements IMsgConnectionOpenTry {
+      /**
+       * Constructs a new MsgConnectionOpenTry.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.connection.IMsgConnectionOpenTry);
+
+      /** MsgConnectionOpenTry clientId. */
+      public clientId: string;
+
+      /** MsgConnectionOpenTry connectionId. */
+      public connectionId: string;
+
+      /** MsgConnectionOpenTry counterparty. */
+      public counterparty?: ibc.connection.ICounterparty | null;
+
+      /** MsgConnectionOpenTry counterpartyVersions. */
+      public counterpartyVersions: string[];
+
+      /** MsgConnectionOpenTry proofInit. */
+      public proofInit: Uint8Array;
+
+      /** MsgConnectionOpenTry proofHeight. */
+      public proofHeight: Long;
+
+      /** MsgConnectionOpenTry proofConsensus. */
+      public proofConsensus: Uint8Array;
+
+      /** MsgConnectionOpenTry consensusHeight. */
+      public consensusHeight: Long;
+
+      /** MsgConnectionOpenTry signer. */
+      public signer: Uint8Array;
+
+      /**
+       * Creates a new MsgConnectionOpenTry instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns MsgConnectionOpenTry instance
+       */
+      public static create(
+        properties?: ibc.connection.IMsgConnectionOpenTry,
+      ): ibc.connection.MsgConnectionOpenTry;
+
+      /**
+       * Encodes the specified MsgConnectionOpenTry message. Does not implicitly {@link ibc.connection.MsgConnectionOpenTry.verify|verify} messages.
+       * @param m MsgConnectionOpenTry message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: ibc.connection.IMsgConnectionOpenTry, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a MsgConnectionOpenTry message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns MsgConnectionOpenTry
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): ibc.connection.MsgConnectionOpenTry;
+    }
+
+    /** Properties of a MsgConnectionOpenAck. */
+    interface IMsgConnectionOpenAck {
+      /** MsgConnectionOpenAck connectionId */
+      connectionId?: string | null;
+
+      /** MsgConnectionOpenAck version */
+      version?: string | null;
+
+      /** MsgConnectionOpenAck proofTry */
+      proofTry?: Uint8Array | null;
+
+      /** MsgConnectionOpenAck proofHeight */
+      proofHeight?: Long | null;
+
+      /** MsgConnectionOpenAck proofConsensus */
+      proofConsensus?: Uint8Array | null;
+
+      /** MsgConnectionOpenAck consensusHeight */
+      consensusHeight?: Long | null;
+
+      /** MsgConnectionOpenAck signer */
+      signer?: Uint8Array | null;
+    }
+
+    /** Represents a MsgConnectionOpenAck. */
+    class MsgConnectionOpenAck implements IMsgConnectionOpenAck {
+      /**
+       * Constructs a new MsgConnectionOpenAck.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.connection.IMsgConnectionOpenAck);
+
+      /** MsgConnectionOpenAck connectionId. */
+      public connectionId: string;
+
+      /** MsgConnectionOpenAck version. */
+      public version: string;
+
+      /** MsgConnectionOpenAck proofTry. */
+      public proofTry: Uint8Array;
+
+      /** MsgConnectionOpenAck proofHeight. */
+      public proofHeight: Long;
+
+      /** MsgConnectionOpenAck proofConsensus. */
+      public proofConsensus: Uint8Array;
+
+      /** MsgConnectionOpenAck consensusHeight. */
+      public consensusHeight: Long;
+
+      /** MsgConnectionOpenAck signer. */
+      public signer: Uint8Array;
+
+      /**
+       * Creates a new MsgConnectionOpenAck instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns MsgConnectionOpenAck instance
+       */
+      public static create(
+        properties?: ibc.connection.IMsgConnectionOpenAck,
+      ): ibc.connection.MsgConnectionOpenAck;
+
+      /**
+       * Encodes the specified MsgConnectionOpenAck message. Does not implicitly {@link ibc.connection.MsgConnectionOpenAck.verify|verify} messages.
+       * @param m MsgConnectionOpenAck message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: ibc.connection.IMsgConnectionOpenAck, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a MsgConnectionOpenAck message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns MsgConnectionOpenAck
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): ibc.connection.MsgConnectionOpenAck;
+    }
+
+    /** Properties of a MsgConnectionOpenConfirm. */
+    interface IMsgConnectionOpenConfirm {
+      /** MsgConnectionOpenConfirm connectionId */
+      connectionId?: string | null;
+
+      /** MsgConnectionOpenConfirm proofAck */
+      proofAck?: Uint8Array | null;
+
+      /** MsgConnectionOpenConfirm proofHeight */
+      proofHeight?: Long | null;
+
+      /** MsgConnectionOpenConfirm signer */
+      signer?: Uint8Array | null;
+    }
+
+    /** Represents a MsgConnectionOpenConfirm. */
+    class MsgConnectionOpenConfirm implements IMsgConnectionOpenConfirm {
+      /**
+       * Constructs a new MsgConnectionOpenConfirm.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.connection.IMsgConnectionOpenConfirm);
+
+      /** MsgConnectionOpenConfirm connectionId. */
+      public connectionId: string;
+
+      /** MsgConnectionOpenConfirm proofAck. */
+      public proofAck: Uint8Array;
+
+      /** MsgConnectionOpenConfirm proofHeight. */
+      public proofHeight: Long;
+
+      /** MsgConnectionOpenConfirm signer. */
+      public signer: Uint8Array;
+
+      /**
+       * Creates a new MsgConnectionOpenConfirm instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns MsgConnectionOpenConfirm instance
+       */
+      public static create(
+        properties?: ibc.connection.IMsgConnectionOpenConfirm,
+      ): ibc.connection.MsgConnectionOpenConfirm;
+
+      /**
+       * Encodes the specified MsgConnectionOpenConfirm message. Does not implicitly {@link ibc.connection.MsgConnectionOpenConfirm.verify|verify} messages.
+       * @param m MsgConnectionOpenConfirm message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(
+        m: ibc.connection.IMsgConnectionOpenConfirm,
+        w?: $protobuf.Writer,
+      ): $protobuf.Writer;
+
+      /**
+       * Decodes a MsgConnectionOpenConfirm message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns MsgConnectionOpenConfirm
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(
+        r: $protobuf.Reader | Uint8Array,
+        l?: number,
+      ): ibc.connection.MsgConnectionOpenConfirm;
+    }
+
+    /** Properties of a ConnectionEnd. */
+    interface IConnectionEnd {
+      /** ConnectionEnd clientId */
+      clientId?: string | null;
+
+      /** ConnectionEnd versions */
+      versions?: string[] | null;
+
+      /** ConnectionEnd state */
+      state?: ibc.connection.State | null;
+
+      /** ConnectionEnd counterparty */
+      counterparty?: ibc.connection.ICounterparty | null;
+    }
+
+    /** Represents a ConnectionEnd. */
+    class ConnectionEnd implements IConnectionEnd {
+      /**
+       * Constructs a new ConnectionEnd.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.connection.IConnectionEnd);
+
+      /** ConnectionEnd clientId. */
+      public clientId: string;
+
+      /** ConnectionEnd versions. */
+      public versions: string[];
+
+      /** ConnectionEnd state. */
+      public state: ibc.connection.State;
+
+      /** ConnectionEnd counterparty. */
+      public counterparty?: ibc.connection.ICounterparty | null;
+
+      /**
+       * Creates a new ConnectionEnd instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns ConnectionEnd instance
+       */
+      public static create(properties?: ibc.connection.IConnectionEnd): ibc.connection.ConnectionEnd;
+
+      /**
+       * Encodes the specified ConnectionEnd message. Does not implicitly {@link ibc.connection.ConnectionEnd.verify|verify} messages.
+       * @param m ConnectionEnd message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: ibc.connection.IConnectionEnd, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a ConnectionEnd message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns ConnectionEnd
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): ibc.connection.ConnectionEnd;
+    }
+
+    /** Properties of an IdentifiedConnection. */
+    interface IIdentifiedConnection {
+      /** IdentifiedConnection id */
+      id?: string | null;
+
+      /** IdentifiedConnection clientId */
+      clientId?: string | null;
+
+      /** IdentifiedConnection versions */
+      versions?: string[] | null;
+
+      /** IdentifiedConnection state */
+      state?: ibc.connection.State | null;
+
+      /** IdentifiedConnection counterparty */
+      counterparty?: ibc.connection.ICounterparty | null;
+    }
+
+    /** Represents an IdentifiedConnection. */
+    class IdentifiedConnection implements IIdentifiedConnection {
+      /**
+       * Constructs a new IdentifiedConnection.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.connection.IIdentifiedConnection);
+
+      /** IdentifiedConnection id. */
+      public id: string;
+
+      /** IdentifiedConnection clientId. */
+      public clientId: string;
+
+      /** IdentifiedConnection versions. */
+      public versions: string[];
+
+      /** IdentifiedConnection state. */
+      public state: ibc.connection.State;
+
+      /** IdentifiedConnection counterparty. */
+      public counterparty?: ibc.connection.ICounterparty | null;
+
+      /**
+       * Creates a new IdentifiedConnection instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns IdentifiedConnection instance
+       */
+      public static create(
+        properties?: ibc.connection.IIdentifiedConnection,
+      ): ibc.connection.IdentifiedConnection;
+
+      /**
+       * Encodes the specified IdentifiedConnection message. Does not implicitly {@link ibc.connection.IdentifiedConnection.verify|verify} messages.
+       * @param m IdentifiedConnection message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: ibc.connection.IIdentifiedConnection, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes an IdentifiedConnection message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns IdentifiedConnection
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): ibc.connection.IdentifiedConnection;
+    }
+
+    /** State enum. */
+    enum State {
+      STATE_UNINITIALIZED_UNSPECIFIED = 0,
+      STATE_INIT = 1,
+      STATE_TRYOPEN = 2,
+      STATE_OPEN = 3,
+    }
+
+    /** Properties of a Counterparty. */
+    interface ICounterparty {
+      /** Counterparty clientId */
+      clientId?: string | null;
+
+      /** Counterparty connectionId */
+      connectionId?: string | null;
+
+      /** Counterparty prefix */
+      prefix?: ibc.commitment.IMerklePrefix | null;
+    }
+
+    /** Represents a Counterparty. */
+    class Counterparty implements ICounterparty {
+      /**
+       * Constructs a new Counterparty.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.connection.ICounterparty);
+
+      /** Counterparty clientId. */
+      public clientId: string;
+
+      /** Counterparty connectionId. */
+      public connectionId: string;
+
+      /** Counterparty prefix. */
+      public prefix?: ibc.commitment.IMerklePrefix | null;
+
+      /**
+       * Creates a new Counterparty instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns Counterparty instance
+       */
+      public static create(properties?: ibc.connection.ICounterparty): ibc.connection.Counterparty;
+
+      /**
+       * Encodes the specified Counterparty message. Does not implicitly {@link ibc.connection.Counterparty.verify|verify} messages.
+       * @param m Counterparty message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: ibc.connection.ICounterparty, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a Counterparty message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns Counterparty
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): ibc.connection.Counterparty;
+    }
+
+    /** Properties of a ClientPaths. */
+    interface IClientPaths {
+      /** ClientPaths paths */
+      paths?: string[] | null;
+    }
+
+    /** Represents a ClientPaths. */
+    class ClientPaths implements IClientPaths {
+      /**
+       * Constructs a new ClientPaths.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.connection.IClientPaths);
+
+      /** ClientPaths paths. */
+      public paths: string[];
+
+      /**
+       * Creates a new ClientPaths instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns ClientPaths instance
+       */
+      public static create(properties?: ibc.connection.IClientPaths): ibc.connection.ClientPaths;
+
+      /**
+       * Encodes the specified ClientPaths message. Does not implicitly {@link ibc.connection.ClientPaths.verify|verify} messages.
+       * @param m ClientPaths message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: ibc.connection.IClientPaths, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a ClientPaths message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns ClientPaths
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): ibc.connection.ClientPaths;
+    }
+
+    /** Properties of a ConnectionPaths. */
+    interface IConnectionPaths {
+      /** ConnectionPaths clientId */
+      clientId?: string | null;
+
+      /** ConnectionPaths paths */
+      paths?: string[] | null;
+    }
+
+    /** Represents a ConnectionPaths. */
+    class ConnectionPaths implements IConnectionPaths {
+      /**
+       * Constructs a new ConnectionPaths.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.connection.IConnectionPaths);
+
+      /** ConnectionPaths clientId. */
+      public clientId: string;
+
+      /** ConnectionPaths paths. */
+      public paths: string[];
+
+      /**
+       * Creates a new ConnectionPaths instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns ConnectionPaths instance
+       */
+      public static create(properties?: ibc.connection.IConnectionPaths): ibc.connection.ConnectionPaths;
+
+      /**
+       * Encodes the specified ConnectionPaths message. Does not implicitly {@link ibc.connection.ConnectionPaths.verify|verify} messages.
+       * @param m ConnectionPaths message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: ibc.connection.IConnectionPaths, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a ConnectionPaths message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns ConnectionPaths
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): ibc.connection.ConnectionPaths;
+    }
+
+    /** Properties of a Version. */
+    interface IVersion {
+      /** Version identifier */
+      identifier?: string | null;
+
+      /** Version features */
+      features?: string[] | null;
+    }
+
+    /** Represents a Version. */
+    class Version implements IVersion {
+      /**
+       * Constructs a new Version.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.connection.IVersion);
+
+      /** Version identifier. */
+      public identifier: string;
+
+      /** Version features. */
+      public features: string[];
+
+      /**
+       * Creates a new Version instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns Version instance
+       */
+      public static create(properties?: ibc.connection.IVersion): ibc.connection.Version;
+
+      /**
+       * Encodes the specified Version message. Does not implicitly {@link ibc.connection.Version.verify|verify} messages.
+       * @param m Version message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: ibc.connection.IVersion, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a Version message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns Version
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): ibc.connection.Version;
+    }
+
+    /** Represents a Query */
+    class Query extends $protobuf.rpc.Service {
+      /**
+       * Constructs a new Query service.
+       * @param rpcImpl RPC implementation
+       * @param [requestDelimited=false] Whether requests are length-delimited
+       * @param [responseDelimited=false] Whether responses are length-delimited
+       */
+      constructor(rpcImpl: $protobuf.RPCImpl, requestDelimited?: boolean, responseDelimited?: boolean);
+
+      /**
+       * Creates new Query service using the specified rpc implementation.
+       * @param rpcImpl RPC implementation
+       * @param [requestDelimited=false] Whether requests are length-delimited
+       * @param [responseDelimited=false] Whether responses are length-delimited
+       * @returns RPC service. Useful where requests and/or responses are streamed.
+       */
+      public static create(
+        rpcImpl: $protobuf.RPCImpl,
+        requestDelimited?: boolean,
+        responseDelimited?: boolean,
+      ): Query;
+
+      /**
+       * Calls Connection.
+       * @param request QueryConnectionRequest message or plain object
+       * @param callback Node-style callback called with the error, if any, and QueryConnectionResponse
+       */
+      public connection(
+        request: ibc.connection.IQueryConnectionRequest,
+        callback: ibc.connection.Query.ConnectionCallback,
+      ): void;
+
+      /**
+       * Calls Connection.
+       * @param request QueryConnectionRequest message or plain object
+       * @returns Promise
+       */
+      public connection(
+        request: ibc.connection.IQueryConnectionRequest,
+      ): Promise<ibc.connection.QueryConnectionResponse>;
+
+      /**
+       * Calls Connections.
+       * @param request QueryConnectionsRequest message or plain object
+       * @param callback Node-style callback called with the error, if any, and QueryConnectionsResponse
+       */
+      public connections(
+        request: ibc.connection.IQueryConnectionsRequest,
+        callback: ibc.connection.Query.ConnectionsCallback,
+      ): void;
+
+      /**
+       * Calls Connections.
+       * @param request QueryConnectionsRequest message or plain object
+       * @returns Promise
+       */
+      public connections(
+        request: ibc.connection.IQueryConnectionsRequest,
+      ): Promise<ibc.connection.QueryConnectionsResponse>;
+
+      /**
+       * Calls ClientConnections.
+       * @param request QueryClientConnectionsRequest message or plain object
+       * @param callback Node-style callback called with the error, if any, and QueryClientConnectionsResponse
+       */
+      public clientConnections(
+        request: ibc.connection.IQueryClientConnectionsRequest,
+        callback: ibc.connection.Query.ClientConnectionsCallback,
+      ): void;
+
+      /**
+       * Calls ClientConnections.
+       * @param request QueryClientConnectionsRequest message or plain object
+       * @returns Promise
+       */
+      public clientConnections(
+        request: ibc.connection.IQueryClientConnectionsRequest,
+      ): Promise<ibc.connection.QueryClientConnectionsResponse>;
+    }
+
+    namespace Query {
+      /**
+       * Callback as used by {@link ibc.connection.Query#connection}.
+       * @param error Error, if any
+       * @param [response] QueryConnectionResponse
+       */
+      type ConnectionCallback = (
+        error: Error | null,
+        response?: ibc.connection.QueryConnectionResponse,
+      ) => void;
+
+      /**
+       * Callback as used by {@link ibc.connection.Query#connections}.
+       * @param error Error, if any
+       * @param [response] QueryConnectionsResponse
+       */
+      type ConnectionsCallback = (
+        error: Error | null,
+        response?: ibc.connection.QueryConnectionsResponse,
+      ) => void;
+
+      /**
+       * Callback as used by {@link ibc.connection.Query#clientConnections}.
+       * @param error Error, if any
+       * @param [response] QueryClientConnectionsResponse
+       */
+      type ClientConnectionsCallback = (
+        error: Error | null,
+        response?: ibc.connection.QueryClientConnectionsResponse,
+      ) => void;
+    }
+
+    /** Properties of a QueryConnectionRequest. */
+    interface IQueryConnectionRequest {
+      /** QueryConnectionRequest connectionId */
+      connectionId?: string | null;
+    }
+
+    /** Represents a QueryConnectionRequest. */
+    class QueryConnectionRequest implements IQueryConnectionRequest {
+      /**
+       * Constructs a new QueryConnectionRequest.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.connection.IQueryConnectionRequest);
+
+      /** QueryConnectionRequest connectionId. */
+      public connectionId: string;
+
+      /**
+       * Creates a new QueryConnectionRequest instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns QueryConnectionRequest instance
+       */
+      public static create(
+        properties?: ibc.connection.IQueryConnectionRequest,
+      ): ibc.connection.QueryConnectionRequest;
+
+      /**
+       * Encodes the specified QueryConnectionRequest message. Does not implicitly {@link ibc.connection.QueryConnectionRequest.verify|verify} messages.
+       * @param m QueryConnectionRequest message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: ibc.connection.IQueryConnectionRequest, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a QueryConnectionRequest message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns QueryConnectionRequest
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(
+        r: $protobuf.Reader | Uint8Array,
+        l?: number,
+      ): ibc.connection.QueryConnectionRequest;
+    }
+
+    /** Properties of a QueryConnectionResponse. */
+    interface IQueryConnectionResponse {
+      /** QueryConnectionResponse connection */
+      connection?: ibc.connection.IConnectionEnd | null;
+
+      /** QueryConnectionResponse proof */
+      proof?: Uint8Array | null;
+
+      /** QueryConnectionResponse proofPath */
+      proofPath?: string | null;
+
+      /** QueryConnectionResponse proofHeight */
+      proofHeight?: Long | null;
+    }
+
+    /** Represents a QueryConnectionResponse. */
+    class QueryConnectionResponse implements IQueryConnectionResponse {
+      /**
+       * Constructs a new QueryConnectionResponse.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.connection.IQueryConnectionResponse);
+
+      /** QueryConnectionResponse connection. */
+      public connection?: ibc.connection.IConnectionEnd | null;
+
+      /** QueryConnectionResponse proof. */
+      public proof: Uint8Array;
+
+      /** QueryConnectionResponse proofPath. */
+      public proofPath: string;
+
+      /** QueryConnectionResponse proofHeight. */
+      public proofHeight: Long;
+
+      /**
+       * Creates a new QueryConnectionResponse instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns QueryConnectionResponse instance
+       */
+      public static create(
+        properties?: ibc.connection.IQueryConnectionResponse,
+      ): ibc.connection.QueryConnectionResponse;
+
+      /**
+       * Encodes the specified QueryConnectionResponse message. Does not implicitly {@link ibc.connection.QueryConnectionResponse.verify|verify} messages.
+       * @param m QueryConnectionResponse message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(
+        m: ibc.connection.IQueryConnectionResponse,
+        w?: $protobuf.Writer,
+      ): $protobuf.Writer;
+
+      /**
+       * Decodes a QueryConnectionResponse message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns QueryConnectionResponse
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(
+        r: $protobuf.Reader | Uint8Array,
+        l?: number,
+      ): ibc.connection.QueryConnectionResponse;
+    }
+
+    /** Properties of a QueryConnectionsRequest. */
+    interface IQueryConnectionsRequest {
+      /** QueryConnectionsRequest pagination */
+      pagination?: cosmos.query.IPageRequest | null;
+    }
+
+    /** Represents a QueryConnectionsRequest. */
+    class QueryConnectionsRequest implements IQueryConnectionsRequest {
+      /**
+       * Constructs a new QueryConnectionsRequest.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.connection.IQueryConnectionsRequest);
+
+      /** QueryConnectionsRequest pagination. */
+      public pagination?: cosmos.query.IPageRequest | null;
+
+      /**
+       * Creates a new QueryConnectionsRequest instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns QueryConnectionsRequest instance
+       */
+      public static create(
+        properties?: ibc.connection.IQueryConnectionsRequest,
+      ): ibc.connection.QueryConnectionsRequest;
+
+      /**
+       * Encodes the specified QueryConnectionsRequest message. Does not implicitly {@link ibc.connection.QueryConnectionsRequest.verify|verify} messages.
+       * @param m QueryConnectionsRequest message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(
+        m: ibc.connection.IQueryConnectionsRequest,
+        w?: $protobuf.Writer,
+      ): $protobuf.Writer;
+
+      /**
+       * Decodes a QueryConnectionsRequest message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns QueryConnectionsRequest
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(
+        r: $protobuf.Reader | Uint8Array,
+        l?: number,
+      ): ibc.connection.QueryConnectionsRequest;
+    }
+
+    /** Properties of a QueryConnectionsResponse. */
+    interface IQueryConnectionsResponse {
+      /** QueryConnectionsResponse connections */
+      connections?: ibc.connection.IIdentifiedConnection[] | null;
+
+      /** QueryConnectionsResponse pagination */
+      pagination?: cosmos.query.IPageResponse | null;
+
+      /** QueryConnectionsResponse height */
+      height?: Long | null;
+    }
+
+    /** Represents a QueryConnectionsResponse. */
+    class QueryConnectionsResponse implements IQueryConnectionsResponse {
+      /**
+       * Constructs a new QueryConnectionsResponse.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.connection.IQueryConnectionsResponse);
+
+      /** QueryConnectionsResponse connections. */
+      public connections: ibc.connection.IIdentifiedConnection[];
+
+      /** QueryConnectionsResponse pagination. */
+      public pagination?: cosmos.query.IPageResponse | null;
+
+      /** QueryConnectionsResponse height. */
+      public height: Long;
+
+      /**
+       * Creates a new QueryConnectionsResponse instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns QueryConnectionsResponse instance
+       */
+      public static create(
+        properties?: ibc.connection.IQueryConnectionsResponse,
+      ): ibc.connection.QueryConnectionsResponse;
+
+      /**
+       * Encodes the specified QueryConnectionsResponse message. Does not implicitly {@link ibc.connection.QueryConnectionsResponse.verify|verify} messages.
+       * @param m QueryConnectionsResponse message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(
+        m: ibc.connection.IQueryConnectionsResponse,
+        w?: $protobuf.Writer,
+      ): $protobuf.Writer;
+
+      /**
+       * Decodes a QueryConnectionsResponse message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns QueryConnectionsResponse
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(
+        r: $protobuf.Reader | Uint8Array,
+        l?: number,
+      ): ibc.connection.QueryConnectionsResponse;
+    }
+
+    /** Properties of a QueryClientConnectionsRequest. */
+    interface IQueryClientConnectionsRequest {
+      /** QueryClientConnectionsRequest clientId */
+      clientId?: string | null;
+    }
+
+    /** Represents a QueryClientConnectionsRequest. */
+    class QueryClientConnectionsRequest implements IQueryClientConnectionsRequest {
+      /**
+       * Constructs a new QueryClientConnectionsRequest.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.connection.IQueryClientConnectionsRequest);
+
+      /** QueryClientConnectionsRequest clientId. */
+      public clientId: string;
+
+      /**
+       * Creates a new QueryClientConnectionsRequest instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns QueryClientConnectionsRequest instance
+       */
+      public static create(
+        properties?: ibc.connection.IQueryClientConnectionsRequest,
+      ): ibc.connection.QueryClientConnectionsRequest;
+
+      /**
+       * Encodes the specified QueryClientConnectionsRequest message. Does not implicitly {@link ibc.connection.QueryClientConnectionsRequest.verify|verify} messages.
+       * @param m QueryClientConnectionsRequest message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(
+        m: ibc.connection.IQueryClientConnectionsRequest,
+        w?: $protobuf.Writer,
+      ): $protobuf.Writer;
+
+      /**
+       * Decodes a QueryClientConnectionsRequest message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns QueryClientConnectionsRequest
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(
+        r: $protobuf.Reader | Uint8Array,
+        l?: number,
+      ): ibc.connection.QueryClientConnectionsRequest;
+    }
+
+    /** Properties of a QueryClientConnectionsResponse. */
+    interface IQueryClientConnectionsResponse {
+      /** QueryClientConnectionsResponse connectionPaths */
+      connectionPaths?: string[] | null;
+
+      /** QueryClientConnectionsResponse proof */
+      proof?: Uint8Array | null;
+
+      /** QueryClientConnectionsResponse proofPath */
+      proofPath?: string | null;
+
+      /** QueryClientConnectionsResponse proofHeight */
+      proofHeight?: Long | null;
+    }
+
+    /** Represents a QueryClientConnectionsResponse. */
+    class QueryClientConnectionsResponse implements IQueryClientConnectionsResponse {
+      /**
+       * Constructs a new QueryClientConnectionsResponse.
+       * @param [p] Properties to set
+       */
+      constructor(p?: ibc.connection.IQueryClientConnectionsResponse);
+
+      /** QueryClientConnectionsResponse connectionPaths. */
+      public connectionPaths: string[];
+
+      /** QueryClientConnectionsResponse proof. */
+      public proof: Uint8Array;
+
+      /** QueryClientConnectionsResponse proofPath. */
+      public proofPath: string;
+
+      /** QueryClientConnectionsResponse proofHeight. */
+      public proofHeight: Long;
+
+      /**
+       * Creates a new QueryClientConnectionsResponse instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns QueryClientConnectionsResponse instance
+       */
+      public static create(
+        properties?: ibc.connection.IQueryClientConnectionsResponse,
+      ): ibc.connection.QueryClientConnectionsResponse;
+
+      /**
+       * Encodes the specified QueryClientConnectionsResponse message. Does not implicitly {@link ibc.connection.QueryClientConnectionsResponse.verify|verify} messages.
+       * @param m QueryClientConnectionsResponse message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(
+        m: ibc.connection.IQueryClientConnectionsResponse,
+        w?: $protobuf.Writer,
+      ): $protobuf.Writer;
+
+      /**
+       * Decodes a QueryClientConnectionsResponse message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns QueryClientConnectionsResponse
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(
+        r: $protobuf.Reader | Uint8Array,
+        l?: number,
+      ): ibc.connection.QueryClientConnectionsResponse;
+    }
+  }
+}
+
 /** Namespace tendermint. */
 export namespace tendermint {
   /** Namespace abci. */

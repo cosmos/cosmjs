@@ -5,6 +5,7 @@ command -v shellcheck > /dev/null && shellcheck "$0"
 GENERATED_DIR="./tmp"
 ROOT_PROTO_DIR="./proto/cosmos/cosmos-sdk"
 COSMOS_PROTO_DIR="$ROOT_PROTO_DIR/proto/cosmos"
+IBC_PROTO_DIR="$ROOT_PROTO_DIR/proto/ibc"
 TENDERMINT_PROTO_DIR="$ROOT_PROTO_DIR/third_party/proto/tendermint"
 GOOGLE_PROTO_DIR="$ROOT_PROTO_DIR/third_party/proto/google"
 
@@ -27,6 +28,9 @@ yarn pbjs \
   "$COSMOS_PROTO_DIR/query/pagination.proto" \
   "$COSMOS_PROTO_DIR/tx/tx.proto" \
   "$COSMOS_PROTO_DIR/tx/signing/signing.proto" \
+  "$IBC_PROTO_DIR/channel/{channel,query}.proto" \
+  "$IBC_PROTO_DIR/commitment/commitment.proto" \
+  "$IBC_PROTO_DIR/connection/{connection,query}.proto" \
   "$TENDERMINT_PROTO_DIR/abci/types/types.proto" \
   "$TENDERMINT_PROTO_DIR/crypto/merkle/merkle.proto" \
   "$TENDERMINT_PROTO_DIR/libs/kv/types.proto" \

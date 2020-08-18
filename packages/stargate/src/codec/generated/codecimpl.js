@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.google = exports.tendermint = exports.cosmos = void 0;
+exports.google = exports.tendermint = exports.ibc = exports.cosmos = void 0;
 var $protobuf = require("protobufjs/minimal");
 const $Reader = $protobuf.Reader,
   $Writer = $protobuf.Writer,
@@ -2737,6 +2737,2881 @@ exports.cosmos = $root.cosmos = (() => {
     return tx;
   })();
   return cosmos;
+})();
+exports.ibc = $root.ibc = (() => {
+  const ibc = {};
+  ibc.channel = (function () {
+    const channel = {};
+    channel.MsgChannelOpenInit = (function () {
+      function MsgChannelOpenInit(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      MsgChannelOpenInit.prototype.portId = "";
+      MsgChannelOpenInit.prototype.channelId = "";
+      MsgChannelOpenInit.prototype.channel = null;
+      MsgChannelOpenInit.prototype.signer = $util.newBuffer([]);
+      MsgChannelOpenInit.create = function create(properties) {
+        return new MsgChannelOpenInit(properties);
+      };
+      MsgChannelOpenInit.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.portId != null && Object.hasOwnProperty.call(m, "portId")) w.uint32(10).string(m.portId);
+        if (m.channelId != null && Object.hasOwnProperty.call(m, "channelId"))
+          w.uint32(18).string(m.channelId);
+        if (m.channel != null && Object.hasOwnProperty.call(m, "channel"))
+          $root.ibc.channel.Channel.encode(m.channel, w.uint32(26).fork()).ldelim();
+        if (m.signer != null && Object.hasOwnProperty.call(m, "signer")) w.uint32(34).bytes(m.signer);
+        return w;
+      };
+      MsgChannelOpenInit.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.channel.MsgChannelOpenInit();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.portId = r.string();
+              break;
+            case 2:
+              m.channelId = r.string();
+              break;
+            case 3:
+              m.channel = $root.ibc.channel.Channel.decode(r, r.uint32());
+              break;
+            case 4:
+              m.signer = r.bytes();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return MsgChannelOpenInit;
+    })();
+    channel.MsgChannelOpenTry = (function () {
+      function MsgChannelOpenTry(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      MsgChannelOpenTry.prototype.portId = "";
+      MsgChannelOpenTry.prototype.channelId = "";
+      MsgChannelOpenTry.prototype.channel = null;
+      MsgChannelOpenTry.prototype.counterpartyVersion = "";
+      MsgChannelOpenTry.prototype.proofInit = $util.newBuffer([]);
+      MsgChannelOpenTry.prototype.proofHeight = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+      MsgChannelOpenTry.prototype.signer = $util.newBuffer([]);
+      MsgChannelOpenTry.create = function create(properties) {
+        return new MsgChannelOpenTry(properties);
+      };
+      MsgChannelOpenTry.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.portId != null && Object.hasOwnProperty.call(m, "portId")) w.uint32(10).string(m.portId);
+        if (m.channelId != null && Object.hasOwnProperty.call(m, "channelId"))
+          w.uint32(18).string(m.channelId);
+        if (m.channel != null && Object.hasOwnProperty.call(m, "channel"))
+          $root.ibc.channel.Channel.encode(m.channel, w.uint32(26).fork()).ldelim();
+        if (m.counterpartyVersion != null && Object.hasOwnProperty.call(m, "counterpartyVersion"))
+          w.uint32(34).string(m.counterpartyVersion);
+        if (m.proofInit != null && Object.hasOwnProperty.call(m, "proofInit"))
+          w.uint32(42).bytes(m.proofInit);
+        if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
+          w.uint32(48).uint64(m.proofHeight);
+        if (m.signer != null && Object.hasOwnProperty.call(m, "signer")) w.uint32(58).bytes(m.signer);
+        return w;
+      };
+      MsgChannelOpenTry.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.channel.MsgChannelOpenTry();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.portId = r.string();
+              break;
+            case 2:
+              m.channelId = r.string();
+              break;
+            case 3:
+              m.channel = $root.ibc.channel.Channel.decode(r, r.uint32());
+              break;
+            case 4:
+              m.counterpartyVersion = r.string();
+              break;
+            case 5:
+              m.proofInit = r.bytes();
+              break;
+            case 6:
+              m.proofHeight = r.uint64();
+              break;
+            case 7:
+              m.signer = r.bytes();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return MsgChannelOpenTry;
+    })();
+    channel.MsgChannelOpenAck = (function () {
+      function MsgChannelOpenAck(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      MsgChannelOpenAck.prototype.portId = "";
+      MsgChannelOpenAck.prototype.channelId = "";
+      MsgChannelOpenAck.prototype.counterpartyVersion = "";
+      MsgChannelOpenAck.prototype.proofTry = $util.newBuffer([]);
+      MsgChannelOpenAck.prototype.proofHeight = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+      MsgChannelOpenAck.prototype.signer = $util.newBuffer([]);
+      MsgChannelOpenAck.create = function create(properties) {
+        return new MsgChannelOpenAck(properties);
+      };
+      MsgChannelOpenAck.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.portId != null && Object.hasOwnProperty.call(m, "portId")) w.uint32(10).string(m.portId);
+        if (m.channelId != null && Object.hasOwnProperty.call(m, "channelId"))
+          w.uint32(18).string(m.channelId);
+        if (m.counterpartyVersion != null && Object.hasOwnProperty.call(m, "counterpartyVersion"))
+          w.uint32(26).string(m.counterpartyVersion);
+        if (m.proofTry != null && Object.hasOwnProperty.call(m, "proofTry")) w.uint32(34).bytes(m.proofTry);
+        if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
+          w.uint32(40).uint64(m.proofHeight);
+        if (m.signer != null && Object.hasOwnProperty.call(m, "signer")) w.uint32(50).bytes(m.signer);
+        return w;
+      };
+      MsgChannelOpenAck.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.channel.MsgChannelOpenAck();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.portId = r.string();
+              break;
+            case 2:
+              m.channelId = r.string();
+              break;
+            case 3:
+              m.counterpartyVersion = r.string();
+              break;
+            case 4:
+              m.proofTry = r.bytes();
+              break;
+            case 5:
+              m.proofHeight = r.uint64();
+              break;
+            case 6:
+              m.signer = r.bytes();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return MsgChannelOpenAck;
+    })();
+    channel.MsgChannelOpenConfirm = (function () {
+      function MsgChannelOpenConfirm(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      MsgChannelOpenConfirm.prototype.portId = "";
+      MsgChannelOpenConfirm.prototype.channelId = "";
+      MsgChannelOpenConfirm.prototype.proofAck = $util.newBuffer([]);
+      MsgChannelOpenConfirm.prototype.proofHeight = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+      MsgChannelOpenConfirm.prototype.signer = $util.newBuffer([]);
+      MsgChannelOpenConfirm.create = function create(properties) {
+        return new MsgChannelOpenConfirm(properties);
+      };
+      MsgChannelOpenConfirm.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.portId != null && Object.hasOwnProperty.call(m, "portId")) w.uint32(10).string(m.portId);
+        if (m.channelId != null && Object.hasOwnProperty.call(m, "channelId"))
+          w.uint32(18).string(m.channelId);
+        if (m.proofAck != null && Object.hasOwnProperty.call(m, "proofAck")) w.uint32(26).bytes(m.proofAck);
+        if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
+          w.uint32(32).uint64(m.proofHeight);
+        if (m.signer != null && Object.hasOwnProperty.call(m, "signer")) w.uint32(42).bytes(m.signer);
+        return w;
+      };
+      MsgChannelOpenConfirm.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.channel.MsgChannelOpenConfirm();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.portId = r.string();
+              break;
+            case 2:
+              m.channelId = r.string();
+              break;
+            case 3:
+              m.proofAck = r.bytes();
+              break;
+            case 4:
+              m.proofHeight = r.uint64();
+              break;
+            case 5:
+              m.signer = r.bytes();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return MsgChannelOpenConfirm;
+    })();
+    channel.MsgChannelCloseInit = (function () {
+      function MsgChannelCloseInit(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      MsgChannelCloseInit.prototype.portId = "";
+      MsgChannelCloseInit.prototype.channelId = "";
+      MsgChannelCloseInit.prototype.signer = $util.newBuffer([]);
+      MsgChannelCloseInit.create = function create(properties) {
+        return new MsgChannelCloseInit(properties);
+      };
+      MsgChannelCloseInit.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.portId != null && Object.hasOwnProperty.call(m, "portId")) w.uint32(10).string(m.portId);
+        if (m.channelId != null && Object.hasOwnProperty.call(m, "channelId"))
+          w.uint32(18).string(m.channelId);
+        if (m.signer != null && Object.hasOwnProperty.call(m, "signer")) w.uint32(26).bytes(m.signer);
+        return w;
+      };
+      MsgChannelCloseInit.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.channel.MsgChannelCloseInit();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.portId = r.string();
+              break;
+            case 2:
+              m.channelId = r.string();
+              break;
+            case 3:
+              m.signer = r.bytes();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return MsgChannelCloseInit;
+    })();
+    channel.MsgChannelCloseConfirm = (function () {
+      function MsgChannelCloseConfirm(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      MsgChannelCloseConfirm.prototype.portId = "";
+      MsgChannelCloseConfirm.prototype.channelId = "";
+      MsgChannelCloseConfirm.prototype.proofInit = $util.newBuffer([]);
+      MsgChannelCloseConfirm.prototype.proofHeight = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+      MsgChannelCloseConfirm.prototype.signer = $util.newBuffer([]);
+      MsgChannelCloseConfirm.create = function create(properties) {
+        return new MsgChannelCloseConfirm(properties);
+      };
+      MsgChannelCloseConfirm.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.portId != null && Object.hasOwnProperty.call(m, "portId")) w.uint32(10).string(m.portId);
+        if (m.channelId != null && Object.hasOwnProperty.call(m, "channelId"))
+          w.uint32(18).string(m.channelId);
+        if (m.proofInit != null && Object.hasOwnProperty.call(m, "proofInit"))
+          w.uint32(26).bytes(m.proofInit);
+        if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
+          w.uint32(32).uint64(m.proofHeight);
+        if (m.signer != null && Object.hasOwnProperty.call(m, "signer")) w.uint32(42).bytes(m.signer);
+        return w;
+      };
+      MsgChannelCloseConfirm.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.channel.MsgChannelCloseConfirm();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.portId = r.string();
+              break;
+            case 2:
+              m.channelId = r.string();
+              break;
+            case 3:
+              m.proofInit = r.bytes();
+              break;
+            case 4:
+              m.proofHeight = r.uint64();
+              break;
+            case 5:
+              m.signer = r.bytes();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return MsgChannelCloseConfirm;
+    })();
+    channel.MsgRecvPacket = (function () {
+      function MsgRecvPacket(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      MsgRecvPacket.prototype.packet = null;
+      MsgRecvPacket.prototype.proof = $util.newBuffer([]);
+      MsgRecvPacket.prototype.proofHeight = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+      MsgRecvPacket.prototype.signer = $util.newBuffer([]);
+      MsgRecvPacket.create = function create(properties) {
+        return new MsgRecvPacket(properties);
+      };
+      MsgRecvPacket.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.packet != null && Object.hasOwnProperty.call(m, "packet"))
+          $root.ibc.channel.Packet.encode(m.packet, w.uint32(10).fork()).ldelim();
+        if (m.proof != null && Object.hasOwnProperty.call(m, "proof")) w.uint32(18).bytes(m.proof);
+        if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
+          w.uint32(24).uint64(m.proofHeight);
+        if (m.signer != null && Object.hasOwnProperty.call(m, "signer")) w.uint32(34).bytes(m.signer);
+        return w;
+      };
+      MsgRecvPacket.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.channel.MsgRecvPacket();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.packet = $root.ibc.channel.Packet.decode(r, r.uint32());
+              break;
+            case 2:
+              m.proof = r.bytes();
+              break;
+            case 3:
+              m.proofHeight = r.uint64();
+              break;
+            case 4:
+              m.signer = r.bytes();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return MsgRecvPacket;
+    })();
+    channel.MsgTimeout = (function () {
+      function MsgTimeout(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      MsgTimeout.prototype.packet = null;
+      MsgTimeout.prototype.proof = $util.newBuffer([]);
+      MsgTimeout.prototype.proofHeight = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+      MsgTimeout.prototype.nextSequenceRecv = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+      MsgTimeout.prototype.signer = $util.newBuffer([]);
+      MsgTimeout.create = function create(properties) {
+        return new MsgTimeout(properties);
+      };
+      MsgTimeout.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.packet != null && Object.hasOwnProperty.call(m, "packet"))
+          $root.ibc.channel.Packet.encode(m.packet, w.uint32(10).fork()).ldelim();
+        if (m.proof != null && Object.hasOwnProperty.call(m, "proof")) w.uint32(18).bytes(m.proof);
+        if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
+          w.uint32(24).uint64(m.proofHeight);
+        if (m.nextSequenceRecv != null && Object.hasOwnProperty.call(m, "nextSequenceRecv"))
+          w.uint32(32).uint64(m.nextSequenceRecv);
+        if (m.signer != null && Object.hasOwnProperty.call(m, "signer")) w.uint32(42).bytes(m.signer);
+        return w;
+      };
+      MsgTimeout.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.channel.MsgTimeout();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.packet = $root.ibc.channel.Packet.decode(r, r.uint32());
+              break;
+            case 2:
+              m.proof = r.bytes();
+              break;
+            case 3:
+              m.proofHeight = r.uint64();
+              break;
+            case 4:
+              m.nextSequenceRecv = r.uint64();
+              break;
+            case 5:
+              m.signer = r.bytes();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return MsgTimeout;
+    })();
+    channel.MsgAcknowledgement = (function () {
+      function MsgAcknowledgement(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      MsgAcknowledgement.prototype.packet = null;
+      MsgAcknowledgement.prototype.acknowledgement = $util.newBuffer([]);
+      MsgAcknowledgement.prototype.proof = $util.newBuffer([]);
+      MsgAcknowledgement.prototype.proofHeight = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+      MsgAcknowledgement.prototype.signer = $util.newBuffer([]);
+      MsgAcknowledgement.create = function create(properties) {
+        return new MsgAcknowledgement(properties);
+      };
+      MsgAcknowledgement.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.packet != null && Object.hasOwnProperty.call(m, "packet"))
+          $root.ibc.channel.Packet.encode(m.packet, w.uint32(10).fork()).ldelim();
+        if (m.acknowledgement != null && Object.hasOwnProperty.call(m, "acknowledgement"))
+          w.uint32(18).bytes(m.acknowledgement);
+        if (m.proof != null && Object.hasOwnProperty.call(m, "proof")) w.uint32(26).bytes(m.proof);
+        if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
+          w.uint32(32).uint64(m.proofHeight);
+        if (m.signer != null && Object.hasOwnProperty.call(m, "signer")) w.uint32(42).bytes(m.signer);
+        return w;
+      };
+      MsgAcknowledgement.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.channel.MsgAcknowledgement();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.packet = $root.ibc.channel.Packet.decode(r, r.uint32());
+              break;
+            case 2:
+              m.acknowledgement = r.bytes();
+              break;
+            case 3:
+              m.proof = r.bytes();
+              break;
+            case 4:
+              m.proofHeight = r.uint64();
+              break;
+            case 5:
+              m.signer = r.bytes();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return MsgAcknowledgement;
+    })();
+    channel.Channel = (function () {
+      function Channel(p) {
+        this.connectionHops = [];
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      Channel.prototype.state = 0;
+      Channel.prototype.ordering = 0;
+      Channel.prototype.counterparty = null;
+      Channel.prototype.connectionHops = $util.emptyArray;
+      Channel.prototype.version = "";
+      Channel.create = function create(properties) {
+        return new Channel(properties);
+      };
+      Channel.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.state != null && Object.hasOwnProperty.call(m, "state")) w.uint32(8).int32(m.state);
+        if (m.ordering != null && Object.hasOwnProperty.call(m, "ordering")) w.uint32(16).int32(m.ordering);
+        if (m.counterparty != null && Object.hasOwnProperty.call(m, "counterparty"))
+          $root.ibc.channel.Counterparty.encode(m.counterparty, w.uint32(26).fork()).ldelim();
+        if (m.connectionHops != null && m.connectionHops.length) {
+          for (var i = 0; i < m.connectionHops.length; ++i) w.uint32(34).string(m.connectionHops[i]);
+        }
+        if (m.version != null && Object.hasOwnProperty.call(m, "version")) w.uint32(42).string(m.version);
+        return w;
+      };
+      Channel.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.channel.Channel();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.state = r.int32();
+              break;
+            case 2:
+              m.ordering = r.int32();
+              break;
+            case 3:
+              m.counterparty = $root.ibc.channel.Counterparty.decode(r, r.uint32());
+              break;
+            case 4:
+              if (!(m.connectionHops && m.connectionHops.length)) m.connectionHops = [];
+              m.connectionHops.push(r.string());
+              break;
+            case 5:
+              m.version = r.string();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return Channel;
+    })();
+    channel.IdentifiedChannel = (function () {
+      function IdentifiedChannel(p) {
+        this.connectionHops = [];
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      IdentifiedChannel.prototype.state = 0;
+      IdentifiedChannel.prototype.ordering = 0;
+      IdentifiedChannel.prototype.counterparty = null;
+      IdentifiedChannel.prototype.connectionHops = $util.emptyArray;
+      IdentifiedChannel.prototype.version = "";
+      IdentifiedChannel.prototype.portId = "";
+      IdentifiedChannel.prototype.channelId = "";
+      IdentifiedChannel.create = function create(properties) {
+        return new IdentifiedChannel(properties);
+      };
+      IdentifiedChannel.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.state != null && Object.hasOwnProperty.call(m, "state")) w.uint32(8).int32(m.state);
+        if (m.ordering != null && Object.hasOwnProperty.call(m, "ordering")) w.uint32(16).int32(m.ordering);
+        if (m.counterparty != null && Object.hasOwnProperty.call(m, "counterparty"))
+          $root.ibc.channel.Counterparty.encode(m.counterparty, w.uint32(26).fork()).ldelim();
+        if (m.connectionHops != null && m.connectionHops.length) {
+          for (var i = 0; i < m.connectionHops.length; ++i) w.uint32(34).string(m.connectionHops[i]);
+        }
+        if (m.version != null && Object.hasOwnProperty.call(m, "version")) w.uint32(42).string(m.version);
+        if (m.portId != null && Object.hasOwnProperty.call(m, "portId")) w.uint32(50).string(m.portId);
+        if (m.channelId != null && Object.hasOwnProperty.call(m, "channelId"))
+          w.uint32(58).string(m.channelId);
+        return w;
+      };
+      IdentifiedChannel.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.channel.IdentifiedChannel();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.state = r.int32();
+              break;
+            case 2:
+              m.ordering = r.int32();
+              break;
+            case 3:
+              m.counterparty = $root.ibc.channel.Counterparty.decode(r, r.uint32());
+              break;
+            case 4:
+              if (!(m.connectionHops && m.connectionHops.length)) m.connectionHops = [];
+              m.connectionHops.push(r.string());
+              break;
+            case 5:
+              m.version = r.string();
+              break;
+            case 6:
+              m.portId = r.string();
+              break;
+            case 7:
+              m.channelId = r.string();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return IdentifiedChannel;
+    })();
+    channel.State = (function () {
+      const valuesById = {},
+        values = Object.create(valuesById);
+      values[(valuesById[0] = "STATE_UNINITIALIZED_UNSPECIFIED")] = 0;
+      values[(valuesById[1] = "STATE_INIT")] = 1;
+      values[(valuesById[2] = "STATE_TRYOPEN")] = 2;
+      values[(valuesById[3] = "STATE_OPEN")] = 3;
+      values[(valuesById[4] = "STATE_CLOSED")] = 4;
+      return values;
+    })();
+    channel.Order = (function () {
+      const valuesById = {},
+        values = Object.create(valuesById);
+      values[(valuesById[0] = "ORDER_NONE_UNSPECIFIED")] = 0;
+      values[(valuesById[1] = "ORDER_UNORDERED")] = 1;
+      values[(valuesById[2] = "ORDER_ORDERED")] = 2;
+      return values;
+    })();
+    channel.Counterparty = (function () {
+      function Counterparty(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      Counterparty.prototype.portId = "";
+      Counterparty.prototype.channelId = "";
+      Counterparty.create = function create(properties) {
+        return new Counterparty(properties);
+      };
+      Counterparty.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.portId != null && Object.hasOwnProperty.call(m, "portId")) w.uint32(10).string(m.portId);
+        if (m.channelId != null && Object.hasOwnProperty.call(m, "channelId"))
+          w.uint32(18).string(m.channelId);
+        return w;
+      };
+      Counterparty.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.channel.Counterparty();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.portId = r.string();
+              break;
+            case 2:
+              m.channelId = r.string();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return Counterparty;
+    })();
+    channel.Packet = (function () {
+      function Packet(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      Packet.prototype.sequence = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+      Packet.prototype.sourcePort = "";
+      Packet.prototype.sourceChannel = "";
+      Packet.prototype.destinationPort = "";
+      Packet.prototype.destinationChannel = "";
+      Packet.prototype.data = $util.newBuffer([]);
+      Packet.prototype.timeoutHeight = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+      Packet.prototype.timeoutTimestamp = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+      Packet.create = function create(properties) {
+        return new Packet(properties);
+      };
+      Packet.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.sequence != null && Object.hasOwnProperty.call(m, "sequence")) w.uint32(8).uint64(m.sequence);
+        if (m.sourcePort != null && Object.hasOwnProperty.call(m, "sourcePort"))
+          w.uint32(18).string(m.sourcePort);
+        if (m.sourceChannel != null && Object.hasOwnProperty.call(m, "sourceChannel"))
+          w.uint32(26).string(m.sourceChannel);
+        if (m.destinationPort != null && Object.hasOwnProperty.call(m, "destinationPort"))
+          w.uint32(34).string(m.destinationPort);
+        if (m.destinationChannel != null && Object.hasOwnProperty.call(m, "destinationChannel"))
+          w.uint32(42).string(m.destinationChannel);
+        if (m.data != null && Object.hasOwnProperty.call(m, "data")) w.uint32(50).bytes(m.data);
+        if (m.timeoutHeight != null && Object.hasOwnProperty.call(m, "timeoutHeight"))
+          w.uint32(56).uint64(m.timeoutHeight);
+        if (m.timeoutTimestamp != null && Object.hasOwnProperty.call(m, "timeoutTimestamp"))
+          w.uint32(64).uint64(m.timeoutTimestamp);
+        return w;
+      };
+      Packet.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.channel.Packet();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.sequence = r.uint64();
+              break;
+            case 2:
+              m.sourcePort = r.string();
+              break;
+            case 3:
+              m.sourceChannel = r.string();
+              break;
+            case 4:
+              m.destinationPort = r.string();
+              break;
+            case 5:
+              m.destinationChannel = r.string();
+              break;
+            case 6:
+              m.data = r.bytes();
+              break;
+            case 7:
+              m.timeoutHeight = r.uint64();
+              break;
+            case 8:
+              m.timeoutTimestamp = r.uint64();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return Packet;
+    })();
+    channel.PacketAckCommitment = (function () {
+      function PacketAckCommitment(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      PacketAckCommitment.prototype.portId = "";
+      PacketAckCommitment.prototype.channelId = "";
+      PacketAckCommitment.prototype.sequence = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+      PacketAckCommitment.prototype.hash = $util.newBuffer([]);
+      PacketAckCommitment.create = function create(properties) {
+        return new PacketAckCommitment(properties);
+      };
+      PacketAckCommitment.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.portId != null && Object.hasOwnProperty.call(m, "portId")) w.uint32(10).string(m.portId);
+        if (m.channelId != null && Object.hasOwnProperty.call(m, "channelId"))
+          w.uint32(18).string(m.channelId);
+        if (m.sequence != null && Object.hasOwnProperty.call(m, "sequence")) w.uint32(24).uint64(m.sequence);
+        if (m.hash != null && Object.hasOwnProperty.call(m, "hash")) w.uint32(34).bytes(m.hash);
+        return w;
+      };
+      PacketAckCommitment.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.channel.PacketAckCommitment();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.portId = r.string();
+              break;
+            case 2:
+              m.channelId = r.string();
+              break;
+            case 3:
+              m.sequence = r.uint64();
+              break;
+            case 4:
+              m.hash = r.bytes();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return PacketAckCommitment;
+    })();
+    channel.Query = (function () {
+      function Query(rpcImpl, requestDelimited, responseDelimited) {
+        $protobuf.rpc.Service.call(this, rpcImpl, requestDelimited, responseDelimited);
+      }
+      (Query.prototype = Object.create($protobuf.rpc.Service.prototype)).constructor = Query;
+      Query.create = function create(rpcImpl, requestDelimited, responseDelimited) {
+        return new this(rpcImpl, requestDelimited, responseDelimited);
+      };
+      Object.defineProperty(
+        (Query.prototype.channel = function channel(request, callback) {
+          return this.rpcCall(
+            channel,
+            $root.ibc.channel.QueryChannelRequest,
+            $root.ibc.channel.QueryChannelResponse,
+            request,
+            callback,
+          );
+        }),
+        "name",
+        { value: "Channel" },
+      );
+      Object.defineProperty(
+        (Query.prototype.channels = function channels(request, callback) {
+          return this.rpcCall(
+            channels,
+            $root.ibc.channel.QueryChannelsRequest,
+            $root.ibc.channel.QueryChannelsResponse,
+            request,
+            callback,
+          );
+        }),
+        "name",
+        { value: "Channels" },
+      );
+      Object.defineProperty(
+        (Query.prototype.connectionChannels = function connectionChannels(request, callback) {
+          return this.rpcCall(
+            connectionChannels,
+            $root.ibc.channel.QueryConnectionChannelsRequest,
+            $root.ibc.channel.QueryConnectionChannelsResponse,
+            request,
+            callback,
+          );
+        }),
+        "name",
+        { value: "ConnectionChannels" },
+      );
+      Object.defineProperty(
+        (Query.prototype.packetCommitment = function packetCommitment(request, callback) {
+          return this.rpcCall(
+            packetCommitment,
+            $root.ibc.channel.QueryPacketCommitmentRequest,
+            $root.ibc.channel.QueryPacketCommitmentResponse,
+            request,
+            callback,
+          );
+        }),
+        "name",
+        { value: "PacketCommitment" },
+      );
+      Object.defineProperty(
+        (Query.prototype.packetCommitments = function packetCommitments(request, callback) {
+          return this.rpcCall(
+            packetCommitments,
+            $root.ibc.channel.QueryPacketCommitmentsRequest,
+            $root.ibc.channel.QueryPacketCommitmentsResponse,
+            request,
+            callback,
+          );
+        }),
+        "name",
+        { value: "PacketCommitments" },
+      );
+      Object.defineProperty(
+        (Query.prototype.packetAcknowledgement = function packetAcknowledgement(request, callback) {
+          return this.rpcCall(
+            packetAcknowledgement,
+            $root.ibc.channel.QueryPacketAcknowledgementRequest,
+            $root.ibc.channel.QueryPacketAcknowledgementResponse,
+            request,
+            callback,
+          );
+        }),
+        "name",
+        { value: "PacketAcknowledgement" },
+      );
+      Object.defineProperty(
+        (Query.prototype.unrelayedPackets = function unrelayedPackets(request, callback) {
+          return this.rpcCall(
+            unrelayedPackets,
+            $root.ibc.channel.QueryUnrelayedPacketsRequest,
+            $root.ibc.channel.QueryUnrelayedPacketsResponse,
+            request,
+            callback,
+          );
+        }),
+        "name",
+        { value: "UnrelayedPackets" },
+      );
+      Object.defineProperty(
+        (Query.prototype.nextSequenceReceive = function nextSequenceReceive(request, callback) {
+          return this.rpcCall(
+            nextSequenceReceive,
+            $root.ibc.channel.QueryNextSequenceReceiveRequest,
+            $root.ibc.channel.QueryNextSequenceReceiveResponse,
+            request,
+            callback,
+          );
+        }),
+        "name",
+        { value: "NextSequenceReceive" },
+      );
+      return Query;
+    })();
+    channel.QueryChannelRequest = (function () {
+      function QueryChannelRequest(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      QueryChannelRequest.prototype.portId = "";
+      QueryChannelRequest.prototype.channelId = "";
+      QueryChannelRequest.create = function create(properties) {
+        return new QueryChannelRequest(properties);
+      };
+      QueryChannelRequest.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.portId != null && Object.hasOwnProperty.call(m, "portId")) w.uint32(10).string(m.portId);
+        if (m.channelId != null && Object.hasOwnProperty.call(m, "channelId"))
+          w.uint32(18).string(m.channelId);
+        return w;
+      };
+      QueryChannelRequest.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.channel.QueryChannelRequest();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.portId = r.string();
+              break;
+            case 2:
+              m.channelId = r.string();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return QueryChannelRequest;
+    })();
+    channel.QueryChannelResponse = (function () {
+      function QueryChannelResponse(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      QueryChannelResponse.prototype.channel = null;
+      QueryChannelResponse.prototype.proof = $util.newBuffer([]);
+      QueryChannelResponse.prototype.proofPath = "";
+      QueryChannelResponse.prototype.proofHeight = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+      QueryChannelResponse.create = function create(properties) {
+        return new QueryChannelResponse(properties);
+      };
+      QueryChannelResponse.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.channel != null && Object.hasOwnProperty.call(m, "channel"))
+          $root.ibc.channel.Channel.encode(m.channel, w.uint32(10).fork()).ldelim();
+        if (m.proof != null && Object.hasOwnProperty.call(m, "proof")) w.uint32(18).bytes(m.proof);
+        if (m.proofPath != null && Object.hasOwnProperty.call(m, "proofPath"))
+          w.uint32(26).string(m.proofPath);
+        if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
+          w.uint32(32).uint64(m.proofHeight);
+        return w;
+      };
+      QueryChannelResponse.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.channel.QueryChannelResponse();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.channel = $root.ibc.channel.Channel.decode(r, r.uint32());
+              break;
+            case 2:
+              m.proof = r.bytes();
+              break;
+            case 3:
+              m.proofPath = r.string();
+              break;
+            case 4:
+              m.proofHeight = r.uint64();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return QueryChannelResponse;
+    })();
+    channel.QueryChannelsRequest = (function () {
+      function QueryChannelsRequest(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      QueryChannelsRequest.prototype.pagination = null;
+      QueryChannelsRequest.create = function create(properties) {
+        return new QueryChannelsRequest(properties);
+      };
+      QueryChannelsRequest.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.pagination != null && Object.hasOwnProperty.call(m, "pagination"))
+          $root.cosmos.query.PageRequest.encode(m.pagination, w.uint32(10).fork()).ldelim();
+        return w;
+      };
+      QueryChannelsRequest.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.channel.QueryChannelsRequest();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.pagination = $root.cosmos.query.PageRequest.decode(r, r.uint32());
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return QueryChannelsRequest;
+    })();
+    channel.QueryChannelsResponse = (function () {
+      function QueryChannelsResponse(p) {
+        this.channels = [];
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      QueryChannelsResponse.prototype.channels = $util.emptyArray;
+      QueryChannelsResponse.prototype.pagination = null;
+      QueryChannelsResponse.prototype.height = $util.Long ? $util.Long.fromBits(0, 0, false) : 0;
+      QueryChannelsResponse.create = function create(properties) {
+        return new QueryChannelsResponse(properties);
+      };
+      QueryChannelsResponse.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.channels != null && m.channels.length) {
+          for (var i = 0; i < m.channels.length; ++i)
+            $root.ibc.channel.IdentifiedChannel.encode(m.channels[i], w.uint32(10).fork()).ldelim();
+        }
+        if (m.pagination != null && Object.hasOwnProperty.call(m, "pagination"))
+          $root.cosmos.query.PageResponse.encode(m.pagination, w.uint32(18).fork()).ldelim();
+        if (m.height != null && Object.hasOwnProperty.call(m, "height")) w.uint32(24).int64(m.height);
+        return w;
+      };
+      QueryChannelsResponse.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.channel.QueryChannelsResponse();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              if (!(m.channels && m.channels.length)) m.channels = [];
+              m.channels.push($root.ibc.channel.IdentifiedChannel.decode(r, r.uint32()));
+              break;
+            case 2:
+              m.pagination = $root.cosmos.query.PageResponse.decode(r, r.uint32());
+              break;
+            case 3:
+              m.height = r.int64();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return QueryChannelsResponse;
+    })();
+    channel.QueryConnectionChannelsRequest = (function () {
+      function QueryConnectionChannelsRequest(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      QueryConnectionChannelsRequest.prototype.connection = "";
+      QueryConnectionChannelsRequest.prototype.pagination = null;
+      QueryConnectionChannelsRequest.create = function create(properties) {
+        return new QueryConnectionChannelsRequest(properties);
+      };
+      QueryConnectionChannelsRequest.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.connection != null && Object.hasOwnProperty.call(m, "connection"))
+          w.uint32(10).string(m.connection);
+        if (m.pagination != null && Object.hasOwnProperty.call(m, "pagination"))
+          $root.cosmos.query.PageRequest.encode(m.pagination, w.uint32(18).fork()).ldelim();
+        return w;
+      };
+      QueryConnectionChannelsRequest.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.channel.QueryConnectionChannelsRequest();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.connection = r.string();
+              break;
+            case 2:
+              m.pagination = $root.cosmos.query.PageRequest.decode(r, r.uint32());
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return QueryConnectionChannelsRequest;
+    })();
+    channel.QueryConnectionChannelsResponse = (function () {
+      function QueryConnectionChannelsResponse(p) {
+        this.channels = [];
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      QueryConnectionChannelsResponse.prototype.channels = $util.emptyArray;
+      QueryConnectionChannelsResponse.prototype.pagination = null;
+      QueryConnectionChannelsResponse.prototype.height = $util.Long ? $util.Long.fromBits(0, 0, false) : 0;
+      QueryConnectionChannelsResponse.create = function create(properties) {
+        return new QueryConnectionChannelsResponse(properties);
+      };
+      QueryConnectionChannelsResponse.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.channels != null && m.channels.length) {
+          for (var i = 0; i < m.channels.length; ++i)
+            $root.ibc.channel.IdentifiedChannel.encode(m.channels[i], w.uint32(10).fork()).ldelim();
+        }
+        if (m.pagination != null && Object.hasOwnProperty.call(m, "pagination"))
+          $root.cosmos.query.PageResponse.encode(m.pagination, w.uint32(18).fork()).ldelim();
+        if (m.height != null && Object.hasOwnProperty.call(m, "height")) w.uint32(24).int64(m.height);
+        return w;
+      };
+      QueryConnectionChannelsResponse.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.channel.QueryConnectionChannelsResponse();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              if (!(m.channels && m.channels.length)) m.channels = [];
+              m.channels.push($root.ibc.channel.IdentifiedChannel.decode(r, r.uint32()));
+              break;
+            case 2:
+              m.pagination = $root.cosmos.query.PageResponse.decode(r, r.uint32());
+              break;
+            case 3:
+              m.height = r.int64();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return QueryConnectionChannelsResponse;
+    })();
+    channel.QueryPacketCommitmentRequest = (function () {
+      function QueryPacketCommitmentRequest(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      QueryPacketCommitmentRequest.prototype.portId = "";
+      QueryPacketCommitmentRequest.prototype.channelId = "";
+      QueryPacketCommitmentRequest.prototype.sequence = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+      QueryPacketCommitmentRequest.create = function create(properties) {
+        return new QueryPacketCommitmentRequest(properties);
+      };
+      QueryPacketCommitmentRequest.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.portId != null && Object.hasOwnProperty.call(m, "portId")) w.uint32(10).string(m.portId);
+        if (m.channelId != null && Object.hasOwnProperty.call(m, "channelId"))
+          w.uint32(18).string(m.channelId);
+        if (m.sequence != null && Object.hasOwnProperty.call(m, "sequence")) w.uint32(24).uint64(m.sequence);
+        return w;
+      };
+      QueryPacketCommitmentRequest.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.channel.QueryPacketCommitmentRequest();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.portId = r.string();
+              break;
+            case 2:
+              m.channelId = r.string();
+              break;
+            case 3:
+              m.sequence = r.uint64();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return QueryPacketCommitmentRequest;
+    })();
+    channel.QueryPacketCommitmentResponse = (function () {
+      function QueryPacketCommitmentResponse(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      QueryPacketCommitmentResponse.prototype.commitment = $util.newBuffer([]);
+      QueryPacketCommitmentResponse.prototype.proof = $util.newBuffer([]);
+      QueryPacketCommitmentResponse.prototype.proofPath = "";
+      QueryPacketCommitmentResponse.prototype.proofHeight = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+      QueryPacketCommitmentResponse.create = function create(properties) {
+        return new QueryPacketCommitmentResponse(properties);
+      };
+      QueryPacketCommitmentResponse.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.commitment != null && Object.hasOwnProperty.call(m, "commitment"))
+          w.uint32(10).bytes(m.commitment);
+        if (m.proof != null && Object.hasOwnProperty.call(m, "proof")) w.uint32(18).bytes(m.proof);
+        if (m.proofPath != null && Object.hasOwnProperty.call(m, "proofPath"))
+          w.uint32(26).string(m.proofPath);
+        if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
+          w.uint32(32).uint64(m.proofHeight);
+        return w;
+      };
+      QueryPacketCommitmentResponse.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.channel.QueryPacketCommitmentResponse();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.commitment = r.bytes();
+              break;
+            case 2:
+              m.proof = r.bytes();
+              break;
+            case 3:
+              m.proofPath = r.string();
+              break;
+            case 4:
+              m.proofHeight = r.uint64();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return QueryPacketCommitmentResponse;
+    })();
+    channel.QueryPacketCommitmentsRequest = (function () {
+      function QueryPacketCommitmentsRequest(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      QueryPacketCommitmentsRequest.prototype.portId = "";
+      QueryPacketCommitmentsRequest.prototype.channelId = "";
+      QueryPacketCommitmentsRequest.prototype.pagination = null;
+      QueryPacketCommitmentsRequest.create = function create(properties) {
+        return new QueryPacketCommitmentsRequest(properties);
+      };
+      QueryPacketCommitmentsRequest.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.portId != null && Object.hasOwnProperty.call(m, "portId")) w.uint32(10).string(m.portId);
+        if (m.channelId != null && Object.hasOwnProperty.call(m, "channelId"))
+          w.uint32(18).string(m.channelId);
+        if (m.pagination != null && Object.hasOwnProperty.call(m, "pagination"))
+          $root.cosmos.query.PageRequest.encode(m.pagination, w.uint32(26).fork()).ldelim();
+        return w;
+      };
+      QueryPacketCommitmentsRequest.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.channel.QueryPacketCommitmentsRequest();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.portId = r.string();
+              break;
+            case 2:
+              m.channelId = r.string();
+              break;
+            case 3:
+              m.pagination = $root.cosmos.query.PageRequest.decode(r, r.uint32());
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return QueryPacketCommitmentsRequest;
+    })();
+    channel.QueryPacketCommitmentsResponse = (function () {
+      function QueryPacketCommitmentsResponse(p) {
+        this.commitments = [];
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      QueryPacketCommitmentsResponse.prototype.commitments = $util.emptyArray;
+      QueryPacketCommitmentsResponse.prototype.pagination = null;
+      QueryPacketCommitmentsResponse.prototype.height = $util.Long ? $util.Long.fromBits(0, 0, false) : 0;
+      QueryPacketCommitmentsResponse.create = function create(properties) {
+        return new QueryPacketCommitmentsResponse(properties);
+      };
+      QueryPacketCommitmentsResponse.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.commitments != null && m.commitments.length) {
+          for (var i = 0; i < m.commitments.length; ++i)
+            $root.ibc.channel.PacketAckCommitment.encode(m.commitments[i], w.uint32(10).fork()).ldelim();
+        }
+        if (m.pagination != null && Object.hasOwnProperty.call(m, "pagination"))
+          $root.cosmos.query.PageResponse.encode(m.pagination, w.uint32(18).fork()).ldelim();
+        if (m.height != null && Object.hasOwnProperty.call(m, "height")) w.uint32(24).int64(m.height);
+        return w;
+      };
+      QueryPacketCommitmentsResponse.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.channel.QueryPacketCommitmentsResponse();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              if (!(m.commitments && m.commitments.length)) m.commitments = [];
+              m.commitments.push($root.ibc.channel.PacketAckCommitment.decode(r, r.uint32()));
+              break;
+            case 2:
+              m.pagination = $root.cosmos.query.PageResponse.decode(r, r.uint32());
+              break;
+            case 3:
+              m.height = r.int64();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return QueryPacketCommitmentsResponse;
+    })();
+    channel.QueryPacketAcknowledgementRequest = (function () {
+      function QueryPacketAcknowledgementRequest(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      QueryPacketAcknowledgementRequest.prototype.portId = "";
+      QueryPacketAcknowledgementRequest.prototype.channelId = "";
+      QueryPacketAcknowledgementRequest.prototype.sequence = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+      QueryPacketAcknowledgementRequest.create = function create(properties) {
+        return new QueryPacketAcknowledgementRequest(properties);
+      };
+      QueryPacketAcknowledgementRequest.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.portId != null && Object.hasOwnProperty.call(m, "portId")) w.uint32(10).string(m.portId);
+        if (m.channelId != null && Object.hasOwnProperty.call(m, "channelId"))
+          w.uint32(18).string(m.channelId);
+        if (m.sequence != null && Object.hasOwnProperty.call(m, "sequence")) w.uint32(24).uint64(m.sequence);
+        return w;
+      };
+      QueryPacketAcknowledgementRequest.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.channel.QueryPacketAcknowledgementRequest();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.portId = r.string();
+              break;
+            case 2:
+              m.channelId = r.string();
+              break;
+            case 3:
+              m.sequence = r.uint64();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return QueryPacketAcknowledgementRequest;
+    })();
+    channel.QueryPacketAcknowledgementResponse = (function () {
+      function QueryPacketAcknowledgementResponse(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      QueryPacketAcknowledgementResponse.prototype.acknowledgement = $util.newBuffer([]);
+      QueryPacketAcknowledgementResponse.prototype.proof = $util.newBuffer([]);
+      QueryPacketAcknowledgementResponse.prototype.proofPath = "";
+      QueryPacketAcknowledgementResponse.prototype.proofHeight = $util.Long
+        ? $util.Long.fromBits(0, 0, true)
+        : 0;
+      QueryPacketAcknowledgementResponse.create = function create(properties) {
+        return new QueryPacketAcknowledgementResponse(properties);
+      };
+      QueryPacketAcknowledgementResponse.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.acknowledgement != null && Object.hasOwnProperty.call(m, "acknowledgement"))
+          w.uint32(10).bytes(m.acknowledgement);
+        if (m.proof != null && Object.hasOwnProperty.call(m, "proof")) w.uint32(18).bytes(m.proof);
+        if (m.proofPath != null && Object.hasOwnProperty.call(m, "proofPath"))
+          w.uint32(26).string(m.proofPath);
+        if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
+          w.uint32(32).uint64(m.proofHeight);
+        return w;
+      };
+      QueryPacketAcknowledgementResponse.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.channel.QueryPacketAcknowledgementResponse();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.acknowledgement = r.bytes();
+              break;
+            case 2:
+              m.proof = r.bytes();
+              break;
+            case 3:
+              m.proofPath = r.string();
+              break;
+            case 4:
+              m.proofHeight = r.uint64();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return QueryPacketAcknowledgementResponse;
+    })();
+    channel.QueryUnrelayedPacketsRequest = (function () {
+      function QueryUnrelayedPacketsRequest(p) {
+        this.packetCommitmentSequences = [];
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      QueryUnrelayedPacketsRequest.prototype.portId = "";
+      QueryUnrelayedPacketsRequest.prototype.channelId = "";
+      QueryUnrelayedPacketsRequest.prototype.packetCommitmentSequences = $util.emptyArray;
+      QueryUnrelayedPacketsRequest.prototype.acknowledgements = false;
+      QueryUnrelayedPacketsRequest.create = function create(properties) {
+        return new QueryUnrelayedPacketsRequest(properties);
+      };
+      QueryUnrelayedPacketsRequest.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.portId != null && Object.hasOwnProperty.call(m, "portId")) w.uint32(10).string(m.portId);
+        if (m.channelId != null && Object.hasOwnProperty.call(m, "channelId"))
+          w.uint32(18).string(m.channelId);
+        if (m.packetCommitmentSequences != null && m.packetCommitmentSequences.length) {
+          w.uint32(26).fork();
+          for (var i = 0; i < m.packetCommitmentSequences.length; ++i)
+            w.uint64(m.packetCommitmentSequences[i]);
+          w.ldelim();
+        }
+        if (m.acknowledgements != null && Object.hasOwnProperty.call(m, "acknowledgements"))
+          w.uint32(32).bool(m.acknowledgements);
+        return w;
+      };
+      QueryUnrelayedPacketsRequest.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.channel.QueryUnrelayedPacketsRequest();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.portId = r.string();
+              break;
+            case 2:
+              m.channelId = r.string();
+              break;
+            case 3:
+              if (!(m.packetCommitmentSequences && m.packetCommitmentSequences.length))
+                m.packetCommitmentSequences = [];
+              if ((t & 7) === 2) {
+                var c2 = r.uint32() + r.pos;
+                while (r.pos < c2) m.packetCommitmentSequences.push(r.uint64());
+              } else m.packetCommitmentSequences.push(r.uint64());
+              break;
+            case 4:
+              m.acknowledgements = r.bool();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return QueryUnrelayedPacketsRequest;
+    })();
+    channel.QueryUnrelayedPacketsResponse = (function () {
+      function QueryUnrelayedPacketsResponse(p) {
+        this.sequences = [];
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      QueryUnrelayedPacketsResponse.prototype.sequences = $util.emptyArray;
+      QueryUnrelayedPacketsResponse.prototype.height = $util.Long ? $util.Long.fromBits(0, 0, false) : 0;
+      QueryUnrelayedPacketsResponse.create = function create(properties) {
+        return new QueryUnrelayedPacketsResponse(properties);
+      };
+      QueryUnrelayedPacketsResponse.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.sequences != null && m.sequences.length) {
+          w.uint32(10).fork();
+          for (var i = 0; i < m.sequences.length; ++i) w.uint64(m.sequences[i]);
+          w.ldelim();
+        }
+        if (m.height != null && Object.hasOwnProperty.call(m, "height")) w.uint32(16).int64(m.height);
+        return w;
+      };
+      QueryUnrelayedPacketsResponse.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.channel.QueryUnrelayedPacketsResponse();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              if (!(m.sequences && m.sequences.length)) m.sequences = [];
+              if ((t & 7) === 2) {
+                var c2 = r.uint32() + r.pos;
+                while (r.pos < c2) m.sequences.push(r.uint64());
+              } else m.sequences.push(r.uint64());
+              break;
+            case 2:
+              m.height = r.int64();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return QueryUnrelayedPacketsResponse;
+    })();
+    channel.QueryNextSequenceReceiveRequest = (function () {
+      function QueryNextSequenceReceiveRequest(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      QueryNextSequenceReceiveRequest.prototype.portId = "";
+      QueryNextSequenceReceiveRequest.prototype.channelId = "";
+      QueryNextSequenceReceiveRequest.create = function create(properties) {
+        return new QueryNextSequenceReceiveRequest(properties);
+      };
+      QueryNextSequenceReceiveRequest.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.portId != null && Object.hasOwnProperty.call(m, "portId")) w.uint32(10).string(m.portId);
+        if (m.channelId != null && Object.hasOwnProperty.call(m, "channelId"))
+          w.uint32(18).string(m.channelId);
+        return w;
+      };
+      QueryNextSequenceReceiveRequest.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.channel.QueryNextSequenceReceiveRequest();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.portId = r.string();
+              break;
+            case 2:
+              m.channelId = r.string();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return QueryNextSequenceReceiveRequest;
+    })();
+    channel.QueryNextSequenceReceiveResponse = (function () {
+      function QueryNextSequenceReceiveResponse(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      QueryNextSequenceReceiveResponse.prototype.nextSequenceReceive = $util.Long
+        ? $util.Long.fromBits(0, 0, true)
+        : 0;
+      QueryNextSequenceReceiveResponse.prototype.proof = $util.newBuffer([]);
+      QueryNextSequenceReceiveResponse.prototype.proofPath = "";
+      QueryNextSequenceReceiveResponse.prototype.proofHeight = $util.Long
+        ? $util.Long.fromBits(0, 0, true)
+        : 0;
+      QueryNextSequenceReceiveResponse.create = function create(properties) {
+        return new QueryNextSequenceReceiveResponse(properties);
+      };
+      QueryNextSequenceReceiveResponse.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.nextSequenceReceive != null && Object.hasOwnProperty.call(m, "nextSequenceReceive"))
+          w.uint32(8).uint64(m.nextSequenceReceive);
+        if (m.proof != null && Object.hasOwnProperty.call(m, "proof")) w.uint32(18).bytes(m.proof);
+        if (m.proofPath != null && Object.hasOwnProperty.call(m, "proofPath"))
+          w.uint32(26).string(m.proofPath);
+        if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
+          w.uint32(32).uint64(m.proofHeight);
+        return w;
+      };
+      QueryNextSequenceReceiveResponse.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.channel.QueryNextSequenceReceiveResponse();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.nextSequenceReceive = r.uint64();
+              break;
+            case 2:
+              m.proof = r.bytes();
+              break;
+            case 3:
+              m.proofPath = r.string();
+              break;
+            case 4:
+              m.proofHeight = r.uint64();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return QueryNextSequenceReceiveResponse;
+    })();
+    channel.QueryChannelClientStateRequest = (function () {
+      function QueryChannelClientStateRequest(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      QueryChannelClientStateRequest.prototype.portId = "";
+      QueryChannelClientStateRequest.prototype.channelId = "";
+      QueryChannelClientStateRequest.create = function create(properties) {
+        return new QueryChannelClientStateRequest(properties);
+      };
+      QueryChannelClientStateRequest.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.portId != null && Object.hasOwnProperty.call(m, "portId")) w.uint32(10).string(m.portId);
+        if (m.channelId != null && Object.hasOwnProperty.call(m, "channelId"))
+          w.uint32(18).string(m.channelId);
+        return w;
+      };
+      QueryChannelClientStateRequest.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.channel.QueryChannelClientStateRequest();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.portId = r.string();
+              break;
+            case 2:
+              m.channelId = r.string();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return QueryChannelClientStateRequest;
+    })();
+    channel.QueryChannelConsensusStateRequest = (function () {
+      function QueryChannelConsensusStateRequest(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      QueryChannelConsensusStateRequest.prototype.portId = "";
+      QueryChannelConsensusStateRequest.prototype.channelId = "";
+      QueryChannelConsensusStateRequest.create = function create(properties) {
+        return new QueryChannelConsensusStateRequest(properties);
+      };
+      QueryChannelConsensusStateRequest.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.portId != null && Object.hasOwnProperty.call(m, "portId")) w.uint32(10).string(m.portId);
+        if (m.channelId != null && Object.hasOwnProperty.call(m, "channelId"))
+          w.uint32(18).string(m.channelId);
+        return w;
+      };
+      QueryChannelConsensusStateRequest.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.channel.QueryChannelConsensusStateRequest();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.portId = r.string();
+              break;
+            case 2:
+              m.channelId = r.string();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return QueryChannelConsensusStateRequest;
+    })();
+    return channel;
+  })();
+  ibc.commitment = (function () {
+    const commitment = {};
+    commitment.MerkleRoot = (function () {
+      function MerkleRoot(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      MerkleRoot.prototype.hash = $util.newBuffer([]);
+      MerkleRoot.create = function create(properties) {
+        return new MerkleRoot(properties);
+      };
+      MerkleRoot.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.hash != null && Object.hasOwnProperty.call(m, "hash")) w.uint32(10).bytes(m.hash);
+        return w;
+      };
+      MerkleRoot.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.commitment.MerkleRoot();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.hash = r.bytes();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return MerkleRoot;
+    })();
+    commitment.MerklePrefix = (function () {
+      function MerklePrefix(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      MerklePrefix.prototype.keyPrefix = $util.newBuffer([]);
+      MerklePrefix.create = function create(properties) {
+        return new MerklePrefix(properties);
+      };
+      MerklePrefix.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.keyPrefix != null && Object.hasOwnProperty.call(m, "keyPrefix"))
+          w.uint32(10).bytes(m.keyPrefix);
+        return w;
+      };
+      MerklePrefix.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.commitment.MerklePrefix();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.keyPrefix = r.bytes();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return MerklePrefix;
+    })();
+    commitment.MerklePath = (function () {
+      function MerklePath(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      MerklePath.prototype.keyPath = null;
+      MerklePath.create = function create(properties) {
+        return new MerklePath(properties);
+      };
+      MerklePath.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.keyPath != null && Object.hasOwnProperty.call(m, "keyPath"))
+          $root.ibc.commitment.KeyPath.encode(m.keyPath, w.uint32(10).fork()).ldelim();
+        return w;
+      };
+      MerklePath.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.commitment.MerklePath();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.keyPath = $root.ibc.commitment.KeyPath.decode(r, r.uint32());
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return MerklePath;
+    })();
+    commitment.MerkleProof = (function () {
+      function MerkleProof(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      MerkleProof.prototype.proof = null;
+      MerkleProof.create = function create(properties) {
+        return new MerkleProof(properties);
+      };
+      MerkleProof.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.proof != null && Object.hasOwnProperty.call(m, "proof"))
+          $root.tendermint.crypto.merkle.Proof.encode(m.proof, w.uint32(10).fork()).ldelim();
+        return w;
+      };
+      MerkleProof.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.commitment.MerkleProof();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.proof = $root.tendermint.crypto.merkle.Proof.decode(r, r.uint32());
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return MerkleProof;
+    })();
+    commitment.KeyPath = (function () {
+      function KeyPath(p) {
+        this.keys = [];
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      KeyPath.prototype.keys = $util.emptyArray;
+      KeyPath.create = function create(properties) {
+        return new KeyPath(properties);
+      };
+      KeyPath.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.keys != null && m.keys.length) {
+          for (var i = 0; i < m.keys.length; ++i)
+            $root.ibc.commitment.Key.encode(m.keys[i], w.uint32(10).fork()).ldelim();
+        }
+        return w;
+      };
+      KeyPath.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.commitment.KeyPath();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              if (!(m.keys && m.keys.length)) m.keys = [];
+              m.keys.push($root.ibc.commitment.Key.decode(r, r.uint32()));
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return KeyPath;
+    })();
+    commitment.Key = (function () {
+      function Key(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      Key.prototype.name = $util.newBuffer([]);
+      Key.prototype.enc = 0;
+      Key.create = function create(properties) {
+        return new Key(properties);
+      };
+      Key.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.name != null && Object.hasOwnProperty.call(m, "name")) w.uint32(10).bytes(m.name);
+        if (m.enc != null && Object.hasOwnProperty.call(m, "enc")) w.uint32(16).int32(m.enc);
+        return w;
+      };
+      Key.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.commitment.Key();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.name = r.bytes();
+              break;
+            case 2:
+              m.enc = r.int32();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return Key;
+    })();
+    commitment.KeyEncoding = (function () {
+      const valuesById = {},
+        values = Object.create(valuesById);
+      values[(valuesById[0] = "KEY_ENCODING_URL_UNSPECIFIED")] = 0;
+      values[(valuesById[1] = "KEY_ENCODING_HEX")] = 1;
+      return values;
+    })();
+    return commitment;
+  })();
+  ibc.connection = (function () {
+    const connection = {};
+    connection.MsgConnectionOpenInit = (function () {
+      function MsgConnectionOpenInit(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      MsgConnectionOpenInit.prototype.clientId = "";
+      MsgConnectionOpenInit.prototype.connectionId = "";
+      MsgConnectionOpenInit.prototype.counterparty = null;
+      MsgConnectionOpenInit.prototype.signer = $util.newBuffer([]);
+      MsgConnectionOpenInit.create = function create(properties) {
+        return new MsgConnectionOpenInit(properties);
+      };
+      MsgConnectionOpenInit.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.clientId != null && Object.hasOwnProperty.call(m, "clientId")) w.uint32(10).string(m.clientId);
+        if (m.connectionId != null && Object.hasOwnProperty.call(m, "connectionId"))
+          w.uint32(18).string(m.connectionId);
+        if (m.counterparty != null && Object.hasOwnProperty.call(m, "counterparty"))
+          $root.ibc.connection.Counterparty.encode(m.counterparty, w.uint32(26).fork()).ldelim();
+        if (m.signer != null && Object.hasOwnProperty.call(m, "signer")) w.uint32(34).bytes(m.signer);
+        return w;
+      };
+      MsgConnectionOpenInit.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.connection.MsgConnectionOpenInit();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.clientId = r.string();
+              break;
+            case 2:
+              m.connectionId = r.string();
+              break;
+            case 3:
+              m.counterparty = $root.ibc.connection.Counterparty.decode(r, r.uint32());
+              break;
+            case 4:
+              m.signer = r.bytes();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return MsgConnectionOpenInit;
+    })();
+    connection.MsgConnectionOpenTry = (function () {
+      function MsgConnectionOpenTry(p) {
+        this.counterpartyVersions = [];
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      MsgConnectionOpenTry.prototype.clientId = "";
+      MsgConnectionOpenTry.prototype.connectionId = "";
+      MsgConnectionOpenTry.prototype.counterparty = null;
+      MsgConnectionOpenTry.prototype.counterpartyVersions = $util.emptyArray;
+      MsgConnectionOpenTry.prototype.proofInit = $util.newBuffer([]);
+      MsgConnectionOpenTry.prototype.proofHeight = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+      MsgConnectionOpenTry.prototype.proofConsensus = $util.newBuffer([]);
+      MsgConnectionOpenTry.prototype.consensusHeight = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+      MsgConnectionOpenTry.prototype.signer = $util.newBuffer([]);
+      MsgConnectionOpenTry.create = function create(properties) {
+        return new MsgConnectionOpenTry(properties);
+      };
+      MsgConnectionOpenTry.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.clientId != null && Object.hasOwnProperty.call(m, "clientId")) w.uint32(10).string(m.clientId);
+        if (m.connectionId != null && Object.hasOwnProperty.call(m, "connectionId"))
+          w.uint32(18).string(m.connectionId);
+        if (m.counterparty != null && Object.hasOwnProperty.call(m, "counterparty"))
+          $root.ibc.connection.Counterparty.encode(m.counterparty, w.uint32(26).fork()).ldelim();
+        if (m.counterpartyVersions != null && m.counterpartyVersions.length) {
+          for (var i = 0; i < m.counterpartyVersions.length; ++i)
+            w.uint32(34).string(m.counterpartyVersions[i]);
+        }
+        if (m.proofInit != null && Object.hasOwnProperty.call(m, "proofInit"))
+          w.uint32(42).bytes(m.proofInit);
+        if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
+          w.uint32(48).uint64(m.proofHeight);
+        if (m.proofConsensus != null && Object.hasOwnProperty.call(m, "proofConsensus"))
+          w.uint32(58).bytes(m.proofConsensus);
+        if (m.consensusHeight != null && Object.hasOwnProperty.call(m, "consensusHeight"))
+          w.uint32(64).uint64(m.consensusHeight);
+        if (m.signer != null && Object.hasOwnProperty.call(m, "signer")) w.uint32(74).bytes(m.signer);
+        return w;
+      };
+      MsgConnectionOpenTry.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.connection.MsgConnectionOpenTry();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.clientId = r.string();
+              break;
+            case 2:
+              m.connectionId = r.string();
+              break;
+            case 3:
+              m.counterparty = $root.ibc.connection.Counterparty.decode(r, r.uint32());
+              break;
+            case 4:
+              if (!(m.counterpartyVersions && m.counterpartyVersions.length)) m.counterpartyVersions = [];
+              m.counterpartyVersions.push(r.string());
+              break;
+            case 5:
+              m.proofInit = r.bytes();
+              break;
+            case 6:
+              m.proofHeight = r.uint64();
+              break;
+            case 7:
+              m.proofConsensus = r.bytes();
+              break;
+            case 8:
+              m.consensusHeight = r.uint64();
+              break;
+            case 9:
+              m.signer = r.bytes();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return MsgConnectionOpenTry;
+    })();
+    connection.MsgConnectionOpenAck = (function () {
+      function MsgConnectionOpenAck(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      MsgConnectionOpenAck.prototype.connectionId = "";
+      MsgConnectionOpenAck.prototype.version = "";
+      MsgConnectionOpenAck.prototype.proofTry = $util.newBuffer([]);
+      MsgConnectionOpenAck.prototype.proofHeight = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+      MsgConnectionOpenAck.prototype.proofConsensus = $util.newBuffer([]);
+      MsgConnectionOpenAck.prototype.consensusHeight = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+      MsgConnectionOpenAck.prototype.signer = $util.newBuffer([]);
+      MsgConnectionOpenAck.create = function create(properties) {
+        return new MsgConnectionOpenAck(properties);
+      };
+      MsgConnectionOpenAck.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.connectionId != null && Object.hasOwnProperty.call(m, "connectionId"))
+          w.uint32(10).string(m.connectionId);
+        if (m.version != null && Object.hasOwnProperty.call(m, "version")) w.uint32(18).string(m.version);
+        if (m.proofTry != null && Object.hasOwnProperty.call(m, "proofTry")) w.uint32(26).bytes(m.proofTry);
+        if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
+          w.uint32(32).uint64(m.proofHeight);
+        if (m.proofConsensus != null && Object.hasOwnProperty.call(m, "proofConsensus"))
+          w.uint32(42).bytes(m.proofConsensus);
+        if (m.consensusHeight != null && Object.hasOwnProperty.call(m, "consensusHeight"))
+          w.uint32(48).uint64(m.consensusHeight);
+        if (m.signer != null && Object.hasOwnProperty.call(m, "signer")) w.uint32(58).bytes(m.signer);
+        return w;
+      };
+      MsgConnectionOpenAck.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.connection.MsgConnectionOpenAck();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.connectionId = r.string();
+              break;
+            case 2:
+              m.version = r.string();
+              break;
+            case 3:
+              m.proofTry = r.bytes();
+              break;
+            case 4:
+              m.proofHeight = r.uint64();
+              break;
+            case 5:
+              m.proofConsensus = r.bytes();
+              break;
+            case 6:
+              m.consensusHeight = r.uint64();
+              break;
+            case 7:
+              m.signer = r.bytes();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return MsgConnectionOpenAck;
+    })();
+    connection.MsgConnectionOpenConfirm = (function () {
+      function MsgConnectionOpenConfirm(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      MsgConnectionOpenConfirm.prototype.connectionId = "";
+      MsgConnectionOpenConfirm.prototype.proofAck = $util.newBuffer([]);
+      MsgConnectionOpenConfirm.prototype.proofHeight = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+      MsgConnectionOpenConfirm.prototype.signer = $util.newBuffer([]);
+      MsgConnectionOpenConfirm.create = function create(properties) {
+        return new MsgConnectionOpenConfirm(properties);
+      };
+      MsgConnectionOpenConfirm.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.connectionId != null && Object.hasOwnProperty.call(m, "connectionId"))
+          w.uint32(10).string(m.connectionId);
+        if (m.proofAck != null && Object.hasOwnProperty.call(m, "proofAck")) w.uint32(18).bytes(m.proofAck);
+        if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
+          w.uint32(24).uint64(m.proofHeight);
+        if (m.signer != null && Object.hasOwnProperty.call(m, "signer")) w.uint32(34).bytes(m.signer);
+        return w;
+      };
+      MsgConnectionOpenConfirm.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.connection.MsgConnectionOpenConfirm();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.connectionId = r.string();
+              break;
+            case 2:
+              m.proofAck = r.bytes();
+              break;
+            case 3:
+              m.proofHeight = r.uint64();
+              break;
+            case 4:
+              m.signer = r.bytes();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return MsgConnectionOpenConfirm;
+    })();
+    connection.ConnectionEnd = (function () {
+      function ConnectionEnd(p) {
+        this.versions = [];
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      ConnectionEnd.prototype.clientId = "";
+      ConnectionEnd.prototype.versions = $util.emptyArray;
+      ConnectionEnd.prototype.state = 0;
+      ConnectionEnd.prototype.counterparty = null;
+      ConnectionEnd.create = function create(properties) {
+        return new ConnectionEnd(properties);
+      };
+      ConnectionEnd.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.clientId != null && Object.hasOwnProperty.call(m, "clientId")) w.uint32(10).string(m.clientId);
+        if (m.versions != null && m.versions.length) {
+          for (var i = 0; i < m.versions.length; ++i) w.uint32(18).string(m.versions[i]);
+        }
+        if (m.state != null && Object.hasOwnProperty.call(m, "state")) w.uint32(24).int32(m.state);
+        if (m.counterparty != null && Object.hasOwnProperty.call(m, "counterparty"))
+          $root.ibc.connection.Counterparty.encode(m.counterparty, w.uint32(34).fork()).ldelim();
+        return w;
+      };
+      ConnectionEnd.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.connection.ConnectionEnd();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.clientId = r.string();
+              break;
+            case 2:
+              if (!(m.versions && m.versions.length)) m.versions = [];
+              m.versions.push(r.string());
+              break;
+            case 3:
+              m.state = r.int32();
+              break;
+            case 4:
+              m.counterparty = $root.ibc.connection.Counterparty.decode(r, r.uint32());
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return ConnectionEnd;
+    })();
+    connection.IdentifiedConnection = (function () {
+      function IdentifiedConnection(p) {
+        this.versions = [];
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      IdentifiedConnection.prototype.id = "";
+      IdentifiedConnection.prototype.clientId = "";
+      IdentifiedConnection.prototype.versions = $util.emptyArray;
+      IdentifiedConnection.prototype.state = 0;
+      IdentifiedConnection.prototype.counterparty = null;
+      IdentifiedConnection.create = function create(properties) {
+        return new IdentifiedConnection(properties);
+      };
+      IdentifiedConnection.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.id != null && Object.hasOwnProperty.call(m, "id")) w.uint32(10).string(m.id);
+        if (m.clientId != null && Object.hasOwnProperty.call(m, "clientId")) w.uint32(18).string(m.clientId);
+        if (m.versions != null && m.versions.length) {
+          for (var i = 0; i < m.versions.length; ++i) w.uint32(26).string(m.versions[i]);
+        }
+        if (m.state != null && Object.hasOwnProperty.call(m, "state")) w.uint32(32).int32(m.state);
+        if (m.counterparty != null && Object.hasOwnProperty.call(m, "counterparty"))
+          $root.ibc.connection.Counterparty.encode(m.counterparty, w.uint32(42).fork()).ldelim();
+        return w;
+      };
+      IdentifiedConnection.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.connection.IdentifiedConnection();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.id = r.string();
+              break;
+            case 2:
+              m.clientId = r.string();
+              break;
+            case 3:
+              if (!(m.versions && m.versions.length)) m.versions = [];
+              m.versions.push(r.string());
+              break;
+            case 4:
+              m.state = r.int32();
+              break;
+            case 5:
+              m.counterparty = $root.ibc.connection.Counterparty.decode(r, r.uint32());
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return IdentifiedConnection;
+    })();
+    connection.State = (function () {
+      const valuesById = {},
+        values = Object.create(valuesById);
+      values[(valuesById[0] = "STATE_UNINITIALIZED_UNSPECIFIED")] = 0;
+      values[(valuesById[1] = "STATE_INIT")] = 1;
+      values[(valuesById[2] = "STATE_TRYOPEN")] = 2;
+      values[(valuesById[3] = "STATE_OPEN")] = 3;
+      return values;
+    })();
+    connection.Counterparty = (function () {
+      function Counterparty(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      Counterparty.prototype.clientId = "";
+      Counterparty.prototype.connectionId = "";
+      Counterparty.prototype.prefix = null;
+      Counterparty.create = function create(properties) {
+        return new Counterparty(properties);
+      };
+      Counterparty.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.clientId != null && Object.hasOwnProperty.call(m, "clientId")) w.uint32(10).string(m.clientId);
+        if (m.connectionId != null && Object.hasOwnProperty.call(m, "connectionId"))
+          w.uint32(18).string(m.connectionId);
+        if (m.prefix != null && Object.hasOwnProperty.call(m, "prefix"))
+          $root.ibc.commitment.MerklePrefix.encode(m.prefix, w.uint32(26).fork()).ldelim();
+        return w;
+      };
+      Counterparty.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.connection.Counterparty();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.clientId = r.string();
+              break;
+            case 2:
+              m.connectionId = r.string();
+              break;
+            case 3:
+              m.prefix = $root.ibc.commitment.MerklePrefix.decode(r, r.uint32());
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return Counterparty;
+    })();
+    connection.ClientPaths = (function () {
+      function ClientPaths(p) {
+        this.paths = [];
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      ClientPaths.prototype.paths = $util.emptyArray;
+      ClientPaths.create = function create(properties) {
+        return new ClientPaths(properties);
+      };
+      ClientPaths.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.paths != null && m.paths.length) {
+          for (var i = 0; i < m.paths.length; ++i) w.uint32(10).string(m.paths[i]);
+        }
+        return w;
+      };
+      ClientPaths.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.connection.ClientPaths();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              if (!(m.paths && m.paths.length)) m.paths = [];
+              m.paths.push(r.string());
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return ClientPaths;
+    })();
+    connection.ConnectionPaths = (function () {
+      function ConnectionPaths(p) {
+        this.paths = [];
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      ConnectionPaths.prototype.clientId = "";
+      ConnectionPaths.prototype.paths = $util.emptyArray;
+      ConnectionPaths.create = function create(properties) {
+        return new ConnectionPaths(properties);
+      };
+      ConnectionPaths.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.clientId != null && Object.hasOwnProperty.call(m, "clientId")) w.uint32(10).string(m.clientId);
+        if (m.paths != null && m.paths.length) {
+          for (var i = 0; i < m.paths.length; ++i) w.uint32(18).string(m.paths[i]);
+        }
+        return w;
+      };
+      ConnectionPaths.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.connection.ConnectionPaths();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.clientId = r.string();
+              break;
+            case 2:
+              if (!(m.paths && m.paths.length)) m.paths = [];
+              m.paths.push(r.string());
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return ConnectionPaths;
+    })();
+    connection.Version = (function () {
+      function Version(p) {
+        this.features = [];
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      Version.prototype.identifier = "";
+      Version.prototype.features = $util.emptyArray;
+      Version.create = function create(properties) {
+        return new Version(properties);
+      };
+      Version.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.identifier != null && Object.hasOwnProperty.call(m, "identifier"))
+          w.uint32(10).string(m.identifier);
+        if (m.features != null && m.features.length) {
+          for (var i = 0; i < m.features.length; ++i) w.uint32(18).string(m.features[i]);
+        }
+        return w;
+      };
+      Version.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.connection.Version();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.identifier = r.string();
+              break;
+            case 2:
+              if (!(m.features && m.features.length)) m.features = [];
+              m.features.push(r.string());
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return Version;
+    })();
+    connection.Query = (function () {
+      function Query(rpcImpl, requestDelimited, responseDelimited) {
+        $protobuf.rpc.Service.call(this, rpcImpl, requestDelimited, responseDelimited);
+      }
+      (Query.prototype = Object.create($protobuf.rpc.Service.prototype)).constructor = Query;
+      Query.create = function create(rpcImpl, requestDelimited, responseDelimited) {
+        return new this(rpcImpl, requestDelimited, responseDelimited);
+      };
+      Object.defineProperty(
+        (Query.prototype.connection = function connection(request, callback) {
+          return this.rpcCall(
+            connection,
+            $root.ibc.connection.QueryConnectionRequest,
+            $root.ibc.connection.QueryConnectionResponse,
+            request,
+            callback,
+          );
+        }),
+        "name",
+        { value: "Connection" },
+      );
+      Object.defineProperty(
+        (Query.prototype.connections = function connections(request, callback) {
+          return this.rpcCall(
+            connections,
+            $root.ibc.connection.QueryConnectionsRequest,
+            $root.ibc.connection.QueryConnectionsResponse,
+            request,
+            callback,
+          );
+        }),
+        "name",
+        { value: "Connections" },
+      );
+      Object.defineProperty(
+        (Query.prototype.clientConnections = function clientConnections(request, callback) {
+          return this.rpcCall(
+            clientConnections,
+            $root.ibc.connection.QueryClientConnectionsRequest,
+            $root.ibc.connection.QueryClientConnectionsResponse,
+            request,
+            callback,
+          );
+        }),
+        "name",
+        { value: "ClientConnections" },
+      );
+      return Query;
+    })();
+    connection.QueryConnectionRequest = (function () {
+      function QueryConnectionRequest(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      QueryConnectionRequest.prototype.connectionId = "";
+      QueryConnectionRequest.create = function create(properties) {
+        return new QueryConnectionRequest(properties);
+      };
+      QueryConnectionRequest.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.connectionId != null && Object.hasOwnProperty.call(m, "connectionId"))
+          w.uint32(10).string(m.connectionId);
+        return w;
+      };
+      QueryConnectionRequest.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.connection.QueryConnectionRequest();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.connectionId = r.string();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return QueryConnectionRequest;
+    })();
+    connection.QueryConnectionResponse = (function () {
+      function QueryConnectionResponse(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      QueryConnectionResponse.prototype.connection = null;
+      QueryConnectionResponse.prototype.proof = $util.newBuffer([]);
+      QueryConnectionResponse.prototype.proofPath = "";
+      QueryConnectionResponse.prototype.proofHeight = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+      QueryConnectionResponse.create = function create(properties) {
+        return new QueryConnectionResponse(properties);
+      };
+      QueryConnectionResponse.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.connection != null && Object.hasOwnProperty.call(m, "connection"))
+          $root.ibc.connection.ConnectionEnd.encode(m.connection, w.uint32(10).fork()).ldelim();
+        if (m.proof != null && Object.hasOwnProperty.call(m, "proof")) w.uint32(18).bytes(m.proof);
+        if (m.proofPath != null && Object.hasOwnProperty.call(m, "proofPath"))
+          w.uint32(26).string(m.proofPath);
+        if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
+          w.uint32(32).uint64(m.proofHeight);
+        return w;
+      };
+      QueryConnectionResponse.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.connection.QueryConnectionResponse();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.connection = $root.ibc.connection.ConnectionEnd.decode(r, r.uint32());
+              break;
+            case 2:
+              m.proof = r.bytes();
+              break;
+            case 3:
+              m.proofPath = r.string();
+              break;
+            case 4:
+              m.proofHeight = r.uint64();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return QueryConnectionResponse;
+    })();
+    connection.QueryConnectionsRequest = (function () {
+      function QueryConnectionsRequest(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      QueryConnectionsRequest.prototype.pagination = null;
+      QueryConnectionsRequest.create = function create(properties) {
+        return new QueryConnectionsRequest(properties);
+      };
+      QueryConnectionsRequest.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.pagination != null && Object.hasOwnProperty.call(m, "pagination"))
+          $root.cosmos.query.PageRequest.encode(m.pagination, w.uint32(10).fork()).ldelim();
+        return w;
+      };
+      QueryConnectionsRequest.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.connection.QueryConnectionsRequest();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.pagination = $root.cosmos.query.PageRequest.decode(r, r.uint32());
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return QueryConnectionsRequest;
+    })();
+    connection.QueryConnectionsResponse = (function () {
+      function QueryConnectionsResponse(p) {
+        this.connections = [];
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      QueryConnectionsResponse.prototype.connections = $util.emptyArray;
+      QueryConnectionsResponse.prototype.pagination = null;
+      QueryConnectionsResponse.prototype.height = $util.Long ? $util.Long.fromBits(0, 0, false) : 0;
+      QueryConnectionsResponse.create = function create(properties) {
+        return new QueryConnectionsResponse(properties);
+      };
+      QueryConnectionsResponse.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.connections != null && m.connections.length) {
+          for (var i = 0; i < m.connections.length; ++i)
+            $root.ibc.connection.IdentifiedConnection.encode(m.connections[i], w.uint32(10).fork()).ldelim();
+        }
+        if (m.pagination != null && Object.hasOwnProperty.call(m, "pagination"))
+          $root.cosmos.query.PageResponse.encode(m.pagination, w.uint32(18).fork()).ldelim();
+        if (m.height != null && Object.hasOwnProperty.call(m, "height")) w.uint32(24).int64(m.height);
+        return w;
+      };
+      QueryConnectionsResponse.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.connection.QueryConnectionsResponse();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              if (!(m.connections && m.connections.length)) m.connections = [];
+              m.connections.push($root.ibc.connection.IdentifiedConnection.decode(r, r.uint32()));
+              break;
+            case 2:
+              m.pagination = $root.cosmos.query.PageResponse.decode(r, r.uint32());
+              break;
+            case 3:
+              m.height = r.int64();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return QueryConnectionsResponse;
+    })();
+    connection.QueryClientConnectionsRequest = (function () {
+      function QueryClientConnectionsRequest(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      QueryClientConnectionsRequest.prototype.clientId = "";
+      QueryClientConnectionsRequest.create = function create(properties) {
+        return new QueryClientConnectionsRequest(properties);
+      };
+      QueryClientConnectionsRequest.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.clientId != null && Object.hasOwnProperty.call(m, "clientId")) w.uint32(10).string(m.clientId);
+        return w;
+      };
+      QueryClientConnectionsRequest.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.connection.QueryClientConnectionsRequest();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.clientId = r.string();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return QueryClientConnectionsRequest;
+    })();
+    connection.QueryClientConnectionsResponse = (function () {
+      function QueryClientConnectionsResponse(p) {
+        this.connectionPaths = [];
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      QueryClientConnectionsResponse.prototype.connectionPaths = $util.emptyArray;
+      QueryClientConnectionsResponse.prototype.proof = $util.newBuffer([]);
+      QueryClientConnectionsResponse.prototype.proofPath = "";
+      QueryClientConnectionsResponse.prototype.proofHeight = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+      QueryClientConnectionsResponse.create = function create(properties) {
+        return new QueryClientConnectionsResponse(properties);
+      };
+      QueryClientConnectionsResponse.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.connectionPaths != null && m.connectionPaths.length) {
+          for (var i = 0; i < m.connectionPaths.length; ++i) w.uint32(10).string(m.connectionPaths[i]);
+        }
+        if (m.proof != null && Object.hasOwnProperty.call(m, "proof")) w.uint32(18).bytes(m.proof);
+        if (m.proofPath != null && Object.hasOwnProperty.call(m, "proofPath"))
+          w.uint32(26).string(m.proofPath);
+        if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
+          w.uint32(32).uint64(m.proofHeight);
+        return w;
+      };
+      QueryClientConnectionsResponse.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.ibc.connection.QueryClientConnectionsResponse();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              if (!(m.connectionPaths && m.connectionPaths.length)) m.connectionPaths = [];
+              m.connectionPaths.push(r.string());
+              break;
+            case 2:
+              m.proof = r.bytes();
+              break;
+            case 3:
+              m.proofPath = r.string();
+              break;
+            case 4:
+              m.proofHeight = r.uint64();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return QueryClientConnectionsResponse;
+    })();
+    return connection;
+  })();
+  return ibc;
 })();
 exports.tendermint = $root.tendermint = (() => {
   const tendermint = {};
