@@ -23,10 +23,21 @@ const faucet = {
 
 describe("SigningCosmosClient", () => {
   describe("makeReadOnly", () => {
-    it("can be constructed", async () => {
+    it("can be constructed with default fees", async () => {
       const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
       const client = new SigningCosmosClient(httpUrl, faucet.address, wallet);
-      expect(client).toBeTruthy();
+      const openedClient = (client as unknown) as PrivateSigningCosmosClient;
+      expect(openedClient.fees).toEqual({
+        send: {
+          amount: [
+            {
+              amount: "2000",
+              denom: "ucosm",
+            },
+          ],
+          gas: "80000",
+        },
+      });
     });
 
     it("can be constructed with custom gas price", async () => {
