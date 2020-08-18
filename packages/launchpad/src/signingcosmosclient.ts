@@ -11,6 +11,11 @@ import { OfflineSigner } from "./wallet";
 const defaultGasPrice = new GasPrice(0.025, "ucosm");
 const defaultGasLimits: GasLimits = { send: 80000 };
 
+/** Use for testing only */
+export interface PrivateSigningCosmosClient {
+  readonly fees: FeeTable;
+}
+
 export class SigningCosmosClient extends CosmosClient {
   public readonly senderAddress: string;
 

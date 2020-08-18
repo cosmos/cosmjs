@@ -6,7 +6,7 @@ import { assertIsBroadcastTxSuccess, PrivateCosmosClient } from "./cosmosclient"
 import { GasPrice } from "./gas";
 import { MsgDelegate } from "./msgs";
 import { Secp256k1Wallet } from "./secp256k1wallet";
-import { SigningCosmosClient } from "./signingcosmosclient";
+import { PrivateSigningCosmosClient, SigningCosmosClient } from "./signingcosmosclient";
 import { makeRandomAddress, pendingWithoutWasmd, validatorAddress } from "./testutils.spec";
 
 const httpUrl = "http://localhost:1317";
@@ -33,7 +33,8 @@ describe("SigningCosmosClient", () => {
       const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
       const gasPrice = new GasPrice(3.14, "utest");
       const client = new SigningCosmosClient(httpUrl, faucet.address, wallet, gasPrice);
-      expect((client as any).fees).toEqual({
+      const openedClient = (client as unknown) as PrivateSigningCosmosClient;
+      expect(openedClient.fees).toEqual({
         send: {
           amount: [
             {
@@ -52,7 +53,8 @@ describe("SigningCosmosClient", () => {
         send: 160000,
       };
       const client = new SigningCosmosClient(httpUrl, faucet.address, wallet, undefined, gasLimits);
-      expect((client as any).fees).toEqual({
+      const openedClient = (client as unknown) as PrivateSigningCosmosClient;
+      expect(openedClient.fees).toEqual({
         send: {
           amount: [
             {
@@ -72,7 +74,8 @@ describe("SigningCosmosClient", () => {
         send: 160000,
       };
       const client = new SigningCosmosClient(httpUrl, faucet.address, wallet, gasPrice, gasLimits);
-      expect((client as any).fees).toEqual({
+      const openedClient = (client as unknown) as PrivateSigningCosmosClient;
+      expect(openedClient.fees).toEqual({
         send: {
           amount: [
             {
