@@ -105,5 +105,6 @@ export declare class QueryClient {
   constructor(tmClient: TendermintClient);
   queryVerified(store: string, key: Uint8Array): Promise<Uint8Array>;
   queryUnverified(path: string, request: Uint8Array): Promise<Uint8Array>;
+  private getNextHeader;
 }
 export {};

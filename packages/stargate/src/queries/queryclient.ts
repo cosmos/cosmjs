@@ -1,9 +1,22 @@
 /* eslint-disable no-dupe-class-members, @typescript-eslint/ban-types, @typescript-eslint/naming-convention */
-import { toHex } from "@cosmjs/encoding";
-import { Client as TendermintClient } from "@cosmjs/tendermint-rpc";
-import { arrayContentEquals, assert, isNonNullObject } from "@cosmjs/utils";
+import { iavlSpec, ics23, tendermintSpec, verifyExistence, verifyNonExistence } from "@confio/ics23";
+import { toAscii, toHex } from "@cosmjs/encoding";
+import { firstEvent } from "@cosmjs/stream";
+import { Client as TendermintClient, Header, NewBlockHeaderEvent, ProofOp } from "@cosmjs/tendermint-rpc";
+import { arrayContentEquals, assert, isNonNullObject, sleep } from "@cosmjs/utils";
+import { Stream } from "xstream";
 
 type QueryExtensionSetup<P> = (base: QueryClient) => P;
+
+function checkAndParseOp(op: ProofOp, kind: string, key: Uint8Array): ics23.CommitmentProof {
+  if (op.type !== kind) {
+    throw new Error(`Op expected to be ${kind}, got "${op.type}`);
+  }
+  if (!arrayContentEquals(key, op.key)) {
+    throw new Error(`Proven key different than queried key.\nQuery: ${toHex(key)}\nProven: ${toHex(op.key)}`);
+  }
+  return ics23.CommitmentProof.decode(op.data);
+}
 
 export class QueryClient {
   /** Constructs a QueryClient with 0 extensions */
@@ -161,8 +174,35 @@ export class QueryClient {
       throw new Error(`Response key ${toHex(response.key)} doesn't match query key ${toHex(key)}`);
     }
 
-    // TODO: implement proof verification
-    // https://github.com/CosmWasm/cosmjs/issues/347
+    assert(response.proof);
+    if (response.proof.ops.length !== 2) {
+      throw new Error(`Expected 2 proof ops, got ${response.proof.ops.length}. Are you using stargate?`);
+    }
+
+    const subProof = checkAndParseOp(response.proof.ops[0], "ics23:iavl", key);
+    const storeProof = checkAndParseOp(response.proof.ops[1], "ics23:simple", toAscii(store));
+
+    // this must always be existence, if the store is not a typo
+    assert(storeProof.exist);
+    assert(storeProof.exist.value);
+
+    // this may be exist or non-exist, depends on response
+    if (!response.value || response.value.length === 0) {
+      // non-existence check
+      assert(subProof.nonexist);
+      // the subproof must map the desired key to the "value" of the storeProof
+      verifyNonExistence(subProof.nonexist, iavlSpec, storeProof.exist.value, key);
+    } else {
+      // existence check
+      assert(subProof.exist);
+      assert(subProof.exist.value);
+      // the subproof must map the desired key to the "value" of the storeProof
+      verifyExistence(subProof.exist, iavlSpec, storeProof.exist.value, key, response.value);
+    }
+
+    // the storeproof must map it's declared value (root of subProof) to the appHash of the next block
+    const header = await this.getNextHeader(response.height);
+    verifyExistence(storeProof.exist, tendermintSpec, header.appHash, toAscii(store), storeProof.exist.value);
 
     return response.value;
   }
@@ -179,5 +219,48 @@ export class QueryClient {
     }
 
     return response.value;
+  }
+
+  // this must return the header for height+1
+  // throws an error if height is 0 or undefined
+  private async getNextHeader(height?: number): Promise<Header> {
+    assert(height);
+    if (height == 0) {
+      throw new Error("Query returned height 0, cannot prove it");
+    }
+
+    const searchHeight = height + 1;
+    let nextHeader: Header;
+    let headersSubscription: Stream<NewBlockHeaderEvent> | undefined;
+    try {
+      headersSubscription = this.tmClient.subscribeNewBlockHeader();
+    } catch {
+      // Ignore exception caused by non-WebSocket Tendermint clients
+    }
+
+    if (headersSubscription) {
+      // get the header for height+1
+      nextHeader = await firstEvent(headersSubscription); // TODO: fall back on polling if this returns a too high header
+    } else {
+      // start from current height to avoid backend error for minHeight in the future
+      let header = (await this.tmClient.blockchain(height, searchHeight)).blockMetas
+        .map((meta) => meta.header)
+        .find((h) => h.height === searchHeight);
+      while (!header) {
+        await sleep(1000);
+        header = (await this.tmClient.blockchain(height, searchHeight)).blockMetas
+          .map((meta) => meta.header)
+          .find((h) => h.height === searchHeight);
+      }
+      nextHeader = header;
+    }
+
+    if (nextHeader.height !== searchHeight) {
+      throw new Error(
+        `Query requires header at height ${searchHeight} for proof verification, but next header was ${nextHeader.height}`,
+      );
+    }
+
+    return nextHeader;
   }
 }

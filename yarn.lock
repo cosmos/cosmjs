@@ -177,6 +177,15 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
+"@confio/ics23@^0.6.3":
+  version "0.6.3"
+  resolved "https://registry.yarnpkg.com/@confio/ics23/-/ics23-0.6.3.tgz#d27da1efca21253dee1b7d038913d72a99a17ca1"
+  integrity sha512-SQDH9tTzXIbC1AVTrjL7BEXfsYwERXNOB7F995LhfJDrP44cC5sl3Prh+lkfKOjn1jkgxknVUyaGx3tMG88gjQ==
+  dependencies:
+    protobufjs "^6.8.8"
+    ripemd160 "^2.0.2"
+    sha.js "^2.4.11"
+
 "@evocateur/libnpmaccess@^3.1.2":
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/@evocateur/libnpmaccess/-/libnpmaccess-3.1.2.tgz#ecf7f6ce6b004e9f942b098d92200be4a4b1c845"
@@ -6764,10 +6773,10 @@ proto-list@~1.2.1:
   resolved "https://registry.yarnpkg.com/proto-list/-/proto-list-1.2.4.tgz#212d5bfe1318306a420f6402b8e26ff39647a849"
   integrity sha1-IS1b/hMYMGpCD2QCuOJv85ZHqEk=
 
-protobufjs@~6.10.0:
-  version "6.10.0"
-  resolved "https://registry.yarnpkg.com/protobufjs/-/protobufjs-6.10.0.tgz#b0698a2a91fc597e2dc625dcf3539ece9675c8fd"
-  integrity sha512-Hdz1+CXkrlmGDKkP6DczxysdnUyUuhM1mjeaydnBxOcjxQPbJldLZ8eGE1gX0UTsgv+0QkFfn6dioo5yt9XORw==
+protobufjs@^6.8.8, protobufjs@~6.10.0:
+  version "6.10.1"
+  resolved "https://registry.yarnpkg.com/protobufjs/-/protobufjs-6.10.1.tgz#e6a484dd8f04b29629e9053344e3970cccf13cd2"
+  integrity sha512-pb8kTchL+1Ceg4lFd5XUpK8PdWacbvV5SK2ULH2ebrYtl4GjJmS24m6CKME67jzV53tbJxHlnNOSqQHbTsR9JQ==
   dependencies:
     "@protobufjs/aspromise" "^1.1.2"
     "@protobufjs/base64" "^1.1.2"
