@@ -12,10 +12,15 @@ import { tendermintInstances } from "./config.spec";
 import { buildQuery } from "./requests";
 import * as responses from "./responses";
 import { HttpClient, RpcClient, WebsocketClient } from "./rpcclients";
+import { chainIdMatcher } from "./testutil.spec";
 import { TxBytes } from "./types";
 
+function tendermintEnabled(): boolean {
+  return !!process.env.TENDERMINT_ENABLED;
+}
+
 function pendingWithoutTendermint(): void {
-  if (!process.env.TENDERMINT_ENABLED) {
+  if (!tendermintEnabled()) {
     pending("Set TENDERMINT_ENABLED to enable tendermint-based tests");
   }
 }
@@ -114,7 +119,6 @@ function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor): void {
     const client = new Client(rpcFactory(), adaptor);
 
     expect(await client.block()).toBeTruthy();
-    expect(await client.blockchain(2, 4)).toBeTruthy();
     expect(await client.blockResults(3)).toBeTruthy();
     expect(await client.commit(4)).toBeTruthy();
     expect(await client.genesis()).toBeTruthy();
@@ -124,118 +128,231 @@ function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor): void {
     client.disconnect();
   });
 
-  it("can call status", async () => {
-    pendingWithoutTendermint();
-    const client = new Client(rpcFactory(), adaptor);
+  describe("status", () => {
+    it("works", async () => {
+      pendingWithoutTendermint();
+      const client = new Client(rpcFactory(), adaptor);
 
-    const status = await client.status();
-    expect(status.nodeInfo.other.size).toBeGreaterThanOrEqual(2);
-    expect(status.nodeInfo.other.get("tx_index")).toEqual("on");
-    expect(status.validatorInfo.pubkey).toBeTruthy();
-    expect(status.validatorInfo.votingPower).toBeGreaterThan(0);
-    expect(status.syncInfo.catchingUp).toEqual(false);
-    expect(status.syncInfo.latestBlockHeight).toBeGreaterThanOrEqual(1);
+      const status = await client.status();
+      expect(status.nodeInfo.other.size).toBeGreaterThanOrEqual(2);
+      expect(status.nodeInfo.other.get("tx_index")).toEqual("on");
+      expect(status.validatorInfo.pubkey).toBeTruthy();
+      expect(status.validatorInfo.votingPower).toBeGreaterThan(0);
+      expect(status.syncInfo.catchingUp).toEqual(false);
+      expect(status.syncInfo.latestBlockHeight).toBeGreaterThanOrEqual(1);
 
-    client.disconnect();
+      client.disconnect();
+    });
   });
 
-  it("can query a tx properly", async () => {
-    pendingWithoutTendermint();
-    const client = new Client(rpcFactory(), adaptor);
+  describe("blockchain", () => {
+    it("returns latest in descending order by default", async () => {
+      pendingWithoutTendermint();
+      const client = new Client(rpcFactory(), adaptor);
 
-    const find = randomString();
-    const me = randomString();
-    const tx = buildKvTx(find, me);
+      // Run in parallel to increase chance there is no block between the calls
+      const [status, blockchain] = await Promise.all([client.status(), client.blockchain()]);
+      const height = status.syncInfo.latestBlockHeight;
 
-    const txRes = await client.broadcastTxCommit({ tx: tx });
-    expect(responses.broadcastTxCommitSuccess(txRes)).toEqual(true);
-    expect(txRes.height).toBeTruthy();
-    const height: number = txRes.height || 0; // || 0 for type system
-    expect(txRes.hash.length).not.toEqual(0);
-    const hash = txRes.hash;
+      expect(blockchain.lastHeight).toEqual(height);
+      expect(blockchain.blockMetas.length).toBeGreaterThanOrEqual(3);
+      expect(blockchain.blockMetas[0].header.height).toEqual(height);
+      expect(blockchain.blockMetas[1].header.height).toEqual(height - 1);
+      expect(blockchain.blockMetas[2].header.height).toEqual(height - 2);
 
-    await tendermintSearchIndexUpdated();
+      client.disconnect();
+    });
 
-    // find by hash - does it match?
-    const r = await client.tx({ hash: hash, prove: true });
-    // both values come from rpc, so same type (Buffer/Uint8Array)
-    expect(r.hash).toEqual(hash);
-    // force the type when comparing to locally generated value
-    expect(r.tx).toEqual(tx);
-    expect(r.height).toEqual(height);
-    expect(r.proof).toBeTruthy();
+    it("can limit by maxHeight", async () => {
+      pendingWithoutTendermint();
+      const client = new Client(rpcFactory(), adaptor);
 
-    // txSearch - you must enable the indexer when running
-    // tendermint, else you get empty results
-    const query = buildQuery({ tags: [{ key: "app.key", value: find }] });
+      const height = (await client.status()).syncInfo.latestBlockHeight;
+      const blockchain = await client.blockchain(undefined, height - 1);
+      expect(blockchain.lastHeight).toEqual(height);
+      expect(blockchain.blockMetas.length).toBeGreaterThanOrEqual(2);
+      expect(blockchain.blockMetas[0].header.height).toEqual(height - 1); // upper limit included
+      expect(blockchain.blockMetas[1].header.height).toEqual(height - 2);
 
-    const s = await client.txSearch({ query: query, page: 1, per_page: 30 });
-    // should find the tx
-    expect(s.totalCount).toEqual(1);
-    // should return same info as querying directly,
-    // except without the proof
-    expect(s.txs[0]).toEqual({ ...r, proof: undefined });
+      client.disconnect();
+    });
 
-    // ensure txSearchAll works as well
-    const sall = await client.txSearchAll({ query: query });
-    // should find the tx
-    expect(sall.totalCount).toEqual(1);
-    // should return same info as querying directly,
-    // except without the proof
-    expect(sall.txs[0]).toEqual({ ...r, proof: undefined });
+    it("works with maxHeight in the future", async () => {
+      pendingWithoutTendermint();
+      const client = new Client(rpcFactory(), adaptor);
 
-    // and let's query the block itself to see this transaction
-    const block = await client.block(height);
-    expect(block.block.txs.length).toEqual(1);
-    expect(block.block.txs[0]).toEqual(tx);
+      const height = (await client.status()).syncInfo.latestBlockHeight;
+      const blockchain = await client.blockchain(undefined, height + 20);
+      expect(blockchain.lastHeight).toEqual(height);
+      expect(blockchain.blockMetas.length).toBeGreaterThanOrEqual(2);
+      expect(blockchain.blockMetas[0].header.height).toEqual(height);
+      expect(blockchain.blockMetas[1].header.height).toEqual(height - 1);
 
-    client.disconnect();
+      client.disconnect();
+    });
+
+    it("can limit by minHeight and maxHeight", async () => {
+      pendingWithoutTendermint();
+      const client = new Client(rpcFactory(), adaptor);
+
+      const height = (await client.status()).syncInfo.latestBlockHeight;
+      const blockchain = await client.blockchain(height - 2, height - 1);
+      expect(blockchain.lastHeight).toEqual(height);
+      expect(blockchain.blockMetas.length).toEqual(2);
+      expect(blockchain.blockMetas[0].header.height).toEqual(height - 1); // upper limit included
+      expect(blockchain.blockMetas[1].header.height).toEqual(height - 2); // lower limit included
+
+      client.disconnect();
+    });
+
+    it("contains all the info", async () => {
+      pendingWithoutTendermint();
+      const client = new Client(rpcFactory(), adaptor);
+
+      const height = (await client.status()).syncInfo.latestBlockHeight;
+      const blockchain = await client.blockchain(height - 1, height - 1);
+
+      expect(blockchain.lastHeight).toEqual(height);
+      expect(blockchain.blockMetas.length).toBeGreaterThanOrEqual(1);
+      const meta = blockchain.blockMetas[0];
+
+      // TODO: check all the fields
+      expect(meta).toEqual({
+        blockId: jasmine.objectContaining({}),
+        // block_size: jasmine.stringMatching(nonNegativeIntegerMatcher),
+        // num_txs: jasmine.stringMatching(nonNegativeIntegerMatcher),
+        header: jasmine.objectContaining({
+          version: {
+            block: 10,
+            app: 1,
+          },
+          chainId: jasmine.stringMatching(chainIdMatcher),
+        }),
+      });
+
+      client.disconnect();
+    });
   });
 
-  it("can paginate over txSearch results", async () => {
-    pendingWithoutTendermint();
-    const client = new Client(rpcFactory(), adaptor);
+  describe("tx", () => {
+    it("can query a tx properly", async () => {
+      pendingWithoutTendermint();
+      const client = new Client(rpcFactory(), adaptor);
 
-    const find = randomString();
-    const query = buildQuery({ tags: [{ key: "app.key", value: find }] });
-
-    async function sendTx(): Promise<void> {
+      const find = randomString();
       const me = randomString();
       const tx = buildKvTx(find, me);
 
       const txRes = await client.broadcastTxCommit({ tx: tx });
       expect(responses.broadcastTxCommitSuccess(txRes)).toEqual(true);
       expect(txRes.height).toBeTruthy();
+      const height: number = txRes.height || 0; // || 0 for type system
       expect(txRes.hash.length).not.toEqual(0);
-    }
+      const hash = txRes.hash;
 
-    // send 3 txs
-    await sendTx();
-    await sendTx();
-    await sendTx();
+      await tendermintSearchIndexUpdated();
 
-    await tendermintSearchIndexUpdated();
+      // find by hash - does it match?
+      const r = await client.tx({ hash: hash, prove: true });
+      // both values come from rpc, so same type (Buffer/Uint8Array)
+      expect(r.hash).toEqual(hash);
+      // force the type when comparing to locally generated value
+      expect(r.tx).toEqual(tx);
+      expect(r.height).toEqual(height);
+      expect(r.proof).toBeTruthy();
 
-    // expect one page of results
-    const s1 = await client.txSearch({ query: query, page: 1, per_page: 2 });
-    expect(s1.totalCount).toEqual(3);
-    expect(s1.txs.length).toEqual(2);
+      // txSearch - you must enable the indexer when running
+      // tendermint, else you get empty results
+      const query = buildQuery({ tags: [{ key: "app.key", value: find }] });
 
-    // second page
-    const s2 = await client.txSearch({ query: query, page: 2, per_page: 2 });
-    expect(s2.totalCount).toEqual(3);
-    expect(s2.txs.length).toEqual(1);
+      const s = await client.txSearch({ query: query, page: 1, per_page: 30 });
+      // should find the tx
+      expect(s.totalCount).toEqual(1);
+      // should return same info as querying directly,
+      // except without the proof
+      expect(s.txs[0]).toEqual({ ...r, proof: undefined });
 
-    // and all together now
-    const sall = await client.txSearchAll({ query: query, per_page: 2 });
-    expect(sall.totalCount).toEqual(3);
-    expect(sall.txs.length).toEqual(3);
-    // make sure there are in order from lowest to highest height
-    const [tx1, tx2, tx3] = sall.txs;
-    expect(tx2.height).toEqual(tx1.height + 1);
-    expect(tx3.height).toEqual(tx2.height + 1);
+      // ensure txSearchAll works as well
+      const sall = await client.txSearchAll({ query: query });
+      // should find the tx
+      expect(sall.totalCount).toEqual(1);
+      // should return same info as querying directly,
+      // except without the proof
+      expect(sall.txs[0]).toEqual({ ...r, proof: undefined });
 
-    client.disconnect();
+      // and let's query the block itself to see this transaction
+      const block = await client.block(height);
+      expect(block.block.txs.length).toEqual(1);
+      expect(block.block.txs[0]).toEqual(tx);
+
+      client.disconnect();
+    });
+  });
+
+  describe("txSearch", () => {
+    const key = randomString();
+
+    beforeAll(async () => {
+      if (tendermintEnabled()) {
+        const client = new Client(rpcFactory(), adaptor);
+
+        // eslint-disable-next-line no-inner-declarations
+        async function sendTx(): Promise<void> {
+          const me = randomString();
+          const tx = buildKvTx(key, me);
+
+          const txRes = await client.broadcastTxCommit({ tx: tx });
+          expect(responses.broadcastTxCommitSuccess(txRes)).toEqual(true);
+          expect(txRes.height).toBeTruthy();
+          expect(txRes.hash.length).not.toEqual(0);
+        }
+
+        // send 3 txs
+        await sendTx();
+        await sendTx();
+        await sendTx();
+
+        client.disconnect();
+
+        await tendermintSearchIndexUpdated();
+      }
+    });
+
+    it("can paginate over txSearch results", async () => {
+      pendingWithoutTendermint();
+      const client = new Client(rpcFactory(), adaptor);
+
+      const query = buildQuery({ tags: [{ key: "app.key", value: key }] });
+
+      // expect one page of results
+      const s1 = await client.txSearch({ query: query, page: 1, per_page: 2 });
+      expect(s1.totalCount).toEqual(3);
+      expect(s1.txs.length).toEqual(2);
+
+      // second page
+      const s2 = await client.txSearch({ query: query, page: 2, per_page: 2 });
+      expect(s2.totalCount).toEqual(3);
+      expect(s2.txs.length).toEqual(1);
+
+      client.disconnect();
+    });
+
+    it("can get all search results in one call", async () => {
+      pendingWithoutTendermint();
+      const client = new Client(rpcFactory(), adaptor);
+
+      const query = buildQuery({ tags: [{ key: "app.key", value: key }] });
+
+      const sall = await client.txSearchAll({ query: query, per_page: 2 });
+      expect(sall.totalCount).toEqual(3);
+      expect(sall.txs.length).toEqual(3);
+      // make sure there are in order from lowest to highest height
+      const [tx1, tx2, tx3] = sall.txs;
+      expect(tx2.height).toEqual(tx1.height + 1);
+      expect(tx3.height).toEqual(tx2.height + 1);
+
+      client.disconnect();
+    });
   });
 }
 
@@ -252,7 +369,7 @@ function websocketTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, appCr
       expect(stream).toBeTruthy();
       const subscription = stream.subscribe({
         next: (event) => {
-          expect(event.chainId).toMatch(/^[-a-zA-Z0-9]{3,30}$/);
+          expect(event.chainId).toMatch(chainIdMatcher);
           expect(event.height).toBeGreaterThan(0);
           // seems that tendermint just guarantees within the last second for timestamp
           expect(event.time.getTime()).toBeGreaterThan(testStart - 1000);
@@ -309,7 +426,7 @@ function websocketTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, appCr
     const stream = client.subscribeNewBlock();
     const subscription = stream.subscribe({
       next: (event) => {
-        expect(event.header.chainId).toMatch(/^[-a-zA-Z0-9]{3,30}$/);
+        expect(event.header.chainId).toMatch(chainIdMatcher);
         expect(event.header.height).toBeGreaterThan(0);
         // seems that tendermint just guarantees within the last second for timestamp
         expect(event.header.time.getTime()).toBeGreaterThan(testStart - 1000);

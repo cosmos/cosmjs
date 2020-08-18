@@ -8,6 +8,7 @@ export declare enum Method {
   AbciInfo = "abci_info",
   AbciQuery = "abci_query",
   Block = "block",
+  /** Get block headers for minHeight <= height <= maxHeight. */
   Blockchain = "blockchain",
   BlockResults = "block_results",
   BroadcastTxAsync = "broadcast_tx_async",

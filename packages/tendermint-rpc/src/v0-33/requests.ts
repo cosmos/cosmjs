@@ -22,6 +22,7 @@ interface RpcBlockchainRequestParams {
   readonly minHeight?: IntegerString;
   readonly maxHeight?: IntegerString;
 }
+
 function encodeBlockchainRequestParams(param: requests.BlockchainRequestParams): RpcBlockchainRequestParams {
   return {
     minHeight: may(Integer.encode, param.minHeight),

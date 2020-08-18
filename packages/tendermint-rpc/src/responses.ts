@@ -186,6 +186,8 @@ export interface TxProof {
 export interface BlockMeta {
   readonly blockId: BlockId;
   readonly header: Header;
+  // TODO: Add blockSize (e.g "block_size": "471")
+  // TODO: Add numTxs (e.g "num_txs": "0")
 }
 
 export interface BlockId {
