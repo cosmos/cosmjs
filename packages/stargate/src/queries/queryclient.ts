@@ -229,6 +229,7 @@ export class QueryClient {
       throw new Error("Query returned height 0, cannot prove it");
     }
 
+    const searchHeight = height + 1;
     let nextHeader: Header;
     let headersSubscription: Stream<NewBlockHeaderEvent> | undefined;
     try {
@@ -241,17 +242,25 @@ export class QueryClient {
       // get the header for height+1
       nextHeader = await firstEvent(headersSubscription); // TODO: fall back on polling if this returns a too high header
     } else {
-      let metas = (await this.tmClient.blockchain(height + 1, height + 1)).blockMetas;
-      while (metas.length === 0) {
+      // start from current height to avoid backend error for minHeight in the future
+      let header = (await this.tmClient.blockchain(height, searchHeight)).blockMetas
+        .map((meta) => meta.header)
+        .find((h) => h.height === searchHeight);
+      while (!header) {
         await sleep(1000);
-        metas = (await this.tmClient.blockchain(height + 1, height + 1)).blockMetas;
+        header = (await this.tmClient.blockchain(height, searchHeight)).blockMetas
+          .map((meta) => meta.header)
+          .find((h) => h.height === searchHeight);
       }
-      nextHeader = metas[0].header;
+      nextHeader = header;
     }
 
-    if (nextHeader.height !== height + 1) {
-      throw new Error(`Query returned height ${height}, but next header was ${nextHeader.height}`);
+    if (nextHeader.height !== searchHeight) {
+      throw new Error(
+        `Query requires header at height ${searchHeight} for proof verification, but next header was ${nextHeader.height}`,
+      );
     }
+
     return nextHeader;
   }
 }
