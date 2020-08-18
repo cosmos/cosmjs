@@ -17,6 +17,9 @@
 - @cosmjs/encoding: Add `limit` parameter to `Bech32.encode` and `.decode`. The
   new default limit for decoding is infinity (was 90 before). Set it to 90 to
   create a strict decoder.
+- @cosmjs/faucet: Environmental variable `FAUCET_FEE` renamed to
+  `FAUCET_GAS_PRICE` and now only accepts one token. Environmental variable
+  `FAUCET_GAS` renamed to `FAUCET_GAS_LIMIT`.
 - @cosmjs/launchpad: Rename `FeeTable` type to `CosmosFeeTable` and export a new
   more generic type `FeeTable`.
 - @cosmjs/launchpad: Add new class `GasPrice`, new helper type `GasLimits` and
