@@ -1,54 +1,14 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Coin, coins } from "./coins";
+import { Coin } from "./coins";
 import { Account, BroadcastTxResult, CosmosClient, GetSequenceResult } from "./cosmosclient";
 import { makeSignBytes } from "./encoding";
+import { buildFeeTable, FeeTable, GasLimits, GasPrice } from "./gas";
 import { BroadcastMode } from "./lcdapi";
 import { Msg, MsgSend } from "./msgs";
 import { StdFee, StdTx } from "./types";
 import { OfflineSigner } from "./wallet";
 
-/**
- * These fees are used by the higher level methods of SigningCosmosClient
- */
-export interface FeeTable {
-  readonly send: StdFee;
-}
-
-export class GasPrice {
-  readonly amount: number;
-  readonly denom: string;
-
-  constructor(amount: number, denom: string) {
-    this.amount = amount;
-    this.denom = denom;
-  }
-}
-
-export type GasLimits = {
-  readonly [key in keyof FeeTable]: number;
-};
-
-function calculateFee(gasLimit: number, denom: string, price: number): StdFee {
-  const amount = Math.ceil(price * gasLimit);
-  return {
-    amount: coins(amount, denom),
-    gas: gasLimit.toString(),
-  };
-}
-
-function buildFeeTable({ denom, amount }: GasPrice, gasLimits: GasLimits): FeeTable {
-  return Object.entries(gasLimits).reduce((feeTable, [type, gasLimit]) => {
-    if (gasLimit === undefined) {
-      return feeTable;
-    }
-    return {
-      ...feeTable,
-      [type]: calculateFee(gasLimit, denom, amount),
-    };
-  }, {} as FeeTable);
-}
-
-const defaultGasPrice: GasPrice = new GasPrice(0.025, "ucosm");
+const defaultGasPrice = new GasPrice(0.025, "ucosm");
 const defaultGasLimits: GasLimits = { send: 80000 };
 
 export class SigningCosmosClient extends CosmosClient {

@@ -1,23 +1,14 @@
 import { Coin } from "./coins";
 import { Account, BroadcastTxResult, CosmosClient, GetSequenceResult } from "./cosmosclient";
+import { FeeTable, GasLimits, GasPrice } from "./gas";
 import { BroadcastMode } from "./lcdapi";
 import { Msg } from "./msgs";
 import { StdFee } from "./types";
 import { OfflineSigner } from "./wallet";
-/**
- * These fees are used by the higher level methods of SigningCosmosClient
- */
-export interface FeeTable {
-  readonly send: StdFee;
+/** Use for testing only */
+export interface PrivateSigningCosmosClient {
+  readonly fees: FeeTable;
 }
-export declare class GasPrice {
-  readonly amount: number;
-  readonly denom: string;
-  constructor(amount: number, denom: string);
-}
-export declare type GasLimits = {
-  readonly [key in keyof FeeTable]: number;
-};
 export declare class SigningCosmosClient extends CosmosClient {
   readonly senderAddress: string;
   private readonly signer;
