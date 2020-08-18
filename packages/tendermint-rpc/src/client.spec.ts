@@ -119,7 +119,6 @@ function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor): void {
     const client = new Client(rpcFactory(), adaptor);
 
     expect(await client.block()).toBeTruthy();
-    expect(await client.blockchain(2, 4)).toBeTruthy();
     expect(await client.blockResults(3)).toBeTruthy();
     expect(await client.commit(4)).toBeTruthy();
     expect(await client.genesis()).toBeTruthy();
