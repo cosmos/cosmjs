@@ -2,8 +2,9 @@
 import { iavlSpec, ics23, tendermintSpec, verifyExistence, verifyNonExistence } from "@confio/ics23";
 import { toAscii, toHex } from "@cosmjs/encoding";
 import { firstEvent } from "@cosmjs/stream";
-import { Client as TendermintClient, Header, ProofOp } from "@cosmjs/tendermint-rpc";
-import { arrayContentEquals, assert, isNonNullObject } from "@cosmjs/utils";
+import { Client as TendermintClient, Header, NewBlockHeaderEvent, ProofOp } from "@cosmjs/tendermint-rpc";
+import { arrayContentEquals, assert, isNonNullObject, sleep } from "@cosmjs/utils";
+import { Stream } from "xstream";
 
 type QueryExtensionSetup<P> = (base: QueryClient) => P;
 
@@ -228,14 +229,29 @@ export class QueryClient {
       throw new Error("Query returned height 0, cannot prove it");
     }
 
-    // get the header for height+1 with events
-    const header = await firstEvent(this.tmClient.subscribeNewBlockHeader());
-    // alternate non-websocket query (fails with error as it is the future)
-    // const header = (await this.tmClient.blockchain(height+1, height+1)).blockMetas[0].header;
-
-    if (header.height !== height + 1) {
-      throw new Error(`Query returned height ${height}, but next header was ${header.height}`);
+    let nextHeader: Header;
+    let headersSubscription: Stream<NewBlockHeaderEvent> | undefined;
+    try {
+      headersSubscription = this.tmClient.subscribeNewBlockHeader();
+    } catch {
+      // Ignore exception caused by non-WebSocket Tendermint clients
     }
-    return header;
+
+    if (headersSubscription) {
+      // get the header for height+1
+      nextHeader = await firstEvent(headersSubscription); // TODO: fall back on polling if this returns a too high header
+    } else {
+      let metas = (await this.tmClient.blockchain(height + 1, height + 1)).blockMetas;
+      while (metas.length === 0) {
+        await sleep(1000);
+        metas = (await this.tmClient.blockchain(height + 1, height + 1)).blockMetas;
+      }
+      nextHeader = metas[0].header;
+    }
+
+    if (nextHeader.height !== height + 1) {
+      throw new Error(`Query returned height ${height}, but next header was ${nextHeader.height}`);
+    }
+    return nextHeader;
   }
 }
