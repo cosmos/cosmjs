@@ -1,8 +1,10 @@
+import { Decimal } from "@cosmjs/math";
 import { StdFee } from "./types";
 export declare class GasPrice {
-  readonly amount: number;
+  readonly amount: Decimal;
   readonly denom: string;
-  constructor(amount: number, denom: string);
+  constructor(amount: Decimal, denom: string);
+  static fromString(gasPrice: string): GasPrice;
 }
 export declare type GasLimits<T extends Record<string, StdFee>> = {
   readonly [key in keyof T]: number;

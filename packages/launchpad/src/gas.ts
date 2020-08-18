@@ -1,13 +1,29 @@
+import { Decimal } from "@cosmjs/math";
+
 import { coins } from "./coins";
 import { StdFee } from "./types";
 
 export class GasPrice {
-  public readonly amount: number;
+  public readonly amount: Decimal;
   public readonly denom: string;
 
-  constructor(amount: number, denom: string) {
+  constructor(amount: Decimal, denom: string) {
     this.amount = amount;
     this.denom = denom;
+  }
+
+  public static fromString(gasPrice: string): GasPrice {
+    const matchResult = gasPrice.match(/^(?<amount>.+?)(?<denom>[a-z]+)$/);
+    if (!matchResult) {
+      throw new Error("Invalid gas price string");
+    }
+    const { amount, denom } = matchResult.groups as { readonly amount: string; readonly denom: string };
+    if (denom.length < 3 || denom.length > 127) {
+      throw new Error("Gas price denomination must be between 3 and 127 characters");
+    }
+    const fractionalDigits = 18;
+    const decimalAmount = Decimal.fromUserInput(amount, fractionalDigits);
+    return new GasPrice(decimalAmount, denom);
   }
 }
 
@@ -16,7 +32,8 @@ export type GasLimits<T extends Record<string, StdFee>> = {
 };
 
 function calculateFee(gasLimit: number, { denom, amount: gasPriceAmount }: GasPrice): StdFee {
-  const amount = Math.ceil(gasPriceAmount * gasLimit);
+  const gasLimitDecimal = Decimal.fromUserInput(gasLimit.toString(), gasPriceAmount.fractionalDigits);
+  const amount = Math.ceil(gasPriceAmount.multiply(gasLimitDecimal).toFloatApproximation());
   return {
     amount: coins(amount, denom),
     gas: gasLimit.toString(),
