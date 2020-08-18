@@ -2,7 +2,7 @@
 import { sleep } from "@cosmjs/utils";
 import { ReadonlyDate } from "readonly-date";
 
-import { assertIsBroadcastTxSuccess, CosmosClient, PrivateCosmWasmClient } from "./cosmosclient";
+import { assertIsBroadcastTxSuccess, CosmosClient, PrivateCosmosClient } from "./cosmosclient";
 import { makeSignBytes } from "./encoding";
 import { findAttribute } from "./logs";
 import { MsgSend } from "./msgs";
@@ -42,7 +42,7 @@ describe("CosmosClient", () => {
     it("caches chain ID", async () => {
       pendingWithoutWasmd();
       const client = new CosmosClient(wasmd.endpoint);
-      const openedClient = (client as unknown) as PrivateCosmWasmClient;
+      const openedClient = (client as unknown) as PrivateCosmosClient;
       const getCodeSpy = spyOn(openedClient.lcdClient, "nodeInfo").and.callThrough();
 
       expect(await client.getChainId()).toEqual(wasmd.chainId); // from network
@@ -56,7 +56,7 @@ describe("CosmosClient", () => {
     it("gets height via last block", async () => {
       pendingWithoutWasmd();
       const client = new CosmosClient(wasmd.endpoint);
-      const openedClient = (client as unknown) as PrivateCosmWasmClient;
+      const openedClient = (client as unknown) as PrivateCosmosClient;
       const blockLatestSpy = spyOn(openedClient.lcdClient, "blocksLatest").and.callThrough();
 
       const height1 = await client.getHeight();
@@ -73,7 +73,7 @@ describe("CosmosClient", () => {
       pendingWithoutWasmd();
       const client = new CosmosClient(wasmd.endpoint);
 
-      const openedClient = (client as unknown) as PrivateCosmWasmClient;
+      const openedClient = (client as unknown) as PrivateCosmosClient;
       const blockLatestSpy = spyOn(openedClient.lcdClient, "blocksLatest").and.callThrough();
       const authAccountsSpy = spyOn(openedClient.lcdClient.auth, "account").and.callThrough();
 

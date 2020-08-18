@@ -104,7 +104,7 @@ export interface Block {
   readonly txs: readonly Uint8Array[];
 }
 /** Use for testing only */
-export interface PrivateCosmWasmClient {
+export interface PrivateCosmosClient {
   readonly lcdClient: LcdClient & AuthExtension;
 }
 export declare class CosmosClient {
