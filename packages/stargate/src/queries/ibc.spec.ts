@@ -42,7 +42,7 @@ describe("IbcExtension", () => {
         pendingWithoutSimapp();
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
-        const response = await client.ibc.unverified.connectionChannels();
+        const response = await client.ibc.unverified.connectionChannels("foo");
         expect(response).toBeTruthy(); // TODO: implement checks
 
         tmClient.disconnect();
@@ -55,7 +55,7 @@ describe("IbcExtension", () => {
         pendingWithoutSimapp();
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
-        const response = await client.ibc.unverified.packetCommitment();
+        const response = await client.ibc.unverified.packetCommitment("foo", "bar", 0);
         expect(response).toBeTruthy(); // TODO: implement checks
 
         tmClient.disconnect();
@@ -68,7 +68,7 @@ describe("IbcExtension", () => {
         pendingWithoutSimapp();
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
-        const response = await client.ibc.unverified.packetCommitments();
+        const response = await client.ibc.unverified.packetCommitments("foo", "bar");
         expect(response).toBeTruthy(); // TODO: implement checks
 
         tmClient.disconnect();
@@ -81,7 +81,7 @@ describe("IbcExtension", () => {
         pendingWithoutSimapp();
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
-        const response = await client.ibc.unverified.packetAcknowledgement();
+        const response = await client.ibc.unverified.packetAcknowledgement("foo", "bar", 1);
         expect(response).toBeTruthy(); // TODO: implement checks
 
         tmClient.disconnect();
@@ -94,7 +94,7 @@ describe("IbcExtension", () => {
         pendingWithoutSimapp();
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
-        const response = await client.ibc.unverified.unrelayedPackets();
+        const response = await client.ibc.unverified.unrelayedPackets("foo", "bar", [0, 1], true);
         expect(response).toBeTruthy(); // TODO: implement checks
 
         tmClient.disconnect();
@@ -107,7 +107,7 @@ describe("IbcExtension", () => {
         pendingWithoutSimapp();
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
-        const response = await client.ibc.unverified.nextSequenceReceive();
+        const response = await client.ibc.unverified.nextSequenceReceive("foo", "bar");
         expect(response).toBeTruthy(); // TODO: implement checks
 
         tmClient.disconnect();
@@ -147,7 +147,7 @@ describe("IbcExtension", () => {
         pendingWithoutSimapp();
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
-        const response = await client.ibc.unverified.clientConnections();
+        const response = await client.ibc.unverified.clientConnections("foo");
         expect(response).toBeTruthy(); // TODO: implement checks
 
         tmClient.disconnect();

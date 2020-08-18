@@ -1,3 +1,5 @@
+import Long from "long";
+
 import { ibc } from "../codec";
 import { QueryClient } from "./queryclient";
 import { toObject } from "./utils";
@@ -9,18 +11,41 @@ export interface IbcExtension {
 
       readonly channel: (portId: string, channelId: string) => Promise<ibc.channel.IQueryChannelResponse>;
       readonly channels: () => Promise<ibc.channel.IQueryChannelsResponse>;
-      readonly connectionChannels: () => Promise<ibc.channel.IQueryConnectionChannelsResponse>;
-      readonly packetCommitment: () => Promise<ibc.channel.IQueryPacketCommitmentResponse>;
-      readonly packetCommitments: () => Promise<ibc.channel.IQueryPacketCommitmentsResponse>;
-      readonly packetAcknowledgement: () => Promise<ibc.channel.IQueryPacketAcknowledgementResponse>;
-      readonly unrelayedPackets: () => Promise<ibc.channel.IQueryUnrelayedPacketsResponse>;
-      readonly nextSequenceReceive: () => Promise<ibc.channel.IQueryNextSequenceReceiveResponse>;
+      readonly connectionChannels: (
+        connection: string,
+      ) => Promise<ibc.channel.IQueryConnectionChannelsResponse>;
+      readonly packetCommitment: (
+        portId: string,
+        channelId: string,
+        sequence: number,
+      ) => Promise<ibc.channel.IQueryPacketCommitmentResponse>;
+      readonly packetCommitments: (
+        portId: string,
+        channelId: string,
+      ) => Promise<ibc.channel.IQueryPacketCommitmentsResponse>;
+      readonly packetAcknowledgement: (
+        portId: string,
+        channelId: string,
+        sequence: number,
+      ) => Promise<ibc.channel.IQueryPacketAcknowledgementResponse>;
+      readonly unrelayedPackets: (
+        portId: string,
+        channelId: string,
+        packetCommitmentSequences: readonly number[],
+        acknowledgements: boolean,
+      ) => Promise<ibc.channel.IQueryUnrelayedPacketsResponse>;
+      readonly nextSequenceReceive: (
+        portId: string,
+        channelId: string,
+      ) => Promise<ibc.channel.IQueryNextSequenceReceiveResponse>;
 
       // Queries for ibc.connection
 
       readonly connection: (connectionId: string) => Promise<ibc.connection.IQueryConnectionResponse>;
       readonly connections: () => Promise<ibc.connection.IQueryConnectionsResponse>;
-      readonly clientConnections: () => Promise<ibc.connection.IQueryClientConnectionsResponse>;
+      readonly clientConnections: (
+        clientId: string,
+      ) => Promise<ibc.connection.IQueryClientConnectionsResponse>;
     };
   };
 }
@@ -60,28 +85,52 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
           const response = await channelQuerySerice.channels({});
           return toObject(response);
         },
-        connectionChannels: async () => {
-          const response = await channelQuerySerice.connectionChannels({});
+        connectionChannels: async (connection: string) => {
+          const response = await channelQuerySerice.connectionChannels({ connection: connection });
           return toObject(response);
         },
-        packetCommitment: async () => {
-          const response = await channelQuerySerice.packetCommitment({});
+        packetCommitment: async (portId: string, channelId: string, sequence: number) => {
+          const response = await channelQuerySerice.packetCommitment({
+            portId: portId,
+            channelId: channelId,
+            sequence: Long.fromNumber(sequence),
+          });
           return toObject(response);
         },
-        packetCommitments: async () => {
-          const response = await channelQuerySerice.packetCommitments({});
+        packetCommitments: async (portId: string, channelId: string) => {
+          const response = await channelQuerySerice.packetCommitments({
+            portId: portId,
+            channelId: channelId,
+          });
           return toObject(response);
         },
-        packetAcknowledgement: async () => {
-          const response = await channelQuerySerice.packetAcknowledgement({});
+        packetAcknowledgement: async (portId: string, channelId: string, sequence: number) => {
+          const response = await channelQuerySerice.packetAcknowledgement({
+            portId: portId,
+            channelId: channelId,
+            sequence: Long.fromNumber(sequence),
+          });
           return toObject(response);
         },
-        unrelayedPackets: async () => {
-          const response = await channelQuerySerice.unrelayedPackets({});
+        unrelayedPackets: async (
+          portId: string,
+          channelId: string,
+          packetCommitmentSequences: readonly number[],
+          acknowledgements: boolean,
+        ) => {
+          const response = await channelQuerySerice.unrelayedPackets({
+            portId: portId,
+            channelId: channelId,
+            packetCommitmentSequences: packetCommitmentSequences.map((s) => Long.fromNumber(s)),
+            acknowledgements: acknowledgements,
+          });
           return toObject(response);
         },
-        nextSequenceReceive: async () => {
-          const response = await channelQuerySerice.nextSequenceReceive({});
+        nextSequenceReceive: async (portId: string, channelId: string) => {
+          const response = await channelQuerySerice.nextSequenceReceive({
+            portId: portId,
+            channelId: channelId,
+          });
           return toObject(response);
         },
 
@@ -95,8 +144,8 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
           const response = await connectionQuerySerice.connections({});
           return toObject(response);
         },
-        clientConnections: async () => {
-          const response = await connectionQuerySerice.clientConnections({});
+        clientConnections: async (clientId: string) => {
+          const response = await connectionQuerySerice.clientConnections({ clientId: clientId });
           return toObject(response);
         },
       },
