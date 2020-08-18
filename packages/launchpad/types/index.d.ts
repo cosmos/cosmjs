@@ -27,7 +27,7 @@ export {
   isSearchByTagsQuery,
 } from "./cosmosclient";
 export { makeSignBytes } from "./encoding";
-export { buildFeeTable, GasPrice } from "./gas";
+export { buildFeeTable, FeeTable, GasLimits, GasPrice } from "./gas";
 export {
   AuthAccountsResponse,
   AuthExtension,
@@ -96,7 +96,7 @@ export {
 } from "./pubkey";
 export { findSequenceForSignedTx } from "./sequence";
 export { encodeSecp256k1Signature, decodeSignature } from "./signature";
-export { FeeTable, SigningCosmosClient } from "./signingcosmosclient";
+export { CosmosFeeTable, SigningCosmosClient } from "./signingcosmosclient";
 export { isStdTx, pubkeyType, CosmosSdkTx, PubKey, StdFee, StdSignature, StdTx } from "./types";
 export {
   AccountData,

@@ -2,7 +2,7 @@
 import { Coin } from "./coins";
 import { Account, BroadcastTxResult, CosmosClient, GetSequenceResult } from "./cosmosclient";
 import { makeSignBytes } from "./encoding";
-import { buildFeeTable, GasLimits, GasPrice } from "./gas";
+import { buildFeeTable, FeeTable, GasLimits, GasPrice } from "./gas";
 import { BroadcastMode } from "./lcdapi";
 import { Msg, MsgSend } from "./msgs";
 import { StdFee, StdTx } from "./types";
@@ -11,23 +11,23 @@ import { OfflineSigner } from "./wallet";
 /**
  * These fees are used by the higher level methods of SigningCosmosClient
  */
-export interface FeeTable extends Record<string, StdFee> {
+export interface CosmosFeeTable extends FeeTable {
   readonly send: StdFee;
 }
 
 const defaultGasPrice = GasPrice.fromString("0.025ucosm");
-const defaultGasLimits: GasLimits<FeeTable> = { send: 80000 };
+const defaultGasLimits: GasLimits<CosmosFeeTable> = { send: 80000 };
 
 /** Use for testing only */
 export interface PrivateSigningCosmosClient {
-  readonly fees: FeeTable;
+  readonly fees: CosmosFeeTable;
 }
 
 export class SigningCosmosClient extends CosmosClient {
   public readonly senderAddress: string;
 
   private readonly signer: OfflineSigner;
-  private readonly fees: FeeTable;
+  private readonly fees: CosmosFeeTable;
 
   /**
    * Creates a new client with signing capability to interact with a Cosmos SDK blockchain. This is the bigger brother of CosmosClient.
@@ -47,14 +47,14 @@ export class SigningCosmosClient extends CosmosClient {
     senderAddress: string,
     signer: OfflineSigner,
     gasPrice: GasPrice = defaultGasPrice,
-    gasLimits: Partial<GasLimits<FeeTable>> = {},
+    gasLimits: Partial<GasLimits<CosmosFeeTable>> = {},
     broadcastMode = BroadcastMode.Block,
   ) {
     super(apiUrl, broadcastMode);
     this.anyValidAddress = senderAddress;
     this.senderAddress = senderAddress;
     this.signer = signer;
-    this.fees = buildFeeTable<FeeTable>(gasPrice, defaultGasLimits, gasLimits);
+    this.fees = buildFeeTable<CosmosFeeTable>(gasPrice, defaultGasLimits, gasLimits);
   }
 
   public async getSequence(address?: string): Promise<GetSequenceResult> {

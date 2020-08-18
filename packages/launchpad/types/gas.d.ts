@@ -1,5 +1,6 @@
 import { Decimal } from "@cosmjs/math";
 import { StdFee } from "./types";
+export declare type FeeTable = Record<string, StdFee>;
 export declare class GasPrice {
   readonly amount: Decimal;
   readonly denom: string;
