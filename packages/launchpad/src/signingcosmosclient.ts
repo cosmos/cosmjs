@@ -2,14 +2,21 @@
 import { Coin } from "./coins";
 import { Account, BroadcastTxResult, CosmosClient, GetSequenceResult } from "./cosmosclient";
 import { makeSignBytes } from "./encoding";
-import { buildFeeTable, FeeTable, GasLimits, GasPrice } from "./gas";
+import { buildFeeTable, GasLimits, GasPrice } from "./gas";
 import { BroadcastMode } from "./lcdapi";
 import { Msg, MsgSend } from "./msgs";
 import { StdFee, StdTx } from "./types";
 import { OfflineSigner } from "./wallet";
 
+/**
+ * These fees are used by the higher level methods of SigningCosmosClient
+ */
+export interface FeeTable extends Record<string, StdFee> {
+  readonly send: StdFee;
+}
+
 const defaultGasPrice = new GasPrice(0.025, "ucosm");
-const defaultGasLimits: GasLimits = { send: 80000 };
+const defaultGasLimits: GasLimits<FeeTable> = { send: 80000 };
 
 /** Use for testing only */
 export interface PrivateSigningCosmosClient {
@@ -40,20 +47,14 @@ export class SigningCosmosClient extends CosmosClient {
     senderAddress: string,
     signer: OfflineSigner,
     gasPrice: GasPrice = defaultGasPrice,
-    gasLimits?: Partial<GasLimits>,
+    gasLimits: Partial<GasLimits<FeeTable>> = {},
     broadcastMode = BroadcastMode.Block,
   ) {
     super(apiUrl, broadcastMode);
     this.anyValidAddress = senderAddress;
-
     this.senderAddress = senderAddress;
     this.signer = signer;
-
-    const mergedGasLimits = {
-      ...defaultGasLimits,
-      ...gasLimits,
-    };
-    this.fees = buildFeeTable(gasPrice, mergedGasLimits);
+    this.fees = buildFeeTable<FeeTable>(gasPrice, defaultGasLimits, gasLimits);
   }
 
   public async getSequence(address?: string): Promise<GetSequenceResult> {

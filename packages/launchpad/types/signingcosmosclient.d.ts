@@ -1,10 +1,16 @@
 import { Coin } from "./coins";
 import { Account, BroadcastTxResult, CosmosClient, GetSequenceResult } from "./cosmosclient";
-import { FeeTable, GasLimits, GasPrice } from "./gas";
+import { GasLimits, GasPrice } from "./gas";
 import { BroadcastMode } from "./lcdapi";
 import { Msg } from "./msgs";
 import { StdFee } from "./types";
 import { OfflineSigner } from "./wallet";
+/**
+ * These fees are used by the higher level methods of SigningCosmosClient
+ */
+export interface FeeTable extends Record<string, StdFee> {
+  readonly send: StdFee;
+}
 /** Use for testing only */
 export interface PrivateSigningCosmosClient {
   readonly fees: FeeTable;
@@ -31,7 +37,7 @@ export declare class SigningCosmosClient extends CosmosClient {
     senderAddress: string,
     signer: OfflineSigner,
     gasPrice?: GasPrice,
-    gasLimits?: Partial<GasLimits>,
+    gasLimits?: Partial<GasLimits<FeeTable>>,
     broadcastMode?: BroadcastMode,
   );
   getSequence(address?: string): Promise<GetSequenceResult>;

@@ -1,13 +1,6 @@
 import { coins } from "./coins";
 import { StdFee } from "./types";
 
-/**
- * These fees are used by the higher level methods of SigningCosmosClient
- */
-export interface FeeTable {
-  readonly send: StdFee;
-}
-
 export class GasPrice {
   public readonly amount: number;
   public readonly denom: string;
@@ -18,25 +11,28 @@ export class GasPrice {
   }
 }
 
-export type GasLimits = {
-  readonly [key in keyof FeeTable]: number;
+export type GasLimits<T extends Record<string, StdFee>> = {
+  readonly [key in keyof T]: number;
 };
 
-function calculateFee(gasLimit: number, denom: string, price: number): StdFee {
-  const amount = Math.ceil(price * gasLimit);
+function calculateFee(gasLimit: number, { denom, amount: gasPriceAmount }: GasPrice): StdFee {
+  const amount = Math.ceil(gasPriceAmount * gasLimit);
   return {
     amount: coins(amount, denom),
     gas: gasLimit.toString(),
   };
 }
 
-export function buildFeeTable({ denom, amount }: GasPrice, gasLimits: GasLimits): FeeTable {
-  return Object.entries(gasLimits).reduce((feeTable, [type, gasLimit]) => {
-    return gasLimit === undefined
-      ? feeTable
-      : {
-          ...feeTable,
-          [type]: calculateFee(gasLimit, denom, amount),
-        };
-  }, {} as FeeTable);
+export function buildFeeTable<T extends Record<string, StdFee>>(
+  gasPrice: GasPrice,
+  defaultGasLimits: GasLimits<T>,
+  gasLimits: Partial<GasLimits<T>>,
+): T {
+  return Object.entries(defaultGasLimits).reduce(
+    (feeTable, [type, defaultGasLimit]) => ({
+      ...feeTable,
+      [type]: calculateFee(gasLimits[type] || defaultGasLimit, gasPrice),
+    }),
+    {} as T,
+  );
 }
