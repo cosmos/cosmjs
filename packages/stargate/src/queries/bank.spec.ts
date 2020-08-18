@@ -10,7 +10,7 @@ import {
 import { BankExtension, setupBankExtension } from "./bank";
 import { QueryClient } from "./queryclient";
 
-async function makeBankClient(rpcUrl: string): Promise<[QueryClient & BankExtension, TendermintClient]> {
+async function makeClientWithBank(rpcUrl: string): Promise<[QueryClient & BankExtension, TendermintClient]> {
   const tmClient = await TendermintClient.connect(rpcUrl);
   return [QueryClient.withExtensions(tmClient, setupBankExtension), tmClient];
 }
@@ -19,7 +19,7 @@ describe("BankExtension", () => {
   describe("balance", () => {
     it("works for different existing balances", async () => {
       pendingWithoutSimapp();
-      const [client, tmClient] = await makeBankClient(simapp.tendermintUrl);
+      const [client, tmClient] = await makeClientWithBank(simapp.tendermintUrl);
 
       const response1 = await client.bank.balance(unused.address, simapp.denomFee);
       expect(response1).toEqual({
@@ -37,7 +37,7 @@ describe("BankExtension", () => {
 
     it("returns null for non-existent balance", async () => {
       pendingWithoutSimapp();
-      const [client, tmClient] = await makeBankClient(simapp.tendermintUrl);
+      const [client, tmClient] = await makeClientWithBank(simapp.tendermintUrl);
 
       const response = await client.bank.balance(unused.address, "gintonic");
       expect(response).toBeNull();
@@ -47,7 +47,7 @@ describe("BankExtension", () => {
 
     it("returns null for non-existent address", async () => {
       pendingWithoutSimapp();
-      const [client, tmClient] = await makeBankClient(simapp.tendermintUrl);
+      const [client, tmClient] = await makeClientWithBank(simapp.tendermintUrl);
 
       const response = await client.bank.balance(nonExistentAddress, simapp.denomFee);
       expect(response).toBeNull();
@@ -60,7 +60,7 @@ describe("BankExtension", () => {
     describe("balance", () => {
       it("works for different existing balances", async () => {
         pendingWithoutSimapp();
-        const [client, tmClient] = await makeBankClient(simapp.tendermintUrl);
+        const [client, tmClient] = await makeClientWithBank(simapp.tendermintUrl);
 
         const response1 = await client.bank.unverified.balance(unused.address, simapp.denomFee);
         expect(response1).toEqual({
@@ -78,7 +78,7 @@ describe("BankExtension", () => {
 
       it("returns zero for non-existent balance", async () => {
         pendingWithoutSimapp();
-        const [client, tmClient] = await makeBankClient(simapp.tendermintUrl);
+        const [client, tmClient] = await makeClientWithBank(simapp.tendermintUrl);
 
         const response = await client.bank.unverified.balance(unused.address, "gintonic");
         expect(response).toEqual({
@@ -91,7 +91,7 @@ describe("BankExtension", () => {
 
       it("returns zero for non-existent address", async () => {
         pendingWithoutSimapp();
-        const [client, tmClient] = await makeBankClient(simapp.tendermintUrl);
+        const [client, tmClient] = await makeClientWithBank(simapp.tendermintUrl);
 
         const response = await client.bank.unverified.balance(nonExistentAddress, simapp.denomFee);
         expect(response).toEqual({
@@ -106,7 +106,7 @@ describe("BankExtension", () => {
     describe("allBalances", () => {
       it("returns all balances for unused account", async () => {
         pendingWithoutSimapp();
-        const [client, tmClient] = await makeBankClient(simapp.tendermintUrl);
+        const [client, tmClient] = await makeClientWithBank(simapp.tendermintUrl);
 
         const balances = await client.bank.unverified.allBalances(unused.address);
         expect(balances).toEqual([
@@ -125,7 +125,7 @@ describe("BankExtension", () => {
 
       it("returns an empty list for non-existent account", async () => {
         pendingWithoutSimapp();
-        const [client, tmClient] = await makeBankClient(simapp.tendermintUrl);
+        const [client, tmClient] = await makeClientWithBank(simapp.tendermintUrl);
 
         const balances = await client.bank.unverified.allBalances(nonExistentAddress);
         expect(balances).toEqual([]);
@@ -137,7 +137,7 @@ describe("BankExtension", () => {
     describe("totalSupply", () => {
       it("works", async () => {
         pendingWithoutSimapp();
-        const [client, tmClient] = await makeBankClient(simapp.tendermintUrl);
+        const [client, tmClient] = await makeClientWithBank(simapp.tendermintUrl);
 
         const response = await client.bank.unverified.totalSupply();
         expect(response).toEqual([
@@ -158,7 +158,7 @@ describe("BankExtension", () => {
     describe("supplyOf", () => {
       it("works for existing denom", async () => {
         pendingWithoutSimapp();
-        const [client, tmClient] = await makeBankClient(simapp.tendermintUrl);
+        const [client, tmClient] = await makeClientWithBank(simapp.tendermintUrl);
 
         const response = await client.bank.unverified.supplyOf(simapp.denomFee);
         expect(response).toEqual({
@@ -171,7 +171,7 @@ describe("BankExtension", () => {
 
       it("returns zero for non-existent denom", async () => {
         pendingWithoutSimapp();
-        const [client, tmClient] = await makeBankClient(simapp.tendermintUrl);
+        const [client, tmClient] = await makeClientWithBank(simapp.tendermintUrl);
 
         const response = await client.bank.unverified.supplyOf("gintonic");
         expect(response).toEqual({

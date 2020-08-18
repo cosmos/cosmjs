@@ -52,6 +52,7 @@ function inline_jq() {
 
   # Custom settings in config.toml
   sed -i "" \
+    -e 's/^cors_allowed_origins =.*$/cors_allowed_origins = ["*"]/' \
     -e 's/^timeout_propose =.*$/timeout_propose = "300ms"/' \
     -e 's/^timeout_propose_delta =.*$/timeout_propose_delta = "100ms"/' \
     -e 's/^timeout_prevote =.*$/timeout_prevote = "300ms"/' \
