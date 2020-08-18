@@ -16,7 +16,10 @@ export declare class Client {
   block(height?: number): Promise<responses.BlockResponse>;
   blockResults(height?: number): Promise<responses.BlockResultsResponse>;
   /**
-   * Get block headers for minHeight <= height <= maxHeight.
+   * Queries block headers filtered by minHeight <= height <= maxHeight.
+   *
+   * @param minHeight The minimum height to be included in the result. Defaults to 0.
+   * @param maxHeight The maximum height to be included in the result. Defaults to infinity.
    */
   blockchain(minHeight?: number, maxHeight?: number): Promise<responses.BlockchainResponse>;
   /**

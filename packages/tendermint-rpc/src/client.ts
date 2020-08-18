@@ -75,7 +75,10 @@ export class Client {
   }
 
   /**
-   * Get block headers for minHeight <= height <= maxHeight.
+   * Queries block headers filtered by minHeight <= height <= maxHeight.
+   *
+   * @param minHeight The minimum height to be included in the result. Defaults to 0.
+   * @param maxHeight The maximum height to be included in the result. Defaults to infinity.
    */
   public async blockchain(minHeight?: number, maxHeight?: number): Promise<responses.BlockchainResponse> {
     const query: requests.BlockchainRequest = {
