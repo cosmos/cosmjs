@@ -53,11 +53,14 @@ describe("Faucet", () => {
       expect(tickers).toEqual([]);
     });
 
-    it("is empty when no tokens are configured", async () => {
+    it("is not empty with default token config", async () => {
       pendingWithoutWasmd();
       const faucet = await Faucet.make(httpUrl, defaultAddressPrefix, defaultTokenConfig, faucetMnemonic, 3);
       const tickers = await faucet.availableTokens();
-      expect(tickers).toEqual(["COSM", "STAKE"]);
+      expect(tickers).toEqual([
+        { denom: "ucosm", tickerSymbol: "COSM", fractionalDigits: 6 },
+        { denom: "ustake", tickerSymbol: "STAKE", fractionalDigits: 6 },
+      ]);
     });
   });
 
@@ -113,7 +116,7 @@ describe("Faucet", () => {
       pendingWithoutWasmd();
       const faucet = await Faucet.make(httpUrl, defaultAddressPrefix, defaultTokenConfig, faucetMnemonic, 3);
       const recipient = makeRandomAddress();
-      await faucet.credit(recipient, "COSM");
+      await faucet.credit(recipient, "ucosm");
 
       const readOnlyClient = new CosmosClient(httpUrl);
       const account = await readOnlyClient.getAccount(recipient);
@@ -130,7 +133,7 @@ describe("Faucet", () => {
       pendingWithoutWasmd();
       const faucet = await Faucet.make(httpUrl, defaultAddressPrefix, defaultTokenConfig, faucetMnemonic, 3);
       const recipient = makeRandomAddress();
-      await faucet.credit(recipient, "STAKE");
+      await faucet.credit(recipient, "ustake");
 
       const readOnlyClient = new CosmosClient(httpUrl);
       const account = await readOnlyClient.getAccount(recipient);

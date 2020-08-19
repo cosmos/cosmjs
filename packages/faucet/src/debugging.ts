@@ -1,5 +1,4 @@
 import { Coin } from "@cosmjs/launchpad";
-import { Decimal } from "@cosmjs/math";
 
 import { TokenConfiguration } from "./tokenmanager";
 import { MinimalAccount, SendJob } from "./types";
@@ -8,8 +7,7 @@ import { MinimalAccount, SendJob } from "./types";
 function debugCoin(coin: Coin, tokens: TokenConfiguration): string {
   const meta = tokens.bankTokens.find((token) => token.denom == coin.denom);
   if (!meta) throw new Error(`No token configuration found for denom ${coin.denom}`);
-  const value = Decimal.fromAtomics(coin.amount, meta.fractionalDigits).toString();
-  return `${value} ${meta?.tickerSymbol}`;
+  return `${coin.amount} ${meta?.denom}`;
 }
 
 /** A string representation of a balance in a human-readable format that can change at any time */

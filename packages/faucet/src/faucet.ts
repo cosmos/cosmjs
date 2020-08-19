@@ -10,6 +10,7 @@ import * as constants from "./constants";
 import { debugAccount, logAccountsState, logSendJob } from "./debugging";
 import { createWallets } from "./profile";
 import { TokenConfiguration, TokenManager } from "./tokenmanager";
+import { BankTokenMeta } from "./tokens";
 import { MinimalAccount, SendJob } from "./types";
 
 function isDefined<X>(value: X | undefined): value is X {
@@ -74,15 +75,14 @@ export class Faucet {
   /**
    * Returns a list of ticker symbols of tokens owned by the the holder and configured in the faucet
    */
-  public async availableTokens(): Promise<readonly string[]> {
+  public async availableTokens(): Promise<readonly BankTokenMeta[]> {
     const holderAccount = await this.readOnlyClient.getAccount(this.holderAddress);
     const balance = holderAccount ? holderAccount.balance : [];
 
     return balance
       .filter((b) => b.amount !== "0")
       .map((b) => this.tokenConfig.bankTokens.find((token) => token.denom == b.denom))
-      .filter(isDefined)
-      .map((token) => token.tickerSymbol);
+      .filter(isDefined);
   }
 
   /**
@@ -94,14 +94,14 @@ export class Faucet {
     assertIsBroadcastTxSuccess(result);
   }
 
-  /** Use one of the distributor accounts to send tokend to user */
-  public async credit(recipient: string, tickerSymbol: string): Promise<void> {
+  /** Use one of the distributor accounts to send tokens to user */
+  public async credit(recipient: string, denom: string): Promise<void> {
     if (this.distributorAddresses.length === 0) throw new Error("No distributor account available");
     const sender = this.distributorAddresses[this.getCreditCount() % this.distributorAddresses.length];
     const job: SendJob = {
       sender: sender,
       recipient: recipient,
-      amount: this.tokenManager.creditAmount(tickerSymbol),
+      amount: this.tokenManager.creditAmount(denom),
     };
     if (this.logging) logSendJob(job, this.tokenConfig);
     await this.send(job);
@@ -141,17 +141,17 @@ export class Faucet {
     if (this.logging) logAccountsState(accounts, this.tokenConfig);
     const [_, ...distributorAccounts] = accounts;
 
-    const availableTokens = await this.availableTokens();
-    if (this.logging) console.info("Available tokens:", availableTokens);
+    const availableTokenDenoms = (await this.availableTokens()).map((token) => token.denom);
+    if (this.logging) console.info("Available tokens:", availableTokenDenoms);
 
     const jobs: SendJob[] = [];
-    for (const tickerSymbol of availableTokens) {
+    for (const denom of availableTokenDenoms) {
       const refillDistibutors = distributorAccounts.filter((account) =>
-        this.tokenManager.needsRefill(account, tickerSymbol),
+        this.tokenManager.needsRefill(account, denom),
       );
 
       if (this.logging) {
-        console.info(`Refilling ${tickerSymbol} of:`);
+        console.info(`Refilling ${denom} of:`);
         console.info(
           refillDistibutors.length
             ? refillDistibutors.map((r) => `  ${debugAccount(r, this.tokenConfig)}`).join("\n")
@@ -162,7 +162,7 @@ export class Faucet {
         jobs.push({
           sender: this.holderAddress,
           recipient: refillDistibutor.address,
-          amount: this.tokenManager.refillAmount(tickerSymbol),
+          amount: this.tokenManager.refillAmount(denom),
         });
       }
     }
