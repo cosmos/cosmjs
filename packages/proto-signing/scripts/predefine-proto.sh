@@ -19,6 +19,7 @@ yarn pbjs \
   --no-delimited \
   --no-verify \
   --no-convert \
+  --force-long \
   "$COSMOS_PROTO_DIR/cosmos.proto" \
   "$COSMOS_PROTO_DIR/bank/bank.proto" \
   "$COSMOS_PROTO_DIR/crypto/crypto.proto" \
