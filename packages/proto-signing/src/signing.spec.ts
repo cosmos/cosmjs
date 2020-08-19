@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Bech32, fromBase64, fromHex, toHex } from "@cosmjs/encoding";
 import { Secp256k1Wallet } from "@cosmjs/launchpad";
+import Long from "long";
 
 import { cosmos } from "./codec";
 import { defaultRegistry } from "./msgs";
@@ -66,7 +67,7 @@ describe("signing demo", () => {
 
   const sendAmount = "1234567";
   const sendDenom = "ucosm";
-  const gasLimit = 200000;
+  const gasLimit = Long.fromNumber(200000);
 
   it("correctly parses test vectors", async () => {
     const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);

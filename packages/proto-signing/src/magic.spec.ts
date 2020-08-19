@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import Long from "long";
 import { Message } from "protobufjs";
 
 import { cosmosField, registered } from "./decorator";
@@ -28,10 +29,10 @@ describe("registry magic demo", () => {
       public readonly bytesDemo?: Uint8Array;
 
       @cosmosField.int64(4)
-      public readonly int64Demo?: number;
+      public readonly int64Demo?: Long;
 
       @cosmosField.uint64(5)
-      public readonly uint64Demo?: number;
+      public readonly uint64Demo?: Long;
 
       @cosmosField.repeatedString(6)
       public readonly listDemo?: readonly string[];
@@ -68,8 +69,8 @@ describe("registry magic demo", () => {
       value: txBodyBytes,
     });
     expect(txBodyDecoded.memo).toEqual(txBodyFields.memo);
-    // int64Demo and uint64Demo decode to Long in Node
-    expect(Number(txBodyDecoded.timeoutHeight)).toEqual(txBodyFields.timeoutHeight);
+    // int64Demo and uint64Demo decode to Long
+    expect(txBodyDecoded.timeoutHeight).toEqual(Long.fromNumber(txBodyFields.timeoutHeight, true));
     expect(txBodyDecoded.extensionOptions).toEqual(txBodyFields.extensionOptions);
 
     const msgDemoDecoded = txBodyDecoded.messages[0] as MsgMagic;
@@ -77,9 +78,9 @@ describe("registry magic demo", () => {
     expect(msgDemoDecoded.booleanDemo).toEqual(msgDemoFields.booleanDemo);
     expect(msgDemoDecoded.stringDemo).toEqual(msgDemoFields.stringDemo);
     expect(msgDemoDecoded.bytesDemo).toEqual(msgDemoFields.bytesDemo);
-    // int64Demo and uint64Demo decode to Long in Node
-    expect(Number(msgDemoDecoded.int64Demo)).toEqual(msgDemoFields.int64Demo);
-    expect(Number(msgDemoDecoded.uint64Demo)).toEqual(msgDemoFields.uint64Demo);
+    // int64Demo and uint64Demo decode to Long
+    expect(msgDemoDecoded.int64Demo).toEqual(Long.fromNumber(msgDemoFields.int64Demo));
+    expect(msgDemoDecoded.uint64Demo).toEqual(Long.fromNumber(msgDemoFields.uint64Demo, true));
     expect(msgDemoDecoded.listDemo).toEqual(msgDemoFields.listDemo);
 
     expect(msgDemoDecoded.nestedDemo).toBeInstanceOf(MsgNestedMagic);

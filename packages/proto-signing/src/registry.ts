@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import Long from "long";
 import protobuf from "protobufjs";
 
 import { cosmos, google } from "./codec";
@@ -22,7 +23,7 @@ export interface DecodeObject {
 export interface TxBodyValue {
   readonly messages: readonly EncodeObject[];
   readonly memo?: string;
-  readonly timeoutHeight?: number;
+  readonly timeoutHeight?: Long;
   readonly extensionOptions?: google.protobuf.IAny[];
   readonly nonCriticalExtensionOptions?: google.protobuf.IAny[];
 }

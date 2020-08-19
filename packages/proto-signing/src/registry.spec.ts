@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { assert } from "@cosmjs/utils";
+import Long from "long";
 
 import { cosmos, google } from "./codec";
 import { MsgDemo as MsgDemoType } from "./demo";
@@ -31,7 +32,7 @@ describe("registry demo", () => {
     const txBody = TxBody.create({
       messages: [msgSendWrapped],
       memo: "Some memo",
-      timeoutHeight: 9999,
+      timeoutHeight: Long.fromNumber(9999),
       extensionOptions: [],
     });
     const txBodyBytes = TxBody.encode(txBody).finish();
@@ -66,7 +67,7 @@ describe("registry demo", () => {
     const txBody = TxBody.create({
       messages: [msgDemoWrapped],
       memo: "Some memo",
-      timeoutHeight: 9999,
+      timeoutHeight: Long.fromNumber(9999),
       extensionOptions: [],
     });
     const txBodyBytes = TxBody.encode(txBody).finish();
