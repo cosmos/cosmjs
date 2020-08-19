@@ -1,0 +1,214 @@
+{
+  "client_genesis": {
+    "clients": [
+      {
+        "client_id": "client0Fortestchain0",
+        "client_state": {
+          "@type": "/ibc.tendermint.ClientState",
+          "chain_id": "testchain0",
+          "trust_level": {
+            "numerator": "1",
+            "denominator": "3"
+          },
+          "trusting_period": "1209600s",
+          "unbonding_period": "1814400s",
+          "max_clock_drift": "10s",
+          "frozen_height": "0",
+          "latest_height": "27",
+          "proof_specs": [
+            {
+              "leaf_spec": {
+                "hash": "SHA256",
+                "prehash_key": "NO_HASH",
+                "prehash_value": "SHA256",
+                "length": "VAR_PROTO",
+                "prefix": "AA=="
+              },
+              "inner_spec": {
+                "child_order": [
+                  0,
+                  1
+                ],
+                "child_size": 33,
+                "min_prefix_length": 4,
+                "max_prefix_length": 12,
+                "empty_child": null,
+                "hash": "SHA256"
+              },
+              "max_depth": 0,
+              "min_depth": 0
+            },
+            {
+              "leaf_spec": {
+                "hash": "SHA256",
+                "prehash_key": "NO_HASH",
+                "prehash_value": "SHA256",
+                "length": "VAR_PROTO",
+                "prefix": "AA=="
+              },
+              "inner_spec": {
+                "child_order": [
+                  0,
+                  1
+                ],
+                "child_size": 32,
+                "min_prefix_length": 1,
+                "max_prefix_length": 1,
+                "empty_child": null,
+                "hash": "SHA256"
+              },
+              "max_depth": 0,
+              "min_depth": 0
+            }
+          ]
+        }
+      }
+    ],
+    "clients_consensus": [
+      {
+        "client_id": "client0Fortestchain0",
+        "consensus_states": [
+          {
+            "@type": "/ibc.tendermint.ConsensusState",
+            "timestamp": "2020-01-02T00:00:55Z",
+            "root": {
+              "hash": "Sikh0Cw/kx5oFBzh36HZ+ATEf6fgAL4gFZMzGHtt6IU="
+            },
+            "height": "10",
+            "next_validators_hash": "B50386DCF6A583AE6E8E7F75C811209469501042FA57AE76AA16E23D05871908"
+          },
+          {
+            "@type": "/ibc.tendermint.ConsensusState",
+            "timestamp": "2020-01-02T00:01:30Z",
+            "root": {
+              "hash": "uMhaAYkxG2DR/IW0iS29+lUwn1M2Fe+J0MJ0/jBphSA="
+            },
+            "height": "15",
+            "next_validators_hash": "B50386DCF6A583AE6E8E7F75C811209469501042FA57AE76AA16E23D05871908"
+          },
+          {
+            "@type": "/ibc.tendermint.ConsensusState",
+            "timestamp": "2020-01-02T00:02:00Z",
+            "root": {
+              "hash": "GzNp55pCrWzCl0tfZDMwjcdMwMruyYmFDDD6iNPMcck="
+            },
+            "height": "19",
+            "next_validators_hash": "B50386DCF6A583AE6E8E7F75C811209469501042FA57AE76AA16E23D05871908"
+          },
+          {
+            "@type": "/ibc.tendermint.ConsensusState",
+            "timestamp": "2020-01-02T00:02:30Z",
+            "root": {
+              "hash": "dRw9P2cNl5fdSGWQYDWUR0RJwGBz8jhJALAbbnkNz2M="
+            },
+            "height": "23",
+            "next_validators_hash": "B50386DCF6A583AE6E8E7F75C811209469501042FA57AE76AA16E23D05871908"
+          },
+          {
+            "@type": "/ibc.tendermint.ConsensusState",
+            "timestamp": "2020-01-02T00:03:00Z",
+            "root": {
+              "hash": "J+KbDixY+VK8M4Z8xqLxoS/YpAXRmieANmxs6z4LWx8="
+            },
+            "height": "27",
+            "next_validators_hash": "B50386DCF6A583AE6E8E7F75C811209469501042FA57AE76AA16E23D05871908"
+          },
+          {
+            "@type": "/ibc.tendermint.ConsensusState",
+            "timestamp": "2020-01-02T00:00:10Z",
+            "root": {
+              "hash": "dq78esoXT0fKeH4pftuMiQaWApOxypxkFxEW9F+/EEU="
+            },
+            "height": "4",
+            "next_validators_hash": "B50386DCF6A583AE6E8E7F75C811209469501042FA57AE76AA16E23D05871908"
+          },
+          {
+            "@type": "/ibc.tendermint.ConsensusState",
+            "timestamp": "2020-01-02T00:00:25Z",
+            "root": {
+              "hash": "nFsKYJjgyD+QYx3Wir++wDZ6sFzbt47Ie2dGYRXep18="
+            },
+            "height": "6",
+            "next_validators_hash": "B50386DCF6A583AE6E8E7F75C811209469501042FA57AE76AA16E23D05871908"
+          }
+        ]
+      }
+    ],
+    "create_localhost": false
+  },
+  "connection_genesis": {
+    "connections": [
+      {
+        "id": "connectionid0",
+        "client_id": "client0Fortestchain0",
+        "versions": [
+          "\n\u00011\u0012\rORDER_ORDERED\u0012\u000fORDER_UNORDERED"
+        ],
+        "state": "STATE_OPEN",
+        "counterparty": {
+          "client_id": "client0Fortestchain1",
+          "connection_id": "connectionid0",
+          "prefix": {
+            "key_prefix": "aWJj"
+          }
+        }
+      }
+    ],
+    "client_connection_paths": [
+      {
+        "client_id": "client0Fortestchain0",
+        "paths": [
+          "connectionid0"
+        ]
+      }
+    ]
+  },
+  "channel_genesis": {
+    "channels": [
+      {
+        "state": "STATE_OPEN",
+        "ordering": "ORDER_UNORDERED",
+        "counterparty": {
+          "port_id": "transfer",
+          "channel_id": "connectionid00"
+        },
+        "connection_hops": [
+          "connectionid0"
+        ],
+        "version": "ics20-1",
+        "port_id": "wasm.cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
+        "channel_id": "connectionid00"
+      }
+    ],
+    "acknowledgements": [
+      {
+        "port_id": "wasm.cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
+        "channel_id": "connectionid00",
+        "sequence": "1",
+        "hash": "qXSjzpBja/YxdzBjt2Zcmnw1mg6DRW+ulHjmfjqxrj0="
+      }
+    ],
+    "commitments": [],
+    "send_sequences": [
+      {
+        "port_id": "wasm.cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
+        "channel_id": "connectionid00",
+        "sequence": "1"
+      }
+    ],
+    "recv_sequences": [
+      {
+        "port_id": "wasm.cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
+        "channel_id": "connectionid00",
+        "sequence": "1"
+      }
+    ],
+    "ack_sequences": [
+      {
+        "port_id": "wasm.cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
+        "channel_id": "connectionid00",
+        "sequence": "1"
+      }
+    ]
+  }
+}
