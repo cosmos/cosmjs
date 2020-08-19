@@ -1,4 +1,4 @@
 # Choose from https://hub.docker.com/r/interchainio/simapp/tags
-REPOSITORY="alpetest/simd"
-VERSION="f02b0b5"
+REPOSITORY="interchainio/simapp"
+VERSION="nightly-2020-08-11"
 CONTAINER_NAME="simapp"
