@@ -1,4 +1,4 @@
-import { Decimal } from "@cosmjs/math";
+import { Decimal, Uint53 } from "@cosmjs/math";
 
 import { coins } from "./coins";
 import { StdFee } from "./types";
@@ -34,8 +34,7 @@ export type GasLimits<T extends Record<string, StdFee>> = {
 };
 
 function calculateFee(gasLimit: number, { denom, amount: gasPriceAmount }: GasPrice): StdFee {
-  const gasLimitDecimal = Decimal.fromUserInput(gasLimit.toString(), gasPriceAmount.fractionalDigits);
-  const amount = Math.ceil(gasPriceAmount.multiply(gasLimitDecimal).toFloatApproximation());
+  const amount = Math.ceil(gasPriceAmount.multiply(new Uint53(gasLimit)).toFloatApproximation());
   return {
     amount: coins(amount, denom),
     gas: gasLimit.toString(),
