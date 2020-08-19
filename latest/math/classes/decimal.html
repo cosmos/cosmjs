@@ -97,6 +97,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="decimal.html#isgreaterthanorequal" class="tsd-kind-icon">is<wbr>Greater<wbr>Than<wbr>OrEqual</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="decimal.html#islessthan" class="tsd-kind-icon">is<wbr>Less<wbr>Than</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="decimal.html#islessthanorequal" class="tsd-kind-icon">is<wbr>Less<wbr>Than<wbr>OrEqual</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="decimal.html#multiply" class="tsd-kind-icon">multiply</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="decimal.html#plus" class="tsd-kind-icon">plus</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="decimal.html#tofloatapproximation" class="tsd-kind-icon">to<wbr>Float<wbr>Approximation</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="decimal.html#tostring" class="tsd-kind-icon">to<wbr>String</a></li>
@@ -120,7 +121,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/8b7bd1e7/packages/math/src/decimal.ts#L72">src/decimal.ts:72</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/0bd8d5ec/packages/math/src/decimal.ts#L74">src/decimal.ts:74</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -137,7 +138,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/8b7bd1e7/packages/math/src/decimal.ts#L76">src/decimal.ts:76</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/0bd8d5ec/packages/math/src/decimal.ts#L78">src/decimal.ts:78</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
@@ -157,7 +158,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/8b7bd1e7/packages/math/src/decimal.ts#L127">src/decimal.ts:127</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/0bd8d5ec/packages/math/src/decimal.ts#L139">src/decimal.ts:139</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -180,7 +181,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/8b7bd1e7/packages/math/src/decimal.ts#L139">src/decimal.ts:139</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/0bd8d5ec/packages/math/src/decimal.ts#L151">src/decimal.ts:151</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -203,7 +204,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/8b7bd1e7/packages/math/src/decimal.ts#L143">src/decimal.ts:143</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/0bd8d5ec/packages/math/src/decimal.ts#L155">src/decimal.ts:155</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -226,7 +227,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/8b7bd1e7/packages/math/src/decimal.ts#L131">src/decimal.ts:131</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/0bd8d5ec/packages/math/src/decimal.ts#L143">src/decimal.ts:143</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -249,7 +250,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/8b7bd1e7/packages/math/src/decimal.ts#L135">src/decimal.ts:135</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/0bd8d5ec/packages/math/src/decimal.ts#L147">src/decimal.ts:147</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -263,6 +264,35 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="multiply" class="tsd-anchor"></a>
+					<h3>multiply</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">multiply<span class="tsd-signature-symbol">(</span>b<span class="tsd-signature-symbol">: </span><a href="uint32.html" class="tsd-signature-type">Uint32</a><span class="tsd-signature-symbol"> | </span><a href="uint53.html" class="tsd-signature-type">Uint53</a><span class="tsd-signature-symbol"> | </span><a href="uint64.html" class="tsd-signature-type">Uint64</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="decimal.html" class="tsd-signature-type">Decimal</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/0bd8d5ec/packages/math/src/decimal.ts#L134">src/decimal.ts:134</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>a.multiply(b) returns a*b.</p>
+								</div>
+								<p>We only allow multiplication by unsigned integers to avoid rounding errors.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>b: <a href="uint32.html" class="tsd-signature-type">Uint32</a><span class="tsd-signature-symbol"> | </span><a href="uint53.html" class="tsd-signature-type">Uint53</a><span class="tsd-signature-symbol"> | </span><a href="uint64.html" class="tsd-signature-type">Uint64</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="decimal.html" class="tsd-signature-type">Decimal</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="plus" class="tsd-anchor"></a>
 					<h3>plus</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -272,7 +302,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/8b7bd1e7/packages/math/src/decimal.ts#L121">src/decimal.ts:121</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/0bd8d5ec/packages/math/src/decimal.ts#L123">src/decimal.ts:123</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -301,7 +331,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/8b7bd1e7/packages/math/src/decimal.ts#L110">src/decimal.ts:110</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/0bd8d5ec/packages/math/src/decimal.ts#L112">src/decimal.ts:112</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -324,7 +354,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/8b7bd1e7/packages/math/src/decimal.ts#L92">src/decimal.ts:92</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/0bd8d5ec/packages/math/src/decimal.ts#L94">src/decimal.ts:94</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -341,7 +371,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/8b7bd1e7/packages/math/src/decimal.ts#L67">src/decimal.ts:67</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/0bd8d5ec/packages/math/src/decimal.ts#L69">src/decimal.ts:69</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -367,7 +397,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/8b7bd1e7/packages/math/src/decimal.ts#L54">src/decimal.ts:54</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/0bd8d5ec/packages/math/src/decimal.ts#L56">src/decimal.ts:56</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -393,7 +423,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/8b7bd1e7/packages/math/src/decimal.ts#L13">src/decimal.ts:13</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/0bd8d5ec/packages/math/src/decimal.ts#L15">src/decimal.ts:15</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -446,6 +476,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="decimal.html#islessthanorequal" class="tsd-kind-icon">is<wbr>Less<wbr>Than<wbr>OrEqual</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="decimal.html#multiply" class="tsd-kind-icon">multiply</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="decimal.html#plus" class="tsd-kind-icon">plus</a>
