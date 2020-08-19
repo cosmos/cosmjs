@@ -7,7 +7,7 @@ import {
   BroadcastTxResult,
   buildFeeTable,
   Coin,
-  FeeTable,
+  CosmosFeeTable,
   GasLimits,
   GasPrice,
   isBroadcastTxFailure,
@@ -36,12 +36,11 @@ import {
 /**
  * These fees are used by the higher level methods of SigningCosmWasmClient
  */
-export interface CosmWasmFeeTable extends FeeTable {
+export interface CosmWasmFeeTable extends CosmosFeeTable {
   readonly upload: StdFee;
   readonly init: StdFee;
   readonly exec: StdFee;
   readonly migrate: StdFee;
-  readonly send: StdFee;
   /** Paid when setting the contract admin to a new address or unsetting it */
   readonly changeAdmin: StdFee;
 }
@@ -153,7 +152,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   public readonly senderAddress: string;
 
   private readonly signer: OfflineSigner;
-  private readonly fees: FeeTable;
+  private readonly fees: CosmWasmFeeTable;
 
   /**
    * Creates a new client with signing capability to interact with a CosmWasm blockchain. This is the bigger brother of CosmWasmClient.

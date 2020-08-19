@@ -2,7 +2,7 @@ import {
   BroadcastMode,
   BroadcastTxResult,
   Coin,
-  FeeTable,
+  CosmosFeeTable,
   GasLimits,
   GasPrice,
   Msg,
@@ -14,12 +14,11 @@ import { Log } from "./logs";
 /**
  * These fees are used by the higher level methods of SigningCosmWasmClient
  */
-export interface CosmWasmFeeTable extends FeeTable {
+export interface CosmWasmFeeTable extends CosmosFeeTable {
   readonly upload: StdFee;
   readonly init: StdFee;
   readonly exec: StdFee;
   readonly migrate: StdFee;
-  readonly send: StdFee;
   /** Paid when setting the contract admin to a new address or unsetting it */
   readonly changeAdmin: StdFee;
 }
