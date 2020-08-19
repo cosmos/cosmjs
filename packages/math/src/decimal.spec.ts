@@ -1,4 +1,5 @@
 import { Decimal } from "./decimal";
+import { Uint32, Uint53, Uint64 } from "./integers";
 
 describe("Decimal", () => {
   describe("fromAtomics", () => {
@@ -208,6 +209,87 @@ describe("Decimal", () => {
 
       expect(() => zero.plus(Decimal.fromUserInput("1", 6))).toThrowError(/do not match/i);
       expect(() => zero.plus(Decimal.fromUserInput("1", 7))).toThrowError(/do not match/i);
+    });
+  });
+
+  describe("multiply", () => {
+    it("returns correct values for Uint32", () => {
+      const zero = Decimal.fromUserInput("0", 5);
+      expect(zero.multiply(new Uint32(0)).toString()).toEqual("0");
+      expect(zero.multiply(new Uint32(1)).toString()).toEqual("0");
+      expect(zero.multiply(new Uint32(2)).toString()).toEqual("0");
+      expect(zero.multiply(new Uint32(4294967295)).toString()).toEqual("0");
+
+      const one = Decimal.fromUserInput("1", 5);
+      expect(one.multiply(new Uint32(0)).toString()).toEqual("0");
+      expect(one.multiply(new Uint32(1)).toString()).toEqual("1");
+      expect(one.multiply(new Uint32(2)).toString()).toEqual("2");
+      expect(one.multiply(new Uint32(4294967295)).toString()).toEqual("4294967295");
+
+      const oneDotFive = Decimal.fromUserInput("1.5", 5);
+      expect(oneDotFive.multiply(new Uint32(0)).toString()).toEqual("0");
+      expect(oneDotFive.multiply(new Uint32(1)).toString()).toEqual("1.5");
+      expect(oneDotFive.multiply(new Uint32(2)).toString()).toEqual("3");
+      expect(oneDotFive.multiply(new Uint32(4294967295)).toString()).toEqual("6442450942.5");
+
+      // original value remain unchanged
+      expect(zero.toString()).toEqual("0");
+      expect(one.toString()).toEqual("1");
+      expect(oneDotFive.toString()).toEqual("1.5");
+    });
+
+    it("returns correct values for Uint53", () => {
+      const zero = Decimal.fromUserInput("0", 5);
+      expect(zero.multiply(new Uint53(0)).toString()).toEqual("0");
+      expect(zero.multiply(new Uint53(1)).toString()).toEqual("0");
+      expect(zero.multiply(new Uint53(2)).toString()).toEqual("0");
+      expect(zero.multiply(new Uint53(9007199254740991)).toString()).toEqual("0");
+
+      const one = Decimal.fromUserInput("1", 5);
+      expect(one.multiply(new Uint53(0)).toString()).toEqual("0");
+      expect(one.multiply(new Uint53(1)).toString()).toEqual("1");
+      expect(one.multiply(new Uint53(2)).toString()).toEqual("2");
+      expect(one.multiply(new Uint53(9007199254740991)).toString()).toEqual("9007199254740991");
+
+      const oneDotFive = Decimal.fromUserInput("1.5", 5);
+      expect(oneDotFive.multiply(new Uint53(0)).toString()).toEqual("0");
+      expect(oneDotFive.multiply(new Uint53(1)).toString()).toEqual("1.5");
+      expect(oneDotFive.multiply(new Uint53(2)).toString()).toEqual("3");
+      expect(oneDotFive.multiply(new Uint53(9007199254740991)).toString()).toEqual("13510798882111486.5");
+
+      // original value remain unchanged
+      expect(zero.toString()).toEqual("0");
+      expect(one.toString()).toEqual("1");
+      expect(oneDotFive.toString()).toEqual("1.5");
+    });
+
+    it("returns correct values for Uint64", () => {
+      const zero = Decimal.fromUserInput("0", 5);
+      expect(zero.multiply(Uint64.fromString("0")).toString()).toEqual("0");
+      expect(zero.multiply(Uint64.fromString("1")).toString()).toEqual("0");
+      expect(zero.multiply(Uint64.fromString("2")).toString()).toEqual("0");
+      expect(zero.multiply(Uint64.fromString("18446744073709551615")).toString()).toEqual("0");
+
+      const one = Decimal.fromUserInput("1", 5);
+      expect(one.multiply(Uint64.fromString("0")).toString()).toEqual("0");
+      expect(one.multiply(Uint64.fromString("1")).toString()).toEqual("1");
+      expect(one.multiply(Uint64.fromString("2")).toString()).toEqual("2");
+      expect(one.multiply(Uint64.fromString("18446744073709551615")).toString()).toEqual(
+        "18446744073709551615",
+      );
+
+      const oneDotFive = Decimal.fromUserInput("1.5", 5);
+      expect(oneDotFive.multiply(Uint64.fromString("0")).toString()).toEqual("0");
+      expect(oneDotFive.multiply(Uint64.fromString("1")).toString()).toEqual("1.5");
+      expect(oneDotFive.multiply(Uint64.fromString("2")).toString()).toEqual("3");
+      expect(oneDotFive.multiply(Uint64.fromString("18446744073709551615")).toString()).toEqual(
+        "27670116110564327422.5",
+      );
+
+      // original value remain unchanged
+      expect(zero.toString()).toEqual("0");
+      expect(one.toString()).toEqual("1");
+      expect(oneDotFive.toString()).toEqual("1.5");
     });
   });
 

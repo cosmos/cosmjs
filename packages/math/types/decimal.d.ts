@@ -1,3 +1,4 @@
+import { Uint32, Uint53, Uint64 } from "./integers";
 /**
  * A type for arbitrary precision, non-negative decimals.
  *
@@ -24,6 +25,12 @@ export declare class Decimal {
    * Both values need to have the same fractional digits.
    */
   plus(b: Decimal): Decimal;
+  /**
+   * a.multiply(b) returns a*b.
+   *
+   * We only allow multiplication by unsigned integers to avoid rounding errors.
+   */
+  multiply(b: Uint32 | Uint53 | Uint64): Decimal;
   equals(b: Decimal): boolean;
   isLessThan(b: Decimal): boolean;
   isLessThanOrEqual(b: Decimal): boolean;

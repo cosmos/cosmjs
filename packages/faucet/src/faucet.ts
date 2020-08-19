@@ -1,7 +1,6 @@
 import {
   assertIsBroadcastTxSuccess,
   CosmosClient,
-  FeeTable,
   OfflineSigner,
   SigningCosmosClient,
 } from "@cosmjs/launchpad";
@@ -57,17 +56,16 @@ export class Faucet {
     this.holderAddress = wallets[0][0];
     this.distributorAddresses = wallets.slice(1).map((pair) => pair[0]);
 
-    const fees: Partial<FeeTable> = {
-      send: {
-        amount: constants.fee,
-        gas: constants.gas,
-      },
-    };
-
     // we need one client per sender
     const clients: { [senderAddress: string]: SigningCosmosClient } = {};
     for (const [senderAddress, wallet] of wallets) {
-      clients[senderAddress] = new SigningCosmosClient(apiUrl, senderAddress, wallet, fees);
+      clients[senderAddress] = new SigningCosmosClient(
+        apiUrl,
+        senderAddress,
+        wallet,
+        constants.gasPrice,
+        constants.gasLimits,
+      );
     }
     this.clients = clients;
     this.logging = logging;

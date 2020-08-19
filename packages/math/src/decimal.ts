@@ -1,5 +1,7 @@
 import BN from "bn.js";
 
+import { Uint32, Uint53, Uint64 } from "./integers";
+
 // Too large values lead to massive memory usage. Limit to something sensible.
 // The largest value we need is 18 (Ether).
 const maxFractionalDigits = 100;
@@ -122,6 +124,16 @@ export class Decimal {
     if (this.fractionalDigits !== b.fractionalDigits) throw new Error("Fractional digits do not match");
     const sum = this.data.atomics.add(new BN(b.atomics));
     return new Decimal(sum.toString(), this.fractionalDigits);
+  }
+
+  /**
+   * a.multiply(b) returns a*b.
+   *
+   * We only allow multiplication by unsigned integers to avoid rounding errors.
+   */
+  public multiply(b: Uint32 | Uint53 | Uint64): Decimal {
+    const product = this.data.atomics.mul(new BN(b.toString()));
+    return new Decimal(product.toString(), this.fractionalDigits);
   }
 
   public equals(b: Decimal): boolean {

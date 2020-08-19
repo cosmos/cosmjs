@@ -20,7 +20,7 @@ export {
 } from "./cosmwasmclient";
 export {
   ExecuteResult,
-  FeeTable,
+  CosmWasmFeeTable,
   InstantiateOptions,
   InstantiateResult,
   MigrateResult,

@@ -57,7 +57,7 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
         "SearchTxFilter",
         // signingcosmwasmclient
         "ExecuteResult",
-        "FeeTable",
+        "CosmWasmFeeTable",
         "InstantiateResult",
         "SigningCosmWasmClient",
         "UploadMeta",
@@ -102,6 +102,7 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
         "BroadcastTxResult",
         "Coin",
         "CosmosClient",
+        "GasPrice",
         "Msg",
         "MsgDelegate",
         "MsgSend",

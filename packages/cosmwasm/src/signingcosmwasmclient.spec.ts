@@ -6,6 +6,7 @@ import {
   AuthExtension,
   coin,
   coins,
+  GasPrice,
   LcdClient,
   MsgDelegate,
   Secp256k1Wallet,
@@ -15,7 +16,7 @@ import { assert } from "@cosmjs/utils";
 
 import { PrivateCosmWasmClient } from "./cosmwasmclient";
 import { setupWasmExtension, WasmExtension } from "./lcdapi/wasm";
-import { SigningCosmWasmClient, UploadMeta } from "./signingcosmwasmclient";
+import { PrivateSigningCosmWasmClient, SigningCosmWasmClient, UploadMeta } from "./signingcosmwasmclient";
 import {
   alice,
   getHackatom,
@@ -37,6 +38,200 @@ describe("SigningCosmWasmClient", () => {
       const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
       const client = new SigningCosmWasmClient(httpUrl, alice.address0, wallet);
       expect(client).toBeTruthy();
+    });
+
+    it("can be constructed with custom gas price", async () => {
+      const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
+      const gasPrice = GasPrice.fromString("3.14utest");
+      const client = new SigningCosmWasmClient(httpUrl, alice.address0, wallet, gasPrice);
+      const openedClient = (client as unknown) as PrivateSigningCosmWasmClient;
+      expect(openedClient.fees).toEqual({
+        upload: {
+          amount: [
+            {
+              amount: "3140000",
+              denom: "utest",
+            },
+          ],
+          gas: "1000000",
+        },
+        init: {
+          amount: [
+            {
+              amount: "1570000",
+              denom: "utest",
+            },
+          ],
+          gas: "500000",
+        },
+        migrate: {
+          amount: [
+            {
+              amount: "628000",
+              denom: "utest",
+            },
+          ],
+          gas: "200000",
+        },
+        exec: {
+          amount: [
+            {
+              amount: "628000",
+              denom: "utest",
+            },
+          ],
+          gas: "200000",
+        },
+        send: {
+          amount: [
+            {
+              amount: "251200",
+              denom: "utest",
+            },
+          ],
+          gas: "80000",
+        },
+        changeAdmin: {
+          amount: [
+            {
+              amount: "251200",
+              denom: "utest",
+            },
+          ],
+          gas: "80000",
+        },
+      });
+    });
+
+    it("can be constructed with custom gas limits", async () => {
+      const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
+      const gasLimits = {
+        send: 160000,
+      };
+      const client = new SigningCosmWasmClient(httpUrl, alice.address0, wallet, undefined, gasLimits);
+      const openedClient = (client as unknown) as PrivateSigningCosmWasmClient;
+      expect(openedClient.fees).toEqual({
+        upload: {
+          amount: [
+            {
+              amount: "25000",
+              denom: "ucosm",
+            },
+          ],
+          gas: "1000000",
+        },
+        init: {
+          amount: [
+            {
+              amount: "12500",
+              denom: "ucosm",
+            },
+          ],
+          gas: "500000",
+        },
+        migrate: {
+          amount: [
+            {
+              amount: "5000",
+              denom: "ucosm",
+            },
+          ],
+          gas: "200000",
+        },
+        exec: {
+          amount: [
+            {
+              amount: "5000",
+              denom: "ucosm",
+            },
+          ],
+          gas: "200000",
+        },
+        send: {
+          amount: [
+            {
+              amount: "4000",
+              denom: "ucosm",
+            },
+          ],
+          gas: "160000",
+        },
+        changeAdmin: {
+          amount: [
+            {
+              amount: "2000",
+              denom: "ucosm",
+            },
+          ],
+          gas: "80000",
+        },
+      });
+    });
+
+    it("can be constructed with custom gas price and gas limits", async () => {
+      const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
+      const gasPrice = GasPrice.fromString("3.14utest");
+      const gasLimits = {
+        send: 160000,
+      };
+      const client = new SigningCosmWasmClient(httpUrl, alice.address0, wallet, gasPrice, gasLimits);
+      const openedClient = (client as unknown) as PrivateSigningCosmWasmClient;
+      expect(openedClient.fees).toEqual({
+        upload: {
+          amount: [
+            {
+              amount: "3140000",
+              denom: "utest",
+            },
+          ],
+          gas: "1000000",
+        },
+        init: {
+          amount: [
+            {
+              amount: "1570000",
+              denom: "utest",
+            },
+          ],
+          gas: "500000",
+        },
+        migrate: {
+          amount: [
+            {
+              amount: "628000",
+              denom: "utest",
+            },
+          ],
+          gas: "200000",
+        },
+        exec: {
+          amount: [
+            {
+              amount: "628000",
+              denom: "utest",
+            },
+          ],
+          gas: "200000",
+        },
+        send: {
+          amount: [
+            {
+              amount: "502400",
+              denom: "utest",
+            },
+          ],
+          gas: "160000",
+        },
+        changeAdmin: {
+          amount: [
+            {
+              amount: "251200",
+              denom: "utest",
+            },
+          ],
+          gas: "80000",
+        },
+      });
     });
   });
 

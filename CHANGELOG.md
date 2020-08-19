@@ -3,6 +3,10 @@
 ## 0.23.0 (unreleased)
 
 - @cosmjs/cosmwasm: Rename `CosmWasmClient.postTx` method to `.broadcastTx`.
+- @cosmjs/cosmwasm: Rename `FeeTable` type to `CosmWasmFeeTable`.
+- @cosmjs/cosmwasm: `SigningCosmWasmClient` constructor now takes optional
+  arguments `gasPrice` and `gasLimits` instead of `customFees` for easier
+  customization.
 - @cosmjs/cosmwasm: Rename `SigningCosmWasmClient.signAndPost` method to
   `.signAndBroadcast`.
 - @cosmjs/cosmwasm: Use stricter type `Record<string, unknown>` for smart query,
@@ -13,7 +17,18 @@
 - @cosmjs/encoding: Add `limit` parameter to `Bech32.encode` and `.decode`. The
   new default limit for decoding is infinity (was 90 before). Set it to 90 to
   create a strict decoder.
+- @cosmjs/faucet: Environmental variable `FAUCET_FEE` renamed to
+  `FAUCET_GAS_PRICE` and now only accepts one token. Environmental variable
+  `FAUCET_GAS` renamed to `FAUCET_GAS_LIMIT`.
+- @cosmjs/launchpad: Rename `FeeTable` type to `CosmosFeeTable` and export a new
+  more generic type `FeeTable`.
+- @cosmjs/launchpad: Add new class `GasPrice`, new helper type `GasLimits` and
+  new helper function `buildFeeTable` for easier handling of gas prices and
+  fees.
 - @cosmjs/launchpad: Rename `CosmosClient.postTx` method to `.broadcastTx`.
+- @cosmjs/launchpad: `SigningCosmosClient` constructor now takes optional
+  arguments `gasPrice` and `gasLimits` instead of `customFees` for easier
+  customization.
 - @cosmjs/launchpad: Rename `SigningCosmosClient.signAndPost` method to
   `.signAndBroadcast`.
 - @cosmjs/launchpad: Rename `PostTx`-related types to `BroadcastTxResult`,
@@ -24,6 +39,7 @@
   `isSearchBySentFromOrToQuery` and `isSearchByTagsQuery`.
 - @cosmjs/launchpad: Change type of `TxsResponse.logs` and
   `BroadcastTxsResponse.logs` to `unknown[]`.
+- @cosmjs/math: Add `.multiply` method to `Decimal` class.
 - @cosmjs/tendermint-rpc: Make `BroadcastTxCommitResponse.height` non-optional.
 - @cosmjs/tendermint-rpc: Change type of `GenesisResponse.appState` to
   `Record<string, unknown> | undefined`.

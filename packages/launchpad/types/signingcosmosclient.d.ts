@@ -1,14 +1,19 @@
 import { Coin } from "./coins";
 import { Account, BroadcastTxResult, CosmosClient, GetSequenceResult } from "./cosmosclient";
+import { FeeTable, GasLimits, GasPrice } from "./gas";
 import { BroadcastMode } from "./lcdapi";
 import { Msg } from "./msgs";
 import { StdFee } from "./types";
 import { OfflineSigner } from "./wallet";
 /**
- * Those fees are used by the higher level methods of SigningCosmosClient
+ * These fees are used by the higher level methods of SigningCosmosClient
  */
-export interface FeeTable {
+export interface CosmosFeeTable extends FeeTable {
   readonly send: StdFee;
+}
+/** Use for testing only */
+export interface PrivateSigningCosmosClient {
+  readonly fees: CosmosFeeTable;
 }
 export declare class SigningCosmosClient extends CosmosClient {
   readonly senderAddress: string;
@@ -23,14 +28,16 @@ export declare class SigningCosmosClient extends CosmosClient {
    * @param apiUrl The URL of a Cosmos SDK light client daemon API (sometimes called REST server or REST API)
    * @param senderAddress The address that will sign and send transactions using this instance
    * @param signer An implementation of OfflineSigner which can provide signatures for transactions, potentially requiring user input.
-   * @param customFees The fees that are paid for transactions
+   * @param gasPrice The price paid per unit of gas
+   * @param gasLimits Custom overrides for gas limits related to specific transaction types
    * @param broadcastMode Defines at which point of the transaction processing the broadcastTx method returns
    */
   constructor(
     apiUrl: string,
     senderAddress: string,
     signer: OfflineSigner,
-    customFees?: Partial<FeeTable>,
+    gasPrice?: GasPrice,
+    gasLimits?: Partial<GasLimits<CosmosFeeTable>>,
     broadcastMode?: BroadcastMode,
   );
   getSequence(address?: string): Promise<GetSequenceResult>;
