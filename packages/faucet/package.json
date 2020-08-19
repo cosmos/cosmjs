@@ -2,7 +2,7 @@
   "name": "@cosmjs/faucet",
   "version": "0.22.2",
   "description": "The faucet",
-  "contributors":[
+  "contributors": [
     "Ethan Frey <ethanfrey@users.noreply.github.com>",
     "Simon Warta <webmaster128@users.noreply.github.com>"
   ],
@@ -36,8 +36,8 @@
     "test-node": "node jasmine-testrunner.js",
     "test": "yarn build-or-skip && yarn test-node",
     "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet",
-    "start-dev": "FAUCET_CREDIT_AMOUNT_COSM=10 FAUCET_CREDIT_AMOUNT_STAKE=5 FAUCET_CONCURRENCY=3 FAUCET_MNEMONIC=\"economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone\" ./bin/cosmos-faucet start \"http://localhost:1317\"",
-    "start-coralnet": "FAUCET_ADDRESS_PREFIX=coral FAUCET_TOKENS=\"SHELL=10^6ushell, REEF=10^6ureef\" FAUCET_CREDIT_AMOUNT_SHELL=10 FAUCET_CREDIT_AMOUNT_REEF=2 FAUCET_CONCURRENCY=3 FAUCET_MNEMONIC=\"economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone\" ./bin/cosmos-faucet start \"https://lcd.coralnet.cosmwasm.com\""
+    "start-dev": "FAUCET_CREDIT_AMOUNT_UCOSM=10000000 FAUCET_CREDIT_AMOUNT_USTAKE=5000000 FAUCET_CONCURRENCY=3 FAUCET_MNEMONIC=\"economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone\" ./bin/cosmos-faucet start \"http://localhost:1317\"",
+    "start-coralnet": "FAUCET_ADDRESS_PREFIX=coral FAUCET_TOKENS=\"SHELL=10^6ushell, REEF=10^6ureef\" FAUCET_CREDIT_AMOUNT_USHELL=10000000 FAUCET_CREDIT_AMOUNT_UREEF=2000000 FAUCET_CONCURRENCY=3 FAUCET_MNEMONIC=\"economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone\" ./bin/cosmos-faucet start \"https://lcd.coralnet.cosmwasm.com\""
   },
   "dependencies": {
     "@cosmjs/crypto": "^0.22.2",
