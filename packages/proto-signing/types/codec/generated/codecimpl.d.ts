@@ -231,10 +231,10 @@ export namespace cosmos {
   /** Properties of a GasInfo. */
   interface IGasInfo {
     /** GasInfo gasWanted */
-    gasWanted?: number | Long | null;
+    gasWanted?: Long | null;
 
     /** GasInfo gasUsed */
-    gasUsed?: number | Long | null;
+    gasUsed?: Long | null;
   }
 
   /** Represents a GasInfo. */
@@ -246,10 +246,10 @@ export namespace cosmos {
     constructor(p?: cosmos.IGasInfo);
 
     /** GasInfo gasWanted. */
-    public gasWanted: number | Long;
+    public gasWanted: Long;
 
     /** GasInfo gasUsed. */
-    public gasUsed: number | Long;
+    public gasUsed: Long;
 
     /**
      * Creates a new GasInfo instance using the specified properties.
@@ -476,7 +476,7 @@ export namespace cosmos {
   /** Properties of a TxResponse. */
   interface ITxResponse {
     /** TxResponse height */
-    height?: number | Long | null;
+    height?: Long | null;
 
     /** TxResponse txhash */
     txhash?: string | null;
@@ -500,10 +500,10 @@ export namespace cosmos {
     info?: string | null;
 
     /** TxResponse gasWanted */
-    gasWanted?: number | Long | null;
+    gasWanted?: Long | null;
 
     /** TxResponse gasUsed */
-    gasUsed?: number | Long | null;
+    gasUsed?: Long | null;
 
     /** TxResponse tx */
     tx?: google.protobuf.IAny | null;
@@ -521,7 +521,7 @@ export namespace cosmos {
     constructor(p?: cosmos.ITxResponse);
 
     /** TxResponse height. */
-    public height: number | Long;
+    public height: Long;
 
     /** TxResponse txhash. */
     public txhash: string;
@@ -545,10 +545,10 @@ export namespace cosmos {
     public info: string;
 
     /** TxResponse gasWanted. */
-    public gasWanted: number | Long;
+    public gasWanted: Long;
 
     /** TxResponse gasUsed. */
-    public gasUsed: number | Long;
+    public gasUsed: Long;
 
     /** TxResponse tx. */
     public tx?: google.protobuf.IAny | null;
@@ -1546,10 +1546,10 @@ export namespace cosmos {
       chainId?: string | null;
 
       /** SignDoc accountNumber */
-      accountNumber?: number | Long | null;
+      accountNumber?: Long | null;
 
       /** SignDoc accountSequence */
-      accountSequence?: number | Long | null;
+      accountSequence?: Long | null;
     }
 
     /** Represents a SignDoc. */
@@ -1570,10 +1570,10 @@ export namespace cosmos {
       public chainId: string;
 
       /** SignDoc accountNumber. */
-      public accountNumber: number | Long;
+      public accountNumber: Long;
 
       /** SignDoc accountSequence. */
-      public accountSequence: number | Long;
+      public accountSequence: Long;
 
       /**
        * Creates a new SignDoc instance using the specified properties.
@@ -1610,7 +1610,7 @@ export namespace cosmos {
       memo?: string | null;
 
       /** TxBody timeoutHeight */
-      timeoutHeight?: number | Long | null;
+      timeoutHeight?: Long | null;
 
       /** TxBody extensionOptions */
       extensionOptions?: google.protobuf.IAny[] | null;
@@ -1634,7 +1634,7 @@ export namespace cosmos {
       public memo: string;
 
       /** TxBody timeoutHeight. */
-      public timeoutHeight: number | Long;
+      public timeoutHeight: Long;
 
       /** TxBody extensionOptions. */
       public extensionOptions: google.protobuf.IAny[];
@@ -1918,7 +1918,7 @@ export namespace cosmos {
       amount?: cosmos.ICoin[] | null;
 
       /** Fee gasLimit */
-      gasLimit?: number | Long | null;
+      gasLimit?: Long | null;
     }
 
     /** Represents a Fee. */
@@ -1933,7 +1933,7 @@ export namespace cosmos {
       public amount: cosmos.ICoin[];
 
       /** Fee gasLimit. */
-      public gasLimit: number | Long;
+      public gasLimit: Long;
 
       /**
        * Creates a new Fee instance using the specified properties.
@@ -2476,10 +2476,10 @@ export namespace tendermint {
         version?: string | null;
 
         /** RequestInfo blockVersion */
-        blockVersion?: number | Long | null;
+        blockVersion?: Long | null;
 
         /** RequestInfo p2pVersion */
-        p2pVersion?: number | Long | null;
+        p2pVersion?: Long | null;
       }
 
       /** Represents a RequestInfo. */
@@ -2494,10 +2494,10 @@ export namespace tendermint {
         public version: string;
 
         /** RequestInfo blockVersion. */
-        public blockVersion: number | Long;
+        public blockVersion: Long;
 
         /** RequestInfo p2pVersion. */
-        public p2pVersion: number | Long;
+        public p2pVersion: Long;
 
         /**
          * Creates a new RequestInfo instance using the specified properties.
@@ -2668,7 +2668,7 @@ export namespace tendermint {
         path?: string | null;
 
         /** RequestQuery height */
-        height?: number | Long | null;
+        height?: Long | null;
 
         /** RequestQuery prove */
         prove?: boolean | null;
@@ -2689,7 +2689,7 @@ export namespace tendermint {
         public path: string;
 
         /** RequestQuery height. */
-        public height: number | Long;
+        public height: Long;
 
         /** RequestQuery prove. */
         public prove: boolean;
@@ -2911,7 +2911,7 @@ export namespace tendermint {
       /** Properties of a RequestEndBlock. */
       interface IRequestEndBlock {
         /** RequestEndBlock height */
-        height?: number | Long | null;
+        height?: Long | null;
       }
 
       /** Represents a RequestEndBlock. */
@@ -2923,7 +2923,7 @@ export namespace tendermint {
         constructor(p?: tendermint.abci.types.IRequestEndBlock);
 
         /** RequestEndBlock height. */
-        public height: number | Long;
+        public height: Long;
 
         /**
          * Creates a new RequestEndBlock instance using the specified properties.
@@ -3275,10 +3275,10 @@ export namespace tendermint {
         version?: string | null;
 
         /** ResponseInfo appVersion */
-        appVersion?: number | Long | null;
+        appVersion?: Long | null;
 
         /** ResponseInfo lastBlockHeight */
-        lastBlockHeight?: number | Long | null;
+        lastBlockHeight?: Long | null;
 
         /** ResponseInfo lastBlockAppHash */
         lastBlockAppHash?: Uint8Array | null;
@@ -3299,10 +3299,10 @@ export namespace tendermint {
         public version: string;
 
         /** ResponseInfo appVersion. */
-        public appVersion: number | Long;
+        public appVersion: Long;
 
         /** ResponseInfo lastBlockHeight. */
-        public lastBlockHeight: number | Long;
+        public lastBlockHeight: Long;
 
         /** ResponseInfo lastBlockAppHash. */
         public lastBlockAppHash: Uint8Array;
@@ -3470,7 +3470,7 @@ export namespace tendermint {
         info?: string | null;
 
         /** ResponseQuery index */
-        index?: number | Long | null;
+        index?: Long | null;
 
         /** ResponseQuery key */
         key?: Uint8Array | null;
@@ -3482,7 +3482,7 @@ export namespace tendermint {
         proof?: tendermint.crypto.merkle.IProof | null;
 
         /** ResponseQuery height */
-        height?: number | Long | null;
+        height?: Long | null;
 
         /** ResponseQuery codespace */
         codespace?: string | null;
@@ -3506,7 +3506,7 @@ export namespace tendermint {
         public info: string;
 
         /** ResponseQuery index. */
-        public index: number | Long;
+        public index: Long;
 
         /** ResponseQuery key. */
         public key: Uint8Array;
@@ -3518,7 +3518,7 @@ export namespace tendermint {
         public proof?: tendermint.crypto.merkle.IProof | null;
 
         /** ResponseQuery height. */
-        public height: number | Long;
+        public height: Long;
 
         /** ResponseQuery codespace. */
         public codespace: string;
@@ -3620,10 +3620,10 @@ export namespace tendermint {
         info?: string | null;
 
         /** ResponseCheckTx gasWanted */
-        gasWanted?: number | Long | null;
+        gasWanted?: Long | null;
 
         /** ResponseCheckTx gasUsed */
-        gasUsed?: number | Long | null;
+        gasUsed?: Long | null;
 
         /** ResponseCheckTx events */
         events?: tendermint.abci.types.IEvent[] | null;
@@ -3653,10 +3653,10 @@ export namespace tendermint {
         public info: string;
 
         /** ResponseCheckTx gasWanted. */
-        public gasWanted: number | Long;
+        public gasWanted: Long;
 
         /** ResponseCheckTx gasUsed. */
-        public gasUsed: number | Long;
+        public gasUsed: Long;
 
         /** ResponseCheckTx events. */
         public events: tendermint.abci.types.IEvent[];
@@ -3713,10 +3713,10 @@ export namespace tendermint {
         info?: string | null;
 
         /** ResponseDeliverTx gasWanted */
-        gasWanted?: number | Long | null;
+        gasWanted?: Long | null;
 
         /** ResponseDeliverTx gasUsed */
-        gasUsed?: number | Long | null;
+        gasUsed?: Long | null;
 
         /** ResponseDeliverTx events */
         events?: tendermint.abci.types.IEvent[] | null;
@@ -3746,10 +3746,10 @@ export namespace tendermint {
         public info: string;
 
         /** ResponseDeliverTx gasWanted. */
-        public gasWanted: number | Long;
+        public gasWanted: Long;
 
         /** ResponseDeliverTx gasUsed. */
-        public gasUsed: number | Long;
+        public gasUsed: Long;
 
         /** ResponseDeliverTx events. */
         public events: tendermint.abci.types.IEvent[];
@@ -3971,10 +3971,10 @@ export namespace tendermint {
       /** Properties of a BlockParams. */
       interface IBlockParams {
         /** BlockParams maxBytes */
-        maxBytes?: number | Long | null;
+        maxBytes?: Long | null;
 
         /** BlockParams maxGas */
-        maxGas?: number | Long | null;
+        maxGas?: Long | null;
       }
 
       /** Represents a BlockParams. */
@@ -3986,10 +3986,10 @@ export namespace tendermint {
         constructor(p?: tendermint.abci.types.IBlockParams);
 
         /** BlockParams maxBytes. */
-        public maxBytes: number | Long;
+        public maxBytes: Long;
 
         /** BlockParams maxGas. */
-        public maxGas: number | Long;
+        public maxGas: Long;
 
         /**
          * Creates a new BlockParams instance using the specified properties.
@@ -4022,7 +4022,7 @@ export namespace tendermint {
       /** Properties of an EvidenceParams. */
       interface IEvidenceParams {
         /** EvidenceParams maxAgeNumBlocks */
-        maxAgeNumBlocks?: number | Long | null;
+        maxAgeNumBlocks?: Long | null;
 
         /** EvidenceParams maxAgeDuration */
         maxAgeDuration?: google.protobuf.IDuration | null;
@@ -4037,7 +4037,7 @@ export namespace tendermint {
         constructor(p?: tendermint.abci.types.IEvidenceParams);
 
         /** EvidenceParams maxAgeNumBlocks. */
-        public maxAgeNumBlocks: number | Long;
+        public maxAgeNumBlocks: Long;
 
         /** EvidenceParams maxAgeDuration. */
         public maxAgeDuration?: google.protobuf.IDuration | null;
@@ -4242,7 +4242,7 @@ export namespace tendermint {
         chainId?: string | null;
 
         /** Header height */
-        height?: number | Long | null;
+        height?: Long | null;
 
         /** Header time */
         time?: google.protobuf.ITimestamp | null;
@@ -4293,7 +4293,7 @@ export namespace tendermint {
         public chainId: string;
 
         /** Header height. */
-        public height: number | Long;
+        public height: Long;
 
         /** Header time. */
         public time?: google.protobuf.ITimestamp | null;
@@ -4357,10 +4357,10 @@ export namespace tendermint {
       /** Properties of a Version. */
       interface IVersion {
         /** Version Block */
-        Block?: number | Long | null;
+        Block?: Long | null;
 
         /** Version App */
-        App?: number | Long | null;
+        App?: Long | null;
       }
 
       /** Represents a Version. */
@@ -4372,10 +4372,10 @@ export namespace tendermint {
         constructor(p?: tendermint.abci.types.IVersion);
 
         /** Version Block. */
-        public Block: number | Long;
+        public Block: Long;
 
         /** Version App. */
-        public App: number | Long;
+        public App: Long;
 
         /**
          * Creates a new Version instance using the specified properties.
@@ -4512,7 +4512,7 @@ export namespace tendermint {
         address?: Uint8Array | null;
 
         /** Validator power */
-        power?: number | Long | null;
+        power?: Long | null;
       }
 
       /** Represents a Validator. */
@@ -4527,7 +4527,7 @@ export namespace tendermint {
         public address: Uint8Array;
 
         /** Validator power. */
-        public power: number | Long;
+        public power: Long;
 
         /**
          * Creates a new Validator instance using the specified properties.
@@ -4561,7 +4561,7 @@ export namespace tendermint {
         pubKey?: tendermint.abci.types.IPubKey | null;
 
         /** ValidatorUpdate power */
-        power?: number | Long | null;
+        power?: Long | null;
       }
 
       /** Represents a ValidatorUpdate. */
@@ -4576,7 +4576,7 @@ export namespace tendermint {
         public pubKey?: tendermint.abci.types.IPubKey | null;
 
         /** ValidatorUpdate power. */
-        public power: number | Long;
+        public power: Long;
 
         /**
          * Creates a new ValidatorUpdate instance using the specified properties.
@@ -4719,13 +4719,13 @@ export namespace tendermint {
         validator?: tendermint.abci.types.IValidator | null;
 
         /** Evidence height */
-        height?: number | Long | null;
+        height?: Long | null;
 
         /** Evidence time */
         time?: google.protobuf.ITimestamp | null;
 
         /** Evidence totalVotingPower */
-        totalVotingPower?: number | Long | null;
+        totalVotingPower?: Long | null;
       }
 
       /** Represents an Evidence. */
@@ -4743,13 +4743,13 @@ export namespace tendermint {
         public validator?: tendermint.abci.types.IValidator | null;
 
         /** Evidence height. */
-        public height: number | Long;
+        public height: Long;
 
         /** Evidence time. */
         public time?: google.protobuf.ITimestamp | null;
 
         /** Evidence totalVotingPower. */
-        public totalVotingPower: number | Long;
+        public totalVotingPower: Long;
 
         /**
          * Creates a new Evidence instance using the specified properties.
@@ -5270,7 +5270,7 @@ export namespace tendermint {
         key?: Uint8Array | null;
 
         /** KI64Pair value */
-        value?: number | Long | null;
+        value?: Long | null;
       }
 
       /** Represents a KI64Pair. */
@@ -5285,7 +5285,7 @@ export namespace tendermint {
         public key: Uint8Array;
 
         /** KI64Pair value. */
-        public value: number | Long;
+        public value: Long;
 
         /**
          * Creates a new KI64Pair instance using the specified properties.
@@ -5372,7 +5372,7 @@ export namespace google {
     /** Properties of a Timestamp. */
     interface ITimestamp {
       /** Timestamp seconds */
-      seconds?: number | Long | null;
+      seconds?: Long | null;
 
       /** Timestamp nanos */
       nanos?: number | null;
@@ -5387,7 +5387,7 @@ export namespace google {
       constructor(p?: google.protobuf.ITimestamp);
 
       /** Timestamp seconds. */
-      public seconds: number | Long;
+      public seconds: Long;
 
       /** Timestamp nanos. */
       public nanos: number;
@@ -5421,7 +5421,7 @@ export namespace google {
     /** Properties of a Duration. */
     interface IDuration {
       /** Duration seconds */
-      seconds?: number | Long | null;
+      seconds?: Long | null;
 
       /** Duration nanos */
       nanos?: number | null;
@@ -5436,7 +5436,7 @@ export namespace google {
       constructor(p?: google.protobuf.IDuration);
 
       /** Duration seconds. */
-      public seconds: number | Long;
+      public seconds: Long;
 
       /** Duration nanos. */
       public nanos: number;

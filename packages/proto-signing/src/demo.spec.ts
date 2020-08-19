@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { assert } from "@cosmjs/utils";
+import Long from "long";
 import protobuf from "protobufjs";
 
+import { cosmos, google } from "./codec";
 import reflectionRoot from "./demo";
 import demoJson from "./demo.json";
 import demoProto from "./demo.proto";
-import { cosmos, google } from "./generated/codecimpl";
 
 type MsgDemo = {
   readonly example: string;
@@ -40,7 +41,7 @@ describe("protobuf demo", () => {
     const txBody = TxBody.create({
       messages: [msgSendWrapped],
       memo: "Some memo",
-      timeoutHeight: 9999,
+      timeoutHeight: Long.fromNumber(9999),
       extensionOptions: [],
     });
     const txBodyBytes = TxBody.encode(txBody).finish();
@@ -72,7 +73,7 @@ describe("protobuf demo", () => {
     const txBody = TxBody.create({
       messages: [msgDemoWrapped],
       memo: "Some memo",
-      timeoutHeight: 9999,
+      timeoutHeight: Long.fromNumber(9999),
       extensionOptions: [],
     });
     const txBodyBytes = TxBody.encode(txBody).finish();
@@ -103,7 +104,7 @@ describe("protobuf demo", () => {
     const txBody = TxBody.create({
       messages: [msgDemoWrapped],
       memo: "Some memo",
-      timeoutHeight: 9999,
+      timeoutHeight: Long.fromNumber(9999),
       extensionOptions: [],
     });
     const txBodyBytes = TxBody.encode(txBody).finish();
@@ -133,7 +134,7 @@ describe("protobuf demo", () => {
     const txBody = TxBody.create({
       messages: [msgDemoWrapped],
       memo: "Some memo",
-      timeoutHeight: 9999,
+      timeoutHeight: Long.fromNumber(9999),
       extensionOptions: [],
     });
     const txBodyBytes = TxBody.encode(txBody).finish();

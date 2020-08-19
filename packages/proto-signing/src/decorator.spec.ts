@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { assert } from "@cosmjs/utils";
+import Long from "long";
 import { Message } from "protobufjs";
 
+import { cosmos, google } from "./codec";
 import { cosmosField, registered } from "./decorator";
-import { cosmos, google } from "./generated/codecimpl";
 import { Registry } from "./registry";
 
 const { TxBody } = cosmos.tx;
@@ -72,7 +73,7 @@ describe("decorator demo", () => {
     const txBody = TxBody.create({
       messages: [msgDemoWrapped],
       memo: "Some memo",
-      timeoutHeight: 9999,
+      timeoutHeight: Long.fromNumber(9999),
       extensionOptions: [],
     });
     const txBodyBytes = TxBody.encode(txBody).finish();

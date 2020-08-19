@@ -53,6 +53,7 @@
     "@cosmjs/stream": "^0.22.2",
     "@cosmjs/tendermint-rpc": "^0.22.2",
     "@cosmjs/utils": "^0.22.2",
+    "long": "^4.0.0",
     "protobufjs": "~6.10.0"
   }
 }
