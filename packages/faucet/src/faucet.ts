@@ -60,7 +60,7 @@ export class Faucet {
     // we need one client per sender
     const clients: { [senderAddress: string]: SigningCosmosClient } = {};
     for (const [senderAddress, wallet] of wallets) {
-      clients[senderAddress] = new SigningCosmosClient(
+      clients[senderAddress] = SigningCosmosClient.fromOfflineSigner(
         apiUrl,
         senderAddress,
         wallet,

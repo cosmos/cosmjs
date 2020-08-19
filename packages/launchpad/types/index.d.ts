@@ -87,7 +87,7 @@ export {
   uint64ToString,
 } from "./lcdapi";
 export { isMsgDelegate, isMsgSend, Msg, MsgDelegate, MsgSend } from "./msgs";
-export { OnlineSigner, SignRequest } from "./onlinesigner";
+export { InProcessOnlineSigner, OnlineSigner, SignRequest } from "./onlinesigner";
 export {
   decodeAminoPubkey,
   decodeBech32Pubkey,
