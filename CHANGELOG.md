@@ -20,6 +20,9 @@
 - @cosmjs/faucet: Environmental variable `FAUCET_FEE` renamed to
   `FAUCET_GAS_PRICE` and now only accepts one token. Environmental variable
   `FAUCET_GAS` renamed to `FAUCET_GAS_LIMIT`.
+- @cosmjs/faucet: `/credit` API now accepts either `denom` (base token) or as
+  before `ticker` (unit token). Environmental variables specifying credit
+  amounts now need to use uppercase denom.
 - @cosmjs/launchpad: Rename `FeeTable` type to `CosmosFeeTable` and export a new
   more generic type `FeeTable`.
 - @cosmjs/launchpad: Add new class `GasPrice`, new helper type `GasLimits` and
