@@ -16,25 +16,6 @@ const defaultOptions: Options = {
 
 const defaultFaucetUrl = "https://faucet.demo-10.cosmwasm.com/credit";
 
-const buildFeeTable = (feeToken: string, gasPrice: number): CosmWasmFeeTable => {
-  const calculateFee = (gas: number, denom: string, price: number) => {
-    const amount = Math.floor(gas * price);
-    return {
-      amount: [{ amount: amount.toString(), denom: denom }],
-      gas: gas.toString(),
-    };
-  };
-
-  return {
-    upload: calculateFee(1000000, feeToken, gasPrice),
-    init: calculateFee(500000, feeToken, gasPrice),
-    migrate: calculateFee(500000, feeToken, gasPrice),
-    exec: calculateFee(200000, feeToken, gasPrice),
-    send: calculateFee(80000, feeToken, gasPrice),
-    changeAdmin: calculateFee(80000, feeToken, gasPrice),
-  };
-};
-
 // TODO: hit faucet
 // if (config.faucetUrl) {
 //   const acct = await client.getAccount();
