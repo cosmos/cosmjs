@@ -94,7 +94,7 @@ export class SigningCosmosClient extends CosmosClient {
       msgs: [sendMsg],
       chainId: await this.getChainId(),
       memo: memo,
-      fees: this.fees.send,
+      fee: this.fees.send,
     };
     return this.signer.signAndSubmit(this.senderAddress, request);
   }

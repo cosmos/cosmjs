@@ -2,7 +2,7 @@ import { Coin } from "./coins";
 import { Account, BroadcastTxResult, CosmosClient, GetSequenceResult } from "./cosmosclient";
 import { FeeTable, GasLimits, GasPrice } from "./gas";
 import { BroadcastMode } from "./lcdapi";
-import { Msg } from "./msgs";
+import { OnlineSigner } from "./onlinesigner";
 import { StdFee } from "./types";
 import { OfflineSigner } from "./wallet";
 /**
@@ -19,6 +19,14 @@ export declare class SigningCosmosClient extends CosmosClient {
   readonly senderAddress: string;
   private readonly signer;
   private readonly fees;
+  static fromOfflineSigner(
+    apiUrl: string,
+    senderAddress: string,
+    signer: OfflineSigner,
+    gasPrice?: GasPrice,
+    gasLimits?: Partial<GasLimits<CosmosFeeTable>>,
+    broadcastMode?: BroadcastMode,
+  ): SigningCosmosClient;
   /**
    * Creates a new client with signing capability to interact with a Cosmos SDK blockchain. This is the bigger brother of CosmosClient.
    *
@@ -35,7 +43,7 @@ export declare class SigningCosmosClient extends CosmosClient {
   constructor(
     apiUrl: string,
     senderAddress: string,
-    signer: OfflineSigner,
+    signer: OnlineSigner,
     gasPrice?: GasPrice,
     gasLimits?: Partial<GasLimits<CosmosFeeTable>>,
     broadcastMode?: BroadcastMode,
@@ -47,9 +55,4 @@ export declare class SigningCosmosClient extends CosmosClient {
     transferAmount: readonly Coin[],
     memo?: string,
   ): Promise<BroadcastTxResult>;
-  /**
-   * Gets account number and sequence from the API, creates a sign doc,
-   * creates a single signature, assembles the signed transaction and broadcasts it.
-   */
-  signAndBroadcast(msgs: readonly Msg[], fee: StdFee, memo?: string): Promise<BroadcastTxResult>;
 }

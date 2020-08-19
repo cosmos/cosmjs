@@ -35,7 +35,7 @@ describe("CosmosClient.searchTx", () => {
       const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
       const accounts = await wallet.getAccounts();
       const [{ address: walletAddress }] = accounts;
-      const client = new SigningCosmosClient(wasmd.endpoint, faucet.address, wallet);
+      const client = SigningCosmosClient.fromOfflineSigner(wasmd.endpoint, faucet.address, wallet);
 
       {
         const memo = "Sending more than I can afford";

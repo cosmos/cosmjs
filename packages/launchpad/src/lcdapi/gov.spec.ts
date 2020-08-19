@@ -31,7 +31,7 @@ describe("GovExtension", () => {
   beforeAll(async () => {
     if (wasmdEnabled()) {
       const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
-      const client = new SigningCosmosClient(wasmd.endpoint, faucet.address, wallet);
+      const client = SigningCosmosClient.fromOfflineSigner(wasmd.endpoint, faucet.address, wallet);
 
       const chainId = await client.getChainId();
       const proposalMsg = {

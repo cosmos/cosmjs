@@ -195,7 +195,7 @@ describe("LcdClient", () => {
         const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
         const accounts = await wallet.getAccounts();
         const [{ address: walletAddress }] = accounts;
-        const client = new SigningCosmosClient(wasmd.endpoint, faucet.address, wallet);
+        const client = SigningCosmosClient.fromOfflineSigner(wasmd.endpoint, faucet.address, wallet);
 
         {
           const recipient = makeRandomAddress();
@@ -325,7 +325,7 @@ describe("LcdClient", () => {
     beforeAll(async () => {
       if (wasmdEnabled()) {
         const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
-        const client = new SigningCosmosClient(wasmd.endpoint, faucet.address, wallet);
+        const client = SigningCosmosClient.fromOfflineSigner(wasmd.endpoint, faucet.address, wallet);
 
         const recipient = makeRandomAddress();
         const transferAmount = [
