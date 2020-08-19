@@ -4,130 +4,112 @@
     "auth": {
       "accounts": [
         {
-          "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "account_number": "0",
-          "address": "cosmos1y0x5htdztu0mqvf07gce7py5ftdtdshqsj98td",
-          "pub_key": null,
-          "sequence": "0"
+          "type": "cosmos-sdk/BaseAccount",
+          "value": {
+            "address": "cosmos12gm9sa666hywxu9nzzmp7hyl7a55hvg769w2kz"
+          }
         },
         {
-          "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "account_number": "0",
-          "address": "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
-          "pub_key": null,
-          "sequence": "0"
+          "type": "cosmos-sdk/BaseAccount",
+          "value": {
+            "address": "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6"
+          }
         },
         {
-          "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "account_number": "0",
-          "address": "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
-          "pub_key": null,
-          "sequence": "0"
+          "type": "cosmos-sdk/BaseAccount",
+          "value": {
+            "address": "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5"
+          }
         },
         {
-          "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "account_number": "0",
-          "address": "cosmos1xy4yqngt0nlkdcenxymg8tenrghmek4nmqm28k",
-          "pub_key": null,
-          "sequence": "0"
+          "type": "cosmos-sdk/BaseAccount",
+          "value": {
+            "address": "cosmos1xy4yqngt0nlkdcenxymg8tenrghmek4nmqm28k"
+          }
         },
         {
-          "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "account_number": "0",
-          "address": "cosmos142u9fgcjdlycfcez3lw8x6x5h7rfjlnfhpw2lx",
-          "pub_key": null,
-          "sequence": "0"
+          "type": "cosmos-sdk/BaseAccount",
+          "value": {
+            "address": "cosmos142u9fgcjdlycfcez3lw8x6x5h7rfjlnfhpw2lx"
+          }
         },
         {
-          "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "account_number": "0",
-          "address": "cosmos1hsm76p4ahyhl5yh3ve9ur49r5kemhp2r0dcjvx",
-          "pub_key": null,
-          "sequence": "0"
+          "type": "cosmos-sdk/BaseAccount",
+          "value": {
+            "address": "cosmos1hsm76p4ahyhl5yh3ve9ur49r5kemhp2r0dcjvx"
+          }
         },
         {
-          "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "account_number": "0",
-          "address": "cosmos14qemq0vw6y3gc3u3e0aty2e764u4gs5le3hada",
-          "pub_key": null,
-          "sequence": "0"
+          "type": "cosmos-sdk/BaseAccount",
+          "value": {
+            "address": "cosmos14qemq0vw6y3gc3u3e0aty2e764u4gs5le3hada"
+          }
         },
         {
-          "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "account_number": "0",
-          "address": "cosmos1hhg2rlu9jscacku2wwckws7932qqqu8x3gfgw0",
-          "pub_key": null,
-          "sequence": "0"
+          "type": "cosmos-sdk/BaseAccount",
+          "value": {
+            "address": "cosmos1hhg2rlu9jscacku2wwckws7932qqqu8x3gfgw0"
+          }
         },
         {
-          "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "account_number": "0",
-          "address": "cosmos1xv9tklw7d82sezh9haa573wufgy59vmwe6xxe5",
-          "pub_key": null,
-          "sequence": "0"
+          "type": "cosmos-sdk/BaseAccount",
+          "value": {
+            "address": "cosmos1xv9tklw7d82sezh9haa573wufgy59vmwe6xxe5"
+          }
         },
         {
-          "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "account_number": "0",
-          "address": "cosmos17yg9mssjenmc3jkqth6ulcwj9cxujrxxzezwta",
-          "pub_key": null,
-          "sequence": "0"
+          "type": "cosmos-sdk/BaseAccount",
+          "value": {
+            "address": "cosmos17yg9mssjenmc3jkqth6ulcwj9cxujrxxzezwta"
+          }
         },
         {
-          "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "account_number": "0",
-          "address": "cosmos1f7j7ryulwjfe9ljplvhtcaxa6wqgula3etktce",
-          "pub_key": null,
-          "sequence": "0"
+          "type": "cosmos-sdk/BaseAccount",
+          "value": {
+            "address": "cosmos1f7j7ryulwjfe9ljplvhtcaxa6wqgula3etktce"
+          }
         },
         {
-          "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "account_number": "0",
-          "address": "cosmos1lvrwcvrqlc5ktzp2c4t22xgkx29q3y83lktgzl",
-          "pub_key": null,
-          "sequence": "0"
+          "type": "cosmos-sdk/BaseAccount",
+          "value": {
+            "address": "cosmos1lvrwcvrqlc5ktzp2c4t22xgkx29q3y83lktgzl"
+          }
         },
         {
-          "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "account_number": "0",
-          "address": "cosmos1vkv9sfwaak76weyamqx0flmng2vuquxqcuqukh",
-          "pub_key": null,
-          "sequence": "0"
+          "type": "cosmos-sdk/BaseAccount",
+          "value": {
+            "address": "cosmos1vkv9sfwaak76weyamqx0flmng2vuquxqcuqukh"
+          }
         },
         {
-          "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "account_number": "0",
-          "address": "cosmos106jwym4s9aujcmes26myzzwqsccw09sdm0v5au",
-          "pub_key": null,
-          "sequence": "0"
+          "type": "cosmos-sdk/BaseAccount",
+          "value": {
+            "address": "cosmos106jwym4s9aujcmes26myzzwqsccw09sdm0v5au"
+          }
         },
         {
-          "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "account_number": "0",
-          "address": "cosmos1c7wpeen2uv8thayf7g8q2rgpm29clj0dgrdtzw",
-          "pub_key": null,
-          "sequence": "0"
+          "type": "cosmos-sdk/BaseAccount",
+          "value": {
+            "address": "cosmos1c7wpeen2uv8thayf7g8q2rgpm29clj0dgrdtzw"
+          }
         },
         {
-          "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "account_number": "0",
-          "address": "cosmos1mjxpv9ft30wer7ma7kwfxhm42l379xutplrdk6",
-          "pub_key": null,
-          "sequence": "0"
+          "type": "cosmos-sdk/BaseAccount",
+          "value": {
+            "address": "cosmos1mjxpv9ft30wer7ma7kwfxhm42l379xutplrdk6"
+          }
         },
         {
-          "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "account_number": "0",
-          "address": "cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u",
-          "pub_key": null,
-          "sequence": "0"
+          "type": "cosmos-sdk/BaseAccount",
+          "value": {
+            "address": "cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u"
+          }
         },
         {
-          "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "account_number": "0",
-          "address": "cosmos17d0jcz59jf68g52vq38tuuncmwwjk42u6mcxej",
-          "pub_key": null,
-          "sequence": "0"
+          "type": "cosmos-sdk/BaseAccount",
+          "value": {
+            "address": "cosmos17d0jcz59jf68g52vq38tuuncmwwjk42u6mcxej"
+          }
         }
       ],
       "params": {
@@ -154,19 +136,6 @@
           ]
         },
         {
-          "address": "cosmos1y0x5htdztu0mqvf07gce7py5ftdtdshqsj98td",
-          "coins": [
-            {
-              "amount": "1000000000",
-              "denom": "ucosm"
-            },
-            {
-              "amount": "10000000",
-              "denom": "ustake"
-            }
-          ]
-        },
-        {
           "address": "cosmos1xy4yqngt0nlkdcenxymg8tenrghmek4nmqm28k",
           "coins": [
             {
@@ -194,6 +163,19 @@
         },
         {
           "address": "cosmos1f7j7ryulwjfe9ljplvhtcaxa6wqgula3etktce",
+          "coins": [
+            {
+              "amount": "1000000000",
+              "denom": "ucosm"
+            },
+            {
+              "amount": "10000000",
+              "denom": "ustake"
+            }
+          ]
+        },
+        {
+          "address": "cosmos12gm9sa666hywxu9nzzmp7hyl7a55hvg769w2kz",
           "coins": [
             {
               "amount": "1000000000",
@@ -375,10 +357,9 @@
           ]
         }
       ],
-      "denom_metadata": [],
+      "denom_metadata": null,
       "params": {
-        "default_send_enabled": true,
-        "send_enabled": []
+        "default_send_enabled": true
       },
       "supply": []
     },
@@ -405,21 +386,17 @@
         "community_tax": "0.020000000000000000",
         "withdraw_addr_enabled": true
       },
-      "previous_proposer": "",
       "validator_accumulated_commissions": [],
       "validator_current_rewards": [],
       "validator_historical_rewards": [],
       "validator_slash_events": []
     },
-    "evidence": {
-      "evidence": []
-    },
+    "evidence": {},
     "genutil": {
-      "gen_txs": [
+      "gentxs": [
         {
           "auth_info": {
             "fee": {
-              "amount": [],
               "gas_limit": "200000"
             },
             "signer_infos": [
@@ -430,51 +407,44 @@
                   }
                 },
                 "public_key": {
-                  "secp256k1": "AyPPyeWut6nM6Y1ExTMTcKiwQRBeoCTDQ8kGa80OiIYP"
+                  "secp256k1": "AnFadRAdh6Fl7robHe8jywDMKSWQQjB7SlpoqGsX9Ghw"
                 }
               }
             ]
           },
           "body": {
-            "extension_options": [],
-            "memo": "bb1f03e4071193dddb3de1fef3aebd0be9c5e642@172.17.0.2:26656",
+            "memo": "b02715f69ce88507acaa543f7de0d3f7e6cd20f8@172.17.0.2:26656",
             "messages": [
               {
-                "@type": "/cosmos.staking.v1beta1.MsgCreateValidator",
+                "@type": "/cosmos.staking.MsgCreateValidator",
                 "commission": {
                   "max_change_rate": "0.010000000000000000",
                   "max_rate": "0.200000000000000000",
                   "rate": "0.100000000000000000"
                 },
-                "delegator_address": "cosmos1y0x5htdztu0mqvf07gce7py5ftdtdshqsj98td",
+                "delegator_address": "cosmos12gm9sa666hywxu9nzzmp7hyl7a55hvg769w2kz",
                 "description": {
-                  "details": "",
-                  "identity": "",
-                  "moniker": "simd-moniker",
-                  "security_contact": "",
-                  "website": ""
+                  "moniker": "simd-moniker"
                 },
                 "min_self_delegation": "1",
-                "pubkey": "cosmosvalconspub1zcjduepq4llddlcql6kfzr0fw75pe4t7g73vk204ckdvx89p03u4v43tu0ps5v94rc",
-                "validator_address": "cosmosvaloper1y0x5htdztu0mqvf07gce7py5ftdtdshq4x3j87",
+                "pubkey": "cosmosvalconspub1zcjduepqcf6dt4wct4uk93lu0nc4vp8x8le8tqfe3wcmys53jn6lfa3fqvwsqktz95",
+                "validator_address": "cosmosvaloper12gm9sa666hywxu9nzzmp7hyl7a55hvg7l36l63",
                 "value": {
                   "amount": "3000000",
                   "denom": "ustake"
                 }
               }
-            ],
-            "non_critical_extension_options": [],
-            "timeout_height": "0"
+            ]
           },
           "signatures": [
-            "SyA3XyaB3L4mtl0p0H68NklwwptXfIh7ke5Ou8MgbQI1bbz15b7zRDJVbbJSCMy9kRohFDeBoXaMAuqUVJTGSA=="
+            "VdidVRYryEAL1v3bMIyHpwswMVSPJncCoC+7+VJdKwR5e8ymOeY+qG7q0QVcWj2x1Z72fw5O5w58anw9msnmzg=="
           ]
         }
       ]
     },
     "gov": {
       "deposit_params": {
-        "max_deposit_period": "172800s",
+        "max_deposit_period": "172800000000000",
         "min_deposit": [
           {
             "amount": "10000000",
@@ -482,17 +452,17 @@
           }
         ]
       },
-      "deposits": [],
-      "proposals": [],
+      "deposits": null,
+      "proposals": null,
       "starting_proposal_id": "1",
       "tally_params": {
         "quorum": "0.334000000000000000",
         "threshold": "0.500000000000000000",
-        "veto_threshold": "0.334000000000000000"
+        "veto": "0.334000000000000000"
       },
-      "votes": [],
+      "votes": null,
       "voting_params": {
-        "voting_period": "172800s"
+        "voting_period": "172800000000000"
       }
     },
     "ibc": {
@@ -501,63 +471,65 @@
           {
             "client_id": "client0Fortestchain0",
             "client_state": {
-              "@type": "/ibc.tendermint.ClientState",
-              "chain_id": "testchain0",
-              "trust_level": {
-                "numerator": "1",
-                "denominator": "3"
-              },
-              "trusting_period": "1209600s",
-              "unbonding_period": "1814400s",
-              "max_clock_drift": "10s",
-              "frozen_height": "0",
-              "latest_height": "27",
-              "proof_specs": [
-                {
-                  "leaf_spec": {
-                    "hash": "SHA256",
-                    "prehash_key": "NO_HASH",
-                    "prehash_value": "SHA256",
-                    "length": "VAR_PROTO",
-                    "prefix": "AA=="
-                  },
-                  "inner_spec": {
-                    "child_order": [
-                      0,
-                      1
-                    ],
-                    "child_size": 33,
-                    "min_prefix_length": 4,
-                    "max_prefix_length": 12,
-                    "empty_child": null,
-                    "hash": "SHA256"
-                  },
-                  "max_depth": 0,
-                  "min_depth": 0
+              "type": "ibc/client/tendermint/ClientState",
+              "value": {
+                "chain_id": "testchain0",
+                "trust_level": {
+                  "numerator": "1",
+                  "denominator": "3"
                 },
-                {
-                  "leaf_spec": {
-                    "hash": "SHA256",
-                    "prehash_key": "NO_HASH",
-                    "prehash_value": "SHA256",
-                    "length": "VAR_PROTO",
-                    "prefix": "AA=="
+                "trusting_period": "1209600",
+                "unbonding_period": "1814400",
+                "max_clock_drift": "10",
+                "frozen_height": "0",
+                "latest_height": "27",
+                "proof_specs": [
+                  {
+                    "leaf_spec": {
+                      "hash": 1,
+                      "prehash_key": 0,
+                      "prehash_value": 1,
+                      "length": 1,
+                      "prefix": "AA=="
+                    },
+                    "inner_spec": {
+                      "child_order": [
+                        0,
+                        1
+                      ],
+                      "child_size": 33,
+                      "min_prefix_length": 4,
+                      "max_prefix_length": 12,
+                      "empty_child": null,
+                      "hash": 1
+                    },
+                    "max_depth": 0,
+                    "min_depth": 0
                   },
-                  "inner_spec": {
-                    "child_order": [
-                      0,
-                      1
-                    ],
-                    "child_size": 32,
-                    "min_prefix_length": 1,
-                    "max_prefix_length": 1,
-                    "empty_child": null,
-                    "hash": "SHA256"
-                  },
-                  "max_depth": 0,
-                  "min_depth": 0
-                }
-              ]
+                  {
+                    "leaf_spec": {
+                      "hash": 1,
+                      "prehash_key": 0,
+                      "prehash_value": 1,
+                      "length": 1,
+                      "prefix": "AA=="
+                    },
+                    "inner_spec": {
+                      "child_order": [
+                        0,
+                        1
+                      ],
+                      "child_size": 32,
+                      "min_prefix_length": 1,
+                      "max_prefix_length": 1,
+                      "empty_child": null,
+                      "hash": 1
+                    },
+                    "max_depth": 0,
+                    "min_depth": 0
+                  }
+                ]
+              }
             }
           }
         ],
@@ -566,67 +538,81 @@
             "client_id": "client0Fortestchain0",
             "consensus_states": [
               {
-                "@type": "/ibc.tendermint.ConsensusState",
-                "timestamp": "2020-01-02T00:00:55Z",
-                "root": {
-                  "hash": "Sikh0Cw/kx5oFBzh36HZ+ATEf6fgAL4gFZMzGHtt6IU="
-                },
-                "height": "10",
-                "next_validators_hash": "B50386DCF6A583AE6E8E7F75C811209469501042FA57AE76AA16E23D05871908"
+                "type": "ibc/client/tendermint/ConsensusState",
+                "value": {
+                  "timestamp": "2020-01-02T00:00:55Z",
+                  "root": {
+                    "hash": "Sikh0Cw/kx5oFBzh36HZ+ATEf6fgAL4gFZMzGHtt6IU="
+                  },
+                  "height": "10",
+                  "next_validators_hash": "B50386DCF6A583AE6E8E7F75C811209469501042FA57AE76AA16E23D05871908"
+                }
               },
               {
-                "@type": "/ibc.tendermint.ConsensusState",
-                "timestamp": "2020-01-02T00:01:30Z",
-                "root": {
-                  "hash": "uMhaAYkxG2DR/IW0iS29+lUwn1M2Fe+J0MJ0/jBphSA="
-                },
-                "height": "15",
-                "next_validators_hash": "B50386DCF6A583AE6E8E7F75C811209469501042FA57AE76AA16E23D05871908"
+                "type": "ibc/client/tendermint/ConsensusState",
+                "value": {
+                  "timestamp": "2020-01-02T00:01:30Z",
+                  "root": {
+                    "hash": "uMhaAYkxG2DR/IW0iS29+lUwn1M2Fe+J0MJ0/jBphSA="
+                  },
+                  "height": "15",
+                  "next_validators_hash": "B50386DCF6A583AE6E8E7F75C811209469501042FA57AE76AA16E23D05871908"
+                }
               },
               {
-                "@type": "/ibc.tendermint.ConsensusState",
-                "timestamp": "2020-01-02T00:02:00Z",
-                "root": {
-                  "hash": "GzNp55pCrWzCl0tfZDMwjcdMwMruyYmFDDD6iNPMcck="
-                },
-                "height": "19",
-                "next_validators_hash": "B50386DCF6A583AE6E8E7F75C811209469501042FA57AE76AA16E23D05871908"
+                "type": "ibc/client/tendermint/ConsensusState",
+                "value": {
+                  "timestamp": "2020-01-02T00:02:00Z",
+                  "root": {
+                    "hash": "GzNp55pCrWzCl0tfZDMwjcdMwMruyYmFDDD6iNPMcck="
+                  },
+                  "height": "19",
+                  "next_validators_hash": "B50386DCF6A583AE6E8E7F75C811209469501042FA57AE76AA16E23D05871908"
+                }
               },
               {
-                "@type": "/ibc.tendermint.ConsensusState",
-                "timestamp": "2020-01-02T00:02:30Z",
-                "root": {
-                  "hash": "dRw9P2cNl5fdSGWQYDWUR0RJwGBz8jhJALAbbnkNz2M="
-                },
-                "height": "23",
-                "next_validators_hash": "B50386DCF6A583AE6E8E7F75C811209469501042FA57AE76AA16E23D05871908"
+                "type": "ibc/client/tendermint/ConsensusState",
+                "value": {
+                  "timestamp": "2020-01-02T00:02:30Z",
+                  "root": {
+                    "hash": "dRw9P2cNl5fdSGWQYDWUR0RJwGBz8jhJALAbbnkNz2M="
+                  },
+                  "height": "23",
+                  "next_validators_hash": "B50386DCF6A583AE6E8E7F75C811209469501042FA57AE76AA16E23D05871908"
+                }
               },
               {
-                "@type": "/ibc.tendermint.ConsensusState",
-                "timestamp": "2020-01-02T00:03:00Z",
-                "root": {
-                  "hash": "J+KbDixY+VK8M4Z8xqLxoS/YpAXRmieANmxs6z4LWx8="
-                },
-                "height": "27",
-                "next_validators_hash": "B50386DCF6A583AE6E8E7F75C811209469501042FA57AE76AA16E23D05871908"
+                "type": "ibc/client/tendermint/ConsensusState",
+                "value": {
+                  "timestamp": "2020-01-02T00:03:00Z",
+                  "root": {
+                    "hash": "J+KbDixY+VK8M4Z8xqLxoS/YpAXRmieANmxs6z4LWx8="
+                  },
+                  "height": "27",
+                  "next_validators_hash": "B50386DCF6A583AE6E8E7F75C811209469501042FA57AE76AA16E23D05871908"
+                }
               },
               {
-                "@type": "/ibc.tendermint.ConsensusState",
-                "timestamp": "2020-01-02T00:00:10Z",
-                "root": {
-                  "hash": "dq78esoXT0fKeH4pftuMiQaWApOxypxkFxEW9F+/EEU="
-                },
-                "height": "4",
-                "next_validators_hash": "B50386DCF6A583AE6E8E7F75C811209469501042FA57AE76AA16E23D05871908"
+                "type": "ibc/client/tendermint/ConsensusState",
+                "value": {
+                  "timestamp": "2020-01-02T00:00:10Z",
+                  "root": {
+                    "hash": "dq78esoXT0fKeH4pftuMiQaWApOxypxkFxEW9F+/EEU="
+                  },
+                  "height": "4",
+                  "next_validators_hash": "B50386DCF6A583AE6E8E7F75C811209469501042FA57AE76AA16E23D05871908"
+                }
               },
               {
-                "@type": "/ibc.tendermint.ConsensusState",
-                "timestamp": "2020-01-02T00:00:25Z",
-                "root": {
-                  "hash": "nFsKYJjgyD+QYx3Wir++wDZ6sFzbt47Ie2dGYRXep18="
-                },
-                "height": "6",
-                "next_validators_hash": "B50386DCF6A583AE6E8E7F75C811209469501042FA57AE76AA16E23D05871908"
+                "type": "ibc/client/tendermint/ConsensusState",
+                "value": {
+                  "timestamp": "2020-01-02T00:00:25Z",
+                  "root": {
+                    "hash": "nFsKYJjgyD+QYx3Wir++wDZ6sFzbt47Ie2dGYRXep18="
+                  },
+                  "height": "6",
+                  "next_validators_hash": "B50386DCF6A583AE6E8E7F75C811209469501042FA57AE76AA16E23D05871908"
+                }
               }
             ]
           }
@@ -641,7 +627,7 @@
             "versions": [
               "\n\u00011\u0012\rORDER_ORDERED\u0012\u000fORDER_UNORDERED"
             ],
-            "state": "STATE_OPEN",
+            "state": 3,
             "counterparty": {
               "client_id": "client0Fortestchain1",
               "connection_id": "connectionid0",
@@ -663,8 +649,8 @@
       "channel_genesis": {
         "channels": [
           {
-            "state": "STATE_OPEN",
-            "ordering": "ORDER_UNORDERED",
+            "state": 3,
+            "ordering": 1,
             "counterparty": {
               "port_id": "transfer",
               "channel_id": "connectionid00"
@@ -727,7 +713,7 @@
     "slashing": {
       "missed_blocks": [],
       "params": {
-        "downtime_jail_duration": "600s",
+        "downtime_jail_duration": "600000000000",
         "min_signed_per_window": "0.500000000000000000",
         "signed_blocks_window": "100",
         "slash_fraction_double_sign": "0.050000000000000000",
@@ -736,27 +722,21 @@
       "signing_infos": []
     },
     "staking": {
-      "delegations": [],
-      "exported": false,
+      "delegations": null,
       "last_total_power": "0",
-      "last_validator_powers": [],
+      "last_validator_powers": null,
       "params": {
         "bond_denom": "ustake",
         "historical_entries": 100,
         "max_entries": 7,
         "max_validators": 100,
-        "unbonding_time": "1814400s"
+        "unbonding_time": "1814400000000000"
       },
-      "redelegations": [],
-      "unbonding_delegations": [],
-      "validators": []
+      "redelegations": null,
+      "unbonding_delegations": null,
+      "validators": null
     },
     "transfer": {
-      "denom_traces": [],
-      "params": {
-        "receive_enabled": true,
-        "send_enabled": true
-      },
       "port_id": "transfer"
     },
     "upgrade": {}
@@ -770,17 +750,13 @@
     },
     "evidence": {
       "max_age_duration": "172800000000000",
-      "max_age_num_blocks": "100000",
-      "max_num": 50,
-      "proof_trial_period": "50000"
+      "max_age_num_blocks": "100000"
     },
     "validator": {
       "pub_key_types": [
         "ed25519"
       ]
-    },
-    "version": {}
+    }
   },
-  "genesis_time": "2020-08-19T11:10:49.4480214Z",
-  "initial_height": "1"
+  "genesis_time": "2020-08-10T04:34:53.3772058Z"
 }
