@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { fromHex } from "@cosmjs/encoding";
 
-import { cosmos } from "./generated/codecimpl";
+import { cosmos } from "./codec";
 import { Coin, MsgSend } from "./msgs";
 
 describe("msgs", () => {

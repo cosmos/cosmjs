@@ -2,10 +2,10 @@
 import { assert } from "@cosmjs/utils";
 import protobuf from "protobufjs";
 
+import { cosmos, google } from "./codec";
 import reflectionRoot from "./demo";
 import demoJson from "./demo.json";
 import demoProto from "./demo.proto";
-import { cosmos, google } from "./generated/codecimpl";
 
 type MsgDemo = {
   readonly example: string;

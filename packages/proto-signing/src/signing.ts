@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { omitDefaults } from "./adr27";
-import { cosmos } from "./generated/codecimpl";
+import { cosmos } from "./codec";
 
 const { SignDoc } = cosmos.tx;
 

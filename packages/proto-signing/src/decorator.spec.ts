@@ -2,8 +2,8 @@
 import { assert } from "@cosmjs/utils";
 import { Message } from "protobufjs";
 
+import { cosmos, google } from "./codec";
 import { cosmosField, registered } from "./decorator";
-import { cosmos, google } from "./generated/codecimpl";
 import { Registry } from "./registry";
 
 const { TxBody } = cosmos.tx;

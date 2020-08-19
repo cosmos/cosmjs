@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { assert } from "@cosmjs/utils";
 
+import { cosmos, google } from "./codec";
 import { MsgDemo as MsgDemoType } from "./demo";
-import { cosmos, google } from "./generated/codecimpl";
 import { Registry } from "./registry";
 
 const { TxBody } = cosmos.tx;

@@ -1,5 +1,5 @@
 import protobuf from "protobufjs";
-import { cosmos, google } from "./generated/codecimpl";
+import { cosmos, google } from "./codec";
 export interface GeneratedType {
   readonly create: (properties?: { [k: string]: any }) => any;
   readonly encode: (

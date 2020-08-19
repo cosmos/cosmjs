@@ -2,7 +2,7 @@
 import { Bech32, fromBase64, fromHex, toHex } from "@cosmjs/encoding";
 import { Secp256k1Wallet } from "@cosmjs/launchpad";
 
-import { cosmos } from "./generated/codecimpl";
+import { cosmos } from "./codec";
 import { defaultRegistry } from "./msgs";
 import { Registry, TxBodyValue } from "./registry";
 import { makeSignBytes } from "./signing";
