@@ -102,6 +102,7 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
         "BroadcastTxResult",
         "Coin",
         "CosmosClient",
+        "GasLimits",
         "GasPrice",
         "Msg",
         "MsgDelegate",
