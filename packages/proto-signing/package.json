@@ -46,6 +46,7 @@
     "postdefine-proto": "prettier --write \"src/codec/generated/codecimpl.*\""
   },
   "dependencies": {
+    "long": "^4.0.0",
     "protobufjs": "~6.10.0"
   },
   "devDependencies": {
