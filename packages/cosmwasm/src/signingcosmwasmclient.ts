@@ -10,13 +10,13 @@ import {
   CosmosFeeTable,
   GasLimits,
   GasPrice,
+  InProcessOnlineSigner,
   isBroadcastTxFailure,
-  makeSignBytes,
   Msg,
   MsgSend,
   OfflineSigner,
+  OnlineSigner,
   StdFee,
-  StdTx,
 } from "@cosmjs/launchpad";
 import { Uint53 } from "@cosmjs/math";
 import pako from "pako";
@@ -151,8 +151,20 @@ export interface PrivateSigningCosmWasmClient {
 export class SigningCosmWasmClient extends CosmWasmClient {
   public readonly senderAddress: string;
 
-  private readonly signer: OfflineSigner;
+  private readonly signer: OnlineSigner;
   private readonly fees: CosmWasmFeeTable;
+
+  public static fromOfflineSigner(
+    apiUrl: string,
+    senderAddress: string,
+    signer: OfflineSigner,
+    gasPrice: GasPrice = defaultGasPrice,
+    gasLimits: Partial<GasLimits<CosmosFeeTable>> = {},
+    broadcastMode = BroadcastMode.Block,
+  ): SigningCosmWasmClient {
+    const online = new InProcessOnlineSigner(signer, apiUrl, broadcastMode);
+    return new SigningCosmWasmClient(apiUrl, senderAddress, online, gasPrice, gasLimits, broadcastMode);
+  }
 
   /**
    * Creates a new client with signing capability to interact with a CosmWasm blockchain. This is the bigger brother of CosmWasmClient.
@@ -170,7 +182,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   public constructor(
     apiUrl: string,
     senderAddress: string,
-    signer: OfflineSigner,
+    signer: OnlineSigner,
     gasPrice: GasPrice = defaultGasPrice,
     gasLimits: Partial<GasLimits<CosmWasmFeeTable>> = {},
     broadcastMode = BroadcastMode.Block,
@@ -357,17 +369,13 @@ export class SigningCosmWasmClient extends CosmWasmClient {
    * Gets account number and sequence from the API, creates a sign doc,
    * creates a single signature, assembles the signed transaction and broadcasts it.
    */
-  public async signAndBroadcast(msgs: readonly Msg[], fee: StdFee, memo = ""): Promise<BroadcastTxResult> {
-    const { accountNumber, sequence } = await this.getSequence();
-    const chainId = await this.getChainId();
-    const signBytes = makeSignBytes(msgs, fee, chainId, memo, accountNumber, sequence);
-    const signature = await this.signer.sign(this.senderAddress, signBytes);
-    const signedTx: StdTx = {
-      msg: msgs,
-      fee: fee,
+  public async signAndBroadcast(msgs: readonly Msg[], fee?: StdFee, memo = ""): Promise<BroadcastTxResult> {
+    const request = {
+      msgs: msgs,
+      chainId: await this.getChainId(),
       memo: memo,
-      signatures: [signature],
+      fee: fee,
     };
-    return this.broadcastTx(signedTx);
+    return this.signer.signAndBroadcast(this.senderAddress, request);
   }
 }

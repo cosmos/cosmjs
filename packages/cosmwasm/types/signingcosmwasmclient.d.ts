@@ -7,6 +7,7 @@ import {
   GasPrice,
   Msg,
   OfflineSigner,
+  OnlineSigner,
   StdFee,
 } from "@cosmjs/launchpad";
 import { Account, CosmWasmClient, GetSequenceResult } from "./cosmwasmclient";
@@ -98,6 +99,14 @@ export declare class SigningCosmWasmClient extends CosmWasmClient {
   readonly senderAddress: string;
   private readonly signer;
   private readonly fees;
+  static fromOfflineSigner(
+    apiUrl: string,
+    senderAddress: string,
+    signer: OfflineSigner,
+    gasPrice?: GasPrice,
+    gasLimits?: Partial<GasLimits<CosmosFeeTable>>,
+    broadcastMode?: BroadcastMode,
+  ): SigningCosmWasmClient;
   /**
    * Creates a new client with signing capability to interact with a CosmWasm blockchain. This is the bigger brother of CosmWasmClient.
    *
@@ -114,7 +123,7 @@ export declare class SigningCosmWasmClient extends CosmWasmClient {
   constructor(
     apiUrl: string,
     senderAddress: string,
-    signer: OfflineSigner,
+    signer: OnlineSigner,
     gasPrice?: GasPrice,
     gasLimits?: Partial<GasLimits<CosmWasmFeeTable>>,
     broadcastMode?: BroadcastMode,
@@ -152,5 +161,5 @@ export declare class SigningCosmWasmClient extends CosmWasmClient {
    * Gets account number and sequence from the API, creates a sign doc,
    * creates a single signature, assembles the signed transaction and broadcasts it.
    */
-  signAndBroadcast(msgs: readonly Msg[], fee: StdFee, memo?: string): Promise<BroadcastTxResult>;
+  signAndBroadcast(msgs: readonly Msg[], fee?: StdFee, memo?: string): Promise<BroadcastTxResult>;
 }

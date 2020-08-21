@@ -372,7 +372,7 @@ describe("CosmWasmClient", () => {
       if (wasmdEnabled()) {
         pendingWithoutWasmd();
         const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
-        const client = new SigningCosmWasmClient(wasmd.endpoint, alice.address0, wallet);
+        const client = SigningCosmWasmClient.fromOfflineSigner(wasmd.endpoint, alice.address0, wallet);
         const { codeId } = await client.upload(getHackatom().data);
         const initMsg = { verifier: makeRandomAddress(), beneficiary: makeRandomAddress() };
         const { contractAddress } = await client.instantiate(codeId, initMsg, "random hackatom");
@@ -423,7 +423,7 @@ describe("CosmWasmClient", () => {
       if (wasmdEnabled()) {
         pendingWithoutWasmd();
         const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
-        const client = new SigningCosmWasmClient(wasmd.endpoint, alice.address0, wallet);
+        const client = SigningCosmWasmClient.fromOfflineSigner(wasmd.endpoint, alice.address0, wallet);
         const { codeId } = await client.upload(getHackatom().data);
         const initMsg = { verifier: makeRandomAddress(), beneficiary: makeRandomAddress() };
         const { contractAddress } = await client.instantiate(codeId, initMsg, "a different hackatom");
