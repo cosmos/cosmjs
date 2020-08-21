@@ -84,7 +84,7 @@ export class InProcessOnlineSigner implements OnlineSigner {
     // never overridden
     const { msgs, chainId } = request;
     const memo = request.memo || "";
-    const {accountNumber, sequence} = await this.getSequence(address);
+    const { accountNumber, sequence } = await this.getSequence(address);
 
     // set fee if not set (TODO properly)
     const { fee } = request;
