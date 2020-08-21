@@ -19,7 +19,7 @@ const faucet = {
 
 async function main() {
   const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
-  const client = new SigningCosmosClient(httpUrl, faucet.address0, wallet);
+  const client = SigningCosmosClient.fromOfflineSigner(httpUrl, faucet.address0, wallet);
   const recipient = Bech32.encode("cosmos", Random.getBytes(20));
   const amount = coins(226644, "ucosm");
   const memo = "Ensure chain has my pubkey";

@@ -135,7 +135,7 @@ const initDataJade = {
 
 async function main() {
   const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
-  const client = new SigningCosmWasmClient(httpUrl, alice.address0, wallet);
+  const client = SigningCosmWasmClient.fromOfflineSigner(httpUrl, alice.address0, wallet);
 
   const wasm = fs.readFileSync(__dirname + "/contracts/cw-erc20.wasm");
   const uploadReceipt = await client.upload(wasm, codeMeta, "Upload ERC20 contract");
