@@ -6,9 +6,7 @@ import { AccountData, OfflineSigner } from "./wallet";
 export interface SignRequest {
   readonly msgs: readonly Msg[];
   readonly chainId: string;
-  readonly accountNumber?: string;
   readonly fee?: StdFee;
-  readonly sequence?: string;
   readonly memo?: string;
 }
 /**
