@@ -2,6 +2,7 @@ import { Coin } from "./coins";
 import { Account, BroadcastTxResult, CosmosClient, GetSequenceResult } from "./cosmosclient";
 import { FeeTable, GasLimits, GasPrice } from "./gas";
 import { BroadcastMode } from "./lcdapi";
+import { Msg } from "./msgs";
 import { OnlineSigner } from "./onlinesigner";
 import { StdFee } from "./types";
 import { OfflineSigner } from "./wallet";
@@ -55,4 +56,5 @@ export declare class SigningCosmosClient extends CosmosClient {
     transferAmount: readonly Coin[],
     memo?: string,
   ): Promise<BroadcastTxResult>;
+  signAndBroadcast(msgs: readonly Msg[], fee?: StdFee, memo?: string): Promise<BroadcastTxResult>;
 }

@@ -27,7 +27,7 @@ export interface OnlineSigner {
    * Will submit to the blockchain and return the BroadcastTxResult (even when rejected by the chain)
    * Promise will only error on network connectivity issues, not on rejected tx.
    */
-  readonly signAndSubmit: (address: string, request: SignRequest) => Promise<BroadcastTxResult>;
+  readonly signAndBroadcast: (address: string, request: SignRequest) => Promise<BroadcastTxResult>;
 }
 export declare class InProcessOnlineSigner implements OnlineSigner {
   protected readonly signer: OfflineSigner;
@@ -44,7 +44,7 @@ export declare class InProcessOnlineSigner implements OnlineSigner {
   constructor(signer: OfflineSigner, apiUrl: string, broadcastMode?: BroadcastMode);
   enable(): Promise<boolean>;
   getAccounts(): Promise<readonly AccountData[]>;
-  signAndSubmit(address: string, request: SignRequest): Promise<BroadcastTxResult>;
+  signAndBroadcast(address: string, request: SignRequest): Promise<BroadcastTxResult>;
   private broadcastTx;
   private getSequence;
 }

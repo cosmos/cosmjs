@@ -3,7 +3,7 @@ import { Coin } from "./coins";
 import { Account, BroadcastTxResult, CosmosClient, GetSequenceResult } from "./cosmosclient";
 import { buildFeeTable, FeeTable, GasLimits, GasPrice } from "./gas";
 import { BroadcastMode } from "./lcdapi";
-import { MsgSend } from "./msgs";
+import { Msg, MsgSend } from "./msgs";
 import { InProcessOnlineSigner, OnlineSigner } from "./onlinesigner";
 import { StdFee } from "./types";
 import { OfflineSigner } from "./wallet";
@@ -90,12 +90,16 @@ export class SigningCosmosClient extends CosmosClient {
         amount: transferAmount,
       },
     };
+    return this.signAndBroadcast([sendMsg], this.fees.send, memo);
+  }
+
+  public async signAndBroadcast(msgs: readonly Msg[], fee?: StdFee, memo = ""): Promise<BroadcastTxResult> {
     const request = {
-      msgs: [sendMsg],
+      msgs: msgs,
       chainId: await this.getChainId(),
       memo: memo,
-      fee: this.fees.send,
+      fee: fee,
     };
-    return this.signer.signAndSubmit(this.senderAddress, request);
+    return this.signer.signAndBroadcast(this.senderAddress, request);
   }
 }

@@ -9,12 +9,12 @@ import {
   Coin,
   coin,
   coins,
-  InProcessOnlineSigner,
   LcdClient,
   makeSignBytes,
   OfflineSigner,
   Secp256k1Wallet,
   setupAuthExtension,
+  SigningCosmosClient,
   StdFee,
 } from "@cosmjs/launchpad";
 import { assert } from "@cosmjs/utils";
@@ -69,13 +69,8 @@ async function uploadContract(
   };
 
   const firstAddress = (await signer.getAccounts())[0].address;
-  const online = new InProcessOnlineSigner(signer, wasmd.endpoint);
-  return online.signAndSubmit(firstAddress, {
-    msgs: [theMsg],
-    fee: fee,
-    memo: memo,
-    chainId: wasmd.chainId,
-  });
+  const client = SigningCosmosClient.fromOfflineSigner(wasmd.endpoint, firstAddress, signer);
+  return client.signAndBroadcast([theMsg], fee, memo);
 }
 
 async function instantiateContract(
@@ -104,13 +99,8 @@ async function instantiateContract(
   };
 
   const firstAddress = (await signer.getAccounts())[0].address;
-  const online = new InProcessOnlineSigner(signer, wasmd.endpoint);
-  return online.signAndSubmit(firstAddress, {
-    msgs: [theMsg],
-    fee: fee,
-    memo: memo,
-    chainId: wasmd.chainId,
-  });
+  const client = SigningCosmosClient.fromOfflineSigner(wasmd.endpoint, firstAddress, signer);
+  return client.signAndBroadcast([theMsg], fee, memo);
 }
 
 async function executeContract(
