@@ -36,7 +36,7 @@ const connect = async (
   const wallet = await Secp256k1Wallet.fromMnemonic(mnemonic);
   const [{ address }] = await wallet.getAccounts();
 
-  const client = new SigningCosmWasmClient(options.httpUrl, address, wallet, gasPrice);
+  const client = SigningCosmWasmClient.fromOfflineSigner(options.httpUrl, address, wallet, gasPrice);
   return { client, address };
 };
 
