@@ -2,6 +2,14 @@ import { ibc } from "../codec";
 import { QueryClient } from "./queryclient";
 export interface IbcExtension {
   readonly ibc: {
+    readonly channel: (portId: string, channelId: string) => Promise<ibc.channel.IChannel | null>;
+    readonly packetCommitment: (portId: string, channelId: string, sequence: number) => Promise<Uint8Array>;
+    readonly packetAcknowledgement: (
+      portId: string,
+      channelId: string,
+      sequence: number,
+    ) => Promise<Uint8Array>;
+    readonly nextSequenceReceive: (portId: string, channelId: string) => Promise<number | null>;
     readonly unverified: {
       readonly channel: (portId: string, channelId: string) => Promise<ibc.channel.IQueryChannelResponse>;
       readonly channels: () => Promise<ibc.channel.IQueryChannelsResponse>;
