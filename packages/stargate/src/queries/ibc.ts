@@ -1,4 +1,5 @@
 import { toAscii } from "@cosmjs/encoding";
+import { Uint64 } from "@cosmjs/math";
 import Long from "long";
 
 import { ibc } from "../codec";
@@ -58,14 +59,6 @@ export interface IbcExtension {
   };
 }
 
-// TODO: pull this into encoding helpers
-function parseUint64BigEndian(bytes: Uint8Array): number {
-  const d = new DataView(bytes.buffer);
-  // Note: this will have rounding issues after 2**53, but we never hit these numbers
-  // when we do, support for bigints (eg. 1234n) will be stabilized
-  return 2 ** 32 * d.getUint32(0) + d.getUint32(4);
-}
-
 export function setupIbcExtension(base: QueryClient): IbcExtension {
   // Use this service to get easy typed access to query methods
   // This cannot be used to for proof verification
@@ -118,7 +111,7 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
         // key: https://github.com/cosmos/cosmos-sdk/blob/ef0a7344af345882729598bc2958a21143930a6b/x/ibc/24-host/keys.go#L133-L136
         const key = toAscii(`seqAcks/ports/${portId}/channels/${channelId}/nextSequenceAck`);
         const responseData = await base.queryVerified("ibc", key);
-        return responseData.length ? parseUint64BigEndian(responseData) : null;
+        return responseData.length ? Uint64.fromBytesBigEndian(responseData).toNumber() : null;
       },
 
       unverified: {
