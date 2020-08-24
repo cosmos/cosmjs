@@ -1,3 +1,4 @@
+import { toAscii } from "@cosmjs/encoding";
 import Long from "long";
 
 import { ibc } from "../codec";
@@ -6,9 +7,16 @@ import { toObject } from "./utils";
 
 export interface IbcExtension {
   readonly ibc: {
+    readonly channel: (portId: string, channelId: string) => Promise<ibc.channel.IChannel | null>;
+    readonly packetCommitment: (portId: string, channelId: string, sequence: number) => Promise<Uint8Array>;
+    readonly packetAcknowledgement: (
+      portId: string,
+      channelId: string,
+      sequence: number,
+    ) => Promise<Uint8Array>;
+    readonly nextSequenceReceive: (portId: string, channelId: string) => Promise<number | null>;
     readonly unverified: {
       // Queries for ibc.channel
-
       readonly channel: (portId: string, channelId: string) => Promise<ibc.channel.IQueryChannelResponse>;
       readonly channels: () => Promise<ibc.channel.IQueryChannelsResponse>;
       readonly connectionChannels: (
@@ -50,6 +58,14 @@ export interface IbcExtension {
   };
 }
 
+// TODO: pull this into encoding helpers
+function parseUint64BigEndian(bytes: Uint8Array): number {
+  const d = new DataView(bytes.buffer);
+  // Note: this will have rounding issues after 2**53, but we never hit these numbers
+  // when we do, support for bigints (eg. 1234n) will be stabilized
+  return 2 ** 32 * d.getUint32(0) + d.getUint32(4);
+}
+
 export function setupIbcExtension(base: QueryClient): IbcExtension {
   // Use this service to get easy typed access to query methods
   // This cannot be used to for proof verification
@@ -74,9 +90,39 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
 
   return {
     ibc: {
+      channel: async (portId: string, channelId: string) => {
+        // keeper: https://github.com/cosmos/cosmos-sdk/blob/3bafd8255a502e5a9cee07391cf8261538245dfd/x/ibc/04-channel/keeper/keeper.go#L55-L65
+        // key: https://github.com/cosmos/cosmos-sdk/blob/ef0a7344af345882729598bc2958a21143930a6b/x/ibc/24-host/keys.go#L117-L120
+        const key = toAscii(`channelEnds/ports/${portId}/channels/${channelId}`);
+        const responseData = await base.queryVerified("ibc", key);
+        return responseData.length ? toObject(ibc.channel.Channel.decode(responseData)) : null;
+      },
+      packetCommitment: async (portId: string, channelId: string, sequence: number) => {
+        // keeper: https://github.com/cosmos/cosmos-sdk/blob/3bafd8255a502e5a9cee07391cf8261538245dfd/x/ibc/04-channel/keeper/keeper.go#L128-L133
+        // key: https://github.com/cosmos/cosmos-sdk/blob/ef0a7344af345882729598bc2958a21143930a6b/x/ibc/24-host/keys.go#L183-L185
+        const key = toAscii(`commitments/ports/${portId}/channels/${channelId}/packets/${sequence}`);
+        const responseData = await base.queryVerified("ibc", key);
+        // keeper code doesn't parse, but returns raw
+        return responseData;
+      },
+      packetAcknowledgement: async (portId: string, channelId: string, sequence: number) => {
+        // keeper: https://github.com/cosmos/cosmos-sdk/blob/3bafd8255a502e5a9cee07391cf8261538245dfd/x/ibc/04-channel/keeper/keeper.go#L159-L166
+        // key: https://github.com/cosmos/cosmos-sdk/blob/ef0a7344af345882729598bc2958a21143930a6b/x/ibc/24-host/keys.go#L153-L156
+        const key = toAscii(`acks/ports/${portId}/channels/${channelId}/acknowledgements/${sequence}`);
+        const responseData = await base.queryVerified("ibc", key);
+        // keeper code doesn't parse, but returns raw
+        return responseData;
+      },
+      nextSequenceReceive: async (portId: string, channelId: string) => {
+        // keeper: https://github.com/cosmos/cosmos-sdk/blob/3bafd8255a502e5a9cee07391cf8261538245dfd/x/ibc/04-channel/keeper/keeper.go#L92-L101
+        // key: https://github.com/cosmos/cosmos-sdk/blob/ef0a7344af345882729598bc2958a21143930a6b/x/ibc/24-host/keys.go#L133-L136
+        const key = toAscii(`seqAcks/ports/${portId}/channels/${channelId}/nextSequenceAck`);
+        const responseData = await base.queryVerified("ibc", key);
+        return responseData.length ? parseUint64BigEndian(responseData) : null;
+      },
+
       unverified: {
         // Queries for ibc.channel
-
         channel: async (portId: string, channelId: string) => {
           const response = await channelQuerySerice.channel({ portId: portId, channelId: channelId });
           return toObject(response);
