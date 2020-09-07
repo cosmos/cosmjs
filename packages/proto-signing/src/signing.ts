@@ -1,8 +1,28 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import Long from "long";
+
 import { omitDefaults } from "./adr27";
 import { cosmos } from "./codec";
 
-const { SignDoc } = cosmos.tx;
+const { SignDoc, AuthInfo } = cosmos.tx;
+
+/**
+ * Creates and serializes an AuthInfo document using SIGN_MODE_DIRECT.
+ */
+export function makeAuthInfo(pubkeys: readonly cosmos.crypto.IPublicKey[], gasLimit: number): Uint8Array {
+  const authInfo = {
+    signerInfos: pubkeys.map(
+      (pubkey): cosmos.tx.ISignerInfo => ({
+        publicKey: pubkey,
+        modeInfo: {
+          single: { mode: cosmos.tx.signing.SignMode.SIGN_MODE_DIRECT },
+        },
+      }),
+    ),
+    fee: { gasLimit: Long.fromNumber(gasLimit) },
+  };
+  return Uint8Array.from(AuthInfo.encode(authInfo).finish());
+}
 
 export function makeSignBytes(
   txBody: Uint8Array,
