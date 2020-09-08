@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Bech32, fromBase64 } from "@cosmjs/encoding";
 import { Secp256k1Wallet } from "@cosmjs/launchpad";
-import { makeSignBytes, Registry } from "@cosmjs/proto-signing";
+import { makeAuthInfo, makeSignBytes, Registry } from "@cosmjs/proto-signing";
 import { assert, sleep } from "@cosmjs/utils";
-import Long from "long";
 import { ReadonlyDate } from "readonly-date";
 
 import { cosmos } from "./codec";
@@ -279,30 +278,16 @@ describe("StargateClient", () => {
       };
       const txBodyBytes = registry.encode(txBodyFields);
       const txBody = TxBody.decode(txBodyBytes);
-      const authInfo = {
-        signerInfos: [
-          {
-            publicKey: publicKey,
-            modeInfo: {
-              single: {
-                mode: cosmos.tx.signing.SignMode.SIGN_MODE_DIRECT,
-              },
-            },
-          },
-        ],
-        fee: {
-          gasLimit: Long.fromNumber(200000),
-        },
-      };
-      const authInfoBytes = Uint8Array.from(AuthInfo.encode(authInfo).finish());
+      const authInfoBytes = makeAuthInfo([publicKey], 200000);
 
       const chainId = await client.getChainId();
       const { accountNumber, sequence } = (await client.getSequence(address))!;
       const signDocBytes = makeSignBytes(txBodyBytes, authInfoBytes, chainId, accountNumber, sequence);
       const signature = await wallet.sign(address, signDocBytes);
+      // TODO: Why is this not a TxRaw? https://github.com/CosmWasm/cosmjs/issues/383
       const txRaw = Tx.create({
         body: txBody,
-        authInfo: authInfo,
+        authInfo: AuthInfo.decode(authInfoBytes),
         signatures: [fromBase64(signature.signature)],
       });
       const txRawBytes = Uint8Array.from(Tx.encode(txRaw).finish());

@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Bech32, fromBase64, fromHex, toHex } from "@cosmjs/encoding";
 import { Secp256k1Wallet } from "@cosmjs/launchpad";
-import Long from "long";
 
 import { cosmos } from "./codec";
 import { defaultRegistry } from "./msgs";
 import { Registry, TxBodyValue } from "./registry";
-import { makeSignBytes } from "./signing";
+import { makeAuthInfo, makeSignBytes } from "./signing";
 
 const { AuthInfo, Tx, TxBody } = cosmos.tx;
 const { PublicKey } = cosmos.crypto;
@@ -61,13 +60,13 @@ const testVectors = [
   },
 ];
 
-describe("signing demo", () => {
+describe("signing", () => {
   const chainId = "simd-testing";
   const toAddress = Uint8Array.from({ length: 20 }, (_, i) => i + 1);
 
   const sendAmount = "1234567";
   const sendDenom = "ucosm";
-  const gasLimit = Long.fromNumber(200000);
+  const gasLimit = 200000;
 
   it("correctly parses test vectors", async () => {
     const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
@@ -130,22 +129,7 @@ describe("signing demo", () => {
     });
     const txBody = TxBody.decode(txBodyBytes);
 
-    const authInfo = {
-      signerInfos: [
-        {
-          publicKey: publicKey,
-          modeInfo: {
-            single: {
-              mode: cosmos.tx.signing.SignMode.SIGN_MODE_DIRECT,
-            },
-          },
-        },
-      ],
-      fee: {
-        gasLimit: gasLimit,
-      },
-    };
-    const authInfoBytes = Uint8Array.from(AuthInfo.encode(authInfo).finish());
+    const authInfoBytes = makeAuthInfo([publicKey], gasLimit);
     const accountNumber = 1;
 
     await Promise.all(
@@ -154,9 +138,10 @@ describe("signing demo", () => {
         expect(toHex(signDocBytes)).toEqual(signBytes);
 
         const signature = await wallet.sign(address, signDocBytes);
+        // TODO: Why is this not a TxRaw? https://github.com/CosmWasm/cosmjs/issues/383
         const txRaw = Tx.create({
           body: txBody,
-          authInfo: authInfo,
+          authInfo: AuthInfo.decode(authInfoBytes),
           signatures: [fromBase64(signature.signature)],
         });
         const txRawBytes = Uint8Array.from(Tx.encode(txRaw).finish());
