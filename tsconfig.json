@@ -4,6 +4,7 @@
     "declaration": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
+    "lib": ["es2017"],
     "module": "commonjs",
     "moduleResolution": "node",
     "newLine": "LF",
@@ -17,7 +18,6 @@
     "resolveJsonModule": true,
     "sourceMap": true,
     "strict": true,
-    "target": "es2017",
-    "lib": ["es2017"]
+    "target": "es2017"
   }
 }
