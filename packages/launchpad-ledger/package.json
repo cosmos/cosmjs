@@ -47,6 +47,7 @@
     "semver": "^7.3.2"
   },
   "devDependencies": {
+    "@types/ledgerhq__hw-transport-webusb": "^4.70.0",
     "@types/semver": "^7.3.3"
   }
 }
