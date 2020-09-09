@@ -42,6 +42,7 @@
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
   },
   "dependencies": {
+    "@cosmjs/utils": "^0.22.2",
     "@ledgerhq/hw-transport-webusb": "^5.23.0",
     "ledger-cosmos-js": "^2.1.7",
     "semver": "^7.3.2"
