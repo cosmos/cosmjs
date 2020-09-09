@@ -4,9 +4,8 @@
     "baseUrl": ".",
     "outDir": "build",
     "declarationDir": "build/types",
-    "rootDir": "src"
+    "rootDir": "src",
+    "lib": ["es2017", "dom"]
   },
-  "include": [
-    "src/**/*"
-  ]
+  "include": ["src/**/*"]
 }
