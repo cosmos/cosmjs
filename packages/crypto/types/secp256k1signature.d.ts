@@ -12,6 +12,7 @@ export declare class Secp256k1Signature {
   constructor(r: Uint8Array, s: Uint8Array);
   r(length?: number): Uint8Array;
   s(length?: number): Uint8Array;
+  toFixedLength(): Uint8Array;
   toDer(): Uint8Array;
 }
 /**

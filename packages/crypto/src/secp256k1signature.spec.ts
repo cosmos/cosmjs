@@ -76,6 +76,15 @@ describe("Secp256k1Signature", () => {
     ).toThrowError(/unsigned integer s must be encoded as unpadded big endian./i);
   });
 
+  it("can be encoded as fixed length", () => {
+    const signature = new Secp256k1Signature(new Uint8Array([0x22, 0x33]), new Uint8Array([0xaa]));
+    expect(signature.toFixedLength()).toEqual(
+      fromHex(
+        "000000000000000000000000000000000000000000000000000000000000223300000000000000000000000000000000000000000000000000000000000000aa",
+      ),
+    );
+  });
+
   it("can encode to DER", () => {
     // Signature 3045022100f25b86e1d8a11d72475b3ed273b0781c7d7f6f9e1dae0dd5d3ee9b84f3fab891022063d9c4e1391de077244583e9a6e3d8e8e1f236a3bf5963735353b93b1a3ba935
     // decoded by http://asn1-playground.oss.com/
