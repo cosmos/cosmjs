@@ -1,5 +1,6 @@
-import { Secp256k1Signature } from "@cosmjs/crypto";
+import { Secp256k1Signature, Slip10RawIndex } from "@cosmjs/crypto";
 import { fromUtf8 } from "@cosmjs/encoding";
+import { makeCosmoshubPath } from "@cosmjs/launchpad";
 import { assert } from "@cosmjs/utils";
 import Transport from "@ledgerhq/hw-transport";
 import TransportWebUsb from "@ledgerhq/hw-transport-webusb";
@@ -58,12 +59,16 @@ async function createTransport(timeout: number): Promise<Transport> {
   }
 }
 
-const cosmosHdPath = [44, 118, 0, 0, 0];
+function unharden(hdPath: readonly Slip10RawIndex[]): number[] {
+  return hdPath.map((n) => (n.isHardened() ? n.toNumber() - 2 ** 31 : n.toNumber()));
+}
+
+const cosmosHdPath = makeCosmoshubPath(0);
 const cosmosBech32Prefix = "cosmos";
 
 export class LaunchpadLedger {
   private readonly testModeAllowed: boolean;
-  private readonly hdPath: number[];
+  private readonly hdPath: readonly Slip10RawIndex[];
   private readonly prefix: string;
   private cosmosApp: CosmosApp | null;
   public readonly platform: string;
@@ -71,7 +76,7 @@ export class LaunchpadLedger {
 
   constructor(
     { testModeAllowed }: { testModeAllowed: boolean } = { testModeAllowed: false },
-    hdPath: number[] = cosmosHdPath,
+    hdPath: readonly Slip10RawIndex[] = cosmosHdPath,
     prefix: string = cosmosBech32Prefix,
   ) {
     this.testModeAllowed = testModeAllowed;
@@ -123,7 +128,8 @@ export class LaunchpadLedger {
     await this.connect();
     assert(this.cosmosApp, "Cosmos Ledger App is not connected");
 
-    const response = await this.cosmosApp.publicKey(this.hdPath);
+    // ledger-cosmos-js hardens the first three indices
+    const response = await this.cosmosApp.publicKey(unharden(this.hdPath));
     this.handleLedgerErrors(response);
     return (response as PublicKeyResponse).compressed_pk;
   }
@@ -147,7 +153,8 @@ export class LaunchpadLedger {
     await this.connect();
     assert(this.cosmosApp, "Cosmos Ledger App is not connected");
 
-    const response = await this.cosmosApp.sign(this.hdPath, fromUtf8(message));
+    // ledger-cosmos-js hardens the first three indices
+    const response = await this.cosmosApp.sign(unharden(this.hdPath), fromUtf8(message));
     this.handleLedgerErrors(response, {
       rejectionMessage: "Transaction signing request was rejected by the user",
     });

@@ -1,4 +1,5 @@
 /// <reference types="node" />
+import { Slip10RawIndex } from "@cosmjs/crypto";
 export declare class LaunchpadLedger {
   private readonly testModeAllowed;
   private readonly hdPath;
@@ -12,7 +13,7 @@ export declare class LaunchpadLedger {
     }?: {
       testModeAllowed: boolean;
     },
-    hdPath?: number[],
+    hdPath?: readonly Slip10RawIndex[],
     prefix?: string,
   );
   connect(timeout?: number): Promise<LaunchpadLedger>;
