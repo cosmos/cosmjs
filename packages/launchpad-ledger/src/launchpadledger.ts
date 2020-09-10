@@ -151,8 +151,7 @@ export class LaunchpadLedger {
     this.handleLedgerErrors(response, {
       rejectionMessage: "Transaction signing request was rejected by the user",
     });
-    const parsedSignature = Secp256k1Signature.fromDer((response as SignResponse).signature);
-    return Uint8Array.from([...parsedSignature.r(), ...parsedSignature.s()]);
+    return Secp256k1Signature.fromDer((response as SignResponse).signature).toFixedLength();
   }
 
   private verifyAppMode(testMode: boolean): void {
