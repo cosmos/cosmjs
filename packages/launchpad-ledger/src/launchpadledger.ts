@@ -23,9 +23,8 @@ function verifyBrowserIsSupported(platform: string, userAgent: string): void {
     throw new Error("Windows is not currently supported.");
   }
 
-  const ua = userAgent.toLowerCase();
-  const isChrome = /chrome|crios/.test(ua) && !/edge|opr\//.test(ua);
-  if (!isChrome) {
+  const isChromeOrBrave = /chrome|crios/i.test(userAgent) && !/edge|opr\//i.test(userAgent);
+  if (!isChromeOrBrave) {
     throw new Error("Your browser does not support Ledger devices.");
   }
 }
