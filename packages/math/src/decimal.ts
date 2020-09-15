@@ -124,6 +124,19 @@ export class Decimal {
     return new Decimal(sum.toString(), this.fractionalDigits);
   }
 
+  /**
+   * a.minus(b) returns a-b.
+   *
+   * Both values need to have the same fractional digits.
+   * The resulting difference needs to be non-negative.
+   */
+  public minus(b: Decimal): Decimal {
+    if (this.fractionalDigits !== b.fractionalDigits) throw new Error("Fractional digits do not match");
+    const difference = this.data.atomics.sub(new BN(b.atomics));
+    if (difference.ltn(0)) throw new Error("Difference must not be negative");
+    return new Decimal(difference.toString(), this.fractionalDigits);
+  }
+
   public equals(b: Decimal): boolean {
     return Decimal.compare(this, b) === 0;
   }
