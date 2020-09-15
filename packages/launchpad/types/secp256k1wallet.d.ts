@@ -1,4 +1,4 @@
-import { Slip10RawIndex } from "@cosmjs/crypto";
+import { HdPath } from "@cosmjs/crypto";
 import { StdSignature } from "./types";
 import { AccountData, EncryptionConfiguration, KdfConfiguration, OfflineSigner, PrehashType } from "./wallet";
 /**
@@ -40,11 +40,7 @@ export declare class Secp256k1Wallet implements OfflineSigner {
    * @param hdPath The BIP-32/SLIP-10 derivation path. Defaults to the Cosmos Hub/ATOM path `m/44'/118'/0'/0/0`.
    * @param prefix The bech32 address prefix (human readable part). Defaults to "cosmos".
    */
-  static fromMnemonic(
-    mnemonic: string,
-    hdPath?: readonly Slip10RawIndex[],
-    prefix?: string,
-  ): Promise<Secp256k1Wallet>;
+  static fromMnemonic(mnemonic: string, hdPath?: HdPath, prefix?: string): Promise<Secp256k1Wallet>;
   /**
    * Generates a new wallet with a BIP39 mnemonic of the given length.
    *
@@ -54,7 +50,7 @@ export declare class Secp256k1Wallet implements OfflineSigner {
    */
   static generate(
     length?: 12 | 15 | 18 | 21 | 24,
-    hdPath?: readonly Slip10RawIndex[],
+    hdPath?: HdPath,
     prefix?: string,
   ): Promise<Secp256k1Wallet>;
   /**
