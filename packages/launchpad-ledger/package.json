@@ -42,12 +42,16 @@
   "dependencies": {
     "@cosmjs/launchpad": "^0.22.2",
     "@cosmjs/utils": "^0.22.2",
-    "@ledgerhq/hw-transport-node-hid": "^5.23.2",
-    "@ledgerhq/hw-transport-webusb": "^5.23.0",
     "ledger-cosmos-js": "^2.1.7",
     "semver": "^7.3.2"
   },
+  "optionalDependencies": {
+    "@ledgerhq/hw-transport-node-hid": "^5.23.2",
+    "@ledgerhq/hw-transport-webusb": "^5.23.0"
+  },
   "devDependencies": {
+    "@ledgerhq/hw-transport-node-hid": "^5.23.2",
+    "@ledgerhq/hw-transport-webusb": "^5.23.0",
     "@types/ledgerhq__hw-transport-node-hid": "^4.22.1",
     "@types/ledgerhq__hw-transport-webusb": "^4.70.0",
     "@types/semver": "^7.3.3"
