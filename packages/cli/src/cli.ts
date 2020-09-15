@@ -71,6 +71,7 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
         "Ed25519",
         "Ed25519Keypair",
         "EnglishMnemonic",
+        "HdPath",
         "Random",
         "Secp256k1",
         "Sha256",
