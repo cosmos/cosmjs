@@ -12,6 +12,13 @@ import CosmosApp, {
 } from "ledger-cosmos-js";
 import semver from "semver";
 
+/* eslint-disable @typescript-eslint/naming-convention */
+export interface LedgerAppErrorResponse {
+  readonly error_message?: string;
+  readonly device_locked?: boolean;
+}
+/* eslint-enable */
+
 const defaultInteractionTimeout = 120; // seconds to wait for user action on Ledger, currently is always limited to 60
 const requiredCosmosAppVersion = "1.5.3";
 
@@ -152,9 +159,7 @@ export class LaunchpadLedger {
     const hdPathToUse = hdPath || this.hdPaths[0];
     // ledger-cosmos-js hardens the first three indices
     const response = await this.cosmosApp.sign(unharden(hdPathToUse), fromUtf8(message));
-    this.handleLedgerErrors(response, {
-      rejectionMessage: "Transaction signing request was rejected by the user",
-    });
+    this.handleLedgerErrors(response, "Transaction signing request was rejected by the user");
     return Secp256k1Signature.fromDer((response as SignResponse).signature).toFixedLength();
   }
 
@@ -196,13 +201,14 @@ export class LaunchpadLedger {
     await this.verifyCosmosAppIsOpen();
   }
 
-  /* eslint-disable @typescript-eslint/naming-convention */
   private handleLedgerErrors(
+    /* eslint-disable @typescript-eslint/naming-convention */
     {
-      error_message: errorMessage,
+      error_message: errorMessage = "No errors",
       device_locked: deviceLocked = false,
-    }: { error_message: string; device_locked?: boolean },
-    { rejectionMessage = "Request was rejected by the user" } = {},
+    }: LedgerAppErrorResponse,
+    /* eslint-enable */
+    rejectionMessage = "Request was rejected by the user",
   ): void {
     if (deviceLocked) {
       throw new Error("Ledger’s screensaver mode is on");
@@ -228,5 +234,4 @@ export class LaunchpadLedger {
         throw new Error(`Ledger Native Error: ${errorMessage}`);
     }
   }
-  /* eslint-enable */
 }

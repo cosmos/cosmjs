@@ -1,4 +1,8 @@
 import { HdPath } from "@cosmjs/crypto";
+export interface LedgerAppErrorResponse {
+  readonly error_message?: string;
+  readonly device_locked?: boolean;
+}
 export interface LaunchpadLedgerOptions {
   readonly hdPaths?: readonly HdPath[];
   readonly prefix?: string;
