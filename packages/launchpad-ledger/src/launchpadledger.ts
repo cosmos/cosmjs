@@ -1,4 +1,4 @@
-import { Secp256k1Signature, Slip10RawIndex } from "@cosmjs/crypto";
+import { HdPath, Secp256k1Signature } from "@cosmjs/crypto";
 import { fromUtf8 } from "@cosmjs/encoding";
 import { makeCosmoshubPath } from "@cosmjs/launchpad";
 import { assert } from "@cosmjs/utils";
@@ -59,7 +59,7 @@ async function createTransport(timeout: number): Promise<Transport> {
   }
 }
 
-function unharden(hdPath: readonly Slip10RawIndex[]): number[] {
+function unharden(hdPath: HdPath): number[] {
   return hdPath.map((n) => (n.isHardened() ? n.toNumber() - 2 ** 31 : n.toNumber()));
 }
 
@@ -67,14 +67,14 @@ const cosmosHdPath = makeCosmoshubPath(0);
 const cosmosBech32Prefix = "cosmos";
 
 export interface LaunchpadLedgerOptions {
-  readonly hdPath?: readonly Slip10RawIndex[];
+  readonly hdPaths?: readonly HdPath[];
   readonly prefix?: string;
   readonly testModeAllowed?: boolean;
 }
 
 export class LaunchpadLedger {
   private readonly testModeAllowed: boolean;
-  private readonly hdPath: readonly Slip10RawIndex[];
+  private readonly hdPaths: readonly HdPath[];
   private readonly prefix: string;
   private cosmosApp: CosmosApp | null;
   public readonly platform: string;
@@ -82,16 +82,16 @@ export class LaunchpadLedger {
 
   constructor(options: LaunchpadLedgerOptions = {}) {
     const defaultOptions = {
-      hdPath: cosmosHdPath,
+      hdPaths: [cosmosHdPath],
       prefix: cosmosBech32Prefix,
       testModeAllowed: false,
     };
-    const { hdPath, prefix, testModeAllowed } = {
+    const { hdPaths, prefix, testModeAllowed } = {
       ...defaultOptions,
       ...options,
     };
     this.testModeAllowed = testModeAllowed;
-    this.hdPath = hdPath;
+    this.hdPaths = hdPaths;
     this.prefix = prefix;
     this.cosmosApp = null;
     this.platform = navigator.platform;
@@ -125,14 +125,19 @@ export class LaunchpadLedger {
     return `${major}.${minor}.${patch}`;
   }
 
-  async getPubkey(): Promise<Uint8Array> {
+  async getPubkey(hdPath?: HdPath): Promise<Uint8Array> {
     await this.connect();
     assert(this.cosmosApp, "Cosmos Ledger App is not connected");
 
+    const hdPathToUse = hdPath || this.hdPaths[0];
     // ledger-cosmos-js hardens the first three indices
-    const response = await this.cosmosApp.publicKey(unharden(this.hdPath));
+    const response = await this.cosmosApp.publicKey(unharden(hdPathToUse));
     this.handleLedgerErrors(response);
     return Uint8Array.from((response as PublicKeyResponse).compressed_pk);
+  }
+
+  async getPubkeys(): Promise<readonly Uint8Array[]> {
+    return Promise.all(this.hdPaths.map(async (hdPath) => this.getPubkey(hdPath)));
   }
 
   async getCosmosAddress(pubkey?: Uint8Array): Promise<string> {
@@ -140,12 +145,13 @@ export class LaunchpadLedger {
     return CosmosApp.getBech32FromPK(this.prefix, Buffer.from(pubkeyToUse));
   }
 
-  async sign(message: Uint8Array): Promise<Uint8Array> {
+  async sign(message: Uint8Array, hdPath?: HdPath): Promise<Uint8Array> {
     await this.connect();
     assert(this.cosmosApp, "Cosmos Ledger App is not connected");
 
+    const hdPathToUse = hdPath || this.hdPaths[0];
     // ledger-cosmos-js hardens the first three indices
-    const response = await this.cosmosApp.sign(unharden(this.hdPath), fromUtf8(message));
+    const response = await this.cosmosApp.sign(unharden(hdPathToUse), fromUtf8(message));
     this.handleLedgerErrors(response, {
       rejectionMessage: "Transaction signing request was rejected by the user",
     });

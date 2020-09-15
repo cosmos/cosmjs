@@ -1,12 +1,12 @@
-import { Slip10RawIndex } from "@cosmjs/crypto";
+import { HdPath } from "@cosmjs/crypto";
 export interface LaunchpadLedgerOptions {
-  readonly hdPath?: readonly Slip10RawIndex[];
+  readonly hdPaths?: readonly HdPath[];
   readonly prefix?: string;
   readonly testModeAllowed?: boolean;
 }
 export declare class LaunchpadLedger {
   private readonly testModeAllowed;
-  private readonly hdPath;
+  private readonly hdPaths;
   private readonly prefix;
   private cosmosApp;
   readonly platform: string;
@@ -14,9 +14,10 @@ export declare class LaunchpadLedger {
   constructor(options?: LaunchpadLedgerOptions);
   connect(timeout?: number): Promise<LaunchpadLedger>;
   getCosmosAppVersion(): Promise<string>;
-  getPubkey(): Promise<Uint8Array>;
+  getPubkey(hdPath?: HdPath): Promise<Uint8Array>;
+  getPubkeys(): Promise<readonly Uint8Array[]>;
   getCosmosAddress(pubkey?: Uint8Array): Promise<string>;
-  sign(message: Uint8Array): Promise<Uint8Array>;
+  sign(message: Uint8Array, hdPath?: HdPath): Promise<Uint8Array>;
   private verifyAppMode;
   private getOpenAppName;
   private verifyAppVersion;
