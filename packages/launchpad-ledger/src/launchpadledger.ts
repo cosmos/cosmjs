@@ -135,19 +135,19 @@ export class LaunchpadLedger {
     return `${major}.${minor}.${patch}`;
   }
 
-  async getPubKey(): Promise<Buffer> {
+  async getPubkey(): Promise<Uint8Array> {
     await this.connect();
     assert(this.cosmosApp, "Cosmos Ledger App is not connected");
 
     // ledger-cosmos-js hardens the first three indices
     const response = await this.cosmosApp.publicKey(unharden(this.hdPath));
     this.handleLedgerErrors(response);
-    return (response as PublicKeyResponse).compressed_pk;
+    return Uint8Array.from((response as PublicKeyResponse).compressed_pk);
   }
 
-  async getCosmosAddress(): Promise<string> {
-    const pubKey = await this.getPubKey();
-    return CosmosApp.getBech32FromPK(this.prefix, pubKey);
+  async getCosmosAddress(pubkey?: Uint8Array): Promise<string> {
+    const pubkeyToUse = pubkey || (await this.getPubkey());
+    return CosmosApp.getBech32FromPK(this.prefix, Buffer.from(pubkeyToUse));
   }
 
   // async verifyLedgerAddress(): Promise<void> {

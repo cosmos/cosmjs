@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import { Slip10RawIndex } from "@cosmjs/crypto";
 export interface LaunchpadLedgerOptions {
   readonly hdPath?: readonly Slip10RawIndex[];
@@ -15,8 +14,8 @@ export declare class LaunchpadLedger {
   constructor(options?: LaunchpadLedgerOptions);
   connect(timeout?: number): Promise<LaunchpadLedger>;
   getCosmosAppVersion(): Promise<string>;
-  getPubKey(): Promise<Buffer>;
-  getCosmosAddress(): Promise<string>;
+  getPubkey(): Promise<Uint8Array>;
+  getCosmosAddress(pubkey?: Uint8Array): Promise<string>;
   sign(message: Uint8Array): Promise<Uint8Array>;
   private verifyAppMode;
   private getOpenAppName;

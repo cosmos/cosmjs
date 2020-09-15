@@ -14,14 +14,18 @@ export class LedgerSigner implements OfflineSigner {
   public async getAccounts(): Promise<readonly AccountData[]> {
     await this.ledger.connect();
 
-    const address = (this.address = this.address || (await this.ledger.getCosmosAddress()));
-    const pubkey = (this.pubkey = this.pubkey || (await this.ledger.getPubKey()));
+    if (!this.pubkey) {
+      this.pubkey = await this.ledger.getPubkey();
+    }
+    if (!this.address) {
+      this.address = await this.ledger.getCosmosAddress(this.pubkey);
+    }
 
     return [
       {
         algo: "secp256k1",
-        address: address,
-        pubkey: pubkey,
+        address: this.address,
+        pubkey: this.pubkey,
       },
     ];
   }
@@ -29,13 +33,18 @@ export class LedgerSigner implements OfflineSigner {
   public async sign(address: string, message: Uint8Array): Promise<StdSignature> {
     await this.ledger.connect();
 
-    const thisAddress = (this.address = this.address || (await this.ledger.getCosmosAddress()));
-    if (address !== thisAddress) {
+    if (!this.pubkey) {
+      this.pubkey = await this.ledger.getPubkey();
+    }
+    if (!this.address) {
+      this.address = await this.ledger.getCosmosAddress(this.pubkey);
+    }
+
+    if (address !== this.address) {
       throw new Error(`Address ${address} not found in wallet`);
     }
 
     const signature = await this.ledger.sign(message);
-    const pubkey = (this.pubkey = this.pubkey || (await this.ledger.getPubKey()));
-    return encodeSecp256k1Signature(pubkey, signature);
+    return encodeSecp256k1Signature(this.pubkey, signature);
   }
 }
