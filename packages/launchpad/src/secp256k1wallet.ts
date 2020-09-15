@@ -1,12 +1,12 @@
 import {
   Bip39,
   EnglishMnemonic,
+  HdPath,
   pathToString,
   Random,
   Secp256k1,
   Slip10,
   Slip10Curve,
-  Slip10RawIndex,
   stringToPath,
 } from "@cosmjs/crypto";
 import { fromBase64, fromUtf8, toBase64, toUtf8 } from "@cosmjs/encoding";
@@ -104,7 +104,7 @@ export function extractKdfConfiguration(serialization: string): KdfConfiguration
  * Derivation information required to derive a keypair and an address from a mnemonic.
  */
 interface Secp256k1Derivation {
-  readonly hdPath: readonly Slip10RawIndex[];
+  readonly hdPath: HdPath;
   readonly prefix: string;
 }
 
@@ -118,7 +118,7 @@ export class Secp256k1Wallet implements OfflineSigner {
    */
   public static async fromMnemonic(
     mnemonic: string,
-    hdPath: readonly Slip10RawIndex[] = makeCosmoshubPath(0),
+    hdPath: HdPath = makeCosmoshubPath(0),
     prefix = "cosmos",
   ): Promise<Secp256k1Wallet> {
     const mnemonicChecked = new EnglishMnemonic(mnemonic);
@@ -143,7 +143,7 @@ export class Secp256k1Wallet implements OfflineSigner {
    */
   public static async generate(
     length: 12 | 15 | 18 | 21 | 24 = 12,
-    hdPath: readonly Slip10RawIndex[] = makeCosmoshubPath(0),
+    hdPath: HdPath = makeCosmoshubPath(0),
     prefix = "cosmos",
   ): Promise<Secp256k1Wallet> {
     const entropyLength = 4 * Math.floor((11 * length) / 33);
@@ -223,7 +223,7 @@ export class Secp256k1Wallet implements OfflineSigner {
 
   private constructor(
     mnemonic: EnglishMnemonic,
-    hdPath: readonly Slip10RawIndex[],
+    hdPath: HdPath,
     privkey: Uint8Array,
     pubkey: Uint8Array,
     prefix: string,

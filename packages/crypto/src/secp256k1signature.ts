@@ -119,6 +119,10 @@ export class Secp256k1Signature {
     }
   }
 
+  public toFixedLength(): Uint8Array {
+    return new Uint8Array([...this.r(32), ...this.s(32)]);
+  }
+
   public toDer(): Uint8Array {
     // DER supports negative integers but our data is unsigned. Thus we need to prepend
     // a leading 0 byte when the higest bit is set to differentiate nagative values

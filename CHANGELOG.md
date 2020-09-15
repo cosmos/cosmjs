@@ -2,6 +2,7 @@
 
 ## 0.23.0 (unreleased)
 
+- @cosmjs/cli: Expose `HdPath` type.
 - @cosmjs/cosmwasm: Rename `CosmWasmClient.postTx` method to `.broadcastTx`.
 - @cosmjs/cosmwasm: Rename `FeeTable` type to `CosmWasmFeeTable`.
 - @cosmjs/cosmwasm: `SigningCosmWasmClient` constructor now takes optional
@@ -13,6 +14,8 @@
   init, migrate and handle messages (in `WasmExtension.wasm.queryContractSmart`,
   `CosmWasmClient.queryContractSmart`, `SigningCosmWasmClient.instantiate`,
   `SigningCosmWasmClient.migrate`, `SigningCosmWasmClient.execute`).
+- @cosmjs/crypto: Export new type alias `HdPath`.
+- @cosmjs/crypto: Add `Secp256k1Signature.toFixedLength` method.
 - @cosmjs/demo-staking: Remove package and supporting scripts.
 - @cosmjs/encoding: Add `limit` parameter to `Bech32.encode` and `.decode`. The
   new default limit for decoding is infinity (was 90 before). Set it to 90 to
@@ -42,6 +45,9 @@
   `isSearchBySentFromOrToQuery` and `isSearchByTagsQuery`.
 - @cosmjs/launchpad: Change type of `TxsResponse.logs` and
   `BroadcastTxsResponse.logs` to `unknown[]`.
+- @cosmjs/launchpad-ledger: Add package supporting Ledger device integration for
+  Launchpad. Two new classes are provided: `LedgerSigner` (for most use cases)
+  and `LaunchpadLedger` for more fine-grained access.
 - @cosmjs/math: Add `.multiply` method to `Decimal` class.
 - @cosmjs/tendermint-rpc: Make `BroadcastTxCommitResponse.height` non-optional.
 - @cosmjs/tendermint-rpc: Change type of `GenesisResponse.appState` to

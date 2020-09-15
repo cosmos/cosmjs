@@ -21,8 +21,9 @@ export declare class Slip10RawIndex extends Uint32 {
   static normal(normalIndex: number): Slip10RawIndex;
   isHardened(): boolean;
 }
+export declare type HdPath = readonly Slip10RawIndex[];
 export declare class Slip10 {
-  static derivePath(curve: Slip10Curve, seed: Uint8Array, path: readonly Slip10RawIndex[]): Slip10Result;
+  static derivePath(curve: Slip10Curve, seed: Uint8Array, path: HdPath): Slip10Result;
   private static master;
   private static child;
   /**
@@ -36,5 +37,5 @@ export declare class Slip10 {
   private static isGteN;
   private static n;
 }
-export declare function pathToString(path: readonly Slip10RawIndex[]): string;
-export declare function stringToPath(input: string): readonly Slip10RawIndex[];
+export declare function pathToString(path: HdPath): string;
+export declare function stringToPath(input: string): HdPath;

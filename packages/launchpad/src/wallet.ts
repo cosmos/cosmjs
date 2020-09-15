@@ -1,5 +1,6 @@
 import {
   Argon2id,
+  HdPath,
   isArgon2idOptions,
   Random,
   Sha256,
@@ -52,7 +53,7 @@ export function prehash(bytes: Uint8Array, type: PrehashType): Uint8Array {
  * The Cosmoshub derivation path in the form `m/44'/118'/0'/0/a`
  * with 0-based account index `a`.
  */
-export function makeCosmoshubPath(a: number): readonly Slip10RawIndex[] {
+export function makeCosmoshubPath(a: number): HdPath {
   return [
     Slip10RawIndex.hardened(44),
     Slip10RawIndex.hardened(118),

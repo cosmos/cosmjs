@@ -1,0 +1,24 @@
+div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  padding: 0.5em;
+}
+
+button {
+  padding: 1em;
+}
+
+label {
+  margin-right: 1em;
+}
+
+input {
+  width: 32em;
+}
+
+textarea {
+  width: 32em;
+  height: 28em;
+}

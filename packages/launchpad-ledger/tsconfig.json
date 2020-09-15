@@ -1,0 +1,11 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "build",
+    "declarationDir": "build/types",
+    "rootDir": "src",
+    "lib": ["es2017", "dom"]
+  },
+  "include": ["src/**/*", "./custom_types/*"]
+}

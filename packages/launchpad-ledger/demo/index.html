@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ledger Demo</title>
+    <link rel="stylesheet" href="index.css"></style>
+    <script src="../dist/demo/ledger.js"></script>
+  </head>
+  <body>
+    <div>
+      <h1>Ledger Demo</h1>
+    </div>
+    <div>
+      <ol>
+        <li>Connect the Ledger device via USB</li>
+        <li>Open the Cosmos app on the Ledger device</li>
+        <li>Click the buttons below</li>
+      </ol>
+    </div>
+    <div>
+      <button onclick="getAccounts()">
+        Get Accounts
+      </button>
+    </div>
+    <div id="accounts"></div>
+    <div>
+      <label>Address</label>
+      <input id="address" type="text" value=""></input>
+    </div>
+    <div>
+      <label>Message</label>
+      <textarea id="message">
+      </textarea>
+    </div>
+    <div>
+      <button onclick="sign()">
+        Sign Message
+      </button>
+    </div>
+    <div id="signature"></div>
+  </body>
+</html>

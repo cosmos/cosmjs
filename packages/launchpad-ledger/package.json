@@ -1,0 +1,52 @@
+{
+  "name": "@cosmjs/launchpad-ledger",
+  "version": "0.22.2",
+  "description": "A library for interacting with the Cosmos Launchpad Ledger Nano App",
+  "contributors": [
+    "Will Clark <willclarktech@users.noreply.github.com>"
+  ],
+  "license": "Apache-2.0",
+  "main": "build/index.js",
+  "types": "types/index.d.ts",
+  "files": [
+    "build/",
+    "types/",
+    "*.md",
+    "!*.spec.*",
+    "!**/testdata/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CosmWasm/cosmjs/tree/master/packages/launchpad-ledger"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "docs": "typedoc --options typedoc.js",
+    "format": "prettier --write --loglevel warn \"./src/**/*.ts\"",
+    "format-text": "prettier --write --prose-wrap always --print-width 80 \"./*.md\"",
+    "lint": "eslint --max-warnings 0 \"**/*.{js,ts}\"",
+    "lint-fix": "eslint --max-warnings 0 \"**/*.{js,ts}\" --fix",
+    "move-types": "shx rm -rf ./types/* && shx mv build/types/* ./types && rm -rf ./types/testdata && shx rm -rf ./types/demo",
+    "format-types": "prettier --write --loglevel warn \"./types/**/*.d.ts\"",
+    "prebuild": "shx rm -rf ./build",
+    "build": "tsc",
+    "postbuild": "yarn move-types && yarn format-types",
+    "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build",
+    "test": "echo 'Please check README for information on how to manually run the demo'",
+    "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet",
+    "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.demo.config.js"
+  },
+  "dependencies": {
+    "@cosmjs/launchpad": "^0.22.2",
+    "@cosmjs/utils": "^0.22.2",
+    "@ledgerhq/hw-transport-webusb": "^5.23.0",
+    "ledger-cosmos-js": "^2.1.7",
+    "semver": "^7.3.2"
+  },
+  "devDependencies": {
+    "@types/ledgerhq__hw-transport-webusb": "^4.70.0",
+    "@types/semver": "^7.3.3"
+  }
+}

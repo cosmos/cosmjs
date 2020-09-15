@@ -1,4 +1,4 @@
-import { Slip10RawIndex } from "@cosmjs/crypto";
+import { HdPath } from "@cosmjs/crypto";
 import { StdSignature } from "./types";
 export declare type PrehashType = "sha256" | "sha512" | null;
 export declare type Algo = "secp256k1" | "ed25519" | "sr25519";
@@ -22,7 +22,7 @@ export declare function prehash(bytes: Uint8Array, type: PrehashType): Uint8Arra
  * The Cosmoshub derivation path in the form `m/44'/118'/0'/0/a`
  * with 0-based account index `a`.
  */
-export declare function makeCosmoshubPath(a: number): readonly Slip10RawIndex[];
+export declare function makeCosmoshubPath(a: number): HdPath;
 /**
  * A fixed salt is chosen to archive a deterministic password to key derivation.
  * This reduces the scope of a potential rainbow attack to all CosmJS users.
