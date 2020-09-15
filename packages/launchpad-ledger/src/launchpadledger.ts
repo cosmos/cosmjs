@@ -3,7 +3,6 @@ import { fromUtf8 } from "@cosmjs/encoding";
 import { makeCosmoshubPath } from "@cosmjs/launchpad";
 import { assert } from "@cosmjs/utils";
 import Transport from "@ledgerhq/hw-transport";
-import TransportWebUsb from "@ledgerhq/hw-transport-webusb";
 import CosmosApp, {
   AppInfoResponse,
   PublicKeyResponse,
@@ -26,43 +25,14 @@ function isWindows(platform: string): boolean {
   return platform.indexOf("Win") > -1;
 }
 
-function verifyBrowserIsSupported(platform: string, userAgent: string): void {
+function verifyBrowserIsSupported(platform: string, userAgent: string | null): void {
   if (isWindows(platform)) {
     throw new Error("Windows is not currently supported.");
   }
 
-  const isChromeOrBrave = /chrome|crios/i.test(userAgent) && !/edge|opr\//i.test(userAgent);
+  const isChromeOrBrave = userAgent && /chrome|crios/i.test(userAgent) && !/edge|opr\//i.test(userAgent);
   if (!isChromeOrBrave) {
     throw new Error("Your browser does not support Ledger devices.");
-  }
-}
-
-async function createTransport(timeout: number): Promise<Transport> {
-  try {
-    const transport = await TransportWebUsb.create(timeout * 1000);
-    return transport;
-  } catch (error) {
-    const trimmedErrorMessage = error.message.trim();
-    if (trimmedErrorMessage.startsWith("No WebUSB interface found for your Ledger device")) {
-      throw new Error(
-        "Could not connect to a Ledger device. Please use Ledger Live to upgrade the Ledger firmware to version 1.5.5 or later.",
-      );
-    }
-    if (trimmedErrorMessage.startsWith("Unable to claim interface")) {
-      throw new Error("Could not access Ledger device. Is it being used in another tab?");
-    }
-    if (trimmedErrorMessage.startsWith("Not supported")) {
-      throw new Error(
-        "Your browser does not seem to support WebUSB yet. Try updating it to the latest version.",
-      );
-    }
-    if (trimmedErrorMessage.startsWith("No device selected")) {
-      throw new Error(
-        "You did not select a Ledger device. If you did not see your Ledger, check if the Ledger is plugged in and unlocked.",
-      );
-    }
-
-    throw error;
   }
 }
 
@@ -85,7 +55,7 @@ export class LaunchpadLedger {
   private readonly prefix: string;
   private cosmosApp: CosmosApp | null;
   public readonly platform: string;
-  public readonly userAgent: string;
+  public readonly userAgent: string | null;
 
   constructor(options: LaunchpadLedgerOptions = {}) {
     const defaultOptions = {
@@ -101,8 +71,14 @@ export class LaunchpadLedger {
     this.hdPaths = hdPaths;
     this.prefix = prefix;
     this.cosmosApp = null;
-    this.platform = navigator.platform;
-    this.userAgent = navigator.userAgent;
+
+    try {
+      this.platform = navigator.platform;
+      this.userAgent = navigator.userAgent;
+    } catch (error) {
+      this.platform = "node";
+      this.userAgent = null;
+    }
   }
 
   async connect(timeout = defaultInteractionTimeout): Promise<LaunchpadLedger> {
@@ -111,9 +87,11 @@ export class LaunchpadLedger {
       return this;
     }
 
-    verifyBrowserIsSupported(this.platform, this.userAgent);
+    if (this.platform !== "node") {
+      verifyBrowserIsSupported(this.platform, this.userAgent);
+    }
 
-    const transport = await createTransport(timeout * 1000);
+    const transport = await this.createTransport(timeout * 1000);
     this.cosmosApp = new CosmosApp(transport);
 
     await this.verifyDeviceIsReady();
@@ -161,6 +139,43 @@ export class LaunchpadLedger {
     const response = await this.cosmosApp.sign(unharden(hdPathToUse), fromUtf8(message));
     this.handleLedgerErrors(response, "Transaction signing request was rejected by the user");
     return Secp256k1Signature.fromDer((response as SignResponse).signature).toFixedLength();
+  }
+
+  private async createTransport(timeout: number): Promise<Transport> {
+    // HACK: Use a variable to get webpack to ignore this
+    const nodeJsTransportPackageName = "@ledgerhq/hw-transport-node-hid";
+    /* eslint-disable-next-line @typescript-eslint/naming-convention */
+    const { default: TransportClass } =
+      this.platform === "node"
+        ? await import(nodeJsTransportPackageName)
+        : await import("@ledgerhq/hw-transport-webusb");
+
+    try {
+      const transport = await TransportClass.create(timeout * 1000);
+      return transport;
+    } catch (error) {
+      const trimmedErrorMessage = error.message.trim();
+      if (trimmedErrorMessage.startsWith("No WebUSB interface found for your Ledger device")) {
+        throw new Error(
+          "Could not connect to a Ledger device. Please use Ledger Live to upgrade the Ledger firmware to version 1.5.5 or later.",
+        );
+      }
+      if (trimmedErrorMessage.startsWith("Unable to claim interface")) {
+        throw new Error("Could not access Ledger device. Is it being used in another tab?");
+      }
+      if (trimmedErrorMessage.startsWith("Not supported")) {
+        throw new Error(
+          "Your browser does not seem to support WebUSB yet. Try updating it to the latest version.",
+        );
+      }
+      if (trimmedErrorMessage.startsWith("No device selected")) {
+        throw new Error(
+          "You did not select a Ledger device. If you did not see your Ledger, check if the Ledger is plugged in and unlocked.",
+        );
+      }
+
+      throw error;
+    }
   }
 
   private verifyAppMode(testMode: boolean): void {

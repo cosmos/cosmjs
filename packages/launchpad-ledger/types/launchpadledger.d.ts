@@ -14,7 +14,7 @@ export declare class LaunchpadLedger {
   private readonly prefix;
   private cosmosApp;
   readonly platform: string;
-  readonly userAgent: string;
+  readonly userAgent: string | null;
   constructor(options?: LaunchpadLedgerOptions);
   connect(timeout?: number): Promise<LaunchpadLedger>;
   getCosmosAppVersion(): Promise<string>;
@@ -22,6 +22,7 @@ export declare class LaunchpadLedger {
   getPubkeys(): Promise<readonly Uint8Array[]>;
   getCosmosAddress(pubkey?: Uint8Array): Promise<string>;
   sign(message: Uint8Array, hdPath?: HdPath): Promise<Uint8Array>;
+  private createTransport;
   private verifyAppMode;
   private getOpenAppName;
   private verifyAppVersion;
