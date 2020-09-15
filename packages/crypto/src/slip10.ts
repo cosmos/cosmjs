@@ -49,16 +49,14 @@ export class Slip10RawIndex extends Uint32 {
   }
 }
 
+export type HdPath = readonly Slip10RawIndex[];
+
 const secp256k1 = new elliptic.ec("secp256k1");
 
 // Universal private key derivation accoring to
 // https://github.com/satoshilabs/slips/blob/master/slip-0010.md
 export class Slip10 {
-  public static derivePath(
-    curve: Slip10Curve,
-    seed: Uint8Array,
-    path: readonly Slip10RawIndex[],
-  ): Slip10Result {
+  public static derivePath(curve: Slip10Curve, seed: Uint8Array, path: HdPath): Slip10Result {
     let result = this.master(curve, seed);
     for (const rawIndex of path) {
       result = this.child(curve, result.privkey, result.chainCode, rawIndex);
@@ -185,7 +183,7 @@ export class Slip10 {
   }
 }
 
-export function pathToString(path: readonly Slip10RawIndex[]): string {
+export function pathToString(path: HdPath): string {
   return path.reduce((current, component): string => {
     const componentString = component.isHardened()
       ? `${component.toNumber() - 2 ** 31}'`
@@ -194,7 +192,7 @@ export function pathToString(path: readonly Slip10RawIndex[]): string {
   }, "m");
 }
 
-export function stringToPath(input: string): readonly Slip10RawIndex[] {
+export function stringToPath(input: string): HdPath {
   if (!input.startsWith("m")) throw new Error("Path string must start with 'm'");
   let rest = input.slice(1);
 
