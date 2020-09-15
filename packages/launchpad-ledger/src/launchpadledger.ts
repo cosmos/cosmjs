@@ -98,16 +98,6 @@ export class LaunchpadLedger {
     this.userAgent = navigator.userAgent;
   }
 
-  // // quickly test connection and compatibility with the LaunchpadLedger device throwing away the connection
-  // async testDevice(): Promise<LaunchpadLedger> {
-  //   // poll device with low timeout to check if the device is connected
-  //   const secondsTimeout = 3; // a lower value always timeouts
-  //   await this.connect(secondsTimeout);
-  //   this.cosmosApp = null;
-
-  //   return this;
-  // }
-
   async connect(timeout = defaultInteractionTimeout): Promise<LaunchpadLedger> {
     // assume good connection if connected once
     if (this.cosmosApp) {
@@ -149,16 +139,6 @@ export class LaunchpadLedger {
     const pubkeyToUse = pubkey || (await this.getPubkey());
     return CosmosApp.getBech32FromPK(this.prefix, Buffer.from(pubkeyToUse));
   }
-
-  // async verifyLedgerAddress(): Promise<void> {
-  //   await this.connect();
-  //   assert(this.cosmosApp, "Cosmos Ledger App is not connected");
-
-  //   const response = await this.cosmosApp.showAddressAndPubKey(this.hdPath, this.bech32Prefix);
-  //   this.handleLedgerErrors(response, {
-  //     rejectionMessage: "Displayed address was rejected by the user",
-  //   });
-  // }
 
   async sign(message: Uint8Array): Promise<Uint8Array> {
     await this.connect();
