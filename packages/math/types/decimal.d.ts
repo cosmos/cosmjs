@@ -24,6 +24,13 @@ export declare class Decimal {
    * Both values need to have the same fractional digits.
    */
   plus(b: Decimal): Decimal;
+  /**
+   * a.minus(b) returns a-b.
+   *
+   * Both values need to have the same fractional digits.
+   * The resulting difference needs to be non-negative.
+   */
+  minus(b: Decimal): Decimal;
   equals(b: Decimal): boolean;
   isLessThan(b: Decimal): boolean;
   isLessThanOrEqual(b: Decimal): boolean;
