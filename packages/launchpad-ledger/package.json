@@ -35,6 +35,7 @@
     "postbuild": "yarn move-types && yarn format-types",
     "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build",
     "test": "echo 'Please check README for information on how to manually run the demo'",
+    "demo-node": "yarn build-or-skip && node ./demo/node.js",
     "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet",
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.demo.config.js"
   },
