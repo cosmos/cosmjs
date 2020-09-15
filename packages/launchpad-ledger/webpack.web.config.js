@@ -20,7 +20,7 @@ module.exports = [
   {
     // bundle used for Ledger demo
     target: target,
-    entry: glob.sync("./build/**/*.demo.js"),
+    entry: glob.sync("./build/demo/index.js"),
     output: {
       path: demodir,
       filename: "ledger.js",

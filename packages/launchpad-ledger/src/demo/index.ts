@@ -1,6 +1,6 @@
 import { toHex, toUtf8 } from "@cosmjs/encoding";
 
-import { LedgerSigner } from "./ledgersigner";
+import { LedgerSigner } from "../ledgersigner";
 
 declare const window: any;
 declare const document: any;
