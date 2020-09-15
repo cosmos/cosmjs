@@ -2,16 +2,16 @@ import { AccountData, encodeSecp256k1Signature, OfflineSigner, StdSignature } fr
 
 import { LaunchpadLedger } from "./launchpadledger";
 
-interface LedgerWalletOptions {
+interface LedgerSignerOptions {
   readonly testModeAllowed: boolean;
 }
 
-export class LedgerWallet implements OfflineSigner {
+export class LedgerSigner implements OfflineSigner {
   private readonly ledger: LaunchpadLedger;
   private address: string | undefined;
   private pubkey: Uint8Array | undefined;
 
-  constructor(options?: LedgerWalletOptions) {
+  constructor(options?: LedgerSignerOptions) {
     this.ledger = new LaunchpadLedger(options);
   }
 

@@ -1,12 +1,12 @@
 import { AccountData, OfflineSigner, StdSignature } from "@cosmjs/launchpad";
-interface LedgerWalletOptions {
+interface LedgerSignerOptions {
   readonly testModeAllowed: boolean;
 }
-export declare class LedgerWallet implements OfflineSigner {
+export declare class LedgerSigner implements OfflineSigner {
   private readonly ledger;
   private address;
   private pubkey;
-  constructor(options?: LedgerWalletOptions);
+  constructor(options?: LedgerSignerOptions);
   getAccounts(): Promise<readonly AccountData[]>;
   sign(address: string, message: Uint8Array): Promise<StdSignature>;
 }
