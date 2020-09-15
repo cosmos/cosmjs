@@ -34,12 +34,9 @@
     "build": "tsc",
     "postbuild": "yarn move-types && yarn format-types",
     "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build",
-    "test-node": "node jasmine-testrunner.js",
-    "test-firefox": "yarn pack-web && karma start --single-run --browsers Firefox",
-    "test-chrome": "yarn pack-web && karma start --single-run --browsers ChromeHeadless",
-    "test": "yarn build-or-skip && yarn test-node",
+    "test": "echo 'Please check README for information on how to manually run the demo'",
     "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet",
-    "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
+    "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.demo.config.js"
   },
   "dependencies": {
     "@cosmjs/launchpad": "^0.22.2",
