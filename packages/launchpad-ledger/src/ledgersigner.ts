@@ -1,17 +1,13 @@
 import { AccountData, encodeSecp256k1Signature, OfflineSigner, StdSignature } from "@cosmjs/launchpad";
 
-import { LaunchpadLedger } from "./launchpadledger";
-
-interface LedgerSignerOptions {
-  readonly testModeAllowed: boolean;
-}
+import { LaunchpadLedger, LaunchpadLedgerOptions } from "./launchpadledger";
 
 export class LedgerSigner implements OfflineSigner {
   private readonly ledger: LaunchpadLedger;
   private address: string | undefined;
   private pubkey: Uint8Array | undefined;
 
-  constructor(options?: LedgerSignerOptions) {
+  constructor(options?: LaunchpadLedgerOptions) {
     this.ledger = new LaunchpadLedger(options);
   }
 

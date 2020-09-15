@@ -66,6 +66,12 @@ function unharden(hdPath: readonly Slip10RawIndex[]): number[] {
 const cosmosHdPath = makeCosmoshubPath(0);
 const cosmosBech32Prefix = "cosmos";
 
+export interface LaunchpadLedgerOptions {
+  readonly hdPath?: readonly Slip10RawIndex[];
+  readonly prefix?: string;
+  readonly testModeAllowed?: boolean;
+}
+
 export class LaunchpadLedger {
   private readonly testModeAllowed: boolean;
   private readonly hdPath: readonly Slip10RawIndex[];
@@ -74,11 +80,16 @@ export class LaunchpadLedger {
   public readonly platform: string;
   public readonly userAgent: string;
 
-  constructor(
-    { testModeAllowed }: { testModeAllowed: boolean } = { testModeAllowed: false },
-    hdPath: readonly Slip10RawIndex[] = cosmosHdPath,
-    prefix: string = cosmosBech32Prefix,
-  ) {
+  constructor(options: LaunchpadLedgerOptions = {}) {
+    const defaultOptions = {
+      hdPath: cosmosHdPath,
+      prefix: cosmosBech32Prefix,
+      testModeAllowed: false,
+    };
+    const { hdPath, prefix, testModeAllowed } = {
+      ...defaultOptions,
+      ...options,
+    };
     this.testModeAllowed = testModeAllowed;
     this.hdPath = hdPath;
     this.prefix = prefix;
