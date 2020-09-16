@@ -28,7 +28,7 @@ function sortJson(json: any): any {
  *
  * @see https://docs.cosmos.network/master/modules/auth/03_types.html#stdsigndoc
  */
-interface StdSignDoc {
+export interface StdSignDoc {
   readonly account_number: string;
   readonly chain_id: string;
   readonly fee: StdFee;
