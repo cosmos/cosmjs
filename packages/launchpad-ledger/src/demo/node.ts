@@ -14,7 +14,7 @@ const defaultSequence = "0";
 
 const signer = new LedgerSigner({
   testModeAllowed: true,
-  accountNumbers: [0, 1, 2],
+  accountNumbers: [0, 1, 2, 10],
 });
 
 export async function getAccounts(): Promise<
