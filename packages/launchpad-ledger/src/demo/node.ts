@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { toBase64 } from "@cosmjs/encoding";
-import { makeCosmoshubPath, makeSignBytes, StdFee, StdSignature } from "@cosmjs/launchpad";
+import { makeSignBytes, StdFee, StdSignature } from "@cosmjs/launchpad";
 
 import { LedgerSigner } from "../ledgersigner";
 
@@ -11,11 +11,10 @@ const defaultFee: StdFee = {
 };
 const defaultMemo = "Some memo";
 const defaultSequence = "0";
-const defaultPrehashType = undefined;
 
 const signer = new LedgerSigner({
   testModeAllowed: true,
-  hdPaths: [makeCosmoshubPath(0), makeCosmoshubPath(1), makeCosmoshubPath(2)],
+  accountNumbers: [0, 1, 2],
 });
 
 export async function getAccounts(): Promise<
@@ -57,5 +56,5 @@ export async function sign(
     accountNumber,
     defaultSequence,
   );
-  return signer.sign(fromAddress, signBytes, defaultPrehashType, accountNumber);
+  return signer.sign(fromAddress, signBytes);
 }

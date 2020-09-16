@@ -1,5 +1,5 @@
 import { toBase64, toUtf8 } from "@cosmjs/encoding";
-import { AccountData, makeCosmoshubPath } from "@cosmjs/launchpad";
+import { AccountData } from "@cosmjs/launchpad";
 
 import { LedgerSigner } from "../ledgersigner";
 
@@ -34,7 +34,7 @@ function createMessage(accountNumber: number, address: string): string {
 
 const signer = new LedgerSigner({
   testModeAllowed: true,
-  hdPaths: [makeCosmoshubPath(0), makeCosmoshubPath(1), makeCosmoshubPath(2)],
+  accountNumbers: [0, 1, 2],
 });
 
 window.updateMessage = (accountNumber: number) => {
@@ -80,11 +80,10 @@ window.sign = async function sign(): Promise<void> {
   signatureDiv.textContent = "Loading...";
 
   try {
-    const accountNumber = document.getElementById("account-number").value;
     const address = document.getElementById("address").value;
     const rawMessage = document.getElementById("message").textContent;
     const message = JSON.stringify(JSON.parse(rawMessage));
-    const signature = await signer.sign(address, toUtf8(message), undefined, parseInt(accountNumber, 10));
+    const signature = await signer.sign(address, toUtf8(message));
     signatureDiv.textContent = JSON.stringify(signature, null, "\t");
   } catch (error) {
     signatureDiv.textContent = error;
