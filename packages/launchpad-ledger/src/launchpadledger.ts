@@ -122,7 +122,11 @@ export class LaunchpadLedger {
   }
 
   async getPubkeys(): Promise<readonly Uint8Array[]> {
-    return Promise.all(this.hdPaths.map(async (hdPath) => this.getPubkey(hdPath)));
+    return this.hdPaths.reduce(
+      (promise: Promise<readonly Uint8Array[]>, hdPath) =>
+        promise.then(async (pubkeys) => [...pubkeys, await this.getPubkey(hdPath)]),
+      Promise.resolve([]),
+    );
   }
 
   async getCosmosAddress(pubkey?: Uint8Array): Promise<string> {

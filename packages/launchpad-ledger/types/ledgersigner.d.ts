@@ -5,5 +5,10 @@ export declare class LedgerSigner implements OfflineSigner {
   private accounts?;
   constructor(options?: LaunchpadLedgerOptions);
   getAccounts(): Promise<readonly AccountData[]>;
-  sign(address: string, message: Uint8Array): Promise<StdSignature>;
+  sign(
+    address: string,
+    message: Uint8Array,
+    _prehashType?: "sha256" | "sha512" | null,
+    accountNumber?: number,
+  ): Promise<StdSignature>;
 }
