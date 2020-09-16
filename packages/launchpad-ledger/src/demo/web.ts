@@ -1,13 +1,16 @@
-import { toHex, toUtf8 } from "@cosmjs/encoding";
+import { toBase64, toUtf8 } from "@cosmjs/encoding";
+import { AccountData, makeCosmoshubPath } from "@cosmjs/launchpad";
 
 import { LedgerSigner } from "../ledgersigner";
 
 declare const window: any;
 declare const document: any;
 
-function createMessage(address: string): string {
+let accounts: readonly AccountData[] = [];
+
+function createMessage(accountNumber: number, address: string): string {
   return `{
-    "account_number": 0,
+    "account_number": ${accountNumber},
     "chain_id": "testing",
     "fee": {
       "amount": [{ "amount": 100, "denom": "ucosm" }],
@@ -29,21 +32,44 @@ function createMessage(address: string): string {
   }`;
 }
 
-const signer = new LedgerSigner({ testModeAllowed: true });
+const signer = new LedgerSigner({
+  testModeAllowed: true,
+  hdPaths: [makeCosmoshubPath(0), makeCosmoshubPath(1), makeCosmoshubPath(2)],
+});
+
+window.updateMessage = (accountNumber: number) => {
+  const account = accounts[accountNumber];
+  if (account === undefined) {
+    return;
+  }
+
+  const address = accounts[accountNumber].address;
+  const addressInput = document.getElementById("address");
+  addressInput.value = address;
+  const messageTextArea = document.getElementById("message");
+  messageTextArea.textContent = createMessage(accountNumber, address);
+};
 
 window.getAccounts = async function getAccounts(): Promise<void> {
+  const accountNumberInput = document.getElementById("account-number");
   const addressInput = document.getElementById("address");
   const accountsDiv = document.getElementById("accounts");
   const messageTextArea = document.getElementById("message");
   accountsDiv.textContent = "Loading...";
 
   try {
-    const accounts = await signer.getAccounts();
-    const prettyAccounts = accounts.map((account) => ({ ...account, pubkey: toHex(account.pubkey) }));
-    accountsDiv.textContent = JSON.stringify(prettyAccounts, null, "\t");
+    accounts = await signer.getAccounts();
+    const prettyAccounts = accounts.map((account: AccountData) => ({
+      ...account,
+      pubkey: toBase64(account.pubkey),
+    }));
+    accountsDiv.textContent = JSON.stringify(prettyAccounts, null, "\n");
+    const accountNumber = 0;
+    accountNumberInput.max = accounts.length - 1;
+    accountNumberInput.value = accountNumber;
     const address = accounts[0].address;
     addressInput.value = address;
-    messageTextArea.textContent = createMessage(address);
+    messageTextArea.textContent = createMessage(accountNumber, address);
   } catch (error) {
     accountsDiv.textContent = error;
   }
@@ -54,10 +80,11 @@ window.sign = async function sign(): Promise<void> {
   signatureDiv.textContent = "Loading...";
 
   try {
+    const accountNumber = document.getElementById("account-number").value;
     const address = document.getElementById("address").value;
     const rawMessage = document.getElementById("message").textContent;
     const message = JSON.stringify(JSON.parse(rawMessage));
-    const signature = await signer.sign(address, toUtf8(message));
+    const signature = await signer.sign(address, toUtf8(message), undefined, parseInt(accountNumber, 10));
     signatureDiv.textContent = JSON.stringify(signature, null, "\t");
   } catch (error) {
     signatureDiv.textContent = error;
