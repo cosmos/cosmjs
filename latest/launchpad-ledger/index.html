@@ -67,13 +67,30 @@
 				<a href="#supported-platforms" id="supported-platforms" style="color: inherit; text-decoration: none;">
 					<h2>Supported platforms</h2>
 				</a>
-				<p>We use the
+				<p>This library works with Node.js as well as certain browsers. We use the
 					<a href="https://github.com/LedgerHQ/ledgerjs/tree/master/packages/hw-transport-webusb">@ledgerhq/hw-transport-webusb</a>
 					library to connect to Ledger devices from the browser via USB. You can check the
 					support status of this library
 				<a href="https://github.com/LedgerHQ/ledgerjs/tree/master/packages/hw-transport-webusb#support-status">here</a>.</p>
+				<p>Note the optional dependencies:</p>
+				<pre><code class="language-json">&quot;optionalDependencies&quot;: {
+  &quot;@ledgerhq/hw-transport-node-hid&quot;: &quot;^5.23.2&quot;,
+  &quot;@ledgerhq/hw-transport-webusb&quot;: &quot;^5.23.0&quot;
+}</code></pre>
+				<p>If you are using this library with Node.js you must install
+					<code>@ledgerhq/hw-transport-node-hid</code>. You’ll need <code>@ledgerhq/hw-transport-webusb</code>
+				for the browser.</p>
 				<a href="#running-the-demo" id="running-the-demo" style="color: inherit; text-decoration: none;">
 					<h2>Running the demo</h2>
+				</a>
+				<a href="#nodejs" id="nodejs" style="color: inherit; text-decoration: none;">
+					<h3>Node.js</h3>
+				</a>
+				<p>Connect the Ledger device via USB, open the Cosmos app, then run the demo (this
+				will also build the package):</p>
+				<pre><code class="language-sh">yarn demo-node</code></pre>
+				<a href="#browser" id="browser" style="color: inherit; text-decoration: none;">
+					<h3>Browser</h3>
 				</a>
 				<p>Build the package for web:</p>
 				<pre><code class="language-sh">yarn pack-web</code></pre>
@@ -113,13 +130,25 @@
 						<a href="interfaces/ledgerapperrorresponse.html" class="tsd-kind-icon">Ledger<wbr>App<wbr>Error<wbr>Response</a>
 					</li>
 					<li class=" tsd-kind-variable">
+						<a href="globals.html#accounts" class="tsd-kind-icon">accounts</a>
+					</li>
+					<li class=" tsd-kind-variable">
 						<a href="globals.html#cosmosbech32prefix" class="tsd-kind-icon">cosmos<wbr>Bech32<wbr>Prefix</a>
 					</li>
 					<li class=" tsd-kind-variable">
 						<a href="globals.html#cosmoshdpath" class="tsd-kind-icon">cosmos<wbr>HdPath</a>
 					</li>
 					<li class=" tsd-kind-variable">
+						<a href="globals.html#defaultchainid" class="tsd-kind-icon">default<wbr>Chain<wbr>Id</a>
+					</li>
+					<li class=" tsd-kind-variable">
 						<a href="globals.html#defaultinteractiontimeout" class="tsd-kind-icon">default<wbr>Interaction<wbr>Timeout</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#defaultmemo" class="tsd-kind-icon">default<wbr>Memo</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#defaultsequence" class="tsd-kind-icon">default<wbr>Sequence</a>
 					</li>
 					<li class=" tsd-kind-variable">
 						<a href="globals.html#document" class="tsd-kind-icon">document</a>
@@ -137,16 +166,22 @@
 						<a href="globals.html#createmessage" class="tsd-kind-icon">create<wbr>Message</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="globals.html#createtransport" class="tsd-kind-icon">create<wbr>Transport</a>
+						<a href="globals.html#getaccounts" class="tsd-kind-icon">get<wbr>Accounts</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#iswindows" class="tsd-kind-icon">is<wbr>Windows</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#sign" class="tsd-kind-icon">sign</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#unharden" class="tsd-kind-icon">unharden</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#verifybrowserissupported" class="tsd-kind-icon">verify<wbr>Browser<wbr>IsSupported</a>
+					</li>
+					<li class=" tsd-kind-object-literal">
+						<a href="globals.html#defaultfee" class="tsd-kind-icon">default<wbr>Fee</a>
 					</li>
 				</ul>
 			</nav>
