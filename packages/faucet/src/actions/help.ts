@@ -29,7 +29,7 @@ FAUCET_ADDRESS_PREFIX     The bech32 address prefix. Defaults to "cosmos".
 FAUCET_TOKENS             A comma separated list of token denoms, e.g.
                           "uatom" or "ucosm, mstake".
 FAUCET_CREDIT_AMOUNT_TKN  Send this amount of TKN to a user requesting TKN. TKN is
-                          a placeholder for the token's denom. Defaults to 10.
+                          a placeholder for the token's denom. Defaults to 10000000.
 FAUCET_REFILL_FACTOR      Send factor times credit amount on refilling. Defauls to 8.
 FAUCET_REFILL_THRESHOLD   Refill when balance gets below factor times credit amount.
                           Defaults to 20.
