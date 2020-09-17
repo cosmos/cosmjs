@@ -124,7 +124,7 @@ situation is different.
 ```
 curl --header "Content-Type: application/json" \
   --request POST \
-  --data '{"ticker":"ISA","address":"cosmos1yre6ac7qfgyfgvh58ph0rgw627rhw766y430qq"}' \
+  --data '{"denom":"ucosm","address":"cosmos1yre6ac7qfgyfgvh58ph0rgw627rhw766y430qq"}' \
   http://localhost:8000/credit
 ```
 

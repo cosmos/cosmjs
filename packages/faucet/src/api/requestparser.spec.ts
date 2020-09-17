@@ -6,9 +6,16 @@ describe("RequestParser", () => {
     expect(RequestParser.parseCreditBody(body)).toEqual({ address: "abc", denom: "utkn" });
   });
 
-  it("can process valid credit request with ticker", () => {
-    const body = { address: "abc", ticker: "TKN" };
-    expect(RequestParser.parseCreditBody(body)).toEqual({ address: "abc", ticker: "TKN" });
+  it("throws helpful error message when ticker is found", () => {
+    const oldBody = { address: "abc", ticker: "TKN" };
+    expect(() => RequestParser.parseCreditBody(oldBody)).toThrowError(
+      /The 'ticker' field was removed in CosmJS 0.23. Please use 'denom' instead./i,
+    );
+
+    const confusedBody = { address: "abc", ticker: "TKN", denom: "utkn" };
+    expect(() => RequestParser.parseCreditBody(confusedBody)).toThrowError(
+      /The 'ticker' field was removed in CosmJS 0.23. Please use 'denom' instead./i,
+    );
   });
 
   it("throws for invalid credit requests", () => {
@@ -26,64 +33,38 @@ describe("RequestParser", () => {
 
     // address unset
     {
-      const body = { ticker: "TKN" };
+      const body = { denom: "utkn" };
       expect(() => RequestParser.parseCreditBody(body)).toThrowError(/Property 'address' must be a string/i);
     }
 
     // address wrong type
     {
-      const body = { address: true, ticker: "TKN" };
+      const body = { address: true, denom: "utkn" };
       expect(() => RequestParser.parseCreditBody(body)).toThrowError(/Property 'address' must be a string/i);
     }
 
     // address empty
     {
-      const body = { address: "", ticker: "TKN" };
+      const body = { address: "", denom: "utkn" };
       expect(() => RequestParser.parseCreditBody(body)).toThrowError(/Property 'address' must not be empty/i);
     }
 
-    // denom and ticker unset
+    // denom unset
     {
       const body = { address: "abc" };
-      expect(() => RequestParser.parseCreditBody(body)).toThrowError(
-        /Exactly one of properties 'denom' or 'ticker' must be a string/i,
-      );
-    }
-
-    // denom and ticker both set
-    {
-      const body = { address: "abc", denom: "ustake", ticker: "COSM" };
-      expect(() => RequestParser.parseCreditBody(body)).toThrowError(
-        /Exactly one of properties 'denom' or 'ticker' must be a string/i,
-      );
+      expect(() => RequestParser.parseCreditBody(body)).toThrowError(/Property 'denom' must be a string/i);
     }
 
     // denom wrong type
     {
       const body = { address: "abc", denom: true };
-      expect(() => RequestParser.parseCreditBody(body)).toThrowError(
-        /Exactly one of properties 'denom' or 'ticker' must be a string/i,
-      );
+      expect(() => RequestParser.parseCreditBody(body)).toThrowError(/Property 'denom' must be a string/i);
     }
 
     // denom empty
     {
       const body = { address: "abc", denom: "" };
       expect(() => RequestParser.parseCreditBody(body)).toThrowError(/Property 'denom' must not be empty/i);
-    }
-
-    // ticker wrong type
-    {
-      const body = { address: "abc", ticker: true };
-      expect(() => RequestParser.parseCreditBody(body)).toThrowError(
-        /Exactly one of properties 'denom' or 'ticker' must be a string/i,
-      );
-    }
-
-    // ticker empty
-    {
-      const body = { address: "abc", ticker: "" };
-      expect(() => RequestParser.parseCreditBody(body)).toThrowError(/Property 'ticker' must not be empty/i);
     }
   });
 });
