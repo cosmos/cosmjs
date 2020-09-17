@@ -29,11 +29,9 @@ export class TokenManager {
     const amountFromEnv = process.env[`FAUCET_CREDIT_AMOUNT_${denom.toUpperCase()}`];
     const amount = amountFromEnv ? Uint53.fromString(amountFromEnv).toNumber() : defaultCreditAmount;
     const value = new Uint53(amount * factor.toNumber());
-
-    const meta = this.getTokenMetaForDenom(denom);
     return {
       amount: value.toString(),
-      denom: meta.denom,
+      denom: denom,
     };
   }
 
@@ -51,20 +49,12 @@ export class TokenManager {
 
   /** true iff the distributor account needs a refill */
   public needsRefill(account: MinimalAccount, denom: string): boolean {
-    const meta = this.getTokenMetaForDenom(denom);
-
-    const balanceAmount = account.balance.find((b) => b.denom === meta.denom);
+    const balanceAmount = account.balance.find((b) => b.denom === denom);
 
     const balance = Decimal.fromAtomics(balanceAmount ? balanceAmount.amount : "0", 0);
     const thresholdAmount = this.refillThreshold(denom);
     const threshold = Decimal.fromAtomics(thresholdAmount.amount, 0);
 
     return balance.isLessThan(threshold);
-  }
-
-  private getTokenMetaForDenom(denom: string): BankTokenMeta {
-    const match = this.config.bankTokens.find((token) => token.denom === denom);
-    if (!match) throw new Error(`No token found for denom: ${denom}`);
-    return match;
   }
 }
