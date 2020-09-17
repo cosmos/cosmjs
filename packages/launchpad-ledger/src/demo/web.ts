@@ -1,5 +1,5 @@
 import { toBase64, toUtf8 } from "@cosmjs/encoding";
-import { AccountData } from "@cosmjs/launchpad";
+import { AccountData, makeCosmoshubPath } from "@cosmjs/launchpad";
 
 import { LedgerSigner } from "../ledgersigner";
 
@@ -34,7 +34,7 @@ function createMessage(accountNumber: number, address: string): string {
 
 const signer = new LedgerSigner({
   testModeAllowed: true,
-  accountNumbers: [0, 1, 2],
+  hdPaths: [makeCosmoshubPath(0), makeCosmoshubPath(1), makeCosmoshubPath(2)],
 });
 
 window.updateMessage = (accountNumber: number) => {

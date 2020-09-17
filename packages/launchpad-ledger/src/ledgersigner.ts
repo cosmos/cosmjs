@@ -1,3 +1,4 @@
+import { HdPath } from "@cosmjs/crypto";
 import {
   AccountData,
   encodeSecp256k1Signature,
@@ -6,25 +7,16 @@ import {
   StdSignature,
 } from "@cosmjs/launchpad";
 
-import { LaunchpadLedger } from "./launchpadledger";
-
-export interface LedgerSignerOptions {
-  readonly accountNumbers?: readonly number[];
-  readonly prefix?: string;
-  readonly testModeAllowed?: boolean;
-}
+import { LaunchpadLedger, LaunchpadLedgerOptions } from "./launchpadledger";
 
 export class LedgerSigner implements OfflineSigner {
   private readonly ledger: LaunchpadLedger;
-  private readonly accountNumbers: readonly number[];
+  private readonly hdPaths: readonly HdPath[];
   private accounts?: readonly AccountData[];
 
-  constructor({ accountNumbers = [0], ...restOptions }: LedgerSignerOptions = {}) {
-    this.accountNumbers = accountNumbers;
-    this.ledger = new LaunchpadLedger({
-      ...restOptions,
-      hdPaths: accountNumbers.map(makeCosmoshubPath),
-    });
+  constructor(options: LaunchpadLedgerOptions = {}) {
+    this.hdPaths = options.hdPaths || [makeCosmoshubPath(0)];
+    this.ledger = new LaunchpadLedger(options);
   }
 
   public async getAccounts(): Promise<readonly AccountData[]> {
@@ -51,8 +43,7 @@ export class LedgerSigner implements OfflineSigner {
     }
 
     const accountForAddress = accounts[accountIndex];
-    const accountNumber = this.accountNumbers[accountIndex];
-    const hdPath = makeCosmoshubPath(accountNumber);
+    const hdPath = this.hdPaths[accountIndex];
     const signature = await this.ledger.sign(message, hdPath);
     return encodeSecp256k1Signature(accountForAddress.pubkey, signature);
   }
