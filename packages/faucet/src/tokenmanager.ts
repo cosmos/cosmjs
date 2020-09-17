@@ -55,9 +55,9 @@ export class TokenManager {
 
     const balanceAmount = account.balance.find((b) => b.denom === meta.denom);
 
-    const balance = Decimal.fromAtomics(balanceAmount ? balanceAmount.amount : "0", meta.fractionalDigits);
+    const balance = Decimal.fromAtomics(balanceAmount ? balanceAmount.amount : "0", 0);
     const thresholdAmount = this.refillThreshold(denom);
-    const threshold = Decimal.fromAtomics(thresholdAmount.amount, meta.fractionalDigits);
+    const threshold = Decimal.fromAtomics(thresholdAmount.amount, 0);
 
     return balance.isLessThan(threshold);
   }
@@ -65,12 +65,6 @@ export class TokenManager {
   private getTokenMetaForDenom(denom: string): BankTokenMeta {
     const match = this.config.bankTokens.find((token) => token.denom === denom);
     if (!match) throw new Error(`No token found for denom: ${denom}`);
-    return match;
-  }
-
-  private getTokenMetaForTicker(ticker: string): BankTokenMeta {
-    const match = this.config.bankTokens.find((token) => token.tickerSymbol === ticker);
-    if (!match) throw new Error(`No token found for ticker: ${ticker}`);
     return match;
   }
 }

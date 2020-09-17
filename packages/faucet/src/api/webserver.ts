@@ -35,7 +35,7 @@ export class Webserver {
         case "/status": {
           const [holder, ...distributors] = await faucet.loadAccounts();
           const availableTokens = await faucet.availableTokens();
-          const chainTokens = faucet.loadTokenTickers();
+          const chainTokens = faucet.configuredTokens();
           context.response.body = {
             status: "ok",
             ...chainConstants,
@@ -66,14 +66,13 @@ export class Webserver {
           }
 
           const availableTokens = await faucet.availableTokens();
-          const matchingToken = availableTokens.find((token) => token.denom === denom);
-          if (matchingToken === undefined) {
-            const tokens = JSON.stringify(availableTokens);
-            throw new HttpError(422, `Token is not available. Available tokens are: ${tokens}`);
+          const matchingDenom = availableTokens.find((availableDenom) => availableDenom === denom);
+          if (matchingDenom === undefined) {
+            throw new HttpError(422, `Token is not available. Available tokens are: ${availableTokens}`);
           }
 
           try {
-            await faucet.credit(address, matchingToken.denom);
+            await faucet.credit(address, matchingDenom);
           } catch (e) {
             console.error(e);
             throw new HttpError(500, "Sending tokens failed");

@@ -10,7 +10,6 @@ import * as constants from "./constants";
 import { debugAccount, logAccountsState, logSendJob } from "./debugging";
 import { createWallets } from "./profile";
 import { TokenConfiguration, TokenManager } from "./tokenmanager";
-import { BankTokenMeta } from "./tokens";
 import { MinimalAccount, SendJob } from "./types";
 
 function isDefined<X>(value: X | undefined): value is X {
@@ -73,16 +72,17 @@ export class Faucet {
   }
 
   /**
-   * Returns a list of ticker symbols of tokens owned by the the holder and configured in the faucet
+   * Returns a list of denoms of tokens owned by the the holder and configured in the faucet
    */
-  public async availableTokens(): Promise<readonly BankTokenMeta[]> {
+  public async availableTokens(): Promise<string[]> {
     const holderAccount = await this.readOnlyClient.getAccount(this.holderAddress);
     const balance = holderAccount ? holderAccount.balance : [];
 
     return balance
       .filter((b) => b.amount !== "0")
       .map((b) => this.tokenConfig.bankTokens.find((token) => token.denom == b.denom))
-      .filter(isDefined);
+      .filter(isDefined)
+      .map((token) => token.denom);
   }
 
   /**
@@ -107,8 +107,9 @@ export class Faucet {
     await this.send(job);
   }
 
-  public loadTokenTickers(): readonly string[] {
-    return this.tokenConfig.bankTokens.map((token) => token.tickerSymbol);
+  /** Returns a list to token denoms which are configured */
+  public configuredTokens(): readonly string[] {
+    return this.tokenConfig.bankTokens.map((token) => token.denom);
   }
 
   public async loadAccounts(): Promise<readonly MinimalAccount[]> {
@@ -134,14 +135,14 @@ export class Faucet {
   public async refill(): Promise<void> {
     if (this.logging) {
       console.info(`Connected to network: ${await this.readOnlyClient.getChainId()}`);
-      console.info(`Tokens on network: ${this.loadTokenTickers().join(", ")}`);
+      console.info(`Tokens on network: ${this.configuredTokens().join(", ")}`);
     }
 
     const accounts = await this.loadAccounts();
     if (this.logging) logAccountsState(accounts, this.tokenConfig);
     const [_, ...distributorAccounts] = accounts;
 
-    const availableTokenDenoms = (await this.availableTokens()).map((token) => token.denom);
+    const availableTokenDenoms = await this.availableTokens();
     if (this.logging) console.info("Available tokens:", availableTokenDenoms);
 
     const jobs: SendJob[] = [];
