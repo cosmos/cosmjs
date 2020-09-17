@@ -212,6 +212,54 @@ describe("Decimal", () => {
     });
   });
 
+  describe("minus", () => {
+    it("returns correct values", () => {
+      const zero = Decimal.fromUserInput("0", 5);
+      expect(Decimal.fromUserInput("0", 5).minus(zero).toString()).toEqual("0");
+      expect(Decimal.fromUserInput("1", 5).minus(zero).toString()).toEqual("1");
+      expect(Decimal.fromUserInput("2", 5).minus(zero).toString()).toEqual("2");
+      expect(Decimal.fromUserInput("2.8", 5).minus(zero).toString()).toEqual("2.8");
+      expect(Decimal.fromUserInput("0.12345", 5).minus(zero).toString()).toEqual("0.12345");
+
+      const one = Decimal.fromUserInput("1", 5);
+      expect(Decimal.fromUserInput("1", 5).minus(one).toString()).toEqual("0");
+      expect(Decimal.fromUserInput("2", 5).minus(one).toString()).toEqual("1");
+      expect(Decimal.fromUserInput("3", 5).minus(one).toString()).toEqual("2");
+      expect(Decimal.fromUserInput("3.8", 5).minus(one).toString()).toEqual("2.8");
+      expect(Decimal.fromUserInput("1.12345", 5).minus(one).toString()).toEqual("0.12345");
+
+      const oneDotFive = Decimal.fromUserInput("1.5", 5);
+      expect(Decimal.fromUserInput("1.5", 5).minus(oneDotFive).toString()).toEqual("0");
+      expect(Decimal.fromUserInput("2.5", 5).minus(oneDotFive).toString()).toEqual("1");
+      expect(Decimal.fromUserInput("3.5", 5).minus(oneDotFive).toString()).toEqual("2");
+      expect(Decimal.fromUserInput("4.3", 5).minus(oneDotFive).toString()).toEqual("2.8");
+      expect(Decimal.fromUserInput("1.62345", 5).minus(oneDotFive).toString()).toEqual("0.12345");
+
+      // original value remain unchanged
+      expect(zero.toString()).toEqual("0");
+      expect(one.toString()).toEqual("1");
+      expect(oneDotFive.toString()).toEqual("1.5");
+    });
+
+    it("throws for different fractional digits", () => {
+      const zero = Decimal.fromUserInput("0", 5);
+      expect(() => Decimal.fromUserInput("1", 1).minus(zero)).toThrowError(/do not match/i);
+      expect(() => Decimal.fromUserInput("1", 2).minus(zero)).toThrowError(/do not match/i);
+      expect(() => Decimal.fromUserInput("1", 3).minus(zero)).toThrowError(/do not match/i);
+      expect(() => Decimal.fromUserInput("1", 4).minus(zero)).toThrowError(/do not match/i);
+
+      expect(() => Decimal.fromUserInput("1", 6).minus(zero)).toThrowError(/do not match/i);
+      expect(() => Decimal.fromUserInput("1", 7).minus(zero)).toThrowError(/do not match/i);
+    });
+
+    it("throws for negative results", () => {
+      const one = Decimal.fromUserInput("1", 5);
+      expect(() => Decimal.fromUserInput("0", 5).minus(one)).toThrowError(/must not be negative/i);
+      expect(() => Decimal.fromUserInput("0.5", 5).minus(one)).toThrowError(/must not be negative/i);
+      expect(() => Decimal.fromUserInput("0.98765", 5).minus(one)).toThrowError(/must not be negative/i);
+    });
+  });
+
   describe("multiply", () => {
     it("returns correct values for Uint32", () => {
       const zero = Decimal.fromUserInput("0", 5);

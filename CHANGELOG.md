@@ -55,6 +55,10 @@
 - @cosmjs/utils: Add `assertDefined`.
 - @cosmjs/faucet: Rename binary from `cosmwasm-faucet` to `cosmos-faucet`.
 
+## 0.22.3 (2020-09-15)
+
+- @cosmjs/math: Add `Decimal.minus`.
+
 ## 0.22.2 (2020-08-11)
 
 - @cosmjs/faucet: Log errors for failed send transactions.

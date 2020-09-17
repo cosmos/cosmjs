@@ -26,6 +26,13 @@ export declare class Decimal {
    */
   plus(b: Decimal): Decimal;
   /**
+   * a.minus(b) returns a-b.
+   *
+   * Both values need to have the same fractional digits.
+   * The resulting difference needs to be non-negative.
+   */
+  minus(b: Decimal): Decimal;
+  /**
    * a.multiply(b) returns a*b.
    *
    * We only allow multiplication by unsigned integers to avoid rounding errors.
