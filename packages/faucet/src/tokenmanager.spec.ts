@@ -2,18 +2,7 @@ import { TokenConfiguration, TokenManager } from "./tokenmanager";
 import { MinimalAccount } from "./types";
 
 const dummyConfig: TokenConfiguration = {
-  bankTokens: [
-    {
-      tickerSymbol: "TOKENZ",
-      fractionalDigits: 6,
-      denom: "utokenz",
-    },
-    {
-      tickerSymbol: "TRASH",
-      fractionalDigits: 3,
-      denom: "mtrash",
-    },
-  ],
+  bankTokens: ["utokenz", "mtrash"],
 };
 
 describe("TokenManager", () => {

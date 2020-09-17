@@ -28,10 +28,10 @@ export async function start(args: readonly string[]): Promise<void> {
     constants.concurrency,
     true,
   );
-  const chainTokens = faucet.loadTokenTickers();
+  const chainTokens = faucet.configuredTokens();
   console.info("Chain tokens:", chainTokens);
   const accounts = await faucet.loadAccounts();
-  logAccountsState(accounts, constants.tokenConfig);
+  logAccountsState(accounts);
   let availableTokens = await faucet.availableTokens();
   console.info("Available tokens:", availableTokens);
   setInterval(async () => {

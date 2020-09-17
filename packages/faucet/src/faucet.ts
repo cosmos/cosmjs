@@ -10,7 +10,6 @@ import * as constants from "./constants";
 import { debugAccount, logAccountsState, logSendJob } from "./debugging";
 import { createWallets } from "./profile";
 import { TokenConfiguration, TokenManager } from "./tokenmanager";
-import { BankTokenMeta } from "./tokens";
 import { MinimalAccount, SendJob } from "./types";
 
 function isDefined<X>(value: X | undefined): value is X {
@@ -73,15 +72,15 @@ export class Faucet {
   }
 
   /**
-   * Returns a list of ticker symbols of tokens owned by the the holder and configured in the faucet
+   * Returns a list of denoms of tokens owned by the the holder and configured in the faucet
    */
-  public async availableTokens(): Promise<readonly BankTokenMeta[]> {
+  public async availableTokens(): Promise<string[]> {
     const holderAccount = await this.readOnlyClient.getAccount(this.holderAddress);
     const balance = holderAccount ? holderAccount.balance : [];
 
     return balance
       .filter((b) => b.amount !== "0")
-      .map((b) => this.tokenConfig.bankTokens.find((token) => token.denom == b.denom))
+      .map((b) => this.tokenConfig.bankTokens.find((token) => token == b.denom))
       .filter(isDefined);
   }
 
@@ -103,12 +102,13 @@ export class Faucet {
       recipient: recipient,
       amount: this.tokenManager.creditAmount(denom),
     };
-    if (this.logging) logSendJob(job, this.tokenConfig);
+    if (this.logging) logSendJob(job);
     await this.send(job);
   }
 
-  public loadTokenTickers(): readonly string[] {
-    return this.tokenConfig.bankTokens.map((token) => token.tickerSymbol);
+  /** Returns a list to token denoms which are configured */
+  public configuredTokens(): string[] {
+    return Array.from(this.tokenConfig.bankTokens);
   }
 
   public async loadAccounts(): Promise<readonly MinimalAccount[]> {
@@ -134,14 +134,14 @@ export class Faucet {
   public async refill(): Promise<void> {
     if (this.logging) {
       console.info(`Connected to network: ${await this.readOnlyClient.getChainId()}`);
-      console.info(`Tokens on network: ${this.loadTokenTickers().join(", ")}`);
+      console.info(`Tokens on network: ${this.configuredTokens().join(", ")}`);
     }
 
     const accounts = await this.loadAccounts();
-    if (this.logging) logAccountsState(accounts, this.tokenConfig);
+    if (this.logging) logAccountsState(accounts);
     const [_, ...distributorAccounts] = accounts;
 
-    const availableTokenDenoms = (await this.availableTokens()).map((token) => token.denom);
+    const availableTokenDenoms = await this.availableTokens();
     if (this.logging) console.info("Available tokens:", availableTokenDenoms);
 
     const jobs: SendJob[] = [];
@@ -154,7 +154,7 @@ export class Faucet {
         console.info(`Refilling ${denom} of:`);
         console.info(
           refillDistibutors.length
-            ? refillDistibutors.map((r) => `  ${debugAccount(r, this.tokenConfig)}`).join("\n")
+            ? refillDistibutors.map((r) => `  ${debugAccount(r)}`).join("\n")
             : "  none",
         );
       }
@@ -168,7 +168,7 @@ export class Faucet {
     }
     if (jobs.length > 0) {
       for (const job of jobs) {
-        if (this.logging) logSendJob(job, this.tokenConfig);
+        if (this.logging) logSendJob(job);
         // don't crash faucet when one send fails
         try {
           await this.send(job);
@@ -180,7 +180,7 @@ export class Faucet {
 
       if (this.logging) {
         console.info("Done refilling accounts.");
-        logAccountsState(await this.loadAccounts(), this.tokenConfig);
+        logAccountsState(await this.loadAccounts());
       }
     } else {
       if (this.logging) {

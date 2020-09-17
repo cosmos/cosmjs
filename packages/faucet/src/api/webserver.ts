@@ -6,7 +6,7 @@ import { isValidAddress } from "../addresses";
 import * as constants from "../constants";
 import { Faucet } from "../faucet";
 import { HttpError } from "./httperror";
-import { isCreditRequestBodyDataWithDenom, RequestParser } from "./requestparser";
+import { RequestParser } from "./requestparser";
 
 /** This will be passed 1:1 to the user */
 export interface ChainConstants {
@@ -35,7 +35,7 @@ export class Webserver {
         case "/status": {
           const [holder, ...distributors] = await faucet.loadAccounts();
           const availableTokens = await faucet.availableTokens();
-          const chainTokens = faucet.loadTokenTickers();
+          const chainTokens = faucet.configuredTokens();
           context.response.body = {
             status: "ok",
             ...chainConstants,
@@ -59,30 +59,20 @@ export class Webserver {
           const requestBody = context.request.body;
           const creditBody = RequestParser.parseCreditBody(requestBody);
 
-          const { address } = creditBody;
-          let denom: string | undefined;
-          let ticker: string | undefined;
-          if (isCreditRequestBodyDataWithDenom(creditBody)) {
-            ({ denom } = creditBody);
-          } else {
-            ({ ticker } = creditBody);
-          }
+          const { address, denom } = creditBody;
 
           if (!isValidAddress(address, constants.addressPrefix)) {
             throw new HttpError(400, "Address is not in the expected format for this chain.");
           }
 
           const availableTokens = await faucet.availableTokens();
-          const matchingToken = availableTokens.find(
-            (token) => token.denom === denom || token.tickerSymbol === ticker,
-          );
-          if (matchingToken === undefined) {
-            const tokens = JSON.stringify(availableTokens);
-            throw new HttpError(422, `Token is not available. Available tokens are: ${tokens}`);
+          const matchingDenom = availableTokens.find((availableDenom) => availableDenom === denom);
+          if (matchingDenom === undefined) {
+            throw new HttpError(422, `Token is not available. Available tokens are: ${availableTokens}`);
           }
 
           try {
-            await faucet.credit(address, matchingToken.denom);
+            await faucet.credit(address, matchingDenom);
           } catch (e) {
             console.error(e);
             throw new HttpError(500, "Sending tokens failed");

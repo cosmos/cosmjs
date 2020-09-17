@@ -14,18 +14,7 @@ function pendingWithoutWasmd(): void {
 
 const httpUrl = "http://localhost:1317";
 const defaultTokenConfig: TokenConfiguration = {
-  bankTokens: [
-    {
-      fractionalDigits: 6,
-      tickerSymbol: "COSM",
-      denom: "ucosm",
-    },
-    {
-      fractionalDigits: 6,
-      tickerSymbol: "STAKE",
-      denom: "ustake",
-    },
-  ],
+  bankTokens: ["ucosm", "ustake"],
 };
 const defaultAddressPrefix = "cosmos";
 
@@ -57,10 +46,7 @@ describe("Faucet", () => {
       pendingWithoutWasmd();
       const faucet = await Faucet.make(httpUrl, defaultAddressPrefix, defaultTokenConfig, faucetMnemonic, 3);
       const tickers = await faucet.availableTokens();
-      expect(tickers).toEqual([
-        { denom: "ucosm", tickerSymbol: "COSM", fractionalDigits: 6 },
-        { denom: "ustake", tickerSymbol: "STAKE", fractionalDigits: 6 },
-      ]);
+      expect(tickers).toEqual(["ucosm", "ustake"]);
     });
   });
 
@@ -147,12 +133,12 @@ describe("Faucet", () => {
     });
   });
 
-  describe("loadTokenTickers", () => {
+  describe("configuredTokens", () => {
     it("works", async () => {
       pendingWithoutWasmd();
       const faucet = await Faucet.make(httpUrl, defaultAddressPrefix, defaultTokenConfig, faucetMnemonic, 3);
-      const tickers = faucet.loadTokenTickers();
-      expect(tickers).toEqual(["COSM", "STAKE"]);
+      const tickers = faucet.configuredTokens();
+      expect(tickers).toEqual(["ucosm", "ustake"]);
     });
   });
 
