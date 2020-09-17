@@ -35,17 +35,24 @@
     "postbuild": "yarn move-types && yarn format-types",
     "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build",
     "test": "echo 'Please check README for information on how to manually run the demo'",
+    "demo-node": "yarn build-or-skip && node ./demo/node.js",
     "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet",
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.demo.config.js"
   },
   "dependencies": {
     "@cosmjs/launchpad": "^0.22.2",
     "@cosmjs/utils": "^0.22.2",
-    "@ledgerhq/hw-transport-webusb": "^5.23.0",
     "ledger-cosmos-js": "^2.1.7",
     "semver": "^7.3.2"
   },
+  "optionalDependencies": {
+    "@ledgerhq/hw-transport-node-hid": "^5.23.2",
+    "@ledgerhq/hw-transport-webusb": "^5.23.0"
+  },
   "devDependencies": {
+    "@ledgerhq/hw-transport-node-hid": "^5.23.2",
+    "@ledgerhq/hw-transport-webusb": "^5.23.0",
+    "@types/ledgerhq__hw-transport-node-hid": "^4.22.1",
     "@types/ledgerhq__hw-transport-webusb": "^4.70.0",
     "@types/semver": "^7.3.3"
   }

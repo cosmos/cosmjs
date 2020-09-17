@@ -22,7 +22,7 @@ module.exports = {
   rules: {
     curly: ["warn", "multi-line", "consistent"],
     "no-bitwise": "warn",
-    "no-console": ["warn", { allow: ["error", "info", "warn"] }],
+    "no-console": ["warn", { allow: ["error", "info", "table", "warn"] }],
     "no-param-reassign": "warn",
     "no-shadow": "warn",
     "no-unused-vars": "off", // disabled in favour of @typescript-eslint/no-unused-vars, see https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-unused-vars.md

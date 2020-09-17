@@ -1,18 +1,25 @@
-import { AccountData, encodeSecp256k1Signature, OfflineSigner, StdSignature } from "@cosmjs/launchpad";
+import { HdPath } from "@cosmjs/crypto";
+import {
+  AccountData,
+  encodeSecp256k1Signature,
+  makeCosmoshubPath,
+  OfflineSigner,
+  StdSignature,
+} from "@cosmjs/launchpad";
 
 import { LaunchpadLedger, LaunchpadLedgerOptions } from "./launchpadledger";
 
 export class LedgerSigner implements OfflineSigner {
   private readonly ledger: LaunchpadLedger;
+  private readonly hdPaths: readonly HdPath[];
   private accounts?: readonly AccountData[];
 
-  constructor(options?: LaunchpadLedgerOptions) {
+  constructor(options: LaunchpadLedgerOptions = {}) {
+    this.hdPaths = options.hdPaths || [makeCosmoshubPath(0)];
     this.ledger = new LaunchpadLedger(options);
   }
 
   public async getAccounts(): Promise<readonly AccountData[]> {
-    await this.ledger.connect();
-
     if (!this.accounts) {
       const pubkeys = await this.ledger.getPubkeys();
       this.accounts = await Promise.all(
@@ -28,16 +35,16 @@ export class LedgerSigner implements OfflineSigner {
   }
 
   public async sign(address: string, message: Uint8Array): Promise<StdSignature> {
-    await this.ledger.connect();
-
     const accounts = this.accounts || (await this.getAccounts());
-    const accountForAddress = accounts.find((account) => account.address === address);
+    const accountIndex = accounts.findIndex((account) => account.address === address);
 
-    if (!accountForAddress) {
+    if (accountIndex === -1) {
       throw new Error(`Address ${address} not found in wallet`);
     }
 
-    const signature = await this.ledger.sign(message);
+    const accountForAddress = accounts[accountIndex];
+    const hdPath = this.hdPaths[accountIndex];
+    const signature = await this.ledger.sign(message, hdPath);
     return encodeSecp256k1Signature(accountForAddress.pubkey, signature);
   }
 }
