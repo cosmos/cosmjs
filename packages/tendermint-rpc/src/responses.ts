@@ -188,8 +188,7 @@ export interface TxProof {
   readonly proof: {
     readonly total: number;
     readonly index: number;
-    /** Optional because does not exist in Tendermint 0.25.x */
-    readonly leafHash?: Uint8Array;
+    readonly leafHash: Uint8Array;
     readonly aunts: readonly Uint8Array[];
   };
 }

@@ -50,6 +50,8 @@
   and `LaunchpadLedger` for more fine-grained access.
 - @cosmjs/math: Add `.multiply` method to `Decimal` class.
 - @cosmjs/tendermint-rpc: Make `BroadcastTxCommitResponse.height` non-optional.
+- @cosmjs/tendermint-rpc: Make `TxProof.proof.leafHash` non-optional because it
+  is always set.
 - @cosmjs/tendermint-rpc: Change type of `GenesisResponse.appState` to
   `Record<string, unknown> | undefined`.
 - @cosmjs/utils: Add `assertDefined`.
