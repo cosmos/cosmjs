@@ -1,7 +1,13 @@
+export interface ExpectedValues {
+  readonly appCreator: string;
+  readonly blockVersion: number;
+}
+
 export interface TendermintInstance {
   readonly url: string;
   readonly version: string;
-  readonly appCreator: string;
+  /** Values we expect in the backend */
+  readonly expected: ExpectedValues;
 }
 
 /**
@@ -20,7 +26,10 @@ export const tendermintInstances: readonly TendermintInstance[] = [
   {
     url: "localhost:11133",
     version: "0.33.x",
-    appCreator: "Cosmoshi Netowoko",
+    expected: {
+      appCreator: "Cosmoshi Netowoko",
+      blockVersion: 10,
+    },
   },
 ];
 

@@ -8,7 +8,7 @@ import { Stream } from "xstream";
 import { Adaptor } from "./adaptor";
 import { adaptorForVersion } from "./adaptorforversion";
 import { Client } from "./client";
-import { tendermintInstances } from "./config.spec";
+import { ExpectedValues, tendermintInstances } from "./config.spec";
 import { buildQuery } from "./requests";
 import * as responses from "./responses";
 import { HttpClient, RpcClient, WebsocketClient } from "./rpcclients";
@@ -41,7 +41,7 @@ function randomString(): string {
     .join("");
 }
 
-function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor): void {
+function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, expected: ExpectedValues): void {
   it("can connect to tendermint with known version", async () => {
     pendingWithoutTendermint();
     const client = new Client(rpcFactory(), adaptor);
@@ -238,7 +238,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor): void {
         // num_txs: jasmine.stringMatching(nonNegativeIntegerMatcher),
         header: jasmine.objectContaining({
           version: {
-            block: 10,
+            block: expected.blockVersion,
             app: 1,
           },
           chainId: jasmine.stringMatching(chainIdMatcher),
@@ -371,7 +371,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor): void {
   });
 }
 
-function websocketTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, appCreator: string): void {
+function websocketTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, expected: ExpectedValues): void {
   it("can subscribe to block header events", (done) => {
     pendingWithoutTendermint();
 
@@ -539,7 +539,7 @@ function websocketTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, appCr
 
     const events: responses.TxEvent[] = [];
     const client = new Client(rpcFactory(), adaptor);
-    const query = buildQuery({ tags: [{ key: "app.creator", value: appCreator }] });
+    const query = buildQuery({ tags: [{ key: "app.creator", value: expected.appCreator }] });
     const stream = client.subscribeTx(query);
     expect(stream).toBeTruthy();
     const subscription = stream.subscribe({
@@ -622,7 +622,7 @@ function websocketTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, appCr
   });
 }
 
-for (const { url, version, appCreator } of tendermintInstances) {
+for (const { url, version, expected } of tendermintInstances) {
   describe(`Client ${version}`, () => {
     it("can connect to a given url", async () => {
       pendingWithoutTendermint();
@@ -654,7 +654,7 @@ for (const { url, version, appCreator } of tendermintInstances) {
 
     describe("With HttpClient", () => {
       const adaptor = adaptorForVersion(version);
-      defaultTestSuite(() => new HttpClient(url), adaptor);
+      defaultTestSuite(() => new HttpClient(url), adaptor, expected);
     });
 
     describe("With WebsocketClient", () => {
@@ -662,8 +662,8 @@ for (const { url, version, appCreator } of tendermintInstances) {
       const onError = process.env.TENDERMINT_ENABLED ? console.error : () => 0;
       const factory = (): WebsocketClient => new WebsocketClient(url, onError);
       const adaptor = adaptorForVersion(version);
-      defaultTestSuite(factory, adaptor);
-      websocketTestSuite(factory, adaptor, appCreator);
+      defaultTestSuite(factory, adaptor, expected);
+      websocketTestSuite(factory, adaptor, expected);
     });
   });
 }
