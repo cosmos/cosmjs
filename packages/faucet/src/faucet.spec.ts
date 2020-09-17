@@ -14,14 +14,7 @@ function pendingWithoutWasmd(): void {
 
 const httpUrl = "http://localhost:1317";
 const defaultTokenConfig: TokenConfiguration = {
-  bankTokens: [
-    {
-      denom: "ucosm",
-    },
-    {
-      denom: "ustake",
-    },
-  ],
+  bankTokens: ["ucosm", "ustake"],
 };
 const defaultAddressPrefix = "cosmos";
 

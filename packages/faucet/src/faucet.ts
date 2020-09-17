@@ -80,9 +80,8 @@ export class Faucet {
 
     return balance
       .filter((b) => b.amount !== "0")
-      .map((b) => this.tokenConfig.bankTokens.find((token) => token.denom == b.denom))
-      .filter(isDefined)
-      .map((token) => token.denom);
+      .map((b) => this.tokenConfig.bankTokens.find((token) => token == b.denom))
+      .filter(isDefined);
   }
 
   /**
@@ -103,13 +102,13 @@ export class Faucet {
       recipient: recipient,
       amount: this.tokenManager.creditAmount(denom),
     };
-    if (this.logging) logSendJob(job, this.tokenConfig);
+    if (this.logging) logSendJob(job);
     await this.send(job);
   }
 
   /** Returns a list to token denoms which are configured */
-  public configuredTokens(): readonly string[] {
-    return this.tokenConfig.bankTokens.map((token) => token.denom);
+  public configuredTokens(): string[] {
+    return Array.from(this.tokenConfig.bankTokens);
   }
 
   public async loadAccounts(): Promise<readonly MinimalAccount[]> {
@@ -139,7 +138,7 @@ export class Faucet {
     }
 
     const accounts = await this.loadAccounts();
-    if (this.logging) logAccountsState(accounts, this.tokenConfig);
+    if (this.logging) logAccountsState(accounts);
     const [_, ...distributorAccounts] = accounts;
 
     const availableTokenDenoms = await this.availableTokens();
@@ -155,7 +154,7 @@ export class Faucet {
         console.info(`Refilling ${denom} of:`);
         console.info(
           refillDistibutors.length
-            ? refillDistibutors.map((r) => `  ${debugAccount(r, this.tokenConfig)}`).join("\n")
+            ? refillDistibutors.map((r) => `  ${debugAccount(r)}`).join("\n")
             : "  none",
         );
       }
@@ -169,7 +168,7 @@ export class Faucet {
     }
     if (jobs.length > 0) {
       for (const job of jobs) {
-        if (this.logging) logSendJob(job, this.tokenConfig);
+        if (this.logging) logSendJob(job);
         // don't crash faucet when one send fails
         try {
           await this.send(job);
@@ -181,7 +180,7 @@ export class Faucet {
 
       if (this.logging) {
         console.info("Done refilling accounts.");
-        logAccountsState(await this.loadAccounts(), this.tokenConfig);
+        logAccountsState(await this.loadAccounts());
       }
     } else {
       if (this.logging) {

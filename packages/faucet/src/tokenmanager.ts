@@ -1,7 +1,6 @@
 import { Coin } from "@cosmjs/launchpad";
 import { Decimal, Uint53 } from "@cosmjs/math";
 
-import { BankTokenMeta } from "./tokens";
 import { MinimalAccount } from "./types";
 
 const defaultCreditAmount = 10_000_000;
@@ -14,7 +13,7 @@ const defaultRefillThresholdFactor = 8;
 
 export interface TokenConfiguration {
   /** Supported tokens of the Cosmos SDK bank module */
-  readonly bankTokens: readonly BankTokenMeta[];
+  readonly bankTokens: readonly string[];
 }
 
 export class TokenManager {
