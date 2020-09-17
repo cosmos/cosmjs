@@ -5,6 +5,7 @@ command -v shellcheck > /dev/null && shellcheck "$0"
 # Find latest patch releases at https://hub.docker.com/r/tendermint/tendermint/tags/
 declare -a TM_VERSIONS
 TM_VERSIONS[33]=v0.33.5
+TM_VERSIONS[34]=latest
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 

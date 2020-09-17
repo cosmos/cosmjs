@@ -31,6 +31,14 @@ export const tendermintInstances: readonly TendermintInstance[] = [
       blockVersion: 10,
     },
   },
+  {
+    url: "localhost:11134",
+    version: "0.34.x",
+    expected: {
+      appCreator: "Cosmoshi Netowoko",
+      blockVersion: 11,
+    },
+  },
 ];
 
 export const defaultInstance: TendermintInstance = tendermintInstances[0];
