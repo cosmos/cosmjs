@@ -236,17 +236,15 @@ interface RpcBlockResultsResponse {
   readonly txs_results: readonly RpcTxData[] | null;
   readonly begin_block_events: readonly RpcEvent[] | null;
   readonly end_block_events: readonly RpcEvent[] | null;
-  readonly validator_updates: null;
-  readonly consensus_param_updates: null;
+  readonly validator_updates: readonly RpcValidatorUpdate[] | null;
+  readonly consensus_param_updates: RpcConsensusParams | null;
 }
 
 function decodeBlockResults(data: RpcBlockResultsResponse): responses.BlockResultsResponse {
-  const results = optional(data.txs_results, [] as readonly RpcTxData[]);
-  const validatorUpdates = optional(data.validator_updates, [] as readonly RpcValidatorUpdate[]);
   return {
     height: Integer.parse(assertNotEmpty(data.height)),
-    results: results.map(decodeTxData),
-    validatorUpdates: validatorUpdates.map(decodeValidatorUpdate),
+    results: (data.txs_results || []).map(decodeTxData),
+    validatorUpdates: (data.validator_updates || []).map(decodeValidatorUpdate),
     consensusUpdates: may(decodeConsensusParams, data.consensus_param_updates),
     beginBlockEvents: decodeEvents(data.begin_block_events || []),
     endBlockEvents: decodeEvents(data.end_block_events || []),
