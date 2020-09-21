@@ -138,8 +138,7 @@ export interface TxData {
   readonly code: number;
   readonly log?: string;
   readonly data?: Uint8Array;
-  readonly tags?: readonly Tag[];
-  readonly events?: readonly Event[];
+  readonly events: readonly Event[];
 }
 export interface TxProof {
   readonly data: Uint8Array;
