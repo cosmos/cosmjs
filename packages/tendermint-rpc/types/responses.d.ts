@@ -47,8 +47,8 @@ export interface BlockResultsResponse {
   readonly results: readonly TxData[];
   readonly validatorUpdates: readonly Validator[];
   readonly consensusUpdates?: ConsensusParams;
-  readonly beginBlock?: readonly Tag[];
-  readonly endBlock?: readonly Tag[];
+  readonly beginBlock?: readonly Attribute[];
+  readonly endBlock?: readonly Attribute[];
 }
 export interface BlockchainResponse {
   readonly lastHeight: number;
@@ -126,13 +126,14 @@ export interface TxEvent {
 export declare const getTxEventHeight: (event: TxEvent) => number;
 export declare const getHeaderEventHeight: (event: NewBlockHeaderEvent) => number;
 export declare const getBlockEventHeight: (event: NewBlockEvent) => number;
-export interface Tag {
+/** An event attribute */
+export interface Attribute {
   readonly key: Uint8Array;
   readonly value: Uint8Array;
 }
 export interface Event {
   readonly type: string;
-  readonly attributes: readonly Tag[];
+  readonly attributes: readonly Attribute[];
 }
 export interface TxData {
   readonly code: number;

@@ -90,31 +90,31 @@ function decodeAbciQuery(data: RpcAbciQueryResponse): responses.AbciQueryRespons
   };
 }
 
-interface RpcTag {
+interface RpcAttribute {
   readonly key: Base64String;
   readonly value: Base64String;
 }
 
-function decodeTag(tag: RpcTag): responses.Tag {
+function decodeAttribute(attribute: RpcAttribute): responses.Attribute {
   return {
-    key: Base64.decode(assertNotEmpty(tag.key)),
-    value: Base64.decode(assertNotEmpty(tag.value)),
+    key: Base64.decode(assertNotEmpty(attribute.key)),
+    value: Base64.decode(assertNotEmpty(attribute.value)),
   };
 }
 
-function decodeTags(tags: readonly RpcTag[]): readonly responses.Tag[] {
-  return assertArray(tags).map(decodeTag);
+function decodeAttributes(attributes: readonly RpcAttribute[]): responses.Attribute[] {
+  return assertArray(attributes).map(decodeAttribute);
 }
 
 interface RpcEvent {
   readonly type: string;
-  readonly attributes: readonly RpcTag[];
+  readonly attributes: readonly RpcAttribute[];
 }
 
 function decodeEvent(event: RpcEvent): responses.Event {
   return {
     type: event.type,
-    attributes: decodeTags(event.attributes),
+    attributes: decodeAttributes(event.attributes),
   };
 }
 
@@ -248,8 +248,8 @@ function decodeBlockResults(data: RpcBlockResultsResponse): responses.BlockResul
     results: results.map(decodeTxData),
     validatorUpdates: validatorUpdates.map(decodeValidatorUpdate),
     consensusUpdates: may(decodeConsensusParams, data.consensus_param_updates),
-    beginBlock: may(decodeTags, data.begin_block_events),
-    endBlock: may(decodeTags, data.end_block_events),
+    beginBlock: may(decodeAttributes, data.begin_block_events),
+    endBlock: may(decodeAttributes, data.end_block_events),
   };
 }
 
