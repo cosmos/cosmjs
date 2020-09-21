@@ -510,7 +510,6 @@ function websocketTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, expec
     const subscription = stream.subscribe({
       next: (event) => {
         expect(event.height).toBeGreaterThan(0);
-        expect(event.index).toEqual(0);
         expect(event.result).toBeTruthy();
         expect(event.result.events.length).toBeGreaterThanOrEqual(1);
 
@@ -557,7 +556,6 @@ function websocketTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, expec
     const subscription = stream.subscribe({
       next: (event) => {
         expect(event.height).toBeGreaterThan(0);
-        expect(event.index).toEqual(0);
         expect(event.result).toBeTruthy();
         expect(event.result.events.length).toBeGreaterThanOrEqual(1);
         events.push(event);

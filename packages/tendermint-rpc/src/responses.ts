@@ -153,7 +153,8 @@ export interface TxEvent {
   readonly tx: TxBytes;
   readonly hash: TxHash;
   readonly height: number;
-  readonly index: number;
+  /** @deprecated this value is not set in Tendermint 0.34+ */
+  readonly index?: number;
   readonly result: TxData;
 }
 
