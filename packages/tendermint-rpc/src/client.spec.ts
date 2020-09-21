@@ -119,7 +119,6 @@ function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor): void {
     const client = new Client(rpcFactory(), adaptor);
 
     expect(await client.block()).toBeTruthy();
-    expect(await client.blockResults(3)).toBeTruthy();
     expect(await client.commit(4)).toBeTruthy();
     expect(await client.genesis()).toBeTruthy();
     expect(await client.health()).toBeNull();
@@ -140,6 +139,22 @@ function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor): void {
       expect(status.validatorInfo.votingPower).toBeGreaterThan(0);
       expect(status.syncInfo.catchingUp).toEqual(false);
       expect(status.syncInfo.latestBlockHeight).toBeGreaterThanOrEqual(1);
+
+      client.disconnect();
+    });
+  });
+
+  describe("blockResults", () => {
+    it("works", async () => {
+      pendingWithoutTendermint();
+      const client = new Client(rpcFactory(), adaptor);
+
+      const height = 3;
+      const results = await client.blockResults(height);
+      expect(results.height).toEqual(height);
+      expect(results.results).toEqual([]);
+      expect(results.beginBlockEvents).toEqual([]);
+      expect(results.endBlockEvents).toEqual([]);
 
       client.disconnect();
     });

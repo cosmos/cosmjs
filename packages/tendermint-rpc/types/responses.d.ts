@@ -47,8 +47,8 @@ export interface BlockResultsResponse {
   readonly results: readonly TxData[];
   readonly validatorUpdates: readonly Validator[];
   readonly consensusUpdates?: ConsensusParams;
-  readonly beginBlock?: readonly Attribute[];
-  readonly endBlock?: readonly Attribute[];
+  readonly beginBlockEvents: readonly Event[];
+  readonly endBlockEvents: readonly Event[];
 }
 export interface BlockchainResponse {
   readonly lastHeight: number;

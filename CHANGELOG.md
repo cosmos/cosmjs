@@ -56,6 +56,9 @@
   `Record<string, unknown> | undefined`.
 - @cosmjs/tendermint-rpc: Remove obsolete `TxData.tags` and make `TxData.events`
   non-optional. Rename `Tag` to `Attribute`.
+- @cosmjs/tendermint-rpc: Remove obsolete `BlockResultsResponse.beginBlock` and
+  `.beginBlock`. The new `.beginBlockEvents` and `.endBlockEvents` now parse the
+  events correctly.
 - @cosmjs/utils: Add `assertDefined`.
 - @cosmjs/faucet: Rename binary from `cosmwasm-faucet` to `cosmos-faucet`.
 

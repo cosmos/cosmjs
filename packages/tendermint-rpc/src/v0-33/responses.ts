@@ -234,8 +234,8 @@ function decodeConsensusParams(data: RpcConsensusParams): responses.ConsensusPar
 interface RpcBlockResultsResponse {
   readonly height: IntegerString;
   readonly txs_results: readonly RpcTxData[] | null;
-  readonly begin_block_events: null;
-  readonly end_block_events: null;
+  readonly begin_block_events: readonly RpcEvent[] | null;
+  readonly end_block_events: readonly RpcEvent[] | null;
   readonly validator_updates: null;
   readonly consensus_param_updates: null;
 }
@@ -248,8 +248,8 @@ function decodeBlockResults(data: RpcBlockResultsResponse): responses.BlockResul
     results: results.map(decodeTxData),
     validatorUpdates: validatorUpdates.map(decodeValidatorUpdate),
     consensusUpdates: may(decodeConsensusParams, data.consensus_param_updates),
-    beginBlock: may(decodeAttributes, data.begin_block_events),
-    endBlock: may(decodeAttributes, data.end_block_events),
+    beginBlockEvents: decodeEvents(data.begin_block_events || []),
+    endBlockEvents: decodeEvents(data.end_block_events || []),
   };
 }
 
