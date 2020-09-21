@@ -1,6 +1,8 @@
 export interface ExpectedValues {
   readonly appCreator: string;
+  readonly p2pVersion: number;
   readonly blockVersion: number;
+  readonly appVersion: number;
 }
 
 export interface TendermintInstance {
@@ -28,7 +30,9 @@ export const tendermintInstances: readonly TendermintInstance[] = [
     version: "0.33.x",
     expected: {
       appCreator: "Cosmoshi Netowoko",
+      p2pVersion: 7,
       blockVersion: 10,
+      appVersion: 1,
     },
   },
   {
@@ -36,7 +40,9 @@ export const tendermintInstances: readonly TendermintInstance[] = [
     version: "0.34.x",
     expected: {
       appCreator: "Cosmoshi Netowoko",
+      p2pVersion: 8,
       blockVersion: 11,
+      appVersion: 1,
     },
   },
 ];

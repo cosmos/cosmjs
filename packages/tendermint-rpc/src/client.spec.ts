@@ -133,12 +133,24 @@ function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, expecte
       const client = new Client(rpcFactory(), adaptor);
 
       const status = await client.status();
+
+      // node info
+      expect(status.nodeInfo.protocolVersion).toEqual({
+        p2p: expected.p2pVersion,
+        block: expected.blockVersion,
+        app: expected.appVersion,
+      });
+      expect(status.nodeInfo.network).toMatch(chainIdMatcher);
       expect(status.nodeInfo.other.size).toBeGreaterThanOrEqual(2);
       expect(status.nodeInfo.other.get("tx_index")).toEqual("on");
-      expect(status.validatorInfo.pubkey).toBeTruthy();
-      expect(status.validatorInfo.votingPower).toBeGreaterThan(0);
+
+      // sync info
       expect(status.syncInfo.catchingUp).toEqual(false);
       expect(status.syncInfo.latestBlockHeight).toBeGreaterThanOrEqual(1);
+
+      // validator info
+      expect(status.validatorInfo.pubkey).toBeTruthy();
+      expect(status.validatorInfo.votingPower).toBeGreaterThan(0);
 
       client.disconnect();
     });
@@ -239,7 +251,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, expecte
         header: jasmine.objectContaining({
           version: {
             block: expected.blockVersion,
-            app: 1,
+            app: expected.appVersion,
           },
           chainId: jasmine.stringMatching(chainIdMatcher),
         }),
