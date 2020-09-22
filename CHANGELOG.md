@@ -81,6 +81,9 @@
 - @cosmjs/tendermint-rpc: Remove trivial helpers `getTxEventHeight`,
   `getHeaderEventHeight` and `getBlockEventHeight` because they don't do
   anything else than accessing an object member.
+- @cosmjs/tendermint-rpc: Add support for connecting to Tendermint RPC 0.34.
+- @cosmjs/tendermint-rpc: Make `TxEvent.index` optional and deprecate it because
+  it is not set anymore in Tendermint 0.34.
 - @cosmjs/utils: Add `assertDefined`.
 - @cosmjs/faucet: Rename binary from `cosmwasm-faucet` to `cosmos-faucet`.
 
