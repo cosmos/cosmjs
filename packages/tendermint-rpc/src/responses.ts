@@ -157,10 +157,6 @@ export interface TxEvent {
   readonly result: TxData;
 }
 
-export const getTxEventHeight = (event: TxEvent): number => event.height;
-export const getHeaderEventHeight = (event: NewBlockHeaderEvent): number => event.height;
-export const getBlockEventHeight = (event: NewBlockEvent): number => event.header.height;
-
 // Helper items used above
 
 /** An event attribute */

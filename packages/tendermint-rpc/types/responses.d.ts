@@ -123,9 +123,6 @@ export interface TxEvent {
   readonly index: number;
   readonly result: TxData;
 }
-export declare const getTxEventHeight: (event: TxEvent) => number;
-export declare const getHeaderEventHeight: (event: NewBlockHeaderEvent) => number;
-export declare const getBlockEventHeight: (event: NewBlockEvent) => number;
 /** An event attribute */
 export interface Attribute {
   readonly key: Uint8Array;
