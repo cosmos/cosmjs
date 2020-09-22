@@ -90,31 +90,31 @@ function decodeAbciQuery(data: RpcAbciQueryResponse): responses.AbciQueryRespons
   };
 }
 
-interface RpcTag {
+interface RpcAttribute {
   readonly key: Base64String;
   readonly value: Base64String;
 }
 
-function decodeTag(tag: RpcTag): responses.Tag {
+function decodeAttribute(attribute: RpcAttribute): responses.Attribute {
   return {
-    key: Base64.decode(assertNotEmpty(tag.key)),
-    value: Base64.decode(assertNotEmpty(tag.value)),
+    key: Base64.decode(assertNotEmpty(attribute.key)),
+    value: Base64.decode(assertNotEmpty(attribute.value)),
   };
 }
 
-function decodeTags(tags: readonly RpcTag[]): readonly responses.Tag[] {
-  return assertArray(tags).map(decodeTag);
+function decodeAttributes(attributes: readonly RpcAttribute[]): responses.Attribute[] {
+  return assertArray(attributes).map(decodeAttribute);
 }
 
 interface RpcEvent {
   readonly type: string;
-  readonly attributes: readonly RpcTag[];
+  readonly attributes: readonly RpcAttribute[];
 }
 
 function decodeEvent(event: RpcEvent): responses.Event {
   return {
     type: event.type,
-    attributes: decodeTags(event.attributes),
+    attributes: decodeAttributes(event.attributes),
   };
 }
 
@@ -126,7 +126,7 @@ interface RpcTxData {
   readonly code?: number;
   readonly log?: string;
   readonly data?: Base64String;
-  readonly events?: readonly RpcEvent[];
+  readonly events: readonly RpcEvent[];
 }
 
 function decodeTxData(data: RpcTxData): responses.TxData {
@@ -134,7 +134,7 @@ function decodeTxData(data: RpcTxData): responses.TxData {
     data: may(Base64.decode, data.data),
     log: data.log,
     code: Integer.parse(assertNumber(optional<number>(data.code, 0))),
-    events: may(decodeEvents, data.events),
+    events: decodeEvents(data.events),
   };
 }
 
@@ -234,22 +234,20 @@ function decodeConsensusParams(data: RpcConsensusParams): responses.ConsensusPar
 interface RpcBlockResultsResponse {
   readonly height: IntegerString;
   readonly txs_results: readonly RpcTxData[] | null;
-  readonly begin_block_events: null;
-  readonly end_block_events: null;
-  readonly validator_updates: null;
-  readonly consensus_param_updates: null;
+  readonly begin_block_events: readonly RpcEvent[] | null;
+  readonly end_block_events: readonly RpcEvent[] | null;
+  readonly validator_updates: readonly RpcValidatorUpdate[] | null;
+  readonly consensus_param_updates: RpcConsensusParams | null;
 }
 
 function decodeBlockResults(data: RpcBlockResultsResponse): responses.BlockResultsResponse {
-  const results = optional(data.txs_results, [] as readonly RpcTxData[]);
-  const validatorUpdates = optional(data.validator_updates, [] as readonly RpcValidatorUpdate[]);
   return {
     height: Integer.parse(assertNotEmpty(data.height)),
-    results: results.map(decodeTxData),
-    validatorUpdates: validatorUpdates.map(decodeValidatorUpdate),
+    results: (data.txs_results || []).map(decodeTxData),
+    validatorUpdates: (data.validator_updates || []).map(decodeValidatorUpdate),
     consensusUpdates: may(decodeConsensusParams, data.consensus_param_updates),
-    beginBlock: may(decodeTags, data.begin_block_events),
-    endBlock: may(decodeTags, data.end_block_events),
+    beginBlockEvents: decodeEvents(data.begin_block_events || []),
+    endBlockEvents: decodeEvents(data.end_block_events || []),
   };
 }
 
