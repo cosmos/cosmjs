@@ -1,8 +1,6 @@
 import { StdSignDoc } from "./encoding";
 import { StdSignature } from "./types";
 
-export type PrehashType = "sha256" | "sha512" | null;
-
 export type Algo = "secp256k1" | "ed25519" | "sr25519";
 
 export interface AccountData {
@@ -24,9 +22,5 @@ export interface OfflineSigner {
    * @param signerAddress The address of the account that should sign the transaction
    * @param signDoc The content that should be signed
    */
-  readonly sign: (
-    signerAddress: string,
-    signDoc: StdSignDoc,
-    prehashType?: PrehashType,
-  ) => Promise<StdSignature>;
+  readonly sign: (signerAddress: string, signDoc: StdSignDoc) => Promise<StdSignature>;
 }

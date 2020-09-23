@@ -3,28 +3,11 @@ import {
   HdPath,
   isArgon2idOptions,
   Random,
-  Sha256,
-  Sha512,
   Slip10RawIndex,
   xchacha20NonceLength,
   Xchacha20poly1305Ietf,
 } from "@cosmjs/crypto";
 import { toAscii } from "@cosmjs/encoding";
-
-import { PrehashType } from "./signer";
-
-export function prehash(bytes: Uint8Array, type: PrehashType): Uint8Array {
-  switch (type) {
-    case null:
-      return new Uint8Array([...bytes]);
-    case "sha256":
-      return new Sha256(bytes).digest();
-    case "sha512":
-      return new Sha512(bytes).digest();
-    default:
-      throw new Error("Unknown prehash type");
-  }
-}
 
 /**
  * The Cosmoshub derivation path in the form `m/44'/118'/0'/0/a`

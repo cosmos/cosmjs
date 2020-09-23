@@ -49,6 +49,9 @@
   serialize a `StdSignDoc`: `makeStdSignDoc` and `serializeSignDoc`.
 - @cosmjs/launchpad: Let `OfflineSigner.sign` take an `StdSignDoc` instead of an
   encoded message.
+- @cosmjs/launchpad: Remove `PrehashType` and the prehash type argument in
+  `OfflineSigner.sign` because the signer now needs to know how to serialize an
+  `StdSignDoc`.
 - @cosmjs/launchpad-ledger: Add package supporting Ledger device integration for
   Launchpad. Two new classes are provided: `LedgerSigner` (for most use cases)
   and `LaunchpadLedger` for more fine-grained access.

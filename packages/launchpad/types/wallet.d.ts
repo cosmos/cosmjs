@@ -1,6 +1,4 @@
 import { HdPath } from "@cosmjs/crypto";
-import { PrehashType } from "./signer";
-export declare function prehash(bytes: Uint8Array, type: PrehashType): Uint8Array;
 /**
  * The Cosmoshub derivation path in the form `m/44'/118'/0'/0/a`
  * with 0-based account index `a`.
