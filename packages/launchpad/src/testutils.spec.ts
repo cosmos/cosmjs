@@ -44,8 +44,8 @@ export const faucet = {
   address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
 };
 
-export const validatorAddress = "cosmosvaloper1e9zn2ueue2m0edjhmsgsf03yfcmeg7m7xh5xu5";
-export const delegatorAddress = "cosmos1e9zn2ueue2m0edjhmsgsf03yfcmeg7m7rrqns8";
+export const validatorAddress = "cosmosvaloper103c7vm0c5mz85ecdy4ldftk4a3ydcyp2sscqrz";
+export const delegatorAddress = "cosmos103c7vm0c5mz85ecdy4ldftk4a3ydcyp24yv403";
 
 /** Unused account */
 export const unused = {
