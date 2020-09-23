@@ -7,7 +7,7 @@ import { GasPrice } from "./gas";
 import { MsgDelegate } from "./msgs";
 import { Secp256k1Wallet } from "./secp256k1wallet";
 import { PrivateSigningCosmosClient, SigningCosmosClient } from "./signingcosmosclient";
-import { makeRandomAddress, pendingWithoutWasmd, validatorAddress } from "./testutils.spec";
+import { makeRandomAddress, pendingWithoutWasmd, wasmd } from "./testutils.spec";
 
 const httpUrl = "http://localhost:1317";
 
@@ -160,7 +160,7 @@ describe("SigningCosmosClient", () => {
         type: "cosmos-sdk/MsgDelegate",
         value: {
           delegator_address: faucet.address,
-          validator_address: validatorAddress,
+          validator_address: wasmd.validator.address,
           amount: coin(1234, "ustake"),
         },
       };

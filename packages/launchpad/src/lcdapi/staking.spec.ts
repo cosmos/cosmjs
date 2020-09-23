@@ -10,11 +10,9 @@ import { SigningCosmosClient } from "../signingcosmosclient";
 import {
   bigDecimalMatcher,
   dateTimeStampMatcher,
-  delegatorAddress,
   faucet,
   nonNegativeIntegerMatcher,
   pendingWithoutWasmd,
-  validatorAddress,
   wasmd,
   wasmdEnabled,
 } from "../testutils.spec";
@@ -42,7 +40,7 @@ describe("StakingExtension", () => {
           type: "cosmos-sdk/MsgDelegate",
           value: {
             delegator_address: faucet.address,
-            validator_address: validatorAddress,
+            validator_address: wasmd.validator.address,
             amount: coin(25000, "ustake"),
           },
         };
@@ -65,7 +63,7 @@ describe("StakingExtension", () => {
           type: "cosmos-sdk/MsgUndelegate",
           value: {
             delegator_address: faucet.address,
-            validator_address: validatorAddress,
+            validator_address: wasmd.validator.address,
             amount: coin(100, "ustake"),
           },
         };
@@ -98,7 +96,7 @@ describe("StakingExtension", () => {
         result: [
           {
             delegator_address: faucet.address,
-            validator_address: validatorAddress,
+            validator_address: wasmd.validator.address,
             shares: jasmine.stringMatching(bigDecimalMatcher),
             balance: { denom: "ustake", amount: jasmine.stringMatching(nonNegativeIntegerMatcher) },
           },
@@ -117,7 +115,7 @@ describe("StakingExtension", () => {
       expect(result).toEqual([
         {
           delegator_address: faucet.address,
-          validator_address: validatorAddress,
+          validator_address: wasmd.validator.address,
           entries: jasmine.arrayContaining([
             {
               creation_height: jasmine.stringMatching(nonNegativeIntegerMatcher),
@@ -149,8 +147,8 @@ describe("StakingExtension", () => {
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: [
           {
-            operator_address: validatorAddress,
-            consensus_pubkey: wasmd.consensusPubkey,
+            operator_address: wasmd.validator.address,
+            consensus_pubkey: wasmd.validator.pubkey,
             jailed: false,
             status: BondStatus.Bonded,
             tokens: jasmine.stringMatching(nonNegativeIntegerMatcher),
@@ -183,12 +181,12 @@ describe("StakingExtension", () => {
     it("works", async () => {
       pendingWithoutWasmd();
       const client = makeStakingClient(wasmd.endpoint);
-      const response = await client.staking.delegatorValidator(faucet.address, validatorAddress);
+      const response = await client.staking.delegatorValidator(faucet.address, wasmd.validator.address);
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: {
-          operator_address: validatorAddress,
-          consensus_pubkey: wasmd.consensusPubkey,
+          operator_address: wasmd.validator.address,
+          consensus_pubkey: wasmd.validator.pubkey,
           jailed: false,
           status: BondStatus.Bonded,
           tokens: jasmine.stringMatching(nonNegativeIntegerMatcher),
@@ -220,12 +218,12 @@ describe("StakingExtension", () => {
     it("works", async () => {
       pendingWithoutWasmd();
       const client = makeStakingClient(wasmd.endpoint);
-      const response = await client.staking.delegation(faucet.address, validatorAddress);
+      const response = await client.staking.delegation(faucet.address, wasmd.validator.address);
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: {
           delegator_address: faucet.address,
-          validator_address: validatorAddress,
+          validator_address: wasmd.validator.address,
           shares: jasmine.stringMatching(bigDecimalMatcher),
           balance: { denom: "ustake", amount: jasmine.stringMatching(nonNegativeIntegerMatcher) },
         },
@@ -237,12 +235,15 @@ describe("StakingExtension", () => {
     it("works", async () => {
       pendingWithoutWasmd();
       const client = makeStakingClient(wasmd.endpoint);
-      const { height, result } = await client.staking.unbondingDelegation(faucet.address, validatorAddress);
+      const { height, result } = await client.staking.unbondingDelegation(
+        faucet.address,
+        wasmd.validator.address,
+      );
       expect(height).toMatch(nonNegativeIntegerMatcher);
       assert(result);
       expect(result).toEqual({
         delegator_address: faucet.address,
-        validator_address: validatorAddress,
+        validator_address: wasmd.validator.address,
         entries: jasmine.arrayContaining([
           {
             creation_height: jasmine.stringMatching(nonNegativeIntegerMatcher),
@@ -277,8 +278,8 @@ describe("StakingExtension", () => {
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: [
           {
-            operator_address: validatorAddress,
-            consensus_pubkey: wasmd.consensusPubkey,
+            operator_address: wasmd.validator.address,
+            consensus_pubkey: wasmd.validator.pubkey,
             jailed: false,
             status: BondStatus.Bonded,
             tokens: jasmine.stringMatching(nonNegativeIntegerMatcher),
@@ -324,8 +325,8 @@ describe("StakingExtension", () => {
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: [
           {
-            operator_address: validatorAddress,
-            consensus_pubkey: wasmd.consensusPubkey,
+            operator_address: wasmd.validator.address,
+            consensus_pubkey: wasmd.validator.pubkey,
             jailed: false,
             status: BondStatus.Bonded,
             tokens: jasmine.stringMatching(nonNegativeIntegerMatcher),
@@ -358,12 +359,12 @@ describe("StakingExtension", () => {
     it("works", async () => {
       pendingWithoutWasmd();
       const client = makeStakingClient(wasmd.endpoint);
-      const response = await client.staking.validator(validatorAddress);
+      const response = await client.staking.validator(wasmd.validator.address);
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: {
-          operator_address: validatorAddress,
-          consensus_pubkey: wasmd.consensusPubkey,
+          operator_address: wasmd.validator.address,
+          consensus_pubkey: wasmd.validator.pubkey,
           jailed: false,
           status: BondStatus.Bonded,
           tokens: jasmine.stringMatching(nonNegativeIntegerMatcher),
@@ -395,19 +396,19 @@ describe("StakingExtension", () => {
     it("works", async () => {
       pendingWithoutWasmd();
       const client = makeStakingClient(wasmd.endpoint);
-      const response = await client.staking.validatorDelegations(validatorAddress);
+      const response = await client.staking.validatorDelegations(wasmd.validator.address);
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: jasmine.arrayContaining([
           {
             delegator_address: faucet.address,
-            validator_address: validatorAddress,
+            validator_address: wasmd.validator.address,
             shares: jasmine.stringMatching(bigDecimalMatcher),
             balance: { denom: "ustake", amount: jasmine.stringMatching(nonNegativeIntegerMatcher) },
           },
           {
-            delegator_address: delegatorAddress,
-            validator_address: validatorAddress,
+            delegator_address: wasmd.validator.delegatorAddress,
+            validator_address: wasmd.validator.address,
             shares: "250000000.000000000000000000",
             balance: { denom: "ustake", amount: "250000000" },
           },
@@ -420,13 +421,13 @@ describe("StakingExtension", () => {
     it("works", async () => {
       pendingWithoutWasmd();
       const client = makeStakingClient(wasmd.endpoint);
-      const { height, result } = await client.staking.validatorUnbondingDelegations(validatorAddress);
+      const { height, result } = await client.staking.validatorUnbondingDelegations(wasmd.validator.address);
       expect(height).toMatch(nonNegativeIntegerMatcher);
       assert(result);
       expect(result).toEqual([
         {
           delegator_address: faucet.address,
-          validator_address: validatorAddress,
+          validator_address: wasmd.validator.address,
           entries: jasmine.arrayContaining([
             {
               creation_height: jasmine.stringMatching(nonNegativeIntegerMatcher),

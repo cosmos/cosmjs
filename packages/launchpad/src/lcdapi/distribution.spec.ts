@@ -13,7 +13,6 @@ import {
   faucet,
   nonNegativeIntegerMatcher,
   pendingWithoutWasmd,
-  validatorAddress,
   wasmd,
   wasmdEnabled,
 } from "../testutils.spec";
@@ -40,7 +39,7 @@ describe("DistributionExtension", () => {
         type: "cosmos-sdk/MsgDelegate",
         value: {
           delegator_address: faucet.address,
-          validator_address: validatorAddress,
+          validator_address: wasmd.validator.address,
           amount: coin(25000, "ustake"),
         },
       };
@@ -72,7 +71,7 @@ describe("DistributionExtension", () => {
         result: {
           rewards: [
             {
-              validator_address: validatorAddress,
+              validator_address: wasmd.validator.address,
               reward: null,
             },
           ],
@@ -86,7 +85,7 @@ describe("DistributionExtension", () => {
     it("works", async () => {
       pendingWithoutWasmd();
       const client = makeDistributionClient(wasmd.endpoint);
-      const response = await client.distribution.delegatorReward(faucet.address, validatorAddress);
+      const response = await client.distribution.delegatorReward(faucet.address, wasmd.validator.address);
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: [],
@@ -110,12 +109,12 @@ describe("DistributionExtension", () => {
     it("works", async () => {
       pendingWithoutWasmd();
       const client = makeDistributionClient(wasmd.endpoint);
-      const response = await client.distribution.validator(validatorAddress);
+      const response = await client.distribution.validator(wasmd.validator.address);
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: {
           // TODO: This smells like a bug in the backend to me
-          operator_address: Bech32.encode("cosmos", Bech32.decode(validatorAddress).data),
+          operator_address: Bech32.encode("cosmos", Bech32.decode(wasmd.validator.address).data),
           self_bond_rewards: [
             { denom: "ucosm", amount: jasmine.stringMatching(bigDecimalMatcher) },
             { denom: "ustake", amount: jasmine.stringMatching(bigDecimalMatcher) },
@@ -133,7 +132,7 @@ describe("DistributionExtension", () => {
     it("works", async () => {
       pendingWithoutWasmd();
       const client = makeDistributionClient(wasmd.endpoint);
-      const response = await client.distribution.validatorRewards(validatorAddress);
+      const response = await client.distribution.validatorRewards(wasmd.validator.address);
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: [
@@ -148,7 +147,7 @@ describe("DistributionExtension", () => {
     it("works", async () => {
       pendingWithoutWasmd();
       const client = makeDistributionClient(wasmd.endpoint);
-      const response = await client.distribution.validatorOutstandingRewards(validatorAddress);
+      const response = await client.distribution.validatorOutstandingRewards(wasmd.validator.address);
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: [

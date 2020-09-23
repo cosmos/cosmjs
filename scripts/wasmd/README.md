@@ -126,3 +126,27 @@ You should get output matching the following:
    degree tackle suggest window test behind mesh extra cover prepare oak script<br>
    Am/+YV0LaeqQPu7BDJuDHV7J8y68ptkGs10YS+9s71Nq<br>
    cosmos17d0jcz59jf68g52vq38tuuncmwwjk42u6mcxej
+6. **Ledger**: accounts for Ledger based demos and tests<br>
+   example indicate trick cereal hub fix civil host kiss version bird dash<br>
+   Address 0: cosmos1p6xs63q4g7np99ttv5nd3yzkt8n4qxa47w8aea<br>
+   Address 1: cosmos1meeu3jl268txxytwmmrsljk8rawh6n2majstn2<br>
+   Address 2: cosmos1cak6lnpfxs035xd88sq8e4zujsm8g2g97dxu5c<br>
+   Address 3: cosmos1x3x8kyypx8z6q7fx3gw65x29mhl5gg8qp4ynlr<br>
+   Address 4: cosmos18c27m2rj4lg74md03ujralvt562c097n8zpdf9<br>
+   Address 5: cosmos1q2y53e6x7s5mlddtd2qkcjr3nwr4dszv6fr9rt<br>
+   Address 6: cosmos1paa2gstlk7c98n27dw2g6tp6fyqvf32mm67qz3<br>
+   Address 7: cosmos1rvxjd8k6xvssz2eerfzemvat35pttfgr67yyzd<br>
+   Address 8: cosmos12zejt8d9xl70jd2333p4p265m2nr9h8gsaewk0<br>
+   Address 9: cosmos1exctm2036jtwyc9v3ftqfzmgnv9tdhj26v87uh<br>
+   Address 10: cosmos1f3pws3ztnp3s4nn5zxqdrl9vlqv5avkqmlrus4<br>
+   Pubkey 0: A66JoCNaNSXDsyj4qW7JgqXPTz5rOnfE6EKEArf4jJEK<br>
+   Pubkey 1: AtvmGuZvEN3NwL05BQdxl3XygUf+Vl/930fhFMt1HTyU<br>
+   Pubkey 2: A58dfmfVoKoTCteEzTHBC0OLJIBgzejGDVVEb8YW9vtJ<br>
+   Pubkey 3: A1wA01EixwcWJkdhI69ckGuQDX0NimhLCYdrQCegkOJF<br>
+   Pubkey 4: A9juq+VbP26qtVh71ANlwwJQ+ABTWIyHEKYrVwjmbYE6<br>
+   Pubkey 5: Ar4VUqiRYl75+TF3AExX8at3deeLj2O9mNMtBq2aVpym<br>
+   Pubkey 6: Ak/JoSXzu6+Rp2W0wT6CqfZfzlDOwebl7xVF/zmKX99Y<br>
+   Pubkey 7: AtmLZZGHeCiNuroPAzBK2NKeXKT68SwioLj4I8Oj35Mn<br>
+   Pubkey 8: AuaUr9GEMUBKeZrJD/dv9QL/zJmMxX7OA/sjRrvBFXS2<br>
+   Pubkey 9: AiV5uMzvzoD7hlF+GhYuRCnf8tP+0AlPMbtfVoYv3InI<br>
+   Pubkey 10: A2ZnLEcbpyjS30H5UF1vezq29aBcT9oo5EARATIW9Cpj

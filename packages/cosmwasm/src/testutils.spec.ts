@@ -48,7 +48,7 @@ export const wasmd = {
   chainId: "testing",
 };
 
-export const validatorAddress = "cosmosvaloper1e9zn2ueue2m0edjhmsgsf03yfcmeg7m7xh5xu5";
+export const validatorAddress = "cosmosvaloper103c7vm0c5mz85ecdy4ldftk4a3ydcyp2sscqrz";
 
 export const alice = {
   mnemonic: "enlist hip relief stomach skate base shallow young switch frequent cry park",
