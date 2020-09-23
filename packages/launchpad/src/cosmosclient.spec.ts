@@ -3,7 +3,7 @@ import { sleep } from "@cosmjs/utils";
 import { ReadonlyDate } from "readonly-date";
 
 import { assertIsBroadcastTxSuccess, CosmosClient, PrivateCosmosClient } from "./cosmosclient";
-import { makeStdSignDoc } from "./encoding";
+import { makeSignDoc } from "./encoding";
 import { findAttribute } from "./logs";
 import { MsgSend } from "./msgs";
 import { Secp256k1Wallet } from "./secp256k1wallet";
@@ -229,7 +229,7 @@ describe("CosmosClient", () => {
 
       const chainId = await client.getChainId();
       const { accountNumber, sequence } = await client.getSequence(faucet.address);
-      const signDoc = makeStdSignDoc([sendMsg], fee, chainId, memo, accountNumber, sequence);
+      const signDoc = makeSignDoc([sendMsg], fee, chainId, memo, accountNumber, sequence);
       const { signature } = await wallet.sign(walletAddress, signDoc);
       const signedTx: StdTx = {
         msg: [sendMsg],

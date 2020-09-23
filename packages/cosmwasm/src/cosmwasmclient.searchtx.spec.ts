@@ -6,7 +6,7 @@ import {
   isBroadcastTxFailure,
   isMsgSend,
   LcdClient,
-  makeStdSignDoc,
+  makeSignDoc,
   MsgSend,
   Secp256k1Wallet,
 } from "@cosmjs/launchpad";
@@ -103,7 +103,7 @@ describe("CosmWasmClient.searchTx", () => {
         };
         const { accountNumber, sequence } = await client.getSequence();
         const chainId = await client.getChainId();
-        const signDoc = makeStdSignDoc([sendMsg], fee, chainId, memo, accountNumber, sequence);
+        const signDoc = makeSignDoc([sendMsg], fee, chainId, memo, accountNumber, sequence);
         const { signature } = await wallet.sign(alice.address0, signDoc);
         const tx: CosmosSdkTx = {
           type: "cosmos-sdk/StdTx",

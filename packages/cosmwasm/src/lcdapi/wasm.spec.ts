@@ -10,7 +10,7 @@ import {
   coin,
   coins,
   LcdClient,
-  makeStdSignDoc,
+  makeSignDoc,
   OfflineSigner,
   Secp256k1Wallet,
   setupAuthExtension,
@@ -125,7 +125,7 @@ async function executeContract(
   };
 
   const { account_number, sequence } = (await client.auth.account(alice.address0)).result.value;
-  const signDoc = makeStdSignDoc([theMsg], fee, wasmd.chainId, memo, account_number, sequence);
+  const signDoc = makeSignDoc([theMsg], fee, wasmd.chainId, memo, account_number, sequence);
   const { signature } = await signer.sign(alice.address0, signDoc);
   const signedTx = makeSignedTx(theMsg, fee, memo, signature);
   return client.broadcastTx(signedTx);

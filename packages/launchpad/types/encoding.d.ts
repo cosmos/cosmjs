@@ -13,7 +13,7 @@ export interface StdSignDoc {
   readonly msgs: readonly Msg[];
   readonly memo: string;
 }
-export declare function makeStdSignDoc(
+export declare function makeSignDoc(
   msgs: readonly Msg[],
   fee: StdFee,
   chainId: string,

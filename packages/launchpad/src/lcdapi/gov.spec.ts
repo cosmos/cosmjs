@@ -3,7 +3,7 @@ import { sleep } from "@cosmjs/utils";
 
 import { coins } from "../coins";
 import { assertIsBroadcastTxSuccess } from "../cosmosclient";
-import { makeStdSignDoc } from "../encoding";
+import { makeSignDoc } from "../encoding";
 import { Secp256k1Wallet } from "../secp256k1wallet";
 import { SigningCosmosClient } from "../signingcosmosclient";
 import {
@@ -50,7 +50,7 @@ describe("GovExtension", () => {
       };
       const proposalMemo = "Test proposal for wasmd";
       const { accountNumber: proposalAccountNumber, sequence: proposalSequence } = await client.getSequence();
-      const proposalSignDoc = makeStdSignDoc(
+      const proposalSignDoc = makeSignDoc(
         [proposalMsg],
         defaultFee,
         chainId,
@@ -82,7 +82,7 @@ describe("GovExtension", () => {
       };
       const voteMemo = "Test vote for wasmd";
       const { accountNumber: voteAccountNumber, sequence: voteSequence } = await client.getSequence();
-      const voteSignDoc = makeStdSignDoc(
+      const voteSignDoc = makeSignDoc(
         [voteMsg],
         defaultFee,
         chainId,

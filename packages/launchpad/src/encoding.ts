@@ -37,7 +37,7 @@ export interface StdSignDoc {
   readonly memo: string;
 }
 
-export function makeStdSignDoc(
+export function makeSignDoc(
   msgs: readonly Msg[],
   fee: StdFee,
   chainId: string,

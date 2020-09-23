@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Coin } from "./coins";
 import { Account, BroadcastTxResult, CosmosClient, GetSequenceResult } from "./cosmosclient";
-import { makeStdSignDoc } from "./encoding";
+import { makeSignDoc } from "./encoding";
 import { buildFeeTable, FeeTable, GasLimits, GasPrice } from "./gas";
 import { BroadcastMode } from "./lcdapi";
 import { Msg, MsgSend } from "./msgs";
@@ -88,7 +88,7 @@ export class SigningCosmosClient extends CosmosClient {
   public async signAndBroadcast(msgs: readonly Msg[], fee: StdFee, memo = ""): Promise<BroadcastTxResult> {
     const { accountNumber, sequence } = await this.getSequence();
     const chainId = await this.getChainId();
-    const signDoc = makeStdSignDoc(msgs, fee, chainId, memo, accountNumber, sequence);
+    const signDoc = makeSignDoc(msgs, fee, chainId, memo, accountNumber, sequence);
     const { signature } = await this.signer.sign(this.senderAddress, signDoc);
     const signedTx: StdTx = {
       msg: msgs,

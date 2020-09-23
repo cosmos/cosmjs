@@ -4,7 +4,7 @@ import { sleep } from "@cosmjs/utils";
 
 import { coin, coins } from "../coins";
 import { assertIsBroadcastTxSuccess } from "../cosmosclient";
-import { makeStdSignDoc } from "../encoding";
+import { makeSignDoc } from "../encoding";
 import { MsgDelegate } from "../msgs";
 import { Secp256k1Wallet } from "../secp256k1wallet";
 import { SigningCosmosClient } from "../signingcosmosclient";
@@ -45,7 +45,7 @@ describe("DistributionExtension", () => {
       };
       const memo = "Test delegation for wasmd";
       const { accountNumber, sequence } = await client.getSequence();
-      const signDoc = makeStdSignDoc([msg], defaultFee, chainId, memo, accountNumber, sequence);
+      const signDoc = makeSignDoc([msg], defaultFee, chainId, memo, accountNumber, sequence);
       const { signature } = await wallet.sign(faucet.address, signDoc);
       const tx = {
         msg: [msg],

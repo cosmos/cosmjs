@@ -66,7 +66,7 @@ const sendTokensMsg: MsgSend = {
   },
 };
 
-const signDoc = makeStdSignDoc(
+const signDoc = makeSignDoc(
   [sendTokensMsg],
   defaultFee,
   defaultNetworkId,

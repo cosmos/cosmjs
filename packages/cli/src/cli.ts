@@ -98,7 +98,7 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
         "encodeSecp256k1Signature",
         "logs",
         "makeCosmoshubPath",
-        "makeStdSignDoc",
+        "makeSignDoc",
         "IndexedTx",
         "BroadcastTxResult",
         "Coin",
@@ -166,7 +166,7 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
         amount: coins(5000000, "ucosm"),
         gas: "89000000",
       };
-      const signDoc = makeStdSignDoc([], fee, "chain-xyz", "hello, world", 1, 2);
+      const signDoc = makeSignDoc([], fee, "chain-xyz", "hello, world", 1, 2);
       const { signed, signature } = await wallet.sign(address, signDoc);
       assert(signed.memo === "hello, world");
 

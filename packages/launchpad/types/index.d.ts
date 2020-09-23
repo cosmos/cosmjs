@@ -26,7 +26,7 @@ export {
   isSearchBySentFromOrToQuery,
   isSearchByTagsQuery,
 } from "./cosmosclient";
-export { makeStdSignDoc, serializeSignDoc, StdSignDoc } from "./encoding";
+export { makeSignDoc, serializeSignDoc, StdSignDoc } from "./encoding";
 export { buildFeeTable, FeeTable, GasLimits, GasPrice } from "./gas";
 export {
   AuthAccountsResponse,

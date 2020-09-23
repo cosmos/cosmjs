@@ -46,14 +46,14 @@
 - @cosmjs/launchpad: Change type of `TxsResponse.logs` and
   `BroadcastTxsResponse.logs` to `unknown[]`.
 - @cosmjs/launchpad: Export `StdSignDoc` and create helpers to make and
-  serialize a `StdSignDoc`: `makeStdSignDoc` and `serializeSignDoc`.
+  serialize a `StdSignDoc`: `makeSignDoc` and `serializeSignDoc`.
 - @cosmjs/launchpad: Let `OfflineSigner.sign` take an `StdSignDoc` instead of an
   encoded message and return a `SignResponse` that includes the document which
   was signed.
 - @cosmjs/launchpad: Remove `PrehashType` and the prehash type argument in
   `OfflineSigner.sign` because the signer now needs to know how to serialize an
   `StdSignDoc`.
-- @cosmjs/launchpad: Remove `makeSignBytes` in favour of `makeStdSignDoc` and
+- @cosmjs/launchpad: Remove `makeSignBytes` in favour of `makeSignDoc` and
   `serializeSignDoc`.
 - @cosmjs/launchpad-ledger: Add package supporting Ledger device integration for
   Launchpad. Two new classes are provided: `LedgerSigner` (for most use cases)
