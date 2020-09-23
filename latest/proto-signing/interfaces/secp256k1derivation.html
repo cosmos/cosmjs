@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>EncodeObject | @cosmjs/proto-signing Documentation</title>
+	<title>Secp256k1Derivation | @cosmjs/proto-signing Documentation</title>
 	<meta name="description" content="Documentation for @cosmjs/proto-signing Documentation">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -52,21 +52,28 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="encodeobject.html">EncodeObject</a>
+					<a href="secp256k1derivation.html">Secp256k1Derivation</a>
 				</li>
 			</ul>
-			<h1>Interface EncodeObject</h1>
+			<h1>Interface Secp256k1Derivation</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Derivation information required to derive a keypair and an address from a mnemonic.</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">EncodeObject</span>
+						<span class="target">Secp256k1Derivation</span>
 					</li>
 				</ul>
 			</section>
@@ -77,8 +84,8 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="encodeobject.html#typeurl" class="tsd-kind-icon">type<wbr>Url</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="encodeobject.html#value" class="tsd-kind-icon">value</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="secp256k1derivation.html#hdpath" class="tsd-kind-icon">hd<wbr>Path</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="secp256k1derivation.html#prefix" class="tsd-kind-icon">prefix</a></li>
 							</ul>
 						</section>
 					</div>
@@ -87,22 +94,22 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="typeurl" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> type<wbr>Url</h3>
-					<div class="tsd-signature tsd-kind-icon">type<wbr>Url<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="hdpath" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> hd<wbr>Path</h3>
+					<div class="tsd-signature tsd-kind-icon">hd<wbr>Path<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">HdPath</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/90b6f813/packages/proto-signing/src/registry.ts#L14">packages/proto-signing/src/registry.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/90b6f813/packages/proto-signing/src/directsecp256k1wallet.ts#L23">packages/proto-signing/src/directsecp256k1wallet.ts:23</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="value" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> value</h3>
-					<div class="tsd-signature tsd-kind-icon">value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<a name="prefix" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> prefix</h3>
+					<div class="tsd-signature tsd-kind-icon">prefix<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/90b6f813/packages/proto-signing/src/registry.ts#L15">packages/proto-signing/src/registry.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/90b6f813/packages/proto-signing/src/directsecp256k1wallet.ts#L24">packages/proto-signing/src/directsecp256k1wallet.ts:24</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -133,27 +140,27 @@
 					<li class=" tsd-kind-interface">
 						<a href="decodeobject.html" class="tsd-kind-icon">Decode<wbr>Object</a>
 					</li>
+					<li class=" tsd-kind-interface">
+						<a href="encodeobject.html" class="tsd-kind-icon">Encode<wbr>Object</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="generatedtype.html" class="tsd-kind-icon">Generated<wbr>Type</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="encodeobject.html" class="tsd-kind-icon">Encode<wbr>Object</a>
+						<a href="secp256k1derivation.html" class="tsd-kind-icon">Secp256k1<wbr>Derivation</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="encodeobject.html#typeurl" class="tsd-kind-icon">type<wbr>Url</a>
+								<a href="secp256k1derivation.html#hdpath" class="tsd-kind-icon">hd<wbr>Path</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="encodeobject.html#value" class="tsd-kind-icon">value</a>
+								<a href="secp256k1derivation.html#prefix" class="tsd-kind-icon">prefix</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-interface">
-						<a href="generatedtype.html" class="tsd-kind-icon">Generated<wbr>Type</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="secp256k1derivation.html" class="tsd-kind-icon">Secp256k1<wbr>Derivation</a>
-					</li>
 					<li class=" tsd-kind-interface">
 						<a href="txbodyvalue.html" class="tsd-kind-icon">Tx<wbr>Body<wbr>Value</a>
 					</li>
