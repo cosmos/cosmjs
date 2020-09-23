@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { toBase64 } from "@cosmjs/encoding";
-import { makeCosmoshubPath, makeSignBytes, StdFee, StdSignature } from "@cosmjs/launchpad";
+import { makeCosmoshubPath, makeStdSignDoc, StdFee, StdSignature } from "@cosmjs/launchpad";
 
 import { LedgerSigner } from "../ledgersigner";
 
@@ -48,7 +48,7 @@ export async function sign(
       },
     },
   ];
-  const signBytes = makeSignBytes(
+  const signDoc = makeStdSignDoc(
     msgs,
     defaultFee,
     defaultChainId,
@@ -56,5 +56,5 @@ export async function sign(
     accountNumber,
     defaultSequence,
   );
-  return signer.sign(fromAddress, signBytes);
+  return signer.sign(fromAddress, signDoc);
 }

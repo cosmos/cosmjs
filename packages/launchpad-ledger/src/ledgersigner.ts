@@ -5,7 +5,9 @@ import {
   makeCosmoshubPath,
   OfflineSigner,
   StdSignature,
+  StdSignDoc,
 } from "@cosmjs/launchpad";
+import { serializeSignDoc } from "@cosmjs/launchpad";
 
 import { LaunchpadLedger, LaunchpadLedgerOptions } from "./launchpadledger";
 
@@ -34,14 +36,15 @@ export class LedgerSigner implements OfflineSigner {
     return this.accounts;
   }
 
-  public async sign(address: string, message: Uint8Array): Promise<StdSignature> {
+  public async sign(signerAddress: string, signDoc: StdSignDoc): Promise<StdSignature> {
     const accounts = this.accounts || (await this.getAccounts());
-    const accountIndex = accounts.findIndex((account) => account.address === address);
+    const accountIndex = accounts.findIndex((account) => account.address === signerAddress);
 
     if (accountIndex === -1) {
-      throw new Error(`Address ${address} not found in wallet`);
+      throw new Error(`Address ${signerAddress} not found in wallet`);
     }
 
+    const message = serializeSignDoc(signDoc);
     const accountForAddress = accounts[accountIndex];
     const hdPath = this.hdPaths[accountIndex];
     const signature = await this.ledger.sign(message, hdPath);

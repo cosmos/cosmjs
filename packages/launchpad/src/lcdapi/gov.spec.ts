@@ -3,7 +3,7 @@ import { sleep } from "@cosmjs/utils";
 
 import { coins } from "../coins";
 import { assertIsBroadcastTxSuccess } from "../cosmosclient";
-import { makeSignBytes } from "../encoding";
+import { makeStdSignDoc } from "../encoding";
 import { Secp256k1Wallet } from "../secp256k1wallet";
 import { SigningCosmosClient } from "../signingcosmosclient";
 import {
@@ -50,7 +50,7 @@ describe("GovExtension", () => {
       };
       const proposalMemo = "Test proposal for wasmd";
       const { accountNumber: proposalAccountNumber, sequence: proposalSequence } = await client.getSequence();
-      const proposalSignBytes = makeSignBytes(
+      const proposalSignDoc = makeStdSignDoc(
         [proposalMsg],
         defaultFee,
         chainId,
@@ -58,7 +58,7 @@ describe("GovExtension", () => {
         proposalAccountNumber,
         proposalSequence,
       );
-      const proposalSignature = await wallet.sign(faucet.address, proposalSignBytes);
+      const proposalSignature = await wallet.sign(faucet.address, proposalSignDoc);
       const proposalTx = {
         msg: [proposalMsg],
         fee: defaultFee,
@@ -82,7 +82,7 @@ describe("GovExtension", () => {
       };
       const voteMemo = "Test vote for wasmd";
       const { accountNumber: voteAccountNumber, sequence: voteSequence } = await client.getSequence();
-      const voteSignBytes = makeSignBytes(
+      const voteSignDoc = makeStdSignDoc(
         [voteMsg],
         defaultFee,
         chainId,
@@ -90,7 +90,7 @@ describe("GovExtension", () => {
         voteAccountNumber,
         voteSequence,
       );
-      const voteSignature = await wallet.sign(faucet.address, voteSignBytes);
+      const voteSignature = await wallet.sign(faucet.address, voteSignDoc);
       const voteTx = {
         msg: [voteMsg],
         fee: defaultFee,

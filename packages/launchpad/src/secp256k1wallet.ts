@@ -5,6 +5,7 @@ import {
   pathToString,
   Random,
   Secp256k1,
+  Sha256,
   Slip10,
   Slip10Curve,
   stringToPath,
@@ -13,8 +14,9 @@ import { fromBase64, fromUtf8, toBase64, toUtf8 } from "@cosmjs/encoding";
 import { assert, isNonNullObject } from "@cosmjs/utils";
 
 import { rawSecp256k1PubkeyToAddress } from "./address";
+import { serializeSignDoc, StdSignDoc } from "./encoding";
 import { encodeSecp256k1Signature } from "./signature";
-import { AccountData, OfflineSigner, PrehashType } from "./signer";
+import { AccountData, OfflineSigner } from "./signer";
 import { StdSignature } from "./types";
 import {
   decrypt,
@@ -23,7 +25,6 @@ import {
   executeKdf,
   KdfConfiguration,
   makeCosmoshubPath,
-  prehash,
   supportedAlgorithms,
 } from "./wallet";
 
@@ -255,16 +256,12 @@ export class Secp256k1Wallet implements OfflineSigner {
     ];
   }
 
-  public async sign(
-    address: string,
-    message: Uint8Array,
-    prehashType: PrehashType = "sha256",
-  ): Promise<StdSignature> {
-    if (address !== this.address) {
-      throw new Error(`Address ${address} not found in wallet`);
+  public async sign(signerAddress: string, signDoc: StdSignDoc): Promise<StdSignature> {
+    if (signerAddress !== this.address) {
+      throw new Error(`Address ${signerAddress} not found in wallet`);
     }
-    const hashedMessage = prehash(message, prehashType);
-    const signature = await Secp256k1.createSignature(hashedMessage, this.privkey);
+    const message = new Sha256(serializeSignDoc(signDoc)).digest();
+    const signature = await Secp256k1.createSignature(message, this.privkey);
     const signatureBytes = new Uint8Array([...signature.r(32), ...signature.s(32)]);
     return encodeSecp256k1Signature(this.pubkey, signatureBytes);
   }

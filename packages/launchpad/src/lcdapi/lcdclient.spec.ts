@@ -3,7 +3,7 @@ import { assert, sleep } from "@cosmjs/utils";
 
 import { Coin } from "../coins";
 import { isBroadcastTxFailure } from "../cosmosclient";
-import { makeSignBytes } from "../encoding";
+import { makeStdSignDoc } from "../encoding";
 import { parseLogs } from "../logs";
 import { MsgSend } from "../msgs";
 import { Secp256k1Wallet } from "../secp256k1wallet";
@@ -239,8 +239,8 @@ describe("LcdClient", () => {
           };
           const { accountNumber, sequence } = await client.getSequence();
           const chainId = await client.getChainId();
-          const signBytes = makeSignBytes([sendMsg], fee, chainId, memo, accountNumber, sequence);
-          const signature = await wallet.sign(walletAddress, signBytes);
+          const signDoc = makeStdSignDoc([sendMsg], fee, chainId, memo, accountNumber, sequence);
+          const signature = await wallet.sign(walletAddress, signDoc);
           const signedTx = {
             msg: [sendMsg],
             fee: fee,
@@ -537,8 +537,8 @@ describe("LcdClient", () => {
       const client = LcdClient.withExtensions({ apiUrl: wasmd.endpoint }, setupAuthExtension);
       const { account_number, sequence } = (await client.auth.account(faucet.address)).result.value;
 
-      const signBytes = makeSignBytes([theMsg], fee, wasmd.chainId, memo, account_number, sequence);
-      const signature = await wallet.sign(walletAddress, signBytes);
+      const signDoc = makeStdSignDoc([theMsg], fee, wasmd.chainId, memo, account_number, sequence);
+      const signature = await wallet.sign(walletAddress, signDoc);
       const signedTx = makeSignedTx(theMsg, fee, memo, signature);
       const result = await client.broadcastTx(signedTx);
       expect(result.code).toBeUndefined();
@@ -594,12 +594,12 @@ describe("LcdClient", () => {
       const { account_number: an2, sequence: sequence2 } = (await client.auth.account(address2)).result.value;
       const { account_number: an3, sequence: sequence3 } = (await client.auth.account(address3)).result.value;
 
-      const signBytes1 = makeSignBytes([theMsg], fee, wasmd.chainId, memo, an1, sequence1);
-      const signBytes2 = makeSignBytes([theMsg], fee, wasmd.chainId, memo, an2, sequence2);
-      const signBytes3 = makeSignBytes([theMsg], fee, wasmd.chainId, memo, an3, sequence3);
-      const signature1 = await account1.sign(address1, signBytes1);
-      const signature2 = await account2.sign(address2, signBytes2);
-      const signature3 = await account3.sign(address3, signBytes3);
+      const signDoc1 = makeStdSignDoc([theMsg], fee, wasmd.chainId, memo, an1, sequence1);
+      const signDoc2 = makeStdSignDoc([theMsg], fee, wasmd.chainId, memo, an2, sequence2);
+      const signDoc3 = makeStdSignDoc([theMsg], fee, wasmd.chainId, memo, an3, sequence3);
+      const signature1 = await account1.sign(address1, signDoc1);
+      const signature2 = await account2.sign(address2, signDoc2);
+      const signature3 = await account3.sign(address3, signDoc3);
       const signedTx = {
         msg: [theMsg],
         fee: fee,
@@ -658,13 +658,13 @@ describe("LcdClient", () => {
       const client = LcdClient.withExtensions({ apiUrl: wasmd.endpoint }, setupAuthExtension);
       const { account_number, sequence } = (await client.auth.account(walletAddress)).result.value;
 
-      const signBytes = makeSignBytes([msg1, msg2], fee, wasmd.chainId, memo, account_number, sequence);
-      const signature1 = await wallet.sign(walletAddress, signBytes);
+      const signDoc = makeStdSignDoc([msg1, msg2], fee, wasmd.chainId, memo, account_number, sequence);
+      const signature = await wallet.sign(walletAddress, signDoc);
       const signedTx = {
         msg: [msg1, msg2],
         fee: fee,
         memo: memo,
-        signatures: [signature1],
+        signatures: [signature],
       };
       const broadcastResult = await client.broadcastTx(signedTx);
       expect(broadcastResult.code).toBeUndefined();
@@ -722,10 +722,10 @@ describe("LcdClient", () => {
       const { account_number: an1, sequence: sequence1 } = (await client.auth.account(address1)).result.value;
       const { account_number: an2, sequence: sequence2 } = (await client.auth.account(address2)).result.value;
 
-      const signBytes1 = makeSignBytes([msg2, msg1], fee, wasmd.chainId, memo, an1, sequence1);
-      const signBytes2 = makeSignBytes([msg2, msg1], fee, wasmd.chainId, memo, an2, sequence2);
-      const signature1 = await account1.sign(address1, signBytes1);
-      const signature2 = await account2.sign(address2, signBytes2);
+      const signDoc1 = makeStdSignDoc([msg2, msg1], fee, wasmd.chainId, memo, an1, sequence1);
+      const signDoc2 = makeStdSignDoc([msg2, msg1], fee, wasmd.chainId, memo, an2, sequence2);
+      const signature1 = await account1.sign(address1, signDoc1);
+      const signature2 = await account2.sign(address2, signDoc2);
       const signedTx = {
         msg: [msg2, msg1],
         fee: fee,
@@ -793,10 +793,10 @@ describe("LcdClient", () => {
       const { account_number: an1, sequence: sequence1 } = (await client.auth.account(address1)).result.value;
       const { account_number: an2, sequence: sequence2 } = (await client.auth.account(address2)).result.value;
 
-      const signBytes1 = makeSignBytes([msg1, msg2], fee, wasmd.chainId, memo, an1, sequence1);
-      const signBytes2 = makeSignBytes([msg1, msg2], fee, wasmd.chainId, memo, an2, sequence2);
-      const signature1 = await account1.sign(address1, signBytes1);
-      const signature2 = await account2.sign(address2, signBytes2);
+      const signDoc1 = makeStdSignDoc([msg1, msg2], fee, wasmd.chainId, memo, an1, sequence1);
+      const signDoc2 = makeStdSignDoc([msg1, msg2], fee, wasmd.chainId, memo, an2, sequence2);
+      const signature1 = await account1.sign(address1, signDoc1);
+      const signature2 = await account2.sign(address2, signDoc2);
       const signedTx = {
         msg: [msg1, msg2],
         fee: fee,
@@ -859,10 +859,10 @@ describe("LcdClient", () => {
       const { account_number: an1, sequence: sequence1 } = (await client.auth.account(address1)).result.value;
       const { account_number: an2, sequence: sequence2 } = (await client.auth.account(address2)).result.value;
 
-      const signBytes1 = makeSignBytes([msg2, msg1], fee, wasmd.chainId, memo, an1, sequence1);
-      const signBytes2 = makeSignBytes([msg2, msg1], fee, wasmd.chainId, memo, an2, sequence2);
-      const signature1 = await account1.sign(address1, signBytes1);
-      const signature2 = await account2.sign(address2, signBytes2);
+      const signDoc1 = makeStdSignDoc([msg2, msg1], fee, wasmd.chainId, memo, an1, sequence1);
+      const signDoc2 = makeStdSignDoc([msg2, msg1], fee, wasmd.chainId, memo, an2, sequence2);
+      const signature1 = await account1.sign(address1, signDoc1);
+      const signature2 = await account2.sign(address2, signDoc2);
       const signedTx = {
         msg: [msg2, msg1],
         fee: fee,

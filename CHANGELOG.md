@@ -47,6 +47,8 @@
   `BroadcastTxsResponse.logs` to `unknown[]`.
 - @cosmjs/launchpad: Export `StdSignDoc` and create helpers to make and
   serialize a `StdSignDoc`: `makeStdSignDoc` and `serializeSignDoc`.
+- @cosmjs/launchpad: Let `OfflineSigner.sign` take an `StdSignDoc` instead of an
+  encoded message.
 - @cosmjs/launchpad-ledger: Add package supporting Ledger device integration for
   Launchpad. Two new classes are provided: `LedgerSigner` (for most use cases)
   and `LaunchpadLedger` for more fine-grained access.

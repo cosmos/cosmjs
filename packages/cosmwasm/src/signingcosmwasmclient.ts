@@ -11,7 +11,7 @@ import {
   GasLimits,
   GasPrice,
   isBroadcastTxFailure,
-  makeSignBytes,
+  makeStdSignDoc,
   Msg,
   MsgSend,
   OfflineSigner,
@@ -360,8 +360,8 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   public async signAndBroadcast(msgs: readonly Msg[], fee: StdFee, memo = ""): Promise<BroadcastTxResult> {
     const { accountNumber, sequence } = await this.getSequence();
     const chainId = await this.getChainId();
-    const signBytes = makeSignBytes(msgs, fee, chainId, memo, accountNumber, sequence);
-    const signature = await this.signer.sign(this.senderAddress, signBytes);
+    const signDoc = makeStdSignDoc(msgs, fee, chainId, memo, accountNumber, sequence);
+    const signature = await this.signer.sign(this.senderAddress, signDoc);
     const signedTx: StdTx = {
       msg: msgs,
       fee: fee,

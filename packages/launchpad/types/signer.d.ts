@@ -1,3 +1,4 @@
+import { StdSignDoc } from "./encoding";
 import { StdSignature } from "./types";
 export declare type PrehashType = "sha256" | "sha512" | null;
 export declare type Algo = "secp256k1" | "ed25519" | "sr25519";
@@ -14,6 +15,13 @@ export interface OfflineSigner {
   readonly getAccounts: () => Promise<readonly AccountData[]>;
   /**
    * Request signature from whichever key corresponds to provided bech32-encoded address. Rejects if not enabled.
+   *
+   * @param signerAddress The address of the account that should sign the transaction
+   * @param signDoc The content that should be signed
    */
-  readonly sign: (address: string, message: Uint8Array, prehashType?: PrehashType) => Promise<StdSignature>;
+  readonly sign: (
+    signerAddress: string,
+    signDoc: StdSignDoc,
+    prehashType?: PrehashType,
+  ) => Promise<StdSignature>;
 }
