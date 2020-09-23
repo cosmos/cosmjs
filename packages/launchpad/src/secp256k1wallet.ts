@@ -263,7 +263,7 @@ export class Secp256k1Wallet implements OfflineSigner {
     const signature = await Secp256k1.createSignature(message, this.privkey);
     const signatureBytes = new Uint8Array([...signature.r(32), ...signature.s(32)]);
     return {
-      signedDoc: signDoc,
+      signed: signDoc,
       signature: encodeSecp256k1Signature(this.pubkey, signatureBytes),
     };
   }

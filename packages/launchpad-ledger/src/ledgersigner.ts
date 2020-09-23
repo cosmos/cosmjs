@@ -48,7 +48,7 @@ export class LedgerSigner implements OfflineSigner {
     const hdPath = this.hdPaths[accountIndex];
     const signature = await this.ledger.sign(message, hdPath);
     return {
-      signedDoc: signDoc,
+      signed: signDoc,
       signature: encodeSecp256k1Signature(accountForAddress.pubkey, signature),
     };
   }

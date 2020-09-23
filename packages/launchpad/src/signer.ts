@@ -15,7 +15,7 @@ export interface SignResponse {
    * The sign doc that was signed.
    * This may be different from the input signDoc when the signer modifies it as part of the signing process.
    */
-  readonly signedDoc: StdSignDoc;
+  readonly signed: StdSignDoc;
   readonly signature: StdSignature;
 }
 
