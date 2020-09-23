@@ -96,15 +96,8 @@ export {
 } from "./pubkey";
 export { findSequenceForSignedTx } from "./sequence";
 export { encodeSecp256k1Signature, decodeSignature } from "./signature";
+export { AccountData, Algo, PrehashType, OfflineSigner } from "./signer";
 export { CosmosFeeTable, SigningCosmosClient } from "./signingcosmosclient";
 export { isStdTx, pubkeyType, CosmosSdkTx, PubKey, StdFee, StdSignature, StdTx } from "./types";
-export {
-  AccountData,
-  Algo,
-  PrehashType,
-  OfflineSigner,
-  makeCosmoshubPath,
-  executeKdf,
-  KdfConfiguration,
-} from "./wallet";
+export { makeCosmoshubPath, executeKdf, KdfConfiguration } from "./wallet";
 export { extractKdfConfiguration, Secp256k1Wallet } from "./secp256k1wallet";

@@ -5,8 +5,8 @@ import { makeSignBytes } from "./encoding";
 import { buildFeeTable, FeeTable, GasLimits, GasPrice } from "./gas";
 import { BroadcastMode } from "./lcdapi";
 import { Msg, MsgSend } from "./msgs";
+import { OfflineSigner } from "./signer";
 import { StdFee, StdTx } from "./types";
-import { OfflineSigner } from "./wallet";
 
 /**
  * These fees are used by the higher level methods of SigningCosmosClient

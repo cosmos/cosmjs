@@ -14,18 +14,16 @@ import { assert, isNonNullObject } from "@cosmjs/utils";
 
 import { rawSecp256k1PubkeyToAddress } from "./address";
 import { encodeSecp256k1Signature } from "./signature";
+import { AccountData, OfflineSigner, PrehashType } from "./signer";
 import { StdSignature } from "./types";
 import {
-  AccountData,
   decrypt,
   encrypt,
   EncryptionConfiguration,
   executeKdf,
   KdfConfiguration,
   makeCosmoshubPath,
-  OfflineSigner,
   prehash,
-  PrehashType,
   supportedAlgorithms,
 } from "./wallet";
 

@@ -1,6 +1,7 @@
 import { HdPath } from "@cosmjs/crypto";
+import { AccountData, OfflineSigner, PrehashType } from "./signer";
 import { StdSignature } from "./types";
-import { AccountData, EncryptionConfiguration, KdfConfiguration, OfflineSigner, PrehashType } from "./wallet";
+import { EncryptionConfiguration, KdfConfiguration } from "./wallet";
 /**
  * This interface describes a JSON object holding the encrypted wallet and the meta data.
  * All fields in here must be JSON types.
