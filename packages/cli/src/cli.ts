@@ -99,6 +99,7 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
         "logs",
         "makeCosmoshubPath",
         "makeSignBytes",
+        "makeStdSignDoc",
         "IndexedTx",
         "BroadcastTxResult",
         "Coin",
@@ -115,6 +116,7 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
         "Secp256k1Wallet",
         "SigningCosmosClient",
         "StdFee",
+        "StdSignDoc",
         "StdTx",
       ],
     ],
@@ -161,7 +163,13 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
       const wallet = await Secp256k1Wallet.fromMnemonic(mnemonic, makeCosmoshubPath(0));
       const [{ address }] = await wallet.getAccounts();
       const data = toAscii("foo bar");
-      const signature = await wallet.sign(address, data);
+      const fee: StdFee = {
+        amount: coins(5000000, "ucosm"),
+        gas: "89000000",
+      };
+      const signDoc = makeStdSignDoc([], fee, "chain-xyz", "hello, world", 1, 2);
+      const { signed, signature } = await wallet.sign(address, signDoc);
+      assert(signed.memo === "hello, world");
 
       const bechPubkey = "coralvalconspub1zcjduepqvxg72ccnl9r65fv0wn3amlk4sfzqfe2k36l073kjx2qyaf6sk23qw7j8wq";
       assert(encodeBech32Pubkey(decodeBech32Pubkey(bechPubkey), "coralvalconspub") == bechPubkey);
