@@ -45,6 +45,8 @@
   `isSearchBySentFromOrToQuery` and `isSearchByTagsQuery`.
 - @cosmjs/launchpad: Change type of `TxsResponse.logs` and
   `BroadcastTxsResponse.logs` to `unknown[]`.
+- @cosmjs/launchpad: Export `StdSignDoc` and create helpers to make and
+  serialize a `StdSignDoc`: `makeStdSignDoc` and `serializeSignDoc`.
 - @cosmjs/launchpad-ledger: Add package supporting Ledger device integration for
   Launchpad. Two new classes are provided: `LedgerSigner` (for most use cases)
   and `LaunchpadLedger` for more fine-grained access.

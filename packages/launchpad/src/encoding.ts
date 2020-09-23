@@ -29,14 +29,38 @@ function sortJson(json: any): any {
  * @see https://docs.cosmos.network/master/modules/auth/03_types.html#stdsigndoc
  */
 export interface StdSignDoc {
-  readonly account_number: string;
   readonly chain_id: string;
-  readonly fee: StdFee;
-  readonly memo: string;
-  readonly msgs: readonly Msg[];
+  readonly account_number: string;
   readonly sequence: string;
+  readonly fee: StdFee;
+  readonly msgs: readonly Msg[];
+  readonly memo: string;
 }
 
+export function makeStdSignDoc(
+  msgs: readonly Msg[],
+  fee: StdFee,
+  chainId: string,
+  memo: string,
+  accountNumber: number | string,
+  sequence: number | string,
+): StdSignDoc {
+  return {
+    chain_id: chainId,
+    account_number: uint64ToString(accountNumber),
+    sequence: uint64ToString(sequence),
+    fee: fee,
+    msgs: msgs,
+    memo: memo,
+  };
+}
+
+export function serializeSignDoc(signDoc: StdSignDoc): Uint8Array {
+  const sortedSignDoc = sortJson(signDoc);
+  return toUtf8(JSON.stringify(sortedSignDoc));
+}
+
+/** A convenience helper to create the StdSignDoc and serialize it */
 export function makeSignBytes(
   msgs: readonly Msg[],
   fee: StdFee,
@@ -45,14 +69,5 @@ export function makeSignBytes(
   accountNumber: number | string,
   sequence: number | string,
 ): Uint8Array {
-  const signDoc: StdSignDoc = {
-    account_number: uint64ToString(accountNumber),
-    chain_id: chainId,
-    fee: fee,
-    memo: memo,
-    msgs: msgs,
-    sequence: uint64ToString(sequence),
-  };
-  const sortedSignDoc = sortJson(signDoc);
-  return toUtf8(JSON.stringify(sortedSignDoc));
+  return serializeSignDoc(makeStdSignDoc(msgs, fee, chainId, memo, accountNumber, sequence));
 }
