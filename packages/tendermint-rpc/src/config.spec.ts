@@ -8,6 +8,8 @@ export interface ExpectedValues {
 export interface TendermintInstance {
   readonly url: string;
   readonly version: string;
+  /** rough block time in ms */
+  readonly blockTime: number;
   /** Values we expect in the backend */
   readonly expected: ExpectedValues;
 }
@@ -28,6 +30,7 @@ export const tendermintInstances: readonly TendermintInstance[] = [
   {
     url: "localhost:11133",
     version: "0.33.x",
+    blockTime: 1000,
     expected: {
       appCreator: "Cosmoshi Netowoko",
       p2pVersion: 7,
@@ -38,6 +41,7 @@ export const tendermintInstances: readonly TendermintInstance[] = [
   {
     url: "localhost:11134",
     version: "0.34.x",
+    blockTime: 500,
     expected: {
       appCreator: "Cosmoshi Netowoko",
       p2pVersion: 8,

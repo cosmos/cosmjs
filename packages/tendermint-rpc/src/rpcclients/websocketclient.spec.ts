@@ -15,7 +15,7 @@ function pendingWithoutTendermint(): void {
 }
 
 describe("WebsocketClient", () => {
-  const tendermintUrl = defaultInstance.url;
+  const { blockTime, url: tendermintUrl } = defaultInstance;
 
   it("can make a simple call", async () => {
     pendingWithoutTendermint();
@@ -48,27 +48,27 @@ describe("WebsocketClient", () => {
 
     const events: SubscriptionEvent[] = [];
 
-    const sub = headers.subscribe({
+    const subscription = headers.subscribe({
       error: done.fail,
       complete: () => done.fail("subscription should not complete"),
-      next: (evt: SubscriptionEvent) => {
-        events.push(evt);
-        expect(evt.query).toEqual(query);
+      next: (event: SubscriptionEvent) => {
+        events.push(event);
+        expect(event.query).toEqual(query);
 
         if (events.length === 2) {
           // make sure they are consequtive heights
           const height = (i: number): number => Integer.parse(events[i].data.value.header.height);
           expect(height(1)).toEqual(height(0) + 1);
 
-          sub.unsubscribe();
+          subscription.unsubscribe();
 
-          // wait 1.5s and check we did not get more events
+          // wait 1.5 * blockTime and check we did not get more events
           setTimeout(() => {
             expect(events.length).toEqual(2);
 
             client.disconnect();
             done();
-          }, 1500);
+          }, 1.5 * blockTime);
         }
       },
     });
@@ -110,23 +110,23 @@ describe("WebsocketClient", () => {
 
     const events: SubscriptionEvent[] = [];
 
-    const sub = headers.subscribe({
+    const subscription = headers.subscribe({
       error: done.fail,
       complete: () => done.fail("subscription should not complete"),
-      next: (evt: SubscriptionEvent) => {
-        events.push(evt);
-        expect(evt.query).toEqual(query);
+      next: (event: SubscriptionEvent) => {
+        events.push(event);
+        expect(event.query).toEqual(query);
 
         if (events.length === 2) {
-          sub.unsubscribe();
+          subscription.unsubscribe();
 
-          // wait 1.5s and check we did not get more events
+          // wait 1.5 * blockTime and check we did not get more events
           setTimeout(() => {
             expect(events.length).toEqual(2);
 
             client.disconnect();
             done();
-          }, 1500);
+          }, 1.5 * blockTime);
         }
       },
     });
@@ -148,7 +148,7 @@ describe("WebsocketClient", () => {
 
     const receivedEvents: SubscriptionEvent[] = [];
 
-    setTimeout(() => client.disconnect(), 1500);
+    setTimeout(() => client.disconnect(), blockTime);
 
     headers.subscribe({
       error: done.fail,
