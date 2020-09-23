@@ -1,4 +1,5 @@
-import { AccountData, OfflineSigner, StdSignature, StdSignDoc } from "@cosmjs/launchpad";
+import { AccountData, OfflineSigner, StdSignDoc } from "@cosmjs/launchpad";
+import { SignResponse } from "@cosmjs/launchpad";
 import { LaunchpadLedgerOptions } from "./launchpadledger";
 export declare class LedgerSigner implements OfflineSigner {
   private readonly ledger;
@@ -6,5 +7,5 @@ export declare class LedgerSigner implements OfflineSigner {
   private accounts?;
   constructor(options?: LaunchpadLedgerOptions);
   getAccounts(): Promise<readonly AccountData[]>;
-  sign(signerAddress: string, signDoc: StdSignDoc): Promise<StdSignature>;
+  sign(signerAddress: string, signDoc: StdSignDoc): Promise<SignResponse>;
 }

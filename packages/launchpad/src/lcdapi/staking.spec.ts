@@ -47,7 +47,7 @@ describe("StakingExtension", () => {
         const memo = "Test delegation for wasmd";
         const { accountNumber, sequence } = await client.getSequence();
         const signDoc = makeStdSignDoc([msg], defaultFee, chainId, memo, accountNumber, sequence);
-        const signature = await wallet.sign(faucet.address, signDoc);
+        const { signature } = await wallet.sign(faucet.address, signDoc);
         const tx = {
           msg: [msg],
           fee: defaultFee,
@@ -70,7 +70,7 @@ describe("StakingExtension", () => {
         const memo = "Test undelegation for wasmd";
         const { accountNumber, sequence } = await client.getSequence();
         const signDoc = makeStdSignDoc([msg], defaultFee, chainId, memo, accountNumber, sequence);
-        const signature = await wallet.sign(faucet.address, signDoc);
+        const { signature } = await wallet.sign(faucet.address, signDoc);
         const tx = {
           msg: [msg],
           fee: defaultFee,

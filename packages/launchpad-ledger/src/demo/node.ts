@@ -56,5 +56,6 @@ export async function sign(
     accountNumber,
     defaultSequence,
   );
-  return signer.sign(fromAddress, signDoc);
+  const { signature } = await signer.sign(fromAddress, signDoc);
+  return signature;
 }

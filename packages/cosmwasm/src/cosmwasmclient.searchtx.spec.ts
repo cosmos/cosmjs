@@ -104,7 +104,7 @@ describe("CosmWasmClient.searchTx", () => {
         const { accountNumber, sequence } = await client.getSequence();
         const chainId = await client.getChainId();
         const signDoc = makeStdSignDoc([sendMsg], fee, chainId, memo, accountNumber, sequence);
-        const signature = await wallet.sign(alice.address0, signDoc);
+        const { signature } = await wallet.sign(alice.address0, signDoc);
         const tx: CosmosSdkTx = {
           type: "cosmos-sdk/StdTx",
           value: {

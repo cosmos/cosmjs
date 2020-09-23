@@ -48,7 +48,8 @@
 - @cosmjs/launchpad: Export `StdSignDoc` and create helpers to make and
   serialize a `StdSignDoc`: `makeStdSignDoc` and `serializeSignDoc`.
 - @cosmjs/launchpad: Let `OfflineSigner.sign` take an `StdSignDoc` instead of an
-  encoded message.
+  encoded message and return a `SignResponse` that includes the document which
+  was signed.
 - @cosmjs/launchpad: Remove `PrehashType` and the prehash type argument in
   `OfflineSigner.sign` because the signer now needs to know how to serialize an
   `StdSignDoc`.

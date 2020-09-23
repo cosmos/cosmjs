@@ -58,7 +58,7 @@ describe("GovExtension", () => {
         proposalAccountNumber,
         proposalSequence,
       );
-      const proposalSignature = await wallet.sign(faucet.address, proposalSignDoc);
+      const { signature: proposalSignature } = await wallet.sign(faucet.address, proposalSignDoc);
       const proposalTx = {
         msg: [proposalMsg],
         fee: defaultFee,
@@ -90,7 +90,7 @@ describe("GovExtension", () => {
         voteAccountNumber,
         voteSequence,
       );
-      const voteSignature = await wallet.sign(faucet.address, voteSignDoc);
+      const { signature: voteSignature } = await wallet.sign(faucet.address, voteSignDoc);
       const voteTx = {
         msg: [voteMsg],
         fee: defaultFee,

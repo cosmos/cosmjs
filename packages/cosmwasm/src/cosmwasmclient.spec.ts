@@ -7,6 +7,7 @@ import {
   MsgSend,
   Secp256k1Wallet,
   StdFee,
+  StdTx,
 } from "@cosmjs/launchpad";
 import { assert, sleep } from "@cosmjs/utils";
 import { ReadonlyDate } from "readonly-date";
@@ -237,8 +238,8 @@ describe("CosmWasmClient", () => {
       const chainId = await client.getChainId();
       const { accountNumber, sequence } = await client.getSequence(alice.address0);
       const signDoc = makeStdSignDoc([sendMsg], fee, chainId, memo, accountNumber, sequence);
-      const signature = await wallet.sign(alice.address0, signDoc);
-      const signedTx = {
+      const { signature } = await wallet.sign(alice.address0, signDoc);
+      const signedTx: StdTx = {
         msg: [sendMsg],
         fee: fee,
         memo: memo,

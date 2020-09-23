@@ -16,8 +16,7 @@ import { assert, isNonNullObject } from "@cosmjs/utils";
 import { rawSecp256k1PubkeyToAddress } from "./address";
 import { serializeSignDoc, StdSignDoc } from "./encoding";
 import { encodeSecp256k1Signature } from "./signature";
-import { AccountData, OfflineSigner } from "./signer";
-import { StdSignature } from "./types";
+import { AccountData, OfflineSigner, SignResponse } from "./signer";
 import {
   decrypt,
   encrypt,
@@ -256,14 +255,17 @@ export class Secp256k1Wallet implements OfflineSigner {
     ];
   }
 
-  public async sign(signerAddress: string, signDoc: StdSignDoc): Promise<StdSignature> {
+  public async sign(signerAddress: string, signDoc: StdSignDoc): Promise<SignResponse> {
     if (signerAddress !== this.address) {
       throw new Error(`Address ${signerAddress} not found in wallet`);
     }
     const message = new Sha256(serializeSignDoc(signDoc)).digest();
     const signature = await Secp256k1.createSignature(message, this.privkey);
     const signatureBytes = new Uint8Array([...signature.r(32), ...signature.s(32)]);
-    return encodeSecp256k1Signature(this.pubkey, signatureBytes);
+    return {
+      signedDoc: signDoc,
+      signature: encodeSecp256k1Signature(this.pubkey, signatureBytes),
+    };
   }
 
   /**

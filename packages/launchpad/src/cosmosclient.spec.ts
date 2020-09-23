@@ -16,7 +16,7 @@ import {
   unused,
   wasmd,
 } from "./testutils.spec";
-import { StdFee } from "./types";
+import { StdFee, StdTx } from "./types";
 
 const blockTime = 1_000; // ms
 
@@ -230,8 +230,8 @@ describe("CosmosClient", () => {
       const chainId = await client.getChainId();
       const { accountNumber, sequence } = await client.getSequence(faucet.address);
       const signDoc = makeStdSignDoc([sendMsg], fee, chainId, memo, accountNumber, sequence);
-      const signature = await wallet.sign(walletAddress, signDoc);
-      const signedTx = {
+      const { signature } = await wallet.sign(walletAddress, signDoc);
+      const signedTx: StdTx = {
         msg: [sendMsg],
         fee: fee,
         memo: memo,

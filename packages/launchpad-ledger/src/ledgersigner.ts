@@ -4,10 +4,9 @@ import {
   encodeSecp256k1Signature,
   makeCosmoshubPath,
   OfflineSigner,
-  StdSignature,
   StdSignDoc,
 } from "@cosmjs/launchpad";
-import { serializeSignDoc } from "@cosmjs/launchpad";
+import { serializeSignDoc, SignResponse } from "@cosmjs/launchpad";
 
 import { LaunchpadLedger, LaunchpadLedgerOptions } from "./launchpadledger";
 
@@ -36,7 +35,7 @@ export class LedgerSigner implements OfflineSigner {
     return this.accounts;
   }
 
-  public async sign(signerAddress: string, signDoc: StdSignDoc): Promise<StdSignature> {
+  public async sign(signerAddress: string, signDoc: StdSignDoc): Promise<SignResponse> {
     const accounts = this.accounts || (await this.getAccounts());
     const accountIndex = accounts.findIndex((account) => account.address === signerAddress);
 
@@ -48,6 +47,9 @@ export class LedgerSigner implements OfflineSigner {
     const accountForAddress = accounts[accountIndex];
     const hdPath = this.hdPaths[accountIndex];
     const signature = await this.ledger.sign(message, hdPath);
-    return encodeSecp256k1Signature(accountForAddress.pubkey, signature);
+    return {
+      signedDoc: signDoc,
+      signature: encodeSecp256k1Signature(accountForAddress.pubkey, signature),
+    };
   }
 }
