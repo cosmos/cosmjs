@@ -87,7 +87,7 @@ describe("Secp256k1Wallet", () => {
   });
 
   describe("getAccounts", () => {
-    it("resolves to a list of accounts if enabled", async () => {
+    it("resolves to a list of accounts", async () => {
       const wallet = await Secp256k1Wallet.fromMnemonic(defaultMnemonic);
       const accounts = await wallet.getAccounts();
       expect(accounts.length).toEqual(1);

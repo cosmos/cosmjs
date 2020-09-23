@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Bech32, fromBase64 } from "@cosmjs/encoding";
-import { Secp256k1Wallet } from "@cosmjs/launchpad";
-import { makeAuthInfo, makeSignBytes, Registry } from "@cosmjs/proto-signing";
+import { DirectSecp256k1Wallet, makeAuthInfo, makeSignBytes, Registry } from "@cosmjs/proto-signing";
 import { assert, sleep } from "@cosmjs/utils";
 import { ReadonlyDate } from "readonly-date";
 
@@ -252,7 +251,7 @@ describe("StargateClient", () => {
     it("broadcasts a transaction", async () => {
       pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrl);
-      const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
+      const wallet = await DirectSecp256k1Wallet.fromMnemonic(faucet.mnemonic);
       const [{ address, pubkey: pubkeyBytes }] = await wallet.getAccounts();
       const publicKey = PublicKey.create({ secp256k1: pubkeyBytes });
       const registry = new Registry();

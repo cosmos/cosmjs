@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Bech32, fromBase64 } from "@cosmjs/encoding";
-import { Coin, coins, Secp256k1Wallet } from "@cosmjs/launchpad";
-import { makeAuthInfo, makeSignBytes, Registry } from "@cosmjs/proto-signing";
+import { Coin, coins } from "@cosmjs/launchpad";
+import { DirectSecp256k1Wallet, makeAuthInfo, makeSignBytes, Registry } from "@cosmjs/proto-signing";
 import { assert, sleep } from "@cosmjs/utils";
 
 import { cosmos } from "./codec";
@@ -27,7 +27,7 @@ interface TestTxSend {
 async function sendTokens(
   client: StargateClient,
   registry: Registry,
-  wallet: Secp256k1Wallet,
+  wallet: DirectSecp256k1Wallet,
   recipient: string,
   amount: readonly Coin[],
   memo: string,
@@ -83,7 +83,7 @@ describe("StargateClient.searchTx", () => {
 
   beforeAll(async () => {
     if (simappEnabled()) {
-      const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
+      const wallet = await DirectSecp256k1Wallet.fromMnemonic(faucet.mnemonic);
       const client = await StargateClient.connect(simapp.tendermintUrl);
       const unsuccessfulRecipient = makeRandomAddress();
       const successfulRecipient = makeRandomAddress();
