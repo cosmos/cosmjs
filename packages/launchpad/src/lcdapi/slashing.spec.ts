@@ -17,7 +17,7 @@ describe("SlashingExtension", () => {
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: [
           {
-            address: "cosmosvalcons14dsaw6zrrk3zugfgwwhmwap8p5cxsemfesgcaw",
+            address: "cosmosvalcons1zxds6samewvdpgt8cwpjtk3e8rdf26xu63dlqd",
             start_height: "0",
             index_offset: jasmine.stringMatching(nonNegativeIntegerMatcher),
             jailed_until: "1970-01-01T00:00:00Z",

@@ -30,8 +30,12 @@ export const wasmd = {
   endpoint: "http://localhost:1317",
   chainId: "testing",
   moniker: "node001",
-  commissionUpdateTime: "2020-07-30T07:56:51.316162Z",
-  consensusPubkey: "cosmosvalconspub1zcjduepquk9s489p8l40yvq9er07tfjzkpm4ku4wphhz6567793dsjmdec4suucg87",
+  commissionUpdateTime: "2020-09-23T15:11:14.6660427Z",
+  validator: {
+    pubkey: "cosmosvalconspub1zcjduepq2dayuk3xq8rxqq6lyw6aqp2jaywdr8d855g09jf9h527zqwhqxgq7vf6kf",
+    address: "cosmosvaloper103c7vm0c5mz85ecdy4ldftk4a3ydcyp2sscqrz",
+    delegatorAddress: "cosmos103c7vm0c5mz85ecdy4ldftk4a3ydcyp24yv403",
+  },
 };
 
 export const faucet = {
@@ -43,9 +47,6 @@ export const faucet = {
   },
   address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
 };
-
-export const validatorAddress = "cosmosvaloper103c7vm0c5mz85ecdy4ldftk4a3ydcyp2sscqrz";
-export const delegatorAddress = "cosmos103c7vm0c5mz85ecdy4ldftk4a3ydcyp24yv403";
 
 /** Unused account */
 export const unused = {
