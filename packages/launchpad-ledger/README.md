@@ -49,7 +49,7 @@ python3 -m http.server
 ```
 
 Visit the demo page in a browser, for example if using the Python 3 option:
-[http://localhost:8000/demo]().
+http://localhost:8000/demo.
 
 Then follow the instructions on that page.
 
