@@ -59,15 +59,3 @@ export function serializeSignDoc(signDoc: StdSignDoc): Uint8Array {
   const sortedSignDoc = sortJson(signDoc);
   return toUtf8(JSON.stringify(sortedSignDoc));
 }
-
-/** A convenience helper to create the StdSignDoc and serialize it */
-export function makeSignBytes(
-  msgs: readonly Msg[],
-  fee: StdFee,
-  chainId: string,
-  memo: string,
-  accountNumber: number | string,
-  sequence: number | string,
-): Uint8Array {
-  return serializeSignDoc(makeStdSignDoc(msgs, fee, chainId, memo, accountNumber, sequence));
-}

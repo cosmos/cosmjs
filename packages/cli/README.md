@@ -66,7 +66,7 @@ const sendTokensMsg: MsgSend = {
   },
 };
 
-const signBytes = makeSignBytes(
+const signDoc = makeStdSignDoc(
   [sendTokensMsg],
   defaultFee,
   defaultNetworkId,
@@ -74,7 +74,7 @@ const signBytes = makeSignBytes(
   account_number,
   sequence,
 );
-const signature = await pen.sign(signBytes);
+const { signature } = await wallet.sign(faucetAddress, signDoc);
 const signedTx: StdTx = {
   msg: [sendTokensMsg],
   fee: defaultFee,

@@ -98,7 +98,6 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
         "encodeSecp256k1Signature",
         "logs",
         "makeCosmoshubPath",
-        "makeSignBytes",
         "makeStdSignDoc",
         "IndexedTx",
         "BroadcastTxResult",

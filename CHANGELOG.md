@@ -53,6 +53,8 @@
 - @cosmjs/launchpad: Remove `PrehashType` and the prehash type argument in
   `OfflineSigner.sign` because the signer now needs to know how to serialize an
   `StdSignDoc`.
+- @cosmjs/launchpad: Remove `makeSignBytes` in favour of `makeStdSignDoc` and
+  `serializeSignDoc`.
 - @cosmjs/launchpad-ledger: Add package supporting Ledger device integration for
   Launchpad. Two new classes are provided: `LedgerSigner` (for most use cases)
   and `LaunchpadLedger` for more fine-grained access.
