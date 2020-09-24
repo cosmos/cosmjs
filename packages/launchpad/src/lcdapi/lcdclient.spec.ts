@@ -20,7 +20,8 @@ import {
   wasmd,
   wasmdEnabled,
 } from "../testutils.spec";
-import { StdFee, StdTx } from "../types";
+import { isWrappedStdTx, StdTx } from "../tx";
+import { StdFee } from "../types";
 import { makeCosmoshubPath } from "../wallet";
 import { setupAuthExtension } from "./auth";
 import { TxsResponse } from "./base";
@@ -493,6 +494,7 @@ describe("LcdClient", () => {
     it("works for cosmoshub example", async () => {
       pendingWithoutWasmd();
       const client = new LcdClient(wasmd.endpoint);
+      assert(isWrappedStdTx(cosmoshub.tx));
       const response = await client.encodeTx(cosmoshub.tx);
       expect(response).toEqual(
         jasmine.objectContaining({

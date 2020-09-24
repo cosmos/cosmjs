@@ -16,14 +16,14 @@ import {
   wasmd,
   wasmdEnabled,
 } from "./testutils.spec";
-import { CosmosSdkTx } from "./types";
+import { WrappedStdTx } from "./tx";
 
 interface TestTxSend {
   readonly sender: string;
   readonly recipient: string;
   readonly hash: string;
   readonly height: number;
-  readonly tx: CosmosSdkTx;
+  readonly tx: WrappedStdTx;
 }
 
 describe("CosmosClient.searchTx", () => {
@@ -57,7 +57,7 @@ describe("CosmosClient.searchTx", () => {
         const chainId = await client.getChainId();
         const signDoc = makeSignDoc([sendMsg], fee, chainId, memo, accountNumber, sequence);
         const { signature } = await wallet.sign(walletAddress, signDoc);
-        const tx: CosmosSdkTx = {
+        const tx: WrappedStdTx = {
           type: "cosmos-sdk/StdTx",
           value: {
             msg: [sendMsg],

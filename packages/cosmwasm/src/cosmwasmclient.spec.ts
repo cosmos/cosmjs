@@ -3,6 +3,7 @@ import { Sha256 } from "@cosmjs/crypto";
 import { Bech32, fromHex, fromUtf8, toAscii, toBase64 } from "@cosmjs/encoding";
 import {
   assertIsBroadcastTxSuccess,
+  isWrappedStdTx,
   makeSignDoc,
   MsgSend,
   Secp256k1Wallet,
@@ -200,6 +201,7 @@ describe("CosmWasmClient", () => {
     it("works", async () => {
       pendingWithoutWasmd();
       const client = new CosmWasmClient(wasmd.endpoint);
+      assert(isWrappedStdTx(cosmoshub.tx));
       expect(await client.getIdentifier(cosmoshub.tx)).toEqual(cosmoshub.id);
     });
   });

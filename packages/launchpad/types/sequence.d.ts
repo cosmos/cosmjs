@@ -1,4 +1,4 @@
-import { CosmosSdkTx } from "./types";
+import { WrappedStdTx } from "./tx";
 /**
  * Serach for sequence s with `min` <= `s` < `upperBound` to find the sequence that was used to sign the transaction
  *
@@ -11,7 +11,7 @@ import { CosmosSdkTx } from "./types";
  * @returns the sequence if a match was found and undefined otherwise
  */
 export declare function findSequenceForSignedTx(
-  tx: CosmosSdkTx,
+  tx: WrappedStdTx,
   chainId: string,
   accountNumber: number,
   upperBound: number,

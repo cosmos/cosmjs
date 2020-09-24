@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { sleep } from "@cosmjs/utils";
+import { assert, sleep } from "@cosmjs/utils";
 import { ReadonlyDate } from "readonly-date";
 
 import { assertIsBroadcastTxSuccess, CosmosClient, PrivateCosmosClient } from "./cosmosclient";
@@ -16,7 +16,8 @@ import {
   unused,
   wasmd,
 } from "./testutils.spec";
-import { StdFee, StdTx } from "./types";
+import { isWrappedStdTx, StdTx } from "./tx";
+import { StdFee } from "./types";
 
 const blockTime = 1_000; // ms
 
@@ -190,6 +191,7 @@ describe("CosmosClient", () => {
     it("works", async () => {
       pendingWithoutWasmd();
       const client = new CosmosClient(wasmd.endpoint);
+      assert(isWrappedStdTx(cosmoshub.tx));
       expect(await client.getIdentifier(cosmoshub.tx)).toEqual(cosmoshub.id);
     });
   });

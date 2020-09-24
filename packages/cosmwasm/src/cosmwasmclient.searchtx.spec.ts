@@ -2,13 +2,13 @@
 import {
   Coin,
   coins,
-  CosmosSdkTx,
   isBroadcastTxFailure,
   isMsgSend,
   LcdClient,
   makeSignDoc,
   MsgSend,
   Secp256k1Wallet,
+  WrappedStdTx,
 } from "@cosmjs/launchpad";
 import { assert, sleep } from "@cosmjs/utils";
 
@@ -30,7 +30,7 @@ interface TestTxSend {
   readonly recipient: string;
   readonly hash: string;
   readonly height: number;
-  readonly tx: CosmosSdkTx;
+  readonly tx: WrappedStdTx;
 }
 
 interface TestTxExecute {
@@ -38,7 +38,7 @@ interface TestTxExecute {
   readonly contract: string;
   readonly hash: string;
   readonly height: number;
-  readonly tx: CosmosSdkTx;
+  readonly tx: WrappedStdTx;
 }
 
 describe("CosmWasmClient.searchTx", () => {
@@ -105,7 +105,7 @@ describe("CosmWasmClient.searchTx", () => {
         const chainId = await client.getChainId();
         const signDoc = makeSignDoc([sendMsg], fee, chainId, memo, accountNumber, sequence);
         const { signature } = await wallet.sign(alice.address0, signDoc);
-        const tx: CosmosSdkTx = {
+        const tx: WrappedStdTx = {
           type: "cosmos-sdk/StdTx",
           value: {
             msg: [sendMsg],

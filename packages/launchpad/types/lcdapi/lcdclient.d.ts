@@ -1,4 +1,4 @@
-import { CosmosSdkTx, StdTx } from "../types";
+import { StdTx, WrappedStdTx } from "../tx";
 import {
   BlockResponse,
   BroadcastMode,
@@ -151,7 +151,7 @@ export declare class LcdClient {
   txById(id: string): Promise<TxsResponse>;
   txsQuery(query: string): Promise<SearchTxsResponse>;
   /** returns the amino-encoding of the transaction performed by the server */
-  encodeTx(tx: CosmosSdkTx): Promise<EncodeTxResponse>;
+  encodeTx(tx: WrappedStdTx): Promise<EncodeTxResponse>;
   /**
    * Broadcasts a signed transaction to the transaction pool.
    * Depending on the client's broadcast mode, this might or might

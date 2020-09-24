@@ -1,4 +1,4 @@
-import { CosmosSdkTx } from "../types";
+import { WrappedStdTx } from "../tx";
 /**
  * The mode used to send transaction
  *
@@ -93,7 +93,7 @@ export interface TxsResponse {
   readonly code?: number;
   readonly raw_log: string;
   readonly logs?: unknown[];
-  readonly tx: CosmosSdkTx;
+  readonly tx: WrappedStdTx;
   /** The gas limit as set by the user */
   readonly gas_wanted?: string;
   /** The gas used by the execution */

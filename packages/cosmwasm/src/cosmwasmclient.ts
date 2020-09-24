@@ -5,7 +5,6 @@ import {
   BroadcastMode,
   BroadcastTxResult,
   Coin,
-  CosmosSdkTx,
   IndexedTx,
   LcdClient,
   normalizePubkey,
@@ -13,6 +12,7 @@ import {
   setupAuthExtension,
   StdTx,
   uint64ToNumber,
+  WrappedStdTx,
 } from "@cosmjs/launchpad";
 import { Uint53 } from "@cosmjs/math";
 
@@ -199,7 +199,7 @@ export class CosmWasmClient {
   /**
    * Returns a 32 byte upper-case hex transaction hash (typically used as the transaction ID)
    */
-  public async getIdentifier(tx: CosmosSdkTx): Promise<string> {
+  public async getIdentifier(tx: WrappedStdTx): Promise<string> {
     // We consult the REST API because we don't have a local amino encoder
     const response = await this.lcdClient.encodeTx(tx);
     const hash = new Sha256(fromBase64(response.tx)).digest();

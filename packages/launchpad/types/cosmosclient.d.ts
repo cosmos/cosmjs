@@ -1,7 +1,8 @@
 import { Coin } from "./coins";
 import { AuthExtension, BroadcastMode, LcdClient } from "./lcdapi";
 import { Log } from "./logs";
-import { CosmosSdkTx, PubKey, StdTx } from "./types";
+import { StdTx, WrappedStdTx } from "./tx";
+import { PubKey } from "./types";
 export interface GetSequenceResult {
   readonly accountNumber: number;
   readonly sequence: number;
@@ -78,7 +79,7 @@ export interface IndexedTx {
   readonly code: number;
   readonly rawLog: string;
   readonly logs: readonly Log[];
-  readonly tx: CosmosSdkTx;
+  readonly tx: WrappedStdTx;
   /** The gas limit as set by the user */
   readonly gasWanted?: number;
   /** The gas used by the execution */
@@ -127,7 +128,7 @@ export declare class CosmosClient {
   /**
    * Returns a 32 byte upper-case hex transaction hash (typically used as the transaction ID)
    */
-  getIdentifier(tx: CosmosSdkTx): Promise<string>;
+  getIdentifier(tx: WrappedStdTx): Promise<string>;
   /**
    * Returns account number and sequence.
    *

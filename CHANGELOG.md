@@ -55,6 +55,9 @@
   `StdSignDoc`.
 - @cosmjs/launchpad: Remove `makeSignBytes` in favour of `makeSignDoc` and
   `serializeSignDoc`.
+- @cosmjs/launchpad: Create `WrappedTx`, `WrappedStdTx` and `isWrappedStdTx` to
+  better represent the Amino tx interface. Deprecate `CosmosSdkTx`, which is an
+  alias for `WrappedStdTx`.
 - @cosmjs/launchpad-ledger: Add package supporting Ledger device integration for
   Launchpad. Two new classes are provided: `LedgerSigner` (for most use cases)
   and `LaunchpadLedger` for more fine-grained access.

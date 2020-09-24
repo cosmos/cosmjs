@@ -1,30 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Coin } from "./coins";
-import { Msg } from "./msgs";
-
-/**
- * A Cosmos SDK StdTx
- *
- * @see https://docs.cosmos.network/master/modules/auth/03_types.html#stdtx
- */
-export interface StdTx {
-  readonly msg: readonly Msg[];
-  readonly fee: StdFee;
-  readonly signatures: readonly StdSignature[];
-  readonly memo: string | undefined;
-}
-
-export function isStdTx(txValue: unknown): txValue is StdTx {
-  const { memo, msg, fee, signatures } = txValue as StdTx;
-  return (
-    typeof memo === "string" && Array.isArray(msg) && typeof fee === "object" && Array.isArray(signatures)
-  );
-}
-
-export interface CosmosSdkTx {
-  readonly type: string;
-  readonly value: StdTx;
-}
 
 export interface StdFee {
   readonly amount: readonly Coin[];

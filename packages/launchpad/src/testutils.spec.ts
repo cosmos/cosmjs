@@ -2,7 +2,8 @@ import { Random } from "@cosmjs/crypto";
 import { Bech32 } from "@cosmjs/encoding";
 
 import { Msg } from "./msgs";
-import { StdFee, StdSignature, StdTx } from "./types";
+import { StdTx } from "./tx";
+import { StdFee, StdSignature } from "./types";
 
 export function makeRandomAddress(): string {
   return Bech32.encode("cosmos", Random.getBytes(20));
