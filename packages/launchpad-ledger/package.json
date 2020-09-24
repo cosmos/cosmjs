@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/launchpad-ledger",
-  "version": "0.22.3",
+  "version": "0.23.0-alpha.0",
   "description": "A library for interacting with the Cosmos Launchpad Ledger Nano App",
   "contributors": [
     "Will Clark <willclarktech@users.noreply.github.com>"
@@ -40,8 +40,8 @@
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.demo.config.js"
   },
   "dependencies": {
-    "@cosmjs/launchpad": "^0.22.2",
-    "@cosmjs/utils": "^0.22.2",
+    "@cosmjs/launchpad": "^0.23.0-alpha.0",
+    "@cosmjs/utils": "^0.23.0-alpha.0",
     "ledger-cosmos-js": "^2.1.7",
     "semver": "^7.3.2"
   },
