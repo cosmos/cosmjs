@@ -114,7 +114,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/973a3102/packages/launchpad/src/secp256k1wallet.ts#L242">src/secp256k1wallet.ts:242</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/75b7a7d2/packages/launchpad/src/secp256k1wallet.ts#L240">src/secp256k1wallet.ts:240</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -134,7 +134,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/973a3102/packages/launchpad/src/secp256k1wallet.ts#L250">src/secp256k1wallet.ts:250</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/75b7a7d2/packages/launchpad/src/secp256k1wallet.ts#L248">src/secp256k1wallet.ts:248</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">keyof </span><a href="../interfaces/accountdata.html" class="tsd-signature-type">AccountData</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -151,7 +151,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/973a3102/packages/launchpad/src/secp256k1wallet.ts#L280">src/secp256k1wallet.ts:280</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/75b7a7d2/packages/launchpad/src/secp256k1wallet.ts#L277">src/secp256k1wallet.ts:277</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -183,7 +183,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/973a3102/packages/launchpad/src/secp256k1wallet.ts#L295">src/secp256k1wallet.ts:295</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/75b7a7d2/packages/launchpad/src/secp256k1wallet.ts#L292">src/secp256k1wallet.ts:292</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -212,28 +212,25 @@
 					<a name="sign" class="tsd-anchor"></a>
 					<h3>sign</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">sign<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span>, prehashType<span class="tsd-signature-symbol">?: </span><a href="../globals.html#prehashtype" class="tsd-signature-type">PrehashType</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/stdsignature.html" class="tsd-signature-type">StdSignature</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">sign<span class="tsd-signature-symbol">(</span>signerAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, signDoc<span class="tsd-signature-symbol">: </span><a href="../interfaces/stdsigndoc.html" class="tsd-signature-type">StdSignDoc</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/signresponse.html" class="tsd-signature-type">SignResponse</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/973a3102/packages/launchpad/src/secp256k1wallet.ts#L260">src/secp256k1wallet.ts:260</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/75b7a7d2/packages/launchpad/src/secp256k1wallet.ts#L258">src/secp256k1wallet.ts:258</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>address: <span class="tsd-signature-type">string</span></h5>
+									<h5>signerAddress: <span class="tsd-signature-type">string</span></h5>
 								</li>
 								<li>
-									<h5>message: <span class="tsd-signature-type">Uint8Array</span></h5>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> prehashType: <a href="../globals.html#prehashtype" class="tsd-signature-type">PrehashType</a><span class="tsd-signature-symbol"> = &quot;sha256&quot;</span></h5>
+									<h5>signDoc: <a href="../interfaces/stdsigndoc.html" class="tsd-signature-type">StdSignDoc</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/stdsignature.html" class="tsd-signature-type">StdSignature</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/signresponse.html" class="tsd-signature-type">SignResponse</a><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -247,7 +244,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/973a3102/packages/launchpad/src/secp256k1wallet.ts#L161">src/secp256k1wallet.ts:161</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/75b7a7d2/packages/launchpad/src/secp256k1wallet.ts#L159">src/secp256k1wallet.ts:159</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -282,7 +279,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/973a3102/packages/launchpad/src/secp256k1wallet.ts#L181">src/secp256k1wallet.ts:181</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/75b7a7d2/packages/launchpad/src/secp256k1wallet.ts#L179">src/secp256k1wallet.ts:179</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -317,7 +314,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/973a3102/packages/launchpad/src/secp256k1wallet.ts#L119">src/secp256k1wallet.ts:119</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/75b7a7d2/packages/launchpad/src/secp256k1wallet.ts#L117">src/secp256k1wallet.ts:117</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -360,7 +357,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/973a3102/packages/launchpad/src/secp256k1wallet.ts#L144">src/secp256k1wallet.ts:144</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/75b7a7d2/packages/launchpad/src/secp256k1wallet.ts#L142">src/secp256k1wallet.ts:142</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">

@@ -216,7 +216,7 @@
 <span class="hljs-keyword">import</span> {
   assertIsPostTxSuccess,
   LcdClient,
-  makeSignBytes,
+  makeSignDoc,
   setupAuthExtension,
   StdFee,
   StdTx,
@@ -248,21 +248,9 @@
 <span class="hljs-keyword">const</span> { account_number, sequence } = (
   <span class="hljs-keyword">await</span> client.auth.account(myAddress)
 ).result.value;
-<span class="hljs-keyword">const</span> signBytes = makeSignBytes(
-  [msg],
-  fee,
-  apiUrl,
-  memo,
-  account_number,
-  sequence,
-);
-<span class="hljs-keyword">const</span> signature = <span class="hljs-keyword">await</span> signer.sign(myAddress, signBytes);
-<span class="hljs-keyword">const</span> signedTx: StdTx = {
-  msg: [msg],
-  fee: fee,
-  memo: memo,
-  signatures: [signature],
-};
+<span class="hljs-keyword">const</span> signDoc = makeSignDoc([msg], fee, apiUrl, memo, account_number, sequence);
+<span class="hljs-keyword">const</span> { signed, signature } = <span class="hljs-keyword">await</span> signer.sign(myAddress, signDoc);
+<span class="hljs-keyword">const</span> signedTx = makeStdTx(signed, signature);
 <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> client.postTx(signedTx);
 assertIsPostTxSuccess(result);</code></pre>
 				<a href="#secure-key-storage" id="secure-key-storage" style="color: inherit; text-decoration: none;">
@@ -426,9 +414,6 @@ assertIsPostTxSuccess(result);</code></pre>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/cosmosfeetable.html" class="tsd-kind-icon">Cosmos<wbr>Fee<wbr>Table</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/cosmossdktx.html" class="tsd-kind-icon">Cosmos<wbr>Sdk<wbr>Tx</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/delegation.html" class="tsd-kind-icon">Delegation</a>
@@ -662,6 +647,9 @@ assertIsPostTxSuccess(result);</code></pre>
 						<a href="interfaces/secp256k1walletserialization.html" class="tsd-kind-icon">Secp256k1<wbr>Wallet<wbr>Serialization</a>
 					</li>
 					<li class=" tsd-kind-interface">
+						<a href="interfaces/signresponse.html" class="tsd-kind-icon">Sign<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-interface">
 						<a href="interfaces/slashingextension.html" class="tsd-kind-icon">Slashing<wbr>Extension</a>
 					</li>
 					<li class=" tsd-kind-interface">
@@ -760,11 +748,20 @@ assertIsPostTxSuccess(result);</code></pre>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/vote.html" class="tsd-kind-icon">Vote</a>
 					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/wrappedstdtx.html" class="tsd-kind-icon">Wrapped<wbr>Std<wbr>Tx</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/wrappedtx.html" class="tsd-kind-icon">Wrapped<wbr>Tx</a>
+					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="globals.html#algo" class="tsd-kind-icon">Algo</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="globals.html#broadcasttxresult" class="tsd-kind-icon">Broadcast<wbr>TxResult</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#cosmossdktx" class="tsd-kind-icon">Cosmos<wbr>Sdk<wbr>Tx</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="globals.html#feetable" class="tsd-kind-icon">Fee<wbr>Table</a>
@@ -780,9 +777,6 @@ assertIsPostTxSuccess(result);</code></pre>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
 						<a href="globals.html#lcdextensionsetup" class="tsd-kind-icon">Lcd<wbr>Extension<wbr>Setup</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#prehashtype" class="tsd-kind-icon">Prehash<wbr>Type</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="globals.html#searchtxquery" class="tsd-kind-icon">Search<wbr>TxQuery</a>
@@ -944,10 +938,16 @@ assertIsPostTxSuccess(result);</code></pre>
 						<a href="globals.html#isstdtx" class="tsd-kind-icon">is<wbr>Std<wbr>Tx</a>
 					</li>
 					<li class=" tsd-kind-function">
+						<a href="globals.html#iswrappedstdtx" class="tsd-kind-icon">is<wbr>Wrapped<wbr>Std<wbr>Tx</a>
+					</li>
+					<li class=" tsd-kind-function">
 						<a href="globals.html#makecosmoshubpath" class="tsd-kind-icon">make<wbr>Cosmoshub<wbr>Path</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="globals.html#makesignbytes" class="tsd-kind-icon">make<wbr>Sign<wbr>Bytes</a>
+						<a href="globals.html#makesigndoc" class="tsd-kind-icon">make<wbr>Sign<wbr>Doc</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#makestdtx" class="tsd-kind-icon">make<wbr>Std<wbr>Tx</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
 						<a href="globals.html#normalizelcdapiarray" class="tsd-kind-icon">normalize<wbr>Lcd<wbr>Api<wbr>Array</a>
@@ -974,13 +974,13 @@ assertIsPostTxSuccess(result);</code></pre>
 						<a href="globals.html#parselogs" class="tsd-kind-icon">parse<wbr>Logs</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="globals.html#prehash" class="tsd-kind-icon">prehash</a>
-					</li>
-					<li class=" tsd-kind-function">
 						<a href="globals.html#pubkeytoaddress" class="tsd-kind-icon">pubkey<wbr>ToAddress</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#rawsecp256k1pubkeytoaddress" class="tsd-kind-icon">raw<wbr>Secp256k1<wbr>Pubkey<wbr>ToAddress</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#serializesigndoc" class="tsd-kind-icon">serialize<wbr>Sign<wbr>Doc</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#setupauthextension" class="tsd-kind-icon">setup<wbr>Auth<wbr>Extension</a>

@@ -108,7 +108,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/973a3102/packages/launchpad-ledger/src/ledgersigner.ts#L15">src/ledgersigner.ts:15</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/75b7a7d2/packages/launchpad-ledger/src/ledgersigner.ts#L16">src/ledgersigner.ts:16</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -134,7 +134,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/973a3102/packages/launchpad-ledger/src/ledgersigner.ts#L22">src/ledgersigner.ts:22</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/75b7a7d2/packages/launchpad-ledger/src/ledgersigner.ts#L23">src/ledgersigner.ts:23</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">AccountData</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -145,25 +145,25 @@
 					<a name="sign" class="tsd-anchor"></a>
 					<h3>sign</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">sign<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">StdSignature</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">sign<span class="tsd-signature-symbol">(</span>signerAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, signDoc<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">StdSignDoc</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">SignResponse</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/973a3102/packages/launchpad-ledger/src/ledgersigner.ts#L37">src/ledgersigner.ts:37</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/75b7a7d2/packages/launchpad-ledger/src/ledgersigner.ts#L38">src/ledgersigner.ts:38</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>address: <span class="tsd-signature-type">string</span></h5>
+									<h5>signerAddress: <span class="tsd-signature-type">string</span></h5>
 								</li>
 								<li>
-									<h5>message: <span class="tsd-signature-type">Uint8Array</span></h5>
+									<h5>signDoc: <span class="tsd-signature-type">StdSignDoc</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">StdSignature</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">SignResponse</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -240,7 +240,7 @@
 						<a href="../globals.html#window" class="tsd-kind-icon">window</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="../globals.html#createmessage" class="tsd-kind-icon">create<wbr>Message</a>
+						<a href="../globals.html#createsigndoc" class="tsd-kind-icon">create<wbr>Sign<wbr>Doc</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="../globals.html#getaccounts" class="tsd-kind-icon">get<wbr>Accounts</a>

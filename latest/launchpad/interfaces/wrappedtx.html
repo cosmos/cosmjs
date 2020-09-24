@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>GenesisRequest | @cosmjs/tendermint-rpc Documentation</title>
-	<meta name="description" content="Documentation for @cosmjs/tendermint-rpc Documentation">
+	<title>WrappedTx | @cosmjs/launchpad Documentation</title>
+	<meta name="description" content="Documentation for @cosmjs/launchpad Documentation">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
 </head>
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">@cosmjs/tendermint-rpc Documentation</a>
+					<a href="../index.html" class="title">@cosmjs/launchpad Documentation</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -52,21 +52,33 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="genesisrequest.html">GenesisRequest</a>
+					<a href="wrappedtx.html">WrappedTx</a>
 				</li>
 			</ul>
-			<h1>Interface GenesisRequest</h1>
+			<h1>Interface WrappedTx</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>An Amino JSON wrapper around the Tx interface</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">GenesisRequest</span>
+						<span class="target">WrappedTx</span>
+						<ul class="tsd-hierarchy">
+							<li>
+								<a href="wrappedstdtx.html" class="tsd-signature-type">WrappedStdTx</a>
+							</li>
+						</ul>
 					</li>
 				</ul>
 			</section>
@@ -77,7 +89,8 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="genesisrequest.html#method" class="tsd-kind-icon">method</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="wrappedtx.html#type" class="tsd-kind-icon">type</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="wrappedtx.html#value" class="tsd-kind-icon">value</a></li>
 							</ul>
 						</section>
 					</div>
@@ -86,12 +99,22 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="method" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> method</h3>
-					<div class="tsd-signature tsd-kind-icon">method<span class="tsd-signature-symbol">:</span> <a href="../enums/method.html#genesis" class="tsd-signature-type">Genesis</a></div>
+					<a name="type" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> type</h3>
+					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/75b7a7d2/packages/tendermint-rpc/src/requests.ts#L117">packages/tendermint-rpc/src/requests.ts:117</a></li>
+							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/75b7a7d2/packages/launchpad/src/tx.ts#L40">src/tx.ts:40</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="value" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> value</h3>
+					<div class="tsd-signature tsd-kind-icon">value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/75b7a7d2/packages/launchpad/src/tx.ts#L41">src/tx.ts:41</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -110,10 +133,13 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="genesisrequest.html" class="tsd-kind-icon">Genesis<wbr>Request</a>
+						<a href="wrappedtx.html" class="tsd-kind-icon">Wrapped<wbr>Tx</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="genesisrequest.html#method" class="tsd-kind-icon">method</a>
+								<a href="wrappedtx.html#type" class="tsd-kind-icon">type</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="wrappedtx.html#value" class="tsd-kind-icon">value</a>
 							</li>
 						</ul>
 					</li>
@@ -134,11 +160,13 @@
 				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
