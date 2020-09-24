@@ -16,7 +16,7 @@ import {
   unused,
   wasmd,
 } from "./testutils.spec";
-import { isWrappedStdTx, StdTx } from "./tx";
+import { isWrappedStdTx, makeStdTx } from "./tx";
 import { StdFee } from "./types";
 
 const blockTime = 1_000; // ms
@@ -232,13 +232,8 @@ describe("CosmosClient", () => {
       const chainId = await client.getChainId();
       const { accountNumber, sequence } = await client.getSequence(faucet.address);
       const signDoc = makeSignDoc([sendMsg], fee, chainId, memo, accountNumber, sequence);
-      const { signature } = await wallet.sign(walletAddress, signDoc);
-      const signedTx: StdTx = {
-        msg: [sendMsg],
-        fee: fee,
-        memo: memo,
-        signatures: [signature],
-      };
+      const { signed, signature } = await wallet.sign(walletAddress, signDoc);
+      const signedTx = makeStdTx(signed, signature);
       const txResult = await client.broadcastTx(signedTx);
       assertIsBroadcastTxSuccess(txResult);
       const { logs, transactionHash } = txResult;

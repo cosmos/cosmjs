@@ -1,3 +1,4 @@
+import { StdSignDoc } from "./encoding";
 import { Msg } from "./msgs";
 import { StdFee, StdSignature } from "./types";
 
@@ -18,6 +19,18 @@ export function isStdTx(txValue: unknown): txValue is StdTx {
   return (
     typeof memo === "string" && Array.isArray(msg) && typeof fee === "object" && Array.isArray(signatures)
   );
+}
+
+export function makeStdTx(
+  content: Pick<StdSignDoc, "msgs" | "fee" | "memo">,
+  signatures: StdSignature | readonly StdSignature[],
+): StdTx {
+  return {
+    msg: content.msgs,
+    fee: content.fee,
+    memo: content.memo,
+    signatures: Array.isArray(signatures) ? signatures : [signatures],
+  };
 }
 
 /**

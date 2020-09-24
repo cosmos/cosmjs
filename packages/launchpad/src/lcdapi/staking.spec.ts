@@ -16,6 +16,7 @@ import {
   wasmd,
   wasmdEnabled,
 } from "../testutils.spec";
+import { makeStdTx } from "../tx";
 import { LcdClient } from "./lcdclient";
 import { BondStatus, setupStakingExtension, StakingExtension } from "./staking";
 
@@ -47,15 +48,10 @@ describe("StakingExtension", () => {
         const memo = "Test delegation for wasmd";
         const { accountNumber, sequence } = await client.getSequence();
         const signDoc = makeSignDoc([msg], defaultFee, chainId, memo, accountNumber, sequence);
-        const { signature } = await wallet.sign(faucet.address, signDoc);
-        const tx = {
-          msg: [msg],
-          fee: defaultFee,
-          memo: memo,
-          signatures: [signature],
-        };
+        const { signed, signature } = await wallet.sign(faucet.address, signDoc);
+        const signedTx = makeStdTx(signed, signature);
 
-        const result = await client.broadcastTx(tx);
+        const result = await client.broadcastTx(signedTx);
         assertIsBroadcastTxSuccess(result);
       }
       {
@@ -70,15 +66,10 @@ describe("StakingExtension", () => {
         const memo = "Test undelegation for wasmd";
         const { accountNumber, sequence } = await client.getSequence();
         const signDoc = makeSignDoc([msg], defaultFee, chainId, memo, accountNumber, sequence);
-        const { signature } = await wallet.sign(faucet.address, signDoc);
-        const tx = {
-          msg: [msg],
-          fee: defaultFee,
-          memo: memo,
-          signatures: [signature],
-        };
+        const { signed, signature } = await wallet.sign(faucet.address, signDoc);
+        const signedTx = makeStdTx(signed, signature);
 
-        const result = await client.broadcastTx(tx);
+        const result = await client.broadcastTx(signedTx);
         assertIsBroadcastTxSuccess(result);
       }
 

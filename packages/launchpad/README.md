@@ -206,13 +206,8 @@ const { account_number, sequence } = (
   await client.auth.account(myAddress)
 ).result.value;
 const signDoc = makeSignDoc([msg], fee, apiUrl, memo, account_number, sequence);
-const { signature } = await signer.sign(myAddress, signDoc);
-const signedTx: StdTx = {
-  msg: [msg],
-  fee: fee,
-  memo: memo,
-  signatures: [signature],
-};
+const { signed, signature } = await signer.sign(myAddress, signDoc);
+const signedTx = makeStdTx(signed, signature);
 const result = await client.postTx(signedTx);
 assertIsPostTxSuccess(result);
 ```

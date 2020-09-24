@@ -99,6 +99,7 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
         "logs",
         "makeCosmoshubPath",
         "makeSignDoc",
+        "makeStdTx",
         "IndexedTx",
         "BroadcastTxResult",
         "Coin",

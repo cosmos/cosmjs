@@ -16,7 +16,7 @@ import {
   wasmd,
   wasmdEnabled,
 } from "./testutils.spec";
-import { WrappedStdTx } from "./tx";
+import { makeStdTx, WrappedStdTx } from "./tx";
 
 interface TestTxSend {
   readonly sender: string;
@@ -56,15 +56,10 @@ describe("CosmosClient.searchTx", () => {
         const { accountNumber, sequence } = await client.getSequence();
         const chainId = await client.getChainId();
         const signDoc = makeSignDoc([sendMsg], fee, chainId, memo, accountNumber, sequence);
-        const { signature } = await wallet.sign(walletAddress, signDoc);
+        const { signed, signature } = await wallet.sign(walletAddress, signDoc);
         const tx: WrappedStdTx = {
           type: "cosmos-sdk/StdTx",
-          value: {
-            msg: [sendMsg],
-            fee: fee,
-            memo: memo,
-            signatures: [signature],
-          },
+          value: makeStdTx(signed, signature),
         };
         const transactionId = await client.getIdentifier(tx);
         const result = await client.broadcastTx(tx.value);

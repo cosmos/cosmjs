@@ -12,7 +12,6 @@ import cosmoshub from "../testdata/cosmoshub.json";
 import {
   faucet,
   makeRandomAddress,
-  makeSignedTx,
   nonNegativeIntegerMatcher,
   pendingWithoutWasmd,
   tendermintIdMatcher,
@@ -20,7 +19,7 @@ import {
   wasmd,
   wasmdEnabled,
 } from "../testutils.spec";
-import { isWrappedStdTx, StdTx } from "../tx";
+import { isWrappedStdTx, makeStdTx, StdTx } from "../tx";
 import { StdFee } from "../types";
 import { makeCosmoshubPath } from "../wallet";
 import { setupAuthExtension } from "./auth";
@@ -241,13 +240,8 @@ describe("LcdClient", () => {
           const { accountNumber, sequence } = await client.getSequence();
           const chainId = await client.getChainId();
           const signDoc = makeSignDoc([sendMsg], fee, chainId, memo, accountNumber, sequence);
-          const { signature } = await wallet.sign(walletAddress, signDoc);
-          const signedTx: StdTx = {
-            msg: [sendMsg],
-            fee: fee,
-            memo: memo,
-            signatures: [signature],
-          };
+          const { signed, signature } = await wallet.sign(walletAddress, signDoc);
+          const signedTx = makeStdTx(signed, signature);
           const transactionId = await client.getIdentifier({ type: "cosmos-sdk/StdTx", value: signedTx });
           const result = await client.broadcastTx(signedTx);
           assert(isBroadcastTxFailure(result));
@@ -540,8 +534,8 @@ describe("LcdClient", () => {
       const { account_number, sequence } = (await client.auth.account(faucet.address)).result.value;
 
       const signDoc = makeSignDoc([theMsg], fee, wasmd.chainId, memo, account_number, sequence);
-      const { signature } = await wallet.sign(walletAddress, signDoc);
-      const signedTx = makeSignedTx(theMsg, fee, memo, signature);
+      const { signed, signature } = await wallet.sign(walletAddress, signDoc);
+      const signedTx = makeStdTx(signed, signature);
       const result = await client.broadcastTx(signedTx);
       expect(result.code).toBeUndefined();
       expect(result).toEqual({
@@ -661,13 +655,8 @@ describe("LcdClient", () => {
       const { account_number, sequence } = (await client.auth.account(walletAddress)).result.value;
 
       const signDoc = makeSignDoc([msg1, msg2], fee, wasmd.chainId, memo, account_number, sequence);
-      const { signature } = await wallet.sign(walletAddress, signDoc);
-      const signedTx: StdTx = {
-        msg: [msg1, msg2],
-        fee: fee,
-        memo: memo,
-        signatures: [signature],
-      };
+      const { signed, signature } = await wallet.sign(walletAddress, signDoc);
+      const signedTx = makeStdTx(signed, signature);
       const broadcastResult = await client.broadcastTx(signedTx);
       expect(broadcastResult.code).toBeUndefined();
     });

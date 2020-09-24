@@ -6,7 +6,7 @@ import { buildFeeTable, FeeTable, GasLimits, GasPrice } from "./gas";
 import { BroadcastMode } from "./lcdapi";
 import { Msg, MsgSend } from "./msgs";
 import { OfflineSigner } from "./signer";
-import { StdTx } from "./tx";
+import { makeStdTx } from "./tx";
 import { StdFee } from "./types";
 
 /**
@@ -90,13 +90,8 @@ export class SigningCosmosClient extends CosmosClient {
     const { accountNumber, sequence } = await this.getSequence();
     const chainId = await this.getChainId();
     const signDoc = makeSignDoc(msgs, fee, chainId, memo, accountNumber, sequence);
-    const { signature } = await this.signer.sign(this.senderAddress, signDoc);
-    const signedTx: StdTx = {
-      msg: msgs,
-      fee: fee,
-      memo: memo,
-      signatures: [signature],
-    };
+    const { signed, signature } = await this.signer.sign(this.senderAddress, signDoc);
+    const signedTx = makeStdTx(signed, signature);
     return this.broadcastTx(signedTx);
   }
 }

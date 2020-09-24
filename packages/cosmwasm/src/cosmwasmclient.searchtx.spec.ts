@@ -6,6 +6,7 @@ import {
   isMsgSend,
   LcdClient,
   makeSignDoc,
+  makeStdTx,
   MsgSend,
   Secp256k1Wallet,
   WrappedStdTx,
@@ -104,15 +105,10 @@ describe("CosmWasmClient.searchTx", () => {
         const { accountNumber, sequence } = await client.getSequence();
         const chainId = await client.getChainId();
         const signDoc = makeSignDoc([sendMsg], fee, chainId, memo, accountNumber, sequence);
-        const { signature } = await wallet.sign(alice.address0, signDoc);
+        const { signed, signature } = await wallet.sign(alice.address0, signDoc);
         const tx: WrappedStdTx = {
           type: "cosmos-sdk/StdTx",
-          value: {
-            msg: [sendMsg],
-            fee: fee,
-            memo: memo,
-            signatures: [signature],
-          },
+          value: makeStdTx(signed, signature),
         };
         const transactionId = await client.getIdentifier(tx);
         const result = await client.broadcastTx(tx.value);

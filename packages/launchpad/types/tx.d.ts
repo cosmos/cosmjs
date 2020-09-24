@@ -1,3 +1,4 @@
+import { StdSignDoc } from "./encoding";
 import { Msg } from "./msgs";
 import { StdFee, StdSignature } from "./types";
 /**
@@ -12,6 +13,10 @@ export interface StdTx {
   readonly memo: string | undefined;
 }
 export declare function isStdTx(txValue: unknown): txValue is StdTx;
+export declare function makeStdTx(
+  content: Pick<StdSignDoc, "msgs" | "fee" | "memo">,
+  signatures: StdSignature | readonly StdSignature[],
+): StdTx;
 /**
  * An Amino JSON wrapper around the Tx interface
  */

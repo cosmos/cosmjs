@@ -120,10 +120,11 @@ describe("Secp256k1Wallet", () => {
         account_number: "7",
         sequence: "54",
       };
-      const { signature } = await wallet.sign(defaultAddress, signDoc);
+      const { signed, signature } = await wallet.sign(defaultAddress, signDoc);
+      expect(signed).toEqual(signDoc);
       const valid = await Secp256k1.verifySignature(
         Secp256k1Signature.fromFixedLength(fromBase64(signature.signature)),
-        new Sha256(serializeSignDoc(signDoc)).digest(),
+        new Sha256(serializeSignDoc(signed)).digest(),
         defaultPubkey,
       );
       expect(valid).toEqual(true);

@@ -58,6 +58,7 @@
 - @cosmjs/launchpad: Create `WrappedTx`, `WrappedStdTx` and `isWrappedStdTx` to
   better represent the Amino tx interface. Deprecate `CosmosSdkTx`, which is an
   alias for `WrappedStdTx`.
+- @cosmjs/launchpad: Add `makeStdTx` to create an `StdTx`.
 - @cosmjs/launchpad-ledger: Add package supporting Ledger device integration for
   Launchpad. Two new classes are provided: `LedgerSigner` (for most use cases)
   and `LaunchpadLedger` for more fine-grained access.

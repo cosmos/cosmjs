@@ -74,13 +74,8 @@ const signDoc = makeSignDoc(
   account_number,
   sequence,
 );
-const { signature } = await wallet.sign(faucetAddress, signDoc);
-const signedTx: StdTx = {
-  msg: [sendTokensMsg],
-  fee: defaultFee,
-  memo: memo,
-  signatures: [signature],
-};
+const { signed, signature } = await wallet.sign(faucetAddress, signDoc);
+const signedTx = makeStdTx(signed, signature);
 const broadcastResult = await client.broadcastTx(signedTx);
 ```
 

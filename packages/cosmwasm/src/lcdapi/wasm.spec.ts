@@ -11,6 +11,7 @@ import {
   coins,
   LcdClient,
   makeSignDoc,
+  makeStdTx,
   OfflineSigner,
   Secp256k1Wallet,
   setupAuthExtension,
@@ -36,7 +37,6 @@ import {
   fromOneElementArray,
   getHackatom,
   makeRandomAddress,
-  makeSignedTx,
   pendingWithoutWasmd,
   wasmd,
   wasmdEnabled,
@@ -126,8 +126,8 @@ async function executeContract(
 
   const { account_number, sequence } = (await client.auth.account(alice.address0)).result.value;
   const signDoc = makeSignDoc([theMsg], fee, wasmd.chainId, memo, account_number, sequence);
-  const { signature } = await signer.sign(alice.address0, signDoc);
-  const signedTx = makeSignedTx(theMsg, fee, memo, signature);
+  const { signed, signature } = await signer.sign(alice.address0, signDoc);
+  const signedTx = makeStdTx(signed, signature);
   return client.broadcastTx(signedTx);
 }
 
