@@ -5,7 +5,8 @@ import { Uint53 } from "@cosmjs/math";
 import { Msg } from "./msgs";
 import { StdFee } from "./types";
 
-function sortJson(json: any): any {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export function sortJson(json: any): any {
   if (typeof json !== "object" || json === null) {
     return json;
   }

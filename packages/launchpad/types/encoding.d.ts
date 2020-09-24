@@ -1,5 +1,6 @@
 import { Msg } from "./msgs";
 import { StdFee } from "./types";
+export declare function sortJson(json: any): any;
 /**
  * The document to be signed
  *
