@@ -205,14 +205,7 @@ const memo = "Time for action";
 const { account_number, sequence } = (
   await client.auth.account(myAddress)
 ).result.value;
-const signDoc = makeSignDoc(
-  [msg],
-  fee,
-  apiUrl,
-  memo,
-  account_number,
-  sequence,
-);
+const signDoc = makeSignDoc([msg], fee, apiUrl, memo, account_number, sequence);
 const { signature } = await signer.sign(myAddress, signDoc);
 const signedTx: StdTx = {
   msg: [msg],
