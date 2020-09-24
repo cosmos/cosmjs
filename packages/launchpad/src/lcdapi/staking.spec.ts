@@ -3,7 +3,7 @@ import { assert, sleep } from "@cosmjs/utils";
 
 import { coin, coins } from "../coins";
 import { assertIsBroadcastTxSuccess } from "../cosmosclient";
-import { makeSignBytes } from "../encoding";
+import { makeSignDoc } from "../encoding";
 import { MsgDelegate, MsgUndelegate } from "../msgs";
 import { Secp256k1Wallet } from "../secp256k1wallet";
 import { SigningCosmosClient } from "../signingcosmosclient";
@@ -16,6 +16,7 @@ import {
   wasmd,
   wasmdEnabled,
 } from "../testutils.spec";
+import { makeStdTx } from "../tx";
 import { LcdClient } from "./lcdclient";
 import { BondStatus, setupStakingExtension, StakingExtension } from "./staking";
 
@@ -46,16 +47,11 @@ describe("StakingExtension", () => {
         };
         const memo = "Test delegation for wasmd";
         const { accountNumber, sequence } = await client.getSequence();
-        const signBytes = makeSignBytes([msg], defaultFee, chainId, memo, accountNumber, sequence);
-        const signature = await wallet.sign(faucet.address, signBytes);
-        const tx = {
-          msg: [msg],
-          fee: defaultFee,
-          memo: memo,
-          signatures: [signature],
-        };
+        const signDoc = makeSignDoc([msg], defaultFee, chainId, memo, accountNumber, sequence);
+        const { signed, signature } = await wallet.sign(faucet.address, signDoc);
+        const signedTx = makeStdTx(signed, signature);
 
-        const result = await client.broadcastTx(tx);
+        const result = await client.broadcastTx(signedTx);
         assertIsBroadcastTxSuccess(result);
       }
       {
@@ -69,16 +65,11 @@ describe("StakingExtension", () => {
         };
         const memo = "Test undelegation for wasmd";
         const { accountNumber, sequence } = await client.getSequence();
-        const signBytes = makeSignBytes([msg], defaultFee, chainId, memo, accountNumber, sequence);
-        const signature = await wallet.sign(faucet.address, signBytes);
-        const tx = {
-          msg: [msg],
-          fee: defaultFee,
-          memo: memo,
-          signatures: [signature],
-        };
+        const signDoc = makeSignDoc([msg], defaultFee, chainId, memo, accountNumber, sequence);
+        const { signed, signature } = await wallet.sign(faucet.address, signDoc);
+        const signedTx = makeStdTx(signed, signature);
 
-        const result = await client.broadcastTx(tx);
+        const result = await client.broadcastTx(signedTx);
         assertIsBroadcastTxSuccess(result);
       }
 

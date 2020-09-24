@@ -3,7 +3,7 @@ import { assert, sleep } from "@cosmjs/utils";
 
 import { coins } from "./coins";
 import { CosmosClient, isBroadcastTxFailure } from "./cosmosclient";
-import { makeSignBytes } from "./encoding";
+import { makeSignDoc } from "./encoding";
 import { LcdClient } from "./lcdapi";
 import { isMsgSend, MsgSend } from "./msgs";
 import { Secp256k1Wallet } from "./secp256k1wallet";
@@ -16,14 +16,14 @@ import {
   wasmd,
   wasmdEnabled,
 } from "./testutils.spec";
-import { CosmosSdkTx } from "./types";
+import { makeStdTx, WrappedStdTx } from "./tx";
 
 interface TestTxSend {
   readonly sender: string;
   readonly recipient: string;
   readonly hash: string;
   readonly height: number;
-  readonly tx: CosmosSdkTx;
+  readonly tx: WrappedStdTx;
 }
 
 describe("CosmosClient.searchTx", () => {
@@ -55,16 +55,11 @@ describe("CosmosClient.searchTx", () => {
         };
         const { accountNumber, sequence } = await client.getSequence();
         const chainId = await client.getChainId();
-        const signBytes = makeSignBytes([sendMsg], fee, chainId, memo, accountNumber, sequence);
-        const signature = await wallet.sign(walletAddress, signBytes);
-        const tx: CosmosSdkTx = {
+        const signDoc = makeSignDoc([sendMsg], fee, chainId, memo, accountNumber, sequence);
+        const { signed, signature } = await wallet.sign(walletAddress, signDoc);
+        const tx: WrappedStdTx = {
           type: "cosmos-sdk/StdTx",
-          value: {
-            msg: [sendMsg],
-            fee: fee,
-            memo: memo,
-            signatures: [signature],
-          },
+          value: makeStdTx(signed, signature),
         };
         const transactionId = await client.getIdentifier(tx);
         const result = await client.broadcastTx(tx.value);

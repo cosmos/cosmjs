@@ -1,5 +1,7 @@
-import { toBase64, toUtf8 } from "@cosmjs/encoding";
-import { AccountData, makeCosmoshubPath } from "@cosmjs/launchpad";
+import { toBase64 } from "@cosmjs/encoding";
+import { AccountData, makeCosmoshubPath, StdSignDoc } from "@cosmjs/launchpad";
+import { Uint53 } from "@cosmjs/math";
+import { assert } from "@cosmjs/utils";
 
 import { LedgerSigner } from "../ledgersigner";
 
@@ -8,28 +10,37 @@ declare const document: any;
 
 let accounts: readonly AccountData[] = [];
 
-function createMessage(accountNumber: number, address: string): string {
-  return `{
-    "account_number": ${accountNumber},
-    "chain_id": "testing",
-    "fee": {
-      "amount": [{ "amount": 100, "denom": "ucosm" }],
-      "gas": 250
+function createSignDoc(accountNumber: number, address: string): string {
+  const signDoc: StdSignDoc = {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    chain_id: "testing",
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    account_number: `${accountNumber}`,
+    sequence: "0",
+    fee: {
+      amount: [{ amount: "100", denom: "ucosm" }],
+      gas: "250",
     },
-    "memo": "Some memo",
-    "msgs": [{
-      "type": "cosmos-sdk/MsgSend",
-      "value": {
-        "amount": [{
-          "amount": "1234567",
-          "denom": "ucosm"
-        }],
-        "from_address": "${address}",
-        "to_address": "${address}"
-      }
-    }],
-    "sequence": 0
-  }`;
+    memo: "Some memo",
+    msgs: [
+      {
+        type: "cosmos-sdk/MsgSend",
+        value: {
+          amount: [
+            {
+              amount: "1234567",
+              denom: "ucosm",
+            },
+          ],
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          from_address: address,
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          to_address: address,
+        },
+      },
+    ],
+  };
+  return JSON.stringify(signDoc, null, 2);
 }
 
 const signer = new LedgerSigner({
@@ -37,7 +48,9 @@ const signer = new LedgerSigner({
   hdPaths: [makeCosmoshubPath(0), makeCosmoshubPath(1), makeCosmoshubPath(2)],
 });
 
-window.updateMessage = (accountNumber: number) => {
+window.updateMessage = (accountNumberInput: unknown) => {
+  assert(typeof accountNumberInput === "string");
+  const accountNumber = Uint53.fromString(accountNumberInput).toNumber();
   const account = accounts[accountNumber];
   if (account === undefined) {
     return;
@@ -46,15 +59,15 @@ window.updateMessage = (accountNumber: number) => {
   const address = accounts[accountNumber].address;
   const addressInput = document.getElementById("address");
   addressInput.value = address;
-  const messageTextArea = document.getElementById("message");
-  messageTextArea.textContent = createMessage(accountNumber, address);
+  const signDocTextArea = document.getElementById("sign-doc");
+  signDocTextArea.textContent = createSignDoc(accountNumber, address);
 };
 
 window.getAccounts = async function getAccounts(): Promise<void> {
   const accountNumberInput = document.getElementById("account-number");
   const addressInput = document.getElementById("address");
   const accountsDiv = document.getElementById("accounts");
-  const messageTextArea = document.getElementById("message");
+  const signDocTextArea = document.getElementById("sign-doc");
   accountsDiv.textContent = "Loading...";
 
   try {
@@ -69,7 +82,7 @@ window.getAccounts = async function getAccounts(): Promise<void> {
     accountNumberInput.value = accountNumber;
     const address = accounts[0].address;
     addressInput.value = address;
-    messageTextArea.textContent = createMessage(accountNumber, address);
+    signDocTextArea.textContent = createSignDoc(accountNumber, address);
   } catch (error) {
     accountsDiv.textContent = error;
   }
@@ -81,9 +94,9 @@ window.sign = async function sign(): Promise<void> {
 
   try {
     const address = document.getElementById("address").value;
-    const rawMessage = document.getElementById("message").textContent;
-    const message = JSON.stringify(JSON.parse(rawMessage));
-    const signature = await signer.sign(address, toUtf8(message));
+    const signDocJson = document.getElementById("sign-doc").textContent;
+    const signDoc: StdSignDoc = JSON.parse(signDocJson);
+    const signature = await signer.sign(address, signDoc);
     signatureDiv.textContent = JSON.stringify(signature, null, "\t");
   } catch (error) {
     signatureDiv.textContent = error;

@@ -2,7 +2,7 @@
 import { assert, isNonNullObject } from "@cosmjs/utils";
 import axios, { AxiosError, AxiosInstance } from "axios";
 
-import { CosmosSdkTx, StdTx } from "../types";
+import { StdTx, WrappedStdTx } from "../tx";
 import {
   BlockResponse,
   BroadcastMode,
@@ -284,7 +284,7 @@ export class LcdClient {
   }
 
   /** returns the amino-encoding of the transaction performed by the server */
-  public async encodeTx(tx: CosmosSdkTx): Promise<EncodeTxResponse> {
+  public async encodeTx(tx: WrappedStdTx): Promise<EncodeTxResponse> {
     const responseData = await this.post("/txs/encode", tx);
     if (!responseData.tx) {
       throw new Error("Unexpected response data format");

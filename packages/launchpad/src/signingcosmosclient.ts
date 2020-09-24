@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Coin } from "./coins";
 import { Account, BroadcastTxResult, CosmosClient, GetSequenceResult } from "./cosmosclient";
-import { makeSignBytes } from "./encoding";
+import { makeSignDoc } from "./encoding";
 import { buildFeeTable, FeeTable, GasLimits, GasPrice } from "./gas";
 import { BroadcastMode } from "./lcdapi";
 import { Msg, MsgSend } from "./msgs";
-import { StdFee, StdTx } from "./types";
-import { OfflineSigner } from "./wallet";
+import { OfflineSigner } from "./signer";
+import { makeStdTx } from "./tx";
+import { StdFee } from "./types";
 
 /**
  * These fees are used by the higher level methods of SigningCosmosClient
@@ -88,14 +89,9 @@ export class SigningCosmosClient extends CosmosClient {
   public async signAndBroadcast(msgs: readonly Msg[], fee: StdFee, memo = ""): Promise<BroadcastTxResult> {
     const { accountNumber, sequence } = await this.getSequence();
     const chainId = await this.getChainId();
-    const signBytes = makeSignBytes(msgs, fee, chainId, memo, accountNumber, sequence);
-    const signature = await this.signer.sign(this.senderAddress, signBytes);
-    const signedTx: StdTx = {
-      msg: msgs,
-      fee: fee,
-      memo: memo,
-      signatures: [signature],
-    };
+    const signDoc = makeSignDoc(msgs, fee, chainId, memo, accountNumber, sequence);
+    const { signed, signature } = await this.signer.sign(this.senderAddress, signDoc);
+    const signedTx = makeStdTx(signed, signature);
     return this.broadcastTx(signedTx);
   }
 }

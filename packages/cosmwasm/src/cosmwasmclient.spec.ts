@@ -3,7 +3,9 @@ import { Sha256 } from "@cosmjs/crypto";
 import { Bech32, fromHex, fromUtf8, toAscii, toBase64 } from "@cosmjs/encoding";
 import {
   assertIsBroadcastTxSuccess,
-  makeSignBytes,
+  isWrappedStdTx,
+  makeSignDoc,
+  makeStdTx,
   MsgSend,
   Secp256k1Wallet,
   StdFee,
@@ -199,6 +201,7 @@ describe("CosmWasmClient", () => {
     it("works", async () => {
       pendingWithoutWasmd();
       const client = new CosmWasmClient(wasmd.endpoint);
+      assert(isWrappedStdTx(cosmoshub.tx));
       expect(await client.getIdentifier(cosmoshub.tx)).toEqual(cosmoshub.id);
     });
   });
@@ -236,14 +239,9 @@ describe("CosmWasmClient", () => {
 
       const chainId = await client.getChainId();
       const { accountNumber, sequence } = await client.getSequence(alice.address0);
-      const signBytes = makeSignBytes([sendMsg], fee, chainId, memo, accountNumber, sequence);
-      const signature = await wallet.sign(alice.address0, signBytes);
-      const signedTx = {
-        msg: [sendMsg],
-        fee: fee,
-        memo: memo,
-        signatures: [signature],
-      };
+      const signDoc = makeSignDoc([sendMsg], fee, chainId, memo, accountNumber, sequence);
+      const { signed, signature } = await wallet.sign(alice.address0, signDoc);
+      const signedTx = makeStdTx(signed, signature);
       const result = await client.broadcastTx(signedTx);
       assertIsBroadcastTxSuccess(result);
       const { logs, transactionHash } = result;

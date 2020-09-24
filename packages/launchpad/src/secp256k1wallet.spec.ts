@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { Secp256k1, Secp256k1Signature, Sha256 } from "@cosmjs/crypto";
-import { fromBase64, fromHex, toAscii } from "@cosmjs/encoding";
+import { fromBase64, fromHex } from "@cosmjs/encoding";
 
+import { serializeSignDoc, StdSignDoc } from "./encoding";
 import { extractKdfConfiguration, Secp256k1Wallet } from "./secp256k1wallet";
 import { base64Matcher } from "./testutils.spec";
 import { executeKdf, KdfConfiguration } from "./wallet";
@@ -110,11 +112,19 @@ describe("Secp256k1Wallet", () => {
   describe("sign", () => {
     it("resolves to valid signature if enabled", async () => {
       const wallet = await Secp256k1Wallet.fromMnemonic(defaultMnemonic);
-      const message = toAscii("foo bar");
-      const signature = await wallet.sign(defaultAddress, message);
+      const signDoc: StdSignDoc = {
+        msgs: [],
+        fee: { amount: [], gas: "23" },
+        chain_id: "foochain",
+        memo: "hello, world",
+        account_number: "7",
+        sequence: "54",
+      };
+      const { signed, signature } = await wallet.sign(defaultAddress, signDoc);
+      expect(signed).toEqual(signDoc);
       const valid = await Secp256k1.verifySignature(
         Secp256k1Signature.fromFixedLength(fromBase64(signature.signature)),
-        new Sha256(message).digest(),
+        new Sha256(serializeSignDoc(signed)).digest(),
         defaultPubkey,
       );
       expect(valid).toEqual(true);

@@ -26,7 +26,7 @@ export {
   isSearchBySentFromOrToQuery,
   isSearchByTagsQuery,
 } from "./cosmosclient";
-export { makeSignBytes, StdSignDoc } from "./encoding";
+export { makeSignDoc, serializeSignDoc, StdSignDoc } from "./encoding";
 export { buildFeeTable, FeeTable, GasLimits, GasPrice } from "./gas";
 export {
   AuthAccountsResponse,
@@ -96,15 +96,9 @@ export {
 } from "./pubkey";
 export { findSequenceForSignedTx } from "./sequence";
 export { encodeSecp256k1Signature, decodeSignature } from "./signature";
+export { AccountData, Algo, OfflineSigner, SignResponse } from "./signer";
 export { CosmosFeeTable, SigningCosmosClient } from "./signingcosmosclient";
-export { isStdTx, pubkeyType, CosmosSdkTx, PubKey, StdFee, StdSignature, StdTx } from "./types";
-export {
-  AccountData,
-  Algo,
-  PrehashType,
-  OfflineSigner,
-  makeCosmoshubPath,
-  executeKdf,
-  KdfConfiguration,
-} from "./wallet";
+export { isStdTx, isWrappedStdTx, makeStdTx, CosmosSdkTx, StdTx, WrappedStdTx, WrappedTx } from "./tx";
+export { pubkeyType, PubKey, StdFee, StdSignature } from "./types";
+export { makeCosmoshubPath, executeKdf, KdfConfiguration } from "./wallet";
 export { extractKdfConfiguration, Secp256k1Wallet } from "./secp256k1wallet";

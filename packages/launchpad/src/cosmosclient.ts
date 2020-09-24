@@ -12,7 +12,8 @@ import {
   uint64ToNumber,
 } from "./lcdapi";
 import { Log, parseLogs } from "./logs";
-import { CosmosSdkTx, PubKey, StdTx } from "./types";
+import { StdTx, WrappedStdTx } from "./tx";
+import { PubKey } from "./types";
 
 export interface GetSequenceResult {
   readonly accountNumber: number;
@@ -121,7 +122,7 @@ export interface IndexedTx {
   readonly code: number;
   readonly rawLog: string;
   readonly logs: readonly Log[];
-  readonly tx: CosmosSdkTx;
+  readonly tx: WrappedStdTx;
   /** The gas limit as set by the user */
   readonly gasWanted?: number;
   /** The gas used by the execution */
@@ -203,7 +204,7 @@ export class CosmosClient {
   /**
    * Returns a 32 byte upper-case hex transaction hash (typically used as the transaction ID)
    */
-  public async getIdentifier(tx: CosmosSdkTx): Promise<string> {
+  public async getIdentifier(tx: WrappedStdTx): Promise<string> {
     // We consult the REST API because we don't have a local amino encoder
     const response = await this.lcdClient.encodeTx(tx);
     const hash = new Sha256(fromBase64(response.tx)).digest();

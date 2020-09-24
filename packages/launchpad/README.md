@@ -173,7 +173,7 @@ import { MsgExecuteContract, setupWasmExtension } from "@cosmjs/cosmwasm";
 import {
   assertIsPostTxSuccess,
   LcdClient,
-  makeSignBytes,
+  makeSignDoc,
   setupAuthExtension,
   StdFee,
   StdTx,
@@ -205,21 +205,9 @@ const memo = "Time for action";
 const { account_number, sequence } = (
   await client.auth.account(myAddress)
 ).result.value;
-const signBytes = makeSignBytes(
-  [msg],
-  fee,
-  apiUrl,
-  memo,
-  account_number,
-  sequence,
-);
-const signature = await signer.sign(myAddress, signBytes);
-const signedTx: StdTx = {
-  msg: [msg],
-  fee: fee,
-  memo: memo,
-  signatures: [signature],
-};
+const signDoc = makeSignDoc([msg], fee, apiUrl, memo, account_number, sequence);
+const { signed, signature } = await signer.sign(myAddress, signDoc);
+const signedTx = makeStdTx(signed, signature);
 const result = await client.postTx(signedTx);
 assertIsPostTxSuccess(result);
 ```

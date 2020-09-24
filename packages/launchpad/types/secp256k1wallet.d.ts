@@ -1,6 +1,7 @@
 import { HdPath } from "@cosmjs/crypto";
-import { StdSignature } from "./types";
-import { AccountData, EncryptionConfiguration, KdfConfiguration, OfflineSigner, PrehashType } from "./wallet";
+import { StdSignDoc } from "./encoding";
+import { AccountData, OfflineSigner, SignResponse } from "./signer";
+import { EncryptionConfiguration, KdfConfiguration } from "./wallet";
 /**
  * This interface describes a JSON object holding the encrypted wallet and the meta data.
  * All fields in here must be JSON types.
@@ -85,7 +86,7 @@ export declare class Secp256k1Wallet implements OfflineSigner {
   get mnemonic(): string;
   private get address();
   getAccounts(): Promise<readonly AccountData[]>;
-  sign(address: string, message: Uint8Array, prehashType?: PrehashType): Promise<StdSignature>;
+  sign(signerAddress: string, signDoc: StdSignDoc): Promise<SignResponse>;
   /**
    * Generates an encrypted serialization of this wallet.
    *

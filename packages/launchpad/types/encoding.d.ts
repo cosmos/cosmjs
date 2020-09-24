@@ -6,18 +6,19 @@ import { StdFee } from "./types";
  * @see https://docs.cosmos.network/master/modules/auth/03_types.html#stdsigndoc
  */
 export interface StdSignDoc {
-  readonly account_number: string;
   readonly chain_id: string;
-  readonly fee: StdFee;
-  readonly memo: string;
-  readonly msgs: readonly Msg[];
+  readonly account_number: string;
   readonly sequence: string;
+  readonly fee: StdFee;
+  readonly msgs: readonly Msg[];
+  readonly memo: string;
 }
-export declare function makeSignBytes(
+export declare function makeSignDoc(
   msgs: readonly Msg[],
   fee: StdFee,
   chainId: string,
   memo: string,
   accountNumber: number | string,
   sequence: number | string,
-): Uint8Array;
+): StdSignDoc;
+export declare function serializeSignDoc(signDoc: StdSignDoc): Uint8Array;

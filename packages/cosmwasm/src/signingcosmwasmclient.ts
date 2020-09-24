@@ -11,12 +11,12 @@ import {
   GasLimits,
   GasPrice,
   isBroadcastTxFailure,
-  makeSignBytes,
+  makeSignDoc,
+  makeStdTx,
   Msg,
   MsgSend,
   OfflineSigner,
   StdFee,
-  StdTx,
 } from "@cosmjs/launchpad";
 import { Uint53 } from "@cosmjs/math";
 import pako from "pako";
@@ -360,14 +360,9 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   public async signAndBroadcast(msgs: readonly Msg[], fee: StdFee, memo = ""): Promise<BroadcastTxResult> {
     const { accountNumber, sequence } = await this.getSequence();
     const chainId = await this.getChainId();
-    const signBytes = makeSignBytes(msgs, fee, chainId, memo, accountNumber, sequence);
-    const signature = await this.signer.sign(this.senderAddress, signBytes);
-    const signedTx: StdTx = {
-      msg: msgs,
-      fee: fee,
-      memo: memo,
-      signatures: [signature],
-    };
+    const signDoc = makeSignDoc(msgs, fee, chainId, memo, accountNumber, sequence);
+    const { signed, signature } = await this.signer.sign(this.senderAddress, signDoc);
+    const signedTx = makeStdTx(signed, signature);
     return this.broadcastTx(signedTx);
   }
 }

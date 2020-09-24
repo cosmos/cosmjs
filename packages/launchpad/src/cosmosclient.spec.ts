@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { sleep } from "@cosmjs/utils";
+import { assert, sleep } from "@cosmjs/utils";
 import { ReadonlyDate } from "readonly-date";
 
 import { assertIsBroadcastTxSuccess, CosmosClient, PrivateCosmosClient } from "./cosmosclient";
-import { makeSignBytes } from "./encoding";
+import { makeSignDoc } from "./encoding";
 import { findAttribute } from "./logs";
 import { MsgSend } from "./msgs";
 import { Secp256k1Wallet } from "./secp256k1wallet";
@@ -16,6 +16,7 @@ import {
   unused,
   wasmd,
 } from "./testutils.spec";
+import { isWrappedStdTx, makeStdTx } from "./tx";
 import { StdFee } from "./types";
 
 const blockTime = 1_000; // ms
@@ -190,6 +191,7 @@ describe("CosmosClient", () => {
     it("works", async () => {
       pendingWithoutWasmd();
       const client = new CosmosClient(wasmd.endpoint);
+      assert(isWrappedStdTx(cosmoshub.tx));
       expect(await client.getIdentifier(cosmoshub.tx)).toEqual(cosmoshub.id);
     });
   });
@@ -229,14 +231,9 @@ describe("CosmosClient", () => {
 
       const chainId = await client.getChainId();
       const { accountNumber, sequence } = await client.getSequence(faucet.address);
-      const signBytes = makeSignBytes([sendMsg], fee, chainId, memo, accountNumber, sequence);
-      const signature = await wallet.sign(walletAddress, signBytes);
-      const signedTx = {
-        msg: [sendMsg],
-        fee: fee,
-        memo: memo,
-        signatures: [signature],
-      };
+      const signDoc = makeSignDoc([sendMsg], fee, chainId, memo, accountNumber, sequence);
+      const { signed, signature } = await wallet.sign(walletAddress, signDoc);
+      const signedTx = makeStdTx(signed, signature);
       const txResult = await client.broadcastTx(signedTx);
       assertIsBroadcastTxSuccess(txResult);
       const { logs, transactionHash } = txResult;

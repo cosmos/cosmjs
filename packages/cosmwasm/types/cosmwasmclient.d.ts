@@ -3,11 +3,11 @@ import {
   BroadcastMode,
   BroadcastTxResult,
   Coin,
-  CosmosSdkTx,
   IndexedTx,
   LcdClient,
   PubKey,
   StdTx,
+  WrappedStdTx,
 } from "@cosmjs/launchpad";
 import { WasmExtension } from "./lcdapi/wasm";
 import { JsonObject } from "./types";
@@ -132,7 +132,7 @@ export declare class CosmWasmClient {
   /**
    * Returns a 32 byte upper-case hex transaction hash (typically used as the transaction ID)
    */
-  getIdentifier(tx: CosmosSdkTx): Promise<string>;
+  getIdentifier(tx: WrappedStdTx): Promise<string>;
   /**
    * Returns account number and sequence.
    *

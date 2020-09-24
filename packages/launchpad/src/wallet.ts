@@ -3,51 +3,11 @@ import {
   HdPath,
   isArgon2idOptions,
   Random,
-  Sha256,
-  Sha512,
   Slip10RawIndex,
   xchacha20NonceLength,
   Xchacha20poly1305Ietf,
 } from "@cosmjs/crypto";
 import { toAscii } from "@cosmjs/encoding";
-
-import { StdSignature } from "./types";
-
-export type PrehashType = "sha256" | "sha512" | null;
-
-export type Algo = "secp256k1" | "ed25519" | "sr25519";
-
-export interface AccountData {
-  // bech32-encoded
-  readonly address: string;
-  readonly algo: Algo;
-  readonly pubkey: Uint8Array;
-}
-
-export interface OfflineSigner {
-  /**
-   * Get AccountData array from wallet. Rejects if not enabled.
-   */
-  readonly getAccounts: () => Promise<readonly AccountData[]>;
-
-  /**
-   * Request signature from whichever key corresponds to provided bech32-encoded address. Rejects if not enabled.
-   */
-  readonly sign: (address: string, message: Uint8Array, prehashType?: PrehashType) => Promise<StdSignature>;
-}
-
-export function prehash(bytes: Uint8Array, type: PrehashType): Uint8Array {
-  switch (type) {
-    case null:
-      return new Uint8Array([...bytes]);
-    case "sha256":
-      return new Sha256(bytes).digest();
-    case "sha512":
-      return new Sha512(bytes).digest();
-    default:
-      throw new Error("Unknown prehash type");
-  }
-}
 
 /**
  * The Cosmoshub derivation path in the form `m/44'/118'/0'/0/a`

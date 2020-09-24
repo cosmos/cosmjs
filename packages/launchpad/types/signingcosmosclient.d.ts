@@ -3,8 +3,8 @@ import { Account, BroadcastTxResult, CosmosClient, GetSequenceResult } from "./c
 import { FeeTable, GasLimits, GasPrice } from "./gas";
 import { BroadcastMode } from "./lcdapi";
 import { Msg } from "./msgs";
+import { OfflineSigner } from "./signer";
 import { StdFee } from "./types";
-import { OfflineSigner } from "./wallet";
 /**
  * These fees are used by the higher level methods of SigningCosmosClient
  */

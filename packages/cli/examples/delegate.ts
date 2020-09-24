@@ -27,14 +27,9 @@ console.log("Connected to chain:", chainId);
 const { accountNumber, sequence } = await client.getSequence(senderAddress);
 console.log("Account/sequence:", accountNumber, sequence);
 
-const signBytes = makeSignBytes([msg], fee, chainId, memo, accountNumber, sequence);
-const signature = await wallet.sign(senderAddress, signBytes);
-const signedTx: StdTx = {
-  msg: [msg],
-  fee: fee,
-  memo: memo,
-  signatures: [signature],
-};
+const signDoc = makeSignDoc([msg], fee, chainId, memo, accountNumber, sequence);
+const { signed, signature } = await wallet.sign(senderAddress, signDoc);
+const signedTx = makeStdTx(signed, signature);
 
 const result = await client.broadcastTx(signedTx);
 console.log("Broadcast result:", result);

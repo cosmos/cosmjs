@@ -1,21 +1,4 @@
 import { Coin } from "./coins";
-import { Msg } from "./msgs";
-/**
- * A Cosmos SDK StdTx
- *
- * @see https://docs.cosmos.network/master/modules/auth/03_types.html#stdtx
- */
-export interface StdTx {
-  readonly msg: readonly Msg[];
-  readonly fee: StdFee;
-  readonly signatures: readonly StdSignature[];
-  readonly memo: string | undefined;
-}
-export declare function isStdTx(txValue: unknown): txValue is StdTx;
-export interface CosmosSdkTx {
-  readonly type: string;
-  readonly value: StdTx;
-}
 export interface StdFee {
   readonly amount: readonly Coin[];
   readonly gas: string;
