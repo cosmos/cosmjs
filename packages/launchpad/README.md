@@ -158,7 +158,7 @@ async function publishProposal(
   };
 
   const client = new SigningCosmosClient(apiUrl, authorAddress, signer);
-  return client.signAndPost([msg], fee, memo);
+  return client.signAndBroadcast([msg], fee, memo);
 }
 ```
 
