@@ -46,6 +46,8 @@ describe("LedgerSigner", () => {
           pubkey: fromBase64("A2ZnLEcbpyjS30H5UF1vezq29aBcT9oo5EARATIW9Cpj"),
         },
       ]);
+
+      await signer.disconnect();
     });
   });
 
@@ -87,6 +89,8 @@ describe("LedgerSigner", () => {
           fistAccount.pubkey,
         );
         expect(valid).toEqual(true);
+
+        await signer.disconnect();
       },
       interactiveTimeout,
     );

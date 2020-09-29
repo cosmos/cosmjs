@@ -8,4 +8,5 @@ export declare class LedgerSigner implements OfflineSigner {
   constructor(options?: LaunchpadLedgerOptions);
   getAccounts(): Promise<readonly AccountData[]>;
   sign(signerAddress: string, signDoc: StdSignDoc): Promise<SignResponse>;
+  disconnect(): Promise<void>;
 }

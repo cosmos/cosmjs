@@ -52,4 +52,8 @@ export class LedgerSigner implements OfflineSigner {
       signature: encodeSecp256k1Signature(accountForAddress.pubkey, signature),
     };
   }
+
+  public async disconnect(): Promise<void> {
+    return this.ledger.disconnect();
+  }
 }

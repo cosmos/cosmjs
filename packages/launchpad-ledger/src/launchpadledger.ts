@@ -18,6 +18,12 @@ export interface LedgerAppErrorResponse {
 }
 /* eslint-enable */
 
+interface ConnectedApp {
+  /** The transport used by the app */
+  readonly transport: Transport;
+  readonly app: CosmosApp;
+}
+
 const defaultInteractionTimeout = 120; // seconds to wait for user action on Ledger, currently is always limited to 60
 const requiredCosmosAppVersion = "1.5.3";
 
@@ -53,7 +59,7 @@ export class LaunchpadLedger {
   private readonly testModeAllowed: boolean;
   private readonly hdPaths: readonly HdPath[];
   private readonly prefix: string;
-  private cosmosApp: CosmosApp | null;
+  private connectedApp: ConnectedApp | null;
   public readonly platform: string;
   public readonly userAgent: string | null;
 
@@ -70,7 +76,7 @@ export class LaunchpadLedger {
     this.testModeAllowed = testModeAllowed;
     this.hdPaths = hdPaths;
     this.prefix = prefix;
-    this.cosmosApp = null;
+    this.connectedApp = null;
 
     try {
       this.platform = navigator.platform;
@@ -83,9 +89,9 @@ export class LaunchpadLedger {
 
   public async getCosmosAppVersion(): Promise<string> {
     await this.ensureConnected();
-    assert(this.cosmosApp, "Cosmos Ledger App is not connected");
+    assert(this.connectedApp, "Cosmos Ledger App is not connected");
 
-    const response = await this.cosmosApp.getVersion();
+    const response = await this.connectedApp.app.getVersion();
     this.handleLedgerErrors(response);
     // eslint-disable-next-line @typescript-eslint/naming-convention
     const { major, minor, patch, test_mode: testMode } = response as VersionResponse;
@@ -95,11 +101,11 @@ export class LaunchpadLedger {
 
   public async getPubkey(hdPath?: HdPath): Promise<Uint8Array> {
     await this.ensureConnected();
-    assert(this.cosmosApp, "Cosmos Ledger App is not connected");
+    assert(this.connectedApp, "Cosmos Ledger App is not connected");
 
     const hdPathToUse = hdPath || this.hdPaths[0];
     // ledger-cosmos-js hardens the first three indices
-    const response = await this.cosmosApp.publicKey(unharden(hdPathToUse));
+    const response = await this.connectedApp.app.publicKey(unharden(hdPathToUse));
     this.handleLedgerErrors(response);
     return Uint8Array.from((response as PublicKeyResponse).compressed_pk);
   }
@@ -119,18 +125,25 @@ export class LaunchpadLedger {
 
   public async sign(message: Uint8Array, hdPath?: HdPath): Promise<Uint8Array> {
     await this.ensureConnected();
-    assert(this.cosmosApp, "Cosmos Ledger App is not connected");
+    assert(this.connectedApp, "Cosmos Ledger App is not connected");
 
     const hdPathToUse = hdPath || this.hdPaths[0];
     // ledger-cosmos-js hardens the first three indices
-    const response = await this.cosmosApp.sign(unharden(hdPathToUse), fromUtf8(message));
+    const response = await this.connectedApp.app.sign(unharden(hdPathToUse), fromUtf8(message));
     this.handleLedgerErrors(response, "Transaction signing request was rejected by the user");
     return Secp256k1Signature.fromDer((response as SignResponse).signature).toFixedLength();
   }
 
+  public async disconnect(): Promise<void> {
+    if (this.connectedApp) {
+      await this.connectedApp.transport.close();
+      this.connectedApp = null;
+    }
+  }
+
   private async ensureConnected(timeout = defaultInteractionTimeout): Promise<void> {
     // assume good connection if connected once
-    if (this.cosmosApp) {
+    if (this.connectedApp) {
       return;
     }
 
@@ -139,7 +152,10 @@ export class LaunchpadLedger {
     }
 
     const transport = await this.createTransport(timeout * 1000);
-    this.cosmosApp = new CosmosApp(transport);
+    this.connectedApp = {
+      transport: transport,
+      app: new CosmosApp(transport),
+    };
 
     await this.verifyDeviceIsReady();
   }
@@ -189,9 +205,9 @@ export class LaunchpadLedger {
 
   private async getOpenAppName(): Promise<string> {
     await this.ensureConnected();
-    assert(this.cosmosApp, "Cosmos Ledger App is not connected");
+    assert(this.connectedApp, "Cosmos Ledger App is not connected");
 
-    const response = await this.cosmosApp.appInfo();
+    const response = await this.connectedApp.app.appInfo();
     this.handleLedgerErrors(response);
     return (response as AppInfoResponse).appName;
   }

@@ -12,7 +12,7 @@ export declare class LaunchpadLedger {
   private readonly testModeAllowed;
   private readonly hdPaths;
   private readonly prefix;
-  private cosmosApp;
+  private connectedApp;
   readonly platform: string;
   readonly userAgent: string | null;
   constructor(options?: LaunchpadLedgerOptions);
@@ -21,6 +21,7 @@ export declare class LaunchpadLedger {
   getPubkeys(): Promise<readonly Uint8Array[]>;
   getCosmosAddress(pubkey?: Uint8Array): Promise<string>;
   sign(message: Uint8Array, hdPath?: HdPath): Promise<Uint8Array>;
+  disconnect(): Promise<void>;
   private ensureConnected;
   private createTransport;
   private verifyAppMode;
