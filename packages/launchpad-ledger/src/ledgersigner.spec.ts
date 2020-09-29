@@ -1,10 +1,20 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Secp256k1, Secp256k1Signature, Sha256 } from "@cosmjs/crypto";
 import { fromBase64 } from "@cosmjs/encoding";
-import { coins, makeCosmoshubPath, makeSignDoc, Msg, serializeSignDoc, StdFee } from "@cosmjs/launchpad";
+import {
+  coins,
+  isBroadcastTxSuccess,
+  makeCosmoshubPath,
+  makeSignDoc,
+  Msg,
+  serializeSignDoc,
+  SigningCosmosClient,
+  StdFee,
+} from "@cosmjs/launchpad";
+import { assert } from "@cosmjs/utils";
 
 import { LedgerSigner } from "./ledgersigner";
-import { pendingWithoutLedger, pendingWithoutLedgerInteractive } from "./testutils.spec";
+import { pendingWithoutLedger, pendingWithoutLedgerInteractive, wasmd } from "./testutils.spec";
 
 const interactiveTimeout = 120_000;
 
@@ -53,7 +63,7 @@ describe("LedgerSigner", () => {
 
   describe("sign", () => {
     it(
-      "works",
+      "returns valid signature",
       async () => {
         pendingWithoutLedgerInteractive();
         const signer = new LedgerSigner({
@@ -89,6 +99,25 @@ describe("LedgerSigner", () => {
           fistAccount.pubkey,
         );
         expect(valid).toEqual(true);
+
+        await signer.disconnect();
+      },
+      interactiveTimeout,
+    );
+
+    it(
+      "creates signature accepted by launchpad backend",
+      async () => {
+        pendingWithoutLedgerInteractive();
+        const signer = new LedgerSigner({
+          testModeAllowed: true,
+          hdPaths: [makeCosmoshubPath(0), makeCosmoshubPath(1), makeCosmoshubPath(10)],
+        });
+        const [fistAccount] = await signer.getAccounts();
+
+        const client = new SigningCosmosClient(wasmd.endpoint, fistAccount.address, signer);
+        const result = await client.sendTokens(defaultRecipient, coins(1234567, "ucosm"));
+        assert(isBroadcastTxSuccess(result));
 
         await signer.disconnect();
       },

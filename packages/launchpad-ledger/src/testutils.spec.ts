@@ -17,3 +17,8 @@ export function pendingWithoutLedgerInteractive(): void {
     return pending("Set LEDGER_INTERACTIVE_ENABLED to enable Wasmd based tests");
   }
 }
+
+export const wasmd = {
+  endpoint: "http://localhost:1317",
+  chainId: "testing",
+};
