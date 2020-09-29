@@ -38,7 +38,7 @@ const defaultTypeUrls = {
 export class Registry {
   private readonly types: Map<string, GeneratedType>;
 
-  constructor(customTypes: Iterable<[string, GeneratedType]> = []) {
+  public constructor(customTypes: Iterable<[string, GeneratedType]> = []) {
     const { cosmosCoin, cosmosMsgSend } = defaultTypeUrls;
     this.types = new Map<string, GeneratedType>([
       [cosmosCoin, cosmos.Coin],

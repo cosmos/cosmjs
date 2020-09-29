@@ -17,7 +17,7 @@ export interface ChainConstants {
 export class Webserver {
   private readonly api = new Koa();
 
-  constructor(faucet: Faucet, chainConstants: ChainConstants) {
+  public constructor(faucet: Faucet, chainConstants: ChainConstants) {
     this.api.use(cors());
     this.api.use(bodyParser());
 
