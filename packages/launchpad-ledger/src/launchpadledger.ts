@@ -81,25 +81,8 @@ export class LaunchpadLedger {
     }
   }
 
-  public async connect(timeout = defaultInteractionTimeout): Promise<LaunchpadLedger> {
-    // assume good connection if connected once
-    if (this.cosmosApp) {
-      return this;
-    }
-
-    if (this.platform !== "node") {
-      verifyBrowserIsSupported(this.platform, this.userAgent);
-    }
-
-    const transport = await this.createTransport(timeout * 1000);
-    this.cosmosApp = new CosmosApp(transport);
-
-    await this.verifyDeviceIsReady();
-    return this;
-  }
-
   public async getCosmosAppVersion(): Promise<string> {
-    await this.connect();
+    await this.ensureConnected();
     assert(this.cosmosApp, "Cosmos Ledger App is not connected");
 
     const response = await this.cosmosApp.getVersion();
@@ -111,7 +94,7 @@ export class LaunchpadLedger {
   }
 
   public async getPubkey(hdPath?: HdPath): Promise<Uint8Array> {
-    await this.connect();
+    await this.ensureConnected();
     assert(this.cosmosApp, "Cosmos Ledger App is not connected");
 
     const hdPathToUse = hdPath || this.hdPaths[0];
@@ -135,7 +118,7 @@ export class LaunchpadLedger {
   }
 
   public async sign(message: Uint8Array, hdPath?: HdPath): Promise<Uint8Array> {
-    await this.connect();
+    await this.ensureConnected();
     assert(this.cosmosApp, "Cosmos Ledger App is not connected");
 
     const hdPathToUse = hdPath || this.hdPaths[0];
@@ -143,6 +126,22 @@ export class LaunchpadLedger {
     const response = await this.cosmosApp.sign(unharden(hdPathToUse), fromUtf8(message));
     this.handleLedgerErrors(response, "Transaction signing request was rejected by the user");
     return Secp256k1Signature.fromDer((response as SignResponse).signature).toFixedLength();
+  }
+
+  private async ensureConnected(timeout = defaultInteractionTimeout): Promise<void> {
+    // assume good connection if connected once
+    if (this.cosmosApp) {
+      return;
+    }
+
+    if (this.platform !== "node") {
+      verifyBrowserIsSupported(this.platform, this.userAgent);
+    }
+
+    const transport = await this.createTransport(timeout * 1000);
+    this.cosmosApp = new CosmosApp(transport);
+
+    await this.verifyDeviceIsReady();
   }
 
   private async createTransport(timeout: number): Promise<Transport> {
@@ -189,7 +188,7 @@ export class LaunchpadLedger {
   }
 
   private async getOpenAppName(): Promise<string> {
-    await this.connect();
+    await this.ensureConnected();
     assert(this.cosmosApp, "Cosmos Ledger App is not connected");
 
     const response = await this.cosmosApp.appInfo();
