@@ -9,7 +9,7 @@ export class GasPrice {
   public readonly amount: Decimal;
   public readonly denom: string;
 
-  constructor(amount: Decimal, denom: string) {
+  public constructor(amount: Decimal, denom: string) {
     this.amount = amount;
     this.denom = denom;
   }

@@ -57,7 +57,7 @@ export class LaunchpadLedger {
   public readonly platform: string;
   public readonly userAgent: string | null;
 
-  constructor(options: LaunchpadLedgerOptions = {}) {
+  public constructor(options: LaunchpadLedgerOptions = {}) {
     const defaultOptions = {
       hdPaths: [cosmosHdPath],
       prefix: cosmosBech32Prefix,
@@ -81,7 +81,7 @@ export class LaunchpadLedger {
     }
   }
 
-  async connect(timeout = defaultInteractionTimeout): Promise<LaunchpadLedger> {
+  public async connect(timeout = defaultInteractionTimeout): Promise<LaunchpadLedger> {
     // assume good connection if connected once
     if (this.cosmosApp) {
       return this;
@@ -98,7 +98,7 @@ export class LaunchpadLedger {
     return this;
   }
 
-  async getCosmosAppVersion(): Promise<string> {
+  public async getCosmosAppVersion(): Promise<string> {
     await this.connect();
     assert(this.cosmosApp, "Cosmos Ledger App is not connected");
 
@@ -110,7 +110,7 @@ export class LaunchpadLedger {
     return `${major}.${minor}.${patch}`;
   }
 
-  async getPubkey(hdPath?: HdPath): Promise<Uint8Array> {
+  public async getPubkey(hdPath?: HdPath): Promise<Uint8Array> {
     await this.connect();
     assert(this.cosmosApp, "Cosmos Ledger App is not connected");
 
@@ -121,7 +121,7 @@ export class LaunchpadLedger {
     return Uint8Array.from((response as PublicKeyResponse).compressed_pk);
   }
 
-  async getPubkeys(): Promise<readonly Uint8Array[]> {
+  public async getPubkeys(): Promise<readonly Uint8Array[]> {
     return this.hdPaths.reduce(
       (promise: Promise<readonly Uint8Array[]>, hdPath) =>
         promise.then(async (pubkeys) => [...pubkeys, await this.getPubkey(hdPath)]),
@@ -129,12 +129,12 @@ export class LaunchpadLedger {
     );
   }
 
-  async getCosmosAddress(pubkey?: Uint8Array): Promise<string> {
+  public async getCosmosAddress(pubkey?: Uint8Array): Promise<string> {
     const pubkeyToUse = pubkey || (await this.getPubkey());
     return CosmosApp.getBech32FromPK(this.prefix, Buffer.from(pubkeyToUse));
   }
 
-  async sign(message: Uint8Array, hdPath?: HdPath): Promise<Uint8Array> {
+  public async sign(message: Uint8Array, hdPath?: HdPath): Promise<Uint8Array> {
     await this.connect();
     assert(this.cosmosApp, "Cosmos Ledger App is not connected");
 

@@ -35,6 +35,7 @@ module.exports = {
     "@typescript-eslint/await-thenable": "warn",
     "@typescript-eslint/ban-types": "warn",
     "@typescript-eslint/explicit-function-return-type": ["warn", { allowExpressions: true }],
+    "@typescript-eslint/explicit-member-accessibility": "warn",
     "@typescript-eslint/naming-convention": [
       "warn",
       {
@@ -65,6 +66,7 @@ module.exports = {
     "@typescript-eslint/no-empty-interface": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-floating-promises": "warn",
+    "@typescript-eslint/no-parameter-properties": "warn",
     "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_", varsIgnorePattern: "^_" }],
     "@typescript-eslint/no-unnecessary-type-assertion": "warn",
     "@typescript-eslint/no-use-before-define": "warn",
@@ -76,6 +78,7 @@ module.exports = {
       rules: {
         "@typescript-eslint/no-var-requires": "off",
         "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/explicit-member-accessibility": "off",
       },
     },
     {

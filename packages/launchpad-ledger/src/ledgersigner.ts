@@ -15,7 +15,7 @@ export class LedgerSigner implements OfflineSigner {
   private readonly hdPaths: readonly HdPath[];
   private accounts?: readonly AccountData[];
 
-  constructor(options: LaunchpadLedgerOptions = {}) {
+  public constructor(options: LaunchpadLedgerOptions = {}) {
     this.hdPaths = options.hdPaths || [makeCosmoshubPath(0)];
     this.ledger = new LaunchpadLedger(options);
   }
