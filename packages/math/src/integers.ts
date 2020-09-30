@@ -25,6 +25,12 @@ export class Uint32 implements Integer, WithByteConverters {
     return Uint32.fromBytes(bytes);
   }
 
+  /**
+   * Creates a Uint32 from a fixed length byte array.
+   *
+   * @param bytes a list of exactly 4 bytes
+   * @param endianess defaults to big endian
+   */
   public static fromBytes(bytes: ArrayLike<number>, endianess: "be" | "le" = "be"): Uint32 {
     if (bytes.length !== 4) {
       throw new Error("Invalid input length. Expected 4 bytes.");
@@ -168,6 +174,12 @@ export class Uint64 implements Integer, WithByteConverters {
     return Uint64.fromBytes(bytes);
   }
 
+  /**
+   * Creates a Uint64 from a fixed length byte array.
+   *
+   * @param bytes a list of exactly 8 bytes
+   * @param endianess defaults to big endian
+   */
   public static fromBytes(bytes: ArrayLike<number>, endianess: "be" | "le" = "be"): Uint64 {
     if (bytes.length !== 8) {
       throw new Error("Invalid input length. Expected 8 bytes.");
