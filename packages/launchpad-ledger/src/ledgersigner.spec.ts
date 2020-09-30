@@ -11,7 +11,7 @@ import {
   SigningCosmosClient,
   StdFee,
 } from "@cosmjs/launchpad";
-import { assert } from "@cosmjs/utils";
+import { assert, sleep } from "@cosmjs/utils";
 
 import { LedgerSigner } from "./ledgersigner";
 import { pendingWithoutLedger, pendingWithoutLedgerInteractive, wasmd } from "./testutils.spec";
@@ -62,6 +62,11 @@ describe("LedgerSigner", () => {
   });
 
   describe("sign", () => {
+    afterEach(async () => {
+      // It seems the Ledger device needs a bit of time to recover
+      await sleep(500);
+    });
+
     it(
       "returns valid signature",
       async () => {
