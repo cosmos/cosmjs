@@ -14,9 +14,12 @@ interface WithByteConverters {
   readonly toBytesLittleEndian: () => Uint8Array;
 }
 
+interface IntegerStatic<T> {
+  readonly fromString: (str: string) => T;
+}
+
 interface FixedLengthIntegerStatic<T> {
   readonly fromBytes: (bytes: ArrayLike<number>, endianess: "be" | "le") => T;
-  readonly fromString: (str: string) => T;
 }
 
 export class Uint32 implements Integer, WithByteConverters {
@@ -104,8 +107,6 @@ export class Uint32 implements Integer, WithByteConverters {
     return this.data.toString();
   }
 }
-
-const _uint32ClassConformsToStaticInterface: FixedLengthIntegerStatic<Uint32> = Uint32;
 
 export class Int53 implements Integer {
   public static fromString(str: string): Int53 {
@@ -249,4 +250,9 @@ export class Uint64 implements Integer, WithByteConverters {
   }
 }
 
-const _uint64ClassConformsToStaticInterface: FixedLengthIntegerStatic<Uint64> = Uint64;
+// Assign classes to unused variables in order to verify static interface conformance at compile time.
+// Workaround for https://github.com/microsoft/TypeScript/issues/33892
+const _int53Class: IntegerStatic<Int53> = Int53;
+const _uint53Class: IntegerStatic<Uint53> = Uint53;
+const _uint32Class: IntegerStatic<Uint32> & FixedLengthIntegerStatic<Uint32> = Uint32;
+const _uint64Class: IntegerStatic<Uint64> & FixedLengthIntegerStatic<Uint64> = Uint64;
