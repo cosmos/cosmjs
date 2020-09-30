@@ -88,6 +88,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="uint64.html#tobyteslittleendian" class="tsd-kind-icon">to<wbr>Bytes<wbr>Little<wbr>Endian</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="uint64.html#tonumber" class="tsd-kind-icon">to<wbr>Number</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="uint64.html#tostring" class="tsd-kind-icon">to<wbr>String</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="uint64.html#frombytes" class="tsd-kind-icon">from<wbr>Bytes</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="uint64.html#frombytesbigendian" class="tsd-kind-icon">from<wbr>Bytes<wbr>Big<wbr>Endian</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="uint64.html#fromnumber" class="tsd-kind-icon">from<wbr>Number</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="uint64.html#fromstring" class="tsd-kind-icon">from<wbr>String</a></li>
@@ -108,7 +109,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/25c61da9/packages/math/src/integers.ts#L201">src/integers.ts:201</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/70b213d1/packages/math/src/integers.ts#L236">src/integers.ts:236</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Uint8Array</span></h4>
@@ -125,7 +126,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/25c61da9/packages/math/src/integers.ts#L205">src/integers.ts:205</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/70b213d1/packages/math/src/integers.ts#L240">src/integers.ts:240</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Uint8Array</span></h4>
@@ -142,7 +143,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/25c61da9/packages/math/src/integers.ts#L213">src/integers.ts:213</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/70b213d1/packages/math/src/integers.ts#L248">src/integers.ts:248</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
@@ -159,10 +160,47 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/25c61da9/packages/math/src/integers.ts#L209">src/integers.ts:209</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/70b213d1/packages/math/src/integers.ts#L244">src/integers.ts:244</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="frombytes" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> from<wbr>Bytes</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">from<wbr>Bytes<span class="tsd-signature-symbol">(</span>bytes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ArrayLike</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span>, endianess<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">"be"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"le"</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="uint64.html" class="tsd-signature-type">Uint64</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/70b213d1/packages/math/src/integers.ts#L184">src/integers.ts:184</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates a Uint64 from a fixed length byte array.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>bytes: <span class="tsd-signature-type">ArrayLike</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>a list of exactly 8 bytes</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> endianess: <span class="tsd-signature-type">"be"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"le"</span><span class="tsd-signature-symbol"> = &quot;be&quot;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>defaults to big endian</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="uint64.html" class="tsd-signature-type">Uint64</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -176,9 +214,16 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/25c61da9/packages/math/src/integers.ts#L145">src/integers.ts:145</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/70b213d1/packages/math/src/integers.ts#L174">src/integers.ts:174</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<dl class="tsd-comment-tags">
+									<dt>deprecated</dt>
+									<dd><p>use Uint64.fromBytes</p>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -199,7 +244,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/25c61da9/packages/math/src/integers.ts#L171">src/integers.ts:171</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/70b213d1/packages/math/src/integers.ts#L206">src/integers.ts:206</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -222,7 +267,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/25c61da9/packages/math/src/integers.ts#L164">src/integers.ts:164</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/70b213d1/packages/math/src/integers.ts#L199">src/integers.ts:199</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -277,6 +322,9 @@
 								<a href="uint64.html#tostring" class="tsd-kind-icon">to<wbr>String</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="uint64.html#frombytes" class="tsd-kind-icon">from<wbr>Bytes</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
 								<a href="uint64.html#frombytesbigendian" class="tsd-kind-icon">from<wbr>Bytes<wbr>Big<wbr>Endian</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
@@ -289,11 +337,29 @@
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/fixedlengthintegerstatic.html" class="tsd-kind-icon">Fixed<wbr>Length<wbr>Integer<wbr>Static</a>
+					</li>
 					<li class=" tsd-kind-interface">
 						<a href="../interfaces/integer.html" class="tsd-kind-icon">Integer</a>
 					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/integerstatic.html" class="tsd-kind-icon">Integer<wbr>Static</a>
+					</li>
 					<li class=" tsd-kind-interface">
 						<a href="../interfaces/withbyteconverters.html" class="tsd-kind-icon">With<wbr>Byte<wbr>Converters</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="../globals.html#_int53class" class="tsd-kind-icon">_int53<wbr>Class</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="../globals.html#_uint32class" class="tsd-kind-icon">_uint32<wbr>Class</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="../globals.html#_uint53class" class="tsd-kind-icon">_uint53<wbr>Class</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="../globals.html#_uint64class" class="tsd-kind-icon">_uint64<wbr>Class</a>
 					</li>
 					<li class=" tsd-kind-variable">
 						<a href="../globals.html#maxfractionaldigits" class="tsd-kind-icon">max<wbr>Fractional<wbr>Digits</a>
