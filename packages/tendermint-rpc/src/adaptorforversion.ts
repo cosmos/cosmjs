@@ -11,7 +11,7 @@ import { v0_33 } from "./v0-33";
  * @param version full Tendermint version string, e.g. "0.20.1"
  */
 export function adaptorForVersion(version: string): Adaptor {
-  if (version.startsWith("0.33.")) {
+  if (version.startsWith("0.33.") || version.startsWith("0.34.")) {
     return v0_33;
   } else {
     throw new Error(`Unsupported tendermint version: ${version}`);

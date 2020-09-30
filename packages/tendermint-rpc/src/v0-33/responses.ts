@@ -619,7 +619,8 @@ interface RpcTxEvent {
   readonly tx: Base64String;
   readonly result: RpcTxData;
   readonly height: IntegerString;
-  readonly index: number;
+  /** Not set since Tendermint 0.34 */
+  readonly index?: number;
 }
 
 function decodeTxEvent(data: RpcTxEvent): responses.TxEvent {
@@ -629,7 +630,7 @@ function decodeTxEvent(data: RpcTxEvent): responses.TxEvent {
     hash: hashTx(tx),
     result: decodeTxData(data.result),
     height: Integer.parse(assertNotEmpty(data.height)),
-    index: Integer.parse(assertNumber(data.index)),
+    index: may(Integer.parse, data.index),
   };
 }
 
