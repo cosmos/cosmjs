@@ -55,7 +55,8 @@ Then follow the instructions on that page.
 
 ## Runnng tests
 
-The tests in this package require a Ledger device initialized with the mnemonic
+The tests in this package require a Ledger device
+[initialized with the mnemonic](https://support.ledger.com/hc/en-us/articles/360005434914)
 from
 [scripts/wasmd/README.md#preset-accounts](https://github.com/CosmWasm/cosmjs/blob/master/scripts/wasmd/README.md#preset-accounts)
 (see "Ledger: accounts for Ledger based demos and tests") with an installed
