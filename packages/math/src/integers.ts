@@ -16,6 +16,7 @@ interface WithByteConverters {
 
 interface FixedLengthIntegerStatic<T> {
   readonly fromBytes: (bytes: ArrayLike<number>, endianess: "be" | "le") => T;
+  readonly fromString: (str: string) => T;
 }
 
 export class Uint32 implements Integer, WithByteConverters {
@@ -40,6 +41,13 @@ export class Uint32 implements Integer, WithByteConverters {
     // Use mulitiplication instead of shifting since bitwise operators are defined
     // on SIGNED int32 in JavaScript and we don't want to risk surprises
     return new Uint32(beBytes[0] * 2 ** 24 + beBytes[1] * 2 ** 16 + beBytes[2] * 2 ** 8 + beBytes[3]);
+  }
+
+  public static fromString(str: string): Uint32 {
+    if (!str.match(/^[0-9]+$/)) {
+      throw new Error("Invalid string format");
+    }
+    return new Uint32(Number.parseInt(str, 10));
   }
 
   protected readonly data: number;

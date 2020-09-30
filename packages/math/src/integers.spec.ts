@@ -2,6 +2,88 @@ import { Int53, Uint32, Uint53, Uint64 } from "./integers";
 
 describe("Integers", () => {
   describe("Uint32", () => {
+    describe("fromBytes", () => {
+      it("can be constructed from to byte array", () => {
+        expect(Uint32.fromBytes([0, 0, 0, 0]).toNumber()).toEqual(0);
+        expect(Uint32.fromBytes([0, 0, 0, 1]).toNumber()).toEqual(1);
+        expect(Uint32.fromBytes([0, 0, 0, 42]).toNumber()).toEqual(42);
+        expect(Uint32.fromBytes([0x3b, 0x9a, 0xca, 0x00]).toNumber()).toEqual(1000000000);
+        expect(Uint32.fromBytes([0x7f, 0xff, 0xff, 0xff]).toNumber()).toEqual(2147483647);
+        expect(Uint32.fromBytes([0x80, 0x00, 0x00, 0x00]).toNumber()).toEqual(2147483648);
+        expect(Uint32.fromBytes([0xff, 0xff, 0xff, 0xff]).toNumber()).toEqual(4294967295);
+      });
+
+      it("can be constructed from Buffer", () => {
+        expect(Uint32.fromBytes(Buffer.from([0, 0, 0, 0])).toNumber()).toEqual(0);
+        expect(Uint32.fromBytes(Buffer.from([0, 0, 0, 1])).toNumber()).toEqual(1);
+        expect(Uint32.fromBytes(Buffer.from([0, 0, 0, 42])).toNumber()).toEqual(42);
+        expect(Uint32.fromBytes(Buffer.from([0x3b, 0x9a, 0xca, 0x00])).toNumber()).toEqual(1000000000);
+        expect(Uint32.fromBytes(Buffer.from([0x7f, 0xff, 0xff, 0xff])).toNumber()).toEqual(2147483647);
+        expect(Uint32.fromBytes(Buffer.from([0x80, 0x00, 0x00, 0x00])).toNumber()).toEqual(2147483648);
+        expect(Uint32.fromBytes(Buffer.from([0xff, 0xff, 0xff, 0xff])).toNumber()).toEqual(4294967295);
+      });
+
+      it("throws for invalid input length", () => {
+        expect(() => Uint32.fromBytes([])).toThrowError(/Invalid input length/);
+        expect(() => Uint32.fromBytes([0, 0, 0])).toThrowError(/Invalid input length/);
+        expect(() => Uint32.fromBytes([0, 0, 0, 0, 0])).toThrowError(/Invalid input length/);
+      });
+
+      it("throws for invalid values", () => {
+        expect(() => Uint32.fromBytes([0, 0, 0, -1])).toThrowError(/Invalid value in byte/);
+        expect(() => Uint32.fromBytes([0, 0, 0, 1.5])).toThrowError(/Invalid value in byte/);
+        expect(() => Uint32.fromBytes([0, 0, 0, 256])).toThrowError(/Invalid value in byte/);
+        expect(() => Uint32.fromBytes([0, 0, 0, NaN])).toThrowError(/Invalid value in byte/);
+        expect(() => Uint32.fromBytes([0, 0, 0, Number.NEGATIVE_INFINITY])).toThrowError(
+          /Invalid value in byte/,
+        );
+        expect(() => Uint32.fromBytes([0, 0, 0, Number.POSITIVE_INFINITY])).toThrowError(
+          /Invalid value in byte/,
+        );
+      });
+
+      it("works for big and little endian", () => {
+        const b = Uint32.fromBytes([0x00, 0xa6, 0xb7, 0xd8], "be");
+        expect(b.toNumber()).toEqual(0xa6b7d8);
+
+        const l = Uint32.fromBytes([0xa6, 0xb7, 0xd8, 0x00], "le");
+        expect(l.toNumber()).toEqual(0xd8b7a6);
+      });
+    });
+
+    describe("fromString", () => {
+      it("can be constructed from string", () => {
+        {
+          const a = Uint32.fromString("0");
+          expect(a.toNumber()).toEqual(0);
+        }
+        {
+          const a = Uint32.fromString("1");
+          expect(a.toNumber()).toEqual(1);
+        }
+        {
+          const a = Uint32.fromString("01");
+          expect(a.toNumber()).toEqual(1);
+        }
+        {
+          const a = Uint32.fromString("4294967295");
+          expect(a.toNumber()).toEqual(4294967295);
+        }
+      });
+
+      it("throws for invalid string values", () => {
+        expect(() => Uint32.fromString(" 1")).toThrowError(/invalid string format/i);
+        expect(() => Uint32.fromString("-1")).toThrowError(/invalid string format/i);
+        expect(() => Uint32.fromString("+1")).toThrowError(/invalid string format/i);
+        expect(() => Uint32.fromString("1e6")).toThrowError(/invalid string format/i);
+      });
+
+      it("throws for string values exceeding uint32", () => {
+        expect(() => Uint32.fromString("4294967296")).toThrowError(/input not in uint32 range/i);
+        expect(() => Uint32.fromString("99999999999999999999")).toThrowError(/input not in uint32 range/i);
+      });
+    });
+
     it("can be constructed", () => {
       expect(new Uint32(0)).toBeTruthy();
       expect(new Uint32(1)).toBeTruthy();
@@ -77,55 +159,6 @@ describe("Integers", () => {
         expect(new Uint32(4294967295).toBytesLittleEndian()).toEqual(
           new Uint8Array([0xff, 0xff, 0xff, 0xff]),
         );
-      });
-    });
-
-    describe("fromBytes", () => {
-      it("can be constructed from to byte array", () => {
-        expect(Uint32.fromBytes([0, 0, 0, 0]).toNumber()).toEqual(0);
-        expect(Uint32.fromBytes([0, 0, 0, 1]).toNumber()).toEqual(1);
-        expect(Uint32.fromBytes([0, 0, 0, 42]).toNumber()).toEqual(42);
-        expect(Uint32.fromBytes([0x3b, 0x9a, 0xca, 0x00]).toNumber()).toEqual(1000000000);
-        expect(Uint32.fromBytes([0x7f, 0xff, 0xff, 0xff]).toNumber()).toEqual(2147483647);
-        expect(Uint32.fromBytes([0x80, 0x00, 0x00, 0x00]).toNumber()).toEqual(2147483648);
-        expect(Uint32.fromBytes([0xff, 0xff, 0xff, 0xff]).toNumber()).toEqual(4294967295);
-      });
-
-      it("can be constructed from Buffer", () => {
-        expect(Uint32.fromBytes(Buffer.from([0, 0, 0, 0])).toNumber()).toEqual(0);
-        expect(Uint32.fromBytes(Buffer.from([0, 0, 0, 1])).toNumber()).toEqual(1);
-        expect(Uint32.fromBytes(Buffer.from([0, 0, 0, 42])).toNumber()).toEqual(42);
-        expect(Uint32.fromBytes(Buffer.from([0x3b, 0x9a, 0xca, 0x00])).toNumber()).toEqual(1000000000);
-        expect(Uint32.fromBytes(Buffer.from([0x7f, 0xff, 0xff, 0xff])).toNumber()).toEqual(2147483647);
-        expect(Uint32.fromBytes(Buffer.from([0x80, 0x00, 0x00, 0x00])).toNumber()).toEqual(2147483648);
-        expect(Uint32.fromBytes(Buffer.from([0xff, 0xff, 0xff, 0xff])).toNumber()).toEqual(4294967295);
-      });
-
-      it("throws for invalid input length", () => {
-        expect(() => Uint32.fromBytes([])).toThrowError(/Invalid input length/);
-        expect(() => Uint32.fromBytes([0, 0, 0])).toThrowError(/Invalid input length/);
-        expect(() => Uint32.fromBytes([0, 0, 0, 0, 0])).toThrowError(/Invalid input length/);
-      });
-
-      it("throws for invalid values", () => {
-        expect(() => Uint32.fromBytes([0, 0, 0, -1])).toThrowError(/Invalid value in byte/);
-        expect(() => Uint32.fromBytes([0, 0, 0, 1.5])).toThrowError(/Invalid value in byte/);
-        expect(() => Uint32.fromBytes([0, 0, 0, 256])).toThrowError(/Invalid value in byte/);
-        expect(() => Uint32.fromBytes([0, 0, 0, NaN])).toThrowError(/Invalid value in byte/);
-        expect(() => Uint32.fromBytes([0, 0, 0, Number.NEGATIVE_INFINITY])).toThrowError(
-          /Invalid value in byte/,
-        );
-        expect(() => Uint32.fromBytes([0, 0, 0, Number.POSITIVE_INFINITY])).toThrowError(
-          /Invalid value in byte/,
-        );
-      });
-
-      it("works for big and little endian", () => {
-        const b = Uint32.fromBytes([0x00, 0xa6, 0xb7, 0xd8], "be");
-        expect(b.toNumber()).toEqual(0xa6b7d8);
-
-        const l = Uint32.fromBytes([0xa6, 0xb7, 0xd8, 0x00], "le");
-        expect(l.toNumber()).toEqual(0xd8b7a6);
       });
     });
   });

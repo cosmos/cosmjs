@@ -11,6 +11,7 @@ export declare class Uint32 implements Integer, WithByteConverters {
   /** @deprecated use Uint32.fromBytes */
   static fromBigEndianBytes(bytes: ArrayLike<number>): Uint32;
   static fromBytes(bytes: ArrayLike<number>, endianess?: "be" | "le"): Uint32;
+  static fromString(str: string): Uint32;
   protected readonly data: number;
   constructor(input: number);
   toBytesBigEndian(): Uint8Array;
