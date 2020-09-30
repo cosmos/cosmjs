@@ -24,7 +24,8 @@ interface ConnectedApp {
   readonly app: CosmosApp;
 }
 
-const defaultInteractionTimeout = 120; // seconds to wait for user action on Ledger, currently is always limited to 60
+/** Time to establish a connection in milliseconds */
+const defaultOpenTimeout = 120_000;
 const requiredCosmosAppVersion = "1.5.3";
 
 function isWindows(platform: string): boolean {
@@ -141,7 +142,7 @@ export class LaunchpadLedger {
     }
   }
 
-  private async ensureConnected(timeout = defaultInteractionTimeout): Promise<void> {
+  private async ensureConnected(): Promise<void> {
     // assume good connection if connected once
     if (this.connectedApp) {
       return;
@@ -151,7 +152,7 @@ export class LaunchpadLedger {
       verifyBrowserIsSupported(this.platform, this.userAgent);
     }
 
-    const transport = await this.createTransport(timeout * 1000);
+    const transport = await this.createTransport(defaultOpenTimeout);
     this.connectedApp = {
       transport: transport,
       app: new CosmosApp(transport),
@@ -160,7 +161,13 @@ export class LaunchpadLedger {
     await this.verifyDeviceIsReady();
   }
 
-  private async createTransport(timeout: number): Promise<Transport> {
+  /**
+   * @param openTimeout The time to establish a connection in milliseconds. This is
+   *                    [passed into as the second argument into Transport.open](https://github.com/LedgerHQ/ledgerjs/blob/v5.25.2/packages/hw-transport/src/Transport.js#L235),
+   *                    which is ignored by both [TransportWebUSB.open](https://github.com/LedgerHQ/ledgerjs/blob/v5.25.2/packages/hw-transport-webusb/src/TransportWebUSB.js#L116)
+   *                    and [TransportNodeHid.open](https://github.com/LedgerHQ/ledgerjs/blob/v5.25.2/packages/hw-transport-node-hid/src/TransportNodeHid.js#L115).
+   */
+  private async createTransport(openTimeout: number): Promise<Transport> {
     // HACK: Use a variable to get webpack to ignore this
     const nodeJsTransportPackageName = "@ledgerhq/hw-transport-node-hid";
     /* eslint-disable-next-line @typescript-eslint/naming-convention */
@@ -170,7 +177,7 @@ export class LaunchpadLedger {
         : await import("@ledgerhq/hw-transport-webusb");
 
     try {
-      const transport = await TransportClass.create(timeout * 1000);
+      const transport = await TransportClass.create(openTimeout);
       return transport;
     } catch (error) {
       const trimmedErrorMessage = error.message.trim();
