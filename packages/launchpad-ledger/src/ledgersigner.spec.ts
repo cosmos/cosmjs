@@ -14,7 +14,12 @@ import {
 import { assert, sleep } from "@cosmjs/utils";
 
 import { LedgerSigner } from "./ledgersigner";
-import { pendingWithoutLedger, pendingWithoutLedgerInteractive, wasmd } from "./testutils.spec";
+import {
+  pendingWithoutLedger,
+  pendingWithoutLedgerInteractive,
+  pendingWithoutWasmd,
+  wasmd,
+} from "./testutils.spec";
 
 const interactiveTimeout = 120_000;
 
@@ -114,6 +119,7 @@ describe("LedgerSigner", () => {
       "creates signature accepted by launchpad backend",
       async () => {
         pendingWithoutLedgerInteractive();
+        pendingWithoutWasmd();
         const signer = new LedgerSigner({
           testModeAllowed: true,
           hdPaths: [makeCosmoshubPath(0), makeCosmoshubPath(1), makeCosmoshubPath(10)],

@@ -18,6 +18,16 @@ export function pendingWithoutLedgerInteractive(): void {
   }
 }
 
+export function wasmdEnabled(): boolean {
+  return !!process.env.WASMD_ENABLED;
+}
+
+export function pendingWithoutWasmd(): void {
+  if (!wasmdEnabled()) {
+    return pending("Set WASMD_ENABLED to enable Wasmd based tests");
+  }
+}
+
 export const wasmd = {
   endpoint: "http://localhost:1317",
   chainId: "testing",
