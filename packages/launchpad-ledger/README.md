@@ -67,7 +67,6 @@ transactions. Start a local wasmd blockchain as described in
 and execute:
 
 ```sh
-export LEDGER_INTERACTIVE_ENABLED=1
 export LEDGER_ENABLED=1
 export WASMD_ENABLED=1
 yarn test
