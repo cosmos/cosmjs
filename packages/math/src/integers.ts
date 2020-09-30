@@ -14,8 +14,27 @@ interface WithByteConverters {
   readonly toBytesLittleEndian: () => Uint8Array;
 }
 
+interface IntegerStatic<T> {
+  readonly fromString: (str: string) => T;
+}
+
+interface FixedLengthIntegerStatic<T> {
+  readonly fromBytes: (bytes: ArrayLike<number>, endianess: "be" | "le") => T;
+}
+
 export class Uint32 implements Integer, WithByteConverters {
+  /** @deprecated use Uint32.fromBytes */
   public static fromBigEndianBytes(bytes: ArrayLike<number>): Uint32 {
+    return Uint32.fromBytes(bytes);
+  }
+
+  /**
+   * Creates a Uint32 from a fixed length byte array.
+   *
+   * @param bytes a list of exactly 4 bytes
+   * @param endianess defaults to big endian
+   */
+  public static fromBytes(bytes: ArrayLike<number>, endianess: "be" | "le" = "be"): Uint32 {
     if (bytes.length !== 4) {
       throw new Error("Invalid input length. Expected 4 bytes.");
     }
@@ -26,9 +45,18 @@ export class Uint32 implements Integer, WithByteConverters {
       }
     }
 
+    const beBytes = endianess === "be" ? bytes : Array.from(bytes).reverse();
+
     // Use mulitiplication instead of shifting since bitwise operators are defined
     // on SIGNED int32 in JavaScript and we don't want to risk surprises
-    return new Uint32(bytes[0] * 2 ** 24 + bytes[1] * 2 ** 16 + bytes[2] * 2 ** 8 + bytes[3]);
+    return new Uint32(beBytes[0] * 2 ** 24 + beBytes[1] * 2 ** 16 + beBytes[2] * 2 ** 8 + beBytes[3]);
+  }
+
+  public static fromString(str: string): Uint32 {
+    if (!str.match(/^[0-9]+$/)) {
+      throw new Error("Invalid string format");
+    }
+    return new Uint32(Number.parseInt(str, 10));
   }
 
   protected readonly data: number;
@@ -142,7 +170,18 @@ export class Uint53 implements Integer {
 }
 
 export class Uint64 implements Integer, WithByteConverters {
+  /** @deprecated use Uint64.fromBytes */
   public static fromBytesBigEndian(bytes: ArrayLike<number>): Uint64 {
+    return Uint64.fromBytes(bytes);
+  }
+
+  /**
+   * Creates a Uint64 from a fixed length byte array.
+   *
+   * @param bytes a list of exactly 8 bytes
+   * @param endianess defaults to big endian
+   */
+  public static fromBytes(bytes: ArrayLike<number>, endianess: "be" | "le" = "be"): Uint64 {
     if (bytes.length !== 8) {
       throw new Error("Invalid input length. Expected 8 bytes.");
     }
@@ -153,12 +192,8 @@ export class Uint64 implements Integer, WithByteConverters {
       }
     }
 
-    const asArray: number[] = [];
-    for (let i = 0; i < bytes.length; ++i) {
-      asArray.push(bytes[i]);
-    }
-
-    return new Uint64(new BN([...asArray]));
+    const beBytes = endianess === "be" ? Array.from(bytes) : Array.from(bytes).reverse();
+    return new Uint64(new BN(beBytes));
   }
 
   public static fromString(str: string): Uint64 {
@@ -214,3 +249,10 @@ export class Uint64 implements Integer, WithByteConverters {
     return this.data.toNumber();
   }
 }
+
+// Assign classes to unused variables in order to verify static interface conformance at compile time.
+// Workaround for https://github.com/microsoft/TypeScript/issues/33892
+const _int53Class: IntegerStatic<Int53> = Int53;
+const _uint53Class: IntegerStatic<Uint53> = Uint53;
+const _uint32Class: IntegerStatic<Uint32> & FixedLengthIntegerStatic<Uint32> = Uint32;
+const _uint64Class: IntegerStatic<Uint64> & FixedLengthIntegerStatic<Uint64> = Uint64;

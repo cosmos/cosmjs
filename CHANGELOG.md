@@ -63,6 +63,11 @@
   Launchpad. Two new classes are provided: `LedgerSigner` (for most use cases)
   and `LaunchpadLedger` for more fine-grained access.
 - @cosmjs/math: Add `.multiply` method to `Decimal` class.
+- @cosmjs/math: Deprecate `Uint32.fromBigEndianBytes` in favour of
+  `Uint32.fromBytes`, which supports both big and little endian.
+- @cosmjs/math: Deprecate `Uint64.fromBytesBigEndian` in favour of
+  `Uint64.fromBytes`, which supports both big and little endian.
+- @cosmjs/math: Add `Uint32.fromString`.
 - @cosmjs/tendermint-rpc: Make `BroadcastTxCommitResponse.height` non-optional.
 - @cosmjs/tendermint-rpc: Make `TxProof.proof.leafHash` non-optional because it
   is always set.

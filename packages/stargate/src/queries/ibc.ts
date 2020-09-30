@@ -111,7 +111,7 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
         // key: https://github.com/cosmos/cosmos-sdk/blob/ef0a7344af345882729598bc2958a21143930a6b/x/ibc/24-host/keys.go#L133-L136
         const key = toAscii(`seqAcks/ports/${portId}/channels/${channelId}/nextSequenceAck`);
         const responseData = await base.queryVerified("ibc", key);
-        return responseData.length ? Uint64.fromBytesBigEndian(responseData).toNumber() : null;
+        return responseData.length ? Uint64.fromBytes(responseData).toNumber() : null;
       },
 
       unverified: {
