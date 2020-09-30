@@ -53,6 +53,25 @@ http://localhost:8000/demo.
 
 Then follow the instructions on that page.
 
+## Runnng tests
+
+The tests in this package require a Ledger device
+[initialized with the mnemonic](https://support.ledger.com/hc/en-us/articles/360005434914)
+from
+[scripts/wasmd/README.md#preset-accounts](https://github.com/CosmWasm/cosmjs/blob/master/scripts/wasmd/README.md#preset-accounts)
+(see "Ledger: accounts for Ledger based demos and tests") with an installed
+"Cosmos (ATOM)" app. The device must be connected via USB, unlocked and the
+Cosmos app must be opened. The tests require the user to manually approve
+transactions. Start a local wasmd blockchain as described in
+[scripts/wasmd/README.md](https://github.com/CosmWasm/cosmjs/blob/master/scripts/wasmd/README.md)
+and execute:
+
+```sh
+export LEDGER_ENABLED=1
+export WASMD_ENABLED=1
+yarn test
+```
+
 ## License
 
 This package is part of the cosmjs repository, licensed under the Apache License
