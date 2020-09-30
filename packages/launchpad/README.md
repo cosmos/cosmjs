@@ -123,9 +123,9 @@ Those can be signed and broadcast the manual way or by using a higher level
 ```ts
 import {
   coins,
+  BroadcastTxResult,
   MsgSubmitProposal,
   OfflineSigner,
-  PostTxResult,
   SigningCosmosClient,
   StdFee,
 } from "@cosmjs/launchpad";
@@ -133,7 +133,7 @@ import {
 async function publishProposal(
   apiUrl: string,
   signer: OfflineSigner,
-): Promise<PostTxResult> {
+): Promise<BroadcastTxResult> {
   const [{ address: authorAddress }] = await signer.getAccounts();
 
   const memo = "My first proposal on chain";
@@ -171,7 +171,7 @@ example we show how to build a client for a blockchain with a wasm module:
 ```ts
 import { MsgExecuteContract, setupWasmExtension } from "@cosmjs/cosmwasm";
 import {
-  assertIsPostTxSuccess,
+  assertIsBroadcastTxResult,
   LcdClient,
   makeSignDoc,
   setupAuthExtension,
@@ -208,8 +208,8 @@ const { account_number, sequence } = (
 const signDoc = makeSignDoc([msg], fee, apiUrl, memo, account_number, sequence);
 const { signed, signature } = await signer.sign(myAddress, signDoc);
 const signedTx = makeStdTx(signed, signature);
-const result = await client.postTx(signedTx);
-assertIsPostTxSuccess(result);
+const result = await client.broadcastTx(signedTx);
+assertIsBroadcastTxResult(result);
 ```
 
 ## Secure key storage
