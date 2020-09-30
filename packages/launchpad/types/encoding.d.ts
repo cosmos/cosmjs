@@ -1,6 +1,7 @@
 import { Msg } from "./msgs";
 import { StdFee } from "./types";
-export declare function sortJson(json: any): any;
+/** Returns a JSON string with objects sorted by key */
+export declare function sortedJsonStringify(obj: any): string;
 /**
  * The document to be signed
  *

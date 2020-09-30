@@ -5,23 +5,28 @@ import { Uint53 } from "@cosmjs/math";
 import { Msg } from "./msgs";
 import { StdFee } from "./types";
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function sortJson(json: any): any {
-  if (typeof json !== "object" || json === null) {
-    return json;
+function sortedObject(obj: any): any {
+  if (typeof obj !== "object" || obj === null) {
+    return obj;
   }
-  if (Array.isArray(json)) {
-    return json.map(sortJson);
+  if (Array.isArray(obj)) {
+    return obj.map(sortedObject);
   }
-  const sortedKeys = Object.keys(json).sort();
+  const sortedKeys = Object.keys(obj).sort();
   const result = sortedKeys.reduce(
     (accumulator, key) => ({
       ...accumulator,
-      [key]: sortJson(json[key]),
+      [key]: sortedObject(obj[key]),
     }),
     {},
   );
   return result;
+}
+
+/** Returns a JSON string with objects sorted by key */
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export function sortedJsonStringify(obj: any): string {
+  return JSON.stringify(sortedObject(obj));
 }
 
 /**
@@ -57,6 +62,5 @@ export function makeSignDoc(
 }
 
 export function serializeSignDoc(signDoc: StdSignDoc): Uint8Array {
-  const sortedSignDoc = sortJson(signDoc);
-  return toUtf8(JSON.stringify(sortedSignDoc));
+  return toUtf8(sortedJsonStringify(signDoc));
 }
