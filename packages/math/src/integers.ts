@@ -14,8 +14,17 @@ interface WithByteConverters {
   readonly toBytesLittleEndian: () => Uint8Array;
 }
 
+interface FixedLengthIntegerStatic<T> {
+  readonly fromBytes: (bytes: ArrayLike<number>, endianess: "be" | "le") => T;
+}
+
 export class Uint32 implements Integer, WithByteConverters {
+  /** @deprecated use Uint32.fromBytes */
   public static fromBigEndianBytes(bytes: ArrayLike<number>): Uint32 {
+    return Uint32.fromBytes(bytes);
+  }
+
+  public static fromBytes(bytes: ArrayLike<number>, endianess: "be" | "le" = "be"): Uint32 {
     if (bytes.length !== 4) {
       throw new Error("Invalid input length. Expected 4 bytes.");
     }
@@ -26,9 +35,11 @@ export class Uint32 implements Integer, WithByteConverters {
       }
     }
 
+    const beBytes = endianess === "be" ? bytes : Array.from(bytes).reverse();
+
     // Use mulitiplication instead of shifting since bitwise operators are defined
     // on SIGNED int32 in JavaScript and we don't want to risk surprises
-    return new Uint32(bytes[0] * 2 ** 24 + bytes[1] * 2 ** 16 + bytes[2] * 2 ** 8 + bytes[3]);
+    return new Uint32(beBytes[0] * 2 ** 24 + beBytes[1] * 2 ** 16 + beBytes[2] * 2 ** 8 + beBytes[3]);
   }
 
   protected readonly data: number;
@@ -79,6 +90,8 @@ export class Uint32 implements Integer, WithByteConverters {
     return this.data.toString();
   }
 }
+
+const _uint32ClassConformsToStaticInterface: FixedLengthIntegerStatic<Uint32> = Uint32;
 
 export class Int53 implements Integer {
   public static fromString(str: string): Int53 {
@@ -142,7 +155,12 @@ export class Uint53 implements Integer {
 }
 
 export class Uint64 implements Integer, WithByteConverters {
+  /** @deprecated use Uint64.fromBytes */
   public static fromBytesBigEndian(bytes: ArrayLike<number>): Uint64 {
+    return Uint64.fromBytes(bytes);
+  }
+
+  public static fromBytes(bytes: ArrayLike<number>, endianess: "be" | "le" = "be"): Uint64 {
     if (bytes.length !== 8) {
       throw new Error("Invalid input length. Expected 8 bytes.");
     }
@@ -153,12 +171,8 @@ export class Uint64 implements Integer, WithByteConverters {
       }
     }
 
-    const asArray: number[] = [];
-    for (let i = 0; i < bytes.length; ++i) {
-      asArray.push(bytes[i]);
-    }
-
-    return new Uint64(new BN([...asArray]));
+    const beBytes = endianess === "be" ? Array.from(bytes) : Array.from(bytes).reverse();
+    return new Uint64(new BN(beBytes));
   }
 
   public static fromString(str: string): Uint64 {
@@ -214,3 +228,5 @@ export class Uint64 implements Integer, WithByteConverters {
     return this.data.toNumber();
   }
 }
+
+const _uint64ClassConformsToStaticInterface: FixedLengthIntegerStatic<Uint64> = Uint64;

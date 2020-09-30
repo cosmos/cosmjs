@@ -8,7 +8,9 @@ interface WithByteConverters {
   readonly toBytesLittleEndian: () => Uint8Array;
 }
 export declare class Uint32 implements Integer, WithByteConverters {
+  /** @deprecated use Uint32.fromBytes */
   static fromBigEndianBytes(bytes: ArrayLike<number>): Uint32;
+  static fromBytes(bytes: ArrayLike<number>, endianess?: "be" | "le"): Uint32;
   protected readonly data: number;
   constructor(input: number);
   toBytesBigEndian(): Uint8Array;
@@ -31,7 +33,9 @@ export declare class Uint53 implements Integer {
   toString(): string;
 }
 export declare class Uint64 implements Integer, WithByteConverters {
+  /** @deprecated use Uint64.fromBytes */
   static fromBytesBigEndian(bytes: ArrayLike<number>): Uint64;
+  static fromBytes(bytes: ArrayLike<number>, endianess?: "be" | "le"): Uint64;
   static fromString(str: string): Uint64;
   static fromNumber(input: number): Uint64;
   private readonly data;
