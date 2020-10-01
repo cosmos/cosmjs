@@ -12,11 +12,28 @@ import {
   StdFee,
 } from "@cosmjs/launchpad";
 import { assert, sleep } from "@cosmjs/utils";
+import LedgerTransport from "@ledgerhq/hw-transport";
 
 import { LedgerSigner } from "./ledgersigner";
 import { pendingWithoutLedger, pendingWithoutWasmd, wasmd } from "./testutils.spec";
 
 const interactiveTimeout = 120_000;
+
+async function createLedgerTransport(): Promise<LedgerTransport> {
+  let platform: string;
+  try {
+    platform = navigator.platform;
+  } catch (error) {
+    platform = "node";
+  }
+  // HACK: Use a variable to get webpack to ignore this
+  const nodeJsTransportPackageName = "@ledgerhq/hw-transport-node-hid";
+  const { default: TransportClass } =
+    platform === "node"
+      ? await import(nodeJsTransportPackageName)
+      : await import("@ledgerhq/hw-transport-webusb");
+  return TransportClass.create(interactiveTimeout, interactiveTimeout);
+}
 
 describe("LedgerSigner", () => {
   const defaultChainId = "testing";
@@ -32,7 +49,8 @@ describe("LedgerSigner", () => {
   describe("getAccount", () => {
     it("works", async () => {
       pendingWithoutLedger();
-      const signer = new LedgerSigner({
+      const ledgerTransport = await createLedgerTransport();
+      const signer = new LedgerSigner(ledgerTransport, {
         testModeAllowed: true,
         hdPaths: [makeCosmoshubPath(0), makeCosmoshubPath(1), makeCosmoshubPath(10)],
       });
@@ -71,7 +89,8 @@ describe("LedgerSigner", () => {
       "returns valid signature",
       async () => {
         pendingWithoutLedger();
-        const signer = new LedgerSigner({
+        const ledgerTransport = await createLedgerTransport();
+        const signer = new LedgerSigner(ledgerTransport, {
           testModeAllowed: true,
           hdPaths: [makeCosmoshubPath(0), makeCosmoshubPath(1), makeCosmoshubPath(10)],
         });
@@ -115,7 +134,8 @@ describe("LedgerSigner", () => {
       async () => {
         pendingWithoutLedger();
         pendingWithoutWasmd();
-        const signer = new LedgerSigner({
+        const ledgerTransport = await createLedgerTransport();
+        const signer = new LedgerSigner(ledgerTransport, {
           testModeAllowed: true,
           hdPaths: [makeCosmoshubPath(0), makeCosmoshubPath(1), makeCosmoshubPath(10)],
         });
