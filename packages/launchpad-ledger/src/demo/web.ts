@@ -2,6 +2,7 @@ import { toBase64 } from "@cosmjs/encoding";
 import { AccountData, makeCosmoshubPath, StdSignDoc } from "@cosmjs/launchpad";
 import { Uint53 } from "@cosmjs/math";
 import { assert } from "@cosmjs/utils";
+import LedgerTransport from "@ledgerhq/hw-transport-webusb";
 
 import { LedgerSigner } from "../ledgersigner";
 
@@ -43,11 +44,6 @@ function createSignDoc(accountNumber: number, address: string): string {
   return JSON.stringify(signDoc, null, 2);
 }
 
-const signer = new LedgerSigner({
-  testModeAllowed: true,
-  hdPaths: [makeCosmoshubPath(0), makeCosmoshubPath(1), makeCosmoshubPath(2)],
-});
-
 window.updateMessage = (accountNumberInput: unknown) => {
   assert(typeof accountNumberInput === "string");
   const accountNumber = Uint53.fromString(accountNumberInput).toNumber();
@@ -63,7 +59,20 @@ window.updateMessage = (accountNumberInput: unknown) => {
   signDocTextArea.textContent = createSignDoc(accountNumber, address);
 };
 
-window.getAccounts = async function getAccounts(): Promise<void> {
+window.createSigner = async function createSigner(): Promise<LedgerSigner> {
+  const interactiveTimeout = 120_000;
+  const ledgerTransport = await LedgerTransport.create(interactiveTimeout, interactiveTimeout);
+  return new LedgerSigner(ledgerTransport, {
+    testModeAllowed: true,
+    hdPaths: [makeCosmoshubPath(0), makeCosmoshubPath(1), makeCosmoshubPath(2)],
+  });
+};
+
+window.getAccounts = async function getAccounts(signer: LedgerSigner | undefined): Promise<void> {
+  if (signer === undefined) {
+    console.error("Please wait for transport to connect");
+    return;
+  }
   const accountNumberInput = document.getElementById("account-number");
   const addressInput = document.getElementById("address");
   const accountsDiv = document.getElementById("accounts");
@@ -88,7 +97,11 @@ window.getAccounts = async function getAccounts(): Promise<void> {
   }
 };
 
-window.sign = async function sign(): Promise<void> {
+window.sign = async function sign(signer: LedgerSigner | undefined): Promise<void> {
+  if (signer === undefined) {
+    console.error("Please wait for transport to connect");
+    return;
+  }
   const signatureDiv = document.getElementById("signature");
   signatureDiv.textContent = "Loading...";
 
@@ -101,4 +114,8 @@ window.sign = async function sign(): Promise<void> {
   } catch (error) {
     signatureDiv.textContent = error;
   }
+};
+
+window.onload = async function onLoad(): Promise<void> {
+  window.signer = await window.createSigner();
 };
