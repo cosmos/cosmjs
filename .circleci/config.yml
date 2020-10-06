@@ -42,6 +42,9 @@ jobs:
           keys:
             - yarn-packages-{{ checksum "yarn.lock" }}
       - run:
+          name: Install libusb
+          command: sudo apt-get install libusb-1.0-0-dev
+      - run:
           name: Install Dependencies
           command: yarn install --frozen-lockfile
       - save_cache:
@@ -111,6 +114,11 @@ jobs:
           name: Restore Yarn Package Cache
           keys:
             - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install libusb
+          command: |
+            wget -O "$HOME/libusb.deb" http://de.archive.ubuntu.com/ubuntu/pool/main/libu/libusb-1.0/libusb-1.0-0-dev_1.0.20-1_amd64.deb
+            sudo dpkg -i "$HOME/libusb.deb"
       - run:
           name: Install Dependencies
           command: yarn install --frozen-lockfile
@@ -215,6 +223,11 @@ jobs:
           keys:
             - yarn-packages-{{ checksum "yarn.lock" }}
       - run:
+          name: Install libusb
+          command: |
+            wget -O "$HOME/libusb.deb" http://de.archive.ubuntu.com/ubuntu/pool/main/libu/libusb-1.0/libusb-1.0-0-dev_1.0.20-1_amd64.deb
+            sudo dpkg -i "$HOME/libusb.deb"
+      - run:
           name: Install Dependencies
           command: yarn install --frozen-lockfile
       - save_cache:
@@ -299,6 +312,11 @@ jobs:
           keys:
             - yarn-packages-{{ checksum "yarn.lock" }}
       - run:
+          name: Install libusb
+          command: |
+            wget -O "$HOME/libusb.deb" http://de.archive.ubuntu.com/ubuntu/pool/main/libu/libusb-1.0/libusb-1.0-0-dev_1.0.20-1_amd64.deb
+            sudo dpkg -i "$HOME/libusb.deb"
+      - run:
           name: Install Dependencies
           command: yarn install --frozen-lockfile
       - save_cache:
@@ -344,6 +362,9 @@ jobs:
           name: Restore Yarn Package Cache
           keys:
             - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install libusb
+          command: sudo apt-get install libusb-1.0-0-dev
       - run:
           name: Install Dependencies
           command: yarn install --frozen-lockfile
@@ -391,6 +412,9 @@ jobs:
           name: Restore Yarn Package Cache
           keys:
             - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install libusb
+          command: sudo apt-get install libusb-1.0-0-dev
       - run:
           name: Install Dependencies
           command: yarn install --frozen-lockfile
