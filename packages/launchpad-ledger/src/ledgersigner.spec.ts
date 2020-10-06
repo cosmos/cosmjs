@@ -45,11 +45,19 @@ describe("LedgerSigner", () => {
   const defaultSequence = "0";
   const defaultAccountNumber = "42";
   const defaultRecipient = "cosmos1p6xs63q4g7np99ttv5nd3yzkt8n4qxa47w8aea";
+  let ledgerTransport: LedgerTransport;
+
+  beforeEach(async () => {
+    ledgerTransport = await createLedgerTransport();
+  });
+
+  afterEach(async () => {
+    await ledgerTransport.close();
+  });
 
   describe("getAccount", () => {
     it("works", async () => {
       pendingWithoutLedger();
-      const ledgerTransport = await createLedgerTransport();
       const signer = new LedgerSigner(ledgerTransport, {
         testModeAllowed: true,
         hdPaths: [makeCosmoshubPath(0), makeCosmoshubPath(1), makeCosmoshubPath(10)],
@@ -87,7 +95,6 @@ describe("LedgerSigner", () => {
       "returns valid signature",
       async () => {
         pendingWithoutLedger();
-        const ledgerTransport = await createLedgerTransport();
         const signer = new LedgerSigner(ledgerTransport, {
           testModeAllowed: true,
           hdPaths: [makeCosmoshubPath(0), makeCosmoshubPath(1), makeCosmoshubPath(10)],
@@ -130,7 +137,6 @@ describe("LedgerSigner", () => {
       async () => {
         pendingWithoutLedger();
         pendingWithoutWasmd();
-        const ledgerTransport = await createLedgerTransport();
         const signer = new LedgerSigner(ledgerTransport, {
           testModeAllowed: true,
           hdPaths: [makeCosmoshubPath(0), makeCosmoshubPath(1), makeCosmoshubPath(10)],
