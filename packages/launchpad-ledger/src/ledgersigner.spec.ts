@@ -74,8 +74,6 @@ describe("LedgerSigner", () => {
           pubkey: fromBase64("A2ZnLEcbpyjS30H5UF1vezq29aBcT9oo5EARATIW9Cpj"),
         },
       ]);
-
-      await signer.disconnect();
     });
   });
 
@@ -123,8 +121,6 @@ describe("LedgerSigner", () => {
           fistAccount.pubkey,
         );
         expect(valid).toEqual(true);
-
-        await signer.disconnect();
       },
       interactiveTimeout,
     );
@@ -144,8 +140,6 @@ describe("LedgerSigner", () => {
         const client = new SigningCosmosClient(wasmd.endpoint, fistAccount.address, signer);
         const result = await client.sendTokens(defaultRecipient, coins(1234567, "ucosm"));
         assert(isBroadcastTxSuccess(result));
-
-        await signer.disconnect();
       },
       interactiveTimeout,
     );

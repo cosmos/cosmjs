@@ -14,15 +14,13 @@ export declare class LaunchpadLedger {
   private readonly testModeAllowed;
   private readonly hdPaths;
   private readonly prefix;
-  private readonly transport;
-  private app;
+  private readonly app;
   constructor(transport: LedgerTransport, options?: LaunchpadLedgerOptions);
   getCosmosAppVersion(): Promise<string>;
   getPubkey(hdPath?: HdPath): Promise<Uint8Array>;
   getPubkeys(): Promise<readonly Uint8Array[]>;
   getCosmosAddress(pubkey?: Uint8Array): Promise<string>;
   sign(message: Uint8Array, hdPath?: HdPath): Promise<Uint8Array>;
-  disconnect(): Promise<void>;
   private verifyAppMode;
   private getOpenAppName;
   private verifyAppVersion;

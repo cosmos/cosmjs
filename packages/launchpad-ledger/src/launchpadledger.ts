@@ -36,8 +36,7 @@ export class LaunchpadLedger {
   private readonly testModeAllowed: boolean;
   private readonly hdPaths: readonly HdPath[];
   private readonly prefix: string;
-  private readonly transport: LedgerTransport;
-  private app: CosmosApp | null;
+  private readonly app: CosmosApp | null;
 
   public constructor(transport: LedgerTransport, options: LaunchpadLedgerOptions = {}) {
     const defaultOptions = {
@@ -52,7 +51,6 @@ export class LaunchpadLedger {
     this.testModeAllowed = testModeAllowed;
     this.hdPaths = hdPaths;
     this.prefix = prefix;
-    this.transport = transport;
     this.app = new CosmosApp(transport);
   }
 
@@ -101,13 +99,6 @@ export class LaunchpadLedger {
     const response = await this.app.sign(unharden(hdPathToUse), fromUtf8(message));
     this.handleLedgerErrors(response, "Transaction signing request was rejected by the user");
     return Secp256k1Signature.fromDer((response as SignResponse).signature).toFixedLength();
-  }
-
-  public async disconnect(): Promise<void> {
-    if (this.app) {
-      await this.transport.close();
-      this.app = null;
-    }
   }
 
   private verifyAppMode(testMode: boolean): void {
