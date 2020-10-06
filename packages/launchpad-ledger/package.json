@@ -44,15 +44,15 @@
   "dependencies": {
     "@cosmjs/launchpad": "^0.23.0-alpha.0",
     "@cosmjs/utils": "^0.23.0-alpha.0",
-    "ledger-cosmos-js": "^2.1.7",
+    "ledger-cosmos-js": "^2.1.8",
     "semver": "^7.3.2"
   },
   "devDependencies": {
     "@ledgerhq/hw-transport": "^5.25.0",
-    "@ledgerhq/hw-transport-node-hid": "^5.23.2",
-    "@ledgerhq/hw-transport-webusb": "^5.23.0",
-    "@types/ledgerhq__hw-transport-node-hid": "^4.22.1",
-    "@types/ledgerhq__hw-transport-webusb": "^4.70.0",
-    "@types/semver": "^7.3.3"
+    "@ledgerhq/hw-transport-node-hid": "^5.25.0",
+    "@ledgerhq/hw-transport-webusb": "^5.25.0",
+    "@types/ledgerhq__hw-transport-node-hid": "^4.22.2",
+    "@types/ledgerhq__hw-transport-webusb": "^4.70.1",
+    "@types/semver": "^7.3.4"
   }
 }
