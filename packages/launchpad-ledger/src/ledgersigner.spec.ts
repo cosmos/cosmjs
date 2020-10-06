@@ -12,14 +12,14 @@ import {
   StdFee,
 } from "@cosmjs/launchpad";
 import { assert, sleep } from "@cosmjs/utils";
-import LedgerTransport from "@ledgerhq/hw-transport";
+import Transport from "@ledgerhq/hw-transport";
 
 import { LedgerSigner } from "./ledgersigner";
 import { pendingWithoutLedger, pendingWithoutWasmd, wasmd } from "./testutils.spec";
 
 const interactiveTimeout = 120_000;
 
-async function createLedgerTransport(): Promise<LedgerTransport> {
+async function createTransport(): Promise<Transport> {
   let platform: string;
   try {
     platform = navigator.platform;
@@ -45,20 +45,20 @@ describe("LedgerSigner", () => {
   const defaultSequence = "0";
   const defaultAccountNumber = "42";
   const defaultRecipient = "cosmos1p6xs63q4g7np99ttv5nd3yzkt8n4qxa47w8aea";
-  let ledgerTransport: LedgerTransport;
+  let transport: Transport;
 
   beforeEach(async () => {
-    ledgerTransport = await createLedgerTransport();
+    transport = await createTransport();
   });
 
   afterEach(async () => {
-    await ledgerTransport.close();
+    await transport.close();
   });
 
   describe("getAccount", () => {
     it("works", async () => {
       pendingWithoutLedger();
-      const signer = new LedgerSigner(ledgerTransport, {
+      const signer = new LedgerSigner(transport, {
         testModeAllowed: true,
         hdPaths: [makeCosmoshubPath(0), makeCosmoshubPath(1), makeCosmoshubPath(10)],
       });
@@ -95,7 +95,7 @@ describe("LedgerSigner", () => {
       "returns valid signature",
       async () => {
         pendingWithoutLedger();
-        const signer = new LedgerSigner(ledgerTransport, {
+        const signer = new LedgerSigner(transport, {
           testModeAllowed: true,
           hdPaths: [makeCosmoshubPath(0), makeCosmoshubPath(1), makeCosmoshubPath(10)],
         });
@@ -137,7 +137,7 @@ describe("LedgerSigner", () => {
       async () => {
         pendingWithoutLedger();
         pendingWithoutWasmd();
-        const signer = new LedgerSigner(ledgerTransport, {
+        const signer = new LedgerSigner(transport, {
           testModeAllowed: true,
           hdPaths: [makeCosmoshubPath(0), makeCosmoshubPath(1), makeCosmoshubPath(10)],
         });

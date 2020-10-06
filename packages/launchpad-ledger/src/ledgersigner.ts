@@ -7,7 +7,7 @@ import {
   StdSignDoc,
 } from "@cosmjs/launchpad";
 import { serializeSignDoc, SignResponse } from "@cosmjs/launchpad";
-import LedgerTransport from "@ledgerhq/hw-transport";
+import Transport from "@ledgerhq/hw-transport";
 
 import { LaunchpadLedger, LaunchpadLedgerOptions } from "./launchpadledger";
 
@@ -16,7 +16,7 @@ export class LedgerSigner implements OfflineSigner {
   private readonly hdPaths: readonly HdPath[];
   private accounts?: readonly AccountData[];
 
-  public constructor(transport: LedgerTransport, options: LaunchpadLedgerOptions = {}) {
+  public constructor(transport: Transport, options: LaunchpadLedgerOptions = {}) {
     this.hdPaths = options.hdPaths || [makeCosmoshubPath(0)];
     this.ledger = new LaunchpadLedger(transport, options);
   }
