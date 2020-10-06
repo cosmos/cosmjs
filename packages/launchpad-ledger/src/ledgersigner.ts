@@ -7,6 +7,7 @@ import {
   StdSignDoc,
 } from "@cosmjs/launchpad";
 import { serializeSignDoc, SignResponse } from "@cosmjs/launchpad";
+import Transport from "@ledgerhq/hw-transport";
 
 import { LaunchpadLedger, LaunchpadLedgerOptions } from "./launchpadledger";
 
@@ -15,9 +16,9 @@ export class LedgerSigner implements OfflineSigner {
   private readonly hdPaths: readonly HdPath[];
   private accounts?: readonly AccountData[];
 
-  public constructor(options: LaunchpadLedgerOptions = {}) {
+  public constructor(transport: Transport, options: LaunchpadLedgerOptions = {}) {
     this.hdPaths = options.hdPaths || [makeCosmoshubPath(0)];
-    this.ledger = new LaunchpadLedger(options);
+    this.ledger = new LaunchpadLedger(transport, options);
   }
 
   public async getAccounts(): Promise<readonly AccountData[]> {
@@ -51,9 +52,5 @@ export class LedgerSigner implements OfflineSigner {
       signed: signDoc,
       signature: encodeSecp256k1Signature(accountForAddress.pubkey, signature),
     };
-  }
-
-  public async disconnect(): Promise<void> {
-    return this.ledger.disconnect();
   }
 }

@@ -12,11 +12,28 @@ import {
   StdFee,
 } from "@cosmjs/launchpad";
 import { assert, sleep } from "@cosmjs/utils";
+import Transport from "@ledgerhq/hw-transport";
 
 import { LedgerSigner } from "./ledgersigner";
 import { pendingWithoutLedger, pendingWithoutWasmd, wasmd } from "./testutils.spec";
 
 const interactiveTimeout = 120_000;
+
+async function createTransport(): Promise<Transport> {
+  let platform: string;
+  try {
+    platform = navigator.platform;
+  } catch (error) {
+    platform = "node";
+  }
+  // HACK: Use a variable to get webpack to ignore this
+  const nodeJsTransportPackageName = "@ledgerhq/hw-transport-node-hid";
+  const { default: TransportClass } =
+    platform === "node"
+      ? await import(nodeJsTransportPackageName)
+      : await import("@ledgerhq/hw-transport-webusb");
+  return TransportClass.create(interactiveTimeout, interactiveTimeout);
+}
 
 describe("LedgerSigner", () => {
   const defaultChainId = "testing";
@@ -28,11 +45,20 @@ describe("LedgerSigner", () => {
   const defaultSequence = "0";
   const defaultAccountNumber = "42";
   const defaultRecipient = "cosmos1p6xs63q4g7np99ttv5nd3yzkt8n4qxa47w8aea";
+  let transport: Transport;
+
+  beforeEach(async () => {
+    transport = await createTransport();
+  });
+
+  afterEach(async () => {
+    await transport.close();
+  });
 
   describe("getAccount", () => {
     it("works", async () => {
       pendingWithoutLedger();
-      const signer = new LedgerSigner({
+      const signer = new LedgerSigner(transport, {
         testModeAllowed: true,
         hdPaths: [makeCosmoshubPath(0), makeCosmoshubPath(1), makeCosmoshubPath(10)],
       });
@@ -56,8 +82,6 @@ describe("LedgerSigner", () => {
           pubkey: fromBase64("A2ZnLEcbpyjS30H5UF1vezq29aBcT9oo5EARATIW9Cpj"),
         },
       ]);
-
-      await signer.disconnect();
     });
   });
 
@@ -71,7 +95,7 @@ describe("LedgerSigner", () => {
       "returns valid signature",
       async () => {
         pendingWithoutLedger();
-        const signer = new LedgerSigner({
+        const signer = new LedgerSigner(transport, {
           testModeAllowed: true,
           hdPaths: [makeCosmoshubPath(0), makeCosmoshubPath(1), makeCosmoshubPath(10)],
         });
@@ -104,8 +128,6 @@ describe("LedgerSigner", () => {
           fistAccount.pubkey,
         );
         expect(valid).toEqual(true);
-
-        await signer.disconnect();
       },
       interactiveTimeout,
     );
@@ -115,7 +137,7 @@ describe("LedgerSigner", () => {
       async () => {
         pendingWithoutLedger();
         pendingWithoutWasmd();
-        const signer = new LedgerSigner({
+        const signer = new LedgerSigner(transport, {
           testModeAllowed: true,
           hdPaths: [makeCosmoshubPath(0), makeCosmoshubPath(1), makeCosmoshubPath(10)],
         });
@@ -124,8 +146,6 @@ describe("LedgerSigner", () => {
         const client = new SigningCosmosClient(wasmd.endpoint, fistAccount.address, signer);
         const result = await client.sendTokens(defaultRecipient, coins(1234567, "ucosm"));
         assert(isBroadcastTxSuccess(result));
-
-        await signer.disconnect();
       },
       interactiveTimeout,
     );

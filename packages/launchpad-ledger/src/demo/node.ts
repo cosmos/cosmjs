@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { toBase64 } from "@cosmjs/encoding";
 import { makeCosmoshubPath, makeSignDoc, StdFee, StdSignature } from "@cosmjs/launchpad";
+import TransportNodeHid from "@ledgerhq/hw-transport-node-hid";
 
 import { LedgerSigner } from "../ledgersigner";
 
@@ -12,12 +13,18 @@ const defaultFee: StdFee = {
 const defaultMemo = "Some memo";
 const defaultSequence = "0";
 
-const signer = new LedgerSigner({
-  testModeAllowed: true,
-  hdPaths: [makeCosmoshubPath(0), makeCosmoshubPath(1), makeCosmoshubPath(2), makeCosmoshubPath(10)],
-});
+export async function createSigner(): Promise<LedgerSigner> {
+  const interactiveTimeout = 120_000;
+  const ledgerTransport = await TransportNodeHid.create(interactiveTimeout, interactiveTimeout);
+  return new LedgerSigner(ledgerTransport, {
+    testModeAllowed: true,
+    hdPaths: [makeCosmoshubPath(0), makeCosmoshubPath(1), makeCosmoshubPath(2), makeCosmoshubPath(10)],
+  });
+}
 
-export async function getAccounts(): Promise<
+export async function getAccounts(
+  signer: LedgerSigner,
+): Promise<
   ReadonlyArray<{
     readonly algo: string;
     readonly address: string;
@@ -29,6 +36,7 @@ export async function getAccounts(): Promise<
 }
 
 export async function sign(
+  signer: LedgerSigner,
   accountNumber: number,
   fromAddress: string,
   toAddress: string,
