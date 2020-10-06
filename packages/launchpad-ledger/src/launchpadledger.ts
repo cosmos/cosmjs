@@ -2,7 +2,7 @@ import { HdPath, Secp256k1Signature } from "@cosmjs/crypto";
 import { fromUtf8 } from "@cosmjs/encoding";
 import { makeCosmoshubPath } from "@cosmjs/launchpad";
 import { assert } from "@cosmjs/utils";
-import LedgerTransport from "@ledgerhq/hw-transport";
+import Transport from "@ledgerhq/hw-transport";
 import CosmosApp, {
   AppInfoResponse,
   PublicKeyResponse,
@@ -36,9 +36,9 @@ export class LaunchpadLedger {
   private readonly testModeAllowed: boolean;
   private readonly hdPaths: readonly HdPath[];
   private readonly prefix: string;
-  private readonly app: CosmosApp | null;
+  private readonly app: CosmosApp;
 
-  public constructor(transport: LedgerTransport, options: LaunchpadLedgerOptions = {}) {
+  public constructor(transport: Transport, options: LaunchpadLedgerOptions = {}) {
     const defaultOptions = {
       hdPaths: [cosmosHdPath],
       prefix: cosmosBech32Prefix,

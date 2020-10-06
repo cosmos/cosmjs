@@ -1,6 +1,6 @@
 /// <reference types="ledgerhq__hw-transport" />
 import { HdPath } from "@cosmjs/crypto";
-import LedgerTransport from "@ledgerhq/hw-transport";
+import Transport from "@ledgerhq/hw-transport";
 export interface LedgerAppErrorResponse {
   readonly error_message?: string;
   readonly device_locked?: boolean;
@@ -15,7 +15,7 @@ export declare class LaunchpadLedger {
   private readonly hdPaths;
   private readonly prefix;
   private readonly app;
-  constructor(transport: LedgerTransport, options?: LaunchpadLedgerOptions);
+  constructor(transport: Transport, options?: LaunchpadLedgerOptions);
   getCosmosAppVersion(): Promise<string>;
   getPubkey(hdPath?: HdPath): Promise<Uint8Array>;
   getPubkeys(): Promise<readonly Uint8Array[]>;

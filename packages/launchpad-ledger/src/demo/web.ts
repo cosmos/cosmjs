@@ -2,7 +2,7 @@ import { toBase64 } from "@cosmjs/encoding";
 import { AccountData, makeCosmoshubPath, StdSignDoc } from "@cosmjs/launchpad";
 import { Uint53 } from "@cosmjs/math";
 import { assert } from "@cosmjs/utils";
-import LedgerTransport from "@ledgerhq/hw-transport-webusb";
+import TransportWebUSB from "@ledgerhq/hw-transport-webusb";
 
 import { LedgerSigner } from "../ledgersigner";
 
@@ -61,7 +61,7 @@ window.updateMessage = (accountNumberInput: unknown) => {
 
 window.createSigner = async function createSigner(): Promise<LedgerSigner> {
   const interactiveTimeout = 120_000;
-  const ledgerTransport = await LedgerTransport.create(interactiveTimeout, interactiveTimeout);
+  const ledgerTransport = await TransportWebUSB.create(interactiveTimeout, interactiveTimeout);
   return new LedgerSigner(ledgerTransport, {
     testModeAllowed: true,
     hdPaths: [makeCosmoshubPath(0), makeCosmoshubPath(1), makeCosmoshubPath(2)],
