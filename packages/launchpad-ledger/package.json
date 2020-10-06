@@ -47,10 +47,6 @@
     "ledger-cosmos-js": "^2.1.7",
     "semver": "^7.3.2"
   },
-  "optionalDependencies": {
-    "@ledgerhq/hw-transport-node-hid": "^5.23.2",
-    "@ledgerhq/hw-transport-webusb": "^5.23.0"
-  },
   "devDependencies": {
     "@ledgerhq/hw-transport-node-hid": "^5.23.2",
     "@ledgerhq/hw-transport-webusb": "^5.23.0",
