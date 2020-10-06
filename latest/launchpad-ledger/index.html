@@ -67,19 +67,15 @@
 				<a href="#supported-platforms" id="supported-platforms" style="color: inherit; text-decoration: none;">
 					<h2>Supported platforms</h2>
 				</a>
-				<p>This library works with Node.js as well as certain browsers. We use the
+				<p>This library must be provided with a Ledger transport, and has been tested with
+					appropriate transports for Node.js as well as certain browsers. In our demo code
+					we use
+					<a href="https://github.com/LedgerHQ/ledgerjs/tree/master/packages/hw-transport-node-hid">@ledgerhq/hw-transport-node-hid</a>
+					to connect to Ledger devices from Node.js. We use the
 					<a href="https://github.com/LedgerHQ/ledgerjs/tree/master/packages/hw-transport-webusb">@ledgerhq/hw-transport-webusb</a>
 					library to connect to Ledger devices from the browser via USB. You can check the
 					support status of this library
 				<a href="https://github.com/LedgerHQ/ledgerjs/tree/master/packages/hw-transport-webusb#support-status">here</a>.</p>
-				<p>Note the optional dependencies:</p>
-				<pre><code class="language-json">&quot;optionalDependencies&quot;: {
-  &quot;@ledgerhq/hw-transport-node-hid&quot;: &quot;^5.23.2&quot;,
-  &quot;@ledgerhq/hw-transport-webusb&quot;: &quot;^5.23.0&quot;
-}</code></pre>
-				<p>If you are using this library with Node.js you must install
-					<code>@ledgerhq/hw-transport-node-hid</code>. You’ll need <code>@ledgerhq/hw-transport-webusb</code>
-				for the browser.</p>
 				<a href="#running-the-demo" id="running-the-demo" style="color: inherit; text-decoration: none;">
 					<h2>Running the demo</h2>
 				</a>
@@ -140,9 +136,6 @@ yarn <span class="hljs-built_in">test</span></code></pre>
 						<a href="classes/ledgersigner.html" class="tsd-kind-icon">Ledger<wbr>Signer</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="interfaces/connectedapp.html" class="tsd-kind-icon">Connected<wbr>App</a>
-					</li>
-					<li class=" tsd-kind-interface">
 						<a href="interfaces/launchpadledgeroptions.html" class="tsd-kind-icon">Launchpad<wbr>Ledger<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-interface">
@@ -164,9 +157,6 @@ yarn <span class="hljs-built_in">test</span></code></pre>
 						<a href="globals.html#defaultmemo" class="tsd-kind-icon">default<wbr>Memo</a>
 					</li>
 					<li class=" tsd-kind-variable">
-						<a href="globals.html#defaultopentimeout" class="tsd-kind-icon">default<wbr>Open<wbr>Timeout</a>
-					</li>
-					<li class=" tsd-kind-variable">
 						<a href="globals.html#defaultsequence" class="tsd-kind-icon">default<wbr>Sequence</a>
 					</li>
 					<li class=" tsd-kind-variable">
@@ -176,28 +166,22 @@ yarn <span class="hljs-built_in">test</span></code></pre>
 						<a href="globals.html#requiredcosmosappversion" class="tsd-kind-icon">required<wbr>Cosmos<wbr>App<wbr>Version</a>
 					</li>
 					<li class=" tsd-kind-variable">
-						<a href="globals.html#signer" class="tsd-kind-icon">signer</a>
-					</li>
-					<li class=" tsd-kind-variable">
 						<a href="globals.html#window" class="tsd-kind-icon">window</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#createsigndoc" class="tsd-kind-icon">create<wbr>Sign<wbr>Doc</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="globals.html#getaccounts" class="tsd-kind-icon">get<wbr>Accounts</a>
+						<a href="globals.html#createsigner" class="tsd-kind-icon">create<wbr>Signer</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="globals.html#iswindows" class="tsd-kind-icon">is<wbr>Windows</a>
+						<a href="globals.html#getaccounts" class="tsd-kind-icon">get<wbr>Accounts</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#sign" class="tsd-kind-icon">sign</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#unharden" class="tsd-kind-icon">unharden</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#verifybrowserissupported" class="tsd-kind-icon">verify<wbr>Browser<wbr>IsSupported</a>
 					</li>
 					<li class=" tsd-kind-object-literal">
 						<a href="globals.html#defaultfee" class="tsd-kind-icon">default<wbr>Fee</a>
@@ -213,7 +197,6 @@ yarn <span class="hljs-built_in">test</span></code></pre>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
 				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">

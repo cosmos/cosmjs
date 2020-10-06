@@ -89,7 +89,6 @@
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="ledgersigner.html#disconnect" class="tsd-kind-icon">disconnect</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="ledgersigner.html#getaccounts" class="tsd-kind-icon">get<wbr>Accounts</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="ledgersigner.html#sign" class="tsd-kind-icon">sign</a></li>
 							</ul>
@@ -103,17 +102,20 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Ledger<wbr>Signer<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/launchpadledgeroptions.html" class="tsd-signature-type">LaunchpadLedgerOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="ledgersigner.html" class="tsd-signature-type">LedgerSigner</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Ledger<wbr>Signer<span class="tsd-signature-symbol">(</span>transport<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Transport</span>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/launchpadledgeroptions.html" class="tsd-signature-type">LaunchpadLedgerOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="ledgersigner.html" class="tsd-signature-type">LedgerSigner</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/d1c6ba44/packages/launchpad-ledger/src/ledgersigner.ts#L16">src/ledgersigner.ts:16</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/7c5f699a/packages/launchpad-ledger/src/ledgersigner.ts#L17">src/ledgersigner.ts:17</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
+								<li>
+									<h5>transport: <span class="tsd-signature-type">Transport</span></h5>
+								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> options: <a href="../interfaces/launchpadledgeroptions.html" class="tsd-signature-type">LaunchpadLedgerOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
 								</li>
@@ -126,23 +128,6 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="disconnect" class="tsd-anchor"></a>
-					<h3>disconnect</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">disconnect<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/d1c6ba44/packages/launchpad-ledger/src/ledgersigner.ts#L56">src/ledgersigner.ts:56</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="getaccounts" class="tsd-anchor"></a>
 					<h3>get<wbr>Accounts</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -152,7 +137,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/d1c6ba44/packages/launchpad-ledger/src/ledgersigner.ts#L23">src/ledgersigner.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/7c5f699a/packages/launchpad-ledger/src/ledgersigner.ts#L24">src/ledgersigner.ts:24</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">AccountData</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -169,7 +154,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/d1c6ba44/packages/launchpad-ledger/src/ledgersigner.ts#L38">src/ledgersigner.ts:38</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/7c5f699a/packages/launchpad-ledger/src/ledgersigner.ts#L39">src/ledgersigner.ts:39</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -209,9 +194,6 @@
 								<a href="ledgersigner.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="ledgersigner.html#disconnect" class="tsd-kind-icon">disconnect</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="ledgersigner.html#getaccounts" class="tsd-kind-icon">get<wbr>Accounts</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
@@ -221,9 +203,6 @@
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/connectedapp.html" class="tsd-kind-icon">Connected<wbr>App</a>
-					</li>
 					<li class=" tsd-kind-interface">
 						<a href="../interfaces/launchpadledgeroptions.html" class="tsd-kind-icon">Launchpad<wbr>Ledger<wbr>Options</a>
 					</li>
@@ -246,9 +225,6 @@
 						<a href="../globals.html#defaultmemo" class="tsd-kind-icon">default<wbr>Memo</a>
 					</li>
 					<li class=" tsd-kind-variable">
-						<a href="../globals.html#defaultopentimeout" class="tsd-kind-icon">default<wbr>Open<wbr>Timeout</a>
-					</li>
-					<li class=" tsd-kind-variable">
 						<a href="../globals.html#defaultsequence" class="tsd-kind-icon">default<wbr>Sequence</a>
 					</li>
 					<li class=" tsd-kind-variable">
@@ -258,28 +234,22 @@
 						<a href="../globals.html#requiredcosmosappversion" class="tsd-kind-icon">required<wbr>Cosmos<wbr>App<wbr>Version</a>
 					</li>
 					<li class=" tsd-kind-variable">
-						<a href="../globals.html#signer" class="tsd-kind-icon">signer</a>
-					</li>
-					<li class=" tsd-kind-variable">
 						<a href="../globals.html#window" class="tsd-kind-icon">window</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="../globals.html#createsigndoc" class="tsd-kind-icon">create<wbr>Sign<wbr>Doc</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="../globals.html#getaccounts" class="tsd-kind-icon">get<wbr>Accounts</a>
+						<a href="../globals.html#createsigner" class="tsd-kind-icon">create<wbr>Signer</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="../globals.html#iswindows" class="tsd-kind-icon">is<wbr>Windows</a>
+						<a href="../globals.html#getaccounts" class="tsd-kind-icon">get<wbr>Accounts</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="../globals.html#sign" class="tsd-kind-icon">sign</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="../globals.html#unharden" class="tsd-kind-icon">unharden</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="../globals.html#verifybrowserissupported" class="tsd-kind-icon">verify<wbr>Browser<wbr>IsSupported</a>
 					</li>
 					<li class=" tsd-kind-object-literal">
 						<a href="../globals.html#defaultfee" class="tsd-kind-icon">default<wbr>Fee</a>
@@ -295,7 +265,6 @@
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
 				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
