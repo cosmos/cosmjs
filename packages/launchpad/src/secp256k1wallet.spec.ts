@@ -3,23 +3,23 @@ import { Secp256k1, Secp256k1Signature, Sha256 } from "@cosmjs/crypto";
 import { fromBase64, fromHex } from "@cosmjs/encoding";
 
 import { serializeSignDoc, StdSignDoc } from "./encoding";
-import { Secp256k1Key } from "./secp256k1key";
+import { Secp256k1Wallet } from "./secp256k1wallet";
 
-describe("Secp256k1Key", () => {
+describe("Secp256k1Wallet", () => {
   const defaultPrivkey = fromHex("b8c462d2bb0c1a92edf44f735021f16c270f28ee2c3d1cb49943a5e70a3c763e");
   const defaultAddress = "cosmos1kxt5x5q2l57ma2d434pqpafxdm0mgeg9c8cvtx";
   const defaultPubkey = fromHex("03f146c27639179e5b67b8646108f48e1a78b146c74939e34afaa5414ad5c93f8a");
 
   describe("fromPrivateKey", () => {
     it("works", async () => {
-      const signer = await Secp256k1Key.fromPrivateKey(defaultPrivkey);
+      const signer = await Secp256k1Wallet.fromPrivateKey(defaultPrivkey);
       expect(signer).toBeTruthy();
     });
   });
 
   describe("getAccounts", () => {
     it("resolves to a list of accounts", async () => {
-      const signer = await Secp256k1Key.fromPrivateKey(defaultPrivkey);
+      const signer = await Secp256k1Wallet.fromPrivateKey(defaultPrivkey);
       const accounts = await signer.getAccounts();
       expect(accounts.length).toEqual(1);
       expect(accounts[0]).toEqual({
@@ -32,7 +32,7 @@ describe("Secp256k1Key", () => {
 
   describe("sign", () => {
     it("resolves to valid signature if enabled", async () => {
-      const signer = await Secp256k1Key.fromPrivateKey(defaultPrivkey);
+      const signer = await Secp256k1Wallet.fromPrivateKey(defaultPrivkey);
       const signDoc: StdSignDoc = {
         msgs: [],
         fee: { amount: [], gas: "23" },
