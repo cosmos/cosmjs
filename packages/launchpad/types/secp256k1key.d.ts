@@ -7,7 +7,7 @@ export declare class Secp256k1Key implements OfflineSigner {
    * @param privkey The private key.
    * @param prefix The bech32 address prefix (human readable part). Defaults to "cosmos".
    */
-  static fromPrivateKey(privkey: Uint8Array, prefix?: string): Promise<Secp256k1Key>;
+  static fromPrivkey(privkey: Uint8Array, prefix?: string): Promise<Secp256k1Key>;
   private readonly pubkey;
   private readonly privkey;
   private readonly prefix;
