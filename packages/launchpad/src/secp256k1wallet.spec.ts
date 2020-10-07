@@ -10,16 +10,16 @@ describe("Secp256k1Wallet", () => {
   const defaultAddress = "cosmos1kxt5x5q2l57ma2d434pqpafxdm0mgeg9c8cvtx";
   const defaultPubkey = fromHex("03f146c27639179e5b67b8646108f48e1a78b146c74939e34afaa5414ad5c93f8a");
 
-  describe("fromPrivateKey", () => {
+  describe("fromPrivkey", () => {
     it("works", async () => {
-      const signer = await Secp256k1Wallet.fromPrivateKey(defaultPrivkey);
+      const signer = await Secp256k1Wallet.fromPrivkey(defaultPrivkey);
       expect(signer).toBeTruthy();
     });
   });
 
   describe("getAccounts", () => {
     it("resolves to a list of accounts", async () => {
-      const signer = await Secp256k1Wallet.fromPrivateKey(defaultPrivkey);
+      const signer = await Secp256k1Wallet.fromPrivkey(defaultPrivkey);
       const accounts = await signer.getAccounts();
       expect(accounts.length).toEqual(1);
       expect(accounts[0]).toEqual({
@@ -32,7 +32,7 @@ describe("Secp256k1Wallet", () => {
 
   describe("sign", () => {
     it("resolves to valid signature if enabled", async () => {
-      const signer = await Secp256k1Wallet.fromPrivateKey(defaultPrivkey);
+      const signer = await Secp256k1Wallet.fromPrivkey(defaultPrivkey);
       const signDoc: StdSignDoc = {
         msgs: [],
         fee: { amount: [], gas: "23" },
