@@ -16,7 +16,7 @@ import {
      * @param privkey The private key.
      * @param prefix The bech32 address prefix (human readable part). Defaults to "cosmos".
      */
-    public static async fromPrivkey(
+    public static async fromPrivateKey(
       privkey: Uint8Array,
       prefix = "cosmos",
     ): Promise<Secp256k1Wallet> {
