@@ -204,10 +204,7 @@ export class Secp256k1HdWallet implements OfflineSigner {
     }
   }
 
-  private static async deserializeTypeV1(
-    serialization: string,
-    password: string,
-  ): Promise<Secp256k1HdWallet> {
+  private static async deserializeTypeV1(serialization: string, password: string): Promise<Secp256k1HdWallet> {
     const root = JSON.parse(serialization);
     if (!isNonNullObject(root)) throw new Error("Root document is not an object.");
     const encryptionKey = await executeKdf(password, (root as any).kdf);
