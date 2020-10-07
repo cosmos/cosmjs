@@ -27,7 +27,7 @@ import {
   supportedAlgorithms,
 } from "./wallet";
 
-const serializationTypeV1 = "secp256k1hdwallet-v1";
+const serializationTypeV1 = "secp256k1wallet-v1";
 
 /**
  * A KDF configuration that is not very strong but can be used on the main thread.
@@ -46,14 +46,14 @@ const basicPasswordHashingOptions: KdfConfiguration = {
  * This interface describes a JSON object holding the encrypted wallet and the meta data.
  * All fields in here must be JSON types.
  */
-export interface Secp256k1HdWalletSerialization {
+export interface Secp256k1WalletSerialization {
   /** A format+version identifier for this serialization format */
   readonly type: string;
   /** Information about the key derivation function (i.e. password to encryption key) */
   readonly kdf: KdfConfiguration;
   /** Information about the symmetric encryption */
   readonly encryption: EncryptionConfiguration;
-  /** An instance of Secp256k1HdWalletData, which is stringified, encrypted and base64 encoded. */
+  /** An instance of Secp256k1WalletData, which is stringified, encrypted and base64 encoded. */
   readonly data: string;
 }
 
@@ -77,7 +77,7 @@ function isSecp256k1DerivationJson(thing: unknown): thing is Secp256k1Derivation
  * The data of a wallet serialization that is encrypted.
  * All fields in here must be JSON types.
  */
-export interface Secp256k1HdWalletData {
+export interface Secp256k1WalletData {
   readonly mnemonic: string;
   readonly accounts: readonly Secp256k1DerivationJson[];
 }
@@ -106,7 +106,7 @@ interface Secp256k1Derivation {
   readonly prefix: string;
 }
 
-export class Secp256k1HdWallet implements OfflineSigner {
+export class Secp256k1Wallet implements OfflineSigner {
   /**
    * Restores a wallet from the given BIP39 mnemonic.
    *
@@ -118,12 +118,12 @@ export class Secp256k1HdWallet implements OfflineSigner {
     mnemonic: string,
     hdPath: HdPath = makeCosmoshubPath(0),
     prefix = "cosmos",
-  ): Promise<Secp256k1HdWallet> {
+  ): Promise<Secp256k1Wallet> {
     const mnemonicChecked = new EnglishMnemonic(mnemonic);
     const seed = await Bip39.mnemonicToSeed(mnemonicChecked);
     const { privkey } = Slip10.derivePath(Slip10Curve.Secp256k1, seed, hdPath);
     const uncompressed = (await Secp256k1.makeKeypair(privkey)).pubkey;
-    return new Secp256k1HdWallet(
+    return new Secp256k1Wallet(
       mnemonicChecked,
       hdPath,
       privkey,
@@ -143,11 +143,11 @@ export class Secp256k1HdWallet implements OfflineSigner {
     length: 12 | 15 | 18 | 21 | 24 = 12,
     hdPath: HdPath = makeCosmoshubPath(0),
     prefix = "cosmos",
-  ): Promise<Secp256k1HdWallet> {
+  ): Promise<Secp256k1Wallet> {
     const entropyLength = 4 * Math.floor((11 * length) / 33);
     const entropy = Random.getBytes(entropyLength);
     const mnemonic = Bip39.encode(entropy);
-    return Secp256k1HdWallet.fromMnemonic(mnemonic.toString(), hdPath, prefix);
+    return Secp256k1Wallet.fromMnemonic(mnemonic.toString(), hdPath, prefix);
   }
 
   /**
@@ -156,12 +156,12 @@ export class Secp256k1HdWallet implements OfflineSigner {
    * @param password The user provided password used to generate an encryption key via a KDF.
    *                 This is not normalized internally (see "Unicode normalization" to learn more).
    */
-  public static async deserialize(serialization: string, password: string): Promise<Secp256k1HdWallet> {
+  public static async deserialize(serialization: string, password: string): Promise<Secp256k1Wallet> {
     const root = JSON.parse(serialization);
     if (!isNonNullObject(root)) throw new Error("Root document is not an object.");
     switch ((root as any).type) {
       case serializationTypeV1:
-        return Secp256k1HdWallet.deserializeTypeV1(serialization, password);
+        return Secp256k1Wallet.deserializeTypeV1(serialization, password);
       default:
         throw new Error("Unsupported serialization type");
     }
@@ -179,7 +179,7 @@ export class Secp256k1HdWallet implements OfflineSigner {
   public static async deserializeWithEncryptionKey(
     serialization: string,
     encryptionKey: Uint8Array,
-  ): Promise<Secp256k1HdWallet> {
+  ): Promise<Secp256k1Wallet> {
     const root = JSON.parse(serialization);
     if (!isNonNullObject(root)) throw new Error("Root document is not an object.");
     const untypedRoot: any = root;
@@ -197,18 +197,18 @@ export class Secp256k1HdWallet implements OfflineSigner {
         if (accounts.length !== 1) throw new Error("Property 'accounts' only supports one entry");
         const account = accounts[0];
         if (!isSecp256k1DerivationJson(account)) throw new Error("Account is not in the correct format.");
-        return Secp256k1HdWallet.fromMnemonic(mnemonic, stringToPath(account.hdPath), account.prefix);
+        return Secp256k1Wallet.fromMnemonic(mnemonic, stringToPath(account.hdPath), account.prefix);
       }
       default:
         throw new Error("Unsupported serialization type");
     }
   }
 
-  private static async deserializeTypeV1(serialization: string, password: string): Promise<Secp256k1HdWallet> {
+  private static async deserializeTypeV1(serialization: string, password: string): Promise<Secp256k1Wallet> {
     const root = JSON.parse(serialization);
     if (!isNonNullObject(root)) throw new Error("Root document is not an object.");
     const encryptionKey = await executeKdf(password, (root as any).kdf);
-    return Secp256k1HdWallet.deserializeWithEncryptionKey(serialization, encryptionKey);
+    return Secp256k1Wallet.deserializeWithEncryptionKey(serialization, encryptionKey);
   }
 
   /** Base secret */
@@ -293,7 +293,7 @@ export class Secp256k1HdWallet implements OfflineSigner {
     encryptionKey: Uint8Array,
     kdfConfiguration: KdfConfiguration,
   ): Promise<string> {
-    const dataToEncrypt: Secp256k1HdWalletData = {
+    const dataToEncrypt: Secp256k1WalletData = {
       mnemonic: this.mnemonic,
       accounts: this.accounts.map(
         (account): Secp256k1DerivationJson => ({
@@ -309,7 +309,7 @@ export class Secp256k1HdWallet implements OfflineSigner {
     };
     const encryptedData = await encrypt(dataToEncryptRaw, encryptionKey, encryptionConfiguration);
 
-    const out: Secp256k1HdWalletSerialization = {
+    const out: Secp256k1WalletSerialization = {
       type: serializationTypeV1,
       kdf: kdfConfiguration,
       encryption: encryptionConfiguration,

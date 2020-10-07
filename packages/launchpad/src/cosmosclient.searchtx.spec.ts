@@ -6,7 +6,7 @@ import { CosmosClient, isBroadcastTxFailure } from "./cosmosclient";
 import { makeSignDoc } from "./encoding";
 import { LcdClient } from "./lcdapi";
 import { isMsgSend, MsgSend } from "./msgs";
-import { Secp256k1HdWallet } from "./secp256k1hdwallet";
+import { Secp256k1Wallet } from "./secp256k1wallet";
 import { SigningCosmosClient } from "./signingcosmosclient";
 import {
   faucet,
@@ -32,7 +32,7 @@ describe("CosmosClient.searchTx", () => {
 
   beforeAll(async () => {
     if (wasmdEnabled()) {
-      const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+      const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
       const accounts = await wallet.getAccounts();
       const [{ address: walletAddress }] = accounts;
       const client = new SigningCosmosClient(wasmd.endpoint, faucet.address, wallet);

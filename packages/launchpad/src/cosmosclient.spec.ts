@@ -6,7 +6,7 @@ import { assertIsBroadcastTxSuccess, CosmosClient, PrivateCosmosClient } from ".
 import { makeSignDoc } from "./encoding";
 import { findAttribute } from "./logs";
 import { MsgSend } from "./msgs";
-import { Secp256k1HdWallet } from "./secp256k1hdwallet";
+import { Secp256k1Wallet } from "./secp256k1wallet";
 import cosmoshub from "./testdata/cosmoshub.json";
 import {
   faucet,
@@ -199,7 +199,7 @@ describe("CosmosClient", () => {
   describe("broadcastTx", () => {
     it("works", async () => {
       pendingWithoutWasmd();
-      const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+      const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
       const accounts = await wallet.getAccounts();
       const [{ address: walletAddress }] = accounts;
       const client = new CosmosClient(wasmd.endpoint);
