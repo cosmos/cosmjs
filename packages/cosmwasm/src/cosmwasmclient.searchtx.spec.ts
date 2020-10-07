@@ -50,7 +50,7 @@ describe("CosmWasmClient.searchTx", () => {
 
   beforeAll(async () => {
     if (wasmdEnabled()) {
-      const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic);
+      const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
       const client = new SigningCosmWasmClient(wasmd.endpoint, alice.address0, wallet);
 
       {

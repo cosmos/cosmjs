@@ -36,7 +36,7 @@ const luxury = {
 };
 
 async function main() {
-  const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic);
+  const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
   const client = new SigningCosmWasmClient(httpUrl, alice.address0, wallet);
 
   const wasm = fs.readFileSync(__dirname + "/contracts/cw-nameservice.wasm");
