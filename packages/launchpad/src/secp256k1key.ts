@@ -12,7 +12,7 @@ export class Secp256k1Key implements OfflineSigner {
    * @param privkey The private key.
    * @param prefix The bech32 address prefix (human readable part). Defaults to "cosmos".
    */
-  public static async fromPrivateKey(privkey: Uint8Array, prefix = "cosmos"): Promise<Secp256k1Key> {
+  public static async fromPrivkey(privkey: Uint8Array, prefix = "cosmos"): Promise<Secp256k1Key> {
     const uncompressed = (await Secp256k1.makeKeypair(privkey)).pubkey;
     return new Secp256k1Key(privkey, Secp256k1.compressPubkey(uncompressed), prefix);
   }
