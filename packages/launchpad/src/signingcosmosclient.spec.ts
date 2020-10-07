@@ -5,7 +5,7 @@ import { Coin, coin, coins } from "./coins";
 import { assertIsBroadcastTxSuccess, PrivateCosmosClient } from "./cosmosclient";
 import { GasPrice } from "./gas";
 import { MsgDelegate } from "./msgs";
-import { Secp256k1Wallet } from "./secp256k1wallet";
+import { Secp256k1HdWallet } from "./secp256k1hdwallet";
 import { PrivateSigningCosmosClient, SigningCosmosClient } from "./signingcosmosclient";
 import { makeRandomAddress, pendingWithoutWasmd, wasmd } from "./testutils.spec";
 
@@ -24,7 +24,7 @@ const faucet = {
 describe("SigningCosmosClient", () => {
   describe("makeReadOnly", () => {
     it("can be constructed with default fees", async () => {
-      const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
+      const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const client = new SigningCosmosClient(httpUrl, faucet.address, wallet);
       const openedClient = (client as unknown) as PrivateSigningCosmosClient;
       expect(openedClient.fees).toEqual({
@@ -41,7 +41,7 @@ describe("SigningCosmosClient", () => {
     });
 
     it("can be constructed with custom gas price", async () => {
-      const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
+      const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const gasPrice = GasPrice.fromString("3.14utest");
       const client = new SigningCosmosClient(httpUrl, faucet.address, wallet, gasPrice);
       const openedClient = (client as unknown) as PrivateSigningCosmosClient;
@@ -59,7 +59,7 @@ describe("SigningCosmosClient", () => {
     });
 
     it("can be constructed with custom gas limits", async () => {
-      const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
+      const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const gasLimits = {
         send: 160000,
       };
@@ -79,7 +79,7 @@ describe("SigningCosmosClient", () => {
     });
 
     it("can be constructed with custom gas price and gas limits", async () => {
-      const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
+      const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const gasPrice = GasPrice.fromString("3.14utest");
       const gasLimits = {
         send: 160000,
@@ -103,7 +103,7 @@ describe("SigningCosmosClient", () => {
   describe("getHeight", () => {
     it("always uses authAccount implementation", async () => {
       pendingWithoutWasmd();
-      const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
+      const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const client = new SigningCosmosClient(httpUrl, faucet.address, wallet);
 
       const openedClient = (client as unknown) as PrivateCosmosClient;
@@ -121,7 +121,7 @@ describe("SigningCosmosClient", () => {
   describe("sendTokens", () => {
     it("works", async () => {
       pendingWithoutWasmd();
-      const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
+      const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const client = new SigningCosmosClient(httpUrl, faucet.address, wallet);
 
       // instantiate
@@ -153,7 +153,7 @@ describe("SigningCosmosClient", () => {
   describe("signAndBroadcast", () => {
     it("works", async () => {
       pendingWithoutWasmd();
-      const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
+      const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const client = new SigningCosmosClient(httpUrl, faucet.address, wallet);
 
       const msg: MsgDelegate = {
