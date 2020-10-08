@@ -160,7 +160,7 @@ export function setupWasmExtension(base: LcdClient): WasmExtension {
         const path = `/wasm/contract/${address}/raw/${hexKey}?encoding=hex`;
         const responseData = (await base.get(path)) as WasmResponse<WasmData[]>;
         const data = unwrapWasmResponse(responseData);
-        return data.length === 0 ? null : fromBase64(data[0].val);
+        return data === null || data.length === 0 || data[0] === undefined ? null : fromBase64(data[0].val);
       },
       queryContractSmart: async (address: string, query: Record<string, unknown>) => {
         const encoded = toHex(toUtf8(JSON.stringify(query)));
