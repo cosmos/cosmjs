@@ -17,13 +17,35 @@ const alice = {
 
 const codeMeta = {
   source: "https://crates.io/api/v1/crates/hackatom/not-yet-released/download",
-  builder: "cosmwasm/rust-optimizer:0.9.0",
+  builder: "cosmwasm/rust-optimizer:0.9.1",
 };
 
-const initMsg = {
-  beneficiary: alice.address0,
-  verifier: alice.address0,
-};
+const inits = [
+  {
+    label: "From deploy_hackatom.js (0)",
+    msg: {
+      beneficiary: alice.address0,
+      verifier: alice.address0,
+    },
+    admin: undefined,
+  },
+  {
+    label: "From deploy_hackatom.js (1)",
+    msg: {
+      beneficiary: alice.address1,
+      verifier: alice.address1,
+    },
+    admin: undefined,
+  },
+  {
+    label: "From deploy_hackatom.js (2)",
+    msg: {
+      beneficiary: alice.address2,
+      verifier: alice.address2,
+    },
+    admin: alice.address1,
+  },
+];
 
 async function main() {
   const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic);
@@ -33,12 +55,13 @@ async function main() {
   const uploadReceipt = await client.upload(wasm, codeMeta, "Upload hackatom contract");
   console.info(`Upload succeeded. Receipt: ${JSON.stringify(uploadReceipt)}`);
 
-  const label = "From deploy_hackatom.js";
-  const { contractAddress } = await client.instantiate(uploadReceipt.codeId, initMsg, label, {
-    memo: `Create a hackatom instance in deploy_hackatom.js`,
-    admin: alice.address0,
-  });
-  console.info(`Contract instantiated at ${contractAddress}`);
+  for (const { label, msg, admin } of inits) {
+    const { contractAddress } = await client.instantiate(uploadReceipt.codeId, msg, label, {
+      memo: `Create a hackatom instance in deploy_hackatom.js`,
+      admin: admin,
+    });
+    console.info(`Contract instantiated at ${contractAddress}`);
+  }
 }
 
 main().then(

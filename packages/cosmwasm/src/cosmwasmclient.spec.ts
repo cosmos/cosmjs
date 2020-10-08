@@ -19,10 +19,9 @@ import { SigningCosmWasmClient } from "./signingcosmwasmclient";
 import cosmoshub from "./testdata/cosmoshub.json";
 import {
   alice,
-  deployedErc20,
+  deployedHackatom,
   getHackatom,
   makeRandomAddress,
-  pendingWithoutErc20,
   pendingWithoutWasmd,
   tendermintIdMatcher,
   unused,
@@ -255,16 +254,15 @@ describe("CosmWasmClient", () => {
   describe("getCodes", () => {
     it("works", async () => {
       pendingWithoutWasmd();
-      pendingWithoutErc20(); // TODO: Adapt test to use hackatom instead
       const client = new CosmWasmClient(wasmd.endpoint);
       const result = await client.getCodes();
       expect(result.length).toBeGreaterThanOrEqual(1);
       const [first] = result;
       expect(first).toEqual({
-        id: deployedErc20.codeId,
-        source: deployedErc20.source,
-        builder: deployedErc20.builder,
-        checksum: deployedErc20.checksum,
+        id: deployedHackatom.codeId,
+        source: deployedHackatom.source,
+        builder: deployedHackatom.builder,
+        checksum: deployedHackatom.checksum,
         creator: alice.address0,
       });
     });
@@ -273,15 +271,14 @@ describe("CosmWasmClient", () => {
   describe("getCodeDetails", () => {
     it("works", async () => {
       pendingWithoutWasmd();
-      pendingWithoutErc20(); // TODO: Adapt test to use hackatom instead
       const client = new CosmWasmClient(wasmd.endpoint);
       const result = await client.getCodeDetails(1);
 
       const expectedInfo: Code = {
-        id: deployedErc20.codeId,
-        source: deployedErc20.source,
-        builder: deployedErc20.builder,
-        checksum: deployedErc20.checksum,
+        id: deployedHackatom.codeId,
+        source: deployedHackatom.source,
+        builder: deployedHackatom.builder,
+        checksum: deployedHackatom.checksum,
         creator: alice.address0,
       };
 
@@ -293,13 +290,12 @@ describe("CosmWasmClient", () => {
 
     it("caches downloads", async () => {
       pendingWithoutWasmd();
-      pendingWithoutErc20(); // TODO: Adapt test to use hackatom instead
       const client = new CosmWasmClient(wasmd.endpoint);
       const openedClient = (client as unknown) as PrivateCosmWasmClient;
       const getCodeSpy = spyOn(openedClient.lcdClient.wasm, "getCode").and.callThrough();
 
-      const result1 = await client.getCodeDetails(deployedErc20.codeId); // from network
-      const result2 = await client.getCodeDetails(deployedErc20.codeId); // from cache
+      const result1 = await client.getCodeDetails(deployedHackatom.codeId); // from network
+      const result2 = await client.getCodeDetails(deployedHackatom.codeId); // from cache
       expect(result2).toEqual(result1);
 
       expect(getCodeSpy).toHaveBeenCalledTimes(1);
@@ -309,31 +305,30 @@ describe("CosmWasmClient", () => {
   describe("getContracts", () => {
     it("works", async () => {
       pendingWithoutWasmd();
-      pendingWithoutErc20(); // TODO: Adapt test to use hackatom instead
       const client = new CosmWasmClient(wasmd.endpoint);
       const result = await client.getContracts(1);
       expect(result.length).toBeGreaterThanOrEqual(3);
-      const [hash, isa, jade] = result;
-      expect(hash).toEqual({
-        address: "cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
+      const [zero, one, two] = result;
+      expect(zero).toEqual({
+        address: deployedHackatom.instances[0].address,
         codeId: 1,
         creator: alice.address0,
         admin: undefined,
-        label: "HASH",
+        label: deployedHackatom.instances[0].label,
       });
-      expect(isa).toEqual({
-        address: "cosmos1hqrdl6wstt8qzshwc6mrumpjk9338k0lr4dqxd",
+      expect(one).toEqual({
+        address: deployedHackatom.instances[1].address,
         codeId: 1,
         creator: alice.address0,
         admin: undefined,
-        label: "ISA",
+        label: deployedHackatom.instances[1].label,
       });
-      expect(jade).toEqual({
-        address: "cosmos18r5szma8hm93pvx6lwpjwyxruw27e0k5uw835c",
+      expect(two).toEqual({
+        address: deployedHackatom.instances[2].address,
         codeId: 1,
         creator: alice.address0,
         admin: alice.address1,
-        label: "JADE",
+        label: deployedHackatom.instances[2].label,
       });
     });
   });
@@ -341,27 +336,27 @@ describe("CosmWasmClient", () => {
   describe("getContract", () => {
     it("works for instance without admin", async () => {
       pendingWithoutWasmd();
-      pendingWithoutErc20(); // TODO: Adapt test to use hackatom instead
       const client = new CosmWasmClient(wasmd.endpoint);
-      const hash = await client.getContract("cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5");
-      expect(hash).toEqual({
-        address: "cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
-        codeId: 1,
+      const zero = await client.getContract(deployedHackatom.instances[0].address);
+      expect(zero).toEqual({
+        address: deployedHackatom.instances[0].address,
+        codeId: deployedHackatom.codeId,
         creator: alice.address0,
-        label: "HASH",
+        label: deployedHackatom.instances[0].label,
         admin: undefined,
       });
     });
 
     it("works for instance with admin", async () => {
       pendingWithoutWasmd();
-      pendingWithoutErc20(); // TODO: Adapt test to use hackatom instead
       const client = new CosmWasmClient(wasmd.endpoint);
-      const jade = await client.getContract("cosmos18r5szma8hm93pvx6lwpjwyxruw27e0k5uw835c");
-      expect(jade).toEqual(
+      const two = await client.getContract(deployedHackatom.instances[2].address);
+      expect(two).toEqual(
         jasmine.objectContaining({
-          address: "cosmos18r5szma8hm93pvx6lwpjwyxruw27e0k5uw835c",
-          label: "JADE",
+          address: deployedHackatom.instances[2].address,
+          codeId: deployedHackatom.codeId,
+          creator: alice.address0,
+          label: deployedHackatom.instances[2].label,
           admin: alice.address1,
         }),
       );
