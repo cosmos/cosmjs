@@ -256,22 +256,22 @@ assertIsBroadcastTxResult(result);</code></pre>
 				<a href="#secure-key-storage" id="secure-key-storage" style="color: inherit; text-decoration: none;">
 					<h2>Secure key storage</h2>
 				</a>
-				<p><a href="https://cosmwasm.github.io/cosmjs/latest/launchpad/classes/secp256k1wallet.html">Secp256k1Wallet</a>
+				<p><a href="https://cosmwasm.github.io/cosmjs/latest/launchpad/classes/secp256k1hdwallet.html">Secp256k1HdWallet</a>
 					supports securely encrypted serialization/deserialization using Argon2 for key
 					derivation and XChaCha20Poly1305 for authenticated encryption. It can be used as
 				easily as:</p>
 				<pre><code class="language-ts"><span class="hljs-comment">// generate an 18 word mnemonic</span>
-<span class="hljs-keyword">const</span> wallet = <span class="hljs-keyword">await</span> Secp256k1Wallet.generate(<span class="hljs-number">18</span>);
+<span class="hljs-keyword">const</span> wallet = <span class="hljs-keyword">await</span> Secp256k1HdWallet.generate(<span class="hljs-number">18</span>);
 <span class="hljs-keyword">const</span> serialized = <span class="hljs-keyword">await</span> original.serialize(<span class="hljs-string">&quot;my password&quot;</span>);
 
 <span class="hljs-comment">// serialized is encrypted and can now be stored in an application-specific way</span>
 
-<span class="hljs-keyword">const</span> restored = <span class="hljs-keyword">await</span> Secp256k1Wallet.deserialize(serialized, <span class="hljs-string">&quot;my password&quot;</span>);</code></pre>
+<span class="hljs-keyword">const</span> restored = <span class="hljs-keyword">await</span> Secp256k1HdWallet.deserialize(serialized, <span class="hljs-string">&quot;my password&quot;</span>);</code></pre>
 				<p>If you want to use really strong KDF parameters in a user interface, you should
 					offload the KDF execution to a separate thread in order to avoid freezing the
 				UI. This can be done in the advanced mode:</p>
 				<p><strong>Session 1 (main thread)</strong></p>
-				<pre><code class="language-ts"><span class="hljs-keyword">const</span> wallet = <span class="hljs-keyword">await</span> Secp256k1Wallet.generate(<span class="hljs-number">18</span>);</code></pre>
+				<pre><code class="language-ts"><span class="hljs-keyword">const</span> wallet = <span class="hljs-keyword">await</span> Secp256k1HdWallet.generate(<span class="hljs-number">18</span>);</code></pre>
 				<p><strong>Session 1 (WebWorker)</strong></p>
 				<p>This operation can now run a couple of seconds without freezing the UI.</p>
 				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { executeKdf } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@cosmjs/launchpad&quot;</span>;
@@ -304,7 +304,7 @@ assertIsBroadcastTxResult(result);</code></pre>
 
 <span class="hljs-comment">// pass encryptionKey to the main thread</span></code></pre>
 				<p><strong>Session 2 (main thead)</strong></p>
-				<pre><code class="language-ts"><span class="hljs-keyword">const</span> restored = <span class="hljs-keyword">await</span> Secp256k1Wallet.deserializeWithEncryptionKey(
+				<pre><code class="language-ts"><span class="hljs-keyword">const</span> restored = <span class="hljs-keyword">await</span> Secp256k1HdWallet.deserializeWithEncryptionKey(
   serialized,
   encryptionKey,
 );
@@ -350,7 +350,7 @@ assertIsBroadcastTxResult(result);</code></pre>
 						<a href="classes/lcdclient.html" class="tsd-kind-icon">Lcd<wbr>Client</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="classes/secp256k1wallet.html" class="tsd-kind-icon">Secp256k1<wbr>Wallet</a>
+						<a href="classes/secp256k1hdwallet.html" class="tsd-kind-icon">Secp256k1<wbr>HdWallet</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/signingcosmosclient.html" class="tsd-kind-icon">Signing<wbr>Cosmos<wbr>Client</a>
@@ -420,6 +420,12 @@ assertIsBroadcastTxResult(result);</code></pre>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/deposit.html" class="tsd-kind-icon">Deposit</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/derivationinfo.html" class="tsd-kind-icon">Derivation<wbr>Info</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/derivationinfojson.html" class="tsd-kind-icon">Derivation<wbr>Info<wbr>Json</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/description.html" class="tsd-kind-icon">Description</a>
@@ -635,16 +641,10 @@ assertIsBroadcastTxResult(result);</code></pre>
 						<a href="interfaces/searchtxsresponse.html" class="tsd-kind-icon">Search<wbr>Txs<wbr>Response</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="interfaces/secp256k1derivation.html" class="tsd-kind-icon">Secp256k1<wbr>Derivation</a>
+						<a href="interfaces/secp256k1hdwalletdata.html" class="tsd-kind-icon">Secp256k1<wbr>HdWallet<wbr>Data</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="interfaces/secp256k1derivationjson.html" class="tsd-kind-icon">Secp256k1<wbr>Derivation<wbr>Json</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/secp256k1walletdata.html" class="tsd-kind-icon">Secp256k1<wbr>Wallet<wbr>Data</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/secp256k1walletserialization.html" class="tsd-kind-icon">Secp256k1<wbr>Wallet<wbr>Serialization</a>
+						<a href="interfaces/secp256k1hdwalletserialization.html" class="tsd-kind-icon">Secp256k1<wbr>HdWallet<wbr>Serialization</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/signresponse.html" class="tsd-kind-icon">Sign<wbr>Response</a>
@@ -869,6 +869,9 @@ assertIsBroadcastTxResult(result);</code></pre>
 						<a href="globals.html#isbroadcasttxsuccess" class="tsd-kind-icon">is<wbr>Broadcast<wbr>TxSuccess</a>
 					</li>
 					<li class=" tsd-kind-function">
+						<a href="globals.html#isderivationjson" class="tsd-kind-icon">is<wbr>Derivation<wbr>Json</a>
+					</li>
+					<li class=" tsd-kind-function">
 						<a href="globals.html#ismsgbeginredelegate" class="tsd-kind-icon">is<wbr>Msg<wbr>Begin<wbr>Redelegate</a>
 					</li>
 					<li class=" tsd-kind-function">
@@ -930,9 +933,6 @@ assertIsBroadcastTxResult(result);</code></pre>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#issearchbytagsquery" class="tsd-kind-icon">is<wbr>Search<wbr>ByTags<wbr>Query</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#issecp256k1derivationjson" class="tsd-kind-icon">is<wbr>Secp256k1<wbr>Derivation<wbr>Json</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#isstdtx" class="tsd-kind-icon">is<wbr>Std<wbr>Tx</a>

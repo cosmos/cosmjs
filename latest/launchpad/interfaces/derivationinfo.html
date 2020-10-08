@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Secp256k1DerivationJson | @cosmjs/launchpad Documentation</title>
+	<title>DerivationInfo | @cosmjs/launchpad Documentation</title>
 	<meta name="description" content="Documentation for @cosmjs/launchpad Documentation">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -52,10 +52,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="secp256k1derivationjson.html">Secp256k1DerivationJson</a>
+					<a href="derivationinfo.html">DerivationInfo</a>
 				</li>
 			</ul>
-			<h1>Interface Secp256k1DerivationJson</h1>
+			<h1>Interface DerivationInfo</h1>
 		</div>
 	</div>
 </header>
@@ -65,8 +65,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Derivation information required to derive a keypair and an address from a mnemonic.
-						All fields in here must be JSON types.</p>
+						<p>Derivation information required to derive a keypair and an address from a mnemonic.</p>
 					</div>
 				</div>
 			</section>
@@ -74,7 +73,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">Secp256k1DerivationJson</span>
+						<span class="target">DerivationInfo</span>
 					</li>
 				</ul>
 			</section>
@@ -85,8 +84,8 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="secp256k1derivationjson.html#hdpath" class="tsd-kind-icon">hd<wbr>Path</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="secp256k1derivationjson.html#prefix" class="tsd-kind-icon">prefix</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="derivationinfo.html#hdpath" class="tsd-kind-icon">hd<wbr>Path</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="derivationinfo.html#prefix" class="tsd-kind-icon">prefix</a></li>
 							</ul>
 						</section>
 					</div>
@@ -97,10 +96,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="hdpath" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> hd<wbr>Path</h3>
-					<div class="tsd-signature tsd-kind-icon">hd<wbr>Path<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<div class="tsd-signature tsd-kind-icon">hd<wbr>Path<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">HdPath</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/59f7445c/packages/launchpad/src/secp256k1wallet.ts#L65">src/secp256k1wallet.ts:65</a></li>
+							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/d28caf8a/packages/launchpad/src/secp256k1hdwallet.ts#L105">src/secp256k1hdwallet.ts:105</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -110,9 +109,14 @@
 					<div class="tsd-signature tsd-kind-icon">prefix<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/59f7445c/packages/launchpad/src/secp256k1wallet.ts#L66">src/secp256k1wallet.ts:66</a></li>
+							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/d28caf8a/packages/launchpad/src/secp256k1hdwallet.ts#L107">src/secp256k1hdwallet.ts:107</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The bech32 address prefix (human readable part).</p>
+						</div>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -129,13 +133,13 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="secp256k1derivationjson.html" class="tsd-kind-icon">Secp256k1<wbr>Derivation<wbr>Json</a>
+						<a href="derivationinfo.html" class="tsd-kind-icon">Derivation<wbr>Info</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="secp256k1derivationjson.html#hdpath" class="tsd-kind-icon">hd<wbr>Path</a>
+								<a href="derivationinfo.html#hdpath" class="tsd-kind-icon">hd<wbr>Path</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="secp256k1derivationjson.html#prefix" class="tsd-kind-icon">prefix</a>
+								<a href="derivationinfo.html#prefix" class="tsd-kind-icon">prefix</a>
 							</li>
 						</ul>
 					</li>

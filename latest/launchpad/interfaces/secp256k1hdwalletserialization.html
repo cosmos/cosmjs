@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Secp256k1Derivation | @cosmjs/launchpad Documentation</title>
+	<title>Secp256k1HdWalletSerialization | @cosmjs/launchpad Documentation</title>
 	<meta name="description" content="Documentation for @cosmjs/launchpad Documentation">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -52,10 +52,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="secp256k1derivation.html">Secp256k1Derivation</a>
+					<a href="secp256k1hdwalletserialization.html">Secp256k1HdWalletSerialization</a>
 				</li>
 			</ul>
-			<h1>Interface Secp256k1Derivation</h1>
+			<h1>Interface Secp256k1HdWalletSerialization</h1>
 		</div>
 	</div>
 </header>
@@ -65,7 +65,8 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Derivation information required to derive a keypair and an address from a mnemonic.</p>
+						<p>This interface describes a JSON object holding the encrypted wallet and the meta data.
+						All fields in here must be JSON types.</p>
 					</div>
 				</div>
 			</section>
@@ -73,7 +74,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">Secp256k1Derivation</span>
+						<span class="target">Secp256k1HdWalletSerialization</span>
 					</li>
 				</ul>
 			</section>
@@ -84,8 +85,10 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="secp256k1derivation.html#hdpath" class="tsd-kind-icon">hd<wbr>Path</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="secp256k1derivation.html#prefix" class="tsd-kind-icon">prefix</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="secp256k1hdwalletserialization.html#data" class="tsd-kind-icon">data</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="secp256k1hdwalletserialization.html#encryption" class="tsd-kind-icon">encryption</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="secp256k1hdwalletserialization.html#kdf" class="tsd-kind-icon">kdf</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="secp256k1hdwalletserialization.html#type" class="tsd-kind-icon">type</a></li>
 							</ul>
 						</section>
 					</div>
@@ -94,24 +97,64 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="hdpath" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> hd<wbr>Path</h3>
-					<div class="tsd-signature tsd-kind-icon">hd<wbr>Path<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">HdPath</span></div>
+					<a name="data" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> data</h3>
+					<div class="tsd-signature tsd-kind-icon">data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/59f7445c/packages/launchpad/src/secp256k1wallet.ts#L105">src/secp256k1wallet.ts:105</a></li>
+							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/d28caf8a/packages/launchpad/src/secp256k1hdwallet.ts#L57">src/secp256k1hdwallet.ts:57</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>An instance of Secp256k1HdWalletData, which is stringified, encrypted and base64 encoded.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="prefix" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> prefix</h3>
-					<div class="tsd-signature tsd-kind-icon">prefix<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="encryption" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> encryption</h3>
+					<div class="tsd-signature tsd-kind-icon">encryption<span class="tsd-signature-symbol">:</span> <a href="encryptionconfiguration.html" class="tsd-signature-type">EncryptionConfiguration</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/59f7445c/packages/launchpad/src/secp256k1wallet.ts#L106">src/secp256k1wallet.ts:106</a></li>
+							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/d28caf8a/packages/launchpad/src/secp256k1hdwallet.ts#L55">src/secp256k1hdwallet.ts:55</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Information about the symmetric encryption</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="kdf" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> kdf</h3>
+					<div class="tsd-signature tsd-kind-icon">kdf<span class="tsd-signature-symbol">:</span> <a href="kdfconfiguration.html" class="tsd-signature-type">KdfConfiguration</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/d28caf8a/packages/launchpad/src/secp256k1hdwallet.ts#L53">src/secp256k1hdwallet.ts:53</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Information about the key derivation function (i.e. password to encryption key)</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="type" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> type</h3>
+					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/d28caf8a/packages/launchpad/src/secp256k1hdwallet.ts#L51">src/secp256k1hdwallet.ts:51</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A format+version identifier for this serialization format</p>
+						</div>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -128,13 +171,19 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="secp256k1derivation.html" class="tsd-kind-icon">Secp256k1<wbr>Derivation</a>
+						<a href="secp256k1hdwalletserialization.html" class="tsd-kind-icon">Secp256k1<wbr>HdWallet<wbr>Serialization</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="secp256k1derivation.html#hdpath" class="tsd-kind-icon">hd<wbr>Path</a>
+								<a href="secp256k1hdwalletserialization.html#data" class="tsd-kind-icon">data</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="secp256k1derivation.html#prefix" class="tsd-kind-icon">prefix</a>
+								<a href="secp256k1hdwalletserialization.html#encryption" class="tsd-kind-icon">encryption</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="secp256k1hdwalletserialization.html#kdf" class="tsd-kind-icon">kdf</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="secp256k1hdwalletserialization.html#type" class="tsd-kind-icon">type</a>
 							</li>
 						</ul>
 					</li>
