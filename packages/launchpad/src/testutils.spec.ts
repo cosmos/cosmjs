@@ -27,11 +27,11 @@ export const wasmd = {
   endpoint: "http://localhost:1317",
   chainId: "testing",
   moniker: "node001",
-  commissionUpdateTime: "2020-09-23T15:11:14.6660427Z",
+  commissionUpdateTime: "2020-10-08T10:18:11.2275025Z",
   validator: {
-    pubkey: "cosmosvalconspub1zcjduepq2dayuk3xq8rxqq6lyw6aqp2jaywdr8d855g09jf9h527zqwhqxgq7vf6kf",
-    address: "cosmosvaloper103c7vm0c5mz85ecdy4ldftk4a3ydcyp2sscqrz",
-    delegatorAddress: "cosmos103c7vm0c5mz85ecdy4ldftk4a3ydcyp24yv403",
+    pubkey: "cosmosvalconspub1zcjduepqf62c9h86qqn4g9s4khcng86quanw8rn5mm6lf69c99vxff0302ksv2ljyl",
+    address: "cosmosvaloper1yfkkk04ve8a0sugj4fe6q6zxuvmvza8r3arurr",
+    delegatorAddress: "cosmos1yfkkk04ve8a0sugj4fe6q6zxuvmvza8r5fhf0s",
   },
 };
 

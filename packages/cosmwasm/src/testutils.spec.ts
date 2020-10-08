@@ -45,9 +45,10 @@ export const deployedErc20 = {
 export const wasmd = {
   endpoint: "http://localhost:1317",
   chainId: "testing",
+  validator: {
+    address: "cosmosvaloper1yfkkk04ve8a0sugj4fe6q6zxuvmvza8r3arurr",
+  },
 };
-
-export const validatorAddress = "cosmosvaloper103c7vm0c5mz85ecdy4ldftk4a3ydcyp2sscqrz";
 
 export const alice = {
   mnemonic: "enlist hip relief stomach skate base shallow young switch frequent cry park",
