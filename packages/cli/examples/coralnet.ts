@@ -16,7 +16,7 @@ const coralnetOptions: Options = {
   },
 };
 
-const wallet = await Secp256k1Wallet.generate(12, coralnetOptions.hdPath, coralnetOptions.bech32prefix);
+const wallet = await Secp256k1HdWallet.generate(12, coralnetOptions.hdPath, coralnetOptions.bech32prefix);
 const [{ address }] = await wallet.getAccounts();
 
 const client = new SigningCosmWasmClient(
