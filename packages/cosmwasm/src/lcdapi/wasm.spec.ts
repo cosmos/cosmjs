@@ -37,6 +37,7 @@ import {
   fromOneElementArray,
   getHackatom,
   makeRandomAddress,
+  pendingWithoutErc20,
   pendingWithoutWasmd,
   wasmd,
   wasmdEnabled,
@@ -368,6 +369,7 @@ describe("WasmExtension", () => {
   describe("txsQuery", () => {
     it("can query by tags (module + code_id)", async () => {
       pendingWithoutWasmd();
+      pendingWithoutErc20();
       const client = makeWasmClient(wasmd.endpoint);
       const result = await client.txsQuery(`message.module=wasm&message.code_id=${deployedErc20.codeId}`);
       expect(parseInt(result.count, 10)).toBeGreaterThanOrEqual(4);
@@ -414,6 +416,7 @@ describe("WasmExtension", () => {
     // Like previous test but filtered by message.action=store-code and message.action=instantiate
     it("can query by tags (module + code_id + action)", async () => {
       pendingWithoutWasmd();
+      pendingWithoutErc20();
       const client = makeWasmClient(wasmd.endpoint);
 
       {

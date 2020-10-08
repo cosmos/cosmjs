@@ -49,6 +49,7 @@ versions of raw Tendermint and a basic WebSocket server.
 ./scripts/wasmd/start.sh
 ./scripts/wasmd/init.sh
 export WASMD_ENABLED=1
+export ERC20_ENABLED=1
 
 # Start Tendermint
 ./scripts/tendermint/all_start.sh
@@ -64,6 +65,7 @@ yarn test
 # And at the end of the day
 unset SOCKETSERVER_ENABLED
 unset TENDERMINT_ENABLED
+unset ERC20_ENABLED
 unset WASMD_ENABLED
 ./scripts/socketserver/stop.sh
 ./scripts/tendermint/all_stop.sh

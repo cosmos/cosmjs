@@ -19,8 +19,10 @@ import { SigningCosmWasmClient } from "./signingcosmwasmclient";
 import {
   alice,
   deployedErc20,
+  erc20Enabled,
   fromOneElementArray,
   makeRandomAddress,
+  pendingWithoutErc20,
   pendingWithoutWasmd,
   wasmd,
   wasmdEnabled,
@@ -49,7 +51,7 @@ describe("CosmWasmClient.searchTx", () => {
   let execute: TestTxExecute | undefined;
 
   beforeAll(async () => {
-    if (wasmdEnabled()) {
+    if (wasmdEnabled() && erc20Enabled()) {
       const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic);
       const client = new SigningCosmWasmClient(wasmd.endpoint, alice.address0, wallet);
 
@@ -148,6 +150,7 @@ describe("CosmWasmClient.searchTx", () => {
   describe("with SearchByIdQuery", () => {
     it("can search successful tx by ID", async () => {
       pendingWithoutWasmd();
+      pendingWithoutErc20();
       assert(sendSuccessful, "value must be set in beforeAll()");
       const client = new CosmWasmClient(wasmd.endpoint);
       const result = await client.searchTx({ id: sendSuccessful.hash });
@@ -164,6 +167,7 @@ describe("CosmWasmClient.searchTx", () => {
 
     it("can search unsuccessful tx by ID", async () => {
       pendingWithoutWasmd();
+      pendingWithoutErc20();
       assert(sendUnsuccessful, "value must be set in beforeAll()");
       const client = new CosmWasmClient(wasmd.endpoint);
       const result = await client.searchTx({ id: sendUnsuccessful.hash });
@@ -180,6 +184,7 @@ describe("CosmWasmClient.searchTx", () => {
 
     it("can search by ID (non existent)", async () => {
       pendingWithoutWasmd();
+      pendingWithoutErc20();
       const client = new CosmWasmClient(wasmd.endpoint);
       const nonExistentId = "0000000000000000000000000000000000000000000000000000000000000000";
       const result = await client.searchTx({ id: nonExistentId });
@@ -188,6 +193,7 @@ describe("CosmWasmClient.searchTx", () => {
 
     it("can search by ID and filter by minHeight", async () => {
       pendingWithoutWasmd();
+      pendingWithoutErc20();
       assert(sendSuccessful);
       const client = new CosmWasmClient(wasmd.endpoint);
       const query = { id: sendSuccessful.hash };
@@ -217,6 +223,7 @@ describe("CosmWasmClient.searchTx", () => {
   describe("with SearchByHeightQuery", () => {
     it("can search successful tx by height", async () => {
       pendingWithoutWasmd();
+      pendingWithoutErc20();
       assert(sendSuccessful, "value must be set in beforeAll()");
       const client = new CosmWasmClient(wasmd.endpoint);
       const result = await client.searchTx({ height: sendSuccessful.height });
@@ -233,6 +240,7 @@ describe("CosmWasmClient.searchTx", () => {
 
     it("can search unsuccessful tx by height", async () => {
       pendingWithoutWasmd();
+      pendingWithoutErc20();
       assert(sendUnsuccessful, "value must be set in beforeAll()");
       const client = new CosmWasmClient(wasmd.endpoint);
       const result = await client.searchTx({ height: sendUnsuccessful.height });
@@ -251,6 +259,7 @@ describe("CosmWasmClient.searchTx", () => {
   describe("with SearchBySentFromOrToQuery", () => {
     it("can search by sender", async () => {
       pendingWithoutWasmd();
+      pendingWithoutErc20();
       assert(sendSuccessful, "value must be set in beforeAll()");
       const client = new CosmWasmClient(wasmd.endpoint);
       const results = await client.searchTx({ sentFromOrTo: sendSuccessful.sender });
@@ -279,6 +288,7 @@ describe("CosmWasmClient.searchTx", () => {
 
     it("can search by recipient", async () => {
       pendingWithoutWasmd();
+      pendingWithoutErc20();
       assert(sendSuccessful, "value must be set in beforeAll()");
       const client = new CosmWasmClient(wasmd.endpoint);
       const results = await client.searchTx({ sentFromOrTo: sendSuccessful.recipient });
@@ -306,6 +316,7 @@ describe("CosmWasmClient.searchTx", () => {
 
     it("can search by sender or recipient (sorted and deduplicated)", async () => {
       pendingWithoutWasmd();
+      pendingWithoutErc20();
       assert(sendSelfSuccessful, "value must be set in beforeAll()");
       const txhash = sendSelfSuccessful.hash;
       const client = new CosmWasmClient(wasmd.endpoint);
@@ -317,6 +328,7 @@ describe("CosmWasmClient.searchTx", () => {
 
     it("can search by recipient and filter by minHeight", async () => {
       pendingWithoutWasmd();
+      pendingWithoutErc20();
       assert(sendSuccessful);
       const client = new CosmWasmClient(wasmd.endpoint);
       const query = { sentFromOrTo: sendSuccessful.recipient };
@@ -344,6 +356,7 @@ describe("CosmWasmClient.searchTx", () => {
 
     it("can search by recipient and filter by maxHeight", async () => {
       pendingWithoutWasmd();
+      pendingWithoutErc20();
       assert(sendSuccessful);
       const client = new CosmWasmClient(wasmd.endpoint);
       const query = { sentFromOrTo: sendSuccessful.recipient };
@@ -373,6 +386,7 @@ describe("CosmWasmClient.searchTx", () => {
   describe("with SearchByTagsQuery", () => {
     it("can search by transfer.recipient", async () => {
       pendingWithoutWasmd();
+      pendingWithoutErc20();
       assert(sendSuccessful, "value must be set in beforeAll()");
       const client = new CosmWasmClient(wasmd.endpoint);
       const results = await client.searchTx({
@@ -399,6 +413,7 @@ describe("CosmWasmClient.searchTx", () => {
 
     it("can search by message.contract_address", async () => {
       pendingWithoutWasmd();
+      pendingWithoutErc20();
       assert(execute, "value must be set in beforeAll()");
       const client = new CosmWasmClient(wasmd.endpoint);
       const results = await client.searchTx({
@@ -441,6 +456,7 @@ describe("CosmWasmClient.searchTx", () => {
 
     it("can search by message.contract_address + message.action", async () => {
       pendingWithoutWasmd();
+      pendingWithoutErc20();
       assert(execute, "value must be set in beforeAll()");
       const client = new CosmWasmClient(wasmd.endpoint);
       const results = await client.searchTx({

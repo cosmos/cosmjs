@@ -83,6 +83,16 @@ export function pendingWithoutWasmd(): void {
   }
 }
 
+export function erc20Enabled(): boolean {
+  return !!process.env.ERC20_ENABLED;
+}
+
+export function pendingWithoutErc20(): void {
+  if (!erc20Enabled()) {
+    return pending("Set ERC20_ENABLED to enable Wasmd based tests");
+  }
+}
+
 /** Returns first element. Throws if array has a different length than 1. */
 export function fromOneElementArray<T>(elements: ArrayLike<T>): T {
   if (elements.length !== 1) throw new Error(`Expected exactly one element but got ${elements.length}`);
