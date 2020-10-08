@@ -311,21 +311,21 @@ describe("CosmWasmClient", () => {
       const [zero, one, two] = result;
       expect(zero).toEqual({
         address: deployedHackatom.instances[0].address,
-        codeId: 1,
+        codeId: deployedHackatom.codeId,
         creator: alice.address0,
         admin: undefined,
         label: deployedHackatom.instances[0].label,
       });
       expect(one).toEqual({
         address: deployedHackatom.instances[1].address,
-        codeId: 1,
+        codeId: deployedHackatom.codeId,
         creator: alice.address0,
         admin: undefined,
         label: deployedHackatom.instances[1].label,
       });
       expect(two).toEqual({
         address: deployedHackatom.instances[2].address,
-        codeId: 1,
+        codeId: deployedHackatom.codeId,
         creator: alice.address0,
         admin: alice.address1,
         label: deployedHackatom.instances[2].label,
