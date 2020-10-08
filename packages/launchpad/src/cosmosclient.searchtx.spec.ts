@@ -6,7 +6,7 @@ import { CosmosClient, isBroadcastTxFailure } from "./cosmosclient";
 import { makeSignDoc } from "./encoding";
 import { LcdClient } from "./lcdapi";
 import { isMsgSend, MsgSend } from "./msgs";
-import { Secp256k1Wallet } from "./secp256k1wallet";
+import { Secp256k1Wallet } from "./secp256k1hdwallet";
 import { SigningCosmosClient } from "./signingcosmosclient";
 import {
   faucet,

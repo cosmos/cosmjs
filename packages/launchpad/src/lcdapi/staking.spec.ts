@@ -5,7 +5,7 @@ import { coin, coins } from "../coins";
 import { assertIsBroadcastTxSuccess } from "../cosmosclient";
 import { makeSignDoc } from "../encoding";
 import { MsgDelegate, MsgUndelegate } from "../msgs";
-import { Secp256k1Wallet } from "../secp256k1wallet";
+import { Secp256k1Wallet } from "../secp256k1hdwallet";
 import { SigningCosmosClient } from "../signingcosmosclient";
 import {
   bigDecimalMatcher,

@@ -5,7 +5,7 @@ import { Coin, coin, coins } from "./coins";
 import { assertIsBroadcastTxSuccess, PrivateCosmosClient } from "./cosmosclient";
 import { GasPrice } from "./gas";
 import { MsgDelegate } from "./msgs";
-import { Secp256k1Wallet } from "./secp256k1wallet";
+import { Secp256k1Wallet } from "./secp256k1hdwallet";
 import { PrivateSigningCosmosClient, SigningCosmosClient } from "./signingcosmosclient";
 import { makeRandomAddress, pendingWithoutWasmd, wasmd } from "./testutils.spec";
 

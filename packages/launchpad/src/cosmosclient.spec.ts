@@ -6,7 +6,7 @@ import { assertIsBroadcastTxSuccess, CosmosClient, PrivateCosmosClient } from ".
 import { makeSignDoc } from "./encoding";
 import { findAttribute } from "./logs";
 import { MsgSend } from "./msgs";
-import { Secp256k1Wallet } from "./secp256k1wallet";
+import { Secp256k1Wallet } from "./secp256k1hdwallet";
 import cosmoshub from "./testdata/cosmoshub.json";
 import {
   faucet,

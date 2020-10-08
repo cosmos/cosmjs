@@ -6,7 +6,7 @@ import { isBroadcastTxFailure } from "../cosmosclient";
 import { makeSignDoc } from "../encoding";
 import { parseLogs } from "../logs";
 import { MsgSend } from "../msgs";
-import { Secp256k1Wallet } from "../secp256k1wallet";
+import { Secp256k1Wallet } from "../secp256k1hdwallet";
 import { SigningCosmosClient } from "../signingcosmosclient";
 import cosmoshub from "../testdata/cosmoshub.json";
 import {

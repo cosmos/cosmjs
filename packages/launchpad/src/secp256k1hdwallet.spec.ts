@@ -3,7 +3,7 @@ import { Secp256k1, Secp256k1Signature, Sha256 } from "@cosmjs/crypto";
 import { fromBase64, fromHex } from "@cosmjs/encoding";
 
 import { serializeSignDoc, StdSignDoc } from "./encoding";
-import { extractKdfConfiguration, Secp256k1Wallet } from "./secp256k1wallet";
+import { extractKdfConfiguration, Secp256k1Wallet } from "./secp256k1hdwallet";
 import { base64Matcher } from "./testutils.spec";
 import { executeKdf, KdfConfiguration } from "./wallet";
 
