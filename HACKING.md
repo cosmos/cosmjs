@@ -41,7 +41,7 @@ yarn test
 
 To run the entire test suite, you need to run some local blockchain to test
 against. We use [wasmd](https://github.com/CosmWasm/wasmd) for both CosmWasm
-tests and as a generic Cosmos SDK 0.38 blockchain. We also spawn multiple
+tests and as a generic Cosmos SDK 0.39 blockchain. We also spawn multiple
 versions of raw Tendermint and a basic WebSocket server.
 
 ```sh
