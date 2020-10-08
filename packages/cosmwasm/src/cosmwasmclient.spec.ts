@@ -22,6 +22,7 @@ import {
   deployedErc20,
   getHackatom,
   makeRandomAddress,
+  pendingWithoutErc20,
   pendingWithoutWasmd,
   tendermintIdMatcher,
   unused,
@@ -254,6 +255,7 @@ describe("CosmWasmClient", () => {
   describe("getCodes", () => {
     it("works", async () => {
       pendingWithoutWasmd();
+      pendingWithoutErc20(); // TODO: Adapt test to use hackatom instead
       const client = new CosmWasmClient(wasmd.endpoint);
       const result = await client.getCodes();
       expect(result.length).toBeGreaterThanOrEqual(1);
@@ -271,6 +273,7 @@ describe("CosmWasmClient", () => {
   describe("getCodeDetails", () => {
     it("works", async () => {
       pendingWithoutWasmd();
+      pendingWithoutErc20(); // TODO: Adapt test to use hackatom instead
       const client = new CosmWasmClient(wasmd.endpoint);
       const result = await client.getCodeDetails(1);
 
@@ -290,6 +293,7 @@ describe("CosmWasmClient", () => {
 
     it("caches downloads", async () => {
       pendingWithoutWasmd();
+      pendingWithoutErc20(); // TODO: Adapt test to use hackatom instead
       const client = new CosmWasmClient(wasmd.endpoint);
       const openedClient = (client as unknown) as PrivateCosmWasmClient;
       const getCodeSpy = spyOn(openedClient.lcdClient.wasm, "getCode").and.callThrough();
@@ -305,6 +309,7 @@ describe("CosmWasmClient", () => {
   describe("getContracts", () => {
     it("works", async () => {
       pendingWithoutWasmd();
+      pendingWithoutErc20(); // TODO: Adapt test to use hackatom instead
       const client = new CosmWasmClient(wasmd.endpoint);
       const result = await client.getContracts(1);
       expect(result.length).toBeGreaterThanOrEqual(3);
@@ -336,6 +341,7 @@ describe("CosmWasmClient", () => {
   describe("getContract", () => {
     it("works for instance without admin", async () => {
       pendingWithoutWasmd();
+      pendingWithoutErc20(); // TODO: Adapt test to use hackatom instead
       const client = new CosmWasmClient(wasmd.endpoint);
       const hash = await client.getContract("cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5");
       expect(hash).toEqual({
@@ -349,6 +355,7 @@ describe("CosmWasmClient", () => {
 
     it("works for instance with admin", async () => {
       pendingWithoutWasmd();
+      pendingWithoutErc20(); // TODO: Adapt test to use hackatom instead
       const client = new CosmWasmClient(wasmd.endpoint);
       const jade = await client.getContract("cosmos18r5szma8hm93pvx6lwpjwyxruw27e0k5uw835c");
       expect(jade).toEqual(
