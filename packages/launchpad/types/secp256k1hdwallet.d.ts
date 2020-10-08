@@ -6,34 +6,18 @@ import { EncryptionConfiguration, KdfConfiguration } from "./wallet";
  * This interface describes a JSON object holding the encrypted wallet and the meta data.
  * All fields in here must be JSON types.
  */
-export interface Secp256k1WalletSerialization {
+export interface Secp256k1HdWalletSerialization {
   /** A format+version identifier for this serialization format */
   readonly type: string;
   /** Information about the key derivation function (i.e. password to encryption key) */
   readonly kdf: KdfConfiguration;
   /** Information about the symmetric encryption */
   readonly encryption: EncryptionConfiguration;
-  /** An instance of Secp256k1WalletData, which is stringified, encrypted and base64 encoded. */
+  /** An instance of Secp256k1HdWalletData, which is stringified, encrypted and base64 encoded. */
   readonly data: string;
 }
-/**
- * Derivation information required to derive a keypair and an address from a mnemonic.
- * All fields in here must be JSON types.
- */
-interface Secp256k1DerivationJson {
-  readonly hdPath: string;
-  readonly prefix: string;
-}
-/**
- * The data of a wallet serialization that is encrypted.
- * All fields in here must be JSON types.
- */
-export interface Secp256k1WalletData {
-  readonly mnemonic: string;
-  readonly accounts: readonly Secp256k1DerivationJson[];
-}
 export declare function extractKdfConfiguration(serialization: string): KdfConfiguration;
-export declare class Secp256k1Wallet implements OfflineSigner {
+export declare class Secp256k1HdWallet implements OfflineSigner {
   /**
    * Restores a wallet from the given BIP39 mnemonic.
    *
@@ -41,7 +25,7 @@ export declare class Secp256k1Wallet implements OfflineSigner {
    * @param hdPath The BIP-32/SLIP-10 derivation path. Defaults to the Cosmos Hub/ATOM path `m/44'/118'/0'/0/0`.
    * @param prefix The bech32 address prefix (human readable part). Defaults to "cosmos".
    */
-  static fromMnemonic(mnemonic: string, hdPath?: HdPath, prefix?: string): Promise<Secp256k1Wallet>;
+  static fromMnemonic(mnemonic: string, hdPath?: HdPath, prefix?: string): Promise<Secp256k1HdWallet>;
   /**
    * Generates a new wallet with a BIP39 mnemonic of the given length.
    *
@@ -53,14 +37,14 @@ export declare class Secp256k1Wallet implements OfflineSigner {
     length?: 12 | 15 | 18 | 21 | 24,
     hdPath?: HdPath,
     prefix?: string,
-  ): Promise<Secp256k1Wallet>;
+  ): Promise<Secp256k1HdWallet>;
   /**
    * Restores a wallet from an encrypted serialization.
    *
    * @param password The user provided password used to generate an encryption key via a KDF.
    *                 This is not normalized internally (see "Unicode normalization" to learn more).
    */
-  static deserialize(serialization: string, password: string): Promise<Secp256k1Wallet>;
+  static deserialize(serialization: string, password: string): Promise<Secp256k1HdWallet>;
   /**
    * Restores a wallet from an encrypted serialization.
    *
@@ -73,7 +57,7 @@ export declare class Secp256k1Wallet implements OfflineSigner {
   static deserializeWithEncryptionKey(
     serialization: string,
     encryptionKey: Uint8Array,
-  ): Promise<Secp256k1Wallet>;
+  ): Promise<Secp256k1HdWallet>;
   private static deserializeTypeV1;
   /** Base secret */
   private readonly secret;
@@ -105,4 +89,3 @@ export declare class Secp256k1Wallet implements OfflineSigner {
    */
   serializeWithEncryptionKey(encryptionKey: Uint8Array, kdfConfiguration: KdfConfiguration): Promise<string>;
 }
-export {};

@@ -113,7 +113,7 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
         "OfflineSigner",
         "PubKey",
         "pubkeyToAddress",
-        "Secp256k1Wallet",
+        "Secp256k1HdWallet",
         "SigningCosmosClient",
         "StdFee",
         "StdSignDoc",
@@ -160,7 +160,7 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
       assert(Decimal.fromAtomics("12870000", 6).toString() === "12.87");
 
       const mnemonic = Bip39.encode(Random.getBytes(16)).toString();
-      const wallet = await Secp256k1Wallet.fromMnemonic(mnemonic, makeCosmoshubPath(0));
+      const wallet = await Secp256k1HdWallet.fromMnemonic(mnemonic, makeCosmoshubPath(0));
       const [{ address }] = await wallet.getAccounts();
       const data = toAscii("foo bar");
       const fee: StdFee = {

@@ -214,19 +214,19 @@ assertIsBroadcastTxResult(result);
 
 ## Secure key storage
 
-[Secp256k1Wallet](https://cosmwasm.github.io/cosmjs/latest/launchpad/classes/secp256k1wallet.html)
+[Secp256k1HdWallet](https://cosmwasm.github.io/cosmjs/latest/launchpad/classes/secp256k1hdwallet.html)
 supports securely encrypted serialization/deserialization using Argon2 for key
 derivation and XChaCha20Poly1305 for authenticated encryption. It can be used as
 easily as:
 
 ```ts
 // generate an 18 word mnemonic
-const wallet = await Secp256k1Wallet.generate(18);
+const wallet = await Secp256k1HdWallet.generate(18);
 const serialized = await original.serialize("my password");
 
 // serialized is encrypted and can now be stored in an application-specific way
 
-const restored = await Secp256k1Wallet.deserialize(serialized, "my password");
+const restored = await Secp256k1HdWallet.deserialize(serialized, "my password");
 ```
 
 If you want to use really strong KDF parameters in a user interface, you should
@@ -236,7 +236,7 @@ UI. This can be done in the advanced mode:
 **Session 1 (main thread)**
 
 ```ts
-const wallet = await Secp256k1Wallet.generate(18);
+const wallet = await Secp256k1HdWallet.generate(18);
 ```
 
 **Session 1 (WebWorker)**
@@ -286,7 +286,7 @@ const encryptionKey = await executeKdf(password, kdfConfiguration);
 **Session 2 (main thead)**
 
 ```ts
-const restored = await Secp256k1Wallet.deserializeWithEncryptionKey(
+const restored = await Secp256k1HdWallet.deserializeWithEncryptionKey(
   serialized,
   encryptionKey,
 );

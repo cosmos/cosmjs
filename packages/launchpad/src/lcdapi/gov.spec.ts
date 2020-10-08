@@ -4,7 +4,7 @@ import { sleep } from "@cosmjs/utils";
 import { coins } from "../coins";
 import { assertIsBroadcastTxSuccess } from "../cosmosclient";
 import { makeSignDoc } from "../encoding";
-import { Secp256k1Wallet } from "../secp256k1wallet";
+import { Secp256k1HdWallet } from "../secp256k1hdwallet";
 import { SigningCosmosClient } from "../signingcosmosclient";
 import {
   dateTimeStampMatcher,
@@ -30,7 +30,7 @@ describe("GovExtension", () => {
 
   beforeAll(async () => {
     if (wasmdEnabled()) {
-      const wallet = await Secp256k1Wallet.fromMnemonic(faucet.mnemonic);
+      const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const client = new SigningCosmosClient(wasmd.endpoint, faucet.address, wallet);
 
       const chainId = await client.getChainId();

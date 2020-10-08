@@ -8,7 +8,7 @@ import {
   makeSignDoc,
   makeStdTx,
   MsgSend,
-  Secp256k1Wallet,
+  Secp256k1HdWallet,
   WrappedStdTx,
 } from "@cosmjs/launchpad";
 import { assert, sleep } from "@cosmjs/utils";
@@ -50,7 +50,7 @@ describe("CosmWasmClient.searchTx", () => {
 
   beforeAll(async () => {
     if (wasmdEnabled()) {
-      const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
+      const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic);
       const client = new SigningCosmWasmClient(wasmd.endpoint, alice.address0, wallet);
 
       {

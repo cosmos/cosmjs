@@ -13,7 +13,7 @@ import {
   makeSignDoc,
   makeStdTx,
   OfflineSigner,
-  Secp256k1Wallet,
+  Secp256k1HdWallet,
   setupAuthExtension,
   SigningCosmosClient,
   StdFee,
@@ -139,7 +139,7 @@ describe("WasmExtension", () => {
 
   beforeAll(async () => {
     if (wasmdEnabled()) {
-      const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
+      const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic);
       const result = await uploadContract(wallet, hackatom);
       assertIsBroadcastTxSuccess(result);
       const logs = parseLogs(result.logs);
@@ -189,7 +189,7 @@ describe("WasmExtension", () => {
     it("works", async () => {
       pendingWithoutWasmd();
       assert(hackatomCodeId);
-      const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
+      const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic);
       const client = makeWasmClient(wasmd.endpoint);
       const beneficiaryAddress = makeRandomAddress();
       const transferAmount = coins(707707, "ucosm");
@@ -246,7 +246,7 @@ describe("WasmExtension", () => {
     it("can list contract history", async () => {
       pendingWithoutWasmd();
       assert(hackatomCodeId);
-      const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
+      const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic);
       const client = makeWasmClient(wasmd.endpoint);
       const beneficiaryAddress = makeRandomAddress();
       const transferAmount = coins(707707, "ucosm");
@@ -472,7 +472,7 @@ describe("WasmExtension", () => {
   describe("broadcastTx", () => {
     it("can upload, instantiate and execute wasm", async () => {
       pendingWithoutWasmd();
-      const wallet = await Secp256k1Wallet.fromMnemonic(alice.mnemonic);
+      const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic);
       const client = makeWasmClient(wasmd.endpoint);
 
       const transferAmount = [coin(1234, "ucosm"), coin(321, "ustake")];
