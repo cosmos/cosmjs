@@ -14,15 +14,9 @@ const alice = {
   address3: "cosmos17yg9mssjenmc3jkqth6ulcwj9cxujrxxzezwta",
   address4: "cosmos1f7j7ryulwjfe9ljplvhtcaxa6wqgula3etktce",
 };
-const unused = {
-  address: "cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u",
-};
-const guest = {
-  address: "cosmos17d0jcz59jf68g52vq38tuuncmwwjk42u6mcxej",
-};
 
 const codeMeta = {
-  source: "https://crates.io/api/v1/crates/cw-erc20/not-yet-released/download",
+  source: "https://crates.io/api/v1/crates/hackatom/not-yet-released/download",
   builder: "cosmwasm/rust-optimizer:0.9.0",
 };
 
@@ -39,11 +33,12 @@ async function main() {
   const uploadReceipt = await client.upload(wasm, codeMeta, "Upload hackatom contract");
   console.info(`Upload succeeded. Receipt: ${JSON.stringify(uploadReceipt)}`);
 
-  const { contractAddress } = await client.instantiate(uploadReceipt.codeId, initMsg, initMsg.symbol, {
-    memo: `Create a hackatom instance for ${initMsg.symbol}`,
+  const label = "From deploy_hackatom.js";
+  const { contractAddress } = await client.instantiate(uploadReceipt.codeId, initMsg, label, {
+    memo: `Create a hackatom instance in deploy_hackatom.js`,
     admin: alice.address0,
   });
-  console.info(`Contract instantiated for ${initMsg.symbol} at ${contractAddress}`);
+  console.info(`Contract instantiated at ${contractAddress}`);
 }
 
 main().then(
