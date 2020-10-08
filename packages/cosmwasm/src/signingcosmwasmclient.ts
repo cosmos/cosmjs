@@ -56,7 +56,7 @@ function prepareBuilder(buider: string | undefined): string {
 
 const defaultGasPrice = GasPrice.fromString("0.025ucosm");
 const defaultGasLimits: GasLimits<CosmWasmFeeTable> = {
-  upload: 1000000,
+  upload: 1005758,
   init: 500000,
   migrate: 200000,
   exec: 200000,
