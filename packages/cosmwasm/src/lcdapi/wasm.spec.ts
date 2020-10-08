@@ -307,6 +307,7 @@ describe("WasmExtension", () => {
   describe("queryContractRaw", () => {
     it("can query by key", async () => {
       pendingWithoutWasmd();
+      pending("Raw query API is broken in v0.11.0-rc (https://github.com/CosmWasm/wasmd/issues/283)");
       assert(hackatomContractAddress);
       const client = makeWasmClient(wasmd.endpoint);
       const raw = await client.wasm.queryContractRaw(hackatomContractAddress, hackatomConfigKey);
@@ -350,7 +351,10 @@ describe("WasmExtension", () => {
       const request = { nosuchkey: {} };
       await client.wasm.queryContractSmart(hackatomContractAddress, request).then(
         () => fail("shouldn't succeed"),
-        (error) => expect(error).toMatch(/query wasm contract failed: parsing hackatom::contract::QueryMsg/),
+        (error) =>
+          expect(error).toMatch(
+            /query wasm contract failed: Error parsing into type hackatom::contract::QueryMsg: unknown variant/,
+          ),
       );
     });
 

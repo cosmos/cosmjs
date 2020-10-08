@@ -42,11 +42,11 @@ describe("SigningCosmWasmClient", () => {
         upload: {
           amount: [
             {
-              amount: "3140000",
+              amount: "4710000",
               denom: "utest",
             },
           ],
-          gas: "1000000",
+          gas: "1500000",
         },
         init: {
           amount: [
@@ -107,11 +107,11 @@ describe("SigningCosmWasmClient", () => {
         upload: {
           amount: [
             {
-              amount: "25000",
+              amount: "37500",
               denom: "ucosm",
             },
           ],
-          gas: "1000000",
+          gas: "1500000",
         },
         init: {
           amount: [
@@ -173,11 +173,11 @@ describe("SigningCosmWasmClient", () => {
         upload: {
           amount: [
             {
-              amount: "3140000",
+              amount: "4710000",
               denom: "utest",
             },
           ],
-          gas: "1000000",
+          gas: "1500000",
         },
         init: {
           amount: [

@@ -387,6 +387,7 @@ describe("CosmWasmClient", () => {
 
     it("can query existing key", async () => {
       pendingWithoutWasmd();
+      pending("Raw query API is broken in v0.11.0-rc (https://github.com/CosmWasm/wasmd/issues/283)");
       assert(contract);
 
       const client = new CosmWasmClient(wasmd.endpoint);
@@ -452,7 +453,10 @@ describe("CosmWasmClient", () => {
       const client = new CosmWasmClient(wasmd.endpoint);
       await client.queryContractSmart(contract.address, { broken: {} }).then(
         () => fail("must not succeed"),
-        (error) => expect(error).toMatch(/query wasm contract failed: parsing hackatom::contract::QueryMsg/i),
+        (error) =>
+          expect(error).toMatch(
+            /query wasm contract failed: Error parsing into type hackatom::contract::QueryMsg: unknown variant/i,
+          ),
       );
     });
 
