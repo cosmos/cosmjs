@@ -24,5 +24,5 @@ SCRIPT_DIR="$(realpath "$(dirname "$0")")"
   cd "$SCRIPT_DIR/contracts"
   sha256sum --check checksums.sha256
 )
-"$SCRIPT_DIR/deploy_erc20.js"
-"$SCRIPT_DIR/deploy_nameservice.js"
+# "$SCRIPT_DIR/deploy_erc20.js"
+# "$SCRIPT_DIR/deploy_nameservice.js"
