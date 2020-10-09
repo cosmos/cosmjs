@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 0.23.0 (unreleased)
+## 0.23.0 (2020-10-09)
 
 - @cosmjs/cli: Expose `HdPath` type.
 - @cosmjs/cosmwasm: Rename `CosmWasmClient.postTx` method to `.broadcastTx`.
