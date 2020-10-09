@@ -17,14 +17,7 @@ import { assert } from "@cosmjs/utils";
 import { PrivateCosmWasmClient } from "./cosmwasmclient";
 import { setupWasmExtension, WasmExtension } from "./lcdapi/wasm";
 import { PrivateSigningCosmWasmClient, SigningCosmWasmClient, UploadMeta } from "./signingcosmwasmclient";
-import {
-  alice,
-  getHackatom,
-  makeRandomAddress,
-  pendingWithoutWasmd,
-  unused,
-  validatorAddress,
-} from "./testutils.spec";
+import { alice, getHackatom, makeRandomAddress, pendingWithoutWasmd, unused, wasmd } from "./testutils.spec";
 
 const httpUrl = "http://localhost:1317";
 
@@ -49,11 +42,11 @@ describe("SigningCosmWasmClient", () => {
         upload: {
           amount: [
             {
-              amount: "3140000",
+              amount: "4710000",
               denom: "utest",
             },
           ],
-          gas: "1000000",
+          gas: "1500000",
         },
         init: {
           amount: [
@@ -114,11 +107,11 @@ describe("SigningCosmWasmClient", () => {
         upload: {
           amount: [
             {
-              amount: "25000",
+              amount: "37500",
               denom: "ucosm",
             },
           ],
-          gas: "1000000",
+          gas: "1500000",
         },
         init: {
           amount: [
@@ -180,11 +173,11 @@ describe("SigningCosmWasmClient", () => {
         upload: {
           amount: [
             {
-              amount: "3140000",
+              amount: "4710000",
               denom: "utest",
             },
           ],
-          gas: "1000000",
+          gas: "1500000",
         },
         init: {
           amount: [
@@ -549,7 +542,7 @@ describe("SigningCosmWasmClient", () => {
         type: "cosmos-sdk/MsgDelegate",
         value: {
           delegator_address: alice.address0,
-          validator_address: validatorAddress,
+          validator_address: wasmd.validator.address,
           amount: coin(1234, "ustake"),
         },
       };

@@ -7,7 +7,7 @@
           "type": "cosmos-sdk/Account",
           "value": {
             "account_number": "0",
-            "address": "cosmos103c7vm0c5mz85ecdy4ldftk4a3ydcyp24yv403",
+            "address": "cosmos1yfkkk04ve8a0sugj4fe6q6zxuvmvza8r5fhf0s",
             "coins": [
               {
                 "amount": "1000000000",
@@ -606,7 +606,7 @@
               "amount": [],
               "gas": "200000"
             },
-            "memo": "3d253cc5185f6dcfdb2084a6bba902d70b0bbd0d@172.17.0.5:26656",
+            "memo": "aaf7eb061829f888de02b377eeb64009317c330d@172.17.0.2:26656",
             "msg": [
               {
                 "type": "cosmos-sdk/MsgCreateValidator",
@@ -616,7 +616,7 @@
                     "max_rate": "0.200000000000000000",
                     "rate": "0.100000000000000000"
                   },
-                  "delegator_address": "cosmos103c7vm0c5mz85ecdy4ldftk4a3ydcyp24yv403",
+                  "delegator_address": "cosmos1yfkkk04ve8a0sugj4fe6q6zxuvmvza8r5fhf0s",
                   "description": {
                     "details": "",
                     "identity": "",
@@ -625,8 +625,8 @@
                     "website": ""
                   },
                   "min_self_delegation": "1",
-                  "pubkey": "cosmosvalconspub1zcjduepq2dayuk3xq8rxqq6lyw6aqp2jaywdr8d855g09jf9h527zqwhqxgq7vf6kf",
-                  "validator_address": "cosmosvaloper103c7vm0c5mz85ecdy4ldftk4a3ydcyp2sscqrz",
+                  "pubkey": "cosmosvalconspub1zcjduepqf62c9h86qqn4g9s4khcng86quanw8rn5mm6lf69c99vxff0302ksv2ljyl",
+                  "validator_address": "cosmosvaloper1yfkkk04ve8a0sugj4fe6q6zxuvmvza8r3arurr",
                   "value": {
                     "amount": "250000000",
                     "denom": "ustake"
@@ -638,9 +638,9 @@
               {
                 "pub_key": {
                   "type": "tendermint/PubKeySecp256k1",
-                  "value": "Aw/GXguVCZWw03ADgT0n0RdYChOId8TJxzrmvDJzhhJQ"
+                  "value": "Atm7XWIgFRE+ONf4mOD15/1f8hst97O8efn8b6o2nP6Q"
                 },
-                "signature": "fHFXV5EdCw9uRC1Abk+slDHrXB3l25iKCDfp5+rVhm5M1/KiHD4prKq/2hru4l3hHVm+UkfK0TxYGiz8J4TEJQ=="
+                "signature": "nc7CR9iYk1QrQX/gRkBIXh2T2/7Os0IxegsFsVuZBL1pDO4KdzjyokuS2pNdxCiL3+v9pJqVsEJ2LVhSqwGqQQ=="
               }
             ]
           }
@@ -742,5 +742,5 @@
       ]
     }
   },
-  "genesis_time": "2020-09-23T15:11:14.6660427Z"
+  "genesis_time": "2020-10-08T10:18:11.2275025Z"
 }

@@ -29,26 +29,6 @@ export const base64Matcher = /^(?:[a-zA-Z0-9+/]{4})*(?:|(?:[a-zA-Z0-9+/]{3}=)|(?
 // https://github.com/bitcoin/bips/blob/master/bip-0173.mediawiki#bech32
 export const bech32AddressMatcher = /^[\x21-\x7e]{1,83}1[02-9ac-hj-np-z]{38}$/;
 
-/** Deployed as part of scripts/wasmd/init.sh */
-export const deployedErc20 = {
-  codeId: 1,
-  source: "https://crates.io/api/v1/crates/cw-erc20/not-yet-released/download",
-  builder: "cosmwasm/rust-optimizer:0.9.0",
-  checksum: "0f14abcc6fed08f2dd06896db974989db97dbcc6e8e30188b73fe5ab427c7785",
-  instances: [
-    "cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5", // HASH
-    "cosmos1hqrdl6wstt8qzshwc6mrumpjk9338k0lr4dqxd", // ISA
-    "cosmos18r5szma8hm93pvx6lwpjwyxruw27e0k5uw835c", // JADE
-  ],
-};
-
-export const wasmd = {
-  endpoint: "http://localhost:1317",
-  chainId: "testing",
-};
-
-export const validatorAddress = "cosmosvaloper103c7vm0c5mz85ecdy4ldftk4a3ydcyp2sscqrz";
-
 export const alice = {
   mnemonic: "enlist hip relief stomach skate base shallow young switch frequent cry park",
   pubkey0: {
@@ -71,6 +51,52 @@ export const unused = {
   address: "cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u",
   accountNumber: 19,
   sequence: 0,
+};
+
+/** Deployed as part of scripts/wasmd/init.sh */
+export const deployedHackatom = {
+  codeId: 1,
+  source: "https://crates.io/api/v1/crates/hackatom/not-yet-released/download",
+  builder: "cosmwasm/rust-optimizer:0.9.1",
+  checksum: "3defc33a41f58c71d38b176d521c411d8e74d26403fde7660486930c7579a016",
+  instances: [
+    {
+      beneficiary: alice.address0,
+      address: "cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
+      label: "From deploy_hackatom.js (0)",
+    },
+    {
+      beneficiary: alice.address1,
+      address: "cosmos1hqrdl6wstt8qzshwc6mrumpjk9338k0lr4dqxd",
+      label: "From deploy_hackatom.js (1)",
+    },
+    {
+      beneficiary: alice.address2,
+      address: "cosmos18r5szma8hm93pvx6lwpjwyxruw27e0k5uw835c",
+      label: "From deploy_hackatom.js (2)",
+    },
+  ],
+};
+
+/** Deployed as part of scripts/wasmd/init.sh */
+export const deployedErc20 = {
+  codeId: 2,
+  source: "https://crates.io/api/v1/crates/cw-erc20/not-yet-released/download",
+  builder: "cosmwasm/rust-optimizer:0.9.0",
+  checksum: "0f14abcc6fed08f2dd06896db974989db97dbcc6e8e30188b73fe5ab427c7785",
+  instances: [
+    "cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5", // HASH
+    "cosmos1hqrdl6wstt8qzshwc6mrumpjk9338k0lr4dqxd", // ISA
+    "cosmos18r5szma8hm93pvx6lwpjwyxruw27e0k5uw835c", // JADE
+  ],
+};
+
+export const wasmd = {
+  endpoint: "http://localhost:1317",
+  chainId: "testing",
+  validator: {
+    address: "cosmosvaloper1yfkkk04ve8a0sugj4fe6q6zxuvmvza8r3arurr",
+  },
 };
 
 export function wasmdEnabled(): boolean {

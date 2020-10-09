@@ -33,11 +33,10 @@ import {
   base64Matcher,
   bech32AddressMatcher,
   ContractUploadInstructions,
-  deployedErc20,
+  deployedHackatom,
   fromOneElementArray,
   getHackatom,
   makeRandomAddress,
-  pendingWithoutErc20,
   pendingWithoutWasmd,
   wasmd,
   wasmdEnabled,
@@ -350,7 +349,10 @@ describe("WasmExtension", () => {
       const request = { nosuchkey: {} };
       await client.wasm.queryContractSmart(hackatomContractAddress, request).then(
         () => fail("shouldn't succeed"),
-        (error) => expect(error).toMatch(/query wasm contract failed: parsing hackatom::contract::QueryMsg/),
+        (error) =>
+          expect(error).toMatch(
+            /query wasm contract failed: Error parsing into type hackatom::contract::QueryMsg: unknown variant/,
+          ),
       );
     });
 
@@ -369,45 +371,48 @@ describe("WasmExtension", () => {
   describe("txsQuery", () => {
     it("can query by tags (module + code_id)", async () => {
       pendingWithoutWasmd();
-      pendingWithoutErc20();
       const client = makeWasmClient(wasmd.endpoint);
-      const result = await client.txsQuery(`message.module=wasm&message.code_id=${deployedErc20.codeId}`);
+      const result = await client.txsQuery(`message.module=wasm&message.code_id=${deployedHackatom.codeId}`);
       expect(parseInt(result.count, 10)).toBeGreaterThanOrEqual(4);
 
       // Check first 4 results
-      const [store, hash, isa, jade] = result.txs.map((tx) => fromOneElementArray(tx.tx.value.msg));
+      const [store, zero, one, two] = result.txs.map((tx) => fromOneElementArray(tx.tx.value.msg));
       assert(isMsgStoreCode(store));
-      assert(isMsgInstantiateContract(hash));
-      assert(isMsgInstantiateContract(isa));
-      assert(isMsgInstantiateContract(jade));
+      assert(isMsgInstantiateContract(zero));
+      assert(isMsgInstantiateContract(one));
+      assert(isMsgInstantiateContract(two));
       expect(store.value).toEqual(
         jasmine.objectContaining({
           sender: alice.address0,
-          source: deployedErc20.source,
-          builder: deployedErc20.builder,
+          source: deployedHackatom.source,
+          builder: deployedHackatom.builder,
         }),
       );
-      expect(hash.value).toEqual({
-        code_id: deployedErc20.codeId.toString(),
+      expect(zero.value).toEqual({
+        code_id: deployedHackatom.codeId.toString(),
         init_funds: [],
         init_msg: jasmine.objectContaining({
-          symbol: "HASH",
+          beneficiary: deployedHackatom.instances[0].beneficiary,
         }),
-        label: "HASH",
+        label: deployedHackatom.instances[0].label,
         sender: alice.address0,
       });
-      expect(isa.value).toEqual({
-        code_id: deployedErc20.codeId.toString(),
+      expect(one.value).toEqual({
+        code_id: deployedHackatom.codeId.toString(),
         init_funds: [],
-        init_msg: jasmine.objectContaining({ symbol: "ISA" }),
-        label: "ISA",
+        init_msg: jasmine.objectContaining({
+          beneficiary: deployedHackatom.instances[1].beneficiary,
+        }),
+        label: deployedHackatom.instances[1].label,
         sender: alice.address0,
       });
-      expect(jade.value).toEqual({
-        code_id: deployedErc20.codeId.toString(),
+      expect(two.value).toEqual({
+        code_id: deployedHackatom.codeId.toString(),
         init_funds: [],
-        init_msg: jasmine.objectContaining({ symbol: "JADE" }),
-        label: "JADE",
+        init_msg: jasmine.objectContaining({
+          beneficiary: deployedHackatom.instances[2].beneficiary,
+        }),
+        label: deployedHackatom.instances[2].label,
         sender: alice.address0,
         admin: alice.address1,
       });
@@ -416,12 +421,11 @@ describe("WasmExtension", () => {
     // Like previous test but filtered by message.action=store-code and message.action=instantiate
     it("can query by tags (module + code_id + action)", async () => {
       pendingWithoutWasmd();
-      pendingWithoutErc20();
       const client = makeWasmClient(wasmd.endpoint);
 
       {
         const uploads = await client.txsQuery(
-          `message.module=wasm&message.code_id=${deployedErc20.codeId}&message.action=store-code`,
+          `message.module=wasm&message.code_id=${deployedHackatom.codeId}&message.action=store-code`,
         );
         expect(parseInt(uploads.count, 10)).toEqual(1);
         const store = fromOneElementArray(uploads.txs[0].tx.value.msg);
@@ -429,42 +433,46 @@ describe("WasmExtension", () => {
         expect(store.value).toEqual(
           jasmine.objectContaining({
             sender: alice.address0,
-            source: deployedErc20.source,
-            builder: deployedErc20.builder,
+            source: deployedHackatom.source,
+            builder: deployedHackatom.builder,
           }),
         );
       }
 
       {
         const instantiations = await client.txsQuery(
-          `message.module=wasm&message.code_id=${deployedErc20.codeId}&message.action=instantiate`,
+          `message.module=wasm&message.code_id=${deployedHackatom.codeId}&message.action=instantiate`,
         );
         expect(parseInt(instantiations.count, 10)).toBeGreaterThanOrEqual(3);
-        const [hash, isa, jade] = instantiations.txs.map((tx) => fromOneElementArray(tx.tx.value.msg));
-        assert(isMsgInstantiateContract(hash));
-        assert(isMsgInstantiateContract(isa));
-        assert(isMsgInstantiateContract(jade));
-        expect(hash.value).toEqual({
-          code_id: deployedErc20.codeId.toString(),
+        const [zero, one, two] = instantiations.txs.map((tx) => fromOneElementArray(tx.tx.value.msg));
+        assert(isMsgInstantiateContract(zero));
+        assert(isMsgInstantiateContract(one));
+        assert(isMsgInstantiateContract(two));
+        expect(zero.value).toEqual({
+          code_id: deployedHackatom.codeId.toString(),
           init_funds: [],
           init_msg: jasmine.objectContaining({
-            symbol: "HASH",
+            beneficiary: deployedHackatom.instances[0].beneficiary,
           }),
-          label: "HASH",
+          label: deployedHackatom.instances[0].label,
           sender: alice.address0,
         });
-        expect(isa.value).toEqual({
-          code_id: deployedErc20.codeId.toString(),
+        expect(one.value).toEqual({
+          code_id: deployedHackatom.codeId.toString(),
           init_funds: [],
-          init_msg: jasmine.objectContaining({ symbol: "ISA" }),
-          label: "ISA",
+          init_msg: jasmine.objectContaining({
+            beneficiary: deployedHackatom.instances[1].beneficiary,
+          }),
+          label: deployedHackatom.instances[1].label,
           sender: alice.address0,
         });
-        expect(jade.value).toEqual({
-          code_id: deployedErc20.codeId.toString(),
+        expect(two.value).toEqual({
+          code_id: deployedHackatom.codeId.toString(),
           init_funds: [],
-          init_msg: jasmine.objectContaining({ symbol: "JADE" }),
-          label: "JADE",
+          init_msg: jasmine.objectContaining({
+            beneficiary: deployedHackatom.instances[2].beneficiary,
+          }),
+          label: deployedHackatom.instances[2].label,
           sender: alice.address0,
           admin: alice.address1,
         });

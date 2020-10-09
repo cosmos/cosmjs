@@ -158,9 +158,15 @@ export function setupWasmExtension(base: LcdClient): WasmExtension {
       queryContractRaw: async (address: string, key: Uint8Array) => {
         const hexKey = toHex(key);
         const path = `/wasm/contract/${address}/raw/${hexKey}?encoding=hex`;
-        const responseData = (await base.get(path)) as WasmResponse<WasmData[]>;
+        const responseData = (await base.get(path)) as WasmResponse<WasmData[] | null | string>;
         const data = unwrapWasmResponse(responseData);
-        return data.length === 0 ? null : fromBase64(data[0].val);
+        if (Array.isArray(data)) {
+          // The CosmWasm 0.10 interface
+          return data.length === 0 ? null : fromBase64(data[0].val);
+        } else {
+          // The CosmWasm 0.11 interface
+          return !data ? null : fromBase64(data); // Yes, we cannot differentiate empty fields from non-existent fields :(
+        }
       },
       queryContractSmart: async (address: string, query: Record<string, unknown>) => {
         const encoded = toHex(toUtf8(JSON.stringify(query)));
