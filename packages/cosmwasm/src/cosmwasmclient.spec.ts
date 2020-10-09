@@ -382,7 +382,6 @@ describe("CosmWasmClient", () => {
 
     it("can query existing key", async () => {
       pendingWithoutWasmd();
-      pending("Raw query API is broken in v0.11.0-rc (https://github.com/CosmWasm/wasmd/issues/283)");
       assert(contract);
 
       const client = new CosmWasmClient(wasmd.endpoint);
