@@ -22,3 +22,7 @@ export class Ripemd160 implements HashFunction {
     return Uint8Array.from(this.impl.digest());
   }
 }
+
+export function ripemd160(data: Uint8Array): Uint8Array {
+  return new Ripemd160(data).digest();
+}

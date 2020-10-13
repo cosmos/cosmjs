@@ -24,3 +24,7 @@ export class Keccak256 implements HashFunction {
     return new Uint8Array(this.impl.digest());
   }
 }
+
+export function keccak256(data: Uint8Array): Uint8Array {
+  return new Keccak256(data).digest();
+}
