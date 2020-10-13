@@ -4,21 +4,26 @@ You need to compile a version of `simd` locally and sign some transactions.
 It seems my printfs got committed into master somehow, so we have debug info without forking!
 
 The following was tested on `v0.40.0-rc0` of [`cosmos-sdk`](https://github.com/cosmos/cosmos-sdk).
+Just a little patch from my branch (which can be rebased).
 
 ## Setup
 
 ```
-git clone https://github.com/cosmos/cosmos-sdk.git
+git clone https://github.com/CosmWasm/cosmos-sdk.git
 cd cosmos-sdk
-git checkout v0.40.0-rc0
+git checkout cosmjs-test-vectors
 
 make build-simd-linux
 # this takes a while to download a docker image and make a deterministic build....
 
 ls -l ./build/simd
 ./build/simd version
-# I got `goz-phase-1-704-g153249205` for `v0.40.0-rc0`, which is commit `153249205`
+# I got `goz-phase-1-706-g1a67086b6` for commit `1a67086b6`
 ```
+
+**IMPORTANT** this stores the proper `simd` binary in `./build/simd`. You may well have another one
+in your global path, so calling `simd` instead of `./build/simd` may lead to confusing results.
+Please use the path to ensure the proper version.
 
 ## Prepare the Keys
 
@@ -29,13 +34,13 @@ This uses the testgen mnemonic:
 `economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone`
 
 ```
-simd keys add testgen -i
+./build/simd keys add testgen -i
 # enter mnemonic, and no passphrase
 
-simd keys show -a testgen
+./build/simd keys show -a testgen
 # cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6
 
-simd keys show testgen
+./build/simd keys show testgen
 # this shows bech32 encoded pubkey!! (I think they need to fix that)
 ```
 
@@ -45,7 +50,7 @@ First we create the unsigned transaction template we will be signing. We want to
 the testvectors create manually.
 
 ```
-simd tx bank send --generate-only --chain-id simd-testing --fees 2000ucosm $(simd keys show -a testgen) cosmos1qypqxpq9qcrsszg2pvxq6rs0zqg3yyc5lzv7xu 1234567ucosm > unsigned_tx.json
+./build/simd tx bank send --generate-only --chain-id simd-testing --fees 2000ucosm $(./build/simd keys show -a testgen) cosmos1qypqxpq9qcrsszg2pvxq6rs0zqg3yyc5lzv7xu 1234567ucosm > unsigned_tx.json
 ```
 
 This is what I get from `jq . unsigned_tx.json`, which is slightly different that the current test vector, in that
@@ -56,7 +61,7 @@ I added a non-empty fee amount to properly test that:
   "body": {
     "messages": [
       {
-        "@type": "/cosmos.bank.MsgSend",
+        "@type": "/cosmos.bank.v1beta1.MsgSend",
         "from_address": "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
         "to_address": "cosmos1qypqxpq9qcrsszg2pvxq6rs0zqg3yyc5lzv7xu",
         "amount": [
@@ -66,9 +71,14 @@ I added a non-empty fee amount to properly test that:
           }
         ]
       }
-    ]
+    ],
+    "memo": "",
+    "timeout_height": "0",
+    "extension_options": [],
+    "non_critical_extension_options": []
   },
   "auth_info": {
+    "signer_infos": [],
     "fee": {
       "amount": [
         {
@@ -76,9 +86,12 @@ I added a non-empty fee amount to properly test that:
           "amount": "2000"
         }
       ],
-      "gas_limit": "200000"
+      "gas_limit": "200000",
+      "payer": "",
+      "granter": ""
     }
-  }
+  },
+  "signatures": []
 }
 ```
 
@@ -89,19 +102,23 @@ You can produce these with the following commands:
 
 ```
 # you may not need `--home /tmp` but I got an odd error without it
-simd tx sign --home /tmp --offline --sign-mode direct -a 1 -s 0 --from testgen --chain-id simd-testing unsigned_tx.json
+./build/simd tx sign --offline --sign-mode direct -a 1 -s 0 --from testgen --chain-id simd-testing unsigned_tx.json
 
-simd tx sign --home /tmp --offline --sign-mode direct -a 1 -s 1 --from testgen --chain-id simd-testing unsigned_tx.json
+./build/simd tx sign --home /tmp --offline --sign-mode direct -a 1 -s 1 --from testgen --chain-id simd-testing unsigned_tx.json
 ```
 
 You will get some output that looks more or less like this:
 
 ```
-handler: signing.SignModeHandlerMap{defaultMode:1, modes:[]signing.SignMode{1, 127}, signModeHandlers:map[signing.SignMode]signing.SignModeHandler{1:tx.signModeDirectHandler{}, 127:tx.signModeLegacyAminoJSONHandler{}}}
-mode: SIGN_MODE_DIRECT
-SignDoc: {"body_bytes":"ClYKFC9jb3Ntb3MuYmFuay5Nc2dTZW5kEj4KFA2CsefJbb+kJGL+YSky5r/xEdUbEhQBAgMEBQYHCAkKCwwNDg8QERITFBoQCgV1Y29zbRIHMTIzNDU2Nw==","auth_info_bytes":"CisKIwohA08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQEgQKAggBEhMKDQoFdWNvc20SBDIwMDAQwJoM","chain_id":"simd-testing","account_number":1,"account_sequence":1}
-SignBytes: 0a580a560a142f636f736d6f732e62616e6b2e4d736753656e64123e0a140d82b1e7c96dbfa42462fe612932e6bff111d51b12140102030405060708090a0b0c0d0e0f10111213141a100a0575636f736d12073132333435363712420a2b0a230a21034f04181eeba35391b858633a765c4a0c189697b40d216354d50890d350c7029012040a02080112130a0d0a0575636f736d12043230303010c09a0c1a0c73696d642d74657374696e6720012801
-Sign Bytes: 0a580a560a142f636f736d6f732e62616e6b2e4d736753656e64123e0a140d82b1e7c96dbfa42462fe612932e6bff111d51b12140102030405060708090a0b0c0d0e0f10111213141a100a0575636f736d12073132333435363712420a2b0a230a21034f04181eeba35391b858633a765c4a0c189697b40d216354d50890d350c7029012040a02080112130a0d0a0575636f736d12043230303010c09a0c1a0c73696d642d74657374696e6720012801
-Signature: fe0a2133ba1de9398cec30839fa1e06184914d739a1271be12f1b6c6da1933601095404f6190a216998e7d20041b63edd0f8cf9b43b0b2a4e2288777c46043ca
-{"body":{"messages":[{"@type":"/cosmos.bank.MsgSend","from_address":"cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6","to_address":"cosmos1qypqxpq9qcrsszg2pvxq6rs0zqg3yyc5lzv7xu","amount":[{"denom":"ucosm","amount":"1234567"}]}]},"auth_info":{"signer_infos":[{"public_key":{"secp256k1":"A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ"},"mode_info":{"single":{"mode":"SIGN_MODE_DIRECT"}}}],"fee":{"amount":[{"denom":"ucosm","amount":"2000"}],"gas_limit":"200000"}},"signatures":["/gohM7od6TmM7DCDn6HgYYSRTXOaEnG+EvG2xtoZM2AQlUBPYZCiFpmOfSAEG2Pt0PjPm0OwsqTiKId3xGBDyg=="]}
+Sign Mode: SIGN_MODE_DIRECT
+
+Sign Bytes: 0a93010a90010a1c2f636f736d6f732e62616e6b2e763162657461312e4d736753656e6412700a2d636f736d6f7331706b707472653766646b6c366766727a6c65736a6a766878686c63337234676d6d6b38727336122d636f736d6f7331717970717870713971637273737a673270767871367273307a716733797963356c7a763778751a100a0575636f736d12073132333435363712650a4e0a460a1f2f636f736d6f732e63727970746f2e736563703235366b312e5075624b657912230a21034f04181eeba35391b858633a765c4a0c189697b40d216354d50890d350c7029012040a02080112130a0d0a0575636f736d12043230303010c09a0c1a0c73696d642d74657374696e672001
+
+Signature: c9dd20e07464d3a688ff4b710b1fbc027e495e797cfa0b4804da2ed117959227772de059808f765aa29b8f92edf30f4c2c5a438e30d3fe6897daa7141e3ce6f9
+
+Signed TX Bytes: 0a93010a90010a1c2f636f736d6f732e62616e6b2e763162657461312e4d736753656e6412700a2d636f736d6f7331706b707472653766646b6c366766727a6c65736a6a766878686c63337234676d6d6b38727336122d636f736d6f7331717970717870713971637273737a673270767871367273307a716733797963356c7a763778751a100a0575636f736d12073132333435363712650a4e0a460a1f2f636f736d6f732e63727970746f2e736563703235366b312e5075624b657912230a21034f04181eeba35391b858633a765c4a0c189697b40d216354d50890d350c7029012040a02080112130a0d0a0575636f736d12043230303010c09a0c1a40c9dd20e07464d3a688ff4b710b1fbc027e495e797cfa0b4804da2ed117959227772de059808f765aa29b8f92edf30f4c2c5a438e30d3fe6897daa7141e3ce6f9
+
+{"body":{"messages":[{"@type":"/cosmos.bank.v1beta1.MsgSend","from_address":"cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6","to_address":"cosmos1qypqxpq9qcrsszg2pvxq6rs0zqg3yyc5lzv7xu","amount":[{"denom":"ucosm","amount":"1234567"}]}],"memo":"","timeout_height":"0","extension_options":[],"non_critical_extension_options":[]},"auth_info":{"signer_infos":[{"public_key":{"@type":"/cosmos.crypto.secp256k1.PubKey","key":"A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ"},"mode_info":{"single":{"mode":"SIGN_MODE_DIRECT"}},"sequence":"0"}],"fee":{"amount":[{"denom":"ucosm","amount":"2000"}],"gas_limit":"200000","payer":"","granter":""}},"signatures":["yd0g4HRk06aI/0txCx+8An5JXnl8+gtIBNou0ReVkid3LeBZgI92WqKbj5Lt8w9MLFpDjjDT/miX2qcUHjzm+Q=="]}
 ```
+
+This should be enough to re-generate and update the test vectors as you wish.
