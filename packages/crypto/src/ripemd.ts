@@ -23,6 +23,7 @@ export class Ripemd160 implements HashFunction {
   }
 }
 
+/** Convenience function equivalent to `new Ripemd160(data).digest()` */
 export function ripemd160(data: Uint8Array): Uint8Array {
   return new Ripemd160(data).digest();
 }
