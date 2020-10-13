@@ -46,6 +46,6 @@
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
   },
   "dependencies": {
-    "xstream": "^11.10.0"
+    "xstream": "^11.14.0"
   }
 }
