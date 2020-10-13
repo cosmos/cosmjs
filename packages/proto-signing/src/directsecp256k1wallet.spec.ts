@@ -1,4 +1,4 @@
-import { Secp256k1, Secp256k1Signature, Sha256 } from "@cosmjs/crypto";
+import { Secp256k1, Secp256k1Signature, sha256 } from "@cosmjs/crypto";
 import { fromBase64, fromHex, toAscii } from "@cosmjs/encoding";
 
 import { DirectSecp256k1Wallet } from "./directsecp256k1wallet";
@@ -61,7 +61,7 @@ describe("DirectSecp256k1Wallet", () => {
       const signature = await wallet.sign(defaultAddress, message);
       const valid = await Secp256k1.verifySignature(
         Secp256k1Signature.fromFixedLength(fromBase64(signature.signature)),
-        new Sha256(message).digest(),
+        sha256(message),
         defaultPubkey,
       );
       expect(valid).toEqual(true);

@@ -1,7 +1,7 @@
 import { fromAscii, fromBase64, fromHex } from "@cosmjs/encoding";
 
 import { EnglishMnemonic } from "./englishmnemonic";
-import { Sha256 } from "./sha";
+import { sha256 } from "./sha";
 import wordlists from "./testdata/bip39_wordlists.json";
 
 describe("EnglishMnemonic", () => {
@@ -11,7 +11,7 @@ describe("EnglishMnemonic", () => {
       const bip39EnglishTxt = fromBase64(wordlists.english);
 
       // Ensure we loaded the correct english.txt from https://github.com/bitcoin/bips/tree/master/bip-0039
-      const checksum = new Sha256(bip39EnglishTxt).digest();
+      const checksum = sha256(bip39EnglishTxt);
       expect(checksum).toEqual(fromHex("2f5eed53a4727b4bf8880d8f3f199efc90e58503646d9ff8eff3a2ed3b24dbda"));
 
       const wordsFromSpec: string[] = [];

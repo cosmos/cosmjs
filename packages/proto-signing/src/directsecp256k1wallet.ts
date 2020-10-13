@@ -4,7 +4,7 @@ import {
   HdPath,
   Random,
   Secp256k1,
-  Sha256,
+  sha256,
   Slip10,
   Slip10Curve,
 } from "@cosmjs/crypto";
@@ -117,7 +117,7 @@ export class DirectSecp256k1Wallet {
     if (address !== this.address) {
       throw new Error(`Address ${address} not found in wallet`);
     }
-    const hashedMessage = new Sha256(message).digest();
+    const hashedMessage = sha256(message);
     const signature = await Secp256k1.createSignature(hashedMessage, this.privkey);
     const signatureBytes = new Uint8Array([...signature.r(32), ...signature.s(32)]);
     return encodeSecp256k1Signature(this.pubkey, signatureBytes);

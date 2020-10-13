@@ -3,7 +3,7 @@ import { fromHex } from "@cosmjs/encoding";
 
 import { Secp256k1 } from "./secp256k1";
 import { ExtendedSecp256k1Signature, Secp256k1Signature } from "./secp256k1signature";
-import { Sha256 } from "./sha";
+import { sha256 } from "./sha";
 
 describe("Secp256k1", () => {
   // How to generate Secp256k1 test vectors:
@@ -383,7 +383,7 @@ describe("Secp256k1", () => {
 
     for (const [index, row] of data.entries()) {
       const pubkey = (await Secp256k1.makeKeypair(row.privkey)).pubkey;
-      const messageHash = new Sha256(row.message).digest();
+      const messageHash = sha256(row.message);
       const isValid = await Secp256k1.verifySignature(
         Secp256k1Signature.fromDer(row.signature),
         messageHash,
@@ -494,7 +494,7 @@ describe("Secp256k1", () => {
 
     for (const [index, row] of data.entries()) {
       const keypair = await Secp256k1.makeKeypair(row.privkey);
-      const messageHash = new Sha256(row.message).digest();
+      const messageHash = sha256(row.message);
 
       // create signature
       const calculatedSignature = await Secp256k1.createSignature(messageHash, row.privkey);

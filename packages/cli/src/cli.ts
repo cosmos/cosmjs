@@ -75,7 +75,9 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
         "Random",
         "Secp256k1",
         "Sha256",
+        "sha256",
         "Sha512",
+        "sha512",
         "Slip10",
         "Slip10Curve",
         "Slip10RawIndex",
@@ -148,7 +150,7 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
       const readmeContent = fs.readFileSync(process.cwd() + "/README.md");
       fs.writeFileSync(process.cwd() + "/README.md", readmeContent);
 
-      const hash = new Sha512(new Uint8Array([])).digest();
+      const hash = sha512(new Uint8Array([]));
       const hexHash = toHex(hash);
       export class NewDummyClass {};
 

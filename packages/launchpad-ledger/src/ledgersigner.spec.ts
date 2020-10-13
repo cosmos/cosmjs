@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Secp256k1, Secp256k1Signature, Sha256 } from "@cosmjs/crypto";
+import { Secp256k1, Secp256k1Signature, sha256 } from "@cosmjs/crypto";
 import { fromBase64 } from "@cosmjs/encoding";
 import {
   coins,
@@ -124,7 +124,7 @@ describe("LedgerSigner", () => {
         expect(signed).toEqual(signDoc);
         const valid = await Secp256k1.verifySignature(
           Secp256k1Signature.fromFixedLength(fromBase64(signature.signature)),
-          new Sha256(serializeSignDoc(signed)).digest(),
+          sha256(serializeSignDoc(signed)),
           fistAccount.pubkey,
         );
         expect(valid).toEqual(true);
