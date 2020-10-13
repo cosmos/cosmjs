@@ -1,6 +1,6 @@
 import { fromHex, toHex } from "@cosmjs/encoding";
 
-import { Sha256 } from "./sha";
+import { Sha256, sha256 } from "./sha";
 import shaVectors from "./testdata/sha.json";
 
 describe("Sha256", () => {
@@ -24,5 +24,10 @@ describe("Sha256", () => {
     for (const { in: input, out: output } of shaVectors.sha256) {
       expect(new Sha256(fromHex(input)).digest()).toEqual(fromHex(output));
     }
+  });
+
+  it("exposes a convenience function", () => {
+    const { in: input, out: output } = shaVectors.sha256[0];
+    expect(sha256(fromHex(input))).toEqual(fromHex(output));
   });
 });
