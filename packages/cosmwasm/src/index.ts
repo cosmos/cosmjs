@@ -1,6 +1,3 @@
-import * as logs from "./logs";
-export { logs };
-
 export { setupWasmExtension, WasmExtension } from "./lcdapi/wasm";
 export {
   Account,

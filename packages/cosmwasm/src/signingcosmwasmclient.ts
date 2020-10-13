@@ -11,6 +11,7 @@ import {
   GasLimits,
   GasPrice,
   isBroadcastTxFailure,
+  logs,
   makeSignDoc,
   makeStdTx,
   Msg,
@@ -23,7 +24,6 @@ import pako from "pako";
 
 import { isValidBuilder } from "./builder";
 import { Account, CosmWasmClient, GetSequenceResult } from "./cosmwasmclient";
-import { findAttribute, Log } from "./logs";
 import {
   MsgClearAdmin,
   MsgExecuteContract,
@@ -91,7 +91,7 @@ export interface UploadResult {
   readonly compressedChecksum: string;
   /** The ID of the code asigned by the chain */
   readonly codeId: number;
-  readonly logs: readonly Log[];
+  readonly logs: readonly logs.Log[];
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
 }
@@ -113,7 +113,7 @@ export interface InstantiateOptions {
 export interface InstantiateResult {
   /** The address of the newly instantiated contract */
   readonly contractAddress: string;
-  readonly logs: readonly Log[];
+  readonly logs: readonly logs.Log[];
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
 }
@@ -122,19 +122,19 @@ export interface InstantiateResult {
  * Result type of updateAdmin and clearAdmin
  */
 export interface ChangeAdminResult {
-  readonly logs: readonly Log[];
+  readonly logs: readonly logs.Log[];
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
 }
 
 export interface MigrateResult {
-  readonly logs: readonly Log[];
+  readonly logs: readonly logs.Log[];
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
 }
 
 export interface ExecuteResult {
-  readonly logs: readonly Log[];
+  readonly logs: readonly logs.Log[];
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
 }
@@ -209,7 +209,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     if (isBroadcastTxFailure(result)) {
       throw new Error(createBroadcastTxErrorMessage(result));
     }
-    const codeIdAttr = findAttribute(result.logs, "message", "code_id");
+    const codeIdAttr = logs.findAttribute(result.logs, "message", "code_id");
     return {
       originalSize: wasmCode.length,
       originalChecksum: toHex(sha256(wasmCode)),
@@ -242,7 +242,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     if (isBroadcastTxFailure(result)) {
       throw new Error(createBroadcastTxErrorMessage(result));
     }
-    const contractAddressAttr = findAttribute(result.logs, "message", "contract_address");
+    const contractAddressAttr = logs.findAttribute(result.logs, "message", "contract_address");
     return {
       contractAddress: contractAddressAttr.value,
       logs: result.logs,

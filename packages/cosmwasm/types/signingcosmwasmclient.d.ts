@@ -5,12 +5,12 @@ import {
   CosmosFeeTable,
   GasLimits,
   GasPrice,
+  logs,
   Msg,
   OfflineSigner,
   StdFee,
 } from "@cosmjs/launchpad";
 import { Account, CosmWasmClient, GetSequenceResult } from "./cosmwasmclient";
-import { Log } from "./logs";
 /**
  * These fees are used by the higher level methods of SigningCosmWasmClient
  */
@@ -48,7 +48,7 @@ export interface UploadResult {
   readonly compressedChecksum: string;
   /** The ID of the code asigned by the chain */
   readonly codeId: number;
-  readonly logs: readonly Log[];
+  readonly logs: readonly logs.Log[];
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
 }
@@ -68,7 +68,7 @@ export interface InstantiateOptions {
 export interface InstantiateResult {
   /** The address of the newly instantiated contract */
   readonly contractAddress: string;
-  readonly logs: readonly Log[];
+  readonly logs: readonly logs.Log[];
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
 }
@@ -76,17 +76,17 @@ export interface InstantiateResult {
  * Result type of updateAdmin and clearAdmin
  */
 export interface ChangeAdminResult {
-  readonly logs: readonly Log[];
+  readonly logs: readonly logs.Log[];
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
 }
 export interface MigrateResult {
-  readonly logs: readonly Log[];
+  readonly logs: readonly logs.Log[];
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
 }
 export interface ExecuteResult {
-  readonly logs: readonly Log[];
+  readonly logs: readonly logs.Log[];
   /** Transaction hash (might be used as transaction ID). Guaranteed to be non-empty upper-case hex */
   readonly transactionHash: string;
 }

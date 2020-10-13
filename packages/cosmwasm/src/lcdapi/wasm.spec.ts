@@ -10,6 +10,7 @@ import {
   coin,
   coins,
   LcdClient,
+  logs,
   makeSignDoc,
   makeStdTx,
   OfflineSigner,
@@ -20,7 +21,6 @@ import {
 } from "@cosmjs/launchpad";
 import { assert } from "@cosmjs/utils";
 
-import { findAttribute, parseLogs } from "../logs";
 import {
   isMsgInstantiateContract,
   isMsgStoreCode,
@@ -142,14 +142,14 @@ describe("WasmExtension", () => {
       const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic);
       const result = await uploadContract(wallet, hackatom);
       assertIsBroadcastTxSuccess(result);
-      const logs = parseLogs(result.logs);
-      const codeIdAttr = findAttribute(logs, "message", "code_id");
+      const parsedLogs = logs.parseLogs(result.logs);
+      const codeIdAttr = logs.findAttribute(parsedLogs, "message", "code_id");
       hackatomCodeId = Number.parseInt(codeIdAttr.value, 10);
 
       const instantiateResult = await instantiateContract(wallet, hackatomCodeId, makeRandomAddress());
       assertIsBroadcastTxSuccess(instantiateResult);
-      const instantiateLogs = parseLogs(instantiateResult.logs);
-      const contractAddressAttr = findAttribute(instantiateLogs, "message", "contract_address");
+      const instantiateLogs = logs.parseLogs(instantiateResult.logs);
+      const contractAddressAttr = logs.findAttribute(instantiateLogs, "message", "contract_address");
       hackatomContractAddress = contractAddressAttr.value;
     }
   });
@@ -205,8 +205,8 @@ describe("WasmExtension", () => {
 
       const result = await instantiateContract(wallet, hackatomCodeId, beneficiaryAddress, transferAmount);
       assertIsBroadcastTxSuccess(result);
-      const logs = parseLogs(result.logs);
-      const contractAddressAttr = findAttribute(logs, "message", "contract_address");
+      const parsedLogs = logs.parseLogs(result.logs);
+      const contractAddressAttr = logs.findAttribute(parsedLogs, "message", "contract_address");
       const myAddress = contractAddressAttr.value;
 
       const newContractsByCode = await client.wasm.listContractsByCodeId(hackatomCodeId);
@@ -254,8 +254,8 @@ describe("WasmExtension", () => {
       // create new instance and compare before and after
       const result = await instantiateContract(wallet, hackatomCodeId, beneficiaryAddress, transferAmount);
       assertIsBroadcastTxSuccess(result);
-      const logs = parseLogs(result.logs);
-      const contractAddressAttr = findAttribute(logs, "message", "contract_address");
+      const parsedLogs = logs.parseLogs(result.logs);
+      const contractAddressAttr = logs.findAttribute(parsedLogs, "message", "contract_address");
       const myAddress = contractAddressAttr.value;
 
       const history = await client.wasm.getContractCodeHistory(myAddress);
@@ -496,8 +496,8 @@ describe("WasmExtension", () => {
         // console.log("Raw log:", result.raw_log);
         const result = await uploadContract(wallet, getHackatom());
         assertIsBroadcastTxSuccess(result);
-        const logs = parseLogs(result.logs);
-        const codeIdAttr = findAttribute(logs, "message", "code_id");
+        const parsedLogs = logs.parseLogs(result.logs);
+        const codeIdAttr = logs.findAttribute(parsedLogs, "message", "code_id");
         codeId = Number.parseInt(codeIdAttr.value, 10);
         expect(codeId).toBeGreaterThanOrEqual(1);
         expect(codeId).toBeLessThanOrEqual(200);
@@ -511,10 +511,10 @@ describe("WasmExtension", () => {
         const result = await instantiateContract(wallet, codeId, beneficiaryAddress, transferAmount);
         assertIsBroadcastTxSuccess(result);
         // console.log("Raw log:", result.raw_log);
-        const logs = parseLogs(result.logs);
-        const contractAddressAttr = findAttribute(logs, "message", "contract_address");
+        const parsedLogs = logs.parseLogs(result.logs);
+        const contractAddressAttr = logs.findAttribute(parsedLogs, "message", "contract_address");
         contractAddress = contractAddressAttr.value;
-        const amountAttr = findAttribute(logs, "transfer", "amount");
+        const amountAttr = logs.findAttribute(parsedLogs, "transfer", "amount");
         expect(amountAttr.value).toEqual("1234ucosm,321ustake");
         expect(result.data).toEqual(Bech32.decode(contractAddress).data);
 
@@ -528,8 +528,8 @@ describe("WasmExtension", () => {
         assert(!result.code);
         expect(result.data).toEqual("F00BAA");
         // console.log("Raw log:", result.logs);
-        const logs = parseLogs(result.logs);
-        const wasmEvent = logs.find(() => true)?.events.find((e) => e.type === "wasm");
+        const parsedLogs = logs.parseLogs(result.logs);
+        const wasmEvent = parsedLogs.find(() => true)?.events.find((e) => e.type === "wasm");
         assert(wasmEvent, "Event of type wasm expected");
         expect(wasmEvent.attributes).toContain({ key: "action", value: "release" });
         expect(wasmEvent.attributes).toContain({

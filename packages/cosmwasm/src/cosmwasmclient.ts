@@ -7,6 +7,7 @@ import {
   Coin,
   IndexedTx,
   LcdClient,
+  logs,
   normalizePubkey,
   PubKey,
   setupAuthExtension,
@@ -17,7 +18,6 @@ import {
 import { Uint53 } from "@cosmjs/math";
 
 import { setupWasmExtension, WasmExtension } from "./lcdapi/wasm";
-import { parseLogs } from "./logs";
 import { JsonObject } from "./types";
 
 export interface GetSequenceResult {
@@ -335,7 +335,7 @@ export class CosmWasmClient {
           rawLog: result.raw_log || "",
         }
       : {
-          logs: result.logs ? parseLogs(result.logs) : [],
+          logs: result.logs ? logs.parseLogs(result.logs) : [],
           rawLog: result.raw_log || "",
           transactionHash: result.txhash,
           data: result.data ? fromHex(result.data) : undefined,
@@ -470,7 +470,7 @@ export class CosmWasmClient {
         hash: restItem.txhash,
         code: restItem.code || 0,
         rawLog: restItem.raw_log,
-        logs: parseLogs(restItem.logs || []),
+        logs: logs.parseLogs(restItem.logs || []),
         tx: restItem.tx,
         timestamp: restItem.timestamp,
       }),
