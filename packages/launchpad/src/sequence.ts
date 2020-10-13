@@ -1,4 +1,4 @@
-import { Secp256k1, Secp256k1Signature, Sha256 } from "@cosmjs/crypto";
+import { Secp256k1, Secp256k1Signature, sha256 } from "@cosmjs/crypto";
 
 import { makeSignDoc, serializeSignDoc } from "./encoding";
 import { decodeSignature } from "./signature";
@@ -33,7 +33,7 @@ export async function findSequenceForSignedTx(
     const signBytes = serializeSignDoc(
       makeSignDoc(tx.value.msg, tx.value.fee, chainId, tx.value.memo || "", accountNumber, s),
     );
-    const prehashed = new Sha256(signBytes).digest();
+    const prehashed = sha256(signBytes);
     const valid = await Secp256k1.verifySignature(secp256keSignature, prehashed, pubkey);
     if (valid) return s;
   }

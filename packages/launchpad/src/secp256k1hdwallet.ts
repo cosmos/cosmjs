@@ -5,7 +5,7 @@ import {
   pathToString,
   Random,
   Secp256k1,
-  Sha256,
+  sha256,
   Slip10,
   Slip10Curve,
   stringToPath,
@@ -263,7 +263,7 @@ export class Secp256k1HdWallet implements OfflineSigner {
     if (signerAddress !== this.address) {
       throw new Error(`Address ${signerAddress} not found in wallet`);
     }
-    const message = new Sha256(serializeSignDoc(signDoc)).digest();
+    const message = sha256(serializeSignDoc(signDoc));
     const signature = await Secp256k1.createSignature(message, this.privkey);
     const signatureBytes = new Uint8Array([...signature.r(32), ...signature.s(32)]);
     return {

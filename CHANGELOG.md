@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.23.1 (unreleased)
+
+- @cosmjs/crypto: Export new convenience functions `keccak256`, `ripemd160`,
+  `sha1`, `sha256` and `sha512`.
+
 ## 0.23.0 (2020-10-09)
 
 - @cosmjs/cli: Expose `HdPath` type.

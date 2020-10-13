@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Sha256 } from "@cosmjs/crypto";
+import { sha256 } from "@cosmjs/crypto";
 import { toHex } from "@cosmjs/encoding";
 import {
   assertIsBroadcastTxSuccess,
@@ -259,7 +259,7 @@ describe("SigningCosmWasmClient", () => {
         compressedChecksum,
         compressedSize,
       } = await client.upload(wasm);
-      expect(originalChecksum).toEqual(toHex(new Sha256(wasm).digest()));
+      expect(originalChecksum).toEqual(toHex(sha256(wasm)));
       expect(originalSize).toEqual(wasm.length);
       expect(compressedChecksum).toMatch(/^[0-9a-f]{64}$/);
       expect(compressedSize).toBeLessThan(wasm.length * 0.5);

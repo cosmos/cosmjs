@@ -1,6 +1,6 @@
 import { fromHex, toHex } from "@cosmjs/encoding";
 
-import { Keccak256 } from "./keccak";
+import { Keccak256, keccak256 } from "./keccak";
 import keccakVectors from "./testdata/keccak.json";
 
 describe("Keccak256", () => {
@@ -24,5 +24,10 @@ describe("Keccak256", () => {
     for (const { in: input, out: output } of keccakVectors.keccak256) {
       expect(new Keccak256(fromHex(input)).digest()).toEqual(fromHex(output));
     }
+  });
+
+  it("exposes a convenience function", () => {
+    const { in: input, out: output } = keccakVectors.keccak256[0];
+    expect(keccak256(fromHex(input))).toEqual(fromHex(output));
   });
 });

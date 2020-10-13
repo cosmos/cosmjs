@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Sha256 } from "@cosmjs/crypto";
+import { sha256 } from "@cosmjs/crypto";
 import { Bech32, fromAscii, fromHex, fromUtf8, toAscii, toBase64, toHex } from "@cosmjs/encoding";
 import {
   assertIsBroadcastTxSuccess,
@@ -165,7 +165,7 @@ describe("WasmExtension", () => {
       expect(lastCode.creator).toEqual(alice.address0);
       expect(lastCode.source).toEqual(hackatom.source);
       expect(lastCode.builder).toEqual(hackatom.builder);
-      expect(lastCode.data_hash.toLowerCase()).toEqual(toHex(new Sha256(hackatom.data).digest()));
+      expect(lastCode.data_hash.toLowerCase()).toEqual(toHex(sha256(hackatom.data)));
     });
   });
 
@@ -179,7 +179,7 @@ describe("WasmExtension", () => {
       expect(code.creator).toEqual(alice.address0);
       expect(code.source).toEqual(hackatom.source);
       expect(code.builder).toEqual(hackatom.builder);
-      expect(code.data_hash.toLowerCase()).toEqual(toHex(new Sha256(hackatom.data).digest()));
+      expect(code.data_hash.toLowerCase()).toEqual(toHex(sha256(hackatom.data)));
       expect(code.data).toEqual(toBase64(hackatom.data));
     });
   });

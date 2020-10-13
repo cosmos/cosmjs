@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Sha256 } from "@cosmjs/crypto";
+import { sha256 } from "@cosmjs/crypto";
 import { Bech32, fromHex, fromUtf8, toAscii, toBase64 } from "@cosmjs/encoding";
 import {
   assertIsBroadcastTxSuccess,
@@ -285,7 +285,7 @@ describe("CosmWasmClient", () => {
       // check info
       expect(result).toEqual(jasmine.objectContaining(expectedInfo));
       // check data
-      expect(new Sha256(result.data).digest()).toEqual(fromHex(expectedInfo.checksum));
+      expect(sha256(result.data)).toEqual(fromHex(expectedInfo.checksum));
     });
 
     it("caches downloads", async () => {

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Sha256 } from "@cosmjs/crypto";
+import { sha256 } from "@cosmjs/crypto";
 import { toBase64, toHex } from "@cosmjs/encoding";
 import {
   BroadcastMode,
@@ -212,9 +212,9 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     const codeIdAttr = findAttribute(result.logs, "message", "code_id");
     return {
       originalSize: wasmCode.length,
-      originalChecksum: toHex(new Sha256(wasmCode).digest()),
+      originalChecksum: toHex(sha256(wasmCode)),
       compressedSize: compressed.length,
-      compressedChecksum: toHex(new Sha256(compressed).digest()),
+      compressedChecksum: toHex(sha256(compressed)),
       codeId: Number.parseInt(codeIdAttr.value, 10),
       logs: result.logs,
       transactionHash: result.transactionHash,

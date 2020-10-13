@@ -1,4 +1,4 @@
-import { Sha256 } from "@cosmjs/crypto";
+import { sha256 } from "@cosmjs/crypto";
 import { fromBase64, fromHex, toHex } from "@cosmjs/encoding";
 import {
   AuthExtension,
@@ -202,7 +202,7 @@ export class CosmWasmClient {
   public async getIdentifier(tx: WrappedStdTx): Promise<string> {
     // We consult the REST API because we don't have a local amino encoder
     const response = await this.lcdClient.encodeTx(tx);
-    const hash = new Sha256(fromBase64(response.tx)).digest();
+    const hash = sha256(fromBase64(response.tx));
     return toHex(hash).toUpperCase();
   }
 

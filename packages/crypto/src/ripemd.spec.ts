@@ -1,6 +1,6 @@
 import { fromHex } from "@cosmjs/encoding";
 
-import { Ripemd160 } from "./ripemd";
+import { Ripemd160, ripemd160 } from "./ripemd";
 import ripemdVectors from "./testdata/ripemd.json";
 
 describe("Ripemd160", () => {
@@ -24,5 +24,10 @@ describe("Ripemd160", () => {
     for (const { in: input, out: output } of ripemdVectors.ripemd160) {
       expect(new Ripemd160(fromHex(input)).digest()).toEqual(fromHex(output));
     }
+  });
+
+  it("exposes a convenience function", () => {
+    const { in: input, out: output } = ripemdVectors.ripemd160[0];
+    expect(ripemd160(fromHex(input))).toEqual(fromHex(output));
   });
 });

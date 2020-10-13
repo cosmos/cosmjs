@@ -6,3 +6,5 @@ export declare class Ripemd160 implements HashFunction {
   update(data: Uint8Array): Ripemd160;
   digest(): Uint8Array;
 }
+/** Convenience function equivalent to `new Ripemd160(data).digest()` */
+export declare function ripemd160(data: Uint8Array): Uint8Array;
