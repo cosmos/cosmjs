@@ -42,5 +42,8 @@
     "postbuild": "yarn move-types && yarn format-types",
     "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build",
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
+  },
+  "dependencies": {
+    "axios": "^0.19.2"
   }
 }
