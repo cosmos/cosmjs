@@ -6,7 +6,7 @@ export declare class Coin extends Message {
   readonly amount?: string;
 }
 export declare class MsgSend extends Message {
-  readonly from_address?: Uint8Array;
-  readonly to_address?: Uint8Array;
+  readonly from_address?: string;
+  readonly to_address?: string;
   readonly amount?: readonly Coin[];
 }
