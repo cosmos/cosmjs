@@ -4,7 +4,8 @@
 
 ## Running the tests
 
-First of all you will need an instance of wasmd running. From the root directory of this repository:
+First of all you will need an instance of wasmd running. From the root directory
+of this repository:
 
 ```sh
 ./scripts/wasmd/start.sh && ./scripts/wasmd/init.sh
@@ -17,7 +18,8 @@ cd packages/faucet
 yarn start-dev
 ```
 
-The tests need to be told you are running the faucet via an environmental variable:
+The tests need to be told you are running the faucet via an environmental
+variable:
 
 ```sh
 export FAUCET_ENABLED=1
