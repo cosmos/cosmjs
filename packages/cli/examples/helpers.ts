@@ -16,14 +16,6 @@ const defaultOptions: Options = {
 
 const defaultFaucetUrl = "https://faucet.demo-10.cosmwasm.com/credit";
 
-// TODO: hit faucet
-// if (config.faucetUrl) {
-//   const acct = await client.getAccount();
-//   if (!acct?.balance?.length) {
-//     await ky.post(config.faucetUrl, { json: { ticker: "COSM", address } });
-//   }
-// }
-
 const connect = async (
   mnemonic: string,
   opts: Partial<Options>,
@@ -54,12 +46,6 @@ const loadOrCreateMnemonic = (filename: string): string => {
     fs.writeFileSync(filename, mnemonic, "utf8");
     return mnemonic;
   }
-};
-
-const hitFaucet = async (faucetUrl: string, address: string, ticker: string): Promise<void> => {
-  const r = await axios.post(defaultFaucetUrl, { ticker, address });
-  console.log(r.status);
-  console.log(r.data);
 };
 
 const randomAddress = async (prefix: string): Promise<string> => {
