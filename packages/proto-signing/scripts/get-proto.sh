@@ -9,7 +9,7 @@ ZIP_FILE="$COSMOS_DIR/tmp.zip"
 REF=${REF:-"master"}
 SUFFIX=${REF}
 
-[[ $SUFFIX =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]] && SUFFIX=${SUFFIX#v}
+[[ $SUFFIX =~ ^v[0-9]+\.[0-9]+\.[0-9]+(-.+)?$ ]] && SUFFIX=${SUFFIX#v}
 
 mkdir -p "$COSMOS_DIR"
 
