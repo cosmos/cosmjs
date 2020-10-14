@@ -6,27 +6,27 @@ import { cosmos, google } from "./codec";
 import { MsgDemo as MsgDemoType } from "./demo";
 import { Registry } from "./registry";
 
-const { TxBody } = cosmos.tx;
+const { TxBody } = cosmos.tx.v1beta1;
 const { Any } = google.protobuf;
 
 describe("registry demo", () => {
   it("works with a default msg", () => {
     const registry = new Registry();
-    const Coin = registry.lookupType("/cosmos.Coin")!;
-    const MsgSend = registry.lookupType("/cosmos.bank.MsgSend")!;
+    const Coin = registry.lookupType("/cosmos.base.v1beta1.Coin")!;
+    const MsgSend = registry.lookupType("/cosmos.bank.v1beta1.MsgSend")!;
 
     const coin = Coin.create({
       denom: "ucosm",
       amount: "1234567890",
     });
     const msgSend = (MsgSend.create({
-      fromAddress: Uint8Array.from(Array.from({ length: 20 }, () => 1)),
-      toAddress: Uint8Array.from(Array.from({ length: 20 }, () => 2)),
+      fromAddress: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+      toAddress: "cosmos1qypqxpq9qcrsszg2pvxq6rs0zqg3yyc5lzv7xu",
       amount: [coin],
-    }) as unknown) as cosmos.bank.MsgSend;
+    }) as unknown) as cosmos.bank.v1beta1.MsgSend;
     const msgSendBytes = MsgSend.encode(msgSend).finish();
     const msgSendWrapped = Any.create({
-      type_url: "/cosmos.bank.MsgSend",
+      type_url: "/cosmos.bank.v1beta1.MsgSend",
       value: msgSendBytes,
     });
     const txBody = TxBody.create({
@@ -46,8 +46,8 @@ describe("registry demo", () => {
     const msgSendDecoded = decoder.decode(msg.value);
 
     // fromAddress and toAddress are now Buffers
-    expect(Uint8Array.from(msgSendDecoded.fromAddress)).toEqual(msgSend.fromAddress);
-    expect(Uint8Array.from(msgSendDecoded.toAddress)).toEqual(msgSend.toAddress);
+    expect(msgSendDecoded.fromAddress).toEqual(msgSend.fromAddress);
+    expect(msgSendDecoded.toAddress).toEqual(msgSend.toAddress);
     expect(msgSendDecoded.amount).toEqual(msgSend.amount);
   });
 

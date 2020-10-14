@@ -60,12 +60,12 @@ describe("registry magic demo", () => {
       extensionOptions: [],
     };
     const txBodyBytes = myRegistry.encode({
-      typeUrl: "/cosmos.tx.TxBody",
+      typeUrl: "/cosmos.tx.v1beta1.TxBody",
       value: txBodyFields,
     });
 
     const txBodyDecoded = myRegistry.decode({
-      typeUrl: "/cosmos.tx.TxBody",
+      typeUrl: "/cosmos.tx.v1beta1.TxBody",
       value: txBodyBytes,
     });
     expect(txBodyDecoded.memo).toEqual(txBodyFields.memo);

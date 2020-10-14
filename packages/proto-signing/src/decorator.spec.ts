@@ -7,7 +7,7 @@ import { cosmos, google } from "./codec";
 import { cosmosField, registered } from "./decorator";
 import { Registry } from "./registry";
 
-const { TxBody } = cosmos.tx;
+const { TxBody } = cosmos.tx.v1beta1;
 const { Any } = google.protobuf;
 
 describe("decorator demo", () => {
