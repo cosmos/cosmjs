@@ -67,12 +67,14 @@
 				<a href="#running-the-tests" id="running-the-tests" style="color: inherit; text-decoration: none;">
 					<h2>Running the tests</h2>
 				</a>
-				<p>First of all you will need an instance of wasmd running. From the root directory of this repository:</p>
+				<p>First of all you will need an instance of wasmd running. From the root directory
+				of this repository:</p>
 				<pre><code class="language-sh">./scripts/wasmd/start.sh &amp;&amp; ./scripts/wasmd/init.sh</code></pre>
 				<p>You will also need a faucet. From the root directory of this repository:</p>
 				<pre><code class="language-sh"><span class="hljs-built_in">cd</span> packages/faucet
 yarn start-dev</code></pre>
-				<p>The tests need to be told you are running the faucet via an environmental variable:</p>
+				<p>The tests need to be told you are running the faucet via an environmental
+				variable:</p>
 				<pre><code class="language-sh"><span class="hljs-built_in">export</span> FAUCET_ENABLED=1</code></pre>
 				<p>Finally run the tests from this directory:</p>
 				<pre><code class="language-sh">yarn <span class="hljs-built_in">test</span></code></pre>
