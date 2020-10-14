@@ -27,7 +27,7 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
         type: "boolean",
       },
       selftest: {
-        describe: "Run a selftext and exit",
+        describe: "Run a selftest and exit",
         type: "boolean",
       },
     })
