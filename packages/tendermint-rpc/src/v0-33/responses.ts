@@ -271,13 +271,13 @@ function decodeBlockId(data: RpcBlockId): responses.BlockId {
 
 interface RpcBlockVersion {
   readonly block: IntegerString;
-  readonly app: IntegerString;
+  readonly app?: IntegerString;
 }
 
 function decodeBlockVersion(data: RpcBlockVersion): responses.Version {
   return {
     block: Integer.parse(data.block),
-    app: Integer.parse(data.app),
+    app: Integer.parse(data.app ?? 0),
   };
 }
 
