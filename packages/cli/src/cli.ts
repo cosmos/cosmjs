@@ -27,7 +27,7 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
         type: "boolean",
       },
       selftest: {
-        describe: "Run a selftext and exit",
+        describe: "Run a selftest and exit",
         type: "boolean",
       },
     })
@@ -87,6 +87,7 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
       "@cosmjs/encoding",
       ["fromAscii", "fromBase64", "fromHex", "fromUtf8", "toAscii", "toBase64", "toHex", "toUtf8", "Bech32"],
     ],
+    ["@cosmjs/faucet-client", ["FaucetClient"]],
     [
       "@cosmjs/launchpad",
       [
