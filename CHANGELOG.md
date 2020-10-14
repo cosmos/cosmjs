@@ -4,6 +4,7 @@
 
 - @cosmjs/crypto: Export new convenience functions `keccak256`, `ripemd160`,
   `sha1`, `sha256` and `sha512`.
+- @cosmjs/faucet-client: Add new package which exports `FaucetClient` class.
 
 ## 0.23.0 (2020-10-09)
 
