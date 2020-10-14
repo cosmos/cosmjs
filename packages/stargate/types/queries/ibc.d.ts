@@ -2,7 +2,7 @@ import { ibc } from "../codec";
 import { QueryClient } from "./queryclient";
 export interface IbcExtension {
   readonly ibc: {
-    readonly channel: (portId: string, channelId: string) => Promise<ibc.channel.IChannel | null>;
+    readonly channel: (portId: string, channelId: string) => Promise<ibc.core.channel.v1.IChannel | null>;
     readonly packetCommitment: (portId: string, channelId: string, sequence: number) => Promise<Uint8Array>;
     readonly packetAcknowledgement: (
       portId: string,
@@ -11,40 +11,47 @@ export interface IbcExtension {
     ) => Promise<Uint8Array>;
     readonly nextSequenceReceive: (portId: string, channelId: string) => Promise<number | null>;
     readonly unverified: {
-      readonly channel: (portId: string, channelId: string) => Promise<ibc.channel.IQueryChannelResponse>;
-      readonly channels: () => Promise<ibc.channel.IQueryChannelsResponse>;
+      readonly channel: (
+        portId: string,
+        channelId: string,
+      ) => Promise<ibc.core.channel.v1.IQueryChannelResponse>;
+      readonly channels: () => Promise<ibc.core.channel.v1.IQueryChannelsResponse>;
       readonly connectionChannels: (
         connection: string,
-      ) => Promise<ibc.channel.IQueryConnectionChannelsResponse>;
+      ) => Promise<ibc.core.channel.v1.IQueryConnectionChannelsResponse>;
       readonly packetCommitment: (
         portId: string,
         channelId: string,
         sequence: number,
-      ) => Promise<ibc.channel.IQueryPacketCommitmentResponse>;
+      ) => Promise<ibc.core.channel.v1.IQueryPacketCommitmentResponse>;
       readonly packetCommitments: (
         portId: string,
         channelId: string,
-      ) => Promise<ibc.channel.IQueryPacketCommitmentsResponse>;
+      ) => Promise<ibc.core.channel.v1.IQueryPacketCommitmentsResponse>;
       readonly packetAcknowledgement: (
         portId: string,
         channelId: string,
         sequence: number,
-      ) => Promise<ibc.channel.IQueryPacketAcknowledgementResponse>;
-      readonly unrelayedPackets: (
+      ) => Promise<ibc.core.channel.v1.IQueryPacketAcknowledgementResponse>;
+      readonly unreceivedPackets: (
         portId: string,
         channelId: string,
         packetCommitmentSequences: readonly number[],
-        acknowledgements: boolean,
-      ) => Promise<ibc.channel.IQueryUnrelayedPacketsResponse>;
+      ) => Promise<ibc.core.channel.v1.IQueryUnreceivedPacketsResponse>;
+      readonly unrelayedAcks: (
+        portId: string,
+        channelId: string,
+        packetCommitmentSequences: readonly number[],
+      ) => Promise<ibc.core.channel.v1.IQueryUnrelayedAcksResponse>;
       readonly nextSequenceReceive: (
         portId: string,
         channelId: string,
-      ) => Promise<ibc.channel.IQueryNextSequenceReceiveResponse>;
-      readonly connection: (connectionId: string) => Promise<ibc.connection.IQueryConnectionResponse>;
-      readonly connections: () => Promise<ibc.connection.IQueryConnectionsResponse>;
+      ) => Promise<ibc.core.channel.v1.IQueryNextSequenceReceiveResponse>;
+      readonly connection: (connectionId: string) => Promise<ibc.core.connection.v1.IQueryConnectionResponse>;
+      readonly connections: () => Promise<ibc.core.connection.v1.IQueryConnectionsResponse>;
       readonly clientConnections: (
         clientId: string,
-      ) => Promise<ibc.connection.IQueryClientConnectionsResponse>;
+      ) => Promise<ibc.core.connection.v1.IQueryClientConnectionsResponse>;
     };
   };
 }

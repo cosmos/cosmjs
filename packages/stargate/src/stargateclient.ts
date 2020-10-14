@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Bech32, toHex } from "@cosmjs/encoding";
+import { toHex } from "@cosmjs/encoding";
 import {
   Block,
   Coin,
-  decodeAminoPubkey,
+  encodeSecp256k1Pubkey,
   isSearchByHeightQuery,
   isSearchByIdQuery,
   PubKey,
@@ -15,7 +15,7 @@ import { broadcastTxCommitSuccess, Client as TendermintClient, QueryString } fro
 import { assert, assertDefined } from "@cosmjs/utils";
 import Long from "long";
 
-import { cosmos } from "./codec";
+import { cosmos, google } from "./codec";
 import { AuthExtension, BankExtension, QueryClient, setupAuthExtension, setupBankExtension } from "./queries";
 
 /** A transaction that is indexed as part of the transaction history */
@@ -85,20 +85,34 @@ function uint64FromProto(input: number | Long | null | undefined): Uint64 {
   return Uint64.fromString(input.toString());
 }
 
-function accountFromProto(input: cosmos.auth.IBaseAccount, prefix: string): Account {
+function decodePubkey(pubkey?: google.protobuf.IAny | null): PubKey | null {
+  if (!pubkey || !pubkey.value) {
+    return null;
+  }
+
+  switch (pubkey.type_url) {
+    case "/cosmos.crypto.secp256k1.PubKey": {
+      const { key } = cosmos.crypto.secp256k1.PubKey.decode(pubkey.value);
+      return encodeSecp256k1Pubkey(key);
+    }
+    default:
+      throw new Error("Unknown pubkey type");
+  }
+}
+
+function accountFromProto(input: cosmos.auth.v1beta1.IBaseAccount): Account {
   const { address, pubKey, accountNumber, sequence } = input;
-  // Pubkey is still Amino-encoded in BaseAccount (https://github.com/cosmos/cosmos-sdk/issues/6886)
-  const pubkey = pubKey && pubKey.length ? decodeAminoPubkey(pubKey) : null;
+  const pubkey = decodePubkey(pubKey);
   assert(address);
   return {
-    address: Bech32.encode(prefix, address),
+    address: address,
     pubkey: pubkey,
     accountNumber: uint64FromProto(accountNumber).toNumber(),
     sequence: uint64FromProto(sequence).toNumber(),
   };
 }
 
-function coinFromProto(input: cosmos.ICoin): Coin {
+function coinFromProto(input: cosmos.base.v1beta1.ICoin): Coin {
   assertDefined(input.amount);
   assertDefined(input.denom);
   assert(input.amount !== null);
@@ -146,10 +160,8 @@ export class StargateClient {
   }
 
   public async getAccount(searchAddress: string): Promise<Account | null> {
-    const { prefix } = Bech32.decode(searchAddress);
-
     const account = await this.queryClient.auth.account(searchAddress);
-    return account ? accountFromProto(account, prefix) : null;
+    return account ? accountFromProto(account) : null;
   }
 
   public async getSequence(address: string): Promise<SequenceResponse | null> {

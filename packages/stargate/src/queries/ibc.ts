@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { toAscii } from "@cosmjs/encoding";
 import { Uint64 } from "@cosmjs/math";
 import Long from "long";
@@ -6,9 +7,12 @@ import { ibc } from "../codec";
 import { QueryClient } from "./queryclient";
 import { toObject } from "./utils";
 
+const { Query: ChannelQuery } = ibc.core.channel.v1;
+const { Query: ConnectionQuery } = ibc.core.connection.v1;
+
 export interface IbcExtension {
   readonly ibc: {
-    readonly channel: (portId: string, channelId: string) => Promise<ibc.channel.IChannel | null>;
+    readonly channel: (portId: string, channelId: string) => Promise<ibc.core.channel.v1.IChannel | null>;
     readonly packetCommitment: (portId: string, channelId: string, sequence: number) => Promise<Uint8Array>;
     readonly packetAcknowledgement: (
       portId: string,
@@ -17,44 +21,51 @@ export interface IbcExtension {
     ) => Promise<Uint8Array>;
     readonly nextSequenceReceive: (portId: string, channelId: string) => Promise<number | null>;
     readonly unverified: {
-      // Queries for ibc.channel
-      readonly channel: (portId: string, channelId: string) => Promise<ibc.channel.IQueryChannelResponse>;
-      readonly channels: () => Promise<ibc.channel.IQueryChannelsResponse>;
+      // Queries for ibc.core.channel.v1
+      readonly channel: (
+        portId: string,
+        channelId: string,
+      ) => Promise<ibc.core.channel.v1.IQueryChannelResponse>;
+      readonly channels: () => Promise<ibc.core.channel.v1.IQueryChannelsResponse>;
       readonly connectionChannels: (
         connection: string,
-      ) => Promise<ibc.channel.IQueryConnectionChannelsResponse>;
+      ) => Promise<ibc.core.channel.v1.IQueryConnectionChannelsResponse>;
       readonly packetCommitment: (
         portId: string,
         channelId: string,
         sequence: number,
-      ) => Promise<ibc.channel.IQueryPacketCommitmentResponse>;
+      ) => Promise<ibc.core.channel.v1.IQueryPacketCommitmentResponse>;
       readonly packetCommitments: (
         portId: string,
         channelId: string,
-      ) => Promise<ibc.channel.IQueryPacketCommitmentsResponse>;
+      ) => Promise<ibc.core.channel.v1.IQueryPacketCommitmentsResponse>;
       readonly packetAcknowledgement: (
         portId: string,
         channelId: string,
         sequence: number,
-      ) => Promise<ibc.channel.IQueryPacketAcknowledgementResponse>;
-      readonly unrelayedPackets: (
+      ) => Promise<ibc.core.channel.v1.IQueryPacketAcknowledgementResponse>;
+      readonly unreceivedPackets: (
         portId: string,
         channelId: string,
         packetCommitmentSequences: readonly number[],
-        acknowledgements: boolean,
-      ) => Promise<ibc.channel.IQueryUnrelayedPacketsResponse>;
+      ) => Promise<ibc.core.channel.v1.IQueryUnreceivedPacketsResponse>;
+      readonly unrelayedAcks: (
+        portId: string,
+        channelId: string,
+        packetCommitmentSequences: readonly number[],
+      ) => Promise<ibc.core.channel.v1.IQueryUnrelayedAcksResponse>;
       readonly nextSequenceReceive: (
         portId: string,
         channelId: string,
-      ) => Promise<ibc.channel.IQueryNextSequenceReceiveResponse>;
+      ) => Promise<ibc.core.channel.v1.IQueryNextSequenceReceiveResponse>;
 
-      // Queries for ibc.connection
+      // Queries for ibc.core.connection.v1
 
-      readonly connection: (connectionId: string) => Promise<ibc.connection.IQueryConnectionResponse>;
-      readonly connections: () => Promise<ibc.connection.IQueryConnectionsResponse>;
+      readonly connection: (connectionId: string) => Promise<ibc.core.connection.v1.IQueryConnectionResponse>;
+      readonly connections: () => Promise<ibc.core.connection.v1.IQueryConnectionsResponse>;
       readonly clientConnections: (
         clientId: string,
-      ) => Promise<ibc.connection.IQueryClientConnectionsResponse>;
+      ) => Promise<ibc.core.connection.v1.IQueryClientConnectionsResponse>;
     };
   };
 }
@@ -63,18 +74,18 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
   // Use this service to get easy typed access to query methods
   // This cannot be used to for proof verification
 
-  const channelQuerySerice = ibc.channel.Query.create((method: any, requestData, callback) => {
+  const channelQuerySerice = ChannelQuery.create((method: any, requestData, callback) => {
     // Parts of the path are unavailable, so we hardcode them here. See https://github.com/protobufjs/protobuf.js/issues/1229
-    const path = `/ibc.channel.Query/${method.name}`;
+    const path = `/ibc.core.channel.v1.Query/${method.name}`;
     base
       .queryUnverified(path, requestData)
       .then((response) => callback(null, response))
       .catch((error) => callback(error));
   });
 
-  const connectionQuerySerice = ibc.connection.Query.create((method: any, requestData, callback) => {
+  const connectionQuerySerice = ConnectionQuery.create((method: any, requestData, callback) => {
     // Parts of the path are unavailable, so we hardcode them here. See https://github.com/protobufjs/protobuf.js/issues/1229
-    const path = `/ibc.connection.Query/${method.name}`;
+    const path = `/ibc.core.connection.v1.Query/${method.name}`;
     base
       .queryUnverified(path, requestData)
       .then((response) => callback(null, response))
@@ -88,7 +99,7 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
         // key: https://github.com/cosmos/cosmos-sdk/blob/ef0a7344af345882729598bc2958a21143930a6b/x/ibc/24-host/keys.go#L117-L120
         const key = toAscii(`channelEnds/ports/${portId}/channels/${channelId}`);
         const responseData = await base.queryVerified("ibc", key);
-        return responseData.length ? toObject(ibc.channel.Channel.decode(responseData)) : null;
+        return responseData.length ? toObject(ibc.core.channel.v1.Channel.decode(responseData)) : null;
       },
       packetCommitment: async (portId: string, channelId: string, sequence: number) => {
         // keeper: https://github.com/cosmos/cosmos-sdk/blob/3bafd8255a502e5a9cee07391cf8261538245dfd/x/ibc/04-channel/keeper/keeper.go#L128-L133
@@ -115,7 +126,7 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
       },
 
       unverified: {
-        // Queries for ibc.channel
+        // Queries for ibc.core.channel.v1
         channel: async (portId: string, channelId: string) => {
           const response = await channelQuerySerice.channel({ portId: portId, channelId: channelId });
           return toObject(response);
@@ -151,17 +162,27 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
           });
           return toObject(response);
         },
-        unrelayedPackets: async (
+        unreceivedPackets: async (
           portId: string,
           channelId: string,
           packetCommitmentSequences: readonly number[],
-          acknowledgements: boolean,
         ) => {
-          const response = await channelQuerySerice.unrelayedPackets({
+          const response = await channelQuerySerice.unreceivedPackets({
             portId: portId,
             channelId: channelId,
             packetCommitmentSequences: packetCommitmentSequences.map((s) => Long.fromNumber(s)),
-            acknowledgements: acknowledgements,
+          });
+          return toObject(response);
+        },
+        unrelayedAcks: async (
+          portId: string,
+          channelId: string,
+          packetCommitmentSequences: readonly number[],
+        ) => {
+          const response = await channelQuerySerice.unrelayedAcks({
+            portId: portId,
+            channelId: channelId,
+            packetCommitmentSequences: packetCommitmentSequences.map((s) => Long.fromNumber(s)),
           });
           return toObject(response);
         },
@@ -173,7 +194,7 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
           return toObject(response);
         },
 
-        // Queries for ibc.connection
+        // Queries for ibc.core.connection.v1
 
         connection: async (connectionId: string) => {
           const response = await connectionQuerySerice.connection({ connectionId: connectionId });

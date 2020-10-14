@@ -88,13 +88,26 @@ describe("IbcExtension", () => {
       });
     });
 
-    describe("unrelayedPackets", () => {
+    describe("unreceivedPackets", () => {
       it("can be called", async () => {
         pending("Fails with 'Query failed with (1): internal'. Make it work.");
         pendingWithoutSimapp();
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
-        const response = await client.ibc.unverified.unrelayedPackets("foo", "bar", [0, 1], true);
+        const response = await client.ibc.unverified.unreceivedPackets("foo", "bar", [0, 1]);
+        expect(response).toBeTruthy(); // TODO: implement checks
+
+        tmClient.disconnect();
+      });
+    });
+
+    describe("unrelayedAcks", () => {
+      it("can be called", async () => {
+        pending("Fails with 'Query failed with (1): internal'. Make it work.");
+        pendingWithoutSimapp();
+        const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+
+        const response = await client.ibc.unverified.unrelayedAcks("foo", "bar", [0, 1]);
         expect(response).toBeTruthy(); // TODO: implement checks
 
         tmClient.disconnect();

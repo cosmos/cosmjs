@@ -1,12 +1,16 @@
-import { encodeAminoPubkey } from "@cosmjs/launchpad";
+/* eslint-disable @typescript-eslint/naming-convention */
+import { fromBase64 } from "@cosmjs/encoding";
 import { Client as TendermintClient } from "@cosmjs/tendermint-rpc";
 import { assert } from "@cosmjs/utils";
 import Long from "long";
 
+import { cosmos, google } from "../codec";
 import { nonExistentAddress, pendingWithoutSimapp, simapp, unused, validator } from "../testutils.spec";
 import { AuthExtension, setupAuthExtension } from "./auth";
 import { QueryClient } from "./queryclient";
-import { toAccAddress } from "./utils";
+
+const { PubKey } = cosmos.crypto.secp256k1;
+const { Any } = google.protobuf;
 
 async function makeClientWithAuth(rpcUrl: string): Promise<[QueryClient & AuthExtension, TendermintClient]> {
   const tmClient = await TendermintClient.connect(rpcUrl);
@@ -18,12 +22,11 @@ describe("AuthExtension", () => {
     it("works for unused account", async () => {
       pendingWithoutSimapp();
       const [client, tmClient] = await makeClientWithAuth(simapp.tendermintUrl);
-
       const account = await client.auth.account(unused.address);
       assert(account);
 
       expect(account).toEqual({
-        address: toAccAddress(unused.address),
+        address: unused.address,
         // pubKey not set
         accountNumber: Long.fromNumber(unused.accountNumber, true),
         // sequence not set
@@ -35,12 +38,19 @@ describe("AuthExtension", () => {
     it("works for account with pubkey and non-zero sequence", async () => {
       pendingWithoutSimapp();
       const [client, tmClient] = await makeClientWithAuth(simapp.tendermintUrl);
-
       const account = await client.auth.account(validator.address);
       assert(account);
+
+      const pubkey = PubKey.create({
+        key: fromBase64(validator.pubkey.value),
+      });
+      const pubkeyAny = Any.create({
+        type_url: "/cosmos.crypto.secp256k1.PubKey",
+        value: Uint8Array.from(PubKey.encode(pubkey).finish()),
+      });
       expect(account).toEqual({
-        address: toAccAddress(validator.address),
-        pubKey: encodeAminoPubkey(validator.pubkey),
+        address: validator.address,
+        pubKey: pubkeyAny,
         // accountNumber not set
         sequence: Long.fromNumber(validator.sequence, true),
       });
@@ -51,8 +61,8 @@ describe("AuthExtension", () => {
     it("returns null for non-existent address", async () => {
       pendingWithoutSimapp();
       const [client, tmClient] = await makeClientWithAuth(simapp.tendermintUrl);
-
       const account = await client.auth.account(nonExistentAddress);
+
       expect(account).toBeNull();
 
       tmClient.disconnect();
@@ -64,11 +74,11 @@ describe("AuthExtension", () => {
       it("works for unused account", async () => {
         pendingWithoutSimapp();
         const [client, tmClient] = await makeClientWithAuth(simapp.tendermintUrl);
-
         const account = await client.auth.unverified.account(unused.address);
         assert(account);
+
         expect(account).toEqual({
-          address: toAccAddress(unused.address),
+          address: unused.address,
           // pubKey not set
           accountNumber: Long.fromNumber(unused.accountNumber, true),
           // sequence not set
@@ -80,12 +90,19 @@ describe("AuthExtension", () => {
       it("works for account with pubkey and non-zero sequence", async () => {
         pendingWithoutSimapp();
         const [client, tmClient] = await makeClientWithAuth(simapp.tendermintUrl);
-
         const account = await client.auth.unverified.account(validator.address);
         assert(account);
+
+        const pubkey = PubKey.create({
+          key: fromBase64(validator.pubkey.value),
+        });
+        const pubkeyAny = Any.create({
+          type_url: "/cosmos.crypto.secp256k1.PubKey",
+          value: Uint8Array.from(PubKey.encode(pubkey).finish()),
+        });
         expect(account).toEqual({
-          address: toAccAddress(validator.address),
-          pubKey: encodeAminoPubkey(validator.pubkey),
+          address: validator.address,
+          pubKey: pubkeyAny,
           // accountNumber not set
           sequence: Long.fromNumber(validator.sequence, true),
         });
