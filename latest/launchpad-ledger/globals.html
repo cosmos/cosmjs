@@ -80,31 +80,15 @@
 						<section class="tsd-index-section ">
 							<h3>Variables</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-variable"><a href="globals.html#accounts" class="tsd-kind-icon">accounts</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#cosmosbech32prefix" class="tsd-kind-icon">cosmos<wbr>Bech32<wbr>Prefix</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#cosmoshdpath" class="tsd-kind-icon">cosmos<wbr>HdPath</a></li>
-								<li class="tsd-kind-variable"><a href="globals.html#defaultchainid" class="tsd-kind-icon">default<wbr>Chain<wbr>Id</a></li>
-								<li class="tsd-kind-variable"><a href="globals.html#defaultmemo" class="tsd-kind-icon">default<wbr>Memo</a></li>
-								<li class="tsd-kind-variable"><a href="globals.html#defaultsequence" class="tsd-kind-icon">default<wbr>Sequence</a></li>
-								<li class="tsd-kind-variable"><a href="globals.html#document" class="tsd-kind-icon">document</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#requiredcosmosappversion" class="tsd-kind-icon">required<wbr>Cosmos<wbr>App<wbr>Version</a></li>
-								<li class="tsd-kind-variable"><a href="globals.html#window" class="tsd-kind-icon">window</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-function"><a href="globals.html#createsigndoc" class="tsd-kind-icon">create<wbr>Sign<wbr>Doc</a></li>
-								<li class="tsd-kind-function"><a href="globals.html#createsigner" class="tsd-kind-icon">create<wbr>Signer</a></li>
-								<li class="tsd-kind-function"><a href="globals.html#getaccounts" class="tsd-kind-icon">get<wbr>Accounts</a></li>
-								<li class="tsd-kind-function"><a href="globals.html#sign" class="tsd-kind-icon">sign</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#unharden" class="tsd-kind-icon">unharden</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
-							<h3>Object literals</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-object-literal"><a href="globals.html#defaultfee" class="tsd-kind-icon">default<wbr>Fee</a></li>
 							</ul>
 						</section>
 					</div>
@@ -113,72 +97,22 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Variables</h2>
 				<section class="tsd-panel tsd-member tsd-kind-variable">
-					<a name="accounts" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagLet">Let</span> accounts</h3>
-					<div class="tsd-signature tsd-kind-icon">accounts<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">AccountData</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/143b7a773/packages/launchpad-ledger/src/demo/web.ts#L12">src/demo/web.ts:12</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="cosmosbech32prefix" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> cosmos<wbr>Bech32<wbr>Prefix</h3>
 					<div class="tsd-signature tsd-kind-icon">cosmos<wbr>Bech32<wbr>Prefix<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"cosmos"</span><span class="tsd-signature-symbol"> = &quot;cosmos&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/143b7a773/packages/launchpad-ledger/src/launchpadledger.ts#L26">src/launchpadledger.ts:26</a></li>
+							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/ae024e51c/packages/launchpad-ledger/src/launchpadledger.ts#L26">src/launchpadledger.ts:26</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="cosmoshdpath" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> cosmos<wbr>HdPath</h3>
-					<div class="tsd-signature tsd-kind-icon">cosmos<wbr>HdPath<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReadonlyArray</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Slip10RawIndex</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = makeCosmoshubPath(0)</span></div>
+					<div class="tsd-signature tsd-kind-icon">cosmos<wbr>HdPath<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">HdPath</span><span class="tsd-signature-symbol"> = makeCosmoshubPath(0)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/143b7a773/packages/launchpad-ledger/src/launchpadledger.ts#L25">src/launchpadledger.ts:25</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-variable">
-					<a name="defaultchainid" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagConst">Const</span> default<wbr>Chain<wbr>Id</h3>
-					<div class="tsd-signature tsd-kind-icon">default<wbr>Chain<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"testing"</span><span class="tsd-signature-symbol"> = &quot;testing&quot;</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/143b7a773/packages/launchpad-ledger/src/demo/node.ts#L8">src/demo/node.ts:8</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-variable">
-					<a name="defaultmemo" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagConst">Const</span> default<wbr>Memo</h3>
-					<div class="tsd-signature tsd-kind-icon">default<wbr>Memo<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"Some memo"</span><span class="tsd-signature-symbol"> = &quot;Some memo&quot;</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/143b7a773/packages/launchpad-ledger/src/demo/node.ts#L13">src/demo/node.ts:13</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-variable">
-					<a name="defaultsequence" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagConst">Const</span> default<wbr>Sequence</h3>
-					<div class="tsd-signature tsd-kind-icon">default<wbr>Sequence<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"0"</span><span class="tsd-signature-symbol"> = &quot;0&quot;</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/143b7a773/packages/launchpad-ledger/src/demo/node.ts#L14">src/demo/node.ts:14</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-variable">
-					<a name="document" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagConst">Const</span> document</h3>
-					<div class="tsd-signature tsd-kind-icon">document<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/143b7a773/packages/launchpad-ledger/src/demo/web.ts#L10">src/demo/web.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/ae024e51c/packages/launchpad-ledger/src/launchpadledger.ts#L25">src/launchpadledger.ts:25</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -188,121 +122,13 @@
 					<div class="tsd-signature tsd-kind-icon">required<wbr>Cosmos<wbr>App<wbr>Version<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"1.5.3"</span><span class="tsd-signature-symbol"> = &quot;1.5.3&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/143b7a773/packages/launchpad-ledger/src/launchpadledger.ts#L27">src/launchpadledger.ts:27</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-variable">
-					<a name="window" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagConst">Const</span> window</h3>
-					<div class="tsd-signature tsd-kind-icon">window<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/143b7a773/packages/launchpad-ledger/src/demo/web.ts#L9">src/demo/web.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/ae024e51c/packages/launchpad-ledger/src/launchpadledger.ts#L27">src/launchpadledger.ts:27</a></li>
 						</ul>
 					</aside>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Functions</h2>
-				<section class="tsd-panel tsd-member tsd-kind-function">
-					<a name="createsigndoc" class="tsd-anchor"></a>
-					<h3>create<wbr>Sign<wbr>Doc</h3>
-					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">create<wbr>Sign<wbr>Doc<span class="tsd-signature-symbol">(</span>accountNumber<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/143b7a773/packages/launchpad-ledger/src/demo/web.ts#L14">src/demo/web.ts:14</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>accountNumber: <span class="tsd-signature-type">number</span></h5>
-								</li>
-								<li>
-									<h5>address: <span class="tsd-signature-type">string</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function">
-					<a name="createsigner" class="tsd-anchor"></a>
-					<h3>create<wbr>Signer</h3>
-					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">create<wbr>Signer<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="classes/ledgersigner.html" class="tsd-signature-type">LedgerSigner</a><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/143b7a773/packages/launchpad-ledger/src/demo/node.ts#L16">src/demo/node.ts:16</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="classes/ledgersigner.html" class="tsd-signature-type">LedgerSigner</a><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function">
-					<a name="getaccounts" class="tsd-anchor"></a>
-					<h3>get<wbr>Accounts</h3>
-					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Accounts<span class="tsd-signature-symbol">(</span>signer<span class="tsd-signature-symbol">: </span><a href="classes/ledgersigner.html" class="tsd-signature-type">LedgerSigner</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ReadonlyArray</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>algo<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>pubkey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/143b7a773/packages/launchpad-ledger/src/demo/node.ts#L25">src/demo/node.ts:25</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>signer: <a href="classes/ledgersigner.html" class="tsd-signature-type">LedgerSigner</a></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ReadonlyArray</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>algo<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>pubkey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function">
-					<a name="sign" class="tsd-anchor"></a>
-					<h3>sign</h3>
-					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">sign<span class="tsd-signature-symbol">(</span>signer<span class="tsd-signature-symbol">: </span><a href="classes/ledgersigner.html" class="tsd-signature-type">LedgerSigner</a>, accountNumber<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, fromAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, toAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">StdSignature</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/143b7a773/packages/launchpad-ledger/src/demo/node.ts#L38">src/demo/node.ts:38</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>signer: <a href="classes/ledgersigner.html" class="tsd-signature-type">LedgerSigner</a></h5>
-								</li>
-								<li>
-									<h5>accountNumber: <span class="tsd-signature-type">number</span></h5>
-								</li>
-								<li>
-									<h5>fromAddress: <span class="tsd-signature-type">string</span></h5>
-								</li>
-								<li>
-									<h5>toAddress: <span class="tsd-signature-type">string</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">StdSignature</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function">
 					<a name="unharden" class="tsd-anchor"></a>
 					<h3>unharden</h3>
@@ -313,7 +139,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/143b7a773/packages/launchpad-ledger/src/launchpadledger.ts#L21">src/launchpadledger.ts:21</a></li>
+									<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/ae024e51c/packages/launchpad-ledger/src/launchpadledger.ts#L21">src/launchpadledger.ts:21</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -325,39 +151,6 @@
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></h4>
 						</li>
 					</ul>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Object literals</h2>
-				<section class="tsd-panel tsd-member tsd-kind-object-literal">
-					<a name="defaultfee" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagConst">Const</span> default<wbr>Fee</h3>
-					<div class="tsd-signature tsd-kind-icon">default<wbr>Fee<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/143b7a773/packages/launchpad-ledger/src/demo/node.ts#L9">src/demo/node.ts:9</a></li>
-						</ul>
-					</aside>
-					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
-						<a name="defaultfee.amount" class="tsd-anchor"></a>
-						<h3>amount</h3>
-						<div class="tsd-signature tsd-kind-icon">amount<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>amount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>denom<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = [{ amount: &quot;100&quot;, denom: &quot;ucosm&quot; }]</span></div>
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/143b7a773/packages/launchpad-ledger/src/demo/node.ts#L10">src/demo/node.ts:10</a></li>
-							</ul>
-						</aside>
-					</section>
-					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
-						<a name="defaultfee.gas" class="tsd-anchor"></a>
-						<h3>gas</h3>
-						<div class="tsd-signature tsd-kind-icon">gas<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;250&quot;</span></div>
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/CosmWasm/cosmjs/blob/143b7a773/packages/launchpad-ledger/src/demo/node.ts#L11">src/demo/node.ts:11</a></li>
-							</ul>
-						</aside>
-					</section>
 				</section>
 			</section>
 		</div>
@@ -384,49 +177,16 @@
 						<a href="interfaces/ledgerapperrorresponse.html" class="tsd-kind-icon">Ledger<wbr>App<wbr>Error<wbr>Response</a>
 					</li>
 					<li class=" tsd-kind-variable">
-						<a href="globals.html#accounts" class="tsd-kind-icon">accounts</a>
-					</li>
-					<li class=" tsd-kind-variable">
 						<a href="globals.html#cosmosbech32prefix" class="tsd-kind-icon">cosmos<wbr>Bech32<wbr>Prefix</a>
 					</li>
 					<li class=" tsd-kind-variable">
 						<a href="globals.html#cosmoshdpath" class="tsd-kind-icon">cosmos<wbr>HdPath</a>
 					</li>
 					<li class=" tsd-kind-variable">
-						<a href="globals.html#defaultchainid" class="tsd-kind-icon">default<wbr>Chain<wbr>Id</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#defaultmemo" class="tsd-kind-icon">default<wbr>Memo</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#defaultsequence" class="tsd-kind-icon">default<wbr>Sequence</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#document" class="tsd-kind-icon">document</a>
-					</li>
-					<li class=" tsd-kind-variable">
 						<a href="globals.html#requiredcosmosappversion" class="tsd-kind-icon">required<wbr>Cosmos<wbr>App<wbr>Version</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#window" class="tsd-kind-icon">window</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#createsigndoc" class="tsd-kind-icon">create<wbr>Sign<wbr>Doc</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#createsigner" class="tsd-kind-icon">create<wbr>Signer</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#getaccounts" class="tsd-kind-icon">get<wbr>Accounts</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#sign" class="tsd-kind-icon">sign</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#unharden" class="tsd-kind-icon">unharden</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#defaultfee" class="tsd-kind-icon">default<wbr>Fee</a>
 					</li>
 				</ul>
 			</nav>
