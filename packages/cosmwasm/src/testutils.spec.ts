@@ -81,13 +81,13 @@ export const deployedHackatom = {
 /** Deployed as part of scripts/wasmd/init.sh */
 export const deployedErc20 = {
   codeId: 2,
-  source: "https://crates.io/api/v1/crates/cw-erc20/not-yet-released/download",
-  builder: "cosmwasm/rust-optimizer:0.9.0",
-  checksum: "0f14abcc6fed08f2dd06896db974989db97dbcc6e8e30188b73fe5ab427c7785",
+  source: "https://crates.io/api/v1/crates/cw-erc20/0.7.0/download",
+  builder: "cosmwasm/rust-optimizer:0.10.4",
+  checksum: "d04368320ad55089384adb171aaea39e43d710d7608829adba0300ed30aa2988",
   instances: [
-    "cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5", // HASH
-    "cosmos1hqrdl6wstt8qzshwc6mrumpjk9338k0lr4dqxd", // ISA
-    "cosmos18r5szma8hm93pvx6lwpjwyxruw27e0k5uw835c", // JADE
+    "cosmos1vjecguu37pmd577339wrdp208ddzymkudc46zj", // HASH
+    "cosmos1ym5m5dw7pttft5w430nxx6uat8f84ck4algmhg", // ISA
+    "cosmos1gv07846a3867ezn3uqkk082c5ftke7hpllcu8q", // JADE
   ],
 };
 
