@@ -1,10 +1,16 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { fromBase64 } from "@cosmjs/encoding";
+import { fromBase64, toBase64 } from "@cosmjs/encoding";
 import { Coin, coins } from "@cosmjs/launchpad";
-import { DirectSecp256k1Wallet, makeAuthInfo, makeSignBytes, Registry } from "@cosmjs/proto-signing";
+import {
+  DirectSecp256k1Wallet,
+  encodePubkey,
+  makeAuthInfo,
+  makeSignBytes,
+  Registry,
+} from "@cosmjs/proto-signing";
 import { assert, sleep } from "@cosmjs/utils";
 
-import { cosmos, google } from "./codec";
+import { cosmos } from "./codec";
 import {
   BroadcastTxResponse,
   isBroadcastTxFailure,
@@ -14,8 +20,6 @@ import {
 import { faucet, makeRandomAddress, pendingWithoutSimapp, simapp, simappEnabled } from "./testutils.spec";
 
 const { TxRaw } = cosmos.tx.v1beta1;
-const { PubKey } = cosmos.crypto.secp256k1;
-const { Any } = google.protobuf;
 
 interface TestTxSend {
   readonly sender: string;
@@ -37,10 +41,9 @@ async function sendTokens(
   readonly tx: Uint8Array;
 }> {
   const [{ address: walletAddress, pubkey: pubkeyBytes }] = await wallet.getAccounts();
-  const pubkey = PubKey.create({ key: pubkeyBytes });
-  const pubkeyAny = Any.create({
-    type_url: "/cosmos.crypto.secp256k1.PubKey",
-    value: PubKey.encode(pubkey).finish(),
+  const pubkey = encodePubkey({
+    type: "tendermint/PubKeySecp256k1",
+    value: toBase64(pubkeyBytes),
   });
   const txBodyFields = {
     typeUrl: "/cosmos.tx.v1beta1.TxBody",
@@ -67,7 +70,7 @@ async function sendTokens(
     },
   ];
   const gasLimit = 200000;
-  const authInfoBytes = makeAuthInfo([pubkeyAny], feeAmount, gasLimit, sequence);
+  const authInfoBytes = makeAuthInfo([pubkey], feeAmount, gasLimit, sequence);
 
   const chainId = await client.getChainId();
   const signDocBytes = makeSignBytes(txBodyBytes, authInfoBytes, chainId, accountNumber);

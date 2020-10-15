@@ -3,7 +3,6 @@ import { toHex } from "@cosmjs/encoding";
 import {
   Block,
   Coin,
-  encodeSecp256k1Pubkey,
   isSearchByHeightQuery,
   isSearchByIdQuery,
   PubKey,
@@ -11,11 +10,12 @@ import {
   SearchTxQuery,
 } from "@cosmjs/launchpad";
 import { Uint53, Uint64 } from "@cosmjs/math";
+import { decodePubkey } from "@cosmjs/proto-signing";
 import { broadcastTxCommitSuccess, Client as TendermintClient, QueryString } from "@cosmjs/tendermint-rpc";
 import { assert, assertDefined } from "@cosmjs/utils";
 import Long from "long";
 
-import { cosmos, google } from "./codec";
+import { cosmos } from "./codec";
 import { AuthExtension, BankExtension, QueryClient, setupAuthExtension, setupBankExtension } from "./queries";
 
 /** A transaction that is indexed as part of the transaction history */
@@ -83,21 +83,6 @@ export function assertIsBroadcastTxSuccess(
 function uint64FromProto(input: number | Long | null | undefined): Uint64 {
   if (!input) return Uint64.fromNumber(0);
   return Uint64.fromString(input.toString());
-}
-
-function decodePubkey(pubkey?: google.protobuf.IAny | null): PubKey | null {
-  if (!pubkey || !pubkey.value) {
-    return null;
-  }
-
-  switch (pubkey.type_url) {
-    case "/cosmos.crypto.secp256k1.PubKey": {
-      const { key } = cosmos.crypto.secp256k1.PubKey.decode(pubkey.value);
-      return encodeSecp256k1Pubkey(key);
-    }
-    default:
-      throw new Error("Unknown pubkey type");
-  }
 }
 
 function accountFromProto(input: cosmos.auth.v1beta1.IBaseAccount): Account {

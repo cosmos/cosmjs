@@ -1,15 +1,14 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { fromBase64 } from "@cosmjs/encoding";
+import { encodePubkey } from "@cosmjs/proto-signing";
 import { Client as TendermintClient } from "@cosmjs/tendermint-rpc";
 import { assert } from "@cosmjs/utils";
 import Long from "long";
 
-import { cosmos, google } from "../codec";
+import { google } from "../codec";
 import { nonExistentAddress, pendingWithoutSimapp, simapp, unused, validator } from "../testutils.spec";
 import { AuthExtension, setupAuthExtension } from "./auth";
 import { QueryClient } from "./queryclient";
 
-const { PubKey } = cosmos.crypto.secp256k1;
 const { Any } = google.protobuf;
 
 async function makeClientWithAuth(rpcUrl: string): Promise<[QueryClient & AuthExtension, TendermintClient]> {
@@ -41,16 +40,10 @@ describe("AuthExtension", () => {
       const account = await client.auth.account(validator.address);
       assert(account);
 
-      const pubkey = PubKey.create({
-        key: fromBase64(validator.pubkey.value),
-      });
-      const pubkeyAny = Any.create({
-        type_url: "/cosmos.crypto.secp256k1.PubKey",
-        value: Uint8Array.from(PubKey.encode(pubkey).finish()),
-      });
+      const pubkey = encodePubkey(validator.pubkey);
       expect(account).toEqual({
         address: validator.address,
-        pubKey: pubkeyAny,
+        pubKey: Any.create(pubkey),
         // accountNumber not set
         sequence: Long.fromNumber(validator.sequence, true),
       });
@@ -93,16 +86,10 @@ describe("AuthExtension", () => {
         const account = await client.auth.unverified.account(validator.address);
         assert(account);
 
-        const pubkey = PubKey.create({
-          key: fromBase64(validator.pubkey.value),
-        });
-        const pubkeyAny = Any.create({
-          type_url: "/cosmos.crypto.secp256k1.PubKey",
-          value: Uint8Array.from(PubKey.encode(pubkey).finish()),
-        });
+        const pubkey = encodePubkey(validator.pubkey);
         expect(account).toEqual({
           address: validator.address,
-          pubKey: pubkeyAny,
+          pubKey: Any.create(pubkey),
           // accountNumber not set
           sequence: Long.fromNumber(validator.sequence, true),
         });

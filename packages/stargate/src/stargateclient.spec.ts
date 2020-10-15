@@ -1,10 +1,16 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { fromBase64 } from "@cosmjs/encoding";
-import { DirectSecp256k1Wallet, makeAuthInfo, makeSignBytes, Registry } from "@cosmjs/proto-signing";
+import { fromBase64, toBase64 } from "@cosmjs/encoding";
+import {
+  DirectSecp256k1Wallet,
+  encodePubkey,
+  makeAuthInfo,
+  makeSignBytes,
+  Registry,
+} from "@cosmjs/proto-signing";
 import { assert, sleep } from "@cosmjs/utils";
 import { ReadonlyDate } from "readonly-date";
 
-import { cosmos, google } from "./codec";
+import { cosmos } from "./codec";
 import { assertIsBroadcastTxSuccess, PrivateStargateClient, StargateClient } from "./stargateclient";
 import {
   faucet,
@@ -18,8 +24,6 @@ import {
 } from "./testutils.spec";
 
 const { TxRaw } = cosmos.tx.v1beta1;
-const { PubKey } = cosmos.crypto.secp256k1;
-const { Any } = google.protobuf;
 
 describe("StargateClient", () => {
   describe("connect", () => {
@@ -254,10 +258,9 @@ describe("StargateClient", () => {
       const client = await StargateClient.connect(simapp.tendermintUrl);
       const wallet = await DirectSecp256k1Wallet.fromMnemonic(faucet.mnemonic);
       const [{ address, pubkey: pubkeyBytes }] = await wallet.getAccounts();
-      const pubkey = PubKey.create({ key: pubkeyBytes });
-      const pubkeyAny = Any.create({
-        type_url: "/cosmos.crypto.secp256k1.PubKey",
-        value: PubKey.encode(pubkey).finish(),
+      const pubkey = encodePubkey({
+        type: "tendermint/PubKeySecp256k1",
+        value: toBase64(pubkeyBytes),
       });
       const registry = new Registry();
       const txBodyFields = {
@@ -289,7 +292,7 @@ describe("StargateClient", () => {
         },
       ];
       const gasLimit = 200000;
-      const authInfoBytes = makeAuthInfo([pubkeyAny], feeAmount, gasLimit, sequence);
+      const authInfoBytes = makeAuthInfo([pubkey], feeAmount, gasLimit, sequence);
 
       const chainId = await client.getChainId();
       const signDocBytes = makeSignBytes(txBodyBytes, authInfoBytes, chainId, accountNumber);
