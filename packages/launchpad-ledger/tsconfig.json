@@ -5,7 +5,11 @@
     "outDir": "build",
     "declarationDir": "build/types",
     "rootDir": "src",
+    "typeRoots": [
+      "./custom_types",
+      "../../node_modules/@types"
+    ],
     "lib": ["es2017", "dom"]
   },
-  "include": ["src/**/*", "./custom_types/*"]
+  "include": ["src/**/*"]
 }
