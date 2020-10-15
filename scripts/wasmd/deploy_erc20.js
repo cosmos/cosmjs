@@ -22,8 +22,8 @@ const guest = {
 };
 
 const codeMeta = {
-  source: "https://crates.io/api/v1/crates/cw-erc20/not-yet-released/download",
-  builder: "cosmwasm/rust-optimizer:0.9.0",
+  source: "https://crates.io/api/v1/crates/cw-erc20/0.7.0/download",
+  builder: "cosmwasm/rust-optimizer:0.10.4",
 };
 
 const initDataHash = {
@@ -137,7 +137,7 @@ async function main() {
   const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic);
   const client = new SigningCosmWasmClient(httpUrl, alice.address0, wallet);
 
-  const wasm = fs.readFileSync(__dirname + "/contracts/cw-erc20.wasm");
+  const wasm = fs.readFileSync(__dirname + "/contracts/cw_erc20.wasm");
   const uploadReceipt = await client.upload(wasm, codeMeta, "Upload ERC20 contract");
   console.info(`Upload succeeded. Receipt: ${JSON.stringify(uploadReceipt)}`);
 

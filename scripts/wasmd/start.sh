@@ -37,7 +37,7 @@ echo "wasmd running and logging into $WASMD_LOGFILE"
 # sleep 3 && cat "$WASMD_LOGFILE"
 
 # Use a large timeout because of potentially long image download in `docker run`
-if ! timeout 180 bash -c "until docker inspect -f '{{.State.Running}}' '$CONTAINER_NAME' &> /dev/null; do sleep 0.5; done"; then
+if ! timeout 180 bash -c "until [ \"\$( docker container inspect -f '{{.State.Status}}' \"$CONTAINER_NAME\" 2> /dev/null )\" = \"running\" ]; do sleep 0.5; done"; then
   echo "Container named '$CONTAINER_NAME' not running. We cannot continue." \
     "This can happen when 'docker run' needs too long to download and start." \
     "It might be worth retrying this step once the image is in the local docker cache."
