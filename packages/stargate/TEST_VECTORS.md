@@ -13,7 +13,7 @@ git clone https://github.com/CosmWasm/cosmos-sdk.git
 cd cosmos-sdk
 git checkout cosmjs-test-vectors
 
-make build-simd-linux
+make build-simd-linux # or on OSX: make build-simd-darwin
 # this takes a while to download a docker image and make a deterministic build....
 
 ls -l ./build/simd
