@@ -6,7 +6,6 @@ GENERATED_DIR="./tmp"
 ROOT_PROTO_DIR="./proto/cosmos/cosmos-sdk"
 COSMOS_PROTO_DIR="$ROOT_PROTO_DIR/proto/cosmos"
 TENDERMINT_PROTO_DIR="$ROOT_PROTO_DIR/third_party/proto/tendermint"
-GOOGLE_PROTO_DIR="$ROOT_PROTO_DIR/third_party/proto/google"
 
 mkdir -p "$GENERATED_DIR"
 yarn pbjs \
@@ -20,15 +19,14 @@ yarn pbjs \
   --no-verify \
   --no-convert \
   --force-long \
-  "$COSMOS_PROTO_DIR/cosmos.proto" \
-  "$COSMOS_PROTO_DIR/bank/bank.proto" \
-  "$COSMOS_PROTO_DIR/crypto/crypto.proto" \
-  "$COSMOS_PROTO_DIR/tx/tx.proto" \
-  "$COSMOS_PROTO_DIR/tx/signing/signing.proto" \
-  "$TENDERMINT_PROTO_DIR/abci/types/types.proto" \
-  "$TENDERMINT_PROTO_DIR/crypto/merkle/merkle.proto" \
-  "$TENDERMINT_PROTO_DIR/libs/kv/types.proto" \
-  "$GOOGLE_PROTO_DIR/protobuf/any.proto"
+  "$COSMOS_PROTO_DIR/bank/v1beta1/bank.proto" \
+  "$COSMOS_PROTO_DIR/bank/v1beta1/tx.proto" \
+  "$COSMOS_PROTO_DIR/base/v1beta1/coin.proto" \
+  "$COSMOS_PROTO_DIR/crypto/multisig/v1beta1/multisig.proto" \
+  "$COSMOS_PROTO_DIR/crypto/secp256k1/keys.proto" \
+  "$COSMOS_PROTO_DIR/tx/v1beta1/tx.proto" \
+  "$COSMOS_PROTO_DIR/tx/signing/v1beta1/signing.proto" \
+  "$TENDERMINT_PROTO_DIR/crypto/keys.proto"
 
 # Work around https://github.com/protobufjs/protobuf.js/issues/1477
 # shellcheck disable=SC2016

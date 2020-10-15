@@ -29,9 +29,9 @@ export interface TxBodyValue {
 }
 
 const defaultTypeUrls = {
-  cosmosCoin: "/cosmos.Coin",
-  cosmosMsgSend: "/cosmos.bank.MsgSend",
-  cosmosTxBody: "/cosmos.tx.TxBody",
+  cosmosCoin: "/cosmos.base.v1beta1.Coin",
+  cosmosMsgSend: "/cosmos.bank.v1beta1.MsgSend",
+  cosmosTxBody: "/cosmos.tx.v1beta1.TxBody",
   googleAny: "/google.protobuf.Any",
 };
 
@@ -41,8 +41,8 @@ export class Registry {
   public constructor(customTypes: Iterable<[string, GeneratedType]> = []) {
     const { cosmosCoin, cosmosMsgSend } = defaultTypeUrls;
     this.types = new Map<string, GeneratedType>([
-      [cosmosCoin, cosmos.Coin],
-      [cosmosMsgSend, cosmos.bank.MsgSend],
+      [cosmosCoin, cosmos.base.v1beta1.Coin],
+      [cosmosMsgSend, cosmos.bank.v1beta1.MsgSend],
       ...customTypes,
     ]);
   }
@@ -73,7 +73,7 @@ export class Registry {
   }
 
   public encodeTxBody(txBodyFields: TxBodyValue): Uint8Array {
-    const { TxBody } = cosmos.tx;
+    const { TxBody } = cosmos.tx.v1beta1;
     const { Any } = google.protobuf;
 
     const wrappedMessages = txBodyFields.messages.map((message) => {
@@ -104,8 +104,8 @@ export class Registry {
     return decoded;
   }
 
-  public decodeTxBody(txBody: Uint8Array): cosmos.tx.TxBody {
-    const { TxBody } = cosmos.tx;
+  public decodeTxBody(txBody: Uint8Array): cosmos.tx.v1beta1.TxBody {
+    const { TxBody } = cosmos.tx.v1beta1;
     const decodedTxBody = TxBody.decode(txBody);
 
     return {

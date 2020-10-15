@@ -174,35 +174,44 @@ export class QueryClient {
       throw new Error(`Response key ${toHex(response.key)} doesn't match query key ${toHex(key)}`);
     }
 
-    assert(response.proof);
-    if (response.proof.ops.length !== 2) {
-      throw new Error(`Expected 2 proof ops, got ${response.proof.ops.length}. Are you using stargate?`);
+    if (response.proof) {
+      if (response.proof.ops.length !== 2) {
+        throw new Error(
+          `Expected 2 proof ops, got ${response.proof?.ops.length ?? 0}. Are you using stargate?`,
+        );
+      }
+
+      const subProof = checkAndParseOp(response.proof.ops[0], "ics23:iavl", key);
+      const storeProof = checkAndParseOp(response.proof.ops[1], "ics23:simple", toAscii(store));
+
+      // this must always be existence, if the store is not a typo
+      assert(storeProof.exist);
+      assert(storeProof.exist.value);
+
+      // this may be exist or non-exist, depends on response
+      if (!response.value || response.value.length === 0) {
+        // non-existence check
+        assert(subProof.nonexist);
+        // the subproof must map the desired key to the "value" of the storeProof
+        verifyNonExistence(subProof.nonexist, iavlSpec, storeProof.exist.value, key);
+      } else {
+        // existence check
+        assert(subProof.exist);
+        assert(subProof.exist.value);
+        // the subproof must map the desired key to the "value" of the storeProof
+        verifyExistence(subProof.exist, iavlSpec, storeProof.exist.value, key, response.value);
+      }
+
+      // the storeproof must map it's declared value (root of subProof) to the appHash of the next block
+      const header = await this.getNextHeader(response.height);
+      verifyExistence(
+        storeProof.exist,
+        tendermintSpec,
+        header.appHash,
+        toAscii(store),
+        storeProof.exist.value,
+      );
     }
-
-    const subProof = checkAndParseOp(response.proof.ops[0], "ics23:iavl", key);
-    const storeProof = checkAndParseOp(response.proof.ops[1], "ics23:simple", toAscii(store));
-
-    // this must always be existence, if the store is not a typo
-    assert(storeProof.exist);
-    assert(storeProof.exist.value);
-
-    // this may be exist or non-exist, depends on response
-    if (!response.value || response.value.length === 0) {
-      // non-existence check
-      assert(subProof.nonexist);
-      // the subproof must map the desired key to the "value" of the storeProof
-      verifyNonExistence(subProof.nonexist, iavlSpec, storeProof.exist.value, key);
-    } else {
-      // existence check
-      assert(subProof.exist);
-      assert(subProof.exist.value);
-      // the subproof must map the desired key to the "value" of the storeProof
-      verifyExistence(subProof.exist, iavlSpec, storeProof.exist.value, key, response.value);
-    }
-
-    // the storeproof must map it's declared value (root of subProof) to the appHash of the next block
-    const header = await this.getNextHeader(response.height);
-    verifyExistence(storeProof.exist, tendermintSpec, header.appHash, toAscii(store), storeProof.exist.value);
 
     return response.value;
   }

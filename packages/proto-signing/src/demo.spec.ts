@@ -12,9 +12,9 @@ type MsgDemo = {
   readonly example: string;
 };
 
-const { Coin } = cosmos;
-const { TxBody } = cosmos.tx;
-const { MsgSend } = cosmos.bank;
+const { Coin } = cosmos.base.v1beta1;
+const { TxBody } = cosmos.tx.v1beta1;
+const { MsgSend } = cosmos.bank.v1beta1;
 const { Any } = google.protobuf;
 
 function getTypeName(typeUrl: string): string {
@@ -29,13 +29,13 @@ describe("protobuf demo", () => {
       amount: "1234567890",
     });
     const msgSend = MsgSend.create({
-      fromAddress: Uint8Array.from(Array.from({ length: 20 }, () => 1)),
-      toAddress: Uint8Array.from(Array.from({ length: 20 }, () => 2)),
+      fromAddress: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+      toAddress: "cosmos1qypqxpq9qcrsszg2pvxq6rs0zqg3yyc5lzv7xu",
       amount: [coin],
     });
     const msgSendBytes = MsgSend.encode(msgSend).finish();
     const msgSendWrapped = Any.create({
-      type_url: "/cosmos.bank.MsgSend",
+      type_url: "/cosmos.bank.v1beta1.MsgSend",
       value: msgSendBytes,
     });
     const txBody = TxBody.create({
@@ -53,8 +53,8 @@ describe("protobuf demo", () => {
     const msgSendDecoded = MsgSend.decode(msg.value);
 
     // fromAddress and toAddress are now Buffers
-    expect(Uint8Array.from(msgSendDecoded.fromAddress)).toEqual(msgSend.fromAddress);
-    expect(Uint8Array.from(msgSendDecoded.toAddress)).toEqual(msgSend.toAddress);
+    expect(msgSendDecoded.fromAddress).toEqual(msgSend.fromAddress);
+    expect(msgSendDecoded.toAddress).toEqual(msgSend.toAddress);
     expect(msgSendDecoded.amount).toEqual(msgSend.amount);
   });
 

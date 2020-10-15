@@ -7,34 +7,35 @@ ROOT_PROTO_DIR="./proto/cosmos/cosmos-sdk"
 COSMOS_PROTO_DIR="$ROOT_PROTO_DIR/proto/cosmos"
 IBC_PROTO_DIR="$ROOT_PROTO_DIR/proto/ibc"
 TENDERMINT_PROTO_DIR="$ROOT_PROTO_DIR/third_party/proto/tendermint"
-GOOGLE_PROTO_DIR="$ROOT_PROTO_DIR/third_party/proto/google"
 
 mkdir -p "$GENERATED_DIR"
+# Can't use --sparse for some reason. Seems related to https://github.com/protobufjs/protobuf.js/issues/1165
 yarn pbjs \
   -t static-module \
   --es6 \
   -w commonjs \
   -o "$GENERATED_DIR/codecimpl.js" \
-  --sparse \
   --no-beautify \
   --no-delimited \
   --no-verify \
   --no-convert \
   --force-long \
-  "$COSMOS_PROTO_DIR/cosmos.proto" \
-  "$COSMOS_PROTO_DIR/auth/{auth,query}.proto" \
-  "$COSMOS_PROTO_DIR/bank/{bank,query}.proto" \
-  "$COSMOS_PROTO_DIR/crypto/crypto.proto" \
-  "$COSMOS_PROTO_DIR/query/pagination.proto" \
-  "$COSMOS_PROTO_DIR/tx/tx.proto" \
-  "$COSMOS_PROTO_DIR/tx/signing/signing.proto" \
-  "$IBC_PROTO_DIR/channel/{channel,query}.proto" \
-  "$IBC_PROTO_DIR/commitment/commitment.proto" \
-  "$IBC_PROTO_DIR/connection/{connection,query}.proto" \
-  "$TENDERMINT_PROTO_DIR/abci/types/types.proto" \
-  "$TENDERMINT_PROTO_DIR/crypto/merkle/merkle.proto" \
-  "$TENDERMINT_PROTO_DIR/libs/kv/types.proto" \
-  "$GOOGLE_PROTO_DIR/protobuf/any.proto"
+  "$COSMOS_PROTO_DIR/auth/v1beta1/auth.proto" \
+  "$COSMOS_PROTO_DIR/auth/v1beta1/query.proto" \
+  "$COSMOS_PROTO_DIR/bank/v1beta1/query.proto" \
+  "$COSMOS_PROTO_DIR/base/query/v1beta1/pagination.proto" \
+  "$COSMOS_PROTO_DIR/base/v1beta1/coin.proto" \
+  "$COSMOS_PROTO_DIR/crypto/multisig/v1beta1/multisig.proto" \
+  "$COSMOS_PROTO_DIR/crypto/secp256k1/keys.proto" \
+  "$COSMOS_PROTO_DIR/tx/signing/v1beta1/signing.proto" \
+  "$COSMOS_PROTO_DIR/tx/v1beta1/tx.proto" \
+  "$IBC_PROTO_DIR/core/channel/v1/channel.proto" \
+  "$IBC_PROTO_DIR/core/channel/v1/query.proto" \
+  "$IBC_PROTO_DIR/core/client/v1/client.proto" \
+  "$IBC_PROTO_DIR/core/commitment/v1/commitment.proto" \
+  "$IBC_PROTO_DIR/core/connection/v1/connection.proto" \
+  "$IBC_PROTO_DIR/core/connection/v1/query.proto" \
+  "$TENDERMINT_PROTO_DIR/crypto/proof.proto"
 
 # Work around https://github.com/protobufjs/protobuf.js/issues/1477
 # shellcheck disable=SC2016

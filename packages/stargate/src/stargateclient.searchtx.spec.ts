@@ -1,7 +1,13 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Bech32, fromBase64 } from "@cosmjs/encoding";
+import { fromBase64, toBase64 } from "@cosmjs/encoding";
 import { Coin, coins } from "@cosmjs/launchpad";
-import { DirectSecp256k1Wallet, makeAuthInfo, makeSignBytes, Registry } from "@cosmjs/proto-signing";
+import {
+  DirectSecp256k1Wallet,
+  encodePubkey,
+  makeAuthInfo,
+  makeSignBytes,
+  Registry,
+} from "@cosmjs/proto-signing";
 import { assert, sleep } from "@cosmjs/utils";
 
 import { cosmos } from "./codec";
@@ -13,8 +19,7 @@ import {
 } from "./stargateclient";
 import { faucet, makeRandomAddress, pendingWithoutSimapp, simapp, simappEnabled } from "./testutils.spec";
 
-const { AuthInfo, Tx, TxBody } = cosmos.tx;
-const { PublicKey } = cosmos.crypto;
+const { TxRaw } = cosmos.tx.v1beta1;
 
 interface TestTxSend {
   readonly sender: string;
@@ -36,16 +41,19 @@ async function sendTokens(
   readonly tx: Uint8Array;
 }> {
   const [{ address: walletAddress, pubkey: pubkeyBytes }] = await wallet.getAccounts();
-  const publicKey = PublicKey.create({ secp256k1: pubkeyBytes });
+  const pubkey = encodePubkey({
+    type: "tendermint/PubKeySecp256k1",
+    value: toBase64(pubkeyBytes),
+  });
   const txBodyFields = {
-    typeUrl: "/cosmos.tx.TxBody",
+    typeUrl: "/cosmos.tx.v1beta1.TxBody",
     value: {
       messages: [
         {
-          typeUrl: "/cosmos.bank.MsgSend",
+          typeUrl: "/cosmos.bank.v1beta1.MsgSend",
           value: {
-            fromAddress: Bech32.decode(walletAddress).data,
-            toAddress: Bech32.decode(recipient).data,
+            fromAddress: walletAddress,
+            toAddress: recipient,
             amount: amount,
           },
         },
@@ -54,20 +62,25 @@ async function sendTokens(
     },
   };
   const txBodyBytes = registry.encode(txBodyFields);
-  const txBody = TxBody.decode(txBodyBytes);
-  const authInfoBytes = makeAuthInfo([publicKey], 200000);
-
   const { accountNumber, sequence } = (await client.getSequence(walletAddress))!;
+  const feeAmount = [
+    {
+      amount: "2000",
+      denom: "ucosm",
+    },
+  ];
+  const gasLimit = 200000;
+  const authInfoBytes = makeAuthInfo([pubkey], feeAmount, gasLimit, sequence);
+
   const chainId = await client.getChainId();
-  const signDocBytes = makeSignBytes(txBodyBytes, authInfoBytes, chainId, accountNumber, sequence);
+  const signDocBytes = makeSignBytes(txBodyBytes, authInfoBytes, chainId, accountNumber);
   const signature = await wallet.sign(walletAddress, signDocBytes);
-  // TODO: Why is this not a TxRaw? https://github.com/CosmWasm/cosmjs/issues/383
-  const txRaw = Tx.create({
-    body: txBody,
-    authInfo: AuthInfo.decode(authInfoBytes),
+  const txRaw = TxRaw.create({
+    bodyBytes: txBodyBytes,
+    authInfoBytes: authInfoBytes,
     signatures: [fromBase64(signature.signature)],
   });
-  const txRawBytes = Uint8Array.from(Tx.encode(txRaw).finish());
+  const txRawBytes = Uint8Array.from(TxRaw.encode(txRaw).finish());
   const broadcastResponse = await client.broadcastTx(txRawBytes);
   return {
     broadcastResponse: broadcastResponse,
