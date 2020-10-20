@@ -91,10 +91,10 @@ describe("StargateClient", () => {
       pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrl);
 
-      const account = await client.getAccount(validator.address);
+      const account = await client.getAccount(validator.delegatorAddress);
       assert(account);
       expect(account).toEqual({
-        address: validator.address,
+        address: validator.delegatorAddress,
         pubkey: validator.pubkey,
         accountNumber: validator.accountNumber,
         sequence: validator.sequence,

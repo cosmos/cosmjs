@@ -37,12 +37,12 @@ describe("AuthExtension", () => {
     it("works for account with pubkey and non-zero sequence", async () => {
       pendingWithoutSimapp();
       const [client, tmClient] = await makeClientWithAuth(simapp.tendermintUrl);
-      const account = await client.auth.account(validator.address);
+      const account = await client.auth.account(validator.delegatorAddress);
       assert(account);
 
       const pubkey = encodePubkey(validator.pubkey);
       expect(account).toEqual({
-        address: validator.address,
+        address: validator.delegatorAddress,
         pubKey: Any.create(pubkey),
         // accountNumber not set
         sequence: Long.fromNumber(validator.sequence, true),
@@ -83,12 +83,12 @@ describe("AuthExtension", () => {
       it("works for account with pubkey and non-zero sequence", async () => {
         pendingWithoutSimapp();
         const [client, tmClient] = await makeClientWithAuth(simapp.tendermintUrl);
-        const account = await client.auth.unverified.account(validator.address);
+        const account = await client.auth.unverified.account(validator.delegatorAddress);
         assert(account);
 
         const pubkey = encodePubkey(validator.pubkey);
         expect(account).toEqual({
-          address: validator.address,
+          address: validator.delegatorAddress,
           pubKey: Any.create(pubkey),
           // accountNumber not set
           sequence: Long.fromNumber(validator.sequence, true),
