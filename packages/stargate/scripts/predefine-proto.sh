@@ -22,7 +22,9 @@ yarn pbjs \
   --force-long \
   "$COSMOS_PROTO_DIR/auth/v1beta1/auth.proto" \
   "$COSMOS_PROTO_DIR/auth/v1beta1/query.proto" \
+  "$COSMOS_PROTO_DIR/bank/v1beta1/bank.proto" \
   "$COSMOS_PROTO_DIR/bank/v1beta1/query.proto" \
+  "$COSMOS_PROTO_DIR/bank/v1beta1/tx.proto" \
   "$COSMOS_PROTO_DIR/base/query/v1beta1/pagination.proto" \
   "$COSMOS_PROTO_DIR/base/v1beta1/coin.proto" \
   "$COSMOS_PROTO_DIR/crypto/multisig/v1beta1/multisig.proto" \
