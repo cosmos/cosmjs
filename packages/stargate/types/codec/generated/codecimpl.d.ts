@@ -1695,6 +1695,1564 @@ export namespace cosmos {
     }
   }
 
+  /** Namespace staking. */
+  namespace staking {
+    /** Namespace v1beta1. */
+    namespace v1beta1 {
+      /** Properties of a HistoricalInfo. */
+      interface IHistoricalInfo {
+        /** HistoricalInfo header */
+        header?: tendermint.types.IHeader | null;
+
+        /** HistoricalInfo valset */
+        valset?: cosmos.staking.v1beta1.IValidator[] | null;
+      }
+
+      /** Represents a HistoricalInfo. */
+      class HistoricalInfo implements IHistoricalInfo {
+        /**
+         * Constructs a new HistoricalInfo.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IHistoricalInfo);
+
+        /** HistoricalInfo header. */
+        public header?: tendermint.types.IHeader | null;
+
+        /** HistoricalInfo valset. */
+        public valset: cosmos.staking.v1beta1.IValidator[];
+
+        /**
+         * Creates a new HistoricalInfo instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns HistoricalInfo instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IHistoricalInfo,
+        ): cosmos.staking.v1beta1.HistoricalInfo;
+
+        /**
+         * Encodes the specified HistoricalInfo message. Does not implicitly {@link cosmos.staking.v1beta1.HistoricalInfo.verify|verify} messages.
+         * @param m HistoricalInfo message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.staking.v1beta1.IHistoricalInfo,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a HistoricalInfo message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns HistoricalInfo
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.HistoricalInfo;
+      }
+
+      /** Properties of a CommissionRates. */
+      interface ICommissionRates {
+        /** CommissionRates rate */
+        rate?: string | null;
+
+        /** CommissionRates maxRate */
+        maxRate?: string | null;
+
+        /** CommissionRates maxChangeRate */
+        maxChangeRate?: string | null;
+      }
+
+      /** Represents a CommissionRates. */
+      class CommissionRates implements ICommissionRates {
+        /**
+         * Constructs a new CommissionRates.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.ICommissionRates);
+
+        /** CommissionRates rate. */
+        public rate: string;
+
+        /** CommissionRates maxRate. */
+        public maxRate: string;
+
+        /** CommissionRates maxChangeRate. */
+        public maxChangeRate: string;
+
+        /**
+         * Creates a new CommissionRates instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns CommissionRates instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.ICommissionRates,
+        ): cosmos.staking.v1beta1.CommissionRates;
+
+        /**
+         * Encodes the specified CommissionRates message. Does not implicitly {@link cosmos.staking.v1beta1.CommissionRates.verify|verify} messages.
+         * @param m CommissionRates message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.staking.v1beta1.ICommissionRates,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a CommissionRates message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns CommissionRates
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.CommissionRates;
+      }
+
+      /** Properties of a Commission. */
+      interface ICommission {
+        /** Commission commissionRates */
+        commissionRates?: cosmos.staking.v1beta1.ICommissionRates | null;
+
+        /** Commission updateTime */
+        updateTime?: google.protobuf.ITimestamp | null;
+      }
+
+      /** Represents a Commission. */
+      class Commission implements ICommission {
+        /**
+         * Constructs a new Commission.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.ICommission);
+
+        /** Commission commissionRates. */
+        public commissionRates?: cosmos.staking.v1beta1.ICommissionRates | null;
+
+        /** Commission updateTime. */
+        public updateTime?: google.protobuf.ITimestamp | null;
+
+        /**
+         * Creates a new Commission instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns Commission instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.ICommission,
+        ): cosmos.staking.v1beta1.Commission;
+
+        /**
+         * Encodes the specified Commission message. Does not implicitly {@link cosmos.staking.v1beta1.Commission.verify|verify} messages.
+         * @param m Commission message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(m: cosmos.staking.v1beta1.ICommission, w?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a Commission message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns Commission
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.staking.v1beta1.Commission;
+      }
+
+      /** Properties of a Description. */
+      interface IDescription {
+        /** Description moniker */
+        moniker?: string | null;
+
+        /** Description identity */
+        identity?: string | null;
+
+        /** Description website */
+        website?: string | null;
+
+        /** Description securityContact */
+        securityContact?: string | null;
+
+        /** Description details */
+        details?: string | null;
+      }
+
+      /** Represents a Description. */
+      class Description implements IDescription {
+        /**
+         * Constructs a new Description.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IDescription);
+
+        /** Description moniker. */
+        public moniker: string;
+
+        /** Description identity. */
+        public identity: string;
+
+        /** Description website. */
+        public website: string;
+
+        /** Description securityContact. */
+        public securityContact: string;
+
+        /** Description details. */
+        public details: string;
+
+        /**
+         * Creates a new Description instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns Description instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IDescription,
+        ): cosmos.staking.v1beta1.Description;
+
+        /**
+         * Encodes the specified Description message. Does not implicitly {@link cosmos.staking.v1beta1.Description.verify|verify} messages.
+         * @param m Description message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(m: cosmos.staking.v1beta1.IDescription, w?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a Description message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns Description
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.Description;
+      }
+
+      /** Properties of a Validator. */
+      interface IValidator {
+        /** Validator operatorAddress */
+        operatorAddress?: string | null;
+
+        /** Validator consensusPubkey */
+        consensusPubkey?: string | null;
+
+        /** Validator jailed */
+        jailed?: boolean | null;
+
+        /** Validator status */
+        status?: number | null;
+
+        /** Validator tokens */
+        tokens?: string | null;
+
+        /** Validator delegatorShares */
+        delegatorShares?: string | null;
+
+        /** Validator description */
+        description?: cosmos.staking.v1beta1.IDescription | null;
+
+        /** Validator unbondingHeight */
+        unbondingHeight?: Long | null;
+
+        /** Validator unbondingTime */
+        unbondingTime?: google.protobuf.ITimestamp | null;
+
+        /** Validator commission */
+        commission?: cosmos.staking.v1beta1.ICommission | null;
+
+        /** Validator minSelfDelegation */
+        minSelfDelegation?: string | null;
+      }
+
+      /** Represents a Validator. */
+      class Validator implements IValidator {
+        /**
+         * Constructs a new Validator.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IValidator);
+
+        /** Validator operatorAddress. */
+        public operatorAddress: string;
+
+        /** Validator consensusPubkey. */
+        public consensusPubkey: string;
+
+        /** Validator jailed. */
+        public jailed: boolean;
+
+        /** Validator status. */
+        public status: number;
+
+        /** Validator tokens. */
+        public tokens: string;
+
+        /** Validator delegatorShares. */
+        public delegatorShares: string;
+
+        /** Validator description. */
+        public description?: cosmos.staking.v1beta1.IDescription | null;
+
+        /** Validator unbondingHeight. */
+        public unbondingHeight: Long;
+
+        /** Validator unbondingTime. */
+        public unbondingTime?: google.protobuf.ITimestamp | null;
+
+        /** Validator commission. */
+        public commission?: cosmos.staking.v1beta1.ICommission | null;
+
+        /** Validator minSelfDelegation. */
+        public minSelfDelegation: string;
+
+        /**
+         * Creates a new Validator instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns Validator instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IValidator,
+        ): cosmos.staking.v1beta1.Validator;
+
+        /**
+         * Encodes the specified Validator message. Does not implicitly {@link cosmos.staking.v1beta1.Validator.verify|verify} messages.
+         * @param m Validator message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(m: cosmos.staking.v1beta1.IValidator, w?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a Validator message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns Validator
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.staking.v1beta1.Validator;
+      }
+
+      /** Properties of a ValAddresses. */
+      interface IValAddresses {
+        /** ValAddresses addresses */
+        addresses?: string[] | null;
+      }
+
+      /** Represents a ValAddresses. */
+      class ValAddresses implements IValAddresses {
+        /**
+         * Constructs a new ValAddresses.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IValAddresses);
+
+        /** ValAddresses addresses. */
+        public addresses: string[];
+
+        /**
+         * Creates a new ValAddresses instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns ValAddresses instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IValAddresses,
+        ): cosmos.staking.v1beta1.ValAddresses;
+
+        /**
+         * Encodes the specified ValAddresses message. Does not implicitly {@link cosmos.staking.v1beta1.ValAddresses.verify|verify} messages.
+         * @param m ValAddresses message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(m: cosmos.staking.v1beta1.IValAddresses, w?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a ValAddresses message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns ValAddresses
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.ValAddresses;
+      }
+
+      /** Properties of a DVPair. */
+      interface IDVPair {
+        /** DVPair delegatorAddress */
+        delegatorAddress?: string | null;
+
+        /** DVPair validatorAddress */
+        validatorAddress?: string | null;
+      }
+
+      /** Represents a DVPair. */
+      class DVPair implements IDVPair {
+        /**
+         * Constructs a new DVPair.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IDVPair);
+
+        /** DVPair delegatorAddress. */
+        public delegatorAddress: string;
+
+        /** DVPair validatorAddress. */
+        public validatorAddress: string;
+
+        /**
+         * Creates a new DVPair instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns DVPair instance
+         */
+        public static create(properties?: cosmos.staking.v1beta1.IDVPair): cosmos.staking.v1beta1.DVPair;
+
+        /**
+         * Encodes the specified DVPair message. Does not implicitly {@link cosmos.staking.v1beta1.DVPair.verify|verify} messages.
+         * @param m DVPair message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(m: cosmos.staking.v1beta1.IDVPair, w?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a DVPair message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns DVPair
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.staking.v1beta1.DVPair;
+      }
+
+      /** Properties of a DVPairs. */
+      interface IDVPairs {
+        /** DVPairs pairs */
+        pairs?: cosmos.staking.v1beta1.IDVPair[] | null;
+      }
+
+      /** Represents a DVPairs. */
+      class DVPairs implements IDVPairs {
+        /**
+         * Constructs a new DVPairs.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IDVPairs);
+
+        /** DVPairs pairs. */
+        public pairs: cosmos.staking.v1beta1.IDVPair[];
+
+        /**
+         * Creates a new DVPairs instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns DVPairs instance
+         */
+        public static create(properties?: cosmos.staking.v1beta1.IDVPairs): cosmos.staking.v1beta1.DVPairs;
+
+        /**
+         * Encodes the specified DVPairs message. Does not implicitly {@link cosmos.staking.v1beta1.DVPairs.verify|verify} messages.
+         * @param m DVPairs message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(m: cosmos.staking.v1beta1.IDVPairs, w?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a DVPairs message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns DVPairs
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.staking.v1beta1.DVPairs;
+      }
+
+      /** Properties of a DVVTriplet. */
+      interface IDVVTriplet {
+        /** DVVTriplet delegatorAddress */
+        delegatorAddress?: string | null;
+
+        /** DVVTriplet validatorSrcAddress */
+        validatorSrcAddress?: string | null;
+
+        /** DVVTriplet validatorDstAddress */
+        validatorDstAddress?: string | null;
+      }
+
+      /** Represents a DVVTriplet. */
+      class DVVTriplet implements IDVVTriplet {
+        /**
+         * Constructs a new DVVTriplet.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IDVVTriplet);
+
+        /** DVVTriplet delegatorAddress. */
+        public delegatorAddress: string;
+
+        /** DVVTriplet validatorSrcAddress. */
+        public validatorSrcAddress: string;
+
+        /** DVVTriplet validatorDstAddress. */
+        public validatorDstAddress: string;
+
+        /**
+         * Creates a new DVVTriplet instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns DVVTriplet instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IDVVTriplet,
+        ): cosmos.staking.v1beta1.DVVTriplet;
+
+        /**
+         * Encodes the specified DVVTriplet message. Does not implicitly {@link cosmos.staking.v1beta1.DVVTriplet.verify|verify} messages.
+         * @param m DVVTriplet message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(m: cosmos.staking.v1beta1.IDVVTriplet, w?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a DVVTriplet message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns DVVTriplet
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.staking.v1beta1.DVVTriplet;
+      }
+
+      /** Properties of a DVVTriplets. */
+      interface IDVVTriplets {
+        /** DVVTriplets triplets */
+        triplets?: cosmos.staking.v1beta1.IDVVTriplet[] | null;
+      }
+
+      /** Represents a DVVTriplets. */
+      class DVVTriplets implements IDVVTriplets {
+        /**
+         * Constructs a new DVVTriplets.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IDVVTriplets);
+
+        /** DVVTriplets triplets. */
+        public triplets: cosmos.staking.v1beta1.IDVVTriplet[];
+
+        /**
+         * Creates a new DVVTriplets instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns DVVTriplets instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IDVVTriplets,
+        ): cosmos.staking.v1beta1.DVVTriplets;
+
+        /**
+         * Encodes the specified DVVTriplets message. Does not implicitly {@link cosmos.staking.v1beta1.DVVTriplets.verify|verify} messages.
+         * @param m DVVTriplets message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(m: cosmos.staking.v1beta1.IDVVTriplets, w?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a DVVTriplets message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns DVVTriplets
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.DVVTriplets;
+      }
+
+      /** Properties of a Delegation. */
+      interface IDelegation {
+        /** Delegation delegatorAddress */
+        delegatorAddress?: string | null;
+
+        /** Delegation validatorAddress */
+        validatorAddress?: string | null;
+
+        /** Delegation shares */
+        shares?: string | null;
+      }
+
+      /** Represents a Delegation. */
+      class Delegation implements IDelegation {
+        /**
+         * Constructs a new Delegation.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IDelegation);
+
+        /** Delegation delegatorAddress. */
+        public delegatorAddress: string;
+
+        /** Delegation validatorAddress. */
+        public validatorAddress: string;
+
+        /** Delegation shares. */
+        public shares: string;
+
+        /**
+         * Creates a new Delegation instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns Delegation instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IDelegation,
+        ): cosmos.staking.v1beta1.Delegation;
+
+        /**
+         * Encodes the specified Delegation message. Does not implicitly {@link cosmos.staking.v1beta1.Delegation.verify|verify} messages.
+         * @param m Delegation message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(m: cosmos.staking.v1beta1.IDelegation, w?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a Delegation message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns Delegation
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.staking.v1beta1.Delegation;
+      }
+
+      /** Properties of an UnbondingDelegation. */
+      interface IUnbondingDelegation {
+        /** UnbondingDelegation delegatorAddress */
+        delegatorAddress?: string | null;
+
+        /** UnbondingDelegation validatorAddress */
+        validatorAddress?: string | null;
+
+        /** UnbondingDelegation entries */
+        entries?: cosmos.staking.v1beta1.IUnbondingDelegationEntry[] | null;
+      }
+
+      /** Represents an UnbondingDelegation. */
+      class UnbondingDelegation implements IUnbondingDelegation {
+        /**
+         * Constructs a new UnbondingDelegation.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IUnbondingDelegation);
+
+        /** UnbondingDelegation delegatorAddress. */
+        public delegatorAddress: string;
+
+        /** UnbondingDelegation validatorAddress. */
+        public validatorAddress: string;
+
+        /** UnbondingDelegation entries. */
+        public entries: cosmos.staking.v1beta1.IUnbondingDelegationEntry[];
+
+        /**
+         * Creates a new UnbondingDelegation instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns UnbondingDelegation instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IUnbondingDelegation,
+        ): cosmos.staking.v1beta1.UnbondingDelegation;
+
+        /**
+         * Encodes the specified UnbondingDelegation message. Does not implicitly {@link cosmos.staking.v1beta1.UnbondingDelegation.verify|verify} messages.
+         * @param m UnbondingDelegation message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.staking.v1beta1.IUnbondingDelegation,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes an UnbondingDelegation message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns UnbondingDelegation
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.UnbondingDelegation;
+      }
+
+      /** Properties of an UnbondingDelegationEntry. */
+      interface IUnbondingDelegationEntry {
+        /** UnbondingDelegationEntry creationHeight */
+        creationHeight?: Long | null;
+
+        /** UnbondingDelegationEntry completionTime */
+        completionTime?: google.protobuf.ITimestamp | null;
+
+        /** UnbondingDelegationEntry initialBalance */
+        initialBalance?: string | null;
+
+        /** UnbondingDelegationEntry balance */
+        balance?: string | null;
+      }
+
+      /** Represents an UnbondingDelegationEntry. */
+      class UnbondingDelegationEntry implements IUnbondingDelegationEntry {
+        /**
+         * Constructs a new UnbondingDelegationEntry.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IUnbondingDelegationEntry);
+
+        /** UnbondingDelegationEntry creationHeight. */
+        public creationHeight: Long;
+
+        /** UnbondingDelegationEntry completionTime. */
+        public completionTime?: google.protobuf.ITimestamp | null;
+
+        /** UnbondingDelegationEntry initialBalance. */
+        public initialBalance: string;
+
+        /** UnbondingDelegationEntry balance. */
+        public balance: string;
+
+        /**
+         * Creates a new UnbondingDelegationEntry instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns UnbondingDelegationEntry instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IUnbondingDelegationEntry,
+        ): cosmos.staking.v1beta1.UnbondingDelegationEntry;
+
+        /**
+         * Encodes the specified UnbondingDelegationEntry message. Does not implicitly {@link cosmos.staking.v1beta1.UnbondingDelegationEntry.verify|verify} messages.
+         * @param m UnbondingDelegationEntry message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.staking.v1beta1.IUnbondingDelegationEntry,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes an UnbondingDelegationEntry message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns UnbondingDelegationEntry
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.UnbondingDelegationEntry;
+      }
+
+      /** Properties of a RedelegationEntry. */
+      interface IRedelegationEntry {
+        /** RedelegationEntry creationHeight */
+        creationHeight?: Long | null;
+
+        /** RedelegationEntry completionTime */
+        completionTime?: google.protobuf.ITimestamp | null;
+
+        /** RedelegationEntry initialBalance */
+        initialBalance?: string | null;
+
+        /** RedelegationEntry sharesDst */
+        sharesDst?: string | null;
+      }
+
+      /** Represents a RedelegationEntry. */
+      class RedelegationEntry implements IRedelegationEntry {
+        /**
+         * Constructs a new RedelegationEntry.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IRedelegationEntry);
+
+        /** RedelegationEntry creationHeight. */
+        public creationHeight: Long;
+
+        /** RedelegationEntry completionTime. */
+        public completionTime?: google.protobuf.ITimestamp | null;
+
+        /** RedelegationEntry initialBalance. */
+        public initialBalance: string;
+
+        /** RedelegationEntry sharesDst. */
+        public sharesDst: string;
+
+        /**
+         * Creates a new RedelegationEntry instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns RedelegationEntry instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IRedelegationEntry,
+        ): cosmos.staking.v1beta1.RedelegationEntry;
+
+        /**
+         * Encodes the specified RedelegationEntry message. Does not implicitly {@link cosmos.staking.v1beta1.RedelegationEntry.verify|verify} messages.
+         * @param m RedelegationEntry message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.staking.v1beta1.IRedelegationEntry,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a RedelegationEntry message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns RedelegationEntry
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.RedelegationEntry;
+      }
+
+      /** Properties of a Redelegation. */
+      interface IRedelegation {
+        /** Redelegation delegatorAddress */
+        delegatorAddress?: string | null;
+
+        /** Redelegation validatorSrcAddress */
+        validatorSrcAddress?: string | null;
+
+        /** Redelegation validatorDstAddress */
+        validatorDstAddress?: string | null;
+
+        /** Redelegation entries */
+        entries?: cosmos.staking.v1beta1.IRedelegationEntry[] | null;
+      }
+
+      /** Represents a Redelegation. */
+      class Redelegation implements IRedelegation {
+        /**
+         * Constructs a new Redelegation.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IRedelegation);
+
+        /** Redelegation delegatorAddress. */
+        public delegatorAddress: string;
+
+        /** Redelegation validatorSrcAddress. */
+        public validatorSrcAddress: string;
+
+        /** Redelegation validatorDstAddress. */
+        public validatorDstAddress: string;
+
+        /** Redelegation entries. */
+        public entries: cosmos.staking.v1beta1.IRedelegationEntry[];
+
+        /**
+         * Creates a new Redelegation instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns Redelegation instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IRedelegation,
+        ): cosmos.staking.v1beta1.Redelegation;
+
+        /**
+         * Encodes the specified Redelegation message. Does not implicitly {@link cosmos.staking.v1beta1.Redelegation.verify|verify} messages.
+         * @param m Redelegation message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(m: cosmos.staking.v1beta1.IRedelegation, w?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a Redelegation message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns Redelegation
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.Redelegation;
+      }
+
+      /** Properties of a Params. */
+      interface IParams {
+        /** Params unbondingTime */
+        unbondingTime?: google.protobuf.IDuration | null;
+
+        /** Params maxValidators */
+        maxValidators?: number | null;
+
+        /** Params maxEntries */
+        maxEntries?: number | null;
+
+        /** Params historicalEntries */
+        historicalEntries?: number | null;
+
+        /** Params bondDenom */
+        bondDenom?: string | null;
+      }
+
+      /** Represents a Params. */
+      class Params implements IParams {
+        /**
+         * Constructs a new Params.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IParams);
+
+        /** Params unbondingTime. */
+        public unbondingTime?: google.protobuf.IDuration | null;
+
+        /** Params maxValidators. */
+        public maxValidators: number;
+
+        /** Params maxEntries. */
+        public maxEntries: number;
+
+        /** Params historicalEntries. */
+        public historicalEntries: number;
+
+        /** Params bondDenom. */
+        public bondDenom: string;
+
+        /**
+         * Creates a new Params instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns Params instance
+         */
+        public static create(properties?: cosmos.staking.v1beta1.IParams): cosmos.staking.v1beta1.Params;
+
+        /**
+         * Encodes the specified Params message. Does not implicitly {@link cosmos.staking.v1beta1.Params.verify|verify} messages.
+         * @param m Params message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(m: cosmos.staking.v1beta1.IParams, w?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a Params message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns Params
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.staking.v1beta1.Params;
+      }
+
+      /** Properties of a DelegationResponse. */
+      interface IDelegationResponse {
+        /** DelegationResponse delegation */
+        delegation?: cosmos.staking.v1beta1.IDelegation | null;
+
+        /** DelegationResponse balance */
+        balance?: cosmos.base.v1beta1.ICoin | null;
+      }
+
+      /** Represents a DelegationResponse. */
+      class DelegationResponse implements IDelegationResponse {
+        /**
+         * Constructs a new DelegationResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IDelegationResponse);
+
+        /** DelegationResponse delegation. */
+        public delegation?: cosmos.staking.v1beta1.IDelegation | null;
+
+        /** DelegationResponse balance. */
+        public balance?: cosmos.base.v1beta1.ICoin | null;
+
+        /**
+         * Creates a new DelegationResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns DelegationResponse instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IDelegationResponse,
+        ): cosmos.staking.v1beta1.DelegationResponse;
+
+        /**
+         * Encodes the specified DelegationResponse message. Does not implicitly {@link cosmos.staking.v1beta1.DelegationResponse.verify|verify} messages.
+         * @param m DelegationResponse message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.staking.v1beta1.IDelegationResponse,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a DelegationResponse message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns DelegationResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.DelegationResponse;
+      }
+
+      /** Properties of a RedelegationEntryResponse. */
+      interface IRedelegationEntryResponse {
+        /** RedelegationEntryResponse redelegationEntry */
+        redelegationEntry?: cosmos.staking.v1beta1.IRedelegationEntry | null;
+
+        /** RedelegationEntryResponse balance */
+        balance?: string | null;
+      }
+
+      /** Represents a RedelegationEntryResponse. */
+      class RedelegationEntryResponse implements IRedelegationEntryResponse {
+        /**
+         * Constructs a new RedelegationEntryResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IRedelegationEntryResponse);
+
+        /** RedelegationEntryResponse redelegationEntry. */
+        public redelegationEntry?: cosmos.staking.v1beta1.IRedelegationEntry | null;
+
+        /** RedelegationEntryResponse balance. */
+        public balance: string;
+
+        /**
+         * Creates a new RedelegationEntryResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns RedelegationEntryResponse instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IRedelegationEntryResponse,
+        ): cosmos.staking.v1beta1.RedelegationEntryResponse;
+
+        /**
+         * Encodes the specified RedelegationEntryResponse message. Does not implicitly {@link cosmos.staking.v1beta1.RedelegationEntryResponse.verify|verify} messages.
+         * @param m RedelegationEntryResponse message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.staking.v1beta1.IRedelegationEntryResponse,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a RedelegationEntryResponse message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns RedelegationEntryResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.RedelegationEntryResponse;
+      }
+
+      /** Properties of a RedelegationResponse. */
+      interface IRedelegationResponse {
+        /** RedelegationResponse redelegation */
+        redelegation?: cosmos.staking.v1beta1.IRedelegation | null;
+
+        /** RedelegationResponse entries */
+        entries?: cosmos.staking.v1beta1.IRedelegationEntryResponse[] | null;
+      }
+
+      /** Represents a RedelegationResponse. */
+      class RedelegationResponse implements IRedelegationResponse {
+        /**
+         * Constructs a new RedelegationResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IRedelegationResponse);
+
+        /** RedelegationResponse redelegation. */
+        public redelegation?: cosmos.staking.v1beta1.IRedelegation | null;
+
+        /** RedelegationResponse entries. */
+        public entries: cosmos.staking.v1beta1.IRedelegationEntryResponse[];
+
+        /**
+         * Creates a new RedelegationResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns RedelegationResponse instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IRedelegationResponse,
+        ): cosmos.staking.v1beta1.RedelegationResponse;
+
+        /**
+         * Encodes the specified RedelegationResponse message. Does not implicitly {@link cosmos.staking.v1beta1.RedelegationResponse.verify|verify} messages.
+         * @param m RedelegationResponse message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.staking.v1beta1.IRedelegationResponse,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a RedelegationResponse message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns RedelegationResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.RedelegationResponse;
+      }
+
+      /** Properties of a Pool. */
+      interface IPool {
+        /** Pool notBondedTokens */
+        notBondedTokens?: string | null;
+
+        /** Pool bondedTokens */
+        bondedTokens?: string | null;
+      }
+
+      /** Represents a Pool. */
+      class Pool implements IPool {
+        /**
+         * Constructs a new Pool.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IPool);
+
+        /** Pool notBondedTokens. */
+        public notBondedTokens: string;
+
+        /** Pool bondedTokens. */
+        public bondedTokens: string;
+
+        /**
+         * Creates a new Pool instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns Pool instance
+         */
+        public static create(properties?: cosmos.staking.v1beta1.IPool): cosmos.staking.v1beta1.Pool;
+
+        /**
+         * Encodes the specified Pool message. Does not implicitly {@link cosmos.staking.v1beta1.Pool.verify|verify} messages.
+         * @param m Pool message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(m: cosmos.staking.v1beta1.IPool, w?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a Pool message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns Pool
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.staking.v1beta1.Pool;
+      }
+
+      /** Properties of a MsgCreateValidator. */
+      interface IMsgCreateValidator {
+        /** MsgCreateValidator description */
+        description?: cosmos.staking.v1beta1.IDescription | null;
+
+        /** MsgCreateValidator commission */
+        commission?: cosmos.staking.v1beta1.ICommissionRates | null;
+
+        /** MsgCreateValidator minSelfDelegation */
+        minSelfDelegation?: string | null;
+
+        /** MsgCreateValidator delegatorAddress */
+        delegatorAddress?: string | null;
+
+        /** MsgCreateValidator validatorAddress */
+        validatorAddress?: string | null;
+
+        /** MsgCreateValidator pubkey */
+        pubkey?: string | null;
+
+        /** MsgCreateValidator value */
+        value?: cosmos.base.v1beta1.ICoin | null;
+      }
+
+      /** Represents a MsgCreateValidator. */
+      class MsgCreateValidator implements IMsgCreateValidator {
+        /**
+         * Constructs a new MsgCreateValidator.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IMsgCreateValidator);
+
+        /** MsgCreateValidator description. */
+        public description?: cosmos.staking.v1beta1.IDescription | null;
+
+        /** MsgCreateValidator commission. */
+        public commission?: cosmos.staking.v1beta1.ICommissionRates | null;
+
+        /** MsgCreateValidator minSelfDelegation. */
+        public minSelfDelegation: string;
+
+        /** MsgCreateValidator delegatorAddress. */
+        public delegatorAddress: string;
+
+        /** MsgCreateValidator validatorAddress. */
+        public validatorAddress: string;
+
+        /** MsgCreateValidator pubkey. */
+        public pubkey: string;
+
+        /** MsgCreateValidator value. */
+        public value?: cosmos.base.v1beta1.ICoin | null;
+
+        /**
+         * Creates a new MsgCreateValidator instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns MsgCreateValidator instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IMsgCreateValidator,
+        ): cosmos.staking.v1beta1.MsgCreateValidator;
+
+        /**
+         * Encodes the specified MsgCreateValidator message. Does not implicitly {@link cosmos.staking.v1beta1.MsgCreateValidator.verify|verify} messages.
+         * @param m MsgCreateValidator message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.staking.v1beta1.IMsgCreateValidator,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a MsgCreateValidator message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns MsgCreateValidator
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.MsgCreateValidator;
+      }
+
+      /** Properties of a MsgEditValidator. */
+      interface IMsgEditValidator {
+        /** MsgEditValidator description */
+        description?: cosmos.staking.v1beta1.IDescription | null;
+
+        /** MsgEditValidator validatorAddress */
+        validatorAddress?: string | null;
+
+        /** MsgEditValidator commissionRate */
+        commissionRate?: string | null;
+
+        /** MsgEditValidator minSelfDelegation */
+        minSelfDelegation?: string | null;
+      }
+
+      /** Represents a MsgEditValidator. */
+      class MsgEditValidator implements IMsgEditValidator {
+        /**
+         * Constructs a new MsgEditValidator.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IMsgEditValidator);
+
+        /** MsgEditValidator description. */
+        public description?: cosmos.staking.v1beta1.IDescription | null;
+
+        /** MsgEditValidator validatorAddress. */
+        public validatorAddress: string;
+
+        /** MsgEditValidator commissionRate. */
+        public commissionRate: string;
+
+        /** MsgEditValidator minSelfDelegation. */
+        public minSelfDelegation: string;
+
+        /**
+         * Creates a new MsgEditValidator instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns MsgEditValidator instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IMsgEditValidator,
+        ): cosmos.staking.v1beta1.MsgEditValidator;
+
+        /**
+         * Encodes the specified MsgEditValidator message. Does not implicitly {@link cosmos.staking.v1beta1.MsgEditValidator.verify|verify} messages.
+         * @param m MsgEditValidator message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.staking.v1beta1.IMsgEditValidator,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a MsgEditValidator message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns MsgEditValidator
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.MsgEditValidator;
+      }
+
+      /** Properties of a MsgDelegate. */
+      interface IMsgDelegate {
+        /** MsgDelegate delegatorAddress */
+        delegatorAddress?: string | null;
+
+        /** MsgDelegate validatorAddress */
+        validatorAddress?: string | null;
+
+        /** MsgDelegate amount */
+        amount?: cosmos.base.v1beta1.ICoin | null;
+      }
+
+      /** Represents a MsgDelegate. */
+      class MsgDelegate implements IMsgDelegate {
+        /**
+         * Constructs a new MsgDelegate.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IMsgDelegate);
+
+        /** MsgDelegate delegatorAddress. */
+        public delegatorAddress: string;
+
+        /** MsgDelegate validatorAddress. */
+        public validatorAddress: string;
+
+        /** MsgDelegate amount. */
+        public amount?: cosmos.base.v1beta1.ICoin | null;
+
+        /**
+         * Creates a new MsgDelegate instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns MsgDelegate instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IMsgDelegate,
+        ): cosmos.staking.v1beta1.MsgDelegate;
+
+        /**
+         * Encodes the specified MsgDelegate message. Does not implicitly {@link cosmos.staking.v1beta1.MsgDelegate.verify|verify} messages.
+         * @param m MsgDelegate message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(m: cosmos.staking.v1beta1.IMsgDelegate, w?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a MsgDelegate message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns MsgDelegate
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.MsgDelegate;
+      }
+
+      /** Properties of a MsgBeginRedelegate. */
+      interface IMsgBeginRedelegate {
+        /** MsgBeginRedelegate delegatorAddress */
+        delegatorAddress?: string | null;
+
+        /** MsgBeginRedelegate validatorSrcAddress */
+        validatorSrcAddress?: string | null;
+
+        /** MsgBeginRedelegate validatorDstAddress */
+        validatorDstAddress?: string | null;
+
+        /** MsgBeginRedelegate amount */
+        amount?: cosmos.base.v1beta1.ICoin | null;
+      }
+
+      /** Represents a MsgBeginRedelegate. */
+      class MsgBeginRedelegate implements IMsgBeginRedelegate {
+        /**
+         * Constructs a new MsgBeginRedelegate.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IMsgBeginRedelegate);
+
+        /** MsgBeginRedelegate delegatorAddress. */
+        public delegatorAddress: string;
+
+        /** MsgBeginRedelegate validatorSrcAddress. */
+        public validatorSrcAddress: string;
+
+        /** MsgBeginRedelegate validatorDstAddress. */
+        public validatorDstAddress: string;
+
+        /** MsgBeginRedelegate amount. */
+        public amount?: cosmos.base.v1beta1.ICoin | null;
+
+        /**
+         * Creates a new MsgBeginRedelegate instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns MsgBeginRedelegate instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IMsgBeginRedelegate,
+        ): cosmos.staking.v1beta1.MsgBeginRedelegate;
+
+        /**
+         * Encodes the specified MsgBeginRedelegate message. Does not implicitly {@link cosmos.staking.v1beta1.MsgBeginRedelegate.verify|verify} messages.
+         * @param m MsgBeginRedelegate message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.staking.v1beta1.IMsgBeginRedelegate,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a MsgBeginRedelegate message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns MsgBeginRedelegate
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.MsgBeginRedelegate;
+      }
+
+      /** Properties of a MsgUndelegate. */
+      interface IMsgUndelegate {
+        /** MsgUndelegate delegatorAddress */
+        delegatorAddress?: string | null;
+
+        /** MsgUndelegate validatorAddress */
+        validatorAddress?: string | null;
+
+        /** MsgUndelegate amount */
+        amount?: cosmos.base.v1beta1.ICoin | null;
+      }
+
+      /** Represents a MsgUndelegate. */
+      class MsgUndelegate implements IMsgUndelegate {
+        /**
+         * Constructs a new MsgUndelegate.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IMsgUndelegate);
+
+        /** MsgUndelegate delegatorAddress. */
+        public delegatorAddress: string;
+
+        /** MsgUndelegate validatorAddress. */
+        public validatorAddress: string;
+
+        /** MsgUndelegate amount. */
+        public amount?: cosmos.base.v1beta1.ICoin | null;
+
+        /**
+         * Creates a new MsgUndelegate instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns MsgUndelegate instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IMsgUndelegate,
+        ): cosmos.staking.v1beta1.MsgUndelegate;
+
+        /**
+         * Encodes the specified MsgUndelegate message. Does not implicitly {@link cosmos.staking.v1beta1.MsgUndelegate.verify|verify} messages.
+         * @param m MsgUndelegate message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.staking.v1beta1.IMsgUndelegate,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a MsgUndelegate message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns MsgUndelegate
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.MsgUndelegate;
+      }
+    }
+  }
+
   /** Namespace tx. */
   namespace tx {
     /** Namespace signing. */
@@ -4357,6 +5915,104 @@ export namespace google {
           l?: number,
         ): google.protobuf.GeneratedCodeInfo.Annotation;
       }
+    }
+
+    /** Properties of a Timestamp. */
+    interface ITimestamp {
+      /** Timestamp seconds */
+      seconds?: Long | null;
+
+      /** Timestamp nanos */
+      nanos?: number | null;
+    }
+
+    /** Represents a Timestamp. */
+    class Timestamp implements ITimestamp {
+      /**
+       * Constructs a new Timestamp.
+       * @param [p] Properties to set
+       */
+      constructor(p?: google.protobuf.ITimestamp);
+
+      /** Timestamp seconds. */
+      public seconds: Long;
+
+      /** Timestamp nanos. */
+      public nanos: number;
+
+      /**
+       * Creates a new Timestamp instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns Timestamp instance
+       */
+      public static create(properties?: google.protobuf.ITimestamp): google.protobuf.Timestamp;
+
+      /**
+       * Encodes the specified Timestamp message. Does not implicitly {@link google.protobuf.Timestamp.verify|verify} messages.
+       * @param m Timestamp message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: google.protobuf.ITimestamp, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a Timestamp message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns Timestamp
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): google.protobuf.Timestamp;
+    }
+
+    /** Properties of a Duration. */
+    interface IDuration {
+      /** Duration seconds */
+      seconds?: Long | null;
+
+      /** Duration nanos */
+      nanos?: number | null;
+    }
+
+    /** Represents a Duration. */
+    class Duration implements IDuration {
+      /**
+       * Constructs a new Duration.
+       * @param [p] Properties to set
+       */
+      constructor(p?: google.protobuf.IDuration);
+
+      /** Duration seconds. */
+      public seconds: Long;
+
+      /** Duration nanos. */
+      public nanos: number;
+
+      /**
+       * Creates a new Duration instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns Duration instance
+       */
+      public static create(properties?: google.protobuf.IDuration): google.protobuf.Duration;
+
+      /**
+       * Encodes the specified Duration message. Does not implicitly {@link google.protobuf.Duration.verify|verify} messages.
+       * @param m Duration message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: google.protobuf.IDuration, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a Duration message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns Duration
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): google.protobuf.Duration;
     }
   }
 
@@ -9880,6 +11536,52 @@ export namespace ibc {
 export namespace tendermint {
   /** Namespace crypto. */
   namespace crypto {
+    /** Properties of a PublicKey. */
+    interface IPublicKey {
+      /** PublicKey ed25519 */
+      ed25519?: Uint8Array | null;
+    }
+
+    /** Represents a PublicKey. */
+    class PublicKey implements IPublicKey {
+      /**
+       * Constructs a new PublicKey.
+       * @param [p] Properties to set
+       */
+      constructor(p?: tendermint.crypto.IPublicKey);
+
+      /** PublicKey ed25519. */
+      public ed25519: Uint8Array;
+
+      /** PublicKey sum. */
+      public sum?: "ed25519";
+
+      /**
+       * Creates a new PublicKey instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns PublicKey instance
+       */
+      public static create(properties?: tendermint.crypto.IPublicKey): tendermint.crypto.PublicKey;
+
+      /**
+       * Encodes the specified PublicKey message. Does not implicitly {@link tendermint.crypto.PublicKey.verify|verify} messages.
+       * @param m PublicKey message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: tendermint.crypto.IPublicKey, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a PublicKey message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns PublicKey
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): tendermint.crypto.PublicKey;
+    }
+
     /** Properties of a Proof. */
     interface IProof {
       /** Proof total */
@@ -10141,6 +11843,1181 @@ export namespace tendermint {
        * @throws {$protobuf.util.ProtocolError} If required fields are missing
        */
       public static decode(r: $protobuf.Reader | Uint8Array, l?: number): tendermint.crypto.ProofOps;
+    }
+  }
+
+  /** Namespace libs. */
+  namespace libs {
+    /** Namespace bits. */
+    namespace bits {
+      /** Properties of a BitArray. */
+      interface IBitArray {
+        /** BitArray bits */
+        bits?: Long | null;
+
+        /** BitArray elems */
+        elems?: Long[] | null;
+      }
+
+      /** Represents a BitArray. */
+      class BitArray implements IBitArray {
+        /**
+         * Constructs a new BitArray.
+         * @param [p] Properties to set
+         */
+        constructor(p?: tendermint.libs.bits.IBitArray);
+
+        /** BitArray bits. */
+        public bits: Long;
+
+        /** BitArray elems. */
+        public elems: Long[];
+
+        /**
+         * Creates a new BitArray instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns BitArray instance
+         */
+        public static create(properties?: tendermint.libs.bits.IBitArray): tendermint.libs.bits.BitArray;
+
+        /**
+         * Encodes the specified BitArray message. Does not implicitly {@link tendermint.libs.bits.BitArray.verify|verify} messages.
+         * @param m BitArray message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(m: tendermint.libs.bits.IBitArray, w?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a BitArray message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns BitArray
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(r: $protobuf.Reader | Uint8Array, l?: number): tendermint.libs.bits.BitArray;
+      }
+    }
+  }
+
+  /** Namespace types. */
+  namespace types {
+    /** BlockIDFlag enum. */
+    enum BlockIDFlag {
+      BLOCK_ID_FLAG_UNKNOWN = 0,
+      BLOCK_ID_FLAG_ABSENT = 1,
+      BLOCK_ID_FLAG_COMMIT = 2,
+      BLOCK_ID_FLAG_NIL = 3,
+    }
+
+    /** SignedMsgType enum. */
+    enum SignedMsgType {
+      SIGNED_MSG_TYPE_UNKNOWN = 0,
+      SIGNED_MSG_TYPE_PREVOTE = 1,
+      SIGNED_MSG_TYPE_PRECOMMIT = 2,
+      SIGNED_MSG_TYPE_PROPOSAL = 32,
+    }
+
+    /** Properties of a PartSetHeader. */
+    interface IPartSetHeader {
+      /** PartSetHeader total */
+      total?: number | null;
+
+      /** PartSetHeader hash */
+      hash?: Uint8Array | null;
+    }
+
+    /** Represents a PartSetHeader. */
+    class PartSetHeader implements IPartSetHeader {
+      /**
+       * Constructs a new PartSetHeader.
+       * @param [p] Properties to set
+       */
+      constructor(p?: tendermint.types.IPartSetHeader);
+
+      /** PartSetHeader total. */
+      public total: number;
+
+      /** PartSetHeader hash. */
+      public hash: Uint8Array;
+
+      /**
+       * Creates a new PartSetHeader instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns PartSetHeader instance
+       */
+      public static create(properties?: tendermint.types.IPartSetHeader): tendermint.types.PartSetHeader;
+
+      /**
+       * Encodes the specified PartSetHeader message. Does not implicitly {@link tendermint.types.PartSetHeader.verify|verify} messages.
+       * @param m PartSetHeader message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: tendermint.types.IPartSetHeader, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a PartSetHeader message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns PartSetHeader
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): tendermint.types.PartSetHeader;
+    }
+
+    /** Properties of a Part. */
+    interface IPart {
+      /** Part index */
+      index?: number | null;
+
+      /** Part bytes */
+      bytes?: Uint8Array | null;
+
+      /** Part proof */
+      proof?: tendermint.crypto.IProof | null;
+    }
+
+    /** Represents a Part. */
+    class Part implements IPart {
+      /**
+       * Constructs a new Part.
+       * @param [p] Properties to set
+       */
+      constructor(p?: tendermint.types.IPart);
+
+      /** Part index. */
+      public index: number;
+
+      /** Part bytes. */
+      public bytes: Uint8Array;
+
+      /** Part proof. */
+      public proof?: tendermint.crypto.IProof | null;
+
+      /**
+       * Creates a new Part instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns Part instance
+       */
+      public static create(properties?: tendermint.types.IPart): tendermint.types.Part;
+
+      /**
+       * Encodes the specified Part message. Does not implicitly {@link tendermint.types.Part.verify|verify} messages.
+       * @param m Part message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: tendermint.types.IPart, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a Part message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns Part
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): tendermint.types.Part;
+    }
+
+    /** Properties of a BlockID. */
+    interface IBlockID {
+      /** BlockID hash */
+      hash?: Uint8Array | null;
+
+      /** BlockID partSetHeader */
+      partSetHeader?: tendermint.types.IPartSetHeader | null;
+    }
+
+    /** Represents a BlockID. */
+    class BlockID implements IBlockID {
+      /**
+       * Constructs a new BlockID.
+       * @param [p] Properties to set
+       */
+      constructor(p?: tendermint.types.IBlockID);
+
+      /** BlockID hash. */
+      public hash: Uint8Array;
+
+      /** BlockID partSetHeader. */
+      public partSetHeader?: tendermint.types.IPartSetHeader | null;
+
+      /**
+       * Creates a new BlockID instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns BlockID instance
+       */
+      public static create(properties?: tendermint.types.IBlockID): tendermint.types.BlockID;
+
+      /**
+       * Encodes the specified BlockID message. Does not implicitly {@link tendermint.types.BlockID.verify|verify} messages.
+       * @param m BlockID message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: tendermint.types.IBlockID, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a BlockID message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns BlockID
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): tendermint.types.BlockID;
+    }
+
+    /** Properties of a Header. */
+    interface IHeader {
+      /** Header version */
+      version?: tendermint.version.IConsensus | null;
+
+      /** Header chainId */
+      chainId?: string | null;
+
+      /** Header height */
+      height?: Long | null;
+
+      /** Header time */
+      time?: google.protobuf.ITimestamp | null;
+
+      /** Header lastBlockId */
+      lastBlockId?: tendermint.types.IBlockID | null;
+
+      /** Header lastCommitHash */
+      lastCommitHash?: Uint8Array | null;
+
+      /** Header dataHash */
+      dataHash?: Uint8Array | null;
+
+      /** Header validatorsHash */
+      validatorsHash?: Uint8Array | null;
+
+      /** Header nextValidatorsHash */
+      nextValidatorsHash?: Uint8Array | null;
+
+      /** Header consensusHash */
+      consensusHash?: Uint8Array | null;
+
+      /** Header appHash */
+      appHash?: Uint8Array | null;
+
+      /** Header lastResultsHash */
+      lastResultsHash?: Uint8Array | null;
+
+      /** Header evidenceHash */
+      evidenceHash?: Uint8Array | null;
+
+      /** Header proposerAddress */
+      proposerAddress?: Uint8Array | null;
+    }
+
+    /** Represents a Header. */
+    class Header implements IHeader {
+      /**
+       * Constructs a new Header.
+       * @param [p] Properties to set
+       */
+      constructor(p?: tendermint.types.IHeader);
+
+      /** Header version. */
+      public version?: tendermint.version.IConsensus | null;
+
+      /** Header chainId. */
+      public chainId: string;
+
+      /** Header height. */
+      public height: Long;
+
+      /** Header time. */
+      public time?: google.protobuf.ITimestamp | null;
+
+      /** Header lastBlockId. */
+      public lastBlockId?: tendermint.types.IBlockID | null;
+
+      /** Header lastCommitHash. */
+      public lastCommitHash: Uint8Array;
+
+      /** Header dataHash. */
+      public dataHash: Uint8Array;
+
+      /** Header validatorsHash. */
+      public validatorsHash: Uint8Array;
+
+      /** Header nextValidatorsHash. */
+      public nextValidatorsHash: Uint8Array;
+
+      /** Header consensusHash. */
+      public consensusHash: Uint8Array;
+
+      /** Header appHash. */
+      public appHash: Uint8Array;
+
+      /** Header lastResultsHash. */
+      public lastResultsHash: Uint8Array;
+
+      /** Header evidenceHash. */
+      public evidenceHash: Uint8Array;
+
+      /** Header proposerAddress. */
+      public proposerAddress: Uint8Array;
+
+      /**
+       * Creates a new Header instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns Header instance
+       */
+      public static create(properties?: tendermint.types.IHeader): tendermint.types.Header;
+
+      /**
+       * Encodes the specified Header message. Does not implicitly {@link tendermint.types.Header.verify|verify} messages.
+       * @param m Header message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: tendermint.types.IHeader, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a Header message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns Header
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): tendermint.types.Header;
+    }
+
+    /** Properties of a Data. */
+    interface IData {
+      /** Data txs */
+      txs?: Uint8Array[] | null;
+
+      /** Data hash */
+      hash?: Uint8Array | null;
+    }
+
+    /** Represents a Data. */
+    class Data implements IData {
+      /**
+       * Constructs a new Data.
+       * @param [p] Properties to set
+       */
+      constructor(p?: tendermint.types.IData);
+
+      /** Data txs. */
+      public txs: Uint8Array[];
+
+      /** Data hash. */
+      public hash: Uint8Array;
+
+      /**
+       * Creates a new Data instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns Data instance
+       */
+      public static create(properties?: tendermint.types.IData): tendermint.types.Data;
+
+      /**
+       * Encodes the specified Data message. Does not implicitly {@link tendermint.types.Data.verify|verify} messages.
+       * @param m Data message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: tendermint.types.IData, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a Data message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns Data
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): tendermint.types.Data;
+    }
+
+    /** Properties of a Vote. */
+    interface IVote {
+      /** Vote type */
+      type?: tendermint.types.SignedMsgType | null;
+
+      /** Vote height */
+      height?: Long | null;
+
+      /** Vote round */
+      round?: number | null;
+
+      /** Vote blockId */
+      blockId?: tendermint.types.IBlockID | null;
+
+      /** Vote timestamp */
+      timestamp?: google.protobuf.ITimestamp | null;
+
+      /** Vote validatorAddress */
+      validatorAddress?: Uint8Array | null;
+
+      /** Vote validatorIndex */
+      validatorIndex?: number | null;
+
+      /** Vote signature */
+      signature?: Uint8Array | null;
+    }
+
+    /** Represents a Vote. */
+    class Vote implements IVote {
+      /**
+       * Constructs a new Vote.
+       * @param [p] Properties to set
+       */
+      constructor(p?: tendermint.types.IVote);
+
+      /** Vote type. */
+      public type: tendermint.types.SignedMsgType;
+
+      /** Vote height. */
+      public height: Long;
+
+      /** Vote round. */
+      public round: number;
+
+      /** Vote blockId. */
+      public blockId?: tendermint.types.IBlockID | null;
+
+      /** Vote timestamp. */
+      public timestamp?: google.protobuf.ITimestamp | null;
+
+      /** Vote validatorAddress. */
+      public validatorAddress: Uint8Array;
+
+      /** Vote validatorIndex. */
+      public validatorIndex: number;
+
+      /** Vote signature. */
+      public signature: Uint8Array;
+
+      /**
+       * Creates a new Vote instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns Vote instance
+       */
+      public static create(properties?: tendermint.types.IVote): tendermint.types.Vote;
+
+      /**
+       * Encodes the specified Vote message. Does not implicitly {@link tendermint.types.Vote.verify|verify} messages.
+       * @param m Vote message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: tendermint.types.IVote, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a Vote message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns Vote
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): tendermint.types.Vote;
+    }
+
+    /** Properties of a Commit. */
+    interface ICommit {
+      /** Commit height */
+      height?: Long | null;
+
+      /** Commit round */
+      round?: number | null;
+
+      /** Commit blockId */
+      blockId?: tendermint.types.IBlockID | null;
+
+      /** Commit signatures */
+      signatures?: tendermint.types.ICommitSig[] | null;
+
+      /** Commit hash */
+      hash?: Uint8Array | null;
+
+      /** Commit bitArray */
+      bitArray?: tendermint.libs.bits.IBitArray | null;
+    }
+
+    /** Represents a Commit. */
+    class Commit implements ICommit {
+      /**
+       * Constructs a new Commit.
+       * @param [p] Properties to set
+       */
+      constructor(p?: tendermint.types.ICommit);
+
+      /** Commit height. */
+      public height: Long;
+
+      /** Commit round. */
+      public round: number;
+
+      /** Commit blockId. */
+      public blockId?: tendermint.types.IBlockID | null;
+
+      /** Commit signatures. */
+      public signatures: tendermint.types.ICommitSig[];
+
+      /** Commit hash. */
+      public hash: Uint8Array;
+
+      /** Commit bitArray. */
+      public bitArray?: tendermint.libs.bits.IBitArray | null;
+
+      /**
+       * Creates a new Commit instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns Commit instance
+       */
+      public static create(properties?: tendermint.types.ICommit): tendermint.types.Commit;
+
+      /**
+       * Encodes the specified Commit message. Does not implicitly {@link tendermint.types.Commit.verify|verify} messages.
+       * @param m Commit message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: tendermint.types.ICommit, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a Commit message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns Commit
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): tendermint.types.Commit;
+    }
+
+    /** Properties of a CommitSig. */
+    interface ICommitSig {
+      /** CommitSig blockIdFlag */
+      blockIdFlag?: tendermint.types.BlockIDFlag | null;
+
+      /** CommitSig validatorAddress */
+      validatorAddress?: Uint8Array | null;
+
+      /** CommitSig timestamp */
+      timestamp?: google.protobuf.ITimestamp | null;
+
+      /** CommitSig signature */
+      signature?: Uint8Array | null;
+    }
+
+    /** Represents a CommitSig. */
+    class CommitSig implements ICommitSig {
+      /**
+       * Constructs a new CommitSig.
+       * @param [p] Properties to set
+       */
+      constructor(p?: tendermint.types.ICommitSig);
+
+      /** CommitSig blockIdFlag. */
+      public blockIdFlag: tendermint.types.BlockIDFlag;
+
+      /** CommitSig validatorAddress. */
+      public validatorAddress: Uint8Array;
+
+      /** CommitSig timestamp. */
+      public timestamp?: google.protobuf.ITimestamp | null;
+
+      /** CommitSig signature. */
+      public signature: Uint8Array;
+
+      /**
+       * Creates a new CommitSig instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns CommitSig instance
+       */
+      public static create(properties?: tendermint.types.ICommitSig): tendermint.types.CommitSig;
+
+      /**
+       * Encodes the specified CommitSig message. Does not implicitly {@link tendermint.types.CommitSig.verify|verify} messages.
+       * @param m CommitSig message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: tendermint.types.ICommitSig, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a CommitSig message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns CommitSig
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): tendermint.types.CommitSig;
+    }
+
+    /** Properties of a Proposal. */
+    interface IProposal {
+      /** Proposal type */
+      type?: tendermint.types.SignedMsgType | null;
+
+      /** Proposal height */
+      height?: Long | null;
+
+      /** Proposal round */
+      round?: number | null;
+
+      /** Proposal polRound */
+      polRound?: number | null;
+
+      /** Proposal blockId */
+      blockId?: tendermint.types.IBlockID | null;
+
+      /** Proposal timestamp */
+      timestamp?: google.protobuf.ITimestamp | null;
+
+      /** Proposal signature */
+      signature?: Uint8Array | null;
+    }
+
+    /** Represents a Proposal. */
+    class Proposal implements IProposal {
+      /**
+       * Constructs a new Proposal.
+       * @param [p] Properties to set
+       */
+      constructor(p?: tendermint.types.IProposal);
+
+      /** Proposal type. */
+      public type: tendermint.types.SignedMsgType;
+
+      /** Proposal height. */
+      public height: Long;
+
+      /** Proposal round. */
+      public round: number;
+
+      /** Proposal polRound. */
+      public polRound: number;
+
+      /** Proposal blockId. */
+      public blockId?: tendermint.types.IBlockID | null;
+
+      /** Proposal timestamp. */
+      public timestamp?: google.protobuf.ITimestamp | null;
+
+      /** Proposal signature. */
+      public signature: Uint8Array;
+
+      /**
+       * Creates a new Proposal instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns Proposal instance
+       */
+      public static create(properties?: tendermint.types.IProposal): tendermint.types.Proposal;
+
+      /**
+       * Encodes the specified Proposal message. Does not implicitly {@link tendermint.types.Proposal.verify|verify} messages.
+       * @param m Proposal message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: tendermint.types.IProposal, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a Proposal message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns Proposal
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): tendermint.types.Proposal;
+    }
+
+    /** Properties of a SignedHeader. */
+    interface ISignedHeader {
+      /** SignedHeader header */
+      header?: tendermint.types.IHeader | null;
+
+      /** SignedHeader commit */
+      commit?: tendermint.types.ICommit | null;
+    }
+
+    /** Represents a SignedHeader. */
+    class SignedHeader implements ISignedHeader {
+      /**
+       * Constructs a new SignedHeader.
+       * @param [p] Properties to set
+       */
+      constructor(p?: tendermint.types.ISignedHeader);
+
+      /** SignedHeader header. */
+      public header?: tendermint.types.IHeader | null;
+
+      /** SignedHeader commit. */
+      public commit?: tendermint.types.ICommit | null;
+
+      /**
+       * Creates a new SignedHeader instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns SignedHeader instance
+       */
+      public static create(properties?: tendermint.types.ISignedHeader): tendermint.types.SignedHeader;
+
+      /**
+       * Encodes the specified SignedHeader message. Does not implicitly {@link tendermint.types.SignedHeader.verify|verify} messages.
+       * @param m SignedHeader message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: tendermint.types.ISignedHeader, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a SignedHeader message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns SignedHeader
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): tendermint.types.SignedHeader;
+    }
+
+    /** Properties of a LightBlock. */
+    interface ILightBlock {
+      /** LightBlock signedHeader */
+      signedHeader?: tendermint.types.ISignedHeader | null;
+
+      /** LightBlock validatorSet */
+      validatorSet?: tendermint.types.IValidatorSet | null;
+    }
+
+    /** Represents a LightBlock. */
+    class LightBlock implements ILightBlock {
+      /**
+       * Constructs a new LightBlock.
+       * @param [p] Properties to set
+       */
+      constructor(p?: tendermint.types.ILightBlock);
+
+      /** LightBlock signedHeader. */
+      public signedHeader?: tendermint.types.ISignedHeader | null;
+
+      /** LightBlock validatorSet. */
+      public validatorSet?: tendermint.types.IValidatorSet | null;
+
+      /**
+       * Creates a new LightBlock instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns LightBlock instance
+       */
+      public static create(properties?: tendermint.types.ILightBlock): tendermint.types.LightBlock;
+
+      /**
+       * Encodes the specified LightBlock message. Does not implicitly {@link tendermint.types.LightBlock.verify|verify} messages.
+       * @param m LightBlock message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: tendermint.types.ILightBlock, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a LightBlock message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns LightBlock
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): tendermint.types.LightBlock;
+    }
+
+    /** Properties of a BlockMeta. */
+    interface IBlockMeta {
+      /** BlockMeta blockId */
+      blockId?: tendermint.types.IBlockID | null;
+
+      /** BlockMeta blockSize */
+      blockSize?: Long | null;
+
+      /** BlockMeta header */
+      header?: tendermint.types.IHeader | null;
+
+      /** BlockMeta numTxs */
+      numTxs?: Long | null;
+    }
+
+    /** Represents a BlockMeta. */
+    class BlockMeta implements IBlockMeta {
+      /**
+       * Constructs a new BlockMeta.
+       * @param [p] Properties to set
+       */
+      constructor(p?: tendermint.types.IBlockMeta);
+
+      /** BlockMeta blockId. */
+      public blockId?: tendermint.types.IBlockID | null;
+
+      /** BlockMeta blockSize. */
+      public blockSize: Long;
+
+      /** BlockMeta header. */
+      public header?: tendermint.types.IHeader | null;
+
+      /** BlockMeta numTxs. */
+      public numTxs: Long;
+
+      /**
+       * Creates a new BlockMeta instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns BlockMeta instance
+       */
+      public static create(properties?: tendermint.types.IBlockMeta): tendermint.types.BlockMeta;
+
+      /**
+       * Encodes the specified BlockMeta message. Does not implicitly {@link tendermint.types.BlockMeta.verify|verify} messages.
+       * @param m BlockMeta message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: tendermint.types.IBlockMeta, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a BlockMeta message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns BlockMeta
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): tendermint.types.BlockMeta;
+    }
+
+    /** Properties of a TxProof. */
+    interface ITxProof {
+      /** TxProof rootHash */
+      rootHash?: Uint8Array | null;
+
+      /** TxProof data */
+      data?: Uint8Array | null;
+
+      /** TxProof proof */
+      proof?: tendermint.crypto.IProof | null;
+    }
+
+    /** Represents a TxProof. */
+    class TxProof implements ITxProof {
+      /**
+       * Constructs a new TxProof.
+       * @param [p] Properties to set
+       */
+      constructor(p?: tendermint.types.ITxProof);
+
+      /** TxProof rootHash. */
+      public rootHash: Uint8Array;
+
+      /** TxProof data. */
+      public data: Uint8Array;
+
+      /** TxProof proof. */
+      public proof?: tendermint.crypto.IProof | null;
+
+      /**
+       * Creates a new TxProof instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns TxProof instance
+       */
+      public static create(properties?: tendermint.types.ITxProof): tendermint.types.TxProof;
+
+      /**
+       * Encodes the specified TxProof message. Does not implicitly {@link tendermint.types.TxProof.verify|verify} messages.
+       * @param m TxProof message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: tendermint.types.ITxProof, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a TxProof message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns TxProof
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): tendermint.types.TxProof;
+    }
+
+    /** Properties of a ValidatorSet. */
+    interface IValidatorSet {
+      /** ValidatorSet validators */
+      validators?: tendermint.types.IValidator[] | null;
+
+      /** ValidatorSet proposer */
+      proposer?: tendermint.types.IValidator | null;
+
+      /** ValidatorSet totalVotingPower */
+      totalVotingPower?: Long | null;
+    }
+
+    /** Represents a ValidatorSet. */
+    class ValidatorSet implements IValidatorSet {
+      /**
+       * Constructs a new ValidatorSet.
+       * @param [p] Properties to set
+       */
+      constructor(p?: tendermint.types.IValidatorSet);
+
+      /** ValidatorSet validators. */
+      public validators: tendermint.types.IValidator[];
+
+      /** ValidatorSet proposer. */
+      public proposer?: tendermint.types.IValidator | null;
+
+      /** ValidatorSet totalVotingPower. */
+      public totalVotingPower: Long;
+
+      /**
+       * Creates a new ValidatorSet instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns ValidatorSet instance
+       */
+      public static create(properties?: tendermint.types.IValidatorSet): tendermint.types.ValidatorSet;
+
+      /**
+       * Encodes the specified ValidatorSet message. Does not implicitly {@link tendermint.types.ValidatorSet.verify|verify} messages.
+       * @param m ValidatorSet message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: tendermint.types.IValidatorSet, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a ValidatorSet message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns ValidatorSet
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): tendermint.types.ValidatorSet;
+    }
+
+    /** Properties of a Validator. */
+    interface IValidator {
+      /** Validator address */
+      address?: Uint8Array | null;
+
+      /** Validator pubKey */
+      pubKey?: tendermint.crypto.IPublicKey | null;
+
+      /** Validator votingPower */
+      votingPower?: Long | null;
+
+      /** Validator proposerPriority */
+      proposerPriority?: Long | null;
+    }
+
+    /** Represents a Validator. */
+    class Validator implements IValidator {
+      /**
+       * Constructs a new Validator.
+       * @param [p] Properties to set
+       */
+      constructor(p?: tendermint.types.IValidator);
+
+      /** Validator address. */
+      public address: Uint8Array;
+
+      /** Validator pubKey. */
+      public pubKey?: tendermint.crypto.IPublicKey | null;
+
+      /** Validator votingPower. */
+      public votingPower: Long;
+
+      /** Validator proposerPriority. */
+      public proposerPriority: Long;
+
+      /**
+       * Creates a new Validator instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns Validator instance
+       */
+      public static create(properties?: tendermint.types.IValidator): tendermint.types.Validator;
+
+      /**
+       * Encodes the specified Validator message. Does not implicitly {@link tendermint.types.Validator.verify|verify} messages.
+       * @param m Validator message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: tendermint.types.IValidator, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a Validator message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns Validator
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): tendermint.types.Validator;
+    }
+
+    /** Properties of a SimpleValidator. */
+    interface ISimpleValidator {
+      /** SimpleValidator pubKey */
+      pubKey?: tendermint.crypto.IPublicKey | null;
+
+      /** SimpleValidator votingPower */
+      votingPower?: Long | null;
+    }
+
+    /** Represents a SimpleValidator. */
+    class SimpleValidator implements ISimpleValidator {
+      /**
+       * Constructs a new SimpleValidator.
+       * @param [p] Properties to set
+       */
+      constructor(p?: tendermint.types.ISimpleValidator);
+
+      /** SimpleValidator pubKey. */
+      public pubKey?: tendermint.crypto.IPublicKey | null;
+
+      /** SimpleValidator votingPower. */
+      public votingPower: Long;
+
+      /**
+       * Creates a new SimpleValidator instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns SimpleValidator instance
+       */
+      public static create(properties?: tendermint.types.ISimpleValidator): tendermint.types.SimpleValidator;
+
+      /**
+       * Encodes the specified SimpleValidator message. Does not implicitly {@link tendermint.types.SimpleValidator.verify|verify} messages.
+       * @param m SimpleValidator message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: tendermint.types.ISimpleValidator, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a SimpleValidator message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns SimpleValidator
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): tendermint.types.SimpleValidator;
+    }
+  }
+
+  /** Namespace version. */
+  namespace version {
+    /** Properties of an App. */
+    interface IApp {
+      /** App protocol */
+      protocol?: Long | null;
+
+      /** App software */
+      software?: string | null;
+    }
+
+    /** Represents an App. */
+    class App implements IApp {
+      /**
+       * Constructs a new App.
+       * @param [p] Properties to set
+       */
+      constructor(p?: tendermint.version.IApp);
+
+      /** App protocol. */
+      public protocol: Long;
+
+      /** App software. */
+      public software: string;
+
+      /**
+       * Creates a new App instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns App instance
+       */
+      public static create(properties?: tendermint.version.IApp): tendermint.version.App;
+
+      /**
+       * Encodes the specified App message. Does not implicitly {@link tendermint.version.App.verify|verify} messages.
+       * @param m App message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: tendermint.version.IApp, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes an App message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns App
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): tendermint.version.App;
+    }
+
+    /** Properties of a Consensus. */
+    interface IConsensus {
+      /** Consensus block */
+      block?: Long | null;
+
+      /** Consensus app */
+      app?: Long | null;
+    }
+
+    /** Represents a Consensus. */
+    class Consensus implements IConsensus {
+      /**
+       * Constructs a new Consensus.
+       * @param [p] Properties to set
+       */
+      constructor(p?: tendermint.version.IConsensus);
+
+      /** Consensus block. */
+      public block: Long;
+
+      /** Consensus app. */
+      public app: Long;
+
+      /**
+       * Creates a new Consensus instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns Consensus instance
+       */
+      public static create(properties?: tendermint.version.IConsensus): tendermint.version.Consensus;
+
+      /**
+       * Encodes the specified Consensus message. Does not implicitly {@link tendermint.version.Consensus.verify|verify} messages.
+       * @param m Consensus message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: tendermint.version.IConsensus, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a Consensus message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns Consensus
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): tendermint.version.Consensus;
     }
   }
 }
