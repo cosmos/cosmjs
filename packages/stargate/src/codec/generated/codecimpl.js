@@ -349,6 +349,321 @@ exports.cosmos = $root.cosmos = (() => {
     const bank = {};
     bank.v1beta1 = (function () {
       const v1beta1 = {};
+      v1beta1.Params = (function () {
+        function Params(p) {
+          this.sendEnabled = [];
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        Params.prototype.sendEnabled = $util.emptyArray;
+        Params.prototype.defaultSendEnabled = false;
+        Params.create = function create(properties) {
+          return new Params(properties);
+        };
+        Params.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.sendEnabled != null && m.sendEnabled.length) {
+            for (var i = 0; i < m.sendEnabled.length; ++i)
+              $root.cosmos.bank.v1beta1.SendEnabled.encode(m.sendEnabled[i], w.uint32(10).fork()).ldelim();
+          }
+          if (m.defaultSendEnabled != null && Object.hasOwnProperty.call(m, "defaultSendEnabled"))
+            w.uint32(16).bool(m.defaultSendEnabled);
+          return w;
+        };
+        Params.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.bank.v1beta1.Params();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                if (!(m.sendEnabled && m.sendEnabled.length)) m.sendEnabled = [];
+                m.sendEnabled.push($root.cosmos.bank.v1beta1.SendEnabled.decode(r, r.uint32()));
+                break;
+              case 2:
+                m.defaultSendEnabled = r.bool();
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return Params;
+      })();
+      v1beta1.SendEnabled = (function () {
+        function SendEnabled(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        SendEnabled.prototype.denom = "";
+        SendEnabled.prototype.enabled = false;
+        SendEnabled.create = function create(properties) {
+          return new SendEnabled(properties);
+        };
+        SendEnabled.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.denom != null && Object.hasOwnProperty.call(m, "denom")) w.uint32(10).string(m.denom);
+          if (m.enabled != null && Object.hasOwnProperty.call(m, "enabled")) w.uint32(16).bool(m.enabled);
+          return w;
+        };
+        SendEnabled.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.bank.v1beta1.SendEnabled();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.denom = r.string();
+                break;
+              case 2:
+                m.enabled = r.bool();
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return SendEnabled;
+      })();
+      v1beta1.Input = (function () {
+        function Input(p) {
+          this.coins = [];
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        Input.prototype.address = "";
+        Input.prototype.coins = $util.emptyArray;
+        Input.create = function create(properties) {
+          return new Input(properties);
+        };
+        Input.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.address != null && Object.hasOwnProperty.call(m, "address")) w.uint32(10).string(m.address);
+          if (m.coins != null && m.coins.length) {
+            for (var i = 0; i < m.coins.length; ++i)
+              $root.cosmos.base.v1beta1.Coin.encode(m.coins[i], w.uint32(18).fork()).ldelim();
+          }
+          return w;
+        };
+        Input.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.bank.v1beta1.Input();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.address = r.string();
+                break;
+              case 2:
+                if (!(m.coins && m.coins.length)) m.coins = [];
+                m.coins.push($root.cosmos.base.v1beta1.Coin.decode(r, r.uint32()));
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return Input;
+      })();
+      v1beta1.Output = (function () {
+        function Output(p) {
+          this.coins = [];
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        Output.prototype.address = "";
+        Output.prototype.coins = $util.emptyArray;
+        Output.create = function create(properties) {
+          return new Output(properties);
+        };
+        Output.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.address != null && Object.hasOwnProperty.call(m, "address")) w.uint32(10).string(m.address);
+          if (m.coins != null && m.coins.length) {
+            for (var i = 0; i < m.coins.length; ++i)
+              $root.cosmos.base.v1beta1.Coin.encode(m.coins[i], w.uint32(18).fork()).ldelim();
+          }
+          return w;
+        };
+        Output.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.bank.v1beta1.Output();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.address = r.string();
+                break;
+              case 2:
+                if (!(m.coins && m.coins.length)) m.coins = [];
+                m.coins.push($root.cosmos.base.v1beta1.Coin.decode(r, r.uint32()));
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return Output;
+      })();
+      v1beta1.Supply = (function () {
+        function Supply(p) {
+          this.total = [];
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        Supply.prototype.total = $util.emptyArray;
+        Supply.create = function create(properties) {
+          return new Supply(properties);
+        };
+        Supply.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.total != null && m.total.length) {
+            for (var i = 0; i < m.total.length; ++i)
+              $root.cosmos.base.v1beta1.Coin.encode(m.total[i], w.uint32(10).fork()).ldelim();
+          }
+          return w;
+        };
+        Supply.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.bank.v1beta1.Supply();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                if (!(m.total && m.total.length)) m.total = [];
+                m.total.push($root.cosmos.base.v1beta1.Coin.decode(r, r.uint32()));
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return Supply;
+      })();
+      v1beta1.DenomUnit = (function () {
+        function DenomUnit(p) {
+          this.aliases = [];
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        DenomUnit.prototype.denom = "";
+        DenomUnit.prototype.exponent = 0;
+        DenomUnit.prototype.aliases = $util.emptyArray;
+        DenomUnit.create = function create(properties) {
+          return new DenomUnit(properties);
+        };
+        DenomUnit.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.denom != null && Object.hasOwnProperty.call(m, "denom")) w.uint32(10).string(m.denom);
+          if (m.exponent != null && Object.hasOwnProperty.call(m, "exponent"))
+            w.uint32(16).uint32(m.exponent);
+          if (m.aliases != null && m.aliases.length) {
+            for (var i = 0; i < m.aliases.length; ++i) w.uint32(26).string(m.aliases[i]);
+          }
+          return w;
+        };
+        DenomUnit.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.bank.v1beta1.DenomUnit();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.denom = r.string();
+                break;
+              case 2:
+                m.exponent = r.uint32();
+                break;
+              case 3:
+                if (!(m.aliases && m.aliases.length)) m.aliases = [];
+                m.aliases.push(r.string());
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return DenomUnit;
+      })();
+      v1beta1.Metadata = (function () {
+        function Metadata(p) {
+          this.denomUnits = [];
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        Metadata.prototype.description = "";
+        Metadata.prototype.denomUnits = $util.emptyArray;
+        Metadata.prototype.base = "";
+        Metadata.prototype.display = "";
+        Metadata.create = function create(properties) {
+          return new Metadata(properties);
+        };
+        Metadata.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.description != null && Object.hasOwnProperty.call(m, "description"))
+            w.uint32(10).string(m.description);
+          if (m.denomUnits != null && m.denomUnits.length) {
+            for (var i = 0; i < m.denomUnits.length; ++i)
+              $root.cosmos.bank.v1beta1.DenomUnit.encode(m.denomUnits[i], w.uint32(18).fork()).ldelim();
+          }
+          if (m.base != null && Object.hasOwnProperty.call(m, "base")) w.uint32(26).string(m.base);
+          if (m.display != null && Object.hasOwnProperty.call(m, "display")) w.uint32(34).string(m.display);
+          return w;
+        };
+        Metadata.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.bank.v1beta1.Metadata();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.description = r.string();
+                break;
+              case 2:
+                if (!(m.denomUnits && m.denomUnits.length)) m.denomUnits = [];
+                m.denomUnits.push($root.cosmos.bank.v1beta1.DenomUnit.decode(r, r.uint32()));
+                break;
+              case 3:
+                m.base = r.string();
+                break;
+              case 4:
+                m.display = r.string();
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return Metadata;
+      })();
       v1beta1.Query = (function () {
         function Query(rpcImpl, requestDelimited, responseDelimited) {
           $protobuf.rpc.Service.call(this, rpcImpl, requestDelimited, responseDelimited);
@@ -762,7 +1077,7 @@ exports.cosmos = $root.cosmos = (() => {
         QueryParamsResponse.encode = function encode(m, w) {
           if (!w) w = $Writer.create();
           if (m.params != null && Object.hasOwnProperty.call(m, "params"))
-            $root.cosmos.auth.v1beta1.Params.encode(m.params, w.uint32(10).fork()).ldelim();
+            $root.cosmos.bank.v1beta1.Params.encode(m.params, w.uint32(10).fork()).ldelim();
           return w;
         };
         QueryParamsResponse.decode = function decode(r, l) {
@@ -773,7 +1088,7 @@ exports.cosmos = $root.cosmos = (() => {
             var t = r.uint32();
             switch (t >>> 3) {
               case 1:
-                m.params = $root.cosmos.auth.v1beta1.Params.decode(r, r.uint32());
+                m.params = $root.cosmos.bank.v1beta1.Params.decode(r, r.uint32());
                 break;
               default:
                 r.skipType(t & 7);
@@ -783,6 +1098,106 @@ exports.cosmos = $root.cosmos = (() => {
           return m;
         };
         return QueryParamsResponse;
+      })();
+      v1beta1.MsgSend = (function () {
+        function MsgSend(p) {
+          this.amount = [];
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        MsgSend.prototype.fromAddress = "";
+        MsgSend.prototype.toAddress = "";
+        MsgSend.prototype.amount = $util.emptyArray;
+        MsgSend.create = function create(properties) {
+          return new MsgSend(properties);
+        };
+        MsgSend.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.fromAddress != null && Object.hasOwnProperty.call(m, "fromAddress"))
+            w.uint32(10).string(m.fromAddress);
+          if (m.toAddress != null && Object.hasOwnProperty.call(m, "toAddress"))
+            w.uint32(18).string(m.toAddress);
+          if (m.amount != null && m.amount.length) {
+            for (var i = 0; i < m.amount.length; ++i)
+              $root.cosmos.base.v1beta1.Coin.encode(m.amount[i], w.uint32(26).fork()).ldelim();
+          }
+          return w;
+        };
+        MsgSend.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.bank.v1beta1.MsgSend();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.fromAddress = r.string();
+                break;
+              case 2:
+                m.toAddress = r.string();
+                break;
+              case 3:
+                if (!(m.amount && m.amount.length)) m.amount = [];
+                m.amount.push($root.cosmos.base.v1beta1.Coin.decode(r, r.uint32()));
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return MsgSend;
+      })();
+      v1beta1.MsgMultiSend = (function () {
+        function MsgMultiSend(p) {
+          this.inputs = [];
+          this.outputs = [];
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        MsgMultiSend.prototype.inputs = $util.emptyArray;
+        MsgMultiSend.prototype.outputs = $util.emptyArray;
+        MsgMultiSend.create = function create(properties) {
+          return new MsgMultiSend(properties);
+        };
+        MsgMultiSend.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.inputs != null && m.inputs.length) {
+            for (var i = 0; i < m.inputs.length; ++i)
+              $root.cosmos.bank.v1beta1.Input.encode(m.inputs[i], w.uint32(10).fork()).ldelim();
+          }
+          if (m.outputs != null && m.outputs.length) {
+            for (var i = 0; i < m.outputs.length; ++i)
+              $root.cosmos.bank.v1beta1.Output.encode(m.outputs[i], w.uint32(18).fork()).ldelim();
+          }
+          return w;
+        };
+        MsgMultiSend.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.bank.v1beta1.MsgMultiSend();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                if (!(m.inputs && m.inputs.length)) m.inputs = [];
+                m.inputs.push($root.cosmos.bank.v1beta1.Input.decode(r, r.uint32()));
+                break;
+              case 2:
+                if (!(m.outputs && m.outputs.length)) m.outputs = [];
+                m.outputs.push($root.cosmos.bank.v1beta1.Output.decode(r, r.uint32()));
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return MsgMultiSend;
       })();
       return v1beta1;
     })();

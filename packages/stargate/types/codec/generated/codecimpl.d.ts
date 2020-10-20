@@ -478,6 +478,361 @@ export namespace cosmos {
   namespace bank {
     /** Namespace v1beta1. */
     namespace v1beta1 {
+      /** Properties of a Params. */
+      interface IParams {
+        /** Params sendEnabled */
+        sendEnabled?: cosmos.bank.v1beta1.ISendEnabled[] | null;
+
+        /** Params defaultSendEnabled */
+        defaultSendEnabled?: boolean | null;
+      }
+
+      /** Represents a Params. */
+      class Params implements IParams {
+        /**
+         * Constructs a new Params.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.bank.v1beta1.IParams);
+
+        /** Params sendEnabled. */
+        public sendEnabled: cosmos.bank.v1beta1.ISendEnabled[];
+
+        /** Params defaultSendEnabled. */
+        public defaultSendEnabled: boolean;
+
+        /**
+         * Creates a new Params instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns Params instance
+         */
+        public static create(properties?: cosmos.bank.v1beta1.IParams): cosmos.bank.v1beta1.Params;
+
+        /**
+         * Encodes the specified Params message. Does not implicitly {@link cosmos.bank.v1beta1.Params.verify|verify} messages.
+         * @param m Params message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(m: cosmos.bank.v1beta1.IParams, w?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a Params message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns Params
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.bank.v1beta1.Params;
+      }
+
+      /** Properties of a SendEnabled. */
+      interface ISendEnabled {
+        /** SendEnabled denom */
+        denom?: string | null;
+
+        /** SendEnabled enabled */
+        enabled?: boolean | null;
+      }
+
+      /** Represents a SendEnabled. */
+      class SendEnabled implements ISendEnabled {
+        /**
+         * Constructs a new SendEnabled.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.bank.v1beta1.ISendEnabled);
+
+        /** SendEnabled denom. */
+        public denom: string;
+
+        /** SendEnabled enabled. */
+        public enabled: boolean;
+
+        /**
+         * Creates a new SendEnabled instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns SendEnabled instance
+         */
+        public static create(properties?: cosmos.bank.v1beta1.ISendEnabled): cosmos.bank.v1beta1.SendEnabled;
+
+        /**
+         * Encodes the specified SendEnabled message. Does not implicitly {@link cosmos.bank.v1beta1.SendEnabled.verify|verify} messages.
+         * @param m SendEnabled message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(m: cosmos.bank.v1beta1.ISendEnabled, w?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a SendEnabled message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns SendEnabled
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.bank.v1beta1.SendEnabled;
+      }
+
+      /** Properties of an Input. */
+      interface IInput {
+        /** Input address */
+        address?: string | null;
+
+        /** Input coins */
+        coins?: cosmos.base.v1beta1.ICoin[] | null;
+      }
+
+      /** Represents an Input. */
+      class Input implements IInput {
+        /**
+         * Constructs a new Input.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.bank.v1beta1.IInput);
+
+        /** Input address. */
+        public address: string;
+
+        /** Input coins. */
+        public coins: cosmos.base.v1beta1.ICoin[];
+
+        /**
+         * Creates a new Input instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns Input instance
+         */
+        public static create(properties?: cosmos.bank.v1beta1.IInput): cosmos.bank.v1beta1.Input;
+
+        /**
+         * Encodes the specified Input message. Does not implicitly {@link cosmos.bank.v1beta1.Input.verify|verify} messages.
+         * @param m Input message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(m: cosmos.bank.v1beta1.IInput, w?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes an Input message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns Input
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.bank.v1beta1.Input;
+      }
+
+      /** Properties of an Output. */
+      interface IOutput {
+        /** Output address */
+        address?: string | null;
+
+        /** Output coins */
+        coins?: cosmos.base.v1beta1.ICoin[] | null;
+      }
+
+      /** Represents an Output. */
+      class Output implements IOutput {
+        /**
+         * Constructs a new Output.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.bank.v1beta1.IOutput);
+
+        /** Output address. */
+        public address: string;
+
+        /** Output coins. */
+        public coins: cosmos.base.v1beta1.ICoin[];
+
+        /**
+         * Creates a new Output instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns Output instance
+         */
+        public static create(properties?: cosmos.bank.v1beta1.IOutput): cosmos.bank.v1beta1.Output;
+
+        /**
+         * Encodes the specified Output message. Does not implicitly {@link cosmos.bank.v1beta1.Output.verify|verify} messages.
+         * @param m Output message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(m: cosmos.bank.v1beta1.IOutput, w?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes an Output message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns Output
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.bank.v1beta1.Output;
+      }
+
+      /** Properties of a Supply. */
+      interface ISupply {
+        /** Supply total */
+        total?: cosmos.base.v1beta1.ICoin[] | null;
+      }
+
+      /** Represents a Supply. */
+      class Supply implements ISupply {
+        /**
+         * Constructs a new Supply.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.bank.v1beta1.ISupply);
+
+        /** Supply total. */
+        public total: cosmos.base.v1beta1.ICoin[];
+
+        /**
+         * Creates a new Supply instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns Supply instance
+         */
+        public static create(properties?: cosmos.bank.v1beta1.ISupply): cosmos.bank.v1beta1.Supply;
+
+        /**
+         * Encodes the specified Supply message. Does not implicitly {@link cosmos.bank.v1beta1.Supply.verify|verify} messages.
+         * @param m Supply message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(m: cosmos.bank.v1beta1.ISupply, w?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a Supply message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns Supply
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.bank.v1beta1.Supply;
+      }
+
+      /** Properties of a DenomUnit. */
+      interface IDenomUnit {
+        /** DenomUnit denom */
+        denom?: string | null;
+
+        /** DenomUnit exponent */
+        exponent?: number | null;
+
+        /** DenomUnit aliases */
+        aliases?: string[] | null;
+      }
+
+      /** Represents a DenomUnit. */
+      class DenomUnit implements IDenomUnit {
+        /**
+         * Constructs a new DenomUnit.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.bank.v1beta1.IDenomUnit);
+
+        /** DenomUnit denom. */
+        public denom: string;
+
+        /** DenomUnit exponent. */
+        public exponent: number;
+
+        /** DenomUnit aliases. */
+        public aliases: string[];
+
+        /**
+         * Creates a new DenomUnit instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns DenomUnit instance
+         */
+        public static create(properties?: cosmos.bank.v1beta1.IDenomUnit): cosmos.bank.v1beta1.DenomUnit;
+
+        /**
+         * Encodes the specified DenomUnit message. Does not implicitly {@link cosmos.bank.v1beta1.DenomUnit.verify|verify} messages.
+         * @param m DenomUnit message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(m: cosmos.bank.v1beta1.IDenomUnit, w?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a DenomUnit message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns DenomUnit
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.bank.v1beta1.DenomUnit;
+      }
+
+      /** Properties of a Metadata. */
+      interface IMetadata {
+        /** Metadata description */
+        description?: string | null;
+
+        /** Metadata denomUnits */
+        denomUnits?: cosmos.bank.v1beta1.IDenomUnit[] | null;
+
+        /** Metadata base */
+        base?: string | null;
+
+        /** Metadata display */
+        display?: string | null;
+      }
+
+      /** Represents a Metadata. */
+      class Metadata implements IMetadata {
+        /**
+         * Constructs a new Metadata.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.bank.v1beta1.IMetadata);
+
+        /** Metadata description. */
+        public description: string;
+
+        /** Metadata denomUnits. */
+        public denomUnits: cosmos.bank.v1beta1.IDenomUnit[];
+
+        /** Metadata base. */
+        public base: string;
+
+        /** Metadata display. */
+        public display: string;
+
+        /**
+         * Creates a new Metadata instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns Metadata instance
+         */
+        public static create(properties?: cosmos.bank.v1beta1.IMetadata): cosmos.bank.v1beta1.Metadata;
+
+        /**
+         * Encodes the specified Metadata message. Does not implicitly {@link cosmos.bank.v1beta1.Metadata.verify|verify} messages.
+         * @param m Metadata message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(m: cosmos.bank.v1beta1.IMetadata, w?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a Metadata message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns Metadata
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.bank.v1beta1.Metadata;
+      }
+
       /** Represents a Query */
       class Query extends $protobuf.rpc.Service {
         /**
@@ -1117,7 +1472,7 @@ export namespace cosmos {
       /** Properties of a QueryParamsResponse. */
       interface IQueryParamsResponse {
         /** QueryParamsResponse params */
-        params?: cosmos.auth.v1beta1.IParams | null;
+        params?: cosmos.bank.v1beta1.IParams | null;
       }
 
       /** Represents a QueryParamsResponse. */
@@ -1129,7 +1484,7 @@ export namespace cosmos {
         constructor(p?: cosmos.bank.v1beta1.IQueryParamsResponse);
 
         /** QueryParamsResponse params. */
-        public params?: cosmos.auth.v1beta1.IParams | null;
+        public params?: cosmos.bank.v1beta1.IParams | null;
 
         /**
          * Creates a new QueryParamsResponse instance using the specified properties.
@@ -1163,6 +1518,112 @@ export namespace cosmos {
           r: $protobuf.Reader | Uint8Array,
           l?: number,
         ): cosmos.bank.v1beta1.QueryParamsResponse;
+      }
+
+      /** Properties of a MsgSend. */
+      interface IMsgSend {
+        /** MsgSend fromAddress */
+        fromAddress?: string | null;
+
+        /** MsgSend toAddress */
+        toAddress?: string | null;
+
+        /** MsgSend amount */
+        amount?: cosmos.base.v1beta1.ICoin[] | null;
+      }
+
+      /** Represents a MsgSend. */
+      class MsgSend implements IMsgSend {
+        /**
+         * Constructs a new MsgSend.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.bank.v1beta1.IMsgSend);
+
+        /** MsgSend fromAddress. */
+        public fromAddress: string;
+
+        /** MsgSend toAddress. */
+        public toAddress: string;
+
+        /** MsgSend amount. */
+        public amount: cosmos.base.v1beta1.ICoin[];
+
+        /**
+         * Creates a new MsgSend instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns MsgSend instance
+         */
+        public static create(properties?: cosmos.bank.v1beta1.IMsgSend): cosmos.bank.v1beta1.MsgSend;
+
+        /**
+         * Encodes the specified MsgSend message. Does not implicitly {@link cosmos.bank.v1beta1.MsgSend.verify|verify} messages.
+         * @param m MsgSend message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(m: cosmos.bank.v1beta1.IMsgSend, w?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a MsgSend message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns MsgSend
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.bank.v1beta1.MsgSend;
+      }
+
+      /** Properties of a MsgMultiSend. */
+      interface IMsgMultiSend {
+        /** MsgMultiSend inputs */
+        inputs?: cosmos.bank.v1beta1.IInput[] | null;
+
+        /** MsgMultiSend outputs */
+        outputs?: cosmos.bank.v1beta1.IOutput[] | null;
+      }
+
+      /** Represents a MsgMultiSend. */
+      class MsgMultiSend implements IMsgMultiSend {
+        /**
+         * Constructs a new MsgMultiSend.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.bank.v1beta1.IMsgMultiSend);
+
+        /** MsgMultiSend inputs. */
+        public inputs: cosmos.bank.v1beta1.IInput[];
+
+        /** MsgMultiSend outputs. */
+        public outputs: cosmos.bank.v1beta1.IOutput[];
+
+        /**
+         * Creates a new MsgMultiSend instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns MsgMultiSend instance
+         */
+        public static create(
+          properties?: cosmos.bank.v1beta1.IMsgMultiSend,
+        ): cosmos.bank.v1beta1.MsgMultiSend;
+
+        /**
+         * Encodes the specified MsgMultiSend message. Does not implicitly {@link cosmos.bank.v1beta1.MsgMultiSend.verify|verify} messages.
+         * @param m MsgMultiSend message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(m: cosmos.bank.v1beta1.IMsgMultiSend, w?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a MsgMultiSend message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns MsgMultiSend
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.bank.v1beta1.MsgMultiSend;
       }
     }
   }
