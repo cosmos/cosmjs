@@ -24,7 +24,7 @@ module.exports = {
     "no-bitwise": "warn",
     "no-console": ["warn", { allow: ["error", "info", "table", "warn"] }],
     "no-param-reassign": "warn",
-    "no-shadow": "warn",
+    "no-shadow": "off", // disabled in favour of @typescript-eslint/no-shadow, see https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-shadow.md
     "no-unused-vars": "off", // disabled in favour of @typescript-eslint/no-unused-vars, see https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-unused-vars.md
     "prefer-const": "warn",
     radix: ["warn", "always"],
@@ -67,6 +67,7 @@ module.exports = {
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-floating-promises": "warn",
     "@typescript-eslint/no-parameter-properties": "warn",
+    "@typescript-eslint/no-shadow": "warn",
     "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_", varsIgnorePattern: "^_" }],
     "@typescript-eslint/no-unnecessary-type-assertion": "warn",
     "@typescript-eslint/no-use-before-define": "warn",
