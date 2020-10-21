@@ -70,7 +70,7 @@ export declare class Secp256k1HdWallet implements OfflineSigner {
   get mnemonic(): string;
   private get address();
   getAccounts(): Promise<readonly AccountData[]>;
-  sign(signerAddress: string, signDoc: StdSignDoc): Promise<SignResponse>;
+  signAmino(signerAddress: string, signDoc: StdSignDoc): Promise<SignResponse>;
   /**
    * Generates an encrypted serialization of this wallet.
    *

@@ -259,7 +259,7 @@ export class Secp256k1HdWallet implements OfflineSigner {
     ];
   }
 
-  public async sign(signerAddress: string, signDoc: StdSignDoc): Promise<SignResponse> {
+  public async signAmino(signerAddress: string, signDoc: StdSignDoc): Promise<SignResponse> {
     if (signerAddress !== this.address) {
       throw new Error(`Address ${signerAddress} not found in wallet`);
     }
