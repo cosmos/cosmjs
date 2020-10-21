@@ -52,7 +52,7 @@ export declare class StargateClient {
   private readonly queryClient;
   private chainId;
   static connect(endpoint: string): Promise<StargateClient>;
-  private constructor();
+  protected constructor(tmClient: TendermintClient);
   getChainId(): Promise<string>;
   getHeight(): Promise<number>;
   getAccount(searchAddress: string): Promise<Account | null>;

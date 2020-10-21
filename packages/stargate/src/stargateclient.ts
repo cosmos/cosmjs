@@ -123,7 +123,7 @@ export class StargateClient {
     return new StargateClient(tmClient);
   }
 
-  private constructor(tmClient: TendermintClient) {
+  protected constructor(tmClient: TendermintClient) {
     this.tmClient = tmClient;
     this.queryClient = QueryClient.withExtensions(tmClient, setupAuthExtension, setupBankExtension);
   }
