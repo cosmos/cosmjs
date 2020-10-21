@@ -9,9 +9,9 @@ const { SignDoc, AuthInfo } = cosmos.tx.v1beta1;
 /**
  * Creates and serializes an AuthInfo document using SIGN_MODE_DIRECT.
  */
-export function makeAuthInfo(
+export function makeAuthInfoBytes(
   pubkeys: readonly google.protobuf.IAny[],
-  feeAmount: cosmos.base.v1beta1.Coin[],
+  feeAmount: readonly cosmos.base.v1beta1.Coin[],
   gasLimit: number,
   sequence: number,
 ): Uint8Array {
@@ -25,23 +25,23 @@ export function makeAuthInfo(
         sequence: sequence ? Long.fromNumber(sequence) : undefined,
       }),
     ),
-    fee: { amount: feeAmount, gasLimit: Long.fromNumber(gasLimit) },
+    fee: { amount: [...feeAmount], gasLimit: Long.fromNumber(gasLimit) },
   };
   return Uint8Array.from(AuthInfo.encode(authInfo).finish());
 }
 
-export function makeSignBytes(
-  txBody: Uint8Array,
-  authInfo: Uint8Array,
-  chainId: string,
-  accountNumber: number,
-): Uint8Array {
+export function makeSignBytes({
+  accountNumber,
+  authInfoBytes,
+  bodyBytes,
+  chainId,
+}: cosmos.tx.v1beta1.ISignDoc): Uint8Array {
   const signDoc = SignDoc.create(
     omitDefaults({
-      bodyBytes: txBody,
-      authInfoBytes: authInfo,
-      chainId: chainId,
       accountNumber: accountNumber,
+      authInfoBytes: authInfoBytes,
+      bodyBytes: bodyBytes,
+      chainId: chainId,
     }),
   );
   return Uint8Array.from(SignDoc.encode(signDoc).finish());

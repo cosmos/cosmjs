@@ -2,15 +2,15 @@ import { cosmos, google } from "./codec";
 /**
  * Creates and serializes an AuthInfo document using SIGN_MODE_DIRECT.
  */
-export declare function makeAuthInfo(
+export declare function makeAuthInfoBytes(
   pubkeys: readonly google.protobuf.IAny[],
-  feeAmount: cosmos.base.v1beta1.Coin[],
+  feeAmount: readonly cosmos.base.v1beta1.Coin[],
   gasLimit: number,
   sequence: number,
 ): Uint8Array;
-export declare function makeSignBytes(
-  txBody: Uint8Array,
-  authInfo: Uint8Array,
-  chainId: string,
-  accountNumber: number,
-): Uint8Array;
+export declare function makeSignBytes({
+  accountNumber,
+  authInfoBytes,
+  bodyBytes,
+  chainId,
+}: cosmos.tx.v1beta1.ISignDoc): Uint8Array;
