@@ -20,3 +20,7 @@ export interface OfflineDirectSigner {
 }
 
 export type OfflineSigner = OfflineAminoSigner | OfflineDirectSigner;
+
+export function isOfflineDirectSigner(signer: OfflineSigner): signer is OfflineDirectSigner {
+  return (signer as any).signDirect !== undefined;
+}

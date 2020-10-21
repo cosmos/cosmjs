@@ -16,3 +16,4 @@ export interface OfflineDirectSigner {
   ) => Promise<DirectSignResponse>;
 }
 export declare type OfflineSigner = OfflineAminoSigner | OfflineDirectSigner;
+export declare function isOfflineDirectSigner(signer: OfflineSigner): signer is OfflineDirectSigner;
