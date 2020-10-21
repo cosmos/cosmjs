@@ -111,7 +111,7 @@ export {
 } from "./pubkey";
 export { findSequenceForSignedTx } from "./sequence";
 export { encodeSecp256k1Signature, decodeSignature } from "./signature";
-export { AccountData, Algo, OfflineSigner, SignResponse } from "./signer";
+export { AccountData, Algo, AminoSignResponse, OfflineSigner } from "./signer";
 export { CosmosFeeTable, SigningCosmosClient } from "./signingcosmosclient";
 export { isStdTx, isWrappedStdTx, makeStdTx, CosmosSdkTx, StdTx, WrappedStdTx, WrappedTx } from "./tx";
 export { pubkeyType, PubKey, StdFee, StdSignature } from "./types";

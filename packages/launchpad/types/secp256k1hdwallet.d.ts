@@ -1,6 +1,6 @@
 import { HdPath } from "@cosmjs/crypto";
 import { StdSignDoc } from "./encoding";
-import { AccountData, OfflineSigner, SignResponse } from "./signer";
+import { AccountData, AminoSignResponse, OfflineSigner } from "./signer";
 import { EncryptionConfiguration, KdfConfiguration } from "./wallet";
 /**
  * This interface describes a JSON object holding the encrypted wallet and the meta data.
@@ -70,7 +70,7 @@ export declare class Secp256k1HdWallet implements OfflineSigner {
   get mnemonic(): string;
   private get address();
   getAccounts(): Promise<readonly AccountData[]>;
-  signAmino(signerAddress: string, signDoc: StdSignDoc): Promise<SignResponse>;
+  signAmino(signerAddress: string, signDoc: StdSignDoc): Promise<AminoSignResponse>;
   /**
    * Generates an encrypted serialization of this wallet.
    *

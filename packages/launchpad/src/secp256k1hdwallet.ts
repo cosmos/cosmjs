@@ -16,7 +16,7 @@ import { assert, isNonNullObject } from "@cosmjs/utils";
 import { rawSecp256k1PubkeyToAddress } from "./address";
 import { serializeSignDoc, StdSignDoc } from "./encoding";
 import { encodeSecp256k1Signature } from "./signature";
-import { AccountData, OfflineSigner, SignResponse } from "./signer";
+import { AccountData, AminoSignResponse, OfflineSigner } from "./signer";
 import {
   decrypt,
   encrypt,
@@ -259,7 +259,7 @@ export class Secp256k1HdWallet implements OfflineSigner {
     ];
   }
 
-  public async signAmino(signerAddress: string, signDoc: StdSignDoc): Promise<SignResponse> {
+  public async signAmino(signerAddress: string, signDoc: StdSignDoc): Promise<AminoSignResponse> {
     if (signerAddress !== this.address) {
       throw new Error(`Address ${signerAddress} not found in wallet`);
     }
