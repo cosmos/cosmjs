@@ -3,8 +3,9 @@ import { fromBase64, toBase64 } from "@cosmjs/encoding";
 import {
   DirectSecp256k1Wallet,
   encodePubkey,
-  makeAuthInfo,
+  makeAuthInfoBytes,
   makeSignBytes,
+  makeSignDoc,
   Registry,
 } from "@cosmjs/proto-signing";
 import { assert, sleep } from "@cosmjs/utils";
@@ -292,15 +293,15 @@ describe("StargateClient", () => {
         },
       ];
       const gasLimit = 200000;
-      const authInfoBytes = makeAuthInfo([pubkey], feeAmount, gasLimit, sequence);
+      const authInfoBytes = makeAuthInfoBytes([pubkey], feeAmount, gasLimit, sequence);
 
       const chainId = await client.getChainId();
-      const signDocBytes = makeSignBytes(txBodyBytes, authInfoBytes, chainId, accountNumber);
-      const signature = await wallet.sign(address, signDocBytes);
+      const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);
+      const signResponse = await wallet.signDirect(address, signDoc);
       const txRaw = TxRaw.create({
         bodyBytes: txBodyBytes,
         authInfoBytes: authInfoBytes,
-        signatures: [fromBase64(signature.signature)],
+        signatures: [fromBase64(signResponse.signature.signature)],
       });
       const txRawBytes = Uint8Array.from(TxRaw.encode(txRaw).finish());
       const txResult = await client.broadcastTx(txRawBytes);
