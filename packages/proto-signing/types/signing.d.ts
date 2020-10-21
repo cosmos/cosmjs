@@ -7,6 +7,7 @@ export declare function makeAuthInfoBytes(
   feeAmount: readonly cosmos.base.v1beta1.Coin[],
   gasLimit: number,
   sequence: number,
+  signMode?: cosmos.tx.signing.v1beta1.SignMode,
 ): Uint8Array;
 export declare function makeSignDoc(
   bodyBytes: Uint8Array,

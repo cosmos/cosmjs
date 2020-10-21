@@ -14,13 +14,14 @@ export function makeAuthInfoBytes(
   feeAmount: readonly cosmos.base.v1beta1.Coin[],
   gasLimit: number,
   sequence: number,
+  signMode = cosmos.tx.signing.v1beta1.SignMode.SIGN_MODE_DIRECT,
 ): Uint8Array {
   const authInfo = {
     signerInfos: pubkeys.map(
       (pubkey): cosmos.tx.v1beta1.ISignerInfo => ({
         publicKey: pubkey,
         modeInfo: {
-          single: { mode: cosmos.tx.signing.v1beta1.SignMode.SIGN_MODE_DIRECT },
+          single: { mode: signMode },
         },
         sequence: sequence ? Long.fromNumber(sequence) : undefined,
       }),
