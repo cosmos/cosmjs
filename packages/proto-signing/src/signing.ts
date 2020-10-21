@@ -30,6 +30,20 @@ export function makeAuthInfoBytes(
   return Uint8Array.from(AuthInfo.encode(authInfo).finish());
 }
 
+export function makeSignDoc(
+  bodyBytes: Uint8Array,
+  authInfoBytes: Uint8Array,
+  chainId: string,
+  accountNumber: number,
+): cosmos.tx.v1beta1.ISignDoc {
+  return {
+    bodyBytes: bodyBytes,
+    authInfoBytes: authInfoBytes,
+    chainId: chainId,
+    accountNumber: Long.fromNumber(accountNumber),
+  };
+}
+
 export function makeSignBytes({
   accountNumber,
   authInfoBytes,

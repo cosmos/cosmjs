@@ -8,6 +8,12 @@ export declare function makeAuthInfoBytes(
   gasLimit: number,
   sequence: number,
 ): Uint8Array;
+export declare function makeSignDoc(
+  bodyBytes: Uint8Array,
+  authInfoBytes: Uint8Array,
+  chainId: string,
+  accountNumber: number,
+): cosmos.tx.v1beta1.ISignDoc;
 export declare function makeSignBytes({
   accountNumber,
   authInfoBytes,

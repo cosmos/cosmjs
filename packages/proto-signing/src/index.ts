@@ -4,4 +4,4 @@ export { Registry } from "./registry";
 export { DirectSecp256k1Wallet } from "./directsecp256k1wallet";
 export { decodePubkey, encodePubkey } from "./pubkey";
 export { OfflineDirectSigner, OfflineSigner } from "./signer";
-export { makeAuthInfoBytes, makeSignBytes } from "./signing";
+export { makeAuthInfoBytes, makeSignBytes, makeSignDoc } from "./signing";

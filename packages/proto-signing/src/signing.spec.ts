@@ -6,7 +6,7 @@ import { cosmos, google } from "./codec";
 import { DirectSecp256k1Wallet } from "./directsecp256k1wallet";
 import { defaultRegistry } from "./msgs";
 import { Registry, TxBodyValue } from "./registry";
-import { makeAuthInfoBytes, makeSignBytes } from "./signing";
+import { makeAuthInfoBytes, makeSignBytes, makeSignDoc } from "./signing";
 import { faucet, testVectors } from "./testutils.spec";
 
 const { Tx, TxRaw } = cosmos.tx.v1beta1;
@@ -97,12 +97,7 @@ describe("signing", () => {
     await Promise.all(
       testVectors.map(async ({ sequence, signBytes, signedTxBytes }) => {
         const authInfoBytes = makeAuthInfoBytes([publicKeyAny], feeAmount, gasLimit, sequence);
-        const signDoc = {
-          bodyBytes: txBodyBytes,
-          authInfoBytes: authInfoBytes,
-          chainId: chainId,
-          accountNumber: Long.fromNumber(accountNumber),
-        };
+        const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);
         const signDocBytes = makeSignBytes(signDoc);
         expect(toHex(signDocBytes)).toEqual(signBytes);
 

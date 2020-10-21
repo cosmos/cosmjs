@@ -4,7 +4,7 @@ import { coins } from "@cosmjs/launchpad";
 import Long from "long";
 
 import { DirectSecp256k1Wallet } from "./directsecp256k1wallet";
-import { makeAuthInfoBytes, makeSignBytes } from "./signing";
+import { makeAuthInfoBytes, makeSignBytes, makeSignDoc } from "./signing";
 import { faucet, testVectors } from "./testutils.spec";
 
 describe("DirectSecp256k1Wallet", () => {
@@ -68,12 +68,14 @@ describe("DirectSecp256k1Wallet", () => {
       };
       const fee = coins(2000, "ucosm");
       const gasLimit = 200000;
-      const signDoc = {
-        bodyBytes: fromHex(bodyBytes),
-        authInfoBytes: makeAuthInfoBytes([pubkey], fee, gasLimit, sequence),
-        accountNumber: Long.fromNumber(1),
-        chainId: "simd-testing",
-      };
+      const chainId = "simd-testing";
+      const accountNumber = 1;
+      const signDoc = makeSignDoc(
+        fromHex(bodyBytes),
+        makeAuthInfoBytes([pubkey], fee, gasLimit, sequence),
+        chainId,
+        accountNumber,
+      );
       const signDocBytes = makeSignBytes(signDoc);
       const signResponse = await wallet.signDirect(faucet.address, signDoc);
       const valid = await Secp256k1.verifySignature(
