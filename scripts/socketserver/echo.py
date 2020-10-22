@@ -4,7 +4,6 @@
 import argparse
 import asyncio
 import websockets
-import sys
 import time
 
 HOST = "0.0.0.0"
