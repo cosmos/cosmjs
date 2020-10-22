@@ -126,7 +126,7 @@ async function executeContract(
 
   const { account_number, sequence } = (await client.auth.account(alice.address0)).result.value;
   const signDoc = makeSignDoc([theMsg], fee, wasmd.chainId, memo, account_number, sequence);
-  const { signed, signature } = await signer.sign(alice.address0, signDoc);
+  const { signed, signature } = await signer.signAmino(alice.address0, signDoc);
   const signedTx = makeStdTx(signed, signature);
   return client.broadcastTx(signedTx);
 }

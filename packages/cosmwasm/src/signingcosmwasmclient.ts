@@ -361,7 +361,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     const { accountNumber, sequence } = await this.getSequence();
     const chainId = await this.getChainId();
     const signDoc = makeSignDoc(msgs, fee, chainId, memo, accountNumber, sequence);
-    const { signed, signature } = await this.signer.sign(this.senderAddress, signDoc);
+    const { signed, signature } = await this.signer.signAmino(this.senderAddress, signDoc);
     const signedTx = makeStdTx(signed, signature);
     return this.broadcastTx(signedTx);
   }
