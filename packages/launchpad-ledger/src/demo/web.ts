@@ -109,7 +109,7 @@ window.sign = async function sign(signer: LedgerSigner | undefined): Promise<voi
     const address = document.getElementById("address").value;
     const signDocJson = document.getElementById("sign-doc").textContent;
     const signDoc: StdSignDoc = JSON.parse(signDocJson);
-    const signature = await signer.sign(address, signDoc);
+    const signature = await signer.signAmino(address, signDoc);
     signatureDiv.textContent = JSON.stringify(signature, null, "\t");
   } catch (error) {
     signatureDiv.textContent = error;

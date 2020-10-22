@@ -6,7 +6,7 @@ import {
   OfflineSigner,
   StdSignDoc,
 } from "@cosmjs/launchpad";
-import { serializeSignDoc, SignResponse } from "@cosmjs/launchpad";
+import { AminoSignResponse, serializeSignDoc } from "@cosmjs/launchpad";
 import Transport from "@ledgerhq/hw-transport";
 
 import { LaunchpadLedger, LaunchpadLedgerOptions } from "./launchpadledger";
@@ -36,7 +36,7 @@ export class LedgerSigner implements OfflineSigner {
     return this.accounts;
   }
 
-  public async sign(signerAddress: string, signDoc: StdSignDoc): Promise<SignResponse> {
+  public async signAmino(signerAddress: string, signDoc: StdSignDoc): Promise<AminoSignResponse> {
     const accounts = this.accounts || (await this.getAccounts());
     const accountIndex = accounts.findIndex((account) => account.address === signerAddress);
 

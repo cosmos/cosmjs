@@ -57,6 +57,6 @@ export async function sign(
     },
   ];
   const signDoc = makeSignDoc(msgs, defaultFee, defaultChainId, defaultMemo, accountNumber, defaultSequence);
-  const { signature } = await signer.sign(fromAddress, signDoc);
+  const { signature } = await signer.signAmino(fromAddress, signDoc);
   return signature;
 }
