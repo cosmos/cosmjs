@@ -1,4 +1,4 @@
-import { coin, coins, GasPrice } from "@cosmjs/launchpad";
+import { coin, coins, GasPrice, Secp256k1HdWallet } from "@cosmjs/launchpad";
 import { DirectSecp256k1Wallet, Registry } from "@cosmjs/proto-signing";
 import { assert } from "@cosmjs/utils";
 
@@ -126,7 +126,7 @@ describe("SigningStargateClient", () => {
   });
 
   describe("signAndBroadcast", () => {
-    it("works", async () => {
+    it("works with direct mode", async () => {
       pendingWithoutSimapp();
       const wallet = await DirectSecp256k1Wallet.fromMnemonic(faucet.mnemonic);
       const msgDelegateTypeUrl = "/cosmos.staking.v1beta1.MsgDelegate";
@@ -147,6 +147,33 @@ describe("SigningStargateClient", () => {
       const fee = {
         amount: coins(2000, "ucosm"),
         gas: "180000", // 180k
+      };
+      const memo = "Use your power wisely";
+      const result = await client.signAndBroadcast(faucet.address0, [msgAny], fee, memo);
+      assertIsBroadcastTxSuccess(result);
+    });
+
+    it("works with legacy Amino mode", async () => {
+      pendingWithoutSimapp();
+      const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+      const msgDelegateTypeUrl = "/cosmos.staking.v1beta1.MsgDelegate";
+      const registry = new Registry();
+      registry.register(msgDelegateTypeUrl, cosmos.staking.v1beta1.MsgDelegate);
+      const options = { registry: registry };
+      const client = await SigningStargateClient.connectWithWallet(simapp.tendermintUrl, wallet, options);
+
+      const msg = cosmos.staking.v1beta1.MsgDelegate.create({
+        delegatorAddress: faucet.address0,
+        validatorAddress: validator.validatorAddress,
+        amount: coin(1234, "ustake"),
+      });
+      const msgAny = {
+        typeUrl: msgDelegateTypeUrl,
+        value: msg,
+      };
+      const fee = {
+        amount: coins(2000, "ucosm"),
+        gas: "200000",
       };
       const memo = "Use your power wisely";
       const result = await client.signAndBroadcast(faucet.address0, [msgAny], fee, memo);

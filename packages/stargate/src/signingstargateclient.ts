@@ -1,13 +1,17 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { fromBase64 } from "@cosmjs/encoding";
 import {
+  AccountData,
   buildFeeTable,
   Coin,
   CosmosFeeTable,
   encodeSecp256k1Pubkey,
   GasLimits,
   GasPrice,
+  makeSignDoc as makeSignDocAmino,
+  Msg,
   StdFee,
+  StdSignDoc,
 } from "@cosmjs/launchpad";
 import { Int53 } from "@cosmjs/math";
 import {
@@ -25,6 +29,40 @@ import { cosmos } from "./codec";
 import { BroadcastTxResponse, StargateClient } from "./stargateclient";
 
 const { TxRaw } = cosmos.tx.v1beta1;
+
+function snakifyMsgValue(obj: Msg): Msg {
+  return {
+    ...obj,
+    value: Object.entries(obj.value).reduce(
+      (snakified, [key, value]) => ({
+        ...snakified,
+        [key
+          .split(/(?=[A-Z])/)
+          .join("_")
+          .toLowerCase()]: value,
+      }),
+      {},
+    ),
+  };
+}
+
+function snakifyForAmino(signDoc: StdSignDoc): StdSignDoc {
+  return {
+    ...signDoc,
+    msgs: signDoc.msgs.map(snakifyMsgValue),
+  };
+}
+
+function getMsgType(typeUrl: string): string {
+  const typeRegister: Record<string, string> = {
+    "/cosmos.staking.v1beta1.MsgDelegate": "cosmos-sdk/MsgDelegate",
+  };
+  const type = typeRegister[typeUrl];
+  if (!type) {
+    throw new Error("Type URL not known");
+  }
+  return type;
+}
 
 const defaultGasPrice = GasPrice.fromString("0.025ucosm");
 const defaultGasLimits: GasLimits<CosmosFeeTable> = { send: 80000 };
@@ -90,12 +128,8 @@ export class SigningStargateClient extends StargateClient {
     fee: StdFee,
     memo = "",
   ): Promise<BroadcastTxResponse> {
-    if (!isOfflineDirectSigner(this.signer)) {
-      throw new Error("Amino signer not yet supported");
-    }
-
     const accountFromSigner = (await this.signer.getAccounts()).find(
-      (account) => account.address === address,
+      (account: AccountData) => account.address === address,
     );
     if (!accountFromSigner) {
       throw new Error("Failed to retrieve account from signer");
@@ -120,10 +154,29 @@ export class SigningStargateClient extends StargateClient {
       value: txBody,
     });
     const gasLimit = Int53.fromString(fee.gas).toNumber();
-    const authInfoBytes = makeAuthInfoBytes([pubkeyAny], fee.amount, gasLimit, sequence);
 
-    const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);
-    const signResponse = await this.signer.signDirect(address, signDoc);
+    if (isOfflineDirectSigner(this.signer)) {
+      const authInfoBytes = makeAuthInfoBytes([pubkeyAny], fee.amount, gasLimit, sequence);
+      const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);
+      const signResponse = await this.signer.signDirect(address, signDoc);
+      const txRaw = TxRaw.create({
+        bodyBytes: txBodyBytes,
+        authInfoBytes: authInfoBytes,
+        signatures: [fromBase64(signResponse.signature.signature)],
+      });
+      const signedTx = Uint8Array.from(TxRaw.encode(txRaw).finish());
+      return this.broadcastTx(signedTx);
+    }
+
+    // Amino signer
+    const signMode = cosmos.tx.signing.v1beta1.SignMode.SIGN_MODE_LEGACY_AMINO_JSON;
+    const authInfoBytes = makeAuthInfoBytes([pubkeyAny], fee.amount, gasLimit, sequence, signMode);
+    const msgs = messages.map((msg) => ({
+      type: getMsgType(msg.typeUrl),
+      value: msg.value,
+    }));
+    const signDoc = makeSignDocAmino(msgs, fee, chainId, memo, accountNumber, sequence);
+    const signResponse = await this.signer.signAmino(address, snakifyForAmino(signDoc));
     const txRaw = TxRaw.create({
       bodyBytes: txBodyBytes,
       authInfoBytes: authInfoBytes,
