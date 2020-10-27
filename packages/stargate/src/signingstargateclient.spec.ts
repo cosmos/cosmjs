@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { coin, coins, GasPrice, Secp256k1HdWallet } from "@cosmjs/launchpad";
-import { DirectSecp256k1Wallet, Registry } from "@cosmjs/proto-signing";
+import { Coin, cosmosField, DirectSecp256k1Wallet, registered, Registry } from "@cosmjs/proto-signing";
 import { assert } from "@cosmjs/utils";
+import { Message } from "protobufjs";
 
 import { cosmos } from "./codec";
 import { PrivateSigningStargateClient, SigningStargateClient } from "./signingstargateclient";
@@ -156,17 +158,30 @@ describe("SigningStargateClient", () => {
     it("works with legacy Amino mode", async () => {
       pendingWithoutSimapp();
       const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+      const coinTypeUrl = "/cosmos.base.v1beta.Coin";
       const msgDelegateTypeUrl = "/cosmos.staking.v1beta1.MsgDelegate";
       const registry = new Registry();
-      registry.register(msgDelegateTypeUrl, cosmos.staking.v1beta1.MsgDelegate);
+      registry.register(coinTypeUrl, Coin);
+
+      @registered(registry, msgDelegateTypeUrl)
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      class MsgDelegate extends Message {
+        @cosmosField.string(1)
+        public readonly delegator_address?: string;
+        @cosmosField.string(2)
+        public readonly validator_address?: string;
+        @cosmosField.message(3, Coin)
+        public readonly amount?: Coin;
+      }
+
       const options = { registry: registry };
       const client = await SigningStargateClient.connectWithWallet(simapp.tendermintUrl, wallet, options);
 
-      const msg = cosmos.staking.v1beta1.MsgDelegate.create({
-        delegatorAddress: faucet.address0,
-        validatorAddress: validator.validatorAddress,
+      const msg = {
+        delegator_address: faucet.address0,
+        validator_address: validator.validatorAddress,
         amount: coin(1234, "ustake"),
-      });
+      };
       const msgAny = {
         typeUrl: msgDelegateTypeUrl,
         value: msg,
