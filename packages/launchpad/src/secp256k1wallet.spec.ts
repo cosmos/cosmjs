@@ -30,7 +30,7 @@ describe("Secp256k1Wallet", () => {
     });
   });
 
-  describe("sign", () => {
+  describe("signAmino", () => {
     it("resolves to valid signature", async () => {
       const signer = await Secp256k1Wallet.fromKey(defaultPrivkey);
       const signDoc: StdSignDoc = {
@@ -41,7 +41,7 @@ describe("Secp256k1Wallet", () => {
         account_number: "7",
         sequence: "54",
       };
-      const { signed, signature } = await signer.sign(defaultAddress, signDoc);
+      const { signed, signature } = await signer.signAmino(defaultAddress, signDoc);
       expect(signed).toEqual(signDoc);
       const valid = await Secp256k1.verifySignature(
         Secp256k1Signature.fromFixedLength(fromBase64(signature.signature)),

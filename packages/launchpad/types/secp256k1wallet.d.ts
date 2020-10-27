@@ -1,5 +1,5 @@
 import { StdSignDoc } from "./encoding";
-import { AccountData, OfflineSigner, SignResponse } from "./signer";
+import { AccountData, OfflineSigner, AminoSignResponse } from "./signer";
 /**
  * A wallet that holds a single secp256k1 keypair.
  *
@@ -19,5 +19,5 @@ export declare class Secp256k1Wallet implements OfflineSigner {
   private constructor();
   private get address();
   getAccounts(): Promise<readonly AccountData[]>;
-  sign(signerAddress: string, signDoc: StdSignDoc): Promise<SignResponse>;
+  signAmino(signerAddress: string, signDoc: StdSignDoc): Promise<AminoSignResponse>;
 }
