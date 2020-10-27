@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { fromBase64, fromHex, toHex } from "@cosmjs/encoding";
-import Long from "long";
 
 import { cosmos, google } from "./codec";
 import { DirectSecp256k1Wallet } from "./directsecp256k1wallet";

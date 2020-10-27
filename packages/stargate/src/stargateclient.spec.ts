@@ -4,7 +4,6 @@ import {
   DirectSecp256k1Wallet,
   encodePubkey,
   makeAuthInfoBytes,
-  makeSignBytes,
   makeSignDoc,
   Registry,
 } from "@cosmjs/proto-signing";
