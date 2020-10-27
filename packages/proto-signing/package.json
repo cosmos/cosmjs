@@ -1,7 +1,7 @@
 {
   "name": "@cosmjs/proto-signing",
   "private": true,
-  "version": "0.23.0",
+  "version": "0.23.1",
   "description": "Utilities for protobuf based signing (Cosmos SDK 0.40+)",
   "contributors": [
     "Will Clark <willclarktech@users.noreply.github.com>",
@@ -46,12 +46,12 @@
     "postdefine-proto": "prettier --write \"src/codec/generated/codecimpl.*\""
   },
   "dependencies": {
-    "@cosmjs/launchpad": "^0.23.0",
+    "@cosmjs/launchpad": "^0.23.1",
     "long": "^4.0.0",
     "protobufjs": "~6.10.0"
   },
   "devDependencies": {
-    "@cosmjs/encoding": "^0.23.0",
-    "@cosmjs/utils": "^0.23.0"
+    "@cosmjs/encoding": "^0.23.1",
+    "@cosmjs/utils": "^0.23.1"
   }
 }
