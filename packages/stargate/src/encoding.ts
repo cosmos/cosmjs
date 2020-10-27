@@ -1,28 +1,3 @@
-import { Msg, StdSignDoc } from "@cosmjs/launchpad";
-
-function snakifyMsgValue(obj: Msg): Msg {
-  return {
-    ...obj,
-    value: Object.entries(obj.value).reduce(
-      (snakified, [key, value]) => ({
-        ...snakified,
-        [key
-          .split(/(?=[A-Z])/)
-          .join("_")
-          .toLowerCase()]: value,
-      }),
-      {},
-    ),
-  };
-}
-
-export function snakifyForAmino(signDoc: StdSignDoc): StdSignDoc {
-  return {
-    ...signDoc,
-    msgs: signDoc.msgs.map(snakifyMsgValue),
-  };
-}
-
 export function getMsgType(typeUrl: string): string {
   const typeRegister: Record<string, string> = {
     "/cosmos.bank.v1beta1.MsgSend": "cosmos-sdk/MsgSend",
