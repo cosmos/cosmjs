@@ -9,9 +9,7 @@ import {
   GasLimits,
   GasPrice,
   makeSignDoc as makeSignDocAmino,
-  Msg,
   StdFee,
-  StdSignDoc,
 } from "@cosmjs/launchpad";
 import { Int53 } from "@cosmjs/math";
 import {
@@ -26,43 +24,10 @@ import {
 import { Client as TendermintClient } from "@cosmjs/tendermint-rpc";
 
 import { cosmos } from "./codec";
+import { getMsgType, snakifyForAmino } from "./encoding";
 import { BroadcastTxResponse, StargateClient } from "./stargateclient";
 
 const { TxRaw } = cosmos.tx.v1beta1;
-
-function snakifyMsgValue(obj: Msg): Msg {
-  return {
-    ...obj,
-    value: Object.entries(obj.value).reduce(
-      (snakified, [key, value]) => ({
-        ...snakified,
-        [key
-          .split(/(?=[A-Z])/)
-          .join("_")
-          .toLowerCase()]: value,
-      }),
-      {},
-    ),
-  };
-}
-
-function snakifyForAmino(signDoc: StdSignDoc): StdSignDoc {
-  return {
-    ...signDoc,
-    msgs: signDoc.msgs.map(snakifyMsgValue),
-  };
-}
-
-function getMsgType(typeUrl: string): string {
-  const typeRegister: Record<string, string> = {
-    "/cosmos.staking.v1beta1.MsgDelegate": "cosmos-sdk/MsgDelegate",
-  };
-  const type = typeRegister[typeUrl];
-  if (!type) {
-    throw new Error("Type URL not known");
-  }
-  return type;
-}
 
 const defaultGasPrice = GasPrice.fromString("0.025ucosm");
 const defaultGasLimits: GasLimits<CosmosFeeTable> = { send: 80000 };
