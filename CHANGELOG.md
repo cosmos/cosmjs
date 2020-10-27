@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 0.23.1 (unreleased)
+## 0.23.1 (2020-10-27)
 
 - @cosmjs/crypto: Export new convenience functions `keccak256`, `ripemd160`,
   `sha1`, `sha256` and `sha512`.
