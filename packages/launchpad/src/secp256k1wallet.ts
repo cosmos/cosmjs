@@ -12,12 +12,12 @@ import { AccountData, OfflineSigner, SignResponse } from "./signer";
  */
 export class Secp256k1Wallet implements OfflineSigner {
   /**
-   * Creates a Secp256k1 key signer from the given private key
+   * Creates a Secp256k1Wallet from the given private key
    *
    * @param privkey The private key.
    * @param prefix The bech32 address prefix (human readable part). Defaults to "cosmos".
    */
-  public static async fromPrivkey(privkey: Uint8Array, prefix = "cosmos"): Promise<Secp256k1Wallet> {
+  public static async fromKey(privkey: Uint8Array, prefix = "cosmos"): Promise<Secp256k1Wallet> {
     const uncompressed = (await Secp256k1.makeKeypair(privkey)).pubkey;
     return new Secp256k1Wallet(privkey, Secp256k1.compressPubkey(uncompressed), prefix);
   }
