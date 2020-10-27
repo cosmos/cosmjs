@@ -31,7 +31,7 @@ describe("Secp256k1Wallet", () => {
   });
 
   describe("sign", () => {
-    it("resolves to valid signature if enabled", async () => {
+    it("resolves to valid signature", async () => {
       const signer = await Secp256k1Wallet.fromKey(defaultPrivkey);
       const signDoc: StdSignDoc = {
         msgs: [],

@@ -55,7 +55,7 @@ describe("DirectSecp256k1Wallet", () => {
   });
 
   describe("sign", () => {
-    it("resolves to valid signature if enabled", async () => {
+    it("resolves to valid signature", async () => {
       const wallet = await DirectSecp256k1Wallet.fromMnemonic(defaultMnemonic);
       const message = toAscii("foo bar");
       const signature = await wallet.sign(defaultAddress, message);
