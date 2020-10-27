@@ -110,7 +110,7 @@ describe("Secp256k1HdWallet", () => {
   });
 
   describe("sign", () => {
-    it("resolves to valid signature if enabled", async () => {
+    it("resolves to valid signature", async () => {
       const wallet = await Secp256k1HdWallet.fromMnemonic(defaultMnemonic);
       const signDoc: StdSignDoc = {
         msgs: [],

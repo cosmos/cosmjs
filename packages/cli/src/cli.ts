@@ -117,6 +117,7 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
         "PubKey",
         "pubkeyToAddress",
         "Secp256k1HdWallet",
+        "Secp256k1Wallet",
         "SigningCosmosClient",
         "StdFee",
         "StdSignDoc",
@@ -161,6 +162,10 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
       assert(decoded === original);
 
       assert(Decimal.fromAtomics("12870000", 6).toString() === "12.87");
+
+      const oneKeyWallet = await Secp256k1Wallet.fromKey(fromHex("b8c462d2bb0c1a92edf44f735021f16c270f28ee2c3d1cb49943a5e70a3c763e"));
+      const accounts = await oneKeyWallet.getAccounts();
+      assert(accounts[0].address == "cosmos1kxt5x5q2l57ma2d434pqpafxdm0mgeg9c8cvtx");
 
       const mnemonic = Bip39.encode(Random.getBytes(16)).toString();
       const wallet = await Secp256k1HdWallet.fromMnemonic(mnemonic, makeCosmoshubPath(0));
