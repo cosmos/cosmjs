@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.24.0 (unreleased)
+
+- @cosmjs/cosmwasm: `logs` is no longer exported. Use `logs` from
+  @cosmjs/launchpad instead.
+
 ## 0.23.1 (2020-10-27)
 
 - @cosmjs/crypto: Export new convenience functions `keccak256`, `ripemd160`,
