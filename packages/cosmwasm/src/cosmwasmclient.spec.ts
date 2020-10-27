@@ -4,6 +4,7 @@ import { Bech32, fromHex, fromUtf8, toAscii, toBase64 } from "@cosmjs/encoding";
 import {
   assertIsBroadcastTxSuccess,
   isWrappedStdTx,
+  logs,
   makeSignDoc,
   makeStdTx,
   MsgSend,
@@ -14,7 +15,6 @@ import { assert, sleep } from "@cosmjs/utils";
 import { ReadonlyDate } from "readonly-date";
 
 import { Code, CosmWasmClient, PrivateCosmWasmClient } from "./cosmwasmclient";
-import { findAttribute } from "./logs";
 import { SigningCosmWasmClient } from "./signingcosmwasmclient";
 import cosmoshub from "./testdata/cosmoshub.json";
 import {
@@ -244,10 +244,9 @@ describe("CosmWasmClient", () => {
       const signedTx = makeStdTx(signed, signature);
       const result = await client.broadcastTx(signedTx);
       assertIsBroadcastTxSuccess(result);
-      const { logs, transactionHash } = result;
-      const amountAttr = findAttribute(logs, "transfer", "amount");
+      const amountAttr = logs.findAttribute(result.logs, "transfer", "amount");
       expect(amountAttr.value).toEqual("1234567ucosm");
-      expect(transactionHash).toMatch(/^[0-9A-F]{64}$/);
+      expect(result.transactionHash).toMatch(/^[0-9A-F]{64}$/);
     });
   });
 
