@@ -4,6 +4,8 @@
 
 - @cosmjs/cosmwasm: `logs` is no longer exported. Use `logs` from
   @cosmjs/launchpad instead.
+- @cosmjs/launchpad: Add `Secp256k1Wallet` to manage a single raw secp256k1
+  keypair.
 
 ## 0.23.1 (2020-10-27)
 
