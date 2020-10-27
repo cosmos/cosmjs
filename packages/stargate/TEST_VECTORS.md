@@ -1,10 +1,12 @@
 # How to generate test vectors
 
-You need to compile a version of `simd` locally and sign some transactions.
-It seems my printfs got committed into master somehow, so we have debug info without forking!
+You need to compile a version of `simd` locally and sign some transactions. It
+seems my printfs got committed into master somehow, so we have debug info
+without forking!
 
-The following was tested on `v0.40.0-rc0` of [`cosmos-sdk`](https://github.com/cosmos/cosmos-sdk).
-Just a little patch from my branch (which can be rebased).
+The following was tested on `v0.40.0-rc0` of
+[`cosmos-sdk`](https://github.com/cosmos/cosmos-sdk). Just a little patch from
+my branch (which can be rebased).
 
 ## Setup
 
@@ -21,9 +23,10 @@ ls -l ./build/simd
 # I got `goz-phase-1-706-g1a67086b6` for commit `1a67086b6`
 ```
 
-**IMPORTANT** this stores the proper `simd` binary in `./build/simd`. You may well have another one
-in your global path, so calling `simd` instead of `./build/simd` may lead to confusing results.
-Please use the path to ensure the proper version.
+**IMPORTANT** this stores the proper `simd` binary in `./build/simd`. You may
+well have another one in your global path, so calling `simd` instead of
+`./build/simd` may lead to confusing results. Please use the path to ensure the
+proper version.
 
 ## Prepare the Keys
 
@@ -46,15 +49,16 @@ This uses the testgen mnemonic:
 
 ## Create the transactions
 
-First we create the unsigned transaction template we will be signing. We want to use the same flags as
-the testvectors create manually.
+First we create the unsigned transaction template we will be signing. We want to
+use the same flags as the testvectors create manually.
 
 ```
 ./build/simd tx bank send --generate-only --chain-id simd-testing --fees 2000ucosm $(./build/simd keys show -a testgen) cosmos1qypqxpq9qcrsszg2pvxq6rs0zqg3yyc5lzv7xu 1234567ucosm > unsigned_tx.json
 ```
 
-This is what I get from `jq . unsigned_tx.json`, which is slightly different that the current test vector, in that
-I added a non-empty fee amount to properly test that:
+This is what I get from `jq . unsigned_tx.json`, which is slightly different
+that the current test vector, in that I added a non-empty fee amount to properly
+test that:
 
 ```json
 {
@@ -97,8 +101,8 @@ I added a non-empty fee amount to properly test that:
 
 ## Generating Signatures
 
-All current test vectors were signed from account number 1, with increasing signatures (0, 1, 2).
-You can produce these with the following commands:
+All current test vectors were signed from account number 1, with increasing
+signatures (0, 1, 2). You can produce these with the following commands:
 
 ```
 # you may not need `--home /tmp` but I got an odd error without it
