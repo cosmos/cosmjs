@@ -176,7 +176,7 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
         gas: "89000000",
       };
       const signDoc = makeSignDoc([], fee, "chain-xyz", "hello, world", 1, 2);
-      const { signed, signature } = await wallet.sign(address, signDoc);
+      const { signed, signature } = await wallet.signAmino(address, signDoc);
       assert(signed.memo === "hello, world");
 
       const bechPubkey = "coralvalconspub1zcjduepqvxg72ccnl9r65fv0wn3amlk4sfzqfe2k36l073kjx2qyaf6sk23qw7j8wq";
