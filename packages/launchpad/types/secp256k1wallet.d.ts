@@ -1,5 +1,5 @@
 import { StdSignDoc } from "./encoding";
-import { AccountData, OfflineSigner, AminoSignResponse } from "./signer";
+import { AccountData, AminoSignResponse, OfflineSigner } from "./signer";
 /**
  * A wallet that holds a single secp256k1 keypair.
  *
