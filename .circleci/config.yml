@@ -58,6 +58,20 @@ jobs:
           root: .
           paths:
             - packages/*/build/*
+      - run:
+          name: Format text
+          command: yarn format-text
+      - run:
+          name: Check for clean workspace
+          command: |
+            SOURCE_CHANGES=$(git status --porcelain)
+            if [[ -n "$SOURCE_CHANGES" ]]; then
+              echo "Error: repository contains changes."
+              echo "Showing 'git status' and 'git diff' for debugging now:"
+              git status
+              git diff
+              exit 1
+            fi
   test:
     machine:
       # We can't use a containerized environment since it requires remote docker to start custom containers.
