@@ -296,11 +296,11 @@ describe("StargateClient", () => {
 
       const chainId = await client.getChainId();
       const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);
-      const signResponse = await wallet.signDirect(address, signDoc);
+      const { signature } = await wallet.signDirect(address, signDoc);
       const txRaw = TxRaw.create({
         bodyBytes: txBodyBytes,
         authInfoBytes: authInfoBytes,
-        signatures: [fromBase64(signResponse.signature.signature)],
+        signatures: [fromBase64(signature.signature)],
       });
       const txRawBytes = Uint8Array.from(TxRaw.encode(txRaw).finish());
       const txResult = await client.broadcastTx(txRawBytes);

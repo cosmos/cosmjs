@@ -76,9 +76,9 @@ describe("DirectSecp256k1Wallet", () => {
         accountNumber,
       );
       const signDocBytes = makeSignBytes(signDoc);
-      const signResponse = await wallet.signDirect(faucet.address, signDoc);
+      const { signature } = await wallet.signDirect(faucet.address, signDoc);
       const valid = await Secp256k1.verifySignature(
-        Secp256k1Signature.fromFixedLength(fromBase64(signResponse.signature.signature)),
+        Secp256k1Signature.fromFixedLength(fromBase64(signature.signature)),
         sha256(signDocBytes),
         pubkey.value,
       );

@@ -123,11 +123,11 @@ export class SigningStargateClient extends StargateClient {
     if (isOfflineDirectSigner(this.signer)) {
       const authInfoBytes = makeAuthInfoBytes([pubkeyAny], fee.amount, gasLimit, sequence);
       const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);
-      const signResponse = await this.signer.signDirect(address, signDoc);
+      const { signature } = await this.signer.signDirect(address, signDoc);
       const txRaw = TxRaw.create({
         bodyBytes: txBodyBytes,
         authInfoBytes: authInfoBytes,
-        signatures: [fromBase64(signResponse.signature.signature)],
+        signatures: [fromBase64(signature.signature)],
       });
       const signedTx = Uint8Array.from(TxRaw.encode(txRaw).finish());
       return this.broadcastTx(signedTx);

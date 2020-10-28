@@ -100,11 +100,11 @@ describe("signing", () => {
         const signDocBytes = makeSignBytes(signDoc);
         expect(toHex(signDocBytes)).toEqual(signBytes);
 
-        const signResponse = await wallet.signDirect(address, signDoc);
+        const { signature } = await wallet.signDirect(address, signDoc);
         const txRaw = TxRaw.create({
           bodyBytes: txBodyBytes,
           authInfoBytes: authInfoBytes,
-          signatures: [fromBase64(signResponse.signature.signature)],
+          signatures: [fromBase64(signature.signature)],
         });
         const txRawBytes = Uint8Array.from(TxRaw.encode(txRaw).finish());
         const txBytesHex = toHex(txRawBytes);

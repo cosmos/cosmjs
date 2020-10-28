@@ -74,11 +74,11 @@ async function sendTokens(
 
   const chainId = await client.getChainId();
   const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);
-  const signResponse = await wallet.signDirect(walletAddress, signDoc);
+  const { signature } = await wallet.signDirect(walletAddress, signDoc);
   const txRaw = TxRaw.create({
     bodyBytes: txBodyBytes,
     authInfoBytes: authInfoBytes,
-    signatures: [fromBase64(signResponse.signature.signature)],
+    signatures: [fromBase64(signature.signature)],
   });
   const txRawBytes = Uint8Array.from(TxRaw.encode(txRaw).finish());
   const broadcastResponse = await client.broadcastTx(txRawBytes);
