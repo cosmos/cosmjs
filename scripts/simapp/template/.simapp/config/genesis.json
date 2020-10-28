@@ -6,7 +6,7 @@
         {
           "@type": "/cosmos.auth.v1beta1.BaseAccount",
           "account_number": "0",
-          "address": "cosmos1gyavpqh80z2v7tcgeycfvf0st2nvjrfcp05dad",
+          "address": "cosmos1jn3z8gnjhjymc7ks6ve08wrsr0h070m37vvmwn",
           "pub_key": null,
           "sequence": "0"
         },
@@ -180,19 +180,6 @@
           ]
         },
         {
-          "address": "cosmos1gyavpqh80z2v7tcgeycfvf0st2nvjrfcp05dad",
-          "coins": [
-            {
-              "amount": "1000000000",
-              "denom": "ucosm"
-            },
-            {
-              "amount": "10000000",
-              "denom": "ustake"
-            }
-          ]
-        },
-        {
           "address": "cosmos1f7j7ryulwjfe9ljplvhtcaxa6wqgula3etktce",
           "coins": [
             {
@@ -233,6 +220,19 @@
         },
         {
           "address": "cosmos106jwym4s9aujcmes26myzzwqsccw09sdm0v5au",
+          "coins": [
+            {
+              "amount": "1000000000",
+              "denom": "ucosm"
+            },
+            {
+              "amount": "10000000",
+              "denom": "ustake"
+            }
+          ]
+        },
+        {
+          "address": "cosmos1jn3z8gnjhjymc7ks6ve08wrsr0h070m37vvmwn",
           "coins": [
             {
               "amount": "1000000000",
@@ -433,7 +433,7 @@
                 },
                 "public_key": {
                   "@type": "/cosmos.crypto.secp256k1.PubKey",
-                  "key": "A/Ltk7FONB0PJOKrLECIxJe5LcJMy9DcWG6X2WVA2xAi"
+                  "key": "AhDz5a/IsL9FPlVC+rcWUNfoNDqj6L6Xd58+CJZXqX33"
                 },
                 "sequence": "0"
               }
@@ -441,7 +441,7 @@
           },
           "body": {
             "extension_options": [],
-            "memo": "6045e08a4e3d552bbc115b23f12071887a2408a4@172.17.0.2:26656",
+            "memo": "45e93bb22a2575e65a99e1674b59b3b54488e0ae@172.17.0.3:26656",
             "messages": [
               {
                 "@type": "/cosmos.staking.v1beta1.MsgCreateValidator",
@@ -450,7 +450,7 @@
                   "max_rate": "0.200000000000000000",
                   "rate": "0.100000000000000000"
                 },
-                "delegator_address": "cosmos1gyavpqh80z2v7tcgeycfvf0st2nvjrfcp05dad",
+                "delegator_address": "cosmos1jn3z8gnjhjymc7ks6ve08wrsr0h070m37vvmwn",
                 "description": {
                   "details": "",
                   "identity": "",
@@ -459,8 +459,8 @@
                   "website": ""
                 },
                 "min_self_delegation": "1",
-                "pubkey": "cosmosvalconspub1zcjduepqdmqcx90ra47mhk65afzl2f3ezlvuxhf9a3j5kzl0hp2ck226mxts8jzajn",
-                "validator_address": "cosmosvaloper1gyavpqh80z2v7tcgeycfvf0st2nvjrfcymqc37",
+                "pubkey": "cosmosvalconspub1zcjduepqsluh9lygp7fhrc2rjr677rezvttchxwp2hw7qjwlh8qf4j4avqwqdyn7uw",
+                "validator_address": "cosmosvaloper1jn3z8gnjhjymc7ks6ve08wrsr0h070m3mccwzq",
                 "value": {
                   "amount": "3000000",
                   "denom": "ustake"
@@ -471,7 +471,7 @@
             "timeout_height": "0"
           },
           "signatures": [
-            "8pVuzBir0VJOA1X7KuCjazKN0WcGO68B0jZvKfPomis7d44Lrqo+MC6ALrtDHtA7tJMQf3cXrsdnF3ImcJQ5Rw=="
+            "S6NjcIWpMPD/9g+wsvMMrniCe3qRteybdzQI/T6cOm5ikGJqfdtBT6w3wL/Se9KC9B0X8kXyFLNlt9Kz4dgsXw=="
           ]
         }
       ]
@@ -568,7 +568,8 @@
       },
       "port_id": "transfer"
     },
-    "upgrade": {}
+    "upgrade": {},
+    "vesting": {}
   },
   "chain_id": "simd-testing",
   "consensus_params": {
@@ -580,7 +581,7 @@
     "evidence": {
       "max_age_duration": "172800000000000",
       "max_age_num_blocks": "100000",
-      "max_num": 50
+      "max_bytes": "1048576"
     },
     "validator": {
       "pub_key_types": [
@@ -589,6 +590,6 @@
     },
     "version": {}
   },
-  "genesis_time": "2020-10-14T13:27:11.507897335Z",
+  "genesis_time": "2020-10-28T16:54:03.302763525Z",
   "initial_height": "1"
 }
