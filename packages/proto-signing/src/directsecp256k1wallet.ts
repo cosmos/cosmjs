@@ -13,8 +13,11 @@ import {
   encodeSecp256k1Signature,
   makeCosmoshubPath,
   rawSecp256k1PubkeyToAddress,
-  StdSignature,
 } from "@cosmjs/launchpad";
+
+import { cosmos } from "./codec";
+import { DirectSignResponse, OfflineDirectSigner } from "./signer";
+import { makeSignBytes } from "./signing";
 
 /**
  * Derivation information required to derive a keypair and an address from a mnemonic.
@@ -25,7 +28,7 @@ interface Secp256k1Derivation {
 }
 
 /** A wallet for protobuf based signing using SIGN_MODE_DIRECT */
-export class DirectSecp256k1Wallet {
+export class DirectSecp256k1Wallet implements OfflineDirectSigner {
   /**
    * Restores a wallet from the given BIP39 mnemonic.
    *
@@ -113,13 +116,18 @@ export class DirectSecp256k1Wallet {
     ];
   }
 
-  public async sign(address: string, message: Uint8Array): Promise<StdSignature> {
+  public async signDirect(address: string, signDoc: cosmos.tx.v1beta1.ISignDoc): Promise<DirectSignResponse> {
+    const signBytes = makeSignBytes(signDoc);
     if (address !== this.address) {
       throw new Error(`Address ${address} not found in wallet`);
     }
-    const hashedMessage = sha256(message);
+    const hashedMessage = sha256(signBytes);
     const signature = await Secp256k1.createSignature(hashedMessage, this.privkey);
     const signatureBytes = new Uint8Array([...signature.r(32), ...signature.s(32)]);
-    return encodeSecp256k1Signature(this.pubkey, signatureBytes);
+    const stdSignature = encodeSecp256k1Signature(this.pubkey, signatureBytes);
+    return {
+      signed: signDoc,
+      signature: stdSignature,
+    };
   }
 }

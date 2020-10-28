@@ -7,7 +7,7 @@ export interface AccountData {
   readonly algo: Algo;
   readonly pubkey: Uint8Array;
 }
-export interface SignResponse {
+export interface AminoSignResponse {
   /**
    * The sign doc that was signed.
    * This may be different from the input signDoc when the signer modifies it as part of the signing process.
@@ -29,5 +29,5 @@ export interface OfflineSigner {
    * @param signerAddress The address of the account that should sign the transaction
    * @param signDoc The content that should be signed
    */
-  readonly sign: (signerAddress: string, signDoc: StdSignDoc) => Promise<SignResponse>;
+  readonly signAmino: (signerAddress: string, signDoc: StdSignDoc) => Promise<AminoSignResponse>;
 }

@@ -28,7 +28,7 @@ const { accountNumber, sequence } = await client.getSequence(senderAddress);
 console.log("Account/sequence:", accountNumber, sequence);
 
 const signDoc = makeSignDoc([msg], fee, chainId, memo, accountNumber, sequence);
-const { signed, signature } = await wallet.sign(senderAddress, signDoc);
+const { signed, signature } = await wallet.signAmino(senderAddress, signDoc);
 const signedTx = makeStdTx(signed, signature);
 
 const result = await client.broadcastTx(signedTx);

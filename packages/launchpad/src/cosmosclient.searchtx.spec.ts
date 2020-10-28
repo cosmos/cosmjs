@@ -56,7 +56,7 @@ describe("CosmosClient.searchTx", () => {
         const { accountNumber, sequence } = await client.getSequence();
         const chainId = await client.getChainId();
         const signDoc = makeSignDoc([sendMsg], fee, chainId, memo, accountNumber, sequence);
-        const { signed, signature } = await wallet.sign(walletAddress, signDoc);
+        const { signed, signature } = await wallet.signAmino(walletAddress, signDoc);
         const tx: WrappedStdTx = {
           type: "cosmos-sdk/StdTx",
           value: makeStdTx(signed, signature),

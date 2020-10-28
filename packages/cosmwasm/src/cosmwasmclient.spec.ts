@@ -240,7 +240,7 @@ describe("CosmWasmClient", () => {
       const chainId = await client.getChainId();
       const { accountNumber, sequence } = await client.getSequence(alice.address0);
       const signDoc = makeSignDoc([sendMsg], fee, chainId, memo, accountNumber, sequence);
-      const { signed, signature } = await wallet.sign(alice.address0, signDoc);
+      const { signed, signature } = await wallet.signAmino(alice.address0, signDoc);
       const signedTx = makeStdTx(signed, signature);
       const result = await client.broadcastTx(signedTx);
       assertIsBroadcastTxSuccess(result);

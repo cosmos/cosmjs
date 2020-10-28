@@ -6,6 +6,13 @@
   @cosmjs/launchpad instead.
 - @cosmjs/launchpad: Add `Secp256k1Wallet` to manage a single raw secp256k1
   keypair.
+- @cosmjs/launchpad: `OfflineSigner` type’s `sign` method renamed `signAmino`
+  and `SignResponse` type renamed `AminoSignResponse`.
+- @cosmjs/launchpad: `Secp256k1HdWallet.sign` method renamed `signAmino`.
+- @cosmjs/launchpad-ledger: `LedgerSigner.sign` method renamed `signAmino`.
+- @cosmjs/proto-signing: Add new package for handling transaction signing with
+  protobuf encoding.
+- @cosmjs/stargate: Add new package for Cosmos SDK Stargate support.
 
 ## 0.23.1 (2020-10-27)
 

@@ -48,7 +48,7 @@ describe("StakingExtension", () => {
         const memo = "Test delegation for wasmd";
         const { accountNumber, sequence } = await client.getSequence();
         const signDoc = makeSignDoc([msg], defaultFee, chainId, memo, accountNumber, sequence);
-        const { signed, signature } = await wallet.sign(faucet.address, signDoc);
+        const { signed, signature } = await wallet.signAmino(faucet.address, signDoc);
         const signedTx = makeStdTx(signed, signature);
 
         const result = await client.broadcastTx(signedTx);
@@ -66,7 +66,7 @@ describe("StakingExtension", () => {
         const memo = "Test undelegation for wasmd";
         const { accountNumber, sequence } = await client.getSequence();
         const signDoc = makeSignDoc([msg], defaultFee, chainId, memo, accountNumber, sequence);
-        const { signed, signature } = await wallet.sign(faucet.address, signDoc);
+        const { signed, signature } = await wallet.signAmino(faucet.address, signDoc);
         const signedTx = makeStdTx(signed, signature);
 
         const result = await client.broadcastTx(signedTx);

@@ -232,7 +232,7 @@ describe("CosmosClient", () => {
       const chainId = await client.getChainId();
       const { accountNumber, sequence } = await client.getSequence(faucet.address);
       const signDoc = makeSignDoc([sendMsg], fee, chainId, memo, accountNumber, sequence);
-      const { signed, signature } = await wallet.sign(walletAddress, signDoc);
+      const { signed, signature } = await wallet.signAmino(walletAddress, signDoc);
       const signedTx = makeStdTx(signed, signature);
       const txResult = await client.broadcastTx(signedTx);
       assertIsBroadcastTxSuccess(txResult);

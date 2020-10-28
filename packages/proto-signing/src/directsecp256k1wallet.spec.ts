@@ -1,7 +1,10 @@
 import { Secp256k1, Secp256k1Signature, sha256 } from "@cosmjs/crypto";
-import { fromBase64, fromHex, toAscii } from "@cosmjs/encoding";
+import { fromBase64, fromHex } from "@cosmjs/encoding";
+import { coins } from "@cosmjs/launchpad";
 
 import { DirectSecp256k1Wallet } from "./directsecp256k1wallet";
+import { makeAuthInfoBytes, makeSignBytes, makeSignDoc } from "./signing";
+import { faucet, testVectors } from "./testutils.spec";
 
 describe("DirectSecp256k1Wallet", () => {
   // m/44'/118'/0'/0/0
@@ -54,15 +57,30 @@ describe("DirectSecp256k1Wallet", () => {
     });
   });
 
-  describe("sign", () => {
+  describe("signDirect", () => {
     it("resolves to valid signature", async () => {
-      const wallet = await DirectSecp256k1Wallet.fromMnemonic(defaultMnemonic);
-      const message = toAscii("foo bar");
-      const signature = await wallet.sign(defaultAddress, message);
+      const { sequence, bodyBytes } = testVectors[1];
+      const wallet = await DirectSecp256k1Wallet.fromMnemonic(faucet.mnemonic);
+      const pubkey = {
+        typeUrl: "/cosmos.crypto.secp256k1.PubKey",
+        value: fromBase64(faucet.pubkey.value),
+      };
+      const fee = coins(2000, "ucosm");
+      const gasLimit = 200000;
+      const chainId = "simd-testing";
+      const accountNumber = 1;
+      const signDoc = makeSignDoc(
+        fromHex(bodyBytes),
+        makeAuthInfoBytes([pubkey], fee, gasLimit, sequence),
+        chainId,
+        accountNumber,
+      );
+      const signDocBytes = makeSignBytes(signDoc);
+      const { signature } = await wallet.signDirect(faucet.address, signDoc);
       const valid = await Secp256k1.verifySignature(
         Secp256k1Signature.fromFixedLength(fromBase64(signature.signature)),
-        sha256(message),
-        defaultPubkey,
+        sha256(signDocBytes),
+        pubkey.value,
       );
       expect(valid).toEqual(true);
     });

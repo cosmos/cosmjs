@@ -120,7 +120,7 @@ describe("LedgerSigner", () => {
           defaultAccountNumber,
           defaultSequence,
         );
-        const { signed, signature } = await signer.sign(fistAccount.address, signDoc);
+        const { signed, signature } = await signer.signAmino(fistAccount.address, signDoc);
         expect(signed).toEqual(signDoc);
         const valid = await Secp256k1.verifySignature(
           Secp256k1Signature.fromFixedLength(fromBase64(signature.signature)),

@@ -59,7 +59,8 @@ export const validator = {
     value: "A/Ltk7FONB0PJOKrLECIxJe5LcJMy9DcWG6X2WVA2xAi",
   },
   /** delegator_address from /cosmos.staking.v1beta1.MsgCreateValidator in scripts/simapp/template/.simapp/config/genesis.json */
-  address: "cosmos1gyavpqh80z2v7tcgeycfvf0st2nvjrfcp05dad",
+  delegatorAddress: "cosmos1gyavpqh80z2v7tcgeycfvf0st2nvjrfcp05dad",
+  validatorAddress: "cosmosvaloper1gyavpqh80z2v7tcgeycfvf0st2nvjrfcymqc37",
   accountNumber: 0,
   sequence: 1,
 };

@@ -74,7 +74,7 @@ const signDoc = makeSignDoc(
   account_number,
   sequence,
 );
-const { signed, signature } = await wallet.sign(faucetAddress, signDoc);
+const { signed, signature } = await wallet.signAmino(faucetAddress, signDoc);
 const signedTx = makeStdTx(signed, signature);
 const broadcastResult = await client.broadcastTx(signedTx);
 ```

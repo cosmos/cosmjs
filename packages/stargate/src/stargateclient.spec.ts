@@ -3,8 +3,8 @@ import { fromBase64, toBase64 } from "@cosmjs/encoding";
 import {
   DirectSecp256k1Wallet,
   encodePubkey,
-  makeAuthInfo,
-  makeSignBytes,
+  makeAuthInfoBytes,
+  makeSignDoc,
   Registry,
 } from "@cosmjs/proto-signing";
 import { assert, sleep } from "@cosmjs/utils";
@@ -90,10 +90,10 @@ describe("StargateClient", () => {
       pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrl);
 
-      const account = await client.getAccount(validator.address);
+      const account = await client.getAccount(validator.delegatorAddress);
       assert(account);
       expect(account).toEqual({
-        address: validator.address,
+        address: validator.delegatorAddress,
         pubkey: validator.pubkey,
         accountNumber: validator.accountNumber,
         sequence: validator.sequence,
@@ -292,11 +292,11 @@ describe("StargateClient", () => {
         },
       ];
       const gasLimit = 200000;
-      const authInfoBytes = makeAuthInfo([pubkey], feeAmount, gasLimit, sequence);
+      const authInfoBytes = makeAuthInfoBytes([pubkey], feeAmount, gasLimit, sequence);
 
       const chainId = await client.getChainId();
-      const signDocBytes = makeSignBytes(txBodyBytes, authInfoBytes, chainId, accountNumber);
-      const signature = await wallet.sign(address, signDocBytes);
+      const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);
+      const { signature } = await wallet.signDirect(address, signDoc);
       const txRaw = TxRaw.create({
         bodyBytes: txBodyBytes,
         authInfoBytes: authInfoBytes,
