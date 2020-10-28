@@ -1,4 +1,5 @@
 import { CosmosClient } from "@cosmjs/launchpad";
+import { StargateClient } from "@cosmjs/stargate";
 
 import { Webserver } from "../api/webserver";
 import * as constants from "../constants";
@@ -15,18 +16,27 @@ export async function start(args: readonly string[]): Promise<void> {
   // Connection
   const blockchainBaseUrl = args[0];
   console.info(`Connecting to blockchain ${blockchainBaseUrl} ...`);
-  const chainId = await new CosmosClient(blockchainBaseUrl).getChainId();
+  let chainId;
+  let stargate = true;
+  try {
+    chainId = await (await StargateClient.connect(blockchainBaseUrl)).getChainId();
+  } catch (_error) {
+    chainId = await new CosmosClient(blockchainBaseUrl).getChainId();
+    stargate = false;
+  }
   console.info(`Connected to network: ${chainId}`);
 
   // Faucet
   if (!constants.mnemonic) throw new Error("The FAUCET_MNEMONIC environment variable is not set");
+  const logging = true;
   const faucet = await Faucet.make(
     blockchainBaseUrl,
     constants.addressPrefix,
     constants.tokenConfig,
     constants.mnemonic,
     constants.concurrency,
-    true,
+    stargate,
+    logging,
   );
   const chainTokens = faucet.configuredTokens();
   console.info("Chain tokens:", chainTokens);
