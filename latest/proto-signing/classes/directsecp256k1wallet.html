@@ -77,6 +77,12 @@
 					</li>
 				</ul>
 			</section>
+			<section class="tsd-panel">
+				<h3>Implements</h3>
+				<ul class="tsd-hierarchy">
+					<li><a href="../interfaces/offlinedirectsigner.html" class="tsd-signature-type">OfflineDirectSigner</a></li>
+				</ul>
+			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
@@ -91,7 +97,7 @@
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="directsecp256k1wallet.html#getaccounts" class="tsd-kind-icon">get<wbr>Accounts</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="directsecp256k1wallet.html#sign" class="tsd-kind-icon">sign</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="directsecp256k1wallet.html#signdirect" class="tsd-kind-icon">sign<wbr>Direct</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="directsecp256k1wallet.html#frommnemonic" class="tsd-kind-icon">from<wbr>Mnemonic</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="directsecp256k1wallet.html#generate" class="tsd-kind-icon">generate</a></li>
 							</ul>
@@ -111,7 +117,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/7feea61e4/packages/proto-signing/src/directsecp256k1wallet.ts#L98">packages/proto-signing/src/directsecp256k1wallet.ts:98</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/38d762af2/packages/proto-signing/src/directsecp256k1wallet.ts#L101">packages/proto-signing/src/directsecp256k1wallet.ts:101</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -131,7 +137,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/7feea61e4/packages/proto-signing/src/directsecp256k1wallet.ts#L106">packages/proto-signing/src/directsecp256k1wallet.ts:106</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/38d762af2/packages/proto-signing/src/directsecp256k1wallet.ts#L109">packages/proto-signing/src/directsecp256k1wallet.ts:109</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">readonly </span><span class="tsd-signature-type">AccountData</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -139,16 +145,16 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="sign" class="tsd-anchor"></a>
-					<h3>sign</h3>
+					<a name="signdirect" class="tsd-anchor"></a>
+					<h3>sign<wbr>Direct</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">sign<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">StdSignature</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">sign<wbr>Direct<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, signDoc<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ISignDoc</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/directsignresponse.html" class="tsd-signature-type">DirectSignResponse</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/7feea61e4/packages/proto-signing/src/directsecp256k1wallet.ts#L116">packages/proto-signing/src/directsecp256k1wallet.ts:116</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/38d762af2/packages/proto-signing/src/directsecp256k1wallet.ts#L119">packages/proto-signing/src/directsecp256k1wallet.ts:119</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -157,10 +163,10 @@
 									<h5>address: <span class="tsd-signature-type">string</span></h5>
 								</li>
 								<li>
-									<h5>message: <span class="tsd-signature-type">Uint8Array</span></h5>
+									<h5>signDoc: <span class="tsd-signature-type">ISignDoc</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">StdSignature</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/directsignresponse.html" class="tsd-signature-type">DirectSignResponse</a><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -174,7 +180,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/7feea61e4/packages/proto-signing/src/directsecp256k1wallet.ts#L36">packages/proto-signing/src/directsecp256k1wallet.ts:36</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/38d762af2/packages/proto-signing/src/directsecp256k1wallet.ts#L39">packages/proto-signing/src/directsecp256k1wallet.ts:39</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -217,7 +223,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/7feea61e4/packages/proto-signing/src/directsecp256k1wallet.ts#L61">packages/proto-signing/src/directsecp256k1wallet.ts:61</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/38d762af2/packages/proto-signing/src/directsecp256k1wallet.ts#L64">packages/proto-signing/src/directsecp256k1wallet.ts:64</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -277,7 +283,7 @@
 								<a href="directsecp256k1wallet.html#getaccounts" class="tsd-kind-icon">get<wbr>Accounts</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="directsecp256k1wallet.html#sign" class="tsd-kind-icon">sign</a>
+								<a href="directsecp256k1wallet.html#signdirect" class="tsd-kind-icon">sign<wbr>Direct</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
 								<a href="directsecp256k1wallet.html#frommnemonic" class="tsd-kind-icon">from<wbr>Mnemonic</a>
@@ -299,10 +305,16 @@
 						<a href="../interfaces/decodeobject.html" class="tsd-kind-icon">Decode<wbr>Object</a>
 					</li>
 					<li class=" tsd-kind-interface">
+						<a href="../interfaces/directsignresponse.html" class="tsd-kind-icon">Direct<wbr>Sign<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-interface">
 						<a href="../interfaces/encodeobject.html" class="tsd-kind-icon">Encode<wbr>Object</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="../interfaces/generatedtype.html" class="tsd-kind-icon">Generated<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/offlinedirectsigner.html" class="tsd-kind-icon">Offline<wbr>Direct<wbr>Signer</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="../interfaces/secp256k1derivation.html" class="tsd-kind-icon">Secp256k1<wbr>Derivation</a>
@@ -312,6 +324,9 @@
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="../globals.html#fielddecorator" class="tsd-kind-icon">Field<wbr>Decorator</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../globals.html#offlinesigner" class="tsd-kind-icon">Offline<wbr>Signer</a>
 					</li>
 					<li class=" tsd-kind-variable">
 						<a href="../globals.html#any" class="tsd-kind-icon">Any</a>
@@ -344,10 +359,16 @@
 						<a href="../globals.html#gettypename" class="tsd-kind-icon">get<wbr>Type<wbr>Name</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="../globals.html#makeauthinfo" class="tsd-kind-icon">make<wbr>Auth<wbr>Info</a>
+						<a href="../globals.html#isofflinedirectsigner" class="tsd-kind-icon">is<wbr>Offline<wbr>Direct<wbr>Signer</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#makeauthinfobytes" class="tsd-kind-icon">make<wbr>Auth<wbr>Info<wbr>Bytes</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="../globals.html#makesignbytes" class="tsd-kind-icon">make<wbr>Sign<wbr>Bytes</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#makesigndoc" class="tsd-kind-icon">make<wbr>Sign<wbr>Doc</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
 						<a href="../globals.html#omitdefault" class="tsd-kind-icon">omit<wbr>Default</a>

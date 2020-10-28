@@ -92,7 +92,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="secp256k1hdwallet.html#getaccounts" class="tsd-kind-icon">get<wbr>Accounts</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="secp256k1hdwallet.html#serialize" class="tsd-kind-icon">serialize</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="secp256k1hdwallet.html#serializewithencryptionkey" class="tsd-kind-icon">serialize<wbr>With<wbr>Encryption<wbr>Key</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="secp256k1hdwallet.html#sign" class="tsd-kind-icon">sign</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="secp256k1hdwallet.html#signamino" class="tsd-kind-icon">sign<wbr>Amino</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="secp256k1hdwallet.html#deserialize" class="tsd-kind-icon">deserialize</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="secp256k1hdwallet.html#deserializewithencryptionkey" class="tsd-kind-icon">deserialize<wbr>With<wbr>Encryption<wbr>Key</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="secp256k1hdwallet.html#frommnemonic" class="tsd-kind-icon">from<wbr>Mnemonic</a></li>
@@ -114,7 +114,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/7feea61e4/packages/launchpad/src/secp256k1hdwallet.ts#L244">src/secp256k1hdwallet.ts:244</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/38d762af2/packages/launchpad/src/secp256k1hdwallet.ts#L244">src/secp256k1hdwallet.ts:244</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -134,7 +134,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/7feea61e4/packages/launchpad/src/secp256k1hdwallet.ts#L252">src/secp256k1hdwallet.ts:252</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/38d762af2/packages/launchpad/src/secp256k1hdwallet.ts#L252">src/secp256k1hdwallet.ts:252</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">readonly </span><a href="../interfaces/accountdata.html" class="tsd-signature-type">AccountData</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -151,7 +151,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/7feea61e4/packages/launchpad/src/secp256k1hdwallet.ts#L281">src/secp256k1hdwallet.ts:281</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/38d762af2/packages/launchpad/src/secp256k1hdwallet.ts#L281">src/secp256k1hdwallet.ts:281</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -183,7 +183,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/7feea61e4/packages/launchpad/src/secp256k1hdwallet.ts#L296">src/secp256k1hdwallet.ts:296</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/38d762af2/packages/launchpad/src/secp256k1hdwallet.ts#L296">src/secp256k1hdwallet.ts:296</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -209,16 +209,16 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="sign" class="tsd-anchor"></a>
-					<h3>sign</h3>
+					<a name="signamino" class="tsd-anchor"></a>
+					<h3>sign<wbr>Amino</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">sign<span class="tsd-signature-symbol">(</span>signerAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, signDoc<span class="tsd-signature-symbol">: </span><a href="../interfaces/stdsigndoc.html" class="tsd-signature-type">StdSignDoc</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/signresponse.html" class="tsd-signature-type">SignResponse</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">sign<wbr>Amino<span class="tsd-signature-symbol">(</span>signerAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, signDoc<span class="tsd-signature-symbol">: </span><a href="../interfaces/stdsigndoc.html" class="tsd-signature-type">StdSignDoc</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/aminosignresponse.html" class="tsd-signature-type">AminoSignResponse</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/7feea61e4/packages/launchpad/src/secp256k1hdwallet.ts#L262">src/secp256k1hdwallet.ts:262</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/38d762af2/packages/launchpad/src/secp256k1hdwallet.ts#L262">src/secp256k1hdwallet.ts:262</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -230,7 +230,7 @@
 									<h5>signDoc: <a href="../interfaces/stdsigndoc.html" class="tsd-signature-type">StdSignDoc</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/signresponse.html" class="tsd-signature-type">SignResponse</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/aminosignresponse.html" class="tsd-signature-type">AminoSignResponse</a><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -244,7 +244,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/7feea61e4/packages/launchpad/src/secp256k1hdwallet.ts#L160">src/secp256k1hdwallet.ts:160</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/38d762af2/packages/launchpad/src/secp256k1hdwallet.ts#L160">src/secp256k1hdwallet.ts:160</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -279,7 +279,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/7feea61e4/packages/launchpad/src/secp256k1hdwallet.ts#L180">src/secp256k1hdwallet.ts:180</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/38d762af2/packages/launchpad/src/secp256k1hdwallet.ts#L180">src/secp256k1hdwallet.ts:180</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -314,7 +314,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/7feea61e4/packages/launchpad/src/secp256k1hdwallet.ts#L118">src/secp256k1hdwallet.ts:118</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/38d762af2/packages/launchpad/src/secp256k1hdwallet.ts#L118">src/secp256k1hdwallet.ts:118</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -357,7 +357,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/7feea61e4/packages/launchpad/src/secp256k1hdwallet.ts#L143">src/secp256k1hdwallet.ts:143</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/38d762af2/packages/launchpad/src/secp256k1hdwallet.ts#L143">src/secp256k1hdwallet.ts:143</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -420,7 +420,7 @@
 								<a href="secp256k1hdwallet.html#serializewithencryptionkey" class="tsd-kind-icon">serialize<wbr>With<wbr>Encryption<wbr>Key</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="secp256k1hdwallet.html#sign" class="tsd-kind-icon">sign</a>
+								<a href="secp256k1hdwallet.html#signamino" class="tsd-kind-icon">sign<wbr>Amino</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
 								<a href="secp256k1hdwallet.html#deserialize" class="tsd-kind-icon">deserialize</a>

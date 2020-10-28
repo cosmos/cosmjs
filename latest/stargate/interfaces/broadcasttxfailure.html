@@ -95,7 +95,7 @@
 					<div class="tsd-signature tsd-kind-icon">code<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/7feea61e4/packages/stargate/src/stargateclient.ts#L47">src/stargateclient.ts:47</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/38d762af2/packages/stargate/src/stargateclient.ts#L47">src/stargateclient.ts:47</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -105,7 +105,7 @@
 					<div class="tsd-signature tsd-kind-icon">data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Uint8Array</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/7feea61e4/packages/stargate/src/stargateclient.ts#L50">src/stargateclient.ts:50</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/38d762af2/packages/stargate/src/stargateclient.ts#L50">src/stargateclient.ts:50</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -115,7 +115,7 @@
 					<div class="tsd-signature tsd-kind-icon">height<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/7feea61e4/packages/stargate/src/stargateclient.ts#L46">src/stargateclient.ts:46</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/38d762af2/packages/stargate/src/stargateclient.ts#L46">src/stargateclient.ts:46</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -125,7 +125,7 @@
 					<div class="tsd-signature tsd-kind-icon">raw<wbr>Log<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/7feea61e4/packages/stargate/src/stargateclient.ts#L49">src/stargateclient.ts:49</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/38d762af2/packages/stargate/src/stargateclient.ts#L49">src/stargateclient.ts:49</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -135,7 +135,7 @@
 					<div class="tsd-signature tsd-kind-icon">transaction<wbr>Hash<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/7feea61e4/packages/stargate/src/stargateclient.ts#L48">src/stargateclient.ts:48</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/38d762af2/packages/stargate/src/stargateclient.ts#L48">src/stargateclient.ts:48</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -153,6 +153,9 @@
 				<ul class="before-current">
 					<li class=" tsd-kind-class">
 						<a href="../classes/queryclient.html" class="tsd-kind-icon">Query<wbr>Client</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/signingstargateclient.html" class="tsd-kind-icon">Signing<wbr>Stargate<wbr>Client</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/stargateclient.html" class="tsd-kind-icon">Stargate<wbr>Client</a>
@@ -200,10 +203,16 @@
 						<a href="indexedtx.html" class="tsd-kind-icon">Indexed<wbr>Tx</a>
 					</li>
 					<li class=" tsd-kind-interface">
+						<a href="privatesigningstargateclient.html" class="tsd-kind-icon">Private<wbr>Signing<wbr>Stargate<wbr>Client</a>
+					</li>
+					<li class=" tsd-kind-interface">
 						<a href="privatestargateclient.html" class="tsd-kind-icon">Private<wbr>Stargate<wbr>Client</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="sequenceresponse.html" class="tsd-kind-icon">Sequence<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="signingstargateclientoptions.html" class="tsd-kind-icon">Signing<wbr>Stargate<wbr>Client<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="../globals.html#broadcasttxresponse" class="tsd-kind-icon">Broadcast<wbr>TxResponse</a>
@@ -226,6 +235,12 @@
 					<li class=" tsd-kind-variable">
 						<a href="../globals.html#query" class="tsd-kind-icon">Query</a>
 					</li>
+					<li class=" tsd-kind-variable">
+						<a href="../globals.html#txraw" class="tsd-kind-icon">Tx<wbr>Raw</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="../globals.html#defaultgasprice" class="tsd-kind-icon">default<wbr>Gas<wbr>Price</a>
+					</li>
 					<li class=" tsd-kind-function">
 						<a href="../globals.html#accountfromproto" class="tsd-kind-icon">account<wbr>From<wbr>Proto</a>
 					</li>
@@ -237,6 +252,9 @@
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="../globals.html#coinfromproto" class="tsd-kind-icon">coin<wbr>From<wbr>Proto</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#getmsgtype" class="tsd-kind-icon">get<wbr>Msg<wbr>Type</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="../globals.html#isbroadcasttxfailure" class="tsd-kind-icon">is<wbr>Broadcast<wbr>TxFailure</a>
@@ -262,6 +280,9 @@
 					<li class=" tsd-kind-function">
 						<a href="../globals.html#uint64fromproto" class="tsd-kind-icon">uint64<wbr>From<wbr>Proto</a>
 					</li>
+					<li class=" tsd-kind-object-literal">
+						<a href="../globals.html#defaultgaslimits" class="tsd-kind-icon">default<wbr>Gas<wbr>Limits</a>
+					</li>
 				</ul>
 			</nav>
 		</div>
@@ -277,6 +298,9 @@
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
