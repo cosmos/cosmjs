@@ -44,6 +44,8 @@
     "@cosmjs/encoding": "^0.23.1",
     "@cosmjs/launchpad": "^0.23.1",
     "@cosmjs/math": "^0.23.1",
+    "@cosmjs/proto-signing": "^0.23.1",
+    "@cosmjs/stargate": "^0.23.1",
     "@cosmjs/utils": "^0.23.1",
     "@koa/cors": "^3.0.0",
     "koa": "^2.11.0",
