@@ -1,6 +1,5 @@
 {
   "name": "@cosmjs/stargate",
-  "private": true,
   "version": "0.23.1",
   "description": "Utilities for Cosmos SDK 0.40",
   "contributors": [
