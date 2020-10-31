@@ -20,6 +20,9 @@
     "type": "git",
     "url": "https://github.com/CosmWasm/cosmjs/tree/master/packages/proto-signing"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "docs": "typedoc --options typedoc.js",
     "format": "prettier --write --loglevel warn \"./src/**/*.ts\"",
