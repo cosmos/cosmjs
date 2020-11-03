@@ -1,0 +1,403 @@
+{
+  "client_genesis": {
+    "clients": [
+      {
+        "client_id": "client0Fortestchain1",
+        "client_state": {
+          "@type": "/ibc.lightclients.tendermint.v1.ClientState",
+          "chain_id": "testchain1",
+          "trust_level": {
+            "numerator": "1",
+            "denominator": "3"
+          },
+          "trusting_period": "1209600s",
+          "unbonding_period": "1814400s",
+          "max_clock_drift": "10s",
+          "frozen_height": {
+            "version_number": "0",
+            "version_height": "0"
+          },
+          "latest_height": {
+            "version_number": "0",
+            "version_height": "59"
+          },
+          "consensus_params": {
+            "block": {
+              "max_bytes": "200000",
+              "max_gas": "2000000"
+            },
+            "evidence": {
+              "max_age_num_blocks": "302400",
+              "max_age_duration": "0.001814400s",
+              "max_bytes": "0"
+            },
+            "validator": {
+              "pub_key_types": [
+                "ed25519"
+              ]
+            },
+            "version": null
+          },
+          "proof_specs": [
+            {
+              "leaf_spec": {
+                "hash": "SHA256",
+                "prehash_key": "NO_HASH",
+                "prehash_value": "SHA256",
+                "length": "VAR_PROTO",
+                "prefix": "AA=="
+              },
+              "inner_spec": {
+                "child_order": [
+                  0,
+                  1
+                ],
+                "child_size": 33,
+                "min_prefix_length": 4,
+                "max_prefix_length": 12,
+                "empty_child": null,
+                "hash": "SHA256"
+              },
+              "max_depth": 0,
+              "min_depth": 0
+            },
+            {
+              "leaf_spec": {
+                "hash": "SHA256",
+                "prehash_key": "NO_HASH",
+                "prehash_value": "SHA256",
+                "length": "VAR_PROTO",
+                "prefix": "AA=="
+              },
+              "inner_spec": {
+                "child_order": [
+                  0,
+                  1
+                ],
+                "child_size": 32,
+                "min_prefix_length": 1,
+                "max_prefix_length": 1,
+                "empty_child": null,
+                "hash": "SHA256"
+              },
+              "max_depth": 0,
+              "min_depth": 0
+            }
+          ],
+          "upgrade_path": "upgrade/upgradedClient",
+          "allow_update_after_expiry": false,
+          "allow_update_after_misbehaviour": false
+        }
+      },
+      {
+        "client_id": "localhost",
+        "client_state": {
+          "@type": "/ibc.lightclients.localhost.v1.ClientState",
+          "chain_id": "testchain0",
+          "height": {
+            "version_number": "0",
+            "version_height": "60"
+          }
+        }
+      }
+    ],
+    "clients_consensus": [
+      {
+        "client_id": "client0Fortestchain1",
+        "consensus_states": [
+          {
+            "height": {
+              "version_number": "0",
+              "version_height": "14"
+            },
+            "consensus_state": {
+              "@type": "/ibc.lightclients.tendermint.v1.ConsensusState",
+              "timestamp": "2020-01-02T00:00:50Z",
+              "root": {
+                "hash": "VHk6MvGLgJZCFNxS7k00rsJBgn+KFR/fpz4zY+0GssI="
+              },
+              "next_validators_hash": "AFC52ADA31027E88B5BCDD96600D5D0B22720A881DFBF4D41C4A3A74B7C621EB"
+            }
+          },
+          {
+            "height": {
+              "version_number": "0",
+              "version_height": "18"
+            },
+            "consensus_state": {
+              "@type": "/ibc.lightclients.tendermint.v1.ConsensusState",
+              "timestamp": "2020-01-02T00:01:20Z",
+              "root": {
+                "hash": "/uF2Cg7072fFKgx1MVWsFFiUQTV/pGNZ1rl3etDi4Zo="
+              },
+              "next_validators_hash": "AFC52ADA31027E88B5BCDD96600D5D0B22720A881DFBF4D41C4A3A74B7C621EB"
+            }
+          },
+          {
+            "height": {
+              "version_number": "0",
+              "version_height": "22"
+            },
+            "consensus_state": {
+              "@type": "/ibc.lightclients.tendermint.v1.ConsensusState",
+              "timestamp": "2020-01-02T00:01:55Z",
+              "root": {
+                "hash": "vLVr8SGynio3onmNIO3jXWh86jXS4Z/VHNCaDZOogqQ="
+              },
+              "next_validators_hash": "AFC52ADA31027E88B5BCDD96600D5D0B22720A881DFBF4D41C4A3A74B7C621EB"
+            }
+          },
+          {
+            "height": {
+              "version_number": "0",
+              "version_height": "26"
+            },
+            "consensus_state": {
+              "@type": "/ibc.lightclients.tendermint.v1.ConsensusState",
+              "timestamp": "2020-01-02T00:02:25Z",
+              "root": {
+                "hash": "AaYJiSuJjNVqHbydjB6CIcdjdqcCOSsERZ3rum5E9cI="
+              },
+              "next_validators_hash": "AFC52ADA31027E88B5BCDD96600D5D0B22720A881DFBF4D41C4A3A74B7C621EB"
+            }
+          },
+          {
+            "height": {
+              "version_number": "0",
+              "version_height": "30"
+            },
+            "consensus_state": {
+              "@type": "/ibc.lightclients.tendermint.v1.ConsensusState",
+              "timestamp": "2020-01-02T00:02:55Z",
+              "root": {
+                "hash": "v9OtcdxZL3O6AoYT3g/eg7JzZjEMxaZYK1whnkrQPIc="
+              },
+              "next_validators_hash": "AFC52ADA31027E88B5BCDD96600D5D0B22720A881DFBF4D41C4A3A74B7C621EB"
+            }
+          },
+          {
+            "height": {
+              "version_number": "0",
+              "version_height": "33"
+            },
+            "consensus_state": {
+              "@type": "/ibc.lightclients.tendermint.v1.ConsensusState",
+              "timestamp": "2020-01-02T00:03:20Z",
+              "root": {
+                "hash": "npsfFqZxTRdVyNexTJ9v8VzuyFV37l56kKOD67VHW7M="
+              },
+              "next_validators_hash": "AFC52ADA31027E88B5BCDD96600D5D0B22720A881DFBF4D41C4A3A74B7C621EB"
+            }
+          },
+          {
+            "height": {
+              "version_number": "0",
+              "version_height": "37"
+            },
+            "consensus_state": {
+              "@type": "/ibc.lightclients.tendermint.v1.ConsensusState",
+              "timestamp": "2020-01-02T00:03:50Z",
+              "root": {
+                "hash": "d7d1qdOlqhcU/iEwj2bi3P3GPV8JKWTJNqHWSLz5rns="
+              },
+              "next_validators_hash": "AFC52ADA31027E88B5BCDD96600D5D0B22720A881DFBF4D41C4A3A74B7C621EB"
+            }
+          },
+          {
+            "height": {
+              "version_number": "0",
+              "version_height": "41"
+            },
+            "consensus_state": {
+              "@type": "/ibc.lightclients.tendermint.v1.ConsensusState",
+              "timestamp": "2020-01-02T00:04:15Z",
+              "root": {
+                "hash": "jDh3k27ovmkgKba74oMLKGT0tFG/H9A/ic3I69y6HQs="
+              },
+              "next_validators_hash": "AFC52ADA31027E88B5BCDD96600D5D0B22720A881DFBF4D41C4A3A74B7C621EB"
+            }
+          },
+          {
+            "height": {
+              "version_number": "0",
+              "version_height": "44"
+            },
+            "consensus_state": {
+              "@type": "/ibc.lightclients.tendermint.v1.ConsensusState",
+              "timestamp": "2020-01-02T00:04:40Z",
+              "root": {
+                "hash": "poVfLrq9cmdQimvmRtR7zzU562QF5+Y8BVh0GiF9EEM="
+              },
+              "next_validators_hash": "AFC52ADA31027E88B5BCDD96600D5D0B22720A881DFBF4D41C4A3A74B7C621EB"
+            }
+          },
+          {
+            "height": {
+              "version_number": "0",
+              "version_height": "48"
+            },
+            "consensus_state": {
+              "@type": "/ibc.lightclients.tendermint.v1.ConsensusState",
+              "timestamp": "2020-01-02T00:05:10Z",
+              "root": {
+                "hash": "6kz08QvPmcEFXgrp95IsSJPhcKseD/X2dSqltRoiL5U="
+              },
+              "next_validators_hash": "AFC52ADA31027E88B5BCDD96600D5D0B22720A881DFBF4D41C4A3A74B7C621EB"
+            }
+          },
+          {
+            "height": {
+              "version_number": "0",
+              "version_height": "52"
+            },
+            "consensus_state": {
+              "@type": "/ibc.lightclients.tendermint.v1.ConsensusState",
+              "timestamp": "2020-01-02T00:05:35Z",
+              "root": {
+                "hash": "IB4o2ZoYmRi4GyztsGsmCnPH+G2bTzLVDhzrySE/09Q="
+              },
+              "next_validators_hash": "AFC52ADA31027E88B5BCDD96600D5D0B22720A881DFBF4D41C4A3A74B7C621EB"
+            }
+          },
+          {
+            "height": {
+              "version_number": "0",
+              "version_height": "55"
+            },
+            "consensus_state": {
+              "@type": "/ibc.lightclients.tendermint.v1.ConsensusState",
+              "timestamp": "2020-01-02T00:06:00Z",
+              "root": {
+                "hash": "7sCilG8ypnsSQzCnSDf9opOYGpC9S6SSAfeKrn1l3no="
+              },
+              "next_validators_hash": "AFC52ADA31027E88B5BCDD96600D5D0B22720A881DFBF4D41C4A3A74B7C621EB"
+            }
+          },
+          {
+            "height": {
+              "version_number": "0",
+              "version_height": "59"
+            },
+            "consensus_state": {
+              "@type": "/ibc.lightclients.tendermint.v1.ConsensusState",
+              "timestamp": "2020-01-02T00:06:30Z",
+              "root": {
+                "hash": "h89zwDUKHhFws76agiqWRBrq4TdjkAID24KwhZvSvZE="
+              },
+              "next_validators_hash": "AFC52ADA31027E88B5BCDD96600D5D0B22720A881DFBF4D41C4A3A74B7C621EB"
+            }
+          },
+          {
+            "height": {
+              "version_number": "0",
+              "version_height": "8"
+            },
+            "consensus_state": {
+              "@type": "/ibc.lightclients.tendermint.v1.ConsensusState",
+              "timestamp": "2020-01-02T00:00:10Z",
+              "root": {
+                "hash": "eozeEviJLtTJkwAZG7OW9wGr3zp0dJ+wCXc+RztXsdM="
+              },
+              "next_validators_hash": "AFC52ADA31027E88B5BCDD96600D5D0B22720A881DFBF4D41C4A3A74B7C621EB"
+            }
+          }
+        ]
+      }
+    ],
+    "create_localhost": false
+  },
+  "connection_genesis": {
+    "connections": [
+      {
+        "id": "testchain0-conn0",
+        "client_id": "client0Fortestchain1",
+        "versions": [
+          "\n\u00011\u0012\rORDER_ORDERED\u0012\u000fORDER_UNORDERED"
+        ],
+        "state": "STATE_OPEN",
+        "counterparty": {
+          "client_id": "client0Fortestchain0",
+          "connection_id": "testchain1-conn0",
+          "prefix": {
+            "key_prefix": "aWJj"
+          }
+        }
+      }
+    ],
+    "client_connection_paths": [
+      {
+        "client_id": "client0Fortestchain1",
+        "paths": [
+          "testchain0-conn0"
+        ]
+      }
+    ]
+  },
+  "channel_genesis": {
+    "channels": [
+      {
+        "state": "STATE_OPEN",
+        "ordering": "ORDER_UNORDERED",
+        "counterparty": {
+          "port_id": "wasm.cosmos10pyejy66429refv3g35g2t7am0was7yacjc2l4",
+          "channel_id": "testchain1-conn00"
+        },
+        "connection_hops": [
+          "testchain0-conn0"
+        ],
+        "version": "pong",
+        "port_id": "wasm.cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
+        "channel_id": "testchain0-conn00"
+      }
+    ],
+    "acknowledgements": [
+      {
+        "port_id": "wasm.cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
+        "channel_id": "testchain0-conn00",
+        "sequence": "1",
+        "hash": "9RKC5OuTvBsFMtD79dHHvb9qCxw08IKsSJlAwmiw8tI="
+      },
+      {
+        "port_id": "wasm.cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
+        "channel_id": "testchain0-conn00",
+        "sequence": "2",
+        "hash": "Nj784gGVOFk2mdt+wAk/LOoPdUOo+5+0JfYs0yAubZU="
+      },
+      {
+        "port_id": "wasm.cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
+        "channel_id": "testchain0-conn00",
+        "sequence": "3",
+        "hash": "+lLTGP1dlSD6MBpJgBIvx98Psd3U2xo500K7JyMkya8="
+      }
+    ],
+    "commitments": [
+      {
+        "port_id": "wasm.cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
+        "channel_id": "testchain0-conn00",
+        "sequence": "4",
+        "hash": "DIuspQzH8GooFceqNxkTsiZXBn9qoWWJMUqsAIB1G5c="
+      }
+    ],
+    "send_sequences": [
+      {
+        "port_id": "wasm.cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
+        "channel_id": "testchain0-conn00",
+        "sequence": "5"
+      }
+    ],
+    "recv_sequences": [
+      {
+        "port_id": "wasm.cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
+        "channel_id": "testchain0-conn00",
+        "sequence": "1"
+      }
+    ],
+    "ack_sequences": [
+      {
+        "port_id": "wasm.cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
+        "channel_id": "testchain0-conn00",
+        "sequence": "1"
+      }
+    ]
+  }
+}
