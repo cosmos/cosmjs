@@ -327,6 +327,42 @@ exports.cosmos = $root.cosmos = (() => {
         };
         return Metadata;
       })();
+      v1beta1.Msg = (function () {
+        function Msg(rpcImpl, requestDelimited, responseDelimited) {
+          $protobuf.rpc.Service.call(this, rpcImpl, requestDelimited, responseDelimited);
+        }
+        (Msg.prototype = Object.create($protobuf.rpc.Service.prototype)).constructor = Msg;
+        Msg.create = function create(rpcImpl, requestDelimited, responseDelimited) {
+          return new this(rpcImpl, requestDelimited, responseDelimited);
+        };
+        Object.defineProperty(
+          (Msg.prototype.send = function send(request, callback) {
+            return this.rpcCall(
+              send,
+              $root.cosmos.bank.v1beta1.MsgSend,
+              $root.cosmos.bank.v1beta1.MsgSendResponse,
+              request,
+              callback,
+            );
+          }),
+          "name",
+          { value: "Send" },
+        );
+        Object.defineProperty(
+          (Msg.prototype.multiSend = function multiSend(request, callback) {
+            return this.rpcCall(
+              multiSend,
+              $root.cosmos.bank.v1beta1.MsgMultiSend,
+              $root.cosmos.bank.v1beta1.MsgMultiSendResponse,
+              request,
+              callback,
+            );
+          }),
+          "name",
+          { value: "MultiSend" },
+        );
+        return Msg;
+      })();
       v1beta1.MsgSend = (function () {
         function MsgSend(p) {
           this.amount = [];
@@ -378,6 +414,35 @@ exports.cosmos = $root.cosmos = (() => {
         };
         return MsgSend;
       })();
+      v1beta1.MsgSendResponse = (function () {
+        function MsgSendResponse(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        MsgSendResponse.create = function create(properties) {
+          return new MsgSendResponse(properties);
+        };
+        MsgSendResponse.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          return w;
+        };
+        MsgSendResponse.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.bank.v1beta1.MsgSendResponse();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return MsgSendResponse;
+      })();
       v1beta1.MsgMultiSend = (function () {
         function MsgMultiSend(p) {
           this.inputs = [];
@@ -426,6 +491,35 @@ exports.cosmos = $root.cosmos = (() => {
           return m;
         };
         return MsgMultiSend;
+      })();
+      v1beta1.MsgMultiSendResponse = (function () {
+        function MsgMultiSendResponse(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        MsgMultiSendResponse.create = function create(properties) {
+          return new MsgMultiSendResponse(properties);
+        };
+        MsgMultiSendResponse.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          return w;
+        };
+        MsgMultiSendResponse.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.bank.v1beta1.MsgMultiSendResponse();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return MsgMultiSendResponse;
       })();
       return v1beta1;
     })();
