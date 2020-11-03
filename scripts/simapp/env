@@ -1,5 +1,4 @@
 # Choose from https://hub.docker.com/r/interchainio/simapp/tags
-# We are using confio’s own images until tagged releases are available
-REPOSITORY="confio/simapp"
-VERSION="v0.40.0-rc1"
+REPOSITORY="interchainio/simapp"
+VERSION="v0.40.0-rc2"
 CONTAINER_NAME="simapp"

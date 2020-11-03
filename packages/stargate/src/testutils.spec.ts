@@ -56,11 +56,12 @@ export const validator = {
   /** From first gentx's auth_info.signer_infos in scripts/simapp/template/.simapp/config/genesis.json */
   pubkey: {
     type: "tendermint/PubKeySecp256k1",
-    value: "A5zRoIxDq35QN/VlXCJFBnJI66oVEqb59Y2aXCff4g77",
+    value: "AiRHwaEnXTLekByvbz4VnCW1TW2Pelp/mb4tK8ple1Xq",
   },
   /** delegator_address from /cosmos.staking.v1beta1.MsgCreateValidator in scripts/simapp/template/.simapp/config/genesis.json */
-  delegatorAddress: "cosmos12r7cues4dl3xnx6jljs95lszrmduz66wm9wu0f",
-  validatorAddress: "cosmosvaloper12r7cues4dl3xnx6jljs95lszrmduz66w736fr6",
+  delegatorAddress: "cosmos10083dys7qlzn663wcusq6hkr8wp7k2mm0sk4u9",
+  /** validator_address from /cosmos.staking.v1beta1.MsgCreateValidator in scripts/simapp/template/.simapp/config/genesis.json */
+  validatorAddress: "cosmosvaloper10083dys7qlzn663wcusq6hkr8wp7k2mm2yzqsk",
   accountNumber: 0,
   sequence: 1,
 };

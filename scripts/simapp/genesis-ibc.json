@@ -88,17 +88,6 @@
           "allow_update_after_expiry": false,
           "allow_update_after_misbehaviour": false
         }
-      },
-      {
-        "client_id": "localhost",
-        "client_state": {
-          "@type": "/ibc.lightclients.localhost.v1.ClientState",
-          "chain_id": "testchain0",
-          "height": {
-            "version_number": "0",
-            "version_height": "60"
-          }
-        }
       }
     ],
     "clients_consensus": [
@@ -114,9 +103,9 @@
               "@type": "/ibc.lightclients.tendermint.v1.ConsensusState",
               "timestamp": "2020-01-02T00:00:50Z",
               "root": {
-                "hash": "VHk6MvGLgJZCFNxS7k00rsJBgn+KFR/fpz4zY+0GssI="
+                "hash": "rRhOd4rghwWeMAgKRVisctyxK+TolMh28cXGYcTqDT0="
               },
-              "next_validators_hash": "AFC52ADA31027E88B5BCDD96600D5D0B22720A881DFBF4D41C4A3A74B7C621EB"
+              "next_validators_hash": "E25883964659F4CEDDD977410E903198E7FBC3EAA6B575EF717E67BE56E84079"
             }
           },
           {
@@ -128,9 +117,9 @@
               "@type": "/ibc.lightclients.tendermint.v1.ConsensusState",
               "timestamp": "2020-01-02T00:01:20Z",
               "root": {
-                "hash": "/uF2Cg7072fFKgx1MVWsFFiUQTV/pGNZ1rl3etDi4Zo="
+                "hash": "fTzFgmADVKxLeEDb7IMVHztpb0eXMDHfsPjVtEeSuoY="
               },
-              "next_validators_hash": "AFC52ADA31027E88B5BCDD96600D5D0B22720A881DFBF4D41C4A3A74B7C621EB"
+              "next_validators_hash": "E25883964659F4CEDDD977410E903198E7FBC3EAA6B575EF717E67BE56E84079"
             }
           },
           {
@@ -142,9 +131,9 @@
               "@type": "/ibc.lightclients.tendermint.v1.ConsensusState",
               "timestamp": "2020-01-02T00:01:55Z",
               "root": {
-                "hash": "vLVr8SGynio3onmNIO3jXWh86jXS4Z/VHNCaDZOogqQ="
+                "hash": "l2FIztRP5evK5dWdHzhyDnBNT/EamxPjPd7D5qgE1tE="
               },
-              "next_validators_hash": "AFC52ADA31027E88B5BCDD96600D5D0B22720A881DFBF4D41C4A3A74B7C621EB"
+              "next_validators_hash": "E25883964659F4CEDDD977410E903198E7FBC3EAA6B575EF717E67BE56E84079"
             }
           },
           {
@@ -156,9 +145,9 @@
               "@type": "/ibc.lightclients.tendermint.v1.ConsensusState",
               "timestamp": "2020-01-02T00:02:25Z",
               "root": {
-                "hash": "AaYJiSuJjNVqHbydjB6CIcdjdqcCOSsERZ3rum5E9cI="
+                "hash": "PYRjmlZIjytW2Pd3eU1czkUkkId+MfgzZtJlLuLyfyk="
               },
-              "next_validators_hash": "AFC52ADA31027E88B5BCDD96600D5D0B22720A881DFBF4D41C4A3A74B7C621EB"
+              "next_validators_hash": "E25883964659F4CEDDD977410E903198E7FBC3EAA6B575EF717E67BE56E84079"
             }
           },
           {
@@ -170,9 +159,9 @@
               "@type": "/ibc.lightclients.tendermint.v1.ConsensusState",
               "timestamp": "2020-01-02T00:02:55Z",
               "root": {
-                "hash": "v9OtcdxZL3O6AoYT3g/eg7JzZjEMxaZYK1whnkrQPIc="
+                "hash": "8WV/XeRzdVLGRa/Cokds5Gbx+hBlnrvatIFFCzpkHjI="
               },
-              "next_validators_hash": "AFC52ADA31027E88B5BCDD96600D5D0B22720A881DFBF4D41C4A3A74B7C621EB"
+              "next_validators_hash": "E25883964659F4CEDDD977410E903198E7FBC3EAA6B575EF717E67BE56E84079"
             }
           },
           {
@@ -184,9 +173,9 @@
               "@type": "/ibc.lightclients.tendermint.v1.ConsensusState",
               "timestamp": "2020-01-02T00:03:20Z",
               "root": {
-                "hash": "npsfFqZxTRdVyNexTJ9v8VzuyFV37l56kKOD67VHW7M="
+                "hash": "7lqe+s7vffIxIdw9zLmva9Ka62ZdLk2xoVpY/ddbfnY="
               },
-              "next_validators_hash": "AFC52ADA31027E88B5BCDD96600D5D0B22720A881DFBF4D41C4A3A74B7C621EB"
+              "next_validators_hash": "E25883964659F4CEDDD977410E903198E7FBC3EAA6B575EF717E67BE56E84079"
             }
           },
           {
@@ -198,9 +187,9 @@
               "@type": "/ibc.lightclients.tendermint.v1.ConsensusState",
               "timestamp": "2020-01-02T00:03:50Z",
               "root": {
-                "hash": "d7d1qdOlqhcU/iEwj2bi3P3GPV8JKWTJNqHWSLz5rns="
+                "hash": "teIRT2KoCB3eyVgcOnmWs9yLKBa65jji+57S2JwQEok="
               },
-              "next_validators_hash": "AFC52ADA31027E88B5BCDD96600D5D0B22720A881DFBF4D41C4A3A74B7C621EB"
+              "next_validators_hash": "E25883964659F4CEDDD977410E903198E7FBC3EAA6B575EF717E67BE56E84079"
             }
           },
           {
@@ -212,9 +201,9 @@
               "@type": "/ibc.lightclients.tendermint.v1.ConsensusState",
               "timestamp": "2020-01-02T00:04:15Z",
               "root": {
-                "hash": "jDh3k27ovmkgKba74oMLKGT0tFG/H9A/ic3I69y6HQs="
+                "hash": "InGy9tyIB3qUmCxMNMdaf+5IAXLKgtjRP6bT5CcNZPY="
               },
-              "next_validators_hash": "AFC52ADA31027E88B5BCDD96600D5D0B22720A881DFBF4D41C4A3A74B7C621EB"
+              "next_validators_hash": "E25883964659F4CEDDD977410E903198E7FBC3EAA6B575EF717E67BE56E84079"
             }
           },
           {
@@ -226,9 +215,9 @@
               "@type": "/ibc.lightclients.tendermint.v1.ConsensusState",
               "timestamp": "2020-01-02T00:04:40Z",
               "root": {
-                "hash": "poVfLrq9cmdQimvmRtR7zzU562QF5+Y8BVh0GiF9EEM="
+                "hash": "U5AQ7i/jWT7mVLAYY6Hd0I2LPqraocnPvm6iyqM77tQ="
               },
-              "next_validators_hash": "AFC52ADA31027E88B5BCDD96600D5D0B22720A881DFBF4D41C4A3A74B7C621EB"
+              "next_validators_hash": "E25883964659F4CEDDD977410E903198E7FBC3EAA6B575EF717E67BE56E84079"
             }
           },
           {
@@ -240,9 +229,9 @@
               "@type": "/ibc.lightclients.tendermint.v1.ConsensusState",
               "timestamp": "2020-01-02T00:05:10Z",
               "root": {
-                "hash": "6kz08QvPmcEFXgrp95IsSJPhcKseD/X2dSqltRoiL5U="
+                "hash": "2gvlcDp2zkV8HbJ3uBUVXBYnkdvjNAnuo1ZYtzZCEpA="
               },
-              "next_validators_hash": "AFC52ADA31027E88B5BCDD96600D5D0B22720A881DFBF4D41C4A3A74B7C621EB"
+              "next_validators_hash": "E25883964659F4CEDDD977410E903198E7FBC3EAA6B575EF717E67BE56E84079"
             }
           },
           {
@@ -254,9 +243,9 @@
               "@type": "/ibc.lightclients.tendermint.v1.ConsensusState",
               "timestamp": "2020-01-02T00:05:35Z",
               "root": {
-                "hash": "IB4o2ZoYmRi4GyztsGsmCnPH+G2bTzLVDhzrySE/09Q="
+                "hash": "rfeFQywd4nVB13dPYr7Fxzf85oGzC2Rsi86f08+JITY="
               },
-              "next_validators_hash": "AFC52ADA31027E88B5BCDD96600D5D0B22720A881DFBF4D41C4A3A74B7C621EB"
+              "next_validators_hash": "E25883964659F4CEDDD977410E903198E7FBC3EAA6B575EF717E67BE56E84079"
             }
           },
           {
@@ -268,9 +257,9 @@
               "@type": "/ibc.lightclients.tendermint.v1.ConsensusState",
               "timestamp": "2020-01-02T00:06:00Z",
               "root": {
-                "hash": "7sCilG8ypnsSQzCnSDf9opOYGpC9S6SSAfeKrn1l3no="
+                "hash": "uxNaVw9QHn99bXzWiNd/63pXcRGM1MtIzWe/91ZU858="
               },
-              "next_validators_hash": "AFC52ADA31027E88B5BCDD96600D5D0B22720A881DFBF4D41C4A3A74B7C621EB"
+              "next_validators_hash": "E25883964659F4CEDDD977410E903198E7FBC3EAA6B575EF717E67BE56E84079"
             }
           },
           {
@@ -282,9 +271,9 @@
               "@type": "/ibc.lightclients.tendermint.v1.ConsensusState",
               "timestamp": "2020-01-02T00:06:30Z",
               "root": {
-                "hash": "h89zwDUKHhFws76agiqWRBrq4TdjkAID24KwhZvSvZE="
+                "hash": "MtE/kuFCztaYojPto6f6IsqP+zjs1RRs94Iy/QVkVd8="
               },
-              "next_validators_hash": "AFC52ADA31027E88B5BCDD96600D5D0B22720A881DFBF4D41C4A3A74B7C621EB"
+              "next_validators_hash": "E25883964659F4CEDDD977410E903198E7FBC3EAA6B575EF717E67BE56E84079"
             }
           },
           {
@@ -296,9 +285,9 @@
               "@type": "/ibc.lightclients.tendermint.v1.ConsensusState",
               "timestamp": "2020-01-02T00:00:10Z",
               "root": {
-                "hash": "eozeEviJLtTJkwAZG7OW9wGr3zp0dJ+wCXc+RztXsdM="
+                "hash": "aDaI4bMoH1mBZ+ZdmdlPlN10EEa71YACm9dvMOeseM0="
               },
-              "next_validators_hash": "AFC52ADA31027E88B5BCDD96600D5D0B22720A881DFBF4D41C4A3A74B7C621EB"
+              "next_validators_hash": "E25883964659F4CEDDD977410E903198E7FBC3EAA6B575EF717E67BE56E84079"
             }
           }
         ]
@@ -312,7 +301,13 @@
         "id": "testchain0-conn0",
         "client_id": "client0Fortestchain1",
         "versions": [
-          "\n\u00011\u0012\rORDER_ORDERED\u0012\u000fORDER_UNORDERED"
+          {
+            "identifier": "1",
+            "features": [
+              "ORDER_ORDERED",
+              "ORDER_UNORDERED"
+            ]
+          }
         ],
         "state": "STATE_OPEN",
         "counterparty": {
@@ -355,19 +350,19 @@
         "port_id": "wasm.cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
         "channel_id": "testchain0-conn00",
         "sequence": "1",
-        "hash": "9RKC5OuTvBsFMtD79dHHvb9qCxw08IKsSJlAwmiw8tI="
+        "data": "9RKC5OuTvBsFMtD79dHHvb9qCxw08IKsSJlAwmiw8tI="
       },
       {
         "port_id": "wasm.cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
         "channel_id": "testchain0-conn00",
         "sequence": "2",
-        "hash": "Nj784gGVOFk2mdt+wAk/LOoPdUOo+5+0JfYs0yAubZU="
+        "data": "Nj784gGVOFk2mdt+wAk/LOoPdUOo+5+0JfYs0yAubZU="
       },
       {
         "port_id": "wasm.cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
         "channel_id": "testchain0-conn00",
         "sequence": "3",
-        "hash": "+lLTGP1dlSD6MBpJgBIvx98Psd3U2xo500K7JyMkya8="
+        "data": "+lLTGP1dlSD6MBpJgBIvx98Psd3U2xo500K7JyMkya8="
       }
     ],
     "commitments": [
@@ -375,7 +370,27 @@
         "port_id": "wasm.cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
         "channel_id": "testchain0-conn00",
         "sequence": "4",
-        "hash": "DIuspQzH8GooFceqNxkTsiZXBn9qoWWJMUqsAIB1G5c="
+        "data": "DIuspQzH8GooFceqNxkTsiZXBn9qoWWJMUqsAIB1G5c="
+      }
+    ],
+    "receipts": [
+      {
+        "port_id": "wasm.cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
+        "channel_id": "testchain0-conn00",
+        "sequence": "1",
+        "data": ""
+      },
+      {
+        "port_id": "wasm.cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
+        "channel_id": "testchain0-conn00",
+        "sequence": "2",
+        "data": ""
+      },
+      {
+        "port_id": "wasm.cosmos18vd8fpwxzck93qlwghaj6arh4p7c5n89uzcee5",
+        "channel_id": "testchain0-conn00",
+        "sequence": "3",
+        "data": ""
       }
     ],
     "send_sequences": [
