@@ -46,7 +46,7 @@ function inline_jq() {
 
 (
   cd "$SCRIPT_DIR"
-
+  inline_jq "template/.simapp/config/genesis.json" --argjson ibc "$(<genesis-ibc.json)" '.app_state.ibc=$ibc'
   # Sort genesis
   inline_jq "template/.simapp/config/genesis.json" -S
 
