@@ -1520,6 +1520,85 @@ export namespace cosmos {
         ): cosmos.bank.v1beta1.QueryParamsResponse;
       }
 
+      /** Represents a Msg */
+      class Msg extends $protobuf.rpc.Service {
+        /**
+         * Constructs a new Msg service.
+         * @param rpcImpl RPC implementation
+         * @param [requestDelimited=false] Whether requests are length-delimited
+         * @param [responseDelimited=false] Whether responses are length-delimited
+         */
+        constructor(rpcImpl: $protobuf.RPCImpl, requestDelimited?: boolean, responseDelimited?: boolean);
+
+        /**
+         * Creates new Msg service using the specified rpc implementation.
+         * @param rpcImpl RPC implementation
+         * @param [requestDelimited=false] Whether requests are length-delimited
+         * @param [responseDelimited=false] Whether responses are length-delimited
+         * @returns RPC service. Useful where requests and/or responses are streamed.
+         */
+        public static create(
+          rpcImpl: $protobuf.RPCImpl,
+          requestDelimited?: boolean,
+          responseDelimited?: boolean,
+        ): Msg;
+
+        /**
+         * Calls Send.
+         * @param request MsgSend message or plain object
+         * @param callback Node-style callback called with the error, if any, and MsgSendResponse
+         */
+        public send(
+          request: cosmos.bank.v1beta1.IMsgSend,
+          callback: cosmos.bank.v1beta1.Msg.SendCallback,
+        ): void;
+
+        /**
+         * Calls Send.
+         * @param request MsgSend message or plain object
+         * @returns Promise
+         */
+        public send(request: cosmos.bank.v1beta1.IMsgSend): Promise<cosmos.bank.v1beta1.MsgSendResponse>;
+
+        /**
+         * Calls MultiSend.
+         * @param request MsgMultiSend message or plain object
+         * @param callback Node-style callback called with the error, if any, and MsgMultiSendResponse
+         */
+        public multiSend(
+          request: cosmos.bank.v1beta1.IMsgMultiSend,
+          callback: cosmos.bank.v1beta1.Msg.MultiSendCallback,
+        ): void;
+
+        /**
+         * Calls MultiSend.
+         * @param request MsgMultiSend message or plain object
+         * @returns Promise
+         */
+        public multiSend(
+          request: cosmos.bank.v1beta1.IMsgMultiSend,
+        ): Promise<cosmos.bank.v1beta1.MsgMultiSendResponse>;
+      }
+
+      namespace Msg {
+        /**
+         * Callback as used by {@link cosmos.bank.v1beta1.Msg#send}.
+         * @param error Error, if any
+         * @param [response] MsgSendResponse
+         */
+        type SendCallback = (error: Error | null, response?: cosmos.bank.v1beta1.MsgSendResponse) => void;
+
+        /**
+         * Callback as used by {@link cosmos.bank.v1beta1.Msg#multiSend}.
+         * @param error Error, if any
+         * @param [response] MsgMultiSendResponse
+         */
+        type MultiSendCallback = (
+          error: Error | null,
+          response?: cosmos.bank.v1beta1.MsgMultiSendResponse,
+        ) => void;
+      }
+
       /** Properties of a MsgSend. */
       interface IMsgSend {
         /** MsgSend fromAddress */
@@ -1575,6 +1654,48 @@ export namespace cosmos {
         public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.bank.v1beta1.MsgSend;
       }
 
+      /** Properties of a MsgSendResponse. */
+      interface IMsgSendResponse {}
+
+      /** Represents a MsgSendResponse. */
+      class MsgSendResponse implements IMsgSendResponse {
+        /**
+         * Constructs a new MsgSendResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.bank.v1beta1.IMsgSendResponse);
+
+        /**
+         * Creates a new MsgSendResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns MsgSendResponse instance
+         */
+        public static create(
+          properties?: cosmos.bank.v1beta1.IMsgSendResponse,
+        ): cosmos.bank.v1beta1.MsgSendResponse;
+
+        /**
+         * Encodes the specified MsgSendResponse message. Does not implicitly {@link cosmos.bank.v1beta1.MsgSendResponse.verify|verify} messages.
+         * @param m MsgSendResponse message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(m: cosmos.bank.v1beta1.IMsgSendResponse, w?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a MsgSendResponse message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns MsgSendResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.bank.v1beta1.MsgSendResponse;
+      }
+
       /** Properties of a MsgMultiSend. */
       interface IMsgMultiSend {
         /** MsgMultiSend inputs */
@@ -1624,6 +1745,51 @@ export namespace cosmos {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.bank.v1beta1.MsgMultiSend;
+      }
+
+      /** Properties of a MsgMultiSendResponse. */
+      interface IMsgMultiSendResponse {}
+
+      /** Represents a MsgMultiSendResponse. */
+      class MsgMultiSendResponse implements IMsgMultiSendResponse {
+        /**
+         * Constructs a new MsgMultiSendResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.bank.v1beta1.IMsgMultiSendResponse);
+
+        /**
+         * Creates a new MsgMultiSendResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns MsgMultiSendResponse instance
+         */
+        public static create(
+          properties?: cosmos.bank.v1beta1.IMsgMultiSendResponse,
+        ): cosmos.bank.v1beta1.MsgMultiSendResponse;
+
+        /**
+         * Encodes the specified MsgMultiSendResponse message. Does not implicitly {@link cosmos.bank.v1beta1.MsgMultiSendResponse.verify|verify} messages.
+         * @param m MsgMultiSendResponse message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.bank.v1beta1.IMsgMultiSendResponse,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a MsgMultiSendResponse message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns MsgMultiSendResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.bank.v1beta1.MsgMultiSendResponse;
       }
     }
   }
@@ -2409,13 +2575,13 @@ export namespace cosmos {
         operatorAddress?: string | null;
 
         /** Validator consensusPubkey */
-        consensusPubkey?: string | null;
+        consensusPubkey?: google.protobuf.IAny | null;
 
         /** Validator jailed */
         jailed?: boolean | null;
 
         /** Validator status */
-        status?: number | null;
+        status?: cosmos.staking.v1beta1.BondStatus | null;
 
         /** Validator tokens */
         tokens?: string | null;
@@ -2451,13 +2617,13 @@ export namespace cosmos {
         public operatorAddress: string;
 
         /** Validator consensusPubkey. */
-        public consensusPubkey: string;
+        public consensusPubkey?: google.protobuf.IAny | null;
 
         /** Validator jailed. */
         public jailed: boolean;
 
         /** Validator status. */
-        public status: number;
+        public status: cosmos.staking.v1beta1.BondStatus;
 
         /** Validator tokens. */
         public tokens: string;
@@ -2506,6 +2672,14 @@ export namespace cosmos {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.staking.v1beta1.Validator;
+      }
+
+      /** BondStatus enum. */
+      enum BondStatus {
+        BOND_STATUS_UNSPECIFIED = 0,
+        BOND_STATUS_UNBONDED = 1,
+        BOND_STATUS_UNBONDING = 2,
+        BOND_STATUS_BONDED = 3,
       }
 
       /** Properties of a ValAddresses. */
@@ -3364,6 +3538,177 @@ export namespace cosmos {
         public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.staking.v1beta1.Pool;
       }
 
+      /** Represents a Msg */
+      class Msg extends $protobuf.rpc.Service {
+        /**
+         * Constructs a new Msg service.
+         * @param rpcImpl RPC implementation
+         * @param [requestDelimited=false] Whether requests are length-delimited
+         * @param [responseDelimited=false] Whether responses are length-delimited
+         */
+        constructor(rpcImpl: $protobuf.RPCImpl, requestDelimited?: boolean, responseDelimited?: boolean);
+
+        /**
+         * Creates new Msg service using the specified rpc implementation.
+         * @param rpcImpl RPC implementation
+         * @param [requestDelimited=false] Whether requests are length-delimited
+         * @param [responseDelimited=false] Whether responses are length-delimited
+         * @returns RPC service. Useful where requests and/or responses are streamed.
+         */
+        public static create(
+          rpcImpl: $protobuf.RPCImpl,
+          requestDelimited?: boolean,
+          responseDelimited?: boolean,
+        ): Msg;
+
+        /**
+         * Calls CreateValidator.
+         * @param request MsgCreateValidator message or plain object
+         * @param callback Node-style callback called with the error, if any, and MsgCreateValidatorResponse
+         */
+        public createValidator(
+          request: cosmos.staking.v1beta1.IMsgCreateValidator,
+          callback: cosmos.staking.v1beta1.Msg.CreateValidatorCallback,
+        ): void;
+
+        /**
+         * Calls CreateValidator.
+         * @param request MsgCreateValidator message or plain object
+         * @returns Promise
+         */
+        public createValidator(
+          request: cosmos.staking.v1beta1.IMsgCreateValidator,
+        ): Promise<cosmos.staking.v1beta1.MsgCreateValidatorResponse>;
+
+        /**
+         * Calls EditValidator.
+         * @param request MsgEditValidator message or plain object
+         * @param callback Node-style callback called with the error, if any, and MsgEditValidatorResponse
+         */
+        public editValidator(
+          request: cosmos.staking.v1beta1.IMsgEditValidator,
+          callback: cosmos.staking.v1beta1.Msg.EditValidatorCallback,
+        ): void;
+
+        /**
+         * Calls EditValidator.
+         * @param request MsgEditValidator message or plain object
+         * @returns Promise
+         */
+        public editValidator(
+          request: cosmos.staking.v1beta1.IMsgEditValidator,
+        ): Promise<cosmos.staking.v1beta1.MsgEditValidatorResponse>;
+
+        /**
+         * Calls Delegate.
+         * @param request MsgDelegate message or plain object
+         * @param callback Node-style callback called with the error, if any, and MsgDelegateResponse
+         */
+        public delegate(
+          request: cosmos.staking.v1beta1.IMsgDelegate,
+          callback: cosmos.staking.v1beta1.Msg.DelegateCallback,
+        ): void;
+
+        /**
+         * Calls Delegate.
+         * @param request MsgDelegate message or plain object
+         * @returns Promise
+         */
+        public delegate(
+          request: cosmos.staking.v1beta1.IMsgDelegate,
+        ): Promise<cosmos.staking.v1beta1.MsgDelegateResponse>;
+
+        /**
+         * Calls BeginRedelegate.
+         * @param request MsgBeginRedelegate message or plain object
+         * @param callback Node-style callback called with the error, if any, and MsgBeginRedelegateResponse
+         */
+        public beginRedelegate(
+          request: cosmos.staking.v1beta1.IMsgBeginRedelegate,
+          callback: cosmos.staking.v1beta1.Msg.BeginRedelegateCallback,
+        ): void;
+
+        /**
+         * Calls BeginRedelegate.
+         * @param request MsgBeginRedelegate message or plain object
+         * @returns Promise
+         */
+        public beginRedelegate(
+          request: cosmos.staking.v1beta1.IMsgBeginRedelegate,
+        ): Promise<cosmos.staking.v1beta1.MsgBeginRedelegateResponse>;
+
+        /**
+         * Calls Undelegate.
+         * @param request MsgUndelegate message or plain object
+         * @param callback Node-style callback called with the error, if any, and MsgUndelegateResponse
+         */
+        public undelegate(
+          request: cosmos.staking.v1beta1.IMsgUndelegate,
+          callback: cosmos.staking.v1beta1.Msg.UndelegateCallback,
+        ): void;
+
+        /**
+         * Calls Undelegate.
+         * @param request MsgUndelegate message or plain object
+         * @returns Promise
+         */
+        public undelegate(
+          request: cosmos.staking.v1beta1.IMsgUndelegate,
+        ): Promise<cosmos.staking.v1beta1.MsgUndelegateResponse>;
+      }
+
+      namespace Msg {
+        /**
+         * Callback as used by {@link cosmos.staking.v1beta1.Msg#createValidator}.
+         * @param error Error, if any
+         * @param [response] MsgCreateValidatorResponse
+         */
+        type CreateValidatorCallback = (
+          error: Error | null,
+          response?: cosmos.staking.v1beta1.MsgCreateValidatorResponse,
+        ) => void;
+
+        /**
+         * Callback as used by {@link cosmos.staking.v1beta1.Msg#editValidator}.
+         * @param error Error, if any
+         * @param [response] MsgEditValidatorResponse
+         */
+        type EditValidatorCallback = (
+          error: Error | null,
+          response?: cosmos.staking.v1beta1.MsgEditValidatorResponse,
+        ) => void;
+
+        /**
+         * Callback as used by {@link cosmos.staking.v1beta1.Msg#delegate}.
+         * @param error Error, if any
+         * @param [response] MsgDelegateResponse
+         */
+        type DelegateCallback = (
+          error: Error | null,
+          response?: cosmos.staking.v1beta1.MsgDelegateResponse,
+        ) => void;
+
+        /**
+         * Callback as used by {@link cosmos.staking.v1beta1.Msg#beginRedelegate}.
+         * @param error Error, if any
+         * @param [response] MsgBeginRedelegateResponse
+         */
+        type BeginRedelegateCallback = (
+          error: Error | null,
+          response?: cosmos.staking.v1beta1.MsgBeginRedelegateResponse,
+        ) => void;
+
+        /**
+         * Callback as used by {@link cosmos.staking.v1beta1.Msg#undelegate}.
+         * @param error Error, if any
+         * @param [response] MsgUndelegateResponse
+         */
+        type UndelegateCallback = (
+          error: Error | null,
+          response?: cosmos.staking.v1beta1.MsgUndelegateResponse,
+        ) => void;
+      }
+
       /** Properties of a MsgCreateValidator. */
       interface IMsgCreateValidator {
         /** MsgCreateValidator description */
@@ -3382,7 +3727,7 @@ export namespace cosmos {
         validatorAddress?: string | null;
 
         /** MsgCreateValidator pubkey */
-        pubkey?: string | null;
+        pubkey?: google.protobuf.IAny | null;
 
         /** MsgCreateValidator value */
         value?: cosmos.base.v1beta1.ICoin | null;
@@ -3412,7 +3757,7 @@ export namespace cosmos {
         public validatorAddress: string;
 
         /** MsgCreateValidator pubkey. */
-        public pubkey: string;
+        public pubkey?: google.protobuf.IAny | null;
 
         /** MsgCreateValidator value. */
         public value?: cosmos.base.v1beta1.ICoin | null;
@@ -3449,6 +3794,51 @@ export namespace cosmos {
           r: $protobuf.Reader | Uint8Array,
           l?: number,
         ): cosmos.staking.v1beta1.MsgCreateValidator;
+      }
+
+      /** Properties of a MsgCreateValidatorResponse. */
+      interface IMsgCreateValidatorResponse {}
+
+      /** Represents a MsgCreateValidatorResponse. */
+      class MsgCreateValidatorResponse implements IMsgCreateValidatorResponse {
+        /**
+         * Constructs a new MsgCreateValidatorResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IMsgCreateValidatorResponse);
+
+        /**
+         * Creates a new MsgCreateValidatorResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns MsgCreateValidatorResponse instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IMsgCreateValidatorResponse,
+        ): cosmos.staking.v1beta1.MsgCreateValidatorResponse;
+
+        /**
+         * Encodes the specified MsgCreateValidatorResponse message. Does not implicitly {@link cosmos.staking.v1beta1.MsgCreateValidatorResponse.verify|verify} messages.
+         * @param m MsgCreateValidatorResponse message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.staking.v1beta1.IMsgCreateValidatorResponse,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a MsgCreateValidatorResponse message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns MsgCreateValidatorResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.MsgCreateValidatorResponse;
       }
 
       /** Properties of a MsgEditValidator. */
@@ -3520,6 +3910,51 @@ export namespace cosmos {
         ): cosmos.staking.v1beta1.MsgEditValidator;
       }
 
+      /** Properties of a MsgEditValidatorResponse. */
+      interface IMsgEditValidatorResponse {}
+
+      /** Represents a MsgEditValidatorResponse. */
+      class MsgEditValidatorResponse implements IMsgEditValidatorResponse {
+        /**
+         * Constructs a new MsgEditValidatorResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IMsgEditValidatorResponse);
+
+        /**
+         * Creates a new MsgEditValidatorResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns MsgEditValidatorResponse instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IMsgEditValidatorResponse,
+        ): cosmos.staking.v1beta1.MsgEditValidatorResponse;
+
+        /**
+         * Encodes the specified MsgEditValidatorResponse message. Does not implicitly {@link cosmos.staking.v1beta1.MsgEditValidatorResponse.verify|verify} messages.
+         * @param m MsgEditValidatorResponse message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.staking.v1beta1.IMsgEditValidatorResponse,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a MsgEditValidatorResponse message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns MsgEditValidatorResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.MsgEditValidatorResponse;
+      }
+
       /** Properties of a MsgDelegate. */
       interface IMsgDelegate {
         /** MsgDelegate delegatorAddress */
@@ -3578,6 +4013,51 @@ export namespace cosmos {
           r: $protobuf.Reader | Uint8Array,
           l?: number,
         ): cosmos.staking.v1beta1.MsgDelegate;
+      }
+
+      /** Properties of a MsgDelegateResponse. */
+      interface IMsgDelegateResponse {}
+
+      /** Represents a MsgDelegateResponse. */
+      class MsgDelegateResponse implements IMsgDelegateResponse {
+        /**
+         * Constructs a new MsgDelegateResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IMsgDelegateResponse);
+
+        /**
+         * Creates a new MsgDelegateResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns MsgDelegateResponse instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IMsgDelegateResponse,
+        ): cosmos.staking.v1beta1.MsgDelegateResponse;
+
+        /**
+         * Encodes the specified MsgDelegateResponse message. Does not implicitly {@link cosmos.staking.v1beta1.MsgDelegateResponse.verify|verify} messages.
+         * @param m MsgDelegateResponse message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.staking.v1beta1.IMsgDelegateResponse,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a MsgDelegateResponse message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns MsgDelegateResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.MsgDelegateResponse;
       }
 
       /** Properties of a MsgBeginRedelegate. */
@@ -3649,6 +4129,57 @@ export namespace cosmos {
         ): cosmos.staking.v1beta1.MsgBeginRedelegate;
       }
 
+      /** Properties of a MsgBeginRedelegateResponse. */
+      interface IMsgBeginRedelegateResponse {
+        /** MsgBeginRedelegateResponse completionTime */
+        completionTime?: google.protobuf.ITimestamp | null;
+      }
+
+      /** Represents a MsgBeginRedelegateResponse. */
+      class MsgBeginRedelegateResponse implements IMsgBeginRedelegateResponse {
+        /**
+         * Constructs a new MsgBeginRedelegateResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IMsgBeginRedelegateResponse);
+
+        /** MsgBeginRedelegateResponse completionTime. */
+        public completionTime?: google.protobuf.ITimestamp | null;
+
+        /**
+         * Creates a new MsgBeginRedelegateResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns MsgBeginRedelegateResponse instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IMsgBeginRedelegateResponse,
+        ): cosmos.staking.v1beta1.MsgBeginRedelegateResponse;
+
+        /**
+         * Encodes the specified MsgBeginRedelegateResponse message. Does not implicitly {@link cosmos.staking.v1beta1.MsgBeginRedelegateResponse.verify|verify} messages.
+         * @param m MsgBeginRedelegateResponse message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.staking.v1beta1.IMsgBeginRedelegateResponse,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a MsgBeginRedelegateResponse message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns MsgBeginRedelegateResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.MsgBeginRedelegateResponse;
+      }
+
       /** Properties of a MsgUndelegate. */
       interface IMsgUndelegate {
         /** MsgUndelegate delegatorAddress */
@@ -3710,6 +4241,57 @@ export namespace cosmos {
           r: $protobuf.Reader | Uint8Array,
           l?: number,
         ): cosmos.staking.v1beta1.MsgUndelegate;
+      }
+
+      /** Properties of a MsgUndelegateResponse. */
+      interface IMsgUndelegateResponse {
+        /** MsgUndelegateResponse completionTime */
+        completionTime?: google.protobuf.ITimestamp | null;
+      }
+
+      /** Represents a MsgUndelegateResponse. */
+      class MsgUndelegateResponse implements IMsgUndelegateResponse {
+        /**
+         * Constructs a new MsgUndelegateResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IMsgUndelegateResponse);
+
+        /** MsgUndelegateResponse completionTime. */
+        public completionTime?: google.protobuf.ITimestamp | null;
+
+        /**
+         * Creates a new MsgUndelegateResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns MsgUndelegateResponse instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IMsgUndelegateResponse,
+        ): cosmos.staking.v1beta1.MsgUndelegateResponse;
+
+        /**
+         * Encodes the specified MsgUndelegateResponse message. Does not implicitly {@link cosmos.staking.v1beta1.MsgUndelegateResponse.verify|verify} messages.
+         * @param m MsgUndelegateResponse message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.staking.v1beta1.IMsgUndelegateResponse,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a MsgUndelegateResponse message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns MsgUndelegateResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.MsgUndelegateResponse;
       }
     }
   }
@@ -6378,55 +6960,6 @@ export namespace google {
       }
     }
 
-    /** Properties of a Timestamp. */
-    interface ITimestamp {
-      /** Timestamp seconds */
-      seconds?: Long | null;
-
-      /** Timestamp nanos */
-      nanos?: number | null;
-    }
-
-    /** Represents a Timestamp. */
-    class Timestamp implements ITimestamp {
-      /**
-       * Constructs a new Timestamp.
-       * @param [p] Properties to set
-       */
-      constructor(p?: google.protobuf.ITimestamp);
-
-      /** Timestamp seconds. */
-      public seconds: Long;
-
-      /** Timestamp nanos. */
-      public nanos: number;
-
-      /**
-       * Creates a new Timestamp instance using the specified properties.
-       * @param [properties] Properties to set
-       * @returns Timestamp instance
-       */
-      public static create(properties?: google.protobuf.ITimestamp): google.protobuf.Timestamp;
-
-      /**
-       * Encodes the specified Timestamp message. Does not implicitly {@link google.protobuf.Timestamp.verify|verify} messages.
-       * @param m Timestamp message or plain object to encode
-       * @param [w] Writer to encode to
-       * @returns Writer
-       */
-      public static encode(m: google.protobuf.ITimestamp, w?: $protobuf.Writer): $protobuf.Writer;
-
-      /**
-       * Decodes a Timestamp message from the specified reader or buffer.
-       * @param r Reader or buffer to decode from
-       * @param [l] Message length if known beforehand
-       * @returns Timestamp
-       * @throws {Error} If the payload is not a reader or valid buffer
-       * @throws {$protobuf.util.ProtocolError} If required fields are missing
-       */
-      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): google.protobuf.Timestamp;
-    }
-
     /** Properties of a Duration. */
     interface IDuration {
       /** Duration seconds */
@@ -6474,6 +7007,55 @@ export namespace google {
        * @throws {$protobuf.util.ProtocolError} If required fields are missing
        */
       public static decode(r: $protobuf.Reader | Uint8Array, l?: number): google.protobuf.Duration;
+    }
+
+    /** Properties of a Timestamp. */
+    interface ITimestamp {
+      /** Timestamp seconds */
+      seconds?: Long | null;
+
+      /** Timestamp nanos */
+      nanos?: number | null;
+    }
+
+    /** Represents a Timestamp. */
+    class Timestamp implements ITimestamp {
+      /**
+       * Constructs a new Timestamp.
+       * @param [p] Properties to set
+       */
+      constructor(p?: google.protobuf.ITimestamp);
+
+      /** Timestamp seconds. */
+      public seconds: Long;
+
+      /** Timestamp nanos. */
+      public nanos: number;
+
+      /**
+       * Creates a new Timestamp instance using the specified properties.
+       * @param [properties] Properties to set
+       * @returns Timestamp instance
+       */
+      public static create(properties?: google.protobuf.ITimestamp): google.protobuf.Timestamp;
+
+      /**
+       * Encodes the specified Timestamp message. Does not implicitly {@link google.protobuf.Timestamp.verify|verify} messages.
+       * @param m Timestamp message or plain object to encode
+       * @param [w] Writer to encode to
+       * @returns Writer
+       */
+      public static encode(m: google.protobuf.ITimestamp, w?: $protobuf.Writer): $protobuf.Writer;
+
+      /**
+       * Decodes a Timestamp message from the specified reader or buffer.
+       * @param r Reader or buffer to decode from
+       * @param [l] Message length if known beforehand
+       * @returns Timestamp
+       * @throws {Error} If the payload is not a reader or valid buffer
+       * @throws {$protobuf.util.ProtocolError} If required fields are missing
+       */
+      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): google.protobuf.Timestamp;
     }
   }
 
@@ -6675,757 +7257,6 @@ export namespace ibc {
     namespace channel {
       /** Namespace v1. */
       namespace v1 {
-        /** Properties of a MsgChannelOpenInit. */
-        interface IMsgChannelOpenInit {
-          /** MsgChannelOpenInit portId */
-          portId?: string | null;
-
-          /** MsgChannelOpenInit channelId */
-          channelId?: string | null;
-
-          /** MsgChannelOpenInit channel */
-          channel?: ibc.core.channel.v1.IChannel | null;
-
-          /** MsgChannelOpenInit signer */
-          signer?: string | null;
-        }
-
-        /** Represents a MsgChannelOpenInit. */
-        class MsgChannelOpenInit implements IMsgChannelOpenInit {
-          /**
-           * Constructs a new MsgChannelOpenInit.
-           * @param [p] Properties to set
-           */
-          constructor(p?: ibc.core.channel.v1.IMsgChannelOpenInit);
-
-          /** MsgChannelOpenInit portId. */
-          public portId: string;
-
-          /** MsgChannelOpenInit channelId. */
-          public channelId: string;
-
-          /** MsgChannelOpenInit channel. */
-          public channel?: ibc.core.channel.v1.IChannel | null;
-
-          /** MsgChannelOpenInit signer. */
-          public signer: string;
-
-          /**
-           * Creates a new MsgChannelOpenInit instance using the specified properties.
-           * @param [properties] Properties to set
-           * @returns MsgChannelOpenInit instance
-           */
-          public static create(
-            properties?: ibc.core.channel.v1.IMsgChannelOpenInit,
-          ): ibc.core.channel.v1.MsgChannelOpenInit;
-
-          /**
-           * Encodes the specified MsgChannelOpenInit message. Does not implicitly {@link ibc.core.channel.v1.MsgChannelOpenInit.verify|verify} messages.
-           * @param m MsgChannelOpenInit message or plain object to encode
-           * @param [w] Writer to encode to
-           * @returns Writer
-           */
-          public static encode(
-            m: ibc.core.channel.v1.IMsgChannelOpenInit,
-            w?: $protobuf.Writer,
-          ): $protobuf.Writer;
-
-          /**
-           * Decodes a MsgChannelOpenInit message from the specified reader or buffer.
-           * @param r Reader or buffer to decode from
-           * @param [l] Message length if known beforehand
-           * @returns MsgChannelOpenInit
-           * @throws {Error} If the payload is not a reader or valid buffer
-           * @throws {$protobuf.util.ProtocolError} If required fields are missing
-           */
-          public static decode(
-            r: $protobuf.Reader | Uint8Array,
-            l?: number,
-          ): ibc.core.channel.v1.MsgChannelOpenInit;
-        }
-
-        /** Properties of a MsgChannelOpenTry. */
-        interface IMsgChannelOpenTry {
-          /** MsgChannelOpenTry portId */
-          portId?: string | null;
-
-          /** MsgChannelOpenTry desiredChannelId */
-          desiredChannelId?: string | null;
-
-          /** MsgChannelOpenTry counterpartyChosenChannelId */
-          counterpartyChosenChannelId?: string | null;
-
-          /** MsgChannelOpenTry channel */
-          channel?: ibc.core.channel.v1.IChannel | null;
-
-          /** MsgChannelOpenTry counterpartyVersion */
-          counterpartyVersion?: string | null;
-
-          /** MsgChannelOpenTry proofInit */
-          proofInit?: Uint8Array | null;
-
-          /** MsgChannelOpenTry proofHeight */
-          proofHeight?: ibc.core.client.v1.IHeight | null;
-
-          /** MsgChannelOpenTry signer */
-          signer?: string | null;
-        }
-
-        /** Represents a MsgChannelOpenTry. */
-        class MsgChannelOpenTry implements IMsgChannelOpenTry {
-          /**
-           * Constructs a new MsgChannelOpenTry.
-           * @param [p] Properties to set
-           */
-          constructor(p?: ibc.core.channel.v1.IMsgChannelOpenTry);
-
-          /** MsgChannelOpenTry portId. */
-          public portId: string;
-
-          /** MsgChannelOpenTry desiredChannelId. */
-          public desiredChannelId: string;
-
-          /** MsgChannelOpenTry counterpartyChosenChannelId. */
-          public counterpartyChosenChannelId: string;
-
-          /** MsgChannelOpenTry channel. */
-          public channel?: ibc.core.channel.v1.IChannel | null;
-
-          /** MsgChannelOpenTry counterpartyVersion. */
-          public counterpartyVersion: string;
-
-          /** MsgChannelOpenTry proofInit. */
-          public proofInit: Uint8Array;
-
-          /** MsgChannelOpenTry proofHeight. */
-          public proofHeight?: ibc.core.client.v1.IHeight | null;
-
-          /** MsgChannelOpenTry signer. */
-          public signer: string;
-
-          /**
-           * Creates a new MsgChannelOpenTry instance using the specified properties.
-           * @param [properties] Properties to set
-           * @returns MsgChannelOpenTry instance
-           */
-          public static create(
-            properties?: ibc.core.channel.v1.IMsgChannelOpenTry,
-          ): ibc.core.channel.v1.MsgChannelOpenTry;
-
-          /**
-           * Encodes the specified MsgChannelOpenTry message. Does not implicitly {@link ibc.core.channel.v1.MsgChannelOpenTry.verify|verify} messages.
-           * @param m MsgChannelOpenTry message or plain object to encode
-           * @param [w] Writer to encode to
-           * @returns Writer
-           */
-          public static encode(
-            m: ibc.core.channel.v1.IMsgChannelOpenTry,
-            w?: $protobuf.Writer,
-          ): $protobuf.Writer;
-
-          /**
-           * Decodes a MsgChannelOpenTry message from the specified reader or buffer.
-           * @param r Reader or buffer to decode from
-           * @param [l] Message length if known beforehand
-           * @returns MsgChannelOpenTry
-           * @throws {Error} If the payload is not a reader or valid buffer
-           * @throws {$protobuf.util.ProtocolError} If required fields are missing
-           */
-          public static decode(
-            r: $protobuf.Reader | Uint8Array,
-            l?: number,
-          ): ibc.core.channel.v1.MsgChannelOpenTry;
-        }
-
-        /** Properties of a MsgChannelOpenAck. */
-        interface IMsgChannelOpenAck {
-          /** MsgChannelOpenAck portId */
-          portId?: string | null;
-
-          /** MsgChannelOpenAck channelId */
-          channelId?: string | null;
-
-          /** MsgChannelOpenAck counterpartyChannelId */
-          counterpartyChannelId?: string | null;
-
-          /** MsgChannelOpenAck counterpartyVersion */
-          counterpartyVersion?: string | null;
-
-          /** MsgChannelOpenAck proofTry */
-          proofTry?: Uint8Array | null;
-
-          /** MsgChannelOpenAck proofHeight */
-          proofHeight?: ibc.core.client.v1.IHeight | null;
-
-          /** MsgChannelOpenAck signer */
-          signer?: string | null;
-        }
-
-        /** Represents a MsgChannelOpenAck. */
-        class MsgChannelOpenAck implements IMsgChannelOpenAck {
-          /**
-           * Constructs a new MsgChannelOpenAck.
-           * @param [p] Properties to set
-           */
-          constructor(p?: ibc.core.channel.v1.IMsgChannelOpenAck);
-
-          /** MsgChannelOpenAck portId. */
-          public portId: string;
-
-          /** MsgChannelOpenAck channelId. */
-          public channelId: string;
-
-          /** MsgChannelOpenAck counterpartyChannelId. */
-          public counterpartyChannelId: string;
-
-          /** MsgChannelOpenAck counterpartyVersion. */
-          public counterpartyVersion: string;
-
-          /** MsgChannelOpenAck proofTry. */
-          public proofTry: Uint8Array;
-
-          /** MsgChannelOpenAck proofHeight. */
-          public proofHeight?: ibc.core.client.v1.IHeight | null;
-
-          /** MsgChannelOpenAck signer. */
-          public signer: string;
-
-          /**
-           * Creates a new MsgChannelOpenAck instance using the specified properties.
-           * @param [properties] Properties to set
-           * @returns MsgChannelOpenAck instance
-           */
-          public static create(
-            properties?: ibc.core.channel.v1.IMsgChannelOpenAck,
-          ): ibc.core.channel.v1.MsgChannelOpenAck;
-
-          /**
-           * Encodes the specified MsgChannelOpenAck message. Does not implicitly {@link ibc.core.channel.v1.MsgChannelOpenAck.verify|verify} messages.
-           * @param m MsgChannelOpenAck message or plain object to encode
-           * @param [w] Writer to encode to
-           * @returns Writer
-           */
-          public static encode(
-            m: ibc.core.channel.v1.IMsgChannelOpenAck,
-            w?: $protobuf.Writer,
-          ): $protobuf.Writer;
-
-          /**
-           * Decodes a MsgChannelOpenAck message from the specified reader or buffer.
-           * @param r Reader or buffer to decode from
-           * @param [l] Message length if known beforehand
-           * @returns MsgChannelOpenAck
-           * @throws {Error} If the payload is not a reader or valid buffer
-           * @throws {$protobuf.util.ProtocolError} If required fields are missing
-           */
-          public static decode(
-            r: $protobuf.Reader | Uint8Array,
-            l?: number,
-          ): ibc.core.channel.v1.MsgChannelOpenAck;
-        }
-
-        /** Properties of a MsgChannelOpenConfirm. */
-        interface IMsgChannelOpenConfirm {
-          /** MsgChannelOpenConfirm portId */
-          portId?: string | null;
-
-          /** MsgChannelOpenConfirm channelId */
-          channelId?: string | null;
-
-          /** MsgChannelOpenConfirm proofAck */
-          proofAck?: Uint8Array | null;
-
-          /** MsgChannelOpenConfirm proofHeight */
-          proofHeight?: ibc.core.client.v1.IHeight | null;
-
-          /** MsgChannelOpenConfirm signer */
-          signer?: string | null;
-        }
-
-        /** Represents a MsgChannelOpenConfirm. */
-        class MsgChannelOpenConfirm implements IMsgChannelOpenConfirm {
-          /**
-           * Constructs a new MsgChannelOpenConfirm.
-           * @param [p] Properties to set
-           */
-          constructor(p?: ibc.core.channel.v1.IMsgChannelOpenConfirm);
-
-          /** MsgChannelOpenConfirm portId. */
-          public portId: string;
-
-          /** MsgChannelOpenConfirm channelId. */
-          public channelId: string;
-
-          /** MsgChannelOpenConfirm proofAck. */
-          public proofAck: Uint8Array;
-
-          /** MsgChannelOpenConfirm proofHeight. */
-          public proofHeight?: ibc.core.client.v1.IHeight | null;
-
-          /** MsgChannelOpenConfirm signer. */
-          public signer: string;
-
-          /**
-           * Creates a new MsgChannelOpenConfirm instance using the specified properties.
-           * @param [properties] Properties to set
-           * @returns MsgChannelOpenConfirm instance
-           */
-          public static create(
-            properties?: ibc.core.channel.v1.IMsgChannelOpenConfirm,
-          ): ibc.core.channel.v1.MsgChannelOpenConfirm;
-
-          /**
-           * Encodes the specified MsgChannelOpenConfirm message. Does not implicitly {@link ibc.core.channel.v1.MsgChannelOpenConfirm.verify|verify} messages.
-           * @param m MsgChannelOpenConfirm message or plain object to encode
-           * @param [w] Writer to encode to
-           * @returns Writer
-           */
-          public static encode(
-            m: ibc.core.channel.v1.IMsgChannelOpenConfirm,
-            w?: $protobuf.Writer,
-          ): $protobuf.Writer;
-
-          /**
-           * Decodes a MsgChannelOpenConfirm message from the specified reader or buffer.
-           * @param r Reader or buffer to decode from
-           * @param [l] Message length if known beforehand
-           * @returns MsgChannelOpenConfirm
-           * @throws {Error} If the payload is not a reader or valid buffer
-           * @throws {$protobuf.util.ProtocolError} If required fields are missing
-           */
-          public static decode(
-            r: $protobuf.Reader | Uint8Array,
-            l?: number,
-          ): ibc.core.channel.v1.MsgChannelOpenConfirm;
-        }
-
-        /** Properties of a MsgChannelCloseInit. */
-        interface IMsgChannelCloseInit {
-          /** MsgChannelCloseInit portId */
-          portId?: string | null;
-
-          /** MsgChannelCloseInit channelId */
-          channelId?: string | null;
-
-          /** MsgChannelCloseInit signer */
-          signer?: string | null;
-        }
-
-        /** Represents a MsgChannelCloseInit. */
-        class MsgChannelCloseInit implements IMsgChannelCloseInit {
-          /**
-           * Constructs a new MsgChannelCloseInit.
-           * @param [p] Properties to set
-           */
-          constructor(p?: ibc.core.channel.v1.IMsgChannelCloseInit);
-
-          /** MsgChannelCloseInit portId. */
-          public portId: string;
-
-          /** MsgChannelCloseInit channelId. */
-          public channelId: string;
-
-          /** MsgChannelCloseInit signer. */
-          public signer: string;
-
-          /**
-           * Creates a new MsgChannelCloseInit instance using the specified properties.
-           * @param [properties] Properties to set
-           * @returns MsgChannelCloseInit instance
-           */
-          public static create(
-            properties?: ibc.core.channel.v1.IMsgChannelCloseInit,
-          ): ibc.core.channel.v1.MsgChannelCloseInit;
-
-          /**
-           * Encodes the specified MsgChannelCloseInit message. Does not implicitly {@link ibc.core.channel.v1.MsgChannelCloseInit.verify|verify} messages.
-           * @param m MsgChannelCloseInit message or plain object to encode
-           * @param [w] Writer to encode to
-           * @returns Writer
-           */
-          public static encode(
-            m: ibc.core.channel.v1.IMsgChannelCloseInit,
-            w?: $protobuf.Writer,
-          ): $protobuf.Writer;
-
-          /**
-           * Decodes a MsgChannelCloseInit message from the specified reader or buffer.
-           * @param r Reader or buffer to decode from
-           * @param [l] Message length if known beforehand
-           * @returns MsgChannelCloseInit
-           * @throws {Error} If the payload is not a reader or valid buffer
-           * @throws {$protobuf.util.ProtocolError} If required fields are missing
-           */
-          public static decode(
-            r: $protobuf.Reader | Uint8Array,
-            l?: number,
-          ): ibc.core.channel.v1.MsgChannelCloseInit;
-        }
-
-        /** Properties of a MsgChannelCloseConfirm. */
-        interface IMsgChannelCloseConfirm {
-          /** MsgChannelCloseConfirm portId */
-          portId?: string | null;
-
-          /** MsgChannelCloseConfirm channelId */
-          channelId?: string | null;
-
-          /** MsgChannelCloseConfirm proofInit */
-          proofInit?: Uint8Array | null;
-
-          /** MsgChannelCloseConfirm proofHeight */
-          proofHeight?: ibc.core.client.v1.IHeight | null;
-
-          /** MsgChannelCloseConfirm signer */
-          signer?: string | null;
-        }
-
-        /** Represents a MsgChannelCloseConfirm. */
-        class MsgChannelCloseConfirm implements IMsgChannelCloseConfirm {
-          /**
-           * Constructs a new MsgChannelCloseConfirm.
-           * @param [p] Properties to set
-           */
-          constructor(p?: ibc.core.channel.v1.IMsgChannelCloseConfirm);
-
-          /** MsgChannelCloseConfirm portId. */
-          public portId: string;
-
-          /** MsgChannelCloseConfirm channelId. */
-          public channelId: string;
-
-          /** MsgChannelCloseConfirm proofInit. */
-          public proofInit: Uint8Array;
-
-          /** MsgChannelCloseConfirm proofHeight. */
-          public proofHeight?: ibc.core.client.v1.IHeight | null;
-
-          /** MsgChannelCloseConfirm signer. */
-          public signer: string;
-
-          /**
-           * Creates a new MsgChannelCloseConfirm instance using the specified properties.
-           * @param [properties] Properties to set
-           * @returns MsgChannelCloseConfirm instance
-           */
-          public static create(
-            properties?: ibc.core.channel.v1.IMsgChannelCloseConfirm,
-          ): ibc.core.channel.v1.MsgChannelCloseConfirm;
-
-          /**
-           * Encodes the specified MsgChannelCloseConfirm message. Does not implicitly {@link ibc.core.channel.v1.MsgChannelCloseConfirm.verify|verify} messages.
-           * @param m MsgChannelCloseConfirm message or plain object to encode
-           * @param [w] Writer to encode to
-           * @returns Writer
-           */
-          public static encode(
-            m: ibc.core.channel.v1.IMsgChannelCloseConfirm,
-            w?: $protobuf.Writer,
-          ): $protobuf.Writer;
-
-          /**
-           * Decodes a MsgChannelCloseConfirm message from the specified reader or buffer.
-           * @param r Reader or buffer to decode from
-           * @param [l] Message length if known beforehand
-           * @returns MsgChannelCloseConfirm
-           * @throws {Error} If the payload is not a reader or valid buffer
-           * @throws {$protobuf.util.ProtocolError} If required fields are missing
-           */
-          public static decode(
-            r: $protobuf.Reader | Uint8Array,
-            l?: number,
-          ): ibc.core.channel.v1.MsgChannelCloseConfirm;
-        }
-
-        /** Properties of a MsgRecvPacket. */
-        interface IMsgRecvPacket {
-          /** MsgRecvPacket packet */
-          packet?: ibc.core.channel.v1.IPacket | null;
-
-          /** MsgRecvPacket proof */
-          proof?: Uint8Array | null;
-
-          /** MsgRecvPacket proofHeight */
-          proofHeight?: ibc.core.client.v1.IHeight | null;
-
-          /** MsgRecvPacket signer */
-          signer?: string | null;
-        }
-
-        /** Represents a MsgRecvPacket. */
-        class MsgRecvPacket implements IMsgRecvPacket {
-          /**
-           * Constructs a new MsgRecvPacket.
-           * @param [p] Properties to set
-           */
-          constructor(p?: ibc.core.channel.v1.IMsgRecvPacket);
-
-          /** MsgRecvPacket packet. */
-          public packet?: ibc.core.channel.v1.IPacket | null;
-
-          /** MsgRecvPacket proof. */
-          public proof: Uint8Array;
-
-          /** MsgRecvPacket proofHeight. */
-          public proofHeight?: ibc.core.client.v1.IHeight | null;
-
-          /** MsgRecvPacket signer. */
-          public signer: string;
-
-          /**
-           * Creates a new MsgRecvPacket instance using the specified properties.
-           * @param [properties] Properties to set
-           * @returns MsgRecvPacket instance
-           */
-          public static create(
-            properties?: ibc.core.channel.v1.IMsgRecvPacket,
-          ): ibc.core.channel.v1.MsgRecvPacket;
-
-          /**
-           * Encodes the specified MsgRecvPacket message. Does not implicitly {@link ibc.core.channel.v1.MsgRecvPacket.verify|verify} messages.
-           * @param m MsgRecvPacket message or plain object to encode
-           * @param [w] Writer to encode to
-           * @returns Writer
-           */
-          public static encode(m: ibc.core.channel.v1.IMsgRecvPacket, w?: $protobuf.Writer): $protobuf.Writer;
-
-          /**
-           * Decodes a MsgRecvPacket message from the specified reader or buffer.
-           * @param r Reader or buffer to decode from
-           * @param [l] Message length if known beforehand
-           * @returns MsgRecvPacket
-           * @throws {Error} If the payload is not a reader or valid buffer
-           * @throws {$protobuf.util.ProtocolError} If required fields are missing
-           */
-          public static decode(
-            r: $protobuf.Reader | Uint8Array,
-            l?: number,
-          ): ibc.core.channel.v1.MsgRecvPacket;
-        }
-
-        /** Properties of a MsgTimeout. */
-        interface IMsgTimeout {
-          /** MsgTimeout packet */
-          packet?: ibc.core.channel.v1.IPacket | null;
-
-          /** MsgTimeout proof */
-          proof?: Uint8Array | null;
-
-          /** MsgTimeout proofHeight */
-          proofHeight?: ibc.core.client.v1.IHeight | null;
-
-          /** MsgTimeout nextSequenceRecv */
-          nextSequenceRecv?: Long | null;
-
-          /** MsgTimeout signer */
-          signer?: string | null;
-        }
-
-        /** Represents a MsgTimeout. */
-        class MsgTimeout implements IMsgTimeout {
-          /**
-           * Constructs a new MsgTimeout.
-           * @param [p] Properties to set
-           */
-          constructor(p?: ibc.core.channel.v1.IMsgTimeout);
-
-          /** MsgTimeout packet. */
-          public packet?: ibc.core.channel.v1.IPacket | null;
-
-          /** MsgTimeout proof. */
-          public proof: Uint8Array;
-
-          /** MsgTimeout proofHeight. */
-          public proofHeight?: ibc.core.client.v1.IHeight | null;
-
-          /** MsgTimeout nextSequenceRecv. */
-          public nextSequenceRecv: Long;
-
-          /** MsgTimeout signer. */
-          public signer: string;
-
-          /**
-           * Creates a new MsgTimeout instance using the specified properties.
-           * @param [properties] Properties to set
-           * @returns MsgTimeout instance
-           */
-          public static create(properties?: ibc.core.channel.v1.IMsgTimeout): ibc.core.channel.v1.MsgTimeout;
-
-          /**
-           * Encodes the specified MsgTimeout message. Does not implicitly {@link ibc.core.channel.v1.MsgTimeout.verify|verify} messages.
-           * @param m MsgTimeout message or plain object to encode
-           * @param [w] Writer to encode to
-           * @returns Writer
-           */
-          public static encode(m: ibc.core.channel.v1.IMsgTimeout, w?: $protobuf.Writer): $protobuf.Writer;
-
-          /**
-           * Decodes a MsgTimeout message from the specified reader or buffer.
-           * @param r Reader or buffer to decode from
-           * @param [l] Message length if known beforehand
-           * @returns MsgTimeout
-           * @throws {Error} If the payload is not a reader or valid buffer
-           * @throws {$protobuf.util.ProtocolError} If required fields are missing
-           */
-          public static decode(r: $protobuf.Reader | Uint8Array, l?: number): ibc.core.channel.v1.MsgTimeout;
-        }
-
-        /** Properties of a MsgTimeoutOnClose. */
-        interface IMsgTimeoutOnClose {
-          /** MsgTimeoutOnClose packet */
-          packet?: ibc.core.channel.v1.IPacket | null;
-
-          /** MsgTimeoutOnClose proof */
-          proof?: Uint8Array | null;
-
-          /** MsgTimeoutOnClose proofClose */
-          proofClose?: Uint8Array | null;
-
-          /** MsgTimeoutOnClose proofHeight */
-          proofHeight?: ibc.core.client.v1.IHeight | null;
-
-          /** MsgTimeoutOnClose nextSequenceRecv */
-          nextSequenceRecv?: Long | null;
-
-          /** MsgTimeoutOnClose signer */
-          signer?: string | null;
-        }
-
-        /** Represents a MsgTimeoutOnClose. */
-        class MsgTimeoutOnClose implements IMsgTimeoutOnClose {
-          /**
-           * Constructs a new MsgTimeoutOnClose.
-           * @param [p] Properties to set
-           */
-          constructor(p?: ibc.core.channel.v1.IMsgTimeoutOnClose);
-
-          /** MsgTimeoutOnClose packet. */
-          public packet?: ibc.core.channel.v1.IPacket | null;
-
-          /** MsgTimeoutOnClose proof. */
-          public proof: Uint8Array;
-
-          /** MsgTimeoutOnClose proofClose. */
-          public proofClose: Uint8Array;
-
-          /** MsgTimeoutOnClose proofHeight. */
-          public proofHeight?: ibc.core.client.v1.IHeight | null;
-
-          /** MsgTimeoutOnClose nextSequenceRecv. */
-          public nextSequenceRecv: Long;
-
-          /** MsgTimeoutOnClose signer. */
-          public signer: string;
-
-          /**
-           * Creates a new MsgTimeoutOnClose instance using the specified properties.
-           * @param [properties] Properties to set
-           * @returns MsgTimeoutOnClose instance
-           */
-          public static create(
-            properties?: ibc.core.channel.v1.IMsgTimeoutOnClose,
-          ): ibc.core.channel.v1.MsgTimeoutOnClose;
-
-          /**
-           * Encodes the specified MsgTimeoutOnClose message. Does not implicitly {@link ibc.core.channel.v1.MsgTimeoutOnClose.verify|verify} messages.
-           * @param m MsgTimeoutOnClose message or plain object to encode
-           * @param [w] Writer to encode to
-           * @returns Writer
-           */
-          public static encode(
-            m: ibc.core.channel.v1.IMsgTimeoutOnClose,
-            w?: $protobuf.Writer,
-          ): $protobuf.Writer;
-
-          /**
-           * Decodes a MsgTimeoutOnClose message from the specified reader or buffer.
-           * @param r Reader or buffer to decode from
-           * @param [l] Message length if known beforehand
-           * @returns MsgTimeoutOnClose
-           * @throws {Error} If the payload is not a reader or valid buffer
-           * @throws {$protobuf.util.ProtocolError} If required fields are missing
-           */
-          public static decode(
-            r: $protobuf.Reader | Uint8Array,
-            l?: number,
-          ): ibc.core.channel.v1.MsgTimeoutOnClose;
-        }
-
-        /** Properties of a MsgAcknowledgement. */
-        interface IMsgAcknowledgement {
-          /** MsgAcknowledgement packet */
-          packet?: ibc.core.channel.v1.IPacket | null;
-
-          /** MsgAcknowledgement acknowledgement */
-          acknowledgement?: Uint8Array | null;
-
-          /** MsgAcknowledgement proof */
-          proof?: Uint8Array | null;
-
-          /** MsgAcknowledgement proofHeight */
-          proofHeight?: ibc.core.client.v1.IHeight | null;
-
-          /** MsgAcknowledgement signer */
-          signer?: string | null;
-        }
-
-        /** Represents a MsgAcknowledgement. */
-        class MsgAcknowledgement implements IMsgAcknowledgement {
-          /**
-           * Constructs a new MsgAcknowledgement.
-           * @param [p] Properties to set
-           */
-          constructor(p?: ibc.core.channel.v1.IMsgAcknowledgement);
-
-          /** MsgAcknowledgement packet. */
-          public packet?: ibc.core.channel.v1.IPacket | null;
-
-          /** MsgAcknowledgement acknowledgement. */
-          public acknowledgement: Uint8Array;
-
-          /** MsgAcknowledgement proof. */
-          public proof: Uint8Array;
-
-          /** MsgAcknowledgement proofHeight. */
-          public proofHeight?: ibc.core.client.v1.IHeight | null;
-
-          /** MsgAcknowledgement signer. */
-          public signer: string;
-
-          /**
-           * Creates a new MsgAcknowledgement instance using the specified properties.
-           * @param [properties] Properties to set
-           * @returns MsgAcknowledgement instance
-           */
-          public static create(
-            properties?: ibc.core.channel.v1.IMsgAcknowledgement,
-          ): ibc.core.channel.v1.MsgAcknowledgement;
-
-          /**
-           * Encodes the specified MsgAcknowledgement message. Does not implicitly {@link ibc.core.channel.v1.MsgAcknowledgement.verify|verify} messages.
-           * @param m MsgAcknowledgement message or plain object to encode
-           * @param [w] Writer to encode to
-           * @returns Writer
-           */
-          public static encode(
-            m: ibc.core.channel.v1.IMsgAcknowledgement,
-            w?: $protobuf.Writer,
-          ): $protobuf.Writer;
-
-          /**
-           * Decodes a MsgAcknowledgement message from the specified reader or buffer.
-           * @param r Reader or buffer to decode from
-           * @param [l] Message length if known beforehand
-           * @returns MsgAcknowledgement
-           * @throws {Error} If the payload is not a reader or valid buffer
-           * @throws {$protobuf.util.ProtocolError} If required fields are missing
-           */
-          public static decode(
-            r: $protobuf.Reader | Uint8Array,
-            l?: number,
-          ): ibc.core.channel.v1.MsgAcknowledgement;
-        }
-
         /** Properties of a Channel. */
         interface IChannel {
           /** Channel state */
@@ -7735,73 +7566,67 @@ export namespace ibc {
           public static decode(r: $protobuf.Reader | Uint8Array, l?: number): ibc.core.channel.v1.Packet;
         }
 
-        /** Properties of a PacketAckCommitment. */
-        interface IPacketAckCommitment {
-          /** PacketAckCommitment portId */
+        /** Properties of a PacketState. */
+        interface IPacketState {
+          /** PacketState portId */
           portId?: string | null;
 
-          /** PacketAckCommitment channelId */
+          /** PacketState channelId */
           channelId?: string | null;
 
-          /** PacketAckCommitment sequence */
+          /** PacketState sequence */
           sequence?: Long | null;
 
-          /** PacketAckCommitment hash */
-          hash?: Uint8Array | null;
+          /** PacketState data */
+          data?: Uint8Array | null;
         }
 
-        /** Represents a PacketAckCommitment. */
-        class PacketAckCommitment implements IPacketAckCommitment {
+        /** Represents a PacketState. */
+        class PacketState implements IPacketState {
           /**
-           * Constructs a new PacketAckCommitment.
+           * Constructs a new PacketState.
            * @param [p] Properties to set
            */
-          constructor(p?: ibc.core.channel.v1.IPacketAckCommitment);
+          constructor(p?: ibc.core.channel.v1.IPacketState);
 
-          /** PacketAckCommitment portId. */
+          /** PacketState portId. */
           public portId: string;
 
-          /** PacketAckCommitment channelId. */
+          /** PacketState channelId. */
           public channelId: string;
 
-          /** PacketAckCommitment sequence. */
+          /** PacketState sequence. */
           public sequence: Long;
 
-          /** PacketAckCommitment hash. */
-          public hash: Uint8Array;
+          /** PacketState data. */
+          public data: Uint8Array;
 
           /**
-           * Creates a new PacketAckCommitment instance using the specified properties.
+           * Creates a new PacketState instance using the specified properties.
            * @param [properties] Properties to set
-           * @returns PacketAckCommitment instance
+           * @returns PacketState instance
            */
           public static create(
-            properties?: ibc.core.channel.v1.IPacketAckCommitment,
-          ): ibc.core.channel.v1.PacketAckCommitment;
+            properties?: ibc.core.channel.v1.IPacketState,
+          ): ibc.core.channel.v1.PacketState;
 
           /**
-           * Encodes the specified PacketAckCommitment message. Does not implicitly {@link ibc.core.channel.v1.PacketAckCommitment.verify|verify} messages.
-           * @param m PacketAckCommitment message or plain object to encode
+           * Encodes the specified PacketState message. Does not implicitly {@link ibc.core.channel.v1.PacketState.verify|verify} messages.
+           * @param m PacketState message or plain object to encode
            * @param [w] Writer to encode to
            * @returns Writer
            */
-          public static encode(
-            m: ibc.core.channel.v1.IPacketAckCommitment,
-            w?: $protobuf.Writer,
-          ): $protobuf.Writer;
+          public static encode(m: ibc.core.channel.v1.IPacketState, w?: $protobuf.Writer): $protobuf.Writer;
 
           /**
-           * Decodes a PacketAckCommitment message from the specified reader or buffer.
+           * Decodes a PacketState message from the specified reader or buffer.
            * @param r Reader or buffer to decode from
            * @param [l] Message length if known beforehand
-           * @returns PacketAckCommitment
+           * @returns PacketState
            * @throws {Error} If the payload is not a reader or valid buffer
            * @throws {$protobuf.util.ProtocolError} If required fields are missing
            */
-          public static decode(
-            r: $protobuf.Reader | Uint8Array,
-            l?: number,
-          ): ibc.core.channel.v1.PacketAckCommitment;
+          public static decode(r: $protobuf.Reader | Uint8Array, l?: number): ibc.core.channel.v1.PacketState;
         }
 
         /** Properties of an Acknowledgement. */
@@ -8021,6 +7846,25 @@ export namespace ibc {
           ): Promise<ibc.core.channel.v1.QueryPacketCommitmentsResponse>;
 
           /**
+           * Calls PacketReceipt.
+           * @param request QueryPacketReceiptRequest message or plain object
+           * @param callback Node-style callback called with the error, if any, and QueryPacketReceiptResponse
+           */
+          public packetReceipt(
+            request: ibc.core.channel.v1.IQueryPacketReceiptRequest,
+            callback: ibc.core.channel.v1.Query.PacketReceiptCallback,
+          ): void;
+
+          /**
+           * Calls PacketReceipt.
+           * @param request QueryPacketReceiptRequest message or plain object
+           * @returns Promise
+           */
+          public packetReceipt(
+            request: ibc.core.channel.v1.IQueryPacketReceiptRequest,
+          ): Promise<ibc.core.channel.v1.QueryPacketReceiptResponse>;
+
+          /**
            * Calls PacketAcknowledgement.
            * @param request QueryPacketAcknowledgementRequest message or plain object
            * @param callback Node-style callback called with the error, if any, and QueryPacketAcknowledgementResponse
@@ -8038,6 +7882,25 @@ export namespace ibc {
           public packetAcknowledgement(
             request: ibc.core.channel.v1.IQueryPacketAcknowledgementRequest,
           ): Promise<ibc.core.channel.v1.QueryPacketAcknowledgementResponse>;
+
+          /**
+           * Calls PacketAcknowledgements.
+           * @param request QueryPacketAcknowledgementsRequest message or plain object
+           * @param callback Node-style callback called with the error, if any, and QueryPacketAcknowledgementsResponse
+           */
+          public packetAcknowledgements(
+            request: ibc.core.channel.v1.IQueryPacketAcknowledgementsRequest,
+            callback: ibc.core.channel.v1.Query.PacketAcknowledgementsCallback,
+          ): void;
+
+          /**
+           * Calls PacketAcknowledgements.
+           * @param request QueryPacketAcknowledgementsRequest message or plain object
+           * @returns Promise
+           */
+          public packetAcknowledgements(
+            request: ibc.core.channel.v1.IQueryPacketAcknowledgementsRequest,
+          ): Promise<ibc.core.channel.v1.QueryPacketAcknowledgementsResponse>;
 
           /**
            * Calls UnreceivedPackets.
@@ -8059,23 +7922,23 @@ export namespace ibc {
           ): Promise<ibc.core.channel.v1.QueryUnreceivedPacketsResponse>;
 
           /**
-           * Calls UnrelayedAcks.
-           * @param request QueryUnrelayedAcksRequest message or plain object
-           * @param callback Node-style callback called with the error, if any, and QueryUnrelayedAcksResponse
+           * Calls UnreceivedAcks.
+           * @param request QueryUnreceivedAcksRequest message or plain object
+           * @param callback Node-style callback called with the error, if any, and QueryUnreceivedAcksResponse
            */
-          public unrelayedAcks(
-            request: ibc.core.channel.v1.IQueryUnrelayedAcksRequest,
-            callback: ibc.core.channel.v1.Query.UnrelayedAcksCallback,
+          public unreceivedAcks(
+            request: ibc.core.channel.v1.IQueryUnreceivedAcksRequest,
+            callback: ibc.core.channel.v1.Query.UnreceivedAcksCallback,
           ): void;
 
           /**
-           * Calls UnrelayedAcks.
-           * @param request QueryUnrelayedAcksRequest message or plain object
+           * Calls UnreceivedAcks.
+           * @param request QueryUnreceivedAcksRequest message or plain object
            * @returns Promise
            */
-          public unrelayedAcks(
-            request: ibc.core.channel.v1.IQueryUnrelayedAcksRequest,
-          ): Promise<ibc.core.channel.v1.QueryUnrelayedAcksResponse>;
+          public unreceivedAcks(
+            request: ibc.core.channel.v1.IQueryUnreceivedAcksRequest,
+          ): Promise<ibc.core.channel.v1.QueryUnreceivedAcksResponse>;
 
           /**
            * Calls NextSequenceReceive.
@@ -8169,6 +8032,16 @@ export namespace ibc {
           ) => void;
 
           /**
+           * Callback as used by {@link ibc.core.channel.v1.Query#packetReceipt}.
+           * @param error Error, if any
+           * @param [response] QueryPacketReceiptResponse
+           */
+          type PacketReceiptCallback = (
+            error: Error | null,
+            response?: ibc.core.channel.v1.QueryPacketReceiptResponse,
+          ) => void;
+
+          /**
            * Callback as used by {@link ibc.core.channel.v1.Query#packetAcknowledgement}.
            * @param error Error, if any
            * @param [response] QueryPacketAcknowledgementResponse
@@ -8176,6 +8049,16 @@ export namespace ibc {
           type PacketAcknowledgementCallback = (
             error: Error | null,
             response?: ibc.core.channel.v1.QueryPacketAcknowledgementResponse,
+          ) => void;
+
+          /**
+           * Callback as used by {@link ibc.core.channel.v1.Query#packetAcknowledgements}.
+           * @param error Error, if any
+           * @param [response] QueryPacketAcknowledgementsResponse
+           */
+          type PacketAcknowledgementsCallback = (
+            error: Error | null,
+            response?: ibc.core.channel.v1.QueryPacketAcknowledgementsResponse,
           ) => void;
 
           /**
@@ -8189,13 +8072,13 @@ export namespace ibc {
           ) => void;
 
           /**
-           * Callback as used by {@link ibc.core.channel.v1.Query#unrelayedAcks}.
+           * Callback as used by {@link ibc.core.channel.v1.Query#unreceivedAcks}.
            * @param error Error, if any
-           * @param [response] QueryUnrelayedAcksResponse
+           * @param [response] QueryUnreceivedAcksResponse
            */
-          type UnrelayedAcksCallback = (
+          type UnreceivedAcksCallback = (
             error: Error | null,
-            response?: ibc.core.channel.v1.QueryUnrelayedAcksResponse,
+            response?: ibc.core.channel.v1.QueryUnreceivedAcksResponse,
           ) => void;
 
           /**
@@ -8274,9 +8157,6 @@ export namespace ibc {
           /** QueryChannelResponse proof */
           proof?: Uint8Array | null;
 
-          /** QueryChannelResponse proofPath */
-          proofPath?: string | null;
-
           /** QueryChannelResponse proofHeight */
           proofHeight?: ibc.core.client.v1.IHeight | null;
         }
@@ -8294,9 +8174,6 @@ export namespace ibc {
 
           /** QueryChannelResponse proof. */
           public proof: Uint8Array;
-
-          /** QueryChannelResponse proofPath. */
-          public proofPath: string;
 
           /** QueryChannelResponse proofHeight. */
           public proofHeight?: ibc.core.client.v1.IHeight | null;
@@ -8634,9 +8511,6 @@ export namespace ibc {
           /** QueryChannelClientStateResponse proof */
           proof?: Uint8Array | null;
 
-          /** QueryChannelClientStateResponse proofPath */
-          proofPath?: string | null;
-
           /** QueryChannelClientStateResponse proofHeight */
           proofHeight?: ibc.core.client.v1.IHeight | null;
         }
@@ -8654,9 +8528,6 @@ export namespace ibc {
 
           /** QueryChannelClientStateResponse proof. */
           public proof: Uint8Array;
-
-          /** QueryChannelClientStateResponse proofPath. */
-          public proofPath: string;
 
           /** QueryChannelClientStateResponse proofHeight. */
           public proofHeight?: ibc.core.client.v1.IHeight | null;
@@ -8775,9 +8646,6 @@ export namespace ibc {
           /** QueryChannelConsensusStateResponse proof */
           proof?: Uint8Array | null;
 
-          /** QueryChannelConsensusStateResponse proofPath */
-          proofPath?: string | null;
-
           /** QueryChannelConsensusStateResponse proofHeight */
           proofHeight?: ibc.core.client.v1.IHeight | null;
         }
@@ -8798,9 +8666,6 @@ export namespace ibc {
 
           /** QueryChannelConsensusStateResponse proof. */
           public proof: Uint8Array;
-
-          /** QueryChannelConsensusStateResponse proofPath. */
-          public proofPath: string;
 
           /** QueryChannelConsensusStateResponse proofHeight. */
           public proofHeight?: ibc.core.client.v1.IHeight | null;
@@ -8910,9 +8775,6 @@ export namespace ibc {
           /** QueryPacketCommitmentResponse proof */
           proof?: Uint8Array | null;
 
-          /** QueryPacketCommitmentResponse proofPath */
-          proofPath?: string | null;
-
           /** QueryPacketCommitmentResponse proofHeight */
           proofHeight?: ibc.core.client.v1.IHeight | null;
         }
@@ -8930,9 +8792,6 @@ export namespace ibc {
 
           /** QueryPacketCommitmentResponse proof. */
           public proof: Uint8Array;
-
-          /** QueryPacketCommitmentResponse proofPath. */
-          public proofPath: string;
 
           /** QueryPacketCommitmentResponse proofHeight. */
           public proofHeight?: ibc.core.client.v1.IHeight | null;
@@ -9037,7 +8896,7 @@ export namespace ibc {
         /** Properties of a QueryPacketCommitmentsResponse. */
         interface IQueryPacketCommitmentsResponse {
           /** QueryPacketCommitmentsResponse commitments */
-          commitments?: ibc.core.channel.v1.IPacketAckCommitment[] | null;
+          commitments?: ibc.core.channel.v1.IPacketState[] | null;
 
           /** QueryPacketCommitmentsResponse pagination */
           pagination?: cosmos.base.query.v1beta1.IPageResponse | null;
@@ -9055,7 +8914,7 @@ export namespace ibc {
           constructor(p?: ibc.core.channel.v1.IQueryPacketCommitmentsResponse);
 
           /** QueryPacketCommitmentsResponse commitments. */
-          public commitments: ibc.core.channel.v1.IPacketAckCommitment[];
+          public commitments: ibc.core.channel.v1.IPacketState[];
 
           /** QueryPacketCommitmentsResponse pagination. */
           public pagination?: cosmos.base.query.v1beta1.IPageResponse | null;
@@ -9095,6 +8954,132 @@ export namespace ibc {
             r: $protobuf.Reader | Uint8Array,
             l?: number,
           ): ibc.core.channel.v1.QueryPacketCommitmentsResponse;
+        }
+
+        /** Properties of a QueryPacketReceiptRequest. */
+        interface IQueryPacketReceiptRequest {
+          /** QueryPacketReceiptRequest portId */
+          portId?: string | null;
+
+          /** QueryPacketReceiptRequest channelId */
+          channelId?: string | null;
+
+          /** QueryPacketReceiptRequest sequence */
+          sequence?: Long | null;
+        }
+
+        /** Represents a QueryPacketReceiptRequest. */
+        class QueryPacketReceiptRequest implements IQueryPacketReceiptRequest {
+          /**
+           * Constructs a new QueryPacketReceiptRequest.
+           * @param [p] Properties to set
+           */
+          constructor(p?: ibc.core.channel.v1.IQueryPacketReceiptRequest);
+
+          /** QueryPacketReceiptRequest portId. */
+          public portId: string;
+
+          /** QueryPacketReceiptRequest channelId. */
+          public channelId: string;
+
+          /** QueryPacketReceiptRequest sequence. */
+          public sequence: Long;
+
+          /**
+           * Creates a new QueryPacketReceiptRequest instance using the specified properties.
+           * @param [properties] Properties to set
+           * @returns QueryPacketReceiptRequest instance
+           */
+          public static create(
+            properties?: ibc.core.channel.v1.IQueryPacketReceiptRequest,
+          ): ibc.core.channel.v1.QueryPacketReceiptRequest;
+
+          /**
+           * Encodes the specified QueryPacketReceiptRequest message. Does not implicitly {@link ibc.core.channel.v1.QueryPacketReceiptRequest.verify|verify} messages.
+           * @param m QueryPacketReceiptRequest message or plain object to encode
+           * @param [w] Writer to encode to
+           * @returns Writer
+           */
+          public static encode(
+            m: ibc.core.channel.v1.IQueryPacketReceiptRequest,
+            w?: $protobuf.Writer,
+          ): $protobuf.Writer;
+
+          /**
+           * Decodes a QueryPacketReceiptRequest message from the specified reader or buffer.
+           * @param r Reader or buffer to decode from
+           * @param [l] Message length if known beforehand
+           * @returns QueryPacketReceiptRequest
+           * @throws {Error} If the payload is not a reader or valid buffer
+           * @throws {$protobuf.util.ProtocolError} If required fields are missing
+           */
+          public static decode(
+            r: $protobuf.Reader | Uint8Array,
+            l?: number,
+          ): ibc.core.channel.v1.QueryPacketReceiptRequest;
+        }
+
+        /** Properties of a QueryPacketReceiptResponse. */
+        interface IQueryPacketReceiptResponse {
+          /** QueryPacketReceiptResponse received */
+          received?: boolean | null;
+
+          /** QueryPacketReceiptResponse proof */
+          proof?: Uint8Array | null;
+
+          /** QueryPacketReceiptResponse proofHeight */
+          proofHeight?: ibc.core.client.v1.IHeight | null;
+        }
+
+        /** Represents a QueryPacketReceiptResponse. */
+        class QueryPacketReceiptResponse implements IQueryPacketReceiptResponse {
+          /**
+           * Constructs a new QueryPacketReceiptResponse.
+           * @param [p] Properties to set
+           */
+          constructor(p?: ibc.core.channel.v1.IQueryPacketReceiptResponse);
+
+          /** QueryPacketReceiptResponse received. */
+          public received: boolean;
+
+          /** QueryPacketReceiptResponse proof. */
+          public proof: Uint8Array;
+
+          /** QueryPacketReceiptResponse proofHeight. */
+          public proofHeight?: ibc.core.client.v1.IHeight | null;
+
+          /**
+           * Creates a new QueryPacketReceiptResponse instance using the specified properties.
+           * @param [properties] Properties to set
+           * @returns QueryPacketReceiptResponse instance
+           */
+          public static create(
+            properties?: ibc.core.channel.v1.IQueryPacketReceiptResponse,
+          ): ibc.core.channel.v1.QueryPacketReceiptResponse;
+
+          /**
+           * Encodes the specified QueryPacketReceiptResponse message. Does not implicitly {@link ibc.core.channel.v1.QueryPacketReceiptResponse.verify|verify} messages.
+           * @param m QueryPacketReceiptResponse message or plain object to encode
+           * @param [w] Writer to encode to
+           * @returns Writer
+           */
+          public static encode(
+            m: ibc.core.channel.v1.IQueryPacketReceiptResponse,
+            w?: $protobuf.Writer,
+          ): $protobuf.Writer;
+
+          /**
+           * Decodes a QueryPacketReceiptResponse message from the specified reader or buffer.
+           * @param r Reader or buffer to decode from
+           * @param [l] Message length if known beforehand
+           * @returns QueryPacketReceiptResponse
+           * @throws {Error} If the payload is not a reader or valid buffer
+           * @throws {$protobuf.util.ProtocolError} If required fields are missing
+           */
+          public static decode(
+            r: $protobuf.Reader | Uint8Array,
+            l?: number,
+          ): ibc.core.channel.v1.QueryPacketReceiptResponse;
         }
 
         /** Properties of a QueryPacketAcknowledgementRequest. */
@@ -9168,9 +9153,6 @@ export namespace ibc {
           /** QueryPacketAcknowledgementResponse proof */
           proof?: Uint8Array | null;
 
-          /** QueryPacketAcknowledgementResponse proofPath */
-          proofPath?: string | null;
-
           /** QueryPacketAcknowledgementResponse proofHeight */
           proofHeight?: ibc.core.client.v1.IHeight | null;
         }
@@ -9188,9 +9170,6 @@ export namespace ibc {
 
           /** QueryPacketAcknowledgementResponse proof. */
           public proof: Uint8Array;
-
-          /** QueryPacketAcknowledgementResponse proofPath. */
-          public proofPath: string;
 
           /** QueryPacketAcknowledgementResponse proofHeight. */
           public proofHeight?: ibc.core.client.v1.IHeight | null;
@@ -9227,6 +9206,132 @@ export namespace ibc {
             r: $protobuf.Reader | Uint8Array,
             l?: number,
           ): ibc.core.channel.v1.QueryPacketAcknowledgementResponse;
+        }
+
+        /** Properties of a QueryPacketAcknowledgementsRequest. */
+        interface IQueryPacketAcknowledgementsRequest {
+          /** QueryPacketAcknowledgementsRequest portId */
+          portId?: string | null;
+
+          /** QueryPacketAcknowledgementsRequest channelId */
+          channelId?: string | null;
+
+          /** QueryPacketAcknowledgementsRequest pagination */
+          pagination?: cosmos.base.query.v1beta1.IPageRequest | null;
+        }
+
+        /** Represents a QueryPacketAcknowledgementsRequest. */
+        class QueryPacketAcknowledgementsRequest implements IQueryPacketAcknowledgementsRequest {
+          /**
+           * Constructs a new QueryPacketAcknowledgementsRequest.
+           * @param [p] Properties to set
+           */
+          constructor(p?: ibc.core.channel.v1.IQueryPacketAcknowledgementsRequest);
+
+          /** QueryPacketAcknowledgementsRequest portId. */
+          public portId: string;
+
+          /** QueryPacketAcknowledgementsRequest channelId. */
+          public channelId: string;
+
+          /** QueryPacketAcknowledgementsRequest pagination. */
+          public pagination?: cosmos.base.query.v1beta1.IPageRequest | null;
+
+          /**
+           * Creates a new QueryPacketAcknowledgementsRequest instance using the specified properties.
+           * @param [properties] Properties to set
+           * @returns QueryPacketAcknowledgementsRequest instance
+           */
+          public static create(
+            properties?: ibc.core.channel.v1.IQueryPacketAcknowledgementsRequest,
+          ): ibc.core.channel.v1.QueryPacketAcknowledgementsRequest;
+
+          /**
+           * Encodes the specified QueryPacketAcknowledgementsRequest message. Does not implicitly {@link ibc.core.channel.v1.QueryPacketAcknowledgementsRequest.verify|verify} messages.
+           * @param m QueryPacketAcknowledgementsRequest message or plain object to encode
+           * @param [w] Writer to encode to
+           * @returns Writer
+           */
+          public static encode(
+            m: ibc.core.channel.v1.IQueryPacketAcknowledgementsRequest,
+            w?: $protobuf.Writer,
+          ): $protobuf.Writer;
+
+          /**
+           * Decodes a QueryPacketAcknowledgementsRequest message from the specified reader or buffer.
+           * @param r Reader or buffer to decode from
+           * @param [l] Message length if known beforehand
+           * @returns QueryPacketAcknowledgementsRequest
+           * @throws {Error} If the payload is not a reader or valid buffer
+           * @throws {$protobuf.util.ProtocolError} If required fields are missing
+           */
+          public static decode(
+            r: $protobuf.Reader | Uint8Array,
+            l?: number,
+          ): ibc.core.channel.v1.QueryPacketAcknowledgementsRequest;
+        }
+
+        /** Properties of a QueryPacketAcknowledgementsResponse. */
+        interface IQueryPacketAcknowledgementsResponse {
+          /** QueryPacketAcknowledgementsResponse acknowledgements */
+          acknowledgements?: ibc.core.channel.v1.IPacketState[] | null;
+
+          /** QueryPacketAcknowledgementsResponse pagination */
+          pagination?: cosmos.base.query.v1beta1.IPageResponse | null;
+
+          /** QueryPacketAcknowledgementsResponse height */
+          height?: ibc.core.client.v1.IHeight | null;
+        }
+
+        /** Represents a QueryPacketAcknowledgementsResponse. */
+        class QueryPacketAcknowledgementsResponse implements IQueryPacketAcknowledgementsResponse {
+          /**
+           * Constructs a new QueryPacketAcknowledgementsResponse.
+           * @param [p] Properties to set
+           */
+          constructor(p?: ibc.core.channel.v1.IQueryPacketAcknowledgementsResponse);
+
+          /** QueryPacketAcknowledgementsResponse acknowledgements. */
+          public acknowledgements: ibc.core.channel.v1.IPacketState[];
+
+          /** QueryPacketAcknowledgementsResponse pagination. */
+          public pagination?: cosmos.base.query.v1beta1.IPageResponse | null;
+
+          /** QueryPacketAcknowledgementsResponse height. */
+          public height?: ibc.core.client.v1.IHeight | null;
+
+          /**
+           * Creates a new QueryPacketAcknowledgementsResponse instance using the specified properties.
+           * @param [properties] Properties to set
+           * @returns QueryPacketAcknowledgementsResponse instance
+           */
+          public static create(
+            properties?: ibc.core.channel.v1.IQueryPacketAcknowledgementsResponse,
+          ): ibc.core.channel.v1.QueryPacketAcknowledgementsResponse;
+
+          /**
+           * Encodes the specified QueryPacketAcknowledgementsResponse message. Does not implicitly {@link ibc.core.channel.v1.QueryPacketAcknowledgementsResponse.verify|verify} messages.
+           * @param m QueryPacketAcknowledgementsResponse message or plain object to encode
+           * @param [w] Writer to encode to
+           * @returns Writer
+           */
+          public static encode(
+            m: ibc.core.channel.v1.IQueryPacketAcknowledgementsResponse,
+            w?: $protobuf.Writer,
+          ): $protobuf.Writer;
+
+          /**
+           * Decodes a QueryPacketAcknowledgementsResponse message from the specified reader or buffer.
+           * @param r Reader or buffer to decode from
+           * @param [l] Message length if known beforehand
+           * @returns QueryPacketAcknowledgementsResponse
+           * @throws {Error} If the payload is not a reader or valid buffer
+           * @throws {$protobuf.util.ProtocolError} If required fields are missing
+           */
+          public static decode(
+            r: $protobuf.Reader | Uint8Array,
+            l?: number,
+          ): ibc.core.channel.v1.QueryPacketAcknowledgementsResponse;
         }
 
         /** Properties of a QueryUnreceivedPacketsRequest. */
@@ -9349,124 +9454,124 @@ export namespace ibc {
           ): ibc.core.channel.v1.QueryUnreceivedPacketsResponse;
         }
 
-        /** Properties of a QueryUnrelayedAcksRequest. */
-        interface IQueryUnrelayedAcksRequest {
-          /** QueryUnrelayedAcksRequest portId */
+        /** Properties of a QueryUnreceivedAcksRequest. */
+        interface IQueryUnreceivedAcksRequest {
+          /** QueryUnreceivedAcksRequest portId */
           portId?: string | null;
 
-          /** QueryUnrelayedAcksRequest channelId */
+          /** QueryUnreceivedAcksRequest channelId */
           channelId?: string | null;
 
-          /** QueryUnrelayedAcksRequest packetCommitmentSequences */
-          packetCommitmentSequences?: Long[] | null;
+          /** QueryUnreceivedAcksRequest packetAckSequences */
+          packetAckSequences?: Long[] | null;
         }
 
-        /** Represents a QueryUnrelayedAcksRequest. */
-        class QueryUnrelayedAcksRequest implements IQueryUnrelayedAcksRequest {
+        /** Represents a QueryUnreceivedAcksRequest. */
+        class QueryUnreceivedAcksRequest implements IQueryUnreceivedAcksRequest {
           /**
-           * Constructs a new QueryUnrelayedAcksRequest.
+           * Constructs a new QueryUnreceivedAcksRequest.
            * @param [p] Properties to set
            */
-          constructor(p?: ibc.core.channel.v1.IQueryUnrelayedAcksRequest);
+          constructor(p?: ibc.core.channel.v1.IQueryUnreceivedAcksRequest);
 
-          /** QueryUnrelayedAcksRequest portId. */
+          /** QueryUnreceivedAcksRequest portId. */
           public portId: string;
 
-          /** QueryUnrelayedAcksRequest channelId. */
+          /** QueryUnreceivedAcksRequest channelId. */
           public channelId: string;
 
-          /** QueryUnrelayedAcksRequest packetCommitmentSequences. */
-          public packetCommitmentSequences: Long[];
+          /** QueryUnreceivedAcksRequest packetAckSequences. */
+          public packetAckSequences: Long[];
 
           /**
-           * Creates a new QueryUnrelayedAcksRequest instance using the specified properties.
+           * Creates a new QueryUnreceivedAcksRequest instance using the specified properties.
            * @param [properties] Properties to set
-           * @returns QueryUnrelayedAcksRequest instance
+           * @returns QueryUnreceivedAcksRequest instance
            */
           public static create(
-            properties?: ibc.core.channel.v1.IQueryUnrelayedAcksRequest,
-          ): ibc.core.channel.v1.QueryUnrelayedAcksRequest;
+            properties?: ibc.core.channel.v1.IQueryUnreceivedAcksRequest,
+          ): ibc.core.channel.v1.QueryUnreceivedAcksRequest;
 
           /**
-           * Encodes the specified QueryUnrelayedAcksRequest message. Does not implicitly {@link ibc.core.channel.v1.QueryUnrelayedAcksRequest.verify|verify} messages.
-           * @param m QueryUnrelayedAcksRequest message or plain object to encode
+           * Encodes the specified QueryUnreceivedAcksRequest message. Does not implicitly {@link ibc.core.channel.v1.QueryUnreceivedAcksRequest.verify|verify} messages.
+           * @param m QueryUnreceivedAcksRequest message or plain object to encode
            * @param [w] Writer to encode to
            * @returns Writer
            */
           public static encode(
-            m: ibc.core.channel.v1.IQueryUnrelayedAcksRequest,
+            m: ibc.core.channel.v1.IQueryUnreceivedAcksRequest,
             w?: $protobuf.Writer,
           ): $protobuf.Writer;
 
           /**
-           * Decodes a QueryUnrelayedAcksRequest message from the specified reader or buffer.
+           * Decodes a QueryUnreceivedAcksRequest message from the specified reader or buffer.
            * @param r Reader or buffer to decode from
            * @param [l] Message length if known beforehand
-           * @returns QueryUnrelayedAcksRequest
+           * @returns QueryUnreceivedAcksRequest
            * @throws {Error} If the payload is not a reader or valid buffer
            * @throws {$protobuf.util.ProtocolError} If required fields are missing
            */
           public static decode(
             r: $protobuf.Reader | Uint8Array,
             l?: number,
-          ): ibc.core.channel.v1.QueryUnrelayedAcksRequest;
+          ): ibc.core.channel.v1.QueryUnreceivedAcksRequest;
         }
 
-        /** Properties of a QueryUnrelayedAcksResponse. */
-        interface IQueryUnrelayedAcksResponse {
-          /** QueryUnrelayedAcksResponse sequences */
+        /** Properties of a QueryUnreceivedAcksResponse. */
+        interface IQueryUnreceivedAcksResponse {
+          /** QueryUnreceivedAcksResponse sequences */
           sequences?: Long[] | null;
 
-          /** QueryUnrelayedAcksResponse height */
+          /** QueryUnreceivedAcksResponse height */
           height?: ibc.core.client.v1.IHeight | null;
         }
 
-        /** Represents a QueryUnrelayedAcksResponse. */
-        class QueryUnrelayedAcksResponse implements IQueryUnrelayedAcksResponse {
+        /** Represents a QueryUnreceivedAcksResponse. */
+        class QueryUnreceivedAcksResponse implements IQueryUnreceivedAcksResponse {
           /**
-           * Constructs a new QueryUnrelayedAcksResponse.
+           * Constructs a new QueryUnreceivedAcksResponse.
            * @param [p] Properties to set
            */
-          constructor(p?: ibc.core.channel.v1.IQueryUnrelayedAcksResponse);
+          constructor(p?: ibc.core.channel.v1.IQueryUnreceivedAcksResponse);
 
-          /** QueryUnrelayedAcksResponse sequences. */
+          /** QueryUnreceivedAcksResponse sequences. */
           public sequences: Long[];
 
-          /** QueryUnrelayedAcksResponse height. */
+          /** QueryUnreceivedAcksResponse height. */
           public height?: ibc.core.client.v1.IHeight | null;
 
           /**
-           * Creates a new QueryUnrelayedAcksResponse instance using the specified properties.
+           * Creates a new QueryUnreceivedAcksResponse instance using the specified properties.
            * @param [properties] Properties to set
-           * @returns QueryUnrelayedAcksResponse instance
+           * @returns QueryUnreceivedAcksResponse instance
            */
           public static create(
-            properties?: ibc.core.channel.v1.IQueryUnrelayedAcksResponse,
-          ): ibc.core.channel.v1.QueryUnrelayedAcksResponse;
+            properties?: ibc.core.channel.v1.IQueryUnreceivedAcksResponse,
+          ): ibc.core.channel.v1.QueryUnreceivedAcksResponse;
 
           /**
-           * Encodes the specified QueryUnrelayedAcksResponse message. Does not implicitly {@link ibc.core.channel.v1.QueryUnrelayedAcksResponse.verify|verify} messages.
-           * @param m QueryUnrelayedAcksResponse message or plain object to encode
+           * Encodes the specified QueryUnreceivedAcksResponse message. Does not implicitly {@link ibc.core.channel.v1.QueryUnreceivedAcksResponse.verify|verify} messages.
+           * @param m QueryUnreceivedAcksResponse message or plain object to encode
            * @param [w] Writer to encode to
            * @returns Writer
            */
           public static encode(
-            m: ibc.core.channel.v1.IQueryUnrelayedAcksResponse,
+            m: ibc.core.channel.v1.IQueryUnreceivedAcksResponse,
             w?: $protobuf.Writer,
           ): $protobuf.Writer;
 
           /**
-           * Decodes a QueryUnrelayedAcksResponse message from the specified reader or buffer.
+           * Decodes a QueryUnreceivedAcksResponse message from the specified reader or buffer.
            * @param r Reader or buffer to decode from
            * @param [l] Message length if known beforehand
-           * @returns QueryUnrelayedAcksResponse
+           * @returns QueryUnreceivedAcksResponse
            * @throws {Error} If the payload is not a reader or valid buffer
            * @throws {$protobuf.util.ProtocolError} If required fields are missing
            */
           public static decode(
             r: $protobuf.Reader | Uint8Array,
             l?: number,
-          ): ibc.core.channel.v1.QueryUnrelayedAcksResponse;
+          ): ibc.core.channel.v1.QueryUnreceivedAcksResponse;
         }
 
         /** Properties of a QueryNextSequenceReceiveRequest. */
@@ -9534,9 +9639,6 @@ export namespace ibc {
           /** QueryNextSequenceReceiveResponse proof */
           proof?: Uint8Array | null;
 
-          /** QueryNextSequenceReceiveResponse proofPath */
-          proofPath?: string | null;
-
           /** QueryNextSequenceReceiveResponse proofHeight */
           proofHeight?: ibc.core.client.v1.IHeight | null;
         }
@@ -9554,9 +9656,6 @@ export namespace ibc {
 
           /** QueryNextSequenceReceiveResponse proof. */
           public proof: Uint8Array;
-
-          /** QueryNextSequenceReceiveResponse proofPath. */
-          public proofPath: string;
 
           /** QueryNextSequenceReceiveResponse proofHeight. */
           public proofHeight?: ibc.core.client.v1.IHeight | null;
@@ -9601,6 +9700,598 @@ export namespace ibc {
     namespace client {
       /** Namespace v1. */
       namespace v1 {
+        /** Represents a Msg */
+        class Msg extends $protobuf.rpc.Service {
+          /**
+           * Constructs a new Msg service.
+           * @param rpcImpl RPC implementation
+           * @param [requestDelimited=false] Whether requests are length-delimited
+           * @param [responseDelimited=false] Whether responses are length-delimited
+           */
+          constructor(rpcImpl: $protobuf.RPCImpl, requestDelimited?: boolean, responseDelimited?: boolean);
+
+          /**
+           * Creates new Msg service using the specified rpc implementation.
+           * @param rpcImpl RPC implementation
+           * @param [requestDelimited=false] Whether requests are length-delimited
+           * @param [responseDelimited=false] Whether responses are length-delimited
+           * @returns RPC service. Useful where requests and/or responses are streamed.
+           */
+          public static create(
+            rpcImpl: $protobuf.RPCImpl,
+            requestDelimited?: boolean,
+            responseDelimited?: boolean,
+          ): Msg;
+
+          /**
+           * Calls CreateClient.
+           * @param request MsgCreateClient message or plain object
+           * @param callback Node-style callback called with the error, if any, and MsgCreateClientResponse
+           */
+          public createClient(
+            request: ibc.core.client.v1.IMsgCreateClient,
+            callback: ibc.core.client.v1.Msg.CreateClientCallback,
+          ): void;
+
+          /**
+           * Calls CreateClient.
+           * @param request MsgCreateClient message or plain object
+           * @returns Promise
+           */
+          public createClient(
+            request: ibc.core.client.v1.IMsgCreateClient,
+          ): Promise<ibc.core.client.v1.MsgCreateClientResponse>;
+
+          /**
+           * Calls UpdateClient.
+           * @param request MsgUpdateClient message or plain object
+           * @param callback Node-style callback called with the error, if any, and MsgUpdateClientResponse
+           */
+          public updateClient(
+            request: ibc.core.client.v1.IMsgUpdateClient,
+            callback: ibc.core.client.v1.Msg.UpdateClientCallback,
+          ): void;
+
+          /**
+           * Calls UpdateClient.
+           * @param request MsgUpdateClient message or plain object
+           * @returns Promise
+           */
+          public updateClient(
+            request: ibc.core.client.v1.IMsgUpdateClient,
+          ): Promise<ibc.core.client.v1.MsgUpdateClientResponse>;
+
+          /**
+           * Calls UpgradeClient.
+           * @param request MsgUpgradeClient message or plain object
+           * @param callback Node-style callback called with the error, if any, and MsgUpgradeClientResponse
+           */
+          public upgradeClient(
+            request: ibc.core.client.v1.IMsgUpgradeClient,
+            callback: ibc.core.client.v1.Msg.UpgradeClientCallback,
+          ): void;
+
+          /**
+           * Calls UpgradeClient.
+           * @param request MsgUpgradeClient message or plain object
+           * @returns Promise
+           */
+          public upgradeClient(
+            request: ibc.core.client.v1.IMsgUpgradeClient,
+          ): Promise<ibc.core.client.v1.MsgUpgradeClientResponse>;
+
+          /**
+           * Calls SubmitMisbehaviour.
+           * @param request MsgSubmitMisbehaviour message or plain object
+           * @param callback Node-style callback called with the error, if any, and MsgSubmitMisbehaviourResponse
+           */
+          public submitMisbehaviour(
+            request: ibc.core.client.v1.IMsgSubmitMisbehaviour,
+            callback: ibc.core.client.v1.Msg.SubmitMisbehaviourCallback,
+          ): void;
+
+          /**
+           * Calls SubmitMisbehaviour.
+           * @param request MsgSubmitMisbehaviour message or plain object
+           * @returns Promise
+           */
+          public submitMisbehaviour(
+            request: ibc.core.client.v1.IMsgSubmitMisbehaviour,
+          ): Promise<ibc.core.client.v1.MsgSubmitMisbehaviourResponse>;
+        }
+
+        namespace Msg {
+          /**
+           * Callback as used by {@link ibc.core.client.v1.Msg#createClient}.
+           * @param error Error, if any
+           * @param [response] MsgCreateClientResponse
+           */
+          type CreateClientCallback = (
+            error: Error | null,
+            response?: ibc.core.client.v1.MsgCreateClientResponse,
+          ) => void;
+
+          /**
+           * Callback as used by {@link ibc.core.client.v1.Msg#updateClient}.
+           * @param error Error, if any
+           * @param [response] MsgUpdateClientResponse
+           */
+          type UpdateClientCallback = (
+            error: Error | null,
+            response?: ibc.core.client.v1.MsgUpdateClientResponse,
+          ) => void;
+
+          /**
+           * Callback as used by {@link ibc.core.client.v1.Msg#upgradeClient}.
+           * @param error Error, if any
+           * @param [response] MsgUpgradeClientResponse
+           */
+          type UpgradeClientCallback = (
+            error: Error | null,
+            response?: ibc.core.client.v1.MsgUpgradeClientResponse,
+          ) => void;
+
+          /**
+           * Callback as used by {@link ibc.core.client.v1.Msg#submitMisbehaviour}.
+           * @param error Error, if any
+           * @param [response] MsgSubmitMisbehaviourResponse
+           */
+          type SubmitMisbehaviourCallback = (
+            error: Error | null,
+            response?: ibc.core.client.v1.MsgSubmitMisbehaviourResponse,
+          ) => void;
+        }
+
+        /** Properties of a MsgCreateClient. */
+        interface IMsgCreateClient {
+          /** MsgCreateClient clientId */
+          clientId?: string | null;
+
+          /** MsgCreateClient clientState */
+          clientState?: google.protobuf.IAny | null;
+
+          /** MsgCreateClient consensusState */
+          consensusState?: google.protobuf.IAny | null;
+
+          /** MsgCreateClient signer */
+          signer?: string | null;
+        }
+
+        /** Represents a MsgCreateClient. */
+        class MsgCreateClient implements IMsgCreateClient {
+          /**
+           * Constructs a new MsgCreateClient.
+           * @param [p] Properties to set
+           */
+          constructor(p?: ibc.core.client.v1.IMsgCreateClient);
+
+          /** MsgCreateClient clientId. */
+          public clientId: string;
+
+          /** MsgCreateClient clientState. */
+          public clientState?: google.protobuf.IAny | null;
+
+          /** MsgCreateClient consensusState. */
+          public consensusState?: google.protobuf.IAny | null;
+
+          /** MsgCreateClient signer. */
+          public signer: string;
+
+          /**
+           * Creates a new MsgCreateClient instance using the specified properties.
+           * @param [properties] Properties to set
+           * @returns MsgCreateClient instance
+           */
+          public static create(
+            properties?: ibc.core.client.v1.IMsgCreateClient,
+          ): ibc.core.client.v1.MsgCreateClient;
+
+          /**
+           * Encodes the specified MsgCreateClient message. Does not implicitly {@link ibc.core.client.v1.MsgCreateClient.verify|verify} messages.
+           * @param m MsgCreateClient message or plain object to encode
+           * @param [w] Writer to encode to
+           * @returns Writer
+           */
+          public static encode(
+            m: ibc.core.client.v1.IMsgCreateClient,
+            w?: $protobuf.Writer,
+          ): $protobuf.Writer;
+
+          /**
+           * Decodes a MsgCreateClient message from the specified reader or buffer.
+           * @param r Reader or buffer to decode from
+           * @param [l] Message length if known beforehand
+           * @returns MsgCreateClient
+           * @throws {Error} If the payload is not a reader or valid buffer
+           * @throws {$protobuf.util.ProtocolError} If required fields are missing
+           */
+          public static decode(
+            r: $protobuf.Reader | Uint8Array,
+            l?: number,
+          ): ibc.core.client.v1.MsgCreateClient;
+        }
+
+        /** Properties of a MsgCreateClientResponse. */
+        interface IMsgCreateClientResponse {}
+
+        /** Represents a MsgCreateClientResponse. */
+        class MsgCreateClientResponse implements IMsgCreateClientResponse {
+          /**
+           * Constructs a new MsgCreateClientResponse.
+           * @param [p] Properties to set
+           */
+          constructor(p?: ibc.core.client.v1.IMsgCreateClientResponse);
+
+          /**
+           * Creates a new MsgCreateClientResponse instance using the specified properties.
+           * @param [properties] Properties to set
+           * @returns MsgCreateClientResponse instance
+           */
+          public static create(
+            properties?: ibc.core.client.v1.IMsgCreateClientResponse,
+          ): ibc.core.client.v1.MsgCreateClientResponse;
+
+          /**
+           * Encodes the specified MsgCreateClientResponse message. Does not implicitly {@link ibc.core.client.v1.MsgCreateClientResponse.verify|verify} messages.
+           * @param m MsgCreateClientResponse message or plain object to encode
+           * @param [w] Writer to encode to
+           * @returns Writer
+           */
+          public static encode(
+            m: ibc.core.client.v1.IMsgCreateClientResponse,
+            w?: $protobuf.Writer,
+          ): $protobuf.Writer;
+
+          /**
+           * Decodes a MsgCreateClientResponse message from the specified reader or buffer.
+           * @param r Reader or buffer to decode from
+           * @param [l] Message length if known beforehand
+           * @returns MsgCreateClientResponse
+           * @throws {Error} If the payload is not a reader or valid buffer
+           * @throws {$protobuf.util.ProtocolError} If required fields are missing
+           */
+          public static decode(
+            r: $protobuf.Reader | Uint8Array,
+            l?: number,
+          ): ibc.core.client.v1.MsgCreateClientResponse;
+        }
+
+        /** Properties of a MsgUpdateClient. */
+        interface IMsgUpdateClient {
+          /** MsgUpdateClient clientId */
+          clientId?: string | null;
+
+          /** MsgUpdateClient header */
+          header?: google.protobuf.IAny | null;
+
+          /** MsgUpdateClient signer */
+          signer?: string | null;
+        }
+
+        /** Represents a MsgUpdateClient. */
+        class MsgUpdateClient implements IMsgUpdateClient {
+          /**
+           * Constructs a new MsgUpdateClient.
+           * @param [p] Properties to set
+           */
+          constructor(p?: ibc.core.client.v1.IMsgUpdateClient);
+
+          /** MsgUpdateClient clientId. */
+          public clientId: string;
+
+          /** MsgUpdateClient header. */
+          public header?: google.protobuf.IAny | null;
+
+          /** MsgUpdateClient signer. */
+          public signer: string;
+
+          /**
+           * Creates a new MsgUpdateClient instance using the specified properties.
+           * @param [properties] Properties to set
+           * @returns MsgUpdateClient instance
+           */
+          public static create(
+            properties?: ibc.core.client.v1.IMsgUpdateClient,
+          ): ibc.core.client.v1.MsgUpdateClient;
+
+          /**
+           * Encodes the specified MsgUpdateClient message. Does not implicitly {@link ibc.core.client.v1.MsgUpdateClient.verify|verify} messages.
+           * @param m MsgUpdateClient message or plain object to encode
+           * @param [w] Writer to encode to
+           * @returns Writer
+           */
+          public static encode(
+            m: ibc.core.client.v1.IMsgUpdateClient,
+            w?: $protobuf.Writer,
+          ): $protobuf.Writer;
+
+          /**
+           * Decodes a MsgUpdateClient message from the specified reader or buffer.
+           * @param r Reader or buffer to decode from
+           * @param [l] Message length if known beforehand
+           * @returns MsgUpdateClient
+           * @throws {Error} If the payload is not a reader or valid buffer
+           * @throws {$protobuf.util.ProtocolError} If required fields are missing
+           */
+          public static decode(
+            r: $protobuf.Reader | Uint8Array,
+            l?: number,
+          ): ibc.core.client.v1.MsgUpdateClient;
+        }
+
+        /** Properties of a MsgUpdateClientResponse. */
+        interface IMsgUpdateClientResponse {}
+
+        /** Represents a MsgUpdateClientResponse. */
+        class MsgUpdateClientResponse implements IMsgUpdateClientResponse {
+          /**
+           * Constructs a new MsgUpdateClientResponse.
+           * @param [p] Properties to set
+           */
+          constructor(p?: ibc.core.client.v1.IMsgUpdateClientResponse);
+
+          /**
+           * Creates a new MsgUpdateClientResponse instance using the specified properties.
+           * @param [properties] Properties to set
+           * @returns MsgUpdateClientResponse instance
+           */
+          public static create(
+            properties?: ibc.core.client.v1.IMsgUpdateClientResponse,
+          ): ibc.core.client.v1.MsgUpdateClientResponse;
+
+          /**
+           * Encodes the specified MsgUpdateClientResponse message. Does not implicitly {@link ibc.core.client.v1.MsgUpdateClientResponse.verify|verify} messages.
+           * @param m MsgUpdateClientResponse message or plain object to encode
+           * @param [w] Writer to encode to
+           * @returns Writer
+           */
+          public static encode(
+            m: ibc.core.client.v1.IMsgUpdateClientResponse,
+            w?: $protobuf.Writer,
+          ): $protobuf.Writer;
+
+          /**
+           * Decodes a MsgUpdateClientResponse message from the specified reader or buffer.
+           * @param r Reader or buffer to decode from
+           * @param [l] Message length if known beforehand
+           * @returns MsgUpdateClientResponse
+           * @throws {Error} If the payload is not a reader or valid buffer
+           * @throws {$protobuf.util.ProtocolError} If required fields are missing
+           */
+          public static decode(
+            r: $protobuf.Reader | Uint8Array,
+            l?: number,
+          ): ibc.core.client.v1.MsgUpdateClientResponse;
+        }
+
+        /** Properties of a MsgUpgradeClient. */
+        interface IMsgUpgradeClient {
+          /** MsgUpgradeClient clientId */
+          clientId?: string | null;
+
+          /** MsgUpgradeClient clientState */
+          clientState?: google.protobuf.IAny | null;
+
+          /** MsgUpgradeClient upgradeHeight */
+          upgradeHeight?: ibc.core.client.v1.IHeight | null;
+
+          /** MsgUpgradeClient proofUpgrade */
+          proofUpgrade?: Uint8Array | null;
+
+          /** MsgUpgradeClient signer */
+          signer?: string | null;
+        }
+
+        /** Represents a MsgUpgradeClient. */
+        class MsgUpgradeClient implements IMsgUpgradeClient {
+          /**
+           * Constructs a new MsgUpgradeClient.
+           * @param [p] Properties to set
+           */
+          constructor(p?: ibc.core.client.v1.IMsgUpgradeClient);
+
+          /** MsgUpgradeClient clientId. */
+          public clientId: string;
+
+          /** MsgUpgradeClient clientState. */
+          public clientState?: google.protobuf.IAny | null;
+
+          /** MsgUpgradeClient upgradeHeight. */
+          public upgradeHeight?: ibc.core.client.v1.IHeight | null;
+
+          /** MsgUpgradeClient proofUpgrade. */
+          public proofUpgrade: Uint8Array;
+
+          /** MsgUpgradeClient signer. */
+          public signer: string;
+
+          /**
+           * Creates a new MsgUpgradeClient instance using the specified properties.
+           * @param [properties] Properties to set
+           * @returns MsgUpgradeClient instance
+           */
+          public static create(
+            properties?: ibc.core.client.v1.IMsgUpgradeClient,
+          ): ibc.core.client.v1.MsgUpgradeClient;
+
+          /**
+           * Encodes the specified MsgUpgradeClient message. Does not implicitly {@link ibc.core.client.v1.MsgUpgradeClient.verify|verify} messages.
+           * @param m MsgUpgradeClient message or plain object to encode
+           * @param [w] Writer to encode to
+           * @returns Writer
+           */
+          public static encode(
+            m: ibc.core.client.v1.IMsgUpgradeClient,
+            w?: $protobuf.Writer,
+          ): $protobuf.Writer;
+
+          /**
+           * Decodes a MsgUpgradeClient message from the specified reader or buffer.
+           * @param r Reader or buffer to decode from
+           * @param [l] Message length if known beforehand
+           * @returns MsgUpgradeClient
+           * @throws {Error} If the payload is not a reader or valid buffer
+           * @throws {$protobuf.util.ProtocolError} If required fields are missing
+           */
+          public static decode(
+            r: $protobuf.Reader | Uint8Array,
+            l?: number,
+          ): ibc.core.client.v1.MsgUpgradeClient;
+        }
+
+        /** Properties of a MsgUpgradeClientResponse. */
+        interface IMsgUpgradeClientResponse {}
+
+        /** Represents a MsgUpgradeClientResponse. */
+        class MsgUpgradeClientResponse implements IMsgUpgradeClientResponse {
+          /**
+           * Constructs a new MsgUpgradeClientResponse.
+           * @param [p] Properties to set
+           */
+          constructor(p?: ibc.core.client.v1.IMsgUpgradeClientResponse);
+
+          /**
+           * Creates a new MsgUpgradeClientResponse instance using the specified properties.
+           * @param [properties] Properties to set
+           * @returns MsgUpgradeClientResponse instance
+           */
+          public static create(
+            properties?: ibc.core.client.v1.IMsgUpgradeClientResponse,
+          ): ibc.core.client.v1.MsgUpgradeClientResponse;
+
+          /**
+           * Encodes the specified MsgUpgradeClientResponse message. Does not implicitly {@link ibc.core.client.v1.MsgUpgradeClientResponse.verify|verify} messages.
+           * @param m MsgUpgradeClientResponse message or plain object to encode
+           * @param [w] Writer to encode to
+           * @returns Writer
+           */
+          public static encode(
+            m: ibc.core.client.v1.IMsgUpgradeClientResponse,
+            w?: $protobuf.Writer,
+          ): $protobuf.Writer;
+
+          /**
+           * Decodes a MsgUpgradeClientResponse message from the specified reader or buffer.
+           * @param r Reader or buffer to decode from
+           * @param [l] Message length if known beforehand
+           * @returns MsgUpgradeClientResponse
+           * @throws {Error} If the payload is not a reader or valid buffer
+           * @throws {$protobuf.util.ProtocolError} If required fields are missing
+           */
+          public static decode(
+            r: $protobuf.Reader | Uint8Array,
+            l?: number,
+          ): ibc.core.client.v1.MsgUpgradeClientResponse;
+        }
+
+        /** Properties of a MsgSubmitMisbehaviour. */
+        interface IMsgSubmitMisbehaviour {
+          /** MsgSubmitMisbehaviour clientId */
+          clientId?: string | null;
+
+          /** MsgSubmitMisbehaviour misbehaviour */
+          misbehaviour?: google.protobuf.IAny | null;
+
+          /** MsgSubmitMisbehaviour signer */
+          signer?: string | null;
+        }
+
+        /** Represents a MsgSubmitMisbehaviour. */
+        class MsgSubmitMisbehaviour implements IMsgSubmitMisbehaviour {
+          /**
+           * Constructs a new MsgSubmitMisbehaviour.
+           * @param [p] Properties to set
+           */
+          constructor(p?: ibc.core.client.v1.IMsgSubmitMisbehaviour);
+
+          /** MsgSubmitMisbehaviour clientId. */
+          public clientId: string;
+
+          /** MsgSubmitMisbehaviour misbehaviour. */
+          public misbehaviour?: google.protobuf.IAny | null;
+
+          /** MsgSubmitMisbehaviour signer. */
+          public signer: string;
+
+          /**
+           * Creates a new MsgSubmitMisbehaviour instance using the specified properties.
+           * @param [properties] Properties to set
+           * @returns MsgSubmitMisbehaviour instance
+           */
+          public static create(
+            properties?: ibc.core.client.v1.IMsgSubmitMisbehaviour,
+          ): ibc.core.client.v1.MsgSubmitMisbehaviour;
+
+          /**
+           * Encodes the specified MsgSubmitMisbehaviour message. Does not implicitly {@link ibc.core.client.v1.MsgSubmitMisbehaviour.verify|verify} messages.
+           * @param m MsgSubmitMisbehaviour message or plain object to encode
+           * @param [w] Writer to encode to
+           * @returns Writer
+           */
+          public static encode(
+            m: ibc.core.client.v1.IMsgSubmitMisbehaviour,
+            w?: $protobuf.Writer,
+          ): $protobuf.Writer;
+
+          /**
+           * Decodes a MsgSubmitMisbehaviour message from the specified reader or buffer.
+           * @param r Reader or buffer to decode from
+           * @param [l] Message length if known beforehand
+           * @returns MsgSubmitMisbehaviour
+           * @throws {Error} If the payload is not a reader or valid buffer
+           * @throws {$protobuf.util.ProtocolError} If required fields are missing
+           */
+          public static decode(
+            r: $protobuf.Reader | Uint8Array,
+            l?: number,
+          ): ibc.core.client.v1.MsgSubmitMisbehaviour;
+        }
+
+        /** Properties of a MsgSubmitMisbehaviourResponse. */
+        interface IMsgSubmitMisbehaviourResponse {}
+
+        /** Represents a MsgSubmitMisbehaviourResponse. */
+        class MsgSubmitMisbehaviourResponse implements IMsgSubmitMisbehaviourResponse {
+          /**
+           * Constructs a new MsgSubmitMisbehaviourResponse.
+           * @param [p] Properties to set
+           */
+          constructor(p?: ibc.core.client.v1.IMsgSubmitMisbehaviourResponse);
+
+          /**
+           * Creates a new MsgSubmitMisbehaviourResponse instance using the specified properties.
+           * @param [properties] Properties to set
+           * @returns MsgSubmitMisbehaviourResponse instance
+           */
+          public static create(
+            properties?: ibc.core.client.v1.IMsgSubmitMisbehaviourResponse,
+          ): ibc.core.client.v1.MsgSubmitMisbehaviourResponse;
+
+          /**
+           * Encodes the specified MsgSubmitMisbehaviourResponse message. Does not implicitly {@link ibc.core.client.v1.MsgSubmitMisbehaviourResponse.verify|verify} messages.
+           * @param m MsgSubmitMisbehaviourResponse message or plain object to encode
+           * @param [w] Writer to encode to
+           * @returns Writer
+           */
+          public static encode(
+            m: ibc.core.client.v1.IMsgSubmitMisbehaviourResponse,
+            w?: $protobuf.Writer,
+          ): $protobuf.Writer;
+
+          /**
+           * Decodes a MsgSubmitMisbehaviourResponse message from the specified reader or buffer.
+           * @param r Reader or buffer to decode from
+           * @param [l] Message length if known beforehand
+           * @returns MsgSubmitMisbehaviourResponse
+           * @throws {Error} If the payload is not a reader or valid buffer
+           * @throws {$protobuf.util.ProtocolError} If required fields are missing
+           */
+          public static decode(
+            r: $protobuf.Reader | Uint8Array,
+            l?: number,
+          ): ibc.core.client.v1.MsgSubmitMisbehaviourResponse;
+        }
+
         /** Properties of an IdentifiedClientState. */
         interface IIdentifiedClientState {
           /** IdentifiedClientState clientId */
@@ -9839,276 +10530,6 @@ export namespace ibc {
             r: $protobuf.Reader | Uint8Array,
             l?: number,
           ): ibc.core.client.v1.ClientUpdateProposal;
-        }
-
-        /** Properties of a MsgCreateClient. */
-        interface IMsgCreateClient {
-          /** MsgCreateClient clientId */
-          clientId?: string | null;
-
-          /** MsgCreateClient clientState */
-          clientState?: google.protobuf.IAny | null;
-
-          /** MsgCreateClient consensusState */
-          consensusState?: google.protobuf.IAny | null;
-
-          /** MsgCreateClient signer */
-          signer?: string | null;
-        }
-
-        /** Represents a MsgCreateClient. */
-        class MsgCreateClient implements IMsgCreateClient {
-          /**
-           * Constructs a new MsgCreateClient.
-           * @param [p] Properties to set
-           */
-          constructor(p?: ibc.core.client.v1.IMsgCreateClient);
-
-          /** MsgCreateClient clientId. */
-          public clientId: string;
-
-          /** MsgCreateClient clientState. */
-          public clientState?: google.protobuf.IAny | null;
-
-          /** MsgCreateClient consensusState. */
-          public consensusState?: google.protobuf.IAny | null;
-
-          /** MsgCreateClient signer. */
-          public signer: string;
-
-          /**
-           * Creates a new MsgCreateClient instance using the specified properties.
-           * @param [properties] Properties to set
-           * @returns MsgCreateClient instance
-           */
-          public static create(
-            properties?: ibc.core.client.v1.IMsgCreateClient,
-          ): ibc.core.client.v1.MsgCreateClient;
-
-          /**
-           * Encodes the specified MsgCreateClient message. Does not implicitly {@link ibc.core.client.v1.MsgCreateClient.verify|verify} messages.
-           * @param m MsgCreateClient message or plain object to encode
-           * @param [w] Writer to encode to
-           * @returns Writer
-           */
-          public static encode(
-            m: ibc.core.client.v1.IMsgCreateClient,
-            w?: $protobuf.Writer,
-          ): $protobuf.Writer;
-
-          /**
-           * Decodes a MsgCreateClient message from the specified reader or buffer.
-           * @param r Reader or buffer to decode from
-           * @param [l] Message length if known beforehand
-           * @returns MsgCreateClient
-           * @throws {Error} If the payload is not a reader or valid buffer
-           * @throws {$protobuf.util.ProtocolError} If required fields are missing
-           */
-          public static decode(
-            r: $protobuf.Reader | Uint8Array,
-            l?: number,
-          ): ibc.core.client.v1.MsgCreateClient;
-        }
-
-        /** Properties of a MsgUpdateClient. */
-        interface IMsgUpdateClient {
-          /** MsgUpdateClient clientId */
-          clientId?: string | null;
-
-          /** MsgUpdateClient header */
-          header?: google.protobuf.IAny | null;
-
-          /** MsgUpdateClient signer */
-          signer?: string | null;
-        }
-
-        /** Represents a MsgUpdateClient. */
-        class MsgUpdateClient implements IMsgUpdateClient {
-          /**
-           * Constructs a new MsgUpdateClient.
-           * @param [p] Properties to set
-           */
-          constructor(p?: ibc.core.client.v1.IMsgUpdateClient);
-
-          /** MsgUpdateClient clientId. */
-          public clientId: string;
-
-          /** MsgUpdateClient header. */
-          public header?: google.protobuf.IAny | null;
-
-          /** MsgUpdateClient signer. */
-          public signer: string;
-
-          /**
-           * Creates a new MsgUpdateClient instance using the specified properties.
-           * @param [properties] Properties to set
-           * @returns MsgUpdateClient instance
-           */
-          public static create(
-            properties?: ibc.core.client.v1.IMsgUpdateClient,
-          ): ibc.core.client.v1.MsgUpdateClient;
-
-          /**
-           * Encodes the specified MsgUpdateClient message. Does not implicitly {@link ibc.core.client.v1.MsgUpdateClient.verify|verify} messages.
-           * @param m MsgUpdateClient message or plain object to encode
-           * @param [w] Writer to encode to
-           * @returns Writer
-           */
-          public static encode(
-            m: ibc.core.client.v1.IMsgUpdateClient,
-            w?: $protobuf.Writer,
-          ): $protobuf.Writer;
-
-          /**
-           * Decodes a MsgUpdateClient message from the specified reader or buffer.
-           * @param r Reader or buffer to decode from
-           * @param [l] Message length if known beforehand
-           * @returns MsgUpdateClient
-           * @throws {Error} If the payload is not a reader or valid buffer
-           * @throws {$protobuf.util.ProtocolError} If required fields are missing
-           */
-          public static decode(
-            r: $protobuf.Reader | Uint8Array,
-            l?: number,
-          ): ibc.core.client.v1.MsgUpdateClient;
-        }
-
-        /** Properties of a MsgUpgradeClient. */
-        interface IMsgUpgradeClient {
-          /** MsgUpgradeClient clientId */
-          clientId?: string | null;
-
-          /** MsgUpgradeClient clientState */
-          clientState?: google.protobuf.IAny | null;
-
-          /** MsgUpgradeClient upgradeHeight */
-          upgradeHeight?: ibc.core.client.v1.IHeight | null;
-
-          /** MsgUpgradeClient proofUpgrade */
-          proofUpgrade?: Uint8Array | null;
-
-          /** MsgUpgradeClient signer */
-          signer?: string | null;
-        }
-
-        /** Represents a MsgUpgradeClient. */
-        class MsgUpgradeClient implements IMsgUpgradeClient {
-          /**
-           * Constructs a new MsgUpgradeClient.
-           * @param [p] Properties to set
-           */
-          constructor(p?: ibc.core.client.v1.IMsgUpgradeClient);
-
-          /** MsgUpgradeClient clientId. */
-          public clientId: string;
-
-          /** MsgUpgradeClient clientState. */
-          public clientState?: google.protobuf.IAny | null;
-
-          /** MsgUpgradeClient upgradeHeight. */
-          public upgradeHeight?: ibc.core.client.v1.IHeight | null;
-
-          /** MsgUpgradeClient proofUpgrade. */
-          public proofUpgrade: Uint8Array;
-
-          /** MsgUpgradeClient signer. */
-          public signer: string;
-
-          /**
-           * Creates a new MsgUpgradeClient instance using the specified properties.
-           * @param [properties] Properties to set
-           * @returns MsgUpgradeClient instance
-           */
-          public static create(
-            properties?: ibc.core.client.v1.IMsgUpgradeClient,
-          ): ibc.core.client.v1.MsgUpgradeClient;
-
-          /**
-           * Encodes the specified MsgUpgradeClient message. Does not implicitly {@link ibc.core.client.v1.MsgUpgradeClient.verify|verify} messages.
-           * @param m MsgUpgradeClient message or plain object to encode
-           * @param [w] Writer to encode to
-           * @returns Writer
-           */
-          public static encode(
-            m: ibc.core.client.v1.IMsgUpgradeClient,
-            w?: $protobuf.Writer,
-          ): $protobuf.Writer;
-
-          /**
-           * Decodes a MsgUpgradeClient message from the specified reader or buffer.
-           * @param r Reader or buffer to decode from
-           * @param [l] Message length if known beforehand
-           * @returns MsgUpgradeClient
-           * @throws {Error} If the payload is not a reader or valid buffer
-           * @throws {$protobuf.util.ProtocolError} If required fields are missing
-           */
-          public static decode(
-            r: $protobuf.Reader | Uint8Array,
-            l?: number,
-          ): ibc.core.client.v1.MsgUpgradeClient;
-        }
-
-        /** Properties of a MsgSubmitMisbehaviour. */
-        interface IMsgSubmitMisbehaviour {
-          /** MsgSubmitMisbehaviour clientId */
-          clientId?: string | null;
-
-          /** MsgSubmitMisbehaviour misbehaviour */
-          misbehaviour?: google.protobuf.IAny | null;
-
-          /** MsgSubmitMisbehaviour signer */
-          signer?: string | null;
-        }
-
-        /** Represents a MsgSubmitMisbehaviour. */
-        class MsgSubmitMisbehaviour implements IMsgSubmitMisbehaviour {
-          /**
-           * Constructs a new MsgSubmitMisbehaviour.
-           * @param [p] Properties to set
-           */
-          constructor(p?: ibc.core.client.v1.IMsgSubmitMisbehaviour);
-
-          /** MsgSubmitMisbehaviour clientId. */
-          public clientId: string;
-
-          /** MsgSubmitMisbehaviour misbehaviour. */
-          public misbehaviour?: google.protobuf.IAny | null;
-
-          /** MsgSubmitMisbehaviour signer. */
-          public signer: string;
-
-          /**
-           * Creates a new MsgSubmitMisbehaviour instance using the specified properties.
-           * @param [properties] Properties to set
-           * @returns MsgSubmitMisbehaviour instance
-           */
-          public static create(
-            properties?: ibc.core.client.v1.IMsgSubmitMisbehaviour,
-          ): ibc.core.client.v1.MsgSubmitMisbehaviour;
-
-          /**
-           * Encodes the specified MsgSubmitMisbehaviour message. Does not implicitly {@link ibc.core.client.v1.MsgSubmitMisbehaviour.verify|verify} messages.
-           * @param m MsgSubmitMisbehaviour message or plain object to encode
-           * @param [w] Writer to encode to
-           * @returns Writer
-           */
-          public static encode(
-            m: ibc.core.client.v1.IMsgSubmitMisbehaviour,
-            w?: $protobuf.Writer,
-          ): $protobuf.Writer;
-
-          /**
-           * Decodes a MsgSubmitMisbehaviour message from the specified reader or buffer.
-           * @param r Reader or buffer to decode from
-           * @param [l] Message length if known beforehand
-           * @returns MsgSubmitMisbehaviour
-           * @throws {Error} If the payload is not a reader or valid buffer
-           * @throws {$protobuf.util.ProtocolError} If required fields are missing
-           */
-          public static decode(
-            r: $protobuf.Reader | Uint8Array,
-            l?: number,
-          ): ibc.core.client.v1.MsgSubmitMisbehaviour;
         }
 
         /** Properties of an Height. */
@@ -10468,379 +10889,13 @@ export namespace ibc {
     namespace connection {
       /** Namespace v1. */
       namespace v1 {
-        /** Properties of a MsgConnectionOpenInit. */
-        interface IMsgConnectionOpenInit {
-          /** MsgConnectionOpenInit clientId */
-          clientId?: string | null;
-
-          /** MsgConnectionOpenInit connectionId */
-          connectionId?: string | null;
-
-          /** MsgConnectionOpenInit counterparty */
-          counterparty?: ibc.core.connection.v1.ICounterparty | null;
-
-          /** MsgConnectionOpenInit version */
-          version?: string | null;
-
-          /** MsgConnectionOpenInit signer */
-          signer?: string | null;
-        }
-
-        /** Represents a MsgConnectionOpenInit. */
-        class MsgConnectionOpenInit implements IMsgConnectionOpenInit {
-          /**
-           * Constructs a new MsgConnectionOpenInit.
-           * @param [p] Properties to set
-           */
-          constructor(p?: ibc.core.connection.v1.IMsgConnectionOpenInit);
-
-          /** MsgConnectionOpenInit clientId. */
-          public clientId: string;
-
-          /** MsgConnectionOpenInit connectionId. */
-          public connectionId: string;
-
-          /** MsgConnectionOpenInit counterparty. */
-          public counterparty?: ibc.core.connection.v1.ICounterparty | null;
-
-          /** MsgConnectionOpenInit version. */
-          public version: string;
-
-          /** MsgConnectionOpenInit signer. */
-          public signer: string;
-
-          /**
-           * Creates a new MsgConnectionOpenInit instance using the specified properties.
-           * @param [properties] Properties to set
-           * @returns MsgConnectionOpenInit instance
-           */
-          public static create(
-            properties?: ibc.core.connection.v1.IMsgConnectionOpenInit,
-          ): ibc.core.connection.v1.MsgConnectionOpenInit;
-
-          /**
-           * Encodes the specified MsgConnectionOpenInit message. Does not implicitly {@link ibc.core.connection.v1.MsgConnectionOpenInit.verify|verify} messages.
-           * @param m MsgConnectionOpenInit message or plain object to encode
-           * @param [w] Writer to encode to
-           * @returns Writer
-           */
-          public static encode(
-            m: ibc.core.connection.v1.IMsgConnectionOpenInit,
-            w?: $protobuf.Writer,
-          ): $protobuf.Writer;
-
-          /**
-           * Decodes a MsgConnectionOpenInit message from the specified reader or buffer.
-           * @param r Reader or buffer to decode from
-           * @param [l] Message length if known beforehand
-           * @returns MsgConnectionOpenInit
-           * @throws {Error} If the payload is not a reader or valid buffer
-           * @throws {$protobuf.util.ProtocolError} If required fields are missing
-           */
-          public static decode(
-            r: $protobuf.Reader | Uint8Array,
-            l?: number,
-          ): ibc.core.connection.v1.MsgConnectionOpenInit;
-        }
-
-        /** Properties of a MsgConnectionOpenTry. */
-        interface IMsgConnectionOpenTry {
-          /** MsgConnectionOpenTry clientId */
-          clientId?: string | null;
-
-          /** MsgConnectionOpenTry desiredConnectionId */
-          desiredConnectionId?: string | null;
-
-          /** MsgConnectionOpenTry counterpartyChosenConnectionId */
-          counterpartyChosenConnectionId?: string | null;
-
-          /** MsgConnectionOpenTry clientState */
-          clientState?: google.protobuf.IAny | null;
-
-          /** MsgConnectionOpenTry counterparty */
-          counterparty?: ibc.core.connection.v1.ICounterparty | null;
-
-          /** MsgConnectionOpenTry counterpartyVersions */
-          counterpartyVersions?: string[] | null;
-
-          /** MsgConnectionOpenTry proofHeight */
-          proofHeight?: ibc.core.client.v1.IHeight | null;
-
-          /** MsgConnectionOpenTry proofInit */
-          proofInit?: Uint8Array | null;
-
-          /** MsgConnectionOpenTry proofClient */
-          proofClient?: Uint8Array | null;
-
-          /** MsgConnectionOpenTry proofConsensus */
-          proofConsensus?: Uint8Array | null;
-
-          /** MsgConnectionOpenTry consensusHeight */
-          consensusHeight?: ibc.core.client.v1.IHeight | null;
-
-          /** MsgConnectionOpenTry signer */
-          signer?: string | null;
-        }
-
-        /** Represents a MsgConnectionOpenTry. */
-        class MsgConnectionOpenTry implements IMsgConnectionOpenTry {
-          /**
-           * Constructs a new MsgConnectionOpenTry.
-           * @param [p] Properties to set
-           */
-          constructor(p?: ibc.core.connection.v1.IMsgConnectionOpenTry);
-
-          /** MsgConnectionOpenTry clientId. */
-          public clientId: string;
-
-          /** MsgConnectionOpenTry desiredConnectionId. */
-          public desiredConnectionId: string;
-
-          /** MsgConnectionOpenTry counterpartyChosenConnectionId. */
-          public counterpartyChosenConnectionId: string;
-
-          /** MsgConnectionOpenTry clientState. */
-          public clientState?: google.protobuf.IAny | null;
-
-          /** MsgConnectionOpenTry counterparty. */
-          public counterparty?: ibc.core.connection.v1.ICounterparty | null;
-
-          /** MsgConnectionOpenTry counterpartyVersions. */
-          public counterpartyVersions: string[];
-
-          /** MsgConnectionOpenTry proofHeight. */
-          public proofHeight?: ibc.core.client.v1.IHeight | null;
-
-          /** MsgConnectionOpenTry proofInit. */
-          public proofInit: Uint8Array;
-
-          /** MsgConnectionOpenTry proofClient. */
-          public proofClient: Uint8Array;
-
-          /** MsgConnectionOpenTry proofConsensus. */
-          public proofConsensus: Uint8Array;
-
-          /** MsgConnectionOpenTry consensusHeight. */
-          public consensusHeight?: ibc.core.client.v1.IHeight | null;
-
-          /** MsgConnectionOpenTry signer. */
-          public signer: string;
-
-          /**
-           * Creates a new MsgConnectionOpenTry instance using the specified properties.
-           * @param [properties] Properties to set
-           * @returns MsgConnectionOpenTry instance
-           */
-          public static create(
-            properties?: ibc.core.connection.v1.IMsgConnectionOpenTry,
-          ): ibc.core.connection.v1.MsgConnectionOpenTry;
-
-          /**
-           * Encodes the specified MsgConnectionOpenTry message. Does not implicitly {@link ibc.core.connection.v1.MsgConnectionOpenTry.verify|verify} messages.
-           * @param m MsgConnectionOpenTry message or plain object to encode
-           * @param [w] Writer to encode to
-           * @returns Writer
-           */
-          public static encode(
-            m: ibc.core.connection.v1.IMsgConnectionOpenTry,
-            w?: $protobuf.Writer,
-          ): $protobuf.Writer;
-
-          /**
-           * Decodes a MsgConnectionOpenTry message from the specified reader or buffer.
-           * @param r Reader or buffer to decode from
-           * @param [l] Message length if known beforehand
-           * @returns MsgConnectionOpenTry
-           * @throws {Error} If the payload is not a reader or valid buffer
-           * @throws {$protobuf.util.ProtocolError} If required fields are missing
-           */
-          public static decode(
-            r: $protobuf.Reader | Uint8Array,
-            l?: number,
-          ): ibc.core.connection.v1.MsgConnectionOpenTry;
-        }
-
-        /** Properties of a MsgConnectionOpenAck. */
-        interface IMsgConnectionOpenAck {
-          /** MsgConnectionOpenAck connectionId */
-          connectionId?: string | null;
-
-          /** MsgConnectionOpenAck counterpartyConnectionId */
-          counterpartyConnectionId?: string | null;
-
-          /** MsgConnectionOpenAck version */
-          version?: string | null;
-
-          /** MsgConnectionOpenAck clientState */
-          clientState?: google.protobuf.IAny | null;
-
-          /** MsgConnectionOpenAck proofHeight */
-          proofHeight?: ibc.core.client.v1.IHeight | null;
-
-          /** MsgConnectionOpenAck proofTry */
-          proofTry?: Uint8Array | null;
-
-          /** MsgConnectionOpenAck proofClient */
-          proofClient?: Uint8Array | null;
-
-          /** MsgConnectionOpenAck proofConsensus */
-          proofConsensus?: Uint8Array | null;
-
-          /** MsgConnectionOpenAck consensusHeight */
-          consensusHeight?: ibc.core.client.v1.IHeight | null;
-
-          /** MsgConnectionOpenAck signer */
-          signer?: string | null;
-        }
-
-        /** Represents a MsgConnectionOpenAck. */
-        class MsgConnectionOpenAck implements IMsgConnectionOpenAck {
-          /**
-           * Constructs a new MsgConnectionOpenAck.
-           * @param [p] Properties to set
-           */
-          constructor(p?: ibc.core.connection.v1.IMsgConnectionOpenAck);
-
-          /** MsgConnectionOpenAck connectionId. */
-          public connectionId: string;
-
-          /** MsgConnectionOpenAck counterpartyConnectionId. */
-          public counterpartyConnectionId: string;
-
-          /** MsgConnectionOpenAck version. */
-          public version: string;
-
-          /** MsgConnectionOpenAck clientState. */
-          public clientState?: google.protobuf.IAny | null;
-
-          /** MsgConnectionOpenAck proofHeight. */
-          public proofHeight?: ibc.core.client.v1.IHeight | null;
-
-          /** MsgConnectionOpenAck proofTry. */
-          public proofTry: Uint8Array;
-
-          /** MsgConnectionOpenAck proofClient. */
-          public proofClient: Uint8Array;
-
-          /** MsgConnectionOpenAck proofConsensus. */
-          public proofConsensus: Uint8Array;
-
-          /** MsgConnectionOpenAck consensusHeight. */
-          public consensusHeight?: ibc.core.client.v1.IHeight | null;
-
-          /** MsgConnectionOpenAck signer. */
-          public signer: string;
-
-          /**
-           * Creates a new MsgConnectionOpenAck instance using the specified properties.
-           * @param [properties] Properties to set
-           * @returns MsgConnectionOpenAck instance
-           */
-          public static create(
-            properties?: ibc.core.connection.v1.IMsgConnectionOpenAck,
-          ): ibc.core.connection.v1.MsgConnectionOpenAck;
-
-          /**
-           * Encodes the specified MsgConnectionOpenAck message. Does not implicitly {@link ibc.core.connection.v1.MsgConnectionOpenAck.verify|verify} messages.
-           * @param m MsgConnectionOpenAck message or plain object to encode
-           * @param [w] Writer to encode to
-           * @returns Writer
-           */
-          public static encode(
-            m: ibc.core.connection.v1.IMsgConnectionOpenAck,
-            w?: $protobuf.Writer,
-          ): $protobuf.Writer;
-
-          /**
-           * Decodes a MsgConnectionOpenAck message from the specified reader or buffer.
-           * @param r Reader or buffer to decode from
-           * @param [l] Message length if known beforehand
-           * @returns MsgConnectionOpenAck
-           * @throws {Error} If the payload is not a reader or valid buffer
-           * @throws {$protobuf.util.ProtocolError} If required fields are missing
-           */
-          public static decode(
-            r: $protobuf.Reader | Uint8Array,
-            l?: number,
-          ): ibc.core.connection.v1.MsgConnectionOpenAck;
-        }
-
-        /** Properties of a MsgConnectionOpenConfirm. */
-        interface IMsgConnectionOpenConfirm {
-          /** MsgConnectionOpenConfirm connectionId */
-          connectionId?: string | null;
-
-          /** MsgConnectionOpenConfirm proofAck */
-          proofAck?: Uint8Array | null;
-
-          /** MsgConnectionOpenConfirm proofHeight */
-          proofHeight?: ibc.core.client.v1.IHeight | null;
-
-          /** MsgConnectionOpenConfirm signer */
-          signer?: string | null;
-        }
-
-        /** Represents a MsgConnectionOpenConfirm. */
-        class MsgConnectionOpenConfirm implements IMsgConnectionOpenConfirm {
-          /**
-           * Constructs a new MsgConnectionOpenConfirm.
-           * @param [p] Properties to set
-           */
-          constructor(p?: ibc.core.connection.v1.IMsgConnectionOpenConfirm);
-
-          /** MsgConnectionOpenConfirm connectionId. */
-          public connectionId: string;
-
-          /** MsgConnectionOpenConfirm proofAck. */
-          public proofAck: Uint8Array;
-
-          /** MsgConnectionOpenConfirm proofHeight. */
-          public proofHeight?: ibc.core.client.v1.IHeight | null;
-
-          /** MsgConnectionOpenConfirm signer. */
-          public signer: string;
-
-          /**
-           * Creates a new MsgConnectionOpenConfirm instance using the specified properties.
-           * @param [properties] Properties to set
-           * @returns MsgConnectionOpenConfirm instance
-           */
-          public static create(
-            properties?: ibc.core.connection.v1.IMsgConnectionOpenConfirm,
-          ): ibc.core.connection.v1.MsgConnectionOpenConfirm;
-
-          /**
-           * Encodes the specified MsgConnectionOpenConfirm message. Does not implicitly {@link ibc.core.connection.v1.MsgConnectionOpenConfirm.verify|verify} messages.
-           * @param m MsgConnectionOpenConfirm message or plain object to encode
-           * @param [w] Writer to encode to
-           * @returns Writer
-           */
-          public static encode(
-            m: ibc.core.connection.v1.IMsgConnectionOpenConfirm,
-            w?: $protobuf.Writer,
-          ): $protobuf.Writer;
-
-          /**
-           * Decodes a MsgConnectionOpenConfirm message from the specified reader or buffer.
-           * @param r Reader or buffer to decode from
-           * @param [l] Message length if known beforehand
-           * @returns MsgConnectionOpenConfirm
-           * @throws {Error} If the payload is not a reader or valid buffer
-           * @throws {$protobuf.util.ProtocolError} If required fields are missing
-           */
-          public static decode(
-            r: $protobuf.Reader | Uint8Array,
-            l?: number,
-          ): ibc.core.connection.v1.MsgConnectionOpenConfirm;
-        }
-
         /** Properties of a ConnectionEnd. */
         interface IConnectionEnd {
           /** ConnectionEnd clientId */
           clientId?: string | null;
 
           /** ConnectionEnd versions */
-          versions?: string[] | null;
+          versions?: ibc.core.connection.v1.IVersion[] | null;
 
           /** ConnectionEnd state */
           state?: ibc.core.connection.v1.State | null;
@@ -10861,7 +10916,7 @@ export namespace ibc {
           public clientId: string;
 
           /** ConnectionEnd versions. */
-          public versions: string[];
+          public versions: ibc.core.connection.v1.IVersion[];
 
           /** ConnectionEnd state. */
           public state: ibc.core.connection.v1.State;
@@ -10912,7 +10967,7 @@ export namespace ibc {
           clientId?: string | null;
 
           /** IdentifiedConnection versions */
-          versions?: string[] | null;
+          versions?: ibc.core.connection.v1.IVersion[] | null;
 
           /** IdentifiedConnection state */
           state?: ibc.core.connection.v1.State | null;
@@ -10936,7 +10991,7 @@ export namespace ibc {
           public clientId: string;
 
           /** IdentifiedConnection versions. */
-          public versions: string[];
+          public versions: ibc.core.connection.v1.IVersion[];
 
           /** IdentifiedConnection state. */
           public state: ibc.core.connection.v1.State;
@@ -11436,9 +11491,6 @@ export namespace ibc {
           /** QueryConnectionResponse proof */
           proof?: Uint8Array | null;
 
-          /** QueryConnectionResponse proofPath */
-          proofPath?: string | null;
-
           /** QueryConnectionResponse proofHeight */
           proofHeight?: ibc.core.client.v1.IHeight | null;
         }
@@ -11456,9 +11508,6 @@ export namespace ibc {
 
           /** QueryConnectionResponse proof. */
           public proof: Uint8Array;
-
-          /** QueryConnectionResponse proofPath. */
-          public proofPath: string;
 
           /** QueryConnectionResponse proofHeight. */
           public proofHeight?: ibc.core.client.v1.IHeight | null;
@@ -11670,9 +11719,6 @@ export namespace ibc {
           /** QueryClientConnectionsResponse proof */
           proof?: Uint8Array | null;
 
-          /** QueryClientConnectionsResponse proofPath */
-          proofPath?: string | null;
-
           /** QueryClientConnectionsResponse proofHeight */
           proofHeight?: ibc.core.client.v1.IHeight | null;
         }
@@ -11690,9 +11736,6 @@ export namespace ibc {
 
           /** QueryClientConnectionsResponse proof. */
           public proof: Uint8Array;
-
-          /** QueryClientConnectionsResponse proofPath. */
-          public proofPath: string;
 
           /** QueryClientConnectionsResponse proofHeight. */
           public proofHeight?: ibc.core.client.v1.IHeight | null;
@@ -11790,9 +11833,6 @@ export namespace ibc {
           /** QueryConnectionClientStateResponse proof */
           proof?: Uint8Array | null;
 
-          /** QueryConnectionClientStateResponse proofPath */
-          proofPath?: string | null;
-
           /** QueryConnectionClientStateResponse proofHeight */
           proofHeight?: ibc.core.client.v1.IHeight | null;
         }
@@ -11810,9 +11850,6 @@ export namespace ibc {
 
           /** QueryConnectionClientStateResponse proof. */
           public proof: Uint8Array;
-
-          /** QueryConnectionClientStateResponse proofPath. */
-          public proofPath: string;
 
           /** QueryConnectionClientStateResponse proofHeight. */
           public proofHeight?: ibc.core.client.v1.IHeight | null;
@@ -11925,9 +11962,6 @@ export namespace ibc {
           /** QueryConnectionConsensusStateResponse proof */
           proof?: Uint8Array | null;
 
-          /** QueryConnectionConsensusStateResponse proofPath */
-          proofPath?: string | null;
-
           /** QueryConnectionConsensusStateResponse proofHeight */
           proofHeight?: ibc.core.client.v1.IHeight | null;
         }
@@ -11948,9 +11982,6 @@ export namespace ibc {
 
           /** QueryConnectionConsensusStateResponse proof. */
           public proof: Uint8Array;
-
-          /** QueryConnectionConsensusStateResponse proofPath. */
-          public proofPath: string;
 
           /** QueryConnectionConsensusStateResponse proofHeight. */
           public proofHeight?: ibc.core.client.v1.IHeight | null;
@@ -12658,9 +12689,6 @@ export namespace tendermint {
     interface IData {
       /** Data txs */
       txs?: Uint8Array[] | null;
-
-      /** Data hash */
-      hash?: Uint8Array | null;
     }
 
     /** Represents a Data. */
@@ -12673,9 +12701,6 @@ export namespace tendermint {
 
       /** Data txs. */
       public txs: Uint8Array[];
-
-      /** Data hash. */
-      public hash: Uint8Array;
 
       /**
        * Creates a new Data instance using the specified properties.
@@ -12801,12 +12826,6 @@ export namespace tendermint {
 
       /** Commit signatures */
       signatures?: tendermint.types.ICommitSig[] | null;
-
-      /** Commit hash */
-      hash?: Uint8Array | null;
-
-      /** Commit bitArray */
-      bitArray?: tendermint.libs.bits.IBitArray | null;
     }
 
     /** Represents a Commit. */
@@ -12828,12 +12847,6 @@ export namespace tendermint {
 
       /** Commit signatures. */
       public signatures: tendermint.types.ICommitSig[];
-
-      /** Commit hash. */
-      public hash: Uint8Array;
-
-      /** Commit bitArray. */
-      public bitArray?: tendermint.libs.bits.IBitArray | null;
 
       /**
        * Creates a new Commit instance using the specified properties.

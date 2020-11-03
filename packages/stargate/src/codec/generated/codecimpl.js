@@ -1099,6 +1099,42 @@ exports.cosmos = $root.cosmos = (() => {
         };
         return QueryParamsResponse;
       })();
+      v1beta1.Msg = (function () {
+        function Msg(rpcImpl, requestDelimited, responseDelimited) {
+          $protobuf.rpc.Service.call(this, rpcImpl, requestDelimited, responseDelimited);
+        }
+        (Msg.prototype = Object.create($protobuf.rpc.Service.prototype)).constructor = Msg;
+        Msg.create = function create(rpcImpl, requestDelimited, responseDelimited) {
+          return new this(rpcImpl, requestDelimited, responseDelimited);
+        };
+        Object.defineProperty(
+          (Msg.prototype.send = function send(request, callback) {
+            return this.rpcCall(
+              send,
+              $root.cosmos.bank.v1beta1.MsgSend,
+              $root.cosmos.bank.v1beta1.MsgSendResponse,
+              request,
+              callback,
+            );
+          }),
+          "name",
+          { value: "Send" },
+        );
+        Object.defineProperty(
+          (Msg.prototype.multiSend = function multiSend(request, callback) {
+            return this.rpcCall(
+              multiSend,
+              $root.cosmos.bank.v1beta1.MsgMultiSend,
+              $root.cosmos.bank.v1beta1.MsgMultiSendResponse,
+              request,
+              callback,
+            );
+          }),
+          "name",
+          { value: "MultiSend" },
+        );
+        return Msg;
+      })();
       v1beta1.MsgSend = (function () {
         function MsgSend(p) {
           this.amount = [];
@@ -1150,6 +1186,35 @@ exports.cosmos = $root.cosmos = (() => {
         };
         return MsgSend;
       })();
+      v1beta1.MsgSendResponse = (function () {
+        function MsgSendResponse(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        MsgSendResponse.create = function create(properties) {
+          return new MsgSendResponse(properties);
+        };
+        MsgSendResponse.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          return w;
+        };
+        MsgSendResponse.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.bank.v1beta1.MsgSendResponse();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return MsgSendResponse;
+      })();
       v1beta1.MsgMultiSend = (function () {
         function MsgMultiSend(p) {
           this.inputs = [];
@@ -1198,6 +1263,35 @@ exports.cosmos = $root.cosmos = (() => {
           return m;
         };
         return MsgMultiSend;
+      })();
+      v1beta1.MsgMultiSendResponse = (function () {
+        function MsgMultiSendResponse(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        MsgMultiSendResponse.create = function create(properties) {
+          return new MsgMultiSendResponse(properties);
+        };
+        MsgMultiSendResponse.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          return w;
+        };
+        MsgMultiSendResponse.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.bank.v1beta1.MsgMultiSendResponse();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return MsgMultiSendResponse;
       })();
       return v1beta1;
     })();
@@ -1817,7 +1911,7 @@ exports.cosmos = $root.cosmos = (() => {
               if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
         }
         Validator.prototype.operatorAddress = "";
-        Validator.prototype.consensusPubkey = "";
+        Validator.prototype.consensusPubkey = null;
         Validator.prototype.jailed = false;
         Validator.prototype.status = 0;
         Validator.prototype.tokens = "";
@@ -1835,7 +1929,7 @@ exports.cosmos = $root.cosmos = (() => {
           if (m.operatorAddress != null && Object.hasOwnProperty.call(m, "operatorAddress"))
             w.uint32(10).string(m.operatorAddress);
           if (m.consensusPubkey != null && Object.hasOwnProperty.call(m, "consensusPubkey"))
-            w.uint32(18).string(m.consensusPubkey);
+            $root.google.protobuf.Any.encode(m.consensusPubkey, w.uint32(18).fork()).ldelim();
           if (m.jailed != null && Object.hasOwnProperty.call(m, "jailed")) w.uint32(24).bool(m.jailed);
           if (m.status != null && Object.hasOwnProperty.call(m, "status")) w.uint32(32).int32(m.status);
           if (m.tokens != null && Object.hasOwnProperty.call(m, "tokens")) w.uint32(42).string(m.tokens);
@@ -1864,7 +1958,7 @@ exports.cosmos = $root.cosmos = (() => {
                 m.operatorAddress = r.string();
                 break;
               case 2:
-                m.consensusPubkey = r.string();
+                m.consensusPubkey = $root.google.protobuf.Any.decode(r, r.uint32());
                 break;
               case 3:
                 m.jailed = r.bool();
@@ -1901,6 +1995,15 @@ exports.cosmos = $root.cosmos = (() => {
           return m;
         };
         return Validator;
+      })();
+      v1beta1.BondStatus = (function () {
+        const valuesById = {},
+          values = Object.create(valuesById);
+        values[(valuesById[0] = "BOND_STATUS_UNSPECIFIED")] = 0;
+        values[(valuesById[1] = "BOND_STATUS_UNBONDED")] = 1;
+        values[(valuesById[2] = "BOND_STATUS_UNBONDING")] = 2;
+        values[(valuesById[3] = "BOND_STATUS_BONDED")] = 3;
+        return values;
       })();
       v1beta1.ValAddresses = (function () {
         function ValAddresses(p) {
@@ -2603,6 +2706,81 @@ exports.cosmos = $root.cosmos = (() => {
         };
         return Pool;
       })();
+      v1beta1.Msg = (function () {
+        function Msg(rpcImpl, requestDelimited, responseDelimited) {
+          $protobuf.rpc.Service.call(this, rpcImpl, requestDelimited, responseDelimited);
+        }
+        (Msg.prototype = Object.create($protobuf.rpc.Service.prototype)).constructor = Msg;
+        Msg.create = function create(rpcImpl, requestDelimited, responseDelimited) {
+          return new this(rpcImpl, requestDelimited, responseDelimited);
+        };
+        Object.defineProperty(
+          (Msg.prototype.createValidator = function createValidator(request, callback) {
+            return this.rpcCall(
+              createValidator,
+              $root.cosmos.staking.v1beta1.MsgCreateValidator,
+              $root.cosmos.staking.v1beta1.MsgCreateValidatorResponse,
+              request,
+              callback,
+            );
+          }),
+          "name",
+          { value: "CreateValidator" },
+        );
+        Object.defineProperty(
+          (Msg.prototype.editValidator = function editValidator(request, callback) {
+            return this.rpcCall(
+              editValidator,
+              $root.cosmos.staking.v1beta1.MsgEditValidator,
+              $root.cosmos.staking.v1beta1.MsgEditValidatorResponse,
+              request,
+              callback,
+            );
+          }),
+          "name",
+          { value: "EditValidator" },
+        );
+        Object.defineProperty(
+          (Msg.prototype.delegate = function delegate(request, callback) {
+            return this.rpcCall(
+              delegate,
+              $root.cosmos.staking.v1beta1.MsgDelegate,
+              $root.cosmos.staking.v1beta1.MsgDelegateResponse,
+              request,
+              callback,
+            );
+          }),
+          "name",
+          { value: "Delegate" },
+        );
+        Object.defineProperty(
+          (Msg.prototype.beginRedelegate = function beginRedelegate(request, callback) {
+            return this.rpcCall(
+              beginRedelegate,
+              $root.cosmos.staking.v1beta1.MsgBeginRedelegate,
+              $root.cosmos.staking.v1beta1.MsgBeginRedelegateResponse,
+              request,
+              callback,
+            );
+          }),
+          "name",
+          { value: "BeginRedelegate" },
+        );
+        Object.defineProperty(
+          (Msg.prototype.undelegate = function undelegate(request, callback) {
+            return this.rpcCall(
+              undelegate,
+              $root.cosmos.staking.v1beta1.MsgUndelegate,
+              $root.cosmos.staking.v1beta1.MsgUndelegateResponse,
+              request,
+              callback,
+            );
+          }),
+          "name",
+          { value: "Undelegate" },
+        );
+        return Msg;
+      })();
       v1beta1.MsgCreateValidator = (function () {
         function MsgCreateValidator(p) {
           if (p)
@@ -2614,7 +2792,7 @@ exports.cosmos = $root.cosmos = (() => {
         MsgCreateValidator.prototype.minSelfDelegation = "";
         MsgCreateValidator.prototype.delegatorAddress = "";
         MsgCreateValidator.prototype.validatorAddress = "";
-        MsgCreateValidator.prototype.pubkey = "";
+        MsgCreateValidator.prototype.pubkey = null;
         MsgCreateValidator.prototype.value = null;
         MsgCreateValidator.create = function create(properties) {
           return new MsgCreateValidator(properties);
@@ -2631,7 +2809,8 @@ exports.cosmos = $root.cosmos = (() => {
             w.uint32(34).string(m.delegatorAddress);
           if (m.validatorAddress != null && Object.hasOwnProperty.call(m, "validatorAddress"))
             w.uint32(42).string(m.validatorAddress);
-          if (m.pubkey != null && Object.hasOwnProperty.call(m, "pubkey")) w.uint32(50).string(m.pubkey);
+          if (m.pubkey != null && Object.hasOwnProperty.call(m, "pubkey"))
+            $root.google.protobuf.Any.encode(m.pubkey, w.uint32(50).fork()).ldelim();
           if (m.value != null && Object.hasOwnProperty.call(m, "value"))
             $root.cosmos.base.v1beta1.Coin.encode(m.value, w.uint32(58).fork()).ldelim();
           return w;
@@ -2659,7 +2838,7 @@ exports.cosmos = $root.cosmos = (() => {
                 m.validatorAddress = r.string();
                 break;
               case 6:
-                m.pubkey = r.string();
+                m.pubkey = $root.google.protobuf.Any.decode(r, r.uint32());
                 break;
               case 7:
                 m.value = $root.cosmos.base.v1beta1.Coin.decode(r, r.uint32());
@@ -2672,6 +2851,35 @@ exports.cosmos = $root.cosmos = (() => {
           return m;
         };
         return MsgCreateValidator;
+      })();
+      v1beta1.MsgCreateValidatorResponse = (function () {
+        function MsgCreateValidatorResponse(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        MsgCreateValidatorResponse.create = function create(properties) {
+          return new MsgCreateValidatorResponse(properties);
+        };
+        MsgCreateValidatorResponse.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          return w;
+        };
+        MsgCreateValidatorResponse.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.staking.v1beta1.MsgCreateValidatorResponse();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return MsgCreateValidatorResponse;
       })();
       v1beta1.MsgEditValidator = (function () {
         function MsgEditValidator(p) {
@@ -2726,6 +2934,35 @@ exports.cosmos = $root.cosmos = (() => {
         };
         return MsgEditValidator;
       })();
+      v1beta1.MsgEditValidatorResponse = (function () {
+        function MsgEditValidatorResponse(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        MsgEditValidatorResponse.create = function create(properties) {
+          return new MsgEditValidatorResponse(properties);
+        };
+        MsgEditValidatorResponse.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          return w;
+        };
+        MsgEditValidatorResponse.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.staking.v1beta1.MsgEditValidatorResponse();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return MsgEditValidatorResponse;
+      })();
       v1beta1.MsgDelegate = (function () {
         function MsgDelegate(p) {
           if (p)
@@ -2772,6 +3009,35 @@ exports.cosmos = $root.cosmos = (() => {
           return m;
         };
         return MsgDelegate;
+      })();
+      v1beta1.MsgDelegateResponse = (function () {
+        function MsgDelegateResponse(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        MsgDelegateResponse.create = function create(properties) {
+          return new MsgDelegateResponse(properties);
+        };
+        MsgDelegateResponse.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          return w;
+        };
+        MsgDelegateResponse.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.staking.v1beta1.MsgDelegateResponse();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return MsgDelegateResponse;
       })();
       v1beta1.MsgBeginRedelegate = (function () {
         function MsgBeginRedelegate(p) {
@@ -2826,6 +3092,41 @@ exports.cosmos = $root.cosmos = (() => {
         };
         return MsgBeginRedelegate;
       })();
+      v1beta1.MsgBeginRedelegateResponse = (function () {
+        function MsgBeginRedelegateResponse(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        MsgBeginRedelegateResponse.prototype.completionTime = null;
+        MsgBeginRedelegateResponse.create = function create(properties) {
+          return new MsgBeginRedelegateResponse(properties);
+        };
+        MsgBeginRedelegateResponse.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.completionTime != null && Object.hasOwnProperty.call(m, "completionTime"))
+            $root.google.protobuf.Timestamp.encode(m.completionTime, w.uint32(10).fork()).ldelim();
+          return w;
+        };
+        MsgBeginRedelegateResponse.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.staking.v1beta1.MsgBeginRedelegateResponse();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.completionTime = $root.google.protobuf.Timestamp.decode(r, r.uint32());
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return MsgBeginRedelegateResponse;
+      })();
       v1beta1.MsgUndelegate = (function () {
         function MsgUndelegate(p) {
           if (p)
@@ -2872,6 +3173,41 @@ exports.cosmos = $root.cosmos = (() => {
           return m;
         };
         return MsgUndelegate;
+      })();
+      v1beta1.MsgUndelegateResponse = (function () {
+        function MsgUndelegateResponse(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        MsgUndelegateResponse.prototype.completionTime = null;
+        MsgUndelegateResponse.create = function create(properties) {
+          return new MsgUndelegateResponse(properties);
+        };
+        MsgUndelegateResponse.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.completionTime != null && Object.hasOwnProperty.call(m, "completionTime"))
+            $root.google.protobuf.Timestamp.encode(m.completionTime, w.uint32(10).fork()).ldelim();
+          return w;
+        };
+        MsgUndelegateResponse.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.staking.v1beta1.MsgUndelegateResponse();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.completionTime = $root.google.protobuf.Timestamp.decode(r, r.uint32());
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return MsgUndelegateResponse;
       })();
       return v1beta1;
     })();
@@ -5307,45 +5643,6 @@ exports.google = $root.google = (() => {
       })();
       return GeneratedCodeInfo;
     })();
-    protobuf.Timestamp = (function () {
-      function Timestamp(p) {
-        if (p)
-          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-      }
-      Timestamp.prototype.seconds = $util.Long ? $util.Long.fromBits(0, 0, false) : 0;
-      Timestamp.prototype.nanos = 0;
-      Timestamp.create = function create(properties) {
-        return new Timestamp(properties);
-      };
-      Timestamp.encode = function encode(m, w) {
-        if (!w) w = $Writer.create();
-        if (m.seconds != null && Object.hasOwnProperty.call(m, "seconds")) w.uint32(8).int64(m.seconds);
-        if (m.nanos != null && Object.hasOwnProperty.call(m, "nanos")) w.uint32(16).int32(m.nanos);
-        return w;
-      };
-      Timestamp.decode = function decode(r, l) {
-        if (!(r instanceof $Reader)) r = $Reader.create(r);
-        var c = l === undefined ? r.len : r.pos + l,
-          m = new $root.google.protobuf.Timestamp();
-        while (r.pos < c) {
-          var t = r.uint32();
-          switch (t >>> 3) {
-            case 1:
-              m.seconds = r.int64();
-              break;
-            case 2:
-              m.nanos = r.int32();
-              break;
-            default:
-              r.skipType(t & 7);
-              break;
-          }
-        }
-        return m;
-      };
-      return Timestamp;
-    })();
     protobuf.Duration = (function () {
       function Duration(p) {
         if (p)
@@ -5384,6 +5681,45 @@ exports.google = $root.google = (() => {
         return m;
       };
       return Duration;
+    })();
+    protobuf.Timestamp = (function () {
+      function Timestamp(p) {
+        if (p)
+          for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+            if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+      }
+      Timestamp.prototype.seconds = $util.Long ? $util.Long.fromBits(0, 0, false) : 0;
+      Timestamp.prototype.nanos = 0;
+      Timestamp.create = function create(properties) {
+        return new Timestamp(properties);
+      };
+      Timestamp.encode = function encode(m, w) {
+        if (!w) w = $Writer.create();
+        if (m.seconds != null && Object.hasOwnProperty.call(m, "seconds")) w.uint32(8).int64(m.seconds);
+        if (m.nanos != null && Object.hasOwnProperty.call(m, "nanos")) w.uint32(16).int32(m.nanos);
+        return w;
+      };
+      Timestamp.decode = function decode(r, l) {
+        if (!(r instanceof $Reader)) r = $Reader.create(r);
+        var c = l === undefined ? r.len : r.pos + l,
+          m = new $root.google.protobuf.Timestamp();
+        while (r.pos < c) {
+          var t = r.uint32();
+          switch (t >>> 3) {
+            case 1:
+              m.seconds = r.int64();
+              break;
+            case 2:
+              m.nanos = r.int32();
+              break;
+            default:
+              r.skipType(t & 7);
+              break;
+          }
+        }
+        return m;
+      };
+      return Timestamp;
     })();
     return protobuf;
   })();
@@ -5564,591 +5900,6 @@ exports.ibc = $root.ibc = (() => {
       const channel = {};
       channel.v1 = (function () {
         const v1 = {};
-        v1.MsgChannelOpenInit = (function () {
-          function MsgChannelOpenInit(p) {
-            if (p)
-              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-          }
-          MsgChannelOpenInit.prototype.portId = "";
-          MsgChannelOpenInit.prototype.channelId = "";
-          MsgChannelOpenInit.prototype.channel = null;
-          MsgChannelOpenInit.prototype.signer = "";
-          MsgChannelOpenInit.create = function create(properties) {
-            return new MsgChannelOpenInit(properties);
-          };
-          MsgChannelOpenInit.encode = function encode(m, w) {
-            if (!w) w = $Writer.create();
-            if (m.portId != null && Object.hasOwnProperty.call(m, "portId")) w.uint32(10).string(m.portId);
-            if (m.channelId != null && Object.hasOwnProperty.call(m, "channelId"))
-              w.uint32(18).string(m.channelId);
-            if (m.channel != null && Object.hasOwnProperty.call(m, "channel"))
-              $root.ibc.core.channel.v1.Channel.encode(m.channel, w.uint32(26).fork()).ldelim();
-            if (m.signer != null && Object.hasOwnProperty.call(m, "signer")) w.uint32(34).string(m.signer);
-            return w;
-          };
-          MsgChannelOpenInit.decode = function decode(r, l) {
-            if (!(r instanceof $Reader)) r = $Reader.create(r);
-            var c = l === undefined ? r.len : r.pos + l,
-              m = new $root.ibc.core.channel.v1.MsgChannelOpenInit();
-            while (r.pos < c) {
-              var t = r.uint32();
-              switch (t >>> 3) {
-                case 1:
-                  m.portId = r.string();
-                  break;
-                case 2:
-                  m.channelId = r.string();
-                  break;
-                case 3:
-                  m.channel = $root.ibc.core.channel.v1.Channel.decode(r, r.uint32());
-                  break;
-                case 4:
-                  m.signer = r.string();
-                  break;
-                default:
-                  r.skipType(t & 7);
-                  break;
-              }
-            }
-            return m;
-          };
-          return MsgChannelOpenInit;
-        })();
-        v1.MsgChannelOpenTry = (function () {
-          function MsgChannelOpenTry(p) {
-            if (p)
-              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-          }
-          MsgChannelOpenTry.prototype.portId = "";
-          MsgChannelOpenTry.prototype.desiredChannelId = "";
-          MsgChannelOpenTry.prototype.counterpartyChosenChannelId = "";
-          MsgChannelOpenTry.prototype.channel = null;
-          MsgChannelOpenTry.prototype.counterpartyVersion = "";
-          MsgChannelOpenTry.prototype.proofInit = $util.newBuffer([]);
-          MsgChannelOpenTry.prototype.proofHeight = null;
-          MsgChannelOpenTry.prototype.signer = "";
-          MsgChannelOpenTry.create = function create(properties) {
-            return new MsgChannelOpenTry(properties);
-          };
-          MsgChannelOpenTry.encode = function encode(m, w) {
-            if (!w) w = $Writer.create();
-            if (m.portId != null && Object.hasOwnProperty.call(m, "portId")) w.uint32(10).string(m.portId);
-            if (m.desiredChannelId != null && Object.hasOwnProperty.call(m, "desiredChannelId"))
-              w.uint32(18).string(m.desiredChannelId);
-            if (
-              m.counterpartyChosenChannelId != null &&
-              Object.hasOwnProperty.call(m, "counterpartyChosenChannelId")
-            )
-              w.uint32(26).string(m.counterpartyChosenChannelId);
-            if (m.channel != null && Object.hasOwnProperty.call(m, "channel"))
-              $root.ibc.core.channel.v1.Channel.encode(m.channel, w.uint32(34).fork()).ldelim();
-            if (m.counterpartyVersion != null && Object.hasOwnProperty.call(m, "counterpartyVersion"))
-              w.uint32(42).string(m.counterpartyVersion);
-            if (m.proofInit != null && Object.hasOwnProperty.call(m, "proofInit"))
-              w.uint32(50).bytes(m.proofInit);
-            if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
-              $root.ibc.core.client.v1.Height.encode(m.proofHeight, w.uint32(58).fork()).ldelim();
-            if (m.signer != null && Object.hasOwnProperty.call(m, "signer")) w.uint32(66).string(m.signer);
-            return w;
-          };
-          MsgChannelOpenTry.decode = function decode(r, l) {
-            if (!(r instanceof $Reader)) r = $Reader.create(r);
-            var c = l === undefined ? r.len : r.pos + l,
-              m = new $root.ibc.core.channel.v1.MsgChannelOpenTry();
-            while (r.pos < c) {
-              var t = r.uint32();
-              switch (t >>> 3) {
-                case 1:
-                  m.portId = r.string();
-                  break;
-                case 2:
-                  m.desiredChannelId = r.string();
-                  break;
-                case 3:
-                  m.counterpartyChosenChannelId = r.string();
-                  break;
-                case 4:
-                  m.channel = $root.ibc.core.channel.v1.Channel.decode(r, r.uint32());
-                  break;
-                case 5:
-                  m.counterpartyVersion = r.string();
-                  break;
-                case 6:
-                  m.proofInit = r.bytes();
-                  break;
-                case 7:
-                  m.proofHeight = $root.ibc.core.client.v1.Height.decode(r, r.uint32());
-                  break;
-                case 8:
-                  m.signer = r.string();
-                  break;
-                default:
-                  r.skipType(t & 7);
-                  break;
-              }
-            }
-            return m;
-          };
-          return MsgChannelOpenTry;
-        })();
-        v1.MsgChannelOpenAck = (function () {
-          function MsgChannelOpenAck(p) {
-            if (p)
-              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-          }
-          MsgChannelOpenAck.prototype.portId = "";
-          MsgChannelOpenAck.prototype.channelId = "";
-          MsgChannelOpenAck.prototype.counterpartyChannelId = "";
-          MsgChannelOpenAck.prototype.counterpartyVersion = "";
-          MsgChannelOpenAck.prototype.proofTry = $util.newBuffer([]);
-          MsgChannelOpenAck.prototype.proofHeight = null;
-          MsgChannelOpenAck.prototype.signer = "";
-          MsgChannelOpenAck.create = function create(properties) {
-            return new MsgChannelOpenAck(properties);
-          };
-          MsgChannelOpenAck.encode = function encode(m, w) {
-            if (!w) w = $Writer.create();
-            if (m.portId != null && Object.hasOwnProperty.call(m, "portId")) w.uint32(10).string(m.portId);
-            if (m.channelId != null && Object.hasOwnProperty.call(m, "channelId"))
-              w.uint32(18).string(m.channelId);
-            if (m.counterpartyChannelId != null && Object.hasOwnProperty.call(m, "counterpartyChannelId"))
-              w.uint32(26).string(m.counterpartyChannelId);
-            if (m.counterpartyVersion != null && Object.hasOwnProperty.call(m, "counterpartyVersion"))
-              w.uint32(34).string(m.counterpartyVersion);
-            if (m.proofTry != null && Object.hasOwnProperty.call(m, "proofTry"))
-              w.uint32(42).bytes(m.proofTry);
-            if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
-              $root.ibc.core.client.v1.Height.encode(m.proofHeight, w.uint32(50).fork()).ldelim();
-            if (m.signer != null && Object.hasOwnProperty.call(m, "signer")) w.uint32(58).string(m.signer);
-            return w;
-          };
-          MsgChannelOpenAck.decode = function decode(r, l) {
-            if (!(r instanceof $Reader)) r = $Reader.create(r);
-            var c = l === undefined ? r.len : r.pos + l,
-              m = new $root.ibc.core.channel.v1.MsgChannelOpenAck();
-            while (r.pos < c) {
-              var t = r.uint32();
-              switch (t >>> 3) {
-                case 1:
-                  m.portId = r.string();
-                  break;
-                case 2:
-                  m.channelId = r.string();
-                  break;
-                case 3:
-                  m.counterpartyChannelId = r.string();
-                  break;
-                case 4:
-                  m.counterpartyVersion = r.string();
-                  break;
-                case 5:
-                  m.proofTry = r.bytes();
-                  break;
-                case 6:
-                  m.proofHeight = $root.ibc.core.client.v1.Height.decode(r, r.uint32());
-                  break;
-                case 7:
-                  m.signer = r.string();
-                  break;
-                default:
-                  r.skipType(t & 7);
-                  break;
-              }
-            }
-            return m;
-          };
-          return MsgChannelOpenAck;
-        })();
-        v1.MsgChannelOpenConfirm = (function () {
-          function MsgChannelOpenConfirm(p) {
-            if (p)
-              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-          }
-          MsgChannelOpenConfirm.prototype.portId = "";
-          MsgChannelOpenConfirm.prototype.channelId = "";
-          MsgChannelOpenConfirm.prototype.proofAck = $util.newBuffer([]);
-          MsgChannelOpenConfirm.prototype.proofHeight = null;
-          MsgChannelOpenConfirm.prototype.signer = "";
-          MsgChannelOpenConfirm.create = function create(properties) {
-            return new MsgChannelOpenConfirm(properties);
-          };
-          MsgChannelOpenConfirm.encode = function encode(m, w) {
-            if (!w) w = $Writer.create();
-            if (m.portId != null && Object.hasOwnProperty.call(m, "portId")) w.uint32(10).string(m.portId);
-            if (m.channelId != null && Object.hasOwnProperty.call(m, "channelId"))
-              w.uint32(18).string(m.channelId);
-            if (m.proofAck != null && Object.hasOwnProperty.call(m, "proofAck"))
-              w.uint32(26).bytes(m.proofAck);
-            if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
-              $root.ibc.core.client.v1.Height.encode(m.proofHeight, w.uint32(34).fork()).ldelim();
-            if (m.signer != null && Object.hasOwnProperty.call(m, "signer")) w.uint32(42).string(m.signer);
-            return w;
-          };
-          MsgChannelOpenConfirm.decode = function decode(r, l) {
-            if (!(r instanceof $Reader)) r = $Reader.create(r);
-            var c = l === undefined ? r.len : r.pos + l,
-              m = new $root.ibc.core.channel.v1.MsgChannelOpenConfirm();
-            while (r.pos < c) {
-              var t = r.uint32();
-              switch (t >>> 3) {
-                case 1:
-                  m.portId = r.string();
-                  break;
-                case 2:
-                  m.channelId = r.string();
-                  break;
-                case 3:
-                  m.proofAck = r.bytes();
-                  break;
-                case 4:
-                  m.proofHeight = $root.ibc.core.client.v1.Height.decode(r, r.uint32());
-                  break;
-                case 5:
-                  m.signer = r.string();
-                  break;
-                default:
-                  r.skipType(t & 7);
-                  break;
-              }
-            }
-            return m;
-          };
-          return MsgChannelOpenConfirm;
-        })();
-        v1.MsgChannelCloseInit = (function () {
-          function MsgChannelCloseInit(p) {
-            if (p)
-              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-          }
-          MsgChannelCloseInit.prototype.portId = "";
-          MsgChannelCloseInit.prototype.channelId = "";
-          MsgChannelCloseInit.prototype.signer = "";
-          MsgChannelCloseInit.create = function create(properties) {
-            return new MsgChannelCloseInit(properties);
-          };
-          MsgChannelCloseInit.encode = function encode(m, w) {
-            if (!w) w = $Writer.create();
-            if (m.portId != null && Object.hasOwnProperty.call(m, "portId")) w.uint32(10).string(m.portId);
-            if (m.channelId != null && Object.hasOwnProperty.call(m, "channelId"))
-              w.uint32(18).string(m.channelId);
-            if (m.signer != null && Object.hasOwnProperty.call(m, "signer")) w.uint32(26).string(m.signer);
-            return w;
-          };
-          MsgChannelCloseInit.decode = function decode(r, l) {
-            if (!(r instanceof $Reader)) r = $Reader.create(r);
-            var c = l === undefined ? r.len : r.pos + l,
-              m = new $root.ibc.core.channel.v1.MsgChannelCloseInit();
-            while (r.pos < c) {
-              var t = r.uint32();
-              switch (t >>> 3) {
-                case 1:
-                  m.portId = r.string();
-                  break;
-                case 2:
-                  m.channelId = r.string();
-                  break;
-                case 3:
-                  m.signer = r.string();
-                  break;
-                default:
-                  r.skipType(t & 7);
-                  break;
-              }
-            }
-            return m;
-          };
-          return MsgChannelCloseInit;
-        })();
-        v1.MsgChannelCloseConfirm = (function () {
-          function MsgChannelCloseConfirm(p) {
-            if (p)
-              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-          }
-          MsgChannelCloseConfirm.prototype.portId = "";
-          MsgChannelCloseConfirm.prototype.channelId = "";
-          MsgChannelCloseConfirm.prototype.proofInit = $util.newBuffer([]);
-          MsgChannelCloseConfirm.prototype.proofHeight = null;
-          MsgChannelCloseConfirm.prototype.signer = "";
-          MsgChannelCloseConfirm.create = function create(properties) {
-            return new MsgChannelCloseConfirm(properties);
-          };
-          MsgChannelCloseConfirm.encode = function encode(m, w) {
-            if (!w) w = $Writer.create();
-            if (m.portId != null && Object.hasOwnProperty.call(m, "portId")) w.uint32(10).string(m.portId);
-            if (m.channelId != null && Object.hasOwnProperty.call(m, "channelId"))
-              w.uint32(18).string(m.channelId);
-            if (m.proofInit != null && Object.hasOwnProperty.call(m, "proofInit"))
-              w.uint32(26).bytes(m.proofInit);
-            if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
-              $root.ibc.core.client.v1.Height.encode(m.proofHeight, w.uint32(34).fork()).ldelim();
-            if (m.signer != null && Object.hasOwnProperty.call(m, "signer")) w.uint32(42).string(m.signer);
-            return w;
-          };
-          MsgChannelCloseConfirm.decode = function decode(r, l) {
-            if (!(r instanceof $Reader)) r = $Reader.create(r);
-            var c = l === undefined ? r.len : r.pos + l,
-              m = new $root.ibc.core.channel.v1.MsgChannelCloseConfirm();
-            while (r.pos < c) {
-              var t = r.uint32();
-              switch (t >>> 3) {
-                case 1:
-                  m.portId = r.string();
-                  break;
-                case 2:
-                  m.channelId = r.string();
-                  break;
-                case 3:
-                  m.proofInit = r.bytes();
-                  break;
-                case 4:
-                  m.proofHeight = $root.ibc.core.client.v1.Height.decode(r, r.uint32());
-                  break;
-                case 5:
-                  m.signer = r.string();
-                  break;
-                default:
-                  r.skipType(t & 7);
-                  break;
-              }
-            }
-            return m;
-          };
-          return MsgChannelCloseConfirm;
-        })();
-        v1.MsgRecvPacket = (function () {
-          function MsgRecvPacket(p) {
-            if (p)
-              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-          }
-          MsgRecvPacket.prototype.packet = null;
-          MsgRecvPacket.prototype.proof = $util.newBuffer([]);
-          MsgRecvPacket.prototype.proofHeight = null;
-          MsgRecvPacket.prototype.signer = "";
-          MsgRecvPacket.create = function create(properties) {
-            return new MsgRecvPacket(properties);
-          };
-          MsgRecvPacket.encode = function encode(m, w) {
-            if (!w) w = $Writer.create();
-            if (m.packet != null && Object.hasOwnProperty.call(m, "packet"))
-              $root.ibc.core.channel.v1.Packet.encode(m.packet, w.uint32(10).fork()).ldelim();
-            if (m.proof != null && Object.hasOwnProperty.call(m, "proof")) w.uint32(18).bytes(m.proof);
-            if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
-              $root.ibc.core.client.v1.Height.encode(m.proofHeight, w.uint32(26).fork()).ldelim();
-            if (m.signer != null && Object.hasOwnProperty.call(m, "signer")) w.uint32(34).string(m.signer);
-            return w;
-          };
-          MsgRecvPacket.decode = function decode(r, l) {
-            if (!(r instanceof $Reader)) r = $Reader.create(r);
-            var c = l === undefined ? r.len : r.pos + l,
-              m = new $root.ibc.core.channel.v1.MsgRecvPacket();
-            while (r.pos < c) {
-              var t = r.uint32();
-              switch (t >>> 3) {
-                case 1:
-                  m.packet = $root.ibc.core.channel.v1.Packet.decode(r, r.uint32());
-                  break;
-                case 2:
-                  m.proof = r.bytes();
-                  break;
-                case 3:
-                  m.proofHeight = $root.ibc.core.client.v1.Height.decode(r, r.uint32());
-                  break;
-                case 4:
-                  m.signer = r.string();
-                  break;
-                default:
-                  r.skipType(t & 7);
-                  break;
-              }
-            }
-            return m;
-          };
-          return MsgRecvPacket;
-        })();
-        v1.MsgTimeout = (function () {
-          function MsgTimeout(p) {
-            if (p)
-              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-          }
-          MsgTimeout.prototype.packet = null;
-          MsgTimeout.prototype.proof = $util.newBuffer([]);
-          MsgTimeout.prototype.proofHeight = null;
-          MsgTimeout.prototype.nextSequenceRecv = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
-          MsgTimeout.prototype.signer = "";
-          MsgTimeout.create = function create(properties) {
-            return new MsgTimeout(properties);
-          };
-          MsgTimeout.encode = function encode(m, w) {
-            if (!w) w = $Writer.create();
-            if (m.packet != null && Object.hasOwnProperty.call(m, "packet"))
-              $root.ibc.core.channel.v1.Packet.encode(m.packet, w.uint32(10).fork()).ldelim();
-            if (m.proof != null && Object.hasOwnProperty.call(m, "proof")) w.uint32(18).bytes(m.proof);
-            if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
-              $root.ibc.core.client.v1.Height.encode(m.proofHeight, w.uint32(26).fork()).ldelim();
-            if (m.nextSequenceRecv != null && Object.hasOwnProperty.call(m, "nextSequenceRecv"))
-              w.uint32(32).uint64(m.nextSequenceRecv);
-            if (m.signer != null && Object.hasOwnProperty.call(m, "signer")) w.uint32(42).string(m.signer);
-            return w;
-          };
-          MsgTimeout.decode = function decode(r, l) {
-            if (!(r instanceof $Reader)) r = $Reader.create(r);
-            var c = l === undefined ? r.len : r.pos + l,
-              m = new $root.ibc.core.channel.v1.MsgTimeout();
-            while (r.pos < c) {
-              var t = r.uint32();
-              switch (t >>> 3) {
-                case 1:
-                  m.packet = $root.ibc.core.channel.v1.Packet.decode(r, r.uint32());
-                  break;
-                case 2:
-                  m.proof = r.bytes();
-                  break;
-                case 3:
-                  m.proofHeight = $root.ibc.core.client.v1.Height.decode(r, r.uint32());
-                  break;
-                case 4:
-                  m.nextSequenceRecv = r.uint64();
-                  break;
-                case 5:
-                  m.signer = r.string();
-                  break;
-                default:
-                  r.skipType(t & 7);
-                  break;
-              }
-            }
-            return m;
-          };
-          return MsgTimeout;
-        })();
-        v1.MsgTimeoutOnClose = (function () {
-          function MsgTimeoutOnClose(p) {
-            if (p)
-              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-          }
-          MsgTimeoutOnClose.prototype.packet = null;
-          MsgTimeoutOnClose.prototype.proof = $util.newBuffer([]);
-          MsgTimeoutOnClose.prototype.proofClose = $util.newBuffer([]);
-          MsgTimeoutOnClose.prototype.proofHeight = null;
-          MsgTimeoutOnClose.prototype.nextSequenceRecv = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
-          MsgTimeoutOnClose.prototype.signer = "";
-          MsgTimeoutOnClose.create = function create(properties) {
-            return new MsgTimeoutOnClose(properties);
-          };
-          MsgTimeoutOnClose.encode = function encode(m, w) {
-            if (!w) w = $Writer.create();
-            if (m.packet != null && Object.hasOwnProperty.call(m, "packet"))
-              $root.ibc.core.channel.v1.Packet.encode(m.packet, w.uint32(10).fork()).ldelim();
-            if (m.proof != null && Object.hasOwnProperty.call(m, "proof")) w.uint32(18).bytes(m.proof);
-            if (m.proofClose != null && Object.hasOwnProperty.call(m, "proofClose"))
-              w.uint32(26).bytes(m.proofClose);
-            if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
-              $root.ibc.core.client.v1.Height.encode(m.proofHeight, w.uint32(34).fork()).ldelim();
-            if (m.nextSequenceRecv != null && Object.hasOwnProperty.call(m, "nextSequenceRecv"))
-              w.uint32(40).uint64(m.nextSequenceRecv);
-            if (m.signer != null && Object.hasOwnProperty.call(m, "signer")) w.uint32(50).string(m.signer);
-            return w;
-          };
-          MsgTimeoutOnClose.decode = function decode(r, l) {
-            if (!(r instanceof $Reader)) r = $Reader.create(r);
-            var c = l === undefined ? r.len : r.pos + l,
-              m = new $root.ibc.core.channel.v1.MsgTimeoutOnClose();
-            while (r.pos < c) {
-              var t = r.uint32();
-              switch (t >>> 3) {
-                case 1:
-                  m.packet = $root.ibc.core.channel.v1.Packet.decode(r, r.uint32());
-                  break;
-                case 2:
-                  m.proof = r.bytes();
-                  break;
-                case 3:
-                  m.proofClose = r.bytes();
-                  break;
-                case 4:
-                  m.proofHeight = $root.ibc.core.client.v1.Height.decode(r, r.uint32());
-                  break;
-                case 5:
-                  m.nextSequenceRecv = r.uint64();
-                  break;
-                case 6:
-                  m.signer = r.string();
-                  break;
-                default:
-                  r.skipType(t & 7);
-                  break;
-              }
-            }
-            return m;
-          };
-          return MsgTimeoutOnClose;
-        })();
-        v1.MsgAcknowledgement = (function () {
-          function MsgAcknowledgement(p) {
-            if (p)
-              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-          }
-          MsgAcknowledgement.prototype.packet = null;
-          MsgAcknowledgement.prototype.acknowledgement = $util.newBuffer([]);
-          MsgAcknowledgement.prototype.proof = $util.newBuffer([]);
-          MsgAcknowledgement.prototype.proofHeight = null;
-          MsgAcknowledgement.prototype.signer = "";
-          MsgAcknowledgement.create = function create(properties) {
-            return new MsgAcknowledgement(properties);
-          };
-          MsgAcknowledgement.encode = function encode(m, w) {
-            if (!w) w = $Writer.create();
-            if (m.packet != null && Object.hasOwnProperty.call(m, "packet"))
-              $root.ibc.core.channel.v1.Packet.encode(m.packet, w.uint32(10).fork()).ldelim();
-            if (m.acknowledgement != null && Object.hasOwnProperty.call(m, "acknowledgement"))
-              w.uint32(18).bytes(m.acknowledgement);
-            if (m.proof != null && Object.hasOwnProperty.call(m, "proof")) w.uint32(26).bytes(m.proof);
-            if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
-              $root.ibc.core.client.v1.Height.encode(m.proofHeight, w.uint32(34).fork()).ldelim();
-            if (m.signer != null && Object.hasOwnProperty.call(m, "signer")) w.uint32(42).string(m.signer);
-            return w;
-          };
-          MsgAcknowledgement.decode = function decode(r, l) {
-            if (!(r instanceof $Reader)) r = $Reader.create(r);
-            var c = l === undefined ? r.len : r.pos + l,
-              m = new $root.ibc.core.channel.v1.MsgAcknowledgement();
-            while (r.pos < c) {
-              var t = r.uint32();
-              switch (t >>> 3) {
-                case 1:
-                  m.packet = $root.ibc.core.channel.v1.Packet.decode(r, r.uint32());
-                  break;
-                case 2:
-                  m.acknowledgement = r.bytes();
-                  break;
-                case 3:
-                  m.proof = r.bytes();
-                  break;
-                case 4:
-                  m.proofHeight = $root.ibc.core.client.v1.Height.decode(r, r.uint32());
-                  break;
-                case 5:
-                  m.signer = r.string();
-                  break;
-                default:
-                  r.skipType(t & 7);
-                  break;
-              }
-            }
-            return m;
-          };
-          return MsgAcknowledgement;
-        })();
         v1.Channel = (function () {
           function Channel(p) {
             this.connectionHops = [];
@@ -6414,33 +6165,33 @@ exports.ibc = $root.ibc = (() => {
           };
           return Packet;
         })();
-        v1.PacketAckCommitment = (function () {
-          function PacketAckCommitment(p) {
+        v1.PacketState = (function () {
+          function PacketState(p) {
             if (p)
               for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
                 if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
           }
-          PacketAckCommitment.prototype.portId = "";
-          PacketAckCommitment.prototype.channelId = "";
-          PacketAckCommitment.prototype.sequence = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
-          PacketAckCommitment.prototype.hash = $util.newBuffer([]);
-          PacketAckCommitment.create = function create(properties) {
-            return new PacketAckCommitment(properties);
+          PacketState.prototype.portId = "";
+          PacketState.prototype.channelId = "";
+          PacketState.prototype.sequence = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+          PacketState.prototype.data = $util.newBuffer([]);
+          PacketState.create = function create(properties) {
+            return new PacketState(properties);
           };
-          PacketAckCommitment.encode = function encode(m, w) {
+          PacketState.encode = function encode(m, w) {
             if (!w) w = $Writer.create();
             if (m.portId != null && Object.hasOwnProperty.call(m, "portId")) w.uint32(10).string(m.portId);
             if (m.channelId != null && Object.hasOwnProperty.call(m, "channelId"))
               w.uint32(18).string(m.channelId);
             if (m.sequence != null && Object.hasOwnProperty.call(m, "sequence"))
               w.uint32(24).uint64(m.sequence);
-            if (m.hash != null && Object.hasOwnProperty.call(m, "hash")) w.uint32(34).bytes(m.hash);
+            if (m.data != null && Object.hasOwnProperty.call(m, "data")) w.uint32(34).bytes(m.data);
             return w;
           };
-          PacketAckCommitment.decode = function decode(r, l) {
+          PacketState.decode = function decode(r, l) {
             if (!(r instanceof $Reader)) r = $Reader.create(r);
             var c = l === undefined ? r.len : r.pos + l,
-              m = new $root.ibc.core.channel.v1.PacketAckCommitment();
+              m = new $root.ibc.core.channel.v1.PacketState();
             while (r.pos < c) {
               var t = r.uint32();
               switch (t >>> 3) {
@@ -6454,7 +6205,7 @@ exports.ibc = $root.ibc = (() => {
                   m.sequence = r.uint64();
                   break;
                 case 4:
-                  m.hash = r.bytes();
+                  m.data = r.bytes();
                   break;
                 default:
                   r.skipType(t & 7);
@@ -6463,7 +6214,7 @@ exports.ibc = $root.ibc = (() => {
             }
             return m;
           };
-          return PacketAckCommitment;
+          return PacketState;
         })();
         v1.Acknowledgement = (function () {
           function Acknowledgement(p) {
@@ -6609,6 +6360,19 @@ exports.ibc = $root.ibc = (() => {
             { value: "PacketCommitments" },
           );
           Object.defineProperty(
+            (Query.prototype.packetReceipt = function packetReceipt(request, callback) {
+              return this.rpcCall(
+                packetReceipt,
+                $root.ibc.core.channel.v1.QueryPacketReceiptRequest,
+                $root.ibc.core.channel.v1.QueryPacketReceiptResponse,
+                request,
+                callback,
+              );
+            }),
+            "name",
+            { value: "PacketReceipt" },
+          );
+          Object.defineProperty(
             (Query.prototype.packetAcknowledgement = function packetAcknowledgement(request, callback) {
               return this.rpcCall(
                 packetAcknowledgement,
@@ -6620,6 +6384,19 @@ exports.ibc = $root.ibc = (() => {
             }),
             "name",
             { value: "PacketAcknowledgement" },
+          );
+          Object.defineProperty(
+            (Query.prototype.packetAcknowledgements = function packetAcknowledgements(request, callback) {
+              return this.rpcCall(
+                packetAcknowledgements,
+                $root.ibc.core.channel.v1.QueryPacketAcknowledgementsRequest,
+                $root.ibc.core.channel.v1.QueryPacketAcknowledgementsResponse,
+                request,
+                callback,
+              );
+            }),
+            "name",
+            { value: "PacketAcknowledgements" },
           );
           Object.defineProperty(
             (Query.prototype.unreceivedPackets = function unreceivedPackets(request, callback) {
@@ -6635,17 +6412,17 @@ exports.ibc = $root.ibc = (() => {
             { value: "UnreceivedPackets" },
           );
           Object.defineProperty(
-            (Query.prototype.unrelayedAcks = function unrelayedAcks(request, callback) {
+            (Query.prototype.unreceivedAcks = function unreceivedAcks(request, callback) {
               return this.rpcCall(
-                unrelayedAcks,
-                $root.ibc.core.channel.v1.QueryUnrelayedAcksRequest,
-                $root.ibc.core.channel.v1.QueryUnrelayedAcksResponse,
+                unreceivedAcks,
+                $root.ibc.core.channel.v1.QueryUnreceivedAcksRequest,
+                $root.ibc.core.channel.v1.QueryUnreceivedAcksResponse,
                 request,
                 callback,
               );
             }),
             "name",
-            { value: "UnrelayedAcks" },
+            { value: "UnreceivedAcks" },
           );
           Object.defineProperty(
             (Query.prototype.nextSequenceReceive = function nextSequenceReceive(request, callback) {
@@ -6710,7 +6487,6 @@ exports.ibc = $root.ibc = (() => {
           }
           QueryChannelResponse.prototype.channel = null;
           QueryChannelResponse.prototype.proof = $util.newBuffer([]);
-          QueryChannelResponse.prototype.proofPath = "";
           QueryChannelResponse.prototype.proofHeight = null;
           QueryChannelResponse.create = function create(properties) {
             return new QueryChannelResponse(properties);
@@ -6720,10 +6496,8 @@ exports.ibc = $root.ibc = (() => {
             if (m.channel != null && Object.hasOwnProperty.call(m, "channel"))
               $root.ibc.core.channel.v1.Channel.encode(m.channel, w.uint32(10).fork()).ldelim();
             if (m.proof != null && Object.hasOwnProperty.call(m, "proof")) w.uint32(18).bytes(m.proof);
-            if (m.proofPath != null && Object.hasOwnProperty.call(m, "proofPath"))
-              w.uint32(26).string(m.proofPath);
             if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
-              $root.ibc.core.client.v1.Height.encode(m.proofHeight, w.uint32(34).fork()).ldelim();
+              $root.ibc.core.client.v1.Height.encode(m.proofHeight, w.uint32(26).fork()).ldelim();
             return w;
           };
           QueryChannelResponse.decode = function decode(r, l) {
@@ -6740,9 +6514,6 @@ exports.ibc = $root.ibc = (() => {
                   m.proof = r.bytes();
                   break;
                 case 3:
-                  m.proofPath = r.string();
-                  break;
-                case 4:
                   m.proofHeight = $root.ibc.core.client.v1.Height.decode(r, r.uint32());
                   break;
                 default:
@@ -6986,7 +6757,6 @@ exports.ibc = $root.ibc = (() => {
           }
           QueryChannelClientStateResponse.prototype.identifiedClientState = null;
           QueryChannelClientStateResponse.prototype.proof = $util.newBuffer([]);
-          QueryChannelClientStateResponse.prototype.proofPath = "";
           QueryChannelClientStateResponse.prototype.proofHeight = null;
           QueryChannelClientStateResponse.create = function create(properties) {
             return new QueryChannelClientStateResponse(properties);
@@ -6999,10 +6769,8 @@ exports.ibc = $root.ibc = (() => {
                 w.uint32(10).fork(),
               ).ldelim();
             if (m.proof != null && Object.hasOwnProperty.call(m, "proof")) w.uint32(18).bytes(m.proof);
-            if (m.proofPath != null && Object.hasOwnProperty.call(m, "proofPath"))
-              w.uint32(26).string(m.proofPath);
             if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
-              $root.ibc.core.client.v1.Height.encode(m.proofHeight, w.uint32(34).fork()).ldelim();
+              $root.ibc.core.client.v1.Height.encode(m.proofHeight, w.uint32(26).fork()).ldelim();
             return w;
           };
           QueryChannelClientStateResponse.decode = function decode(r, l) {
@@ -7022,9 +6790,6 @@ exports.ibc = $root.ibc = (() => {
                   m.proof = r.bytes();
                   break;
                 case 3:
-                  m.proofPath = r.string();
-                  break;
-                case 4:
                   m.proofHeight = $root.ibc.core.client.v1.Height.decode(r, r.uint32());
                   break;
                 default:
@@ -7101,7 +6866,6 @@ exports.ibc = $root.ibc = (() => {
           QueryChannelConsensusStateResponse.prototype.consensusState = null;
           QueryChannelConsensusStateResponse.prototype.clientId = "";
           QueryChannelConsensusStateResponse.prototype.proof = $util.newBuffer([]);
-          QueryChannelConsensusStateResponse.prototype.proofPath = "";
           QueryChannelConsensusStateResponse.prototype.proofHeight = null;
           QueryChannelConsensusStateResponse.create = function create(properties) {
             return new QueryChannelConsensusStateResponse(properties);
@@ -7113,10 +6877,8 @@ exports.ibc = $root.ibc = (() => {
             if (m.clientId != null && Object.hasOwnProperty.call(m, "clientId"))
               w.uint32(18).string(m.clientId);
             if (m.proof != null && Object.hasOwnProperty.call(m, "proof")) w.uint32(26).bytes(m.proof);
-            if (m.proofPath != null && Object.hasOwnProperty.call(m, "proofPath"))
-              w.uint32(34).string(m.proofPath);
             if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
-              $root.ibc.core.client.v1.Height.encode(m.proofHeight, w.uint32(42).fork()).ldelim();
+              $root.ibc.core.client.v1.Height.encode(m.proofHeight, w.uint32(34).fork()).ldelim();
             return w;
           };
           QueryChannelConsensusStateResponse.decode = function decode(r, l) {
@@ -7136,9 +6898,6 @@ exports.ibc = $root.ibc = (() => {
                   m.proof = r.bytes();
                   break;
                 case 4:
-                  m.proofPath = r.string();
-                  break;
-                case 5:
                   m.proofHeight = $root.ibc.core.client.v1.Height.decode(r, r.uint32());
                   break;
                 default:
@@ -7204,7 +6963,6 @@ exports.ibc = $root.ibc = (() => {
           }
           QueryPacketCommitmentResponse.prototype.commitment = $util.newBuffer([]);
           QueryPacketCommitmentResponse.prototype.proof = $util.newBuffer([]);
-          QueryPacketCommitmentResponse.prototype.proofPath = "";
           QueryPacketCommitmentResponse.prototype.proofHeight = null;
           QueryPacketCommitmentResponse.create = function create(properties) {
             return new QueryPacketCommitmentResponse(properties);
@@ -7214,10 +6972,8 @@ exports.ibc = $root.ibc = (() => {
             if (m.commitment != null && Object.hasOwnProperty.call(m, "commitment"))
               w.uint32(10).bytes(m.commitment);
             if (m.proof != null && Object.hasOwnProperty.call(m, "proof")) w.uint32(18).bytes(m.proof);
-            if (m.proofPath != null && Object.hasOwnProperty.call(m, "proofPath"))
-              w.uint32(26).string(m.proofPath);
             if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
-              $root.ibc.core.client.v1.Height.encode(m.proofHeight, w.uint32(34).fork()).ldelim();
+              $root.ibc.core.client.v1.Height.encode(m.proofHeight, w.uint32(26).fork()).ldelim();
             return w;
           };
           QueryPacketCommitmentResponse.decode = function decode(r, l) {
@@ -7234,9 +6990,6 @@ exports.ibc = $root.ibc = (() => {
                   m.proof = r.bytes();
                   break;
                 case 3:
-                  m.proofPath = r.string();
-                  break;
-                case 4:
                   m.proofHeight = $root.ibc.core.client.v1.Height.decode(r, r.uint32());
                   break;
                 default:
@@ -7311,10 +7064,7 @@ exports.ibc = $root.ibc = (() => {
             if (!w) w = $Writer.create();
             if (m.commitments != null && m.commitments.length) {
               for (var i = 0; i < m.commitments.length; ++i)
-                $root.ibc.core.channel.v1.PacketAckCommitment.encode(
-                  m.commitments[i],
-                  w.uint32(10).fork(),
-                ).ldelim();
+                $root.ibc.core.channel.v1.PacketState.encode(m.commitments[i], w.uint32(10).fork()).ldelim();
             }
             if (m.pagination != null && Object.hasOwnProperty.call(m, "pagination"))
               $root.cosmos.base.query.v1beta1.PageResponse.encode(m.pagination, w.uint32(18).fork()).ldelim();
@@ -7331,7 +7081,7 @@ exports.ibc = $root.ibc = (() => {
               switch (t >>> 3) {
                 case 1:
                   if (!(m.commitments && m.commitments.length)) m.commitments = [];
-                  m.commitments.push($root.ibc.core.channel.v1.PacketAckCommitment.decode(r, r.uint32()));
+                  m.commitments.push($root.ibc.core.channel.v1.PacketState.decode(r, r.uint32()));
                   break;
                 case 2:
                   m.pagination = $root.cosmos.base.query.v1beta1.PageResponse.decode(r, r.uint32());
@@ -7347,6 +7097,98 @@ exports.ibc = $root.ibc = (() => {
             return m;
           };
           return QueryPacketCommitmentsResponse;
+        })();
+        v1.QueryPacketReceiptRequest = (function () {
+          function QueryPacketReceiptRequest(p) {
+            if (p)
+              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+          }
+          QueryPacketReceiptRequest.prototype.portId = "";
+          QueryPacketReceiptRequest.prototype.channelId = "";
+          QueryPacketReceiptRequest.prototype.sequence = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+          QueryPacketReceiptRequest.create = function create(properties) {
+            return new QueryPacketReceiptRequest(properties);
+          };
+          QueryPacketReceiptRequest.encode = function encode(m, w) {
+            if (!w) w = $Writer.create();
+            if (m.portId != null && Object.hasOwnProperty.call(m, "portId")) w.uint32(10).string(m.portId);
+            if (m.channelId != null && Object.hasOwnProperty.call(m, "channelId"))
+              w.uint32(18).string(m.channelId);
+            if (m.sequence != null && Object.hasOwnProperty.call(m, "sequence"))
+              w.uint32(24).uint64(m.sequence);
+            return w;
+          };
+          QueryPacketReceiptRequest.decode = function decode(r, l) {
+            if (!(r instanceof $Reader)) r = $Reader.create(r);
+            var c = l === undefined ? r.len : r.pos + l,
+              m = new $root.ibc.core.channel.v1.QueryPacketReceiptRequest();
+            while (r.pos < c) {
+              var t = r.uint32();
+              switch (t >>> 3) {
+                case 1:
+                  m.portId = r.string();
+                  break;
+                case 2:
+                  m.channelId = r.string();
+                  break;
+                case 3:
+                  m.sequence = r.uint64();
+                  break;
+                default:
+                  r.skipType(t & 7);
+                  break;
+              }
+            }
+            return m;
+          };
+          return QueryPacketReceiptRequest;
+        })();
+        v1.QueryPacketReceiptResponse = (function () {
+          function QueryPacketReceiptResponse(p) {
+            if (p)
+              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+          }
+          QueryPacketReceiptResponse.prototype.received = false;
+          QueryPacketReceiptResponse.prototype.proof = $util.newBuffer([]);
+          QueryPacketReceiptResponse.prototype.proofHeight = null;
+          QueryPacketReceiptResponse.create = function create(properties) {
+            return new QueryPacketReceiptResponse(properties);
+          };
+          QueryPacketReceiptResponse.encode = function encode(m, w) {
+            if (!w) w = $Writer.create();
+            if (m.received != null && Object.hasOwnProperty.call(m, "received"))
+              w.uint32(16).bool(m.received);
+            if (m.proof != null && Object.hasOwnProperty.call(m, "proof")) w.uint32(26).bytes(m.proof);
+            if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
+              $root.ibc.core.client.v1.Height.encode(m.proofHeight, w.uint32(34).fork()).ldelim();
+            return w;
+          };
+          QueryPacketReceiptResponse.decode = function decode(r, l) {
+            if (!(r instanceof $Reader)) r = $Reader.create(r);
+            var c = l === undefined ? r.len : r.pos + l,
+              m = new $root.ibc.core.channel.v1.QueryPacketReceiptResponse();
+            while (r.pos < c) {
+              var t = r.uint32();
+              switch (t >>> 3) {
+                case 2:
+                  m.received = r.bool();
+                  break;
+                case 3:
+                  m.proof = r.bytes();
+                  break;
+                case 4:
+                  m.proofHeight = $root.ibc.core.client.v1.Height.decode(r, r.uint32());
+                  break;
+                default:
+                  r.skipType(t & 7);
+                  break;
+              }
+            }
+            return m;
+          };
+          return QueryPacketReceiptResponse;
         })();
         v1.QueryPacketAcknowledgementRequest = (function () {
           function QueryPacketAcknowledgementRequest(p) {
@@ -7404,7 +7246,6 @@ exports.ibc = $root.ibc = (() => {
           }
           QueryPacketAcknowledgementResponse.prototype.acknowledgement = $util.newBuffer([]);
           QueryPacketAcknowledgementResponse.prototype.proof = $util.newBuffer([]);
-          QueryPacketAcknowledgementResponse.prototype.proofPath = "";
           QueryPacketAcknowledgementResponse.prototype.proofHeight = null;
           QueryPacketAcknowledgementResponse.create = function create(properties) {
             return new QueryPacketAcknowledgementResponse(properties);
@@ -7414,10 +7255,8 @@ exports.ibc = $root.ibc = (() => {
             if (m.acknowledgement != null && Object.hasOwnProperty.call(m, "acknowledgement"))
               w.uint32(10).bytes(m.acknowledgement);
             if (m.proof != null && Object.hasOwnProperty.call(m, "proof")) w.uint32(18).bytes(m.proof);
-            if (m.proofPath != null && Object.hasOwnProperty.call(m, "proofPath"))
-              w.uint32(26).string(m.proofPath);
             if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
-              $root.ibc.core.client.v1.Height.encode(m.proofHeight, w.uint32(34).fork()).ldelim();
+              $root.ibc.core.client.v1.Height.encode(m.proofHeight, w.uint32(26).fork()).ldelim();
             return w;
           };
           QueryPacketAcknowledgementResponse.decode = function decode(r, l) {
@@ -7434,9 +7273,6 @@ exports.ibc = $root.ibc = (() => {
                   m.proof = r.bytes();
                   break;
                 case 3:
-                  m.proofPath = r.string();
-                  break;
-                case 4:
                   m.proofHeight = $root.ibc.core.client.v1.Height.decode(r, r.uint32());
                   break;
                 default:
@@ -7447,6 +7283,106 @@ exports.ibc = $root.ibc = (() => {
             return m;
           };
           return QueryPacketAcknowledgementResponse;
+        })();
+        v1.QueryPacketAcknowledgementsRequest = (function () {
+          function QueryPacketAcknowledgementsRequest(p) {
+            if (p)
+              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+          }
+          QueryPacketAcknowledgementsRequest.prototype.portId = "";
+          QueryPacketAcknowledgementsRequest.prototype.channelId = "";
+          QueryPacketAcknowledgementsRequest.prototype.pagination = null;
+          QueryPacketAcknowledgementsRequest.create = function create(properties) {
+            return new QueryPacketAcknowledgementsRequest(properties);
+          };
+          QueryPacketAcknowledgementsRequest.encode = function encode(m, w) {
+            if (!w) w = $Writer.create();
+            if (m.portId != null && Object.hasOwnProperty.call(m, "portId")) w.uint32(10).string(m.portId);
+            if (m.channelId != null && Object.hasOwnProperty.call(m, "channelId"))
+              w.uint32(18).string(m.channelId);
+            if (m.pagination != null && Object.hasOwnProperty.call(m, "pagination"))
+              $root.cosmos.base.query.v1beta1.PageRequest.encode(m.pagination, w.uint32(26).fork()).ldelim();
+            return w;
+          };
+          QueryPacketAcknowledgementsRequest.decode = function decode(r, l) {
+            if (!(r instanceof $Reader)) r = $Reader.create(r);
+            var c = l === undefined ? r.len : r.pos + l,
+              m = new $root.ibc.core.channel.v1.QueryPacketAcknowledgementsRequest();
+            while (r.pos < c) {
+              var t = r.uint32();
+              switch (t >>> 3) {
+                case 1:
+                  m.portId = r.string();
+                  break;
+                case 2:
+                  m.channelId = r.string();
+                  break;
+                case 3:
+                  m.pagination = $root.cosmos.base.query.v1beta1.PageRequest.decode(r, r.uint32());
+                  break;
+                default:
+                  r.skipType(t & 7);
+                  break;
+              }
+            }
+            return m;
+          };
+          return QueryPacketAcknowledgementsRequest;
+        })();
+        v1.QueryPacketAcknowledgementsResponse = (function () {
+          function QueryPacketAcknowledgementsResponse(p) {
+            this.acknowledgements = [];
+            if (p)
+              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+          }
+          QueryPacketAcknowledgementsResponse.prototype.acknowledgements = $util.emptyArray;
+          QueryPacketAcknowledgementsResponse.prototype.pagination = null;
+          QueryPacketAcknowledgementsResponse.prototype.height = null;
+          QueryPacketAcknowledgementsResponse.create = function create(properties) {
+            return new QueryPacketAcknowledgementsResponse(properties);
+          };
+          QueryPacketAcknowledgementsResponse.encode = function encode(m, w) {
+            if (!w) w = $Writer.create();
+            if (m.acknowledgements != null && m.acknowledgements.length) {
+              for (var i = 0; i < m.acknowledgements.length; ++i)
+                $root.ibc.core.channel.v1.PacketState.encode(
+                  m.acknowledgements[i],
+                  w.uint32(10).fork(),
+                ).ldelim();
+            }
+            if (m.pagination != null && Object.hasOwnProperty.call(m, "pagination"))
+              $root.cosmos.base.query.v1beta1.PageResponse.encode(m.pagination, w.uint32(18).fork()).ldelim();
+            if (m.height != null && Object.hasOwnProperty.call(m, "height"))
+              $root.ibc.core.client.v1.Height.encode(m.height, w.uint32(26).fork()).ldelim();
+            return w;
+          };
+          QueryPacketAcknowledgementsResponse.decode = function decode(r, l) {
+            if (!(r instanceof $Reader)) r = $Reader.create(r);
+            var c = l === undefined ? r.len : r.pos + l,
+              m = new $root.ibc.core.channel.v1.QueryPacketAcknowledgementsResponse();
+            while (r.pos < c) {
+              var t = r.uint32();
+              switch (t >>> 3) {
+                case 1:
+                  if (!(m.acknowledgements && m.acknowledgements.length)) m.acknowledgements = [];
+                  m.acknowledgements.push($root.ibc.core.channel.v1.PacketState.decode(r, r.uint32()));
+                  break;
+                case 2:
+                  m.pagination = $root.cosmos.base.query.v1beta1.PageResponse.decode(r, r.uint32());
+                  break;
+                case 3:
+                  m.height = $root.ibc.core.client.v1.Height.decode(r, r.uint32());
+                  break;
+                default:
+                  r.skipType(t & 7);
+                  break;
+              }
+            }
+            return m;
+          };
+          return QueryPacketAcknowledgementsResponse;
         })();
         v1.QueryUnreceivedPacketsRequest = (function () {
           function QueryUnreceivedPacketsRequest(p) {
@@ -7553,36 +7489,35 @@ exports.ibc = $root.ibc = (() => {
           };
           return QueryUnreceivedPacketsResponse;
         })();
-        v1.QueryUnrelayedAcksRequest = (function () {
-          function QueryUnrelayedAcksRequest(p) {
-            this.packetCommitmentSequences = [];
+        v1.QueryUnreceivedAcksRequest = (function () {
+          function QueryUnreceivedAcksRequest(p) {
+            this.packetAckSequences = [];
             if (p)
               for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
                 if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
           }
-          QueryUnrelayedAcksRequest.prototype.portId = "";
-          QueryUnrelayedAcksRequest.prototype.channelId = "";
-          QueryUnrelayedAcksRequest.prototype.packetCommitmentSequences = $util.emptyArray;
-          QueryUnrelayedAcksRequest.create = function create(properties) {
-            return new QueryUnrelayedAcksRequest(properties);
+          QueryUnreceivedAcksRequest.prototype.portId = "";
+          QueryUnreceivedAcksRequest.prototype.channelId = "";
+          QueryUnreceivedAcksRequest.prototype.packetAckSequences = $util.emptyArray;
+          QueryUnreceivedAcksRequest.create = function create(properties) {
+            return new QueryUnreceivedAcksRequest(properties);
           };
-          QueryUnrelayedAcksRequest.encode = function encode(m, w) {
+          QueryUnreceivedAcksRequest.encode = function encode(m, w) {
             if (!w) w = $Writer.create();
             if (m.portId != null && Object.hasOwnProperty.call(m, "portId")) w.uint32(10).string(m.portId);
             if (m.channelId != null && Object.hasOwnProperty.call(m, "channelId"))
               w.uint32(18).string(m.channelId);
-            if (m.packetCommitmentSequences != null && m.packetCommitmentSequences.length) {
+            if (m.packetAckSequences != null && m.packetAckSequences.length) {
               w.uint32(26).fork();
-              for (var i = 0; i < m.packetCommitmentSequences.length; ++i)
-                w.uint64(m.packetCommitmentSequences[i]);
+              for (var i = 0; i < m.packetAckSequences.length; ++i) w.uint64(m.packetAckSequences[i]);
               w.ldelim();
             }
             return w;
           };
-          QueryUnrelayedAcksRequest.decode = function decode(r, l) {
+          QueryUnreceivedAcksRequest.decode = function decode(r, l) {
             if (!(r instanceof $Reader)) r = $Reader.create(r);
             var c = l === undefined ? r.len : r.pos + l,
-              m = new $root.ibc.core.channel.v1.QueryUnrelayedAcksRequest();
+              m = new $root.ibc.core.channel.v1.QueryUnreceivedAcksRequest();
             while (r.pos < c) {
               var t = r.uint32();
               switch (t >>> 3) {
@@ -7593,12 +7528,11 @@ exports.ibc = $root.ibc = (() => {
                   m.channelId = r.string();
                   break;
                 case 3:
-                  if (!(m.packetCommitmentSequences && m.packetCommitmentSequences.length))
-                    m.packetCommitmentSequences = [];
+                  if (!(m.packetAckSequences && m.packetAckSequences.length)) m.packetAckSequences = [];
                   if ((t & 7) === 2) {
                     var c2 = r.uint32() + r.pos;
-                    while (r.pos < c2) m.packetCommitmentSequences.push(r.uint64());
-                  } else m.packetCommitmentSequences.push(r.uint64());
+                    while (r.pos < c2) m.packetAckSequences.push(r.uint64());
+                  } else m.packetAckSequences.push(r.uint64());
                   break;
                 default:
                   r.skipType(t & 7);
@@ -7607,21 +7541,21 @@ exports.ibc = $root.ibc = (() => {
             }
             return m;
           };
-          return QueryUnrelayedAcksRequest;
+          return QueryUnreceivedAcksRequest;
         })();
-        v1.QueryUnrelayedAcksResponse = (function () {
-          function QueryUnrelayedAcksResponse(p) {
+        v1.QueryUnreceivedAcksResponse = (function () {
+          function QueryUnreceivedAcksResponse(p) {
             this.sequences = [];
             if (p)
               for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
                 if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
           }
-          QueryUnrelayedAcksResponse.prototype.sequences = $util.emptyArray;
-          QueryUnrelayedAcksResponse.prototype.height = null;
-          QueryUnrelayedAcksResponse.create = function create(properties) {
-            return new QueryUnrelayedAcksResponse(properties);
+          QueryUnreceivedAcksResponse.prototype.sequences = $util.emptyArray;
+          QueryUnreceivedAcksResponse.prototype.height = null;
+          QueryUnreceivedAcksResponse.create = function create(properties) {
+            return new QueryUnreceivedAcksResponse(properties);
           };
-          QueryUnrelayedAcksResponse.encode = function encode(m, w) {
+          QueryUnreceivedAcksResponse.encode = function encode(m, w) {
             if (!w) w = $Writer.create();
             if (m.sequences != null && m.sequences.length) {
               w.uint32(10).fork();
@@ -7632,10 +7566,10 @@ exports.ibc = $root.ibc = (() => {
               $root.ibc.core.client.v1.Height.encode(m.height, w.uint32(18).fork()).ldelim();
             return w;
           };
-          QueryUnrelayedAcksResponse.decode = function decode(r, l) {
+          QueryUnreceivedAcksResponse.decode = function decode(r, l) {
             if (!(r instanceof $Reader)) r = $Reader.create(r);
             var c = l === undefined ? r.len : r.pos + l,
-              m = new $root.ibc.core.channel.v1.QueryUnrelayedAcksResponse();
+              m = new $root.ibc.core.channel.v1.QueryUnreceivedAcksResponse();
             while (r.pos < c) {
               var t = r.uint32();
               switch (t >>> 3) {
@@ -7656,7 +7590,7 @@ exports.ibc = $root.ibc = (() => {
             }
             return m;
           };
-          return QueryUnrelayedAcksResponse;
+          return QueryUnreceivedAcksResponse;
         })();
         v1.QueryNextSequenceReceiveRequest = (function () {
           function QueryNextSequenceReceiveRequest(p) {
@@ -7708,7 +7642,6 @@ exports.ibc = $root.ibc = (() => {
             ? $util.Long.fromBits(0, 0, true)
             : 0;
           QueryNextSequenceReceiveResponse.prototype.proof = $util.newBuffer([]);
-          QueryNextSequenceReceiveResponse.prototype.proofPath = "";
           QueryNextSequenceReceiveResponse.prototype.proofHeight = null;
           QueryNextSequenceReceiveResponse.create = function create(properties) {
             return new QueryNextSequenceReceiveResponse(properties);
@@ -7718,10 +7651,8 @@ exports.ibc = $root.ibc = (() => {
             if (m.nextSequenceReceive != null && Object.hasOwnProperty.call(m, "nextSequenceReceive"))
               w.uint32(8).uint64(m.nextSequenceReceive);
             if (m.proof != null && Object.hasOwnProperty.call(m, "proof")) w.uint32(18).bytes(m.proof);
-            if (m.proofPath != null && Object.hasOwnProperty.call(m, "proofPath"))
-              w.uint32(26).string(m.proofPath);
             if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
-              $root.ibc.core.client.v1.Height.encode(m.proofHeight, w.uint32(34).fork()).ldelim();
+              $root.ibc.core.client.v1.Height.encode(m.proofHeight, w.uint32(26).fork()).ldelim();
             return w;
           };
           QueryNextSequenceReceiveResponse.decode = function decode(r, l) {
@@ -7738,9 +7669,6 @@ exports.ibc = $root.ibc = (() => {
                   m.proof = r.bytes();
                   break;
                 case 3:
-                  m.proofPath = r.string();
-                  break;
-                case 4:
                   m.proofHeight = $root.ibc.core.client.v1.Height.decode(r, r.uint32());
                   break;
                 default:
@@ -7760,6 +7688,386 @@ exports.ibc = $root.ibc = (() => {
       const client = {};
       client.v1 = (function () {
         const v1 = {};
+        v1.Msg = (function () {
+          function Msg(rpcImpl, requestDelimited, responseDelimited) {
+            $protobuf.rpc.Service.call(this, rpcImpl, requestDelimited, responseDelimited);
+          }
+          (Msg.prototype = Object.create($protobuf.rpc.Service.prototype)).constructor = Msg;
+          Msg.create = function create(rpcImpl, requestDelimited, responseDelimited) {
+            return new this(rpcImpl, requestDelimited, responseDelimited);
+          };
+          Object.defineProperty(
+            (Msg.prototype.createClient = function createClient(request, callback) {
+              return this.rpcCall(
+                createClient,
+                $root.ibc.core.client.v1.MsgCreateClient,
+                $root.ibc.core.client.v1.MsgCreateClientResponse,
+                request,
+                callback,
+              );
+            }),
+            "name",
+            { value: "CreateClient" },
+          );
+          Object.defineProperty(
+            (Msg.prototype.updateClient = function updateClient(request, callback) {
+              return this.rpcCall(
+                updateClient,
+                $root.ibc.core.client.v1.MsgUpdateClient,
+                $root.ibc.core.client.v1.MsgUpdateClientResponse,
+                request,
+                callback,
+              );
+            }),
+            "name",
+            { value: "UpdateClient" },
+          );
+          Object.defineProperty(
+            (Msg.prototype.upgradeClient = function upgradeClient(request, callback) {
+              return this.rpcCall(
+                upgradeClient,
+                $root.ibc.core.client.v1.MsgUpgradeClient,
+                $root.ibc.core.client.v1.MsgUpgradeClientResponse,
+                request,
+                callback,
+              );
+            }),
+            "name",
+            { value: "UpgradeClient" },
+          );
+          Object.defineProperty(
+            (Msg.prototype.submitMisbehaviour = function submitMisbehaviour(request, callback) {
+              return this.rpcCall(
+                submitMisbehaviour,
+                $root.ibc.core.client.v1.MsgSubmitMisbehaviour,
+                $root.ibc.core.client.v1.MsgSubmitMisbehaviourResponse,
+                request,
+                callback,
+              );
+            }),
+            "name",
+            { value: "SubmitMisbehaviour" },
+          );
+          return Msg;
+        })();
+        v1.MsgCreateClient = (function () {
+          function MsgCreateClient(p) {
+            if (p)
+              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+          }
+          MsgCreateClient.prototype.clientId = "";
+          MsgCreateClient.prototype.clientState = null;
+          MsgCreateClient.prototype.consensusState = null;
+          MsgCreateClient.prototype.signer = "";
+          MsgCreateClient.create = function create(properties) {
+            return new MsgCreateClient(properties);
+          };
+          MsgCreateClient.encode = function encode(m, w) {
+            if (!w) w = $Writer.create();
+            if (m.clientId != null && Object.hasOwnProperty.call(m, "clientId"))
+              w.uint32(10).string(m.clientId);
+            if (m.clientState != null && Object.hasOwnProperty.call(m, "clientState"))
+              $root.google.protobuf.Any.encode(m.clientState, w.uint32(18).fork()).ldelim();
+            if (m.consensusState != null && Object.hasOwnProperty.call(m, "consensusState"))
+              $root.google.protobuf.Any.encode(m.consensusState, w.uint32(26).fork()).ldelim();
+            if (m.signer != null && Object.hasOwnProperty.call(m, "signer")) w.uint32(34).string(m.signer);
+            return w;
+          };
+          MsgCreateClient.decode = function decode(r, l) {
+            if (!(r instanceof $Reader)) r = $Reader.create(r);
+            var c = l === undefined ? r.len : r.pos + l,
+              m = new $root.ibc.core.client.v1.MsgCreateClient();
+            while (r.pos < c) {
+              var t = r.uint32();
+              switch (t >>> 3) {
+                case 1:
+                  m.clientId = r.string();
+                  break;
+                case 2:
+                  m.clientState = $root.google.protobuf.Any.decode(r, r.uint32());
+                  break;
+                case 3:
+                  m.consensusState = $root.google.protobuf.Any.decode(r, r.uint32());
+                  break;
+                case 4:
+                  m.signer = r.string();
+                  break;
+                default:
+                  r.skipType(t & 7);
+                  break;
+              }
+            }
+            return m;
+          };
+          return MsgCreateClient;
+        })();
+        v1.MsgCreateClientResponse = (function () {
+          function MsgCreateClientResponse(p) {
+            if (p)
+              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+          }
+          MsgCreateClientResponse.create = function create(properties) {
+            return new MsgCreateClientResponse(properties);
+          };
+          MsgCreateClientResponse.encode = function encode(m, w) {
+            if (!w) w = $Writer.create();
+            return w;
+          };
+          MsgCreateClientResponse.decode = function decode(r, l) {
+            if (!(r instanceof $Reader)) r = $Reader.create(r);
+            var c = l === undefined ? r.len : r.pos + l,
+              m = new $root.ibc.core.client.v1.MsgCreateClientResponse();
+            while (r.pos < c) {
+              var t = r.uint32();
+              switch (t >>> 3) {
+                default:
+                  r.skipType(t & 7);
+                  break;
+              }
+            }
+            return m;
+          };
+          return MsgCreateClientResponse;
+        })();
+        v1.MsgUpdateClient = (function () {
+          function MsgUpdateClient(p) {
+            if (p)
+              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+          }
+          MsgUpdateClient.prototype.clientId = "";
+          MsgUpdateClient.prototype.header = null;
+          MsgUpdateClient.prototype.signer = "";
+          MsgUpdateClient.create = function create(properties) {
+            return new MsgUpdateClient(properties);
+          };
+          MsgUpdateClient.encode = function encode(m, w) {
+            if (!w) w = $Writer.create();
+            if (m.clientId != null && Object.hasOwnProperty.call(m, "clientId"))
+              w.uint32(10).string(m.clientId);
+            if (m.header != null && Object.hasOwnProperty.call(m, "header"))
+              $root.google.protobuf.Any.encode(m.header, w.uint32(18).fork()).ldelim();
+            if (m.signer != null && Object.hasOwnProperty.call(m, "signer")) w.uint32(26).string(m.signer);
+            return w;
+          };
+          MsgUpdateClient.decode = function decode(r, l) {
+            if (!(r instanceof $Reader)) r = $Reader.create(r);
+            var c = l === undefined ? r.len : r.pos + l,
+              m = new $root.ibc.core.client.v1.MsgUpdateClient();
+            while (r.pos < c) {
+              var t = r.uint32();
+              switch (t >>> 3) {
+                case 1:
+                  m.clientId = r.string();
+                  break;
+                case 2:
+                  m.header = $root.google.protobuf.Any.decode(r, r.uint32());
+                  break;
+                case 3:
+                  m.signer = r.string();
+                  break;
+                default:
+                  r.skipType(t & 7);
+                  break;
+              }
+            }
+            return m;
+          };
+          return MsgUpdateClient;
+        })();
+        v1.MsgUpdateClientResponse = (function () {
+          function MsgUpdateClientResponse(p) {
+            if (p)
+              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+          }
+          MsgUpdateClientResponse.create = function create(properties) {
+            return new MsgUpdateClientResponse(properties);
+          };
+          MsgUpdateClientResponse.encode = function encode(m, w) {
+            if (!w) w = $Writer.create();
+            return w;
+          };
+          MsgUpdateClientResponse.decode = function decode(r, l) {
+            if (!(r instanceof $Reader)) r = $Reader.create(r);
+            var c = l === undefined ? r.len : r.pos + l,
+              m = new $root.ibc.core.client.v1.MsgUpdateClientResponse();
+            while (r.pos < c) {
+              var t = r.uint32();
+              switch (t >>> 3) {
+                default:
+                  r.skipType(t & 7);
+                  break;
+              }
+            }
+            return m;
+          };
+          return MsgUpdateClientResponse;
+        })();
+        v1.MsgUpgradeClient = (function () {
+          function MsgUpgradeClient(p) {
+            if (p)
+              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+          }
+          MsgUpgradeClient.prototype.clientId = "";
+          MsgUpgradeClient.prototype.clientState = null;
+          MsgUpgradeClient.prototype.upgradeHeight = null;
+          MsgUpgradeClient.prototype.proofUpgrade = $util.newBuffer([]);
+          MsgUpgradeClient.prototype.signer = "";
+          MsgUpgradeClient.create = function create(properties) {
+            return new MsgUpgradeClient(properties);
+          };
+          MsgUpgradeClient.encode = function encode(m, w) {
+            if (!w) w = $Writer.create();
+            if (m.clientId != null && Object.hasOwnProperty.call(m, "clientId"))
+              w.uint32(10).string(m.clientId);
+            if (m.clientState != null && Object.hasOwnProperty.call(m, "clientState"))
+              $root.google.protobuf.Any.encode(m.clientState, w.uint32(18).fork()).ldelim();
+            if (m.upgradeHeight != null && Object.hasOwnProperty.call(m, "upgradeHeight"))
+              $root.ibc.core.client.v1.Height.encode(m.upgradeHeight, w.uint32(26).fork()).ldelim();
+            if (m.proofUpgrade != null && Object.hasOwnProperty.call(m, "proofUpgrade"))
+              w.uint32(34).bytes(m.proofUpgrade);
+            if (m.signer != null && Object.hasOwnProperty.call(m, "signer")) w.uint32(42).string(m.signer);
+            return w;
+          };
+          MsgUpgradeClient.decode = function decode(r, l) {
+            if (!(r instanceof $Reader)) r = $Reader.create(r);
+            var c = l === undefined ? r.len : r.pos + l,
+              m = new $root.ibc.core.client.v1.MsgUpgradeClient();
+            while (r.pos < c) {
+              var t = r.uint32();
+              switch (t >>> 3) {
+                case 1:
+                  m.clientId = r.string();
+                  break;
+                case 2:
+                  m.clientState = $root.google.protobuf.Any.decode(r, r.uint32());
+                  break;
+                case 3:
+                  m.upgradeHeight = $root.ibc.core.client.v1.Height.decode(r, r.uint32());
+                  break;
+                case 4:
+                  m.proofUpgrade = r.bytes();
+                  break;
+                case 5:
+                  m.signer = r.string();
+                  break;
+                default:
+                  r.skipType(t & 7);
+                  break;
+              }
+            }
+            return m;
+          };
+          return MsgUpgradeClient;
+        })();
+        v1.MsgUpgradeClientResponse = (function () {
+          function MsgUpgradeClientResponse(p) {
+            if (p)
+              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+          }
+          MsgUpgradeClientResponse.create = function create(properties) {
+            return new MsgUpgradeClientResponse(properties);
+          };
+          MsgUpgradeClientResponse.encode = function encode(m, w) {
+            if (!w) w = $Writer.create();
+            return w;
+          };
+          MsgUpgradeClientResponse.decode = function decode(r, l) {
+            if (!(r instanceof $Reader)) r = $Reader.create(r);
+            var c = l === undefined ? r.len : r.pos + l,
+              m = new $root.ibc.core.client.v1.MsgUpgradeClientResponse();
+            while (r.pos < c) {
+              var t = r.uint32();
+              switch (t >>> 3) {
+                default:
+                  r.skipType(t & 7);
+                  break;
+              }
+            }
+            return m;
+          };
+          return MsgUpgradeClientResponse;
+        })();
+        v1.MsgSubmitMisbehaviour = (function () {
+          function MsgSubmitMisbehaviour(p) {
+            if (p)
+              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+          }
+          MsgSubmitMisbehaviour.prototype.clientId = "";
+          MsgSubmitMisbehaviour.prototype.misbehaviour = null;
+          MsgSubmitMisbehaviour.prototype.signer = "";
+          MsgSubmitMisbehaviour.create = function create(properties) {
+            return new MsgSubmitMisbehaviour(properties);
+          };
+          MsgSubmitMisbehaviour.encode = function encode(m, w) {
+            if (!w) w = $Writer.create();
+            if (m.clientId != null && Object.hasOwnProperty.call(m, "clientId"))
+              w.uint32(10).string(m.clientId);
+            if (m.misbehaviour != null && Object.hasOwnProperty.call(m, "misbehaviour"))
+              $root.google.protobuf.Any.encode(m.misbehaviour, w.uint32(18).fork()).ldelim();
+            if (m.signer != null && Object.hasOwnProperty.call(m, "signer")) w.uint32(26).string(m.signer);
+            return w;
+          };
+          MsgSubmitMisbehaviour.decode = function decode(r, l) {
+            if (!(r instanceof $Reader)) r = $Reader.create(r);
+            var c = l === undefined ? r.len : r.pos + l,
+              m = new $root.ibc.core.client.v1.MsgSubmitMisbehaviour();
+            while (r.pos < c) {
+              var t = r.uint32();
+              switch (t >>> 3) {
+                case 1:
+                  m.clientId = r.string();
+                  break;
+                case 2:
+                  m.misbehaviour = $root.google.protobuf.Any.decode(r, r.uint32());
+                  break;
+                case 3:
+                  m.signer = r.string();
+                  break;
+                default:
+                  r.skipType(t & 7);
+                  break;
+              }
+            }
+            return m;
+          };
+          return MsgSubmitMisbehaviour;
+        })();
+        v1.MsgSubmitMisbehaviourResponse = (function () {
+          function MsgSubmitMisbehaviourResponse(p) {
+            if (p)
+              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+          }
+          MsgSubmitMisbehaviourResponse.create = function create(properties) {
+            return new MsgSubmitMisbehaviourResponse(properties);
+          };
+          MsgSubmitMisbehaviourResponse.encode = function encode(m, w) {
+            if (!w) w = $Writer.create();
+            return w;
+          };
+          MsgSubmitMisbehaviourResponse.decode = function decode(r, l) {
+            if (!(r instanceof $Reader)) r = $Reader.create(r);
+            var c = l === undefined ? r.len : r.pos + l,
+              m = new $root.ibc.core.client.v1.MsgSubmitMisbehaviourResponse();
+            while (r.pos < c) {
+              var t = r.uint32();
+              switch (t >>> 3) {
+                default:
+                  r.skipType(t & 7);
+                  break;
+              }
+            }
+            return m;
+          };
+          return MsgSubmitMisbehaviourResponse;
+        })();
         v1.IdentifiedClientState = (function () {
           function IdentifiedClientState(p) {
             if (p)
@@ -7943,208 +8251,6 @@ exports.ibc = $root.ibc = (() => {
             return m;
           };
           return ClientUpdateProposal;
-        })();
-        v1.MsgCreateClient = (function () {
-          function MsgCreateClient(p) {
-            if (p)
-              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-          }
-          MsgCreateClient.prototype.clientId = "";
-          MsgCreateClient.prototype.clientState = null;
-          MsgCreateClient.prototype.consensusState = null;
-          MsgCreateClient.prototype.signer = "";
-          MsgCreateClient.create = function create(properties) {
-            return new MsgCreateClient(properties);
-          };
-          MsgCreateClient.encode = function encode(m, w) {
-            if (!w) w = $Writer.create();
-            if (m.clientId != null && Object.hasOwnProperty.call(m, "clientId"))
-              w.uint32(10).string(m.clientId);
-            if (m.clientState != null && Object.hasOwnProperty.call(m, "clientState"))
-              $root.google.protobuf.Any.encode(m.clientState, w.uint32(18).fork()).ldelim();
-            if (m.consensusState != null && Object.hasOwnProperty.call(m, "consensusState"))
-              $root.google.protobuf.Any.encode(m.consensusState, w.uint32(26).fork()).ldelim();
-            if (m.signer != null && Object.hasOwnProperty.call(m, "signer")) w.uint32(34).string(m.signer);
-            return w;
-          };
-          MsgCreateClient.decode = function decode(r, l) {
-            if (!(r instanceof $Reader)) r = $Reader.create(r);
-            var c = l === undefined ? r.len : r.pos + l,
-              m = new $root.ibc.core.client.v1.MsgCreateClient();
-            while (r.pos < c) {
-              var t = r.uint32();
-              switch (t >>> 3) {
-                case 1:
-                  m.clientId = r.string();
-                  break;
-                case 2:
-                  m.clientState = $root.google.protobuf.Any.decode(r, r.uint32());
-                  break;
-                case 3:
-                  m.consensusState = $root.google.protobuf.Any.decode(r, r.uint32());
-                  break;
-                case 4:
-                  m.signer = r.string();
-                  break;
-                default:
-                  r.skipType(t & 7);
-                  break;
-              }
-            }
-            return m;
-          };
-          return MsgCreateClient;
-        })();
-        v1.MsgUpdateClient = (function () {
-          function MsgUpdateClient(p) {
-            if (p)
-              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-          }
-          MsgUpdateClient.prototype.clientId = "";
-          MsgUpdateClient.prototype.header = null;
-          MsgUpdateClient.prototype.signer = "";
-          MsgUpdateClient.create = function create(properties) {
-            return new MsgUpdateClient(properties);
-          };
-          MsgUpdateClient.encode = function encode(m, w) {
-            if (!w) w = $Writer.create();
-            if (m.clientId != null && Object.hasOwnProperty.call(m, "clientId"))
-              w.uint32(10).string(m.clientId);
-            if (m.header != null && Object.hasOwnProperty.call(m, "header"))
-              $root.google.protobuf.Any.encode(m.header, w.uint32(18).fork()).ldelim();
-            if (m.signer != null && Object.hasOwnProperty.call(m, "signer")) w.uint32(26).string(m.signer);
-            return w;
-          };
-          MsgUpdateClient.decode = function decode(r, l) {
-            if (!(r instanceof $Reader)) r = $Reader.create(r);
-            var c = l === undefined ? r.len : r.pos + l,
-              m = new $root.ibc.core.client.v1.MsgUpdateClient();
-            while (r.pos < c) {
-              var t = r.uint32();
-              switch (t >>> 3) {
-                case 1:
-                  m.clientId = r.string();
-                  break;
-                case 2:
-                  m.header = $root.google.protobuf.Any.decode(r, r.uint32());
-                  break;
-                case 3:
-                  m.signer = r.string();
-                  break;
-                default:
-                  r.skipType(t & 7);
-                  break;
-              }
-            }
-            return m;
-          };
-          return MsgUpdateClient;
-        })();
-        v1.MsgUpgradeClient = (function () {
-          function MsgUpgradeClient(p) {
-            if (p)
-              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-          }
-          MsgUpgradeClient.prototype.clientId = "";
-          MsgUpgradeClient.prototype.clientState = null;
-          MsgUpgradeClient.prototype.upgradeHeight = null;
-          MsgUpgradeClient.prototype.proofUpgrade = $util.newBuffer([]);
-          MsgUpgradeClient.prototype.signer = "";
-          MsgUpgradeClient.create = function create(properties) {
-            return new MsgUpgradeClient(properties);
-          };
-          MsgUpgradeClient.encode = function encode(m, w) {
-            if (!w) w = $Writer.create();
-            if (m.clientId != null && Object.hasOwnProperty.call(m, "clientId"))
-              w.uint32(10).string(m.clientId);
-            if (m.clientState != null && Object.hasOwnProperty.call(m, "clientState"))
-              $root.google.protobuf.Any.encode(m.clientState, w.uint32(18).fork()).ldelim();
-            if (m.upgradeHeight != null && Object.hasOwnProperty.call(m, "upgradeHeight"))
-              $root.ibc.core.client.v1.Height.encode(m.upgradeHeight, w.uint32(26).fork()).ldelim();
-            if (m.proofUpgrade != null && Object.hasOwnProperty.call(m, "proofUpgrade"))
-              w.uint32(34).bytes(m.proofUpgrade);
-            if (m.signer != null && Object.hasOwnProperty.call(m, "signer")) w.uint32(42).string(m.signer);
-            return w;
-          };
-          MsgUpgradeClient.decode = function decode(r, l) {
-            if (!(r instanceof $Reader)) r = $Reader.create(r);
-            var c = l === undefined ? r.len : r.pos + l,
-              m = new $root.ibc.core.client.v1.MsgUpgradeClient();
-            while (r.pos < c) {
-              var t = r.uint32();
-              switch (t >>> 3) {
-                case 1:
-                  m.clientId = r.string();
-                  break;
-                case 2:
-                  m.clientState = $root.google.protobuf.Any.decode(r, r.uint32());
-                  break;
-                case 3:
-                  m.upgradeHeight = $root.ibc.core.client.v1.Height.decode(r, r.uint32());
-                  break;
-                case 4:
-                  m.proofUpgrade = r.bytes();
-                  break;
-                case 5:
-                  m.signer = r.string();
-                  break;
-                default:
-                  r.skipType(t & 7);
-                  break;
-              }
-            }
-            return m;
-          };
-          return MsgUpgradeClient;
-        })();
-        v1.MsgSubmitMisbehaviour = (function () {
-          function MsgSubmitMisbehaviour(p) {
-            if (p)
-              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-          }
-          MsgSubmitMisbehaviour.prototype.clientId = "";
-          MsgSubmitMisbehaviour.prototype.misbehaviour = null;
-          MsgSubmitMisbehaviour.prototype.signer = "";
-          MsgSubmitMisbehaviour.create = function create(properties) {
-            return new MsgSubmitMisbehaviour(properties);
-          };
-          MsgSubmitMisbehaviour.encode = function encode(m, w) {
-            if (!w) w = $Writer.create();
-            if (m.clientId != null && Object.hasOwnProperty.call(m, "clientId"))
-              w.uint32(10).string(m.clientId);
-            if (m.misbehaviour != null && Object.hasOwnProperty.call(m, "misbehaviour"))
-              $root.google.protobuf.Any.encode(m.misbehaviour, w.uint32(18).fork()).ldelim();
-            if (m.signer != null && Object.hasOwnProperty.call(m, "signer")) w.uint32(26).string(m.signer);
-            return w;
-          };
-          MsgSubmitMisbehaviour.decode = function decode(r, l) {
-            if (!(r instanceof $Reader)) r = $Reader.create(r);
-            var c = l === undefined ? r.len : r.pos + l,
-              m = new $root.ibc.core.client.v1.MsgSubmitMisbehaviour();
-            while (r.pos < c) {
-              var t = r.uint32();
-              switch (t >>> 3) {
-                case 1:
-                  m.clientId = r.string();
-                  break;
-                case 2:
-                  m.misbehaviour = $root.google.protobuf.Any.decode(r, r.uint32());
-                  break;
-                case 3:
-                  m.signer = r.string();
-                  break;
-                default:
-                  r.skipType(t & 7);
-                  break;
-              }
-            }
-            return m;
-          };
-          return MsgSubmitMisbehaviour;
         })();
         v1.Height = (function () {
           function Height(p) {
@@ -8427,312 +8533,6 @@ exports.ibc = $root.ibc = (() => {
       const connection = {};
       connection.v1 = (function () {
         const v1 = {};
-        v1.MsgConnectionOpenInit = (function () {
-          function MsgConnectionOpenInit(p) {
-            if (p)
-              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-          }
-          MsgConnectionOpenInit.prototype.clientId = "";
-          MsgConnectionOpenInit.prototype.connectionId = "";
-          MsgConnectionOpenInit.prototype.counterparty = null;
-          MsgConnectionOpenInit.prototype.version = "";
-          MsgConnectionOpenInit.prototype.signer = "";
-          MsgConnectionOpenInit.create = function create(properties) {
-            return new MsgConnectionOpenInit(properties);
-          };
-          MsgConnectionOpenInit.encode = function encode(m, w) {
-            if (!w) w = $Writer.create();
-            if (m.clientId != null && Object.hasOwnProperty.call(m, "clientId"))
-              w.uint32(10).string(m.clientId);
-            if (m.connectionId != null && Object.hasOwnProperty.call(m, "connectionId"))
-              w.uint32(18).string(m.connectionId);
-            if (m.counterparty != null && Object.hasOwnProperty.call(m, "counterparty"))
-              $root.ibc.core.connection.v1.Counterparty.encode(m.counterparty, w.uint32(26).fork()).ldelim();
-            if (m.version != null && Object.hasOwnProperty.call(m, "version")) w.uint32(34).string(m.version);
-            if (m.signer != null && Object.hasOwnProperty.call(m, "signer")) w.uint32(42).string(m.signer);
-            return w;
-          };
-          MsgConnectionOpenInit.decode = function decode(r, l) {
-            if (!(r instanceof $Reader)) r = $Reader.create(r);
-            var c = l === undefined ? r.len : r.pos + l,
-              m = new $root.ibc.core.connection.v1.MsgConnectionOpenInit();
-            while (r.pos < c) {
-              var t = r.uint32();
-              switch (t >>> 3) {
-                case 1:
-                  m.clientId = r.string();
-                  break;
-                case 2:
-                  m.connectionId = r.string();
-                  break;
-                case 3:
-                  m.counterparty = $root.ibc.core.connection.v1.Counterparty.decode(r, r.uint32());
-                  break;
-                case 4:
-                  m.version = r.string();
-                  break;
-                case 5:
-                  m.signer = r.string();
-                  break;
-                default:
-                  r.skipType(t & 7);
-                  break;
-              }
-            }
-            return m;
-          };
-          return MsgConnectionOpenInit;
-        })();
-        v1.MsgConnectionOpenTry = (function () {
-          function MsgConnectionOpenTry(p) {
-            this.counterpartyVersions = [];
-            if (p)
-              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-          }
-          MsgConnectionOpenTry.prototype.clientId = "";
-          MsgConnectionOpenTry.prototype.desiredConnectionId = "";
-          MsgConnectionOpenTry.prototype.counterpartyChosenConnectionId = "";
-          MsgConnectionOpenTry.prototype.clientState = null;
-          MsgConnectionOpenTry.prototype.counterparty = null;
-          MsgConnectionOpenTry.prototype.counterpartyVersions = $util.emptyArray;
-          MsgConnectionOpenTry.prototype.proofHeight = null;
-          MsgConnectionOpenTry.prototype.proofInit = $util.newBuffer([]);
-          MsgConnectionOpenTry.prototype.proofClient = $util.newBuffer([]);
-          MsgConnectionOpenTry.prototype.proofConsensus = $util.newBuffer([]);
-          MsgConnectionOpenTry.prototype.consensusHeight = null;
-          MsgConnectionOpenTry.prototype.signer = "";
-          MsgConnectionOpenTry.create = function create(properties) {
-            return new MsgConnectionOpenTry(properties);
-          };
-          MsgConnectionOpenTry.encode = function encode(m, w) {
-            if (!w) w = $Writer.create();
-            if (m.clientId != null && Object.hasOwnProperty.call(m, "clientId"))
-              w.uint32(10).string(m.clientId);
-            if (m.desiredConnectionId != null && Object.hasOwnProperty.call(m, "desiredConnectionId"))
-              w.uint32(18).string(m.desiredConnectionId);
-            if (
-              m.counterpartyChosenConnectionId != null &&
-              Object.hasOwnProperty.call(m, "counterpartyChosenConnectionId")
-            )
-              w.uint32(26).string(m.counterpartyChosenConnectionId);
-            if (m.clientState != null && Object.hasOwnProperty.call(m, "clientState"))
-              $root.google.protobuf.Any.encode(m.clientState, w.uint32(34).fork()).ldelim();
-            if (m.counterparty != null && Object.hasOwnProperty.call(m, "counterparty"))
-              $root.ibc.core.connection.v1.Counterparty.encode(m.counterparty, w.uint32(42).fork()).ldelim();
-            if (m.counterpartyVersions != null && m.counterpartyVersions.length) {
-              for (var i = 0; i < m.counterpartyVersions.length; ++i)
-                w.uint32(50).string(m.counterpartyVersions[i]);
-            }
-            if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
-              $root.ibc.core.client.v1.Height.encode(m.proofHeight, w.uint32(58).fork()).ldelim();
-            if (m.proofInit != null && Object.hasOwnProperty.call(m, "proofInit"))
-              w.uint32(66).bytes(m.proofInit);
-            if (m.proofClient != null && Object.hasOwnProperty.call(m, "proofClient"))
-              w.uint32(74).bytes(m.proofClient);
-            if (m.proofConsensus != null && Object.hasOwnProperty.call(m, "proofConsensus"))
-              w.uint32(82).bytes(m.proofConsensus);
-            if (m.consensusHeight != null && Object.hasOwnProperty.call(m, "consensusHeight"))
-              $root.ibc.core.client.v1.Height.encode(m.consensusHeight, w.uint32(90).fork()).ldelim();
-            if (m.signer != null && Object.hasOwnProperty.call(m, "signer")) w.uint32(98).string(m.signer);
-            return w;
-          };
-          MsgConnectionOpenTry.decode = function decode(r, l) {
-            if (!(r instanceof $Reader)) r = $Reader.create(r);
-            var c = l === undefined ? r.len : r.pos + l,
-              m = new $root.ibc.core.connection.v1.MsgConnectionOpenTry();
-            while (r.pos < c) {
-              var t = r.uint32();
-              switch (t >>> 3) {
-                case 1:
-                  m.clientId = r.string();
-                  break;
-                case 2:
-                  m.desiredConnectionId = r.string();
-                  break;
-                case 3:
-                  m.counterpartyChosenConnectionId = r.string();
-                  break;
-                case 4:
-                  m.clientState = $root.google.protobuf.Any.decode(r, r.uint32());
-                  break;
-                case 5:
-                  m.counterparty = $root.ibc.core.connection.v1.Counterparty.decode(r, r.uint32());
-                  break;
-                case 6:
-                  if (!(m.counterpartyVersions && m.counterpartyVersions.length)) m.counterpartyVersions = [];
-                  m.counterpartyVersions.push(r.string());
-                  break;
-                case 7:
-                  m.proofHeight = $root.ibc.core.client.v1.Height.decode(r, r.uint32());
-                  break;
-                case 8:
-                  m.proofInit = r.bytes();
-                  break;
-                case 9:
-                  m.proofClient = r.bytes();
-                  break;
-                case 10:
-                  m.proofConsensus = r.bytes();
-                  break;
-                case 11:
-                  m.consensusHeight = $root.ibc.core.client.v1.Height.decode(r, r.uint32());
-                  break;
-                case 12:
-                  m.signer = r.string();
-                  break;
-                default:
-                  r.skipType(t & 7);
-                  break;
-              }
-            }
-            return m;
-          };
-          return MsgConnectionOpenTry;
-        })();
-        v1.MsgConnectionOpenAck = (function () {
-          function MsgConnectionOpenAck(p) {
-            if (p)
-              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-          }
-          MsgConnectionOpenAck.prototype.connectionId = "";
-          MsgConnectionOpenAck.prototype.counterpartyConnectionId = "";
-          MsgConnectionOpenAck.prototype.version = "";
-          MsgConnectionOpenAck.prototype.clientState = null;
-          MsgConnectionOpenAck.prototype.proofHeight = null;
-          MsgConnectionOpenAck.prototype.proofTry = $util.newBuffer([]);
-          MsgConnectionOpenAck.prototype.proofClient = $util.newBuffer([]);
-          MsgConnectionOpenAck.prototype.proofConsensus = $util.newBuffer([]);
-          MsgConnectionOpenAck.prototype.consensusHeight = null;
-          MsgConnectionOpenAck.prototype.signer = "";
-          MsgConnectionOpenAck.create = function create(properties) {
-            return new MsgConnectionOpenAck(properties);
-          };
-          MsgConnectionOpenAck.encode = function encode(m, w) {
-            if (!w) w = $Writer.create();
-            if (m.connectionId != null && Object.hasOwnProperty.call(m, "connectionId"))
-              w.uint32(10).string(m.connectionId);
-            if (
-              m.counterpartyConnectionId != null &&
-              Object.hasOwnProperty.call(m, "counterpartyConnectionId")
-            )
-              w.uint32(18).string(m.counterpartyConnectionId);
-            if (m.version != null && Object.hasOwnProperty.call(m, "version")) w.uint32(26).string(m.version);
-            if (m.clientState != null && Object.hasOwnProperty.call(m, "clientState"))
-              $root.google.protobuf.Any.encode(m.clientState, w.uint32(34).fork()).ldelim();
-            if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
-              $root.ibc.core.client.v1.Height.encode(m.proofHeight, w.uint32(42).fork()).ldelim();
-            if (m.proofTry != null && Object.hasOwnProperty.call(m, "proofTry"))
-              w.uint32(50).bytes(m.proofTry);
-            if (m.proofClient != null && Object.hasOwnProperty.call(m, "proofClient"))
-              w.uint32(58).bytes(m.proofClient);
-            if (m.proofConsensus != null && Object.hasOwnProperty.call(m, "proofConsensus"))
-              w.uint32(66).bytes(m.proofConsensus);
-            if (m.consensusHeight != null && Object.hasOwnProperty.call(m, "consensusHeight"))
-              $root.ibc.core.client.v1.Height.encode(m.consensusHeight, w.uint32(74).fork()).ldelim();
-            if (m.signer != null && Object.hasOwnProperty.call(m, "signer")) w.uint32(82).string(m.signer);
-            return w;
-          };
-          MsgConnectionOpenAck.decode = function decode(r, l) {
-            if (!(r instanceof $Reader)) r = $Reader.create(r);
-            var c = l === undefined ? r.len : r.pos + l,
-              m = new $root.ibc.core.connection.v1.MsgConnectionOpenAck();
-            while (r.pos < c) {
-              var t = r.uint32();
-              switch (t >>> 3) {
-                case 1:
-                  m.connectionId = r.string();
-                  break;
-                case 2:
-                  m.counterpartyConnectionId = r.string();
-                  break;
-                case 3:
-                  m.version = r.string();
-                  break;
-                case 4:
-                  m.clientState = $root.google.protobuf.Any.decode(r, r.uint32());
-                  break;
-                case 5:
-                  m.proofHeight = $root.ibc.core.client.v1.Height.decode(r, r.uint32());
-                  break;
-                case 6:
-                  m.proofTry = r.bytes();
-                  break;
-                case 7:
-                  m.proofClient = r.bytes();
-                  break;
-                case 8:
-                  m.proofConsensus = r.bytes();
-                  break;
-                case 9:
-                  m.consensusHeight = $root.ibc.core.client.v1.Height.decode(r, r.uint32());
-                  break;
-                case 10:
-                  m.signer = r.string();
-                  break;
-                default:
-                  r.skipType(t & 7);
-                  break;
-              }
-            }
-            return m;
-          };
-          return MsgConnectionOpenAck;
-        })();
-        v1.MsgConnectionOpenConfirm = (function () {
-          function MsgConnectionOpenConfirm(p) {
-            if (p)
-              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-          }
-          MsgConnectionOpenConfirm.prototype.connectionId = "";
-          MsgConnectionOpenConfirm.prototype.proofAck = $util.newBuffer([]);
-          MsgConnectionOpenConfirm.prototype.proofHeight = null;
-          MsgConnectionOpenConfirm.prototype.signer = "";
-          MsgConnectionOpenConfirm.create = function create(properties) {
-            return new MsgConnectionOpenConfirm(properties);
-          };
-          MsgConnectionOpenConfirm.encode = function encode(m, w) {
-            if (!w) w = $Writer.create();
-            if (m.connectionId != null && Object.hasOwnProperty.call(m, "connectionId"))
-              w.uint32(10).string(m.connectionId);
-            if (m.proofAck != null && Object.hasOwnProperty.call(m, "proofAck"))
-              w.uint32(18).bytes(m.proofAck);
-            if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
-              $root.ibc.core.client.v1.Height.encode(m.proofHeight, w.uint32(26).fork()).ldelim();
-            if (m.signer != null && Object.hasOwnProperty.call(m, "signer")) w.uint32(34).string(m.signer);
-            return w;
-          };
-          MsgConnectionOpenConfirm.decode = function decode(r, l) {
-            if (!(r instanceof $Reader)) r = $Reader.create(r);
-            var c = l === undefined ? r.len : r.pos + l,
-              m = new $root.ibc.core.connection.v1.MsgConnectionOpenConfirm();
-            while (r.pos < c) {
-              var t = r.uint32();
-              switch (t >>> 3) {
-                case 1:
-                  m.connectionId = r.string();
-                  break;
-                case 2:
-                  m.proofAck = r.bytes();
-                  break;
-                case 3:
-                  m.proofHeight = $root.ibc.core.client.v1.Height.decode(r, r.uint32());
-                  break;
-                case 4:
-                  m.signer = r.string();
-                  break;
-                default:
-                  r.skipType(t & 7);
-                  break;
-              }
-            }
-            return m;
-          };
-          return MsgConnectionOpenConfirm;
-        })();
         v1.ConnectionEnd = (function () {
           function ConnectionEnd(p) {
             this.versions = [];
@@ -8752,7 +8552,8 @@ exports.ibc = $root.ibc = (() => {
             if (m.clientId != null && Object.hasOwnProperty.call(m, "clientId"))
               w.uint32(10).string(m.clientId);
             if (m.versions != null && m.versions.length) {
-              for (var i = 0; i < m.versions.length; ++i) w.uint32(18).string(m.versions[i]);
+              for (var i = 0; i < m.versions.length; ++i)
+                $root.ibc.core.connection.v1.Version.encode(m.versions[i], w.uint32(18).fork()).ldelim();
             }
             if (m.state != null && Object.hasOwnProperty.call(m, "state")) w.uint32(24).int32(m.state);
             if (m.counterparty != null && Object.hasOwnProperty.call(m, "counterparty"))
@@ -8771,7 +8572,7 @@ exports.ibc = $root.ibc = (() => {
                   break;
                 case 2:
                   if (!(m.versions && m.versions.length)) m.versions = [];
-                  m.versions.push(r.string());
+                  m.versions.push($root.ibc.core.connection.v1.Version.decode(r, r.uint32()));
                   break;
                 case 3:
                   m.state = r.int32();
@@ -8809,7 +8610,8 @@ exports.ibc = $root.ibc = (() => {
             if (m.clientId != null && Object.hasOwnProperty.call(m, "clientId"))
               w.uint32(18).string(m.clientId);
             if (m.versions != null && m.versions.length) {
-              for (var i = 0; i < m.versions.length; ++i) w.uint32(26).string(m.versions[i]);
+              for (var i = 0; i < m.versions.length; ++i)
+                $root.ibc.core.connection.v1.Version.encode(m.versions[i], w.uint32(26).fork()).ldelim();
             }
             if (m.state != null && Object.hasOwnProperty.call(m, "state")) w.uint32(32).int32(m.state);
             if (m.counterparty != null && Object.hasOwnProperty.call(m, "counterparty"))
@@ -8831,7 +8633,7 @@ exports.ibc = $root.ibc = (() => {
                   break;
                 case 3:
                   if (!(m.versions && m.versions.length)) m.versions = [];
-                  m.versions.push(r.string());
+                  m.versions.push($root.ibc.core.connection.v1.Version.decode(r, r.uint32()));
                   break;
                 case 4:
                   m.state = r.int32();
@@ -9148,7 +8950,6 @@ exports.ibc = $root.ibc = (() => {
           }
           QueryConnectionResponse.prototype.connection = null;
           QueryConnectionResponse.prototype.proof = $util.newBuffer([]);
-          QueryConnectionResponse.prototype.proofPath = "";
           QueryConnectionResponse.prototype.proofHeight = null;
           QueryConnectionResponse.create = function create(properties) {
             return new QueryConnectionResponse(properties);
@@ -9158,10 +8959,8 @@ exports.ibc = $root.ibc = (() => {
             if (m.connection != null && Object.hasOwnProperty.call(m, "connection"))
               $root.ibc.core.connection.v1.ConnectionEnd.encode(m.connection, w.uint32(10).fork()).ldelim();
             if (m.proof != null && Object.hasOwnProperty.call(m, "proof")) w.uint32(18).bytes(m.proof);
-            if (m.proofPath != null && Object.hasOwnProperty.call(m, "proofPath"))
-              w.uint32(26).string(m.proofPath);
             if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
-              $root.ibc.core.client.v1.Height.encode(m.proofHeight, w.uint32(34).fork()).ldelim();
+              $root.ibc.core.client.v1.Height.encode(m.proofHeight, w.uint32(26).fork()).ldelim();
             return w;
           };
           QueryConnectionResponse.decode = function decode(r, l) {
@@ -9178,9 +8977,6 @@ exports.ibc = $root.ibc = (() => {
                   m.proof = r.bytes();
                   break;
                 case 3:
-                  m.proofPath = r.string();
-                  break;
-                case 4:
                   m.proofHeight = $root.ibc.core.client.v1.Height.decode(r, r.uint32());
                   break;
                 default:
@@ -9325,7 +9121,6 @@ exports.ibc = $root.ibc = (() => {
           }
           QueryClientConnectionsResponse.prototype.connectionPaths = $util.emptyArray;
           QueryClientConnectionsResponse.prototype.proof = $util.newBuffer([]);
-          QueryClientConnectionsResponse.prototype.proofPath = "";
           QueryClientConnectionsResponse.prototype.proofHeight = null;
           QueryClientConnectionsResponse.create = function create(properties) {
             return new QueryClientConnectionsResponse(properties);
@@ -9336,10 +9131,8 @@ exports.ibc = $root.ibc = (() => {
               for (var i = 0; i < m.connectionPaths.length; ++i) w.uint32(10).string(m.connectionPaths[i]);
             }
             if (m.proof != null && Object.hasOwnProperty.call(m, "proof")) w.uint32(18).bytes(m.proof);
-            if (m.proofPath != null && Object.hasOwnProperty.call(m, "proofPath"))
-              w.uint32(26).string(m.proofPath);
             if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
-              $root.ibc.core.client.v1.Height.encode(m.proofHeight, w.uint32(34).fork()).ldelim();
+              $root.ibc.core.client.v1.Height.encode(m.proofHeight, w.uint32(26).fork()).ldelim();
             return w;
           };
           QueryClientConnectionsResponse.decode = function decode(r, l) {
@@ -9357,9 +9150,6 @@ exports.ibc = $root.ibc = (() => {
                   m.proof = r.bytes();
                   break;
                 case 3:
-                  m.proofPath = r.string();
-                  break;
-                case 4:
                   m.proofHeight = $root.ibc.core.client.v1.Height.decode(r, r.uint32());
                   break;
                 default:
@@ -9414,7 +9204,6 @@ exports.ibc = $root.ibc = (() => {
           }
           QueryConnectionClientStateResponse.prototype.identifiedClientState = null;
           QueryConnectionClientStateResponse.prototype.proof = $util.newBuffer([]);
-          QueryConnectionClientStateResponse.prototype.proofPath = "";
           QueryConnectionClientStateResponse.prototype.proofHeight = null;
           QueryConnectionClientStateResponse.create = function create(properties) {
             return new QueryConnectionClientStateResponse(properties);
@@ -9427,10 +9216,8 @@ exports.ibc = $root.ibc = (() => {
                 w.uint32(10).fork(),
               ).ldelim();
             if (m.proof != null && Object.hasOwnProperty.call(m, "proof")) w.uint32(18).bytes(m.proof);
-            if (m.proofPath != null && Object.hasOwnProperty.call(m, "proofPath"))
-              w.uint32(26).string(m.proofPath);
             if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
-              $root.ibc.core.client.v1.Height.encode(m.proofHeight, w.uint32(34).fork()).ldelim();
+              $root.ibc.core.client.v1.Height.encode(m.proofHeight, w.uint32(26).fork()).ldelim();
             return w;
           };
           QueryConnectionClientStateResponse.decode = function decode(r, l) {
@@ -9450,9 +9237,6 @@ exports.ibc = $root.ibc = (() => {
                   m.proof = r.bytes();
                   break;
                 case 3:
-                  m.proofPath = r.string();
-                  break;
-                case 4:
                   m.proofHeight = $root.ibc.core.client.v1.Height.decode(r, r.uint32());
                   break;
                 default:
@@ -9524,7 +9308,6 @@ exports.ibc = $root.ibc = (() => {
           QueryConnectionConsensusStateResponse.prototype.consensusState = null;
           QueryConnectionConsensusStateResponse.prototype.clientId = "";
           QueryConnectionConsensusStateResponse.prototype.proof = $util.newBuffer([]);
-          QueryConnectionConsensusStateResponse.prototype.proofPath = "";
           QueryConnectionConsensusStateResponse.prototype.proofHeight = null;
           QueryConnectionConsensusStateResponse.create = function create(properties) {
             return new QueryConnectionConsensusStateResponse(properties);
@@ -9536,10 +9319,8 @@ exports.ibc = $root.ibc = (() => {
             if (m.clientId != null && Object.hasOwnProperty.call(m, "clientId"))
               w.uint32(18).string(m.clientId);
             if (m.proof != null && Object.hasOwnProperty.call(m, "proof")) w.uint32(26).bytes(m.proof);
-            if (m.proofPath != null && Object.hasOwnProperty.call(m, "proofPath"))
-              w.uint32(34).string(m.proofPath);
             if (m.proofHeight != null && Object.hasOwnProperty.call(m, "proofHeight"))
-              $root.ibc.core.client.v1.Height.encode(m.proofHeight, w.uint32(42).fork()).ldelim();
+              $root.ibc.core.client.v1.Height.encode(m.proofHeight, w.uint32(34).fork()).ldelim();
             return w;
           };
           QueryConnectionConsensusStateResponse.decode = function decode(r, l) {
@@ -9559,9 +9340,6 @@ exports.ibc = $root.ibc = (() => {
                   m.proof = r.bytes();
                   break;
                 case 4:
-                  m.proofPath = r.string();
-                  break;
-                case 5:
                   m.proofHeight = $root.ibc.core.client.v1.Height.decode(r, r.uint32());
                   break;
                 default:
@@ -10163,7 +9941,6 @@ exports.tendermint = $root.tendermint = (() => {
             if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
       }
       Data.prototype.txs = $util.emptyArray;
-      Data.prototype.hash = $util.newBuffer([]);
       Data.create = function create(properties) {
         return new Data(properties);
       };
@@ -10172,7 +9949,6 @@ exports.tendermint = $root.tendermint = (() => {
         if (m.txs != null && m.txs.length) {
           for (var i = 0; i < m.txs.length; ++i) w.uint32(10).bytes(m.txs[i]);
         }
-        if (m.hash != null && Object.hasOwnProperty.call(m, "hash")) w.uint32(18).bytes(m.hash);
         return w;
       };
       Data.decode = function decode(r, l) {
@@ -10185,9 +9961,6 @@ exports.tendermint = $root.tendermint = (() => {
             case 1:
               if (!(m.txs && m.txs.length)) m.txs = [];
               m.txs.push(r.bytes());
-              break;
-            case 2:
-              m.hash = r.bytes();
               break;
             default:
               r.skipType(t & 7);
@@ -10283,8 +10056,6 @@ exports.tendermint = $root.tendermint = (() => {
       Commit.prototype.round = 0;
       Commit.prototype.blockId = null;
       Commit.prototype.signatures = $util.emptyArray;
-      Commit.prototype.hash = $util.newBuffer([]);
-      Commit.prototype.bitArray = null;
       Commit.create = function create(properties) {
         return new Commit(properties);
       };
@@ -10298,9 +10069,6 @@ exports.tendermint = $root.tendermint = (() => {
           for (var i = 0; i < m.signatures.length; ++i)
             $root.tendermint.types.CommitSig.encode(m.signatures[i], w.uint32(34).fork()).ldelim();
         }
-        if (m.hash != null && Object.hasOwnProperty.call(m, "hash")) w.uint32(42).bytes(m.hash);
-        if (m.bitArray != null && Object.hasOwnProperty.call(m, "bitArray"))
-          $root.tendermint.libs.bits.BitArray.encode(m.bitArray, w.uint32(50).fork()).ldelim();
         return w;
       };
       Commit.decode = function decode(r, l) {
@@ -10322,12 +10090,6 @@ exports.tendermint = $root.tendermint = (() => {
             case 4:
               if (!(m.signatures && m.signatures.length)) m.signatures = [];
               m.signatures.push($root.tendermint.types.CommitSig.decode(r, r.uint32()));
-              break;
-            case 5:
-              m.hash = r.bytes();
-              break;
-            case 6:
-              m.bitArray = $root.tendermint.libs.bits.BitArray.decode(r, r.uint32());
               break;
             default:
               r.skipType(t & 7);
