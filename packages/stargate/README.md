@@ -4,7 +4,7 @@
 
 A client library for the Cosmos SDK 0.40.
 
-## Supported Cosmos-SDK versions
+## Supported Cosmos SDK versions
 
 | CosmJS version | Supported Cosmos SDK version(s) |
 | -------------- | ------------------------------- |
