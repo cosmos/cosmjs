@@ -4,6 +4,13 @@
 
 A client library for the Cosmos SDK 0.40.
 
+## Supported Cosmos-SDK versions
+
+| CosmJS version | Supported Cosmos SDK version(s) |
+| -------------- | ------------------------------- |
+| 0.24.0-alpha.2 | 0.40.0-rc2                      |
+| 0.24.0-alpha.1 | 0.40.0-rc1                      |
+
 ## License
 
 This package is part of the cosmjs repository, licensed under the Apache License
