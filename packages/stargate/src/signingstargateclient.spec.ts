@@ -12,6 +12,7 @@ import { faucet, makeRandomAddress, pendingWithoutSimapp, simapp, validator } fr
 describe("SigningStargateClient", () => {
   describe("constructor", () => {
     it("can be constructed with default fees", async () => {
+      pendingWithoutSimapp();
       const wallet = await DirectSecp256k1Wallet.fromMnemonic(faucet.mnemonic);
       const client = await SigningStargateClient.connectWithWallet(simapp.tendermintUrl, wallet);
       const openedClient = (client as unknown) as PrivateSigningStargateClient;
@@ -29,6 +30,7 @@ describe("SigningStargateClient", () => {
     });
 
     it("can be constructed with custom registry", async () => {
+      pendingWithoutSimapp();
       const wallet = await DirectSecp256k1Wallet.fromMnemonic(faucet.mnemonic);
       const registry = new Registry();
       registry.register("/custom.MsgCustom", cosmos.bank.v1beta1.MsgSend);
@@ -39,6 +41,7 @@ describe("SigningStargateClient", () => {
     });
 
     it("can be constructed with custom gas price", async () => {
+      pendingWithoutSimapp();
       const wallet = await DirectSecp256k1Wallet.fromMnemonic(faucet.mnemonic);
       const gasPrice = GasPrice.fromString("3.14utest");
       const options = { gasPrice: gasPrice };
@@ -58,6 +61,7 @@ describe("SigningStargateClient", () => {
     });
 
     it("can be constructed with custom gas limits", async () => {
+      pendingWithoutSimapp();
       const wallet = await DirectSecp256k1Wallet.fromMnemonic(faucet.mnemonic);
       const gasLimits = {
         send: 160000,
@@ -79,6 +83,7 @@ describe("SigningStargateClient", () => {
     });
 
     it("can be constructed with custom gas price and gas limits", async () => {
+      pendingWithoutSimapp();
       const wallet = await DirectSecp256k1Wallet.fromMnemonic(faucet.mnemonic);
       const gasPrice = GasPrice.fromString("3.14utest");
       const gasLimits = {
