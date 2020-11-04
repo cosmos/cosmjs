@@ -101,13 +101,13 @@ describe("IbcExtension", () => {
       });
     });
 
-    describe("unrelayedAcks", () => {
+    describe("unreceivedAcks", () => {
       it("can be called", async () => {
         pending("Fails with 'Query failed with (1): internal'. Make it work.");
         pendingWithoutSimapp();
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
-        const response = await client.ibc.unverified.unrelayedAcks("foo", "bar", [0, 1]);
+        const response = await client.ibc.unverified.unreceivedAcks("foo", "bar", [0, 1]);
         expect(response).toBeTruthy(); // TODO: implement checks
 
         tmClient.disconnect();

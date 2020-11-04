@@ -360,6 +360,85 @@ export namespace cosmos {
         public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.bank.v1beta1.Metadata;
       }
 
+      /** Represents a Msg */
+      class Msg extends $protobuf.rpc.Service {
+        /**
+         * Constructs a new Msg service.
+         * @param rpcImpl RPC implementation
+         * @param [requestDelimited=false] Whether requests are length-delimited
+         * @param [responseDelimited=false] Whether responses are length-delimited
+         */
+        constructor(rpcImpl: $protobuf.RPCImpl, requestDelimited?: boolean, responseDelimited?: boolean);
+
+        /**
+         * Creates new Msg service using the specified rpc implementation.
+         * @param rpcImpl RPC implementation
+         * @param [requestDelimited=false] Whether requests are length-delimited
+         * @param [responseDelimited=false] Whether responses are length-delimited
+         * @returns RPC service. Useful where requests and/or responses are streamed.
+         */
+        public static create(
+          rpcImpl: $protobuf.RPCImpl,
+          requestDelimited?: boolean,
+          responseDelimited?: boolean,
+        ): Msg;
+
+        /**
+         * Calls Send.
+         * @param request MsgSend message or plain object
+         * @param callback Node-style callback called with the error, if any, and MsgSendResponse
+         */
+        public send(
+          request: cosmos.bank.v1beta1.IMsgSend,
+          callback: cosmos.bank.v1beta1.Msg.SendCallback,
+        ): void;
+
+        /**
+         * Calls Send.
+         * @param request MsgSend message or plain object
+         * @returns Promise
+         */
+        public send(request: cosmos.bank.v1beta1.IMsgSend): Promise<cosmos.bank.v1beta1.MsgSendResponse>;
+
+        /**
+         * Calls MultiSend.
+         * @param request MsgMultiSend message or plain object
+         * @param callback Node-style callback called with the error, if any, and MsgMultiSendResponse
+         */
+        public multiSend(
+          request: cosmos.bank.v1beta1.IMsgMultiSend,
+          callback: cosmos.bank.v1beta1.Msg.MultiSendCallback,
+        ): void;
+
+        /**
+         * Calls MultiSend.
+         * @param request MsgMultiSend message or plain object
+         * @returns Promise
+         */
+        public multiSend(
+          request: cosmos.bank.v1beta1.IMsgMultiSend,
+        ): Promise<cosmos.bank.v1beta1.MsgMultiSendResponse>;
+      }
+
+      namespace Msg {
+        /**
+         * Callback as used by {@link cosmos.bank.v1beta1.Msg#send}.
+         * @param error Error, if any
+         * @param [response] MsgSendResponse
+         */
+        type SendCallback = (error: Error | null, response?: cosmos.bank.v1beta1.MsgSendResponse) => void;
+
+        /**
+         * Callback as used by {@link cosmos.bank.v1beta1.Msg#multiSend}.
+         * @param error Error, if any
+         * @param [response] MsgMultiSendResponse
+         */
+        type MultiSendCallback = (
+          error: Error | null,
+          response?: cosmos.bank.v1beta1.MsgMultiSendResponse,
+        ) => void;
+      }
+
       /** Properties of a MsgSend. */
       interface IMsgSend {
         /** MsgSend fromAddress */
@@ -415,6 +494,48 @@ export namespace cosmos {
         public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.bank.v1beta1.MsgSend;
       }
 
+      /** Properties of a MsgSendResponse. */
+      interface IMsgSendResponse {}
+
+      /** Represents a MsgSendResponse. */
+      class MsgSendResponse implements IMsgSendResponse {
+        /**
+         * Constructs a new MsgSendResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.bank.v1beta1.IMsgSendResponse);
+
+        /**
+         * Creates a new MsgSendResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns MsgSendResponse instance
+         */
+        public static create(
+          properties?: cosmos.bank.v1beta1.IMsgSendResponse,
+        ): cosmos.bank.v1beta1.MsgSendResponse;
+
+        /**
+         * Encodes the specified MsgSendResponse message. Does not implicitly {@link cosmos.bank.v1beta1.MsgSendResponse.verify|verify} messages.
+         * @param m MsgSendResponse message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(m: cosmos.bank.v1beta1.IMsgSendResponse, w?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a MsgSendResponse message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns MsgSendResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.bank.v1beta1.MsgSendResponse;
+      }
+
       /** Properties of a MsgMultiSend. */
       interface IMsgMultiSend {
         /** MsgMultiSend inputs */
@@ -464,6 +585,51 @@ export namespace cosmos {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmos.bank.v1beta1.MsgMultiSend;
+      }
+
+      /** Properties of a MsgMultiSendResponse. */
+      interface IMsgMultiSendResponse {}
+
+      /** Represents a MsgMultiSendResponse. */
+      class MsgMultiSendResponse implements IMsgMultiSendResponse {
+        /**
+         * Constructs a new MsgMultiSendResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.bank.v1beta1.IMsgMultiSendResponse);
+
+        /**
+         * Creates a new MsgMultiSendResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns MsgMultiSendResponse instance
+         */
+        public static create(
+          properties?: cosmos.bank.v1beta1.IMsgMultiSendResponse,
+        ): cosmos.bank.v1beta1.MsgMultiSendResponse;
+
+        /**
+         * Encodes the specified MsgMultiSendResponse message. Does not implicitly {@link cosmos.bank.v1beta1.MsgMultiSendResponse.verify|verify} messages.
+         * @param m MsgMultiSendResponse message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.bank.v1beta1.IMsgMultiSendResponse,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a MsgMultiSendResponse message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns MsgMultiSendResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.bank.v1beta1.MsgMultiSendResponse;
       }
     }
   }

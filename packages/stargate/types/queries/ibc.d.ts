@@ -38,11 +38,11 @@ export interface IbcExtension {
         channelId: string,
         packetCommitmentSequences: readonly number[],
       ) => Promise<ibc.core.channel.v1.IQueryUnreceivedPacketsResponse>;
-      readonly unrelayedAcks: (
+      readonly unreceivedAcks: (
         portId: string,
         channelId: string,
         packetCommitmentSequences: readonly number[],
-      ) => Promise<ibc.core.channel.v1.IQueryUnrelayedAcksResponse>;
+      ) => Promise<ibc.core.channel.v1.IQueryUnreceivedAcksResponse>;
       readonly nextSequenceReceive: (
         portId: string,
         channelId: string,

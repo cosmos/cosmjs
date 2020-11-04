@@ -49,11 +49,11 @@ export interface IbcExtension {
         channelId: string,
         packetCommitmentSequences: readonly number[],
       ) => Promise<ibc.core.channel.v1.IQueryUnreceivedPacketsResponse>;
-      readonly unrelayedAcks: (
+      readonly unreceivedAcks: (
         portId: string,
         channelId: string,
         packetCommitmentSequences: readonly number[],
-      ) => Promise<ibc.core.channel.v1.IQueryUnrelayedAcksResponse>;
+      ) => Promise<ibc.core.channel.v1.IQueryUnreceivedAcksResponse>;
       readonly nextSequenceReceive: (
         portId: string,
         channelId: string,
@@ -174,15 +174,11 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
           });
           return toObject(response);
         },
-        unrelayedAcks: async (
-          portId: string,
-          channelId: string,
-          packetCommitmentSequences: readonly number[],
-        ) => {
-          const response = await channelQuerySerice.unrelayedAcks({
+        unreceivedAcks: async (portId: string, channelId: string, packetAckSequences: readonly number[]) => {
+          const response = await channelQuerySerice.unreceivedAcks({
             portId: portId,
             channelId: channelId,
-            packetCommitmentSequences: packetCommitmentSequences.map((s) => Long.fromNumber(s)),
+            packetAckSequences: packetAckSequences.map((s) => Long.fromNumber(s)),
           });
           return toObject(response);
         },
