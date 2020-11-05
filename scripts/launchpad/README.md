@@ -1,11 +1,11 @@
-# Local Wasmd development network
+# Local Launchpad development network with CosmWasm support
 
 ## Starting the blockchain
 
 Run the following:
 
 ```
-cd scripts/wasmd
+cd scripts/launchpad
 ./start.sh && ./init.sh
 ```
 
