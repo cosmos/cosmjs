@@ -74,7 +74,7 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
   // Use this service to get easy typed access to query methods
   // This cannot be used to for proof verification
 
-  const channelQuerySerice = ChannelQuery.create((method: any, requestData, callback) => {
+  const channelQueryService = ChannelQuery.create((method: any, requestData, callback) => {
     // Parts of the path are unavailable, so we hardcode them here. See https://github.com/protobufjs/protobuf.js/issues/1229
     const path = `/ibc.core.channel.v1.Query/${method.name}`;
     base
@@ -83,7 +83,7 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
       .catch((error) => callback(error));
   });
 
-  const connectionQuerySerice = ConnectionQuery.create((method: any, requestData, callback) => {
+  const connectionQueryService = ConnectionQuery.create((method: any, requestData, callback) => {
     // Parts of the path are unavailable, so we hardcode them here. See https://github.com/protobufjs/protobuf.js/issues/1229
     const path = `/ibc.core.connection.v1.Query/${method.name}`;
     base
@@ -128,19 +128,19 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
       unverified: {
         // Queries for ibc.core.channel.v1
         channel: async (portId: string, channelId: string) => {
-          const response = await channelQuerySerice.channel({ portId: portId, channelId: channelId });
+          const response = await channelQueryService.channel({ portId: portId, channelId: channelId });
           return toObject(response);
         },
         channels: async () => {
-          const response = await channelQuerySerice.channels({});
+          const response = await channelQueryService.channels({});
           return toObject(response);
         },
         connectionChannels: async (connection: string) => {
-          const response = await channelQuerySerice.connectionChannels({ connection: connection });
+          const response = await channelQueryService.connectionChannels({ connection: connection });
           return toObject(response);
         },
         packetCommitment: async (portId: string, channelId: string, sequence: number) => {
-          const response = await channelQuerySerice.packetCommitment({
+          const response = await channelQueryService.packetCommitment({
             portId: portId,
             channelId: channelId,
             sequence: Long.fromNumber(sequence),
@@ -148,14 +148,14 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
           return toObject(response);
         },
         packetCommitments: async (portId: string, channelId: string) => {
-          const response = await channelQuerySerice.packetCommitments({
+          const response = await channelQueryService.packetCommitments({
             portId: portId,
             channelId: channelId,
           });
           return toObject(response);
         },
         packetAcknowledgement: async (portId: string, channelId: string, sequence: number) => {
-          const response = await channelQuerySerice.packetAcknowledgement({
+          const response = await channelQueryService.packetAcknowledgement({
             portId: portId,
             channelId: channelId,
             sequence: Long.fromNumber(sequence),
@@ -167,7 +167,7 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
           channelId: string,
           packetCommitmentSequences: readonly number[],
         ) => {
-          const response = await channelQuerySerice.unreceivedPackets({
+          const response = await channelQueryService.unreceivedPackets({
             portId: portId,
             channelId: channelId,
             packetCommitmentSequences: packetCommitmentSequences.map((s) => Long.fromNumber(s)),
@@ -175,7 +175,7 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
           return toObject(response);
         },
         unreceivedAcks: async (portId: string, channelId: string, packetAckSequences: readonly number[]) => {
-          const response = await channelQuerySerice.unreceivedAcks({
+          const response = await channelQueryService.unreceivedAcks({
             portId: portId,
             channelId: channelId,
             packetAckSequences: packetAckSequences.map((s) => Long.fromNumber(s)),
@@ -183,7 +183,7 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
           return toObject(response);
         },
         nextSequenceReceive: async (portId: string, channelId: string) => {
-          const response = await channelQuerySerice.nextSequenceReceive({
+          const response = await channelQueryService.nextSequenceReceive({
             portId: portId,
             channelId: channelId,
           });
@@ -193,15 +193,15 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
         // Queries for ibc.core.connection.v1
 
         connection: async (connectionId: string) => {
-          const response = await connectionQuerySerice.connection({ connectionId: connectionId });
+          const response = await connectionQueryService.connection({ connectionId: connectionId });
           return toObject(response);
         },
         connections: async () => {
-          const response = await connectionQuerySerice.connections({});
+          const response = await connectionQueryService.connections({});
           return toObject(response);
         },
         clientConnections: async (clientId: string) => {
-          const response = await connectionQuerySerice.clientConnections({ clientId: clientId });
+          const response = await connectionQueryService.clientConnections({ clientId: clientId });
           return toObject(response);
         },
       },
