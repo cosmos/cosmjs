@@ -11,10 +11,10 @@ import { SigningCosmosClient } from "../signingcosmosclient";
 import {
   bigDecimalMatcher,
   faucet,
+  launchpad,
+  launchpadEnabled,
   nonNegativeIntegerMatcher,
-  pendingWithoutWasmd,
-  wasmd,
-  wasmdEnabled,
+  pendingWithoutLaunchpad,
 } from "../testutils.spec";
 import { makeStdTx } from "../tx";
 import { DistributionExtension, setupDistributionExtension } from "./distribution";
@@ -31,20 +31,20 @@ describe("DistributionExtension", () => {
   };
 
   beforeAll(async () => {
-    if (wasmdEnabled()) {
+    if (launchpadEnabled()) {
       const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
-      const client = new SigningCosmosClient(wasmd.endpoint, faucet.address, wallet);
+      const client = new SigningCosmosClient(launchpad.endpoint, faucet.address, wallet);
 
       const chainId = await client.getChainId();
       const msg: MsgDelegate = {
         type: "cosmos-sdk/MsgDelegate",
         value: {
           delegator_address: faucet.address,
-          validator_address: wasmd.validator.address,
+          validator_address: launchpad.validator.address,
           amount: coin(25000, "ustake"),
         },
       };
-      const memo = "Test delegation for wasmd";
+      const memo = "Test delegation for launchpad";
       const { accountNumber, sequence } = await client.getSequence();
       const signDoc = makeSignDoc([msg], defaultFee, chainId, memo, accountNumber, sequence);
       const { signed, signature } = await wallet.signAmino(faucet.address, signDoc);
@@ -59,15 +59,15 @@ describe("DistributionExtension", () => {
 
   describe("delegatorRewards", () => {
     it("works", async () => {
-      pendingWithoutWasmd();
-      const client = makeDistributionClient(wasmd.endpoint);
+      pendingWithoutLaunchpad();
+      const client = makeDistributionClient(launchpad.endpoint);
       const response = await client.distribution.delegatorRewards(faucet.address);
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: {
           rewards: [
             {
-              validator_address: wasmd.validator.address,
+              validator_address: launchpad.validator.address,
               reward: null,
             },
           ],
@@ -79,9 +79,9 @@ describe("DistributionExtension", () => {
 
   describe("delegatorReward", () => {
     it("works", async () => {
-      pendingWithoutWasmd();
-      const client = makeDistributionClient(wasmd.endpoint);
-      const response = await client.distribution.delegatorReward(faucet.address, wasmd.validator.address);
+      pendingWithoutLaunchpad();
+      const client = makeDistributionClient(launchpad.endpoint);
+      const response = await client.distribution.delegatorReward(faucet.address, launchpad.validator.address);
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: [],
@@ -91,8 +91,8 @@ describe("DistributionExtension", () => {
 
   describe("withdrawAddress", () => {
     it("works", async () => {
-      pendingWithoutWasmd();
-      const client = makeDistributionClient(wasmd.endpoint);
+      pendingWithoutLaunchpad();
+      const client = makeDistributionClient(launchpad.endpoint);
       const response = await client.distribution.withdrawAddress(faucet.address);
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
@@ -103,14 +103,14 @@ describe("DistributionExtension", () => {
 
   describe("validator", () => {
     it("works", async () => {
-      pendingWithoutWasmd();
-      const client = makeDistributionClient(wasmd.endpoint);
-      const response = await client.distribution.validator(wasmd.validator.address);
+      pendingWithoutLaunchpad();
+      const client = makeDistributionClient(launchpad.endpoint);
+      const response = await client.distribution.validator(launchpad.validator.address);
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: {
           // TODO: This smells like a bug in the backend to me
-          operator_address: Bech32.encode("cosmos", Bech32.decode(wasmd.validator.address).data),
+          operator_address: Bech32.encode("cosmos", Bech32.decode(launchpad.validator.address).data),
           self_bond_rewards: [
             { denom: "ucosm", amount: jasmine.stringMatching(bigDecimalMatcher) },
             { denom: "ustake", amount: jasmine.stringMatching(bigDecimalMatcher) },
@@ -126,9 +126,9 @@ describe("DistributionExtension", () => {
 
   describe("validatorRewards", () => {
     it("works", async () => {
-      pendingWithoutWasmd();
-      const client = makeDistributionClient(wasmd.endpoint);
-      const response = await client.distribution.validatorRewards(wasmd.validator.address);
+      pendingWithoutLaunchpad();
+      const client = makeDistributionClient(launchpad.endpoint);
+      const response = await client.distribution.validatorRewards(launchpad.validator.address);
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: [
@@ -141,9 +141,9 @@ describe("DistributionExtension", () => {
 
   describe("validatorOutstandingRewards", () => {
     it("works", async () => {
-      pendingWithoutWasmd();
-      const client = makeDistributionClient(wasmd.endpoint);
-      const response = await client.distribution.validatorOutstandingRewards(wasmd.validator.address);
+      pendingWithoutLaunchpad();
+      const client = makeDistributionClient(launchpad.endpoint);
+      const response = await client.distribution.validatorOutstandingRewards(launchpad.validator.address);
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: [
@@ -156,8 +156,8 @@ describe("DistributionExtension", () => {
 
   describe("parameters", () => {
     it("works", async () => {
-      pendingWithoutWasmd();
-      const client = makeDistributionClient(wasmd.endpoint);
+      pendingWithoutLaunchpad();
+      const client = makeDistributionClient(launchpad.endpoint);
       const response = await client.distribution.parameters();
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
@@ -173,8 +173,8 @@ describe("DistributionExtension", () => {
 
   describe("communityPool", () => {
     it("works", async () => {
-      pendingWithoutWasmd();
-      const client = makeDistributionClient(wasmd.endpoint);
+      pendingWithoutLaunchpad();
+      const client = makeDistributionClient(launchpad.endpoint);
       const response = await client.distribution.communityPool();
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),

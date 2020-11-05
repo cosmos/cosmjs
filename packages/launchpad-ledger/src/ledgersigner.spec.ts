@@ -15,7 +15,7 @@ import { assert, sleep } from "@cosmjs/utils";
 import Transport from "@ledgerhq/hw-transport";
 
 import { LedgerSigner } from "./ledgersigner";
-import { pendingWithoutLedger, pendingWithoutWasmd, wasmd } from "./testutils.spec";
+import { launchpad, pendingWithoutLaunchpad, pendingWithoutLedger } from "./testutils.spec";
 
 const interactiveTimeout = 120_000;
 
@@ -136,14 +136,14 @@ describe("LedgerSigner", () => {
       "creates signature accepted by launchpad backend",
       async () => {
         pendingWithoutLedger();
-        pendingWithoutWasmd();
+        pendingWithoutLaunchpad();
         const signer = new LedgerSigner(transport, {
           testModeAllowed: true,
           hdPaths: [makeCosmoshubPath(0), makeCosmoshubPath(1), makeCosmoshubPath(10)],
         });
         const [fistAccount] = await signer.getAccounts();
 
-        const client = new SigningCosmosClient(wasmd.endpoint, fistAccount.address, signer);
+        const client = new SigningCosmosClient(launchpad.endpoint, fistAccount.address, signer);
         const result = await client.sendTokens(defaultRecipient, coins(1234567, "ucosm"));
         assert(isBroadcastTxSuccess(result));
       },

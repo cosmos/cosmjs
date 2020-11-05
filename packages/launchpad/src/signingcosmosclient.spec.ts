@@ -7,7 +7,7 @@ import { GasPrice } from "./gas";
 import { MsgDelegate } from "./msgs";
 import { Secp256k1HdWallet } from "./secp256k1hdwallet";
 import { PrivateSigningCosmosClient, SigningCosmosClient } from "./signingcosmosclient";
-import { makeRandomAddress, pendingWithoutWasmd, wasmd } from "./testutils.spec";
+import { launchpad, makeRandomAddress, pendingWithoutLaunchpad } from "./testutils.spec";
 
 const httpUrl = "http://localhost:1317";
 
@@ -102,7 +102,7 @@ describe("SigningCosmosClient", () => {
 
   describe("getHeight", () => {
     it("always uses authAccount implementation", async () => {
-      pendingWithoutWasmd();
+      pendingWithoutLaunchpad();
       const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const client = new SigningCosmosClient(httpUrl, faucet.address, wallet);
 
@@ -120,7 +120,7 @@ describe("SigningCosmosClient", () => {
 
   describe("sendTokens", () => {
     it("works", async () => {
-      pendingWithoutWasmd();
+      pendingWithoutLaunchpad();
       const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const client = new SigningCosmosClient(httpUrl, faucet.address, wallet);
 
@@ -152,7 +152,7 @@ describe("SigningCosmosClient", () => {
 
   describe("signAndBroadcast", () => {
     it("works", async () => {
-      pendingWithoutWasmd();
+      pendingWithoutLaunchpad();
       const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const client = new SigningCosmosClient(httpUrl, faucet.address, wallet);
 
@@ -160,7 +160,7 @@ describe("SigningCosmosClient", () => {
         type: "cosmos-sdk/MsgDelegate",
         value: {
           delegator_address: faucet.address,
-          validator_address: wasmd.validator.address,
+          validator_address: launchpad.validator.address,
           amount: coin(1234, "ustake"),
         },
       };

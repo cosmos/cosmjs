@@ -9,7 +9,7 @@ const msg: MsgDelegate = {
   type: "cosmos-sdk/MsgDelegate",
   value: {
     delegator_address: senderAddress,
-    // To get the proper validator address, start the demo chain (./scripts/wasmd/start.sh), then run:
+    // To get the proper validator address, start the demo chain (./scripts/launchpad/start.sh), then run:
     //   curl http://localhost:1317/staking/validators | jq '.result[0].operator_address'
     validator_address: "cosmosvaloper1yfkkk04ve8a0sugj4fe6q6zxuvmvza8r3arurr",
     amount: coin(300000, "ustake"),

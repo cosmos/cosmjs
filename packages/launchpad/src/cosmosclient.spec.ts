@@ -10,11 +10,11 @@ import { Secp256k1HdWallet } from "./secp256k1hdwallet";
 import cosmoshub from "./testdata/cosmoshub.json";
 import {
   faucet,
+  launchpad,
   makeRandomAddress,
-  pendingWithoutWasmd,
+  pendingWithoutLaunchpad,
   tendermintIdMatcher,
   unused,
-  wasmd,
 } from "./testutils.spec";
 import { isWrappedStdTx, makeStdTx } from "./tx";
 import { StdFee } from "./types";
@@ -28,26 +28,26 @@ const guest = {
 describe("CosmosClient", () => {
   describe("constructor", () => {
     it("can be constructed", () => {
-      const client = new CosmosClient(wasmd.endpoint);
+      const client = new CosmosClient(launchpad.endpoint);
       expect(client).toBeTruthy();
     });
   });
 
   describe("getChainId", () => {
     it("works", async () => {
-      pendingWithoutWasmd();
-      const client = new CosmosClient(wasmd.endpoint);
-      expect(await client.getChainId()).toEqual(wasmd.chainId);
+      pendingWithoutLaunchpad();
+      const client = new CosmosClient(launchpad.endpoint);
+      expect(await client.getChainId()).toEqual(launchpad.chainId);
     });
 
     it("caches chain ID", async () => {
-      pendingWithoutWasmd();
-      const client = new CosmosClient(wasmd.endpoint);
+      pendingWithoutLaunchpad();
+      const client = new CosmosClient(launchpad.endpoint);
       const openedClient = (client as unknown) as PrivateCosmosClient;
       const getCodeSpy = spyOn(openedClient.lcdClient, "nodeInfo").and.callThrough();
 
-      expect(await client.getChainId()).toEqual(wasmd.chainId); // from network
-      expect(await client.getChainId()).toEqual(wasmd.chainId); // from cache
+      expect(await client.getChainId()).toEqual(launchpad.chainId); // from network
+      expect(await client.getChainId()).toEqual(launchpad.chainId); // from cache
 
       expect(getCodeSpy).toHaveBeenCalledTimes(1);
     });
@@ -55,8 +55,8 @@ describe("CosmosClient", () => {
 
   describe("getHeight", () => {
     it("gets height via last block", async () => {
-      pendingWithoutWasmd();
-      const client = new CosmosClient(wasmd.endpoint);
+      pendingWithoutLaunchpad();
+      const client = new CosmosClient(launchpad.endpoint);
       const openedClient = (client as unknown) as PrivateCosmosClient;
       const blockLatestSpy = spyOn(openedClient.lcdClient, "blocksLatest").and.callThrough();
 
@@ -71,8 +71,8 @@ describe("CosmosClient", () => {
     });
 
     it("gets height via authAccount once an address is known", async () => {
-      pendingWithoutWasmd();
-      const client = new CosmosClient(wasmd.endpoint);
+      pendingWithoutLaunchpad();
+      const client = new CosmosClient(launchpad.endpoint);
 
       const openedClient = (client as unknown) as PrivateCosmosClient;
       const blockLatestSpy = spyOn(openedClient.lcdClient, "blocksLatest").and.callThrough();
@@ -97,8 +97,8 @@ describe("CosmosClient", () => {
 
   describe("getSequence", () => {
     it("works", async () => {
-      pendingWithoutWasmd();
-      const client = new CosmosClient(wasmd.endpoint);
+      pendingWithoutLaunchpad();
+      const client = new CosmosClient(launchpad.endpoint);
       expect(await client.getSequence(unused.address)).toEqual({
         accountNumber: unused.accountNumber,
         sequence: unused.sequence,
@@ -106,8 +106,8 @@ describe("CosmosClient", () => {
     });
 
     it("throws for missing accounts", async () => {
-      pendingWithoutWasmd();
-      const client = new CosmosClient(wasmd.endpoint);
+      pendingWithoutLaunchpad();
+      const client = new CosmosClient(launchpad.endpoint);
       const missing = makeRandomAddress();
       await client.getSequence(missing).then(
         () => fail("this must not succeed"),
@@ -118,8 +118,8 @@ describe("CosmosClient", () => {
 
   describe("getAccount", () => {
     it("works", async () => {
-      pendingWithoutWasmd();
-      const client = new CosmosClient(wasmd.endpoint);
+      pendingWithoutLaunchpad();
+      const client = new CosmosClient(launchpad.endpoint);
       expect(await client.getAccount(unused.address)).toEqual({
         address: unused.address,
         accountNumber: unused.accountNumber,
@@ -133,8 +133,8 @@ describe("CosmosClient", () => {
     });
 
     it("returns undefined for missing accounts", async () => {
-      pendingWithoutWasmd();
-      const client = new CosmosClient(wasmd.endpoint);
+      pendingWithoutLaunchpad();
+      const client = new CosmosClient(launchpad.endpoint);
       const missing = makeRandomAddress();
       expect(await client.getAccount(missing)).toBeUndefined();
     });
@@ -142,8 +142,8 @@ describe("CosmosClient", () => {
 
   describe("getBlock", () => {
     it("works for latest block", async () => {
-      pendingWithoutWasmd();
-      const client = new CosmosClient(wasmd.endpoint);
+      pendingWithoutLaunchpad();
+      const client = new CosmosClient(launchpad.endpoint);
       const response = await client.getBlock();
 
       expect(response).toEqual(
@@ -164,8 +164,8 @@ describe("CosmosClient", () => {
     });
 
     it("works for block by height", async () => {
-      pendingWithoutWasmd();
-      const client = new CosmosClient(wasmd.endpoint);
+      pendingWithoutLaunchpad();
+      const client = new CosmosClient(launchpad.endpoint);
       const height = (await client.getBlock()).header.height;
       const response = await client.getBlock(height - 1);
 
@@ -189,8 +189,8 @@ describe("CosmosClient", () => {
 
   describe("getIdentifier", () => {
     it("works", async () => {
-      pendingWithoutWasmd();
-      const client = new CosmosClient(wasmd.endpoint);
+      pendingWithoutLaunchpad();
+      const client = new CosmosClient(launchpad.endpoint);
       assert(isWrappedStdTx(cosmoshub.tx));
       expect(await client.getIdentifier(cosmoshub.tx)).toEqual(cosmoshub.id);
     });
@@ -198,11 +198,11 @@ describe("CosmosClient", () => {
 
   describe("broadcastTx", () => {
     it("works", async () => {
-      pendingWithoutWasmd();
+      pendingWithoutLaunchpad();
       const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const accounts = await wallet.getAccounts();
       const [{ address: walletAddress }] = accounts;
-      const client = new CosmosClient(wasmd.endpoint);
+      const client = new CosmosClient(launchpad.endpoint);
 
       const memo = "Test send";
       const sendMsg: MsgSend = {

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { nonNegativeIntegerMatcher, pendingWithoutWasmd, wasmd } from "../testutils.spec";
+import { launchpad, nonNegativeIntegerMatcher, pendingWithoutLaunchpad } from "../testutils.spec";
 import { LcdClient } from "./lcdclient";
 import { setupSlashingExtension, SlashingExtension } from "./slashing";
 
@@ -10,8 +10,8 @@ function makeSlashingClient(apiUrl: string): LcdClient & SlashingExtension {
 describe("SlashingExtension", () => {
   describe("signingInfos", () => {
     it("works", async () => {
-      pendingWithoutWasmd();
-      const client = makeSlashingClient(wasmd.endpoint);
+      pendingWithoutLaunchpad();
+      const client = makeSlashingClient(launchpad.endpoint);
       const response = await client.slashing.signingInfos();
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
@@ -31,8 +31,8 @@ describe("SlashingExtension", () => {
 
   describe("parameters", () => {
     it("works", async () => {
-      pendingWithoutWasmd();
-      const client = makeSlashingClient(wasmd.endpoint);
+      pendingWithoutLaunchpad();
+      const client = makeSlashingClient(launchpad.endpoint);
       const response = await client.slashing.parameters();
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
