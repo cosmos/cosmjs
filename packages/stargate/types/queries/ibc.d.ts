@@ -15,9 +15,10 @@ export interface IbcExtension {
         portId: string,
         channelId: string,
       ) => Promise<ibc.core.channel.v1.IQueryChannelResponse>;
-      readonly channels: () => Promise<ibc.core.channel.v1.IQueryChannelsResponse>;
+      readonly channels: (paginationKey?: Uint8Array) => Promise<ibc.core.channel.v1.IQueryChannelsResponse>;
       readonly connectionChannels: (
         connection: string,
+        paginationKey?: Uint8Array,
       ) => Promise<ibc.core.channel.v1.IQueryConnectionChannelsResponse>;
       readonly packetCommitment: (
         portId: string,
@@ -27,6 +28,7 @@ export interface IbcExtension {
       readonly packetCommitments: (
         portId: string,
         channelId: string,
+        paginationKey?: Uint8Array,
       ) => Promise<ibc.core.channel.v1.IQueryPacketCommitmentsResponse>;
       readonly packetAcknowledgement: (
         portId: string,
@@ -48,7 +50,9 @@ export interface IbcExtension {
         channelId: string,
       ) => Promise<ibc.core.channel.v1.IQueryNextSequenceReceiveResponse>;
       readonly connection: (connectionId: string) => Promise<ibc.core.connection.v1.IQueryConnectionResponse>;
-      readonly connections: () => Promise<ibc.core.connection.v1.IQueryConnectionsResponse>;
+      readonly connections: (
+        paginationKey?: Uint8Array,
+      ) => Promise<ibc.core.connection.v1.IQueryConnectionsResponse>;
       readonly clientConnections: (
         clientId: string,
       ) => Promise<ibc.core.connection.v1.IQueryClientConnectionsResponse>;

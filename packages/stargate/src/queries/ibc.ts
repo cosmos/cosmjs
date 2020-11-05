@@ -26,9 +26,10 @@ export interface IbcExtension {
         portId: string,
         channelId: string,
       ) => Promise<ibc.core.channel.v1.IQueryChannelResponse>;
-      readonly channels: () => Promise<ibc.core.channel.v1.IQueryChannelsResponse>;
+      readonly channels: (paginationKey?: Uint8Array) => Promise<ibc.core.channel.v1.IQueryChannelsResponse>;
       readonly connectionChannels: (
         connection: string,
+        paginationKey?: Uint8Array,
       ) => Promise<ibc.core.channel.v1.IQueryConnectionChannelsResponse>;
       readonly packetCommitment: (
         portId: string,
@@ -38,6 +39,7 @@ export interface IbcExtension {
       readonly packetCommitments: (
         portId: string,
         channelId: string,
+        paginationKey?: Uint8Array,
       ) => Promise<ibc.core.channel.v1.IQueryPacketCommitmentsResponse>;
       readonly packetAcknowledgement: (
         portId: string,
@@ -62,7 +64,9 @@ export interface IbcExtension {
       // Queries for ibc.core.connection.v1
 
       readonly connection: (connectionId: string) => Promise<ibc.core.connection.v1.IQueryConnectionResponse>;
-      readonly connections: () => Promise<ibc.core.connection.v1.IQueryConnectionsResponse>;
+      readonly connections: (
+        paginationKey?: Uint8Array,
+      ) => Promise<ibc.core.connection.v1.IQueryConnectionsResponse>;
       readonly clientConnections: (
         clientId: string,
       ) => Promise<ibc.core.connection.v1.IQueryClientConnectionsResponse>;
@@ -131,12 +135,19 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
           const response = await channelQueryService.channel({ portId: portId, channelId: channelId });
           return toObject(response);
         },
-        channels: async () => {
-          const response = await channelQueryService.channels({});
+        channels: async (paginationKey?: Uint8Array) => {
+          const request = {
+            pagination: paginationKey ? { key: paginationKey } : undefined,
+          };
+          const response = await channelQueryService.channels(request);
           return toObject(response);
         },
-        connectionChannels: async (connection: string) => {
-          const response = await channelQueryService.connectionChannels({ connection: connection });
+        connectionChannels: async (connection: string, paginationKey?: Uint8Array) => {
+          const request = {
+            connection: connection,
+            pagination: paginationKey ? { key: paginationKey } : undefined,
+          };
+          const response = await channelQueryService.connectionChannels(request);
           return toObject(response);
         },
         packetCommitment: async (portId: string, channelId: string, sequence: number) => {
@@ -147,11 +158,13 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
           });
           return toObject(response);
         },
-        packetCommitments: async (portId: string, channelId: string) => {
-          const response = await channelQueryService.packetCommitments({
-            portId: portId,
+        packetCommitments: async (portId: string, channelId: string, paginationKey?: Uint8Array) => {
+          const request = {
             channelId: channelId,
-          });
+            portId: portId,
+            pagination: paginationKey ? { key: paginationKey } : undefined,
+          };
+          const response = await channelQueryService.packetCommitments(request);
           return toObject(response);
         },
         packetAcknowledgement: async (portId: string, channelId: string, sequence: number) => {
@@ -196,8 +209,11 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
           const response = await connectionQueryService.connection({ connectionId: connectionId });
           return toObject(response);
         },
-        connections: async () => {
-          const response = await connectionQueryService.connections({});
+        connections: async (paginationKey?: Uint8Array) => {
+          const request = {
+            pagination: paginationKey ? { key: paginationKey } : undefined,
+          };
+          const response = await connectionQueryService.connections(request);
           return toObject(response);
         },
         clientConnections: async (clientId: string) => {
