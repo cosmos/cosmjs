@@ -14,6 +14,6 @@ module.exports = [
       path: distdir,
       filename: "tests.js",
     },
-    plugins: [new webpack.EnvironmentPlugin(["WASMD_ENABLED", "ERC20_ENABLED"])],
+    plugins: [new webpack.EnvironmentPlugin(["LAUNCHPAD_ENABLED", "ERC20_ENABLED"])],
   },
 ];

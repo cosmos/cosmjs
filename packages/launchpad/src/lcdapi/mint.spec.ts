@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import {
   bigDecimalMatcher,
+  launchpad,
   nonNegativeIntegerMatcher,
-  pendingWithoutWasmd,
+  pendingWithoutLaunchpad,
   smallDecimalMatcher,
-  wasmd,
 } from "../testutils.spec";
 import { LcdClient } from "./lcdclient";
 import { MintExtension, setupMintExtension } from "./mint";
@@ -16,8 +16,8 @@ function makeMintClient(apiUrl: string): LcdClient & MintExtension {
 describe("MintExtension", () => {
   describe("parameters", () => {
     it("works", async () => {
-      pendingWithoutWasmd();
-      const client = makeMintClient(wasmd.endpoint);
+      pendingWithoutLaunchpad();
+      const client = makeMintClient(launchpad.endpoint);
       const response = await client.mint.parameters();
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
@@ -35,8 +35,8 @@ describe("MintExtension", () => {
 
   describe("inflation", () => {
     it("works", async () => {
-      pendingWithoutWasmd();
-      const client = makeMintClient(wasmd.endpoint);
+      pendingWithoutLaunchpad();
+      const client = makeMintClient(launchpad.endpoint);
       const response = await client.mint.inflation();
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
@@ -47,8 +47,8 @@ describe("MintExtension", () => {
 
   describe("annualProvisions", () => {
     it("works", async () => {
-      pendingWithoutWasmd();
-      const client = makeMintClient(wasmd.endpoint);
+      pendingWithoutLaunchpad();
+      const client = makeMintClient(launchpad.endpoint);
       const response = await client.mint.annualProvisions();
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),

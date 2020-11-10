@@ -1,9 +1,9 @@
 import {
+  launchpad,
   makeRandomAddress,
   nonNegativeIntegerMatcher,
-  pendingWithoutWasmd,
+  pendingWithoutLaunchpad,
   unused,
-  wasmd,
 } from "../testutils.spec";
 import { BankExtension, setupBankExtension } from "./bank";
 import { LcdClient } from "./lcdclient";
@@ -14,8 +14,8 @@ function makeBankClient(apiUrl: string): LcdClient & BankExtension {
 
 describe("BankExtension", () => {
   it("returns correct values for the unused account", async () => {
-    pendingWithoutWasmd();
-    const client = makeBankClient(wasmd.endpoint);
+    pendingWithoutLaunchpad();
+    const client = makeBankClient(launchpad.endpoint);
     const balances = await client.bank.balances(unused.address);
     expect(balances).toEqual({
       height: jasmine.stringMatching(nonNegativeIntegerMatcher),
@@ -33,8 +33,8 @@ describe("BankExtension", () => {
   });
 
   it("returns an empty result for a non-existent account", async () => {
-    pendingWithoutWasmd();
-    const client = makeBankClient(wasmd.endpoint);
+    pendingWithoutLaunchpad();
+    const client = makeBankClient(launchpad.endpoint);
     const nonExistentAddress = makeRandomAddress();
     const balances = await client.bank.balances(nonExistentAddress);
     expect(balances).toEqual({

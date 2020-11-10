@@ -36,10 +36,10 @@ import {
   deployedHackatom,
   fromOneElementArray,
   getHackatom,
+  launchpad,
+  launchpadEnabled,
   makeRandomAddress,
-  pendingWithoutWasmd,
-  wasmd,
-  wasmdEnabled,
+  pendingWithoutLaunchpad,
 } from "../testutils.spec";
 import { setupWasmExtension, WasmExtension } from "./wasm";
 
@@ -69,7 +69,7 @@ async function uploadContract(
   };
 
   const firstAddress = (await signer.getAccounts())[0].address;
-  const client = new SigningCosmosClient(wasmd.endpoint, firstAddress, signer);
+  const client = new SigningCosmosClient(launchpad.endpoint, firstAddress, signer);
   return client.signAndBroadcast([theMsg], fee, memo);
 }
 
@@ -99,7 +99,7 @@ async function instantiateContract(
   };
 
   const firstAddress = (await signer.getAccounts())[0].address;
-  const client = new SigningCosmosClient(wasmd.endpoint, firstAddress, signer);
+  const client = new SigningCosmosClient(launchpad.endpoint, firstAddress, signer);
   return client.signAndBroadcast([theMsg], fee, memo);
 }
 
@@ -125,7 +125,7 @@ async function executeContract(
   };
 
   const { account_number, sequence } = (await client.auth.account(alice.address0)).result.value;
-  const signDoc = makeSignDoc([theMsg], fee, wasmd.chainId, memo, account_number, sequence);
+  const signDoc = makeSignDoc([theMsg], fee, launchpad.chainId, memo, account_number, sequence);
   const { signed, signature } = await signer.signAmino(alice.address0, signDoc);
   const signedTx = makeStdTx(signed, signature);
   return client.broadcastTx(signedTx);
@@ -138,7 +138,7 @@ describe("WasmExtension", () => {
   let hackatomContractAddress: string | undefined;
 
   beforeAll(async () => {
-    if (wasmdEnabled()) {
+    if (launchpadEnabled()) {
       const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic);
       const result = await uploadContract(wallet, hackatom);
       assertIsBroadcastTxSuccess(result);
@@ -156,9 +156,9 @@ describe("WasmExtension", () => {
 
   describe("listCodeInfo", () => {
     it("has recently uploaded contract as last entry", async () => {
-      pendingWithoutWasmd();
+      pendingWithoutLaunchpad();
       assert(hackatomCodeId);
-      const client = makeWasmClient(wasmd.endpoint);
+      const client = makeWasmClient(launchpad.endpoint);
       const codesList = await client.wasm.listCodeInfo();
       const lastCode = codesList[codesList.length - 1];
       expect(lastCode.id).toEqual(hackatomCodeId);
@@ -171,9 +171,9 @@ describe("WasmExtension", () => {
 
   describe("getCode", () => {
     it("contains fill code information", async () => {
-      pendingWithoutWasmd();
+      pendingWithoutLaunchpad();
       assert(hackatomCodeId);
-      const client = makeWasmClient(wasmd.endpoint);
+      const client = makeWasmClient(launchpad.endpoint);
       const code = await client.wasm.getCode(hackatomCodeId);
       expect(code.id).toEqual(hackatomCodeId);
       expect(code.creator).toEqual(alice.address0);
@@ -187,10 +187,10 @@ describe("WasmExtension", () => {
   // TODO: move listContractsByCodeId tests out of here
   describe("getContractInfo", () => {
     it("works", async () => {
-      pendingWithoutWasmd();
+      pendingWithoutLaunchpad();
       assert(hackatomCodeId);
       const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic);
-      const client = makeWasmClient(wasmd.endpoint);
+      const client = makeWasmClient(launchpad.endpoint);
       const beneficiaryAddress = makeRandomAddress();
       const transferAmount = coins(707707, "ucosm");
 
@@ -233,9 +233,9 @@ describe("WasmExtension", () => {
     });
 
     it("returns null for non-existent address", async () => {
-      pendingWithoutWasmd();
+      pendingWithoutLaunchpad();
       assert(hackatomCodeId);
-      const client = makeWasmClient(wasmd.endpoint);
+      const client = makeWasmClient(launchpad.endpoint);
       const nonExistentAddress = makeRandomAddress();
       const info = await client.wasm.getContractInfo(nonExistentAddress);
       expect(info).toBeNull();
@@ -244,10 +244,10 @@ describe("WasmExtension", () => {
 
   describe("getContractCodeHistory", () => {
     it("can list contract history", async () => {
-      pendingWithoutWasmd();
+      pendingWithoutLaunchpad();
       assert(hackatomCodeId);
       const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic);
-      const client = makeWasmClient(wasmd.endpoint);
+      const client = makeWasmClient(launchpad.endpoint);
       const beneficiaryAddress = makeRandomAddress();
       const transferAmount = coins(707707, "ucosm");
 
@@ -271,9 +271,9 @@ describe("WasmExtension", () => {
     });
 
     it("returns null for non-existent address", async () => {
-      pendingWithoutWasmd();
+      pendingWithoutLaunchpad();
       assert(hackatomCodeId);
-      const client = makeWasmClient(wasmd.endpoint);
+      const client = makeWasmClient(launchpad.endpoint);
       const nonExistentAddress = makeRandomAddress();
       const history = await client.wasm.getContractCodeHistory(nonExistentAddress);
       expect(history).toBeNull();
@@ -282,9 +282,9 @@ describe("WasmExtension", () => {
 
   describe("getAllContractState", () => {
     it("can get all state", async () => {
-      pendingWithoutWasmd();
+      pendingWithoutLaunchpad();
       assert(hackatomContractAddress);
-      const client = makeWasmClient(wasmd.endpoint);
+      const client = makeWasmClient(launchpad.endpoint);
       const state = await client.wasm.getAllContractState(hackatomContractAddress);
       expect(state.length).toEqual(1);
       const data = state[0];
@@ -295,8 +295,8 @@ describe("WasmExtension", () => {
     });
 
     it("is empty for non-existent address", async () => {
-      pendingWithoutWasmd();
-      const client = makeWasmClient(wasmd.endpoint);
+      pendingWithoutLaunchpad();
+      const client = makeWasmClient(launchpad.endpoint);
       const nonExistentAddress = makeRandomAddress();
       const state = await client.wasm.getAllContractState(nonExistentAddress);
       expect(state).toEqual([]);
@@ -305,9 +305,9 @@ describe("WasmExtension", () => {
 
   describe("queryContractRaw", () => {
     it("can query by key", async () => {
-      pendingWithoutWasmd();
+      pendingWithoutLaunchpad();
       assert(hackatomContractAddress);
-      const client = makeWasmClient(wasmd.endpoint);
+      const client = makeWasmClient(launchpad.endpoint);
       const raw = await client.wasm.queryContractRaw(hackatomContractAddress, hackatomConfigKey);
       assert(raw, "must get result");
       const model = JSON.parse(fromAscii(raw));
@@ -316,16 +316,16 @@ describe("WasmExtension", () => {
     });
 
     it("returns null for missing key", async () => {
-      pendingWithoutWasmd();
+      pendingWithoutLaunchpad();
       assert(hackatomContractAddress);
-      const client = makeWasmClient(wasmd.endpoint);
+      const client = makeWasmClient(launchpad.endpoint);
       const info = await client.wasm.queryContractRaw(hackatomContractAddress, fromHex("cafe0dad"));
       expect(info).toBeNull();
     });
 
     it("returns null for non-existent address", async () => {
-      pendingWithoutWasmd();
-      const client = makeWasmClient(wasmd.endpoint);
+      pendingWithoutLaunchpad();
+      const client = makeWasmClient(launchpad.endpoint);
       const nonExistentAddress = makeRandomAddress();
       const info = await client.wasm.queryContractRaw(nonExistentAddress, hackatomConfigKey);
       expect(info).toBeNull();
@@ -334,18 +334,18 @@ describe("WasmExtension", () => {
 
   describe("queryContractSmart", () => {
     it("can make smart queries", async () => {
-      pendingWithoutWasmd();
+      pendingWithoutLaunchpad();
       assert(hackatomContractAddress);
-      const client = makeWasmClient(wasmd.endpoint);
+      const client = makeWasmClient(launchpad.endpoint);
       const request = { verifier: {} };
       const response = await client.wasm.queryContractSmart(hackatomContractAddress, request);
       expect(response).toEqual({ verifier: alice.address0 });
     });
 
     it("throws for invalid query requests", async () => {
-      pendingWithoutWasmd();
+      pendingWithoutLaunchpad();
       assert(hackatomContractAddress);
-      const client = makeWasmClient(wasmd.endpoint);
+      const client = makeWasmClient(launchpad.endpoint);
       const request = { nosuchkey: {} };
       await client.wasm.queryContractSmart(hackatomContractAddress, request).then(
         () => fail("shouldn't succeed"),
@@ -357,8 +357,8 @@ describe("WasmExtension", () => {
     });
 
     it("throws for non-existent address", async () => {
-      pendingWithoutWasmd();
-      const client = makeWasmClient(wasmd.endpoint);
+      pendingWithoutLaunchpad();
+      const client = makeWasmClient(launchpad.endpoint);
       const nonExistentAddress = makeRandomAddress();
       const request = { verifier: {} };
       await client.wasm.queryContractSmart(nonExistentAddress, request).then(
@@ -370,8 +370,8 @@ describe("WasmExtension", () => {
 
   describe("txsQuery", () => {
     it("can query by tags (module + code_id)", async () => {
-      pendingWithoutWasmd();
-      const client = makeWasmClient(wasmd.endpoint);
+      pendingWithoutLaunchpad();
+      const client = makeWasmClient(launchpad.endpoint);
       const result = await client.txsQuery(`message.module=wasm&message.code_id=${deployedHackatom.codeId}`);
       expect(parseInt(result.count, 10)).toBeGreaterThanOrEqual(4);
 
@@ -420,8 +420,8 @@ describe("WasmExtension", () => {
 
     // Like previous test but filtered by message.action=store-code and message.action=instantiate
     it("can query by tags (module + code_id + action)", async () => {
-      pendingWithoutWasmd();
-      const client = makeWasmClient(wasmd.endpoint);
+      pendingWithoutLaunchpad();
+      const client = makeWasmClient(launchpad.endpoint);
 
       {
         const uploads = await client.txsQuery(
@@ -482,9 +482,9 @@ describe("WasmExtension", () => {
 
   describe("broadcastTx", () => {
     it("can upload, instantiate and execute wasm", async () => {
-      pendingWithoutWasmd();
+      pendingWithoutLaunchpad();
       const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic);
-      const client = makeWasmClient(wasmd.endpoint);
+      const client = makeWasmClient(launchpad.endpoint);
 
       const transferAmount = [coin(1234, "ucosm"), coin(321, "ustake")];
       const beneficiaryAddress = makeRandomAddress();

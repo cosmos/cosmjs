@@ -9,10 +9,10 @@ import { SigningCosmosClient } from "../signingcosmosclient";
 import {
   dateTimeStampMatcher,
   faucet,
+  launchpad,
+  launchpadEnabled,
   nonNegativeIntegerMatcher,
-  pendingWithoutWasmd,
-  wasmd,
-  wasmdEnabled,
+  pendingWithoutLaunchpad,
 } from "../testutils.spec";
 import { GovExtension, GovParametersType, setupGovExtension } from "./gov";
 import { LcdClient } from "./lcdclient";
@@ -29,9 +29,9 @@ describe("GovExtension", () => {
   let proposalId: string;
 
   beforeAll(async () => {
-    if (wasmdEnabled()) {
+    if (launchpadEnabled()) {
       const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
-      const client = new SigningCosmosClient(wasmd.endpoint, faucet.address, wallet);
+      const client = new SigningCosmosClient(launchpad.endpoint, faucet.address, wallet);
 
       const chainId = await client.getChainId();
       const proposalMsg = {
@@ -105,8 +105,8 @@ describe("GovExtension", () => {
 
   describe("parameters", () => {
     it("works for deposit", async () => {
-      pendingWithoutWasmd();
-      const client = makeGovClient(wasmd.endpoint);
+      pendingWithoutLaunchpad();
+      const client = makeGovClient(launchpad.endpoint);
       const paramsType = GovParametersType.Deposit;
       const response = await client.gov.parameters(paramsType);
       expect(response).toEqual({
@@ -119,8 +119,8 @@ describe("GovExtension", () => {
     });
 
     it("works for tallying", async () => {
-      pendingWithoutWasmd();
-      const client = makeGovClient(wasmd.endpoint);
+      pendingWithoutLaunchpad();
+      const client = makeGovClient(launchpad.endpoint);
       const paramsType = GovParametersType.Tallying;
       const response = await client.gov.parameters(paramsType);
       expect(response).toEqual({
@@ -134,8 +134,8 @@ describe("GovExtension", () => {
     });
 
     it("works for voting", async () => {
-      pendingWithoutWasmd();
-      const client = makeGovClient(wasmd.endpoint);
+      pendingWithoutLaunchpad();
+      const client = makeGovClient(launchpad.endpoint);
       const paramsType = GovParametersType.Voting;
       const response = await client.gov.parameters(paramsType);
       expect(response).toEqual({
@@ -149,8 +149,8 @@ describe("GovExtension", () => {
 
   describe("proposals", () => {
     it("works", async () => {
-      pendingWithoutWasmd();
-      const client = makeGovClient(wasmd.endpoint);
+      pendingWithoutLaunchpad();
+      const client = makeGovClient(launchpad.endpoint);
       const response = await client.gov.proposals();
       expect(response.height).toMatch(nonNegativeIntegerMatcher);
       expect(response.result.length).toBeGreaterThanOrEqual(1);
@@ -176,8 +176,8 @@ describe("GovExtension", () => {
 
   describe("proposal", () => {
     it("works", async () => {
-      pendingWithoutWasmd();
-      const client = makeGovClient(wasmd.endpoint);
+      pendingWithoutLaunchpad();
+      const client = makeGovClient(launchpad.endpoint);
       const response = await client.gov.proposal(proposalId);
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
@@ -204,8 +204,8 @@ describe("GovExtension", () => {
 
   describe("proposer", () => {
     it("works", async () => {
-      pendingWithoutWasmd();
-      const client = makeGovClient(wasmd.endpoint);
+      pendingWithoutLaunchpad();
+      const client = makeGovClient(launchpad.endpoint);
       const response = await client.gov.proposer(proposalId);
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
@@ -219,8 +219,8 @@ describe("GovExtension", () => {
 
   describe("deposits", () => {
     it("works", async () => {
-      pendingWithoutWasmd();
-      const client = makeGovClient(wasmd.endpoint);
+      pendingWithoutLaunchpad();
+      const client = makeGovClient(launchpad.endpoint);
       const response = await client.gov.deposits(proposalId);
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
@@ -237,8 +237,8 @@ describe("GovExtension", () => {
 
   describe("deposit", () => {
     it("works", async () => {
-      pendingWithoutWasmd();
-      const client = makeGovClient(wasmd.endpoint);
+      pendingWithoutLaunchpad();
+      const client = makeGovClient(launchpad.endpoint);
       const response = await client.gov.deposit(proposalId, faucet.address);
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
@@ -253,8 +253,8 @@ describe("GovExtension", () => {
 
   describe("tally", () => {
     it("works", async () => {
-      pendingWithoutWasmd();
-      const client = makeGovClient(wasmd.endpoint);
+      pendingWithoutLaunchpad();
+      const client = makeGovClient(launchpad.endpoint);
       const response = await client.gov.tally(proposalId);
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
@@ -270,8 +270,8 @@ describe("GovExtension", () => {
 
   describe("votes", () => {
     it("works", async () => {
-      pendingWithoutWasmd();
-      const client = makeGovClient(wasmd.endpoint);
+      pendingWithoutLaunchpad();
+      const client = makeGovClient(launchpad.endpoint);
       const response = await client.gov.votes(proposalId);
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
@@ -288,8 +288,8 @@ describe("GovExtension", () => {
 
   describe("vote", () => {
     it("works", async () => {
-      pendingWithoutWasmd();
-      const client = makeGovClient(wasmd.endpoint);
+      pendingWithoutLaunchpad();
+      const client = makeGovClient(launchpad.endpoint);
       const response = await client.gov.vote(proposalId, faucet.address);
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),

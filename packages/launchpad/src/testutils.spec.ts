@@ -23,7 +23,7 @@ export const hexMatcher = /^([0-9a-fA-F][0-9a-fA-F])*$/;
 // https://github.com/bitcoin/bips/blob/master/bip-0173.mediawiki#bech32
 export const bech32AddressMatcher = /^[\x21-\x7e]{1,83}1[02-9ac-hj-np-z]{38}$/;
 
-export const wasmd = {
+export const launchpad = {
   endpoint: "http://localhost:1317",
   chainId: "testing",
   moniker: "node001",
@@ -56,13 +56,13 @@ export const unused = {
   sequence: 0,
 };
 
-export function wasmdEnabled(): boolean {
-  return !!process.env.WASMD_ENABLED;
+export function launchpadEnabled(): boolean {
+  return !!process.env.LAUNCHPAD_ENABLED;
 }
 
-export function pendingWithoutWasmd(): void {
-  if (!wasmdEnabled()) {
-    return pending("Set WASMD_ENABLED to enable Wasmd based tests");
+export function pendingWithoutLaunchpad(): void {
+  if (!launchpadEnabled()) {
+    return pending("Set LAUNCHPAD_ENABLED to enable Launchpad-based tests");
   }
 }
 

@@ -7,9 +7,9 @@ import { assert } from "@cosmjs/utils";
 import { Faucet } from "./faucet";
 import { TokenConfiguration } from "./tokenmanager";
 
-function pendingWithoutWasmd(): void {
-  if (!process.env.WASMD_ENABLED) {
-    return pending("Set WASMD_ENABLED to enable Cosmos node-based tests");
+function pendingWithoutLaunchpad(): void {
+  if (!process.env.LAUNCHPAD_ENABLED) {
+    return pending("Set LAUNCHPAD_ENABLED to enable Launchpad node-based tests");
   }
 }
 
@@ -38,7 +38,7 @@ describe("Faucet", () => {
 
     describe("constructor", () => {
       it("can be constructed", async () => {
-        pendingWithoutWasmd();
+        pendingWithoutLaunchpad();
         const faucet = await Faucet.make(
           apiUrl,
           defaultAddressPrefix,
@@ -53,7 +53,7 @@ describe("Faucet", () => {
 
     describe("availableTokens", () => {
       it("is empty when no tokens are configured", async () => {
-        pendingWithoutWasmd();
+        pendingWithoutLaunchpad();
         const faucet = await Faucet.make(
           apiUrl,
           defaultAddressPrefix,
@@ -67,7 +67,7 @@ describe("Faucet", () => {
       });
 
       it("is not empty with default token config", async () => {
-        pendingWithoutWasmd();
+        pendingWithoutLaunchpad();
         const faucet = await Faucet.make(
           apiUrl,
           defaultAddressPrefix,
@@ -83,7 +83,7 @@ describe("Faucet", () => {
 
     describe("send", () => {
       it("can send bank token", async () => {
-        pendingWithoutWasmd();
+        pendingWithoutLaunchpad();
         const faucet = await Faucet.make(
           apiUrl,
           defaultAddressPrefix,
@@ -116,7 +116,7 @@ describe("Faucet", () => {
 
     describe("refill", () => {
       it("works", async () => {
-        pendingWithoutWasmd();
+        pendingWithoutLaunchpad();
         const faucet = await Faucet.make(
           apiUrl,
           defaultAddressPrefix,
@@ -144,7 +144,7 @@ describe("Faucet", () => {
 
     describe("credit", () => {
       it("works for fee token", async () => {
-        pendingWithoutWasmd();
+        pendingWithoutLaunchpad();
         const faucet = await Faucet.make(
           apiUrl,
           defaultAddressPrefix,
@@ -168,7 +168,7 @@ describe("Faucet", () => {
       });
 
       it("works for stake token", async () => {
-        pendingWithoutWasmd();
+        pendingWithoutLaunchpad();
         const faucet = await Faucet.make(
           apiUrl,
           defaultAddressPrefix,
@@ -194,7 +194,7 @@ describe("Faucet", () => {
 
     describe("configuredTokens", () => {
       it("works", async () => {
-        pendingWithoutWasmd();
+        pendingWithoutLaunchpad();
         const faucet = await Faucet.make(
           apiUrl,
           defaultAddressPrefix,
@@ -210,7 +210,7 @@ describe("Faucet", () => {
 
     describe("loadAccounts", () => {
       it("works", async () => {
-        pendingWithoutWasmd();
+        pendingWithoutLaunchpad();
         const faucet = await Faucet.make(
           apiUrl,
           defaultAddressPrefix,
@@ -241,7 +241,7 @@ describe("Faucet", () => {
   });
 
   describe("stargate", () => {
-    const apiUrl = "localhost:26657";
+    const apiUrl = "localhost:26658";
     const stargate = true;
     let originalEnvVariable: string | undefined;
 

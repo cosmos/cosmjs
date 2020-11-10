@@ -26,7 +26,7 @@ To verify everything worked as expected, check if the testing contracts are
 correctly checked out:
 
 ```sh
-cd scripts/wasmd/contracts
+cd scripts/launchpad/contracts
 sha256sum -c checksums.sha256
 ```
 
@@ -41,14 +41,14 @@ yarn test
 
 To run the entire test suite, you need to run some local blockchain to test
 against. We use [wasmd](https://github.com/CosmWasm/wasmd) for both CosmWasm
-tests and as a generic Cosmos SDK 0.39 blockchain. We also spawn multiple
-versions of raw Tendermint and a basic WebSocket server.
+tests and as a generic Cosmos SDK 0.39 (Launchpad) blockchain. We also spawn
+multiple versions of raw Tendermint and a basic WebSocket server.
 
 ```sh
 # Start wasmd
-./scripts/wasmd/start.sh
-./scripts/wasmd/init.sh
-export WASMD_ENABLED=1
+./scripts/launchpad/start.sh
+./scripts/launchpad/init.sh
+export LAUNCHPAD_ENABLED=1
 export ERC20_ENABLED=1
 
 # Start Tendermint
@@ -66,10 +66,10 @@ yarn test
 unset SOCKETSERVER_ENABLED
 unset TENDERMINT_ENABLED
 unset ERC20_ENABLED
-unset WASMD_ENABLED
+unset LAUNCHPAD_ENABLED
 ./scripts/socketserver/stop.sh
 ./scripts/tendermint/all_stop.sh
-./scripts/wasmd/stop.sh
+./scripts/launchpad/stop.sh
 ```
 
 ## Sanity
@@ -93,8 +93,8 @@ order to avoid conflicts. Here is an overview of the ports used:
 | ----- | --------------------- | ------------------------------------------------------------------------------------- |
 | 1317  | wasmd LCD API         | @cosmjs/launchpad and @cosmjs/cosmwasm tests                                          |
 | 1318  | simapp API            | Manual Stargate debugging                                                             |
-| 4444  | sockertserver         | @cosmjs/sockets tests                                                                 |
-| 4445  | sockertserver slow    | @cosmjs/sockets tests                                                                 |
+| 4444  | socketserver          | @cosmjs/sockets tests                                                                 |
+| 4445  | socketserver slow     | @cosmjs/sockets tests                                                                 |
 | 11133 | Tendermint 0.33 RPC   | @cosmjs/tendermint-rpc tests                                                          |
 | 11134 | Tendermint 0.34 RPC   | @cosmjs/tendermint-rpc tests ([soon™](https://github.com/CosmWasm/cosmjs/issues/344)) |
-| 26657 | simapp Tendermint RPC | Stargate client tests                                                                 |
+| 26658 | simapp Tendermint RPC | Stargate client tests                                                                 |

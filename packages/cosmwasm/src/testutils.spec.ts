@@ -53,7 +53,7 @@ export const unused = {
   sequence: 0,
 };
 
-/** Deployed as part of scripts/wasmd/init.sh */
+/** Deployed as part of scripts/launchpad/init.sh */
 export const deployedHackatom = {
   codeId: 1,
   source: "https://crates.io/api/v1/crates/hackatom/not-yet-released/download",
@@ -78,7 +78,7 @@ export const deployedHackatom = {
   ],
 };
 
-/** Deployed as part of scripts/wasmd/init.sh */
+/** Deployed as part of scripts/launchpad/init.sh */
 export const deployedErc20 = {
   codeId: 2,
   source: "https://crates.io/api/v1/crates/cw-erc20/0.7.0/download",
@@ -91,7 +91,7 @@ export const deployedErc20 = {
   ],
 };
 
-export const wasmd = {
+export const launchpad = {
   endpoint: "http://localhost:1317",
   chainId: "testing",
   validator: {
@@ -99,13 +99,13 @@ export const wasmd = {
   },
 };
 
-export function wasmdEnabled(): boolean {
-  return !!process.env.WASMD_ENABLED;
+export function launchpadEnabled(): boolean {
+  return !!process.env.LAUNCHPAD_ENABLED;
 }
 
-export function pendingWithoutWasmd(): void {
-  if (!wasmdEnabled()) {
-    return pending("Set WASMD_ENABLED to enable Wasmd based tests");
+export function pendingWithoutLaunchpad(): void {
+  if (!launchpadEnabled()) {
+    return pending("Set LAUNCHPAD_ENABLED to enable Launchpad-based tests");
   }
 }
 
@@ -115,7 +115,7 @@ export function erc20Enabled(): boolean {
 
 export function pendingWithoutErc20(): void {
   if (!erc20Enabled()) {
-    return pending("Set ERC20_ENABLED to enable Wasmd based tests");
+    return pending("Set ERC20_ENABLED to enable ERC20-based tests");
   }
 }
 

@@ -2,4 +2,4 @@
 REPOSITORY="cosmwasm/wasmd"
 VERSION="v0.11.1"
 
-CONTAINER_NAME="wasmd"
+CONTAINER_NAME="launchpad"

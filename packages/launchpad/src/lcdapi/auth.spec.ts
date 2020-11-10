@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import {
   faucet,
+  launchpad,
   makeRandomAddress,
   nonNegativeIntegerMatcher,
-  pendingWithoutWasmd,
+  pendingWithoutLaunchpad,
   unused,
-  wasmd,
 } from "../testutils.spec";
 import { AuthExtension, setupAuthExtension } from "./auth";
 import { LcdClient } from "./lcdclient";
@@ -16,8 +16,8 @@ function makeAuthClient(apiUrl: string): LcdClient & AuthExtension {
 
 describe("AuthExtension", () => {
   it("works for unused account without pubkey", async () => {
-    pendingWithoutWasmd();
-    const client = makeAuthClient(wasmd.endpoint);
+    pendingWithoutLaunchpad();
+    const client = makeAuthClient(launchpad.endpoint);
     const { height, result } = await client.auth.account(unused.address);
     expect(height).toMatch(nonNegativeIntegerMatcher);
     expect(result).toEqual({
@@ -41,10 +41,10 @@ describe("AuthExtension", () => {
     });
   });
 
-  // This fails in the first test run if you forget to run `./scripts/wasmd/init.sh`
+  // This fails in the first test run if you forget to run `./scripts/launchpad/init.sh`
   it("has correct pubkey for faucet", async () => {
-    pendingWithoutWasmd();
-    const client = makeAuthClient(wasmd.endpoint);
+    pendingWithoutLaunchpad();
+    const client = makeAuthClient(launchpad.endpoint);
     const { result } = await client.auth.account(faucet.address);
     expect(result.value).toEqual(
       jasmine.objectContaining({
@@ -55,8 +55,8 @@ describe("AuthExtension", () => {
 
   // This property is used by CosmWasmClient.getAccount
   it("returns empty address for non-existent account", async () => {
-    pendingWithoutWasmd();
-    const client = makeAuthClient(wasmd.endpoint);
+    pendingWithoutLaunchpad();
+    const client = makeAuthClient(launchpad.endpoint);
     const nonExistentAccount = makeRandomAddress();
     const { result } = await client.auth.account(nonExistentAccount);
     expect(result).toEqual({
