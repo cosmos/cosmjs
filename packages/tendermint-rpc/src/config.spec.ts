@@ -38,18 +38,17 @@ export const tendermintInstances: readonly TendermintInstance[] = [
       appVersion: 1,
     },
   },
-  // Re-enable testing (https://github.com/cosmos/cosmjs/issues/486)
-  // {
-  //   url: "localhost:11134",
-  //   version: "0.34.x",
-  //   blockTime: 500,
-  //   expected: {
-  //     appCreator: "Cosmoshi Netowoko",
-  //     p2pVersion: 8,
-  //     blockVersion: 11,
-  //     appVersion: 1,
-  //   },
-  // },
+  {
+    url: "localhost:11134",
+    version: "0.34.x",
+    blockTime: 500,
+    expected: {
+      appCreator: "Cosmoshi Netowoko",
+      p2pVersion: 8,
+      blockVersion: 11,
+      appVersion: 1,
+    },
+  },
 ];
 
 export const defaultInstance: TendermintInstance = tendermintInstances[0];
