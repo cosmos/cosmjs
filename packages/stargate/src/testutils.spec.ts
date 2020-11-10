@@ -20,9 +20,9 @@ export function makeRandomAddress(): string {
 }
 
 export const simapp = {
-  tendermintUrl: "localhost:26657",
-  tendermintUrlWs: "ws://localhost:26657",
-  tendermintUrlHttp: "http://localhost:26657",
+  tendermintUrl: "localhost:26658",
+  tendermintUrlWs: "ws://localhost:26658",
+  tendermintUrlHttp: "http://localhost:26658",
   chainId: "simd-testing",
   denomStaking: "ustake",
   denomFee: "ucosm",

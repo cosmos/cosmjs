@@ -97,4 +97,4 @@ order to avoid conflicts. Here is an overview of the ports used:
 | 4445  | socketserver slow     | @cosmjs/sockets tests                                                                 |
 | 11133 | Tendermint 0.33 RPC   | @cosmjs/tendermint-rpc tests                                                          |
 | 11134 | Tendermint 0.34 RPC   | @cosmjs/tendermint-rpc tests ([soon™](https://github.com/CosmWasm/cosmjs/issues/344)) |
-| 26657 | simapp Tendermint RPC | Stargate client tests                                                                 |
+| 26658 | simapp Tendermint RPC | Stargate client tests                                                                 |

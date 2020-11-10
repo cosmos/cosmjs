@@ -36,7 +36,7 @@
     "test-node": "node jasmine-testrunner.js",
     "test": "yarn build-or-skip && yarn test-node",
     "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet",
-    "start-dev": "FAUCET_CREDIT_AMOUNT_UCOSM=10000000 FAUCET_CREDIT_AMOUNT_USTAKE=100000 FAUCET_CONCURRENCY=3 FAUCET_MNEMONIC=\"economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone\" ./bin/cosmos-faucet start \"http://localhost:26657\"",
+    "start-dev": "FAUCET_CREDIT_AMOUNT_UCOSM=10000000 FAUCET_CREDIT_AMOUNT_USTAKE=100000 FAUCET_CONCURRENCY=3 FAUCET_MNEMONIC=\"economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone\" ./bin/cosmos-faucet start \"http://localhost:26658\"",
     "start-coralnet": "FAUCET_ADDRESS_PREFIX=coral FAUCET_TOKENS=\"ushell,ureef\" FAUCET_CREDIT_AMOUNT_USHELL=10000000 FAUCET_CREDIT_AMOUNT_UREEF=2000000 FAUCET_CONCURRENCY=3 FAUCET_MNEMONIC=\"economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone\" ./bin/cosmos-faucet start \"https://lcd.coralnet.cosmwasm.com\""
   },
   "dependencies": {

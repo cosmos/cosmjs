@@ -241,7 +241,7 @@ describe("Faucet", () => {
   });
 
   describe("stargate", () => {
-    const apiUrl = "localhost:26657";
+    const apiUrl = "localhost:26658";
     const stargate = true;
     let originalEnvVariable: string | undefined;
 
