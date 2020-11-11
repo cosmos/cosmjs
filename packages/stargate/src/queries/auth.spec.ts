@@ -98,12 +98,12 @@ describe("AuthExtension", () => {
       });
 
       it("returns null for non-existent address", async () => {
-        pending("This fails with Error: Query failed with (1): internal");
         pendingWithoutSimapp();
         const [client, tmClient] = await makeClientWithAuth(simapp.tendermintUrl);
 
-        const account = await client.auth.unverified.account(nonExistentAddress);
-        expect(account).toBeNull();
+        await expectAsync(client.auth.unverified.account(nonExistentAddress)).toBeRejectedWithError(
+          /account cosmos1p79apjaufyphcmsn4g07cynqf0wyjuezqu84hd not found/i,
+        );
 
         tmClient.disconnect();
       });
