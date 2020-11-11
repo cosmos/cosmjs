@@ -42,7 +42,27 @@ export const packetState = ibc.core.channel.v1.PacketState.create({
   sequence: Long.fromInt(4, true),
   data: commitmentData,
 });
-export const acknowledgement = fromBase64("9RKC5OuTvBsFMtD79dHHvb9qCxw08IKsSJlAwmiw8tI=");
+
+export const packetAcknowledgements = [
+  ibc.core.channel.v1.PacketState.create({
+    portId: portId,
+    channelId: channelId,
+    sequence: Long.fromInt(1, true),
+    data: fromBase64("9RKC5OuTvBsFMtD79dHHvb9qCxw08IKsSJlAwmiw8tI="),
+  }),
+  ibc.core.channel.v1.PacketState.create({
+    portId: portId,
+    channelId: channelId,
+    sequence: Long.fromInt(2, true),
+    data: fromBase64("Nj784gGVOFk2mdt+wAk/LOoPdUOo+5+0JfYs0yAubZU="),
+  }),
+  ibc.core.channel.v1.PacketState.create({
+    portId: portId,
+    channelId: channelId,
+    sequence: Long.fromInt(3, true),
+    data: fromBase64("+lLTGP1dlSD6MBpJgBIvx98Psd3U2xo500K7JyMkya8="),
+  }),
+];
 
 export const connection = ibc.core.connection.v1.ConnectionEnd.create({
   clientId: clientId,
