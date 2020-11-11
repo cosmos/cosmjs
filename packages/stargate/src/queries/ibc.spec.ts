@@ -122,10 +122,15 @@ describe("IbcExtension", () => {
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.unverified.unreceivedPackets(ibcTest.portId, ibcTest.channelId, [
+          1,
+          2,
+          3,
           4,
           5,
+          6,
+          7,
         ]);
-        expect(response.sequences).toEqual([Long.fromInt(4, true), Long.fromInt(5, true)]);
+        expect(response.sequences).toEqual([4, 5, 6, 7].map((n) => Long.fromInt(n, true)));
         expect(response.height).toBeInstanceOf(ibc.core.client.v1.Height);
 
         tmClient.disconnect();
@@ -138,8 +143,13 @@ describe("IbcExtension", () => {
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.unverified.unreceivedAcks(ibcTest.portId, ibcTest.channelId, [
+          1,
+          2,
+          3,
           4,
           5,
+          6,
+          7,
         ]);
         expect(response.sequences).toEqual([Long.fromInt(4, true)]);
         expect(response.height).toBeInstanceOf(ibc.core.client.v1.Height);
