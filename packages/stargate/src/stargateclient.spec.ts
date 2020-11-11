@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { fromBase64, toBase64 } from "@cosmjs/encoding";
 import {
-  DirectSecp256k1Wallet,
+  DirectSecp256k1HdWallet,
   encodePubkey,
   makeAuthInfoBytes,
   makeSignDoc,
@@ -256,7 +256,7 @@ describe("StargateClient", () => {
     it("broadcasts a transaction", async () => {
       pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrl);
-      const wallet = await DirectSecp256k1Wallet.fromMnemonic(faucet.mnemonic);
+      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const [{ address, pubkey: pubkeyBytes }] = await wallet.getAccounts();
       const pubkey = encodePubkey({
         type: "tendermint/PubKeySecp256k1",

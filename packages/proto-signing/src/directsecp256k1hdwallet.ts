@@ -28,7 +28,7 @@ interface Secp256k1Derivation {
 }
 
 /** A wallet for protobuf based signing using SIGN_MODE_DIRECT */
-export class DirectSecp256k1Wallet implements OfflineDirectSigner {
+export class DirectSecp256k1HdWallet implements OfflineDirectSigner {
   /**
    * Restores a wallet from the given BIP39 mnemonic.
    *
@@ -40,12 +40,12 @@ export class DirectSecp256k1Wallet implements OfflineDirectSigner {
     mnemonic: string,
     hdPath: HdPath = makeCosmoshubPath(0),
     prefix = "cosmos",
-  ): Promise<DirectSecp256k1Wallet> {
+  ): Promise<DirectSecp256k1HdWallet> {
     const mnemonicChecked = new EnglishMnemonic(mnemonic);
     const seed = await Bip39.mnemonicToSeed(mnemonicChecked);
     const { privkey } = Slip10.derivePath(Slip10Curve.Secp256k1, seed, hdPath);
     const uncompressed = (await Secp256k1.makeKeypair(privkey)).pubkey;
-    return new DirectSecp256k1Wallet(
+    return new DirectSecp256k1HdWallet(
       mnemonicChecked,
       hdPath,
       privkey,
@@ -65,11 +65,11 @@ export class DirectSecp256k1Wallet implements OfflineDirectSigner {
     length: 12 | 15 | 18 | 21 | 24 = 12,
     hdPath: HdPath = makeCosmoshubPath(0),
     prefix = "cosmos",
-  ): Promise<DirectSecp256k1Wallet> {
+  ): Promise<DirectSecp256k1HdWallet> {
     const entropyLength = 4 * Math.floor((11 * length) / 33);
     const entropy = Random.getBytes(entropyLength);
     const mnemonic = Bip39.encode(entropy);
-    return DirectSecp256k1Wallet.fromMnemonic(mnemonic.toString(), hdPath, prefix);
+    return DirectSecp256k1HdWallet.fromMnemonic(mnemonic.toString(), hdPath, prefix);
   }
 
   /** Base secret */

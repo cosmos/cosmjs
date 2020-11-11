@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { coin, coins, GasPrice, Secp256k1HdWallet } from "@cosmjs/launchpad";
-import { Coin, cosmosField, DirectSecp256k1Wallet, registered, Registry } from "@cosmjs/proto-signing";
+import { Coin, cosmosField, DirectSecp256k1HdWallet, registered, Registry } from "@cosmjs/proto-signing";
 import { assert } from "@cosmjs/utils";
 import { Message } from "protobufjs";
 
@@ -13,7 +13,7 @@ describe("SigningStargateClient", () => {
   describe("constructor", () => {
     it("can be constructed with default fees", async () => {
       pendingWithoutSimapp();
-      const wallet = await DirectSecp256k1Wallet.fromMnemonic(faucet.mnemonic);
+      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const client = await SigningStargateClient.connectWithWallet(simapp.tendermintUrl, wallet);
       const openedClient = (client as unknown) as PrivateSigningStargateClient;
       expect(openedClient.fees).toEqual({
@@ -31,7 +31,7 @@ describe("SigningStargateClient", () => {
 
     it("can be constructed with custom registry", async () => {
       pendingWithoutSimapp();
-      const wallet = await DirectSecp256k1Wallet.fromMnemonic(faucet.mnemonic);
+      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const registry = new Registry();
       registry.register("/custom.MsgCustom", cosmos.bank.v1beta1.MsgSend);
       const options = { registry: registry };
@@ -42,7 +42,7 @@ describe("SigningStargateClient", () => {
 
     it("can be constructed with custom gas price", async () => {
       pendingWithoutSimapp();
-      const wallet = await DirectSecp256k1Wallet.fromMnemonic(faucet.mnemonic);
+      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const gasPrice = GasPrice.fromString("3.14utest");
       const options = { gasPrice: gasPrice };
       const client = await SigningStargateClient.connectWithWallet(simapp.tendermintUrl, wallet, options);
@@ -62,7 +62,7 @@ describe("SigningStargateClient", () => {
 
     it("can be constructed with custom gas limits", async () => {
       pendingWithoutSimapp();
-      const wallet = await DirectSecp256k1Wallet.fromMnemonic(faucet.mnemonic);
+      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const gasLimits = {
         send: 160000,
       };
@@ -84,7 +84,7 @@ describe("SigningStargateClient", () => {
 
     it("can be constructed with custom gas price and gas limits", async () => {
       pendingWithoutSimapp();
-      const wallet = await DirectSecp256k1Wallet.fromMnemonic(faucet.mnemonic);
+      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const gasPrice = GasPrice.fromString("3.14utest");
       const gasLimits = {
         send: 160000,
@@ -109,7 +109,7 @@ describe("SigningStargateClient", () => {
   describe("sendTokens", () => {
     it("works", async () => {
       pendingWithoutSimapp();
-      const wallet = await DirectSecp256k1Wallet.fromMnemonic(faucet.mnemonic);
+      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const client = await SigningStargateClient.connectWithWallet(simapp.tendermintUrl, wallet);
 
       const transferAmount = coins(7890, "ucosm");
@@ -135,7 +135,7 @@ describe("SigningStargateClient", () => {
   describe("signAndBroadcast", () => {
     it("works with direct mode", async () => {
       pendingWithoutSimapp();
-      const wallet = await DirectSecp256k1Wallet.fromMnemonic(faucet.mnemonic);
+      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const msgDelegateTypeUrl = "/cosmos.staking.v1beta1.MsgDelegate";
       const registry = new Registry();
       registry.register(msgDelegateTypeUrl, cosmos.staking.v1beta1.MsgDelegate);
