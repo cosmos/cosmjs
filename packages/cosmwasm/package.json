@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/cosmwasm",
-  "version": "0.24.0-alpha.4",
+  "version": "0.24.0-alpha.5",
   "description": "CosmWasm SDK",
   "author": "Ethan Frey <ethanfrey@users.noreply.github.com>",
   "license": "Apache-2.0",
@@ -40,11 +40,11 @@
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
   },
   "dependencies": {
-    "@cosmjs/crypto": "^0.24.0-alpha.4",
-    "@cosmjs/encoding": "^0.24.0-alpha.4",
-    "@cosmjs/launchpad": "^0.24.0-alpha.4",
-    "@cosmjs/math": "^0.24.0-alpha.4",
-    "@cosmjs/utils": "^0.24.0-alpha.4",
+    "@cosmjs/crypto": "^0.24.0-alpha.5",
+    "@cosmjs/encoding": "^0.24.0-alpha.5",
+    "@cosmjs/launchpad": "^0.24.0-alpha.5",
+    "@cosmjs/math": "^0.24.0-alpha.5",
+    "@cosmjs/utils": "^0.24.0-alpha.5",
     "pako": "^1.0.11"
   },
   "devDependencies": {
