@@ -46,6 +46,11 @@ export interface IbcExtension {
         channelId: string,
         sequence: number,
       ) => Promise<ibc.core.channel.v1.IQueryPacketAcknowledgementResponse>;
+      readonly packetAcknowledgements: (
+        portId: string,
+        channelId: string,
+        paginationKey?: Uint8Array,
+      ) => Promise<ibc.core.channel.v1.IQueryPacketAcknowledgementsResponse>;
       readonly unreceivedPackets: (
         portId: string,
         channelId: string,
@@ -172,6 +177,14 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
             portId: portId,
             channelId: channelId,
             sequence: Long.fromNumber(sequence),
+          });
+          return toObject(response);
+        },
+        packetAcknowledgements: async (portId: string, channelId: string, paginationKey?: Uint8Array) => {
+          const response = await channelQueryService.packetAcknowledgements({
+            portId: portId,
+            channelId: channelId,
+            pagination: paginationKey ? { key: paginationKey } : undefined,
           });
           return toObject(response);
         },

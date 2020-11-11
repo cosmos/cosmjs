@@ -35,6 +35,11 @@ export interface IbcExtension {
         channelId: string,
         sequence: number,
       ) => Promise<ibc.core.channel.v1.IQueryPacketAcknowledgementResponse>;
+      readonly packetAcknowledgements: (
+        portId: string,
+        channelId: string,
+        paginationKey?: Uint8Array,
+      ) => Promise<ibc.core.channel.v1.IQueryPacketAcknowledgementsResponse>;
       readonly unreceivedPackets: (
         portId: string,
         channelId: string,

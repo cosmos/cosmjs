@@ -92,8 +92,25 @@ describe("IbcExtension", () => {
           ibcTest.channelId,
           1,
         );
-        expect(response.acknowledgement).toEqual(ibcTest.acknowledgement);
+        expect(response.acknowledgement).toEqual(ibcTest.packetAcknowledgements[0].data);
         expect(response.proofHeight).toBeInstanceOf(ibc.core.client.v1.Height);
+
+        tmClient.disconnect();
+      });
+    });
+
+    describe("packetAcknowledgements", () => {
+      it("works", async () => {
+        pendingWithoutSimapp();
+        const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
+
+        const response = await client.ibc.unverified.packetAcknowledgements(
+          ibcTest.portId,
+          ibcTest.channelId,
+        );
+        expect(response.acknowledgements).toEqual(ibcTest.packetAcknowledgements);
+        expect(response.pagination).toBeInstanceOf(cosmos.base.query.v1beta1.PageResponse);
+        expect(response.height).toBeInstanceOf(ibc.core.client.v1.Height);
 
         tmClient.disconnect();
       });
