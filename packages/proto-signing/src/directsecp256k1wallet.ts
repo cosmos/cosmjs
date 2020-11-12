@@ -1,109 +1,39 @@
-import {
-  Bip39,
-  EnglishMnemonic,
-  HdPath,
-  Random,
-  Secp256k1,
-  sha256,
-  Slip10,
-  Slip10Curve,
-} from "@cosmjs/crypto";
-import {
-  AccountData,
-  encodeSecp256k1Signature,
-  makeCosmoshubPath,
-  rawSecp256k1PubkeyToAddress,
-} from "@cosmjs/launchpad";
+import { Secp256k1, sha256 } from "@cosmjs/crypto";
+import { AccountData, encodeSecp256k1Signature, rawSecp256k1PubkeyToAddress } from "@cosmjs/launchpad";
 
 import { cosmos } from "./codec";
 import { DirectSignResponse, OfflineDirectSigner } from "./signer";
 import { makeSignBytes } from "./signing";
 
 /**
- * Derivation information required to derive a keypair and an address from a mnemonic.
+ * A wallet that holds a single secp256k1 keypair.
+ *
+ * If you want to work with BIP39 mnemonics and multiple accounts, use DirectSecp256k1HdWallet.
  */
-interface Secp256k1Derivation {
-  readonly hdPath: HdPath;
-  readonly prefix: string;
-}
-
-/** A wallet for protobuf based signing using SIGN_MODE_DIRECT */
 export class DirectSecp256k1Wallet implements OfflineDirectSigner {
   /**
-   * Restores a wallet from the given BIP39 mnemonic.
+   * Creates a DirectSecp256k1Wallet from the given private key
    *
-   * @param mnemonic Any valid English mnemonic.
-   * @param hdPath The BIP-32/SLIP-10 derivation path. Defaults to the Cosmos Hub/ATOM path `m/44'/118'/0'/0/0`.
+   * @param privkey The private key.
    * @param prefix The bech32 address prefix (human readable part). Defaults to "cosmos".
    */
-  public static async fromMnemonic(
-    mnemonic: string,
-    hdPath: HdPath = makeCosmoshubPath(0),
-    prefix = "cosmos",
-  ): Promise<DirectSecp256k1Wallet> {
-    const mnemonicChecked = new EnglishMnemonic(mnemonic);
-    const seed = await Bip39.mnemonicToSeed(mnemonicChecked);
-    const { privkey } = Slip10.derivePath(Slip10Curve.Secp256k1, seed, hdPath);
+  public static async fromKey(privkey: Uint8Array, prefix = "cosmos"): Promise<DirectSecp256k1Wallet> {
     const uncompressed = (await Secp256k1.makeKeypair(privkey)).pubkey;
-    return new DirectSecp256k1Wallet(
-      mnemonicChecked,
-      hdPath,
-      privkey,
-      Secp256k1.compressPubkey(uncompressed),
-      prefix,
-    );
+    return new DirectSecp256k1Wallet(privkey, Secp256k1.compressPubkey(uncompressed), prefix);
   }
 
-  /**
-   * Generates a new wallet with a BIP39 mnemonic of the given length.
-   *
-   * @param length The number of words in the mnemonic (12, 15, 18, 21 or 24).
-   * @param hdPath The BIP-32/SLIP-10 derivation path. Defaults to the Cosmos Hub/ATOM path `m/44'/118'/0'/0/0`.
-   * @param prefix The bech32 address prefix (human readable part). Defaults to "cosmos".
-   */
-  public static async generate(
-    length: 12 | 15 | 18 | 21 | 24 = 12,
-    hdPath: HdPath = makeCosmoshubPath(0),
-    prefix = "cosmos",
-  ): Promise<DirectSecp256k1Wallet> {
-    const entropyLength = 4 * Math.floor((11 * length) / 33);
-    const entropy = Random.getBytes(entropyLength);
-    const mnemonic = Bip39.encode(entropy);
-    return DirectSecp256k1Wallet.fromMnemonic(mnemonic.toString(), hdPath, prefix);
-  }
-
-  /** Base secret */
-  private readonly secret: EnglishMnemonic;
-  /** Derivation instruction */
-  private readonly accounts: readonly Secp256k1Derivation[];
-  /** Derived data */
   private readonly pubkey: Uint8Array;
   private readonly privkey: Uint8Array;
+  private readonly prefix: string;
 
-  private constructor(
-    mnemonic: EnglishMnemonic,
-    hdPath: HdPath,
-    privkey: Uint8Array,
-    pubkey: Uint8Array,
-    prefix: string,
-  ) {
-    this.secret = mnemonic;
-    this.accounts = [
-      {
-        hdPath: hdPath,
-        prefix: prefix,
-      },
-    ];
+  private constructor(privkey: Uint8Array, pubkey: Uint8Array, prefix: string) {
     this.privkey = privkey;
     this.pubkey = pubkey;
-  }
-
-  public get mnemonic(): string {
-    return this.secret.toString();
+    this.prefix = prefix;
   }
 
   private get address(): string {
-    return rawSecp256k1PubkeyToAddress(this.pubkey, this.accounts[0].prefix);
+    return rawSecp256k1PubkeyToAddress(this.pubkey, this.prefix);
   }
 
   public async getAccounts(): Promise<readonly AccountData[]> {

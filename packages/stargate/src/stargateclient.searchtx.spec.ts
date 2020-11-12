@@ -2,7 +2,7 @@
 import { fromBase64, toBase64 } from "@cosmjs/encoding";
 import { Coin, coins } from "@cosmjs/launchpad";
 import {
-  DirectSecp256k1Wallet,
+  DirectSecp256k1HdWallet,
   encodePubkey,
   makeAuthInfoBytes,
   makeSignDoc,
@@ -32,7 +32,7 @@ interface TestTxSend {
 async function sendTokens(
   client: StargateClient,
   registry: Registry,
-  wallet: DirectSecp256k1Wallet,
+  wallet: DirectSecp256k1HdWallet,
   recipient: string,
   amount: readonly Coin[],
   memo: string,
@@ -96,7 +96,7 @@ describe("StargateClient.searchTx", () => {
 
   beforeAll(async () => {
     if (simappEnabled()) {
-      const wallet = await DirectSecp256k1Wallet.fromMnemonic(faucet.mnemonic);
+      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const client = await StargateClient.connect(simapp.tendermintUrl);
       const unsuccessfulRecipient = makeRandomAddress();
       const successfulRecipient = makeRandomAddress();

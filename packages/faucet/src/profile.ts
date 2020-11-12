@@ -1,6 +1,6 @@
 import { pathToString } from "@cosmjs/crypto";
 import { makeCosmoshubPath, Secp256k1HdWallet, SigningCosmosClient } from "@cosmjs/launchpad";
-import { DirectSecp256k1Wallet, isOfflineDirectSigner, OfflineSigner } from "@cosmjs/proto-signing";
+import { DirectSecp256k1HdWallet, isOfflineDirectSigner, OfflineSigner } from "@cosmjs/proto-signing";
 import { SigningStargateClient } from "@cosmjs/stargate";
 
 import * as constants from "./constants";
@@ -12,7 +12,7 @@ export async function createWallets(
   stargate = true,
   logging = false,
 ): Promise<ReadonlyArray<readonly [string, OfflineSigner]>> {
-  const createWallet = stargate ? DirectSecp256k1Wallet.fromMnemonic : Secp256k1HdWallet.fromMnemonic;
+  const createWallet = stargate ? DirectSecp256k1HdWallet.fromMnemonic : Secp256k1HdWallet.fromMnemonic;
   const wallets = new Array<readonly [string, OfflineSigner]>();
 
   // first account is the token holder

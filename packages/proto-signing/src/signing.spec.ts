@@ -2,7 +2,7 @@
 import { fromBase64, fromHex, toHex } from "@cosmjs/encoding";
 
 import { cosmos, google } from "./codec";
-import { DirectSecp256k1Wallet } from "./directsecp256k1wallet";
+import { DirectSecp256k1HdWallet } from "./directsecp256k1hdwallet";
 import { defaultRegistry } from "./msgs";
 import { Registry, TxBodyValue } from "./registry";
 import { makeAuthInfoBytes, makeSignBytes, makeSignDoc } from "./signing";
@@ -27,7 +27,7 @@ describe("signing", () => {
   const gasLimit = 200000;
 
   it("correctly parses test vectors", async () => {
-    const wallet = await DirectSecp256k1Wallet.fromMnemonic(faucet.mnemonic);
+    const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
     const [{ address, pubkey: pubkeyBytes }] = await wallet.getAccounts();
     const prefixedPubkeyBytes = Uint8Array.from([0x0a, pubkeyBytes.length, ...pubkeyBytes]);
 
@@ -61,7 +61,7 @@ describe("signing", () => {
 
   it("correctly generates test vectors", async () => {
     const myRegistry = new Registry();
-    const wallet = await DirectSecp256k1Wallet.fromMnemonic(faucet.mnemonic);
+    const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
     const [{ address, pubkey: pubkeyBytes }] = await wallet.getAccounts();
     const publicKey = PubKey.create({
       key: pubkeyBytes,
