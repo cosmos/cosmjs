@@ -5,6 +5,8 @@ import {
   Coin,
   isSearchByHeightQuery,
   isSearchByIdQuery,
+  isSearchBySentFromOrToQuery,
+  isSearchByTagsQuery,
   PubKey,
   SearchTxFilter,
   SearchTxQuery,
@@ -209,6 +211,14 @@ export class StargateClient {
         query.height >= minHeight && query.height <= maxHeight
           ? await this.txsQuery(`tx.height=${query.height}`)
           : [];
+    } else if (isSearchBySentFromOrToQuery(query)) {
+      throw new Error(
+        "This type of search query is not yet implemented. See https://github.com/cosmos/cosmjs/issues/533.",
+      );
+    } else if (isSearchByTagsQuery(query)) {
+      throw new Error(
+        "This type of search query is not yet implemented. See https://github.com/cosmos/cosmjs/issues/532.",
+      );
     } else {
       throw new Error("Unknown query type");
     }
