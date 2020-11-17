@@ -5,7 +5,10 @@ import { Adaptor } from "./adaptor";
 import { v0_33 } from "./v0-33";
 
 const hashes = {
-  v0_34: ["ca2c9df"],
+  v0_34: [
+    "ca2c9df", // v0.34.0-rc6
+    "", // See https://github.com/cosmos/cosmos-sdk/issues/7963
+  ],
 };
 
 /**

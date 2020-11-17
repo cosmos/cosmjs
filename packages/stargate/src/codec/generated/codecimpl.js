@@ -9370,9 +9370,10 @@ exports.tendermint = $root.tendermint = (() => {
             if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
       }
       PublicKey.prototype.ed25519 = $util.newBuffer([]);
+      PublicKey.prototype.secp256k1 = $util.newBuffer([]);
       let $oneOfFields;
       Object.defineProperty(PublicKey.prototype, "sum", {
-        get: $util.oneOfGetter(($oneOfFields = ["ed25519"])),
+        get: $util.oneOfGetter(($oneOfFields = ["ed25519", "secp256k1"])),
         set: $util.oneOfSetter($oneOfFields),
       });
       PublicKey.create = function create(properties) {
@@ -9381,6 +9382,8 @@ exports.tendermint = $root.tendermint = (() => {
       PublicKey.encode = function encode(m, w) {
         if (!w) w = $Writer.create();
         if (m.ed25519 != null && Object.hasOwnProperty.call(m, "ed25519")) w.uint32(10).bytes(m.ed25519);
+        if (m.secp256k1 != null && Object.hasOwnProperty.call(m, "secp256k1"))
+          w.uint32(18).bytes(m.secp256k1);
         return w;
       };
       PublicKey.decode = function decode(r, l) {
@@ -9392,6 +9395,9 @@ exports.tendermint = $root.tendermint = (() => {
           switch (t >>> 3) {
             case 1:
               m.ed25519 = r.bytes();
+              break;
+            case 2:
+              m.secp256k1 = r.bytes();
               break;
             default:
               r.skipType(t & 7);

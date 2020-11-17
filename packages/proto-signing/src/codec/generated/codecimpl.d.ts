@@ -1965,6 +1965,9 @@ export namespace tendermint {
     interface IPublicKey {
       /** PublicKey ed25519 */
       ed25519?: Uint8Array | null;
+
+      /** PublicKey secp256k1 */
+      secp256k1?: Uint8Array | null;
     }
 
     /** Represents a PublicKey. */
@@ -1978,8 +1981,11 @@ export namespace tendermint {
       /** PublicKey ed25519. */
       public ed25519: Uint8Array;
 
+      /** PublicKey secp256k1. */
+      public secp256k1: Uint8Array;
+
       /** PublicKey sum. */
-      public sum?: "ed25519";
+      public sum?: "ed25519" | "secp256k1";
 
       /**
        * Creates a new PublicKey instance using the specified properties.

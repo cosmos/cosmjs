@@ -8,6 +8,7 @@ A client library for the Cosmos SDK 0.40.
 
 | CosmJS version                  | Supported Cosmos SDK version(s) |
 | ------------------------------- | ------------------------------- |
+| ^0.24.0-alpha.8                 | 0.40.0-rc3                      |
 | 0.24.0-alpha.2 – 0.24.0-alpha.7 | 0.40.0-rc2                      |
 | 0.24.0-alpha.1                  | 0.40.0-rc1                      |
 

@@ -502,7 +502,9 @@ function decodeNodeInfo(data: RpcNodeInfo): responses.NodeInfo {
     id: fromHex(assertNotEmpty(data.id)),
     listenAddr: assertNotEmpty(data.listen_addr),
     network: assertNotEmpty(data.network),
-    version: assertNotEmpty(data.version),
+    // TODO: Reactivate check when https://github.com/cosmos/cosmos-sdk/issues/7963 is resolved
+    // version: assertNotEmpty(data.version),
+    version: data.version,
     channels: assertNotEmpty(data.channels),
     moniker: assertNotEmpty(data.moniker),
     other: dictionaryToStringMap(data.other),
