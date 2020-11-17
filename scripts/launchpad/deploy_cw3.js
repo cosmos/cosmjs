@@ -75,6 +75,12 @@ async function main() {
       memo: `Create a CW3 instance for ${initMsg.symbol}`,
       admin: admin,
     });
+    await client.sendTokens(contractAddress, [
+      {
+        amount: "1000",
+        denom: "ucosm",
+      },
+    ]);
     console.info(`Contract instantiated for ${label} at ${contractAddress}`);
   }
 }
