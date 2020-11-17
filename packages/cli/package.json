@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/cli",
-  "version": "0.24.0-alpha.6",
+  "version": "0.24.0-alpha.7",
   "description": "Command line interface",
   "contributors": [
     "IOV SAS <admin@iov.one>",
@@ -40,13 +40,13 @@
     "!**/testdata/"
   ],
   "dependencies": {
-    "@cosmjs/cosmwasm": "^0.24.0-alpha.6",
-    "@cosmjs/crypto": "^0.24.0-alpha.6",
-    "@cosmjs/encoding": "^0.24.0-alpha.6",
-    "@cosmjs/faucet-client": "^0.24.0-alpha.6",
-    "@cosmjs/launchpad": "^0.24.0-alpha.6",
-    "@cosmjs/math": "^0.24.0-alpha.6",
-    "@cosmjs/utils": "^0.24.0-alpha.6",
+    "@cosmjs/cosmwasm": "^0.24.0-alpha.7",
+    "@cosmjs/crypto": "^0.24.0-alpha.7",
+    "@cosmjs/encoding": "^0.24.0-alpha.7",
+    "@cosmjs/faucet-client": "^0.24.0-alpha.7",
+    "@cosmjs/launchpad": "^0.24.0-alpha.7",
+    "@cosmjs/math": "^0.24.0-alpha.7",
+    "@cosmjs/utils": "^0.24.0-alpha.7",
     "axios": "^0.19.2",
     "babylon": "^6.18.0",
     "colors": "^1.3.3",
