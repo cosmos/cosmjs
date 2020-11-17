@@ -50,7 +50,7 @@
   "dependencies": {
     "@cosmjs/launchpad": "^0.24.0-alpha.6",
     "long": "^4.0.0",
-    "protobufjs": "~6.10.0"
+    "protobufjs": "~6.10.2"
   },
   "devDependencies": {
     "@cosmjs/encoding": "^0.24.0-alpha.6",

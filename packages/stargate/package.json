@@ -56,6 +56,6 @@
     "@cosmjs/tendermint-rpc": "^0.24.0-alpha.6",
     "@cosmjs/utils": "^0.24.0-alpha.6",
     "long": "^4.0.0",
-    "protobufjs": "~6.10.0"
+    "protobufjs": "~6.10.2"
   }
 }
