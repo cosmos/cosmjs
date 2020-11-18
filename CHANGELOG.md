@@ -18,6 +18,8 @@
 - @cosmjs/tendermint-rpc: Make the constructor of `Client` private. Add
   `Client.create` for creating a Tendermint client given an RPC client and an
   optional adaptor.
+- @cosmjs/tendermint-rpc: Add an optional adaptor argument to `Client.connect`
+  which allows skipping the auto-detection.
 
 ## 0.23.1 (2020-10-27)
 

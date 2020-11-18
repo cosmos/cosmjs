@@ -8,8 +8,10 @@ export declare class Client {
    * Creates a new Tendermint client for the given endpoint.
    *
    * Uses HTTP when the URL schema is http or https. Uses WebSockets otherwise.
+   *
+   * If the adaptor is not set an auto-detection is performed.
    */
-  static connect(url: string): Promise<Client>;
+  static connect(url: string, adaptor?: Adaptor): Promise<Client>;
   /**
    * Creates a new Tendermint client given an RPC client.
    *

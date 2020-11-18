@@ -18,11 +18,13 @@ export class Client {
    * Creates a new Tendermint client for the given endpoint.
    *
    * Uses HTTP when the URL schema is http or https. Uses WebSockets otherwise.
+   *
+   * If the adaptor is not set an auto-detection is performed.
    */
-  public static async connect(url: string): Promise<Client> {
+  public static async connect(url: string, adaptor?: Adaptor): Promise<Client> {
     const useHttp = url.startsWith("http://") || url.startsWith("https://");
     const rpcClient = useHttp ? new HttpClient(url) : new WebsocketClient(url);
-    return Client.create(rpcClient);
+    return Client.create(rpcClient, adaptor);
   }
 
   /**
