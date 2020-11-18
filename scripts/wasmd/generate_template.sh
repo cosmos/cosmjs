@@ -16,12 +16,12 @@ docker run --rm \
   --mount type=bind,source="$SCRIPT_DIR/template",target=/root \
   "$REPOSITORY:$VERSION" \
   ./setup_wasmd.sh \
-  cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6 cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5 cosmos1xy4yqngt0nlkdcenxymg8tenrghmek4nmqm28k cosmos142u9fgcjdlycfcez3lw8x6x5h7rfjlnfhpw2lx cosmos1hsm76p4ahyhl5yh3ve9ur49r5kemhp2r0dcjvx \
-  cosmos14qemq0vw6y3gc3u3e0aty2e764u4gs5le3hada cosmos1hhg2rlu9jscacku2wwckws7932qqqu8x3gfgw0 cosmos1xv9tklw7d82sezh9haa573wufgy59vmwe6xxe5 cosmos17yg9mssjenmc3jkqth6ulcwj9cxujrxxzezwta cosmos1f7j7ryulwjfe9ljplvhtcaxa6wqgula3etktce \
-  cosmos1lvrwcvrqlc5ktzp2c4t22xgkx29q3y83lktgzl cosmos1vkv9sfwaak76weyamqx0flmng2vuquxqcuqukh cosmos106jwym4s9aujcmes26myzzwqsccw09sdm0v5au cosmos1c7wpeen2uv8thayf7g8q2rgpm29clj0dgrdtzw cosmos1mjxpv9ft30wer7ma7kwfxhm42l379xutplrdk6 \
-  cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u \
-  cosmos17d0jcz59jf68g52vq38tuuncmwwjk42u6mcxej \
-  cosmos1p6xs63q4g7np99ttv5nd3yzkt8n4qxa47w8aea cosmos1meeu3jl268txxytwmmrsljk8rawh6n2majstn2 cosmos1cak6lnpfxs035xd88sq8e4zujsm8g2g97dxu5c cosmos1x3x8kyypx8z6q7fx3gw65x29mhl5gg8qp4ynlr cosmos18c27m2rj4lg74md03ujralvt562c097n8zpdf9 cosmos1q2y53e6x7s5mlddtd2qkcjr3nwr4dszv6fr9rt cosmos1paa2gstlk7c98n27dw2g6tp6fyqvf32mm67qz3 cosmos1rvxjd8k6xvssz2eerfzemvat35pttfgr67yyzd cosmos12zejt8d9xl70jd2333p4p265m2nr9h8gsaewk0 cosmos1exctm2036jtwyc9v3ftqfzmgnv9tdhj26v87uh cosmos1f3pws3ztnp3s4nn5zxqdrl9vlqv5avkqmlrus4
+wasm1pkptre7fdkl6gfrzlesjjvhxhlc3r4gm32kke3 wasm10dyr9899g6t0pelew4nvf4j5c3jcgv0r5d3a5l wasm1xy4yqngt0nlkdcenxymg8tenrghmek4n3u2lwa wasm142u9fgcjdlycfcez3lw8x6x5h7rfjlnfaallkd wasm1hsm76p4ahyhl5yh3ve9ur49r5kemhp2r93f89d \
+wasm14qemq0vw6y3gc3u3e0aty2e764u4gs5lndxgyk wasm1hhg2rlu9jscacku2wwckws7932qqqu8xm5ca8y wasm1xv9tklw7d82sezh9haa573wufgy59vmwnxhnsl wasm17yg9mssjenmc3jkqth6ulcwj9cxujrxxg9nmzk wasm1f7j7ryulwjfe9ljplvhtcaxa6wqgula3nh873j \
+wasm1lvrwcvrqlc5ktzp2c4t22xgkx29q3y83426at5 wasm1vkv9sfwaak76weyamqx0flmng2vuquxqjq3flu wasm106jwym4s9aujcmes26myzzwqsccw09sd3nap5h wasm1c7wpeen2uv8thayf7g8q2rgpm29clj0dzlu7t9 wasm1mjxpv9ft30wer7ma7kwfxhm42l379xuttrjcl3 \
+wasm1cjsxept9rkggzxztslae9ndgpdyt240842kpxh \
+wasm17d0jcz59jf68g52vq38tuuncmwwjk42us8fnse \
+wasm1p6xs63q4g7np99ttv5nd3yzkt8n4qxa45jkgsk wasm1meeu3jl268txxytwmmrsljk8rawh6n2mhwp76p wasm1cak6lnpfxs035xd88sq8e4zujsm8g2g953hfan wasm1x3x8kyypx8z6q7fx3gw65x29mhl5gg8qtf4xkg wasm18c27m2rj4lg74md03ujralvt562c097nd7scqw wasm1q2y53e6x7s5mlddtd2qkcjr3nwr4dszvs4js2q wasm1paa2gstlk7c98n27dw2g6tp6fyqvf32m3x04t6 wasm1rvxjd8k6xvssz2eerfzemvat35pttfgrsz43tx wasm12zejt8d9xl70jd2333p4p265m2nr9h8g6pgmly wasm1exctm2036jtwyc9v3ftqfzmgnv9tdhj2sskt4u wasm1f3pws3ztnp3s4nn5zxqdrl9vlqv5avkq3rjfe7
 
 # The ./template folder is created by the docker daemon's user (root on Linux, current user
 # when using Docker Desktop on macOS), let's make it ours if needed
@@ -41,4 +41,26 @@ function inline_jq() {
   fi
 }
 
-inline_jq "$SCRIPT_DIR/template/.wasmd/config/genesis.json" -S
+(
+  cd "$SCRIPT_DIR"
+  # Sort genesis
+  inline_jq "template/.wasmd/config/genesis.json" -S
+
+  # Custom settings in config.toml
+  sed -i "" \
+    -e 's/^cors_allowed_origins =.*$/cors_allowed_origins = ["*"]/' \
+    -e 's/^timeout_propose =.*$/timeout_propose = "300ms"/' \
+    -e 's/^timeout_propose_delta =.*$/timeout_propose_delta = "100ms"/' \
+    -e 's/^timeout_prevote =.*$/timeout_prevote = "300ms"/' \
+    -e 's/^timeout_prevote_delta =.*$/timeout_prevote_delta = "100ms"/' \
+    -e 's/^timeout_precommit =.*$/timeout_precommit = "300ms"/' \
+    -e 's/^timeout_precommit_delta =.*$/timeout_precommit_delta = "100ms"/' \
+    -e 's/^timeout_commit =.*$/timeout_commit = "1s"/' \
+    "template/.wasmd/config/config.toml"
+
+  # Custom settings app.toml
+  sed -i "" \
+    -e 's/^enable =.*$/enable = true/' \
+    -e 's/^enabled-unsafe-cors =.*$/enabled-unsafe-cors = true/' \
+    "template/.wasmd/config/app.toml"
+)
