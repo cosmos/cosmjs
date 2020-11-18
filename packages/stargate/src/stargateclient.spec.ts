@@ -40,6 +40,7 @@ describe("StargateClient", () => {
       pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrl);
       expect(await client.getChainId()).toEqual(simapp.chainId);
+      client.disconnect();
     });
 
     it("caches chain ID", async () => {
@@ -52,6 +53,8 @@ describe("StargateClient", () => {
       expect(await client.getChainId()).toEqual(simapp.chainId); // from cache
 
       expect(getCodeSpy).toHaveBeenCalledTimes(1);
+
+      client.disconnect();
     });
   });
 
@@ -66,6 +69,8 @@ describe("StargateClient", () => {
       const height2 = await client.getHeight();
       expect(height2).toBeGreaterThanOrEqual(height1 + 1);
       expect(height2).toBeLessThanOrEqual(height1 + 2);
+
+      client.disconnect();
     });
   });
 
@@ -160,6 +165,8 @@ describe("StargateClient", () => {
       expect(new ReadonlyDate(response.header.time).getTime()).toBeGreaterThanOrEqual(
         ReadonlyDate.now() - 5_000,
       );
+
+      client.disconnect();
     });
 
     it("works for block by height", async () => {
@@ -183,6 +190,8 @@ describe("StargateClient", () => {
       expect(new ReadonlyDate(response.header.time).getTime()).toBeGreaterThanOrEqual(
         ReadonlyDate.now() - 5_000,
       );
+
+      client.disconnect();
     });
   });
 
@@ -242,13 +251,18 @@ describe("StargateClient", () => {
           denom: simapp.denomStaking,
         },
       ]);
+
+      client.disconnect();
     });
 
     it("returns an empty list for non-existent account", async () => {
       pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrl);
+
       const balances = await client.getAllBalancesUnverified(nonExistentAddress);
       expect(balances).toEqual([]);
+
+      client.disconnect();
     });
   });
 
@@ -309,6 +323,8 @@ describe("StargateClient", () => {
       const { rawLog, transactionHash } = txResult;
       expect(rawLog).toMatch(/{"key":"amount","value":"1234567ucosm"}/);
       expect(transactionHash).toMatch(/^[0-9A-F]{64}$/);
+
+      client.disconnect();
     });
   });
 });
