@@ -217,17 +217,9 @@ describe("Cw3CosmWasmClient", () => {
           },
         },
       };
-      const { logs } = await client.createMultisigProposal(
-        "My proposal",
-        "A proposal to propose proposing proposals",
-        [msg],
-      );
-      const wasmEvents = logs[0].events.find((event) => event.type === "wasm");
-      assert(wasmEvents, "Wasm events not found in logs");
-      const proposalIdAttribute = wasmEvents.attributes.find((log) => log.key === "proposal_id");
-      assert(proposalIdAttribute, "Proposal ID not found in logs");
-      const proposalId = parseInt(proposalIdAttribute.value, 10);
-
+      await client.createMultisigProposal("My proposal", "A proposal to propose proposing proposals", [msg]);
+      const { proposals } = await client.reverseProposals(undefined, 1);
+      const proposalId = proposals[0].id;
       const executeResult = await client.executeMultisigProposal(proposalId);
       expect(executeResult).toBeTruthy();
     });
@@ -260,17 +252,11 @@ describe("Cw3CosmWasmClient", () => {
           },
         },
       };
-      const { logs } = await proposer.createMultisigProposal(
-        "My proposal",
-        "A proposal to propose proposing proposals",
-        [msg],
-      );
-      const wasmEvents = logs[0].events.find((event) => event.type === "wasm");
-      assert(wasmEvents, "Wasm events not found in logs");
-      const proposalIdAttribute = wasmEvents.attributes.find((log) => log.key === "proposal_id");
-      assert(proposalIdAttribute, "Proposal ID not found in logs");
-      const proposalId = parseInt(proposalIdAttribute.value, 10);
-
+      await proposer.createMultisigProposal("My proposal", "A proposal to propose proposing proposals", [
+        msg,
+      ]);
+      const { proposals } = await voter.reverseProposals(undefined, 1);
+      const proposalId = proposals[0].id;
       const voteResult = await voter.voteMultisigProposal(proposalId, Vote.Yes);
       expect(voteResult).toBeTruthy();
 
@@ -309,7 +295,7 @@ describe("Cw3CosmWasmClient", () => {
         },
       };
       const currentHeight = await proposer.getHeight();
-      const { logs } = await proposer.createMultisigProposal(
+      await proposer.createMultisigProposal(
         "My proposal",
         "A proposal to propose proposing proposals",
         [msg],
@@ -320,11 +306,8 @@ describe("Cw3CosmWasmClient", () => {
           at_height: currentHeight + 5,
         },
       );
-      const wasmEvents = logs[0].events.find((event) => event.type === "wasm");
-      assert(wasmEvents, "Wasm events not found in logs");
-      const proposalIdAttribute = wasmEvents.attributes.find((log) => log.key === "proposal_id");
-      assert(proposalIdAttribute, "Proposal ID not found in logs");
-      const proposalId = parseInt(proposalIdAttribute.value, 10);
+      const { proposals } = await voter1.reverseProposals(undefined, 1);
+      const proposalId = proposals[0].id;
 
       const vote1Result = await voter1.voteMultisigProposal(proposalId, Vote.Abstain);
       expect(vote1Result).toBeTruthy();
