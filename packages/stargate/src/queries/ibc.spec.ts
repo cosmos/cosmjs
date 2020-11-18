@@ -1,4 +1,4 @@
-import { Client as TendermintClient } from "@cosmjs/tendermint-rpc";
+import { adaptor34, Client as TendermintClient } from "@cosmjs/tendermint-rpc";
 import Long from "long";
 
 import { cosmos, ibc } from "../codec";
@@ -8,7 +8,7 @@ import * as ibcTest from "./ibctestdata.spec";
 import { QueryClient } from "./queryclient";
 
 async function makeClientWithIbc(rpcUrl: string): Promise<[QueryClient & IbcExtension, TendermintClient]> {
-  const tmClient = await TendermintClient.connect(rpcUrl);
+  const tmClient = await TendermintClient.connect(rpcUrl, adaptor34);
   return [QueryClient.withExtensions(tmClient, setupIbcExtension), tmClient];
 }
 

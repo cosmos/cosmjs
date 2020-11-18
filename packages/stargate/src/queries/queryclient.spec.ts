@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { toAscii } from "@cosmjs/encoding";
-import { Client as TendermintClient } from "@cosmjs/tendermint-rpc";
+import { adaptor34, Client as TendermintClient } from "@cosmjs/tendermint-rpc";
 
 import { cosmos } from "../codec";
 import { nonNegativeIntegerMatcher, pendingWithoutSimapp, simapp, unused } from "../testutils.spec";
@@ -11,7 +11,7 @@ const { Coin } = cosmos.base.v1beta1;
 const { QueryAllBalancesRequest, QueryAllBalancesResponse } = cosmos.bank.v1beta1;
 
 async function makeClient(rpcUrl: string): Promise<[QueryClient, TendermintClient]> {
-  const tmClient = await TendermintClient.connect(rpcUrl);
+  const tmClient = await TendermintClient.connect(rpcUrl, adaptor34);
   return [QueryClient.withExtensions(tmClient), tmClient];
 }
 

@@ -21,7 +21,7 @@ import {
   OfflineSigner,
   Registry,
 } from "@cosmjs/proto-signing";
-import { Client as TendermintClient } from "@cosmjs/tendermint-rpc";
+import { adaptor34, Client as TendermintClient } from "@cosmjs/tendermint-rpc";
 
 import { cosmos } from "./codec";
 import { getMsgType } from "./encoding";
@@ -54,7 +54,7 @@ export class SigningStargateClient extends StargateClient {
     signer: OfflineSigner,
     options: SigningStargateClientOptions = {},
   ): Promise<SigningStargateClient> {
-    const tmClient = await TendermintClient.connect(endpoint);
+    const tmClient = await TendermintClient.connect(endpoint, adaptor34);
     return new SigningStargateClient(tmClient, signer, options);
   }
 
