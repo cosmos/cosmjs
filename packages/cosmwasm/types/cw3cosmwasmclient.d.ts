@@ -47,6 +47,18 @@ export interface VoterResult {
 export interface VotersResult {
   readonly voters: readonly VoterResult[];
 }
+interface StartBeforeNumberPaginationOptions {
+  readonly startBefore?: number;
+  readonly limit?: number;
+}
+interface StartAfterNumberPaginationOptions {
+  readonly startAfter?: number;
+  readonly limit?: number;
+}
+interface StartAfterStringPaginationOptions {
+  readonly startAfter?: string;
+  readonly limit?: number;
+}
 export declare class Cw3CosmWasmClient extends SigningCosmWasmClient {
   private readonly cw3ContractAddress;
   constructor(
@@ -60,12 +72,15 @@ export declare class Cw3CosmWasmClient extends SigningCosmWasmClient {
   );
   getThreshold(): Promise<ThresholdResult>;
   getProposal(proposalId: number): Promise<ProposalResult>;
-  listProposals(startAfter?: number, limit?: number): Promise<ProposalsResult>;
-  reverseProposals(startBefore?: number, limit?: number): Promise<ProposalsResult>;
+  listProposals({ startAfter, limit }?: StartAfterNumberPaginationOptions): Promise<ProposalsResult>;
+  reverseProposals({ startBefore, limit }?: StartBeforeNumberPaginationOptions): Promise<ProposalsResult>;
   getVote(proposalId: number, voter: string): Promise<VoteResult>;
-  listVotes(proposalId: number, startAfter?: string, limit?: number): Promise<VotesResult>;
+  listVotes(
+    proposalId: number,
+    { startAfter, limit }?: StartAfterStringPaginationOptions,
+  ): Promise<VotesResult>;
   getVoter(address: string): Promise<VoterResult>;
-  listVoters(startAfter?: string, limit?: number): Promise<VotersResult>;
+  listVoters({ startAfter, limit }?: StartAfterStringPaginationOptions): Promise<VotersResult>;
   createMultisigProposal(
     title: string,
     description: string,
@@ -78,3 +93,4 @@ export declare class Cw3CosmWasmClient extends SigningCosmWasmClient {
   executeMultisigProposal(proposalId: number, memo?: string): Promise<ExecuteResult>;
   closeMultisigProposal(proposalId: number, memo?: string): Promise<ExecuteResult>;
 }
+export {};

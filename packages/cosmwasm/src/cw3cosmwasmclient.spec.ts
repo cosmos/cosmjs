@@ -105,7 +105,7 @@ describe("Cw3CosmWasmClient", () => {
 
       const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic);
       const client = new Cw3CosmWasmClient(launchpad.endpoint, alice.address0, wallet, contractAddress);
-      const result = await client.listProposals(proposalId - 1, 1);
+      const result = await client.listProposals({ startAfter: proposalId - 1, limit: 1 });
 
       expect(result).toEqual({
         proposals: [
@@ -127,7 +127,7 @@ describe("Cw3CosmWasmClient", () => {
 
       const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic);
       const client = new Cw3CosmWasmClient(launchpad.endpoint, alice.address0, wallet, contractAddress);
-      const result = await client.reverseProposals(undefined, 1);
+      const result = await client.reverseProposals({ limit: 1 });
 
       expect(result).toEqual({
         proposals: [
@@ -218,7 +218,7 @@ describe("Cw3CosmWasmClient", () => {
         },
       };
       await client.createMultisigProposal("My proposal", "A proposal to propose proposing proposals", [msg]);
-      const { proposals } = await client.reverseProposals(undefined, 1);
+      const { proposals } = await client.reverseProposals({ limit: 1 });
       const proposalId = proposals[0].id;
       const executeResult = await client.executeMultisigProposal(proposalId);
       expect(executeResult).toBeTruthy();
@@ -255,7 +255,7 @@ describe("Cw3CosmWasmClient", () => {
       await proposer.createMultisigProposal("My proposal", "A proposal to propose proposing proposals", [
         msg,
       ]);
-      const { proposals } = await voter.reverseProposals(undefined, 1);
+      const { proposals } = await voter.reverseProposals({ limit: 1 });
       const proposalId = proposals[0].id;
       const voteResult = await voter.voteMultisigProposal(proposalId, Vote.Yes);
       expect(voteResult).toBeTruthy();
@@ -306,7 +306,7 @@ describe("Cw3CosmWasmClient", () => {
           at_height: currentHeight + 5,
         },
       );
-      const { proposals } = await voter1.reverseProposals(undefined, 1);
+      const { proposals } = await voter1.reverseProposals({ limit: 1 });
       const proposalId = proposals[0].id;
 
       const vote1Result = await voter1.voteMultisigProposal(proposalId, Vote.Abstain);

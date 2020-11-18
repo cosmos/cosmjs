@@ -55,6 +55,21 @@ export interface VotersResult {
   readonly voters: readonly VoterResult[];
 }
 
+interface StartBeforeNumberPaginationOptions {
+  readonly startBefore?: number;
+  readonly limit?: number;
+}
+
+interface StartAfterNumberPaginationOptions {
+  readonly startAfter?: number;
+  readonly limit?: number;
+}
+
+interface StartAfterStringPaginationOptions {
+  readonly startAfter?: string;
+  readonly limit?: number;
+}
+
 export class Cw3CosmWasmClient extends SigningCosmWasmClient {
   private readonly cw3ContractAddress: string;
 
@@ -79,7 +94,9 @@ export class Cw3CosmWasmClient extends SigningCosmWasmClient {
     return this.queryContractSmart(this.cw3ContractAddress, { proposal: { proposal_id: proposalId } });
   }
 
-  public listProposals(startAfter?: number, limit?: number): Promise<ProposalsResult> {
+  public listProposals({ startAfter, limit }: StartAfterNumberPaginationOptions = {}): Promise<
+    ProposalsResult
+  > {
     return this.queryContractSmart(this.cw3ContractAddress, {
       list_proposals: {
         start_after: startAfter,
@@ -88,7 +105,9 @@ export class Cw3CosmWasmClient extends SigningCosmWasmClient {
     });
   }
 
-  public reverseProposals(startBefore?: number, limit?: number): Promise<ProposalsResult> {
+  public reverseProposals({ startBefore, limit }: StartBeforeNumberPaginationOptions = {}): Promise<
+    ProposalsResult
+  > {
     return this.queryContractSmart(this.cw3ContractAddress, {
       reverse_proposals: {
         start_before: startBefore,
@@ -106,7 +125,10 @@ export class Cw3CosmWasmClient extends SigningCosmWasmClient {
     });
   }
 
-  public listVotes(proposalId: number, startAfter?: string, limit?: number): Promise<VotesResult> {
+  public listVotes(
+    proposalId: number,
+    { startAfter, limit }: StartAfterStringPaginationOptions = {},
+  ): Promise<VotesResult> {
     return this.queryContractSmart(this.cw3ContractAddress, {
       list_votes: {
         proposal_id: proposalId,
@@ -124,7 +146,7 @@ export class Cw3CosmWasmClient extends SigningCosmWasmClient {
     });
   }
 
-  public listVoters(startAfter?: string, limit?: number): Promise<VotersResult> {
+  public listVoters({ startAfter, limit }: StartAfterStringPaginationOptions = {}): Promise<VotersResult> {
     return this.queryContractSmart(this.cw3ContractAddress, {
       list_voters: {
         start_after: startAfter,
