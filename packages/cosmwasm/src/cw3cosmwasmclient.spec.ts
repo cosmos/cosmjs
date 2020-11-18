@@ -27,9 +27,48 @@ describe("Cw3CosmWasmClient", () => {
   });
 
   describe("queries", () => {
-    it("works", async () => {
+    const contractAddress = deployedCw3.instances[0];
+    const toAddress = makeRandomAddress();
+    const msg = {
+      bank: {
+        send: {
+          from_address: contractAddress,
+          to_address: toAddress,
+          amount: [
+            {
+              amount: "1",
+              denom: "ucosm",
+            },
+          ],
+        },
+      },
+    };
+    let proposalId: number;
+    let expirationHeight: number;
+
+    beforeAll(async () => {
+      const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic);
+      const client = new Cw3CosmWasmClient(launchpad.endpoint, alice.address0, wallet, contractAddress);
+      const currentHeight = await client.getHeight();
+      expirationHeight = currentHeight + 1;
+      const { logs } = await client.createMultisigProposal(
+        "My proposal",
+        "A proposal to propose proposing proposals",
+        [msg],
+        undefined,
+        { at_height: expirationHeight },
+      );
+      const wasmEvents = logs[0].events.find((event) => event.type === "wasm");
+      assert(wasmEvents, "Wasm events not found in logs");
+      const proposalIdAttribute = wasmEvents.attributes.find((log) => log.key === "proposal_id");
+      assert(proposalIdAttribute, "Proposal ID not found in logs");
+      proposalId = parseInt(proposalIdAttribute.value, 10);
+    });
+
+    it("getThreshold", async () => {
       pendingWithoutLaunchpad();
       pendingWithoutCw3();
+
       const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic);
       const client = new Cw3CosmWasmClient(
         launchpad.endpoint,
@@ -37,8 +76,122 @@ describe("Cw3CosmWasmClient", () => {
         wallet,
         deployedCw3.instances[0],
       );
-      const result = await client.queryContractSmart(deployedCw3.instances[0], { threshold: {} });
+      const result = await client.getThreshold();
+
       expect(result).toEqual({ absolute_count: { weight_needed: 1, total_weight: 3 } });
+    });
+
+    it("getProposal", async () => {
+      pendingWithoutLaunchpad();
+      pendingWithoutCw3();
+
+      const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic);
+      const client = new Cw3CosmWasmClient(launchpad.endpoint, alice.address0, wallet, contractAddress);
+      const result = await client.getProposal(proposalId);
+
+      expect(result).toEqual({
+        id: proposalId,
+        title: "My proposal",
+        description: "A proposal to propose proposing proposals",
+        msgs: [msg],
+        expires: { at_height: expirationHeight },
+        status: "passed",
+      });
+    });
+
+    it("listProposals", async () => {
+      pendingWithoutLaunchpad();
+      pendingWithoutCw3();
+
+      const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic);
+      const client = new Cw3CosmWasmClient(launchpad.endpoint, alice.address0, wallet, contractAddress);
+      const result = await client.listProposals(proposalId - 1, 1);
+
+      expect(result).toEqual({
+        proposals: [
+          {
+            id: proposalId,
+            title: "My proposal",
+            description: "A proposal to propose proposing proposals",
+            msgs: [msg],
+            expires: { at_height: expirationHeight },
+            status: "passed",
+          },
+        ],
+      });
+    });
+
+    it("reverseProposals", async () => {
+      pendingWithoutLaunchpad();
+      pendingWithoutCw3();
+
+      const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic);
+      const client = new Cw3CosmWasmClient(launchpad.endpoint, alice.address0, wallet, contractAddress);
+      const result = await client.reverseProposals(undefined, 1);
+
+      expect(result).toEqual({
+        proposals: [
+          {
+            id: proposalId,
+            title: "My proposal",
+            description: "A proposal to propose proposing proposals",
+            msgs: [msg],
+            expires: { at_height: expirationHeight },
+            status: "passed",
+          },
+        ],
+      });
+    });
+
+    it("getVote", async () => {
+      pendingWithoutLaunchpad();
+      pendingWithoutCw3();
+
+      const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic);
+      const client = new Cw3CosmWasmClient(launchpad.endpoint, alice.address0, wallet, contractAddress);
+      const result = await client.getVote(proposalId, alice.address0);
+
+      expect(result).toEqual({ vote: Vote.Yes });
+    });
+
+    it("listVotes", async () => {
+      pendingWithoutLaunchpad();
+      pendingWithoutCw3();
+
+      const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic);
+      const client = new Cw3CosmWasmClient(launchpad.endpoint, alice.address0, wallet, contractAddress);
+      const result = await client.listVotes(proposalId);
+
+      expect(result).toEqual({ votes: [{ voter: alice.address0, vote: Vote.Yes, weight: 1 }] });
+    });
+
+    it("getVoter", async () => {
+      pendingWithoutLaunchpad();
+      pendingWithoutCw3();
+
+      const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic);
+      const client = new Cw3CosmWasmClient(launchpad.endpoint, alice.address0, wallet, contractAddress);
+      const result = await client.getVoter(alice.address0);
+
+      expect(result).toEqual({ addr: alice.address0, weight: 1 });
+    });
+
+    it("listVoters", async () => {
+      pendingWithoutLaunchpad();
+      pendingWithoutCw3();
+
+      const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic);
+      const client = new Cw3CosmWasmClient(launchpad.endpoint, alice.address0, wallet, contractAddress);
+      const result = await client.listVoters();
+
+      expect(result.voters.length).toEqual(3);
+      expect(result.voters).toEqual(
+        jasmine.arrayContaining([
+          { addr: alice.address0, weight: 1 },
+          { addr: alice.address1, weight: 1 },
+          { addr: alice.address2, weight: 1 },
+        ]),
+      );
     });
   });
 
