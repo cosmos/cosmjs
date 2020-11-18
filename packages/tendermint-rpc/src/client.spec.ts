@@ -6,7 +6,7 @@ import { ReadonlyDate } from "readonly-date";
 import { Stream } from "xstream";
 
 import { Adaptor } from "./adaptor";
-import { adaptorForVersion } from "./adaptorforversion";
+import { adaptorForVersion } from "./adaptors";
 import { Client } from "./client";
 import { ExpectedValues, tendermintInstances } from "./config.spec";
 import { buildQuery } from "./requests";

@@ -20,6 +20,8 @@
   optional adaptor.
 - @cosmjs/tendermint-rpc: Add an optional adaptor argument to `Client.connect`
   which allows skipping the auto-detection.
+- @cosmjs/tendermint-rpc: Remove export `v0_33` in favour of `adaptor33` and
+  `adaptor34`. Export the `Adaptor` type.
 
 ## 0.23.1 (2020-10-27)
 

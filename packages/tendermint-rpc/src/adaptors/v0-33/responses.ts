@@ -20,10 +20,10 @@ import {
   IntegerString,
   may,
   optional,
-} from "../encodings";
-import * as responses from "../responses";
-import { SubscriptionEvent } from "../rpcclients";
-import { IpPortString, TxBytes, TxHash, ValidatorPubkey, ValidatorSignature } from "../types";
+} from "../../encodings";
+import * as responses from "../../responses";
+import { SubscriptionEvent } from "../../rpcclients";
+import { IpPortString, TxBytes, TxHash, ValidatorPubkey, ValidatorSignature } from "../../types";
 import { hashTx } from "./hasher";
 
 interface AbciInfoResult {

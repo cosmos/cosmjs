@@ -1,7 +1,7 @@
 import { JsonRpcSuccessResponse } from "@cosmjs/json-rpc";
-import { Base64String } from "../encodings";
-import * as responses from "../responses";
-import { SubscriptionEvent } from "../rpcclients";
+import { Base64String } from "../../encodings";
+import * as responses from "../../responses";
+import { SubscriptionEvent } from "../../rpcclients";
 export interface RpcProofOp {
   readonly type: string;
   readonly key: Base64String;
