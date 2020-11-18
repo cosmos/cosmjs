@@ -12,13 +12,18 @@ export declare class Client {
   static connect(url: string): Promise<Client>;
   /**
    * Creates a new Tendermint client given an RPC client.
+   *
+   * If the adaptor is not set, an auto-detection is performed.
    */
-  static create(rpcClient: RpcClient): Promise<Client>;
+  static create(rpcClient: RpcClient, adaptor?: Adaptor): Promise<Client>;
   private static detectVersion;
   private readonly client;
   private readonly p;
   private readonly r;
-  constructor(client: RpcClient, adaptor: Adaptor);
+  /**
+   * Use `Client.connect` or `Client.create` to create an instance.
+   */
+  private constructor();
   disconnect(): void;
   abciInfo(): Promise<responses.AbciInfoResponse>;
   abciQuery(params: requests.AbciQueryParams): Promise<responses.AbciQueryResponse>;

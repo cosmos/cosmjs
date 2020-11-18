@@ -27,10 +27,18 @@ export class Client {
 
   /**
    * Creates a new Tendermint client given an RPC client.
+   *
+   * If the adaptor is not set, an auto-detection is performed.
    */
-  public static async create(rpcClient: RpcClient): Promise<Client> {
-    const version = await this.detectVersion(rpcClient);
-    return new Client(rpcClient, adaptorForVersion(version));
+  public static async create(rpcClient: RpcClient, adaptor?: Adaptor): Promise<Client> {
+    let usedAdaptor: Adaptor;
+    if (adaptor) {
+      usedAdaptor = adaptor;
+    } else {
+      const version = await this.detectVersion(rpcClient);
+      usedAdaptor = adaptorForVersion(version);
+    }
+    return new Client(rpcClient, usedAdaptor);
   }
 
   private static async detectVersion(client: RpcClient): Promise<string> {
@@ -53,7 +61,10 @@ export class Client {
   private readonly p: Params;
   private readonly r: Responses;
 
-  public constructor(client: RpcClient, adaptor: Adaptor) {
+  /**
+   * Use `Client.connect` or `Client.create` to create an instance.
+   */
+  private constructor(client: RpcClient, adaptor: Adaptor) {
     this.client = client;
     this.p = adaptor.params;
     this.r = adaptor.responses;

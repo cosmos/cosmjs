@@ -15,8 +15,9 @@
 - @cosmjs/stargate: Add new package for Cosmos SDK Stargate support.
 - @cosmjs/tendermint-rpc: Make `Client.detectVersion` private and let it return
   a version instead of a client.
-- @cosmjs/tendermint-rpc: Add `Client.create` for creating a Tendermint client
-  given an RPC client.
+- @cosmjs/tendermint-rpc: Make the constructor of `Client` private. Add
+  `Client.create` for creating a Tendermint client given an RPC client and an
+  optional adaptor.
 
 ## 0.23.1 (2020-10-27)
 
