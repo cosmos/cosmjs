@@ -14,13 +14,26 @@ import {
 } from "./rpcclients";
 
 export class Client {
+  /**
+   * Creates a new Tendermint client for the given endpoint.
+   *
+   * Uses HTTP when the URL schema is http or https. Uses WebSockets otherwise.
+   */
   public static async connect(url: string): Promise<Client> {
     const useHttp = url.startsWith("http://") || url.startsWith("https://");
-    const client = useHttp ? new HttpClient(url) : new WebsocketClient(url);
-    return this.detectVersion(client);
+    const rpcClient = useHttp ? new HttpClient(url) : new WebsocketClient(url);
+    return Client.create(rpcClient);
   }
 
-  public static async detectVersion(client: RpcClient): Promise<Client> {
+  /**
+   * Creates a new Tendermint client given an RPC client.
+   */
+  public static async create(rpcClient: RpcClient): Promise<Client> {
+    const version = await this.detectVersion(rpcClient);
+    return new Client(rpcClient, adaptorForVersion(version));
+  }
+
+  private static async detectVersion(client: RpcClient): Promise<string> {
     const req = createJsonRpcRequest(requests.Method.Status);
     const response = await client.execute(req);
     const result = response.result;
@@ -33,8 +46,7 @@ export class Client {
     if (typeof version !== "string") {
       throw new Error("Unrecognized version format: must be string");
     }
-
-    return new Client(client, adaptorForVersion(version));
+    return version;
   }
 
   private readonly client: RpcClient;

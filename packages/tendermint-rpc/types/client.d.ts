@@ -4,8 +4,17 @@ import * as requests from "./requests";
 import * as responses from "./responses";
 import { RpcClient } from "./rpcclients";
 export declare class Client {
+  /**
+   * Creates a new Tendermint client for the given endpoint.
+   *
+   * Uses HTTP when the URL schema is http or https. Uses WebSockets otherwise.
+   */
   static connect(url: string): Promise<Client>;
-  static detectVersion(client: RpcClient): Promise<Client>;
+  /**
+   * Creates a new Tendermint client given an RPC client.
+   */
+  static create(rpcClient: RpcClient): Promise<Client>;
+  private static detectVersion;
   private readonly client;
   private readonly p;
   private readonly r;

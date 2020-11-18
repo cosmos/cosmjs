@@ -42,18 +42,20 @@ function randomString(): string {
 }
 
 function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, expected: ExpectedValues): void {
+  describe("create", () => {
+    it("can auto-discover Tendermint version and communicate", async () => {
+      pendingWithoutTendermint();
+      const client = await Client.create(rpcFactory());
+      const info = await client.abciInfo();
+      expect(info).toBeTruthy();
+      client.disconnect();
+    });
+  });
+
   it("can connect to tendermint with known version", async () => {
     pendingWithoutTendermint();
     const client = new Client(rpcFactory(), adaptor);
     expect(await client.abciInfo()).toBeTruthy();
-    client.disconnect();
-  });
-
-  it("can auto-discover tendermint version and connect", async () => {
-    pendingWithoutTendermint();
-    const client = await Client.detectVersion(rpcFactory());
-    const info = await client.abciInfo();
-    expect(info).toBeTruthy();
     client.disconnect();
   });
 

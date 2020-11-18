@@ -13,6 +13,10 @@
 - @cosmjs/proto-signing: Add new package for handling transaction signing with
   protobuf encoding.
 - @cosmjs/stargate: Add new package for Cosmos SDK Stargate support.
+- @cosmjs/tendermint-rpc: Make `Client.detectVersion` private and let it return
+  a version instead of a client.
+- @cosmjs/tendermint-rpc: Add `Client.create` for creating a Tendermint client
+  given an RPC client.
 
 ## 0.23.1 (2020-10-27)
 
