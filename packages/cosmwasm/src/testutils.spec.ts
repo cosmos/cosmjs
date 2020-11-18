@@ -91,6 +91,18 @@ export const deployedErc20 = {
   ],
 };
 
+/** Deployed as part of scripts/launchpad/init.sh */
+export const deployedCw3 = {
+  codeId: 3,
+  source: "https://crates.io/api/v1/crates/cw3-fixed-multisig/0.3.1/download",
+  builder: "cosmwasm/rust-optimizer:0.10.4",
+  instances: [
+    "cosmos1xqeym28j9xgv0p93pwwt6qcxf9tdvf9zddufdw", // Multisig (1/3)
+    "cosmos1jka38ckju8cpjap00jf9xdvdyttz9caujtd6t5", // Multisig (2/3)
+    "cosmos12dnl585uxzddjw9hw4ca694f054shgpgr4zg80", // Multisig (uneven weights)
+  ],
+};
+
 export const launchpad = {
   endpoint: "http://localhost:1317",
   chainId: "testing",
@@ -116,6 +128,16 @@ export function erc20Enabled(): boolean {
 export function pendingWithoutErc20(): void {
   if (!erc20Enabled()) {
     return pending("Set ERC20_ENABLED to enable ERC20-based tests");
+  }
+}
+
+export function cw3Enabled(): boolean {
+  return !!process.env.CW3_ENABLED;
+}
+
+export function pendingWithoutCw3(): void {
+  if (!cw3Enabled()) {
+    return pending("Set CW3_ENABLED to enable CW3-based tests");
   }
 }
 
