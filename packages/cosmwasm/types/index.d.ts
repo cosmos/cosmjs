@@ -17,6 +17,18 @@ export {
   SearchTxFilter,
 } from "./cosmwasmclient";
 export {
+  Cw3CosmWasmClient,
+  Expiration,
+  ProposalResult,
+  ProposalsResult,
+  ThresholdResult,
+  Vote,
+  VoteResult,
+  VotesResult,
+  VoterResult,
+  VotersResult,
+} from "./cw3cosmwasmclient";
+export {
   ExecuteResult,
   CosmWasmFeeTable,
   InstantiateOptions,
