@@ -84,11 +84,11 @@ You should get output matching the following:
 
 1. **Faucet**<br>
    economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone<br>
-   Address 0: cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6<br>
-   Address 1: cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5<br>
-   Address 2: cosmos1xy4yqngt0nlkdcenxymg8tenrghmek4nmqm28k<br>
-   Address 3: cosmos142u9fgcjdlycfcez3lw8x6x5h7rfjlnfhpw2lx<br>
-   Address 4: cosmos1hsm76p4ahyhl5yh3ve9ur49r5kemhp2r0dcjvx<br>
+   Address 0: wasm1pkptre7fdkl6gfrzlesjjvhxhlc3r4gm32kke3<br>
+   Address 1: wasm10dyr9899g6t0pelew4nvf4j5c3jcgv0r5d3a5l<br>
+   Address 2: wasm1xy4yqngt0nlkdcenxymg8tenrghmek4n3u2lwa<br>
+   Address 3: wasm142u9fgcjdlycfcez3lw8x6x5h7rfjlnfaallkd<br>
+   Address 4: wasm1hsm76p4ahyhl5yh3ve9ur49r5kemhp2r93f89d<br>
    Pubkey 0: A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ<br>
    Pubkey 1: AiDosfIbBi54XJ1QjCeApumcy/FjdtF+YhywPf3DKTx7<br>
    Pubkey 2: AzQg33JZqH7vSsm09esZY5bZvmzYwE/SY78cA0iLxpD7<br>
@@ -96,11 +96,11 @@ You should get output matching the following:
    Pubkey 4: Aum2063ub/ErUnIUB36sK55LktGUStgcbSiaAnL1wadu
 2. **Alice**: Test account for the cosmwasm package that can run in parallel with faucet without sequence conflicts<br>
    enlist hip relief stomach skate base shallow young switch frequent cry park<br>
-   Address 0: cosmos14qemq0vw6y3gc3u3e0aty2e764u4gs5le3hada<br>
-   Address 1: cosmos1hhg2rlu9jscacku2wwckws7932qqqu8x3gfgw0<br>
-   Address 2: cosmos1xv9tklw7d82sezh9haa573wufgy59vmwe6xxe5<br>
-   Address 3: cosmos17yg9mssjenmc3jkqth6ulcwj9cxujrxxzezwta<br>
-   Address 4: cosmos1f7j7ryulwjfe9ljplvhtcaxa6wqgula3etktce<br>
+   Address 0: wasm14qemq0vw6y3gc3u3e0aty2e764u4gs5lndxgyk<br>
+   Address 1: wasm1hhg2rlu9jscacku2wwckws7932qqqu8xm5ca8y<br>
+   Address 2: wasm1xv9tklw7d82sezh9haa573wufgy59vmwnxhnsl<br>
+   Address 3: wasm17yg9mssjenmc3jkqth6ulcwj9cxujrxxg9nmzk<br>
+   Address 4: wasm1f7j7ryulwjfe9ljplvhtcaxa6wqgula3nh873j<br>
    Pubkey 0: A9cXhWb8ZpqCzkA8dQCPV29KdeRLV3rUYxrkHudLbQtS<br>
    Pubkey 1: A4XluzvcUx0ViLF0DjYW5/noArGwpltDstoUUZo+g1b0<br>
    Pubkey 2: A5TKr1NKc/MKRJ7+EHDD9PlzmGaPD/di/6hzZyBwxoy5<br>
@@ -108,11 +108,11 @@ You should get output matching the following:
    Pubkey 4: A7usTiqgqfxL/WKhoephDUSCHBQlLagtwI/qTmEteTRM
 3. **Bob**: Test account (unused for now)<br>
    remain fragile remove stamp quiz bus country dress critic mammal office need<br>
-   Address 0: cosmos1lvrwcvrqlc5ktzp2c4t22xgkx29q3y83lktgzl<br>
-   Address 1: cosmos1vkv9sfwaak76weyamqx0flmng2vuquxqcuqukh<br>
-   Address 2: cosmos106jwym4s9aujcmes26myzzwqsccw09sdm0v5au<br>
-   Address 3: cosmos1c7wpeen2uv8thayf7g8q2rgpm29clj0dgrdtzw<br>
-   Address 4: cosmos1mjxpv9ft30wer7ma7kwfxhm42l379xutplrdk6<br>
+   Address 0: wasm1lvrwcvrqlc5ktzp2c4t22xgkx29q3y83426at5<br>
+   Address 1: wasm1vkv9sfwaak76weyamqx0flmng2vuquxqjq3flu<br>
+   Address 2: wasm106jwym4s9aujcmes26myzzwqsccw09sd3nap5h<br>
+   Address 3: wasm1c7wpeen2uv8thayf7g8q2rgpm29clj0dzlu7t9<br>
+   Address 4: wasm1mjxpv9ft30wer7ma7kwfxhm42l379xuttrjcl3<br>
    Pubkey 0: A0d/GxY+UALE+miWJP0qyq4/EayG1G6tsg24v+cbD6By<br>
    Pubkey 1: Agqd6njsVEQD1CR+F2aqEb8hil5NXZ06mjKgetaNC12t<br>
    Pubkey 2: A6e9ElvKaM0DKWh1bIdK3bgB14dyEDgIXYMA0Lbs1GoQ<br>
@@ -121,24 +121,24 @@ You should get output matching the following:
 4. **Unused**: for testing account state; this account never changes balances or sequences<br>
    oyster design unusual machine spread century engine gravity focus cave carry slot<br>
    ArkCaFUJ/IH+vKBmNRCdUVl3mCAhbopk9jjW4Ko4OfRQ<br>
-   cosmos1cjsxept9rkggzxztslae9ndgpdyt2408lk850u
+   wasm1cjsxept9rkggzxztslae9ndgpdyt240842kpxh
 5. **Guest**: account for manual testing<br>
    degree tackle suggest window test behind mesh extra cover prepare oak script<br>
    Am/+YV0LaeqQPu7BDJuDHV7J8y68ptkGs10YS+9s71Nq<br>
-   cosmos17d0jcz59jf68g52vq38tuuncmwwjk42u6mcxej
+   wasm17d0jcz59jf68g52vq38tuuncmwwjk42us8fnse
 6. **Ledger**: accounts for Ledger based demos and tests<br>
    example indicate trick cereal hub fix civil host kiss version bird dash<br>
-   Address 0: cosmos1p6xs63q4g7np99ttv5nd3yzkt8n4qxa47w8aea<br>
-   Address 1: cosmos1meeu3jl268txxytwmmrsljk8rawh6n2majstn2<br>
-   Address 2: cosmos1cak6lnpfxs035xd88sq8e4zujsm8g2g97dxu5c<br>
-   Address 3: cosmos1x3x8kyypx8z6q7fx3gw65x29mhl5gg8qp4ynlr<br>
-   Address 4: cosmos18c27m2rj4lg74md03ujralvt562c097n8zpdf9<br>
-   Address 5: cosmos1q2y53e6x7s5mlddtd2qkcjr3nwr4dszv6fr9rt<br>
-   Address 6: cosmos1paa2gstlk7c98n27dw2g6tp6fyqvf32mm67qz3<br>
-   Address 7: cosmos1rvxjd8k6xvssz2eerfzemvat35pttfgr67yyzd<br>
-   Address 8: cosmos12zejt8d9xl70jd2333p4p265m2nr9h8gsaewk0<br>
-   Address 9: cosmos1exctm2036jtwyc9v3ftqfzmgnv9tdhj26v87uh<br>
-   Address 10: cosmos1f3pws3ztnp3s4nn5zxqdrl9vlqv5avkqmlrus4<br>
+   Address 0: wasm1p6xs63q4g7np99ttv5nd3yzkt8n4qxa45jkgsk<br>
+   Address 1: wasm1meeu3jl268txxytwmmrsljk8rawh6n2mhwp76p<br>
+   Address 2: wasm1cak6lnpfxs035xd88sq8e4zujsm8g2g953hfan<br>
+   Address 3: wasm1x3x8kyypx8z6q7fx3gw65x29mhl5gg8qtf4xkg<br>
+   Address 4: wasm18c27m2rj4lg74md03ujralvt562c097nd7scqw<br>
+   Address 5: wasm1q2y53e6x7s5mlddtd2qkcjr3nwr4dszvs4js2q<br>
+   Address 6: wasm1paa2gstlk7c98n27dw2g6tp6fyqvf32m3x04t6<br>
+   Address 7: wasm1rvxjd8k6xvssz2eerfzemvat35pttfgrsz43tx<br>
+   Address 8: wasm12zejt8d9xl70jd2333p4p265m2nr9h8g6pgmly<br>
+   Address 9: wasm1exctm2036jtwyc9v3ftqfzmgnv9tdhj2sskt4u<br>
+   Address 10: wasm1f3pws3ztnp3s4nn5zxqdrl9vlqv5avkq3rjfe7<br>
    Pubkey 0: A66JoCNaNSXDsyj4qW7JgqXPTz5rOnfE6EKEArf4jJEK<br>
    Pubkey 1: AtvmGuZvEN3NwL05BQdxl3XygUf+Vl/930fhFMt1HTyU<br>
    Pubkey 2: A58dfmfVoKoTCteEzTHBC0OLJIBgzejGDVVEb8YW9vtJ<br>
