@@ -137,7 +137,7 @@ jobs:
       - run:
           name: Install libusb
           command: |
-            wget -O "$HOME/libusb.deb" http://de.archive.ubuntu.com/ubuntu/pool/main/libu/libusb-1.0/libusb-1.0-0-dev_1.0.20-1_amd64.deb
+            wget -O "$HOME/libusb.deb" http://de.archive.ubuntu.com/ubuntu/pool/main/libu/libusb-1.0/libusb-1.0-0-dev_1.0.23-2build1_amd64.deb
             sudo dpkg -i "$HOME/libusb.deb"
       - run:
           name: Install Dependencies
@@ -258,7 +258,7 @@ jobs:
       - run:
           name: Install libusb
           command: |
-            wget -O "$HOME/libusb.deb" http://de.archive.ubuntu.com/ubuntu/pool/main/libu/libusb-1.0/libusb-1.0-0-dev_1.0.20-1_amd64.deb
+            wget -O "$HOME/libusb.deb" http://de.archive.ubuntu.com/ubuntu/pool/main/libu/libusb-1.0/libusb-1.0-0-dev_1.0.23-2build1_amd64.deb
             sudo dpkg -i "$HOME/libusb.deb"
       - run:
           name: Install Dependencies
@@ -360,7 +360,7 @@ jobs:
       - run:
           name: Install libusb
           command: |
-            wget -O "$HOME/libusb.deb" http://de.archive.ubuntu.com/ubuntu/pool/main/libu/libusb-1.0/libusb-1.0-0-dev_1.0.20-1_amd64.deb
+            wget -O "$HOME/libusb.deb" http://de.archive.ubuntu.com/ubuntu/pool/main/libu/libusb-1.0/libusb-1.0-0-dev_1.0.23-2build1_amd64.deb
             sudo dpkg -i "$HOME/libusb.deb"
       - run:
           name: Install Dependencies
