@@ -33,14 +33,12 @@ export class Client {
    * If the adaptor is not set, an auto-detection is performed.
    */
   public static async create(rpcClient: RpcClient, adaptor?: Adaptor): Promise<Client> {
-    let usedAdaptor: Adaptor;
-    if (adaptor) {
-      usedAdaptor = adaptor;
-    } else {
-      const version = await this.detectVersion(rpcClient);
-      usedAdaptor = adaptorForVersion(version);
-    }
-    return new Client(rpcClient, usedAdaptor);
+    // For some very strange reason I don't understand, tests start to fail on some systems
+    // (our CI) when skipping the status call before doing other queries. Sleeping a little
+    // while did not help. Thus we query the version as a way to say "hi" to the backend,
+    // even in cases where we don't use the result.
+    const version = await this.detectVersion(rpcClient);
+    return new Client(rpcClient, adaptor || adaptorForVersion(version));
   }
 
   private static async detectVersion(client: RpcClient): Promise<string> {
