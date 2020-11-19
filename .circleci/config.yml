@@ -93,6 +93,10 @@ jobs:
           name: Start launchpad
           command: ./scripts/launchpad/start.sh
           background: true
+      - run: # start early for less wait time below
+          name: Start wasmd
+          command: ./scripts/wasmd/start.sh
+          background: true
       - run:
           name: Start simapp
           command: ./scripts/simapp/start.sh
@@ -145,6 +149,9 @@ jobs:
           name: Initialize launchpad (deploy contracts and friends)
           command: ./scripts/launchpad/init.sh
       - run:
+          name: Initialize wasmd (deploy contracts and friends)
+          command: ./scripts/wasmd/init.sh
+      - run:
           name: Start socket server
           command: ./scripts/socketserver/start.sh
       - run:
@@ -155,6 +162,7 @@ jobs:
             TENDERMINT_ENABLED: 1
             SOCKETSERVER_ENABLED: 1
             SKIP_BUILD: 1
+            WASMD_ENABLED: 1
           command: yarn test --stream
       - run:
           name: Run CLI selftest
@@ -176,11 +184,13 @@ jobs:
             ./bin/cosmwasm-cli --init examples/local_faucet.ts --code "process.exit(0)"
             ./bin/cosmwasm-cli --init examples/mask.ts --code "process.exit(0)"
       - run:
-          command: ./scripts/launchpad/stop.sh
-      - run:
-          command: ./scripts/tendermint/all_stop.sh
-      - run:
-          command: ./scripts/socketserver/stop.sh
+          name: Stop chains
+          command: |
+            ./scripts/socketserver/stop.sh
+            ./scripts/tendermint/all_stop.sh
+            ./scripts/simapp/stop.sh
+            ./scripts/wasmd/stop.sh
+            ./scripts/launchpad/stop.sh
   test-chrome:
     machine:
       # We can't use a containerized environment since it requires remote docker to start custom containers.
@@ -202,6 +212,10 @@ jobs:
           name: Start launchpad
           command: ./scripts/launchpad/start.sh
           background: true
+      - run: # start early for less wait time below
+          name: Start wasmd
+          command: ./scripts/wasmd/start.sh
+          background: true
       - run:
           name: Start simapp
           command: ./scripts/simapp/start.sh
@@ -254,6 +268,9 @@ jobs:
           name: Initialize launchpad (deploy contracts and friends)
           command: ./scripts/launchpad/init.sh
       - run:
+          name: Initialize wasmd (deploy contracts and friends)
+          command: ./scripts/wasmd/init.sh
+      - run:
           name: Start socket server
           command: ./scripts/socketserver/start.sh
       - run:
@@ -264,13 +281,16 @@ jobs:
             TENDERMINT_ENABLED: 1
             SOCKETSERVER_ENABLED: 1
             SKIP_BUILD: 1
+            WASMD_ENABLED: 1
           command: yarn test-chrome
       - run:
-          command: ./scripts/launchpad/stop.sh
-      - run:
-          command: ./scripts/tendermint/all_stop.sh
-      - run:
-          command: ./scripts/socketserver/stop.sh
+          name: Stop chains
+          command: |
+            ./scripts/socketserver/stop.sh
+            ./scripts/tendermint/all_stop.sh
+            ./scripts/simapp/stop.sh
+            ./scripts/wasmd/stop.sh
+            ./scripts/launchpad/stop.sh
   coverage:
     machine:
       # We can't use a containerized environment since it requires remote docker to start custom containers.
@@ -292,6 +312,10 @@ jobs:
           name: Start launchpad
           command: ./scripts/launchpad/start.sh
           background: true
+      - run: # start early for less wait time below
+          name: Start wasmd
+          command: ./scripts/wasmd/start.sh
+          background: true
       - run:
           name: Start simapp
           command: ./scripts/simapp/start.sh
@@ -344,6 +368,9 @@ jobs:
           name: Initialize launchpad (deploy contracts and friends)
           command: ./scripts/launchpad/init.sh
       - run:
+          name: Initialize wasmd (deploy contracts and friends)
+          command: ./scripts/wasmd/init.sh
+      - run:
           name: Start socket server
           command: ./scripts/socketserver/start.sh
       - run:
@@ -354,16 +381,19 @@ jobs:
             TENDERMINT_ENABLED: 1
             SOCKETSERVER_ENABLED: 1
             SKIP_BUILD: 1
+            WASMD_ENABLED: 1
           command: yarn coverage
       - run:
           name: Upload coverage report
           command: npx codecov
       - run:
-          command: ./scripts/launchpad/stop.sh
-      - run:
-          command: ./scripts/tendermint/all_stop.sh
-      - run:
-          command: ./scripts/socketserver/stop.sh
+          name: Stop chains
+          command: |
+            ./scripts/socketserver/stop.sh
+            ./scripts/tendermint/all_stop.sh
+            ./scripts/simapp/stop.sh
+            ./scripts/wasmd/stop.sh
+            ./scripts/launchpad/stop.sh
   docs-build:
     docker:
       - image: circleci/node:10-buster
