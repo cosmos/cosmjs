@@ -85,8 +85,9 @@ jobs:
     steps:
       - run:
           name: Install Git Large File Storage (LFS)
+          # In the current image, `sudo apt install git-lfs` requires `sudo apt update` which is too slow
           command: |
-            wget -O "$HOME/git-lfs.deb" https://packagecloud.io/github/git-lfs/packages/ubuntu/xenial/git-lfs_2.11.0_amd64.deb/download.deb
+            wget -O "$HOME/git-lfs.deb" https://packagecloud.io/github/git-lfs/packages/ubuntu/focal/git-lfs_2.12.1_amd64.deb/download.deb
             sudo dpkg -i "$HOME/git-lfs.deb"
       - checkout
       - run: # start early for less wait time below
@@ -204,8 +205,9 @@ jobs:
     steps:
       - run:
           name: Install Git Large File Storage (LFS)
+          # In the current image, `sudo apt install git-lfs` requires `sudo apt update` which is too slow
           command: |
-            wget -O "$HOME/git-lfs.deb" https://packagecloud.io/github/git-lfs/packages/ubuntu/xenial/git-lfs_2.11.0_amd64.deb/download.deb
+            wget -O "$HOME/git-lfs.deb" https://packagecloud.io/github/git-lfs/packages/ubuntu/focal/git-lfs_2.12.1_amd64.deb/download.deb
             sudo dpkg -i "$HOME/git-lfs.deb"
       - checkout
       - run: # start early for less wait time below
@@ -304,8 +306,9 @@ jobs:
     steps:
       - run:
           name: Install Git Large File Storage (LFS)
+          # In the current image, `sudo apt install git-lfs` requires `sudo apt update` which is too slow
           command: |
-            wget -O "$HOME/git-lfs.deb" https://packagecloud.io/github/git-lfs/packages/ubuntu/xenial/git-lfs_2.11.0_amd64.deb/download.deb
+            wget -O "$HOME/git-lfs.deb" https://packagecloud.io/github/git-lfs/packages/ubuntu/focal/git-lfs_2.12.1_amd64.deb/download.deb
             sudo dpkg -i "$HOME/git-lfs.deb"
       - checkout
       - run: # start early for less wait time below
