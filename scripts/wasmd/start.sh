@@ -21,6 +21,7 @@ WASMD_LOGFILE="$TMP_DIR/wasmd.log"
 # Use a fresh volume for every start
 docker volume rm -f wasmd_data
 
+echo "TEMPLATE: $SCRIPT_DIR/template"
 # This starts up wasmd
 docker run --rm \
   --name "$CONTAINER_NAME" \
@@ -37,29 +38,11 @@ echo "wasmd running and logging into $WASMD_LOGFILE"
 # Debug chain start
 # sleep 3 && cat "$WASMD_LOGFILE"
 
-# Use a large timeout because of potentially long image download in `docker run`
-if ! timeout 180 bash -c "until [ \"\$( docker container inspect -f '{{.State.Status}}' \"$CONTAINER_NAME\" 2> /dev/null )\" = \"running\" ]; do sleep 0.5; done"; then
-  echo "Container named '$CONTAINER_NAME' not running. We cannot continue." \
-    "This can happen when 'docker run' needs too long to download and start." \
-    "It might be worth retrying this step once the image is in the local docker cache."
-  docker kill "$CONTAINER_NAME"
-  exit 1
-fi
-
-# docker exec "$CONTAINER_NAME" \
-#   wasmcli rest-server \
-#   --node tcp://localhost:26657 \
-#   --trust-node \
-#   --unsafe-cors \
-#   --laddr "tcp://0.0.0.0:$LCD_API_PORT_GUEST" \
-#   > "$REST_SERVER_LOGFILE" &
-
-# echo "rest server running on http://localhost:$LCD_API_PORT_HOST and logging into $REST_SERVER_LOGFILE
-
-if [ -n "${CI:-}" ]; then
-  # Give process some time to come alive. No idea why this helps. Needed for CI.
-  sleep 0.5
-
-  # Follow the logs in CI's background job
-  tail -f "$WASMD_LOGFILE"
-fi
+# # Use a large timeout because of potentially long image download in `docker run`
+# if ! timeout 180 bash -c "until [ \"\$( docker container inspect -f '{{.State.Status}}' \"$CONTAINER_NAME\" 2> /dev/null )\" = \"running\" ]; do sleep 0.5; done"; then
+#   echo "Container named '$CONTAINER_NAME' not running. We cannot continue." \
+#     "This can happen when 'docker run' needs too long to download and start." \
+#     "It might be worth retrying this step once the image is in the local docker cache."
+#   docker kill "$CONTAINER_NAME"
+#   exit 1
+# fi

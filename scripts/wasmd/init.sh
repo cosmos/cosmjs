@@ -7,8 +7,8 @@ timeout 60 bash -c "until curl -s http://localhost:1319/node_info > /dev/null; d
 # The chain is unreliable in the first second of its existence (https://gist.github.com/webmaster128/8175692d4af5e6c572fddda7a9ef437c)
 sleep 1
 echo "Waiting for height to be > 1 ..."
-sleep 10
-# timeout 20 bash -c "until test $(curl -s localhost:1319/blocks/latest | jq -r '.block.header.height // 0') -gt 1; do sleep 0.5; done"
+# sleep 10
+timeout 20 bash -c "until [ $(curl -s localhost:1319/blocks/latest | jq -r '.block.header.height // 0') -gt 1 ]; do sleep 0.5; done"
 echo "Okay, thank you for your patience."
 
 
