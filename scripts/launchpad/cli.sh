@@ -13,7 +13,7 @@ HOME_DIR="/root"
 docker run \
   --rm \
   -it \
-  --mount type=volume,source=wasmcli_data,target=/root/.wasmcli \
+  --mount type=volume,source=launchpad_cli_data,target=/root/.wasmcli \
   -w "$HOME_DIR" \
   --env "HOME=$HOME_DIR" \
   --net "container:$CONTAINER_NAME" \

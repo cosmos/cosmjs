@@ -19,14 +19,14 @@ WASMD_LOGFILE="$TMP_DIR/wasmd.log"
 REST_SERVER_LOGFILE="$TMP_DIR/rest-server.log"
 
 # Use a fresh volume for every start
-docker volume rm -f wasmd_data
+docker volume rm -f launchpad_data
 
 # This starts up wasmd
 docker run --rm \
   --name "$CONTAINER_NAME" \
   -p "$LCD_API_PORT_HOST":"$LCD_API_PORT_GUEST" \
   --mount type=bind,source="$SCRIPT_DIR/template",target=/template \
-  --mount type=volume,source=wasmd_data,target=/root \
+  --mount type=volume,source=launchpad_data,target=/root \
   "$REPOSITORY:$VERSION" \
   ./run_wasmd.sh /template \
   > "$WASMD_LOGFILE" &
