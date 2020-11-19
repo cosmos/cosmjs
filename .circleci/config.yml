@@ -118,8 +118,9 @@ jobs:
           command: mkdir -p ~/.local/share/Trash && mv "$NVM_DIR" ~/.npm ~/.local/share/Trash
       - run:
           name: Install nodejs
+          # In the current image, `sudo apt install nodejs` requires `sudo apt update` which is too slow
           command: |
-            wget -O "$HOME/nodejs.deb" https://deb.nodesource.com/node_10.x/pool/main/n/nodejs/nodejs_10.21.0-1nodesource1_amd64.deb
+            wget -O "$HOME/nodejs.deb" https://deb.nodesource.com/node_10.x/pool/main/n/nodejs/nodejs_10.23.0-deb-1nodesource1_amd64.deb
             sudo dpkg -i "$HOME/nodejs.deb"
       - run:
           name: Install yarn
@@ -238,8 +239,9 @@ jobs:
           command: mkdir -p ~/.local/share/Trash && mv "$NVM_DIR" ~/.npm ~/.local/share/Trash
       - run:
           name: Install nodejs
+          # In the current image, `sudo apt install nodejs` requires `sudo apt update` which is too slow
           command: |
-            wget -O "$HOME/nodejs.deb" https://deb.nodesource.com/node_10.x/pool/main/n/nodejs/nodejs_10.21.0-1nodesource1_amd64.deb
+            wget -O "$HOME/nodejs.deb" https://deb.nodesource.com/node_10.x/pool/main/n/nodejs/nodejs_10.23.0-deb-1nodesource1_amd64.deb
             sudo dpkg -i "$HOME/nodejs.deb"
       - run:
           name: Install yarn
@@ -339,8 +341,9 @@ jobs:
           command: mkdir -p ~/.local/share/Trash && mv "$NVM_DIR" ~/.npm ~/.local/share/Trash
       - run:
           name: Install nodejs
+          # In the current image, `sudo apt install nodejs` requires `sudo apt update` which is too slow
           command: |
-            wget -O "$HOME/nodejs.deb" https://deb.nodesource.com/node_10.x/pool/main/n/nodejs/nodejs_10.21.0-1nodesource1_amd64.deb
+            wget -O "$HOME/nodejs.deb" https://deb.nodesource.com/node_10.x/pool/main/n/nodejs/nodejs_10.23.0-deb-1nodesource1_amd64.deb
             sudo dpkg -i "$HOME/nodejs.deb"
       - run:
           name: Install yarn
