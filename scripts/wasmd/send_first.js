@@ -3,27 +3,25 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 const { Random } = require("@cosmjs/crypto");
 const { Bech32 } = require("@cosmjs/encoding");
-const {
-  coins,
-  Secp256k1HdWallet,
-  SigningCosmosClient,
-  assertIsBroadcastTxSuccess,
-} = require("@cosmjs/stargate");
+const { coins } = require("@cosmjs/launchpad");
+const { DirectSecp256k1HdWallet } = require("@cosmjs/proto-signing");
+const { assertIsBroadcastTxSuccess, SigningStargateClient } = require("@cosmjs/stargate");
 
-const httpUrl = "http://localhost:1317";
+const rpcUrl = "http://localhost:26659";
+const prefix = "wasm";
 const faucet = {
   mnemonic:
     "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone",
-  address0: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+  address0: "wasm1pkptre7fdkl6gfrzlesjjvhxhlc3r4gm32kke3",
 };
 
 async function main() {
-  const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
-  const client = new SigningCosmosClient(httpUrl, faucet.address0, wallet);
-  const recipient = Bech32.encode("cosmos", Random.getBytes(20));
+  const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic, undefined, prefix);
+  const client = await SigningStargateClient.connectWithWallet(rpcUrl, wallet);
+  const recipient = Bech32.encode(prefix, Random.getBytes(20));
   const amount = coins(226644, "ucosm");
   const memo = "Ensure chain has my pubkey";
-  const sendResult = await client.sendTokens(recipient, amount, memo);
+  const sendResult = await client.sendTokens(faucet.address0, recipient, amount, memo);
   assertIsBroadcastTxSuccess(sendResult);
 }
 
