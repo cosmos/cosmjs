@@ -1,4 +1,5 @@
 import { BroadcastMode, GasLimits, GasPrice, OfflineSigner } from "@cosmjs/launchpad";
+import { Account } from "./cosmwasmclient";
 import { CosmWasmFeeTable, ExecuteResult, SigningCosmWasmClient } from "./signingcosmwasmclient";
 export declare type Expiration =
   | {
@@ -60,16 +61,17 @@ interface StartAfterStringPaginationOptions {
   readonly limit?: number;
 }
 export declare class Cw3CosmWasmClient extends SigningCosmWasmClient {
-  private readonly cw3ContractAddress;
+  readonly cw3ContractAddress: string;
   constructor(
     apiUrl: string,
-    senderAddress: string,
+    signerAddress: string,
     signer: OfflineSigner,
     cw3ContractAddress: string,
     gasPrice?: GasPrice,
     gasLimits?: Partial<GasLimits<CosmWasmFeeTable>>,
     broadcastMode?: BroadcastMode,
   );
+  getAccount(address?: string): Promise<Account | undefined>;
   getThreshold(): Promise<ThresholdResult>;
   getProposal(proposalId: number): Promise<ProposalResult>;
   listProposals({ startAfter, limit }?: StartAfterNumberPaginationOptions): Promise<ProposalsResult>;

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { BroadcastMode, GasLimits, GasPrice, OfflineSigner } from "@cosmjs/launchpad";
 
+import { Account } from "./cosmwasmclient";
 import { CosmWasmFeeTable, ExecuteResult, SigningCosmWasmClient } from "./signingcosmwasmclient";
 
 export type Expiration =
@@ -71,19 +72,23 @@ interface StartAfterStringPaginationOptions {
 }
 
 export class Cw3CosmWasmClient extends SigningCosmWasmClient {
-  private readonly cw3ContractAddress: string;
+  public readonly cw3ContractAddress: string;
 
   public constructor(
     apiUrl: string,
-    senderAddress: string,
+    signerAddress: string,
     signer: OfflineSigner,
     cw3ContractAddress: string,
     gasPrice?: GasPrice,
     gasLimits?: Partial<GasLimits<CosmWasmFeeTable>>,
     broadcastMode?: BroadcastMode,
   ) {
-    super(apiUrl, senderAddress, signer, gasPrice, gasLimits, broadcastMode);
+    super(apiUrl, signerAddress, signer, gasPrice, gasLimits, broadcastMode);
     this.cw3ContractAddress = cw3ContractAddress;
+  }
+
+  public getAccount(address?: string): Promise<Account | undefined> {
+    return super.getAccount(address || this.cw3ContractAddress);
   }
 
   public getThreshold(): Promise<ThresholdResult> {

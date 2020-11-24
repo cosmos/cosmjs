@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { makeCosmoshubPath, Secp256k1HdWallet } from "@cosmjs/launchpad";
-import { assert, sleep } from "@cosmjs/utils";
+import { assert } from "@cosmjs/utils";
 
 import { Cw3CosmWasmClient, Vote } from "./cw3cosmwasmclient";
 import {
@@ -257,6 +257,11 @@ describe("Cw3CosmWasmClient", () => {
       ]);
       const { proposals } = await voter.reverseProposals({ limit: 1 });
       const proposalId = proposals[0].id;
+
+      await expectAsync(proposer.executeMultisigProposal(proposalId)).toBeRejectedWithError(
+        /proposal must have passed and not yet been executed/i,
+      );
+
       const voteResult = await voter.voteMultisigProposal(proposalId, Vote.Yes);
       expect(voteResult).toBeTruthy();
 
@@ -314,7 +319,9 @@ describe("Cw3CosmWasmClient", () => {
       const vote2Result = await voter2.voteMultisigProposal(proposalId, Vote.No);
       expect(vote2Result).toBeTruthy();
 
-      await sleep(2000);
+      await expectAsync(proposer.executeMultisigProposal(proposalId)).toBeRejectedWithError(
+        /proposal must have passed and not yet been executed/i,
+      );
 
       const closeResult = await proposer.closeMultisigProposal(proposalId);
       expect(closeResult).toBeTruthy();
