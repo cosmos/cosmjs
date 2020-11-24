@@ -1,4 +1,5 @@
 import { fromHex } from "@cosmjs/encoding";
+import Long from "long";
 import { parse } from "protobufjs";
 
 import { omitDefault, omitDefaults } from "./adr27";
@@ -23,6 +24,16 @@ describe("adr27", () => {
     it("works for floats", () => {
       expect(omitDefault(1.234)).toEqual(1.234);
       expect(omitDefault(0.0)).toEqual(null);
+    });
+
+    it("works for Long", () => {
+      // unsigned
+      expect(omitDefault(Long.fromNumber(123, true))).toEqual(Long.fromNumber(123, true));
+      expect(omitDefault(Long.fromNumber(0, true))).toEqual(null);
+
+      // signed
+      expect(omitDefault(Long.fromNumber(123, false))).toEqual(Long.fromNumber(123, false));
+      expect(omitDefault(Long.fromNumber(0, false))).toEqual(null);
     });
 
     it("works for booleans", () => {
@@ -72,6 +83,12 @@ describe("adr27", () => {
 
       expect(omitDefaults(1.234)).toEqual(1.234);
       expect(omitDefaults(0.0)).toEqual(null);
+
+      expect(omitDefaults(Long.fromNumber(123, true))).toEqual(Long.fromNumber(123, true));
+      expect(omitDefaults(Long.fromNumber(0, true))).toEqual(null);
+
+      expect(omitDefaults(Long.fromNumber(123, false))).toEqual(Long.fromNumber(123, false));
+      expect(omitDefaults(Long.fromNumber(0, false))).toEqual(null);
 
       expect(omitDefaults(true)).toEqual(true);
       expect(omitDefaults(false)).toEqual(null);
