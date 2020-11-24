@@ -9,13 +9,13 @@ export declare class Client {
    *
    * Uses HTTP when the URL schema is http or https. Uses WebSockets otherwise.
    *
-   * If the adaptor is not set an auto-detection is performed.
+   * If the adaptor is not set an auto-detection is attempted.
    */
   static connect(url: string, adaptor?: Adaptor): Promise<Client>;
   /**
    * Creates a new Tendermint client given an RPC client.
    *
-   * If the adaptor is not set, an auto-detection is performed.
+   * If the adaptor is not set an auto-detection is attempted.
    */
   static create(rpcClient: RpcClient, adaptor?: Adaptor): Promise<Client>;
   private static detectVersion;

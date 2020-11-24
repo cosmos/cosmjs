@@ -19,7 +19,7 @@ export class Client {
    *
    * Uses HTTP when the URL schema is http or https. Uses WebSockets otherwise.
    *
-   * If the adaptor is not set an auto-detection is performed.
+   * If the adaptor is not set an auto-detection is attempted.
    */
   public static async connect(url: string, adaptor?: Adaptor): Promise<Client> {
     const useHttp = url.startsWith("http://") || url.startsWith("https://");
@@ -30,7 +30,7 @@ export class Client {
   /**
    * Creates a new Tendermint client given an RPC client.
    *
-   * If the adaptor is not set, an auto-detection is performed.
+   * If the adaptor is not set an auto-detection is attempted.
    */
   public static async create(rpcClient: RpcClient, adaptor?: Adaptor): Promise<Client> {
     // For some very strange reason I don't understand, tests start to fail on some systems
