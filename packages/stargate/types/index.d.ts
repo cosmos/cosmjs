@@ -1,4 +1,4 @@
-import * as codecImport from "./codec";
+export * as codec from "./codec";
 export {
   AuthExtension,
   BankExtension,
@@ -10,5 +10,3 @@ export {
 } from "./queries";
 export { assertIsBroadcastTxSuccess, StargateClient } from "./stargateclient";
 export { SigningStargateClient } from "./signingstargateclient";
-/** This codec is derived from the Cosmos SDK protocol buffer definitions and can change at any time. */
-export declare const codec: typeof codecImport;
