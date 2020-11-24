@@ -61,7 +61,7 @@ interface StartAfterStringPaginationOptions {
   readonly limit?: number;
 }
 export declare class Cw3CosmWasmClient extends SigningCosmWasmClient {
-  private readonly cw3ContractAddress;
+  readonly cw3ContractAddress: string;
   constructor(
     apiUrl: string,
     signerAddress: string,

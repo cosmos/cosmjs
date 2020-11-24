@@ -72,7 +72,7 @@ interface StartAfterStringPaginationOptions {
 }
 
 export class Cw3CosmWasmClient extends SigningCosmWasmClient {
-  private readonly cw3ContractAddress: string;
+  public readonly cw3ContractAddress: string;
 
   public constructor(
     apiUrl: string,
