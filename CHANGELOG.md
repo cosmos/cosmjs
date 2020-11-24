@@ -13,6 +13,15 @@
 - @cosmjs/proto-signing: Add new package for handling transaction signing with
   protobuf encoding.
 - @cosmjs/stargate: Add new package for Cosmos SDK Stargate support.
+- @cosmjs/tendermint-rpc: Make `Client.detectVersion` private and let it return
+  a version instead of a client.
+- @cosmjs/tendermint-rpc: Make the constructor of `Client` private. Add
+  `Client.create` for creating a Tendermint client given an RPC client and an
+  optional adaptor.
+- @cosmjs/tendermint-rpc: Add an optional adaptor argument to `Client.connect`
+  which allows skipping the auto-detection.
+- @cosmjs/tendermint-rpc: Remove export `v0_33` in favour of `adaptor33` and
+  `adaptor34`. Export the `Adaptor` type.
 
 ## 0.23.1 (2020-10-27)
 

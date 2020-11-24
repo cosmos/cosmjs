@@ -13,7 +13,12 @@ import {
 } from "@cosmjs/launchpad";
 import { Uint53, Uint64 } from "@cosmjs/math";
 import { decodePubkey } from "@cosmjs/proto-signing";
-import { broadcastTxCommitSuccess, Client as TendermintClient, QueryString } from "@cosmjs/tendermint-rpc";
+import {
+  adaptor34,
+  broadcastTxCommitSuccess,
+  Client as TendermintClient,
+  QueryString,
+} from "@cosmjs/tendermint-rpc";
 import { assert, assertDefined } from "@cosmjs/utils";
 import Long from "long";
 
@@ -121,7 +126,7 @@ export class StargateClient {
   private chainId: string | undefined;
 
   public static async connect(endpoint: string): Promise<StargateClient> {
-    const tmClient = await TendermintClient.connect(endpoint);
+    const tmClient = await TendermintClient.connect(endpoint, adaptor34);
     return new StargateClient(tmClient);
   }
 

@@ -18,6 +18,13 @@ export declare function assertSet<T>(value: T): T;
  */
 export declare function assertBoolean(value: boolean): boolean;
 /**
+ * A runtime checker that ensures a given value is a string.
+ *
+ * This is used when you want to verify that data at runtime matches the expected type.
+ * This implies assertSet.
+ */
+export declare function assertString(value: string): string;
+/**
  * A runtime checker that ensures a given value is a number
  *
  * This is used when you want to verify that data at runtime matches the expected type.

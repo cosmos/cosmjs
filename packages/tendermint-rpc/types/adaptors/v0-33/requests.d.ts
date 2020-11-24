@@ -1,5 +1,5 @@
 import { JsonRpcRequest } from "@cosmjs/json-rpc";
-import * as requests from "../requests";
+import * as requests from "../../requests";
 export declare class Params {
   static encodeAbciInfo(req: requests.AbciInfoRequest): JsonRpcRequest;
   static encodeAbciQuery(req: requests.AbciQueryRequest): JsonRpcRequest;

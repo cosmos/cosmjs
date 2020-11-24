@@ -4,12 +4,28 @@ import * as requests from "./requests";
 import * as responses from "./responses";
 import { RpcClient } from "./rpcclients";
 export declare class Client {
-  static connect(url: string): Promise<Client>;
-  static detectVersion(client: RpcClient): Promise<Client>;
+  /**
+   * Creates a new Tendermint client for the given endpoint.
+   *
+   * Uses HTTP when the URL schema is http or https. Uses WebSockets otherwise.
+   *
+   * If the adaptor is not set an auto-detection is attempted.
+   */
+  static connect(url: string, adaptor?: Adaptor): Promise<Client>;
+  /**
+   * Creates a new Tendermint client given an RPC client.
+   *
+   * If the adaptor is not set an auto-detection is attempted.
+   */
+  static create(rpcClient: RpcClient, adaptor?: Adaptor): Promise<Client>;
+  private static detectVersion;
   private readonly client;
   private readonly p;
   private readonly r;
-  constructor(client: RpcClient, adaptor: Adaptor);
+  /**
+   * Use `Client.connect` or `Client.create` to create an instance.
+   */
+  private constructor();
   disconnect(): void;
   abciInfo(): Promise<responses.AbciInfoResponse>;
   abciQuery(params: requests.AbciQueryParams): Promise<responses.AbciQueryResponse>;

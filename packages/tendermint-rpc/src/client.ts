@@ -1,7 +1,7 @@
 import { Stream } from "xstream";
 
 import { Adaptor, Decoder, Encoder, Params, Responses } from "./adaptor";
-import { adaptorForVersion } from "./adaptorforversion";
+import { adaptorForVersion } from "./adaptors";
 import { createJsonRpcRequest } from "./jsonrpc";
 import * as requests from "./requests";
 import * as responses from "./responses";
@@ -14,13 +14,34 @@ import {
 } from "./rpcclients";
 
 export class Client {
-  public static async connect(url: string): Promise<Client> {
+  /**
+   * Creates a new Tendermint client for the given endpoint.
+   *
+   * Uses HTTP when the URL schema is http or https. Uses WebSockets otherwise.
+   *
+   * If the adaptor is not set an auto-detection is attempted.
+   */
+  public static async connect(url: string, adaptor?: Adaptor): Promise<Client> {
     const useHttp = url.startsWith("http://") || url.startsWith("https://");
-    const client = useHttp ? new HttpClient(url) : new WebsocketClient(url);
-    return this.detectVersion(client);
+    const rpcClient = useHttp ? new HttpClient(url) : new WebsocketClient(url);
+    return Client.create(rpcClient, adaptor);
   }
 
-  public static async detectVersion(client: RpcClient): Promise<Client> {
+  /**
+   * Creates a new Tendermint client given an RPC client.
+   *
+   * If the adaptor is not set an auto-detection is attempted.
+   */
+  public static async create(rpcClient: RpcClient, adaptor?: Adaptor): Promise<Client> {
+    // For some very strange reason I don't understand, tests start to fail on some systems
+    // (our CI) when skipping the status call before doing other queries. Sleeping a little
+    // while did not help. Thus we query the version as a way to say "hi" to the backend,
+    // even in cases where we don't use the result.
+    const version = await this.detectVersion(rpcClient);
+    return new Client(rpcClient, adaptor || adaptorForVersion(version));
+  }
+
+  private static async detectVersion(client: RpcClient): Promise<string> {
     const req = createJsonRpcRequest(requests.Method.Status);
     const response = await client.execute(req);
     const result = response.result;
@@ -33,15 +54,17 @@ export class Client {
     if (typeof version !== "string") {
       throw new Error("Unrecognized version format: must be string");
     }
-
-    return new Client(client, adaptorForVersion(version));
+    return version;
   }
 
   private readonly client: RpcClient;
   private readonly p: Params;
   private readonly r: Responses;
 
-  public constructor(client: RpcClient, adaptor: Adaptor) {
+  /**
+   * Use `Client.connect` or `Client.create` to create an instance.
+   */
+  private constructor(client: RpcClient, adaptor: Adaptor) {
     this.client = client;
     this.p = adaptor.params;
     this.r = adaptor.responses;

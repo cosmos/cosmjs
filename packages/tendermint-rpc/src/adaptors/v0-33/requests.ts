@@ -2,9 +2,17 @@
 import { toHex } from "@cosmjs/encoding";
 import { JsonRpcRequest } from "@cosmjs/json-rpc";
 
-import { assertNotEmpty, Base64, Base64String, HexString, Integer, IntegerString, may } from "../encodings";
-import { createJsonRpcRequest } from "../jsonrpc";
-import * as requests from "../requests";
+import {
+  assertNotEmpty,
+  Base64,
+  Base64String,
+  HexString,
+  Integer,
+  IntegerString,
+  may,
+} from "../../encodings";
+import { createJsonRpcRequest } from "../../jsonrpc";
+import * as requests from "../../requests";
 
 interface HeightParam {
   readonly height?: number;

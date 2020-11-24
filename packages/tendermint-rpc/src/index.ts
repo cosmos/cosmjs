@@ -1,7 +1,5 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-// exported to access version-specific hashing
-export { v0_33 } from "./v0-33";
-
+export { Adaptor } from "./adaptor";
+export { adaptor33, adaptor34 } from "./adaptors";
 export { Client } from "./client";
 export {
   AbciInfoRequest,

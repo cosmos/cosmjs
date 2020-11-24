@@ -9,6 +9,7 @@ import {
   assertNumber,
   assertObject,
   assertSet,
+  assertString,
   Base64,
   Base64String,
   DateTime,
@@ -20,10 +21,10 @@ import {
   IntegerString,
   may,
   optional,
-} from "../encodings";
-import * as responses from "../responses";
-import { SubscriptionEvent } from "../rpcclients";
-import { IpPortString, TxBytes, TxHash, ValidatorPubkey, ValidatorSignature } from "../types";
+} from "../../encodings";
+import * as responses from "../../responses";
+import { SubscriptionEvent } from "../../rpcclients";
+import { IpPortString, TxBytes, TxHash, ValidatorPubkey, ValidatorSignature } from "../../types";
 import { hashTx } from "./hasher";
 
 interface AbciInfoResult {
@@ -502,9 +503,7 @@ function decodeNodeInfo(data: RpcNodeInfo): responses.NodeInfo {
     id: fromHex(assertNotEmpty(data.id)),
     listenAddr: assertNotEmpty(data.listen_addr),
     network: assertNotEmpty(data.network),
-    // TODO: Reactivate check when https://github.com/cosmos/cosmos-sdk/issues/7963 is resolved
-    // version: assertNotEmpty(data.version),
-    version: data.version,
+    version: assertString(data.version), // Can be empty (https://github.com/cosmos/cosmos-sdk/issues/7963)
     channels: assertNotEmpty(data.channels),
     moniker: assertNotEmpty(data.moniker),
     other: dictionaryToStringMap(data.other),

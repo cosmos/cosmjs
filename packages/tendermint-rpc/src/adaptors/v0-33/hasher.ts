@@ -1,8 +1,15 @@
 import { Sha256 } from "@cosmjs/crypto";
 
-import { encodeBlockId, encodeBytes, encodeInt, encodeString, encodeTime, encodeVersion } from "../encodings";
-import { Header } from "../responses";
-import { BlockHash, TxBytes, TxHash } from "../types";
+import {
+  encodeBlockId,
+  encodeBytes,
+  encodeInt,
+  encodeString,
+  encodeTime,
+  encodeVersion,
+} from "../../encodings";
+import { Header } from "../../responses";
+import { BlockHash, TxBytes, TxHash } from "../../types";
 
 // hash is sha256
 // https://github.com/tendermint/tendermint/blob/master/UPGRADING.md#v0260
