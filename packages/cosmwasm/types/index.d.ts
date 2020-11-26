@@ -1,4 +1,5 @@
 export { setupWasmExtension, WasmExtension } from "./lcdapi/wasm";
+export { BankMsg, CosmosMsg, CustomMsg, StakingMsg, WasmMsg } from "./cosmosmsg";
 export {
   Account,
   Block,

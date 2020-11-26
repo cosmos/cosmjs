@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { BroadcastMode, GasLimits, GasPrice, OfflineSigner } from "@cosmjs/launchpad";
 
+import { CosmosMsg } from "./cosmosmsg";
 import { Account } from "./cosmwasmclient";
 import { CosmWasmFeeTable, ExecuteResult, SigningCosmWasmClient } from "./signingcosmwasmclient";
 
@@ -30,7 +31,7 @@ export interface ProposalResult {
   readonly id: number;
   readonly title: string;
   readonly description: string;
-  readonly msgs: ReadonlyArray<Record<string, unknown>>;
+  readonly msgs: readonly CosmosMsg[];
   readonly expires: Expiration;
   readonly status: string;
 }
@@ -163,7 +164,7 @@ export class Cw3CosmWasmClient extends SigningCosmWasmClient {
   public createMultisigProposal(
     title: string,
     description: string,
-    msgs: ReadonlyArray<Record<string, unknown>>,
+    msgs: readonly CosmosMsg[],
     earliest?: Expiration,
     latest?: Expiration,
     memo = "",
