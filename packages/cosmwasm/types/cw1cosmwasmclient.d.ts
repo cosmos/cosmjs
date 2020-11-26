@@ -14,5 +14,5 @@ export declare class Cw1CosmWasmClient extends SigningCosmWasmClient {
   );
   getAccount(address?: string): Promise<Account | undefined>;
   canSend(msg: CosmosMsg, address?: string): Promise<boolean>;
-  executeSubkey(msgs: readonly CosmosMsg[], memo?: string): Promise<ExecuteResult>;
+  executeCw1(msgs: readonly CosmosMsg[], memo?: string): Promise<ExecuteResult>;
 }

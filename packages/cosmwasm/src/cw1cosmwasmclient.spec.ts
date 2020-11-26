@@ -98,7 +98,7 @@ describe("Cw1CosmWasmClient", () => {
     });
   });
 
-  describe("executeSubkey", () => {
+  describe("executeCw1", () => {
     it("works", async () => {
       pendingWithoutLaunchpad();
       pendingWithoutCw1();
@@ -110,7 +110,7 @@ describe("Cw1CosmWasmClient", () => {
         wallet,
         deployedCw1.instances[0],
       );
-      const result = await client.executeSubkey([defaultMsg]);
+      const result = await client.executeCw1([defaultMsg]);
 
       expect(result.transactionHash).toBeTruthy();
     });

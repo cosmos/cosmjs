@@ -34,7 +34,7 @@ export class Cw1CosmWasmClient extends SigningCosmWasmClient {
     return result.can_send;
   }
 
-  public async executeSubkey(msgs: readonly CosmosMsg[], memo = ""): Promise<ExecuteResult> {
+  public async executeCw1(msgs: readonly CosmosMsg[], memo = ""): Promise<ExecuteResult> {
     const handleMsg = {
       execute: {
         msgs: msgs,
