@@ -39,6 +39,11 @@ export {
   UploadResult,
 } from "./signingcosmwasmclient";
 export {
+  BankMsg,
+  CosmosMsg,
+  CustomMsg,
+  StakingMsg,
+  WasmMsg,
   isMsgClearAdmin,
   isMsgExecuteContract,
   isMsgInstantiateContract,
