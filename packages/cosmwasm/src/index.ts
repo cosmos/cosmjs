@@ -1,4 +1,5 @@
 export { setupWasmExtension, WasmExtension } from "./lcdapi/wasm";
+export { BankMsg, CosmosMsg, CustomMsg, StakingMsg, WasmMsg } from "./cosmosmsg";
 export {
   Account,
   Block,
@@ -39,11 +40,6 @@ export {
   UploadResult,
 } from "./signingcosmwasmclient";
 export {
-  BankMsg,
-  CosmosMsg,
-  CustomMsg,
-  StakingMsg,
-  WasmMsg,
   isMsgClearAdmin,
   isMsgExecuteContract,
   isMsgInstantiateContract,

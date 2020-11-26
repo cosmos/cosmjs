@@ -1,6 +1,6 @@
 import { BroadcastMode, GasLimits, GasPrice, OfflineSigner } from "@cosmjs/launchpad";
+import { CosmosMsg } from "./cosmosmsg";
 import { Account } from "./cosmwasmclient";
-import { CosmosMsg } from "./msgs";
 import { CosmWasmFeeTable, ExecuteResult, SigningCosmWasmClient } from "./signingcosmwasmclient";
 export declare type Expiration =
   | {
