@@ -1,5 +1,6 @@
 import { BroadcastMode, GasLimits, GasPrice, OfflineSigner } from "@cosmjs/launchpad";
 import { Account } from "./cosmwasmclient";
+import { CosmosMsg } from "./msgs";
 import { CosmWasmFeeTable, ExecuteResult, SigningCosmWasmClient } from "./signingcosmwasmclient";
 export declare type Expiration =
   | {
@@ -24,7 +25,7 @@ export interface ProposalResult {
   readonly id: number;
   readonly title: string;
   readonly description: string;
-  readonly msgs: ReadonlyArray<Record<string, unknown>>;
+  readonly msgs: readonly CosmosMsg[];
   readonly expires: Expiration;
   readonly status: string;
 }
@@ -86,7 +87,7 @@ export declare class Cw3CosmWasmClient extends SigningCosmWasmClient {
   createMultisigProposal(
     title: string,
     description: string,
-    msgs: ReadonlyArray<Record<string, unknown>>,
+    msgs: readonly CosmosMsg[],
     earliest?: Expiration,
     latest?: Expiration,
     memo?: string,
