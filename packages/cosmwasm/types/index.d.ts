@@ -17,6 +17,7 @@ export {
   SearchTxQuery,
   SearchTxFilter,
 } from "./cosmwasmclient";
+export { Cw1CosmWasmClient } from "./cw1cosmwasmclient";
 export {
   Cw3CosmWasmClient,
   Expiration,
