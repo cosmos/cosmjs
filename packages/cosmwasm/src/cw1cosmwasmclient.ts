@@ -1,12 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Account, BroadcastMode, Coin, GasLimits, GasPrice, OfflineSigner } from "@cosmjs/launchpad";
+import { Account, BroadcastMode, GasLimits, GasPrice, OfflineSigner } from "@cosmjs/launchpad";
 
 import { CosmosMsg } from "./cosmosmsg";
 import { CosmWasmFeeTable, ExecuteResult, SigningCosmWasmClient } from "./signingcosmwasmclient";
-
-export interface CanSendResult {
-  readonly can_send: boolean;
-}
 
 export class Cw1CosmWasmClient extends SigningCosmWasmClient {
   public readonly cw1ContractAddress: string;
@@ -24,29 +20,26 @@ export class Cw1CosmWasmClient extends SigningCosmWasmClient {
     this.cw1ContractAddress = cw1ContractAddress;
   }
 
-  public getAccount(address?: string): Promise<Account | undefined> {
+  public async getAccount(address?: string): Promise<Account | undefined> {
     return super.getAccount(address || this.cw1ContractAddress);
   }
 
-  public canSend(msg: CosmosMsg, address = this.senderAddress): Promise<CanSendResult> {
-    return this.queryContractSmart(this.cw1ContractAddress, {
+  public async canSend(msg: CosmosMsg, address = this.senderAddress): Promise<boolean> {
+    const result = await this.queryContractSmart(this.cw1ContractAddress, {
       can_send: {
         sender: address,
         msg: msg,
       },
     });
+    return result.can_send;
   }
 
-  public executeSubkey(
-    msgs: readonly CosmosMsg[],
-    memo = "",
-    transferAmount: readonly Coin[] = [],
-  ): Promise<ExecuteResult> {
+  public async executeSubkey(msgs: readonly CosmosMsg[], memo = ""): Promise<ExecuteResult> {
     const handleMsg = {
       execute: {
         msgs: msgs,
       },
     };
-    return this.execute(this.cw1ContractAddress, handleMsg, memo, transferAmount);
+    return this.execute(this.cw1ContractAddress, handleMsg, memo);
   }
 }

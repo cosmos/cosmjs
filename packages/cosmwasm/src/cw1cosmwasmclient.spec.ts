@@ -46,7 +46,7 @@ describe("Cw1CosmWasmClient", () => {
       );
       const result = await client.canSend(defaultMsg);
 
-      expect(result).toEqual({ can_send: true });
+      expect(result).toEqual(true);
     });
 
     it("returns false if client signer cannot send", async () => {
@@ -62,7 +62,7 @@ describe("Cw1CosmWasmClient", () => {
       );
       const result = await client.canSend(defaultMsg);
 
-      expect(result).toEqual({ can_send: false });
+      expect(result).toEqual(false);
     });
 
     it("returns true if supplied signer can send", async () => {
@@ -78,7 +78,7 @@ describe("Cw1CosmWasmClient", () => {
       );
       const result = await client.canSend(defaultMsg, alice.address0);
 
-      expect(result).toEqual({ can_send: true });
+      expect(result).toEqual(true);
     });
 
     it("returns false if supplied signer cannot send", async () => {
@@ -94,7 +94,7 @@ describe("Cw1CosmWasmClient", () => {
       );
       const result = await client.canSend(defaultMsg, alice.address1);
 
-      expect(result).toEqual({ can_send: false });
+      expect(result).toEqual(false);
     });
   });
 
@@ -113,27 +113,6 @@ describe("Cw1CosmWasmClient", () => {
       const result = await client.executeSubkey([defaultMsg]);
 
       expect(result.transactionHash).toBeTruthy();
-    });
-
-    it("works with a transfer", async () => {
-      pendingWithoutLaunchpad();
-      pendingWithoutCw1();
-
-      const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic);
-      const client = new Cw1CosmWasmClient(
-        launchpad.endpoint,
-        alice.address0,
-        wallet,
-        deployedCw1.instances[0],
-      );
-      const balanceBefore = parseInt((await client.getAccount())!.balance[0].amount, 10);
-      const memo = "This time with coins";
-      const transferAmount = coins(1000, "ucosm");
-      const result = await client.executeSubkey([defaultMsg], memo, transferAmount);
-      const balanceAfter = parseInt((await client.getAccount())!.balance[0].amount, 10);
-
-      expect(result.transactionHash).toBeTruthy();
-      expect(balanceAfter).toEqual(balanceBefore + 999);
     });
   });
 });
