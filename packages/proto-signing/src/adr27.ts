@@ -1,4 +1,5 @@
 import { isNonNullObject, isUint8Array } from "@cosmjs/utils";
+import Long from "long";
 
 /**
  * Converts default values to null in order to tell protobuf.js
@@ -11,6 +12,10 @@ export function omitDefault<T>(input: T): T | null {
 
   if (typeof input === "number" || typeof input === "boolean" || typeof input === "string") {
     return input || null;
+  }
+
+  if (Long.isLong(input)) {
+    return !input.isZero() ? input : null;
   }
 
   if (Array.isArray(input) || isUint8Array(input)) {
@@ -33,6 +38,7 @@ export function omitDefaults(input: any): any {
     typeof input === "number" ||
     typeof input === "boolean" ||
     typeof input === "string" ||
+    Long.isLong(input) ||
     Array.isArray(input) ||
     isUint8Array(input)
   ) {
