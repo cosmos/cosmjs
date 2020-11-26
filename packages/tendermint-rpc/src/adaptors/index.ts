@@ -31,6 +31,7 @@ export const adaptor34 = v0_33; // With this alias we can swap out the implement
 const hashes = {
   v0_34: [
     "ca2c9df", // v0.34.0-rc6
+    "182fa32", // v0.34.0
   ],
 };
 
