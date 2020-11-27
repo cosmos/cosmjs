@@ -30,7 +30,7 @@ async function main() {
 
   const initMsg = {
     admins: [alice.address0],
-    mutable: false,
+    mutable: true,
   };
   const label = "Subkey test";
   const { contractAddress } = await client.instantiate(uploadReceipt.codeId, initMsg, label, {
