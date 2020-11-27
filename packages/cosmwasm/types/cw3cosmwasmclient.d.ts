@@ -2,13 +2,7 @@ import { BroadcastMode, GasLimits, GasPrice, OfflineSigner } from "@cosmjs/launc
 import { CosmosMsg } from "./cosmosmsg";
 import { Account } from "./cosmwasmclient";
 import { CosmWasmFeeTable, ExecuteResult, SigningCosmWasmClient } from "./signingcosmwasmclient";
-export declare type Expiration =
-  | {
-      readonly at_height: number;
-    }
-  | {
-      readonly at_time: number;
-    };
+import { Expiration } from "./types";
 export declare enum Vote {
   Yes = "yes",
   No = "no",

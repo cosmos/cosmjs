@@ -20,7 +20,6 @@ export {
 export { Cw1CosmWasmClient } from "./cw1cosmwasmclient";
 export {
   Cw3CosmWasmClient,
-  Expiration,
   ProposalResult,
   ProposalsResult,
   ThresholdResult,
@@ -54,3 +53,4 @@ export {
   MsgUpdateAdmin,
   MsgStoreCode,
 } from "./msgs";
+export { Expiration } from "./types";
