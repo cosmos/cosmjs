@@ -1,3 +1,4 @@
+export { Expiration } from "./interfaces";
 export { setupWasmExtension, WasmExtension } from "./lcdapi/wasm";
 export { BankMsg, CosmosMsg, CustomMsg, StakingMsg, WasmMsg } from "./cosmosmsg";
 export {
@@ -17,9 +18,9 @@ export {
   SearchTxQuery,
   SearchTxFilter,
 } from "./cosmwasmclient";
+export { Cw1CosmWasmClient } from "./cw1cosmwasmclient";
 export {
   Cw3CosmWasmClient,
-  Expiration,
   ProposalResult,
   ProposalsResult,
   ThresholdResult,
