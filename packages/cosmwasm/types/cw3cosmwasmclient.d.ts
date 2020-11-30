@@ -3,6 +3,9 @@ import { CosmosMsg } from "./cosmosmsg";
 import { Account } from "./cosmwasmclient";
 import { Expiration } from "./interfaces";
 import { CosmWasmFeeTable, ExecuteResult, SigningCosmWasmClient } from "./signingcosmwasmclient";
+/**
+ * @see https://github.com/CosmWasm/cosmwasm-plus/blob/v0.3.2/packages/cw3/src/msg.rs#L35
+ */
 export declare enum Vote {
   Yes = "yes",
   No = "no",
