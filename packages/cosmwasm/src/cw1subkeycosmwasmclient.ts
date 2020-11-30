@@ -5,16 +5,45 @@ import { Cw1CosmWasmClient } from "./cw1cosmwasmclient";
 import { Expiration } from "./interfaces";
 import { ExecuteResult } from "./signingcosmwasmclient";
 
-export interface AllowanceResult {
+/**
+ * @see https://github.com/CosmWasm/cosmwasm-plus/blob/v0.3.2/contracts/cw1-subkeys/src/msg.rs#L88
+ */
+export interface Cw1SubkeyAllowanceInfo {
   readonly balance: readonly Coin[];
   readonly expires: Expiration;
 }
 
+/**
+ * @see https://github.com/CosmWasm/cosmwasm-plus/blob/v0.3.2/contracts/cw1-subkeys/src/msg.rs#L83
+ */
+interface AllAllowancesResponse {
+  readonly allowances: readonly Cw1SubkeyAllowanceInfo[];
+}
+
+/**
+ * @see https://github.com/CosmWasm/cosmwasm-plus/blob/v0.3.2/contracts/cw1-subkeys/src/state.rs#L15
+ */
 export interface Cw1SubkeyPermissions {
   readonly delegate: boolean;
   readonly redelegate: boolean;
   readonly undelegate: boolean;
   readonly withdraw: boolean;
+}
+
+/**
+ * @see https://github.com/CosmWasm/cosmwasm-plus/blob/v0.3.2/contracts/cw1-subkeys/src/msg.rs#L95
+ */
+export interface Cw1SubkeyPermissionsInfo {
+  /** Spender address */
+  readonly spender: string;
+  readonly permissions: readonly Cw1SubkeyPermissions[];
+}
+
+/**
+ * @see https://github.com/CosmWasm/cosmwasm-plus/blob/v0.3.2/contracts/cw1-subkeys/src/msg.rs#L101
+ */
+interface AllPermissionsResponse {
+  readonly permissions: readonly Cw1SubkeyPermissionsInfo[];
 }
 
 export class Cw1SubkeyCosmWasmClient extends Cw1CosmWasmClient {
@@ -37,24 +66,24 @@ export class Cw1SubkeyCosmWasmClient extends Cw1CosmWasmClient {
     return admins.includes(address);
   }
 
-  public async getAllAllowances(): Promise<readonly AllowanceResult[]> {
-    const { allowances } = await this.queryContractSmart(this.cw1ContractAddress, {
+  public async getAllAllowances(): Promise<readonly Cw1SubkeyAllowanceInfo[]> {
+    const response: AllAllowancesResponse = await this.queryContractSmart(this.cw1ContractAddress, {
       all_allowances: {},
     });
-    return allowances;
+    return response.allowances;
   }
 
-  public async getAllowance(address = this.senderAddress): Promise<AllowanceResult> {
+  public async getAllowance(address = this.senderAddress): Promise<Cw1SubkeyAllowanceInfo> {
     return this.queryContractSmart(this.cw1ContractAddress, {
       allowance: { spender: address },
     });
   }
 
-  public async getAllPermissions(): Promise<readonly Cw1SubkeyPermissions[]> {
-    const { permissions } = await this.queryContractSmart(this.cw1ContractAddress, {
+  public async getAllPermissions(): Promise<readonly Cw1SubkeyPermissionsInfo[]> {
+    const response: AllPermissionsResponse = await this.queryContractSmart(this.cw1ContractAddress, {
       all_permissions: {},
     });
-    return permissions;
+    return response.permissions;
   }
 
   public async getPermissions(address = this.senderAddress): Promise<Cw1SubkeyPermissions> {

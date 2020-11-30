@@ -144,7 +144,8 @@ describe("Cw1SubkeyCosmWasmClient", () => {
         deployedCw1.instances[0],
       );
       const result = await client.getAllPermissions();
-      expect(result).toBeTruthy();
+      expect(result.length).toEqual(1);
+      // TODO: test content of permissions
     });
   });
 
