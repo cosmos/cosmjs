@@ -1,8 +1,8 @@
 import { BroadcastMode, GasLimits, GasPrice, OfflineSigner } from "@cosmjs/launchpad";
 import { CosmosMsg } from "./cosmosmsg";
 import { Account } from "./cosmwasmclient";
+import { Expiration } from "./interfaces";
 import { CosmWasmFeeTable, ExecuteResult, SigningCosmWasmClient } from "./signingcosmwasmclient";
-import { Expiration } from "./types";
 export declare enum Vote {
   Yes = "yes",
   No = "no",

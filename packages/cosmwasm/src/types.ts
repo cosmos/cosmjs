@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { fromBase64, fromHex } from "@cosmjs/encoding";
 
 export interface WasmData {
@@ -26,14 +25,3 @@ export function parseWasmData({ key, val }: WasmData): Model {
  * This doen't privide any type safety over `any` but expresses intent in the code.
  */
 export type JsonObject = any;
-
-export type Expiration =
-  | {
-      readonly at_height: number;
-    }
-  | {
-      readonly at_time: number;
-    }
-  | {
-      readonly never: Record<any, never>;
-    };

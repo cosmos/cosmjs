@@ -1,3 +1,4 @@
+export { Expiration } from "./interfaces";
 export { setupWasmExtension, WasmExtension } from "./lcdapi/wasm";
 export { BankMsg, CosmosMsg, CustomMsg, StakingMsg, WasmMsg } from "./cosmosmsg";
 export {
@@ -53,4 +54,3 @@ export {
   MsgUpdateAdmin,
   MsgStoreCode,
 } from "./msgs";
-export { Expiration } from "./types";

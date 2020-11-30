@@ -1,7 +1,7 @@
 import { Coin } from "@cosmjs/launchpad";
 import { Cw1CosmWasmClient } from "./cw1cosmwasmclient";
+import { Expiration } from "./interfaces";
 import { ExecuteResult } from "./signingcosmwasmclient";
-import { Expiration } from "./types";
 export interface AllowanceResult {
   readonly balance: readonly Coin[];
   readonly expires: Expiration;

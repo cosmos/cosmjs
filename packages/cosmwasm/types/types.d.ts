@@ -12,13 +12,3 @@ export declare function parseWasmData({ key, val }: WasmData): Model;
  * This doen't privide any type safety over `any` but expresses intent in the code.
  */
 export declare type JsonObject = any;
-export declare type Expiration =
-  | {
-      readonly at_height: number;
-    }
-  | {
-      readonly at_time: number;
-    }
-  | {
-      readonly never: Record<any, never>;
-    };
