@@ -1,5 +1,18 @@
-import { Random } from "@cosmjs/crypto";
+/* eslint-disable @typescript-eslint/naming-convention */
+import { Bip39, EnglishMnemonic, Random, Secp256k1, Slip10, Slip10Curve } from "@cosmjs/crypto";
 import { Bech32 } from "@cosmjs/encoding";
+import {
+  AminoSignResponse,
+  coins,
+  makeCosmoshubPath,
+  Secp256k1HdWallet,
+  StdSignDoc,
+} from "@cosmjs/launchpad";
+import { DirectSecp256k1HdWallet, DirectSignResponse, makeAuthInfoBytes } from "@cosmjs/proto-signing";
+
+import { cosmos } from "./codec";
+
+const { AuthInfo, TxBody } = cosmos.tx.v1beta1;
 
 export function simappEnabled(): boolean {
   return !!process.env.SIMAPP_ENABLED;
@@ -70,3 +83,86 @@ export const nonExistentAddress = "cosmos1p79apjaufyphcmsn4g07cynqf0wyjuezqu84hd
 
 export const nonNegativeIntegerMatcher = /^[0-9]+$/;
 export const tendermintIdMatcher = /^[0-9A-F]{64}$/;
+
+/**
+ * A class for testing clients using an Amino signer which modifies the transaction it receives before signing
+ */
+export class ModifyingSecp256k1HdWallet extends Secp256k1HdWallet {
+  public static async fromMnemonic(
+    mnemonic: string,
+    hdPath = makeCosmoshubPath(0),
+    prefix = "cosmos",
+  ): Promise<ModifyingSecp256k1HdWallet> {
+    const mnemonicChecked = new EnglishMnemonic(mnemonic);
+    const seed = await Bip39.mnemonicToSeed(mnemonicChecked);
+    const { privkey } = Slip10.derivePath(Slip10Curve.Secp256k1, seed, hdPath);
+    const uncompressed = (await Secp256k1.makeKeypair(privkey)).pubkey;
+    return new ModifyingSecp256k1HdWallet(
+      mnemonicChecked,
+      hdPath,
+      privkey,
+      Secp256k1.compressPubkey(uncompressed),
+      prefix,
+    );
+  }
+
+  public async signAmino(signerAddress: string, signDoc: StdSignDoc): Promise<AminoSignResponse> {
+    const modifiedSignDoc = {
+      ...signDoc,
+      fee: {
+        amount: coins(3000, "ucosm"),
+        gas: "333333",
+      },
+      memo: "This was modified",
+    };
+    return super.signAmino(signerAddress, modifiedSignDoc);
+  }
+}
+
+/**
+ * A class for testing clients using a direct signer which modifies the transaction it receives before signing
+ */
+export class ModifyingDirectSecp256k1HdWallet extends DirectSecp256k1HdWallet {
+  public static async fromMnemonic(
+    mnemonic: string,
+    hdPath = makeCosmoshubPath(0),
+    prefix = "cosmos",
+  ): Promise<DirectSecp256k1HdWallet> {
+    const mnemonicChecked = new EnglishMnemonic(mnemonic);
+    const seed = await Bip39.mnemonicToSeed(mnemonicChecked);
+    const { privkey } = Slip10.derivePath(Slip10Curve.Secp256k1, seed, hdPath);
+    const uncompressed = (await Secp256k1.makeKeypair(privkey)).pubkey;
+    return new ModifyingDirectSecp256k1HdWallet(
+      mnemonicChecked,
+      hdPath,
+      privkey,
+      Secp256k1.compressPubkey(uncompressed),
+      prefix,
+    );
+  }
+
+  public async signDirect(address: string, signDoc: cosmos.tx.v1beta1.ISignDoc): Promise<DirectSignResponse> {
+    const txBody = TxBody.decode(signDoc.bodyBytes!);
+    const modifiedTxBody = TxBody.create({
+      ...txBody,
+      memo: "This was modified",
+    });
+    const authInfo = AuthInfo.decode(signDoc.authInfoBytes!);
+    const pubkeys = authInfo.signerInfos.map((signerInfo) => signerInfo.publicKey!);
+    const sequence = authInfo.signerInfos[0].sequence!.toNumber();
+    const modifiedFeeAmount = coins(3000, "ucosm");
+    const modifiedGasLimit = 333333;
+    const modifiedSignDoc = {
+      ...signDoc,
+      bodyBytes: Uint8Array.from(TxBody.encode(modifiedTxBody).finish()),
+      authInfoBytes: makeAuthInfoBytes(
+        pubkeys,
+        modifiedFeeAmount,
+        modifiedGasLimit,
+        sequence,
+        cosmos.tx.signing.v1beta1.SignMode.SIGN_MODE_DIRECT,
+      ),
+    };
+    return super.signDirect(address, modifiedSignDoc);
+  }
+}
