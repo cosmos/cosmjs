@@ -1,4 +1,4 @@
-import { HdPath } from "@cosmjs/crypto";
+import { EnglishMnemonic, HdPath } from "@cosmjs/crypto";
 import { AccountData } from "@cosmjs/launchpad";
 import { cosmos } from "./codec";
 import { DirectSignResponse, OfflineDirectSigner } from "./signer";
@@ -31,7 +31,13 @@ export declare class DirectSecp256k1HdWallet implements OfflineDirectSigner {
   /** Derived data */
   private readonly pubkey;
   private readonly privkey;
-  private constructor();
+  protected constructor(
+    mnemonic: EnglishMnemonic,
+    hdPath: HdPath,
+    privkey: Uint8Array,
+    pubkey: Uint8Array,
+    prefix: string,
+  );
   get mnemonic(): string;
   private get address();
   getAccounts(): Promise<readonly AccountData[]>;

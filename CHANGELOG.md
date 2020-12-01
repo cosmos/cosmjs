@@ -12,6 +12,7 @@
 - @cosmjs/launchpad-ledger: `LedgerSigner.sign` method renamed `signAmino`.
 - @cosmjs/proto-signing: Add new package for handling transaction signing with
   protobuf encoding.
+- @cosmjs/proto-signing: Expose `DirectSignResponse` interface.
 - @cosmjs/stargate: Add new package for Cosmos SDK Stargate support.
 - @cosmjs/tendermint-rpc: Make `Client.detectVersion` private and let it return
   a version instead of a client.
