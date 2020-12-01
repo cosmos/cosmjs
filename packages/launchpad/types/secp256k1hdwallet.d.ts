@@ -1,4 +1,4 @@
-import { HdPath } from "@cosmjs/crypto";
+import { EnglishMnemonic, HdPath } from "@cosmjs/crypto";
 import { StdSignDoc } from "./encoding";
 import { AccountData, AminoSignResponse, OfflineSigner } from "./signer";
 import { EncryptionConfiguration, KdfConfiguration } from "./wallet";
@@ -66,7 +66,13 @@ export declare class Secp256k1HdWallet implements OfflineSigner {
   /** Derived data */
   private readonly pubkey;
   private readonly privkey;
-  private constructor();
+  protected constructor(
+    mnemonic: EnglishMnemonic,
+    hdPath: HdPath,
+    privkey: Uint8Array,
+    pubkey: Uint8Array,
+    prefix: string,
+  );
   get mnemonic(): string;
   private get address();
   getAccounts(): Promise<readonly AccountData[]>;
