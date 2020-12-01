@@ -163,7 +163,7 @@ describe("SigningStargateClient", () => {
     it("works with legacy Amino mode", async () => {
       pendingWithoutSimapp();
       const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
-      const coinTypeUrl = "/cosmos.base.v1beta.Coin";
+      const coinTypeUrl = "/cosmos.base.v1beta1.Coin";
       const msgDelegateTypeUrl = "/cosmos.staking.v1beta1.MsgDelegate";
       const registry = new Registry();
       registry.register(coinTypeUrl, Coin);
