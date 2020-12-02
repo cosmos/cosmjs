@@ -1,4 +1,5 @@
 export * as codec from "./codec";
+export { getMsgType, getMsgTypeUrl } from "./encoding";
 export {
   AuthExtension,
   BankExtension,
@@ -8,5 +9,17 @@ export {
   setupBankExtension,
   setupIbcExtension,
 } from "./queries";
-export { assertIsBroadcastTxSuccess, StargateClient } from "./stargateclient";
+export {
+  Account,
+  accountFromProto,
+  assertIsBroadcastTxSuccess,
+  BroadcastTxFailure,
+  BroadcastTxResponse,
+  BroadcastTxSuccess,
+  coinFromProto,
+  IndexedTx,
+  isBroadcastTxFailure,
+  SequenceResponse,
+  StargateClient,
+} from "./stargateclient";
 export { SigningStargateClient } from "./signingstargateclient";
