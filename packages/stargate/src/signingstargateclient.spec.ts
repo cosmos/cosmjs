@@ -1,13 +1,25 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { coin, coins, GasPrice, Secp256k1HdWallet } from "@cosmjs/launchpad";
 import { Coin, cosmosField, DirectSecp256k1HdWallet, registered, Registry } from "@cosmjs/proto-signing";
-import { assert } from "@cosmjs/utils";
+import { assert, sleep } from "@cosmjs/utils";
 import { Message } from "protobufjs";
 
 import { cosmos } from "./codec";
 import { PrivateSigningStargateClient, SigningStargateClient } from "./signingstargateclient";
 import { assertIsBroadcastTxSuccess } from "./stargateclient";
-import { faucet, makeRandomAddress, pendingWithoutSimapp, simapp, validator } from "./testutils.spec";
+import {
+  faucet,
+  makeRandomAddress,
+  ModifyingDirectSecp256k1HdWallet,
+  ModifyingSecp256k1HdWallet,
+  pendingWithoutSimapp,
+  simapp,
+  validator,
+} from "./testutils.spec";
+
+const { MsgSend } = cosmos.bank.v1beta1;
+const { MsgDelegate } = cosmos.staking.v1beta1;
+const { Tx } = cosmos.tx.v1beta1;
 
 describe("SigningStargateClient", () => {
   describe("constructor", () => {
@@ -33,11 +45,11 @@ describe("SigningStargateClient", () => {
       pendingWithoutSimapp();
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const registry = new Registry();
-      registry.register("/custom.MsgCustom", cosmos.bank.v1beta1.MsgSend);
+      registry.register("/custom.MsgCustom", MsgSend);
       const options = { registry: registry };
       const client = await SigningStargateClient.connectWithWallet(simapp.tendermintUrl, wallet, options);
       const openedClient = (client as unknown) as PrivateSigningStargateClient;
-      expect(openedClient.registry.lookupType("/custom.MsgCustom")).toEqual(cosmos.bank.v1beta1.MsgSend);
+      expect(openedClient.registry.lookupType("/custom.MsgCustom")).toEqual(MsgSend);
     });
 
     it("can be constructed with custom gas price", async () => {
@@ -133,44 +145,81 @@ describe("SigningStargateClient", () => {
   });
 
   describe("signAndBroadcast", () => {
-    it("works with direct mode", async () => {
-      pendingWithoutSimapp();
-      const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
-      const msgDelegateTypeUrl = "/cosmos.staking.v1beta1.MsgDelegate";
-      const registry = new Registry();
-      registry.register(msgDelegateTypeUrl, cosmos.staking.v1beta1.MsgDelegate);
-      const options = { registry: registry };
-      const client = await SigningStargateClient.connectWithWallet(simapp.tendermintUrl, wallet, options);
+    describe("direct mode", () => {
+      it("works", async () => {
+        pendingWithoutSimapp();
+        const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+        const msgDelegateTypeUrl = "/cosmos.staking.v1beta1.MsgDelegate";
+        const registry = new Registry();
+        registry.register(msgDelegateTypeUrl, MsgDelegate);
+        const options = { registry: registry };
+        const client = await SigningStargateClient.connectWithWallet(simapp.tendermintUrl, wallet, options);
 
-      const msg = cosmos.staking.v1beta1.MsgDelegate.create({
-        delegatorAddress: faucet.address0,
-        validatorAddress: validator.validatorAddress,
-        amount: coin(1234, "ustake"),
+        const msg = MsgDelegate.create({
+          delegatorAddress: faucet.address0,
+          validatorAddress: validator.validatorAddress,
+          amount: coin(1234, "ustake"),
+        });
+        const msgAny = {
+          typeUrl: msgDelegateTypeUrl,
+          value: msg,
+        };
+        const fee = {
+          amount: coins(2000, "ucosm"),
+          gas: "180000", // 180k
+        };
+        const memo = "Use your power wisely";
+        const result = await client.signAndBroadcast(faucet.address0, [msgAny], fee, memo);
+        assertIsBroadcastTxSuccess(result);
       });
-      const msgAny = {
-        typeUrl: msgDelegateTypeUrl,
-        value: msg,
-      };
-      const fee = {
-        amount: coins(2000, "ucosm"),
-        gas: "180000", // 180k
-      };
-      const memo = "Use your power wisely";
-      const result = await client.signAndBroadcast(faucet.address0, [msgAny], fee, memo);
-      assertIsBroadcastTxSuccess(result);
+
+      it("works with a modifying signer", async () => {
+        pendingWithoutSimapp();
+        const wallet = await ModifyingDirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+        const msgDelegateTypeUrl = "/cosmos.staking.v1beta1.MsgDelegate";
+        const registry = new Registry();
+        registry.register(msgDelegateTypeUrl, MsgDelegate);
+        const options = { registry: registry };
+        const client = await SigningStargateClient.connectWithWallet(simapp.tendermintUrl, wallet, options);
+
+        const msg = MsgDelegate.create({
+          delegatorAddress: faucet.address0,
+          validatorAddress: validator.validatorAddress,
+          amount: coin(1234, "ustake"),
+        });
+        const msgAny = {
+          typeUrl: msgDelegateTypeUrl,
+          value: msg,
+        };
+        const fee = {
+          amount: coins(2000, "ucosm"),
+          gas: "180000", // 180k
+        };
+        const memo = "Use your power wisely";
+        const result = await client.signAndBroadcast(faucet.address0, [msgAny], fee, memo);
+        assertIsBroadcastTxSuccess(result);
+
+        await sleep(1000);
+
+        const searchResult = await client.searchTx({ id: result.transactionHash });
+        const tx = Tx.decode(searchResult[0].tx);
+        // From ModifyingDirectSecp256k1HdWallet
+        expect(tx.body!.memo).toEqual("This was modified");
+        expect({ ...tx.authInfo!.fee!.amount![0] }).toEqual(coin(3000, "ucosm"));
+        expect(tx.authInfo!.fee!.gasLimit!.toNumber()).toEqual(333333);
+      });
     });
 
-    it("works with legacy Amino mode", async () => {
-      pendingWithoutSimapp();
-      const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
-      const coinTypeUrl = "/cosmos.base.v1beta1.Coin";
-      const msgDelegateTypeUrl = "/cosmos.staking.v1beta1.MsgDelegate";
+    describe("legacy Amino mode", () => {
+      // NOTE: One registry shared between tests
+      // See https://github.com/protobufjs/protobuf.js#using-decorators
+      // > Decorated types reside in protobuf.roots["decorated"] using a flat structure, so no duplicate names.
       const registry = new Registry();
-      registry.register(coinTypeUrl, Coin);
+      const msgDelegateTypeUrl = "/cosmos.staking.v1beta1.MsgDelegate";
 
       @registered(registry, msgDelegateTypeUrl)
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      class MsgDelegate extends Message {
+      class CustomMsgDelegate extends Message {
         @cosmosField.string(1)
         public readonly delegator_address?: string;
         @cosmosField.string(2)
@@ -179,25 +228,62 @@ describe("SigningStargateClient", () => {
         public readonly amount?: Coin;
       }
 
-      const options = { registry: registry };
-      const client = await SigningStargateClient.connectWithWallet(simapp.tendermintUrl, wallet, options);
+      it("works", async () => {
+        pendingWithoutSimapp();
+        const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+        const options = { registry: registry };
+        const client = await SigningStargateClient.connectWithWallet(simapp.tendermintUrl, wallet, options);
 
-      const msg = {
-        delegator_address: faucet.address0,
-        validator_address: validator.validatorAddress,
-        amount: coin(1234, "ustake"),
-      };
-      const msgAny = {
-        typeUrl: msgDelegateTypeUrl,
-        value: msg,
-      };
-      const fee = {
-        amount: coins(2000, "ucosm"),
-        gas: "200000",
-      };
-      const memo = "Use your power wisely";
-      const result = await client.signAndBroadcast(faucet.address0, [msgAny], fee, memo);
-      assertIsBroadcastTxSuccess(result);
+        const msg = {
+          delegator_address: faucet.address0,
+          validator_address: validator.validatorAddress,
+          amount: coin(1234, "ustake"),
+        };
+        const msgAny = {
+          typeUrl: msgDelegateTypeUrl,
+          value: msg,
+        };
+        const fee = {
+          amount: coins(2000, "ucosm"),
+          gas: "200000",
+        };
+        const memo = "Use your power wisely";
+        const result = await client.signAndBroadcast(faucet.address0, [msgAny], fee, memo);
+        assertIsBroadcastTxSuccess(result);
+      });
+
+      it("works with a modifying signer", async () => {
+        pendingWithoutSimapp();
+        const wallet = await ModifyingSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+        const options = { registry: registry };
+        const client = await SigningStargateClient.connectWithWallet(simapp.tendermintUrl, wallet, options);
+
+        const msg = {
+          delegator_address: faucet.address0,
+          validator_address: validator.validatorAddress,
+          amount: coin(1234, "ustake"),
+        };
+        const msgAny = {
+          typeUrl: msgDelegateTypeUrl,
+          value: msg,
+        };
+        const fee = {
+          amount: coins(2000, "ucosm"),
+          gas: "200000",
+        };
+        const memo = "Use your power wisely";
+        const result = await client.signAndBroadcast(faucet.address0, [msgAny], fee, memo);
+        assertIsBroadcastTxSuccess(result);
+
+        await sleep(1000);
+
+        const searchResult = await client.searchTx({ id: result.transactionHash });
+        const tx = Tx.decode(searchResult[0].tx);
+        // From ModifyingSecp256k1HdWallet
+        expect(tx.body!.memo).toEqual("This was modified");
+        expect({ ...tx.authInfo!.fee!.amount![0] }).toEqual(coin(3000, "ucosm"));
+        expect(tx.authInfo!.fee!.gasLimit!.toNumber()).toEqual(333333);
+      });
     });
   });
 });

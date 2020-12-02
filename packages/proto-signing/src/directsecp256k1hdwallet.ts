@@ -80,7 +80,7 @@ export class DirectSecp256k1HdWallet implements OfflineDirectSigner {
   private readonly pubkey: Uint8Array;
   private readonly privkey: Uint8Array;
 
-  private constructor(
+  protected constructor(
     mnemonic: EnglishMnemonic,
     hdPath: HdPath,
     privkey: Uint8Array,

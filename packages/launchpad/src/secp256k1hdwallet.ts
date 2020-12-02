@@ -223,7 +223,7 @@ export class Secp256k1HdWallet implements OfflineSigner {
   private readonly pubkey: Uint8Array;
   private readonly privkey: Uint8Array;
 
-  private constructor(
+  protected constructor(
     mnemonic: EnglishMnemonic,
     hdPath: HdPath,
     privkey: Uint8Array,

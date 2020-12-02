@@ -24,7 +24,7 @@ import {
 import { adaptor34, Client as TendermintClient } from "@cosmjs/tendermint-rpc";
 
 import { cosmos } from "./codec";
-import { getMsgType } from "./encoding";
+import { getMsgType, getMsgTypeUrl } from "./encoding";
 import { BroadcastTxResponse, StargateClient } from "./stargateclient";
 
 const { TxRaw } = cosmos.tx.v1beta1;
@@ -123,10 +123,10 @@ export class SigningStargateClient extends StargateClient {
     if (isOfflineDirectSigner(this.signer)) {
       const authInfoBytes = makeAuthInfoBytes([pubkeyAny], fee.amount, gasLimit, sequence);
       const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);
-      const { signature } = await this.signer.signDirect(address, signDoc);
+      const { signature, signed } = await this.signer.signDirect(address, signDoc);
       const txRaw = TxRaw.create({
-        bodyBytes: txBodyBytes,
-        authInfoBytes: authInfoBytes,
+        bodyBytes: signed.bodyBytes,
+        authInfoBytes: signed.authInfoBytes,
         signatures: [fromBase64(signature.signature)],
       });
       const signedTx = Uint8Array.from(TxRaw.encode(txRaw).finish());
@@ -135,17 +135,36 @@ export class SigningStargateClient extends StargateClient {
 
     // Amino signer
     const signMode = cosmos.tx.signing.v1beta1.SignMode.SIGN_MODE_LEGACY_AMINO_JSON;
-    const authInfoBytes = makeAuthInfoBytes([pubkeyAny], fee.amount, gasLimit, sequence, signMode);
     const msgs = messages.map((msg) => ({
       type: getMsgType(msg.typeUrl),
       value: msg.value,
     }));
     const signDoc = makeSignDocAmino(msgs, fee, chainId, memo, accountNumber, sequence);
-    const signResponse = await this.signer.signAmino(address, signDoc);
+    const { signature, signed } = await this.signer.signAmino(address, signDoc);
+    const signedTxBody = {
+      messages: signed.msgs.map((msg) => ({
+        typeUrl: getMsgTypeUrl(msg.type),
+        value: msg.value,
+      })),
+      memo: signed.memo,
+    };
+    const signedTxBodyBytes = this.registry.encode({
+      typeUrl: "/cosmos.tx.v1beta1.TxBody",
+      value: signedTxBody,
+    });
+    const signedGasLimit = Int53.fromString(signed.fee.gas).toNumber();
+    const signedSequence = Int53.fromString(signed.sequence).toNumber();
+    const signedAuthInfoBytes = makeAuthInfoBytes(
+      [pubkeyAny],
+      signed.fee.amount,
+      signedGasLimit,
+      signedSequence,
+      signMode,
+    );
     const txRaw = TxRaw.create({
-      bodyBytes: txBodyBytes,
-      authInfoBytes: authInfoBytes,
-      signatures: [fromBase64(signResponse.signature.signature)],
+      bodyBytes: signedTxBodyBytes,
+      authInfoBytes: signedAuthInfoBytes,
+      signatures: [fromBase64(signature.signature)],
     });
     const signedTx = Uint8Array.from(TxRaw.encode(txRaw).finish());
     return this.broadcastTx(signedTx);
