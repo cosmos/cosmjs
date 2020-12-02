@@ -17,14 +17,14 @@ SCRIPT_DIR="$(realpath "$(dirname "$0")")"
 #
 "$SCRIPT_DIR/send_first.js"
 
-# #
-# # CosmWasm init
-# #
-# (
-#   echo "Ensuring contracts' checksums are correct ..."
-#   cd "$SCRIPT_DIR/contracts"
-#   sha256sum --check checksums.sha256
-# )
+#
+# CosmWasm init
+#
+(
+  echo "Ensuring contracts' checksums are correct ..."
+  cd "$SCRIPT_DIR/contracts"
+  sha256sum --check checksums.sha256
+)
 # "$SCRIPT_DIR/deploy_hackatom.js"
 # "$SCRIPT_DIR/deploy_erc20.js"
 # "$SCRIPT_DIR/deploy_cw3.js"
