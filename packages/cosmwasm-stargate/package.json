@@ -40,6 +40,11 @@
     "test-chrome": "yarn pack-web && karma start --single-run --browsers ChromeHeadless",
     "test": "yarn build-or-skip && yarn test-node",
     "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet",
-    "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
+    "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js",
+    "preget-proto": "rm -rf proto",
+    "get-proto": "WASM_REF=v0.12.1 COSMOS_REF=v0.40.0-rc3 ./scripts/get-proto.sh",
+    "predefine-proto": "./scripts/predefine-proto.sh",
+    "define-proto": "./scripts/define-proto.sh",
+    "postdefine-proto": "prettier --write \"src/codec/generated/codecimpl.*\""
   }
 }
