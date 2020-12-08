@@ -1,13 +1,11 @@
 #!/bin/bash
 set -o errexit -o nounset -o pipefail
-command -v shellcheck > /dev/null && shellcheck "$0"
+command -v shellcheck >/dev/null && shellcheck "$0"
 
 # Tendermint settings must be specified
 # Choose version from https://hub.docker.com/r/tendermint/tendermint/tags/
-for SETTING in "TENDERMINT_VERSION" "TENDERMINT_PORT" "TENDERMINT_NAME"
-do
-  if test -z "$(eval echo "\$$SETTING")"
-  then
+for SETTING in "TENDERMINT_VERSION" "TENDERMINT_PORT" "TENDERMINT_NAME"; do
+  if test -z "$(eval echo "\$$SETTING")"; then
     echo "\$$SETTING must be set when running this script"
     exit 1
   fi
@@ -38,7 +36,7 @@ docker run --rm \
   --proxy_app=kvstore \
   --rpc.laddr=tcp://0.0.0.0:26657 \
   --log_level=state:info,rpc:info,*:error \
-  > "$LOGFILE" &
+  >"$LOGFILE" &
 
 echo "Tendermint running and logging into $LOGFILE"
 

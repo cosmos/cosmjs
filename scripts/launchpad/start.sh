@@ -1,6 +1,6 @@
 #!/bin/bash
 set -o errexit -o nounset -o pipefail
-command -v shellcheck > /dev/null && shellcheck "$0"
+command -v shellcheck >/dev/null && shellcheck "$0"
 
 # Please keep this in sync with the Ports overview in HACKING.md
 # Tendermint port (26657) and p2p port (26656) are not exposed since we don't need them for testing
@@ -29,7 +29,7 @@ docker run --rm \
   --mount type=volume,source=launchpad_data,target=/root \
   "$REPOSITORY:$VERSION" \
   ./run_wasmd.sh /template \
-  > "$WASMD_LOGFILE" &
+  >"$WASMD_LOGFILE" &
 
 echo "wasmd running and logging into $WASMD_LOGFILE"
 
@@ -51,7 +51,7 @@ docker exec "$CONTAINER_NAME" \
   --trust-node \
   --unsafe-cors \
   --laddr "tcp://0.0.0.0:$LCD_API_PORT_GUEST" \
-  > "$REST_SERVER_LOGFILE" &
+  >"$REST_SERVER_LOGFILE" &
 
 echo "rest server running on http://localhost:$LCD_API_PORT_HOST and logging into $REST_SERVER_LOGFILE"
 

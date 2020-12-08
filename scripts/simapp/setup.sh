@@ -1,6 +1,6 @@
 #!/bin/sh
 set -o errexit -o nounset
-command -v shellcheck > /dev/null && shellcheck "$0"
+command -v shellcheck >/dev/null && shellcheck "$0"
 
 PASSWORD=${PASSWORD:-1234567890}
 CHAIN_ID=${CHAIN_ID:-simd-testing}
@@ -18,9 +18,12 @@ simd init --chain-id "$CHAIN_ID" "$MONIKER"
 sed -i "s/\"stake\"/\"$STAKE\"/" "$HOME"/.simapp/config/genesis.json # staking/governance token is hardcoded in config, change this
 
 echo "Setting up validator ..."
-if ! simd keys show validator 2> /dev/null; then
+if ! simd keys show validator 2>/dev/null; then
   echo "Validator does not yet exist. Creating it ..."
-  (echo "$PASSWORD"; echo "$PASSWORD") | simd keys add validator
+  (
+    echo "$PASSWORD"
+    echo "$PASSWORD"
+  ) | simd keys add validator
 fi
 # hardcode the validator account for this instance
 echo "$PASSWORD" | simd add-genesis-account validator "$START_BALANCE"
@@ -34,5 +37,9 @@ done
 
 echo "Creating genesis tx ..."
 SELF_DELEGATION="3000000$STAKE" # 3 STAKE (leads to a voting power of 3)
-(echo "$PASSWORD"; echo "$PASSWORD"; echo "$PASSWORD") | simd gentx validator --offline --amount "$SELF_DELEGATION" --chain-id "$CHAIN_ID" --moniker="$MONIKER"
+(
+  echo "$PASSWORD"
+  echo "$PASSWORD"
+  echo "$PASSWORD"
+) | simd gentx validator --offline --amount "$SELF_DELEGATION" --chain-id "$CHAIN_ID" --moniker="$MONIKER"
 simd collect-gentxs
