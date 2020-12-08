@@ -21,6 +21,32 @@ export declare class Slip10RawIndex extends Uint32 {
   static normal(normalIndex: number): Slip10RawIndex;
   isHardened(): boolean;
 }
+/**
+ * An array of raw SLIP10 indices.
+ *
+ * This can be constructed via string parsing:
+ *
+ * ```ts
+ * import { stringToPath } from "@cosmjs/crypto";
+ *
+ * const path = stringToPath("m/0'/1/2'/2/1000000000");
+ * ```
+ *
+ * or manually:
+ *
+ * ```ts
+ * import { HdPath, Slip10RawIndex } from "@cosmjs/crypto";
+ *
+ * // m/0'/1/2'/2/1000000000
+ * const path: HdPath = [
+ *   Slip10RawIndex.hardened(0),
+ *   Slip10RawIndex.normal(1),
+ *   Slip10RawIndex.hardened(2),
+ *   Slip10RawIndex.normal(2),
+ *   Slip10RawIndex.normal(1000000000),
+ * ];
+ * ```
+ */
 export declare type HdPath = readonly Slip10RawIndex[];
 export declare class Slip10 {
   static derivePath(curve: Slip10Curve, seed: Uint8Array, path: HdPath): Slip10Result;
