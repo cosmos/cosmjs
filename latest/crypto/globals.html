@@ -145,9 +145,29 @@
 					<div class="tsd-signature tsd-kind-icon">Hd<wbr>Path<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">readonly </span><a href="classes/slip10rawindex.html" class="tsd-signature-type">Slip10RawIndex</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/f9550b828/packages/crypto/src/slip10.ts#L52">crypto/src/slip10.ts:52</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/14a652721/packages/crypto/src/slip10.ts#L78">crypto/src/slip10.ts:78</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>An array of raw SLIP10 indices.</p>
+						</div>
+						<p>This can be constructed via string parsing:</p>
+						<pre><code class="language-ts"><span class="hljs-keyword">import</span> { stringToPath } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@cosmjs/crypto&quot;</span>;
+
+<span class="hljs-keyword">const</span> path = stringToPath(<span class="hljs-string">&quot;m/0&#x27;/1/2&#x27;/2/1000000000&quot;</span>);</code></pre>
+						<p>or manually:</p>
+						<pre><code class="language-ts"><span class="hljs-keyword">import</span> { HdPath, Slip10RawIndex } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@cosmjs/crypto&quot;</span>;
+
+<span class="hljs-comment">// m/0&#x27;/1/2&#x27;/2/1000000000</span>
+<span class="hljs-keyword">const</span> path: HdPath = [
+  Slip10RawIndex.hardened(<span class="hljs-number">0</span>),
+  Slip10RawIndex.normal(<span class="hljs-number">1</span>),
+  Slip10RawIndex.hardened(<span class="hljs-number">2</span>),
+  Slip10RawIndex.normal(<span class="hljs-number">2</span>),
+  Slip10RawIndex.normal(<span class="hljs-number">1000000000</span>),
+];</code></pre>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias">
 					<a name="secp256k1keypair" class="tsd-anchor"></a>
@@ -155,7 +175,7 @@
 					<div class="tsd-signature tsd-kind-icon">Secp256k1<wbr>Keypair<span class="tsd-signature-symbol">:</span> <a href="interfaces/keypair.html" class="tsd-signature-type">Keypair</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">As</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"secp256k1-keypair"</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/f9550b828/packages/crypto/src/secp256k1.ts#L16">crypto/src/secp256k1.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/14a652721/packages/crypto/src/secp256k1.ts#L16">crypto/src/secp256k1.ts:16</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -168,7 +188,7 @@
 					<div class="tsd-signature tsd-kind-icon">der<wbr>Tag<wbr>Integer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">2</span><span class="tsd-signature-symbol"> = 2</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/f9550b828/packages/crypto/src/secp256k1signature.ts#L13">crypto/src/secp256k1signature.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/14a652721/packages/crypto/src/secp256k1signature.ts#L13">crypto/src/secp256k1signature.ts:13</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -178,8 +198,8 @@
 					<div class="tsd-signature tsd-kind-icon">secp256k1<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ec</span><span class="tsd-signature-symbol"> = new elliptic.ec(&quot;secp256k1&quot;)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/f9550b828/packages/crypto/src/secp256k1.ts#L8">crypto/src/secp256k1.ts:8</a></li>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/f9550b828/packages/crypto/src/slip10.ts#L54">crypto/src/slip10.ts:54</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/14a652721/packages/crypto/src/secp256k1.ts#L8">crypto/src/secp256k1.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/14a652721/packages/crypto/src/slip10.ts#L80">crypto/src/slip10.ts:80</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -189,7 +209,7 @@
 					<div class="tsd-signature tsd-kind-icon">secp256k1N<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">BN</span><span class="tsd-signature-symbol"> = new BN(&quot;FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141&quot;, &quot;hex&quot;)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/f9550b828/packages/crypto/src/secp256k1.ts#L9">crypto/src/secp256k1.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/14a652721/packages/crypto/src/secp256k1.ts#L9">crypto/src/secp256k1.ts:9</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -199,7 +219,7 @@
 					<div class="tsd-signature tsd-kind-icon">self<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/f9550b828/packages/crypto/src/random.ts#L2">crypto/src/random.ts:2</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/14a652721/packages/crypto/src/random.ts#L2">crypto/src/random.ts:2</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -209,7 +229,7 @@
 					<div class="tsd-signature tsd-kind-icon">window<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/f9550b828/packages/crypto/src/random.ts#L1">crypto/src/random.ts:1</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/14a652721/packages/crypto/src/random.ts#L1">crypto/src/random.ts:1</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -219,7 +239,7 @@
 					<div class="tsd-signature tsd-kind-icon">xchacha20<wbr>Nonce<wbr>Length<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">24</span><span class="tsd-signature-symbol"> = 24</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/f9550b828/packages/crypto/src/libsodium.ts#L111">crypto/src/libsodium.ts:111</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/14a652721/packages/crypto/src/libsodium.ts#L111">crypto/src/libsodium.ts:111</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -246,7 +266,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/f9550b828/packages/crypto/src/libsodium.ts#L28">crypto/src/libsodium.ts:28</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/14a652721/packages/crypto/src/libsodium.ts#L28">crypto/src/libsodium.ts:28</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -269,7 +289,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/f9550b828/packages/crypto/src/keccak.ts#L29">crypto/src/keccak.ts:29</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/14a652721/packages/crypto/src/keccak.ts#L29">crypto/src/keccak.ts:29</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -297,7 +317,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/f9550b828/packages/crypto/src/slip10.ts#L186">crypto/src/slip10.ts:186</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/14a652721/packages/crypto/src/slip10.ts#L212">crypto/src/slip10.ts:212</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -320,7 +340,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/f9550b828/packages/crypto/src/ripemd.ts#L27">crypto/src/ripemd.ts:27</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/14a652721/packages/crypto/src/ripemd.ts#L27">crypto/src/ripemd.ts:27</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -348,7 +368,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/f9550b828/packages/crypto/src/sha.ts#L30">crypto/src/sha.ts:30</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/14a652721/packages/crypto/src/sha.ts#L30">crypto/src/sha.ts:30</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -376,7 +396,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/f9550b828/packages/crypto/src/sha.ts#L58">crypto/src/sha.ts:58</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/14a652721/packages/crypto/src/sha.ts#L58">crypto/src/sha.ts:58</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -404,7 +424,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/f9550b828/packages/crypto/src/sha.ts#L86">crypto/src/sha.ts:86</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/14a652721/packages/crypto/src/sha.ts#L86">crypto/src/sha.ts:86</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -432,7 +452,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/f9550b828/packages/crypto/src/slip10.ts#L27">crypto/src/slip10.ts:27</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/14a652721/packages/crypto/src/slip10.ts#L27">crypto/src/slip10.ts:27</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -460,7 +480,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/f9550b828/packages/crypto/src/slip10.ts#L195">crypto/src/slip10.ts:195</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/14a652721/packages/crypto/src/slip10.ts#L221">crypto/src/slip10.ts:221</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -483,7 +503,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/f9550b828/packages/crypto/src/secp256k1signature.ts#L1">crypto/src/secp256k1signature.ts:1</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/14a652721/packages/crypto/src/secp256k1signature.ts#L1">crypto/src/secp256k1signature.ts:1</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
