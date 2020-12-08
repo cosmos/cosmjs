@@ -59,9 +59,6 @@ jobs:
           paths:
             - packages/*/build/*
       - run:
-          name: Format text
-          command: yarn format-text
-      - run:
           name: Check for clean workspace
           command: |
             SOURCE_CHANGES=$(git status --porcelain)
@@ -462,6 +459,12 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install shfmt
+          command: |
+            sudo wget https://github.com/mvdan/sh/releases/download/v3.2.1/shfmt_v3.2.1_linux_amd64 -O /usr/local/bin/shfmt
+            sudo chmod +x /usr/local/bin/shfmt
+            shfmt --version
+      - run:
           name: Version information
           command: echo "node $(node --version)"; echo "yarn $(yarn --version)"
       - restore_cache:
@@ -480,4 +483,22 @@ jobs:
           paths:
             - ~/.cache/yarn
       - run:
+          name: Lint
           command: yarn lint
+      - run:
+          name: Format text
+          command: yarn format-text
+      - run:
+          name: Format shell scripts
+          command: yarn format-shell
+      - run:
+          name: Check for clean workspace
+          command: |
+            SOURCE_CHANGES=$(git status --porcelain)
+            if [[ -n "$SOURCE_CHANGES" ]]; then
+              echo "Error: repository contains changes."
+              echo "Showing 'git status' and 'git diff' for debugging now:"
+              git status
+              git diff
+              exit 1
+            fi

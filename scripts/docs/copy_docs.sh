@@ -1,6 +1,6 @@
 #!/bin/bash
 set -o errexit -o nounset -o pipefail
-command -v shellcheck > /dev/null && shellcheck "$0"
+command -v shellcheck >/dev/null && shellcheck "$0"
 
 version="latest"
 out_dir="./docs_deployment"
@@ -21,11 +21,11 @@ cp docs/cosmjs-tree.png "$assets_dir"
   echo '<h2>Package documentation</h2>'
   echo '<p>The following packages can be used as libraries.</p>'
   echo '<ul>'
-} > "$index"
+} >"$index"
 
-for package_dir in ./packages/*/ ; do
+for package_dir in ./packages/*/; do
   package_basename="$(basename "$package_dir")"
-  package_name="$(jq -r .name < "$package_dir"/package.json)"
+  package_name="$(jq -r .name <"$package_dir"/package.json)"
   package_docs_src="$(realpath "$package_dir")/docs"
   package_docs_dest="$out_dir/$version/$package_basename"
 
@@ -34,7 +34,7 @@ for package_dir in ./packages/*/ ; do
     echo "$package_basename: $package_docs_src -> $package_docs_dest"
     cp -R "$package_docs_src/"* "$package_docs_dest"
 
-    echo "  <li><a href='./latest/$package_basename/index.html'>$package_name</a></li>" >> "$index"
+    echo "  <li><a href='./latest/$package_basename/index.html'>$package_name</a></li>" >>"$index"
   fi
 done
 
@@ -44,4 +44,4 @@ done
   echo '<footer>'
   echo '  <a href="https://github.com/CosmWasm/cosmjs">CosmJS on GitHub</a>'
   echo '</footer>'
-} >> "$index"
+} >>"$index"

@@ -1,6 +1,6 @@
 #!/bin/bash
 set -o errexit -o nounset -o pipefail
-command -v shellcheck > /dev/null && shellcheck "$0"
+command -v shellcheck >/dev/null && shellcheck "$0"
 
 SCRIPT_DIR="$(realpath "$(dirname "$0")")"
 # shellcheck source=./env
@@ -37,9 +37,9 @@ function inline_jq() {
   shift
   TMP_DIR=$(mktemp -d "${TMPDIR:-/tmp}/inline_jq.XXXXXXXXX")
   TMP_FILE="$TMP_DIR/$(basename "$IN_OUT_PATH")"
-  jq "$@" < "$IN_OUT_PATH" > "$TMP_FILE"
-  if ! mv "$TMP_FILE" "$IN_OUT_PATH" ; then
-    >&2 echo "Temp file '$TMP_FILE' could not be deleted. If it contains sensitive data, you might want to delete it manually."
+  jq "$@" <"$IN_OUT_PATH" >"$TMP_FILE"
+  if ! mv "$TMP_FILE" "$IN_OUT_PATH"; then
+    echo >&2 "Temp file '$TMP_FILE' could not be deleted. If it contains sensitive data, you might want to delete it manually."
     exit 3
   fi
 }

@@ -1,6 +1,6 @@
 #!/bin/bash
 set -o errexit -o nounset -o pipefail
-command -v shellcheck > /dev/null && shellcheck "$0"
+command -v shellcheck >/dev/null && shellcheck "$0"
 
 ## This is like start.sh but using local binaries, not docker images
 SCRIPT_DIR="$(realpath "$(dirname "$0")")"
@@ -18,7 +18,7 @@ wasmd start \
   --home "$TMP_DIR/.wasmd" \
   --trace \
   --rpc.laddr tcp://0.0.0.0:26657 \
-  > "$WASMD_LOGFILE" &
+  >"$WASMD_LOGFILE" &
 
 echo "wasmd running and logging into $WASMD_LOGFILE"
 
@@ -30,7 +30,7 @@ wasmcli rest-server \
   --node tcp://localhost:26657 \
   --trust-node \
   --laddr tcp://0.0.0.0:1317 \
-  > "$REST_SERVER_LOGFILE" &
+  >"$REST_SERVER_LOGFILE" &
 
 echo "rest server running on http://localhost:1317 and logging into $REST_SERVER_LOGFILE"
 

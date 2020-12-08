@@ -1,12 +1,11 @@
 #!/bin/bash
 set -o errexit -o nounset -o pipefail
-command -v shellcheck > /dev/null && shellcheck "$0"
+command -v shellcheck >/dev/null && shellcheck "$0"
 
 TMP_DIR="./tmp"
 JS_SOURCE_FILE="$TMP_DIR/codecimpl.js"
 DEFINITIONS_FILE="$TMP_DIR/codecimpl.d.ts"
 OUTPUT_DIR="./src/codec/generated/"
-
 
 yarn pbts "$JS_SOURCE_FILE" -o "$DEFINITIONS_FILE"
 # Remove comments after using them for the .d.ts
