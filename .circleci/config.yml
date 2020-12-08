@@ -459,6 +459,12 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install shfmt
+          command: |
+            sudo wget https://github.com/mvdan/sh/releases/download/v3.2.1/shfmt_v3.2.1_linux_amd64 -O /usr/local/bin/shfmt
+            sudo chmod +x /usr/local/bin/shfmt
+            shfmt --version
+      - run:
           name: Version information
           command: echo "node $(node --version)"; echo "yarn $(yarn --version)"
       - restore_cache:
