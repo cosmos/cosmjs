@@ -26,6 +26,7 @@
   "scripts": {
     "format": "lerna run format",
     "format-text": "prettier --write --prose-wrap always --print-width 80 \"./*.md\" && lerna run format-text",
+    "format-shell": "shfmt -w scripts packages",
     "lint": "lerna run lint",
     "lint-fix": "lerna run lint-fix",
     "test": "lerna run test",
