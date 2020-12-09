@@ -1,5 +1,6 @@
 export * as codec from "./codec";
 export { getMsgType, getMsgTypeUrl } from "./encoding";
+export { parseRawLog } from "./logs";
 export {
   AuthExtension,
   BankExtension,
