@@ -25,6 +25,7 @@ yarn pbjs \
   "$COSMOS_PROTO_DIR/bank/v1beta1/bank.proto" \
   "$COSMOS_PROTO_DIR/bank/v1beta1/query.proto" \
   "$COSMOS_PROTO_DIR/bank/v1beta1/tx.proto" \
+  "$COSMOS_PROTO_DIR/base/abci/v1beta1/abci.proto" \
   "$COSMOS_PROTO_DIR/base/query/v1beta1/pagination.proto" \
   "$COSMOS_PROTO_DIR/base/v1beta1/coin.proto" \
   "$COSMOS_PROTO_DIR/crypto/multisig/v1beta1/multisig.proto" \
@@ -39,9 +40,11 @@ yarn pbjs \
   "$IBC_PROTO_DIR/core/commitment/v1/commitment.proto" \
   "$IBC_PROTO_DIR/core/connection/v1/connection.proto" \
   "$IBC_PROTO_DIR/core/connection/v1/query.proto" \
+  "$TENDERMINT_PROTO_DIR/abci/types.proto" \
   "$TENDERMINT_PROTO_DIR/crypto/keys.proto" \
   "$TENDERMINT_PROTO_DIR/crypto/proof.proto" \
   "$TENDERMINT_PROTO_DIR/libs/bits/types.proto" \
+  "$TENDERMINT_PROTO_DIR/types/params.proto" \
   "$TENDERMINT_PROTO_DIR/types/types.proto" \
   "$TENDERMINT_PROTO_DIR/types/validator.proto" \
   "$TENDERMINT_PROTO_DIR/version/types.proto"
