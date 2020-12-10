@@ -45,12 +45,12 @@ export interface CosmWasmFeeTable extends CosmosFeeTable {
   readonly changeAdmin: StdFee;
 }
 
-function prepareBuilder(buider: string | undefined): string {
-  if (buider === undefined) {
+function prepareBuilder(builder: string | undefined): string {
+  if (builder === undefined) {
     return ""; // normalization needed by backend
   } else {
-    if (!isValidBuilder(buider)) throw new Error("The builder (Docker Hub image with tag) is not valid");
-    return buider;
+    if (!isValidBuilder(builder)) throw new Error("The builder (Docker Hub image with tag) is not valid");
+    return builder;
   }
 }
 

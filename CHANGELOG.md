@@ -4,6 +4,8 @@
 
 - @cosmjs/cosmwasm: `logs` is no longer exported. Use `logs` from
   @cosmjs/launchpad instead.
+- @cosmjs/cosmwasm: Export `JsonObject`, `ChangeAdminResult` and `WasmData`
+  types as well as `isValidBuilder` and `parseWasmData` functions.
 - @cosmjs/launchpad: Add `Secp256k1Wallet` to manage a single raw secp256k1
   keypair.
 - @cosmjs/launchpad: `OfflineSigner` type’s `sign` method renamed `signAmino`

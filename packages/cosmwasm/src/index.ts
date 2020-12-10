@@ -1,3 +1,4 @@
+export { isValidBuilder } from "./builder";
 export { Expiration } from "./interfaces";
 export { setupWasmExtension, WasmExtension } from "./lcdapi/wasm";
 
@@ -32,6 +33,7 @@ export {
   VotersResult,
 } from "./cw3cosmwasmclient";
 export {
+  ChangeAdminResult,
   ExecuteResult,
   CosmWasmFeeTable,
   InstantiateOptions,
@@ -55,3 +57,4 @@ export {
   MsgUpdateAdmin,
   MsgStoreCode,
 } from "./msgs";
+export { JsonObject, parseWasmData, WasmData } from "./types";
