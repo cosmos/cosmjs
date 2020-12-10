@@ -46,16 +46,6 @@ if ! timeout 180 bash -c "until [ \"\$( docker container inspect -f '{{.State.St
   exit 1
 fi
 
-# docker exec "$CONTAINER_NAME" \
-#   wasmcli rest-server \
-#   --node tcp://localhost:26657 \
-#   --trust-node \
-#   --unsafe-cors \
-#   --laddr "tcp://0.0.0.0:$LCD_API_PORT_GUEST" \
-#   > "$REST_SERVER_LOGFILE" &
-
-# echo "rest server running on http://localhost:$LCD_API_PORT_HOST and logging into $REST_SERVER_LOGFILE
-
 if [ -n "${CI:-}" ]; then
   # Give process some time to come alive. No idea why this helps. Needed for CI.
   sleep 0.5
