@@ -136,11 +136,11 @@
 					<a href="https://cosmwasm.github.io/cosmjs/latest/launchpad/interfaces/msg.html">Msg</a>
 				interface like this:</p>
 				<pre><code class="language-ts"><span class="hljs-keyword">const</span> voteMsg: Msg = {
-  <span class="hljs-keyword">type</span>: <span class="hljs-string">&quot;cosmos-sdk/MsgVote&quot;</span>,
-  value: {
-    proposal_id: proposalId,
-    voter: faucet.address,
-    option: <span class="hljs-string">&quot;Yes&quot;</span>,
+  <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;cosmos-sdk/MsgVote&quot;</span>,
+  <span class="hljs-attr">value</span>: {
+    <span class="hljs-attr">proposal_id</span>: proposalId,
+    <span class="hljs-attr">voter</span>: faucet.address,
+    <span class="hljs-attr">option</span>: <span class="hljs-string">&quot;Yes&quot;</span>,
   },
 };</code></pre>
 				<p>This is most flexible since you are not restricted to known messages, but gives
@@ -180,27 +180,27 @@
   apiUrl: <span class="hljs-built_in">string</span>,
   signer: OfflineSigner,
 </span>): <span class="hljs-title">Promise</span>&lt;<span class="hljs-title">BroadcastTxResult</span>&gt; </span>{
-  <span class="hljs-keyword">const</span> [{ address: authorAddress }] = <span class="hljs-keyword">await</span> signer.getAccounts();
+  <span class="hljs-keyword">const</span> [{ <span class="hljs-attr">address</span>: authorAddress }] = <span class="hljs-keyword">await</span> signer.getAccounts();
 
   <span class="hljs-keyword">const</span> memo = <span class="hljs-string">&quot;My first proposal on chain&quot;</span>;
   <span class="hljs-keyword">const</span> msg: MsgSubmitProposal = {
-    <span class="hljs-keyword">type</span>: <span class="hljs-string">&quot;cosmos-sdk/MsgSubmitProposal&quot;</span>,
-    value: {
-      content: {
-        <span class="hljs-keyword">type</span>: <span class="hljs-string">&quot;cosmos-sdk/TextProposal&quot;</span>,
-        value: {
-          description:
+    <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;cosmos-sdk/MsgSubmitProposal&quot;</span>,
+    <span class="hljs-attr">value</span>: {
+      <span class="hljs-attr">content</span>: {
+        <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;cosmos-sdk/TextProposal&quot;</span>,
+        <span class="hljs-attr">value</span>: {
+          <span class="hljs-attr">description</span>:
             <span class="hljs-string">&quot;This proposal proposes to test whether this proposal passes&quot;</span>,
-          title: <span class="hljs-string">&quot;Test Proposal&quot;</span>,
+          <span class="hljs-attr">title</span>: <span class="hljs-string">&quot;Test Proposal&quot;</span>,
         },
       },
-      proposer: authorAddress,
-      initial_deposit: coins(<span class="hljs-number">25000000</span>, <span class="hljs-string">&quot;ustake&quot;</span>),
+      <span class="hljs-attr">proposer</span>: authorAddress,
+      <span class="hljs-attr">initial_deposit</span>: coins(<span class="hljs-number">25000000</span>, <span class="hljs-string">&quot;ustake&quot;</span>),
     },
   };
   <span class="hljs-keyword">const</span> fee: StdFee = {
-    amount: coins(<span class="hljs-number">5000000</span>, <span class="hljs-string">&quot;ucosm&quot;</span>),
-    gas: <span class="hljs-string">&quot;89000000&quot;</span>,
+    <span class="hljs-attr">amount</span>: coins(<span class="hljs-number">5000000</span>, <span class="hljs-string">&quot;ucosm&quot;</span>),
+    <span class="hljs-attr">gas</span>: <span class="hljs-string">&quot;89000000&quot;</span>,
   };
 
   <span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> SigningCosmosClient(apiUrl, authorAddress, signer);
@@ -231,18 +231,18 @@
 
 <span class="hljs-comment">// 👇 this message type can come from a chain-specific package or the application itself</span>
 <span class="hljs-keyword">const</span> msg: MsgExecuteContract = {
-  <span class="hljs-keyword">type</span>: <span class="hljs-string">&quot;wasm/MsgExecuteContract&quot;</span>,
-  value: {
-    sender: myAddress,
-    contract: contractAddress,
-    msg: wasmMsg,
-    sent_funds: [],
+  <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;wasm/MsgExecuteContract&quot;</span>,
+  <span class="hljs-attr">value</span>: {
+    <span class="hljs-attr">sender</span>: myAddress,
+    <span class="hljs-attr">contract</span>: contractAddress,
+    <span class="hljs-attr">msg</span>: wasmMsg,
+    <span class="hljs-attr">sent_funds</span>: [],
   },
 };
 
 <span class="hljs-keyword">const</span> fee: StdFee = {
-  amount: coins(<span class="hljs-number">5000000</span>, <span class="hljs-string">&quot;ucosm&quot;</span>),
-  gas: <span class="hljs-string">&quot;89000000&quot;</span>,
+  <span class="hljs-attr">amount</span>: coins(<span class="hljs-number">5000000</span>, <span class="hljs-string">&quot;ucosm&quot;</span>),
+  <span class="hljs-attr">gas</span>: <span class="hljs-string">&quot;89000000&quot;</span>,
 };
 <span class="hljs-keyword">const</span> memo = <span class="hljs-string">&quot;Time for action&quot;</span>;
 <span class="hljs-keyword">const</span> { account_number, sequence } = (
@@ -279,11 +279,11 @@ assertIsBroadcastTxResult(result);</code></pre>
 <span class="hljs-comment">// pass password to the worker</span>
 
 <span class="hljs-keyword">const</span> strongKdfParams: KdfConfiguration = {
-  algorithm: <span class="hljs-string">&quot;argon2id&quot;</span>,
-  params: {
-    outputLength: <span class="hljs-number">32</span>,
-    opsLimit: <span class="hljs-number">5000</span>,
-    memLimitKib: <span class="hljs-number">15</span> * <span class="hljs-number">1024</span>,
+  <span class="hljs-attr">algorithm</span>: <span class="hljs-string">&quot;argon2id&quot;</span>,
+  <span class="hljs-attr">params</span>: {
+    <span class="hljs-attr">outputLength</span>: <span class="hljs-number">32</span>,
+    <span class="hljs-attr">opsLimit</span>: <span class="hljs-number">5000</span>,
+    <span class="hljs-attr">memLimitKib</span>: <span class="hljs-number">15</span> * <span class="hljs-number">1024</span>,
   },
 };
 <span class="hljs-keyword">const</span> encryptionKey = <span class="hljs-keyword">await</span> executeKdf(password, strongKdfParams);
