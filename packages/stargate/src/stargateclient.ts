@@ -25,6 +25,12 @@ import Long from "long";
 import { cosmos } from "./codec";
 import { AuthExtension, BankExtension, QueryClient, setupAuthExtension, setupBankExtension } from "./queries";
 
+type IBaseAccount = cosmos.auth.v1beta1.IBaseAccount;
+type IMsgData = cosmos.base.abci.v1beta1.IMsgData;
+type ICoin = cosmos.base.v1beta1.ICoin;
+
+const { TxMsgData } = cosmos.base.abci.v1beta1;
+
 /** A transaction that is indexed as part of the transaction history */
 export interface IndexedTx {
   readonly height: number;
@@ -54,14 +60,14 @@ export interface BroadcastTxFailure {
   readonly code: number;
   readonly transactionHash: string;
   readonly rawLog?: string;
-  readonly data?: Uint8Array;
+  readonly data?: readonly IMsgData[];
 }
 
 export interface BroadcastTxSuccess {
   readonly height: number;
   readonly transactionHash: string;
   readonly rawLog?: string;
-  readonly data?: Uint8Array;
+  readonly data?: readonly IMsgData[];
 }
 
 export type BroadcastTxResponse = BroadcastTxSuccess | BroadcastTxFailure;
@@ -92,7 +98,7 @@ function uint64FromProto(input: number | Long | null | undefined): Uint64 {
   return Uint64.fromString(input.toString());
 }
 
-function accountFromProto(input: cosmos.auth.v1beta1.IBaseAccount): Account {
+export function accountFromProto(input: IBaseAccount): Account {
   const { address, pubKey, accountNumber, sequence } = input;
   const pubkey = decodePubkey(pubKey);
   assert(address);
@@ -104,7 +110,7 @@ function accountFromProto(input: cosmos.auth.v1beta1.IBaseAccount): Account {
   };
 }
 
-function coinFromProto(input: cosmos.base.v1beta1.ICoin): Coin {
+export function coinFromProto(input: ICoin): Coin {
   assertDefined(input.amount);
   assertDefined(input.denom);
   assert(input.amount !== null);
@@ -243,7 +249,7 @@ export class StargateClient {
         height: response.height,
         transactionHash: toHex(response.hash).toUpperCase(),
         rawLog: response.deliverTx?.log,
-        data: response.deliverTx?.data,
+        data: response.deliverTx?.data ? TxMsgData.decode(response.deliverTx?.data).data : undefined,
       };
     }
     return response.checkTx.code !== 0
@@ -252,14 +258,14 @@ export class StargateClient {
           code: response.checkTx.code,
           transactionHash: toHex(response.hash).toUpperCase(),
           rawLog: response.checkTx.log,
-          data: response.checkTx.data,
+          data: response.checkTx.data ? TxMsgData.decode(response.checkTx.data).data : undefined,
         }
       : {
           height: response.height,
           code: response.deliverTx?.code,
           transactionHash: toHex(response.hash).toUpperCase(),
           rawLog: response.deliverTx?.log,
-          data: response.deliverTx?.data,
+          data: response.deliverTx?.data ? TxMsgData.decode(response.deliverTx?.data).data : undefined,
         };
   }
 

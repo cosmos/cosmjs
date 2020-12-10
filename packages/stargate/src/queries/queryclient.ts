@@ -3,7 +3,7 @@ import { iavlSpec, ics23, tendermintSpec, verifyExistence, verifyNonExistence } 
 import { toAscii, toHex } from "@cosmjs/encoding";
 import { firstEvent } from "@cosmjs/stream";
 import { Client as TendermintClient, Header, NewBlockHeaderEvent, ProofOp } from "@cosmjs/tendermint-rpc";
-import { arrayContentEquals, assert, isNonNullObject, sleep } from "@cosmjs/utils";
+import { arrayContentEquals, assert, assertDefined, isNonNullObject, sleep } from "@cosmjs/utils";
 import { Stream } from "xstream";
 
 type QueryExtensionSetup<P> = (base: QueryClient) => P;
@@ -233,8 +233,8 @@ export class QueryClient {
   // this must return the header for height+1
   // throws an error if height is 0 or undefined
   private async getNextHeader(height?: number): Promise<Header> {
-    assert(height);
-    if (height == 0) {
+    assertDefined(height);
+    if (height === 0) {
       throw new Error("Query returned height 0, cannot prove it");
     }
 
