@@ -91,7 +91,7 @@
 					<div class="tsd-signature tsd-kind-icon">ibc<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>channel<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>portId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, channelId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">IChannel</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>nextSequenceReceive<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>portId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, channelId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>packetAcknowledgement<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>portId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, channelId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, sequence<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>packetCommitment<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>portId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, channelId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, sequence<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>unverified<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>channel<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>portId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, channelId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">IQueryChannelResponse</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>channels<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>paginationKey<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">IQueryChannelsResponse</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>clientConnections<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>clientId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">IQueryClientConnectionsResponse</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>connection<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>connectionId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">IQueryConnectionResponse</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>connectionChannels<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>connection<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, paginationKey<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">IQueryConnectionChannelsResponse</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>connections<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>paginationKey<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">IQueryConnectionsResponse</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>nextSequenceReceive<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>portId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, channelId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">IQueryNextSequenceReceiveResponse</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>packetAcknowledgement<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>portId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, channelId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, sequence<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">IQueryPacketAcknowledgementResponse</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>packetAcknowledgements<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>portId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, channelId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, paginationKey<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">IQueryPacketAcknowledgementsResponse</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>packetCommitment<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>portId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, channelId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, sequence<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">IQueryPacketCommitmentResponse</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>packetCommitments<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>portId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, channelId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, paginationKey<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">IQueryPacketCommitmentsResponse</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>unreceivedAcks<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>portId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, channelId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, packetCommitmentSequences<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">readonly </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">IQueryUnreceivedAcksResponse</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>unreceivedPackets<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>portId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, channelId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, packetCommitmentSequences<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">readonly </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">IQueryUnreceivedPacketsResponse</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/360bd6b56/packages/stargate/src/queries/ibc.ts#L14">src/queries/ibc.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/179b35553/packages/stargate/src/queries/ibc.ts#L14">src/queries/ibc.ts:14</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -537,30 +537,6 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class">
-						<a href="../classes/queryclient.html" class="tsd-kind-icon">Query<wbr>Client</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/signingstargateclient.html" class="tsd-kind-icon">Signing<wbr>Stargate<wbr>Client</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/stargateclient.html" class="tsd-kind-icon">Stargate<wbr>Client</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="account.html" class="tsd-kind-icon">Account</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="authextension.html" class="tsd-kind-icon">Auth<wbr>Extension</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="bankextension.html" class="tsd-kind-icon">Bank<wbr>Extension</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="broadcasttxfailure.html" class="tsd-kind-icon">Broadcast<wbr>TxFailure</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="broadcasttxsuccess.html" class="tsd-kind-icon">Broadcast<wbr>TxSuccess</a>
-					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
@@ -573,96 +549,6 @@
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-interface">
-						<a href="indexedtx.html" class="tsd-kind-icon">Indexed<wbr>Tx</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="privatesigningstargateclient.html" class="tsd-kind-icon">Private<wbr>Signing<wbr>Stargate<wbr>Client</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="privatestargateclient.html" class="tsd-kind-icon">Private<wbr>Stargate<wbr>Client</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="sequenceresponse.html" class="tsd-kind-icon">Sequence<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="signingstargateclientoptions.html" class="tsd-kind-icon">Signing<wbr>Stargate<wbr>Client<wbr>Options</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="../globals.html#broadcasttxresponse" class="tsd-kind-icon">Broadcast<wbr>TxResponse</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
-						<a href="../globals.html#queryextensionsetup" class="tsd-kind-icon">Query<wbr>Extension<wbr>Setup</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="../globals.html#baseaccount" class="tsd-kind-icon">Base<wbr>Account</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="../globals.html#channelquery" class="tsd-kind-icon">Channel<wbr>Query</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="../globals.html#coin" class="tsd-kind-icon">Coin</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="../globals.html#connectionquery" class="tsd-kind-icon">Connection<wbr>Query</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="../globals.html#query" class="tsd-kind-icon">Query</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="../globals.html#txraw" class="tsd-kind-icon">Tx<wbr>Raw</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="../globals.html#defaultgasprice" class="tsd-kind-icon">default<wbr>Gas<wbr>Price</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="../globals.html#accountfromproto" class="tsd-kind-icon">account<wbr>From<wbr>Proto</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="../globals.html#assertisbroadcasttxsuccess" class="tsd-kind-icon">assert<wbr>IsBroadcast<wbr>TxSuccess</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="../globals.html#checkandparseop" class="tsd-kind-icon">check<wbr>And<wbr>Parse<wbr>Op</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="../globals.html#coinfromproto" class="tsd-kind-icon">coin<wbr>From<wbr>Proto</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="../globals.html#getmsgtype" class="tsd-kind-icon">get<wbr>Msg<wbr>Type</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="../globals.html#getmsgtypeurl" class="tsd-kind-icon">get<wbr>Msg<wbr>Type<wbr>Url</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="../globals.html#isbroadcasttxfailure" class="tsd-kind-icon">is<wbr>Broadcast<wbr>TxFailure</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="../globals.html#isbroadcasttxsuccess" class="tsd-kind-icon">is<wbr>Broadcast<wbr>TxSuccess</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="../globals.html#setupauthextension" class="tsd-kind-icon">setup<wbr>Auth<wbr>Extension</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="../globals.html#setupbankextension" class="tsd-kind-icon">setup<wbr>Bank<wbr>Extension</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="../globals.html#setupibcextension" class="tsd-kind-icon">setup<wbr>Ibc<wbr>Extension</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="../globals.html#toaccaddress" class="tsd-kind-icon">to<wbr>Acc<wbr>Address</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="../globals.html#toobject" class="tsd-kind-icon">to<wbr>Object</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="../globals.html#uint64fromproto" class="tsd-kind-icon">uint64<wbr>From<wbr>Proto</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="../globals.html#defaultgaslimits" class="tsd-kind-icon">default<wbr>Gas<wbr>Limits</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="../globals.html#typeregister" class="tsd-kind-icon">type<wbr>Register</a>
-					</li>
 				</ul>
 			</nav>
 		</div>
