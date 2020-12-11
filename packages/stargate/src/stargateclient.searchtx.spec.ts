@@ -17,9 +17,16 @@ import {
   isBroadcastTxSuccess,
   StargateClient,
 } from "./stargateclient";
-import { faucet, makeRandomAddress, pendingWithoutSimapp, simapp, simappEnabled } from "./testutils.spec";
+import {
+  faucet,
+  fromOneElementArray,
+  makeRandomAddress,
+  pendingWithoutSimapp,
+  simapp,
+  simappEnabled,
+} from "./testutils.spec";
 
-const { TxRaw } = cosmos.tx.v1beta1;
+const { Tx, TxRaw } = cosmos.tx.v1beta1;
 
 interface TestTxSend {
   readonly sender: string;
@@ -238,6 +245,148 @@ describe("StargateClient.searchTx", () => {
           hash: sendUnsuccessful.hash,
           code: 5,
           tx: sendUnsuccessful.tx,
+        }),
+      );
+    });
+  });
+
+  describe("with SearchBySentFromOrToQuery", () => {
+    it("can search by sender", async () => {
+      pendingWithoutSimapp();
+      assert(sendSuccessful, "value must be set in beforeAll()");
+      const client = await StargateClient.connect(simapp.tendermintUrl);
+      const results = await client.searchTx({ sentFromOrTo: sendSuccessful.sender });
+      expect(results.length).toBeGreaterThanOrEqual(1);
+
+      // Check basic structure of all results
+      for (const result of results) {
+        const tx = Tx.decode(result.tx);
+        const filteredMsgs = tx.body!.messages!.filter(({ type_url: typeUrl, value }) => {
+          if (typeUrl !== "/cosmos.bank.v1beta1.MsgSend") return false;
+          const decoded = registry.decode({ typeUrl: typeUrl, value: value! });
+          return decoded.fromAddress === sendSuccessful?.sender;
+        });
+        expect(filteredMsgs.length).toBeGreaterThanOrEqual(1);
+      }
+
+      // Check details of most recent result
+      expect(results[results.length - 1]).toEqual(
+        jasmine.objectContaining({
+          height: sendSuccessful.height,
+          hash: sendSuccessful.hash,
+          tx: sendSuccessful.tx,
+        }),
+      );
+    });
+
+    it("can search by recipient", async () => {
+      pendingWithoutSimapp();
+      assert(sendSuccessful, "value must be set in beforeAll()");
+      const client = await StargateClient.connect(simapp.tendermintUrl);
+      const results = await client.searchTx({ sentFromOrTo: sendSuccessful.recipient });
+      expect(results.length).toBeGreaterThanOrEqual(1);
+
+      // Check basic structure of all results
+      for (const result of results) {
+        const tx = Tx.decode(result.tx);
+        const filteredMsgs = tx.body!.messages!.filter(({ type_url: typeUrl, value }) => {
+          if (typeUrl !== "/cosmos.bank.v1beta1.MsgSend") return false;
+          const decoded = registry.decode({ typeUrl: typeUrl, value: value! });
+          return decoded.toAddress === sendSuccessful?.recipient;
+        });
+        expect(filteredMsgs.length).toBeGreaterThanOrEqual(1);
+      }
+
+      // Check details of most recent result
+      expect(results[results.length - 1]).toEqual(
+        jasmine.objectContaining({
+          height: sendSuccessful.height,
+          hash: sendSuccessful.hash,
+          tx: sendSuccessful.tx,
+        }),
+      );
+    });
+
+    it("can search by recipient and filter by minHeight", async () => {
+      pendingWithoutSimapp();
+      assert(sendSuccessful);
+      const client = await StargateClient.connect(simapp.tendermintUrl);
+      const query = { sentFromOrTo: sendSuccessful.recipient };
+
+      {
+        const result = await client.searchTx(query, { minHeight: 0 });
+        expect(result.length).toEqual(1);
+      }
+
+      {
+        const result = await client.searchTx(query, { minHeight: sendSuccessful.height - 1 });
+        expect(result.length).toEqual(1);
+      }
+
+      {
+        const result = await client.searchTx(query, { minHeight: sendSuccessful.height });
+        expect(result.length).toEqual(1);
+      }
+
+      {
+        const result = await client.searchTx(query, { minHeight: sendSuccessful.height + 1 });
+        expect(result.length).toEqual(0);
+      }
+    });
+
+    it("can search by recipient and filter by maxHeight", async () => {
+      pendingWithoutSimapp();
+      assert(sendSuccessful);
+      const client = await StargateClient.connect(simapp.tendermintUrl);
+      const query = { sentFromOrTo: sendSuccessful.recipient };
+
+      {
+        const result = await client.searchTx(query, { maxHeight: 9999999999999 });
+        expect(result.length).toEqual(1);
+      }
+
+      {
+        const result = await client.searchTx(query, { maxHeight: sendSuccessful.height + 1 });
+        expect(result.length).toEqual(1);
+      }
+
+      {
+        const result = await client.searchTx(query, { maxHeight: sendSuccessful.height });
+        expect(result.length).toEqual(1);
+      }
+
+      {
+        const result = await client.searchTx(query, { maxHeight: sendSuccessful.height - 1 });
+        expect(result.length).toEqual(0);
+      }
+    });
+  });
+
+  describe("with SearchByTagsQuery", () => {
+    it("can search by transfer.recipient", async () => {
+      pendingWithoutSimapp();
+      assert(sendSuccessful, "value must be set in beforeAll()");
+      const client = await StargateClient.connect(simapp.tendermintUrl);
+      const results = await client.searchTx({
+        tags: [{ key: "transfer.recipient", value: sendSuccessful.recipient }],
+      });
+      expect(results.length).toBeGreaterThanOrEqual(1);
+
+      // Check basic structure of all results
+      for (const result of results) {
+        const tx = Tx.decode(result.tx);
+        const { type_url: typeUrl, value } = fromOneElementArray(tx.body!.messages!);
+        expect(typeUrl).toEqual("/cosmos.bank.v1beta1.MsgSend");
+        const decoded = registry.decode({ typeUrl: typeUrl!, value: value! });
+        expect(decoded.toAddress).toEqual(sendSuccessful.recipient);
+      }
+
+      // Check details of most recent result
+      expect(results[results.length - 1]).toEqual(
+        jasmine.objectContaining({
+          height: sendSuccessful.height,
+          hash: sendSuccessful.hash,
+          tx: sendSuccessful.tx,
         }),
       );
     });

@@ -32,6 +32,12 @@ export function makeRandomAddress(): string {
   return Bech32.encode("cosmos", makeRandomAddressBytes());
 }
 
+/** Returns first element. Throws if array has a different length than 1. */
+export function fromOneElementArray<T>(elements: ArrayLike<T>): T {
+  if (elements.length !== 1) throw new Error(`Expected exactly one element but got ${elements.length}`);
+  return elements[0];
+}
+
 export const simapp = {
   tendermintUrl: "localhost:26658",
   tendermintUrlWs: "ws://localhost:26658",
