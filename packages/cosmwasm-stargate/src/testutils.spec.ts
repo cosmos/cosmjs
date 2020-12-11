@@ -125,45 +125,38 @@ export const deployedHackatom = {
   ],
 };
 
-// /** Deployed as part of scripts/wasmd/init.sh */
-// export const deployedErc20 = {
-//   codeId: 2,
-//   source: "https://crates.io/api/v1/crates/cw-erc20/0.7.0/download",
-//   builder: "cosmwasm/rust-optimizer:0.10.4",
-//   checksum: "d04368320ad55089384adb171aaea39e43d710d7608829adba0300ed30aa2988",
-//   instances: [
-//     // TODO: Update this address
-//     "cosmos1vjecguu37pmd577339wrdp208ddzymkudc46zj", // HASH
-//     // TODO: Update this address
-//     "cosmos1ym5m5dw7pttft5w430nxx6uat8f84ck4algmhg", // ISA
-//     // TODO: Update this address
-//     "cosmos1gv07846a3867ezn3uqkk082c5ftke7hpllcu8q", // JADE
-//   ],
-// };
+/** Deployed as part of scripts/wasmd/init.sh */
+export const deployedErc20 = {
+  codeId: 2,
+  source: "https://crates.io/api/v1/crates/cw-erc20/0.7.0/download",
+  builder: "cosmwasm/rust-optimizer:0.10.4",
+  checksum: "d04368320ad55089384adb171aaea39e43d710d7608829adba0300ed30aa2988",
+  instances: [
+    "wasm1vjecguu37pmd577339wrdp208ddzymku8yy0te", // HASH
+    "wasm1ym5m5dw7pttft5w430nxx6uat8f84ck4hrew7r", // ISA
+    "wasm1gv07846a3867ezn3uqkk082c5ftke7hp4rffwt", // JADE
+  ],
+};
 
-// /** Deployed as part of scripts/wasmd/init.sh */
-// export const deployedCw3 = {
-//   codeId: 3,
-//   source: "https://crates.io/api/v1/crates/cw3-fixed-multisig/0.3.1/download",
-//   builder: "cosmwasm/rust-optimizer:0.10.4",
-//   instances: [
-//     // TODO: Update this address
-//     "cosmos1xqeym28j9xgv0p93pwwt6qcxf9tdvf9zddufdw", // Multisig (1/3)
-//     // TODO: Update this address
-//     "cosmos1jka38ckju8cpjap00jf9xdvdyttz9caujtd6t5", // Multisig (2/3)
-//     // TODO: Update this address
-//     "cosmos12dnl585uxzddjw9hw4ca694f054shgpgr4zg80", // Multisig (uneven weights)
-//   ],
-// };
+/** Deployed as part of scripts/wasmd/init.sh */
+export const deployedCw3 = {
+  codeId: 3,
+  source: "https://crates.io/api/v1/crates/cw3-fixed-multisig/0.3.1/download",
+  builder: "cosmwasm/rust-optimizer:0.10.4",
+  instances: [
+    "wasm1xqeym28j9xgv0p93pwwt6qcxf9tdvf9z83duy9", // Multisig (1/3)
+    "wasm1jka38ckju8cpjap00jf9xdvdyttz9cauchu0zl", // Multisig (2/3)
+    "wasm12dnl585uxzddjw9hw4ca694f054shgpgffnawy", // Multisig (uneven weights)
+  ],
+};
 
-// /** Deployed as part of scripts/wasmd/init.sh */
-// export const deployedCw1 = {
-//   codeId: 4,
-//   source: "https://crates.io/api/v1/crates/cw1-subkeys/0.3.1/download",
-//   builder: "cosmwasm/rust-optimizer:0.10.4",
-//   // TODO: Update this address
-//   instances: ["cosmos1vs2vuks65rq7xj78mwtvn7vvnm2gn7ad5me0d2"],
-// };
+/** Deployed as part of scripts/wasmd/init.sh */
+export const deployedCw1 = {
+  codeId: 4,
+  source: "https://crates.io/api/v1/crates/cw1-subkeys/0.3.1/download",
+  builder: "cosmwasm/rust-optimizer:0.10.4",
+  instances: ["wasm1vs2vuks65rq7xj78mwtvn7vvnm2gn7ad78g6yp"],
+};
 
 export function wasmdEnabled(): boolean {
   return !!process.env.WASMD_ENABLED;
@@ -175,35 +168,35 @@ export function pendingWithoutWasmd(): void {
   }
 }
 
-// export function erc20Enabled(): boolean {
-//   return !!process.env.ERC20_ENABLED;
-// }
+export function erc20Enabled(): boolean {
+  return !!process.env.ERC20_ENABLED;
+}
 
-// export function pendingWithoutErc20(): void {
-//   if (!erc20Enabled()) {
-//     return pending("Set ERC20_ENABLED to enable ERC20-based tests");
-//   }
-// }
+export function pendingWithoutErc20(): void {
+  if (!erc20Enabled()) {
+    return pending("Set ERC20_ENABLED to enable ERC20-based tests");
+  }
+}
 
-// export function cw3Enabled(): boolean {
-//   return !!process.env.CW3_ENABLED;
-// }
+export function cw3Enabled(): boolean {
+  return !!process.env.CW3_ENABLED;
+}
 
-// export function pendingWithoutCw3(): void {
-//   if (!cw3Enabled()) {
-//     return pending("Set CW3_ENABLED to enable CW3-based tests");
-//   }
-// }
+export function pendingWithoutCw3(): void {
+  if (!cw3Enabled()) {
+    return pending("Set CW3_ENABLED to enable CW3-based tests");
+  }
+}
 
-// export function cw1Enabled(): boolean {
-//   return !!process.env.CW1_ENABLED;
-// }
+export function cw1Enabled(): boolean {
+  return !!process.env.CW1_ENABLED;
+}
 
-// export function pendingWithoutCw1(): void {
-//   if (!cw1Enabled()) {
-//     return pending("Set CW1_ENABLED to enable CW1-based tests");
-//   }
-// }
+export function pendingWithoutCw1(): void {
+  if (!cw1Enabled()) {
+    return pending("Set CW1_ENABLED to enable CW1-based tests");
+  }
+}
 
 /** Returns first element. Throws if array has a different length than 1. */
 export function fromOneElementArray<T>(elements: ArrayLike<T>): T {
