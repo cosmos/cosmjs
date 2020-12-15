@@ -1,0 +1,42 @@
+{
+  "name": "@cosmjs/cosmwasm",
+  "version": "0.24.0-alpha.10",
+  "description": "CosmWasm SDK",
+  "contributors": [
+    "Ethan Frey <ethanfrey@users.noreply.github.com>",
+    "Will Clark <willclarktech@users.noreply.github.com>"
+  ],
+  "license": "Apache-2.0",
+  "main": "build/index.js",
+  "types": "types/index.d.ts",
+  "files": [
+    "build/",
+    "types/",
+    "*.md",
+    "!*.spec.*",
+    "!**/testdata/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CosmWasm/cosmjs/tree/master/packages/cosmwasm"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "docs": "typedoc --options typedoc.js",
+    "format": "prettier --write --loglevel warn \"./src/**/*.ts\"",
+    "format-text": "prettier --write --prose-wrap always --print-width 80 \"./*.md\"",
+    "lint": "eslint --max-warnings 0 \"**/*.{js,ts}\"",
+    "lint-fix": "eslint --max-warnings 0 \"**/*.{js,ts}\" --fix",
+    "move-types": "shx rm -rf ./types/* && shx mv build/types/* ./types",
+    "format-types": "prettier --write --loglevel warn \"./types/**/*.d.ts\"",
+    "prebuild": "shx rm -rf ./build",
+    "build": "tsc",
+    "postbuild": "yarn move-types && yarn format-types",
+    "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build"
+  },
+  "dependencies": {
+    "@cosmjs/cosmwasm-launchpad": "^0.24.0-alpha.10"
+  }
+}
