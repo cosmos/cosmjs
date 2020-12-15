@@ -44,7 +44,7 @@ interface TestTxExecute {
   readonly tx: WrappedStdTx;
 }
 
-describe("CosmWasmClient.searchTx", () => {
+describe("CosmWasmClient.getTx and .searchTx", () => {
   let sendSuccessful: TestTxSend | undefined;
   let sendSelfSuccessful: TestTxSend | undefined;
   let sendUnsuccessful: TestTxSend | undefined;
@@ -147,15 +147,14 @@ describe("CosmWasmClient.searchTx", () => {
     }
   });
 
-  describe("with SearchByIdQuery", () => {
-    it("can search successful tx by ID", async () => {
+  describe("getTx", () => {
+    it("can get successful tx by ID", async () => {
       pendingWithoutLaunchpad();
       pendingWithoutErc20();
       assert(sendSuccessful, "value must be set in beforeAll()");
       const client = new CosmWasmClient(launchpad.endpoint);
-      const result = await client.searchTx({ id: sendSuccessful.hash });
-      expect(result.length).toEqual(1);
-      expect(result[0]).toEqual(
+      const result = await client.getTx(sendSuccessful.hash);
+      expect(result).toEqual(
         jasmine.objectContaining({
           height: sendSuccessful.height,
           hash: sendSuccessful.hash,
@@ -165,14 +164,13 @@ describe("CosmWasmClient.searchTx", () => {
       );
     });
 
-    it("can search unsuccessful tx by ID", async () => {
+    it("can get unsuccessful tx by ID", async () => {
       pendingWithoutLaunchpad();
       pendingWithoutErc20();
       assert(sendUnsuccessful, "value must be set in beforeAll()");
       const client = new CosmWasmClient(launchpad.endpoint);
-      const result = await client.searchTx({ id: sendUnsuccessful.hash });
-      expect(result.length).toEqual(1);
-      expect(result[0]).toEqual(
+      const result = await client.getTx(sendUnsuccessful.hash);
+      expect(result).toEqual(
         jasmine.objectContaining({
           height: sendUnsuccessful.height,
           hash: sendUnsuccessful.hash,
@@ -182,41 +180,13 @@ describe("CosmWasmClient.searchTx", () => {
       );
     });
 
-    it("can search by ID (non existent)", async () => {
+    it("can get by ID (non existent)", async () => {
       pendingWithoutLaunchpad();
       pendingWithoutErc20();
       const client = new CosmWasmClient(launchpad.endpoint);
       const nonExistentId = "0000000000000000000000000000000000000000000000000000000000000000";
-      const result = await client.searchTx({ id: nonExistentId });
-      expect(result.length).toEqual(0);
-    });
-
-    it("can search by ID and filter by minHeight", async () => {
-      pendingWithoutLaunchpad();
-      pendingWithoutErc20();
-      assert(sendSuccessful);
-      const client = new CosmWasmClient(launchpad.endpoint);
-      const query = { id: sendSuccessful.hash };
-
-      {
-        const result = await client.searchTx(query, { minHeight: 0 });
-        expect(result.length).toEqual(1);
-      }
-
-      {
-        const result = await client.searchTx(query, { minHeight: sendSuccessful.height - 1 });
-        expect(result.length).toEqual(1);
-      }
-
-      {
-        const result = await client.searchTx(query, { minHeight: sendSuccessful.height });
-        expect(result.length).toEqual(1);
-      }
-
-      {
-        const result = await client.searchTx(query, { minHeight: sendSuccessful.height + 1 });
-        expect(result.length).toEqual(0);
-      }
+      const result = await client.getTx(nonExistentId);
+      expect(result).toBeNull();
     });
   });
 

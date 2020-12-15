@@ -42,11 +42,7 @@ export interface SearchByTagsQuery {
     readonly value: string;
   }>;
 }
-export declare type SearchTxQuery =
-  | SearchByIdQuery
-  | SearchByHeightQuery
-  | SearchBySentFromOrToQuery
-  | SearchByTagsQuery;
+export declare type SearchTxQuery = SearchByHeightQuery | SearchBySentFromOrToQuery | SearchByTagsQuery;
 export interface SearchTxFilter {
   readonly minHeight?: number;
   readonly maxHeight?: number;
@@ -148,6 +144,7 @@ export declare class CosmWasmClient {
    * @param height The height of the block. If undefined, the latest height is used.
    */
   getBlock(height?: number): Promise<Block>;
+  getTx(id: string): Promise<IndexedTx | null>;
   searchTx(query: SearchTxQuery, filter?: SearchTxFilter): Promise<readonly IndexedTx[]>;
   broadcastTx(tx: StdTx): Promise<BroadcastTxResult>;
   getCodes(): Promise<readonly Code[]>;
