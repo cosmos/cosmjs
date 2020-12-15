@@ -68,6 +68,7 @@ export declare class Base64 {
 }
 export declare class DateTime {
   static decode(dateTimeString: DateTimeString): ReadonlyDateWithNanoseconds;
+  static encode(dateTime: ReadonlyDateWithNanoseconds): DateTimeString;
 }
 export declare class Hex {
   static encode(data: Uint8Array): HexString;

@@ -179,6 +179,12 @@ export class DateTime {
     (readonlyDate as any).nanoseconds = parseInt(nanoseconds.padEnd(6, "0"), 10);
     return readonlyDate as ReadonlyDateWithNanoseconds;
   }
+
+  public static encode(dateTime: ReadonlyDateWithNanoseconds): DateTimeString {
+    const millisecondIso = dateTime.toISOString();
+    const nanoseconds = dateTime.nanoseconds?.toString() ?? "";
+    return `${millisecondIso.slice(0, -1)}${nanoseconds.padStart(6, "0")}Z` as DateTimeString;
+  }
 }
 
 export class Hex {
