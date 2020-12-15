@@ -20,6 +20,7 @@ export {
   coinFromProto,
   IndexedTx,
   isBroadcastTxFailure,
+  isBroadcastTxSuccess,
   SequenceResponse,
   StargateClient,
 } from "./stargateclient";

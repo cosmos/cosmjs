@@ -136,6 +136,10 @@ export class CosmWasmClient {
 
     if (maxHeight < minHeight) return []; // optional optimization
 
+    function withFilters(originalQuery: string): string {
+      return `${originalQuery} AND tx.height>=${minHeight} AND tx.height<=${maxHeight}`;
+    }
+
     let txs: readonly IndexedTx[];
 
     if (isSearchByHeightQuery(query)) {
@@ -144,13 +148,18 @@ export class CosmWasmClient {
           ? await this.txsQuery(`tx.height=${query.height}`)
           : [];
     } else if (isSearchBySentFromOrToQuery(query)) {
-      throw new Error(
-        "This type of search query is not yet implemented. See https://github.com/cosmos/cosmjs/issues/533.",
+      const sentQuery = withFilters(`message.module='bank' AND transfer.sender='${query.sentFromOrTo}'`);
+      const receivedQuery = withFilters(
+        `message.module='bank' AND transfer.recipient='${query.sentFromOrTo}'`,
       );
+      const [sent, received] = await Promise.all(
+        [sentQuery, receivedQuery].map((rawQuery) => this.txsQuery(rawQuery)),
+      );
+      const sentHashes = sent.map((t) => t.hash);
+      txs = [...sent, ...received.filter((t) => !sentHashes.includes(t.hash))];
     } else if (isSearchByTagsQuery(query)) {
-      throw new Error(
-        "This type of search query is not yet implemented. See https://github.com/cosmos/cosmjs/issues/532.",
-      );
+      const rawQuery = withFilters(query.tags.map((t) => `${t.key}='${t.value}'`).join(" AND "));
+      txs = await this.txsQuery(rawQuery);
     } else {
       throw new Error("Unknown query type");
     }
