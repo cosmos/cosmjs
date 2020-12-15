@@ -37,7 +37,7 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
 
   const imports = new Map<string, readonly string[]>([
     [
-      "@cosmjs/cosmwasm",
+      "@cosmjs/cosmwasm-launchpad",
       [
         // cosmwasmclient
         "Account",

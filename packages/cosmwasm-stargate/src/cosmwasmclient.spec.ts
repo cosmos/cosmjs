@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Code } from "@cosmjs/cosmwasm";
+import { Code } from "@cosmjs/cosmwasm-launchpad";
 import { sha256 } from "@cosmjs/crypto";
 import { Bech32, fromAscii, fromBase64, fromHex, toAscii, toBase64 } from "@cosmjs/encoding";
 import { coins, logs, StdFee } from "@cosmjs/launchpad";

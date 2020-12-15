@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /* eslint-disable @typescript-eslint/naming-convention */
-const { SigningCosmWasmClient } = require("@cosmjs/cosmwasm");
+const { SigningCosmWasmClient } = require("@cosmjs/cosmwasm-launchpad");
 const { Secp256k1HdWallet } = require("@cosmjs/launchpad");
 const fs = require("fs");
 

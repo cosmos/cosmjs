@@ -1,5 +1,11 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Code, CodeDetails, Contract, ContractCodeHistoryEntry, JsonObject } from "@cosmjs/cosmwasm";
+import {
+  Code,
+  CodeDetails,
+  Contract,
+  ContractCodeHistoryEntry,
+  JsonObject,
+} from "@cosmjs/cosmwasm-launchpad";
 import { fromAscii, toHex } from "@cosmjs/encoding";
 import {
   Block,

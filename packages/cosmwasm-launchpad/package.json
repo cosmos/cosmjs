@@ -1,8 +1,9 @@
 {
-  "name": "@cosmjs/cosmwasm-stargate",
+  "name": "@cosmjs/cosmwasm-launchpad",
   "version": "0.24.0-alpha.10",
-  "description": "CosmWasm SDK",
+  "description": "CosmWasm SDK for Launchpad",
   "contributors": [
+    "Ethan Frey <ethanfrey@users.noreply.github.com>",
     "Will Clark <willclarktech@users.noreply.github.com>"
   ],
   "license": "Apache-2.0",
@@ -17,49 +18,37 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/CosmWasm/cosmjs/tree/master/packages/cosmwasm-stargate"
+    "url": "https://github.com/CosmWasm/cosmjs/tree/master/packages/cosmwasm-launchpad"
   },
   "publishConfig": {
     "access": "public"
   },
-  "private": true,
   "scripts": {
     "docs": "typedoc --options typedoc.js",
     "format": "prettier --write --loglevel warn \"./src/**/*.ts\"",
     "format-text": "prettier --write --prose-wrap always --print-width 80 \"./*.md\"",
     "lint": "eslint --max-warnings 0 \"**/*.{js,ts}\"",
     "lint-fix": "eslint --max-warnings 0 \"**/*.{js,ts}\" --fix",
-    "move-types": "shx rm -rf ./types/* && shx mv build/types/* ./types && rm -rf ./types/testdata ./types/*.spec.d.ts ./types/*/*.spec.d.ts",
+    "move-types": "shx rm -rf ./types/* && shx mv build/types/* ./types && shx rm -rf ./types/testdata ./types/*.spec.d.ts ./types/*/*.spec.d.ts",
     "format-types": "prettier --write --loglevel warn \"./types/**/*.d.ts\"",
     "prebuild": "shx rm -rf ./build",
-    "build": "tsc && shx mkdir -p build/codec/generated && shx cp ./src/codec/generated/*.js ./build/codec/generated",
-    "postbuild": "shx mkdir -p ./build/types/codec/generated && shx cp ./src/codec/generated/*.d.ts ./build/types/codec/generated && yarn move-types && yarn format-types",
+    "build": "tsc",
+    "postbuild": "yarn move-types && yarn format-types",
     "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build",
     "test-node": "node jasmine-testrunner.js",
     "test-firefox": "yarn pack-web && karma start --single-run --browsers Firefox",
     "test-chrome": "yarn pack-web && karma start --single-run --browsers ChromeHeadless",
     "test": "yarn build-or-skip && yarn test-node",
     "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet",
-    "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js",
-    "preget-proto": "shx rm -rf proto",
-    "get-proto": "WASM_REF=v0.13.0 COSMOS_REF=v0.40.0-rc3 ./scripts/get-proto.sh",
-    "predefine-proto": "./scripts/predefine-proto.sh",
-    "define-proto": "./scripts/define-proto.sh",
-    "postdefine-proto": "prettier --write \"src/codec/generated/codecimpl.*\""
+    "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
   },
   "dependencies": {
-    "@cosmjs/cosmwasm-launchpad": "^0.24.0-alpha.10",
     "@cosmjs/crypto": "^0.24.0-alpha.10",
     "@cosmjs/encoding": "^0.24.0-alpha.10",
     "@cosmjs/launchpad": "^0.24.0-alpha.10",
     "@cosmjs/math": "^0.24.0-alpha.10",
-    "@cosmjs/proto-signing": "^0.24.0-alpha.10",
-    "@cosmjs/stargate": "^0.24.0-alpha.10",
-    "@cosmjs/tendermint-rpc": "^0.24.0-alpha.10",
     "@cosmjs/utils": "^0.24.0-alpha.10",
-    "long": "^4.0.0",
-    "pako": "^2.0.2",
-    "protobufjs": "~6.10.2"
+    "pako": "^2.0.2"
   },
   "devDependencies": {
     "@types/pako": "^1.0.1",

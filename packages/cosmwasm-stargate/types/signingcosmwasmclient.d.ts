@@ -7,7 +7,7 @@ import {
   MigrateResult,
   UploadMeta,
   UploadResult,
-} from "@cosmjs/cosmwasm";
+} from "@cosmjs/cosmwasm-launchpad";
 import { Coin, CosmosFeeTable, GasLimits, GasPrice, StdFee } from "@cosmjs/launchpad";
 import { EncodeObject, OfflineSigner, Registry } from "@cosmjs/proto-signing";
 import { BroadcastTxResponse } from "@cosmjs/stargate";

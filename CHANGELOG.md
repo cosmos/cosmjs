@@ -2,6 +2,8 @@
 
 ## 0.24.0 (unreleased)
 
+- @cosmjs/cosmwasm: This package is now deprecated. The same functionality is
+  now available in @cosmjs/cosmwasm-launchpad.
 - @cosmjs/cosmwasm: `logs` is no longer exported. Use `logs` from
   @cosmjs/launchpad instead.
 - @cosmjs/cosmwasm: Export `JsonObject`, `ChangeAdminResult` and `WasmData`

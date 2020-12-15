@@ -1,4 +1,10 @@
-import { Code, CodeDetails, Contract, ContractCodeHistoryEntry, JsonObject } from "@cosmjs/cosmwasm";
+import {
+  Code,
+  CodeDetails,
+  Contract,
+  ContractCodeHistoryEntry,
+  JsonObject,
+} from "@cosmjs/cosmwasm-launchpad";
 import { Block, Coin, SearchTxFilter, SearchTxQuery } from "@cosmjs/launchpad";
 import {
   Account,
