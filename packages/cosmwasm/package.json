@@ -45,7 +45,7 @@
     "@cosmjs/launchpad": "^0.24.0-alpha.10",
     "@cosmjs/math": "^0.24.0-alpha.10",
     "@cosmjs/utils": "^0.24.0-alpha.10",
-    "pako": "^1.0.11"
+    "pako": "^2.0.2"
   },
   "devDependencies": {
     "@types/pako": "^1.0.1",
