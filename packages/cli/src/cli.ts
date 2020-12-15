@@ -50,7 +50,6 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
         "CosmWasmClient",
         "GetSequenceResult",
         "SearchByHeightQuery",
-        "SearchByIdQuery",
         "SearchBySentFromOrToQuery",
         "SearchByTagsQuery",
         "SearchTxQuery",
