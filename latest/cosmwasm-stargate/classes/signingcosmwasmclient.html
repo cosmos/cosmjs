@@ -1,0 +1,1060 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>SigningCosmWasmClient | @cosmjs/cosmwasm-stargate Documentation</title>
+	<meta name="description" content="Documentation for @cosmjs/cosmwasm-stargate Documentation">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">@cosmjs/cosmwasm-stargate Documentation</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../globals.html">Globals</a>
+				</li>
+				<li>
+					<a href="signingcosmwasmclient.html">SigningCosmWasmClient</a>
+				</li>
+			</ul>
+			<h1>Class SigningCosmWasmClient</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<a href="cosmwasmclient.html" class="tsd-signature-type">CosmWasmClient</a>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">SigningCosmWasmClient</span>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="signingcosmwasmclient.html#broadcasttx" class="tsd-kind-icon">broadcast<wbr>Tx</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="signingcosmwasmclient.html#clearadmin" class="tsd-kind-icon">clear<wbr>Admin</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="signingcosmwasmclient.html#disconnect" class="tsd-kind-icon">disconnect</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="signingcosmwasmclient.html#execute" class="tsd-kind-icon">execute</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="signingcosmwasmclient.html#getaccount" class="tsd-kind-icon">get<wbr>Account</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="signingcosmwasmclient.html#getbalance" class="tsd-kind-icon">get<wbr>Balance</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="signingcosmwasmclient.html#getblock" class="tsd-kind-icon">get<wbr>Block</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="signingcosmwasmclient.html#getchainid" class="tsd-kind-icon">get<wbr>Chain<wbr>Id</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="signingcosmwasmclient.html#getcodedetails" class="tsd-kind-icon">get<wbr>Code<wbr>Details</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="signingcosmwasmclient.html#getcodes" class="tsd-kind-icon">get<wbr>Codes</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="signingcosmwasmclient.html#getcontract" class="tsd-kind-icon">get<wbr>Contract</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="signingcosmwasmclient.html#getcontractcodehistory" class="tsd-kind-icon">get<wbr>Contract<wbr>Code<wbr>History</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="signingcosmwasmclient.html#getcontracts" class="tsd-kind-icon">get<wbr>Contracts</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="signingcosmwasmclient.html#getheight" class="tsd-kind-icon">get<wbr>Height</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="signingcosmwasmclient.html#getsequence" class="tsd-kind-icon">get<wbr>Sequence</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="signingcosmwasmclient.html#instantiate" class="tsd-kind-icon">instantiate</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="signingcosmwasmclient.html#migrate" class="tsd-kind-icon">migrate</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="signingcosmwasmclient.html#querycontractraw" class="tsd-kind-icon">query<wbr>Contract<wbr>Raw</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="signingcosmwasmclient.html#querycontractsmart" class="tsd-kind-icon">query<wbr>Contract<wbr>Smart</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="signingcosmwasmclient.html#searchtx" class="tsd-kind-icon">search<wbr>Tx</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="signingcosmwasmclient.html#sendtokens" class="tsd-kind-icon">send<wbr>Tokens</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="signingcosmwasmclient.html#signandbroadcast" class="tsd-kind-icon">sign<wbr>And<wbr>Broadcast</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="signingcosmwasmclient.html#updateadmin" class="tsd-kind-icon">update<wbr>Admin</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="signingcosmwasmclient.html#upload" class="tsd-kind-icon">upload</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static"><a href="signingcosmwasmclient.html#connect" class="tsd-kind-icon">connect</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="signingcosmwasmclient.html#connectwithwallet" class="tsd-kind-icon">connect<wbr>With<wbr>Wallet</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="broadcasttx" class="tsd-anchor"></a>
+					<h3>broadcast<wbr>Tx</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">broadcast<wbr>Tx<span class="tsd-signature-symbol">(</span>tx<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">BroadcastTxResponse</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="cosmwasmclient.html">CosmWasmClient</a>.<a href="cosmwasmclient.html#broadcasttx">broadcastTx</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cd3b99bda/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L164">src/cosmwasmclient.ts:164</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>tx: <span class="tsd-signature-type">Uint8Array</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">BroadcastTxResponse</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="clearadmin" class="tsd-anchor"></a>
+					<h3>clear<wbr>Admin</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">clear<wbr>Admin<span class="tsd-signature-symbol">(</span>senderAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, contractAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, memo<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ChangeAdminResult</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cd3b99bda/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L231">src/signingcosmwasmclient.ts:231</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>senderAddress: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>contractAddress: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> memo: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;&quot;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ChangeAdminResult</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="disconnect" class="tsd-anchor"></a>
+					<h3>disconnect</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">disconnect<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="cosmwasmclient.html">CosmWasmClient</a>.<a href="cosmwasmclient.html#disconnect">disconnect</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cd3b99bda/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L160">src/cosmwasmclient.ts:160</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="execute" class="tsd-anchor"></a>
+					<h3>execute</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">execute<span class="tsd-signature-symbol">(</span>senderAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, contractAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, handleMsg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span>, memo<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, transferAmount<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-symbol">readonly </span><span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ExecuteResult</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cd3b99bda/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L279">src/signingcosmwasmclient.ts:279</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>senderAddress: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>contractAddress: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>handleMsg: <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> memo: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;&quot;</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> transferAmount: <span class="tsd-signature-symbol">readonly </span><span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ExecuteResult</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="getaccount" class="tsd-anchor"></a>
+					<h3>get<wbr>Account</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Account<span class="tsd-signature-symbol">(</span>searchAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Account</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="cosmwasmclient.html">CosmWasmClient</a>.<a href="cosmwasmclient.html#getaccount">getAccount</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cd3b99bda/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L90">src/cosmwasmclient.ts:90</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>searchAddress: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Account</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="getbalance" class="tsd-anchor"></a>
+					<h3>get<wbr>Balance</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Balance<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, searchDenom<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="cosmwasmclient.html">CosmWasmClient</a>.<a href="cosmwasmclient.html#getbalance">getBalance</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cd3b99bda/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L124">src/cosmwasmclient.ts:124</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>address: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>searchDenom: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="getblock" class="tsd-anchor"></a>
+					<h3>get<wbr>Block</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Block<span class="tsd-signature-symbol">(</span>height<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Block</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="cosmwasmclient.html">CosmWasmClient</a>.<a href="cosmwasmclient.html#getblock">getBlock</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cd3b99bda/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L107">src/cosmwasmclient.ts:107</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> height: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Block</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="getchainid" class="tsd-anchor"></a>
+					<h3>get<wbr>Chain<wbr>Id</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Chain<wbr>Id<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="cosmwasmclient.html">CosmWasmClient</a>.<a href="cosmwasmclient.html#getchainid">getChainId</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cd3b99bda/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L74">src/cosmwasmclient.ts:74</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="getcodedetails" class="tsd-anchor"></a>
+					<h3>get<wbr>Code<wbr>Details</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Code<wbr>Details<span class="tsd-signature-symbol">(</span>codeId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">CodeDetails</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="cosmwasmclient.html">CosmWasmClient</a>.<a href="cosmwasmclient.html#getcodedetails">getCodeDetails</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cd3b99bda/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L207">src/cosmwasmclient.ts:207</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>codeId: <span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">CodeDetails</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="getcodes" class="tsd-anchor"></a>
+					<h3>get<wbr>Codes</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Codes<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">readonly </span><span class="tsd-signature-type">Code</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="cosmwasmclient.html">CosmWasmClient</a>.<a href="cosmwasmclient.html#getcodes">getCodes</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cd3b99bda/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L191">src/cosmwasmclient.ts:191</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">readonly </span><span class="tsd-signature-type">Code</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="getcontract" class="tsd-anchor"></a>
+					<h3>get<wbr>Contract</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Contract<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Contract</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="cosmwasmclient.html">CosmWasmClient</a>.<a href="cosmwasmclient.html#getcontract">getContract</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cd3b99bda/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L251">src/cosmwasmclient.ts:251</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Throws an error if no contract was found at the address</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>address: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Contract</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="getcontractcodehistory" class="tsd-anchor"></a>
+					<h3>get<wbr>Contract<wbr>Code<wbr>History</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Contract<wbr>Code<wbr>History<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">readonly </span><span class="tsd-signature-type">ContractCodeHistoryEntry</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="cosmwasmclient.html">CosmWasmClient</a>.<a href="cosmwasmclient.html#getcontractcodehistory">getContractCodeHistory</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cd3b99bda/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L271">src/cosmwasmclient.ts:271</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Throws an error if no contract was found at the address</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>address: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">readonly </span><span class="tsd-signature-type">ContractCodeHistoryEntry</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="getcontracts" class="tsd-anchor"></a>
+					<h3>get<wbr>Contracts</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Contracts<span class="tsd-signature-symbol">(</span>codeId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">readonly </span><span class="tsd-signature-type">Contract</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="cosmwasmclient.html">CosmWasmClient</a>.<a href="cosmwasmclient.html#getcontracts">getContracts</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cd3b99bda/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L228">src/cosmwasmclient.ts:228</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>codeId: <span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">readonly </span><span class="tsd-signature-type">Contract</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="getheight" class="tsd-anchor"></a>
+					<h3>get<wbr>Height</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Height<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="cosmwasmclient.html">CosmWasmClient</a>.<a href="cosmwasmclient.html#getheight">getHeight</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cd3b99bda/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L85">src/cosmwasmclient.ts:85</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="getsequence" class="tsd-anchor"></a>
+					<h3>get<wbr>Sequence</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Sequence<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">SequenceResponse</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="cosmwasmclient.html">CosmWasmClient</a>.<a href="cosmwasmclient.html#getsequence">getSequence</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cd3b99bda/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L95">src/cosmwasmclient.ts:95</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>address: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">SequenceResponse</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="instantiate" class="tsd-anchor"></a>
+					<h3>instantiate</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">instantiate<span class="tsd-signature-symbol">(</span>senderAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, codeId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, initMsg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span>, label<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, options<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">InstantiateOptions</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">InstantiateResult</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cd3b99bda/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L176">src/signingcosmwasmclient.ts:176</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>senderAddress: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>codeId: <span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li>
+									<h5>initMsg: <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>label: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> options: <span class="tsd-signature-type">InstantiateOptions</span><span class="tsd-signature-symbol"> = {}</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">InstantiateResult</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="migrate" class="tsd-anchor"></a>
+					<h3>migrate</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">migrate<span class="tsd-signature-symbol">(</span>senderAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, contractAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, codeId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, migrateMsg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span>, memo<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">MigrateResult</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cd3b99bda/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L253">src/signingcosmwasmclient.ts:253</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>senderAddress: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>contractAddress: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>codeId: <span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li>
+									<h5>migrateMsg: <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> memo: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;&quot;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">MigrateResult</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="querycontractraw" class="tsd-anchor"></a>
+					<h3>query<wbr>Contract<wbr>Raw</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">query<wbr>Contract<wbr>Raw<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="cosmwasmclient.html">CosmWasmClient</a>.<a href="cosmwasmclient.html#querycontractraw">queryContractRaw</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cd3b99bda/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L297">src/cosmwasmclient.ts:297</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns the data at the key if present (raw contract dependent storage data)
+									or null if no data at this key.</p>
+								</div>
+								<p>Promise is rejected when contract does not exist.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>address: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>key: <span class="tsd-signature-type">Uint8Array</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="querycontractsmart" class="tsd-anchor"></a>
+					<h3>query<wbr>Contract<wbr>Smart</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">query<wbr>Contract<wbr>Smart<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, queryMsg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">JsonObject</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="cosmwasmclient.html">CosmWasmClient</a>.<a href="cosmwasmclient.html#querycontractsmart">queryContractSmart</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cd3b99bda/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L312">src/cosmwasmclient.ts:312</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Makes a smart query on the contract, returns the parsed JSON document.</p>
+								</div>
+								<p>Promise is rejected when contract does not exist.
+									Promise is rejected for invalid query format.
+								Promise is rejected for invalid response format.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>address: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>queryMsg: <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">JsonObject</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="searchtx" class="tsd-anchor"></a>
+					<h3>search<wbr>Tx</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">search<wbr>Tx<span class="tsd-signature-symbol">(</span>query<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">SearchTxQuery</span>, filter<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">SearchTxFilter</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">readonly </span><span class="tsd-signature-type">IndexedTx</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="cosmwasmclient.html">CosmWasmClient</a>.<a href="cosmwasmclient.html#searchtx">searchTx</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cd3b99bda/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L129">src/cosmwasmclient.ts:129</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>query: <span class="tsd-signature-type">SearchTxQuery</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> filter: <span class="tsd-signature-type">SearchTxFilter</span><span class="tsd-signature-symbol"> = {}</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">readonly </span><span class="tsd-signature-type">IndexedTx</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="sendtokens" class="tsd-anchor"></a>
+					<h3>send<wbr>Tokens</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">send<wbr>Tokens<span class="tsd-signature-symbol">(</span>senderAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, recipientAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, transferAmount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">readonly </span><span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span>, memo<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">BroadcastTxResponse</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cd3b99bda/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L305">src/signingcosmwasmclient.ts:305</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>senderAddress: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>recipientAddress: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>transferAmount: <span class="tsd-signature-symbol">readonly </span><span class="tsd-signature-type">Coin</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> memo: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;&quot;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">BroadcastTxResponse</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="signandbroadcast" class="tsd-anchor"></a>
+					<h3>sign<wbr>And<wbr>Broadcast</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">sign<wbr>And<wbr>Broadcast<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, messages<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">readonly </span><span class="tsd-signature-type">EncodeObject</span><span class="tsd-signature-symbol">[]</span>, fee<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">StdFee</span>, memo<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">BroadcastTxResponse</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cd3b99bda/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L322">src/signingcosmwasmclient.ts:322</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>address: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>messages: <span class="tsd-signature-symbol">readonly </span><span class="tsd-signature-type">EncodeObject</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+								<li>
+									<h5>fee: <span class="tsd-signature-type">StdFee</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> memo: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;&quot;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">BroadcastTxResponse</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="updateadmin" class="tsd-anchor"></a>
+					<h3>update<wbr>Admin</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">update<wbr>Admin<span class="tsd-signature-symbol">(</span>senderAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, contractAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, newAdmin<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, memo<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ChangeAdminResult</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cd3b99bda/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L207">src/signingcosmwasmclient.ts:207</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>senderAddress: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>contractAddress: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>newAdmin: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> memo: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;&quot;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ChangeAdminResult</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="upload" class="tsd-anchor"></a>
+					<h3>upload</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">upload<span class="tsd-signature-symbol">(</span>senderAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, wasmCode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span>, meta<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">UploadMeta</span>, memo<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">UploadResult</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cd3b99bda/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L140">src/signingcosmwasmclient.ts:140</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Uploads code and returns a receipt, including the code ID</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>senderAddress: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>wasmCode: <span class="tsd-signature-type">Uint8Array</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> meta: <span class="tsd-signature-type">UploadMeta</span><span class="tsd-signature-symbol"> = {}</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> memo: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;&quot;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">UploadResult</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static">
+					<a name="connect" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> connect</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">connect<span class="tsd-signature-symbol">(</span>endpoint<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="cosmwasmclient.html" class="tsd-signature-type">CosmWasmClient</a><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="cosmwasmclient.html">CosmWasmClient</a>.<a href="cosmwasmclient.html#connect">connect</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cd3b99bda/packages/cosmwasm-stargate/src/cosmwasmclient.ts#L59">src/cosmwasmclient.ts:59</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>endpoint: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="cosmwasmclient.html" class="tsd-signature-type">CosmWasmClient</a><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="connectwithwallet" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> connect<wbr>With<wbr>Wallet</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">connect<wbr>With<wbr>Wallet<span class="tsd-signature-symbol">(</span>endpoint<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, signer<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">OfflineSigner</span>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/signingcosmwasmclientoptions.html" class="tsd-signature-type">SigningCosmWasmClientOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="signingcosmwasmclient.html" class="tsd-signature-type">SigningCosmWasmClient</a><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/cd3b99bda/packages/cosmwasm-stargate/src/signingcosmwasmclient.ts#L114">src/signingcosmwasmclient.ts:114</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>endpoint: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>signer: <span class="tsd-signature-type">OfflineSigner</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> options: <a href="../interfaces/signingcosmwasmclientoptions.html" class="tsd-signature-type">SigningCosmWasmClientOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="signingcosmwasmclient.html" class="tsd-signature-type">SigningCosmWasmClient</a><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="../globals.html"><em>Globals</em></a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-class">
+						<a href="cosmwasmclient.html" class="tsd-kind-icon">Cosm<wbr>Wasm<wbr>Client</a>
+					</li>
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class">
+						<a href="signingcosmwasmclient.html" class="tsd-kind-icon">Signing<wbr>Cosm<wbr>Wasm<wbr>Client</a>
+						<ul>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="signingcosmwasmclient.html#broadcasttx" class="tsd-kind-icon">broadcast<wbr>Tx</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="signingcosmwasmclient.html#clearadmin" class="tsd-kind-icon">clear<wbr>Admin</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="signingcosmwasmclient.html#disconnect" class="tsd-kind-icon">disconnect</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="signingcosmwasmclient.html#execute" class="tsd-kind-icon">execute</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="signingcosmwasmclient.html#getaccount" class="tsd-kind-icon">get<wbr>Account</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="signingcosmwasmclient.html#getbalance" class="tsd-kind-icon">get<wbr>Balance</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="signingcosmwasmclient.html#getblock" class="tsd-kind-icon">get<wbr>Block</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="signingcosmwasmclient.html#getchainid" class="tsd-kind-icon">get<wbr>Chain<wbr>Id</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="signingcosmwasmclient.html#getcodedetails" class="tsd-kind-icon">get<wbr>Code<wbr>Details</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="signingcosmwasmclient.html#getcodes" class="tsd-kind-icon">get<wbr>Codes</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="signingcosmwasmclient.html#getcontract" class="tsd-kind-icon">get<wbr>Contract</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="signingcosmwasmclient.html#getcontractcodehistory" class="tsd-kind-icon">get<wbr>Contract<wbr>Code<wbr>History</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="signingcosmwasmclient.html#getcontracts" class="tsd-kind-icon">get<wbr>Contracts</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="signingcosmwasmclient.html#getheight" class="tsd-kind-icon">get<wbr>Height</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="signingcosmwasmclient.html#getsequence" class="tsd-kind-icon">get<wbr>Sequence</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="signingcosmwasmclient.html#instantiate" class="tsd-kind-icon">instantiate</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="signingcosmwasmclient.html#migrate" class="tsd-kind-icon">migrate</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="signingcosmwasmclient.html#querycontractraw" class="tsd-kind-icon">query<wbr>Contract<wbr>Raw</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="signingcosmwasmclient.html#querycontractsmart" class="tsd-kind-icon">query<wbr>Contract<wbr>Smart</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="signingcosmwasmclient.html#searchtx" class="tsd-kind-icon">search<wbr>Tx</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="signingcosmwasmclient.html#sendtokens" class="tsd-kind-icon">send<wbr>Tokens</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="signingcosmwasmclient.html#signandbroadcast" class="tsd-kind-icon">sign<wbr>And<wbr>Broadcast</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="signingcosmwasmclient.html#updateadmin" class="tsd-kind-icon">update<wbr>Admin</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="signingcosmwasmclient.html#upload" class="tsd-kind-icon">upload</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static">
+								<a href="signingcosmwasmclient.html#connect" class="tsd-kind-icon">connect</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="signingcosmwasmclient.html#connectwithwallet" class="tsd-kind-icon">connect<wbr>With<wbr>Wallet</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/privatecosmwasmclient.html" class="tsd-kind-icon">Private<wbr>Cosm<wbr>Wasm<wbr>Client</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/privatesigningcosmwasmclient.html" class="tsd-kind-icon">Private<wbr>Signing<wbr>Cosm<wbr>Wasm<wbr>Client</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/signingcosmwasmclientoptions.html" class="tsd-kind-icon">Signing<wbr>Cosm<wbr>Wasm<wbr>Client<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/wasmextension.html" class="tsd-kind-icon">Wasm<wbr>Extension</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../globals.html#contractcodehistoryoperationtype" class="tsd-kind-icon">Contract<wbr>Code<wbr>History<wbr>Operation<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../globals.html#icodeinforesponse" class="tsd-kind-icon">ICode<wbr>Info<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../globals.html#iqueryallcontractstateresponse" class="tsd-kind-icon">IQuery<wbr>All<wbr>Contract<wbr>State<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../globals.html#iquerycoderesponse" class="tsd-kind-icon">IQuery<wbr>Code<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../globals.html#iquerycodesresponse" class="tsd-kind-icon">IQuery<wbr>Codes<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../globals.html#iquerycontracthistoryresponse" class="tsd-kind-icon">IQuery<wbr>Contract<wbr>History<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../globals.html#iquerycontractinforesponse" class="tsd-kind-icon">IQuery<wbr>Contract<wbr>Info<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../globals.html#iquerycontractsbycoderesponse" class="tsd-kind-icon">IQuery<wbr>Contracts<wbr>ByCode<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../globals.html#iqueryrawcontractstateresponse" class="tsd-kind-icon">IQuery<wbr>Raw<wbr>Contract<wbr>State<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../globals.html#iquerysmartcontractstateresponse" class="tsd-kind-icon">IQuery<wbr>Smart<wbr>Contract<wbr>State<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="../globals.html#contractcodehistoryoperationtype" class="tsd-kind-icon">Contract<wbr>Code<wbr>History<wbr>Operation<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="../globals.html#msgclearadmin" class="tsd-kind-icon">Msg<wbr>Clear<wbr>Admin</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="../globals.html#msgexecutecontract" class="tsd-kind-icon">Msg<wbr>Execute<wbr>Contract</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="../globals.html#msginstantiatecontract" class="tsd-kind-icon">Msg<wbr>Instantiate<wbr>Contract</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="../globals.html#msgmigratecontract" class="tsd-kind-icon">Msg<wbr>Migrate<wbr>Contract</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="../globals.html#msgstorecode" class="tsd-kind-icon">Msg<wbr>Store<wbr>Code</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="../globals.html#msgupdateadmin" class="tsd-kind-icon">Msg<wbr>Update<wbr>Admin</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="../globals.html#query" class="tsd-kind-icon">Query</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="../globals.html#signmode" class="tsd-kind-icon">Sign<wbr>Mode</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="../globals.html#txmsgdata" class="tsd-kind-icon">Tx<wbr>Msg<wbr>Data</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="../globals.html#txraw" class="tsd-kind-icon">Tx<wbr>Raw</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="../globals.html#defaultgasprice" class="tsd-kind-icon">default<wbr>Gas<wbr>Price</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#createbroadcasttxerrormessage" class="tsd-kind-icon">create<wbr>Broadcast<wbr>TxError<wbr>Message</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#createdefaultregistry" class="tsd-kind-icon">create<wbr>Default<wbr>Registry</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#preparebuilder" class="tsd-kind-icon">prepare<wbr>Builder</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#setupwasmextension" class="tsd-kind-icon">setup<wbr>Wasm<wbr>Extension</a>
+					</li>
+					<li class=" tsd-kind-object-literal">
+						<a href="../globals.html#defaultgaslimits" class="tsd-kind-icon">default<wbr>Gas<wbr>Limits</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
