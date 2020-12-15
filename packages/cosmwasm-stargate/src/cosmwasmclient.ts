@@ -30,6 +30,7 @@ import {
   adaptor34,
   broadcastTxCommitSuccess,
   Client as TendermintClient,
+  DateTime,
   QueryString,
 } from "@cosmjs/tendermint-rpc";
 import { assert } from "@cosmjs/utils";
@@ -114,7 +115,7 @@ export class CosmWasmClient {
         },
         height: response.block.header.height,
         chainId: response.block.header.chainId,
-        time: response.block.header.time.toISOString(),
+        time: DateTime.encode(response.block.header.time),
       },
       txs: response.block.txs,
     };
