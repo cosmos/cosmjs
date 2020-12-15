@@ -95,7 +95,7 @@ async function sendTokens(
   };
 }
 
-describe("StargateClient.searchTx", () => {
+describe("StargateClient.getTx and .searchTx", () => {
   const registry = new Registry();
 
   let sendUnsuccessful: TestTxSend | undefined;
@@ -147,14 +147,13 @@ describe("StargateClient.searchTx", () => {
     }
   });
 
-  describe("with SearchByIdQuery", () => {
-    it("can search successful tx by ID", async () => {
+  describe("getTx", () => {
+    it("can get successful tx by ID", async () => {
       pendingWithoutSimapp();
       assert(sendSuccessful, "value must be set in beforeAll()");
       const client = await StargateClient.connect(simapp.tendermintUrl);
-      const result = await client.searchTx({ id: sendSuccessful.hash });
-      expect(result.length).toEqual(1);
-      expect(result[0]).toEqual(
+      const result = await client.getTx(sendSuccessful.hash);
+      expect(result).toEqual(
         jasmine.objectContaining({
           height: sendSuccessful.height,
           hash: sendSuccessful.hash,
@@ -164,13 +163,12 @@ describe("StargateClient.searchTx", () => {
       );
     });
 
-    it("can search unsuccessful tx by ID", async () => {
+    it("can get unsuccessful tx by ID", async () => {
       pendingWithoutSimapp();
       assert(sendUnsuccessful, "value must be set in beforeAll()");
       const client = await StargateClient.connect(simapp.tendermintUrl);
-      const result = await client.searchTx({ id: sendUnsuccessful.hash });
-      expect(result.length).toEqual(1);
-      expect(result[0]).toEqual(
+      const result = await client.getTx(sendUnsuccessful.hash);
+      expect(result).toEqual(
         jasmine.objectContaining({
           height: sendUnsuccessful.height,
           hash: sendUnsuccessful.hash,
@@ -180,39 +178,12 @@ describe("StargateClient.searchTx", () => {
       );
     });
 
-    it("can search by ID (non existent)", async () => {
+    it("can get by ID (non existent)", async () => {
       pendingWithoutSimapp();
       const client = await StargateClient.connect(simapp.tendermintUrl);
       const nonExistentId = "0000000000000000000000000000000000000000000000000000000000000000";
-      const result = await client.searchTx({ id: nonExistentId });
-      expect(result.length).toEqual(0);
-    });
-
-    it("can search by ID and filter by minHeight", async () => {
-      pendingWithoutSimapp();
-      assert(sendSuccessful, "value must be set in beforeAll()");
-      const client = await StargateClient.connect(simapp.tendermintUrl);
-      const query = { id: sendSuccessful.hash };
-
-      {
-        const result = await client.searchTx(query, { minHeight: 0 });
-        expect(result.length).toEqual(1);
-      }
-
-      {
-        const result = await client.searchTx(query, { minHeight: sendSuccessful.height - 1 });
-        expect(result.length).toEqual(1);
-      }
-
-      {
-        const result = await client.searchTx(query, { minHeight: sendSuccessful.height });
-        expect(result.length).toEqual(1);
-      }
-
-      {
-        const result = await client.searchTx(query, { minHeight: sendSuccessful.height + 1 });
-        expect(result.length).toEqual(0);
-      }
+      const result = await client.getTx(nonExistentId);
+      expect(result).toBeNull();
     });
   });
 

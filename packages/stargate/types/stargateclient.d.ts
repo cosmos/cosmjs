@@ -72,6 +72,7 @@ export declare class StargateClient {
    * proofs from such a method.
    */
   getAllBalancesUnverified(address: string): Promise<readonly Coin[]>;
+  getTx(id: string): Promise<IndexedTx | null>;
   searchTx(query: SearchTxQuery, filter?: SearchTxFilter): Promise<readonly IndexedTx[]>;
   disconnect(): void;
   broadcastTx(tx: Uint8Array): Promise<BroadcastTxResponse>;

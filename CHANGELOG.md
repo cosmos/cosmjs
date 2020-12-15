@@ -6,12 +6,16 @@
   @cosmjs/launchpad instead.
 - @cosmjs/cosmwasm: Export `JsonObject`, `ChangeAdminResult` and `WasmData`
   types as well as `isValidBuilder` and `parseWasmData` functions.
+- @cosmjs/cosmwasm: Add `CosmWasmClient.getTx` method for searching by ID and
+  remove such functionality from `CosmWasmClient.searchTx`.
 - @cosmjs/cosmwasm-stargate: Add new package for CosmWasm Stargate support.
 - @cosmjs/launchpad: Add `Secp256k1Wallet` to manage a single raw secp256k1
   keypair.
 - @cosmjs/launchpad: `OfflineSigner` type’s `sign` method renamed `signAmino`
   and `SignResponse` type renamed `AminoSignResponse`.
 - @cosmjs/launchpad: `Secp256k1HdWallet.sign` method renamed `signAmino`.
+- @cosmjs/launchpad: Add `CosmosClient.getTx` method for searching by ID and
+  remove such functionality from `CosmosClient.searchTx`.
 - @cosmjs/launchpad-ledger: `LedgerSigner.sign` method renamed `signAmino`.
 - @cosmjs/proto-signing: Add new package for handling transaction signing with
   protobuf encoding.

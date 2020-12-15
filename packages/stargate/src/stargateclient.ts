@@ -4,7 +4,6 @@ import {
   Block,
   Coin,
   isSearchByHeightQuery,
-  isSearchByIdQuery,
   isSearchBySentFromOrToQuery,
   isSearchByTagsQuery,
   PubKey,
@@ -207,6 +206,11 @@ export class StargateClient {
     return balances.map(coinFromProto);
   }
 
+  public async getTx(id: string): Promise<IndexedTx | null> {
+    const results = await this.txsQuery(`tx.hash='${id}'`);
+    return results[0] ?? null;
+  }
+
   public async searchTx(query: SearchTxQuery, filter: SearchTxFilter = {}): Promise<readonly IndexedTx[]> {
     const minHeight = filter.minHeight || 0;
     const maxHeight = filter.maxHeight || Number.MAX_SAFE_INTEGER;
@@ -219,9 +223,7 @@ export class StargateClient {
 
     let txs: readonly IndexedTx[];
 
-    if (isSearchByIdQuery(query)) {
-      txs = await this.txsQuery(`tx.hash='${query.id}'`);
-    } else if (isSearchByHeightQuery(query)) {
+    if (isSearchByHeightQuery(query)) {
       txs =
         query.height >= minHeight && query.height <= maxHeight
           ? await this.txsQuery(`tx.height=${query.height}`)

@@ -38,9 +38,6 @@ export declare function isBroadcastTxSuccess(result: BroadcastTxResult): result 
 export declare function assertIsBroadcastTxSuccess(
   result: BroadcastTxResult,
 ): asserts result is BroadcastTxSuccess;
-export interface SearchByIdQuery {
-  readonly id: string;
-}
 export interface SearchByHeightQuery {
   readonly height: number;
 }
@@ -57,12 +54,7 @@ export interface SearchByTagsQuery {
     readonly value: string;
   }>;
 }
-export declare type SearchTxQuery =
-  | SearchByIdQuery
-  | SearchByHeightQuery
-  | SearchBySentFromOrToQuery
-  | SearchByTagsQuery;
-export declare function isSearchByIdQuery(query: SearchTxQuery): query is SearchByIdQuery;
+export declare type SearchTxQuery = SearchByHeightQuery | SearchBySentFromOrToQuery | SearchByTagsQuery;
 export declare function isSearchByHeightQuery(query: SearchTxQuery): query is SearchByHeightQuery;
 export declare function isSearchBySentFromOrToQuery(query: SearchTxQuery): query is SearchBySentFromOrToQuery;
 export declare function isSearchByTagsQuery(query: SearchTxQuery): query is SearchByTagsQuery;
@@ -144,6 +136,7 @@ export declare class CosmosClient {
    * @param height The height of the block. If undefined, the latest height is used.
    */
   getBlock(height?: number): Promise<Block>;
+  getTx(id: string): Promise<IndexedTx | null>;
   searchTx(query: SearchTxQuery, filter?: SearchTxFilter): Promise<readonly IndexedTx[]>;
   broadcastTx(tx: StdTx): Promise<BroadcastTxResult>;
   private txsQuery;

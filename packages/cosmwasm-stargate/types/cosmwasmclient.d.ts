@@ -29,6 +29,7 @@ export declare class CosmWasmClient {
   getSequence(address: string): Promise<SequenceResponse | null>;
   getBlock(height?: number): Promise<Block>;
   getBalance(address: string, searchDenom: string): Promise<Coin | null>;
+  getTx(id: string): Promise<IndexedTx | null>;
   searchTx(query: SearchTxQuery, filter?: SearchTxFilter): Promise<readonly IndexedTx[]>;
   disconnect(): void;
   broadcastTx(tx: Uint8Array): Promise<BroadcastTxResponse>;

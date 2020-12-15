@@ -54,15 +54,7 @@ export interface SearchByTagsQuery {
   readonly tags: ReadonlyArray<{ readonly key: string; readonly value: string }>;
 }
 
-export type SearchTxQuery =
-  | SearchByIdQuery
-  | SearchByHeightQuery
-  | SearchBySentFromOrToQuery
-  | SearchByTagsQuery;
-
-function isSearchByIdQuery(query: SearchTxQuery): query is SearchByIdQuery {
-  return (query as SearchByIdQuery).id !== undefined;
-}
+export type SearchTxQuery = SearchByHeightQuery | SearchBySentFromOrToQuery | SearchByTagsQuery;
 
 function isSearchByHeightQuery(query: SearchTxQuery): query is SearchByHeightQuery {
   return (query as SearchByHeightQuery).height !== undefined;
@@ -264,6 +256,11 @@ export class CosmWasmClient {
     };
   }
 
+  public async getTx(id: string): Promise<IndexedTx | null> {
+    const results = await this.txsQuery(`tx.hash=${id}`);
+    return results[0] ?? null;
+  }
+
   public async searchTx(query: SearchTxQuery, filter: SearchTxFilter = {}): Promise<readonly IndexedTx[]> {
     const minHeight = filter.minHeight || 0;
     const maxHeight = filter.maxHeight || Number.MAX_SAFE_INTEGER;
@@ -275,9 +272,7 @@ export class CosmWasmClient {
     }
 
     let txs: readonly IndexedTx[];
-    if (isSearchByIdQuery(query)) {
-      txs = await this.txsQuery(`tx.hash=${query.id}`);
-    } else if (isSearchByHeightQuery(query)) {
+    if (isSearchByHeightQuery(query)) {
       // optional optimization to avoid network request
       if (query.height < minHeight || query.height > maxHeight) {
         txs = [];

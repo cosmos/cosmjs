@@ -13,7 +13,6 @@ export {
   CosmWasmClient,
   GetSequenceResult,
   SearchByHeightQuery,
-  SearchByIdQuery,
   SearchBySentFromOrToQuery,
   SearchByTagsQuery,
   SearchTxQuery,
