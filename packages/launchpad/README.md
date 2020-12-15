@@ -169,7 +169,10 @@ allows applications to add their extensions without changing CosmJS. As an
 example we show how to build a client for a blockchain with a wasm module:
 
 ```ts
-import { MsgExecuteContract, setupWasmExtension } from "@cosmjs/cosmwasm";
+import {
+  MsgExecuteContract,
+  setupWasmExtension,
+} from "@cosmjs/cosmwasm-launchpad";
 import {
   assertIsBroadcastTxResult,
   LcdClient,
