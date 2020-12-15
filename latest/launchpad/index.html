@@ -212,7 +212,10 @@
 				<p>Both query and message support is implemented in a decentralized fashion, which
 					allows applications to add their extensions without changing CosmJS. As an
 				example we show how to build a client for a blockchain with a wasm module:</p>
-				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { MsgExecuteContract, setupWasmExtension } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@cosmjs/cosmwasm&quot;</span>;
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> {
+  MsgExecuteContract,
+  setupWasmExtension,
+} <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@cosmjs/cosmwasm-launchpad&quot;</span>;
 <span class="hljs-keyword">import</span> {
   assertIsBroadcastTxResult,
   LcdClient,
