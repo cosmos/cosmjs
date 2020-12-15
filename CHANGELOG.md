@@ -6,6 +6,7 @@
   @cosmjs/launchpad instead.
 - @cosmjs/cosmwasm: Export `JsonObject`, `ChangeAdminResult` and `WasmData`
   types as well as `isValidBuilder` and `parseWasmData` functions.
+- @cosmjs/cosmwasm-stargate: Add new package for CosmWasm Stargate support.
 - @cosmjs/launchpad: Add `Secp256k1Wallet` to manage a single raw secp256k1
   keypair.
 - @cosmjs/launchpad: `OfflineSigner` type’s `sign` method renamed `signAmino`
@@ -25,6 +26,7 @@
   which allows skipping the auto-detection.
 - @cosmjs/tendermint-rpc: Remove export `v0_33` in favour of `adaptor33` and
   `adaptor34`. Export the `Adaptor` type.
+- @cosmjs/tendermint-rpc: Export `DateTime` class.
 
 ## 0.23.1 (2020-10-27)
 
