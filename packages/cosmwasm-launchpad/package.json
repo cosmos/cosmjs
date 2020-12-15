@@ -1,8 +1,11 @@
 {
-  "name": "@cosmjs/cosmwasm",
+  "name": "@cosmjs/cosmwasm-launchpad",
   "version": "0.24.0-alpha.10",
-  "description": "CosmWasm SDK",
-  "author": "Ethan Frey <ethanfrey@users.noreply.github.com>",
+  "description": "CosmWasm SDK for Launchpad",
+  "contributors": [
+    "Ethan Frey <ethanfrey@users.noreply.github.com>",
+    "Will Clark <willclarktech@users.noreply.github.com>"
+  ],
   "license": "Apache-2.0",
   "main": "build/index.js",
   "types": "types/index.d.ts",
@@ -15,7 +18,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/CosmWasm/cosmjs/tree/master/packages/cosmwasm"
+    "url": "https://github.com/CosmWasm/cosmjs/tree/master/packages/cosmwasm-launchpad"
   },
   "publishConfig": {
     "access": "public"
