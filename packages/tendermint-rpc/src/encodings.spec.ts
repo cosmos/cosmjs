@@ -2,7 +2,6 @@ import { ReadonlyDate } from "readonly-date";
 
 import {
   DateTime,
-  DateTimeString,
   encodeBlockId,
   encodeBytes,
   encodeInt,
@@ -15,13 +14,13 @@ import { ReadonlyDateWithNanoseconds } from "./responses";
 describe("encodings", () => {
   describe("DateTime", () => {
     it("decodes a string", () => {
-      expect(DateTime.decode("2020-12-15T10:57:26.778Z" as DateTimeString).nanoseconds).toEqual(0);
-      expect(DateTime.decode("2020-12-15T10:57:26.7789Z" as DateTimeString).nanoseconds).toEqual(900000);
-      expect(DateTime.decode("2020-12-15T10:57:26.77809Z" as DateTimeString).nanoseconds).toEqual(90000);
-      expect(DateTime.decode("2020-12-15T10:57:26.778009Z" as DateTimeString).nanoseconds).toEqual(9000);
-      expect(DateTime.decode("2020-12-15T10:57:26.7780009Z" as DateTimeString).nanoseconds).toEqual(900);
-      expect(DateTime.decode("2020-12-15T10:57:26.77800009Z" as DateTimeString).nanoseconds).toEqual(90);
-      expect(DateTime.decode("2020-12-15T10:57:26.778000009Z" as DateTimeString).nanoseconds).toEqual(9);
+      expect(DateTime.decode("2020-12-15T10:57:26.778Z").nanoseconds).toEqual(0);
+      expect(DateTime.decode("2020-12-15T10:57:26.7789Z").nanoseconds).toEqual(900000);
+      expect(DateTime.decode("2020-12-15T10:57:26.77809Z").nanoseconds).toEqual(90000);
+      expect(DateTime.decode("2020-12-15T10:57:26.778009Z").nanoseconds).toEqual(9000);
+      expect(DateTime.decode("2020-12-15T10:57:26.7780009Z").nanoseconds).toEqual(900);
+      expect(DateTime.decode("2020-12-15T10:57:26.77800009Z").nanoseconds).toEqual(90);
+      expect(DateTime.decode("2020-12-15T10:57:26.778000009Z").nanoseconds).toEqual(9);
     });
 
     it("encodes a string", () => {

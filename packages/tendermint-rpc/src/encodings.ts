@@ -7,7 +7,6 @@ import { BlockId, ReadonlyDateWithNanoseconds, Version } from "./responses";
 export type Base64String = string & As<"base64">;
 export type HexString = string & As<"hex">;
 export type IntegerString = string & As<"integer">;
-export type DateTimeString = string & As<"datetime">;
 
 /**
  * A runtime checker that ensures a given value is set (i.e. not undefined or null)
@@ -172,7 +171,7 @@ export class Base64 {
 }
 
 export class DateTime {
-  public static decode(dateTimeString: DateTimeString): ReadonlyDateWithNanoseconds {
+  public static decode(dateTimeString: string): ReadonlyDateWithNanoseconds {
     const readonlyDate = fromRfc3339(dateTimeString);
     const nanosecondsMatch = dateTimeString.match(/\.(\d+)Z$/);
     const nanoseconds = nanosecondsMatch ? nanosecondsMatch[1].slice(3) : "";
@@ -180,10 +179,10 @@ export class DateTime {
     return readonlyDate as ReadonlyDateWithNanoseconds;
   }
 
-  public static encode(dateTime: ReadonlyDateWithNanoseconds): DateTimeString {
+  public static encode(dateTime: ReadonlyDateWithNanoseconds): string {
     const millisecondIso = dateTime.toISOString();
     const nanoseconds = dateTime.nanoseconds?.toString() ?? "";
-    return `${millisecondIso.slice(0, -1)}${nanoseconds.padStart(6, "0")}Z` as DateTimeString;
+    return `${millisecondIso.slice(0, -1)}${nanoseconds.padStart(6, "0")}Z`;
   }
 }
 

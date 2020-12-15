@@ -3,7 +3,6 @@ import { BlockId, ReadonlyDateWithNanoseconds, Version } from "./responses";
 export declare type Base64String = string & As<"base64">;
 export declare type HexString = string & As<"hex">;
 export declare type IntegerString = string & As<"integer">;
-export declare type DateTimeString = string & As<"datetime">;
 /**
  * A runtime checker that ensures a given value is set (i.e. not undefined or null)
  *
@@ -67,8 +66,8 @@ export declare class Base64 {
   static decode(base64String: Base64String): Uint8Array;
 }
 export declare class DateTime {
-  static decode(dateTimeString: DateTimeString): ReadonlyDateWithNanoseconds;
-  static encode(dateTime: ReadonlyDateWithNanoseconds): DateTimeString;
+  static decode(dateTimeString: string): ReadonlyDateWithNanoseconds;
+  static encode(dateTime: ReadonlyDateWithNanoseconds): string;
 }
 export declare class Hex {
   static encode(data: Uint8Array): HexString;

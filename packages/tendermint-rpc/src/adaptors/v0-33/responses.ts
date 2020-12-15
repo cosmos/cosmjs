@@ -13,7 +13,6 @@ import {
   Base64,
   Base64String,
   DateTime,
-  DateTimeString,
   dictionaryToStringMap,
   Hex,
   HexString,
@@ -286,7 +285,7 @@ interface RpcHeader {
   readonly version: RpcBlockVersion;
   readonly chain_id: string;
   readonly height: IntegerString;
-  readonly time: DateTimeString;
+  readonly time: string;
   readonly num_txs: IntegerString;
   readonly total_txs: IntegerString;
 
@@ -382,7 +381,7 @@ function decodeBroadcastTxCommit(data: RpcBroadcastTxCommitResponse): responses.
 type RpcSignature = {
   readonly block_id_flag: number;
   readonly validator_address: HexString;
-  readonly timestamp: DateTimeString;
+  readonly timestamp: string;
   readonly signature: Base64String;
 };
 
@@ -436,7 +435,7 @@ function decodeValidatorGenesis(data: RpcValidatorGenesis): responses.Validator 
 }
 
 interface RpcGenesisResponse {
-  readonly genesis_time: DateTimeString;
+  readonly genesis_time: string;
   readonly chain_id: string;
   readonly consensus_params: RpcConsensusParams;
   // The validators key is used to specify a set of validators for testnets or PoA blockchains.
@@ -519,7 +518,7 @@ interface RpcSyncInfo {
   readonly latest_block_hash: HexString;
   readonly latest_app_hash: HexString;
   readonly latest_block_height: IntegerString;
-  readonly latest_block_time: DateTimeString;
+  readonly latest_block_time: string;
   readonly catching_up: boolean;
 }
 
