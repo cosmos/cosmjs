@@ -40,7 +40,7 @@
     "!**/testdata/"
   ],
   "dependencies": {
-    "@cosmjs/cosmwasm": "^0.24.0-alpha.10",
+    "@cosmjs/cosmwasm-launchpad": "^0.24.0-alpha.10",
     "@cosmjs/crypto": "^0.24.0-alpha.10",
     "@cosmjs/encoding": "^0.24.0-alpha.10",
     "@cosmjs/faucet-client": "^0.24.0-alpha.10",

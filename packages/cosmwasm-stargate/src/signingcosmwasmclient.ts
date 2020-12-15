@@ -9,7 +9,7 @@ import {
   MigrateResult,
   UploadMeta,
   UploadResult,
-} from "@cosmjs/cosmwasm";
+} from "@cosmjs/cosmwasm-launchpad";
 import { sha256 } from "@cosmjs/crypto";
 import { fromBase64, toAscii, toHex } from "@cosmjs/encoding";
 import {
