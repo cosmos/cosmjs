@@ -12,6 +12,8 @@
 - @cosmjs/launchpad: `OfflineSigner` type’s `sign` method renamed `signAmino`
   and `SignResponse` type renamed `AminoSignResponse`.
 - @cosmjs/launchpad: `Secp256k1HdWallet.sign` method renamed `signAmino`.
+- @cosmjs/launchpad: Add `CosmosClient.getTx` method for searching by ID and
+  remove such functionality from `CosmosClient.searchTx`.
 - @cosmjs/launchpad-ledger: `LedgerSigner.sign` method renamed `signAmino`.
 - @cosmjs/proto-signing: Add new package for handling transaction signing with
   protobuf encoding.

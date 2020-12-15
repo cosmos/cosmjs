@@ -16,13 +16,11 @@ export {
   BroadcastTxResult,
   BroadcastTxSuccess,
   SearchByHeightQuery,
-  SearchByIdQuery,
   SearchBySentFromOrToQuery,
   SearchByTagsQuery,
   SearchTxQuery,
   SearchTxFilter,
   isSearchByHeightQuery,
-  isSearchByIdQuery,
   isSearchBySentFromOrToQuery,
   isSearchByTagsQuery,
 } from "./cosmosclient";
