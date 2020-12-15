@@ -495,8 +495,9 @@ describe("SigningCosmWasmClient", () => {
 
         await sleep(1000);
 
-        const searchResult = await client.searchTx({ id: result.transactionHash });
-        const tx = Tx.decode(searchResult[0].tx);
+        const searchResult = await client.getTx(result.transactionHash);
+        assert(searchResult, "Must find transaction");
+        const tx = Tx.decode(searchResult.tx);
         // From ModifyingDirectSecp256k1HdWallet
         expect(tx.body!.memo).toEqual("This was modified");
         expect({ ...tx.authInfo!.fee!.amount![0] }).toEqual(coin(3000, "ucosm"));
@@ -571,8 +572,9 @@ describe("SigningCosmWasmClient", () => {
 
         await sleep(1000);
 
-        const searchResult = await client.searchTx({ id: result.transactionHash });
-        const tx = Tx.decode(searchResult[0].tx);
+        const searchResult = await client.getTx(result.transactionHash);
+        assert(searchResult, "Must find transaction");
+        const tx = Tx.decode(searchResult.tx);
         // From ModifyingSecp256k1HdWallet
         expect(tx.body!.memo).toEqual("This was modified");
         expect({ ...tx.authInfo!.fee!.amount![0] }).toEqual(coin(3000, "ucosm"));
