@@ -22,7 +22,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "private": true,
   "scripts": {
     "docs": "typedoc --options typedoc.js",
     "format": "prettier --write --loglevel warn \"./src/**/*.ts\"",
