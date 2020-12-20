@@ -75,7 +75,7 @@ function encodeTxParams(params: requests.TxParams): RpcTxParams {
 }
 
 interface RpcTxSearchParams {
-  readonly query: requests.QueryString;
+  readonly query: string;
   readonly prove?: boolean;
   readonly page?: IntegerString;
   readonly per_page?: IntegerString;

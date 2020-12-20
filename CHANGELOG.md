@@ -33,6 +33,7 @@
 - @cosmjs/tendermint-rpc: Remove export `v0_33` in favour of `adaptor33` and
   `adaptor34`. Export the `Adaptor` type.
 - @cosmjs/tendermint-rpc: Export `DateTime` class.
+- @cosmjs/tendermint-rpc: Remove type `QueryString`. Use `string` instead.
 
 ## 0.23.1 (2020-10-27)
 

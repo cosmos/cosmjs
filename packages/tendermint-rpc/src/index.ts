@@ -16,7 +16,6 @@ export {
   HealthRequest,
   Method,
   Request,
-  QueryString,
   QueryTag,
   StatusRequest,
   SubscriptionEventType,

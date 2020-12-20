@@ -186,7 +186,7 @@ export class Client {
     return this.subscribe(request, this.r.decodeNewBlockHeaderEvent);
   }
 
-  public subscribeTx(query?: requests.QueryString): Stream<responses.TxEvent> {
+  public subscribeTx(query?: string): Stream<responses.TxEvent> {
     const request: requests.SubscribeRequest = {
       method: requests.Method.Subscribe,
       query: {
