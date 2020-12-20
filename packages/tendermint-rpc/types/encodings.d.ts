@@ -1,8 +1,4 @@
-import { As } from "type-tagger";
 import { BlockId, ReadonlyDateWithNanoseconds, Version } from "./responses";
-export declare type Base64String = string & As<"base64">;
-export declare type HexString = string & As<"hex">;
-export declare type IntegerString = string & As<"integer">;
 /**
  * A runtime checker that ensures a given value is set (i.e. not undefined or null)
  *
@@ -58,20 +54,20 @@ export declare function optional<T>(value: T | null | undefined, fallback: T): T
 export declare function may<T, U>(transform: (val: T) => U, value: T | null | undefined): U | undefined;
 export declare function dictionaryToStringMap(obj: Record<string, unknown>): Map<string, string>;
 export declare class Integer {
-  static parse(input: IntegerString | number): number;
-  static encode(num: number): IntegerString;
+  static parse(input: string | number): number;
+  static encode(num: number): string;
 }
 export declare class Base64 {
-  static encode(data: Uint8Array): Base64String;
-  static decode(base64String: Base64String): Uint8Array;
+  static encode(data: Uint8Array): string;
+  static decode(base64String: string): Uint8Array;
 }
 export declare class DateTime {
   static decode(dateTimeString: string): ReadonlyDateWithNanoseconds;
   static encode(dateTime: ReadonlyDateWithNanoseconds): string;
 }
 export declare class Hex {
-  static encode(data: Uint8Array): HexString;
-  static decode(hexString: HexString): Uint8Array;
+  static encode(data: Uint8Array): string;
+  static decode(hexString: string): Uint8Array;
 }
 export declare function encodeString(s: string): Uint8Array;
 export declare function encodeInt(n: number): Uint8Array;

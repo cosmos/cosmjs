@@ -2,15 +2,7 @@
 import { toHex } from "@cosmjs/encoding";
 import { JsonRpcRequest } from "@cosmjs/json-rpc";
 
-import {
-  assertNotEmpty,
-  Base64,
-  Base64String,
-  HexString,
-  Integer,
-  IntegerString,
-  may,
-} from "../../encodings";
+import { assertNotEmpty, Base64, Integer, may } from "../../encodings";
 import { createJsonRpcRequest } from "../../jsonrpc";
 import * as requests from "../../requests";
 
@@ -18,7 +10,7 @@ interface HeightParam {
   readonly height?: number;
 }
 interface RpcHeightParam {
-  readonly height?: IntegerString;
+  readonly height?: string;
 }
 function encodeHeightParam(param: HeightParam): RpcHeightParam {
   return {
@@ -27,8 +19,8 @@ function encodeHeightParam(param: HeightParam): RpcHeightParam {
 }
 
 interface RpcBlockchainRequestParams {
-  readonly minHeight?: IntegerString;
-  readonly maxHeight?: IntegerString;
+  readonly minHeight?: string;
+  readonly maxHeight?: string;
 }
 
 function encodeBlockchainRequestParams(param: requests.BlockchainRequestParams): RpcBlockchainRequestParams {
@@ -40,7 +32,8 @@ function encodeBlockchainRequestParams(param: requests.BlockchainRequestParams):
 
 interface RpcAbciQueryParams {
   readonly path: string;
-  readonly data: HexString;
+  /** hex encoded */
+  readonly data: string;
   readonly height?: string;
   readonly prove?: boolean;
 }
@@ -48,14 +41,15 @@ interface RpcAbciQueryParams {
 function encodeAbciQueryParams(params: requests.AbciQueryParams): RpcAbciQueryParams {
   return {
     path: assertNotEmpty(params.path),
-    data: toHex(params.data) as HexString,
+    data: toHex(params.data),
     height: may(Integer.encode, params.height),
     prove: params.prove,
   };
 }
 
 interface RpcBroadcastTxParams {
-  readonly tx: Base64String;
+  /** base64 encoded */
+  readonly tx: string;
 }
 function encodeBroadcastTxParams(params: requests.BroadcastTxParams): RpcBroadcastTxParams {
   return {
@@ -64,7 +58,8 @@ function encodeBroadcastTxParams(params: requests.BroadcastTxParams): RpcBroadca
 }
 
 interface RpcTxParams {
-  readonly hash: Base64String;
+  /** base64 encoded */
+  readonly hash: string;
   readonly prove?: boolean;
 }
 function encodeTxParams(params: requests.TxParams): RpcTxParams {
@@ -77,8 +72,8 @@ function encodeTxParams(params: requests.TxParams): RpcTxParams {
 interface RpcTxSearchParams {
   readonly query: string;
   readonly prove?: boolean;
-  readonly page?: IntegerString;
-  readonly per_page?: IntegerString;
+  readonly page?: string;
+  readonly per_page?: string;
 }
 function encodeTxSearchParams(params: requests.TxSearchParams): RpcTxSearchParams {
   return {
