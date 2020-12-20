@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { fromHex } from "@cosmjs/encoding";
+import { fromBase64, fromHex } from "@cosmjs/encoding";
 import { JsonRpcSuccessResponse } from "@cosmjs/json-rpc";
 
 import {
@@ -10,10 +10,8 @@ import {
   assertObject,
   assertSet,
   assertString,
-  Base64,
   DateTime,
   dictionaryToStringMap,
-  Hex,
   Integer,
   may,
   optional,
@@ -38,7 +36,7 @@ function decodeAbciInfo(data: RpcAbciInfoResponse): responses.AbciInfoResponse {
   return {
     data: data.data,
     lastBlockHeight: may(Integer.parse, data.last_block_height),
-    lastBlockAppHash: may(Base64.decode, data.last_block_app_hash),
+    lastBlockAppHash: may(fromBase64, data.last_block_app_hash),
   };
 }
 
@@ -62,8 +60,8 @@ function decodeQueryProof(data: RpcQueryProof): responses.QueryProof {
   return {
     ops: data.ops.map((op) => ({
       type: op.type,
-      key: Base64.decode(op.key),
-      data: Base64.decode(op.data),
+      key: fromBase64(op.key),
+      data: fromBase64(op.data),
     })),
   };
 }
@@ -82,8 +80,8 @@ interface RpcAbciQueryResponse {
 
 function decodeAbciQuery(data: RpcAbciQueryResponse): responses.AbciQueryResponse {
   return {
-    key: Base64.decode(optional(data.key, "")),
-    value: Base64.decode(optional(data.value, "")),
+    key: fromBase64(optional(data.key, "")),
+    value: fromBase64(optional(data.value, "")),
     proof: may(decodeQueryProof, data.proof),
     height: may(Integer.parse, data.height),
     code: may(Integer.parse, data.code),
@@ -101,8 +99,8 @@ interface RpcAttribute {
 
 function decodeAttribute(attribute: RpcAttribute): responses.Attribute {
   return {
-    key: Base64.decode(assertNotEmpty(attribute.key)),
-    value: Base64.decode(assertNotEmpty(attribute.value)),
+    key: fromBase64(assertNotEmpty(attribute.key)),
+    value: fromBase64(assertNotEmpty(attribute.value)),
   };
 }
 
@@ -136,7 +134,7 @@ interface RpcTxData {
 
 function decodeTxData(data: RpcTxData): responses.TxData {
   return {
-    data: may(Base64.decode, data.data),
+    data: may(fromBase64, data.data),
     log: data.log,
     code: Integer.parse(assertNumber(optional<number>(data.code, 0))),
     events: decodeEvents(data.events),
@@ -155,7 +153,7 @@ function decodePubkey(data: RpcPubkey): ValidatorPubkey {
     // go-amino special code
     return {
       algorithm: "ed25519",
-      data: Base64.decode(assertNotEmpty(data.value)),
+      data: fromBase64(assertNotEmpty(data.value)),
     };
   }
   throw new Error(`unknown pubkey type: ${data.type}`);
@@ -173,7 +171,7 @@ function decodeValidatorUpdate(data: RpcValidatorUpdate): responses.Validator {
   return {
     pubkey: decodePubkey(assertObject(data.pub_key)),
     votingPower: Integer.parse(assertNotEmpty(data.voting_power)),
-    address: Hex.decode(assertNotEmpty(data.address)),
+    address: fromHex(assertNotEmpty(data.address)),
   };
 }
 
@@ -410,7 +408,7 @@ type RpcSignature = {
 function decodeSignature(data: RpcSignature): ValidatorSignature {
   return {
     algorithm: "ed25519",
-    data: Base64.decode(assertNotEmpty(data.signature)),
+    data: fromBase64(assertNotEmpty(data.signature)),
   };
 }
 
@@ -603,13 +601,13 @@ interface RpcTxProof {
 
 function decodeTxProof(data: RpcTxProof): responses.TxProof {
   return {
-    data: Base64.decode(assertNotEmpty(data.data)),
+    data: fromBase64(assertNotEmpty(data.data)),
     rootHash: fromHex(assertNotEmpty(data.root_hash)),
     proof: {
       total: Integer.parse(assertNotEmpty(data.proof.total)),
       index: Integer.parse(assertNotEmpty(data.proof.index)),
-      leafHash: Base64.decode(assertNotEmpty(data.proof.leaf_hash)),
-      aunts: assertArray(data.proof.aunts).map(Base64.decode),
+      leafHash: fromBase64(assertNotEmpty(data.proof.leaf_hash)),
+      aunts: assertArray(data.proof.aunts).map(fromBase64),
     },
   };
 }
@@ -627,7 +625,7 @@ interface RpcTxResponse {
 
 function decodeTxResponse(data: RpcTxResponse): responses.TxResponse {
   return {
-    tx: Base64.decode(assertNotEmpty(data.tx)) as TxBytes,
+    tx: fromBase64(assertNotEmpty(data.tx)) as TxBytes,
     result: decodeTxData(assertObject(data.tx_result)),
     height: Integer.parse(assertNotEmpty(data.height)),
     index: Integer.parse(assertNumber(data.index)),
@@ -658,7 +656,7 @@ interface RpcTxEvent {
 }
 
 function decodeTxEvent(data: RpcTxEvent): responses.TxEvent {
-  const tx = Base64.decode(assertNotEmpty(data.tx)) as TxBytes;
+  const tx = fromBase64(assertNotEmpty(data.tx)) as TxBytes;
   return {
     tx: tx,
     hash: hashTx(tx),
@@ -730,7 +728,7 @@ function decodeBlock(data: RpcBlock): responses.Block {
   return {
     header: decodeHeader(assertObject(data.header)),
     lastCommit: decodeCommit(assertObject(data.last_commit)),
-    txs: data.data.txs ? assertArray(data.data.txs).map(Base64.decode) : [],
+    txs: data.data.txs ? assertArray(data.data.txs).map(fromBase64) : [],
     evidence: data.evidence && may(decodeEvidences, data.evidence.evidence),
   };
 }

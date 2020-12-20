@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { toHex } from "@cosmjs/encoding";
+import { toBase64, toHex } from "@cosmjs/encoding";
 import { JsonRpcRequest } from "@cosmjs/json-rpc";
 
-import { assertNotEmpty, Base64, Integer, may } from "../../encodings";
+import { assertNotEmpty, Integer, may } from "../../encodings";
 import { createJsonRpcRequest } from "../../jsonrpc";
 import * as requests from "../../requests";
 
@@ -53,7 +53,7 @@ interface RpcBroadcastTxParams {
 }
 function encodeBroadcastTxParams(params: requests.BroadcastTxParams): RpcBroadcastTxParams {
   return {
-    tx: Base64.encode(assertNotEmpty(params.tx)),
+    tx: toBase64(assertNotEmpty(params.tx)),
   };
 }
 
@@ -64,7 +64,7 @@ interface RpcTxParams {
 }
 function encodeTxParams(params: requests.TxParams): RpcTxParams {
   return {
-    hash: Base64.encode(assertNotEmpty(params.hash)),
+    hash: toBase64(assertNotEmpty(params.hash)),
     prove: params.prove,
   };
 }

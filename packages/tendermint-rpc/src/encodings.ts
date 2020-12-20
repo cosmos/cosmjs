@@ -1,4 +1,4 @@
-import { fromBase64, fromHex, fromRfc3339, toBase64, toHex, toUtf8 } from "@cosmjs/encoding";
+import { fromRfc3339, toUtf8 } from "@cosmjs/encoding";
 import { Int53 } from "@cosmjs/math";
 
 import { BlockId, ReadonlyDateWithNanoseconds, Version } from "./responses";
@@ -155,16 +155,6 @@ export class Integer {
   }
 }
 
-export class Base64 {
-  public static encode(data: Uint8Array): string {
-    return toBase64(data);
-  }
-
-  public static decode(base64String: string): Uint8Array {
-    return fromBase64(base64String);
-  }
-}
-
 export class DateTime {
   public static decode(dateTimeString: string): ReadonlyDateWithNanoseconds {
     const readonlyDate = fromRfc3339(dateTimeString);
@@ -178,16 +168,6 @@ export class DateTime {
     const millisecondIso = dateTime.toISOString();
     const nanoseconds = dateTime.nanoseconds?.toString() ?? "";
     return `${millisecondIso.slice(0, -1)}${nanoseconds.padStart(6, "0")}Z`;
-  }
-}
-
-export class Hex {
-  public static encode(data: Uint8Array): string {
-    return toHex(data);
-  }
-
-  public static decode(hexString: string): Uint8Array {
-    return fromHex(hexString);
   }
 }
 

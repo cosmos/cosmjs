@@ -57,17 +57,9 @@ export declare class Integer {
   static parse(input: string | number): number;
   static encode(num: number): string;
 }
-export declare class Base64 {
-  static encode(data: Uint8Array): string;
-  static decode(base64String: string): Uint8Array;
-}
 export declare class DateTime {
   static decode(dateTimeString: string): ReadonlyDateWithNanoseconds;
   static encode(dateTime: ReadonlyDateWithNanoseconds): string;
-}
-export declare class Hex {
-  static encode(data: Uint8Array): string;
-  static decode(hexString: string): Uint8Array;
 }
 export declare function encodeString(s: string): Uint8Array;
 export declare function encodeInt(n: number): Uint8Array;
