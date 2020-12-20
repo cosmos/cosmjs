@@ -18,7 +18,7 @@ import {
 } from "../../encodings";
 import * as responses from "../../responses";
 import { SubscriptionEvent } from "../../rpcclients";
-import { IpPortString, TxBytes, TxHash, ValidatorPubkey, ValidatorSignature } from "../../types";
+import { TxBytes, TxHash, ValidatorPubkey, ValidatorSignature } from "../../types";
 import { hashTx } from "./hasher";
 
 interface AbciInfoResult {
@@ -500,7 +500,8 @@ function decodeValidatorInfo(data: RpcValidatorInfo): responses.Validator {
 interface RpcNodeInfo {
   /** hex encoded */
   readonly id: string;
-  readonly listen_addr: IpPortString;
+  /** IP and port */
+  readonly listen_addr: string;
   readonly network: string;
   readonly version: string;
   readonly channels: string; // ???

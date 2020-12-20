@@ -74,7 +74,6 @@ export {
 } from "./responses";
 export { HttpClient, WebsocketClient } from "./rpcclients"; // TODO: Why do we export those outside of this package?
 export {
-  IpPortString,
   TxBytes,
   TxHash,
   ValidatorEd25519Pubkey,

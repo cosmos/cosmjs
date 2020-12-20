@@ -1,5 +1,5 @@
 import { ReadonlyDate } from "readonly-date";
-import { IpPortString, TxBytes, TxHash, ValidatorPubkey, ValidatorSignature } from "./types";
+import { TxBytes, TxHash, ValidatorPubkey, ValidatorSignature } from "./types";
 export declare type Response =
   | AbciInfoResponse
   | AbciQueryResponse
@@ -219,7 +219,8 @@ export interface Header {
 }
 export interface NodeInfo {
   readonly id: Uint8Array;
-  readonly listenAddr: IpPortString;
+  /** IP and port */
+  readonly listenAddr: string;
   readonly network: string;
   readonly version: string;
   readonly channels: string;

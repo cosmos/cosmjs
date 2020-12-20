@@ -34,7 +34,7 @@
   `adaptor34`. Export the `Adaptor` type.
 - @cosmjs/tendermint-rpc: Export `DateTime` class.
 - @cosmjs/tendermint-rpc: Remove types `QueryString`, `Base64String`,
-  `HexString`, `IntegerString`. Use `string` instead.
+  `HexString`, `IntegerString` and `IpPortString`. Use `string` instead.
 
 ## 0.23.1 (2020-10-27)
 

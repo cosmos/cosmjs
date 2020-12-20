@@ -74,7 +74,6 @@ export {
 } from "./responses";
 export { HttpClient, WebsocketClient } from "./rpcclients";
 export {
-  IpPortString,
   TxBytes,
   TxHash,
   ValidatorEd25519Pubkey,
