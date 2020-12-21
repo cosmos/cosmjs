@@ -14,6 +14,7 @@ import {
   makeRandomAddress,
   pendingWithoutLaunchpad,
 } from "./testutils.spec";
+import { makeCosmoshubPath } from "./wallet";
 
 describe("SigningCosmosClient", () => {
   describe("makeReadOnly", () => {
@@ -219,6 +220,67 @@ describe("SigningCosmosClient", () => {
       ]);
 
       const broadcastResult = await client.broadcastTx(signed);
+      assertIsBroadcastTxSuccess(broadcastResult);
+    });
+  });
+
+  describe("appendSignature", () => {
+    it("works", async () => {
+      pendingWithoutLaunchpad();
+      const wallet0 = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(0));
+      const wallet1 = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic, makeCosmoshubPath(1));
+      const client0 = new SigningCosmosClient(launchpad.endpoint, faucet.address0, wallet0);
+      const client1 = new SigningCosmosClient(launchpad.endpoint, faucet.address1, wallet1);
+
+      const msg1: MsgSend = {
+        type: "cosmos-sdk/MsgSend",
+        value: {
+          from_address: faucet.address0,
+          to_address: makeRandomAddress(),
+          amount: coins(1234567, "ucosm"),
+        },
+      };
+      const msg2: MsgSend = {
+        type: "cosmos-sdk/MsgSend",
+        value: {
+          from_address: faucet.address1,
+          to_address: makeRandomAddress(),
+          amount: coins(1234567, "ucosm"),
+        },
+      };
+      const fee = {
+        amount: coins(2000, "ucosm"),
+        gas: "160000", // 2*80k
+      };
+      const memo = "This must be authorized by the two of us";
+
+      const signed = await client0.sign([msg1, msg2], fee, memo);
+      expect(signed.msg).toEqual([msg1, msg2]);
+      expect(signed.fee).toEqual(fee);
+      expect(signed.memo).toEqual(memo);
+      expect(signed.signatures).toEqual([
+        {
+          pub_key: faucet.pubkey0,
+          signature: jasmine.stringMatching(base64Matcher),
+        },
+      ]);
+
+      const cosigned = await client1.appendSignature(signed);
+      expect(cosigned.msg).toEqual([msg1, msg2]);
+      expect(cosigned.fee).toEqual(fee);
+      expect(cosigned.memo).toEqual(memo);
+      expect(cosigned.signatures).toEqual([
+        {
+          pub_key: faucet.pubkey0,
+          signature: jasmine.stringMatching(base64Matcher),
+        },
+        {
+          pub_key: faucet.pubkey1,
+          signature: jasmine.stringMatching(base64Matcher),
+        },
+      ]);
+
+      const broadcastResult = await client0.broadcastTx(cosigned);
       assertIsBroadcastTxSuccess(broadcastResult);
     });
   });

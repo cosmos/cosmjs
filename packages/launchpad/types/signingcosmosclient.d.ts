@@ -58,4 +58,9 @@ export declare class SigningCosmosClient extends CosmosClient {
    * creates a single signature and assembles the signed transaction.
    */
   sign(msgs: readonly Msg[], fee: StdFee, memo?: string): Promise<StdTx>;
+  /**
+   * Gets account number and sequence from the API, creates a sign doc,
+   * creates a single signature and appends it to the existing signatures.
+   */
+  appendSignature(signedTx: StdTx): Promise<StdTx>;
 }

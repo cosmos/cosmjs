@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import equals from "fast-deep-equal";
+
 import { Coin } from "./coins";
 import { Account, BroadcastTxResult, CosmosClient, GetSequenceResult } from "./cosmosclient";
 import { makeSignDoc } from "./encoding";
@@ -101,5 +103,26 @@ export class SigningCosmosClient extends CosmosClient {
     const signDoc = makeSignDoc(msgs, fee, chainId, memo, accountNumber, sequence);
     const { signed, signature } = await this.signer.signAmino(this.senderAddress, signDoc);
     return makeStdTx(signed, signature);
+  }
+
+  /**
+   * Gets account number and sequence from the API, creates a sign doc,
+   * creates a single signature and appends it to the existing signatures.
+   */
+  public async appendSignature(signedTx: StdTx): Promise<StdTx> {
+    const { msg: msgs, fee, memo } = signedTx;
+    const { accountNumber, sequence } = await this.getSequence();
+    const chainId = await this.getChainId();
+    const signDoc = makeSignDoc(msgs, fee, chainId, memo, accountNumber, sequence);
+    const { signed, signature: additionalSignature } = await this.signer.signAmino(
+      this.senderAddress,
+      signDoc,
+    );
+    if (!equals(signDoc, signed)) {
+      throw new Error(
+        "The signed document differs from the one of the original transaction. This is not allowed since the resulting transaction will be invalid.",
+      );
+    }
+    return makeStdTx(signed, [...signedTx.signatures, additionalSignature]);
   }
 }

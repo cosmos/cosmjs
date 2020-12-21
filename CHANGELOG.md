@@ -22,6 +22,8 @@
   remove such functionality from `CosmosClient.searchTx`.
 - @cosmjs/launchpad: Add `SigningCosmosClient.sign` method for signing without
   broadcasting.
+- @cosmjs/launchpad: Add `SigningCosmosClient.appendSignature` method creating
+  transactions with multiple signatures.
 - @cosmjs/launchpad: Add support for undefined memo in `makeSignDoc`.
 - @cosmjs/launchpad-ledger: `LedgerSigner.sign` method renamed `signAmino`.
 - @cosmjs/proto-signing: Add new package for handling transaction signing with
