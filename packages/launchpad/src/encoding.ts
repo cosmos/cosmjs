@@ -47,7 +47,7 @@ export function makeSignDoc(
   msgs: readonly Msg[],
   fee: StdFee,
   chainId: string,
-  memo: string,
+  memo: string | undefined,
   accountNumber: number | string,
   sequence: number | string,
 ): StdSignDoc {
@@ -57,7 +57,7 @@ export function makeSignDoc(
     sequence: Uint53.fromString(sequence.toString()).toString(),
     fee: fee,
     msgs: msgs,
-    memo: memo,
+    memo: memo || "",
   };
 }
 
