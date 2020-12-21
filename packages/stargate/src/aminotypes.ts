@@ -1,8 +1,4 @@
-/**
- * A map from Stargate message types as used in the messages's `Any` type
- * to Amino types.
- */
-const aminoTypeRegister: Record<string, string> = {
+const defaultTypes: Record<string, string> = {
   "/cosmos.bank.v1beta1.MsgSend": "cosmos-sdk/MsgSend",
   "/cosmos.bank.v1beta1.MsgMultiSend": "cosmos-sdk/MsgMultiSend",
   "/cosmos.crisis.v1beta1.MsgVerifyInvariant": "cosmos-sdk/MsgVerifyInvariant",
@@ -23,22 +19,38 @@ const aminoTypeRegister: Record<string, string> = {
   "/cosmos.vesting.v1beta1.MsgCreateVestingAccount": "cosmos-sdk/MsgCreateVestingAccount",
 };
 
-export function toAminoMsgType(typeUrl: string): string {
-  const type = aminoTypeRegister[typeUrl];
-  if (!type) {
-    throw new Error(
-      "Type URL does not exist in the Amino message type register. If you need support for this message, please open an issue at https://github.com/cosmos/cosmjs/issues.",
-    );
-  }
-  return type;
-}
+/**
+ * A map from Stargate message types as used in the messages's `Any` type
+ * to Amino types.
+ */
+export class AminoTypes {
+  private readonly register: Record<string, string>;
 
-export function fromAminoMsgType(type: string): string {
-  const [typeUrl] = Object.entries(aminoTypeRegister).find(([_typeUrl, value]) => value === type) ?? [];
-  if (!typeUrl) {
-    throw new Error(
-      "Type does not exist in the Amino message type register. If you need support for this message, please open an issue at https://github.com/cosmos/cosmjs/issues.",
-    );
+  public constructor(additions: Record<string, string> = {}) {
+    this.register = { ...defaultTypes, ...additions };
   }
-  return typeUrl;
+
+  public toAmino(typeUrl: string): string {
+    const type = defaultTypes[typeUrl];
+    if (!type) {
+      throw new Error(
+        "Type URL does not exist in the Amino message type register. " +
+          "If you need support for this message type, you can pass in additional entries to the AminoTypes constructor. " +
+          "If you think this message type should be included by default, please open an issue at https://github.com/cosmos/cosmjs/issues.",
+      );
+    }
+    return type;
+  }
+
+  public fromAmino(type: string): string {
+    const [typeUrl] = Object.entries(defaultTypes).find(([_typeUrl, value]) => value === type) ?? [];
+    if (!typeUrl) {
+      throw new Error(
+        "Type does not exist in the Amino message type register. " +
+          "If you need support for this message type, you can pass in additional entries to the AminoTypes constructor. " +
+          "If you think this message type should be included by default, please open an issue at https://github.com/cosmos/cosmjs/issues.",
+      );
+    }
+    return typeUrl;
+  }
 }

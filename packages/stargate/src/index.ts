@@ -1,5 +1,5 @@
 export * as codec from "./codec";
-export { toAminoMsgType, fromAminoMsgType } from "./encoding";
+export { AminoTypes } from "./aminotypes";
 export { parseRawLog } from "./logs";
 export {
   AuthExtension,

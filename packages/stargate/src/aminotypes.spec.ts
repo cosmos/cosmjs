@@ -1,28 +1,28 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { fromAminoMsgType, toAminoMsgType } from "./encoding";
+import { AminoTypes } from "./aminotypes";
 
-describe("encoding", () => {
-  describe("toAminoMsgType", () => {
+describe("AminoTypes", () => {
+  describe("toAmino", () => {
     it("works for known type url", () => {
-      const msgType = toAminoMsgType("/cosmos.staking.v1beta1.MsgDelegate");
+      const msgType = new AminoTypes().toAmino("/cosmos.staking.v1beta1.MsgDelegate");
       expect(msgType).toEqual("cosmos-sdk/MsgDelegate");
     });
 
     it("throws for unknown type url", () => {
-      expect(() => toAminoMsgType("/xxx.Unknown")).toThrowError(
+      expect(() => new AminoTypes().toAmino("/xxx.Unknown")).toThrowError(
         /Type URL does not exist in the Amino message type register./i,
       );
     });
   });
 
-  describe("fromAminoMsgType", () => {
+  describe("fromAmino", () => {
     it("works for known type url", () => {
-      const msgUrl = fromAminoMsgType("cosmos-sdk/MsgDelegate");
+      const msgUrl = new AminoTypes().fromAmino("cosmos-sdk/MsgDelegate");
       expect(msgUrl).toEqual("/cosmos.staking.v1beta1.MsgDelegate");
     });
 
     it("throws for unknown type url", () => {
-      expect(() => fromAminoMsgType("cosmos-sdk/MsgUnknown")).toThrowError(
+      expect(() => new AminoTypes().fromAmino("cosmos-sdk/MsgUnknown")).toThrowError(
         /Type does not exist in the Amino message type register./i,
       );
     });
