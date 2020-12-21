@@ -213,10 +213,7 @@ describe("SigningCosmosClient", () => {
       expect(signed.memo).toEqual(memo);
       expect(signed.signatures).toEqual([
         {
-          pub_key: {
-            type: "tendermint/PubKeySecp256k1",
-            value: jasmine.stringMatching(base64Matcher),
-          },
+          pub_key: faucet.pubkey0,
           signature: jasmine.stringMatching(base64Matcher),
         },
       ]);
