@@ -18,7 +18,7 @@ import {
 } from "../../encodings";
 import * as responses from "../../responses";
 import { SubscriptionEvent } from "../../rpcclients";
-import { TxBytes, TxHash, ValidatorPubkey, ValidatorSignature } from "../../types";
+import { ValidatorPubkey, ValidatorSignature } from "../../types";
 import { hashTx } from "./hasher";
 
 interface AbciInfoResult {
@@ -375,7 +375,7 @@ interface RpcBroadcastTxSyncResponse extends RpcTxData {
 function decodeBroadcastTxSync(data: RpcBroadcastTxSyncResponse): responses.BroadcastTxSyncResponse {
   return {
     ...decodeTxData(data),
-    hash: fromHex(assertNotEmpty(data.hash)) as TxHash,
+    hash: fromHex(assertNotEmpty(data.hash)),
   };
 }
 
@@ -390,7 +390,7 @@ interface RpcBroadcastTxCommitResponse {
 function decodeBroadcastTxCommit(data: RpcBroadcastTxCommitResponse): responses.BroadcastTxCommitResponse {
   return {
     height: Integer.parse(data.height),
-    hash: fromHex(assertNotEmpty(data.hash)) as TxHash,
+    hash: fromHex(assertNotEmpty(data.hash)),
     checkTx: decodeTxData(assertObject(data.check_tx)),
     deliverTx: may(decodeTxData, data.deliver_tx),
   };
@@ -626,11 +626,11 @@ interface RpcTxResponse {
 
 function decodeTxResponse(data: RpcTxResponse): responses.TxResponse {
   return {
-    tx: fromBase64(assertNotEmpty(data.tx)) as TxBytes,
+    tx: fromBase64(assertNotEmpty(data.tx)),
     result: decodeTxData(assertObject(data.tx_result)),
     height: Integer.parse(assertNotEmpty(data.height)),
     index: Integer.parse(assertNumber(data.index)),
-    hash: fromHex(assertNotEmpty(data.hash)) as TxHash,
+    hash: fromHex(assertNotEmpty(data.hash)),
     proof: may(decodeTxProof, data.proof),
   };
 }
@@ -657,7 +657,7 @@ interface RpcTxEvent {
 }
 
 function decodeTxEvent(data: RpcTxEvent): responses.TxEvent {
-  const tx = fromBase64(assertNotEmpty(data.tx)) as TxBytes;
+  const tx = fromBase64(assertNotEmpty(data.tx));
   return {
     tx: tx,
     hash: hashTx(tx),

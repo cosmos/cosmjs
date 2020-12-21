@@ -2,12 +2,11 @@ import { JsonRpcRequest, JsonRpcSuccessResponse } from "@cosmjs/json-rpc";
 import * as requests from "./requests";
 import * as responses from "./responses";
 import { SubscriptionEvent } from "./rpcclients";
-import { BlockHash, TxBytes, TxHash } from "./types";
 export interface Adaptor {
   readonly params: Params;
   readonly responses: Responses;
-  readonly hashTx: (tx: TxBytes) => TxHash;
-  readonly hashBlock: (header: responses.Header) => BlockHash;
+  readonly hashTx: (tx: Uint8Array) => Uint8Array;
+  readonly hashBlock: (header: responses.Header) => Uint8Array;
 }
 export declare type Encoder<T extends requests.Request> = (req: T) => JsonRpcRequest;
 export declare type Decoder<T extends responses.Response> = (res: JsonRpcSuccessResponse) => T;

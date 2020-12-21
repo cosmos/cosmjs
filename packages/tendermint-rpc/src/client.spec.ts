@@ -13,7 +13,6 @@ import { buildQuery } from "./requests";
 import * as responses from "./responses";
 import { HttpClient, RpcClient, WebsocketClient } from "./rpcclients";
 import { chainIdMatcher } from "./testutil.spec";
-import { TxBytes } from "./types";
 
 function tendermintEnabled(): boolean {
   return !!process.env.TENDERMINT_ENABLED;
@@ -30,8 +29,8 @@ async function tendermintSearchIndexUpdated(): Promise<void> {
   return sleep(75);
 }
 
-function buildKvTx(k: string, v: string): TxBytes {
-  return toAscii(`${k}=${v}`) as TxBytes;
+function buildKvTx(k: string, v: string): Uint8Array {
+  return toAscii(`${k}=${v}`);
 }
 
 function randomString(): string {

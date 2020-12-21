@@ -74,8 +74,6 @@ export {
 } from "./responses";
 export { HttpClient, WebsocketClient } from "./rpcclients";
 export {
-  TxBytes,
-  TxHash,
   ValidatorEd25519Pubkey,
   ValidatorEd25519Signature,
   ValidatorPubkey,

@@ -35,6 +35,8 @@
 - @cosmjs/tendermint-rpc: Export `DateTime` class.
 - @cosmjs/tendermint-rpc: Remove types `QueryString`, `Base64String`,
   `HexString`, `IntegerString` and `IpPortString`. Use `string` instead.
+- @cosmjs/tendermint-rpc: Remove types `BlockHash`, `TxBytes` and `TxHash`. Use
+  `Uint8Array` instead.
 
 ## 0.23.1 (2020-10-27)
 

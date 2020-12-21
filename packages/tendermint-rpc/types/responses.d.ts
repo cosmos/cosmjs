@@ -1,5 +1,5 @@
 import { ReadonlyDate } from "readonly-date";
-import { TxBytes, TxHash, ValidatorPubkey, ValidatorSignature } from "./types";
+import { ValidatorPubkey, ValidatorSignature } from "./types";
 export declare type Response =
   | AbciInfoResponse
   | AbciQueryResponse
@@ -57,7 +57,7 @@ export interface BlockchainResponse {
 /** No data in here because RPC method BroadcastTxAsync "returns right away, with no response" */
 export interface BroadcastTxAsyncResponse {}
 export interface BroadcastTxSyncResponse extends TxData {
-  readonly hash: TxHash;
+  readonly hash: Uint8Array;
 }
 /**
  * Returns true iff transaction made it sucessfully into the transaction pool
@@ -65,7 +65,7 @@ export interface BroadcastTxSyncResponse extends TxData {
 export declare function broadcastTxSyncSuccess(res: BroadcastTxSyncResponse): boolean;
 export interface BroadcastTxCommitResponse {
   readonly height: number;
-  readonly hash: TxHash;
+  readonly hash: Uint8Array;
   readonly checkTx: TxData;
   readonly deliverTx?: TxData;
 }
@@ -99,8 +99,8 @@ export interface StatusResponse {
  * Try to keep this compatible to TxEvent
  */
 export interface TxResponse {
-  readonly tx: TxBytes;
-  readonly hash: TxHash;
+  readonly tx: Uint8Array;
+  readonly hash: Uint8Array;
   readonly height: number;
   readonly index: number;
   readonly result: TxData;
@@ -117,8 +117,8 @@ export interface ValidatorsResponse {
 export interface NewBlockEvent extends Block {}
 export interface NewBlockHeaderEvent extends Header {}
 export interface TxEvent {
-  readonly tx: TxBytes;
-  readonly hash: TxHash;
+  readonly tx: Uint8Array;
+  readonly hash: Uint8Array;
   readonly height: number;
   /** @deprecated this value is not set in Tendermint 0.34+ */
   readonly index?: number;
