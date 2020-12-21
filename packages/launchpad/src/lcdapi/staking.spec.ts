@@ -33,14 +33,14 @@ describe("StakingExtension", () => {
   beforeAll(async () => {
     if (launchpadEnabled()) {
       const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
-      const client = new SigningCosmosClient(launchpad.endpoint, faucet.address, wallet);
+      const client = new SigningCosmosClient(launchpad.endpoint, faucet.address0, wallet);
 
       const chainId = await client.getChainId();
       {
         const msg: MsgDelegate = {
           type: "cosmos-sdk/MsgDelegate",
           value: {
-            delegator_address: faucet.address,
+            delegator_address: faucet.address0,
             validator_address: launchpad.validator.address,
             amount: coin(25000, "ustake"),
           },
@@ -48,7 +48,7 @@ describe("StakingExtension", () => {
         const memo = "Test delegation for wasmd";
         const { accountNumber, sequence } = await client.getSequence();
         const signDoc = makeSignDoc([msg], defaultFee, chainId, memo, accountNumber, sequence);
-        const { signed, signature } = await wallet.signAmino(faucet.address, signDoc);
+        const { signed, signature } = await wallet.signAmino(faucet.address0, signDoc);
         const signedTx = makeStdTx(signed, signature);
 
         const result = await client.broadcastTx(signedTx);
@@ -58,7 +58,7 @@ describe("StakingExtension", () => {
         const msg: MsgUndelegate = {
           type: "cosmos-sdk/MsgUndelegate",
           value: {
-            delegator_address: faucet.address,
+            delegator_address: faucet.address0,
             validator_address: launchpad.validator.address,
             amount: coin(100, "ustake"),
           },
@@ -66,7 +66,7 @@ describe("StakingExtension", () => {
         const memo = "Test undelegation for wasmd";
         const { accountNumber, sequence } = await client.getSequence();
         const signDoc = makeSignDoc([msg], defaultFee, chainId, memo, accountNumber, sequence);
-        const { signed, signature } = await wallet.signAmino(faucet.address, signDoc);
+        const { signed, signature } = await wallet.signAmino(faucet.address0, signDoc);
         const signedTx = makeStdTx(signed, signature);
 
         const result = await client.broadcastTx(signedTx);
@@ -81,12 +81,12 @@ describe("StakingExtension", () => {
     it("works", async () => {
       pendingWithoutLaunchpad();
       const client = makeStakingClient(launchpad.endpoint);
-      const response = await client.staking.delegatorDelegations(faucet.address);
+      const response = await client.staking.delegatorDelegations(faucet.address0);
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: [
           {
-            delegator_address: faucet.address,
+            delegator_address: faucet.address0,
             validator_address: launchpad.validator.address,
             shares: jasmine.stringMatching(bigDecimalMatcher),
             balance: { denom: "ustake", amount: jasmine.stringMatching(nonNegativeIntegerMatcher) },
@@ -100,12 +100,12 @@ describe("StakingExtension", () => {
     it("works", async () => {
       pendingWithoutLaunchpad();
       const client = makeStakingClient(launchpad.endpoint);
-      const { height, result } = await client.staking.delegatorUnbondingDelegations(faucet.address);
+      const { height, result } = await client.staking.delegatorUnbondingDelegations(faucet.address0);
       expect(height).toMatch(nonNegativeIntegerMatcher);
       assert(result);
       expect(result).toEqual([
         {
-          delegator_address: faucet.address,
+          delegator_address: faucet.address0,
           validator_address: launchpad.validator.address,
           entries: jasmine.arrayContaining([
             {
@@ -124,7 +124,7 @@ describe("StakingExtension", () => {
     it("works", async () => {
       pendingWithoutLaunchpad();
       const client = makeStakingClient(launchpad.endpoint);
-      const response = await client.staking.delegatorTransactions(faucet.address);
+      const response = await client.staking.delegatorTransactions(faucet.address0);
       expect(response.length).toEqual(3);
     });
   });
@@ -133,7 +133,7 @@ describe("StakingExtension", () => {
     it("works", async () => {
       pendingWithoutLaunchpad();
       const client = makeStakingClient(launchpad.endpoint);
-      const response = await client.staking.delegatorValidators(faucet.address);
+      const response = await client.staking.delegatorValidators(faucet.address0);
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: [
@@ -172,7 +172,7 @@ describe("StakingExtension", () => {
     it("works", async () => {
       pendingWithoutLaunchpad();
       const client = makeStakingClient(launchpad.endpoint);
-      const response = await client.staking.delegatorValidator(faucet.address, launchpad.validator.address);
+      const response = await client.staking.delegatorValidator(faucet.address0, launchpad.validator.address);
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: {
@@ -209,11 +209,11 @@ describe("StakingExtension", () => {
     it("works", async () => {
       pendingWithoutLaunchpad();
       const client = makeStakingClient(launchpad.endpoint);
-      const response = await client.staking.delegation(faucet.address, launchpad.validator.address);
+      const response = await client.staking.delegation(faucet.address0, launchpad.validator.address);
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: {
-          delegator_address: faucet.address,
+          delegator_address: faucet.address0,
           validator_address: launchpad.validator.address,
           shares: jasmine.stringMatching(bigDecimalMatcher),
           balance: { denom: "ustake", amount: jasmine.stringMatching(nonNegativeIntegerMatcher) },
@@ -227,13 +227,13 @@ describe("StakingExtension", () => {
       pendingWithoutLaunchpad();
       const client = makeStakingClient(launchpad.endpoint);
       const { height, result } = await client.staking.unbondingDelegation(
-        faucet.address,
+        faucet.address0,
         launchpad.validator.address,
       );
       expect(height).toMatch(nonNegativeIntegerMatcher);
       assert(result);
       expect(result).toEqual({
-        delegator_address: faucet.address,
+        delegator_address: faucet.address0,
         validator_address: launchpad.validator.address,
         entries: jasmine.arrayContaining([
           {
@@ -392,7 +392,7 @@ describe("StakingExtension", () => {
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: jasmine.arrayContaining([
           {
-            delegator_address: faucet.address,
+            delegator_address: faucet.address0,
             validator_address: launchpad.validator.address,
             shares: jasmine.stringMatching(bigDecimalMatcher),
             balance: { denom: "ustake", amount: jasmine.stringMatching(nonNegativeIntegerMatcher) },
@@ -419,7 +419,7 @@ describe("StakingExtension", () => {
       assert(result);
       expect(result).toEqual([
         {
-          delegator_address: faucet.address,
+          delegator_address: faucet.address0,
           validator_address: launchpad.validator.address,
           entries: jasmine.arrayContaining([
             {

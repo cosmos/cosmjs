@@ -45,10 +45,10 @@ describe("AuthExtension", () => {
   it("has correct pubkey for faucet", async () => {
     pendingWithoutLaunchpad();
     const client = makeAuthClient(launchpad.endpoint);
-    const { result } = await client.auth.account(faucet.address);
+    const { result } = await client.auth.account(faucet.address0);
     expect(result.value).toEqual(
       jasmine.objectContaining({
-        public_key: faucet.pubkey,
+        public_key: faucet.pubkey0,
       }),
     );
   });

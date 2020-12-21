@@ -208,7 +208,7 @@ describe("CosmosClient", () => {
       const sendMsg: MsgSend = {
         type: "cosmos-sdk/MsgSend",
         value: {
-          from_address: faucet.address,
+          from_address: faucet.address0,
           to_address: makeRandomAddress(),
           amount: [
             {
@@ -230,7 +230,7 @@ describe("CosmosClient", () => {
       };
 
       const chainId = await client.getChainId();
-      const { accountNumber, sequence } = await client.getSequence(faucet.address);
+      const { accountNumber, sequence } = await client.getSequence(faucet.address0);
       const signDoc = makeSignDoc([sendMsg], fee, chainId, memo, accountNumber, sequence);
       const { signed, signature } = await wallet.signAmino(walletAddress, signDoc);
       const signedTx = makeStdTx(signed, signature);

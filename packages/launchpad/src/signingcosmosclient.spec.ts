@@ -19,7 +19,7 @@ describe("SigningCosmosClient", () => {
   describe("makeReadOnly", () => {
     it("can be constructed with default fees", async () => {
       const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
-      const client = new SigningCosmosClient(launchpad.endpoint, faucet.address, wallet);
+      const client = new SigningCosmosClient(launchpad.endpoint, faucet.address0, wallet);
       const openedClient = (client as unknown) as PrivateSigningCosmosClient;
       expect(openedClient.fees).toEqual({
         send: {
@@ -37,7 +37,7 @@ describe("SigningCosmosClient", () => {
     it("can be constructed with custom gas price", async () => {
       const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const gasPrice = GasPrice.fromString("3.14utest");
-      const client = new SigningCosmosClient(launchpad.endpoint, faucet.address, wallet, gasPrice);
+      const client = new SigningCosmosClient(launchpad.endpoint, faucet.address0, wallet, gasPrice);
       const openedClient = (client as unknown) as PrivateSigningCosmosClient;
       expect(openedClient.fees).toEqual({
         send: {
@@ -59,7 +59,7 @@ describe("SigningCosmosClient", () => {
       };
       const client = new SigningCosmosClient(
         launchpad.endpoint,
-        faucet.address,
+        faucet.address0,
         wallet,
         undefined,
         gasLimits,
@@ -84,7 +84,13 @@ describe("SigningCosmosClient", () => {
       const gasLimits = {
         send: 160000,
       };
-      const client = new SigningCosmosClient(launchpad.endpoint, faucet.address, wallet, gasPrice, gasLimits);
+      const client = new SigningCosmosClient(
+        launchpad.endpoint,
+        faucet.address0,
+        wallet,
+        gasPrice,
+        gasLimits,
+      );
       const openedClient = (client as unknown) as PrivateSigningCosmosClient;
       expect(openedClient.fees).toEqual({
         send: {
@@ -104,7 +110,7 @@ describe("SigningCosmosClient", () => {
     it("always uses authAccount implementation", async () => {
       pendingWithoutLaunchpad();
       const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
-      const client = new SigningCosmosClient(launchpad.endpoint, faucet.address, wallet);
+      const client = new SigningCosmosClient(launchpad.endpoint, faucet.address0, wallet);
 
       const openedClient = (client as unknown) as PrivateCosmosClient;
       const blockLatestSpy = spyOn(openedClient.lcdClient, "blocksLatest").and.callThrough();
@@ -122,7 +128,7 @@ describe("SigningCosmosClient", () => {
     it("works", async () => {
       pendingWithoutLaunchpad();
       const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
-      const client = new SigningCosmosClient(launchpad.endpoint, faucet.address, wallet);
+      const client = new SigningCosmosClient(launchpad.endpoint, faucet.address0, wallet);
 
       // instantiate
       const transferAmount: readonly Coin[] = [
@@ -154,12 +160,12 @@ describe("SigningCosmosClient", () => {
     it("works", async () => {
       pendingWithoutLaunchpad();
       const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
-      const client = new SigningCosmosClient(launchpad.endpoint, faucet.address, wallet);
+      const client = new SigningCosmosClient(launchpad.endpoint, faucet.address0, wallet);
 
       const msg: MsgDelegate = {
         type: "cosmos-sdk/MsgDelegate",
         value: {
-          delegator_address: faucet.address,
+          delegator_address: faucet.address0,
           validator_address: launchpad.validator.address,
           amount: coin(1234, "ustake"),
         },
@@ -177,12 +183,12 @@ describe("SigningCosmosClient", () => {
     it("works", async () => {
       pendingWithoutLaunchpad();
       const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
-      const client = new SigningCosmosClient(launchpad.endpoint, faucet.address, wallet);
+      const client = new SigningCosmosClient(launchpad.endpoint, faucet.address0, wallet);
 
       const msg1: MsgDelegate = {
         type: "cosmos-sdk/MsgDelegate",
         value: {
-          delegator_address: faucet.address,
+          delegator_address: faucet.address0,
           validator_address: launchpad.validator.address,
           amount: coin(1234, "ustake"),
         },
@@ -190,7 +196,7 @@ describe("SigningCosmosClient", () => {
       const msg2: MsgSend = {
         type: "cosmos-sdk/MsgSend",
         value: {
-          from_address: faucet.address,
+          from_address: faucet.address0,
           to_address: makeRandomAddress(),
           amount: coins(1234567, "ucosm"),
         },

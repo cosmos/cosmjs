@@ -35,7 +35,7 @@ describe("CosmosClient.getTx and .searchTx", () => {
       const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const accounts = await wallet.getAccounts();
       const [{ address: walletAddress }] = accounts;
-      const client = new SigningCosmosClient(launchpad.endpoint, faucet.address, wallet);
+      const client = new SigningCosmosClient(launchpad.endpoint, faucet.address0, wallet);
 
       {
         const memo = "Sending more than I can afford";
@@ -44,7 +44,7 @@ describe("CosmosClient.getTx and .searchTx", () => {
         const sendMsg: MsgSend = {
           type: "cosmos-sdk/MsgSend",
           value: {
-            from_address: faucet.address,
+            from_address: faucet.address0,
             to_address: recipient,
             amount: transferAmount,
           },
@@ -65,7 +65,7 @@ describe("CosmosClient.getTx and .searchTx", () => {
         const result = await client.broadcastTx(tx.value);
         if (isBroadcastTxFailure(result)) {
           sendUnsuccessful = {
-            sender: faucet.address,
+            sender: faucet.address0,
             recipient: recipient,
             hash: transactionId,
             height: result.height,
@@ -81,7 +81,7 @@ describe("CosmosClient.getTx and .searchTx", () => {
         await sleep(75); // wait until tx is indexed
         const txDetails = await new LcdClient(launchpad.endpoint).txById(result.transactionHash);
         sendSuccessful = {
-          sender: faucet.address,
+          sender: faucet.address0,
           recipient: recipient,
           hash: result.transactionHash,
           height: Number.parseInt(txDetails.height, 10),

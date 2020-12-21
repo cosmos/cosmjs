@@ -58,7 +58,7 @@ describe("encoding", () => {
       const msg1: MsgDelegate = {
         type: "cosmos-sdk/MsgDelegate",
         value: {
-          delegator_address: faucet.address,
+          delegator_address: faucet.address0,
           validator_address: launchpad.validator.address,
           amount: coin(1234, "ustake"),
         },
@@ -66,7 +66,7 @@ describe("encoding", () => {
       const msg2: MsgSend = {
         type: "cosmos-sdk/MsgSend",
         value: {
-          from_address: faucet.address,
+          from_address: faucet.address0,
           to_address: makeRandomAddress(),
           amount: coins(1234567, "ucosm"),
         },
@@ -95,7 +95,7 @@ describe("encoding", () => {
       const msg1: MsgDelegate = {
         type: "cosmos-sdk/MsgDelegate",
         value: {
-          delegator_address: faucet.address,
+          delegator_address: faucet.address0,
           validator_address: launchpad.validator.address,
           amount: coin(1234, "ustake"),
         },
@@ -103,7 +103,7 @@ describe("encoding", () => {
       const msg2: MsgSend = {
         type: "cosmos-sdk/MsgSend",
         value: {
-          from_address: faucet.address,
+          from_address: faucet.address0,
           to_address: makeRandomAddress(),
           amount: coins(1234567, "ucosm"),
         },

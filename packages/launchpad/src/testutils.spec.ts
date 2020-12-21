@@ -38,11 +38,15 @@ export const launchpad = {
 export const faucet = {
   mnemonic:
     "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone",
-  pubkey: {
+  pubkey0: {
     type: "tendermint/PubKeySecp256k1",
     value: "A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ",
   },
-  address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+  address0: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+  address1: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
+  address2: "cosmos1xy4yqngt0nlkdcenxymg8tenrghmek4nmqm28k",
+  address3: "cosmos142u9fgcjdlycfcez3lw8x6x5h7rfjlnfhpw2lx",
+  address4: "cosmos1hsm76p4ahyhl5yh3ve9ur49r5kemhp2r0dcjvx",
 };
 
 /** Unused account */
