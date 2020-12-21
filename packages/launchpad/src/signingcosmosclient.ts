@@ -6,7 +6,7 @@ import { buildFeeTable, FeeTable, GasLimits, GasPrice } from "./gas";
 import { BroadcastMode } from "./lcdapi";
 import { Msg, MsgSend } from "./msgs";
 import { OfflineSigner } from "./signer";
-import { makeStdTx } from "./tx";
+import { makeStdTx, StdTx } from "./tx";
 import { StdFee } from "./types";
 
 /**
@@ -87,11 +87,19 @@ export class SigningCosmosClient extends CosmosClient {
    * creates a single signature, assembles the signed transaction and broadcasts it.
    */
   public async signAndBroadcast(msgs: readonly Msg[], fee: StdFee, memo = ""): Promise<BroadcastTxResult> {
+    const signedTx = await this.sign(msgs, fee, memo);
+    return this.broadcastTx(signedTx);
+  }
+
+  /**
+   * Gets account number and sequence from the API, creates a sign doc,
+   * creates a single signature and assembles the signed transaction.
+   */
+  public async sign(msgs: readonly Msg[], fee: StdFee, memo = ""): Promise<StdTx> {
     const { accountNumber, sequence } = await this.getSequence();
     const chainId = await this.getChainId();
     const signDoc = makeSignDoc(msgs, fee, chainId, memo, accountNumber, sequence);
     const { signed, signature } = await this.signer.signAmino(this.senderAddress, signDoc);
-    const signedTx = makeStdTx(signed, signature);
-    return this.broadcastTx(signedTx);
+    return makeStdTx(signed, signature);
   }
 }

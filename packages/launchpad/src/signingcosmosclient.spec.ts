@@ -4,10 +4,10 @@ import { assert } from "@cosmjs/utils";
 import { Coin, coin, coins } from "./coins";
 import { assertIsBroadcastTxSuccess, PrivateCosmosClient } from "./cosmosclient";
 import { GasPrice } from "./gas";
-import { MsgDelegate } from "./msgs";
+import { MsgDelegate, MsgSend } from "./msgs";
 import { Secp256k1HdWallet } from "./secp256k1hdwallet";
 import { PrivateSigningCosmosClient, SigningCosmosClient } from "./signingcosmosclient";
-import { launchpad, makeRandomAddress, pendingWithoutLaunchpad } from "./testutils.spec";
+import { base64Matcher, launchpad, makeRandomAddress, pendingWithoutLaunchpad } from "./testutils.spec";
 
 const httpUrl = "http://localhost:1317";
 
@@ -170,6 +170,53 @@ describe("SigningCosmosClient", () => {
       };
       const result = await client.signAndBroadcast([msg], fee, "Use your power wisely");
       assertIsBroadcastTxSuccess(result);
+    });
+  });
+
+  describe("sign", () => {
+    it("works", async () => {
+      pendingWithoutLaunchpad();
+      const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+      const client = new SigningCosmosClient(httpUrl, faucet.address, wallet);
+
+      const msg1: MsgDelegate = {
+        type: "cosmos-sdk/MsgDelegate",
+        value: {
+          delegator_address: faucet.address,
+          validator_address: launchpad.validator.address,
+          amount: coin(1234, "ustake"),
+        },
+      };
+      const msg2: MsgSend = {
+        type: "cosmos-sdk/MsgSend",
+        value: {
+          from_address: faucet.address,
+          to_address: makeRandomAddress(),
+          amount: coins(1234567, "ucosm"),
+        },
+      };
+      const fee = {
+        amount: coins(2000, "ucosm"),
+        gas: "180000", // 180k
+      };
+      const memo = "Use your power wisely";
+
+      const signed = await client.sign([msg1, msg2], fee, memo);
+      expect(signed.msg).toEqual([msg1, msg2]);
+      expect(signed.fee).toEqual(fee);
+      expect(signed.memo).toEqual(memo);
+      expect(signed.signatures).toEqual([
+        {
+          pub_key: {
+            type: "tendermint/PubKeySecp256k1",
+            value: jasmine.stringMatching(base64Matcher),
+          },
+          signature: jasmine.stringMatching(base64Matcher),
+        },
+      ]);
+
+      const broadcastResult = await client.broadcastTx(signed);
+      assertIsBroadcastTxSuccess(broadcastResult);
     });
   });
 });
