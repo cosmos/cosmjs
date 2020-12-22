@@ -218,7 +218,7 @@ describe("SigningCosmosClient", () => {
           signature: jasmine.stringMatching(base64Matcher),
         },
       ]);
-
+      // Ensure signed transaction is valid
       const broadcastResult = await client.broadcastTx(signed);
       assertIsBroadcastTxSuccess(broadcastResult);
     });
@@ -255,15 +255,6 @@ describe("SigningCosmosClient", () => {
       const memo = "This must be authorized by the two of us";
 
       const signed = await client0.sign([msg1, msg2], fee, memo);
-      expect(signed.msg).toEqual([msg1, msg2]);
-      expect(signed.fee).toEqual(fee);
-      expect(signed.memo).toEqual(memo);
-      expect(signed.signatures).toEqual([
-        {
-          pub_key: faucet.pubkey0,
-          signature: jasmine.stringMatching(base64Matcher),
-        },
-      ]);
 
       const cosigned = await client1.appendSignature(signed);
       expect(cosigned.msg).toEqual([msg1, msg2]);
@@ -279,7 +270,7 @@ describe("SigningCosmosClient", () => {
           signature: jasmine.stringMatching(base64Matcher),
         },
       ]);
-
+      // Ensure signed transaction is valid
       const broadcastResult = await client0.broadcastTx(cosigned);
       assertIsBroadcastTxSuccess(broadcastResult);
     });
