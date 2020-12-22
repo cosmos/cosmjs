@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { As } from "type-tagger";
 
 /**
  * RPC methods as documented in https://docs.tendermint.com/master/rpc/
@@ -129,11 +128,9 @@ export interface SubscribeRequest {
   readonly method: Method.Subscribe;
   readonly query: {
     readonly type: SubscriptionEventType;
-    readonly raw?: QueryString;
+    readonly raw?: string;
   };
 }
-
-export type QueryString = string & As<"query">;
 
 export interface QueryTag {
   readonly key: string;
@@ -154,8 +151,9 @@ export interface TxSearchRequest {
   readonly method: Method.TxSearch;
   readonly params: TxSearchParams;
 }
+
 export interface TxSearchParams {
-  readonly query: QueryString;
+  readonly query: string;
   readonly prove?: boolean;
   readonly page?: number;
   readonly per_page?: number;
@@ -170,13 +168,13 @@ export interface ValidatorsRequest {
 
 export interface BuildQueryComponents {
   readonly tags?: readonly QueryTag[];
-  readonly raw?: QueryString;
+  readonly raw?: string;
 }
 
-export function buildQuery(components: BuildQueryComponents): QueryString {
+export function buildQuery(components: BuildQueryComponents): string {
   const tags = components.tags ? components.tags : [];
   const tagComponents = tags.map((tag) => `${tag.key}='${tag.value}'`);
   const rawComponents = components.raw ? [components.raw] : [];
 
-  return [...tagComponents, ...rawComponents].join(" AND ") as QueryString;
+  return [...tagComponents, ...rawComponents].join(" AND ");
 }

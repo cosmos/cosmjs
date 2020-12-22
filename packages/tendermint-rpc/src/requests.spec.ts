@@ -1,4 +1,4 @@
-import { buildQuery, QueryString } from "./requests";
+import { buildQuery } from "./requests";
 
 describe("Requests", () => {
   describe("buildQuery", () => {
@@ -23,7 +23,7 @@ describe("Requests", () => {
     });
 
     it("works for raw input", () => {
-      const query = buildQuery({ raw: "aabbCCDD" as QueryString });
+      const query = buildQuery({ raw: "aabbCCDD" });
       expect(query).toEqual("aabbCCDD");
     });
 
@@ -33,7 +33,7 @@ describe("Requests", () => {
           { key: "k", value: "9" },
           { key: "L", value: "7" },
         ],
-        raw: "aabbCCDD" as QueryString,
+        raw: "aabbCCDD",
       });
       expect(query).toEqual("k='9' AND L='7' AND aabbCCDD");
     });

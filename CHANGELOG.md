@@ -11,6 +11,8 @@
 - @cosmjs/cosmwasm: Add `CosmWasmClient.getTx` method for searching by ID and
   remove such functionality from `CosmWasmClient.searchTx`.
 - @cosmjs/cosmwasm-stargate: Add new package for CosmWasm Stargate support.
+- @cosmjs/crypto: Change `Secp256k1Keypair` from tagged type to simple
+  interface.
 - @cosmjs/launchpad: Add `Secp256k1Wallet` to manage a single raw secp256k1
   keypair.
 - @cosmjs/launchpad: `OfflineSigner` type’s `sign` method renamed `signAmino`
@@ -33,6 +35,10 @@
 - @cosmjs/tendermint-rpc: Remove export `v0_33` in favour of `adaptor33` and
   `adaptor34`. Export the `Adaptor` type.
 - @cosmjs/tendermint-rpc: Export `DateTime` class.
+- @cosmjs/tendermint-rpc: Remove types `QueryString`, `Base64String`,
+  `HexString`, `IntegerString` and `IpPortString`. Use `string` instead.
+- @cosmjs/tendermint-rpc: Remove types `BlockHash`, `TxBytes` and `TxHash`. Use
+  `Uint8Array` instead.
 
 ## 0.23.1 (2020-10-27)
 

@@ -1,19 +1,16 @@
 import { fromHex, toHex } from "@cosmjs/encoding";
 import BN from "bn.js";
 import elliptic from "elliptic";
-import { As } from "type-tagger";
 
 import { ExtendedSecp256k1Signature, Secp256k1Signature } from "./secp256k1signature";
 
 const secp256k1 = new elliptic.ec("secp256k1");
 const secp256k1N = new BN("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141", "hex");
 
-interface Keypair {
+export interface Secp256k1Keypair {
   readonly pubkey: Uint8Array;
   readonly privkey: Uint8Array;
 }
-
-export type Secp256k1Keypair = Keypair & As<"secp256k1-keypair">;
 
 export class Secp256k1 {
   public static async makeKeypair(privkey: Uint8Array): Promise<Secp256k1Keypair> {
@@ -35,7 +32,7 @@ export class Secp256k1 {
       throw new Error("input data is not a valid secp256k1 private key");
     }
 
-    const out: Keypair = {
+    const out: Secp256k1Keypair = {
       privkey: fromHex(keypair.getPrivate("hex")),
       // encodes uncompressed as
       // - 1-byte prefix "04"
@@ -43,7 +40,7 @@ export class Secp256k1 {
       // - 32-byte y coordinate
       pubkey: Uint8Array.from(keypair.getPublic("array")),
     };
-    return out as Secp256k1Keypair;
+    return out;
   }
 
   // Creates a signature that is

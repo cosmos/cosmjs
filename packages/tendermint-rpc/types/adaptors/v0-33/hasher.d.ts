@@ -1,4 +1,3 @@
 import { Header } from "../../responses";
-import { BlockHash, TxBytes, TxHash } from "../../types";
-export declare function hashTx(tx: TxBytes): TxHash;
-export declare function hashBlock(header: Header): BlockHash;
+export declare function hashTx(tx: Uint8Array): Uint8Array;
+export declare function hashBlock(header: Header): Uint8Array;

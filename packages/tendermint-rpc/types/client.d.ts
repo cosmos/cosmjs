@@ -62,7 +62,7 @@ export declare class Client {
   status(): Promise<responses.StatusResponse>;
   subscribeNewBlock(): Stream<responses.NewBlockEvent>;
   subscribeNewBlockHeader(): Stream<responses.NewBlockHeaderEvent>;
-  subscribeTx(query?: requests.QueryString): Stream<responses.TxEvent>;
+  subscribeTx(query?: string): Stream<responses.TxEvent>;
   /**
    * Get a single transaction by hash
    *

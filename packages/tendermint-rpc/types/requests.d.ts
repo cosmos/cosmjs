@@ -1,4 +1,3 @@
-import { As } from "type-tagger";
 /**
  * RPC methods as documented in https://docs.tendermint.com/master/rpc/
  *
@@ -113,10 +112,9 @@ export interface SubscribeRequest {
   readonly method: Method.Subscribe;
   readonly query: {
     readonly type: SubscriptionEventType;
-    readonly raw?: QueryString;
+    readonly raw?: string;
   };
 }
-export declare type QueryString = string & As<"query">;
 export interface QueryTag {
   readonly key: string;
   readonly value: string;
@@ -134,7 +132,7 @@ export interface TxSearchRequest {
   readonly params: TxSearchParams;
 }
 export interface TxSearchParams {
-  readonly query: QueryString;
+  readonly query: string;
   readonly prove?: boolean;
   readonly page?: number;
   readonly per_page?: number;
@@ -147,6 +145,6 @@ export interface ValidatorsRequest {
 }
 export interface BuildQueryComponents {
   readonly tags?: readonly QueryTag[];
-  readonly raw?: QueryString;
+  readonly raw?: string;
 }
-export declare function buildQuery(components: BuildQueryComponents): QueryString;
+export declare function buildQuery(components: BuildQueryComponents): string;

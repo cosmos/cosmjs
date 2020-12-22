@@ -36,7 +36,6 @@ import {
   broadcastTxCommitSuccess,
   Client as TendermintClient,
   DateTime,
-  QueryString,
 } from "@cosmjs/tendermint-rpc";
 import { assert } from "@cosmjs/utils";
 
@@ -343,10 +342,7 @@ export class CosmWasmClient {
   }
 
   private async txsQuery(query: string): Promise<readonly IndexedTx[]> {
-    const params = {
-      query: query as QueryString,
-    };
-    const results = await this.tmClient.txSearchAll(params);
+    const results = await this.tmClient.txSearchAll({ query: query });
     return results.txs.map((tx) => {
       return {
         height: tx.height,

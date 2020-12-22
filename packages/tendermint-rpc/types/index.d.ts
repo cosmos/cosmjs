@@ -16,7 +16,6 @@ export {
   HealthRequest,
   Method,
   Request,
-  QueryString,
   QueryTag,
   StatusRequest,
   SubscriptionEventType,
@@ -75,9 +74,6 @@ export {
 } from "./responses";
 export { HttpClient, WebsocketClient } from "./rpcclients";
 export {
-  IpPortString,
-  TxBytes,
-  TxHash,
   ValidatorEd25519Pubkey,
   ValidatorEd25519Signature,
   ValidatorPubkey,

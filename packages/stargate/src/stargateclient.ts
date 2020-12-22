@@ -12,12 +12,7 @@ import {
 } from "@cosmjs/launchpad";
 import { Uint53, Uint64 } from "@cosmjs/math";
 import { decodePubkey } from "@cosmjs/proto-signing";
-import {
-  adaptor34,
-  broadcastTxCommitSuccess,
-  Client as TendermintClient,
-  QueryString,
-} from "@cosmjs/tendermint-rpc";
+import { adaptor34, broadcastTxCommitSuccess, Client as TendermintClient } from "@cosmjs/tendermint-rpc";
 import { assert, assertDefined } from "@cosmjs/utils";
 import Long from "long";
 
@@ -281,10 +276,7 @@ export class StargateClient {
   }
 
   private async txsQuery(query: string): Promise<readonly IndexedTx[]> {
-    const params = {
-      query: query as QueryString,
-    };
-    const results = await this.tmClient.txSearchAll(params);
+    const results = await this.tmClient.txSearchAll({ query: query });
     return results.txs.map((tx) => {
       return {
         height: tx.height,

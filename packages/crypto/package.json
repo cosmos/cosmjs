@@ -56,7 +56,6 @@
     "pbkdf2": "^3.1.1",
     "ripemd160": "^2.0.2",
     "sha.js": "^2.4.11",
-    "type-tagger": "^1.0.0",
     "unorm": "^1.5.0"
   },
   "devDependencies": {

@@ -1,4 +1,4 @@
-import { Sha256 } from "@cosmjs/crypto";
+import { Sha256, sha256 } from "@cosmjs/crypto";
 
 import {
   encodeBlockId,
@@ -9,13 +9,11 @@ import {
   encodeVersion,
 } from "../../encodings";
 import { Header } from "../../responses";
-import { BlockHash, TxBytes, TxHash } from "../../types";
 
 // hash is sha256
 // https://github.com/tendermint/tendermint/blob/master/UPGRADING.md#v0260
-export function hashTx(tx: TxBytes): TxHash {
-  const hash = new Sha256(tx).digest();
-  return hash as TxHash;
+export function hashTx(tx: Uint8Array): Uint8Array {
+  return sha256(tx);
 }
 
 function getSplitPoint(n: number): number {
@@ -54,7 +52,7 @@ function hashTree(hashes: readonly Uint8Array[]): Uint8Array {
   }
 }
 
-export function hashBlock(header: Header): BlockHash {
+export function hashBlock(header: Header): Uint8Array {
   const encodedFields: readonly Uint8Array[] = [
     encodeVersion(header.version),
     encodeString(header.chainId),
@@ -72,5 +70,5 @@ export function hashBlock(header: Header): BlockHash {
     encodeBytes(header.evidenceHash),
     encodeBytes(header.proposerAddress),
   ];
-  return hashTree(encodedFields) as BlockHash;
+  return hashTree(encodedFields);
 }

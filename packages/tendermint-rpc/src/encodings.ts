@@ -1,12 +1,7 @@
-import { fromBase64, fromHex, fromRfc3339, toBase64, toHex, toUtf8 } from "@cosmjs/encoding";
+import { fromRfc3339, toUtf8 } from "@cosmjs/encoding";
 import { Int53 } from "@cosmjs/math";
-import { As } from "type-tagger";
 
 import { BlockId, ReadonlyDateWithNanoseconds, Version } from "./responses";
-
-export type Base64String = string & As<"base64">;
-export type HexString = string & As<"hex">;
-export type IntegerString = string & As<"integer">;
 
 /**
  * A runtime checker that ensures a given value is set (i.e. not undefined or null)
@@ -150,23 +145,13 @@ export function dictionaryToStringMap(obj: Record<string, unknown>): Map<string,
 }
 
 export class Integer {
-  public static parse(input: IntegerString | number): number {
+  public static parse(input: string | number): number {
     const asInt = typeof input === "number" ? new Int53(input) : Int53.fromString(input);
     return asInt.toNumber();
   }
 
-  public static encode(num: number): IntegerString {
-    return new Int53(num).toString() as IntegerString;
-  }
-}
-
-export class Base64 {
-  public static encode(data: Uint8Array): Base64String {
-    return toBase64(data) as Base64String;
-  }
-
-  public static decode(base64String: Base64String): Uint8Array {
-    return fromBase64(base64String);
+  public static encode(num: number): string {
+    return new Int53(num).toString();
   }
 }
 
@@ -183,16 +168,6 @@ export class DateTime {
     const millisecondIso = dateTime.toISOString();
     const nanoseconds = dateTime.nanoseconds?.toString() ?? "";
     return `${millisecondIso.slice(0, -1)}${nanoseconds.padStart(6, "0")}Z`;
-  }
-}
-
-export class Hex {
-  public static encode(data: Uint8Array): HexString {
-    return toHex(data) as HexString;
-  }
-
-  public static decode(hexString: HexString): Uint8Array {
-    return fromHex(hexString);
   }
 }
 
