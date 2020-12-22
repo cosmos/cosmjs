@@ -7,6 +7,225 @@ A client library for the Cosmos SDK 0.37 (cosmoshub-3), 0.38 and 0.39
 [Launchpad — A pre-stargate stable version of the Cosmos SDK](https://blog.cosmos.network/launchpad-a-pre-stargate-stable-version-of-the-cosmos-sdk-e0c58d8c4e24)
 to learn more about launchpad.
 
+## Basic usage
+
+The basic usage of the package `@cosmjs/launchpad` contains the following:
+
+1. [Create a wallet](#create-a-wallet)
+2. [Sign and broadcast transactions](#sign-and-broadcast-transactions)
+
+### Create a wallet
+
+For the sake of simplicity we use an in-memory wallet. This is not the safest
+way to store production keys. The following demo code is intended for developers
+using testnet credentials only. Integrating it into end user facing products
+requires serious security review.
+
+If you do not yet have a mnemonic, generate a new wallet with a random mnemonic:
+
+```ts
+import { Secp256k1HdWallet } from "@cosmjs/launchpad";
+
+// …
+
+const wallet = await Secp256k1HdWallet.generate();
+console.log("Mnemonic:", wallet.mnemonic);
+
+const [{ address }] = await wallet.getAccounts();
+console.log("Address:", address);
+```
+
+Or import an existing one:
+
+```ts
+import { Secp256k1HdWallet } from "@cosmjs/launchpad";
+
+// …
+
+const wallet = await Secp256k1HdWallet.fromMnemonic(
+  // your mnemonic here 👇
+  "enlist hip relief stomach skate base shallow young switch frequent cry park",
+);
+
+const [{ address }] = await wallet.getAccounts();
+console.log("Address:", address);
+```
+
+### Sign and broadcast transactions
+
+A wallet holds private keys and can use them for signing transactions. To do so
+we stick the wallet into a client:
+
+```ts
+import {
+  Secp256k1HdWallet,
+  SigningCosmosClient,
+  coins,
+} from "@cosmjs/launchpad";
+
+// …
+
+const wallet = await Secp256k1HdWallet.generate();
+const [{ address }] = await wallet.getAccounts();
+console.log("Address:", address);
+
+// Ensure the address has some tokens to spend
+
+const lcdApi = "https://…";
+const client = new SigningCosmosClient(lcdApi, address, wallet);
+
+// check our balance
+const account = await client.getAccount();
+console.log("Account:", account);
+
+// Send tokens
+const recipient = "cosmos1b2340gb2…";
+await client.sendTokens(recipient, coins(123, "uatom"));
+```
+
+or use custom message types:
+
+```ts
+import {
+  Secp256k1HdWallet,
+  SigningCosmosClient,
+  coins,
+  coin,
+  MsgDelegate,
+} from "@cosmjs/launchpad";
+
+// …
+
+const wallet = await Secp256k1HdWallet.generate();
+const [{ address }] = await wallet.getAccounts();
+console.log("Address:", address);
+
+// Ensure the address has some tokens to spend
+
+const lcdApi = "https://…";
+const client = new SigningCosmosClient(lcdApi, address, wallet);
+
+// …
+
+const msg: MsgDelegate = {
+  type: "cosmos-sdk/MsgDelegate",
+  value: {
+    delegator_address: address,
+    validator_address: "cosmosvaloper1yfkkk04ve8a0sugj4fe6q6zxuvmvza8r3arurr",
+    amount: coin(300000, "ustake"),
+  },
+};
+const fee = {
+  amount: coins(2000, "ucosm"),
+  gas: "180000", // 180k
+};
+await client.signAndBroadcast([msg], fee);
+```
+
+## Advanced usage
+
+Here you will learn a few things that are slightly more advanced:
+
+1. [Sign only](#sign-only)
+2. [Aggregate signatures](#aggregate-signatures) from multiple signers
+
+### Sign only
+
+You can sign a transaction without broadcasting it:
+
+```ts
+import {
+  Secp256k1HdWallet,
+  SigningCosmosClient,
+  coins,
+  coin,
+  MsgDelegate,
+} from "@cosmjs/launchpad";
+
+// …
+
+const wallet = await Secp256k1HdWallet.generate();
+const [{ address }] = await wallet.getAccounts();
+console.log("Address:", address);
+
+const lcdApi = "https://…"; // Signing is offline, but from this endpoint we get the account number and sequence
+const client = new SigningCosmosClient(lcdApi, address, wallet);
+
+// …
+
+const msg: MsgDelegate = {
+  type: "cosmos-sdk/MsgDelegate",
+  value: {
+    delegator_address: address,
+    validator_address: "cosmosvaloper1yfkkk04ve8a0sugj4fe6q6zxuvmvza8r3arurr",
+    amount: coin(300000, "ustake"),
+  },
+};
+const fee = {
+  amount: coins(2000, "ucosm"),
+  gas: "180000", // 180k
+};
+
+let signed = await client.sign([msg], fee);
+console.log("Signed transaction:", signed);
+
+// We can broadcast it manually later on
+const result = await client.broadcastTx(signed);
+console.log("Broadcasting result:", result);
+```
+
+### Aggregate signatures
+
+In this example we use `wallet0`/`client0` and `wallet1`/`client1` which can
+live on separate systems:
+
+```ts
+import {
+  Secp256k1HdWallet,
+  SigningCosmosClient,
+  coins,
+  coin,
+  MsgDelegate,
+} from "@cosmjs/launchpad";
+
+const wallet0 = await Secp256k1HdWallet.fromMnemonic(mnemonic0);
+const [{ address: address0 }] = await wallet.getAccounts();
+const client0 = new SigningCosmosClient("https://…", address0, wallet0);
+
+const wallet1 = await Secp256k1HdWallet.fromMnemonic(mnemonic1);
+const [{ address: address1 }] = await wallet.getAccounts();
+const client1 = new SigningCosmosClient("https://…", address1, wallet1);
+
+const msg1: MsgSend = {
+  type: "cosmos-sdk/MsgSend",
+  value: {
+    from_address: address0,
+    to_address: "cosmos1b2340gb2…",
+    amount: coins(1234567, "ucosm"),
+  },
+};
+const msg2: MsgSend = {
+  type: "cosmos-sdk/MsgSend",
+  value: {
+    from_address: address1,
+    to_address: "cosmos1b2340gb2…",
+    amount: coins(1234567, "ucosm"),
+  },
+};
+const fee = {
+  amount: coins(2000, "ucosm"),
+  gas: "160000", // 2*80k
+};
+const memo = "This must be authorized by the two of us";
+
+const signed = await client0.sign([msg1, msg2], fee, memo);
+
+const cosigned = await client1.appendSignature(signed);
+
+const result = await client1.broadcastTx(cosigned);
+console.log("Broadcasting result:", result);
+```
+
 ## Cosmos SDK module support
 
 This client library supports connecting to standard Cosmos SDK modules as well
