@@ -23,8 +23,8 @@ import {
 } from "@cosmjs/proto-signing";
 import { adaptor34, Client as TendermintClient } from "@cosmjs/tendermint-rpc";
 
+import { AminoTypes } from "./aminotypes";
 import { cosmos } from "./codec";
-import { getMsgType, getMsgTypeUrl } from "./encoding";
 import { BroadcastTxResponse, StargateClient } from "./stargateclient";
 
 const { TxRaw } = cosmos.tx.v1beta1;
@@ -48,6 +48,7 @@ export class SigningStargateClient extends StargateClient {
   private readonly fees: CosmosFeeTable;
   private readonly registry: Registry;
   private readonly signer: OfflineSigner;
+  private readonly aminoTypes = new AminoTypes();
 
   public static async connectWithWallet(
     endpoint: string,
@@ -136,14 +137,14 @@ export class SigningStargateClient extends StargateClient {
     // Amino signer
     const signMode = cosmos.tx.signing.v1beta1.SignMode.SIGN_MODE_LEGACY_AMINO_JSON;
     const msgs = messages.map((msg) => ({
-      type: getMsgType(msg.typeUrl),
+      type: this.aminoTypes.toAmino(msg.typeUrl),
       value: msg.value,
     }));
     const signDoc = makeSignDocAmino(msgs, fee, chainId, memo, accountNumber, sequence);
     const { signature, signed } = await this.signer.signAmino(address, signDoc);
     const signedTxBody = {
       messages: signed.msgs.map((msg) => ({
-        typeUrl: getMsgTypeUrl(msg.type),
+        typeUrl: this.aminoTypes.fromAmino(msg.type),
         value: msg.value,
       })),
       memo: signed.memo,

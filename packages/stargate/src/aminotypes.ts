@@ -1,4 +1,4 @@
-const typeRegister: Record<string, string> = {
+const defaultTypes: Record<string, string> = {
   "/cosmos.bank.v1beta1.MsgSend": "cosmos-sdk/MsgSend",
   "/cosmos.bank.v1beta1.MsgMultiSend": "cosmos-sdk/MsgMultiSend",
   "/cosmos.crisis.v1beta1.MsgVerifyInvariant": "cosmos-sdk/MsgVerifyInvariant",
@@ -19,18 +19,38 @@ const typeRegister: Record<string, string> = {
   "/cosmos.vesting.v1beta1.MsgCreateVestingAccount": "cosmos-sdk/MsgCreateVestingAccount",
 };
 
-export function getMsgType(typeUrl: string): string {
-  const type = typeRegister[typeUrl];
-  if (!type) {
-    throw new Error("Type URL not known");
-  }
-  return type;
-}
+/**
+ * A map from Stargate message types as used in the messages's `Any` type
+ * to Amino types.
+ */
+export class AminoTypes {
+  private readonly register: Record<string, string>;
 
-export function getMsgTypeUrl(type: string): string {
-  const [typeUrl] = Object.entries(typeRegister).find(([_typeUrl, value]) => value === type) ?? [];
-  if (!typeUrl) {
-    throw new Error("Type not known");
+  public constructor(additions: Record<string, string> = {}) {
+    this.register = { ...defaultTypes, ...additions };
   }
-  return typeUrl;
+
+  public toAmino(typeUrl: string): string {
+    const type = defaultTypes[typeUrl];
+    if (!type) {
+      throw new Error(
+        "Type URL does not exist in the Amino message type register. " +
+          "If you need support for this message type, you can pass in additional entries to the AminoTypes constructor. " +
+          "If you think this message type should be included by default, please open an issue at https://github.com/cosmos/cosmjs/issues.",
+      );
+    }
+    return type;
+  }
+
+  public fromAmino(type: string): string {
+    const [typeUrl] = Object.entries(defaultTypes).find(([_typeUrl, value]) => value === type) ?? [];
+    if (!typeUrl) {
+      throw new Error(
+        "Type does not exist in the Amino message type register. " +
+          "If you need support for this message type, you can pass in additional entries to the AminoTypes constructor. " +
+          "If you think this message type should be included by default, please open an issue at https://github.com/cosmos/cosmjs/issues.",
+      );
+    }
+    return typeUrl;
+  }
 }

@@ -35,11 +35,10 @@ import {
   Registry,
 } from "@cosmjs/proto-signing";
 import {
+  AminoTypes,
   BroadcastTxFailure,
   BroadcastTxResponse,
   codec,
-  getMsgType,
-  getMsgTypeUrl,
   isBroadcastTxFailure,
   parseRawLog,
 } from "@cosmjs/stargate";
@@ -110,6 +109,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   private readonly fees: CosmosFeeTable;
   private readonly registry: Registry;
   private readonly signer: OfflineSigner;
+  private readonly aminoTypes = new AminoTypes();
 
   public static async connectWithWallet(
     endpoint: string,
@@ -368,14 +368,14 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     // Amino signer
     const signMode = SignMode.SIGN_MODE_LEGACY_AMINO_JSON;
     const msgs = messages.map((msg) => ({
-      type: getMsgType(msg.typeUrl),
+      type: this.aminoTypes.toAmino(msg.typeUrl),
       value: msg.value,
     }));
     const signDoc = makeSignDocAmino(msgs, fee, chainId, memo, accountNumber, sequence);
     const { signature, signed } = await this.signer.signAmino(address, signDoc);
     const signedTxBody = {
       messages: signed.msgs.map((msg) => ({
-        typeUrl: getMsgTypeUrl(msg.type),
+        typeUrl: this.aminoTypes.fromAmino(msg.type),
         value: msg.value,
       })),
       memo: signed.memo,
