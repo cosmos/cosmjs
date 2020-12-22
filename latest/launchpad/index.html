@@ -68,6 +68,206 @@
 					(Launchpad). See the article
 					<a href="https://blog.cosmos.network/launchpad-a-pre-stargate-stable-version-of-the-cosmos-sdk-e0c58d8c4e24">Launchpad — A pre-stargate stable version of the Cosmos SDK</a>
 				to learn more about launchpad.</p>
+				<a href="#basic-usage" id="basic-usage" style="color: inherit; text-decoration: none;">
+					<h2>Basic usage</h2>
+				</a>
+				<p>The basic usage of the package <code>@cosmjs/launchpad</code> contains the following:</p>
+				<ol>
+					<li><a href="#create-a-wallet">Create a wallet</a></li>
+					<li><a href="#sign-and-broadcast-transactions">Sign and broadcast transactions</a></li>
+				</ol>
+				<a href="#create-a-wallet" id="create-a-wallet" style="color: inherit; text-decoration: none;">
+					<h3>Create a wallet</h3>
+				</a>
+				<p>For the sake of simplicity we use an in-memory wallet. This is not the safest
+					way to store production keys. The following demo code is intended for developers
+					using testnet credentials only. Integrating it into end user facing products
+				requires serious security review.</p>
+				<p>If you do not yet have a mnemonic, generate a new wallet with a random mnemonic:</p>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { Secp256k1HdWallet } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@cosmjs/launchpad&quot;</span>;
+
+<span class="hljs-comment">// …</span>
+
+<span class="hljs-keyword">const</span> wallet = <span class="hljs-keyword">await</span> Secp256k1HdWallet.generate();
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;Mnemonic:&quot;</span>, wallet.mnemonic);
+
+<span class="hljs-keyword">const</span> [{ address }] = <span class="hljs-keyword">await</span> wallet.getAccounts();
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;Address:&quot;</span>, address);</code></pre>
+				<p>Or import an existing one:</p>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { Secp256k1HdWallet } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@cosmjs/launchpad&quot;</span>;
+
+<span class="hljs-comment">// …</span>
+
+<span class="hljs-keyword">const</span> wallet = <span class="hljs-keyword">await</span> Secp256k1HdWallet.fromMnemonic(
+  <span class="hljs-comment">// your mnemonic here 👇</span>
+  <span class="hljs-string">&quot;enlist hip relief stomach skate base shallow young switch frequent cry park&quot;</span>,
+);
+
+<span class="hljs-keyword">const</span> [{ address }] = <span class="hljs-keyword">await</span> wallet.getAccounts();
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;Address:&quot;</span>, address);</code></pre>
+				<a href="#sign-and-broadcast-transactions" id="sign-and-broadcast-transactions" style="color: inherit; text-decoration: none;">
+					<h3>Sign and broadcast transactions</h3>
+				</a>
+				<p>A wallet holds private keys and can use them for signing transactions. To do so
+				we stick the wallet into a client:</p>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> {
+  Secp256k1HdWallet,
+  SigningCosmosClient,
+  coins,
+} <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@cosmjs/launchpad&quot;</span>;
+
+<span class="hljs-comment">// …</span>
+
+<span class="hljs-keyword">const</span> wallet = <span class="hljs-keyword">await</span> Secp256k1HdWallet.generate();
+<span class="hljs-keyword">const</span> [{ address }] = <span class="hljs-keyword">await</span> wallet.getAccounts();
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;Address:&quot;</span>, address);
+
+<span class="hljs-comment">// Ensure the address has some tokens to spend</span>
+
+<span class="hljs-keyword">const</span> lcdApi = <span class="hljs-string">&quot;https://…&quot;</span>;
+<span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> SigningCosmosClient(lcdApi, address, wallet);
+
+<span class="hljs-comment">// check our balance</span>
+<span class="hljs-keyword">const</span> account = <span class="hljs-keyword">await</span> client.getAccount();
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;Account:&quot;</span>, account);
+
+<span class="hljs-comment">// Send tokens</span>
+<span class="hljs-keyword">const</span> recipient = <span class="hljs-string">&quot;cosmos1b2340gb2…&quot;</span>;
+<span class="hljs-keyword">await</span> client.sendTokens(recipient, coins(<span class="hljs-number">123</span>, <span class="hljs-string">&quot;uatom&quot;</span>));</code></pre>
+				<p>or use custom message types:</p>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> {
+  Secp256k1HdWallet,
+  SigningCosmosClient,
+  coins,
+  coin,
+  MsgDelegate,
+} <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@cosmjs/launchpad&quot;</span>;
+
+<span class="hljs-comment">// …</span>
+
+<span class="hljs-keyword">const</span> wallet = <span class="hljs-keyword">await</span> Secp256k1HdWallet.generate();
+<span class="hljs-keyword">const</span> [{ address }] = <span class="hljs-keyword">await</span> wallet.getAccounts();
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;Address:&quot;</span>, address);
+
+<span class="hljs-comment">// Ensure the address has some tokens to spend</span>
+
+<span class="hljs-keyword">const</span> lcdApi = <span class="hljs-string">&quot;https://…&quot;</span>;
+<span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> SigningCosmosClient(lcdApi, address, wallet);
+
+<span class="hljs-comment">// …</span>
+
+<span class="hljs-keyword">const</span> msg: MsgDelegate = {
+  <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;cosmos-sdk/MsgDelegate&quot;</span>,
+  <span class="hljs-attr">value</span>: {
+    <span class="hljs-attr">delegator_address</span>: address,
+    <span class="hljs-attr">validator_address</span>: <span class="hljs-string">&quot;cosmosvaloper1yfkkk04ve8a0sugj4fe6q6zxuvmvza8r3arurr&quot;</span>,
+    <span class="hljs-attr">amount</span>: coin(<span class="hljs-number">300000</span>, <span class="hljs-string">&quot;ustake&quot;</span>),
+  },
+};
+<span class="hljs-keyword">const</span> fee = {
+  <span class="hljs-attr">amount</span>: coins(<span class="hljs-number">2000</span>, <span class="hljs-string">&quot;ucosm&quot;</span>),
+  <span class="hljs-attr">gas</span>: <span class="hljs-string">&quot;180000&quot;</span>, <span class="hljs-comment">// 180k</span>
+};
+<span class="hljs-keyword">await</span> client.signAndBroadcast([msg], fee);</code></pre>
+				<a href="#advanced-usage" id="advanced-usage" style="color: inherit; text-decoration: none;">
+					<h2>Advanced usage</h2>
+				</a>
+				<p>Here you will learn a few things that are slightly more advanced:</p>
+				<ol>
+					<li><a href="#sign-only">Sign only</a></li>
+					<li><a href="#aggregate-signatures">Aggregate signatures</a> from multiple signers</li>
+				</ol>
+				<a href="#sign-only" id="sign-only" style="color: inherit; text-decoration: none;">
+					<h3>Sign only</h3>
+				</a>
+				<p>You can sign a transaction without broadcasting it:</p>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> {
+  Secp256k1HdWallet,
+  SigningCosmosClient,
+  coins,
+  coin,
+  MsgDelegate,
+} <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@cosmjs/launchpad&quot;</span>;
+
+<span class="hljs-comment">// …</span>
+
+<span class="hljs-keyword">const</span> wallet = <span class="hljs-keyword">await</span> Secp256k1HdWallet.generate();
+<span class="hljs-keyword">const</span> [{ address }] = <span class="hljs-keyword">await</span> wallet.getAccounts();
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;Address:&quot;</span>, address);
+
+<span class="hljs-keyword">const</span> lcdApi = <span class="hljs-string">&quot;https://…&quot;</span>; <span class="hljs-comment">// Signing is offline, but from this endpoint we get the account number and sequence</span>
+<span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> SigningCosmosClient(lcdApi, address, wallet);
+
+<span class="hljs-comment">// …</span>
+
+<span class="hljs-keyword">const</span> msg: MsgDelegate = {
+  <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;cosmos-sdk/MsgDelegate&quot;</span>,
+  <span class="hljs-attr">value</span>: {
+    <span class="hljs-attr">delegator_address</span>: address,
+    <span class="hljs-attr">validator_address</span>: <span class="hljs-string">&quot;cosmosvaloper1yfkkk04ve8a0sugj4fe6q6zxuvmvza8r3arurr&quot;</span>,
+    <span class="hljs-attr">amount</span>: coin(<span class="hljs-number">300000</span>, <span class="hljs-string">&quot;ustake&quot;</span>),
+  },
+};
+<span class="hljs-keyword">const</span> fee = {
+  <span class="hljs-attr">amount</span>: coins(<span class="hljs-number">2000</span>, <span class="hljs-string">&quot;ucosm&quot;</span>),
+  <span class="hljs-attr">gas</span>: <span class="hljs-string">&quot;180000&quot;</span>, <span class="hljs-comment">// 180k</span>
+};
+
+<span class="hljs-keyword">let</span> signed = <span class="hljs-keyword">await</span> client.sign([msg], fee);
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;Signed transaction:&quot;</span>, signed);
+
+<span class="hljs-comment">// We can broadcast it manually later on</span>
+<span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> client.broadcastTx(signed);
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;Broadcasting result:&quot;</span>, result);</code></pre>
+				<a href="#aggregate-signatures" id="aggregate-signatures" style="color: inherit; text-decoration: none;">
+					<h3>Aggregate signatures</h3>
+				</a>
+				<p>In this example we use <code>wallet0</code>/<code>client0</code> and <code>wallet1</code>/<code>client1</code> which can
+				live on separate systems:</p>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> {
+  Secp256k1HdWallet,
+  SigningCosmosClient,
+  coins,
+  coin,
+  MsgDelegate,
+} <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@cosmjs/launchpad&quot;</span>;
+
+<span class="hljs-keyword">const</span> wallet0 = <span class="hljs-keyword">await</span> Secp256k1HdWallet.fromMnemonic(mnemonic0);
+<span class="hljs-keyword">const</span> [{ <span class="hljs-attr">address</span>: address0 }] = <span class="hljs-keyword">await</span> wallet.getAccounts();
+<span class="hljs-keyword">const</span> client0 = <span class="hljs-keyword">new</span> SigningCosmosClient(<span class="hljs-string">&quot;https://…&quot;</span>, address0, wallet0);
+
+<span class="hljs-keyword">const</span> wallet1 = <span class="hljs-keyword">await</span> Secp256k1HdWallet.fromMnemonic(mnemonic1);
+<span class="hljs-keyword">const</span> [{ <span class="hljs-attr">address</span>: address1 }] = <span class="hljs-keyword">await</span> wallet.getAccounts();
+<span class="hljs-keyword">const</span> client1 = <span class="hljs-keyword">new</span> SigningCosmosClient(<span class="hljs-string">&quot;https://…&quot;</span>, address1, wallet1);
+
+<span class="hljs-keyword">const</span> msg1: MsgSend = {
+  <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;cosmos-sdk/MsgSend&quot;</span>,
+  <span class="hljs-attr">value</span>: {
+    <span class="hljs-attr">from_address</span>: address0,
+    <span class="hljs-attr">to_address</span>: <span class="hljs-string">&quot;cosmos1b2340gb2…&quot;</span>,
+    <span class="hljs-attr">amount</span>: coins(<span class="hljs-number">1234567</span>, <span class="hljs-string">&quot;ucosm&quot;</span>),
+  },
+};
+<span class="hljs-keyword">const</span> msg2: MsgSend = {
+  <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;cosmos-sdk/MsgSend&quot;</span>,
+  <span class="hljs-attr">value</span>: {
+    <span class="hljs-attr">from_address</span>: address1,
+    <span class="hljs-attr">to_address</span>: <span class="hljs-string">&quot;cosmos1b2340gb2…&quot;</span>,
+    <span class="hljs-attr">amount</span>: coins(<span class="hljs-number">1234567</span>, <span class="hljs-string">&quot;ucosm&quot;</span>),
+  },
+};
+<span class="hljs-keyword">const</span> fee = {
+  <span class="hljs-attr">amount</span>: coins(<span class="hljs-number">2000</span>, <span class="hljs-string">&quot;ucosm&quot;</span>),
+  <span class="hljs-attr">gas</span>: <span class="hljs-string">&quot;160000&quot;</span>, <span class="hljs-comment">// 2*80k</span>
+};
+<span class="hljs-keyword">const</span> memo = <span class="hljs-string">&quot;This must be authorized by the two of us&quot;</span>;
+
+<span class="hljs-keyword">const</span> signed = <span class="hljs-keyword">await</span> client0.sign([msg1, msg2], fee, memo);
+
+<span class="hljs-keyword">const</span> cosigned = <span class="hljs-keyword">await</span> client1.appendSignature(signed);
+
+<span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> client1.broadcastTx(cosigned);
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;Broadcasting result:&quot;</span>, result);</code></pre>
 				<a href="#cosmos-sdk-module-support" id="cosmos-sdk-module-support" style="color: inherit; text-decoration: none;">
 					<h2>Cosmos SDK module support</h2>
 				</a>

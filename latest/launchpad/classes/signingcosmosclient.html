@@ -96,6 +96,7 @@
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="signingcosmosclient.html#appendsignature" class="tsd-kind-icon">append<wbr>Signature</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="signingcosmosclient.html#broadcasttx" class="tsd-kind-icon">broadcast<wbr>Tx</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="signingcosmosclient.html#getaccount" class="tsd-kind-icon">get<wbr>Account</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="signingcosmosclient.html#getblock" class="tsd-kind-icon">get<wbr>Block</a></li>
@@ -106,6 +107,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="signingcosmosclient.html#gettx" class="tsd-kind-icon">get<wbr>Tx</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="signingcosmosclient.html#searchtx" class="tsd-kind-icon">search<wbr>Tx</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="signingcosmosclient.html#sendtokens" class="tsd-kind-icon">send<wbr>Tokens</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="signingcosmosclient.html#sign" class="tsd-kind-icon">sign</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="signingcosmosclient.html#signandbroadcast" class="tsd-kind-icon">sign<wbr>And<wbr>Broadcast</a></li>
 							</ul>
 						</section>
@@ -125,7 +127,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="cosmosclient.html">CosmosClient</a>.<a href="cosmosclient.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a7674d016/packages/launchpad/src/signingcosmosclient.ts#L31">src/signingcosmosclient.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/ed11f3070/packages/launchpad/src/signingcosmosclient.ts#L33">src/signingcosmosclient.ts:33</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -200,7 +202,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="cosmosclient.html">CosmosClient</a>.<a href="cosmosclient.html#anyvalidaddress">anyValidAddress</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a7674d016/packages/launchpad/src/cosmosclient.ts#L149">src/cosmosclient.ts:149</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/ed11f3070/packages/launchpad/src/cosmosclient.ts#L149">src/cosmosclient.ts:149</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -216,7 +218,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="cosmosclient.html">CosmosClient</a>.<a href="cosmosclient.html#lcdclient">lcdClient</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a7674d016/packages/launchpad/src/cosmosclient.ts#L147">src/cosmosclient.ts:147</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/ed11f3070/packages/launchpad/src/cosmosclient.ts#L147">src/cosmosclient.ts:147</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -226,13 +228,42 @@
 					<div class="tsd-signature tsd-kind-icon">sender<wbr>Address<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a7674d016/packages/launchpad/src/signingcosmosclient.ts#L28">src/signingcosmosclient.ts:28</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/ed11f3070/packages/launchpad/src/signingcosmosclient.ts#L30">src/signingcosmosclient.ts:30</a></li>
 						</ul>
 					</aside>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="appendsignature" class="tsd-anchor"></a>
+					<h3>append<wbr>Signature</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">append<wbr>Signature<span class="tsd-signature-symbol">(</span>signedTx<span class="tsd-signature-symbol">: </span><a href="../interfaces/stdtx.html" class="tsd-signature-type">StdTx</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/stdtx.html" class="tsd-signature-type">StdTx</a><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/ed11f3070/packages/launchpad/src/signingcosmosclient.ts#L112">src/signingcosmosclient.ts:112</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Gets account number and sequence from the API, creates a sign doc,
+									creates a single signature and appends it to the existing signatures.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>signedTx: <a href="../interfaces/stdtx.html" class="tsd-signature-type">StdTx</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/stdtx.html" class="tsd-signature-type">StdTx</a><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="broadcasttx" class="tsd-anchor"></a>
 					<h3>broadcast<wbr>Tx</h3>
@@ -244,7 +275,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="cosmosclient.html">CosmosClient</a>.<a href="cosmosclient.html#broadcasttx">broadcastTx</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a7674d016/packages/launchpad/src/cosmosclient.ts#L305">src/cosmosclient.ts:305</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/ed11f3070/packages/launchpad/src/cosmosclient.ts#L305">src/cosmosclient.ts:305</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -268,7 +299,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="cosmosclient.html">CosmosClient</a>.<a href="cosmosclient.html#getaccount">getAccount</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a7674d016/packages/launchpad/src/signingcosmosclient.ts#L65">src/signingcosmosclient.ts:65</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/ed11f3070/packages/launchpad/src/signingcosmosclient.ts#L67">src/signingcosmosclient.ts:67</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -292,7 +323,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="cosmosclient.html">CosmosClient</a>.<a href="cosmosclient.html#getblock">getBlock</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a7674d016/packages/launchpad/src/cosmosclient.ts#L244">src/cosmosclient.ts:244</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/ed11f3070/packages/launchpad/src/cosmosclient.ts#L244">src/cosmosclient.ts:244</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -324,7 +355,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="cosmosclient.html">CosmosClient</a>.<a href="cosmosclient.html#getchainid">getChainId</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a7674d016/packages/launchpad/src/cosmosclient.ts#L169">src/cosmosclient.ts:169</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/ed11f3070/packages/launchpad/src/cosmosclient.ts#L169">src/cosmosclient.ts:169</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -342,7 +373,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="cosmosclient.html">CosmosClient</a>.<a href="cosmosclient.html#getheight">getHeight</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a7674d016/packages/launchpad/src/cosmosclient.ts#L180">src/cosmosclient.ts:180</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/ed11f3070/packages/launchpad/src/cosmosclient.ts#L180">src/cosmosclient.ts:180</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -360,7 +391,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="cosmosclient.html">CosmosClient</a>.<a href="cosmosclient.html#getidentifier">getIdentifier</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a7674d016/packages/launchpad/src/cosmosclient.ts#L195">src/cosmosclient.ts:195</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/ed11f3070/packages/launchpad/src/cosmosclient.ts#L195">src/cosmosclient.ts:195</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -389,7 +420,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="cosmosclient.html">CosmosClient</a>.<a href="cosmosclient.html#getsequence">getSequence</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a7674d016/packages/launchpad/src/signingcosmosclient.ts#L61">src/signingcosmosclient.ts:61</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/ed11f3070/packages/launchpad/src/signingcosmosclient.ts#L63">src/signingcosmosclient.ts:63</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -413,7 +444,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="cosmosclient.html">CosmosClient</a>.<a href="cosmosclient.html#gettx">getTx</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a7674d016/packages/launchpad/src/cosmosclient.ts#L260">src/cosmosclient.ts:260</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/ed11f3070/packages/launchpad/src/cosmosclient.ts#L260">src/cosmosclient.ts:260</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -437,7 +468,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="cosmosclient.html">CosmosClient</a>.<a href="cosmosclient.html#searchtx">searchTx</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a7674d016/packages/launchpad/src/cosmosclient.ts#L265">src/cosmosclient.ts:265</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/ed11f3070/packages/launchpad/src/cosmosclient.ts#L265">src/cosmosclient.ts:265</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -463,7 +494,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a7674d016/packages/launchpad/src/signingcosmosclient.ts#L69">src/signingcosmosclient.ts:69</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/ed11f3070/packages/launchpad/src/signingcosmosclient.ts#L71">src/signingcosmosclient.ts:71</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -483,6 +514,41 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="sign" class="tsd-anchor"></a>
+					<h3>sign</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">sign<span class="tsd-signature-symbol">(</span>msgs<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">readonly </span><a href="../interfaces/msg.html" class="tsd-signature-type">Msg</a><span class="tsd-signature-symbol">[]</span>, fee<span class="tsd-signature-symbol">: </span><a href="../interfaces/stdfee.html" class="tsd-signature-type">StdFee</a>, memo<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/stdtx.html" class="tsd-signature-type">StdTx</a><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/ed11f3070/packages/launchpad/src/signingcosmosclient.ts#L100">src/signingcosmosclient.ts:100</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Gets account number and sequence from the API, creates a sign doc,
+									creates a single signature and assembles the signed transaction.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>msgs: <span class="tsd-signature-symbol">readonly </span><a href="../interfaces/msg.html" class="tsd-signature-type">Msg</a><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+								<li>
+									<h5>fee: <a href="../interfaces/stdfee.html" class="tsd-signature-type">StdFee</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> memo: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;&quot;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/stdtx.html" class="tsd-signature-type">StdTx</a><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="signandbroadcast" class="tsd-anchor"></a>
 					<h3>sign<wbr>And<wbr>Broadcast</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -492,7 +558,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/a7674d016/packages/launchpad/src/signingcosmosclient.ts#L89">src/signingcosmosclient.ts:89</a></li>
+									<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/ed11f3070/packages/launchpad/src/signingcosmosclient.ts#L91">src/signingcosmosclient.ts:91</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -546,6 +612,9 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="signingcosmosclient.html#senderaddress" class="tsd-kind-icon">sender<wbr>Address</a>
 							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="signingcosmosclient.html#appendsignature" class="tsd-kind-icon">append<wbr>Signature</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="signingcosmosclient.html#broadcasttx" class="tsd-kind-icon">broadcast<wbr>Tx</a>
 							</li>
@@ -575,6 +644,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="signingcosmosclient.html#sendtokens" class="tsd-kind-icon">send<wbr>Tokens</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="signingcosmosclient.html#sign" class="tsd-kind-icon">sign</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="signingcosmosclient.html#signandbroadcast" class="tsd-kind-icon">sign<wbr>And<wbr>Broadcast</a>
