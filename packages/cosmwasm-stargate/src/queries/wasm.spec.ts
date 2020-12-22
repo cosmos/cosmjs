@@ -341,10 +341,8 @@ describe("WasmExtension", () => {
       assert(hackatomContractAddress);
       const client = await makeWasmClient(wasmd.endpoint);
       const request = { verifier: {} };
-      const { data } = await client.unverified.wasm.queryContractSmart(hackatomContractAddress, request);
-      assert(data);
-      const parsedData = JSON.parse(fromAscii(data));
-      expect(parsedData).toEqual({ verifier: alice.address0 });
+      const result = await client.unverified.wasm.queryContractSmart(hackatomContractAddress, request);
+      expect(result).toEqual({ verifier: alice.address0 });
     });
 
     it("throws for invalid query requests", async () => {

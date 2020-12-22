@@ -409,9 +409,8 @@ describe("CosmWasmClient", () => {
       assert(contract);
 
       const client = await CosmWasmClient.connect(wasmd.endpoint);
-      const { data } = await client.queryContractSmart(contract.address, { verifier: {} });
-      const parsedData = JSON.parse(fromAscii(data));
-      expect(parsedData).toEqual({ verifier: contract.initMsg.verifier });
+      const result = await client.queryContractSmart(contract.address, { verifier: {} });
+      expect(result).toEqual({ verifier: contract.initMsg.verifier });
     });
 
     it("errors for malformed query message", async () => {

@@ -1,3 +1,4 @@
+import { JsonObject } from "@cosmjs/cosmwasm-launchpad";
 import { QueryClient } from "@cosmjs/stargate";
 import { cosmwasm } from "../codec";
 declare type IQueryAllContractStateResponse = cosmwasm.wasm.v1beta1.IQueryAllContractStateResponse;
@@ -7,7 +8,6 @@ declare type IQueryContractHistoryResponse = cosmwasm.wasm.v1beta1.IQueryContrac
 declare type IQueryContractInfoResponse = cosmwasm.wasm.v1beta1.IQueryContractInfoResponse;
 declare type IQueryContractsByCodeResponse = cosmwasm.wasm.v1beta1.IQueryContractsByCodeResponse;
 declare type IQueryRawContractStateResponse = cosmwasm.wasm.v1beta1.IQueryRawContractStateResponse;
-declare type IQuerySmartContractStateResponse = cosmwasm.wasm.v1beta1.IQuerySmartContractStateResponse;
 export interface WasmExtension {
   readonly unverified: {
     readonly wasm: {
@@ -53,10 +53,7 @@ export interface WasmExtension {
        * Makes a smart query on the contract and parses the response as JSON.
        * Throws error if no such contract exists, the query format is invalid or the response is invalid.
        */
-      readonly queryContractSmart: (
-        address: string,
-        query: Record<string, unknown>,
-      ) => Promise<IQuerySmartContractStateResponse>;
+      readonly queryContractSmart: (address: string, query: Record<string, unknown>) => Promise<JsonObject>;
     };
   };
 }
