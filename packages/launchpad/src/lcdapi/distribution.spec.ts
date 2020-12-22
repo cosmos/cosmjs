@@ -33,13 +33,13 @@ describe("DistributionExtension", () => {
   beforeAll(async () => {
     if (launchpadEnabled()) {
       const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
-      const client = new SigningCosmosClient(launchpad.endpoint, faucet.address, wallet);
+      const client = new SigningCosmosClient(launchpad.endpoint, faucet.address0, wallet);
 
       const chainId = await client.getChainId();
       const msg: MsgDelegate = {
         type: "cosmos-sdk/MsgDelegate",
         value: {
-          delegator_address: faucet.address,
+          delegator_address: faucet.address0,
           validator_address: launchpad.validator.address,
           amount: coin(25000, "ustake"),
         },
@@ -47,7 +47,7 @@ describe("DistributionExtension", () => {
       const memo = "Test delegation for launchpad";
       const { accountNumber, sequence } = await client.getSequence();
       const signDoc = makeSignDoc([msg], defaultFee, chainId, memo, accountNumber, sequence);
-      const { signed, signature } = await wallet.signAmino(faucet.address, signDoc);
+      const { signed, signature } = await wallet.signAmino(faucet.address0, signDoc);
       const signedTx = makeStdTx(signed, signature);
 
       const result = await client.broadcastTx(signedTx);
@@ -61,7 +61,7 @@ describe("DistributionExtension", () => {
     it("works", async () => {
       pendingWithoutLaunchpad();
       const client = makeDistributionClient(launchpad.endpoint);
-      const response = await client.distribution.delegatorRewards(faucet.address);
+      const response = await client.distribution.delegatorRewards(faucet.address0);
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: {
@@ -81,7 +81,10 @@ describe("DistributionExtension", () => {
     it("works", async () => {
       pendingWithoutLaunchpad();
       const client = makeDistributionClient(launchpad.endpoint);
-      const response = await client.distribution.delegatorReward(faucet.address, launchpad.validator.address);
+      const response = await client.distribution.delegatorReward(
+        faucet.address0,
+        launchpad.validator.address,
+      );
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: [],
@@ -93,10 +96,10 @@ describe("DistributionExtension", () => {
     it("works", async () => {
       pendingWithoutLaunchpad();
       const client = makeDistributionClient(launchpad.endpoint);
-      const response = await client.distribution.withdrawAddress(faucet.address);
+      const response = await client.distribution.withdrawAddress(faucet.address0);
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
-        result: faucet.address,
+        result: faucet.address0,
       });
     });
   });

@@ -195,7 +195,7 @@ describe("LcdClient", () => {
         const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
         const accounts = await wallet.getAccounts();
         const [{ address: walletAddress }] = accounts;
-        const client = new SigningCosmosClient(launchpad.endpoint, faucet.address, wallet);
+        const client = new SigningCosmosClient(launchpad.endpoint, faucet.address0, wallet);
 
         {
           const recipient = makeRandomAddress();
@@ -205,7 +205,7 @@ describe("LcdClient", () => {
           };
           const result = await client.sendTokens(recipient, [transferAmount]);
           successful = {
-            sender: faucet.address,
+            sender: faucet.address0,
             recipient: recipient,
             hash: result.transactionHash,
           };
@@ -223,7 +223,7 @@ describe("LcdClient", () => {
           const sendMsg: MsgSend = {
             type: "cosmos-sdk/MsgSend",
             value: {
-              from_address: faucet.address,
+              from_address: faucet.address0,
               to_address: recipient,
               amount: transferAmount,
             },
@@ -246,7 +246,7 @@ describe("LcdClient", () => {
           const result = await client.broadcastTx(signedTx);
           assert(isBroadcastTxFailure(result));
           unsuccessful = {
-            sender: faucet.address,
+            sender: faucet.address0,
             recipient: recipient,
             hash: transactionId,
           };
@@ -320,7 +320,7 @@ describe("LcdClient", () => {
     beforeAll(async () => {
       if (launchpadEnabled()) {
         const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
-        const client = new SigningCosmosClient(launchpad.endpoint, faucet.address, wallet);
+        const client = new SigningCosmosClient(launchpad.endpoint, faucet.address0, wallet);
 
         const recipient = makeRandomAddress();
         const transferAmount = [
@@ -334,7 +334,7 @@ describe("LcdClient", () => {
         await sleep(75); // wait until tx is indexed
         const txDetails = await new LcdClient(launchpad.endpoint).txById(result.transactionHash);
         broadcasted = {
-          sender: faucet.address,
+          sender: faucet.address0,
           recipient: recipient,
           hash: result.transactionHash,
           height: Number.parseInt(txDetails.height, 10),
@@ -509,7 +509,7 @@ describe("LcdClient", () => {
       const theMsg: MsgSend = {
         type: "cosmos-sdk/MsgSend",
         value: {
-          from_address: faucet.address,
+          from_address: faucet.address0,
           to_address: defaultRecipientAddress,
           amount: [
             {
@@ -531,7 +531,7 @@ describe("LcdClient", () => {
       };
 
       const client = LcdClient.withExtensions({ apiUrl: launchpad.endpoint }, setupAuthExtension);
-      const { account_number, sequence } = (await client.auth.account(faucet.address)).result.value;
+      const { account_number, sequence } = (await client.auth.account(faucet.address0)).result.value;
 
       const signDoc = makeSignDoc([theMsg], fee, launchpad.chainId, memo, account_number, sequence);
       const { signed, signature } = await wallet.signAmino(walletAddress, signDoc);

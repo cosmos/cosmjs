@@ -19,7 +19,7 @@ export declare function makeSignDoc(
   msgs: readonly Msg[],
   fee: StdFee,
   chainId: string,
-  memo: string,
+  memo: string | undefined,
   accountNumber: number | string,
   sequence: number | string,
 ): StdSignDoc;

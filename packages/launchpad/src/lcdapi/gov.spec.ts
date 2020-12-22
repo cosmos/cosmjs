@@ -31,7 +31,7 @@ describe("GovExtension", () => {
   beforeAll(async () => {
     if (launchpadEnabled()) {
       const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
-      const client = new SigningCosmosClient(launchpad.endpoint, faucet.address, wallet);
+      const client = new SigningCosmosClient(launchpad.endpoint, faucet.address0, wallet);
 
       const chainId = await client.getChainId();
       const proposalMsg = {
@@ -44,7 +44,7 @@ describe("GovExtension", () => {
               title: "Test Proposal",
             },
           },
-          proposer: faucet.address,
+          proposer: faucet.address0,
           initial_deposit: coins(25000000, "ustake"),
         },
       };
@@ -58,7 +58,7 @@ describe("GovExtension", () => {
         proposalAccountNumber,
         proposalSequence,
       );
-      const { signature: proposalSignature } = await wallet.signAmino(faucet.address, proposalSignDoc);
+      const { signature: proposalSignature } = await wallet.signAmino(faucet.address0, proposalSignDoc);
       const proposalTx = {
         msg: [proposalMsg],
         fee: defaultFee,
@@ -76,7 +76,7 @@ describe("GovExtension", () => {
         type: "cosmos-sdk/MsgVote",
         value: {
           proposal_id: proposalId,
-          voter: faucet.address,
+          voter: faucet.address0,
           option: "Yes",
         },
       };
@@ -90,7 +90,7 @@ describe("GovExtension", () => {
         voteAccountNumber,
         voteSequence,
       );
-      const { signature: voteSignature } = await wallet.signAmino(faucet.address, voteSignDoc);
+      const { signature: voteSignature } = await wallet.signAmino(faucet.address0, voteSignDoc);
       const voteTx = {
         msg: [voteMsg],
         fee: defaultFee,
@@ -211,7 +211,7 @@ describe("GovExtension", () => {
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: {
           proposal_id: proposalId,
-          proposer: faucet.address,
+          proposer: faucet.address0,
         },
       });
     });
@@ -227,7 +227,7 @@ describe("GovExtension", () => {
         result: [
           {
             proposal_id: proposalId,
-            depositor: faucet.address,
+            depositor: faucet.address0,
             amount: [{ denom: "ustake", amount: "25000000" }],
           },
         ],
@@ -239,12 +239,12 @@ describe("GovExtension", () => {
     it("works", async () => {
       pendingWithoutLaunchpad();
       const client = makeGovClient(launchpad.endpoint);
-      const response = await client.gov.deposit(proposalId, faucet.address);
+      const response = await client.gov.deposit(proposalId, faucet.address0);
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: {
           proposal_id: proposalId,
-          depositor: faucet.address,
+          depositor: faucet.address0,
           amount: [{ denom: "ustake", amount: "25000000" }],
         },
       });
@@ -278,7 +278,7 @@ describe("GovExtension", () => {
         result: [
           {
             proposal_id: proposalId,
-            voter: faucet.address,
+            voter: faucet.address0,
             option: "Yes",
           },
         ],
@@ -290,11 +290,11 @@ describe("GovExtension", () => {
     it("works", async () => {
       pendingWithoutLaunchpad();
       const client = makeGovClient(launchpad.endpoint);
-      const response = await client.gov.vote(proposalId, faucet.address);
+      const response = await client.gov.vote(proposalId, faucet.address0);
       expect(response).toEqual({
         height: jasmine.stringMatching(nonNegativeIntegerMatcher),
         result: {
-          voter: faucet.address,
+          voter: faucet.address0,
           proposal_id: proposalId,
           option: "Yes",
         },

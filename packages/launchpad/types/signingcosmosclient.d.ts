@@ -4,6 +4,7 @@ import { FeeTable, GasLimits, GasPrice } from "./gas";
 import { BroadcastMode } from "./lcdapi";
 import { Msg } from "./msgs";
 import { OfflineSigner } from "./signer";
+import { StdTx } from "./tx";
 import { StdFee } from "./types";
 /**
  * These fees are used by the higher level methods of SigningCosmosClient
@@ -52,4 +53,14 @@ export declare class SigningCosmosClient extends CosmosClient {
    * creates a single signature, assembles the signed transaction and broadcasts it.
    */
   signAndBroadcast(msgs: readonly Msg[], fee: StdFee, memo?: string): Promise<BroadcastTxResult>;
+  /**
+   * Gets account number and sequence from the API, creates a sign doc,
+   * creates a single signature and assembles the signed transaction.
+   */
+  sign(msgs: readonly Msg[], fee: StdFee, memo?: string): Promise<StdTx>;
+  /**
+   * Gets account number and sequence from the API, creates a sign doc,
+   * creates a single signature and appends it to the existing signatures.
+   */
+  appendSignature(signedTx: StdTx): Promise<StdTx>;
 }

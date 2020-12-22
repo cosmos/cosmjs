@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import equals from "fast-deep-equal";
+
 import { Coin } from "./coins";
 import { Account, BroadcastTxResult, CosmosClient, GetSequenceResult } from "./cosmosclient";
 import { makeSignDoc } from "./encoding";
@@ -6,7 +8,7 @@ import { buildFeeTable, FeeTable, GasLimits, GasPrice } from "./gas";
 import { BroadcastMode } from "./lcdapi";
 import { Msg, MsgSend } from "./msgs";
 import { OfflineSigner } from "./signer";
-import { makeStdTx } from "./tx";
+import { makeStdTx, StdTx } from "./tx";
 import { StdFee } from "./types";
 
 /**
@@ -87,11 +89,40 @@ export class SigningCosmosClient extends CosmosClient {
    * creates a single signature, assembles the signed transaction and broadcasts it.
    */
   public async signAndBroadcast(msgs: readonly Msg[], fee: StdFee, memo = ""): Promise<BroadcastTxResult> {
+    const signedTx = await this.sign(msgs, fee, memo);
+    return this.broadcastTx(signedTx);
+  }
+
+  /**
+   * Gets account number and sequence from the API, creates a sign doc,
+   * creates a single signature and assembles the signed transaction.
+   */
+  public async sign(msgs: readonly Msg[], fee: StdFee, memo = ""): Promise<StdTx> {
     const { accountNumber, sequence } = await this.getSequence();
     const chainId = await this.getChainId();
     const signDoc = makeSignDoc(msgs, fee, chainId, memo, accountNumber, sequence);
     const { signed, signature } = await this.signer.signAmino(this.senderAddress, signDoc);
-    const signedTx = makeStdTx(signed, signature);
-    return this.broadcastTx(signedTx);
+    return makeStdTx(signed, signature);
+  }
+
+  /**
+   * Gets account number and sequence from the API, creates a sign doc,
+   * creates a single signature and appends it to the existing signatures.
+   */
+  public async appendSignature(signedTx: StdTx): Promise<StdTx> {
+    const { msg: msgs, fee, memo } = signedTx;
+    const { accountNumber, sequence } = await this.getSequence();
+    const chainId = await this.getChainId();
+    const signDoc = makeSignDoc(msgs, fee, chainId, memo, accountNumber, sequence);
+    const { signed, signature: additionalSignature } = await this.signer.signAmino(
+      this.senderAddress,
+      signDoc,
+    );
+    if (!equals(signDoc, signed)) {
+      throw new Error(
+        "The signed document differs from the one of the original transaction. This is not allowed since the resulting transaction will be invalid.",
+      );
+    }
+    return makeStdTx(signed, [...signedTx.signatures, additionalSignature]);
   }
 }
