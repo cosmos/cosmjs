@@ -27,11 +27,16 @@ export class AminoTypes {
   private readonly register: Record<string, string>;
 
   public constructor(additions: Record<string, string> = {}) {
-    this.register = { ...defaultTypes, ...additions };
+    const additionalAminoTypes = Object.values(additions);
+    const filteredDefaultTypes = Object.entries(defaultTypes).reduce(
+      (acc, [key, value]) => (additionalAminoTypes.includes(value) ? acc : { ...acc, [key]: value }),
+      {},
+    );
+    this.register = { ...filteredDefaultTypes, ...additions };
   }
 
   public toAmino(typeUrl: string): string {
-    const type = defaultTypes[typeUrl];
+    const type = this.register[typeUrl];
     if (!type) {
       throw new Error(
         "Type URL does not exist in the Amino message type register. " +
@@ -43,7 +48,7 @@ export class AminoTypes {
   }
 
   public fromAmino(type: string): string {
-    const [typeUrl] = Object.entries(defaultTypes).find(([_typeUrl, value]) => value === type) ?? [];
+    const [typeUrl] = Object.entries(this.register).find(([_typeUrl, value]) => value === type) ?? [];
     if (!typeUrl) {
       throw new Error(
         "Type does not exist in the Amino message type register. " +
