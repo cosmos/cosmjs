@@ -12,7 +12,12 @@ import {
 } from "@cosmjs/launchpad";
 import { Uint53, Uint64 } from "@cosmjs/math";
 import { decodePubkey } from "@cosmjs/proto-signing";
-import { adaptor34, broadcastTxCommitSuccess, Client as TendermintClient } from "@cosmjs/tendermint-rpc";
+import {
+  adaptor34,
+  broadcastTxCommitSuccess,
+  Client as TendermintClient,
+  DateTime,
+} from "@cosmjs/tendermint-rpc";
 import { assert, assertDefined } from "@cosmjs/utils";
 import Long from "long";
 
@@ -179,7 +184,7 @@ export class StargateClient {
         },
         height: response.block.header.height,
         chainId: response.block.header.chainId,
-        time: response.block.header.time.toISOString(),
+        time: DateTime.encode(response.block.header.time),
       },
       txs: response.block.txs,
     };
