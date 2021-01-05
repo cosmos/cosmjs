@@ -13,13 +13,11 @@ function sortedObject(obj: any): any {
     return obj.map(sortedObject);
   }
   const sortedKeys = Object.keys(obj).sort();
-  const result = sortedKeys.reduce(
-    (accumulator, key) => ({
-      ...accumulator,
-      [key]: sortedObject(obj[key]),
-    }),
-    {},
-  );
+  const result: Record<string, any> = {};
+  // NOTE: Use forEach instead of reduce for performance with large objects eg Wasm code
+  sortedKeys.forEach((key) => {
+    result[key] = sortedObject(obj[key]);
+  });
   return result;
 }
 
