@@ -9,7 +9,7 @@ import {
   UploadResult,
 } from "@cosmjs/cosmwasm-launchpad";
 import { Coin, CosmosFeeTable, GasLimits, GasPrice, StdFee } from "@cosmjs/launchpad";
-import { EncodeObject, OfflineSigner, Registry } from "@cosmjs/proto-signing";
+import { EncodeObject, OfflineDirectSigner, Registry } from "@cosmjs/proto-signing";
 import { BroadcastTxResponse } from "@cosmjs/stargate";
 import { CosmWasmClient } from "./cosmwasmclient";
 export interface SigningCosmWasmClientOptions {
@@ -25,10 +25,9 @@ export declare class SigningCosmWasmClient extends CosmWasmClient {
   private readonly fees;
   private readonly registry;
   private readonly signer;
-  private readonly aminoTypes;
   static connectWithWallet(
     endpoint: string,
-    signer: OfflineSigner,
+    signer: OfflineDirectSigner,
     options?: SigningCosmWasmClientOptions,
   ): Promise<SigningCosmWasmClient>;
   private constructor();

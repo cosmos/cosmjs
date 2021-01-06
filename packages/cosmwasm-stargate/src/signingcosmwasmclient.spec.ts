@@ -3,11 +3,10 @@ import { UploadMeta } from "@cosmjs/cosmwasm-launchpad";
 import { sha256 } from "@cosmjs/crypto";
 import { toHex } from "@cosmjs/encoding";
 import { coin, coins, GasPrice } from "@cosmjs/launchpad";
-import { Coin, cosmosField, DirectSecp256k1HdWallet, registered, Registry } from "@cosmjs/proto-signing";
+import { DirectSecp256k1HdWallet, Registry } from "@cosmjs/proto-signing";
 import { assertIsBroadcastTxSuccess, codec } from "@cosmjs/stargate";
 import { assert, sleep } from "@cosmjs/utils";
 import Long from "long";
-import { Message } from "protobufjs";
 
 import { PrivateSigningCosmWasmClient, SigningCosmWasmClient } from "./signingcosmwasmclient";
 import {
@@ -16,7 +15,6 @@ import {
   makeRandomAddress,
   makeWasmClient,
   ModifyingDirectSecp256k1HdWallet,
-  ModifyingSecp256k1HdWallet,
   pendingWithoutWasmd,
   unused,
   validator,
@@ -499,83 +497,6 @@ describe("SigningCosmWasmClient", () => {
         assert(searchResult, "Must find transaction");
         const tx = Tx.decode(searchResult.tx);
         // From ModifyingDirectSecp256k1HdWallet
-        expect(tx.body!.memo).toEqual("This was modified");
-        expect({ ...tx.authInfo!.fee!.amount![0] }).toEqual(coin(3000, "ucosm"));
-        expect(tx.authInfo!.fee!.gasLimit!.toNumber()).toEqual(333333);
-      });
-    });
-
-    describe("legacy Amino mode", () => {
-      // NOTE: One registry shared between tests
-      // See https://github.com/protobufjs/protobuf.js#using-decorators
-      // > Decorated types reside in protobuf.roots["decorated"] using a flat structure, so no duplicate names.
-      const registry = new Registry();
-      const msgDelegateTypeUrl = "/cosmos.staking.v1beta1.MsgDelegate";
-
-      @registered(registry, msgDelegateTypeUrl)
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      class CustomMsgDelegate extends Message {
-        @cosmosField.string(1)
-        public readonly delegator_address?: string;
-        @cosmosField.string(2)
-        public readonly validator_address?: string;
-        @cosmosField.message(3, Coin)
-        public readonly amount?: Coin;
-      }
-
-      it("works", async () => {
-        pendingWithoutWasmd();
-        const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, undefined, wasmd.prefix);
-        const options = { registry: registry };
-        const client = await SigningCosmWasmClient.connectWithWallet(wasmd.endpoint, wallet, options);
-
-        const msg = {
-          delegator_address: alice.address0,
-          validator_address: validator.validatorAddress,
-          amount: coin(1234, "ustake"),
-        };
-        const msgAny = {
-          typeUrl: msgDelegateTypeUrl,
-          value: msg,
-        };
-        const fee = {
-          amount: coins(2000, "ucosm"),
-          gas: "200000",
-        };
-        const memo = "Use your power wisely";
-        const result = await client.signAndBroadcast(alice.address0, [msgAny], fee, memo);
-        assertIsBroadcastTxSuccess(result);
-      });
-
-      it("works with a modifying signer", async () => {
-        pendingWithoutWasmd();
-        const wallet = await ModifyingSecp256k1HdWallet.fromMnemonic(alice.mnemonic, undefined, wasmd.prefix);
-        const options = { registry: registry };
-        const client = await SigningCosmWasmClient.connectWithWallet(wasmd.endpoint, wallet, options);
-
-        const msg = {
-          delegator_address: alice.address0,
-          validator_address: validator.validatorAddress,
-          amount: coin(1234, "ustake"),
-        };
-        const msgAny = {
-          typeUrl: msgDelegateTypeUrl,
-          value: msg,
-        };
-        const fee = {
-          amount: coins(2000, "ucosm"),
-          gas: "200000",
-        };
-        const memo = "Use your power wisely";
-        const result = await client.signAndBroadcast(alice.address0, [msgAny], fee, memo);
-        assertIsBroadcastTxSuccess(result);
-
-        await sleep(1000);
-
-        const searchResult = await client.getTx(result.transactionHash);
-        assert(searchResult, "Must find transaction");
-        const tx = Tx.decode(searchResult.tx);
-        // From ModifyingSecp256k1HdWallet
         expect(tx.body!.memo).toEqual("This was modified");
         expect({ ...tx.authInfo!.fee!.amount![0] }).toEqual(coin(3000, "ucosm"));
         expect(tx.authInfo!.fee!.gasLimit!.toNumber()).toEqual(333333);
