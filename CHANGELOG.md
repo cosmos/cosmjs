@@ -45,6 +45,15 @@
 - @cosmjs/tendermint-rpc: Remove types `BlockHash`, `TxBytes` and `TxHash`. Use
   `Uint8Array` instead.
 
+## 0.23.2 (2021-01-06)
+
+### Security
+
+- @cosmjs/cli: Update vulnerable axios dependency.
+- @cosmjs/faucet-client: Update vulnerable axios dependency.
+- @cosmjs/launchpad: Update vulnerable axios dependency.
+- @cosmjs/tendermint-rpc: Update vulnerable axios dependency.
+
 ## 0.23.1 (2020-10-27)
 
 - @cosmjs/crypto: Export new convenience functions `keccak256`, `ripemd160`,
