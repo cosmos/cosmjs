@@ -42,6 +42,7 @@ interface HackatomInstance {
 describe("CosmWasmClient", () => {
   describe("connect", () => {
     it("can be constructed", async () => {
+      pendingWithoutWasmd();
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       expect(client).toBeTruthy();
     });
