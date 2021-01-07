@@ -27,12 +27,14 @@ const { Tx } = codec.cosmos.tx.v1beta1;
 describe("SigningCosmWasmClient", () => {
   describe("connectWithWallet", () => {
     it("can be constructed", async () => {
+      pendingWithoutWasmd();
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, undefined, wasmd.prefix);
       const client = await SigningCosmWasmClient.connectWithWallet(wasmd.endpoint, wallet);
       expect(client).toBeTruthy();
     });
 
     it("can be constructed with custom gas price", async () => {
+      pendingWithoutWasmd();
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, undefined, wasmd.prefix);
       const gasPrice = GasPrice.fromString("3.14utest");
       const client = await SigningCosmWasmClient.connectWithWallet(wasmd.endpoint, wallet, { gasPrice });
@@ -66,6 +68,7 @@ describe("SigningCosmWasmClient", () => {
     });
 
     it("can be constructed with custom gas limits", async () => {
+      pendingWithoutWasmd();
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, undefined, wasmd.prefix);
       const gasLimits = {
         send: 160000,
@@ -101,6 +104,7 @@ describe("SigningCosmWasmClient", () => {
     });
 
     it("can be constructed with custom gas price and gas limits", async () => {
+      pendingWithoutWasmd();
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, undefined, wasmd.prefix);
       const gasPrice = GasPrice.fromString("3.14utest");
       const gasLimits = {
