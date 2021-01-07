@@ -5,8 +5,10 @@ import { assert } from "@cosmjs/utils";
 import { Cw3CosmWasmClient, Vote } from "./cw3cosmwasmclient";
 import {
   alice,
+  cw3Enabled,
   deployedCw3,
   launchpad,
+  launchpadEnabled,
   makeRandomAddress,
   pendingWithoutCw3,
   pendingWithoutLaunchpad,
@@ -43,26 +45,28 @@ describe("Cw3CosmWasmClient", () => {
         },
       },
     };
-    let proposalId: number;
-    let expirationHeight: number;
+    let proposalId: number | undefined;
+    let expirationHeight: number | undefined;
 
     beforeAll(async () => {
-      const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic);
-      const client = new Cw3CosmWasmClient(launchpad.endpoint, alice.address0, wallet, contractAddress);
-      const currentHeight = await client.getHeight();
-      expirationHeight = currentHeight + 1;
-      const { logs } = await client.createMultisigProposal(
-        "My proposal",
-        "A proposal to propose proposing proposals",
-        [msg],
-        undefined,
-        { at_height: expirationHeight },
-      );
-      const wasmEvents = logs[0].events.find((event) => event.type === "wasm");
-      assert(wasmEvents, "Wasm events not found in logs");
-      const proposalIdAttribute = wasmEvents.attributes.find((log) => log.key === "proposal_id");
-      assert(proposalIdAttribute, "Proposal ID not found in logs");
-      proposalId = parseInt(proposalIdAttribute.value, 10);
+      if (launchpadEnabled() && cw3Enabled()) {
+        const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic);
+        const client = new Cw3CosmWasmClient(launchpad.endpoint, alice.address0, wallet, contractAddress);
+        const currentHeight = await client.getHeight();
+        expirationHeight = currentHeight + 1;
+        const { logs } = await client.createMultisigProposal(
+          "My proposal",
+          "A proposal to propose proposing proposals",
+          [msg],
+          undefined,
+          { at_height: expirationHeight },
+        );
+        const wasmEvents = logs[0].events.find((event) => event.type === "wasm");
+        assert(wasmEvents, "Wasm events not found in logs");
+        const proposalIdAttribute = wasmEvents.attributes.find((log) => log.key === "proposal_id");
+        assert(proposalIdAttribute, "Proposal ID not found in logs");
+        proposalId = parseInt(proposalIdAttribute.value, 10);
+      }
     });
 
     it("getThreshold", async () => {
@@ -84,6 +88,8 @@ describe("Cw3CosmWasmClient", () => {
     it("getProposal", async () => {
       pendingWithoutLaunchpad();
       pendingWithoutCw3();
+      assert(proposalId, "value must be set in beforeAll()");
+      assert(expirationHeight, "value must be set in beforeAll()");
 
       const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic);
       const client = new Cw3CosmWasmClient(launchpad.endpoint, alice.address0, wallet, contractAddress);
@@ -102,6 +108,8 @@ describe("Cw3CosmWasmClient", () => {
     it("listProposals", async () => {
       pendingWithoutLaunchpad();
       pendingWithoutCw3();
+      assert(proposalId, "value must be set in beforeAll()");
+      assert(expirationHeight, "value must be set in beforeAll()");
 
       const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic);
       const client = new Cw3CosmWasmClient(launchpad.endpoint, alice.address0, wallet, contractAddress);
@@ -124,6 +132,8 @@ describe("Cw3CosmWasmClient", () => {
     it("reverseProposals", async () => {
       pendingWithoutLaunchpad();
       pendingWithoutCw3();
+      assert(proposalId, "value must be set in beforeAll()");
+      assert(expirationHeight, "value must be set in beforeAll()");
 
       const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic);
       const client = new Cw3CosmWasmClient(launchpad.endpoint, alice.address0, wallet, contractAddress);
@@ -146,6 +156,7 @@ describe("Cw3CosmWasmClient", () => {
     it("getVote", async () => {
       pendingWithoutLaunchpad();
       pendingWithoutCw3();
+      assert(proposalId, "value must be set in beforeAll()");
 
       const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic);
       const client = new Cw3CosmWasmClient(launchpad.endpoint, alice.address0, wallet, contractAddress);
@@ -157,6 +168,7 @@ describe("Cw3CosmWasmClient", () => {
     it("listVotes", async () => {
       pendingWithoutLaunchpad();
       pendingWithoutCw3();
+      assert(proposalId, "value must be set in beforeAll()");
 
       const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic);
       const client = new Cw3CosmWasmClient(launchpad.endpoint, alice.address0, wallet, contractAddress);
