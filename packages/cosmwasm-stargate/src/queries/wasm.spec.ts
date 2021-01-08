@@ -387,8 +387,12 @@ describe("WasmExtension", () => {
         expect(codeId).toBeGreaterThanOrEqual(1);
         expect(codeId).toBeLessThanOrEqual(200);
         expect(result.data!.length).toEqual(1);
+        console.log(`Raw Store Data: [${result.data![0].data}]`);
+        console.log(`Code ID From events: ${codeId}`);
         expect({ ...result.data![0] }).toEqual({
           msgType: "store-code",
+          // TODO: protobuf de/encode here `{codeId: codeId}`
+          // https://github.com/CosmWasm/wasmd/blob/5f8c246d25e8be640fb401fda4bbf82db37e9e90/x/wasm/internal/types/tx.proto#L41-L45
           data: toAscii(`${codeId}`),
         });
       }
@@ -405,8 +409,12 @@ describe("WasmExtension", () => {
         const amountAttr = logs.findAttribute(parsedLogs, "transfer", "amount");
         expect(amountAttr.value).toEqual("1234ucosm,321ustake");
         expect(result.data!.length).toEqual(1);
+        console.log(`Raw Init Data: [${result.data![0].data}]`);
+        console.log(`Addr From events (ascii bytes): [${toAscii(contractAddress)}]`);
         expect({ ...result.data![0] }).toEqual({
           msgType: "instantiate",
+          // TODO: protobuf de/encode here `{address: contractAddress}`
+          // https://github.com/CosmWasm/wasmd/blob/5f8c246d25e8be640fb401fda4bbf82db37e9e90/x/wasm/internal/types/tx.proto#L62-L66
           data: toAscii(contractAddress),
         });
 
@@ -421,8 +429,12 @@ describe("WasmExtension", () => {
         const result = await executeContract(wallet, contractAddress, { release: {} });
         assertIsBroadcastTxSuccess(result);
         expect(result.data!.length).toEqual(1);
+        console.log(`Raw Execute Data: 0x${toHex(result.data![0].data!)}`);
+        console.log(`Expected Contract Data: 0xf00baa`);
         expect({ ...result.data![0] }).toEqual({
           msgType: "execute",
+          // TODO: protobuf de/encode here `{data: [0xf0, 0x0b, 0xaa]}`
+          // https://github.com/CosmWasm/wasmd/blob/5f8c246d25e8be640fb401fda4bbf82db37e9e90/x/wasm/internal/types/tx.proto#L80-L84
           data: fromHex("F00BAA"),
         });
         const parsedLogs = logs.parseLogs(parseRawLog(result.rawLog));
