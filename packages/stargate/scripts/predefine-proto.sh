@@ -6,6 +6,7 @@ GENERATED_DIR="./tmp"
 ROOT_PROTO_DIR="./proto/cosmos/cosmos-sdk"
 COSMOS_PROTO_DIR="$ROOT_PROTO_DIR/proto/cosmos"
 IBC_PROTO_DIR="$ROOT_PROTO_DIR/proto/ibc"
+CONFIO_PROTO_DIR="$ROOT_PROTO_DIR/third_party/proto/confio"
 TENDERMINT_PROTO_DIR="$ROOT_PROTO_DIR/third_party/proto/tendermint"
 
 mkdir -p "$GENERATED_DIR"
@@ -40,6 +41,7 @@ yarn pbjs \
   "$IBC_PROTO_DIR/core/commitment/v1/commitment.proto" \
   "$IBC_PROTO_DIR/core/connection/v1/connection.proto" \
   "$IBC_PROTO_DIR/core/connection/v1/query.proto" \
+  "$CONFIO_PROTO_DIR/proofs.proto" \
   "$TENDERMINT_PROTO_DIR/abci/types.proto" \
   "$TENDERMINT_PROTO_DIR/crypto/keys.proto" \
   "$TENDERMINT_PROTO_DIR/crypto/proof.proto" \

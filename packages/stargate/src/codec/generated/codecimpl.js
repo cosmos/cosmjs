@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.tendermint = exports.ibc = exports.google = exports.cosmos = void 0;
+exports.tendermint = exports.ics23 = exports.ibc = exports.google = exports.cosmos = void 0;
 var $protobuf = require("protobufjs/minimal");
 const $Reader = $protobuf.Reader,
   $Writer = $protobuf.Writer,
@@ -7326,10 +7326,10 @@ exports.ibc = $root.ibc = (() => {
           }
           QueryChannelConsensusStateRequest.prototype.portId = "";
           QueryChannelConsensusStateRequest.prototype.channelId = "";
-          QueryChannelConsensusStateRequest.prototype.versionNumber = $util.Long
+          QueryChannelConsensusStateRequest.prototype.revisionNumber = $util.Long
             ? $util.Long.fromBits(0, 0, true)
             : 0;
-          QueryChannelConsensusStateRequest.prototype.versionHeight = $util.Long
+          QueryChannelConsensusStateRequest.prototype.revisionHeight = $util.Long
             ? $util.Long.fromBits(0, 0, true)
             : 0;
           QueryChannelConsensusStateRequest.create = function create(properties) {
@@ -7340,10 +7340,10 @@ exports.ibc = $root.ibc = (() => {
             if (m.portId != null && Object.hasOwnProperty.call(m, "portId")) w.uint32(10).string(m.portId);
             if (m.channelId != null && Object.hasOwnProperty.call(m, "channelId"))
               w.uint32(18).string(m.channelId);
-            if (m.versionNumber != null && Object.hasOwnProperty.call(m, "versionNumber"))
-              w.uint32(24).uint64(m.versionNumber);
-            if (m.versionHeight != null && Object.hasOwnProperty.call(m, "versionHeight"))
-              w.uint32(32).uint64(m.versionHeight);
+            if (m.revisionNumber != null && Object.hasOwnProperty.call(m, "revisionNumber"))
+              w.uint32(24).uint64(m.revisionNumber);
+            if (m.revisionHeight != null && Object.hasOwnProperty.call(m, "revisionHeight"))
+              w.uint32(32).uint64(m.revisionHeight);
             return w;
           };
           QueryChannelConsensusStateRequest.decode = function decode(r, l) {
@@ -7360,10 +7360,10 @@ exports.ibc = $root.ibc = (() => {
                   m.channelId = r.string();
                   break;
                 case 3:
-                  m.versionNumber = r.uint64();
+                  m.revisionNumber = r.uint64();
                   break;
                 case 4:
-                  m.versionHeight = r.uint64();
+                  m.revisionHeight = r.uint64();
                   break;
                 default:
                   r.skipType(t & 7);
@@ -8205,386 +8205,6 @@ exports.ibc = $root.ibc = (() => {
       const client = {};
       client.v1 = (function () {
         const v1 = {};
-        v1.Msg = (function () {
-          function Msg(rpcImpl, requestDelimited, responseDelimited) {
-            $protobuf.rpc.Service.call(this, rpcImpl, requestDelimited, responseDelimited);
-          }
-          (Msg.prototype = Object.create($protobuf.rpc.Service.prototype)).constructor = Msg;
-          Msg.create = function create(rpcImpl, requestDelimited, responseDelimited) {
-            return new this(rpcImpl, requestDelimited, responseDelimited);
-          };
-          Object.defineProperty(
-            (Msg.prototype.createClient = function createClient(request, callback) {
-              return this.rpcCall(
-                createClient,
-                $root.ibc.core.client.v1.MsgCreateClient,
-                $root.ibc.core.client.v1.MsgCreateClientResponse,
-                request,
-                callback,
-              );
-            }),
-            "name",
-            { value: "CreateClient" },
-          );
-          Object.defineProperty(
-            (Msg.prototype.updateClient = function updateClient(request, callback) {
-              return this.rpcCall(
-                updateClient,
-                $root.ibc.core.client.v1.MsgUpdateClient,
-                $root.ibc.core.client.v1.MsgUpdateClientResponse,
-                request,
-                callback,
-              );
-            }),
-            "name",
-            { value: "UpdateClient" },
-          );
-          Object.defineProperty(
-            (Msg.prototype.upgradeClient = function upgradeClient(request, callback) {
-              return this.rpcCall(
-                upgradeClient,
-                $root.ibc.core.client.v1.MsgUpgradeClient,
-                $root.ibc.core.client.v1.MsgUpgradeClientResponse,
-                request,
-                callback,
-              );
-            }),
-            "name",
-            { value: "UpgradeClient" },
-          );
-          Object.defineProperty(
-            (Msg.prototype.submitMisbehaviour = function submitMisbehaviour(request, callback) {
-              return this.rpcCall(
-                submitMisbehaviour,
-                $root.ibc.core.client.v1.MsgSubmitMisbehaviour,
-                $root.ibc.core.client.v1.MsgSubmitMisbehaviourResponse,
-                request,
-                callback,
-              );
-            }),
-            "name",
-            { value: "SubmitMisbehaviour" },
-          );
-          return Msg;
-        })();
-        v1.MsgCreateClient = (function () {
-          function MsgCreateClient(p) {
-            if (p)
-              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-          }
-          MsgCreateClient.prototype.clientId = "";
-          MsgCreateClient.prototype.clientState = null;
-          MsgCreateClient.prototype.consensusState = null;
-          MsgCreateClient.prototype.signer = "";
-          MsgCreateClient.create = function create(properties) {
-            return new MsgCreateClient(properties);
-          };
-          MsgCreateClient.encode = function encode(m, w) {
-            if (!w) w = $Writer.create();
-            if (m.clientId != null && Object.hasOwnProperty.call(m, "clientId"))
-              w.uint32(10).string(m.clientId);
-            if (m.clientState != null && Object.hasOwnProperty.call(m, "clientState"))
-              $root.google.protobuf.Any.encode(m.clientState, w.uint32(18).fork()).ldelim();
-            if (m.consensusState != null && Object.hasOwnProperty.call(m, "consensusState"))
-              $root.google.protobuf.Any.encode(m.consensusState, w.uint32(26).fork()).ldelim();
-            if (m.signer != null && Object.hasOwnProperty.call(m, "signer")) w.uint32(34).string(m.signer);
-            return w;
-          };
-          MsgCreateClient.decode = function decode(r, l) {
-            if (!(r instanceof $Reader)) r = $Reader.create(r);
-            var c = l === undefined ? r.len : r.pos + l,
-              m = new $root.ibc.core.client.v1.MsgCreateClient();
-            while (r.pos < c) {
-              var t = r.uint32();
-              switch (t >>> 3) {
-                case 1:
-                  m.clientId = r.string();
-                  break;
-                case 2:
-                  m.clientState = $root.google.protobuf.Any.decode(r, r.uint32());
-                  break;
-                case 3:
-                  m.consensusState = $root.google.protobuf.Any.decode(r, r.uint32());
-                  break;
-                case 4:
-                  m.signer = r.string();
-                  break;
-                default:
-                  r.skipType(t & 7);
-                  break;
-              }
-            }
-            return m;
-          };
-          return MsgCreateClient;
-        })();
-        v1.MsgCreateClientResponse = (function () {
-          function MsgCreateClientResponse(p) {
-            if (p)
-              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-          }
-          MsgCreateClientResponse.create = function create(properties) {
-            return new MsgCreateClientResponse(properties);
-          };
-          MsgCreateClientResponse.encode = function encode(m, w) {
-            if (!w) w = $Writer.create();
-            return w;
-          };
-          MsgCreateClientResponse.decode = function decode(r, l) {
-            if (!(r instanceof $Reader)) r = $Reader.create(r);
-            var c = l === undefined ? r.len : r.pos + l,
-              m = new $root.ibc.core.client.v1.MsgCreateClientResponse();
-            while (r.pos < c) {
-              var t = r.uint32();
-              switch (t >>> 3) {
-                default:
-                  r.skipType(t & 7);
-                  break;
-              }
-            }
-            return m;
-          };
-          return MsgCreateClientResponse;
-        })();
-        v1.MsgUpdateClient = (function () {
-          function MsgUpdateClient(p) {
-            if (p)
-              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-          }
-          MsgUpdateClient.prototype.clientId = "";
-          MsgUpdateClient.prototype.header = null;
-          MsgUpdateClient.prototype.signer = "";
-          MsgUpdateClient.create = function create(properties) {
-            return new MsgUpdateClient(properties);
-          };
-          MsgUpdateClient.encode = function encode(m, w) {
-            if (!w) w = $Writer.create();
-            if (m.clientId != null && Object.hasOwnProperty.call(m, "clientId"))
-              w.uint32(10).string(m.clientId);
-            if (m.header != null && Object.hasOwnProperty.call(m, "header"))
-              $root.google.protobuf.Any.encode(m.header, w.uint32(18).fork()).ldelim();
-            if (m.signer != null && Object.hasOwnProperty.call(m, "signer")) w.uint32(26).string(m.signer);
-            return w;
-          };
-          MsgUpdateClient.decode = function decode(r, l) {
-            if (!(r instanceof $Reader)) r = $Reader.create(r);
-            var c = l === undefined ? r.len : r.pos + l,
-              m = new $root.ibc.core.client.v1.MsgUpdateClient();
-            while (r.pos < c) {
-              var t = r.uint32();
-              switch (t >>> 3) {
-                case 1:
-                  m.clientId = r.string();
-                  break;
-                case 2:
-                  m.header = $root.google.protobuf.Any.decode(r, r.uint32());
-                  break;
-                case 3:
-                  m.signer = r.string();
-                  break;
-                default:
-                  r.skipType(t & 7);
-                  break;
-              }
-            }
-            return m;
-          };
-          return MsgUpdateClient;
-        })();
-        v1.MsgUpdateClientResponse = (function () {
-          function MsgUpdateClientResponse(p) {
-            if (p)
-              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-          }
-          MsgUpdateClientResponse.create = function create(properties) {
-            return new MsgUpdateClientResponse(properties);
-          };
-          MsgUpdateClientResponse.encode = function encode(m, w) {
-            if (!w) w = $Writer.create();
-            return w;
-          };
-          MsgUpdateClientResponse.decode = function decode(r, l) {
-            if (!(r instanceof $Reader)) r = $Reader.create(r);
-            var c = l === undefined ? r.len : r.pos + l,
-              m = new $root.ibc.core.client.v1.MsgUpdateClientResponse();
-            while (r.pos < c) {
-              var t = r.uint32();
-              switch (t >>> 3) {
-                default:
-                  r.skipType(t & 7);
-                  break;
-              }
-            }
-            return m;
-          };
-          return MsgUpdateClientResponse;
-        })();
-        v1.MsgUpgradeClient = (function () {
-          function MsgUpgradeClient(p) {
-            if (p)
-              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-          }
-          MsgUpgradeClient.prototype.clientId = "";
-          MsgUpgradeClient.prototype.clientState = null;
-          MsgUpgradeClient.prototype.upgradeHeight = null;
-          MsgUpgradeClient.prototype.proofUpgrade = $util.newBuffer([]);
-          MsgUpgradeClient.prototype.signer = "";
-          MsgUpgradeClient.create = function create(properties) {
-            return new MsgUpgradeClient(properties);
-          };
-          MsgUpgradeClient.encode = function encode(m, w) {
-            if (!w) w = $Writer.create();
-            if (m.clientId != null && Object.hasOwnProperty.call(m, "clientId"))
-              w.uint32(10).string(m.clientId);
-            if (m.clientState != null && Object.hasOwnProperty.call(m, "clientState"))
-              $root.google.protobuf.Any.encode(m.clientState, w.uint32(18).fork()).ldelim();
-            if (m.upgradeHeight != null && Object.hasOwnProperty.call(m, "upgradeHeight"))
-              $root.ibc.core.client.v1.Height.encode(m.upgradeHeight, w.uint32(26).fork()).ldelim();
-            if (m.proofUpgrade != null && Object.hasOwnProperty.call(m, "proofUpgrade"))
-              w.uint32(34).bytes(m.proofUpgrade);
-            if (m.signer != null && Object.hasOwnProperty.call(m, "signer")) w.uint32(42).string(m.signer);
-            return w;
-          };
-          MsgUpgradeClient.decode = function decode(r, l) {
-            if (!(r instanceof $Reader)) r = $Reader.create(r);
-            var c = l === undefined ? r.len : r.pos + l,
-              m = new $root.ibc.core.client.v1.MsgUpgradeClient();
-            while (r.pos < c) {
-              var t = r.uint32();
-              switch (t >>> 3) {
-                case 1:
-                  m.clientId = r.string();
-                  break;
-                case 2:
-                  m.clientState = $root.google.protobuf.Any.decode(r, r.uint32());
-                  break;
-                case 3:
-                  m.upgradeHeight = $root.ibc.core.client.v1.Height.decode(r, r.uint32());
-                  break;
-                case 4:
-                  m.proofUpgrade = r.bytes();
-                  break;
-                case 5:
-                  m.signer = r.string();
-                  break;
-                default:
-                  r.skipType(t & 7);
-                  break;
-              }
-            }
-            return m;
-          };
-          return MsgUpgradeClient;
-        })();
-        v1.MsgUpgradeClientResponse = (function () {
-          function MsgUpgradeClientResponse(p) {
-            if (p)
-              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-          }
-          MsgUpgradeClientResponse.create = function create(properties) {
-            return new MsgUpgradeClientResponse(properties);
-          };
-          MsgUpgradeClientResponse.encode = function encode(m, w) {
-            if (!w) w = $Writer.create();
-            return w;
-          };
-          MsgUpgradeClientResponse.decode = function decode(r, l) {
-            if (!(r instanceof $Reader)) r = $Reader.create(r);
-            var c = l === undefined ? r.len : r.pos + l,
-              m = new $root.ibc.core.client.v1.MsgUpgradeClientResponse();
-            while (r.pos < c) {
-              var t = r.uint32();
-              switch (t >>> 3) {
-                default:
-                  r.skipType(t & 7);
-                  break;
-              }
-            }
-            return m;
-          };
-          return MsgUpgradeClientResponse;
-        })();
-        v1.MsgSubmitMisbehaviour = (function () {
-          function MsgSubmitMisbehaviour(p) {
-            if (p)
-              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-          }
-          MsgSubmitMisbehaviour.prototype.clientId = "";
-          MsgSubmitMisbehaviour.prototype.misbehaviour = null;
-          MsgSubmitMisbehaviour.prototype.signer = "";
-          MsgSubmitMisbehaviour.create = function create(properties) {
-            return new MsgSubmitMisbehaviour(properties);
-          };
-          MsgSubmitMisbehaviour.encode = function encode(m, w) {
-            if (!w) w = $Writer.create();
-            if (m.clientId != null && Object.hasOwnProperty.call(m, "clientId"))
-              w.uint32(10).string(m.clientId);
-            if (m.misbehaviour != null && Object.hasOwnProperty.call(m, "misbehaviour"))
-              $root.google.protobuf.Any.encode(m.misbehaviour, w.uint32(18).fork()).ldelim();
-            if (m.signer != null && Object.hasOwnProperty.call(m, "signer")) w.uint32(26).string(m.signer);
-            return w;
-          };
-          MsgSubmitMisbehaviour.decode = function decode(r, l) {
-            if (!(r instanceof $Reader)) r = $Reader.create(r);
-            var c = l === undefined ? r.len : r.pos + l,
-              m = new $root.ibc.core.client.v1.MsgSubmitMisbehaviour();
-            while (r.pos < c) {
-              var t = r.uint32();
-              switch (t >>> 3) {
-                case 1:
-                  m.clientId = r.string();
-                  break;
-                case 2:
-                  m.misbehaviour = $root.google.protobuf.Any.decode(r, r.uint32());
-                  break;
-                case 3:
-                  m.signer = r.string();
-                  break;
-                default:
-                  r.skipType(t & 7);
-                  break;
-              }
-            }
-            return m;
-          };
-          return MsgSubmitMisbehaviour;
-        })();
-        v1.MsgSubmitMisbehaviourResponse = (function () {
-          function MsgSubmitMisbehaviourResponse(p) {
-            if (p)
-              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-          }
-          MsgSubmitMisbehaviourResponse.create = function create(properties) {
-            return new MsgSubmitMisbehaviourResponse(properties);
-          };
-          MsgSubmitMisbehaviourResponse.encode = function encode(m, w) {
-            if (!w) w = $Writer.create();
-            return w;
-          };
-          MsgSubmitMisbehaviourResponse.decode = function decode(r, l) {
-            if (!(r instanceof $Reader)) r = $Reader.create(r);
-            var c = l === undefined ? r.len : r.pos + l,
-              m = new $root.ibc.core.client.v1.MsgSubmitMisbehaviourResponse();
-            while (r.pos < c) {
-              var t = r.uint32();
-              switch (t >>> 3) {
-                default:
-                  r.skipType(t & 7);
-                  break;
-              }
-            }
-            return m;
-          };
-          return MsgSubmitMisbehaviourResponse;
-        })();
         v1.IdentifiedClientState = (function () {
           function IdentifiedClientState(p) {
             if (p)
@@ -8775,17 +8395,17 @@ exports.ibc = $root.ibc = (() => {
               for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
                 if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
           }
-          Height.prototype.versionNumber = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
-          Height.prototype.versionHeight = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+          Height.prototype.revisionNumber = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+          Height.prototype.revisionHeight = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
           Height.create = function create(properties) {
             return new Height(properties);
           };
           Height.encode = function encode(m, w) {
             if (!w) w = $Writer.create();
-            if (m.versionNumber != null && Object.hasOwnProperty.call(m, "versionNumber"))
-              w.uint32(8).uint64(m.versionNumber);
-            if (m.versionHeight != null && Object.hasOwnProperty.call(m, "versionHeight"))
-              w.uint32(16).uint64(m.versionHeight);
+            if (m.revisionNumber != null && Object.hasOwnProperty.call(m, "revisionNumber"))
+              w.uint32(8).uint64(m.revisionNumber);
+            if (m.revisionHeight != null && Object.hasOwnProperty.call(m, "revisionHeight"))
+              w.uint32(16).uint64(m.revisionHeight);
             return w;
           };
           Height.decode = function decode(r, l) {
@@ -8796,10 +8416,10 @@ exports.ibc = $root.ibc = (() => {
               var t = r.uint32();
               switch (t >>> 3) {
                 case 1:
-                  m.versionNumber = r.uint64();
+                  m.revisionNumber = r.uint64();
                   break;
                 case 2:
-                  m.versionHeight = r.uint64();
+                  m.revisionHeight = r.uint64();
                   break;
                 default:
                   r.skipType(t & 7);
@@ -8809,6 +8429,44 @@ exports.ibc = $root.ibc = (() => {
             return m;
           };
           return Height;
+        })();
+        v1.Params = (function () {
+          function Params(p) {
+            this.allowedClients = [];
+            if (p)
+              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+          }
+          Params.prototype.allowedClients = $util.emptyArray;
+          Params.create = function create(properties) {
+            return new Params(properties);
+          };
+          Params.encode = function encode(m, w) {
+            if (!w) w = $Writer.create();
+            if (m.allowedClients != null && m.allowedClients.length) {
+              for (var i = 0; i < m.allowedClients.length; ++i) w.uint32(10).string(m.allowedClients[i]);
+            }
+            return w;
+          };
+          Params.decode = function decode(r, l) {
+            if (!(r instanceof $Reader)) r = $Reader.create(r);
+            var c = l === undefined ? r.len : r.pos + l,
+              m = new $root.ibc.core.client.v1.Params();
+            while (r.pos < c) {
+              var t = r.uint32();
+              switch (t >>> 3) {
+                case 1:
+                  if (!(m.allowedClients && m.allowedClients.length)) m.allowedClients = [];
+                  m.allowedClients.push(r.string());
+                  break;
+                default:
+                  r.skipType(t & 7);
+                  break;
+              }
+            }
+            return m;
+          };
+          return Params;
         })();
         return v1;
       })();
@@ -8889,18 +8547,20 @@ exports.ibc = $root.ibc = (() => {
         })();
         v1.MerklePath = (function () {
           function MerklePath(p) {
+            this.keyPath = [];
             if (p)
               for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
                 if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
           }
-          MerklePath.prototype.keyPath = null;
+          MerklePath.prototype.keyPath = $util.emptyArray;
           MerklePath.create = function create(properties) {
             return new MerklePath(properties);
           };
           MerklePath.encode = function encode(m, w) {
             if (!w) w = $Writer.create();
-            if (m.keyPath != null && Object.hasOwnProperty.call(m, "keyPath"))
-              $root.ibc.core.commitment.v1.KeyPath.encode(m.keyPath, w.uint32(10).fork()).ldelim();
+            if (m.keyPath != null && m.keyPath.length) {
+              for (var i = 0; i < m.keyPath.length; ++i) w.uint32(10).string(m.keyPath[i]);
+            }
             return w;
           };
           MerklePath.decode = function decode(r, l) {
@@ -8911,7 +8571,8 @@ exports.ibc = $root.ibc = (() => {
               var t = r.uint32();
               switch (t >>> 3) {
                 case 1:
-                  m.keyPath = $root.ibc.core.commitment.v1.KeyPath.decode(r, r.uint32());
+                  if (!(m.keyPath && m.keyPath.length)) m.keyPath = [];
+                  m.keyPath.push(r.string());
                   break;
                 default:
                   r.skipType(t & 7);
@@ -8924,18 +8585,21 @@ exports.ibc = $root.ibc = (() => {
         })();
         v1.MerkleProof = (function () {
           function MerkleProof(p) {
+            this.proofs = [];
             if (p)
               for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
                 if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
           }
-          MerkleProof.prototype.proof = null;
+          MerkleProof.prototype.proofs = $util.emptyArray;
           MerkleProof.create = function create(properties) {
             return new MerkleProof(properties);
           };
           MerkleProof.encode = function encode(m, w) {
             if (!w) w = $Writer.create();
-            if (m.proof != null && Object.hasOwnProperty.call(m, "proof"))
-              $root.tendermint.crypto.ProofOps.encode(m.proof, w.uint32(10).fork()).ldelim();
+            if (m.proofs != null && m.proofs.length) {
+              for (var i = 0; i < m.proofs.length; ++i)
+                $root.ics23.CommitmentProof.encode(m.proofs[i], w.uint32(10).fork()).ldelim();
+            }
             return w;
           };
           MerkleProof.decode = function decode(r, l) {
@@ -8946,7 +8610,8 @@ exports.ibc = $root.ibc = (() => {
               var t = r.uint32();
               switch (t >>> 3) {
                 case 1:
-                  m.proof = $root.tendermint.crypto.ProofOps.decode(r, r.uint32());
+                  if (!(m.proofs && m.proofs.length)) m.proofs = [];
+                  m.proofs.push($root.ics23.CommitmentProof.decode(r, r.uint32()));
                   break;
                 default:
                   r.skipType(t & 7);
@@ -8956,91 +8621,6 @@ exports.ibc = $root.ibc = (() => {
             return m;
           };
           return MerkleProof;
-        })();
-        v1.KeyPath = (function () {
-          function KeyPath(p) {
-            this.keys = [];
-            if (p)
-              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-          }
-          KeyPath.prototype.keys = $util.emptyArray;
-          KeyPath.create = function create(properties) {
-            return new KeyPath(properties);
-          };
-          KeyPath.encode = function encode(m, w) {
-            if (!w) w = $Writer.create();
-            if (m.keys != null && m.keys.length) {
-              for (var i = 0; i < m.keys.length; ++i)
-                $root.ibc.core.commitment.v1.Key.encode(m.keys[i], w.uint32(10).fork()).ldelim();
-            }
-            return w;
-          };
-          KeyPath.decode = function decode(r, l) {
-            if (!(r instanceof $Reader)) r = $Reader.create(r);
-            var c = l === undefined ? r.len : r.pos + l,
-              m = new $root.ibc.core.commitment.v1.KeyPath();
-            while (r.pos < c) {
-              var t = r.uint32();
-              switch (t >>> 3) {
-                case 1:
-                  if (!(m.keys && m.keys.length)) m.keys = [];
-                  m.keys.push($root.ibc.core.commitment.v1.Key.decode(r, r.uint32()));
-                  break;
-                default:
-                  r.skipType(t & 7);
-                  break;
-              }
-            }
-            return m;
-          };
-          return KeyPath;
-        })();
-        v1.Key = (function () {
-          function Key(p) {
-            if (p)
-              for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
-          }
-          Key.prototype.name = $util.newBuffer([]);
-          Key.prototype.enc = 0;
-          Key.create = function create(properties) {
-            return new Key(properties);
-          };
-          Key.encode = function encode(m, w) {
-            if (!w) w = $Writer.create();
-            if (m.name != null && Object.hasOwnProperty.call(m, "name")) w.uint32(10).bytes(m.name);
-            if (m.enc != null && Object.hasOwnProperty.call(m, "enc")) w.uint32(16).int32(m.enc);
-            return w;
-          };
-          Key.decode = function decode(r, l) {
-            if (!(r instanceof $Reader)) r = $Reader.create(r);
-            var c = l === undefined ? r.len : r.pos + l,
-              m = new $root.ibc.core.commitment.v1.Key();
-            while (r.pos < c) {
-              var t = r.uint32();
-              switch (t >>> 3) {
-                case 1:
-                  m.name = r.bytes();
-                  break;
-                case 2:
-                  m.enc = r.int32();
-                  break;
-                default:
-                  r.skipType(t & 7);
-                  break;
-              }
-            }
-            return m;
-          };
-          return Key;
-        })();
-        v1.KeyEncoding = (function () {
-          const valuesById = {},
-            values = Object.create(valuesById);
-          values[(valuesById[0] = "KEY_ENCODING_URL_UNSPECIFIED")] = 0;
-          values[(valuesById[1] = "KEY_ENCODING_HEX")] = 1;
-          return values;
         })();
         return v1;
       })();
@@ -9061,6 +8641,7 @@ exports.ibc = $root.ibc = (() => {
           ConnectionEnd.prototype.versions = $util.emptyArray;
           ConnectionEnd.prototype.state = 0;
           ConnectionEnd.prototype.counterparty = null;
+          ConnectionEnd.prototype.delayPeriod = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
           ConnectionEnd.create = function create(properties) {
             return new ConnectionEnd(properties);
           };
@@ -9075,6 +8656,8 @@ exports.ibc = $root.ibc = (() => {
             if (m.state != null && Object.hasOwnProperty.call(m, "state")) w.uint32(24).int32(m.state);
             if (m.counterparty != null && Object.hasOwnProperty.call(m, "counterparty"))
               $root.ibc.core.connection.v1.Counterparty.encode(m.counterparty, w.uint32(34).fork()).ldelim();
+            if (m.delayPeriod != null && Object.hasOwnProperty.call(m, "delayPeriod"))
+              w.uint32(40).uint64(m.delayPeriod);
             return w;
           };
           ConnectionEnd.decode = function decode(r, l) {
@@ -9097,6 +8680,9 @@ exports.ibc = $root.ibc = (() => {
                 case 4:
                   m.counterparty = $root.ibc.core.connection.v1.Counterparty.decode(r, r.uint32());
                   break;
+                case 5:
+                  m.delayPeriod = r.uint64();
+                  break;
                 default:
                   r.skipType(t & 7);
                   break;
@@ -9118,6 +8704,7 @@ exports.ibc = $root.ibc = (() => {
           IdentifiedConnection.prototype.versions = $util.emptyArray;
           IdentifiedConnection.prototype.state = 0;
           IdentifiedConnection.prototype.counterparty = null;
+          IdentifiedConnection.prototype.delayPeriod = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
           IdentifiedConnection.create = function create(properties) {
             return new IdentifiedConnection(properties);
           };
@@ -9133,6 +8720,8 @@ exports.ibc = $root.ibc = (() => {
             if (m.state != null && Object.hasOwnProperty.call(m, "state")) w.uint32(32).int32(m.state);
             if (m.counterparty != null && Object.hasOwnProperty.call(m, "counterparty"))
               $root.ibc.core.connection.v1.Counterparty.encode(m.counterparty, w.uint32(42).fork()).ldelim();
+            if (m.delayPeriod != null && Object.hasOwnProperty.call(m, "delayPeriod"))
+              w.uint32(48).uint64(m.delayPeriod);
             return w;
           };
           IdentifiedConnection.decode = function decode(r, l) {
@@ -9157,6 +8746,9 @@ exports.ibc = $root.ibc = (() => {
                   break;
                 case 5:
                   m.counterparty = $root.ibc.core.connection.v1.Counterparty.decode(r, r.uint32());
+                  break;
+                case 6:
+                  m.delayPeriod = r.uint64();
                   break;
                 default:
                   r.skipType(t & 7);
@@ -9772,10 +9364,10 @@ exports.ibc = $root.ibc = (() => {
                 if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
           }
           QueryConnectionConsensusStateRequest.prototype.connectionId = "";
-          QueryConnectionConsensusStateRequest.prototype.versionNumber = $util.Long
+          QueryConnectionConsensusStateRequest.prototype.revisionNumber = $util.Long
             ? $util.Long.fromBits(0, 0, true)
             : 0;
-          QueryConnectionConsensusStateRequest.prototype.versionHeight = $util.Long
+          QueryConnectionConsensusStateRequest.prototype.revisionHeight = $util.Long
             ? $util.Long.fromBits(0, 0, true)
             : 0;
           QueryConnectionConsensusStateRequest.create = function create(properties) {
@@ -9785,10 +9377,10 @@ exports.ibc = $root.ibc = (() => {
             if (!w) w = $Writer.create();
             if (m.connectionId != null && Object.hasOwnProperty.call(m, "connectionId"))
               w.uint32(10).string(m.connectionId);
-            if (m.versionNumber != null && Object.hasOwnProperty.call(m, "versionNumber"))
-              w.uint32(16).uint64(m.versionNumber);
-            if (m.versionHeight != null && Object.hasOwnProperty.call(m, "versionHeight"))
-              w.uint32(24).uint64(m.versionHeight);
+            if (m.revisionNumber != null && Object.hasOwnProperty.call(m, "revisionNumber"))
+              w.uint32(16).uint64(m.revisionNumber);
+            if (m.revisionHeight != null && Object.hasOwnProperty.call(m, "revisionHeight"))
+              w.uint32(24).uint64(m.revisionHeight);
             return w;
           };
           QueryConnectionConsensusStateRequest.decode = function decode(r, l) {
@@ -9802,10 +9394,10 @@ exports.ibc = $root.ibc = (() => {
                   m.connectionId = r.string();
                   break;
                 case 2:
-                  m.versionNumber = r.uint64();
+                  m.revisionNumber = r.uint64();
                   break;
                 case 3:
-                  m.versionHeight = r.uint64();
+                  m.revisionHeight = r.uint64();
                   break;
                 default:
                   r.skipType(t & 7);
@@ -9875,6 +9467,688 @@ exports.ibc = $root.ibc = (() => {
     return core;
   })();
   return ibc;
+})();
+exports.ics23 = $root.ics23 = (() => {
+  const ics23 = {};
+  ics23.HashOp = (function () {
+    const valuesById = {},
+      values = Object.create(valuesById);
+    values[(valuesById[0] = "NO_HASH")] = 0;
+    values[(valuesById[1] = "SHA256")] = 1;
+    values[(valuesById[2] = "SHA512")] = 2;
+    values[(valuesById[3] = "KECCAK")] = 3;
+    values[(valuesById[4] = "RIPEMD160")] = 4;
+    values[(valuesById[5] = "BITCOIN")] = 5;
+    return values;
+  })();
+  ics23.LengthOp = (function () {
+    const valuesById = {},
+      values = Object.create(valuesById);
+    values[(valuesById[0] = "NO_PREFIX")] = 0;
+    values[(valuesById[1] = "VAR_PROTO")] = 1;
+    values[(valuesById[2] = "VAR_RLP")] = 2;
+    values[(valuesById[3] = "FIXED32_BIG")] = 3;
+    values[(valuesById[4] = "FIXED32_LITTLE")] = 4;
+    values[(valuesById[5] = "FIXED64_BIG")] = 5;
+    values[(valuesById[6] = "FIXED64_LITTLE")] = 6;
+    values[(valuesById[7] = "REQUIRE_32_BYTES")] = 7;
+    values[(valuesById[8] = "REQUIRE_64_BYTES")] = 8;
+    return values;
+  })();
+  ics23.ExistenceProof = (function () {
+    function ExistenceProof(p) {
+      this.path = [];
+      if (p)
+        for (var ks = Object.keys(p), i = 0; i < ks.length; ++i) if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+    }
+    ExistenceProof.prototype.key = $util.newBuffer([]);
+    ExistenceProof.prototype.value = $util.newBuffer([]);
+    ExistenceProof.prototype.leaf = null;
+    ExistenceProof.prototype.path = $util.emptyArray;
+    ExistenceProof.create = function create(properties) {
+      return new ExistenceProof(properties);
+    };
+    ExistenceProof.encode = function encode(m, w) {
+      if (!w) w = $Writer.create();
+      if (m.key != null && Object.hasOwnProperty.call(m, "key")) w.uint32(10).bytes(m.key);
+      if (m.value != null && Object.hasOwnProperty.call(m, "value")) w.uint32(18).bytes(m.value);
+      if (m.leaf != null && Object.hasOwnProperty.call(m, "leaf"))
+        $root.ics23.LeafOp.encode(m.leaf, w.uint32(26).fork()).ldelim();
+      if (m.path != null && m.path.length) {
+        for (var i = 0; i < m.path.length; ++i)
+          $root.ics23.InnerOp.encode(m.path[i], w.uint32(34).fork()).ldelim();
+      }
+      return w;
+    };
+    ExistenceProof.decode = function decode(r, l) {
+      if (!(r instanceof $Reader)) r = $Reader.create(r);
+      var c = l === undefined ? r.len : r.pos + l,
+        m = new $root.ics23.ExistenceProof();
+      while (r.pos < c) {
+        var t = r.uint32();
+        switch (t >>> 3) {
+          case 1:
+            m.key = r.bytes();
+            break;
+          case 2:
+            m.value = r.bytes();
+            break;
+          case 3:
+            m.leaf = $root.ics23.LeafOp.decode(r, r.uint32());
+            break;
+          case 4:
+            if (!(m.path && m.path.length)) m.path = [];
+            m.path.push($root.ics23.InnerOp.decode(r, r.uint32()));
+            break;
+          default:
+            r.skipType(t & 7);
+            break;
+        }
+      }
+      return m;
+    };
+    return ExistenceProof;
+  })();
+  ics23.NonExistenceProof = (function () {
+    function NonExistenceProof(p) {
+      if (p)
+        for (var ks = Object.keys(p), i = 0; i < ks.length; ++i) if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+    }
+    NonExistenceProof.prototype.key = $util.newBuffer([]);
+    NonExistenceProof.prototype.left = null;
+    NonExistenceProof.prototype.right = null;
+    NonExistenceProof.create = function create(properties) {
+      return new NonExistenceProof(properties);
+    };
+    NonExistenceProof.encode = function encode(m, w) {
+      if (!w) w = $Writer.create();
+      if (m.key != null && Object.hasOwnProperty.call(m, "key")) w.uint32(10).bytes(m.key);
+      if (m.left != null && Object.hasOwnProperty.call(m, "left"))
+        $root.ics23.ExistenceProof.encode(m.left, w.uint32(18).fork()).ldelim();
+      if (m.right != null && Object.hasOwnProperty.call(m, "right"))
+        $root.ics23.ExistenceProof.encode(m.right, w.uint32(26).fork()).ldelim();
+      return w;
+    };
+    NonExistenceProof.decode = function decode(r, l) {
+      if (!(r instanceof $Reader)) r = $Reader.create(r);
+      var c = l === undefined ? r.len : r.pos + l,
+        m = new $root.ics23.NonExistenceProof();
+      while (r.pos < c) {
+        var t = r.uint32();
+        switch (t >>> 3) {
+          case 1:
+            m.key = r.bytes();
+            break;
+          case 2:
+            m.left = $root.ics23.ExistenceProof.decode(r, r.uint32());
+            break;
+          case 3:
+            m.right = $root.ics23.ExistenceProof.decode(r, r.uint32());
+            break;
+          default:
+            r.skipType(t & 7);
+            break;
+        }
+      }
+      return m;
+    };
+    return NonExistenceProof;
+  })();
+  ics23.CommitmentProof = (function () {
+    function CommitmentProof(p) {
+      if (p)
+        for (var ks = Object.keys(p), i = 0; i < ks.length; ++i) if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+    }
+    CommitmentProof.prototype.exist = null;
+    CommitmentProof.prototype.nonexist = null;
+    CommitmentProof.prototype.batch = null;
+    CommitmentProof.prototype.compressed = null;
+    let $oneOfFields;
+    Object.defineProperty(CommitmentProof.prototype, "proof", {
+      get: $util.oneOfGetter(($oneOfFields = ["exist", "nonexist", "batch", "compressed"])),
+      set: $util.oneOfSetter($oneOfFields),
+    });
+    CommitmentProof.create = function create(properties) {
+      return new CommitmentProof(properties);
+    };
+    CommitmentProof.encode = function encode(m, w) {
+      if (!w) w = $Writer.create();
+      if (m.exist != null && Object.hasOwnProperty.call(m, "exist"))
+        $root.ics23.ExistenceProof.encode(m.exist, w.uint32(10).fork()).ldelim();
+      if (m.nonexist != null && Object.hasOwnProperty.call(m, "nonexist"))
+        $root.ics23.NonExistenceProof.encode(m.nonexist, w.uint32(18).fork()).ldelim();
+      if (m.batch != null && Object.hasOwnProperty.call(m, "batch"))
+        $root.ics23.BatchProof.encode(m.batch, w.uint32(26).fork()).ldelim();
+      if (m.compressed != null && Object.hasOwnProperty.call(m, "compressed"))
+        $root.ics23.CompressedBatchProof.encode(m.compressed, w.uint32(34).fork()).ldelim();
+      return w;
+    };
+    CommitmentProof.decode = function decode(r, l) {
+      if (!(r instanceof $Reader)) r = $Reader.create(r);
+      var c = l === undefined ? r.len : r.pos + l,
+        m = new $root.ics23.CommitmentProof();
+      while (r.pos < c) {
+        var t = r.uint32();
+        switch (t >>> 3) {
+          case 1:
+            m.exist = $root.ics23.ExistenceProof.decode(r, r.uint32());
+            break;
+          case 2:
+            m.nonexist = $root.ics23.NonExistenceProof.decode(r, r.uint32());
+            break;
+          case 3:
+            m.batch = $root.ics23.BatchProof.decode(r, r.uint32());
+            break;
+          case 4:
+            m.compressed = $root.ics23.CompressedBatchProof.decode(r, r.uint32());
+            break;
+          default:
+            r.skipType(t & 7);
+            break;
+        }
+      }
+      return m;
+    };
+    return CommitmentProof;
+  })();
+  ics23.LeafOp = (function () {
+    function LeafOp(p) {
+      if (p)
+        for (var ks = Object.keys(p), i = 0; i < ks.length; ++i) if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+    }
+    LeafOp.prototype.hash = 0;
+    LeafOp.prototype.prehashKey = 0;
+    LeafOp.prototype.prehashValue = 0;
+    LeafOp.prototype.length = 0;
+    LeafOp.prototype.prefix = $util.newBuffer([]);
+    LeafOp.create = function create(properties) {
+      return new LeafOp(properties);
+    };
+    LeafOp.encode = function encode(m, w) {
+      if (!w) w = $Writer.create();
+      if (m.hash != null && Object.hasOwnProperty.call(m, "hash")) w.uint32(8).int32(m.hash);
+      if (m.prehashKey != null && Object.hasOwnProperty.call(m, "prehashKey"))
+        w.uint32(16).int32(m.prehashKey);
+      if (m.prehashValue != null && Object.hasOwnProperty.call(m, "prehashValue"))
+        w.uint32(24).int32(m.prehashValue);
+      if (m.length != null && Object.hasOwnProperty.call(m, "length")) w.uint32(32).int32(m.length);
+      if (m.prefix != null && Object.hasOwnProperty.call(m, "prefix")) w.uint32(42).bytes(m.prefix);
+      return w;
+    };
+    LeafOp.decode = function decode(r, l) {
+      if (!(r instanceof $Reader)) r = $Reader.create(r);
+      var c = l === undefined ? r.len : r.pos + l,
+        m = new $root.ics23.LeafOp();
+      while (r.pos < c) {
+        var t = r.uint32();
+        switch (t >>> 3) {
+          case 1:
+            m.hash = r.int32();
+            break;
+          case 2:
+            m.prehashKey = r.int32();
+            break;
+          case 3:
+            m.prehashValue = r.int32();
+            break;
+          case 4:
+            m.length = r.int32();
+            break;
+          case 5:
+            m.prefix = r.bytes();
+            break;
+          default:
+            r.skipType(t & 7);
+            break;
+        }
+      }
+      return m;
+    };
+    return LeafOp;
+  })();
+  ics23.InnerOp = (function () {
+    function InnerOp(p) {
+      if (p)
+        for (var ks = Object.keys(p), i = 0; i < ks.length; ++i) if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+    }
+    InnerOp.prototype.hash = 0;
+    InnerOp.prototype.prefix = $util.newBuffer([]);
+    InnerOp.prototype.suffix = $util.newBuffer([]);
+    InnerOp.create = function create(properties) {
+      return new InnerOp(properties);
+    };
+    InnerOp.encode = function encode(m, w) {
+      if (!w) w = $Writer.create();
+      if (m.hash != null && Object.hasOwnProperty.call(m, "hash")) w.uint32(8).int32(m.hash);
+      if (m.prefix != null && Object.hasOwnProperty.call(m, "prefix")) w.uint32(18).bytes(m.prefix);
+      if (m.suffix != null && Object.hasOwnProperty.call(m, "suffix")) w.uint32(26).bytes(m.suffix);
+      return w;
+    };
+    InnerOp.decode = function decode(r, l) {
+      if (!(r instanceof $Reader)) r = $Reader.create(r);
+      var c = l === undefined ? r.len : r.pos + l,
+        m = new $root.ics23.InnerOp();
+      while (r.pos < c) {
+        var t = r.uint32();
+        switch (t >>> 3) {
+          case 1:
+            m.hash = r.int32();
+            break;
+          case 2:
+            m.prefix = r.bytes();
+            break;
+          case 3:
+            m.suffix = r.bytes();
+            break;
+          default:
+            r.skipType(t & 7);
+            break;
+        }
+      }
+      return m;
+    };
+    return InnerOp;
+  })();
+  ics23.ProofSpec = (function () {
+    function ProofSpec(p) {
+      if (p)
+        for (var ks = Object.keys(p), i = 0; i < ks.length; ++i) if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+    }
+    ProofSpec.prototype.leafSpec = null;
+    ProofSpec.prototype.innerSpec = null;
+    ProofSpec.prototype.maxDepth = 0;
+    ProofSpec.prototype.minDepth = 0;
+    ProofSpec.create = function create(properties) {
+      return new ProofSpec(properties);
+    };
+    ProofSpec.encode = function encode(m, w) {
+      if (!w) w = $Writer.create();
+      if (m.leafSpec != null && Object.hasOwnProperty.call(m, "leafSpec"))
+        $root.ics23.LeafOp.encode(m.leafSpec, w.uint32(10).fork()).ldelim();
+      if (m.innerSpec != null && Object.hasOwnProperty.call(m, "innerSpec"))
+        $root.ics23.InnerSpec.encode(m.innerSpec, w.uint32(18).fork()).ldelim();
+      if (m.maxDepth != null && Object.hasOwnProperty.call(m, "maxDepth")) w.uint32(24).int32(m.maxDepth);
+      if (m.minDepth != null && Object.hasOwnProperty.call(m, "minDepth")) w.uint32(32).int32(m.minDepth);
+      return w;
+    };
+    ProofSpec.decode = function decode(r, l) {
+      if (!(r instanceof $Reader)) r = $Reader.create(r);
+      var c = l === undefined ? r.len : r.pos + l,
+        m = new $root.ics23.ProofSpec();
+      while (r.pos < c) {
+        var t = r.uint32();
+        switch (t >>> 3) {
+          case 1:
+            m.leafSpec = $root.ics23.LeafOp.decode(r, r.uint32());
+            break;
+          case 2:
+            m.innerSpec = $root.ics23.InnerSpec.decode(r, r.uint32());
+            break;
+          case 3:
+            m.maxDepth = r.int32();
+            break;
+          case 4:
+            m.minDepth = r.int32();
+            break;
+          default:
+            r.skipType(t & 7);
+            break;
+        }
+      }
+      return m;
+    };
+    return ProofSpec;
+  })();
+  ics23.InnerSpec = (function () {
+    function InnerSpec(p) {
+      this.childOrder = [];
+      if (p)
+        for (var ks = Object.keys(p), i = 0; i < ks.length; ++i) if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+    }
+    InnerSpec.prototype.childOrder = $util.emptyArray;
+    InnerSpec.prototype.childSize = 0;
+    InnerSpec.prototype.minPrefixLength = 0;
+    InnerSpec.prototype.maxPrefixLength = 0;
+    InnerSpec.prototype.emptyChild = $util.newBuffer([]);
+    InnerSpec.prototype.hash = 0;
+    InnerSpec.create = function create(properties) {
+      return new InnerSpec(properties);
+    };
+    InnerSpec.encode = function encode(m, w) {
+      if (!w) w = $Writer.create();
+      if (m.childOrder != null && m.childOrder.length) {
+        w.uint32(10).fork();
+        for (var i = 0; i < m.childOrder.length; ++i) w.int32(m.childOrder[i]);
+        w.ldelim();
+      }
+      if (m.childSize != null && Object.hasOwnProperty.call(m, "childSize")) w.uint32(16).int32(m.childSize);
+      if (m.minPrefixLength != null && Object.hasOwnProperty.call(m, "minPrefixLength"))
+        w.uint32(24).int32(m.minPrefixLength);
+      if (m.maxPrefixLength != null && Object.hasOwnProperty.call(m, "maxPrefixLength"))
+        w.uint32(32).int32(m.maxPrefixLength);
+      if (m.emptyChild != null && Object.hasOwnProperty.call(m, "emptyChild"))
+        w.uint32(42).bytes(m.emptyChild);
+      if (m.hash != null && Object.hasOwnProperty.call(m, "hash")) w.uint32(48).int32(m.hash);
+      return w;
+    };
+    InnerSpec.decode = function decode(r, l) {
+      if (!(r instanceof $Reader)) r = $Reader.create(r);
+      var c = l === undefined ? r.len : r.pos + l,
+        m = new $root.ics23.InnerSpec();
+      while (r.pos < c) {
+        var t = r.uint32();
+        switch (t >>> 3) {
+          case 1:
+            if (!(m.childOrder && m.childOrder.length)) m.childOrder = [];
+            if ((t & 7) === 2) {
+              var c2 = r.uint32() + r.pos;
+              while (r.pos < c2) m.childOrder.push(r.int32());
+            } else m.childOrder.push(r.int32());
+            break;
+          case 2:
+            m.childSize = r.int32();
+            break;
+          case 3:
+            m.minPrefixLength = r.int32();
+            break;
+          case 4:
+            m.maxPrefixLength = r.int32();
+            break;
+          case 5:
+            m.emptyChild = r.bytes();
+            break;
+          case 6:
+            m.hash = r.int32();
+            break;
+          default:
+            r.skipType(t & 7);
+            break;
+        }
+      }
+      return m;
+    };
+    return InnerSpec;
+  })();
+  ics23.BatchProof = (function () {
+    function BatchProof(p) {
+      this.entries = [];
+      if (p)
+        for (var ks = Object.keys(p), i = 0; i < ks.length; ++i) if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+    }
+    BatchProof.prototype.entries = $util.emptyArray;
+    BatchProof.create = function create(properties) {
+      return new BatchProof(properties);
+    };
+    BatchProof.encode = function encode(m, w) {
+      if (!w) w = $Writer.create();
+      if (m.entries != null && m.entries.length) {
+        for (var i = 0; i < m.entries.length; ++i)
+          $root.ics23.BatchEntry.encode(m.entries[i], w.uint32(10).fork()).ldelim();
+      }
+      return w;
+    };
+    BatchProof.decode = function decode(r, l) {
+      if (!(r instanceof $Reader)) r = $Reader.create(r);
+      var c = l === undefined ? r.len : r.pos + l,
+        m = new $root.ics23.BatchProof();
+      while (r.pos < c) {
+        var t = r.uint32();
+        switch (t >>> 3) {
+          case 1:
+            if (!(m.entries && m.entries.length)) m.entries = [];
+            m.entries.push($root.ics23.BatchEntry.decode(r, r.uint32()));
+            break;
+          default:
+            r.skipType(t & 7);
+            break;
+        }
+      }
+      return m;
+    };
+    return BatchProof;
+  })();
+  ics23.BatchEntry = (function () {
+    function BatchEntry(p) {
+      if (p)
+        for (var ks = Object.keys(p), i = 0; i < ks.length; ++i) if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+    }
+    BatchEntry.prototype.exist = null;
+    BatchEntry.prototype.nonexist = null;
+    let $oneOfFields;
+    Object.defineProperty(BatchEntry.prototype, "proof", {
+      get: $util.oneOfGetter(($oneOfFields = ["exist", "nonexist"])),
+      set: $util.oneOfSetter($oneOfFields),
+    });
+    BatchEntry.create = function create(properties) {
+      return new BatchEntry(properties);
+    };
+    BatchEntry.encode = function encode(m, w) {
+      if (!w) w = $Writer.create();
+      if (m.exist != null && Object.hasOwnProperty.call(m, "exist"))
+        $root.ics23.ExistenceProof.encode(m.exist, w.uint32(10).fork()).ldelim();
+      if (m.nonexist != null && Object.hasOwnProperty.call(m, "nonexist"))
+        $root.ics23.NonExistenceProof.encode(m.nonexist, w.uint32(18).fork()).ldelim();
+      return w;
+    };
+    BatchEntry.decode = function decode(r, l) {
+      if (!(r instanceof $Reader)) r = $Reader.create(r);
+      var c = l === undefined ? r.len : r.pos + l,
+        m = new $root.ics23.BatchEntry();
+      while (r.pos < c) {
+        var t = r.uint32();
+        switch (t >>> 3) {
+          case 1:
+            m.exist = $root.ics23.ExistenceProof.decode(r, r.uint32());
+            break;
+          case 2:
+            m.nonexist = $root.ics23.NonExistenceProof.decode(r, r.uint32());
+            break;
+          default:
+            r.skipType(t & 7);
+            break;
+        }
+      }
+      return m;
+    };
+    return BatchEntry;
+  })();
+  ics23.CompressedBatchProof = (function () {
+    function CompressedBatchProof(p) {
+      this.entries = [];
+      this.lookupInners = [];
+      if (p)
+        for (var ks = Object.keys(p), i = 0; i < ks.length; ++i) if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+    }
+    CompressedBatchProof.prototype.entries = $util.emptyArray;
+    CompressedBatchProof.prototype.lookupInners = $util.emptyArray;
+    CompressedBatchProof.create = function create(properties) {
+      return new CompressedBatchProof(properties);
+    };
+    CompressedBatchProof.encode = function encode(m, w) {
+      if (!w) w = $Writer.create();
+      if (m.entries != null && m.entries.length) {
+        for (var i = 0; i < m.entries.length; ++i)
+          $root.ics23.CompressedBatchEntry.encode(m.entries[i], w.uint32(10).fork()).ldelim();
+      }
+      if (m.lookupInners != null && m.lookupInners.length) {
+        for (var i = 0; i < m.lookupInners.length; ++i)
+          $root.ics23.InnerOp.encode(m.lookupInners[i], w.uint32(18).fork()).ldelim();
+      }
+      return w;
+    };
+    CompressedBatchProof.decode = function decode(r, l) {
+      if (!(r instanceof $Reader)) r = $Reader.create(r);
+      var c = l === undefined ? r.len : r.pos + l,
+        m = new $root.ics23.CompressedBatchProof();
+      while (r.pos < c) {
+        var t = r.uint32();
+        switch (t >>> 3) {
+          case 1:
+            if (!(m.entries && m.entries.length)) m.entries = [];
+            m.entries.push($root.ics23.CompressedBatchEntry.decode(r, r.uint32()));
+            break;
+          case 2:
+            if (!(m.lookupInners && m.lookupInners.length)) m.lookupInners = [];
+            m.lookupInners.push($root.ics23.InnerOp.decode(r, r.uint32()));
+            break;
+          default:
+            r.skipType(t & 7);
+            break;
+        }
+      }
+      return m;
+    };
+    return CompressedBatchProof;
+  })();
+  ics23.CompressedBatchEntry = (function () {
+    function CompressedBatchEntry(p) {
+      if (p)
+        for (var ks = Object.keys(p), i = 0; i < ks.length; ++i) if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+    }
+    CompressedBatchEntry.prototype.exist = null;
+    CompressedBatchEntry.prototype.nonexist = null;
+    let $oneOfFields;
+    Object.defineProperty(CompressedBatchEntry.prototype, "proof", {
+      get: $util.oneOfGetter(($oneOfFields = ["exist", "nonexist"])),
+      set: $util.oneOfSetter($oneOfFields),
+    });
+    CompressedBatchEntry.create = function create(properties) {
+      return new CompressedBatchEntry(properties);
+    };
+    CompressedBatchEntry.encode = function encode(m, w) {
+      if (!w) w = $Writer.create();
+      if (m.exist != null && Object.hasOwnProperty.call(m, "exist"))
+        $root.ics23.CompressedExistenceProof.encode(m.exist, w.uint32(10).fork()).ldelim();
+      if (m.nonexist != null && Object.hasOwnProperty.call(m, "nonexist"))
+        $root.ics23.CompressedNonExistenceProof.encode(m.nonexist, w.uint32(18).fork()).ldelim();
+      return w;
+    };
+    CompressedBatchEntry.decode = function decode(r, l) {
+      if (!(r instanceof $Reader)) r = $Reader.create(r);
+      var c = l === undefined ? r.len : r.pos + l,
+        m = new $root.ics23.CompressedBatchEntry();
+      while (r.pos < c) {
+        var t = r.uint32();
+        switch (t >>> 3) {
+          case 1:
+            m.exist = $root.ics23.CompressedExistenceProof.decode(r, r.uint32());
+            break;
+          case 2:
+            m.nonexist = $root.ics23.CompressedNonExistenceProof.decode(r, r.uint32());
+            break;
+          default:
+            r.skipType(t & 7);
+            break;
+        }
+      }
+      return m;
+    };
+    return CompressedBatchEntry;
+  })();
+  ics23.CompressedExistenceProof = (function () {
+    function CompressedExistenceProof(p) {
+      this.path = [];
+      if (p)
+        for (var ks = Object.keys(p), i = 0; i < ks.length; ++i) if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+    }
+    CompressedExistenceProof.prototype.key = $util.newBuffer([]);
+    CompressedExistenceProof.prototype.value = $util.newBuffer([]);
+    CompressedExistenceProof.prototype.leaf = null;
+    CompressedExistenceProof.prototype.path = $util.emptyArray;
+    CompressedExistenceProof.create = function create(properties) {
+      return new CompressedExistenceProof(properties);
+    };
+    CompressedExistenceProof.encode = function encode(m, w) {
+      if (!w) w = $Writer.create();
+      if (m.key != null && Object.hasOwnProperty.call(m, "key")) w.uint32(10).bytes(m.key);
+      if (m.value != null && Object.hasOwnProperty.call(m, "value")) w.uint32(18).bytes(m.value);
+      if (m.leaf != null && Object.hasOwnProperty.call(m, "leaf"))
+        $root.ics23.LeafOp.encode(m.leaf, w.uint32(26).fork()).ldelim();
+      if (m.path != null && m.path.length) {
+        w.uint32(34).fork();
+        for (var i = 0; i < m.path.length; ++i) w.int32(m.path[i]);
+        w.ldelim();
+      }
+      return w;
+    };
+    CompressedExistenceProof.decode = function decode(r, l) {
+      if (!(r instanceof $Reader)) r = $Reader.create(r);
+      var c = l === undefined ? r.len : r.pos + l,
+        m = new $root.ics23.CompressedExistenceProof();
+      while (r.pos < c) {
+        var t = r.uint32();
+        switch (t >>> 3) {
+          case 1:
+            m.key = r.bytes();
+            break;
+          case 2:
+            m.value = r.bytes();
+            break;
+          case 3:
+            m.leaf = $root.ics23.LeafOp.decode(r, r.uint32());
+            break;
+          case 4:
+            if (!(m.path && m.path.length)) m.path = [];
+            if ((t & 7) === 2) {
+              var c2 = r.uint32() + r.pos;
+              while (r.pos < c2) m.path.push(r.int32());
+            } else m.path.push(r.int32());
+            break;
+          default:
+            r.skipType(t & 7);
+            break;
+        }
+      }
+      return m;
+    };
+    return CompressedExistenceProof;
+  })();
+  ics23.CompressedNonExistenceProof = (function () {
+    function CompressedNonExistenceProof(p) {
+      if (p)
+        for (var ks = Object.keys(p), i = 0; i < ks.length; ++i) if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+    }
+    CompressedNonExistenceProof.prototype.key = $util.newBuffer([]);
+    CompressedNonExistenceProof.prototype.left = null;
+    CompressedNonExistenceProof.prototype.right = null;
+    CompressedNonExistenceProof.create = function create(properties) {
+      return new CompressedNonExistenceProof(properties);
+    };
+    CompressedNonExistenceProof.encode = function encode(m, w) {
+      if (!w) w = $Writer.create();
+      if (m.key != null && Object.hasOwnProperty.call(m, "key")) w.uint32(10).bytes(m.key);
+      if (m.left != null && Object.hasOwnProperty.call(m, "left"))
+        $root.ics23.CompressedExistenceProof.encode(m.left, w.uint32(18).fork()).ldelim();
+      if (m.right != null && Object.hasOwnProperty.call(m, "right"))
+        $root.ics23.CompressedExistenceProof.encode(m.right, w.uint32(26).fork()).ldelim();
+      return w;
+    };
+    CompressedNonExistenceProof.decode = function decode(r, l) {
+      if (!(r instanceof $Reader)) r = $Reader.create(r);
+      var c = l === undefined ? r.len : r.pos + l,
+        m = new $root.ics23.CompressedNonExistenceProof();
+      while (r.pos < c) {
+        var t = r.uint32();
+        switch (t >>> 3) {
+          case 1:
+            m.key = r.bytes();
+            break;
+          case 2:
+            m.left = $root.ics23.CompressedExistenceProof.decode(r, r.uint32());
+            break;
+          case 3:
+            m.right = $root.ics23.CompressedExistenceProof.decode(r, r.uint32());
+            break;
+          default:
+            r.skipType(t & 7);
+            break;
+        }
+      }
+      return m;
+    };
+    return CompressedNonExistenceProof;
+  })();
+  return ics23;
 })();
 exports.tendermint = $root.tendermint = (() => {
   const tendermint = {};
