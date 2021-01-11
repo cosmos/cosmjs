@@ -41,5 +41,5 @@ SELF_DELEGATION="3000000$STAKE" # 3 STAKE (leads to a voting power of 3)
   echo "$PASSWORD"
   echo "$PASSWORD"
   echo "$PASSWORD"
-) | simd gentx validator --offline --amount "$SELF_DELEGATION" --chain-id "$CHAIN_ID" --moniker="$MONIKER"
+) | simd gentx validator "$SELF_DELEGATION" --offline --chain-id "$CHAIN_ID" --moniker="$MONIKER"
 simd collect-gentxs
