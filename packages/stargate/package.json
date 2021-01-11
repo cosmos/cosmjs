@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/stargate",
-  "version": "0.24.0-alpha.13",
+  "version": "0.24.0-alpha.14",
   "description": "Utilities for Cosmos SDK 0.40",
   "contributors": [
     "Simon Warta <webmaster128@users.noreply.github.com>"
@@ -48,13 +48,13 @@
   },
   "dependencies": {
     "@confio/ics23": "^0.6.3",
-    "@cosmjs/encoding": "^0.24.0-alpha.13",
-    "@cosmjs/launchpad": "^0.24.0-alpha.13",
-    "@cosmjs/math": "^0.24.0-alpha.13",
-    "@cosmjs/proto-signing": "^0.24.0-alpha.13",
-    "@cosmjs/stream": "^0.24.0-alpha.13",
-    "@cosmjs/tendermint-rpc": "^0.24.0-alpha.13",
-    "@cosmjs/utils": "^0.24.0-alpha.13",
+    "@cosmjs/encoding": "^0.24.0-alpha.14",
+    "@cosmjs/launchpad": "^0.24.0-alpha.14",
+    "@cosmjs/math": "^0.24.0-alpha.14",
+    "@cosmjs/proto-signing": "^0.24.0-alpha.14",
+    "@cosmjs/stream": "^0.24.0-alpha.14",
+    "@cosmjs/tendermint-rpc": "^0.24.0-alpha.14",
+    "@cosmjs/utils": "^0.24.0-alpha.14",
     "long": "^4.0.0",
     "protobufjs": "~6.10.2"
   }

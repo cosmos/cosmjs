@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/cosmwasm-launchpad",
-  "version": "0.24.0-alpha.13",
+  "version": "0.24.0-alpha.14",
   "description": "CosmWasm SDK for Launchpad",
   "contributors": [
     "Ethan Frey <ethanfrey@users.noreply.github.com>",
@@ -43,11 +43,11 @@
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
   },
   "dependencies": {
-    "@cosmjs/crypto": "^0.24.0-alpha.13",
-    "@cosmjs/encoding": "^0.24.0-alpha.13",
-    "@cosmjs/launchpad": "^0.24.0-alpha.13",
-    "@cosmjs/math": "^0.24.0-alpha.13",
-    "@cosmjs/utils": "^0.24.0-alpha.13",
+    "@cosmjs/crypto": "^0.24.0-alpha.14",
+    "@cosmjs/encoding": "^0.24.0-alpha.14",
+    "@cosmjs/launchpad": "^0.24.0-alpha.14",
+    "@cosmjs/math": "^0.24.0-alpha.14",
+    "@cosmjs/utils": "^0.24.0-alpha.14",
     "pako": "^2.0.2"
   },
   "devDependencies": {

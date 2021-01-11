@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/cosmwasm",
-  "version": "0.24.0-alpha.13",
+  "version": "0.24.0-alpha.14",
   "description": "CosmWasm SDK",
   "contributors": [
     "Ethan Frey <ethanfrey@users.noreply.github.com>",
@@ -37,6 +37,6 @@
     "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build"
   },
   "dependencies": {
-    "@cosmjs/cosmwasm-launchpad": "^0.24.0-alpha.13"
+    "@cosmjs/cosmwasm-launchpad": "^0.24.0-alpha.14"
   }
 }
