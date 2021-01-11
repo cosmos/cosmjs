@@ -19,8 +19,8 @@ yarn pbjs \
   --no-verify \
   --no-convert \
   --force-long \
-  "$WASM_PROTO_DIR/internal/types/msg.proto" \
   "$WASM_PROTO_DIR/internal/types/query.proto" \
+  "$WASM_PROTO_DIR/internal/types/tx.proto" \
   "$WASM_PROTO_DIR/internal/types/types.proto" \
   "$COSMOS_PROTO_DIR/base/v1beta1/coin.proto" \
   "$COSMOS_PROTO_DIR/base/query/v1beta1/pagination.proto"

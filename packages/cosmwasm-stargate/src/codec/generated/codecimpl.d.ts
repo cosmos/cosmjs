@@ -5,414 +5,6 @@ export namespace cosmwasm {
   namespace wasm {
     /** Namespace v1beta1. */
     namespace v1beta1 {
-      /** Properties of a MsgStoreCode. */
-      interface IMsgStoreCode {
-        /** MsgStoreCode sender */
-        sender?: string | null;
-
-        /** MsgStoreCode wasmByteCode */
-        wasmByteCode?: Uint8Array | null;
-
-        /** MsgStoreCode source */
-        source?: string | null;
-
-        /** MsgStoreCode builder */
-        builder?: string | null;
-
-        /** MsgStoreCode instantiatePermission */
-        instantiatePermission?: cosmwasm.wasm.v1beta1.IAccessConfig | null;
-      }
-
-      /** Represents a MsgStoreCode. */
-      class MsgStoreCode implements IMsgStoreCode {
-        /**
-         * Constructs a new MsgStoreCode.
-         * @param [p] Properties to set
-         */
-        constructor(p?: cosmwasm.wasm.v1beta1.IMsgStoreCode);
-
-        /** MsgStoreCode sender. */
-        public sender: string;
-
-        /** MsgStoreCode wasmByteCode. */
-        public wasmByteCode: Uint8Array;
-
-        /** MsgStoreCode source. */
-        public source: string;
-
-        /** MsgStoreCode builder. */
-        public builder: string;
-
-        /** MsgStoreCode instantiatePermission. */
-        public instantiatePermission?: cosmwasm.wasm.v1beta1.IAccessConfig | null;
-
-        /**
-         * Creates a new MsgStoreCode instance using the specified properties.
-         * @param [properties] Properties to set
-         * @returns MsgStoreCode instance
-         */
-        public static create(
-          properties?: cosmwasm.wasm.v1beta1.IMsgStoreCode,
-        ): cosmwasm.wasm.v1beta1.MsgStoreCode;
-
-        /**
-         * Encodes the specified MsgStoreCode message. Does not implicitly {@link cosmwasm.wasm.v1beta1.MsgStoreCode.verify|verify} messages.
-         * @param m MsgStoreCode message or plain object to encode
-         * @param [w] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(m: cosmwasm.wasm.v1beta1.IMsgStoreCode, w?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Decodes a MsgStoreCode message from the specified reader or buffer.
-         * @param r Reader or buffer to decode from
-         * @param [l] Message length if known beforehand
-         * @returns MsgStoreCode
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(
-          r: $protobuf.Reader | Uint8Array,
-          l?: number,
-        ): cosmwasm.wasm.v1beta1.MsgStoreCode;
-      }
-
-      /** Properties of a MsgInstantiateContract. */
-      interface IMsgInstantiateContract {
-        /** MsgInstantiateContract sender */
-        sender?: string | null;
-
-        /** MsgInstantiateContract admin */
-        admin?: string | null;
-
-        /** MsgInstantiateContract codeId */
-        codeId?: Long | null;
-
-        /** MsgInstantiateContract label */
-        label?: string | null;
-
-        /** MsgInstantiateContract initMsg */
-        initMsg?: Uint8Array | null;
-
-        /** MsgInstantiateContract initFunds */
-        initFunds?: cosmos.base.v1beta1.ICoin[] | null;
-      }
-
-      /** Represents a MsgInstantiateContract. */
-      class MsgInstantiateContract implements IMsgInstantiateContract {
-        /**
-         * Constructs a new MsgInstantiateContract.
-         * @param [p] Properties to set
-         */
-        constructor(p?: cosmwasm.wasm.v1beta1.IMsgInstantiateContract);
-
-        /** MsgInstantiateContract sender. */
-        public sender: string;
-
-        /** MsgInstantiateContract admin. */
-        public admin: string;
-
-        /** MsgInstantiateContract codeId. */
-        public codeId: Long;
-
-        /** MsgInstantiateContract label. */
-        public label: string;
-
-        /** MsgInstantiateContract initMsg. */
-        public initMsg: Uint8Array;
-
-        /** MsgInstantiateContract initFunds. */
-        public initFunds: cosmos.base.v1beta1.ICoin[];
-
-        /**
-         * Creates a new MsgInstantiateContract instance using the specified properties.
-         * @param [properties] Properties to set
-         * @returns MsgInstantiateContract instance
-         */
-        public static create(
-          properties?: cosmwasm.wasm.v1beta1.IMsgInstantiateContract,
-        ): cosmwasm.wasm.v1beta1.MsgInstantiateContract;
-
-        /**
-         * Encodes the specified MsgInstantiateContract message. Does not implicitly {@link cosmwasm.wasm.v1beta1.MsgInstantiateContract.verify|verify} messages.
-         * @param m MsgInstantiateContract message or plain object to encode
-         * @param [w] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(
-          m: cosmwasm.wasm.v1beta1.IMsgInstantiateContract,
-          w?: $protobuf.Writer,
-        ): $protobuf.Writer;
-
-        /**
-         * Decodes a MsgInstantiateContract message from the specified reader or buffer.
-         * @param r Reader or buffer to decode from
-         * @param [l] Message length if known beforehand
-         * @returns MsgInstantiateContract
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(
-          r: $protobuf.Reader | Uint8Array,
-          l?: number,
-        ): cosmwasm.wasm.v1beta1.MsgInstantiateContract;
-      }
-
-      /** Properties of a MsgExecuteContract. */
-      interface IMsgExecuteContract {
-        /** MsgExecuteContract sender */
-        sender?: string | null;
-
-        /** MsgExecuteContract contract */
-        contract?: string | null;
-
-        /** MsgExecuteContract msg */
-        msg?: Uint8Array | null;
-
-        /** MsgExecuteContract sentFunds */
-        sentFunds?: cosmos.base.v1beta1.ICoin[] | null;
-      }
-
-      /** Represents a MsgExecuteContract. */
-      class MsgExecuteContract implements IMsgExecuteContract {
-        /**
-         * Constructs a new MsgExecuteContract.
-         * @param [p] Properties to set
-         */
-        constructor(p?: cosmwasm.wasm.v1beta1.IMsgExecuteContract);
-
-        /** MsgExecuteContract sender. */
-        public sender: string;
-
-        /** MsgExecuteContract contract. */
-        public contract: string;
-
-        /** MsgExecuteContract msg. */
-        public msg: Uint8Array;
-
-        /** MsgExecuteContract sentFunds. */
-        public sentFunds: cosmos.base.v1beta1.ICoin[];
-
-        /**
-         * Creates a new MsgExecuteContract instance using the specified properties.
-         * @param [properties] Properties to set
-         * @returns MsgExecuteContract instance
-         */
-        public static create(
-          properties?: cosmwasm.wasm.v1beta1.IMsgExecuteContract,
-        ): cosmwasm.wasm.v1beta1.MsgExecuteContract;
-
-        /**
-         * Encodes the specified MsgExecuteContract message. Does not implicitly {@link cosmwasm.wasm.v1beta1.MsgExecuteContract.verify|verify} messages.
-         * @param m MsgExecuteContract message or plain object to encode
-         * @param [w] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(
-          m: cosmwasm.wasm.v1beta1.IMsgExecuteContract,
-          w?: $protobuf.Writer,
-        ): $protobuf.Writer;
-
-        /**
-         * Decodes a MsgExecuteContract message from the specified reader or buffer.
-         * @param r Reader or buffer to decode from
-         * @param [l] Message length if known beforehand
-         * @returns MsgExecuteContract
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(
-          r: $protobuf.Reader | Uint8Array,
-          l?: number,
-        ): cosmwasm.wasm.v1beta1.MsgExecuteContract;
-      }
-
-      /** Properties of a MsgMigrateContract. */
-      interface IMsgMigrateContract {
-        /** MsgMigrateContract sender */
-        sender?: string | null;
-
-        /** MsgMigrateContract contract */
-        contract?: string | null;
-
-        /** MsgMigrateContract codeId */
-        codeId?: Long | null;
-
-        /** MsgMigrateContract migrateMsg */
-        migrateMsg?: Uint8Array | null;
-      }
-
-      /** Represents a MsgMigrateContract. */
-      class MsgMigrateContract implements IMsgMigrateContract {
-        /**
-         * Constructs a new MsgMigrateContract.
-         * @param [p] Properties to set
-         */
-        constructor(p?: cosmwasm.wasm.v1beta1.IMsgMigrateContract);
-
-        /** MsgMigrateContract sender. */
-        public sender: string;
-
-        /** MsgMigrateContract contract. */
-        public contract: string;
-
-        /** MsgMigrateContract codeId. */
-        public codeId: Long;
-
-        /** MsgMigrateContract migrateMsg. */
-        public migrateMsg: Uint8Array;
-
-        /**
-         * Creates a new MsgMigrateContract instance using the specified properties.
-         * @param [properties] Properties to set
-         * @returns MsgMigrateContract instance
-         */
-        public static create(
-          properties?: cosmwasm.wasm.v1beta1.IMsgMigrateContract,
-        ): cosmwasm.wasm.v1beta1.MsgMigrateContract;
-
-        /**
-         * Encodes the specified MsgMigrateContract message. Does not implicitly {@link cosmwasm.wasm.v1beta1.MsgMigrateContract.verify|verify} messages.
-         * @param m MsgMigrateContract message or plain object to encode
-         * @param [w] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(
-          m: cosmwasm.wasm.v1beta1.IMsgMigrateContract,
-          w?: $protobuf.Writer,
-        ): $protobuf.Writer;
-
-        /**
-         * Decodes a MsgMigrateContract message from the specified reader or buffer.
-         * @param r Reader or buffer to decode from
-         * @param [l] Message length if known beforehand
-         * @returns MsgMigrateContract
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(
-          r: $protobuf.Reader | Uint8Array,
-          l?: number,
-        ): cosmwasm.wasm.v1beta1.MsgMigrateContract;
-      }
-
-      /** Properties of a MsgUpdateAdmin. */
-      interface IMsgUpdateAdmin {
-        /** MsgUpdateAdmin sender */
-        sender?: string | null;
-
-        /** MsgUpdateAdmin newAdmin */
-        newAdmin?: string | null;
-
-        /** MsgUpdateAdmin contract */
-        contract?: string | null;
-      }
-
-      /** Represents a MsgUpdateAdmin. */
-      class MsgUpdateAdmin implements IMsgUpdateAdmin {
-        /**
-         * Constructs a new MsgUpdateAdmin.
-         * @param [p] Properties to set
-         */
-        constructor(p?: cosmwasm.wasm.v1beta1.IMsgUpdateAdmin);
-
-        /** MsgUpdateAdmin sender. */
-        public sender: string;
-
-        /** MsgUpdateAdmin newAdmin. */
-        public newAdmin: string;
-
-        /** MsgUpdateAdmin contract. */
-        public contract: string;
-
-        /**
-         * Creates a new MsgUpdateAdmin instance using the specified properties.
-         * @param [properties] Properties to set
-         * @returns MsgUpdateAdmin instance
-         */
-        public static create(
-          properties?: cosmwasm.wasm.v1beta1.IMsgUpdateAdmin,
-        ): cosmwasm.wasm.v1beta1.MsgUpdateAdmin;
-
-        /**
-         * Encodes the specified MsgUpdateAdmin message. Does not implicitly {@link cosmwasm.wasm.v1beta1.MsgUpdateAdmin.verify|verify} messages.
-         * @param m MsgUpdateAdmin message or plain object to encode
-         * @param [w] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(
-          m: cosmwasm.wasm.v1beta1.IMsgUpdateAdmin,
-          w?: $protobuf.Writer,
-        ): $protobuf.Writer;
-
-        /**
-         * Decodes a MsgUpdateAdmin message from the specified reader or buffer.
-         * @param r Reader or buffer to decode from
-         * @param [l] Message length if known beforehand
-         * @returns MsgUpdateAdmin
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(
-          r: $protobuf.Reader | Uint8Array,
-          l?: number,
-        ): cosmwasm.wasm.v1beta1.MsgUpdateAdmin;
-      }
-
-      /** Properties of a MsgClearAdmin. */
-      interface IMsgClearAdmin {
-        /** MsgClearAdmin sender */
-        sender?: string | null;
-
-        /** MsgClearAdmin contract */
-        contract?: string | null;
-      }
-
-      /** Represents a MsgClearAdmin. */
-      class MsgClearAdmin implements IMsgClearAdmin {
-        /**
-         * Constructs a new MsgClearAdmin.
-         * @param [p] Properties to set
-         */
-        constructor(p?: cosmwasm.wasm.v1beta1.IMsgClearAdmin);
-
-        /** MsgClearAdmin sender. */
-        public sender: string;
-
-        /** MsgClearAdmin contract. */
-        public contract: string;
-
-        /**
-         * Creates a new MsgClearAdmin instance using the specified properties.
-         * @param [properties] Properties to set
-         * @returns MsgClearAdmin instance
-         */
-        public static create(
-          properties?: cosmwasm.wasm.v1beta1.IMsgClearAdmin,
-        ): cosmwasm.wasm.v1beta1.MsgClearAdmin;
-
-        /**
-         * Encodes the specified MsgClearAdmin message. Does not implicitly {@link cosmwasm.wasm.v1beta1.MsgClearAdmin.verify|verify} messages.
-         * @param m MsgClearAdmin message or plain object to encode
-         * @param [w] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(m: cosmwasm.wasm.v1beta1.IMsgClearAdmin, w?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Decodes a MsgClearAdmin message from the specified reader or buffer.
-         * @param r Reader or buffer to decode from
-         * @param [l] Message length if known beforehand
-         * @returns MsgClearAdmin
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(
-          r: $protobuf.Reader | Uint8Array,
-          l?: number,
-        ): cosmwasm.wasm.v1beta1.MsgClearAdmin;
-      }
-
       /** Represents a Query */
       class Query extends $protobuf.rpc.Service {
         /**
@@ -1682,6 +1274,908 @@ export namespace cosmwasm {
         ): cosmwasm.wasm.v1beta1.QueryCodesResponse;
       }
 
+      /** Represents a Msg */
+      class Msg extends $protobuf.rpc.Service {
+        /**
+         * Constructs a new Msg service.
+         * @param rpcImpl RPC implementation
+         * @param [requestDelimited=false] Whether requests are length-delimited
+         * @param [responseDelimited=false] Whether responses are length-delimited
+         */
+        constructor(rpcImpl: $protobuf.RPCImpl, requestDelimited?: boolean, responseDelimited?: boolean);
+
+        /**
+         * Creates new Msg service using the specified rpc implementation.
+         * @param rpcImpl RPC implementation
+         * @param [requestDelimited=false] Whether requests are length-delimited
+         * @param [responseDelimited=false] Whether responses are length-delimited
+         * @returns RPC service. Useful where requests and/or responses are streamed.
+         */
+        public static create(
+          rpcImpl: $protobuf.RPCImpl,
+          requestDelimited?: boolean,
+          responseDelimited?: boolean,
+        ): Msg;
+
+        /**
+         * Calls StoreCode.
+         * @param request MsgStoreCode message or plain object
+         * @param callback Node-style callback called with the error, if any, and MsgStoreCodeResponse
+         */
+        public storeCode(
+          request: cosmwasm.wasm.v1beta1.IMsgStoreCode,
+          callback: cosmwasm.wasm.v1beta1.Msg.StoreCodeCallback,
+        ): void;
+
+        /**
+         * Calls StoreCode.
+         * @param request MsgStoreCode message or plain object
+         * @returns Promise
+         */
+        public storeCode(
+          request: cosmwasm.wasm.v1beta1.IMsgStoreCode,
+        ): Promise<cosmwasm.wasm.v1beta1.MsgStoreCodeResponse>;
+
+        /**
+         * Calls InstantiateContract.
+         * @param request MsgInstantiateContract message or plain object
+         * @param callback Node-style callback called with the error, if any, and MsgInstantiateContractResponse
+         */
+        public instantiateContract(
+          request: cosmwasm.wasm.v1beta1.IMsgInstantiateContract,
+          callback: cosmwasm.wasm.v1beta1.Msg.InstantiateContractCallback,
+        ): void;
+
+        /**
+         * Calls InstantiateContract.
+         * @param request MsgInstantiateContract message or plain object
+         * @returns Promise
+         */
+        public instantiateContract(
+          request: cosmwasm.wasm.v1beta1.IMsgInstantiateContract,
+        ): Promise<cosmwasm.wasm.v1beta1.MsgInstantiateContractResponse>;
+
+        /**
+         * Calls ExecuteContract.
+         * @param request MsgExecuteContract message or plain object
+         * @param callback Node-style callback called with the error, if any, and MsgExecuteContractResponse
+         */
+        public executeContract(
+          request: cosmwasm.wasm.v1beta1.IMsgExecuteContract,
+          callback: cosmwasm.wasm.v1beta1.Msg.ExecuteContractCallback,
+        ): void;
+
+        /**
+         * Calls ExecuteContract.
+         * @param request MsgExecuteContract message or plain object
+         * @returns Promise
+         */
+        public executeContract(
+          request: cosmwasm.wasm.v1beta1.IMsgExecuteContract,
+        ): Promise<cosmwasm.wasm.v1beta1.MsgExecuteContractResponse>;
+
+        /**
+         * Calls MigrateContract.
+         * @param request MsgMigrateContract message or plain object
+         * @param callback Node-style callback called with the error, if any, and MsgMigrateContractResponse
+         */
+        public migrateContract(
+          request: cosmwasm.wasm.v1beta1.IMsgMigrateContract,
+          callback: cosmwasm.wasm.v1beta1.Msg.MigrateContractCallback,
+        ): void;
+
+        /**
+         * Calls MigrateContract.
+         * @param request MsgMigrateContract message or plain object
+         * @returns Promise
+         */
+        public migrateContract(
+          request: cosmwasm.wasm.v1beta1.IMsgMigrateContract,
+        ): Promise<cosmwasm.wasm.v1beta1.MsgMigrateContractResponse>;
+
+        /**
+         * Calls UpdateAdmin.
+         * @param request MsgUpdateAdmin message or plain object
+         * @param callback Node-style callback called with the error, if any, and MsgUpdateAdminResponse
+         */
+        public updateAdmin(
+          request: cosmwasm.wasm.v1beta1.IMsgUpdateAdmin,
+          callback: cosmwasm.wasm.v1beta1.Msg.UpdateAdminCallback,
+        ): void;
+
+        /**
+         * Calls UpdateAdmin.
+         * @param request MsgUpdateAdmin message or plain object
+         * @returns Promise
+         */
+        public updateAdmin(
+          request: cosmwasm.wasm.v1beta1.IMsgUpdateAdmin,
+        ): Promise<cosmwasm.wasm.v1beta1.MsgUpdateAdminResponse>;
+
+        /**
+         * Calls ClearAdmin.
+         * @param request MsgClearAdmin message or plain object
+         * @param callback Node-style callback called with the error, if any, and MsgClearAdminResponse
+         */
+        public clearAdmin(
+          request: cosmwasm.wasm.v1beta1.IMsgClearAdmin,
+          callback: cosmwasm.wasm.v1beta1.Msg.ClearAdminCallback,
+        ): void;
+
+        /**
+         * Calls ClearAdmin.
+         * @param request MsgClearAdmin message or plain object
+         * @returns Promise
+         */
+        public clearAdmin(
+          request: cosmwasm.wasm.v1beta1.IMsgClearAdmin,
+        ): Promise<cosmwasm.wasm.v1beta1.MsgClearAdminResponse>;
+      }
+
+      namespace Msg {
+        /**
+         * Callback as used by {@link cosmwasm.wasm.v1beta1.Msg#storeCode}.
+         * @param error Error, if any
+         * @param [response] MsgStoreCodeResponse
+         */
+        type StoreCodeCallback = (
+          error: Error | null,
+          response?: cosmwasm.wasm.v1beta1.MsgStoreCodeResponse,
+        ) => void;
+
+        /**
+         * Callback as used by {@link cosmwasm.wasm.v1beta1.Msg#instantiateContract}.
+         * @param error Error, if any
+         * @param [response] MsgInstantiateContractResponse
+         */
+        type InstantiateContractCallback = (
+          error: Error | null,
+          response?: cosmwasm.wasm.v1beta1.MsgInstantiateContractResponse,
+        ) => void;
+
+        /**
+         * Callback as used by {@link cosmwasm.wasm.v1beta1.Msg#executeContract}.
+         * @param error Error, if any
+         * @param [response] MsgExecuteContractResponse
+         */
+        type ExecuteContractCallback = (
+          error: Error | null,
+          response?: cosmwasm.wasm.v1beta1.MsgExecuteContractResponse,
+        ) => void;
+
+        /**
+         * Callback as used by {@link cosmwasm.wasm.v1beta1.Msg#migrateContract}.
+         * @param error Error, if any
+         * @param [response] MsgMigrateContractResponse
+         */
+        type MigrateContractCallback = (
+          error: Error | null,
+          response?: cosmwasm.wasm.v1beta1.MsgMigrateContractResponse,
+        ) => void;
+
+        /**
+         * Callback as used by {@link cosmwasm.wasm.v1beta1.Msg#updateAdmin}.
+         * @param error Error, if any
+         * @param [response] MsgUpdateAdminResponse
+         */
+        type UpdateAdminCallback = (
+          error: Error | null,
+          response?: cosmwasm.wasm.v1beta1.MsgUpdateAdminResponse,
+        ) => void;
+
+        /**
+         * Callback as used by {@link cosmwasm.wasm.v1beta1.Msg#clearAdmin}.
+         * @param error Error, if any
+         * @param [response] MsgClearAdminResponse
+         */
+        type ClearAdminCallback = (
+          error: Error | null,
+          response?: cosmwasm.wasm.v1beta1.MsgClearAdminResponse,
+        ) => void;
+      }
+
+      /** Properties of a MsgStoreCode. */
+      interface IMsgStoreCode {
+        /** MsgStoreCode sender */
+        sender?: string | null;
+
+        /** MsgStoreCode wasmByteCode */
+        wasmByteCode?: Uint8Array | null;
+
+        /** MsgStoreCode source */
+        source?: string | null;
+
+        /** MsgStoreCode builder */
+        builder?: string | null;
+
+        /** MsgStoreCode instantiatePermission */
+        instantiatePermission?: cosmwasm.wasm.v1beta1.IAccessConfig | null;
+      }
+
+      /** Represents a MsgStoreCode. */
+      class MsgStoreCode implements IMsgStoreCode {
+        /**
+         * Constructs a new MsgStoreCode.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmwasm.wasm.v1beta1.IMsgStoreCode);
+
+        /** MsgStoreCode sender. */
+        public sender: string;
+
+        /** MsgStoreCode wasmByteCode. */
+        public wasmByteCode: Uint8Array;
+
+        /** MsgStoreCode source. */
+        public source: string;
+
+        /** MsgStoreCode builder. */
+        public builder: string;
+
+        /** MsgStoreCode instantiatePermission. */
+        public instantiatePermission?: cosmwasm.wasm.v1beta1.IAccessConfig | null;
+
+        /**
+         * Creates a new MsgStoreCode instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns MsgStoreCode instance
+         */
+        public static create(
+          properties?: cosmwasm.wasm.v1beta1.IMsgStoreCode,
+        ): cosmwasm.wasm.v1beta1.MsgStoreCode;
+
+        /**
+         * Encodes the specified MsgStoreCode message. Does not implicitly {@link cosmwasm.wasm.v1beta1.MsgStoreCode.verify|verify} messages.
+         * @param m MsgStoreCode message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(m: cosmwasm.wasm.v1beta1.IMsgStoreCode, w?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a MsgStoreCode message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns MsgStoreCode
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmwasm.wasm.v1beta1.MsgStoreCode;
+      }
+
+      /** Properties of a MsgStoreCodeResponse. */
+      interface IMsgStoreCodeResponse {
+        /** MsgStoreCodeResponse codeId */
+        codeId?: Long | null;
+      }
+
+      /** Represents a MsgStoreCodeResponse. */
+      class MsgStoreCodeResponse implements IMsgStoreCodeResponse {
+        /**
+         * Constructs a new MsgStoreCodeResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmwasm.wasm.v1beta1.IMsgStoreCodeResponse);
+
+        /** MsgStoreCodeResponse codeId. */
+        public codeId: Long;
+
+        /**
+         * Creates a new MsgStoreCodeResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns MsgStoreCodeResponse instance
+         */
+        public static create(
+          properties?: cosmwasm.wasm.v1beta1.IMsgStoreCodeResponse,
+        ): cosmwasm.wasm.v1beta1.MsgStoreCodeResponse;
+
+        /**
+         * Encodes the specified MsgStoreCodeResponse message. Does not implicitly {@link cosmwasm.wasm.v1beta1.MsgStoreCodeResponse.verify|verify} messages.
+         * @param m MsgStoreCodeResponse message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmwasm.wasm.v1beta1.IMsgStoreCodeResponse,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a MsgStoreCodeResponse message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns MsgStoreCodeResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmwasm.wasm.v1beta1.MsgStoreCodeResponse;
+      }
+
+      /** Properties of a MsgInstantiateContract. */
+      interface IMsgInstantiateContract {
+        /** MsgInstantiateContract sender */
+        sender?: string | null;
+
+        /** MsgInstantiateContract admin */
+        admin?: string | null;
+
+        /** MsgInstantiateContract codeId */
+        codeId?: Long | null;
+
+        /** MsgInstantiateContract label */
+        label?: string | null;
+
+        /** MsgInstantiateContract initMsg */
+        initMsg?: Uint8Array | null;
+
+        /** MsgInstantiateContract initFunds */
+        initFunds?: cosmos.base.v1beta1.ICoin[] | null;
+      }
+
+      /** Represents a MsgInstantiateContract. */
+      class MsgInstantiateContract implements IMsgInstantiateContract {
+        /**
+         * Constructs a new MsgInstantiateContract.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmwasm.wasm.v1beta1.IMsgInstantiateContract);
+
+        /** MsgInstantiateContract sender. */
+        public sender: string;
+
+        /** MsgInstantiateContract admin. */
+        public admin: string;
+
+        /** MsgInstantiateContract codeId. */
+        public codeId: Long;
+
+        /** MsgInstantiateContract label. */
+        public label: string;
+
+        /** MsgInstantiateContract initMsg. */
+        public initMsg: Uint8Array;
+
+        /** MsgInstantiateContract initFunds. */
+        public initFunds: cosmos.base.v1beta1.ICoin[];
+
+        /**
+         * Creates a new MsgInstantiateContract instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns MsgInstantiateContract instance
+         */
+        public static create(
+          properties?: cosmwasm.wasm.v1beta1.IMsgInstantiateContract,
+        ): cosmwasm.wasm.v1beta1.MsgInstantiateContract;
+
+        /**
+         * Encodes the specified MsgInstantiateContract message. Does not implicitly {@link cosmwasm.wasm.v1beta1.MsgInstantiateContract.verify|verify} messages.
+         * @param m MsgInstantiateContract message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmwasm.wasm.v1beta1.IMsgInstantiateContract,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a MsgInstantiateContract message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns MsgInstantiateContract
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmwasm.wasm.v1beta1.MsgInstantiateContract;
+      }
+
+      /** Properties of a MsgInstantiateContractResponse. */
+      interface IMsgInstantiateContractResponse {
+        /** MsgInstantiateContractResponse address */
+        address?: string | null;
+      }
+
+      /** Represents a MsgInstantiateContractResponse. */
+      class MsgInstantiateContractResponse implements IMsgInstantiateContractResponse {
+        /**
+         * Constructs a new MsgInstantiateContractResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmwasm.wasm.v1beta1.IMsgInstantiateContractResponse);
+
+        /** MsgInstantiateContractResponse address. */
+        public address: string;
+
+        /**
+         * Creates a new MsgInstantiateContractResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns MsgInstantiateContractResponse instance
+         */
+        public static create(
+          properties?: cosmwasm.wasm.v1beta1.IMsgInstantiateContractResponse,
+        ): cosmwasm.wasm.v1beta1.MsgInstantiateContractResponse;
+
+        /**
+         * Encodes the specified MsgInstantiateContractResponse message. Does not implicitly {@link cosmwasm.wasm.v1beta1.MsgInstantiateContractResponse.verify|verify} messages.
+         * @param m MsgInstantiateContractResponse message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmwasm.wasm.v1beta1.IMsgInstantiateContractResponse,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a MsgInstantiateContractResponse message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns MsgInstantiateContractResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmwasm.wasm.v1beta1.MsgInstantiateContractResponse;
+      }
+
+      /** Properties of a MsgExecuteContract. */
+      interface IMsgExecuteContract {
+        /** MsgExecuteContract sender */
+        sender?: string | null;
+
+        /** MsgExecuteContract contract */
+        contract?: string | null;
+
+        /** MsgExecuteContract msg */
+        msg?: Uint8Array | null;
+
+        /** MsgExecuteContract sentFunds */
+        sentFunds?: cosmos.base.v1beta1.ICoin[] | null;
+      }
+
+      /** Represents a MsgExecuteContract. */
+      class MsgExecuteContract implements IMsgExecuteContract {
+        /**
+         * Constructs a new MsgExecuteContract.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmwasm.wasm.v1beta1.IMsgExecuteContract);
+
+        /** MsgExecuteContract sender. */
+        public sender: string;
+
+        /** MsgExecuteContract contract. */
+        public contract: string;
+
+        /** MsgExecuteContract msg. */
+        public msg: Uint8Array;
+
+        /** MsgExecuteContract sentFunds. */
+        public sentFunds: cosmos.base.v1beta1.ICoin[];
+
+        /**
+         * Creates a new MsgExecuteContract instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns MsgExecuteContract instance
+         */
+        public static create(
+          properties?: cosmwasm.wasm.v1beta1.IMsgExecuteContract,
+        ): cosmwasm.wasm.v1beta1.MsgExecuteContract;
+
+        /**
+         * Encodes the specified MsgExecuteContract message. Does not implicitly {@link cosmwasm.wasm.v1beta1.MsgExecuteContract.verify|verify} messages.
+         * @param m MsgExecuteContract message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmwasm.wasm.v1beta1.IMsgExecuteContract,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a MsgExecuteContract message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns MsgExecuteContract
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmwasm.wasm.v1beta1.MsgExecuteContract;
+      }
+
+      /** Properties of a MsgExecuteContractResponse. */
+      interface IMsgExecuteContractResponse {
+        /** MsgExecuteContractResponse data */
+        data?: Uint8Array | null;
+      }
+
+      /** Represents a MsgExecuteContractResponse. */
+      class MsgExecuteContractResponse implements IMsgExecuteContractResponse {
+        /**
+         * Constructs a new MsgExecuteContractResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmwasm.wasm.v1beta1.IMsgExecuteContractResponse);
+
+        /** MsgExecuteContractResponse data. */
+        public data: Uint8Array;
+
+        /**
+         * Creates a new MsgExecuteContractResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns MsgExecuteContractResponse instance
+         */
+        public static create(
+          properties?: cosmwasm.wasm.v1beta1.IMsgExecuteContractResponse,
+        ): cosmwasm.wasm.v1beta1.MsgExecuteContractResponse;
+
+        /**
+         * Encodes the specified MsgExecuteContractResponse message. Does not implicitly {@link cosmwasm.wasm.v1beta1.MsgExecuteContractResponse.verify|verify} messages.
+         * @param m MsgExecuteContractResponse message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmwasm.wasm.v1beta1.IMsgExecuteContractResponse,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a MsgExecuteContractResponse message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns MsgExecuteContractResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmwasm.wasm.v1beta1.MsgExecuteContractResponse;
+      }
+
+      /** Properties of a MsgMigrateContract. */
+      interface IMsgMigrateContract {
+        /** MsgMigrateContract sender */
+        sender?: string | null;
+
+        /** MsgMigrateContract contract */
+        contract?: string | null;
+
+        /** MsgMigrateContract codeId */
+        codeId?: Long | null;
+
+        /** MsgMigrateContract migrateMsg */
+        migrateMsg?: Uint8Array | null;
+      }
+
+      /** Represents a MsgMigrateContract. */
+      class MsgMigrateContract implements IMsgMigrateContract {
+        /**
+         * Constructs a new MsgMigrateContract.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmwasm.wasm.v1beta1.IMsgMigrateContract);
+
+        /** MsgMigrateContract sender. */
+        public sender: string;
+
+        /** MsgMigrateContract contract. */
+        public contract: string;
+
+        /** MsgMigrateContract codeId. */
+        public codeId: Long;
+
+        /** MsgMigrateContract migrateMsg. */
+        public migrateMsg: Uint8Array;
+
+        /**
+         * Creates a new MsgMigrateContract instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns MsgMigrateContract instance
+         */
+        public static create(
+          properties?: cosmwasm.wasm.v1beta1.IMsgMigrateContract,
+        ): cosmwasm.wasm.v1beta1.MsgMigrateContract;
+
+        /**
+         * Encodes the specified MsgMigrateContract message. Does not implicitly {@link cosmwasm.wasm.v1beta1.MsgMigrateContract.verify|verify} messages.
+         * @param m MsgMigrateContract message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmwasm.wasm.v1beta1.IMsgMigrateContract,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a MsgMigrateContract message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns MsgMigrateContract
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmwasm.wasm.v1beta1.MsgMigrateContract;
+      }
+
+      /** Properties of a MsgMigrateContractResponse. */
+      interface IMsgMigrateContractResponse {
+        /** MsgMigrateContractResponse data */
+        data?: Uint8Array | null;
+      }
+
+      /** Represents a MsgMigrateContractResponse. */
+      class MsgMigrateContractResponse implements IMsgMigrateContractResponse {
+        /**
+         * Constructs a new MsgMigrateContractResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmwasm.wasm.v1beta1.IMsgMigrateContractResponse);
+
+        /** MsgMigrateContractResponse data. */
+        public data: Uint8Array;
+
+        /**
+         * Creates a new MsgMigrateContractResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns MsgMigrateContractResponse instance
+         */
+        public static create(
+          properties?: cosmwasm.wasm.v1beta1.IMsgMigrateContractResponse,
+        ): cosmwasm.wasm.v1beta1.MsgMigrateContractResponse;
+
+        /**
+         * Encodes the specified MsgMigrateContractResponse message. Does not implicitly {@link cosmwasm.wasm.v1beta1.MsgMigrateContractResponse.verify|verify} messages.
+         * @param m MsgMigrateContractResponse message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmwasm.wasm.v1beta1.IMsgMigrateContractResponse,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a MsgMigrateContractResponse message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns MsgMigrateContractResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmwasm.wasm.v1beta1.MsgMigrateContractResponse;
+      }
+
+      /** Properties of a MsgUpdateAdmin. */
+      interface IMsgUpdateAdmin {
+        /** MsgUpdateAdmin sender */
+        sender?: string | null;
+
+        /** MsgUpdateAdmin newAdmin */
+        newAdmin?: string | null;
+
+        /** MsgUpdateAdmin contract */
+        contract?: string | null;
+      }
+
+      /** Represents a MsgUpdateAdmin. */
+      class MsgUpdateAdmin implements IMsgUpdateAdmin {
+        /**
+         * Constructs a new MsgUpdateAdmin.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmwasm.wasm.v1beta1.IMsgUpdateAdmin);
+
+        /** MsgUpdateAdmin sender. */
+        public sender: string;
+
+        /** MsgUpdateAdmin newAdmin. */
+        public newAdmin: string;
+
+        /** MsgUpdateAdmin contract. */
+        public contract: string;
+
+        /**
+         * Creates a new MsgUpdateAdmin instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns MsgUpdateAdmin instance
+         */
+        public static create(
+          properties?: cosmwasm.wasm.v1beta1.IMsgUpdateAdmin,
+        ): cosmwasm.wasm.v1beta1.MsgUpdateAdmin;
+
+        /**
+         * Encodes the specified MsgUpdateAdmin message. Does not implicitly {@link cosmwasm.wasm.v1beta1.MsgUpdateAdmin.verify|verify} messages.
+         * @param m MsgUpdateAdmin message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmwasm.wasm.v1beta1.IMsgUpdateAdmin,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a MsgUpdateAdmin message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns MsgUpdateAdmin
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmwasm.wasm.v1beta1.MsgUpdateAdmin;
+      }
+
+      /** Properties of a MsgUpdateAdminResponse. */
+      interface IMsgUpdateAdminResponse {}
+
+      /** Represents a MsgUpdateAdminResponse. */
+      class MsgUpdateAdminResponse implements IMsgUpdateAdminResponse {
+        /**
+         * Constructs a new MsgUpdateAdminResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmwasm.wasm.v1beta1.IMsgUpdateAdminResponse);
+
+        /**
+         * Creates a new MsgUpdateAdminResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns MsgUpdateAdminResponse instance
+         */
+        public static create(
+          properties?: cosmwasm.wasm.v1beta1.IMsgUpdateAdminResponse,
+        ): cosmwasm.wasm.v1beta1.MsgUpdateAdminResponse;
+
+        /**
+         * Encodes the specified MsgUpdateAdminResponse message. Does not implicitly {@link cosmwasm.wasm.v1beta1.MsgUpdateAdminResponse.verify|verify} messages.
+         * @param m MsgUpdateAdminResponse message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmwasm.wasm.v1beta1.IMsgUpdateAdminResponse,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a MsgUpdateAdminResponse message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns MsgUpdateAdminResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmwasm.wasm.v1beta1.MsgUpdateAdminResponse;
+      }
+
+      /** Properties of a MsgClearAdmin. */
+      interface IMsgClearAdmin {
+        /** MsgClearAdmin sender */
+        sender?: string | null;
+
+        /** MsgClearAdmin contract */
+        contract?: string | null;
+      }
+
+      /** Represents a MsgClearAdmin. */
+      class MsgClearAdmin implements IMsgClearAdmin {
+        /**
+         * Constructs a new MsgClearAdmin.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmwasm.wasm.v1beta1.IMsgClearAdmin);
+
+        /** MsgClearAdmin sender. */
+        public sender: string;
+
+        /** MsgClearAdmin contract. */
+        public contract: string;
+
+        /**
+         * Creates a new MsgClearAdmin instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns MsgClearAdmin instance
+         */
+        public static create(
+          properties?: cosmwasm.wasm.v1beta1.IMsgClearAdmin,
+        ): cosmwasm.wasm.v1beta1.MsgClearAdmin;
+
+        /**
+         * Encodes the specified MsgClearAdmin message. Does not implicitly {@link cosmwasm.wasm.v1beta1.MsgClearAdmin.verify|verify} messages.
+         * @param m MsgClearAdmin message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(m: cosmwasm.wasm.v1beta1.IMsgClearAdmin, w?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a MsgClearAdmin message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns MsgClearAdmin
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmwasm.wasm.v1beta1.MsgClearAdmin;
+      }
+
+      /** Properties of a MsgClearAdminResponse. */
+      interface IMsgClearAdminResponse {}
+
+      /** Represents a MsgClearAdminResponse. */
+      class MsgClearAdminResponse implements IMsgClearAdminResponse {
+        /**
+         * Constructs a new MsgClearAdminResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmwasm.wasm.v1beta1.IMsgClearAdminResponse);
+
+        /**
+         * Creates a new MsgClearAdminResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns MsgClearAdminResponse instance
+         */
+        public static create(
+          properties?: cosmwasm.wasm.v1beta1.IMsgClearAdminResponse,
+        ): cosmwasm.wasm.v1beta1.MsgClearAdminResponse;
+
+        /**
+         * Encodes the specified MsgClearAdminResponse message. Does not implicitly {@link cosmwasm.wasm.v1beta1.MsgClearAdminResponse.verify|verify} messages.
+         * @param m MsgClearAdminResponse message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmwasm.wasm.v1beta1.IMsgClearAdminResponse,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a MsgClearAdminResponse message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns MsgClearAdminResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmwasm.wasm.v1beta1.MsgClearAdminResponse;
+      }
+
       /** AccessType enum. */
       enum AccessType {
         ACCESS_TYPE_UNSPECIFIED = 0,
@@ -2170,1940 +2664,6 @@ export namespace cosmwasm {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         public static decode(r: $protobuf.Reader | Uint8Array, l?: number): cosmwasm.wasm.v1beta1.Model;
-      }
-    }
-  }
-}
-
-/** Namespace google. */
-export namespace google {
-  /** Namespace api. */
-  namespace api {
-    /** Properties of a Http. */
-    interface IHttp {
-      /** Http rules */
-      rules?: google.api.IHttpRule[] | null;
-    }
-
-    /** Represents a Http. */
-    class Http implements IHttp {
-      /**
-       * Constructs a new Http.
-       * @param [p] Properties to set
-       */
-      constructor(p?: google.api.IHttp);
-
-      /** Http rules. */
-      public rules: google.api.IHttpRule[];
-
-      /**
-       * Creates a new Http instance using the specified properties.
-       * @param [properties] Properties to set
-       * @returns Http instance
-       */
-      public static create(properties?: google.api.IHttp): google.api.Http;
-
-      /**
-       * Encodes the specified Http message. Does not implicitly {@link google.api.Http.verify|verify} messages.
-       * @param m Http message or plain object to encode
-       * @param [w] Writer to encode to
-       * @returns Writer
-       */
-      public static encode(m: google.api.IHttp, w?: $protobuf.Writer): $protobuf.Writer;
-
-      /**
-       * Decodes a Http message from the specified reader or buffer.
-       * @param r Reader or buffer to decode from
-       * @param [l] Message length if known beforehand
-       * @returns Http
-       * @throws {Error} If the payload is not a reader or valid buffer
-       * @throws {$protobuf.util.ProtocolError} If required fields are missing
-       */
-      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): google.api.Http;
-    }
-
-    /** Properties of a HttpRule. */
-    interface IHttpRule {
-      /** HttpRule get */
-      get?: string | null;
-
-      /** HttpRule put */
-      put?: string | null;
-
-      /** HttpRule post */
-      post?: string | null;
-
-      /** HttpRule delete */
-      delete?: string | null;
-
-      /** HttpRule patch */
-      patch?: string | null;
-
-      /** HttpRule custom */
-      custom?: google.api.ICustomHttpPattern | null;
-
-      /** HttpRule selector */
-      selector?: string | null;
-
-      /** HttpRule body */
-      body?: string | null;
-
-      /** HttpRule additionalBindings */
-      additionalBindings?: google.api.IHttpRule[] | null;
-    }
-
-    /** Represents a HttpRule. */
-    class HttpRule implements IHttpRule {
-      /**
-       * Constructs a new HttpRule.
-       * @param [p] Properties to set
-       */
-      constructor(p?: google.api.IHttpRule);
-
-      /** HttpRule get. */
-      public get: string;
-
-      /** HttpRule put. */
-      public put: string;
-
-      /** HttpRule post. */
-      public post: string;
-
-      /** HttpRule delete. */
-      public delete: string;
-
-      /** HttpRule patch. */
-      public patch: string;
-
-      /** HttpRule custom. */
-      public custom?: google.api.ICustomHttpPattern | null;
-
-      /** HttpRule selector. */
-      public selector: string;
-
-      /** HttpRule body. */
-      public body: string;
-
-      /** HttpRule additionalBindings. */
-      public additionalBindings: google.api.IHttpRule[];
-
-      /** HttpRule pattern. */
-      public pattern?: "get" | "put" | "post" | "delete" | "patch" | "custom";
-
-      /**
-       * Creates a new HttpRule instance using the specified properties.
-       * @param [properties] Properties to set
-       * @returns HttpRule instance
-       */
-      public static create(properties?: google.api.IHttpRule): google.api.HttpRule;
-
-      /**
-       * Encodes the specified HttpRule message. Does not implicitly {@link google.api.HttpRule.verify|verify} messages.
-       * @param m HttpRule message or plain object to encode
-       * @param [w] Writer to encode to
-       * @returns Writer
-       */
-      public static encode(m: google.api.IHttpRule, w?: $protobuf.Writer): $protobuf.Writer;
-
-      /**
-       * Decodes a HttpRule message from the specified reader or buffer.
-       * @param r Reader or buffer to decode from
-       * @param [l] Message length if known beforehand
-       * @returns HttpRule
-       * @throws {Error} If the payload is not a reader or valid buffer
-       * @throws {$protobuf.util.ProtocolError} If required fields are missing
-       */
-      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): google.api.HttpRule;
-    }
-
-    /** Properties of a CustomHttpPattern. */
-    interface ICustomHttpPattern {
-      /** CustomHttpPattern kind */
-      kind?: string | null;
-
-      /** CustomHttpPattern path */
-      path?: string | null;
-    }
-
-    /** Represents a CustomHttpPattern. */
-    class CustomHttpPattern implements ICustomHttpPattern {
-      /**
-       * Constructs a new CustomHttpPattern.
-       * @param [p] Properties to set
-       */
-      constructor(p?: google.api.ICustomHttpPattern);
-
-      /** CustomHttpPattern kind. */
-      public kind: string;
-
-      /** CustomHttpPattern path. */
-      public path: string;
-
-      /**
-       * Creates a new CustomHttpPattern instance using the specified properties.
-       * @param [properties] Properties to set
-       * @returns CustomHttpPattern instance
-       */
-      public static create(properties?: google.api.ICustomHttpPattern): google.api.CustomHttpPattern;
-
-      /**
-       * Encodes the specified CustomHttpPattern message. Does not implicitly {@link google.api.CustomHttpPattern.verify|verify} messages.
-       * @param m CustomHttpPattern message or plain object to encode
-       * @param [w] Writer to encode to
-       * @returns Writer
-       */
-      public static encode(m: google.api.ICustomHttpPattern, w?: $protobuf.Writer): $protobuf.Writer;
-
-      /**
-       * Decodes a CustomHttpPattern message from the specified reader or buffer.
-       * @param r Reader or buffer to decode from
-       * @param [l] Message length if known beforehand
-       * @returns CustomHttpPattern
-       * @throws {Error} If the payload is not a reader or valid buffer
-       * @throws {$protobuf.util.ProtocolError} If required fields are missing
-       */
-      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): google.api.CustomHttpPattern;
-    }
-  }
-
-  /** Namespace protobuf. */
-  namespace protobuf {
-    /** Properties of a FileDescriptorSet. */
-    interface IFileDescriptorSet {
-      /** FileDescriptorSet file */
-      file?: google.protobuf.IFileDescriptorProto[] | null;
-    }
-
-    /** Represents a FileDescriptorSet. */
-    class FileDescriptorSet implements IFileDescriptorSet {
-      /**
-       * Constructs a new FileDescriptorSet.
-       * @param [p] Properties to set
-       */
-      constructor(p?: google.protobuf.IFileDescriptorSet);
-
-      /** FileDescriptorSet file. */
-      public file: google.protobuf.IFileDescriptorProto[];
-
-      /**
-       * Creates a new FileDescriptorSet instance using the specified properties.
-       * @param [properties] Properties to set
-       * @returns FileDescriptorSet instance
-       */
-      public static create(
-        properties?: google.protobuf.IFileDescriptorSet,
-      ): google.protobuf.FileDescriptorSet;
-
-      /**
-       * Encodes the specified FileDescriptorSet message. Does not implicitly {@link google.protobuf.FileDescriptorSet.verify|verify} messages.
-       * @param m FileDescriptorSet message or plain object to encode
-       * @param [w] Writer to encode to
-       * @returns Writer
-       */
-      public static encode(m: google.protobuf.IFileDescriptorSet, w?: $protobuf.Writer): $protobuf.Writer;
-
-      /**
-       * Decodes a FileDescriptorSet message from the specified reader or buffer.
-       * @param r Reader or buffer to decode from
-       * @param [l] Message length if known beforehand
-       * @returns FileDescriptorSet
-       * @throws {Error} If the payload is not a reader or valid buffer
-       * @throws {$protobuf.util.ProtocolError} If required fields are missing
-       */
-      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): google.protobuf.FileDescriptorSet;
-    }
-
-    /** Properties of a FileDescriptorProto. */
-    interface IFileDescriptorProto {
-      /** FileDescriptorProto name */
-      name?: string | null;
-
-      /** FileDescriptorProto package */
-      package?: string | null;
-
-      /** FileDescriptorProto dependency */
-      dependency?: string[] | null;
-
-      /** FileDescriptorProto publicDependency */
-      publicDependency?: number[] | null;
-
-      /** FileDescriptorProto weakDependency */
-      weakDependency?: number[] | null;
-
-      /** FileDescriptorProto messageType */
-      messageType?: google.protobuf.IDescriptorProto[] | null;
-
-      /** FileDescriptorProto enumType */
-      enumType?: google.protobuf.IEnumDescriptorProto[] | null;
-
-      /** FileDescriptorProto service */
-      service?: google.protobuf.IServiceDescriptorProto[] | null;
-
-      /** FileDescriptorProto extension */
-      extension?: google.protobuf.IFieldDescriptorProto[] | null;
-
-      /** FileDescriptorProto options */
-      options?: google.protobuf.IFileOptions | null;
-
-      /** FileDescriptorProto sourceCodeInfo */
-      sourceCodeInfo?: google.protobuf.ISourceCodeInfo | null;
-
-      /** FileDescriptorProto syntax */
-      syntax?: string | null;
-    }
-
-    /** Represents a FileDescriptorProto. */
-    class FileDescriptorProto implements IFileDescriptorProto {
-      /**
-       * Constructs a new FileDescriptorProto.
-       * @param [p] Properties to set
-       */
-      constructor(p?: google.protobuf.IFileDescriptorProto);
-
-      /** FileDescriptorProto name. */
-      public name: string;
-
-      /** FileDescriptorProto package. */
-      public package: string;
-
-      /** FileDescriptorProto dependency. */
-      public dependency: string[];
-
-      /** FileDescriptorProto publicDependency. */
-      public publicDependency: number[];
-
-      /** FileDescriptorProto weakDependency. */
-      public weakDependency: number[];
-
-      /** FileDescriptorProto messageType. */
-      public messageType: google.protobuf.IDescriptorProto[];
-
-      /** FileDescriptorProto enumType. */
-      public enumType: google.protobuf.IEnumDescriptorProto[];
-
-      /** FileDescriptorProto service. */
-      public service: google.protobuf.IServiceDescriptorProto[];
-
-      /** FileDescriptorProto extension. */
-      public extension: google.protobuf.IFieldDescriptorProto[];
-
-      /** FileDescriptorProto options. */
-      public options?: google.protobuf.IFileOptions | null;
-
-      /** FileDescriptorProto sourceCodeInfo. */
-      public sourceCodeInfo?: google.protobuf.ISourceCodeInfo | null;
-
-      /** FileDescriptorProto syntax. */
-      public syntax: string;
-
-      /**
-       * Creates a new FileDescriptorProto instance using the specified properties.
-       * @param [properties] Properties to set
-       * @returns FileDescriptorProto instance
-       */
-      public static create(
-        properties?: google.protobuf.IFileDescriptorProto,
-      ): google.protobuf.FileDescriptorProto;
-
-      /**
-       * Encodes the specified FileDescriptorProto message. Does not implicitly {@link google.protobuf.FileDescriptorProto.verify|verify} messages.
-       * @param m FileDescriptorProto message or plain object to encode
-       * @param [w] Writer to encode to
-       * @returns Writer
-       */
-      public static encode(m: google.protobuf.IFileDescriptorProto, w?: $protobuf.Writer): $protobuf.Writer;
-
-      /**
-       * Decodes a FileDescriptorProto message from the specified reader or buffer.
-       * @param r Reader or buffer to decode from
-       * @param [l] Message length if known beforehand
-       * @returns FileDescriptorProto
-       * @throws {Error} If the payload is not a reader or valid buffer
-       * @throws {$protobuf.util.ProtocolError} If required fields are missing
-       */
-      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): google.protobuf.FileDescriptorProto;
-    }
-
-    /** Properties of a DescriptorProto. */
-    interface IDescriptorProto {
-      /** DescriptorProto name */
-      name?: string | null;
-
-      /** DescriptorProto field */
-      field?: google.protobuf.IFieldDescriptorProto[] | null;
-
-      /** DescriptorProto extension */
-      extension?: google.protobuf.IFieldDescriptorProto[] | null;
-
-      /** DescriptorProto nestedType */
-      nestedType?: google.protobuf.IDescriptorProto[] | null;
-
-      /** DescriptorProto enumType */
-      enumType?: google.protobuf.IEnumDescriptorProto[] | null;
-
-      /** DescriptorProto extensionRange */
-      extensionRange?: google.protobuf.DescriptorProto.IExtensionRange[] | null;
-
-      /** DescriptorProto oneofDecl */
-      oneofDecl?: google.protobuf.IOneofDescriptorProto[] | null;
-
-      /** DescriptorProto options */
-      options?: google.protobuf.IMessageOptions | null;
-
-      /** DescriptorProto reservedRange */
-      reservedRange?: google.protobuf.DescriptorProto.IReservedRange[] | null;
-
-      /** DescriptorProto reservedName */
-      reservedName?: string[] | null;
-    }
-
-    /** Represents a DescriptorProto. */
-    class DescriptorProto implements IDescriptorProto {
-      /**
-       * Constructs a new DescriptorProto.
-       * @param [p] Properties to set
-       */
-      constructor(p?: google.protobuf.IDescriptorProto);
-
-      /** DescriptorProto name. */
-      public name: string;
-
-      /** DescriptorProto field. */
-      public field: google.protobuf.IFieldDescriptorProto[];
-
-      /** DescriptorProto extension. */
-      public extension: google.protobuf.IFieldDescriptorProto[];
-
-      /** DescriptorProto nestedType. */
-      public nestedType: google.protobuf.IDescriptorProto[];
-
-      /** DescriptorProto enumType. */
-      public enumType: google.protobuf.IEnumDescriptorProto[];
-
-      /** DescriptorProto extensionRange. */
-      public extensionRange: google.protobuf.DescriptorProto.IExtensionRange[];
-
-      /** DescriptorProto oneofDecl. */
-      public oneofDecl: google.protobuf.IOneofDescriptorProto[];
-
-      /** DescriptorProto options. */
-      public options?: google.protobuf.IMessageOptions | null;
-
-      /** DescriptorProto reservedRange. */
-      public reservedRange: google.protobuf.DescriptorProto.IReservedRange[];
-
-      /** DescriptorProto reservedName. */
-      public reservedName: string[];
-
-      /**
-       * Creates a new DescriptorProto instance using the specified properties.
-       * @param [properties] Properties to set
-       * @returns DescriptorProto instance
-       */
-      public static create(properties?: google.protobuf.IDescriptorProto): google.protobuf.DescriptorProto;
-
-      /**
-       * Encodes the specified DescriptorProto message. Does not implicitly {@link google.protobuf.DescriptorProto.verify|verify} messages.
-       * @param m DescriptorProto message or plain object to encode
-       * @param [w] Writer to encode to
-       * @returns Writer
-       */
-      public static encode(m: google.protobuf.IDescriptorProto, w?: $protobuf.Writer): $protobuf.Writer;
-
-      /**
-       * Decodes a DescriptorProto message from the specified reader or buffer.
-       * @param r Reader or buffer to decode from
-       * @param [l] Message length if known beforehand
-       * @returns DescriptorProto
-       * @throws {Error} If the payload is not a reader or valid buffer
-       * @throws {$protobuf.util.ProtocolError} If required fields are missing
-       */
-      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): google.protobuf.DescriptorProto;
-    }
-
-    namespace DescriptorProto {
-      /** Properties of an ExtensionRange. */
-      interface IExtensionRange {
-        /** ExtensionRange start */
-        start?: number | null;
-
-        /** ExtensionRange end */
-        end?: number | null;
-      }
-
-      /** Represents an ExtensionRange. */
-      class ExtensionRange implements IExtensionRange {
-        /**
-         * Constructs a new ExtensionRange.
-         * @param [p] Properties to set
-         */
-        constructor(p?: google.protobuf.DescriptorProto.IExtensionRange);
-
-        /** ExtensionRange start. */
-        public start: number;
-
-        /** ExtensionRange end. */
-        public end: number;
-
-        /**
-         * Creates a new ExtensionRange instance using the specified properties.
-         * @param [properties] Properties to set
-         * @returns ExtensionRange instance
-         */
-        public static create(
-          properties?: google.protobuf.DescriptorProto.IExtensionRange,
-        ): google.protobuf.DescriptorProto.ExtensionRange;
-
-        /**
-         * Encodes the specified ExtensionRange message. Does not implicitly {@link google.protobuf.DescriptorProto.ExtensionRange.verify|verify} messages.
-         * @param m ExtensionRange message or plain object to encode
-         * @param [w] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(
-          m: google.protobuf.DescriptorProto.IExtensionRange,
-          w?: $protobuf.Writer,
-        ): $protobuf.Writer;
-
-        /**
-         * Decodes an ExtensionRange message from the specified reader or buffer.
-         * @param r Reader or buffer to decode from
-         * @param [l] Message length if known beforehand
-         * @returns ExtensionRange
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(
-          r: $protobuf.Reader | Uint8Array,
-          l?: number,
-        ): google.protobuf.DescriptorProto.ExtensionRange;
-      }
-
-      /** Properties of a ReservedRange. */
-      interface IReservedRange {
-        /** ReservedRange start */
-        start?: number | null;
-
-        /** ReservedRange end */
-        end?: number | null;
-      }
-
-      /** Represents a ReservedRange. */
-      class ReservedRange implements IReservedRange {
-        /**
-         * Constructs a new ReservedRange.
-         * @param [p] Properties to set
-         */
-        constructor(p?: google.protobuf.DescriptorProto.IReservedRange);
-
-        /** ReservedRange start. */
-        public start: number;
-
-        /** ReservedRange end. */
-        public end: number;
-
-        /**
-         * Creates a new ReservedRange instance using the specified properties.
-         * @param [properties] Properties to set
-         * @returns ReservedRange instance
-         */
-        public static create(
-          properties?: google.protobuf.DescriptorProto.IReservedRange,
-        ): google.protobuf.DescriptorProto.ReservedRange;
-
-        /**
-         * Encodes the specified ReservedRange message. Does not implicitly {@link google.protobuf.DescriptorProto.ReservedRange.verify|verify} messages.
-         * @param m ReservedRange message or plain object to encode
-         * @param [w] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(
-          m: google.protobuf.DescriptorProto.IReservedRange,
-          w?: $protobuf.Writer,
-        ): $protobuf.Writer;
-
-        /**
-         * Decodes a ReservedRange message from the specified reader or buffer.
-         * @param r Reader or buffer to decode from
-         * @param [l] Message length if known beforehand
-         * @returns ReservedRange
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(
-          r: $protobuf.Reader | Uint8Array,
-          l?: number,
-        ): google.protobuf.DescriptorProto.ReservedRange;
-      }
-    }
-
-    /** Properties of a FieldDescriptorProto. */
-    interface IFieldDescriptorProto {
-      /** FieldDescriptorProto name */
-      name?: string | null;
-
-      /** FieldDescriptorProto number */
-      number?: number | null;
-
-      /** FieldDescriptorProto label */
-      label?: google.protobuf.FieldDescriptorProto.Label | null;
-
-      /** FieldDescriptorProto type */
-      type?: google.protobuf.FieldDescriptorProto.Type | null;
-
-      /** FieldDescriptorProto typeName */
-      typeName?: string | null;
-
-      /** FieldDescriptorProto extendee */
-      extendee?: string | null;
-
-      /** FieldDescriptorProto defaultValue */
-      defaultValue?: string | null;
-
-      /** FieldDescriptorProto oneofIndex */
-      oneofIndex?: number | null;
-
-      /** FieldDescriptorProto jsonName */
-      jsonName?: string | null;
-
-      /** FieldDescriptorProto options */
-      options?: google.protobuf.IFieldOptions | null;
-    }
-
-    /** Represents a FieldDescriptorProto. */
-    class FieldDescriptorProto implements IFieldDescriptorProto {
-      /**
-       * Constructs a new FieldDescriptorProto.
-       * @param [p] Properties to set
-       */
-      constructor(p?: google.protobuf.IFieldDescriptorProto);
-
-      /** FieldDescriptorProto name. */
-      public name: string;
-
-      /** FieldDescriptorProto number. */
-      public number: number;
-
-      /** FieldDescriptorProto label. */
-      public label: google.protobuf.FieldDescriptorProto.Label;
-
-      /** FieldDescriptorProto type. */
-      public type: google.protobuf.FieldDescriptorProto.Type;
-
-      /** FieldDescriptorProto typeName. */
-      public typeName: string;
-
-      /** FieldDescriptorProto extendee. */
-      public extendee: string;
-
-      /** FieldDescriptorProto defaultValue. */
-      public defaultValue: string;
-
-      /** FieldDescriptorProto oneofIndex. */
-      public oneofIndex: number;
-
-      /** FieldDescriptorProto jsonName. */
-      public jsonName: string;
-
-      /** FieldDescriptorProto options. */
-      public options?: google.protobuf.IFieldOptions | null;
-
-      /**
-       * Creates a new FieldDescriptorProto instance using the specified properties.
-       * @param [properties] Properties to set
-       * @returns FieldDescriptorProto instance
-       */
-      public static create(
-        properties?: google.protobuf.IFieldDescriptorProto,
-      ): google.protobuf.FieldDescriptorProto;
-
-      /**
-       * Encodes the specified FieldDescriptorProto message. Does not implicitly {@link google.protobuf.FieldDescriptorProto.verify|verify} messages.
-       * @param m FieldDescriptorProto message or plain object to encode
-       * @param [w] Writer to encode to
-       * @returns Writer
-       */
-      public static encode(m: google.protobuf.IFieldDescriptorProto, w?: $protobuf.Writer): $protobuf.Writer;
-
-      /**
-       * Decodes a FieldDescriptorProto message from the specified reader or buffer.
-       * @param r Reader or buffer to decode from
-       * @param [l] Message length if known beforehand
-       * @returns FieldDescriptorProto
-       * @throws {Error} If the payload is not a reader or valid buffer
-       * @throws {$protobuf.util.ProtocolError} If required fields are missing
-       */
-      public static decode(
-        r: $protobuf.Reader | Uint8Array,
-        l?: number,
-      ): google.protobuf.FieldDescriptorProto;
-    }
-
-    namespace FieldDescriptorProto {
-      /** Type enum. */
-      enum Type {
-        TYPE_DOUBLE = 1,
-        TYPE_FLOAT = 2,
-        TYPE_INT64 = 3,
-        TYPE_UINT64 = 4,
-        TYPE_INT32 = 5,
-        TYPE_FIXED64 = 6,
-        TYPE_FIXED32 = 7,
-        TYPE_BOOL = 8,
-        TYPE_STRING = 9,
-        TYPE_GROUP = 10,
-        TYPE_MESSAGE = 11,
-        TYPE_BYTES = 12,
-        TYPE_UINT32 = 13,
-        TYPE_ENUM = 14,
-        TYPE_SFIXED32 = 15,
-        TYPE_SFIXED64 = 16,
-        TYPE_SINT32 = 17,
-        TYPE_SINT64 = 18,
-      }
-
-      /** Label enum. */
-      enum Label {
-        LABEL_OPTIONAL = 1,
-        LABEL_REQUIRED = 2,
-        LABEL_REPEATED = 3,
-      }
-    }
-
-    /** Properties of an OneofDescriptorProto. */
-    interface IOneofDescriptorProto {
-      /** OneofDescriptorProto name */
-      name?: string | null;
-
-      /** OneofDescriptorProto options */
-      options?: google.protobuf.IOneofOptions | null;
-    }
-
-    /** Represents an OneofDescriptorProto. */
-    class OneofDescriptorProto implements IOneofDescriptorProto {
-      /**
-       * Constructs a new OneofDescriptorProto.
-       * @param [p] Properties to set
-       */
-      constructor(p?: google.protobuf.IOneofDescriptorProto);
-
-      /** OneofDescriptorProto name. */
-      public name: string;
-
-      /** OneofDescriptorProto options. */
-      public options?: google.protobuf.IOneofOptions | null;
-
-      /**
-       * Creates a new OneofDescriptorProto instance using the specified properties.
-       * @param [properties] Properties to set
-       * @returns OneofDescriptorProto instance
-       */
-      public static create(
-        properties?: google.protobuf.IOneofDescriptorProto,
-      ): google.protobuf.OneofDescriptorProto;
-
-      /**
-       * Encodes the specified OneofDescriptorProto message. Does not implicitly {@link google.protobuf.OneofDescriptorProto.verify|verify} messages.
-       * @param m OneofDescriptorProto message or plain object to encode
-       * @param [w] Writer to encode to
-       * @returns Writer
-       */
-      public static encode(m: google.protobuf.IOneofDescriptorProto, w?: $protobuf.Writer): $protobuf.Writer;
-
-      /**
-       * Decodes an OneofDescriptorProto message from the specified reader or buffer.
-       * @param r Reader or buffer to decode from
-       * @param [l] Message length if known beforehand
-       * @returns OneofDescriptorProto
-       * @throws {Error} If the payload is not a reader or valid buffer
-       * @throws {$protobuf.util.ProtocolError} If required fields are missing
-       */
-      public static decode(
-        r: $protobuf.Reader | Uint8Array,
-        l?: number,
-      ): google.protobuf.OneofDescriptorProto;
-    }
-
-    /** Properties of an EnumDescriptorProto. */
-    interface IEnumDescriptorProto {
-      /** EnumDescriptorProto name */
-      name?: string | null;
-
-      /** EnumDescriptorProto value */
-      value?: google.protobuf.IEnumValueDescriptorProto[] | null;
-
-      /** EnumDescriptorProto options */
-      options?: google.protobuf.IEnumOptions | null;
-    }
-
-    /** Represents an EnumDescriptorProto. */
-    class EnumDescriptorProto implements IEnumDescriptorProto {
-      /**
-       * Constructs a new EnumDescriptorProto.
-       * @param [p] Properties to set
-       */
-      constructor(p?: google.protobuf.IEnumDescriptorProto);
-
-      /** EnumDescriptorProto name. */
-      public name: string;
-
-      /** EnumDescriptorProto value. */
-      public value: google.protobuf.IEnumValueDescriptorProto[];
-
-      /** EnumDescriptorProto options. */
-      public options?: google.protobuf.IEnumOptions | null;
-
-      /**
-       * Creates a new EnumDescriptorProto instance using the specified properties.
-       * @param [properties] Properties to set
-       * @returns EnumDescriptorProto instance
-       */
-      public static create(
-        properties?: google.protobuf.IEnumDescriptorProto,
-      ): google.protobuf.EnumDescriptorProto;
-
-      /**
-       * Encodes the specified EnumDescriptorProto message. Does not implicitly {@link google.protobuf.EnumDescriptorProto.verify|verify} messages.
-       * @param m EnumDescriptorProto message or plain object to encode
-       * @param [w] Writer to encode to
-       * @returns Writer
-       */
-      public static encode(m: google.protobuf.IEnumDescriptorProto, w?: $protobuf.Writer): $protobuf.Writer;
-
-      /**
-       * Decodes an EnumDescriptorProto message from the specified reader or buffer.
-       * @param r Reader or buffer to decode from
-       * @param [l] Message length if known beforehand
-       * @returns EnumDescriptorProto
-       * @throws {Error} If the payload is not a reader or valid buffer
-       * @throws {$protobuf.util.ProtocolError} If required fields are missing
-       */
-      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): google.protobuf.EnumDescriptorProto;
-    }
-
-    /** Properties of an EnumValueDescriptorProto. */
-    interface IEnumValueDescriptorProto {
-      /** EnumValueDescriptorProto name */
-      name?: string | null;
-
-      /** EnumValueDescriptorProto number */
-      number?: number | null;
-
-      /** EnumValueDescriptorProto options */
-      options?: google.protobuf.IEnumValueOptions | null;
-    }
-
-    /** Represents an EnumValueDescriptorProto. */
-    class EnumValueDescriptorProto implements IEnumValueDescriptorProto {
-      /**
-       * Constructs a new EnumValueDescriptorProto.
-       * @param [p] Properties to set
-       */
-      constructor(p?: google.protobuf.IEnumValueDescriptorProto);
-
-      /** EnumValueDescriptorProto name. */
-      public name: string;
-
-      /** EnumValueDescriptorProto number. */
-      public number: number;
-
-      /** EnumValueDescriptorProto options. */
-      public options?: google.protobuf.IEnumValueOptions | null;
-
-      /**
-       * Creates a new EnumValueDescriptorProto instance using the specified properties.
-       * @param [properties] Properties to set
-       * @returns EnumValueDescriptorProto instance
-       */
-      public static create(
-        properties?: google.protobuf.IEnumValueDescriptorProto,
-      ): google.protobuf.EnumValueDescriptorProto;
-
-      /**
-       * Encodes the specified EnumValueDescriptorProto message. Does not implicitly {@link google.protobuf.EnumValueDescriptorProto.verify|verify} messages.
-       * @param m EnumValueDescriptorProto message or plain object to encode
-       * @param [w] Writer to encode to
-       * @returns Writer
-       */
-      public static encode(
-        m: google.protobuf.IEnumValueDescriptorProto,
-        w?: $protobuf.Writer,
-      ): $protobuf.Writer;
-
-      /**
-       * Decodes an EnumValueDescriptorProto message from the specified reader or buffer.
-       * @param r Reader or buffer to decode from
-       * @param [l] Message length if known beforehand
-       * @returns EnumValueDescriptorProto
-       * @throws {Error} If the payload is not a reader or valid buffer
-       * @throws {$protobuf.util.ProtocolError} If required fields are missing
-       */
-      public static decode(
-        r: $protobuf.Reader | Uint8Array,
-        l?: number,
-      ): google.protobuf.EnumValueDescriptorProto;
-    }
-
-    /** Properties of a ServiceDescriptorProto. */
-    interface IServiceDescriptorProto {
-      /** ServiceDescriptorProto name */
-      name?: string | null;
-
-      /** ServiceDescriptorProto method */
-      method?: google.protobuf.IMethodDescriptorProto[] | null;
-
-      /** ServiceDescriptorProto options */
-      options?: google.protobuf.IServiceOptions | null;
-    }
-
-    /** Represents a ServiceDescriptorProto. */
-    class ServiceDescriptorProto implements IServiceDescriptorProto {
-      /**
-       * Constructs a new ServiceDescriptorProto.
-       * @param [p] Properties to set
-       */
-      constructor(p?: google.protobuf.IServiceDescriptorProto);
-
-      /** ServiceDescriptorProto name. */
-      public name: string;
-
-      /** ServiceDescriptorProto method. */
-      public method: google.protobuf.IMethodDescriptorProto[];
-
-      /** ServiceDescriptorProto options. */
-      public options?: google.protobuf.IServiceOptions | null;
-
-      /**
-       * Creates a new ServiceDescriptorProto instance using the specified properties.
-       * @param [properties] Properties to set
-       * @returns ServiceDescriptorProto instance
-       */
-      public static create(
-        properties?: google.protobuf.IServiceDescriptorProto,
-      ): google.protobuf.ServiceDescriptorProto;
-
-      /**
-       * Encodes the specified ServiceDescriptorProto message. Does not implicitly {@link google.protobuf.ServiceDescriptorProto.verify|verify} messages.
-       * @param m ServiceDescriptorProto message or plain object to encode
-       * @param [w] Writer to encode to
-       * @returns Writer
-       */
-      public static encode(
-        m: google.protobuf.IServiceDescriptorProto,
-        w?: $protobuf.Writer,
-      ): $protobuf.Writer;
-
-      /**
-       * Decodes a ServiceDescriptorProto message from the specified reader or buffer.
-       * @param r Reader or buffer to decode from
-       * @param [l] Message length if known beforehand
-       * @returns ServiceDescriptorProto
-       * @throws {Error} If the payload is not a reader or valid buffer
-       * @throws {$protobuf.util.ProtocolError} If required fields are missing
-       */
-      public static decode(
-        r: $protobuf.Reader | Uint8Array,
-        l?: number,
-      ): google.protobuf.ServiceDescriptorProto;
-    }
-
-    /** Properties of a MethodDescriptorProto. */
-    interface IMethodDescriptorProto {
-      /** MethodDescriptorProto name */
-      name?: string | null;
-
-      /** MethodDescriptorProto inputType */
-      inputType?: string | null;
-
-      /** MethodDescriptorProto outputType */
-      outputType?: string | null;
-
-      /** MethodDescriptorProto options */
-      options?: google.protobuf.IMethodOptions | null;
-
-      /** MethodDescriptorProto clientStreaming */
-      clientStreaming?: boolean | null;
-
-      /** MethodDescriptorProto serverStreaming */
-      serverStreaming?: boolean | null;
-    }
-
-    /** Represents a MethodDescriptorProto. */
-    class MethodDescriptorProto implements IMethodDescriptorProto {
-      /**
-       * Constructs a new MethodDescriptorProto.
-       * @param [p] Properties to set
-       */
-      constructor(p?: google.protobuf.IMethodDescriptorProto);
-
-      /** MethodDescriptorProto name. */
-      public name: string;
-
-      /** MethodDescriptorProto inputType. */
-      public inputType: string;
-
-      /** MethodDescriptorProto outputType. */
-      public outputType: string;
-
-      /** MethodDescriptorProto options. */
-      public options?: google.protobuf.IMethodOptions | null;
-
-      /** MethodDescriptorProto clientStreaming. */
-      public clientStreaming: boolean;
-
-      /** MethodDescriptorProto serverStreaming. */
-      public serverStreaming: boolean;
-
-      /**
-       * Creates a new MethodDescriptorProto instance using the specified properties.
-       * @param [properties] Properties to set
-       * @returns MethodDescriptorProto instance
-       */
-      public static create(
-        properties?: google.protobuf.IMethodDescriptorProto,
-      ): google.protobuf.MethodDescriptorProto;
-
-      /**
-       * Encodes the specified MethodDescriptorProto message. Does not implicitly {@link google.protobuf.MethodDescriptorProto.verify|verify} messages.
-       * @param m MethodDescriptorProto message or plain object to encode
-       * @param [w] Writer to encode to
-       * @returns Writer
-       */
-      public static encode(m: google.protobuf.IMethodDescriptorProto, w?: $protobuf.Writer): $protobuf.Writer;
-
-      /**
-       * Decodes a MethodDescriptorProto message from the specified reader or buffer.
-       * @param r Reader or buffer to decode from
-       * @param [l] Message length if known beforehand
-       * @returns MethodDescriptorProto
-       * @throws {Error} If the payload is not a reader or valid buffer
-       * @throws {$protobuf.util.ProtocolError} If required fields are missing
-       */
-      public static decode(
-        r: $protobuf.Reader | Uint8Array,
-        l?: number,
-      ): google.protobuf.MethodDescriptorProto;
-    }
-
-    /** Properties of a FileOptions. */
-    interface IFileOptions {
-      /** FileOptions javaPackage */
-      javaPackage?: string | null;
-
-      /** FileOptions javaOuterClassname */
-      javaOuterClassname?: string | null;
-
-      /** FileOptions javaMultipleFiles */
-      javaMultipleFiles?: boolean | null;
-
-      /** FileOptions javaGenerateEqualsAndHash */
-      javaGenerateEqualsAndHash?: boolean | null;
-
-      /** FileOptions javaStringCheckUtf8 */
-      javaStringCheckUtf8?: boolean | null;
-
-      /** FileOptions optimizeFor */
-      optimizeFor?: google.protobuf.FileOptions.OptimizeMode | null;
-
-      /** FileOptions goPackage */
-      goPackage?: string | null;
-
-      /** FileOptions ccGenericServices */
-      ccGenericServices?: boolean | null;
-
-      /** FileOptions javaGenericServices */
-      javaGenericServices?: boolean | null;
-
-      /** FileOptions pyGenericServices */
-      pyGenericServices?: boolean | null;
-
-      /** FileOptions deprecated */
-      deprecated?: boolean | null;
-
-      /** FileOptions ccEnableArenas */
-      ccEnableArenas?: boolean | null;
-
-      /** FileOptions objcClassPrefix */
-      objcClassPrefix?: string | null;
-
-      /** FileOptions csharpNamespace */
-      csharpNamespace?: string | null;
-
-      /** FileOptions uninterpretedOption */
-      uninterpretedOption?: google.protobuf.IUninterpretedOption[] | null;
-    }
-
-    /** Represents a FileOptions. */
-    class FileOptions implements IFileOptions {
-      /**
-       * Constructs a new FileOptions.
-       * @param [p] Properties to set
-       */
-      constructor(p?: google.protobuf.IFileOptions);
-
-      /** FileOptions javaPackage. */
-      public javaPackage: string;
-
-      /** FileOptions javaOuterClassname. */
-      public javaOuterClassname: string;
-
-      /** FileOptions javaMultipleFiles. */
-      public javaMultipleFiles: boolean;
-
-      /** FileOptions javaGenerateEqualsAndHash. */
-      public javaGenerateEqualsAndHash: boolean;
-
-      /** FileOptions javaStringCheckUtf8. */
-      public javaStringCheckUtf8: boolean;
-
-      /** FileOptions optimizeFor. */
-      public optimizeFor: google.protobuf.FileOptions.OptimizeMode;
-
-      /** FileOptions goPackage. */
-      public goPackage: string;
-
-      /** FileOptions ccGenericServices. */
-      public ccGenericServices: boolean;
-
-      /** FileOptions javaGenericServices. */
-      public javaGenericServices: boolean;
-
-      /** FileOptions pyGenericServices. */
-      public pyGenericServices: boolean;
-
-      /** FileOptions deprecated. */
-      public deprecated: boolean;
-
-      /** FileOptions ccEnableArenas. */
-      public ccEnableArenas: boolean;
-
-      /** FileOptions objcClassPrefix. */
-      public objcClassPrefix: string;
-
-      /** FileOptions csharpNamespace. */
-      public csharpNamespace: string;
-
-      /** FileOptions uninterpretedOption. */
-      public uninterpretedOption: google.protobuf.IUninterpretedOption[];
-
-      /**
-       * Creates a new FileOptions instance using the specified properties.
-       * @param [properties] Properties to set
-       * @returns FileOptions instance
-       */
-      public static create(properties?: google.protobuf.IFileOptions): google.protobuf.FileOptions;
-
-      /**
-       * Encodes the specified FileOptions message. Does not implicitly {@link google.protobuf.FileOptions.verify|verify} messages.
-       * @param m FileOptions message or plain object to encode
-       * @param [w] Writer to encode to
-       * @returns Writer
-       */
-      public static encode(m: google.protobuf.IFileOptions, w?: $protobuf.Writer): $protobuf.Writer;
-
-      /**
-       * Decodes a FileOptions message from the specified reader or buffer.
-       * @param r Reader or buffer to decode from
-       * @param [l] Message length if known beforehand
-       * @returns FileOptions
-       * @throws {Error} If the payload is not a reader or valid buffer
-       * @throws {$protobuf.util.ProtocolError} If required fields are missing
-       */
-      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): google.protobuf.FileOptions;
-    }
-
-    namespace FileOptions {
-      /** OptimizeMode enum. */
-      enum OptimizeMode {
-        SPEED = 1,
-        CODE_SIZE = 2,
-        LITE_RUNTIME = 3,
-      }
-    }
-
-    /** Properties of a MessageOptions. */
-    interface IMessageOptions {
-      /** MessageOptions messageSetWireFormat */
-      messageSetWireFormat?: boolean | null;
-
-      /** MessageOptions noStandardDescriptorAccessor */
-      noStandardDescriptorAccessor?: boolean | null;
-
-      /** MessageOptions deprecated */
-      deprecated?: boolean | null;
-
-      /** MessageOptions mapEntry */
-      mapEntry?: boolean | null;
-
-      /** MessageOptions uninterpretedOption */
-      uninterpretedOption?: google.protobuf.IUninterpretedOption[] | null;
-    }
-
-    /** Represents a MessageOptions. */
-    class MessageOptions implements IMessageOptions {
-      /**
-       * Constructs a new MessageOptions.
-       * @param [p] Properties to set
-       */
-      constructor(p?: google.protobuf.IMessageOptions);
-
-      /** MessageOptions messageSetWireFormat. */
-      public messageSetWireFormat: boolean;
-
-      /** MessageOptions noStandardDescriptorAccessor. */
-      public noStandardDescriptorAccessor: boolean;
-
-      /** MessageOptions deprecated. */
-      public deprecated: boolean;
-
-      /** MessageOptions mapEntry. */
-      public mapEntry: boolean;
-
-      /** MessageOptions uninterpretedOption. */
-      public uninterpretedOption: google.protobuf.IUninterpretedOption[];
-
-      /**
-       * Creates a new MessageOptions instance using the specified properties.
-       * @param [properties] Properties to set
-       * @returns MessageOptions instance
-       */
-      public static create(properties?: google.protobuf.IMessageOptions): google.protobuf.MessageOptions;
-
-      /**
-       * Encodes the specified MessageOptions message. Does not implicitly {@link google.protobuf.MessageOptions.verify|verify} messages.
-       * @param m MessageOptions message or plain object to encode
-       * @param [w] Writer to encode to
-       * @returns Writer
-       */
-      public static encode(m: google.protobuf.IMessageOptions, w?: $protobuf.Writer): $protobuf.Writer;
-
-      /**
-       * Decodes a MessageOptions message from the specified reader or buffer.
-       * @param r Reader or buffer to decode from
-       * @param [l] Message length if known beforehand
-       * @returns MessageOptions
-       * @throws {Error} If the payload is not a reader or valid buffer
-       * @throws {$protobuf.util.ProtocolError} If required fields are missing
-       */
-      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): google.protobuf.MessageOptions;
-    }
-
-    /** Properties of a FieldOptions. */
-    interface IFieldOptions {
-      /** FieldOptions ctype */
-      ctype?: google.protobuf.FieldOptions.CType | null;
-
-      /** FieldOptions packed */
-      packed?: boolean | null;
-
-      /** FieldOptions jstype */
-      jstype?: google.protobuf.FieldOptions.JSType | null;
-
-      /** FieldOptions lazy */
-      lazy?: boolean | null;
-
-      /** FieldOptions deprecated */
-      deprecated?: boolean | null;
-
-      /** FieldOptions weak */
-      weak?: boolean | null;
-
-      /** FieldOptions uninterpretedOption */
-      uninterpretedOption?: google.protobuf.IUninterpretedOption[] | null;
-    }
-
-    /** Represents a FieldOptions. */
-    class FieldOptions implements IFieldOptions {
-      /**
-       * Constructs a new FieldOptions.
-       * @param [p] Properties to set
-       */
-      constructor(p?: google.protobuf.IFieldOptions);
-
-      /** FieldOptions ctype. */
-      public ctype: google.protobuf.FieldOptions.CType;
-
-      /** FieldOptions packed. */
-      public packed: boolean;
-
-      /** FieldOptions jstype. */
-      public jstype: google.protobuf.FieldOptions.JSType;
-
-      /** FieldOptions lazy. */
-      public lazy: boolean;
-
-      /** FieldOptions deprecated. */
-      public deprecated: boolean;
-
-      /** FieldOptions weak. */
-      public weak: boolean;
-
-      /** FieldOptions uninterpretedOption. */
-      public uninterpretedOption: google.protobuf.IUninterpretedOption[];
-
-      /**
-       * Creates a new FieldOptions instance using the specified properties.
-       * @param [properties] Properties to set
-       * @returns FieldOptions instance
-       */
-      public static create(properties?: google.protobuf.IFieldOptions): google.protobuf.FieldOptions;
-
-      /**
-       * Encodes the specified FieldOptions message. Does not implicitly {@link google.protobuf.FieldOptions.verify|verify} messages.
-       * @param m FieldOptions message or plain object to encode
-       * @param [w] Writer to encode to
-       * @returns Writer
-       */
-      public static encode(m: google.protobuf.IFieldOptions, w?: $protobuf.Writer): $protobuf.Writer;
-
-      /**
-       * Decodes a FieldOptions message from the specified reader or buffer.
-       * @param r Reader or buffer to decode from
-       * @param [l] Message length if known beforehand
-       * @returns FieldOptions
-       * @throws {Error} If the payload is not a reader or valid buffer
-       * @throws {$protobuf.util.ProtocolError} If required fields are missing
-       */
-      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): google.protobuf.FieldOptions;
-    }
-
-    namespace FieldOptions {
-      /** CType enum. */
-      enum CType {
-        STRING = 0,
-        CORD = 1,
-        STRING_PIECE = 2,
-      }
-
-      /** JSType enum. */
-      enum JSType {
-        JS_NORMAL = 0,
-        JS_STRING = 1,
-        JS_NUMBER = 2,
-      }
-    }
-
-    /** Properties of an OneofOptions. */
-    interface IOneofOptions {
-      /** OneofOptions uninterpretedOption */
-      uninterpretedOption?: google.protobuf.IUninterpretedOption[] | null;
-    }
-
-    /** Represents an OneofOptions. */
-    class OneofOptions implements IOneofOptions {
-      /**
-       * Constructs a new OneofOptions.
-       * @param [p] Properties to set
-       */
-      constructor(p?: google.protobuf.IOneofOptions);
-
-      /** OneofOptions uninterpretedOption. */
-      public uninterpretedOption: google.protobuf.IUninterpretedOption[];
-
-      /**
-       * Creates a new OneofOptions instance using the specified properties.
-       * @param [properties] Properties to set
-       * @returns OneofOptions instance
-       */
-      public static create(properties?: google.protobuf.IOneofOptions): google.protobuf.OneofOptions;
-
-      /**
-       * Encodes the specified OneofOptions message. Does not implicitly {@link google.protobuf.OneofOptions.verify|verify} messages.
-       * @param m OneofOptions message or plain object to encode
-       * @param [w] Writer to encode to
-       * @returns Writer
-       */
-      public static encode(m: google.protobuf.IOneofOptions, w?: $protobuf.Writer): $protobuf.Writer;
-
-      /**
-       * Decodes an OneofOptions message from the specified reader or buffer.
-       * @param r Reader or buffer to decode from
-       * @param [l] Message length if known beforehand
-       * @returns OneofOptions
-       * @throws {Error} If the payload is not a reader or valid buffer
-       * @throws {$protobuf.util.ProtocolError} If required fields are missing
-       */
-      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): google.protobuf.OneofOptions;
-    }
-
-    /** Properties of an EnumOptions. */
-    interface IEnumOptions {
-      /** EnumOptions allowAlias */
-      allowAlias?: boolean | null;
-
-      /** EnumOptions deprecated */
-      deprecated?: boolean | null;
-
-      /** EnumOptions uninterpretedOption */
-      uninterpretedOption?: google.protobuf.IUninterpretedOption[] | null;
-    }
-
-    /** Represents an EnumOptions. */
-    class EnumOptions implements IEnumOptions {
-      /**
-       * Constructs a new EnumOptions.
-       * @param [p] Properties to set
-       */
-      constructor(p?: google.protobuf.IEnumOptions);
-
-      /** EnumOptions allowAlias. */
-      public allowAlias: boolean;
-
-      /** EnumOptions deprecated. */
-      public deprecated: boolean;
-
-      /** EnumOptions uninterpretedOption. */
-      public uninterpretedOption: google.protobuf.IUninterpretedOption[];
-
-      /**
-       * Creates a new EnumOptions instance using the specified properties.
-       * @param [properties] Properties to set
-       * @returns EnumOptions instance
-       */
-      public static create(properties?: google.protobuf.IEnumOptions): google.protobuf.EnumOptions;
-
-      /**
-       * Encodes the specified EnumOptions message. Does not implicitly {@link google.protobuf.EnumOptions.verify|verify} messages.
-       * @param m EnumOptions message or plain object to encode
-       * @param [w] Writer to encode to
-       * @returns Writer
-       */
-      public static encode(m: google.protobuf.IEnumOptions, w?: $protobuf.Writer): $protobuf.Writer;
-
-      /**
-       * Decodes an EnumOptions message from the specified reader or buffer.
-       * @param r Reader or buffer to decode from
-       * @param [l] Message length if known beforehand
-       * @returns EnumOptions
-       * @throws {Error} If the payload is not a reader or valid buffer
-       * @throws {$protobuf.util.ProtocolError} If required fields are missing
-       */
-      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): google.protobuf.EnumOptions;
-    }
-
-    /** Properties of an EnumValueOptions. */
-    interface IEnumValueOptions {
-      /** EnumValueOptions deprecated */
-      deprecated?: boolean | null;
-
-      /** EnumValueOptions uninterpretedOption */
-      uninterpretedOption?: google.protobuf.IUninterpretedOption[] | null;
-    }
-
-    /** Represents an EnumValueOptions. */
-    class EnumValueOptions implements IEnumValueOptions {
-      /**
-       * Constructs a new EnumValueOptions.
-       * @param [p] Properties to set
-       */
-      constructor(p?: google.protobuf.IEnumValueOptions);
-
-      /** EnumValueOptions deprecated. */
-      public deprecated: boolean;
-
-      /** EnumValueOptions uninterpretedOption. */
-      public uninterpretedOption: google.protobuf.IUninterpretedOption[];
-
-      /**
-       * Creates a new EnumValueOptions instance using the specified properties.
-       * @param [properties] Properties to set
-       * @returns EnumValueOptions instance
-       */
-      public static create(properties?: google.protobuf.IEnumValueOptions): google.protobuf.EnumValueOptions;
-
-      /**
-       * Encodes the specified EnumValueOptions message. Does not implicitly {@link google.protobuf.EnumValueOptions.verify|verify} messages.
-       * @param m EnumValueOptions message or plain object to encode
-       * @param [w] Writer to encode to
-       * @returns Writer
-       */
-      public static encode(m: google.protobuf.IEnumValueOptions, w?: $protobuf.Writer): $protobuf.Writer;
-
-      /**
-       * Decodes an EnumValueOptions message from the specified reader or buffer.
-       * @param r Reader or buffer to decode from
-       * @param [l] Message length if known beforehand
-       * @returns EnumValueOptions
-       * @throws {Error} If the payload is not a reader or valid buffer
-       * @throws {$protobuf.util.ProtocolError} If required fields are missing
-       */
-      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): google.protobuf.EnumValueOptions;
-    }
-
-    /** Properties of a ServiceOptions. */
-    interface IServiceOptions {
-      /** ServiceOptions deprecated */
-      deprecated?: boolean | null;
-
-      /** ServiceOptions uninterpretedOption */
-      uninterpretedOption?: google.protobuf.IUninterpretedOption[] | null;
-    }
-
-    /** Represents a ServiceOptions. */
-    class ServiceOptions implements IServiceOptions {
-      /**
-       * Constructs a new ServiceOptions.
-       * @param [p] Properties to set
-       */
-      constructor(p?: google.protobuf.IServiceOptions);
-
-      /** ServiceOptions deprecated. */
-      public deprecated: boolean;
-
-      /** ServiceOptions uninterpretedOption. */
-      public uninterpretedOption: google.protobuf.IUninterpretedOption[];
-
-      /**
-       * Creates a new ServiceOptions instance using the specified properties.
-       * @param [properties] Properties to set
-       * @returns ServiceOptions instance
-       */
-      public static create(properties?: google.protobuf.IServiceOptions): google.protobuf.ServiceOptions;
-
-      /**
-       * Encodes the specified ServiceOptions message. Does not implicitly {@link google.protobuf.ServiceOptions.verify|verify} messages.
-       * @param m ServiceOptions message or plain object to encode
-       * @param [w] Writer to encode to
-       * @returns Writer
-       */
-      public static encode(m: google.protobuf.IServiceOptions, w?: $protobuf.Writer): $protobuf.Writer;
-
-      /**
-       * Decodes a ServiceOptions message from the specified reader or buffer.
-       * @param r Reader or buffer to decode from
-       * @param [l] Message length if known beforehand
-       * @returns ServiceOptions
-       * @throws {Error} If the payload is not a reader or valid buffer
-       * @throws {$protobuf.util.ProtocolError} If required fields are missing
-       */
-      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): google.protobuf.ServiceOptions;
-    }
-
-    /** Properties of a MethodOptions. */
-    interface IMethodOptions {
-      /** MethodOptions deprecated */
-      deprecated?: boolean | null;
-
-      /** MethodOptions uninterpretedOption */
-      uninterpretedOption?: google.protobuf.IUninterpretedOption[] | null;
-
-      /** MethodOptions .google.api.http */
-      ".google.api.http"?: google.api.IHttpRule | null;
-    }
-
-    /** Represents a MethodOptions. */
-    class MethodOptions implements IMethodOptions {
-      /**
-       * Constructs a new MethodOptions.
-       * @param [p] Properties to set
-       */
-      constructor(p?: google.protobuf.IMethodOptions);
-
-      /** MethodOptions deprecated. */
-      public deprecated: boolean;
-
-      /** MethodOptions uninterpretedOption. */
-      public uninterpretedOption: google.protobuf.IUninterpretedOption[];
-
-      /**
-       * Creates a new MethodOptions instance using the specified properties.
-       * @param [properties] Properties to set
-       * @returns MethodOptions instance
-       */
-      public static create(properties?: google.protobuf.IMethodOptions): google.protobuf.MethodOptions;
-
-      /**
-       * Encodes the specified MethodOptions message. Does not implicitly {@link google.protobuf.MethodOptions.verify|verify} messages.
-       * @param m MethodOptions message or plain object to encode
-       * @param [w] Writer to encode to
-       * @returns Writer
-       */
-      public static encode(m: google.protobuf.IMethodOptions, w?: $protobuf.Writer): $protobuf.Writer;
-
-      /**
-       * Decodes a MethodOptions message from the specified reader or buffer.
-       * @param r Reader or buffer to decode from
-       * @param [l] Message length if known beforehand
-       * @returns MethodOptions
-       * @throws {Error} If the payload is not a reader or valid buffer
-       * @throws {$protobuf.util.ProtocolError} If required fields are missing
-       */
-      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): google.protobuf.MethodOptions;
-    }
-
-    /** Properties of an UninterpretedOption. */
-    interface IUninterpretedOption {
-      /** UninterpretedOption name */
-      name?: google.protobuf.UninterpretedOption.INamePart[] | null;
-
-      /** UninterpretedOption identifierValue */
-      identifierValue?: string | null;
-
-      /** UninterpretedOption positiveIntValue */
-      positiveIntValue?: Long | null;
-
-      /** UninterpretedOption negativeIntValue */
-      negativeIntValue?: Long | null;
-
-      /** UninterpretedOption doubleValue */
-      doubleValue?: number | null;
-
-      /** UninterpretedOption stringValue */
-      stringValue?: Uint8Array | null;
-
-      /** UninterpretedOption aggregateValue */
-      aggregateValue?: string | null;
-    }
-
-    /** Represents an UninterpretedOption. */
-    class UninterpretedOption implements IUninterpretedOption {
-      /**
-       * Constructs a new UninterpretedOption.
-       * @param [p] Properties to set
-       */
-      constructor(p?: google.protobuf.IUninterpretedOption);
-
-      /** UninterpretedOption name. */
-      public name: google.protobuf.UninterpretedOption.INamePart[];
-
-      /** UninterpretedOption identifierValue. */
-      public identifierValue: string;
-
-      /** UninterpretedOption positiveIntValue. */
-      public positiveIntValue: Long;
-
-      /** UninterpretedOption negativeIntValue. */
-      public negativeIntValue: Long;
-
-      /** UninterpretedOption doubleValue. */
-      public doubleValue: number;
-
-      /** UninterpretedOption stringValue. */
-      public stringValue: Uint8Array;
-
-      /** UninterpretedOption aggregateValue. */
-      public aggregateValue: string;
-
-      /**
-       * Creates a new UninterpretedOption instance using the specified properties.
-       * @param [properties] Properties to set
-       * @returns UninterpretedOption instance
-       */
-      public static create(
-        properties?: google.protobuf.IUninterpretedOption,
-      ): google.protobuf.UninterpretedOption;
-
-      /**
-       * Encodes the specified UninterpretedOption message. Does not implicitly {@link google.protobuf.UninterpretedOption.verify|verify} messages.
-       * @param m UninterpretedOption message or plain object to encode
-       * @param [w] Writer to encode to
-       * @returns Writer
-       */
-      public static encode(m: google.protobuf.IUninterpretedOption, w?: $protobuf.Writer): $protobuf.Writer;
-
-      /**
-       * Decodes an UninterpretedOption message from the specified reader or buffer.
-       * @param r Reader or buffer to decode from
-       * @param [l] Message length if known beforehand
-       * @returns UninterpretedOption
-       * @throws {Error} If the payload is not a reader or valid buffer
-       * @throws {$protobuf.util.ProtocolError} If required fields are missing
-       */
-      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): google.protobuf.UninterpretedOption;
-    }
-
-    namespace UninterpretedOption {
-      /** Properties of a NamePart. */
-      interface INamePart {
-        /** NamePart namePart */
-        namePart: string;
-
-        /** NamePart isExtension */
-        isExtension: boolean;
-      }
-
-      /** Represents a NamePart. */
-      class NamePart implements INamePart {
-        /**
-         * Constructs a new NamePart.
-         * @param [p] Properties to set
-         */
-        constructor(p?: google.protobuf.UninterpretedOption.INamePart);
-
-        /** NamePart namePart. */
-        public namePart: string;
-
-        /** NamePart isExtension. */
-        public isExtension: boolean;
-
-        /**
-         * Creates a new NamePart instance using the specified properties.
-         * @param [properties] Properties to set
-         * @returns NamePart instance
-         */
-        public static create(
-          properties?: google.protobuf.UninterpretedOption.INamePart,
-        ): google.protobuf.UninterpretedOption.NamePart;
-
-        /**
-         * Encodes the specified NamePart message. Does not implicitly {@link google.protobuf.UninterpretedOption.NamePart.verify|verify} messages.
-         * @param m NamePart message or plain object to encode
-         * @param [w] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(
-          m: google.protobuf.UninterpretedOption.INamePart,
-          w?: $protobuf.Writer,
-        ): $protobuf.Writer;
-
-        /**
-         * Decodes a NamePart message from the specified reader or buffer.
-         * @param r Reader or buffer to decode from
-         * @param [l] Message length if known beforehand
-         * @returns NamePart
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(
-          r: $protobuf.Reader | Uint8Array,
-          l?: number,
-        ): google.protobuf.UninterpretedOption.NamePart;
-      }
-    }
-
-    /** Properties of a SourceCodeInfo. */
-    interface ISourceCodeInfo {
-      /** SourceCodeInfo location */
-      location?: google.protobuf.SourceCodeInfo.ILocation[] | null;
-    }
-
-    /** Represents a SourceCodeInfo. */
-    class SourceCodeInfo implements ISourceCodeInfo {
-      /**
-       * Constructs a new SourceCodeInfo.
-       * @param [p] Properties to set
-       */
-      constructor(p?: google.protobuf.ISourceCodeInfo);
-
-      /** SourceCodeInfo location. */
-      public location: google.protobuf.SourceCodeInfo.ILocation[];
-
-      /**
-       * Creates a new SourceCodeInfo instance using the specified properties.
-       * @param [properties] Properties to set
-       * @returns SourceCodeInfo instance
-       */
-      public static create(properties?: google.protobuf.ISourceCodeInfo): google.protobuf.SourceCodeInfo;
-
-      /**
-       * Encodes the specified SourceCodeInfo message. Does not implicitly {@link google.protobuf.SourceCodeInfo.verify|verify} messages.
-       * @param m SourceCodeInfo message or plain object to encode
-       * @param [w] Writer to encode to
-       * @returns Writer
-       */
-      public static encode(m: google.protobuf.ISourceCodeInfo, w?: $protobuf.Writer): $protobuf.Writer;
-
-      /**
-       * Decodes a SourceCodeInfo message from the specified reader or buffer.
-       * @param r Reader or buffer to decode from
-       * @param [l] Message length if known beforehand
-       * @returns SourceCodeInfo
-       * @throws {Error} If the payload is not a reader or valid buffer
-       * @throws {$protobuf.util.ProtocolError} If required fields are missing
-       */
-      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): google.protobuf.SourceCodeInfo;
-    }
-
-    namespace SourceCodeInfo {
-      /** Properties of a Location. */
-      interface ILocation {
-        /** Location path */
-        path?: number[] | null;
-
-        /** Location span */
-        span?: number[] | null;
-
-        /** Location leadingComments */
-        leadingComments?: string | null;
-
-        /** Location trailingComments */
-        trailingComments?: string | null;
-
-        /** Location leadingDetachedComments */
-        leadingDetachedComments?: string[] | null;
-      }
-
-      /** Represents a Location. */
-      class Location implements ILocation {
-        /**
-         * Constructs a new Location.
-         * @param [p] Properties to set
-         */
-        constructor(p?: google.protobuf.SourceCodeInfo.ILocation);
-
-        /** Location path. */
-        public path: number[];
-
-        /** Location span. */
-        public span: number[];
-
-        /** Location leadingComments. */
-        public leadingComments: string;
-
-        /** Location trailingComments. */
-        public trailingComments: string;
-
-        /** Location leadingDetachedComments. */
-        public leadingDetachedComments: string[];
-
-        /**
-         * Creates a new Location instance using the specified properties.
-         * @param [properties] Properties to set
-         * @returns Location instance
-         */
-        public static create(
-          properties?: google.protobuf.SourceCodeInfo.ILocation,
-        ): google.protobuf.SourceCodeInfo.Location;
-
-        /**
-         * Encodes the specified Location message. Does not implicitly {@link google.protobuf.SourceCodeInfo.Location.verify|verify} messages.
-         * @param m Location message or plain object to encode
-         * @param [w] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(
-          m: google.protobuf.SourceCodeInfo.ILocation,
-          w?: $protobuf.Writer,
-        ): $protobuf.Writer;
-
-        /**
-         * Decodes a Location message from the specified reader or buffer.
-         * @param r Reader or buffer to decode from
-         * @param [l] Message length if known beforehand
-         * @returns Location
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(
-          r: $protobuf.Reader | Uint8Array,
-          l?: number,
-        ): google.protobuf.SourceCodeInfo.Location;
-      }
-    }
-
-    /** Properties of a GeneratedCodeInfo. */
-    interface IGeneratedCodeInfo {
-      /** GeneratedCodeInfo annotation */
-      annotation?: google.protobuf.GeneratedCodeInfo.IAnnotation[] | null;
-    }
-
-    /** Represents a GeneratedCodeInfo. */
-    class GeneratedCodeInfo implements IGeneratedCodeInfo {
-      /**
-       * Constructs a new GeneratedCodeInfo.
-       * @param [p] Properties to set
-       */
-      constructor(p?: google.protobuf.IGeneratedCodeInfo);
-
-      /** GeneratedCodeInfo annotation. */
-      public annotation: google.protobuf.GeneratedCodeInfo.IAnnotation[];
-
-      /**
-       * Creates a new GeneratedCodeInfo instance using the specified properties.
-       * @param [properties] Properties to set
-       * @returns GeneratedCodeInfo instance
-       */
-      public static create(
-        properties?: google.protobuf.IGeneratedCodeInfo,
-      ): google.protobuf.GeneratedCodeInfo;
-
-      /**
-       * Encodes the specified GeneratedCodeInfo message. Does not implicitly {@link google.protobuf.GeneratedCodeInfo.verify|verify} messages.
-       * @param m GeneratedCodeInfo message or plain object to encode
-       * @param [w] Writer to encode to
-       * @returns Writer
-       */
-      public static encode(m: google.protobuf.IGeneratedCodeInfo, w?: $protobuf.Writer): $protobuf.Writer;
-
-      /**
-       * Decodes a GeneratedCodeInfo message from the specified reader or buffer.
-       * @param r Reader or buffer to decode from
-       * @param [l] Message length if known beforehand
-       * @returns GeneratedCodeInfo
-       * @throws {Error} If the payload is not a reader or valid buffer
-       * @throws {$protobuf.util.ProtocolError} If required fields are missing
-       */
-      public static decode(r: $protobuf.Reader | Uint8Array, l?: number): google.protobuf.GeneratedCodeInfo;
-    }
-
-    namespace GeneratedCodeInfo {
-      /** Properties of an Annotation. */
-      interface IAnnotation {
-        /** Annotation path */
-        path?: number[] | null;
-
-        /** Annotation sourceFile */
-        sourceFile?: string | null;
-
-        /** Annotation begin */
-        begin?: number | null;
-
-        /** Annotation end */
-        end?: number | null;
-      }
-
-      /** Represents an Annotation. */
-      class Annotation implements IAnnotation {
-        /**
-         * Constructs a new Annotation.
-         * @param [p] Properties to set
-         */
-        constructor(p?: google.protobuf.GeneratedCodeInfo.IAnnotation);
-
-        /** Annotation path. */
-        public path: number[];
-
-        /** Annotation sourceFile. */
-        public sourceFile: string;
-
-        /** Annotation begin. */
-        public begin: number;
-
-        /** Annotation end. */
-        public end: number;
-
-        /**
-         * Creates a new Annotation instance using the specified properties.
-         * @param [properties] Properties to set
-         * @returns Annotation instance
-         */
-        public static create(
-          properties?: google.protobuf.GeneratedCodeInfo.IAnnotation,
-        ): google.protobuf.GeneratedCodeInfo.Annotation;
-
-        /**
-         * Encodes the specified Annotation message. Does not implicitly {@link google.protobuf.GeneratedCodeInfo.Annotation.verify|verify} messages.
-         * @param m Annotation message or plain object to encode
-         * @param [w] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(
-          m: google.protobuf.GeneratedCodeInfo.IAnnotation,
-          w?: $protobuf.Writer,
-        ): $protobuf.Writer;
-
-        /**
-         * Decodes an Annotation message from the specified reader or buffer.
-         * @param r Reader or buffer to decode from
-         * @param [l] Message length if known beforehand
-         * @returns Annotation
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(
-          r: $protobuf.Reader | Uint8Array,
-          l?: number,
-        ): google.protobuf.GeneratedCodeInfo.Annotation;
       }
     }
   }
