@@ -72,15 +72,33 @@ export const unused = {
 };
 
 export const validator = {
-  /** From first gentx's auth_info.signer_infos in scripts/simapp/template/.simapp/config/genesis.json */
+  /**
+   * From first gentx's auth_info.signer_infos in scripts/simapp/template/.simapp/config/genesis.json
+   *
+   * ```
+   * jq ".app_state.genutil.gen_txs[0].auth_info.signer_infos[0].public_key" scripts/simapp/template/.simapp/config/genesis.json
+   * ```
+   */
   pubkey: {
     type: "tendermint/PubKeySecp256k1",
-    value: "AiRHwaEnXTLekByvbz4VnCW1TW2Pelp/mb4tK8ple1Xq",
+    value: "Ap1EN+TjP611NX0PicqFJXknbLmxBbhgoCgGtRF7SLQk",
   },
-  /** delegator_address from /cosmos.staking.v1beta1.MsgCreateValidator in scripts/simapp/template/.simapp/config/genesis.json */
-  delegatorAddress: "cosmos10083dys7qlzn663wcusq6hkr8wp7k2mm0sk4u9",
-  /** validator_address from /cosmos.staking.v1beta1.MsgCreateValidator in scripts/simapp/template/.simapp/config/genesis.json */
-  validatorAddress: "cosmosvaloper10083dys7qlzn663wcusq6hkr8wp7k2mm2yzqsk",
+  /**
+   * delegator_address from /cosmos.staking.v1beta1.MsgCreateValidator in scripts/simapp/template/.simapp/config/genesis.json
+   *
+   * ```
+   * jq ".app_state.genutil.gen_txs[0].body.messages[0].delegator_address" scripts/simapp/template/.simapp/config/genesis.json
+   * ```
+   */
+  delegatorAddress: "cosmos1acf9m2d35rqsk2e7kcgsmkh5ekdjcjh5n86vyq",
+  /**
+   * validator_address from /cosmos.staking.v1beta1.MsgCreateValidator in scripts/simapp/template/.simapp/config/genesis.json
+   *
+   * ```
+   * jq ".app_state.genutil.gen_txs[0].body.messages[0].validator_address" scripts/simapp/template/.simapp/config/genesis.json
+   * ```
+   */
+  validatorAddress: "cosmosvaloper1acf9m2d35rqsk2e7kcgsmkh5ekdjcjh5knwegn",
   accountNumber: 0,
   sequence: 1,
 };
