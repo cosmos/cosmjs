@@ -9,7 +9,7 @@ import {
   parseRawLog,
   SigningStargateClient,
 } from "@cosmjs/stargate";
-import { assert } from "@cosmjs/utils";
+import { assert, assertDefined } from "@cosmjs/utils";
 import Long from "long";
 
 import { cosmwasm } from "../codec";
@@ -19,6 +19,7 @@ import {
   base64Matcher,
   bech32AddressMatcher,
   ContractUploadInstructions,
+  fromOneElementArray,
   getHackatom,
   makeRandomAddress,
   makeWasmClient,
@@ -27,7 +28,14 @@ import {
   wasmdEnabled,
 } from "../testutils.spec";
 
-const { MsgExecuteContract, MsgInstantiateContract, MsgStoreCode } = cosmwasm.wasm.v1beta1;
+const {
+  MsgExecuteContract,
+  MsgExecuteContractResponse,
+  MsgInstantiateContract,
+  MsgInstantiateContractResponse,
+  MsgStoreCode,
+  MsgStoreCodeResponse,
+} = cosmwasm.wasm.v1beta1;
 
 const registry = new Registry([
   ["/cosmwasm.wasm.v1beta1.MsgExecuteContract", MsgExecuteContract],
@@ -386,15 +394,13 @@ describe("WasmExtension", () => {
         codeId = Number.parseInt(codeIdAttr.value, 10);
         expect(codeId).toBeGreaterThanOrEqual(1);
         expect(codeId).toBeLessThanOrEqual(200);
-        expect(result.data!.length).toEqual(1);
-        console.log(`Raw Store Data: [${result.data![0].data}]`);
-        console.log(`Code ID From events: ${codeId}`);
-        expect({ ...result.data![0] }).toEqual({
-          msgType: "store-code",
-          // TODO: protobuf de/encode here `{codeId: codeId}`
-          // https://github.com/CosmWasm/wasmd/blob/5f8c246d25e8be640fb401fda4bbf82db37e9e90/x/wasm/internal/types/tx.proto#L41-L45
-          data: toAscii(`${codeId}`),
-        });
+
+        assertDefined(result.data);
+        const msgData = fromOneElementArray(result.data);
+        expect(msgData.msgType).toEqual("store-code");
+        expect(MsgStoreCodeResponse.decode(msgData.data!)).toEqual(
+          MsgStoreCodeResponse.create({ codeId: Long.fromNumber(codeId, true) }),
+        );
       }
 
       let contractAddress: string;
@@ -408,15 +414,13 @@ describe("WasmExtension", () => {
         contractAddress = contractAddressAttr.value;
         const amountAttr = logs.findAttribute(parsedLogs, "transfer", "amount");
         expect(amountAttr.value).toEqual("1234ucosm,321ustake");
-        expect(result.data!.length).toEqual(1);
-        console.log(`Raw Init Data: [${result.data![0].data}]`);
-        console.log(`Addr From events (ascii bytes): [${toAscii(contractAddress)}]`);
-        expect({ ...result.data![0] }).toEqual({
-          msgType: "instantiate",
-          // TODO: protobuf de/encode here `{address: contractAddress}`
-          // https://github.com/CosmWasm/wasmd/blob/5f8c246d25e8be640fb401fda4bbf82db37e9e90/x/wasm/internal/types/tx.proto#L62-L66
-          data: toAscii(contractAddress),
-        });
+
+        assertDefined(result.data);
+        const msgData = fromOneElementArray(result.data);
+        expect(msgData.msgType).toEqual("instantiate");
+        expect(MsgInstantiateContractResponse.decode(msgData.data!)).toEqual(
+          MsgInstantiateContractResponse.create({ address: contractAddress }),
+        );
 
         const balanceUcosm = await client.bank.balance(contractAddress, "ucosm");
         expect(balanceUcosm).toEqual(transferAmount[0]);
@@ -428,15 +432,6 @@ describe("WasmExtension", () => {
       {
         const result = await executeContract(wallet, contractAddress, { release: {} });
         assertIsBroadcastTxSuccess(result);
-        expect(result.data!.length).toEqual(1);
-        console.log(`Raw Execute Data: 0x${toHex(result.data![0].data!)}`);
-        console.log(`Expected Contract Data: 0xf00baa`);
-        expect({ ...result.data![0] }).toEqual({
-          msgType: "execute",
-          // TODO: protobuf de/encode here `{data: [0xf0, 0x0b, 0xaa]}`
-          // https://github.com/CosmWasm/wasmd/blob/5f8c246d25e8be640fb401fda4bbf82db37e9e90/x/wasm/internal/types/tx.proto#L80-L84
-          data: fromHex("F00BAA"),
-        });
         const parsedLogs = logs.parseLogs(parseRawLog(result.rawLog));
         const wasmEvent = parsedLogs.find(() => true)?.events.find((e) => e.type === "wasm");
         assert(wasmEvent, "Event of type wasm expected");
@@ -445,6 +440,13 @@ describe("WasmExtension", () => {
           key: "destination",
           value: beneficiaryAddress,
         });
+
+        assertDefined(result.data);
+        const msgData = fromOneElementArray(result.data);
+        expect(msgData.msgType).toEqual("execute");
+        expect(MsgExecuteContractResponse.decode(msgData.data!)).toEqual(
+          MsgExecuteContractResponse.create({ data: fromHex("F00BAA") }),
+        );
 
         // Verify token transfer from contract to beneficiary
         const beneficiaryBalanceUcosm = await client.bank.balance(beneficiaryAddress, "ucosm");
