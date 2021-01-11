@@ -60,8 +60,12 @@ describe("IbcExtension", () => {
         pendingWithoutSimapp();
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
-        const response = await client.ibc.unverified.packetCommitment(ibcTest.portId, ibcTest.channelId, 4);
-        expect(response.commitment).toEqual(ibcTest.commitmentData);
+        const response = await client.ibc.unverified.packetCommitment(
+          ibcTest.portId,
+          ibcTest.channelId,
+          ibcTest.commitment.sequence,
+        );
+        expect(response.commitment).toEqual(ibcTest.commitment.data);
         expect(response.proofHeight).toBeInstanceOf(ibc.core.client.v1.Height);
 
         tmClient.disconnect();
@@ -84,13 +88,14 @@ describe("IbcExtension", () => {
 
     describe("packetAcknowledgement", () => {
       it("works", async () => {
+        pending("We don't have an acknowledgement for testing at the moment");
         pendingWithoutSimapp();
         const [client, tmClient] = await makeClientWithIbc(simapp.tendermintUrl);
 
         const response = await client.ibc.unverified.packetAcknowledgement(
           ibcTest.portId,
           ibcTest.channelId,
-          1,
+          ibcTest.commitment.sequence,
         );
         expect(response.acknowledgement).toEqual(ibcTest.packetAcknowledgements[0].data);
         expect(response.proofHeight).toBeInstanceOf(ibc.core.client.v1.Height);
@@ -125,12 +130,8 @@ describe("IbcExtension", () => {
           1,
           2,
           3,
-          4,
-          5,
-          6,
-          7,
         ]);
-        expect(response.sequences).toEqual([4, 5, 6, 7].map((n) => Long.fromInt(n, true)));
+        expect(response.sequences).toEqual([1, 2, 3].map((n) => Long.fromInt(n, true)));
         expect(response.height).toBeInstanceOf(ibc.core.client.v1.Height);
 
         tmClient.disconnect();
@@ -151,7 +152,7 @@ describe("IbcExtension", () => {
           6,
           7,
         ]);
-        expect(response.sequences).toEqual([Long.fromInt(4, true)]);
+        expect(response.sequences).toEqual([Long.fromInt(ibcTest.commitment.sequence, true)]);
         expect(response.height).toBeInstanceOf(ibc.core.client.v1.Height);
 
         tmClient.disconnect();
