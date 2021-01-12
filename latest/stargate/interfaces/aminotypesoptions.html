@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>StakingDelegatorUnbondingDelegationsResponse | @cosmjs/launchpad Documentation</title>
-	<meta name="description" content="Documentation for @cosmjs/launchpad Documentation">
+	<title>AminoTypesOptions | @cosmjs/stargate Documentation</title>
+	<meta name="description" content="Documentation for @cosmjs/stargate Documentation">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
 </head>
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">@cosmjs/launchpad Documentation</a>
+					<a href="../index.html" class="title">@cosmjs/stargate Documentation</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -52,10 +52,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="stakingdelegatorunbondingdelegationsresponse.html">StakingDelegatorUnbondingDelegationsResponse</a>
+					<a href="aminotypesoptions.html">AminoTypesOptions</a>
 				</li>
 			</ul>
-			<h1>Interface StakingDelegatorUnbondingDelegationsResponse</h1>
+			<h1>Interface AminoTypesOptions</h1>
 		</div>
 	</div>
 </header>
@@ -66,7 +66,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">StakingDelegatorUnbondingDelegationsResponse</span>
+						<span class="target">AminoTypesOptions</span>
 					</li>
 				</ul>
 			</section>
@@ -77,8 +77,8 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="stakingdelegatorunbondingdelegationsresponse.html#height" class="tsd-kind-icon">height</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="stakingdelegatorunbondingdelegationsresponse.html#result" class="tsd-kind-icon">result</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="aminotypesoptions.html#additions" class="tsd-kind-icon">additions</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="aminotypesoptions.html#prefix" class="tsd-kind-icon">prefix</a></li>
 							</ul>
 						</section>
 					</div>
@@ -87,22 +87,22 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="height" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> height</h3>
-					<div class="tsd-signature tsd-kind-icon">height<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="additions" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> additions</h3>
+					<div class="tsd-signature tsd-kind-icon">additions<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="aminoconverter.html" class="tsd-signature-type">AminoConverter</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/3f996b9fc/packages/launchpad/src/lcdapi/staking.ts#L70">src/lcdapi/staking.ts:70</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/3f996b9fc/packages/stargate/src/aminotypes.ts#L333">src/aminotypes.ts:333</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="result" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> result</h3>
-					<div class="tsd-signature tsd-kind-icon">result<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">readonly </span><a href="unbondingdelegation.html" class="tsd-signature-type">UnbondingDelegation</a><span class="tsd-signature-symbol">[]</span></div>
+					<a name="prefix" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> prefix</h3>
+					<div class="tsd-signature tsd-kind-icon">prefix<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/3f996b9fc/packages/launchpad/src/lcdapi/staking.ts#L71">src/lcdapi/staking.ts:71</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/3f996b9fc/packages/stargate/src/aminotypes.ts#L334">src/aminotypes.ts:334</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -121,13 +121,13 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="stakingdelegatorunbondingdelegationsresponse.html" class="tsd-kind-icon">Staking<wbr>Delegator<wbr>Unbonding<wbr>Delegations<wbr>Response</a>
+						<a href="aminotypesoptions.html" class="tsd-kind-icon">Amino<wbr>Types<wbr>Options</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="stakingdelegatorunbondingdelegationsresponse.html#height" class="tsd-kind-icon">height</a>
+								<a href="aminotypesoptions.html#additions" class="tsd-kind-icon">additions</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="stakingdelegatorunbondingdelegationsresponse.html#result" class="tsd-kind-icon">result</a>
+								<a href="aminotypesoptions.html#prefix" class="tsd-kind-icon">prefix</a>
 							</li>
 						</ul>
 					</li>
@@ -144,7 +144,6 @@
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
 				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
@@ -152,9 +151,6 @@
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>

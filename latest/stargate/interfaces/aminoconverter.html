@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>SigningStargateClientOptions | @cosmjs/stargate Documentation</title>
+	<title>AminoConverter | @cosmjs/stargate Documentation</title>
 	<meta name="description" content="Documentation for @cosmjs/stargate Documentation">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -52,10 +52,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="signingstargateclientoptions.html">SigningStargateClientOptions</a>
+					<a href="aminoconverter.html">AminoConverter</a>
 				</li>
 			</ul>
-			<h1>Interface SigningStargateClientOptions</h1>
+			<h1>Interface AminoConverter</h1>
 		</div>
 	</div>
 </header>
@@ -66,7 +66,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">SigningStargateClientOptions</span>
+						<span class="target">AminoConverter</span>
 					</li>
 				</ul>
 			</section>
@@ -77,10 +77,9 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="signingstargateclientoptions.html#aminotypes" class="tsd-kind-icon">amino<wbr>Types</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="signingstargateclientoptions.html#gaslimits" class="tsd-kind-icon">gas<wbr>Limits</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="signingstargateclientoptions.html#gasprice" class="tsd-kind-icon">gas<wbr>Price</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="signingstargateclientoptions.html#registry" class="tsd-kind-icon">registry</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="aminoconverter.html#aminotype" class="tsd-kind-icon">amino<wbr>Type</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="aminoconverter.html#fromamino" class="tsd-kind-icon">from<wbr>Amino</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="aminoconverter.html#toamino" class="tsd-kind-icon">to<wbr>Amino</a></li>
 							</ul>
 						</section>
 					</div>
@@ -89,44 +88,76 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="aminotypes" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> amino<wbr>Types</h3>
-					<div class="tsd-signature tsd-kind-icon">amino<wbr>Types<span class="tsd-signature-symbol">:</span> <a href="../classes/aminotypes.html" class="tsd-signature-type">AminoTypes</a></div>
+					<a name="aminotype" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> amino<wbr>Type</h3>
+					<div class="tsd-signature tsd-kind-icon">amino<wbr>Type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/3f996b9fc/packages/stargate/src/signingstargateclient.ts#L51">src/signingstargateclient.ts:51</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/3f996b9fc/packages/stargate/src/aminotypes.ts#L31">src/aminotypes.ts:31</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="gaslimits" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> gas<wbr>Limits</h3>
-					<div class="tsd-signature tsd-kind-icon">gas<wbr>Limits<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">GasLimits</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">CosmosFeeTable</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<a name="fromamino" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> from<wbr>Amino</h3>
+					<div class="tsd-signature tsd-kind-icon">from<wbr>Amino<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/3f996b9fc/packages/stargate/src/signingstargateclient.ts#L53">src/signingstargateclient.ts:53</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/3f996b9fc/packages/stargate/src/aminotypes.ts#L33">src/aminotypes.ts:33</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-signature">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>value: <span class="tsd-signature-type">any</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="gasprice" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> gas<wbr>Price</h3>
-					<div class="tsd-signature tsd-kind-icon">gas<wbr>Price<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">GasPrice</span></div>
+					<a name="toamino" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> to<wbr>Amino</h3>
+					<div class="tsd-signature tsd-kind-icon">to<wbr>Amino<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/3f996b9fc/packages/stargate/src/signingstargateclient.ts#L52">src/signingstargateclient.ts:52</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/3f996b9fc/packages/stargate/src/aminotypes.ts#L32">src/aminotypes.ts:32</a></li>
 						</ul>
 					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="registry" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> registry</h3>
-					<div class="tsd-signature tsd-kind-icon">registry<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Registry</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/3f996b9fc/packages/stargate/src/signingstargateclient.ts#L50">src/signingstargateclient.ts:50</a></li>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-signature">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>value: <span class="tsd-signature-type">any</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+									</li>
+								</ul>
+							</li>
 						</ul>
-					</aside>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -143,19 +174,16 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="signingstargateclientoptions.html" class="tsd-kind-icon">Signing<wbr>Stargate<wbr>Client<wbr>Options</a>
+						<a href="aminoconverter.html" class="tsd-kind-icon">Amino<wbr>Converter</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="signingstargateclientoptions.html#aminotypes" class="tsd-kind-icon">amino<wbr>Types</a>
+								<a href="aminoconverter.html#aminotype" class="tsd-kind-icon">amino<wbr>Type</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="signingstargateclientoptions.html#gaslimits" class="tsd-kind-icon">gas<wbr>Limits</a>
+								<a href="aminoconverter.html#fromamino" class="tsd-kind-icon">from<wbr>Amino</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="signingstargateclientoptions.html#gasprice" class="tsd-kind-icon">gas<wbr>Price</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="signingstargateclientoptions.html#registry" class="tsd-kind-icon">registry</a>
+								<a href="aminoconverter.html#toamino" class="tsd-kind-icon">to<wbr>Amino</a>
 							</li>
 						</ul>
 					</li>
