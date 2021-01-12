@@ -314,20 +314,28 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     return this.signAndBroadcast(senderAddress, [sendMsg], this.fees.send, memo);
   }
 
+  /**
+   * Creates a transaction with the given messages, fee and memo. Then signs and broadcasts the transaction.
+   *
+   * @param signerAddress The address that will sign transactions using this instance. The signer must be able to sign with this address.
+   * @param messages
+   * @param fee
+   * @param memo
+   */
   public async signAndBroadcast(
-    address: string,
+    signerAddress: string,
     messages: readonly EncodeObject[],
     fee: StdFee,
     memo = "",
   ): Promise<BroadcastTxResponse> {
     const accountFromSigner = (await this.signer.getAccounts()).find(
-      (account: AccountData) => account.address === address,
+      (account: AccountData) => account.address === signerAddress,
     );
     if (!accountFromSigner) {
       throw new Error("Failed to retrieve account from signer");
     }
     const pubkey = encodeSecp256k1Pubkey(accountFromSigner.pubkey);
-    const accountFromChain = await this.getAccount(address);
+    const accountFromChain = await this.getAccount(signerAddress);
     if (!accountFromChain) {
       throw new Error("Account not found");
     }
@@ -349,7 +357,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
 
     const authInfoBytes = makeAuthInfoBytes([pubkeyAny], fee.amount, gasLimit, sequence);
     const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);
-    const { signature, signed } = await this.signer.signDirect(address, signDoc);
+    const { signature, signed } = await this.signer.signDirect(signerAddress, signDoc);
     const txRaw = TxRaw.create({
       bodyBytes: signed.bodyBytes,
       authInfoBytes: signed.authInfoBytes,

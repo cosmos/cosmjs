@@ -61,7 +61,7 @@ export class Cw1SubkeyCosmWasmClient extends Cw1CosmWasmClient {
     return admins;
   }
 
-  public async isAdmin(address = this.senderAddress): Promise<boolean> {
+  public async isAdmin(address = this.signerAddress): Promise<boolean> {
     const admins = await this.getAdmins();
     return admins.includes(address);
   }
@@ -73,7 +73,7 @@ export class Cw1SubkeyCosmWasmClient extends Cw1CosmWasmClient {
     return response.allowances;
   }
 
-  public async getAllowance(address = this.senderAddress): Promise<Cw1SubkeyAllowanceInfo> {
+  public async getAllowance(address = this.signerAddress): Promise<Cw1SubkeyAllowanceInfo> {
     return this.queryContractSmart(this.cw1ContractAddress, {
       allowance: { spender: address },
     });
@@ -86,7 +86,7 @@ export class Cw1SubkeyCosmWasmClient extends Cw1CosmWasmClient {
     return response.permissions;
   }
 
-  public async getPermissions(address = this.senderAddress): Promise<Cw1SubkeyPermissions> {
+  public async getPermissions(address = this.signerAddress): Promise<Cw1SubkeyPermissions> {
     return this.queryContractSmart(this.cw1ContractAddress, {
       permissions: { spender: address },
     });

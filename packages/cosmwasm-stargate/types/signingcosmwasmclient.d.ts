@@ -72,8 +72,16 @@ export declare class SigningCosmWasmClient extends CosmWasmClient {
     transferAmount: readonly Coin[],
     memo?: string,
   ): Promise<BroadcastTxResponse>;
+  /**
+   * Creates a transaction with the given messages, fee and memo. Then signs and broadcasts the transaction.
+   *
+   * @param signerAddress The address that will sign transactions using this instance. The signer must be able to sign with this address.
+   * @param messages
+   * @param fee
+   * @param memo
+   */
   signAndBroadcast(
-    address: string,
+    signerAddress: string,
     messages: readonly EncodeObject[],
     fee: StdFee,
     memo?: string,
