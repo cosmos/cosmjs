@@ -1,5 +1,6 @@
 import { Coin, CosmosFeeTable, GasLimits, GasPrice, StdFee } from "@cosmjs/launchpad";
 import { EncodeObject, OfflineSigner, Registry } from "@cosmjs/proto-signing";
+import { AminoTypes } from "./aminotypes";
 import { BroadcastTxResponse, StargateClient } from "./stargateclient";
 /** Use for testing only */
 export interface PrivateSigningStargateClient {
@@ -8,6 +9,7 @@ export interface PrivateSigningStargateClient {
 }
 export interface SigningStargateClientOptions {
   readonly registry?: Registry;
+  readonly aminoTypes?: AminoTypes;
   readonly gasPrice?: GasPrice;
   readonly gasLimits?: GasLimits<CosmosFeeTable>;
 }

@@ -27,6 +27,14 @@ import { AminoTypes } from "./aminotypes";
 import { cosmos } from "./codec";
 import { BroadcastTxResponse, StargateClient } from "./stargateclient";
 
+const { MsgMultiSend } = cosmos.bank.v1beta1;
+const {
+  MsgBeginRedelegate,
+  MsgCreateValidator,
+  MsgDelegate,
+  MsgEditValidator,
+  MsgUndelegate,
+} = cosmos.staking.v1beta1;
 const { TxRaw } = cosmos.tx.v1beta1;
 
 const defaultGasPrice = GasPrice.fromString("0.025ucosm");
@@ -40,6 +48,7 @@ export interface PrivateSigningStargateClient {
 
 export interface SigningStargateClientOptions {
   readonly registry?: Registry;
+  readonly aminoTypes?: AminoTypes;
   readonly gasPrice?: GasPrice;
   readonly gasLimits?: GasLimits<CosmosFeeTable>;
 }
@@ -48,7 +57,7 @@ export class SigningStargateClient extends StargateClient {
   private readonly fees: CosmosFeeTable;
   private readonly registry: Registry;
   private readonly signer: OfflineSigner;
-  private readonly aminoTypes = new AminoTypes();
+  private readonly aminoTypes;
 
   public static async connectWithSigner(
     endpoint: string,
@@ -65,9 +74,22 @@ export class SigningStargateClient extends StargateClient {
     options: SigningStargateClientOptions,
   ) {
     super(tmClient);
-    const { registry = new Registry(), gasPrice = defaultGasPrice, gasLimits = defaultGasLimits } = options;
+    const {
+      registry = new Registry([
+        ["/cosmos.bank.v1beta1.MsgMultiSend", MsgMultiSend],
+        ["/cosmos.staking.v1beta1.MsgBeginRedelegate", MsgBeginRedelegate],
+        ["/cosmos.staking.v1beta1.MsgCreateValidator", MsgCreateValidator],
+        ["/cosmos.staking.v1beta1.MsgDelegate", MsgDelegate],
+        ["/cosmos.staking.v1beta1.MsgEditValidator", MsgEditValidator],
+        ["/cosmos.staking.v1beta1.MsgUndelegate", MsgUndelegate],
+      ]),
+      aminoTypes = new AminoTypes(),
+      gasPrice = defaultGasPrice,
+      gasLimits = defaultGasLimits,
+    } = options;
     this.fees = buildFeeTable<CosmosFeeTable>(gasPrice, defaultGasLimits, gasLimits);
     this.registry = registry;
+    this.aminoTypes = aminoTypes;
     this.signer = signer;
   }
 
@@ -136,17 +158,11 @@ export class SigningStargateClient extends StargateClient {
 
     // Amino signer
     const signMode = cosmos.tx.signing.v1beta1.SignMode.SIGN_MODE_LEGACY_AMINO_JSON;
-    const msgs = messages.map((msg) => ({
-      type: this.aminoTypes.toAmino(msg.typeUrl),
-      value: msg.value,
-    }));
+    const msgs = messages.map((msg) => this.aminoTypes.toAmino(msg));
     const signDoc = makeSignDocAmino(msgs, fee, chainId, memo, accountNumber, sequence);
     const { signature, signed } = await this.signer.signAmino(address, signDoc);
     const signedTxBody = {
-      messages: signed.msgs.map((msg) => ({
-        typeUrl: this.aminoTypes.fromAmino(msg.type),
-        value: msg.value,
-      })),
+      messages: signed.msgs.map((msg) => this.aminoTypes.fromAmino(msg)),
       memo: signed.memo,
     };
     const signedTxBodyBytes = this.registry.encode({
