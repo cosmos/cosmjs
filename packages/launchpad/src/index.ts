@@ -99,7 +99,23 @@ export {
   uint64ToNumber,
   uint64ToString,
 } from "./lcdapi";
-export { isMsgDelegate, isMsgSend, Msg, MsgDelegate, MsgSend } from "./msgs";
+export {
+  isMsgBeginRedelegate,
+  isMsgCreateValidator,
+  isMsgDelegate,
+  isMsgEditValidator,
+  isMsgMultiSend,
+  isMsgSend,
+  isMsgUndelegate,
+  Msg,
+  MsgBeginRedelegate,
+  MsgCreateValidator,
+  MsgDelegate,
+  MsgEditValidator,
+  MsgMultiSend,
+  MsgSend,
+  MsgUndelegate,
+} from "./msgs";
 export {
   decodeAminoPubkey,
   decodeBech32Pubkey,
