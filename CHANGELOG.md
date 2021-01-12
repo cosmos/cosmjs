@@ -10,6 +10,8 @@
   types as well as `isValidBuilder` and `parseWasmData` functions.
 - @cosmjs/cosmwasm: Add `CosmWasmClient.getTx` method for searching by ID and
   remove such functionality from `CosmWasmClient.searchTx`.
+- @cosmjs/cosmwasm: Rename `SigningCosmWasmClient.senderAddress` to
+  `.signerAddress`.
 - @cosmjs/cosmwasm-stargate: Add new package for CosmWasm Stargate support.
 - @cosmjs/crypto: Change `Secp256k1Keypair` from tagged type to simple
   interface.
@@ -25,6 +27,8 @@
 - @cosmjs/launchpad: Add `SigningCosmosClient.appendSignature` method creating
   transactions with multiple signatures.
 - @cosmjs/launchpad: Add support for undefined memo in `makeSignDoc`.
+- @cosmjs/launchpad: Rename `SigningCosmosClient.senderAddress` to
+  `.signerAddress`.
 - @cosmjs/launchpad-ledger: `LedgerSigner.sign` method renamed `signAmino`.
 - @cosmjs/proto-signing: Add new package for handling transaction signing with
   protobuf encoding.
