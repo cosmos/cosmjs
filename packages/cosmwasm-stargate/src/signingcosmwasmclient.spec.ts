@@ -25,11 +25,11 @@ const { MsgDelegate } = codec.cosmos.staking.v1beta1;
 const { Tx } = codec.cosmos.tx.v1beta1;
 
 describe("SigningCosmWasmClient", () => {
-  describe("connectWithWallet", () => {
+  describe("connectWithSigner", () => {
     it("can be constructed", async () => {
       pendingWithoutWasmd();
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, undefined, wasmd.prefix);
-      const client = await SigningCosmWasmClient.connectWithWallet(wasmd.endpoint, wallet);
+      const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet);
       expect(client).toBeTruthy();
     });
 
@@ -37,7 +37,7 @@ describe("SigningCosmWasmClient", () => {
       pendingWithoutWasmd();
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, undefined, wasmd.prefix);
       const gasPrice = GasPrice.fromString("3.14utest");
-      const client = await SigningCosmWasmClient.connectWithWallet(wasmd.endpoint, wallet, { gasPrice });
+      const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, { gasPrice });
       const openedClient = (client as unknown) as PrivateSigningCosmWasmClient;
       expect(openedClient.fees).toEqual({
         upload: {
@@ -73,7 +73,7 @@ describe("SigningCosmWasmClient", () => {
       const gasLimits = {
         send: 160000,
       };
-      const client = await SigningCosmWasmClient.connectWithWallet(wasmd.endpoint, wallet, { gasLimits });
+      const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, { gasLimits });
       const openedClient = (client as unknown) as PrivateSigningCosmWasmClient;
       expect(openedClient.fees).toEqual({
         upload: {
@@ -110,7 +110,7 @@ describe("SigningCosmWasmClient", () => {
       const gasLimits = {
         send: 160000,
       };
-      const client = await SigningCosmWasmClient.connectWithWallet(wasmd.endpoint, wallet, {
+      const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, {
         gasPrice,
         gasLimits,
       });
@@ -148,7 +148,7 @@ describe("SigningCosmWasmClient", () => {
     it("works", async () => {
       pendingWithoutWasmd();
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, undefined, wasmd.prefix);
-      const client = await SigningCosmWasmClient.connectWithWallet(wasmd.endpoint, wallet);
+      const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet);
       const wasm = getHackatom().data;
       const {
         codeId,
@@ -167,7 +167,7 @@ describe("SigningCosmWasmClient", () => {
     it("can set builder and source", async () => {
       pendingWithoutWasmd();
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, undefined, wasmd.prefix);
-      const client = await SigningCosmWasmClient.connectWithWallet(wasmd.endpoint, wallet);
+      const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet);
       const hackatom = getHackatom();
       const meta: UploadMeta = {
         source: "https://crates.io/api/v1/crates/cw-nameservice/0.1.0/download",
@@ -184,7 +184,7 @@ describe("SigningCosmWasmClient", () => {
     it("works with transfer amount", async () => {
       pendingWithoutWasmd();
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, undefined, wasmd.prefix);
-      const client = await SigningCosmWasmClient.connectWithWallet(wasmd.endpoint, wallet);
+      const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet);
       const { codeId } = await client.upload(alice.address0, getHackatom().data);
       const transferAmount = [coin(1234, "ucosm"), coin(321, "ustake")];
       const beneficiaryAddress = makeRandomAddress();
@@ -211,7 +211,7 @@ describe("SigningCosmWasmClient", () => {
     it("works with admin", async () => {
       pendingWithoutWasmd();
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, undefined, wasmd.prefix);
-      const client = await SigningCosmWasmClient.connectWithWallet(wasmd.endpoint, wallet);
+      const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet);
       const { codeId } = await client.upload(alice.address0, getHackatom().data);
       const beneficiaryAddress = makeRandomAddress();
       const { contractAddress } = await client.instantiate(
@@ -233,7 +233,7 @@ describe("SigningCosmWasmClient", () => {
     it("can instantiate one code multiple times", async () => {
       pendingWithoutWasmd();
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, undefined, wasmd.prefix);
-      const client = await SigningCosmWasmClient.connectWithWallet(wasmd.endpoint, wallet);
+      const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet);
       const { codeId } = await client.upload(alice.address0, getHackatom().data);
       const contractAddress1 = await client.instantiate(
         alice.address0,
@@ -261,7 +261,7 @@ describe("SigningCosmWasmClient", () => {
     it("can update an admin", async () => {
       pendingWithoutWasmd();
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, undefined, wasmd.prefix);
-      const client = await SigningCosmWasmClient.connectWithWallet(wasmd.endpoint, wallet);
+      const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet);
       const { codeId } = await client.upload(alice.address0, getHackatom().data);
       const beneficiaryAddress = makeRandomAddress();
       const { contractAddress } = await client.instantiate(
@@ -296,7 +296,7 @@ describe("SigningCosmWasmClient", () => {
     it("can clear an admin", async () => {
       pendingWithoutWasmd();
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, undefined, wasmd.prefix);
-      const client = await SigningCosmWasmClient.connectWithWallet(wasmd.endpoint, wallet);
+      const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet);
       const { codeId } = await client.upload(alice.address0, getHackatom().data);
       const beneficiaryAddress = makeRandomAddress();
       const { contractAddress } = await client.instantiate(
@@ -331,7 +331,7 @@ describe("SigningCosmWasmClient", () => {
     it("can can migrate from one code ID to another", async () => {
       pendingWithoutWasmd();
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, undefined, wasmd.prefix);
-      const client = await SigningCosmWasmClient.connectWithWallet(wasmd.endpoint, wallet);
+      const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet);
       const { codeId: codeId1 } = await client.upload(alice.address0, getHackatom().data);
       const { codeId: codeId2 } = await client.upload(alice.address0, getHackatom().data);
       const beneficiaryAddress = makeRandomAddress();
@@ -371,7 +371,7 @@ describe("SigningCosmWasmClient", () => {
     it("works", async () => {
       pendingWithoutWasmd();
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, undefined, wasmd.prefix);
-      const client = await SigningCosmWasmClient.connectWithWallet(wasmd.endpoint, wallet);
+      const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet);
       const { codeId } = await client.upload(alice.address0, getHackatom().data);
       // instantiate
       const transferAmount = [coin(233444, "ucosm"), coin(5454, "ustake")];
@@ -414,7 +414,7 @@ describe("SigningCosmWasmClient", () => {
     it("works", async () => {
       pendingWithoutWasmd();
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, undefined, wasmd.prefix);
-      const client = await SigningCosmWasmClient.connectWithWallet(wasmd.endpoint, wallet);
+      const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet);
 
       const transferAmount = coins(7890, "ucosm");
       const beneficiaryAddress = makeRandomAddress();
@@ -445,7 +445,7 @@ describe("SigningCosmWasmClient", () => {
         const registry = new Registry();
         registry.register(msgDelegateTypeUrl, MsgDelegate);
         const options = { registry: registry };
-        const client = await SigningCosmWasmClient.connectWithWallet(wasmd.endpoint, wallet, options);
+        const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
 
         const msg = MsgDelegate.create({
           delegatorAddress: alice.address0,
@@ -476,7 +476,7 @@ describe("SigningCosmWasmClient", () => {
         const registry = new Registry();
         registry.register(msgDelegateTypeUrl, MsgDelegate);
         const options = { registry: registry };
-        const client = await SigningCosmWasmClient.connectWithWallet(wasmd.endpoint, wallet, options);
+        const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
 
         const msg = MsgDelegate.create({
           delegatorAddress: alice.address0,

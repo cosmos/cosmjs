@@ -149,7 +149,7 @@ export interface PrivateSigningCosmWasmClient {
 }
 
 export class SigningCosmWasmClient extends CosmWasmClient {
-  public readonly senderAddress: string;
+  public readonly signerAddress: string;
 
   private readonly signer: OfflineSigner;
   private readonly fees: CosmWasmFeeTable;
@@ -161,7 +161,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
    * for the lifetime of your application. When switching backends, a new instance must be created.
    *
    * @param apiUrl The URL of a Cosmos SDK light client daemon API (sometimes called REST server or REST API)
-   * @param senderAddress The address that will sign and send transactions using this instance
+   * @param signerAddress The address that will sign transactions using this instance. The `signer` must be able to sign with this address.
    * @param signer An implementation of OfflineSigner which can provide signatures for transactions, potentially requiring user input.
    * @param gasPrice The price paid per unit of gas
    * @param gasLimits Custom overrides for gas limits related to specific transaction types
@@ -169,25 +169,25 @@ export class SigningCosmWasmClient extends CosmWasmClient {
    */
   public constructor(
     apiUrl: string,
-    senderAddress: string,
+    signerAddress: string,
     signer: OfflineSigner,
     gasPrice: GasPrice = defaultGasPrice,
     gasLimits: Partial<GasLimits<CosmWasmFeeTable>> = {},
     broadcastMode = BroadcastMode.Block,
   ) {
     super(apiUrl, broadcastMode);
-    this.anyValidAddress = senderAddress;
-    this.senderAddress = senderAddress;
+    this.anyValidAddress = signerAddress;
+    this.signerAddress = signerAddress;
     this.signer = signer;
     this.fees = buildFeeTable<CosmWasmFeeTable>(gasPrice, defaultGasLimits, gasLimits);
   }
 
   public async getSequence(address?: string): Promise<GetSequenceResult> {
-    return super.getSequence(address || this.senderAddress);
+    return super.getSequence(address || this.signerAddress);
   }
 
   public async getAccount(address?: string): Promise<Account | undefined> {
-    return super.getAccount(address || this.senderAddress);
+    return super.getAccount(address || this.signerAddress);
   }
 
   /** Uploads code and returns a receipt, including the code ID */
@@ -199,7 +199,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     const storeCodeMsg: MsgStoreCode = {
       type: "wasm/MsgStoreCode",
       value: {
-        sender: this.senderAddress,
+        sender: this.signerAddress,
         wasm_byte_code: toBase64(compressed),
         source: source,
         builder: builder,
@@ -230,7 +230,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     const instantiateMsg: MsgInstantiateContract = {
       type: "wasm/MsgInstantiateContract",
       value: {
-        sender: this.senderAddress,
+        sender: this.signerAddress,
         code_id: new Uint53(codeId).toString(),
         label: label,
         init_msg: initMsg,
@@ -254,7 +254,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     const updateAdminMsg: MsgUpdateAdmin = {
       type: "wasm/MsgUpdateAdmin",
       value: {
-        sender: this.senderAddress,
+        sender: this.signerAddress,
         contract: contractAddress,
         new_admin: newAdmin,
       },
@@ -273,7 +273,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     const clearAdminMsg: MsgClearAdmin = {
       type: "wasm/MsgClearAdmin",
       value: {
-        sender: this.senderAddress,
+        sender: this.signerAddress,
         contract: contractAddress,
       },
     };
@@ -296,7 +296,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     const msg: MsgMigrateContract = {
       type: "wasm/MsgMigrateContract",
       value: {
-        sender: this.senderAddress,
+        sender: this.signerAddress,
         contract: contractAddress,
         code_id: new Uint53(codeId).toString(),
         msg: migrateMsg,
@@ -321,7 +321,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     const executeMsg: MsgExecuteContract = {
       type: "wasm/MsgExecuteContract",
       value: {
-        sender: this.senderAddress,
+        sender: this.signerAddress,
         contract: contractAddress,
         msg: handleMsg,
         sent_funds: transferAmount || [],
@@ -345,7 +345,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     const sendMsg: MsgSend = {
       type: "cosmos-sdk/MsgSend",
       value: {
-        from_address: this.senderAddress,
+        from_address: this.signerAddress,
         to_address: recipientAddress,
         amount: transferAmount,
       },
@@ -361,7 +361,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     const { accountNumber, sequence } = await this.getSequence();
     const chainId = await this.getChainId();
     const signDoc = makeSignDoc(msgs, fee, chainId, memo, accountNumber, sequence);
-    const { signed, signature } = await this.signer.signAmino(this.senderAddress, signDoc);
+    const { signed, signature } = await this.signer.signAmino(this.signerAddress, signDoc);
     const signedTx = makeStdTx(signed, signature);
     return this.broadcastTx(signedTx);
   }

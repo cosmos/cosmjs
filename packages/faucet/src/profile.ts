@@ -43,7 +43,7 @@ export async function createClients(
       > => [
         senderAddress,
         isOfflineDirectSigner(wallet)
-          ? await SigningStargateClient.connectWithWallet(apiUrl, wallet, {
+          ? await SigningStargateClient.connectWithSigner(apiUrl, wallet, {
               gasLimits: constants.gasLimits,
               gasPrice: constants.gasPrice,
             })

@@ -50,7 +50,7 @@ export class SigningStargateClient extends StargateClient {
   private readonly signer: OfflineSigner;
   private readonly aminoTypes = new AminoTypes();
 
-  public static async connectWithWallet(
+  public static async connectWithSigner(
     endpoint: string,
     signer: OfflineSigner,
     options: SigningStargateClientOptions = {},

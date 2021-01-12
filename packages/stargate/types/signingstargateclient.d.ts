@@ -16,7 +16,7 @@ export declare class SigningStargateClient extends StargateClient {
   private readonly registry;
   private readonly signer;
   private readonly aminoTypes;
-  static connectWithWallet(
+  static connectWithSigner(
     endpoint: string,
     signer: OfflineSigner,
     options?: SigningStargateClientOptions,

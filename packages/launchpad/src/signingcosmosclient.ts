@@ -27,7 +27,7 @@ export interface PrivateSigningCosmosClient {
 }
 
 export class SigningCosmosClient extends CosmosClient {
-  public readonly senderAddress: string;
+  public readonly signerAddress: string;
 
   private readonly signer: OfflineSigner;
   private readonly fees: CosmosFeeTable;
@@ -39,7 +39,7 @@ export class SigningCosmosClient extends CosmosClient {
    * for the lifetime of your application. When switching backends, a new instance must be created.
    *
    * @param apiUrl The URL of a Cosmos SDK light client daemon API (sometimes called REST server or REST API)
-   * @param senderAddress The address that will sign and send transactions using this instance
+   * @param signerAddress The address that will sign transactions using this instance. The `signer` must be able to sign with this address.
    * @param signer An implementation of OfflineSigner which can provide signatures for transactions, potentially requiring user input.
    * @param gasPrice The price paid per unit of gas
    * @param gasLimits Custom overrides for gas limits related to specific transaction types
@@ -47,25 +47,25 @@ export class SigningCosmosClient extends CosmosClient {
    */
   public constructor(
     apiUrl: string,
-    senderAddress: string,
+    signerAddress: string,
     signer: OfflineSigner,
     gasPrice: GasPrice = defaultGasPrice,
     gasLimits: Partial<GasLimits<CosmosFeeTable>> = {},
     broadcastMode = BroadcastMode.Block,
   ) {
     super(apiUrl, broadcastMode);
-    this.anyValidAddress = senderAddress;
-    this.senderAddress = senderAddress;
+    this.anyValidAddress = signerAddress;
+    this.signerAddress = signerAddress;
     this.signer = signer;
     this.fees = buildFeeTable<CosmosFeeTable>(gasPrice, defaultGasLimits, gasLimits);
   }
 
   public async getSequence(address?: string): Promise<GetSequenceResult> {
-    return super.getSequence(address || this.senderAddress);
+    return super.getSequence(address || this.signerAddress);
   }
 
   public async getAccount(address?: string): Promise<Account | undefined> {
-    return super.getAccount(address || this.senderAddress);
+    return super.getAccount(address || this.signerAddress);
   }
 
   public async sendTokens(
@@ -76,7 +76,7 @@ export class SigningCosmosClient extends CosmosClient {
     const sendMsg: MsgSend = {
       type: "cosmos-sdk/MsgSend",
       value: {
-        from_address: this.senderAddress,
+        from_address: this.signerAddress,
         to_address: recipientAddress,
         amount: transferAmount,
       },
@@ -101,7 +101,7 @@ export class SigningCosmosClient extends CosmosClient {
     const { accountNumber, sequence } = await this.getSequence();
     const chainId = await this.getChainId();
     const signDoc = makeSignDoc(msgs, fee, chainId, memo, accountNumber, sequence);
-    const { signed, signature } = await this.signer.signAmino(this.senderAddress, signDoc);
+    const { signed, signature } = await this.signer.signAmino(this.signerAddress, signDoc);
     return makeStdTx(signed, signature);
   }
 
@@ -115,7 +115,7 @@ export class SigningCosmosClient extends CosmosClient {
     const chainId = await this.getChainId();
     const signDoc = makeSignDoc(msgs, fee, chainId, memo, accountNumber, sequence);
     const { signed, signature: additionalSignature } = await this.signer.signAmino(
-      this.senderAddress,
+      this.signerAddress,
       signDoc,
     );
     if (!equals(signDoc, signed)) {

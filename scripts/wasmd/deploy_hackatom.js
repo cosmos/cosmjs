@@ -49,7 +49,7 @@ const inits = [
 
 async function main() {
   const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, undefined, "wasm");
-  const client = await SigningCosmWasmClient.connectWithWallet(endpoint, wallet);
+  const client = await SigningCosmWasmClient.connectWithSigner(endpoint, wallet);
 
   const wasm = fs.readFileSync(__dirname + "/contracts/hackatom.wasm");
   const uploadReceipt = await client.upload(alice.address0, wasm, codeMeta, "Upload hackatom contract");

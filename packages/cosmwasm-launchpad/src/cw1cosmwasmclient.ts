@@ -24,7 +24,7 @@ export class Cw1CosmWasmClient extends SigningCosmWasmClient {
     return super.getAccount(address || this.cw1ContractAddress);
   }
 
-  public async canSend(msg: CosmosMsg, address = this.senderAddress): Promise<boolean> {
+  public async canSend(msg: CosmosMsg, address = this.signerAddress): Promise<boolean> {
     const result = await this.queryContractSmart(this.cw1ContractAddress, {
       can_send: {
         sender: address,

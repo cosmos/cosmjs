@@ -95,7 +95,7 @@ export interface PrivateSigningCosmWasmClient {
   readonly fees: CosmWasmFeeTable;
 }
 export declare class SigningCosmWasmClient extends CosmWasmClient {
-  readonly senderAddress: string;
+  readonly signerAddress: string;
   private readonly signer;
   private readonly fees;
   /**
@@ -105,7 +105,7 @@ export declare class SigningCosmWasmClient extends CosmWasmClient {
    * for the lifetime of your application. When switching backends, a new instance must be created.
    *
    * @param apiUrl The URL of a Cosmos SDK light client daemon API (sometimes called REST server or REST API)
-   * @param senderAddress The address that will sign and send transactions using this instance
+   * @param signerAddress The address that will sign transactions using this instance. The `signer` must be able to sign with this address.
    * @param signer An implementation of OfflineSigner which can provide signatures for transactions, potentially requiring user input.
    * @param gasPrice The price paid per unit of gas
    * @param gasLimits Custom overrides for gas limits related to specific transaction types
@@ -113,7 +113,7 @@ export declare class SigningCosmWasmClient extends CosmWasmClient {
    */
   constructor(
     apiUrl: string,
-    senderAddress: string,
+    signerAddress: string,
     signer: OfflineSigner,
     gasPrice?: GasPrice,
     gasLimits?: Partial<GasLimits<CosmWasmFeeTable>>,
