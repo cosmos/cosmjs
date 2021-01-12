@@ -26,7 +26,7 @@ describe("SigningStargateClient", () => {
     it("can be constructed with default fees", async () => {
       pendingWithoutSimapp();
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
-      const client = await SigningStargateClient.connectWithWallet(simapp.tendermintUrl, wallet);
+      const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, wallet);
       const openedClient = (client as unknown) as PrivateSigningStargateClient;
       expect(openedClient.fees).toEqual({
         send: {
@@ -47,7 +47,7 @@ describe("SigningStargateClient", () => {
       const registry = new Registry();
       registry.register("/custom.MsgCustom", MsgSend);
       const options = { registry: registry };
-      const client = await SigningStargateClient.connectWithWallet(simapp.tendermintUrl, wallet, options);
+      const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, wallet, options);
       const openedClient = (client as unknown) as PrivateSigningStargateClient;
       expect(openedClient.registry.lookupType("/custom.MsgCustom")).toEqual(MsgSend);
     });
@@ -57,7 +57,7 @@ describe("SigningStargateClient", () => {
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const gasPrice = GasPrice.fromString("3.14utest");
       const options = { gasPrice: gasPrice };
-      const client = await SigningStargateClient.connectWithWallet(simapp.tendermintUrl, wallet, options);
+      const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, wallet, options);
       const openedClient = (client as unknown) as PrivateSigningStargateClient;
       expect(openedClient.fees).toEqual({
         send: {
@@ -79,7 +79,7 @@ describe("SigningStargateClient", () => {
         send: 160000,
       };
       const options = { gasLimits: gasLimits };
-      const client = await SigningStargateClient.connectWithWallet(simapp.tendermintUrl, wallet, options);
+      const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, wallet, options);
       const openedClient = (client as unknown) as PrivateSigningStargateClient;
       expect(openedClient.fees).toEqual({
         send: {
@@ -102,7 +102,7 @@ describe("SigningStargateClient", () => {
         send: 160000,
       };
       const options = { gasPrice: gasPrice, gasLimits: gasLimits };
-      const client = await SigningStargateClient.connectWithWallet(simapp.tendermintUrl, wallet, options);
+      const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, wallet, options);
       const openedClient = (client as unknown) as PrivateSigningStargateClient;
       expect(openedClient.fees).toEqual({
         send: {
@@ -122,7 +122,7 @@ describe("SigningStargateClient", () => {
     it("works", async () => {
       pendingWithoutSimapp();
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
-      const client = await SigningStargateClient.connectWithWallet(simapp.tendermintUrl, wallet);
+      const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, wallet);
 
       const transferAmount = coins(7890, "ucosm");
       const beneficiaryAddress = makeRandomAddress();
@@ -153,7 +153,7 @@ describe("SigningStargateClient", () => {
         const registry = new Registry();
         registry.register(msgDelegateTypeUrl, MsgDelegate);
         const options = { registry: registry };
-        const client = await SigningStargateClient.connectWithWallet(simapp.tendermintUrl, wallet, options);
+        const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, wallet, options);
 
         const msg = MsgDelegate.create({
           delegatorAddress: faucet.address0,
@@ -180,7 +180,7 @@ describe("SigningStargateClient", () => {
         const registry = new Registry();
         registry.register(msgDelegateTypeUrl, MsgDelegate);
         const options = { registry: registry };
-        const client = await SigningStargateClient.connectWithWallet(simapp.tendermintUrl, wallet, options);
+        const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, wallet, options);
 
         const msg = MsgDelegate.create({
           delegatorAddress: faucet.address0,
@@ -233,7 +233,7 @@ describe("SigningStargateClient", () => {
         pendingWithoutSimapp();
         const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
         const options = { registry: registry };
-        const client = await SigningStargateClient.connectWithWallet(simapp.tendermintUrl, wallet, options);
+        const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, wallet, options);
 
         const msg = {
           delegator_address: faucet.address0,
@@ -257,7 +257,7 @@ describe("SigningStargateClient", () => {
         pendingWithoutSimapp();
         const wallet = await ModifyingSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
         const options = { registry: registry };
-        const client = await SigningStargateClient.connectWithWallet(simapp.tendermintUrl, wallet, options);
+        const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, wallet, options);
 
         const msg = {
           delegator_address: faucet.address0,

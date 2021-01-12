@@ -337,7 +337,7 @@ describe("CosmWasmClient", () => {
     beforeAll(async () => {
       if (wasmdEnabled()) {
         const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, undefined, wasmd.prefix);
-        const client = await SigningCosmWasmClient.connectWithWallet(wasmd.endpoint, wallet);
+        const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet);
         const { codeId } = await client.upload(alice.address0, getHackatom().data);
         const initMsg = { verifier: makeRandomAddress(), beneficiary: makeRandomAddress() };
         const { contractAddress } = await client.instantiate(
@@ -392,7 +392,7 @@ describe("CosmWasmClient", () => {
     beforeAll(async () => {
       if (wasmdEnabled()) {
         const wallet = await DirectSecp256k1HdWallet.fromMnemonic(alice.mnemonic, undefined, wasmd.prefix);
-        const client = await SigningCosmWasmClient.connectWithWallet(wasmd.endpoint, wallet);
+        const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet);
         const { codeId } = await client.upload(alice.address0, getHackatom().data);
         const initMsg = { verifier: makeRandomAddress(), beneficiary: makeRandomAddress() };
         const { contractAddress } = await client.instantiate(

@@ -106,7 +106,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   private readonly registry: Registry;
   private readonly signer: OfflineDirectSigner;
 
-  public static async connectWithWallet(
+  public static async connectWithSigner(
     endpoint: string,
     signer: OfflineDirectSigner,
     options: SigningCosmWasmClientOptions = {},

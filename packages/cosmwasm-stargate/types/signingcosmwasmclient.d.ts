@@ -25,7 +25,7 @@ export declare class SigningCosmWasmClient extends CosmWasmClient {
   private readonly fees;
   private readonly registry;
   private readonly signer;
-  static connectWithWallet(
+  static connectWithSigner(
     endpoint: string,
     signer: OfflineDirectSigner,
     options?: SigningCosmWasmClientOptions,
