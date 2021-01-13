@@ -8,14 +8,12 @@ import {
   MsgUpdateAdmin,
 } from "@cosmjs/cosmwasm-launchpad";
 import { fromBase64, fromUtf8, toBase64, toUtf8 } from "@cosmjs/encoding";
-import { Coin } from "@cosmjs/launchpad";
-import { AminoConverter, codec } from "@cosmjs/stargate";
-import { assert } from "@cosmjs/utils";
+import { AminoConverter, coinFromProto } from "@cosmjs/stargate";
+import { assertDefinedAndNotNull } from "@cosmjs/utils";
 import Long from "long";
 
 import { cosmwasm } from "./codec";
 
-type ICoin = codec.cosmos.base.v1beta1.ICoin;
 type IMsgStoreCode = cosmwasm.wasm.v1beta1.IMsgStoreCode;
 type IMsgInstantiateContract = cosmwasm.wasm.v1beta1.IMsgInstantiateContract;
 type IMsgUpdateAdmin = cosmwasm.wasm.v1beta1.IMsgUpdateAdmin;
@@ -23,26 +21,14 @@ type IMsgClearAdmin = cosmwasm.wasm.v1beta1.IMsgClearAdmin;
 type IMsgExecuteContract = cosmwasm.wasm.v1beta1.IMsgExecuteContract;
 type IMsgMigrateContract = cosmwasm.wasm.v1beta1.IMsgMigrateContract;
 
-function checkAmount(amount: readonly ICoin[] | undefined | null): readonly Coin[] {
-  assert(amount, "missing amount");
-  return amount.map((a) => {
-    assert(a.amount, "missing amount");
-    assert(a.denom, "missing denom");
-    return {
-      amount: a.amount,
-      denom: a.denom,
-    };
-  });
-}
-
 export const cosmWasmTypes: Record<string, AminoConverter> = {
   "/cosmwasm.wasm.v1beta1.MsgStoreCode": {
     aminoType: "wasm/MsgStoreCode",
     toAmino: ({ sender, wasmByteCode, source, builder }: IMsgStoreCode): MsgStoreCode["value"] => {
-      assert(sender, "missing sender");
-      assert(wasmByteCode, "missing wasmByteCode");
-      assert(typeof source === "string", "missing source");
-      assert(typeof builder === "string", "missing builder");
+      assertDefinedAndNotNull(sender, "missing sender");
+      assertDefinedAndNotNull(wasmByteCode, "missing wasmByteCode");
+      assertDefinedAndNotNull(source, "missing source");
+      assertDefinedAndNotNull(builder, "missing builder");
       return {
         sender: sender,
         wasm_byte_code: toBase64(wasmByteCode),
@@ -67,16 +53,17 @@ export const cosmWasmTypes: Record<string, AminoConverter> = {
       initFunds,
       admin,
     }: IMsgInstantiateContract): MsgInstantiateContract["value"] => {
-      assert(sender, "missing sender");
-      assert(codeId, "missing codeId");
-      assert(label, "missing label");
-      assert(initMsg, "missing initMsg");
+      assertDefinedAndNotNull(sender, "missing sender");
+      assertDefinedAndNotNull(codeId, "missing codeId");
+      assertDefinedAndNotNull(label, "missing label");
+      assertDefinedAndNotNull(initMsg, "missing initMsg");
+      assertDefinedAndNotNull(initFunds, "missing initFunds");
       return {
         sender: sender,
         code_id: codeId.toString(),
         label: label,
         init_msg: JSON.parse(fromUtf8(initMsg)),
-        init_funds: checkAmount(initFunds),
+        init_funds: initFunds.map(coinFromProto),
         admin: admin ?? undefined,
       };
     },
@@ -99,9 +86,9 @@ export const cosmWasmTypes: Record<string, AminoConverter> = {
   "/cosmwasm.wasm.v1beta1.MsgUpdateAdmin": {
     aminoType: "wasm/MsgUpdateAdmin",
     toAmino: ({ sender, newAdmin, contract }: IMsgUpdateAdmin): MsgUpdateAdmin["value"] => {
-      assert(sender, "missing sender");
-      assert(newAdmin, "missing newAdmin");
-      assert(contract, "missing contract");
+      assertDefinedAndNotNull(sender, "missing sender");
+      assertDefinedAndNotNull(newAdmin, "missing newAdmin");
+      assertDefinedAndNotNull(contract, "missing contract");
       return {
         sender: sender,
         new_admin: newAdmin,
@@ -117,8 +104,8 @@ export const cosmWasmTypes: Record<string, AminoConverter> = {
   "/cosmwasm.wasm.v1beta1.MsgClearAdmin": {
     aminoType: "wasm/MsgClearAdmin",
     toAmino: ({ sender, contract }: IMsgClearAdmin): MsgClearAdmin["value"] => {
-      assert(sender, "missing sender");
-      assert(contract, "missing contract");
+      assertDefinedAndNotNull(sender, "missing sender");
+      assertDefinedAndNotNull(contract, "missing contract");
       return {
         sender: sender,
         contract: contract,
@@ -132,14 +119,15 @@ export const cosmWasmTypes: Record<string, AminoConverter> = {
   "/cosmwasm.wasm.v1beta1.MsgExecuteContract": {
     aminoType: "wasm/MsgExecuteContract",
     toAmino: ({ sender, contract, msg, sentFunds }: IMsgExecuteContract): MsgExecuteContract["value"] => {
-      assert(sender, "missing sender");
-      assert(contract, "missing contract");
-      assert(msg, "missing msg");
+      assertDefinedAndNotNull(sender, "missing sender");
+      assertDefinedAndNotNull(contract, "missing contract");
+      assertDefinedAndNotNull(msg, "missing msg");
+      assertDefinedAndNotNull(sentFunds, "missing sentFunds");
       return {
         sender: sender,
         contract: contract,
         msg: JSON.parse(fromUtf8(msg)),
-        sent_funds: checkAmount(sentFunds),
+        sent_funds: sentFunds.map(coinFromProto),
       };
     },
     fromAmino: ({ sender, contract, msg, sent_funds }: MsgExecuteContract["value"]): IMsgExecuteContract => ({
@@ -152,10 +140,10 @@ export const cosmWasmTypes: Record<string, AminoConverter> = {
   "/cosmwasm.wasm.v1beta1.MsgMigrateContract": {
     aminoType: "wasm/MsgMigrateContract",
     toAmino: ({ sender, contract, codeId, migrateMsg }: IMsgMigrateContract): MsgMigrateContract["value"] => {
-      assert(sender, "missing sender");
-      assert(contract, "missing contract");
-      assert(codeId, "missing codeId");
-      assert(migrateMsg, "missing migrateMsg");
+      assertDefinedAndNotNull(sender, "missing sender");
+      assertDefinedAndNotNull(contract, "missing contract");
+      assertDefinedAndNotNull(codeId, "missing codeId");
+      assertDefinedAndNotNull(migrateMsg, "missing migrateMsg");
       return {
         sender: sender,
         contract: contract,
