@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { fromBase64, toBase64 } from "@cosmjs/encoding";
 import {
-  Coin,
   decodeBech32Pubkey,
   encodeBech32Pubkey,
   Msg,
@@ -14,11 +13,11 @@ import {
   MsgUndelegate,
 } from "@cosmjs/launchpad";
 import { EncodeObject } from "@cosmjs/proto-signing";
-import { assert } from "@cosmjs/utils";
+import { assertDefinedAndNotNull } from "@cosmjs/utils";
 
 import { cosmos } from "./codec";
+import { coinFromProto } from "./stargateclient";
 
-type ICoin = cosmos.base.v1beta1.ICoin;
 type IMsgSend = cosmos.bank.v1beta1.IMsgSend;
 type IMsgMultiSend = cosmos.bank.v1beta1.IMsgMultiSend;
 type IMsgBeginRedelegate = cosmos.staking.v1beta1.IMsgBeginRedelegate;
@@ -33,29 +32,18 @@ export interface AminoConverter {
   readonly fromAmino: (value: any) => any;
 }
 
-function checkAmount(amount: readonly ICoin[] | undefined | null): readonly Coin[] {
-  assert(amount, "missing amount");
-  return amount.map((a) => {
-    assert(a.amount, "missing amount");
-    assert(a.denom, "missing denom");
-    return {
-      amount: a.amount,
-      denom: a.denom,
-    };
-  });
-}
-
 function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
   return {
     "/cosmos.bank.v1beta1.MsgSend": {
       aminoType: "cosmos-sdk/MsgSend",
       toAmino: ({ fromAddress, toAddress, amount }: IMsgSend): MsgSend["value"] => {
-        assert(fromAddress, "missing fromAddress");
-        assert(toAddress, "missing toAddress");
+        assertDefinedAndNotNull(fromAddress, "missing fromAddress");
+        assertDefinedAndNotNull(toAddress, "missing toAddress");
+        assertDefinedAndNotNull(amount, "missing amount");
         return {
           from_address: fromAddress,
           to_address: toAddress,
-          amount: checkAmount(amount),
+          amount: amount.map(coinFromProto),
         };
       },
       fromAmino: ({ from_address, to_address, amount }: MsgSend["value"]): IMsgSend => ({
@@ -67,21 +55,23 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
     "/cosmos.bank.v1beta1.MsgMultiSend": {
       aminoType: "cosmos-sdk/MsgMultiSend",
       toAmino: ({ inputs, outputs }: IMsgMultiSend): MsgMultiSend["value"] => {
-        assert(inputs, "missing inputs");
-        assert(outputs, "missing outputs");
+        assertDefinedAndNotNull(inputs, "missing inputs");
+        assertDefinedAndNotNull(outputs, "missing outputs");
         return {
           inputs: inputs.map((input) => {
-            assert(input.address, "missing input.address");
+            assertDefinedAndNotNull(input.address, "missing input.address");
+            assertDefinedAndNotNull(input.coins, "missing input.amount");
             return {
               address: input.address,
-              coins: checkAmount(input.coins),
+              coins: input.coins.map(coinFromProto),
             };
           }),
           outputs: outputs.map((output) => {
-            assert(output.address, "missing output.address");
+            assertDefinedAndNotNull(output.address, "missing output.address");
+            assertDefinedAndNotNull(output.coins, "missing output.coins");
             return {
               address: output.address,
-              coins: checkAmount(output.coins),
+              coins: output.coins.map(coinFromProto),
             };
           }),
         };
@@ -105,20 +95,15 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
         validatorDstAddress,
         amount,
       }: IMsgBeginRedelegate): MsgBeginRedelegate["value"] => {
-        assert(delegatorAddress, "missing delegatorAddress");
-        assert(validatorSrcAddress, "missing validatorSrcAddress");
-        assert(validatorDstAddress, "missing validatorDstAddress");
-        assert(amount, "missing amount");
-        assert(amount.amount, "missing amount.amount");
-        assert(amount.denom, "missing amount.denom");
+        assertDefinedAndNotNull(delegatorAddress, "missing delegatorAddress");
+        assertDefinedAndNotNull(validatorSrcAddress, "missing validatorSrcAddress");
+        assertDefinedAndNotNull(validatorDstAddress, "missing validatorDstAddress");
+        assertDefinedAndNotNull(amount, "missing amount");
         return {
           delegator_address: delegatorAddress,
           validator_src_address: validatorSrcAddress,
           validator_dst_address: validatorDstAddress,
-          amount: {
-            amount: amount.amount,
-            denom: amount.denom,
-          },
+          amount: coinFromProto(amount),
         };
       },
       fromAmino: ({
@@ -144,24 +129,22 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
         pubkey,
         value,
       }: IMsgCreateValidator): MsgCreateValidator["value"] => {
-        assert(description, "missing description");
-        assert(description.moniker, "missing description.moniker");
-        assert(description.identity, "missing description.identity");
-        assert(description.website, "missing description.website");
-        assert(description.securityContact, "missing description.securityContact");
-        assert(description.details, "missing description.details");
-        assert(commission, "missing commission");
-        assert(commission.rate, "missing commission.rate");
-        assert(commission.maxRate, "missing commission.maxRate");
-        assert(commission.maxChangeRate, "missing commission.maxChangeRate");
-        assert(minSelfDelegation, "missing minSelfDelegation");
-        assert(delegatorAddress, "missing delegatorAddress");
-        assert(validatorAddress, "missing validatorAddress");
-        assert(pubkey, "missing pubkey");
-        assert(pubkey.value, "missing pubkey.value");
-        assert(value, "missing value");
-        assert(value.amount, "missing value.amount");
-        assert(value.denom, "missing value.denom");
+        assertDefinedAndNotNull(description, "missing description");
+        assertDefinedAndNotNull(description.moniker, "missing description.moniker");
+        assertDefinedAndNotNull(description.identity, "missing description.identity");
+        assertDefinedAndNotNull(description.website, "missing description.website");
+        assertDefinedAndNotNull(description.securityContact, "missing description.securityContact");
+        assertDefinedAndNotNull(description.details, "missing description.details");
+        assertDefinedAndNotNull(commission, "missing commission");
+        assertDefinedAndNotNull(commission.rate, "missing commission.rate");
+        assertDefinedAndNotNull(commission.maxRate, "missing commission.maxRate");
+        assertDefinedAndNotNull(commission.maxChangeRate, "missing commission.maxChangeRate");
+        assertDefinedAndNotNull(minSelfDelegation, "missing minSelfDelegation");
+        assertDefinedAndNotNull(delegatorAddress, "missing delegatorAddress");
+        assertDefinedAndNotNull(validatorAddress, "missing validatorAddress");
+        assertDefinedAndNotNull(pubkey, "missing pubkey");
+        assertDefinedAndNotNull(pubkey.value, "missing pubkey.value");
+        assertDefinedAndNotNull(value, "missing value");
         return {
           description: {
             moniker: description.moniker,
@@ -185,10 +168,7 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
             },
             prefix,
           ),
-          value: {
-            amount: value.amount,
-            denom: value.denom,
-          },
+          value: coinFromProto(value),
         };
       },
       fromAmino: ({
@@ -231,18 +211,13 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
     "/cosmos.staking.v1beta1.MsgDelegate": {
       aminoType: "cosmos-sdk/MsgDelegate",
       toAmino: ({ delegatorAddress, validatorAddress, amount }: IMsgDelegate): MsgDelegate["value"] => {
-        assert(delegatorAddress, "missing delegatorAddress");
-        assert(validatorAddress, "missing validatorAddress");
-        assert(amount, "missing amount");
-        assert(amount.amount, "missing amount.amount");
-        assert(amount.denom, "missing amount.denom");
+        assertDefinedAndNotNull(delegatorAddress, "missing delegatorAddress");
+        assertDefinedAndNotNull(validatorAddress, "missing validatorAddress");
+        assertDefinedAndNotNull(amount, "missing amount");
         return {
           delegator_address: delegatorAddress,
           validator_address: validatorAddress,
-          amount: {
-            amount: amount.amount,
-            denom: amount.denom,
-          },
+          amount: coinFromProto(amount),
         };
       },
       fromAmino: ({ delegator_address, validator_address, amount }: MsgDelegate["value"]): IMsgDelegate => ({
@@ -259,15 +234,15 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
         minSelfDelegation,
         validatorAddress,
       }: IMsgEditValidator): MsgEditValidator["value"] => {
-        assert(description, "missing description");
-        assert(description.moniker, "missing description.moniker");
-        assert(description.identity, "missing description.identity");
-        assert(description.website, "missing description.website");
-        assert(description.securityContact, "missing description.securityContact");
-        assert(description.details, "missing description.details");
-        assert(commissionRate, "missing commissionRate");
-        assert(minSelfDelegation, "missing minSelfDelegation");
-        assert(validatorAddress, "missing validatorAddress");
+        assertDefinedAndNotNull(description, "missing description");
+        assertDefinedAndNotNull(description.moniker, "missing description.moniker");
+        assertDefinedAndNotNull(description.identity, "missing description.identity");
+        assertDefinedAndNotNull(description.website, "missing description.website");
+        assertDefinedAndNotNull(description.securityContact, "missing description.securityContact");
+        assertDefinedAndNotNull(description.details, "missing description.details");
+        assertDefinedAndNotNull(commissionRate, "missing commissionRate");
+        assertDefinedAndNotNull(minSelfDelegation, "missing minSelfDelegation");
+        assertDefinedAndNotNull(validatorAddress, "missing validatorAddress");
         return {
           description: {
             moniker: description.moniker,
@@ -302,18 +277,13 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
     "/cosmos.staking.v1beta1.MsgUndelegate": {
       aminoType: "cosmos-sdk/MsgUndelegate",
       toAmino: ({ delegatorAddress, validatorAddress, amount }: IMsgUndelegate): MsgUndelegate["value"] => {
-        assert(delegatorAddress, "missing delegatorAddress");
-        assert(validatorAddress, "missing validatorAddress");
-        assert(amount, "missing amount");
-        assert(amount.amount, "missing amount.amount");
-        assert(amount.denom, "missing amount.denom");
+        assertDefinedAndNotNull(delegatorAddress, "missing delegatorAddress");
+        assertDefinedAndNotNull(validatorAddress, "missing validatorAddress");
+        assertDefinedAndNotNull(amount, "missing amount");
         return {
           delegator_address: delegatorAddress,
           validator_address: validatorAddress,
-          amount: {
-            amount: amount.amount,
-            denom: amount.denom,
-          },
+          amount: coinFromProto(amount),
         };
       },
       fromAmino: ({
