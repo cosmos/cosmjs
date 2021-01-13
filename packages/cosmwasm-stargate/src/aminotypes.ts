@@ -7,7 +7,7 @@ import {
   MsgStoreCode,
   MsgUpdateAdmin,
 } from "@cosmjs/cosmwasm-launchpad";
-import { fromAscii, fromBase64, toAscii, toBase64 } from "@cosmjs/encoding";
+import { fromBase64, fromUtf8, toBase64, toUtf8 } from "@cosmjs/encoding";
 import { Coin } from "@cosmjs/launchpad";
 import { AminoConverter, codec } from "@cosmjs/stargate";
 import { assert } from "@cosmjs/utils";
@@ -35,7 +35,7 @@ function checkAmount(amount: readonly ICoin[] | undefined | null): readonly Coin
   });
 }
 
-export const defaultTypes: Record<string, AminoConverter> = {
+export const cosmWasmTypes: Record<string, AminoConverter> = {
   "/cosmwasm.wasm.v1beta1.MsgStoreCode": {
     aminoType: "wasm/MsgStoreCode",
     toAmino: ({ sender, wasmByteCode, source, builder }: IMsgStoreCode): MsgStoreCode["value"] => {
@@ -75,7 +75,7 @@ export const defaultTypes: Record<string, AminoConverter> = {
         sender: sender,
         code_id: codeId.toString(),
         label: label,
-        init_msg: JSON.parse(fromAscii(initMsg)),
+        init_msg: JSON.parse(fromUtf8(initMsg)),
         init_funds: checkAmount(initFunds),
         admin: admin ?? undefined,
       };
@@ -91,7 +91,7 @@ export const defaultTypes: Record<string, AminoConverter> = {
       sender: sender,
       codeId: Long.fromString(code_id),
       label: label,
-      initMsg: toAscii(JSON.stringify(init_msg)),
+      initMsg: toUtf8(JSON.stringify(init_msg)),
       initFunds: [...init_funds],
       admin: admin,
     }),
@@ -138,14 +138,14 @@ export const defaultTypes: Record<string, AminoConverter> = {
       return {
         sender: sender,
         contract: contract,
-        msg: JSON.parse(fromAscii(msg)),
+        msg: JSON.parse(fromUtf8(msg)),
         sent_funds: checkAmount(sentFunds),
       };
     },
     fromAmino: ({ sender, contract, msg, sent_funds }: MsgExecuteContract["value"]): IMsgExecuteContract => ({
       sender: sender,
       contract: contract,
-      msg: toAscii(JSON.stringify(msg)),
+      msg: toUtf8(JSON.stringify(msg)),
       sentFunds: [...sent_funds],
     }),
   },
@@ -160,14 +160,14 @@ export const defaultTypes: Record<string, AminoConverter> = {
         sender: sender,
         contract: contract,
         code_id: codeId.toString(),
-        msg: JSON.parse(fromAscii(migrateMsg)),
+        msg: JSON.parse(fromUtf8(migrateMsg)),
       };
     },
     fromAmino: ({ sender, contract, code_id, msg }: MsgMigrateContract["value"]): IMsgMigrateContract => ({
       sender: sender,
       contract: contract,
       codeId: Long.fromString(code_id),
-      migrateMsg: toAscii(JSON.stringify(msg)),
+      migrateMsg: toUtf8(JSON.stringify(msg)),
     }),
   },
 };

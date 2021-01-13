@@ -7,12 +7,12 @@ import {
   MsgStoreCode,
   MsgUpdateAdmin,
 } from "@cosmjs/cosmwasm-launchpad";
-import { fromBase64, toAscii } from "@cosmjs/encoding";
+import { fromBase64, toUtf8 } from "@cosmjs/encoding";
 import { coins } from "@cosmjs/launchpad";
 import { AminoTypes } from "@cosmjs/stargate";
 import Long from "long";
 
-import { defaultTypes } from "./aminotypes";
+import { cosmWasmTypes } from "./aminotypes";
 import { cosmwasm } from "./codec";
 
 type IMsgStoreCode = cosmwasm.wasm.v1beta1.IMsgStoreCode;
@@ -31,7 +31,7 @@ describe("AminoTypes", () => {
         source: "Arrabiata",
         builder: "Bob",
       };
-      const aminoMsg = new AminoTypes({ additions: defaultTypes }).toAmino({
+      const aminoMsg = new AminoTypes({ additions: cosmWasmTypes }).toAmino({
         typeUrl: "/cosmwasm.wasm.v1beta1.MsgStoreCode",
         value: msg,
       });
@@ -52,7 +52,7 @@ describe("AminoTypes", () => {
         sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
         codeId: Long.fromString("12345"),
         label: "sticky",
-        initMsg: toAscii(
+        initMsg: toUtf8(
           JSON.stringify({
             foo: "bar",
           }),
@@ -60,7 +60,7 @@ describe("AminoTypes", () => {
         initFunds: coins(1234, "ucosm"),
         admin: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
       };
-      const aminoMsg = new AminoTypes({ additions: defaultTypes }).toAmino({
+      const aminoMsg = new AminoTypes({ additions: cosmWasmTypes }).toAmino({
         typeUrl: "/cosmwasm.wasm.v1beta1.MsgInstantiateContract",
         value: msg,
       });
@@ -86,7 +86,7 @@ describe("AminoTypes", () => {
         newAdmin: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
         contract: "cosmos1xy4yqngt0nlkdcenxymg8tenrghmek4nmqm28k",
       };
-      const aminoMsg = new AminoTypes({ additions: defaultTypes }).toAmino({
+      const aminoMsg = new AminoTypes({ additions: cosmWasmTypes }).toAmino({
         typeUrl: "/cosmwasm.wasm.v1beta1.MsgUpdateAdmin",
         value: msg,
       });
@@ -106,7 +106,7 @@ describe("AminoTypes", () => {
         sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
         contract: "cosmos1xy4yqngt0nlkdcenxymg8tenrghmek4nmqm28k",
       };
-      const aminoMsg = new AminoTypes({ additions: defaultTypes }).toAmino({
+      const aminoMsg = new AminoTypes({ additions: cosmWasmTypes }).toAmino({
         typeUrl: "/cosmwasm.wasm.v1beta1.MsgClearAdmin",
         value: msg,
       });
@@ -124,14 +124,14 @@ describe("AminoTypes", () => {
       const msg: IMsgExecuteContract = {
         sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
         contract: "cosmos1xy4yqngt0nlkdcenxymg8tenrghmek4nmqm28k",
-        msg: toAscii(
+        msg: toUtf8(
           JSON.stringify({
             foo: "bar",
           }),
         ),
         sentFunds: coins(1234, "ucosm"),
       };
-      const aminoMsg = new AminoTypes({ additions: defaultTypes }).toAmino({
+      const aminoMsg = new AminoTypes({ additions: cosmWasmTypes }).toAmino({
         typeUrl: "/cosmwasm.wasm.v1beta1.MsgExecuteContract",
         value: msg,
       });
@@ -154,13 +154,13 @@ describe("AminoTypes", () => {
         sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
         contract: "cosmos1xy4yqngt0nlkdcenxymg8tenrghmek4nmqm28k",
         codeId: Long.fromString("98765"),
-        migrateMsg: toAscii(
+        migrateMsg: toUtf8(
           JSON.stringify({
             foo: "bar",
           }),
         ),
       };
-      const aminoMsg = new AminoTypes({ additions: defaultTypes }).toAmino({
+      const aminoMsg = new AminoTypes({ additions: cosmWasmTypes }).toAmino({
         typeUrl: "/cosmwasm.wasm.v1beta1.MsgMigrateContract",
         value: msg,
       });
@@ -190,7 +190,7 @@ describe("AminoTypes", () => {
           builder: "Bob",
         },
       };
-      const msg = new AminoTypes({ additions: defaultTypes }).fromAmino(aminoMsg);
+      const msg = new AminoTypes({ additions: cosmWasmTypes }).fromAmino(aminoMsg);
       const expectedValue: IMsgStoreCode = {
         sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
         wasmByteCode: fromBase64("WUVMTE9XIFNVQk1BUklORQ=="),
@@ -217,12 +217,12 @@ describe("AminoTypes", () => {
           admin: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
         },
       };
-      const msg = new AminoTypes({ additions: defaultTypes }).fromAmino(aminoMsg);
+      const msg = new AminoTypes({ additions: cosmWasmTypes }).fromAmino(aminoMsg);
       const expectedValue: IMsgInstantiateContract = {
         sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
         codeId: Long.fromString("12345"),
         label: "sticky",
-        initMsg: toAscii(
+        initMsg: toUtf8(
           JSON.stringify({
             foo: "bar",
           }),
@@ -245,7 +245,7 @@ describe("AminoTypes", () => {
           contract: "cosmos1xy4yqngt0nlkdcenxymg8tenrghmek4nmqm28k",
         },
       };
-      const msg = new AminoTypes({ additions: defaultTypes }).fromAmino(aminoMsg);
+      const msg = new AminoTypes({ additions: cosmWasmTypes }).fromAmino(aminoMsg);
       const expectedValue: IMsgUpdateAdmin = {
         sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
         newAdmin: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
@@ -265,7 +265,7 @@ describe("AminoTypes", () => {
           contract: "cosmos1xy4yqngt0nlkdcenxymg8tenrghmek4nmqm28k",
         },
       };
-      const msg = new AminoTypes({ additions: defaultTypes }).fromAmino(aminoMsg);
+      const msg = new AminoTypes({ additions: cosmWasmTypes }).fromAmino(aminoMsg);
       const expectedValue: IMsgClearAdmin = {
         sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
         contract: "cosmos1xy4yqngt0nlkdcenxymg8tenrghmek4nmqm28k",
@@ -288,11 +288,11 @@ describe("AminoTypes", () => {
           sent_funds: coins(1234, "ucosm"),
         },
       };
-      const msg = new AminoTypes({ additions: defaultTypes }).fromAmino(aminoMsg);
+      const msg = new AminoTypes({ additions: cosmWasmTypes }).fromAmino(aminoMsg);
       const expectedValue: IMsgExecuteContract = {
         sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
         contract: "cosmos1xy4yqngt0nlkdcenxymg8tenrghmek4nmqm28k",
-        msg: toAscii(
+        msg: toUtf8(
           JSON.stringify({
             foo: "bar",
           }),
@@ -317,12 +317,12 @@ describe("AminoTypes", () => {
           },
         },
       };
-      const msg = new AminoTypes({ additions: defaultTypes }).fromAmino(aminoMsg);
+      const msg = new AminoTypes({ additions: cosmWasmTypes }).fromAmino(aminoMsg);
       const expectedValue: IMsgMigrateContract = {
         sender: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
         contract: "cosmos1xy4yqngt0nlkdcenxymg8tenrghmek4nmqm28k",
         codeId: Long.fromString("98765"),
-        migrateMsg: toAscii(
+        migrateMsg: toUtf8(
           JSON.stringify({
             foo: "bar",
           }),

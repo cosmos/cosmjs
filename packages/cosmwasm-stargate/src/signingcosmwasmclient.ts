@@ -46,7 +46,7 @@ import { adaptor34, Client as TendermintClient } from "@cosmjs/tendermint-rpc";
 import Long from "long";
 import pako from "pako";
 
-import { defaultTypes } from "./aminotypes";
+import { cosmWasmTypes } from "./aminotypes";
 import { cosmwasm } from "./codec";
 import { CosmWasmClient } from "./cosmwasmclient";
 
@@ -146,7 +146,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     super(tmClient);
     const {
       registry = createDefaultRegistry(),
-      aminoTypes = new AminoTypes({ additions: defaultTypes, prefix: options.prefix }),
+      aminoTypes = new AminoTypes({ additions: cosmWasmTypes, prefix: options.prefix }),
       gasPrice = defaultGasPrice,
       gasLimits = defaultGasLimits,
     } = options;
@@ -392,7 +392,6 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       const signedTx = Uint8Array.from(TxRaw.encode(txRaw).finish());
       return this.broadcastTx(signedTx);
     }
-    // Amino signer
 
     // Amino signer
     const signMode = SignMode.SIGN_MODE_LEGACY_AMINO_JSON;
