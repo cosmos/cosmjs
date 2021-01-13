@@ -24,6 +24,9 @@ import {
   validator,
 } from "./testutils.spec";
 
+type IMsgSend = cosmos.bank.v1beta1.IMsgSend;
+type IMsgDelegate = cosmos.staking.v1beta1.IMsgDelegate;
+
 const { MsgSend } = cosmos.bank.v1beta1;
 const { MsgDelegate } = cosmos.staking.v1beta1;
 const { Tx } = cosmos.tx.v1beta1;
@@ -259,7 +262,7 @@ describe("SigningStargateClient", () => {
         const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
         const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, wallet);
 
-        const msgSend = {
+        const msgSend: IMsgSend = {
           fromAddress: faucet.address0,
           toAddress: makeRandomAddress(),
           amount: coins(1234, "ucosm"),
@@ -282,7 +285,7 @@ describe("SigningStargateClient", () => {
         const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
         const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, wallet);
 
-        const msgDelegate = {
+        const msgDelegate: IMsgDelegate = {
           delegatorAddress: faucet.address0,
           validatorAddress: validator.validatorAddress,
           amount: coin(1234, "ustake"),
