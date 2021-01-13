@@ -126,9 +126,33 @@ describe("SigningStargateClient", () => {
   });
 
   describe("sendTokens", () => {
-    it("works", async () => {
+    it("works with direct signer", async () => {
       pendingWithoutSimapp();
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+      const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, wallet);
+
+      const transferAmount = coins(7890, "ucosm");
+      const beneficiaryAddress = makeRandomAddress();
+      const memo = "for dinner";
+
+      // no tokens here
+      const before = await client.getBalance(beneficiaryAddress, "ucosm");
+      expect(before).toBeNull();
+
+      // send
+      const result = await client.sendTokens(faucet.address0, beneficiaryAddress, transferAmount, memo);
+      assertIsBroadcastTxSuccess(result);
+      expect(result.rawLog).toBeTruthy();
+
+      // got tokens
+      const after = await client.getBalance(beneficiaryAddress, "ucosm");
+      assert(after);
+      expect(after).toEqual(transferAmount[0]);
+    });
+
+    it("works with legacy Amino signer", async () => {
+      pendingWithoutSimapp();
+      const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, wallet);
 
       const transferAmount = coins(7890, "ucosm");
