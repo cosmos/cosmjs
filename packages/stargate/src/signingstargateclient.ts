@@ -49,6 +49,7 @@ export interface PrivateSigningStargateClient {
 export interface SigningStargateClientOptions {
   readonly registry?: Registry;
   readonly aminoTypes?: AminoTypes;
+  readonly prefix?: string;
   readonly gasPrice?: GasPrice;
   readonly gasLimits?: GasLimits<CosmosFeeTable>;
 }
@@ -83,7 +84,7 @@ export class SigningStargateClient extends StargateClient {
         ["/cosmos.staking.v1beta1.MsgEditValidator", MsgEditValidator],
         ["/cosmos.staking.v1beta1.MsgUndelegate", MsgUndelegate],
       ]),
-      aminoTypes = new AminoTypes(),
+      aminoTypes = new AminoTypes({ prefix: options.prefix }),
       gasPrice = defaultGasPrice,
       gasLimits = defaultGasLimits,
     } = options;

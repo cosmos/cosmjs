@@ -10,6 +10,7 @@ export interface PrivateSigningStargateClient {
 export interface SigningStargateClientOptions {
   readonly registry?: Registry;
   readonly aminoTypes?: AminoTypes;
+  readonly prefix?: string;
   readonly gasPrice?: GasPrice;
   readonly gasLimits?: GasLimits<CosmosFeeTable>;
 }
