@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/crypto",
-  "version": "0.24.0-alpha.14",
+  "version": "0.24.0-alpha.16",
   "description": "Cryptography resources for blockchain projects",
   "contributors": [
     "IOV SAS <admin@iov.one>",
@@ -45,9 +45,9 @@
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
   },
   "dependencies": {
-    "@cosmjs/encoding": "^0.24.0-alpha.14",
-    "@cosmjs/math": "^0.24.0-alpha.14",
-    "@cosmjs/utils": "^0.24.0-alpha.14",
+    "@cosmjs/encoding": "^0.24.0-alpha.16",
+    "@cosmjs/math": "^0.24.0-alpha.16",
+    "@cosmjs/utils": "^0.24.0-alpha.16",
     "bip39": "^3.0.2",
     "bn.js": "^4.11.8",
     "elliptic": "^6.5.3",
