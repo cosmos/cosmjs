@@ -40,6 +40,17 @@ const { TxRaw } = cosmos.tx.v1beta1;
 const defaultGasPrice = GasPrice.fromString("0.025ucosm");
 const defaultGasLimits: GasLimits<CosmosFeeTable> = { send: 80000 };
 
+function createDefaultRegistry(): Registry {
+  return new Registry([
+    ["/cosmos.bank.v1beta1.MsgMultiSend", MsgMultiSend],
+    ["/cosmos.staking.v1beta1.MsgBeginRedelegate", MsgBeginRedelegate],
+    ["/cosmos.staking.v1beta1.MsgCreateValidator", MsgCreateValidator],
+    ["/cosmos.staking.v1beta1.MsgDelegate", MsgDelegate],
+    ["/cosmos.staking.v1beta1.MsgEditValidator", MsgEditValidator],
+    ["/cosmos.staking.v1beta1.MsgUndelegate", MsgUndelegate],
+  ]);
+}
+
 /** Use for testing only */
 export interface PrivateSigningStargateClient {
   readonly fees: CosmosFeeTable;
@@ -49,6 +60,7 @@ export interface PrivateSigningStargateClient {
 export interface SigningStargateClientOptions {
   readonly registry?: Registry;
   readonly aminoTypes?: AminoTypes;
+  readonly prefix?: string;
   readonly gasPrice?: GasPrice;
   readonly gasLimits?: GasLimits<CosmosFeeTable>;
 }
@@ -57,7 +69,7 @@ export class SigningStargateClient extends StargateClient {
   private readonly fees: CosmosFeeTable;
   private readonly registry: Registry;
   private readonly signer: OfflineSigner;
-  private readonly aminoTypes;
+  private readonly aminoTypes: AminoTypes;
 
   public static async connectWithSigner(
     endpoint: string,
@@ -75,15 +87,8 @@ export class SigningStargateClient extends StargateClient {
   ) {
     super(tmClient);
     const {
-      registry = new Registry([
-        ["/cosmos.bank.v1beta1.MsgMultiSend", MsgMultiSend],
-        ["/cosmos.staking.v1beta1.MsgBeginRedelegate", MsgBeginRedelegate],
-        ["/cosmos.staking.v1beta1.MsgCreateValidator", MsgCreateValidator],
-        ["/cosmos.staking.v1beta1.MsgDelegate", MsgDelegate],
-        ["/cosmos.staking.v1beta1.MsgEditValidator", MsgEditValidator],
-        ["/cosmos.staking.v1beta1.MsgUndelegate", MsgUndelegate],
-      ]),
-      aminoTypes = new AminoTypes(),
+      registry = createDefaultRegistry(),
+      aminoTypes = new AminoTypes({ prefix: options.prefix }),
       gasPrice = defaultGasPrice,
       gasLimits = defaultGasLimits,
     } = options;
@@ -111,19 +116,19 @@ export class SigningStargateClient extends StargateClient {
   }
 
   public async signAndBroadcast(
-    address: string,
+    signerAddress: string,
     messages: readonly EncodeObject[],
     fee: StdFee,
     memo = "",
   ): Promise<BroadcastTxResponse> {
     const accountFromSigner = (await this.signer.getAccounts()).find(
-      (account: AccountData) => account.address === address,
+      (account: AccountData) => account.address === signerAddress,
     );
     if (!accountFromSigner) {
       throw new Error("Failed to retrieve account from signer");
     }
     const pubkey = encodeSecp256k1Pubkey(accountFromSigner.pubkey);
-    const accountFromChain = await this.getAccount(address);
+    const accountFromChain = await this.getAccount(signerAddress);
     if (!accountFromChain) {
       throw new Error("Account not found");
     }
@@ -146,7 +151,7 @@ export class SigningStargateClient extends StargateClient {
     if (isOfflineDirectSigner(this.signer)) {
       const authInfoBytes = makeAuthInfoBytes([pubkeyAny], fee.amount, gasLimit, sequence);
       const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);
-      const { signature, signed } = await this.signer.signDirect(address, signDoc);
+      const { signature, signed } = await this.signer.signDirect(signerAddress, signDoc);
       const txRaw = TxRaw.create({
         bodyBytes: signed.bodyBytes,
         authInfoBytes: signed.authInfoBytes,
@@ -160,7 +165,7 @@ export class SigningStargateClient extends StargateClient {
     const signMode = cosmos.tx.signing.v1beta1.SignMode.SIGN_MODE_LEGACY_AMINO_JSON;
     const msgs = messages.map((msg) => this.aminoTypes.toAmino(msg));
     const signDoc = makeSignDocAmino(msgs, fee, chainId, memo, accountNumber, sequence);
-    const { signature, signed } = await this.signer.signAmino(address, signDoc);
+    const { signature, signed } = await this.signer.signAmino(signerAddress, signDoc);
     const signedTxBody = {
       messages: signed.msgs.map((msg) => this.aminoTypes.fromAmino(msg)),
       memo: signed.memo,

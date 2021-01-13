@@ -21,18 +21,21 @@ import {
   GasLimits,
   GasPrice,
   logs,
+  makeSignDoc as makeSignDocAmino,
   StdFee,
 } from "@cosmjs/launchpad";
 import { Int53, Uint53 } from "@cosmjs/math";
 import {
   EncodeObject,
   encodePubkey,
+  isOfflineDirectSigner,
   makeAuthInfoBytes,
   makeSignDoc,
-  OfflineDirectSigner,
+  OfflineSigner,
   Registry,
 } from "@cosmjs/proto-signing";
 import {
+  AminoTypes,
   BroadcastTxFailure,
   BroadcastTxResponse,
   codec,
@@ -43,10 +46,20 @@ import { adaptor34, Client as TendermintClient } from "@cosmjs/tendermint-rpc";
 import Long from "long";
 import pako from "pako";
 
+import { cosmWasmTypes } from "./aminotypes";
 import { cosmwasm } from "./codec";
 import { CosmWasmClient } from "./cosmwasmclient";
 
+const { SignMode } = codec.cosmos.tx.signing.v1beta1;
 const { TxRaw } = codec.cosmos.tx.v1beta1;
+const { MsgMultiSend } = codec.cosmos.bank.v1beta1;
+const {
+  MsgBeginRedelegate,
+  MsgCreateValidator,
+  MsgDelegate,
+  MsgEditValidator,
+  MsgUndelegate,
+} = codec.cosmos.staking.v1beta1;
 const {
   MsgClearAdmin,
   MsgExecuteContract,
@@ -81,6 +94,12 @@ function createBroadcastTxErrorMessage(result: BroadcastTxFailure): string {
 
 function createDefaultRegistry(): Registry {
   return new Registry([
+    ["/cosmos.bank.v1beta1.MsgMultiSend", MsgMultiSend],
+    ["/cosmos.staking.v1beta1.MsgBeginRedelegate", MsgBeginRedelegate],
+    ["/cosmos.staking.v1beta1.MsgCreateValidator", MsgCreateValidator],
+    ["/cosmos.staking.v1beta1.MsgDelegate", MsgDelegate],
+    ["/cosmos.staking.v1beta1.MsgEditValidator", MsgEditValidator],
+    ["/cosmos.staking.v1beta1.MsgUndelegate", MsgUndelegate],
     ["/cosmwasm.wasm.v1beta1.MsgClearAdmin", MsgClearAdmin],
     ["/cosmwasm.wasm.v1beta1.MsgExecuteContract", MsgExecuteContract],
     ["/cosmwasm.wasm.v1beta1.MsgMigrateContract", MsgMigrateContract],
@@ -92,6 +111,8 @@ function createDefaultRegistry(): Registry {
 
 export interface SigningCosmWasmClientOptions {
   readonly registry?: Registry;
+  readonly aminoTypes?: AminoTypes;
+  readonly prefix?: string;
   readonly gasPrice?: GasPrice;
   readonly gasLimits?: GasLimits<CosmosFeeTable>;
 }
@@ -99,16 +120,18 @@ export interface SigningCosmWasmClientOptions {
 /** Use for testing only */
 export interface PrivateSigningCosmWasmClient {
   readonly fees: CosmWasmFeeTable;
+  readonly registry: Registry;
 }
 
 export class SigningCosmWasmClient extends CosmWasmClient {
   private readonly fees: CosmosFeeTable;
   private readonly registry: Registry;
-  private readonly signer: OfflineDirectSigner;
+  private readonly signer: OfflineSigner;
+  private readonly aminoTypes: AminoTypes;
 
   public static async connectWithSigner(
     endpoint: string,
-    signer: OfflineDirectSigner,
+    signer: OfflineSigner,
     options: SigningCosmWasmClientOptions = {},
   ): Promise<SigningCosmWasmClient> {
     const tmClient = await TendermintClient.connect(endpoint, adaptor34);
@@ -117,17 +140,19 @@ export class SigningCosmWasmClient extends CosmWasmClient {
 
   private constructor(
     tmClient: TendermintClient,
-    signer: OfflineDirectSigner,
+    signer: OfflineSigner,
     options: SigningCosmWasmClientOptions,
   ) {
     super(tmClient);
     const {
       registry = createDefaultRegistry(),
+      aminoTypes = new AminoTypes({ additions: cosmWasmTypes, prefix: options.prefix }),
       gasPrice = defaultGasPrice,
       gasLimits = defaultGasLimits,
     } = options;
     this.fees = buildFeeTable<CosmosFeeTable>(gasPrice, defaultGasLimits, gasLimits);
     this.registry = registry;
+    this.aminoTypes = aminoTypes;
     this.signer = signer;
   }
 
@@ -355,12 +380,44 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     });
     const gasLimit = Int53.fromString(fee.gas).toNumber();
 
-    const authInfoBytes = makeAuthInfoBytes([pubkeyAny], fee.amount, gasLimit, sequence);
-    const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);
-    const { signature, signed } = await this.signer.signDirect(signerAddress, signDoc);
+    if (isOfflineDirectSigner(this.signer)) {
+      const authInfoBytes = makeAuthInfoBytes([pubkeyAny], fee.amount, gasLimit, sequence);
+      const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);
+      const { signature, signed } = await this.signer.signDirect(signerAddress, signDoc);
+      const txRaw = TxRaw.create({
+        bodyBytes: signed.bodyBytes,
+        authInfoBytes: signed.authInfoBytes,
+        signatures: [fromBase64(signature.signature)],
+      });
+      const signedTx = Uint8Array.from(TxRaw.encode(txRaw).finish());
+      return this.broadcastTx(signedTx);
+    }
+
+    // Amino signer
+    const signMode = SignMode.SIGN_MODE_LEGACY_AMINO_JSON;
+    const msgs = messages.map((msg) => this.aminoTypes.toAmino(msg));
+    const signDoc = makeSignDocAmino(msgs, fee, chainId, memo, accountNumber, sequence);
+    const { signature, signed } = await this.signer.signAmino(signerAddress, signDoc);
+    const signedTxBody = {
+      messages: signed.msgs.map((msg) => this.aminoTypes.fromAmino(msg)),
+      memo: signed.memo,
+    };
+    const signedTxBodyBytes = this.registry.encode({
+      typeUrl: "/cosmos.tx.v1beta1.TxBody",
+      value: signedTxBody,
+    });
+    const signedGasLimit = Int53.fromString(signed.fee.gas).toNumber();
+    const signedSequence = Int53.fromString(signed.sequence).toNumber();
+    const signedAuthInfoBytes = makeAuthInfoBytes(
+      [pubkeyAny],
+      signed.fee.amount,
+      signedGasLimit,
+      signedSequence,
+      signMode,
+    );
     const txRaw = TxRaw.create({
-      bodyBytes: signed.bodyBytes,
-      authInfoBytes: signed.authInfoBytes,
+      bodyBytes: signedTxBodyBytes,
+      authInfoBytes: signedAuthInfoBytes,
       signatures: [fromBase64(signature.signature)],
     });
     const signedTx = Uint8Array.from(TxRaw.encode(txRaw).finish());

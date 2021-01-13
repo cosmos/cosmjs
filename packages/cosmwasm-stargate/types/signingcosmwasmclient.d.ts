@@ -9,25 +9,29 @@ import {
   UploadResult,
 } from "@cosmjs/cosmwasm-launchpad";
 import { Coin, CosmosFeeTable, GasLimits, GasPrice, StdFee } from "@cosmjs/launchpad";
-import { EncodeObject, OfflineDirectSigner, Registry } from "@cosmjs/proto-signing";
-import { BroadcastTxResponse } from "@cosmjs/stargate";
+import { EncodeObject, OfflineSigner, Registry } from "@cosmjs/proto-signing";
+import { AminoTypes, BroadcastTxResponse } from "@cosmjs/stargate";
 import { CosmWasmClient } from "./cosmwasmclient";
 export interface SigningCosmWasmClientOptions {
   readonly registry?: Registry;
+  readonly aminoTypes?: AminoTypes;
+  readonly prefix?: string;
   readonly gasPrice?: GasPrice;
   readonly gasLimits?: GasLimits<CosmosFeeTable>;
 }
 /** Use for testing only */
 export interface PrivateSigningCosmWasmClient {
   readonly fees: CosmWasmFeeTable;
+  readonly registry: Registry;
 }
 export declare class SigningCosmWasmClient extends CosmWasmClient {
   private readonly fees;
   private readonly registry;
   private readonly signer;
+  private readonly aminoTypes;
   static connectWithSigner(
     endpoint: string,
-    signer: OfflineDirectSigner,
+    signer: OfflineSigner,
     options?: SigningCosmWasmClientOptions,
   ): Promise<SigningCosmWasmClient>;
   private constructor();

@@ -10,6 +10,7 @@ export interface PrivateSigningStargateClient {
 export interface SigningStargateClientOptions {
   readonly registry?: Registry;
   readonly aminoTypes?: AminoTypes;
+  readonly prefix?: string;
   readonly gasPrice?: GasPrice;
   readonly gasLimits?: GasLimits<CosmosFeeTable>;
 }
@@ -31,7 +32,7 @@ export declare class SigningStargateClient extends StargateClient {
     memo?: string,
   ): Promise<BroadcastTxResponse>;
   signAndBroadcast(
-    address: string,
+    signerAddress: string,
     messages: readonly EncodeObject[],
     fee: StdFee,
     memo?: string,

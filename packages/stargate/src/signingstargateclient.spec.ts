@@ -24,6 +24,9 @@ import {
   validator,
 } from "./testutils.spec";
 
+type IMsgSend = cosmos.bank.v1beta1.IMsgSend;
+type IMsgDelegate = cosmos.staking.v1beta1.IMsgDelegate;
+
 const { MsgSend } = cosmos.bank.v1beta1;
 const { MsgDelegate } = cosmos.staking.v1beta1;
 const { Tx } = cosmos.tx.v1beta1;
@@ -126,9 +129,33 @@ describe("SigningStargateClient", () => {
   });
 
   describe("sendTokens", () => {
-    it("works", async () => {
+    it("works with direct signer", async () => {
       pendingWithoutSimapp();
       const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+      const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, wallet);
+
+      const transferAmount = coins(7890, "ucosm");
+      const beneficiaryAddress = makeRandomAddress();
+      const memo = "for dinner";
+
+      // no tokens here
+      const before = await client.getBalance(beneficiaryAddress, "ucosm");
+      expect(before).toBeNull();
+
+      // send
+      const result = await client.sendTokens(faucet.address0, beneficiaryAddress, transferAmount, memo);
+      assertIsBroadcastTxSuccess(result);
+      expect(result.rawLog).toBeTruthy();
+
+      // got tokens
+      const after = await client.getBalance(beneficiaryAddress, "ucosm");
+      assert(after);
+      expect(after).toEqual(transferAmount[0]);
+    });
+
+    it("works with legacy Amino signer", async () => {
+      pendingWithoutSimapp();
+      const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
       const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, wallet);
 
       const transferAmount = coins(7890, "ucosm");
@@ -235,7 +262,7 @@ describe("SigningStargateClient", () => {
         const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
         const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, wallet);
 
-        const msgSend = {
+        const msgSend: IMsgSend = {
           fromAddress: faucet.address0,
           toAddress: makeRandomAddress(),
           amount: coins(1234, "ucosm"),
@@ -258,7 +285,7 @@ describe("SigningStargateClient", () => {
         const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
         const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, wallet);
 
-        const msgDelegate = {
+        const msgDelegate: IMsgDelegate = {
           delegatorAddress: faucet.address0,
           validatorAddress: validator.validatorAddress,
           amount: coin(1234, "ustake"),

@@ -1,7 +1,13 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Bip39, EnglishMnemonic, Random, Secp256k1, Slip10, Slip10Curve } from "@cosmjs/crypto";
 import { Bech32, fromBase64 } from "@cosmjs/encoding";
-import { coins, makeCosmoshubPath } from "@cosmjs/launchpad";
+import {
+  AminoSignResponse,
+  coins,
+  makeCosmoshubPath,
+  Secp256k1HdWallet,
+  StdSignDoc,
+} from "@cosmjs/launchpad";
 import { DirectSecp256k1HdWallet, DirectSignResponse, makeAuthInfoBytes } from "@cosmjs/proto-signing";
 import {
   AuthExtension,
@@ -203,6 +209,41 @@ export async function makeWasmClient(
 ): Promise<QueryClient & AuthExtension & BankExtension & WasmExtension> {
   const tmClient = await TendermintClient.connect(endpoint, adaptor34);
   return QueryClient.withExtensions(tmClient, setupAuthExtension, setupBankExtension, setupWasmExtension);
+}
+
+/**
+ * A class for testing clients using an Amino signer which modifies the transaction it receives before signing
+ */
+export class ModifyingSecp256k1HdWallet extends Secp256k1HdWallet {
+  public static async fromMnemonic(
+    mnemonic: string,
+    hdPath = makeCosmoshubPath(0),
+    prefix = "cosmos",
+  ): Promise<ModifyingSecp256k1HdWallet> {
+    const mnemonicChecked = new EnglishMnemonic(mnemonic);
+    const seed = await Bip39.mnemonicToSeed(mnemonicChecked);
+    const { privkey } = Slip10.derivePath(Slip10Curve.Secp256k1, seed, hdPath);
+    const uncompressed = (await Secp256k1.makeKeypair(privkey)).pubkey;
+    return new ModifyingSecp256k1HdWallet(
+      mnemonicChecked,
+      hdPath,
+      privkey,
+      Secp256k1.compressPubkey(uncompressed),
+      prefix,
+    );
+  }
+
+  public async signAmino(signerAddress: string, signDoc: StdSignDoc): Promise<AminoSignResponse> {
+    const modifiedSignDoc = {
+      ...signDoc,
+      fee: {
+        amount: coins(3000, "ucosm"),
+        gas: "333333",
+      },
+      memo: "This was modified",
+    };
+    return super.signAmino(signerAddress, modifiedSignDoc);
+  }
 }
 
 /**

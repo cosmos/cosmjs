@@ -49,6 +49,14 @@
 - @cosmjs/tendermint-rpc: Remove types `BlockHash`, `TxBytes` and `TxHash`. Use
   `Uint8Array` instead.
 
+### Added
+
+- @cosmjs/utils: Added `assertDefinedAndNotNull`.
+
+### Removed
+
+- @cosmjs/utils: `assertDefined` removed in favour of `assertDefinedAndNotNull`.
+
 ## 0.23.2 (2021-01-06)
 
 ### Security
