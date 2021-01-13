@@ -31,7 +31,7 @@ export declare class SigningStargateClient extends StargateClient {
     memo?: string,
   ): Promise<BroadcastTxResponse>;
   signAndBroadcast(
-    address: string,
+    signerAddress: string,
     messages: readonly EncodeObject[],
     fee: StdFee,
     memo?: string,
