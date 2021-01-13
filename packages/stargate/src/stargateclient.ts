@@ -18,7 +18,7 @@ import {
   Client as TendermintClient,
   DateTime,
 } from "@cosmjs/tendermint-rpc";
-import { assert, assertDefined } from "@cosmjs/utils";
+import { assert, assertDefinedAndNotNull } from "@cosmjs/utils";
 import Long from "long";
 
 import { cosmos } from "./codec";
@@ -110,10 +110,8 @@ export function accountFromProto(input: IBaseAccount): Account {
 }
 
 export function coinFromProto(input: ICoin): Coin {
-  assertDefined(input.amount);
-  assertDefined(input.denom);
-  assert(input.amount !== null);
-  assert(input.denom !== null);
+  assertDefinedAndNotNull(input.amount);
+  assertDefinedAndNotNull(input.denom);
   return {
     amount: input.amount,
     denom: input.denom,
