@@ -2,20 +2,33 @@
 import { Secp256k1, Secp256k1Signature, sha256 } from "@cosmjs/crypto";
 import { fromBase64 } from "@cosmjs/encoding";
 import {
+  assertIsBroadcastTxSuccess as assertIsBroadcastTxSuccessLaunchpad,
   coins,
-  isBroadcastTxSuccess,
   makeCosmoshubPath,
   makeSignDoc,
   Msg,
+  Secp256k1HdWallet,
   serializeSignDoc,
   SigningCosmosClient,
   StdFee,
 } from "@cosmjs/launchpad";
-import { assert, sleep } from "@cosmjs/utils";
+import {
+  assertIsBroadcastTxSuccess as assertIsBroadcastTxSuccessStargate,
+  SigningStargateClient,
+} from "@cosmjs/stargate";
+import { sleep } from "@cosmjs/utils";
 import Transport from "@ledgerhq/hw-transport";
 
 import { LedgerSigner } from "./ledgersigner";
-import { launchpad, pendingWithoutLaunchpad, pendingWithoutLedger } from "./testutils.spec";
+import {
+  faucet,
+  launchpad,
+  pendingWithoutLaunchpad,
+  pendingWithoutLedger,
+  pendingWithoutSimapp,
+  simapp,
+  simappEnabled,
+} from "./testutils.spec";
 
 const interactiveTimeout = 120_000;
 
@@ -44,8 +57,19 @@ describe("LedgerSigner", () => {
   const defaultMemo = "Some memo";
   const defaultSequence = "0";
   const defaultAccountNumber = "42";
-  const defaultRecipient = "cosmos1p6xs63q4g7np99ttv5nd3yzkt8n4qxa47w8aea";
+  const defaultLedgerAddress = "cosmos1p6xs63q4g7np99ttv5nd3yzkt8n4qxa47w8aea";
   let transport: Transport;
+
+  beforeAll(async () => {
+    if (simappEnabled()) {
+      const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+      const client = await SigningStargateClient.connectWithSigner(simapp.endpoint, wallet);
+      const amount = coins(226644, "ucosm");
+      const memo = "Ensure chain has my pubkey";
+      const sendResult = await client.sendTokens(faucet.address, defaultLedgerAddress, amount, memo);
+      assertIsBroadcastTxSuccessStargate(sendResult);
+    }
+  });
 
   beforeEach(async () => {
     transport = await createTransport();
@@ -100,15 +124,15 @@ describe("LedgerSigner", () => {
           hdPaths: [makeCosmoshubPath(0), makeCosmoshubPath(1), makeCosmoshubPath(10)],
         });
 
-        const [fistAccount] = await signer.getAccounts();
+        const [firstAccount] = await signer.getAccounts();
 
         const msgs: readonly Msg[] = [
           {
             type: "cosmos-sdk/MsgSend",
             value: {
               amount: coins(1234567, "ucosm"),
-              from_address: fistAccount.address,
-              to_address: defaultRecipient,
+              from_address: firstAccount.address,
+              to_address: defaultLedgerAddress,
             },
           },
         ];
@@ -120,12 +144,12 @@ describe("LedgerSigner", () => {
           defaultAccountNumber,
           defaultSequence,
         );
-        const { signed, signature } = await signer.signAmino(fistAccount.address, signDoc);
+        const { signed, signature } = await signer.signAmino(firstAccount.address, signDoc);
         expect(signed).toEqual(signDoc);
         const valid = await Secp256k1.verifySignature(
           Secp256k1Signature.fromFixedLength(fromBase64(signature.signature)),
           sha256(serializeSignDoc(signed)),
-          fistAccount.pubkey,
+          firstAccount.pubkey,
         );
         expect(valid).toEqual(true);
       },
@@ -133,7 +157,7 @@ describe("LedgerSigner", () => {
     );
 
     it(
-      "creates signature accepted by launchpad backend",
+      "creates signature accepted by Launchpad backend",
       async () => {
         pendingWithoutLedger();
         pendingWithoutLaunchpad();
@@ -141,11 +165,33 @@ describe("LedgerSigner", () => {
           testModeAllowed: true,
           hdPaths: [makeCosmoshubPath(0), makeCosmoshubPath(1), makeCosmoshubPath(10)],
         });
-        const [fistAccount] = await signer.getAccounts();
+        const [firstAccount] = await signer.getAccounts();
 
-        const client = new SigningCosmosClient(launchpad.endpoint, fistAccount.address, signer);
-        const result = await client.sendTokens(defaultRecipient, coins(1234567, "ucosm"));
-        assert(isBroadcastTxSuccess(result));
+        const client = new SigningCosmosClient(launchpad.endpoint, firstAccount.address, signer);
+        const result = await client.sendTokens(defaultLedgerAddress, coins(1234567, "ucosm"));
+        assertIsBroadcastTxSuccessLaunchpad(result);
+      },
+      interactiveTimeout,
+    );
+
+    it(
+      "creates signature accepted by Stargate backend",
+      async () => {
+        pendingWithoutLedger();
+        pendingWithoutSimapp();
+        const signer = new LedgerSigner(transport, {
+          testModeAllowed: true,
+          hdPaths: [makeCosmoshubPath(0), makeCosmoshubPath(1), makeCosmoshubPath(10)],
+        });
+        const [firstAccount] = await signer.getAccounts();
+
+        const client = await SigningStargateClient.connectWithSigner(simapp.endpoint, signer);
+        const result = await client.sendTokens(
+          firstAccount.address,
+          defaultLedgerAddress,
+          coins(1234, "ucosm"),
+        );
+        assertIsBroadcastTxSuccessStargate(result);
       },
       interactiveTimeout,
     );
