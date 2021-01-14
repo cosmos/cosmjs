@@ -53,10 +53,6 @@
 
 - @cosmjs/utils: Added `assertDefinedAndNotNull`.
 
-### Removed
-
-- @cosmjs/utils: `assertDefined` removed in favour of `assertDefinedAndNotNull`.
-
 ## 0.23.2 (2021-01-06)
 
 ### Security
