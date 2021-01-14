@@ -9,7 +9,7 @@ import {
   parseRawLog,
   SigningStargateClient,
 } from "@cosmjs/stargate";
-import { assert, assertDefinedAndNotNull } from "@cosmjs/utils";
+import { assert, assertDefined } from "@cosmjs/utils";
 import Long from "long";
 
 import { cosmwasm } from "../codec";
@@ -395,7 +395,7 @@ describe("WasmExtension", () => {
         expect(codeId).toBeGreaterThanOrEqual(1);
         expect(codeId).toBeLessThanOrEqual(200);
 
-        assertDefinedAndNotNull(result.data);
+        assertDefined(result.data);
         const msgData = fromOneElementArray(result.data);
         expect(msgData.msgType).toEqual("store-code");
         expect(MsgStoreCodeResponse.decode(msgData.data!)).toEqual(
@@ -415,7 +415,7 @@ describe("WasmExtension", () => {
         const amountAttr = logs.findAttribute(parsedLogs, "transfer", "amount");
         expect(amountAttr.value).toEqual("1234ucosm,321ustake");
 
-        assertDefinedAndNotNull(result.data);
+        assertDefined(result.data);
         const msgData = fromOneElementArray(result.data);
         expect(msgData.msgType).toEqual("instantiate");
         expect(MsgInstantiateContractResponse.decode(msgData.data!)).toEqual(
@@ -441,7 +441,7 @@ describe("WasmExtension", () => {
           value: beneficiaryAddress,
         });
 
-        assertDefinedAndNotNull(result.data);
+        assertDefined(result.data);
         const msgData = fromOneElementArray(result.data);
         expect(msgData.msgType).toEqual("execute");
         expect(MsgExecuteContractResponse.decode(msgData.data!)).toEqual(
