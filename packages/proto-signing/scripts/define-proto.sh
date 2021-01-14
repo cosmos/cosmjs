@@ -2,15 +2,25 @@
 set -o errexit -o nounset -o pipefail
 command -v shellcheck >/dev/null && shellcheck "$0"
 
-TMP_DIR="./tmp"
-JS_SOURCE_FILE="$TMP_DIR/codecimpl.js"
-DEFINITIONS_FILE="$TMP_DIR/codecimpl.d.ts"
-OUTPUT_DIR="./src/codec/generated/"
+ROOT_PROTO_DIR="./proto/cosmos/cosmos-sdk"
+THIRD_PARTY_PROTO_DIR="$ROOT_PROTO_DIR/third_party/proto"
+COSMOS_PROTO_DIR="$ROOT_PROTO_DIR/proto"
+OUT_DIR="./src/codec/"
 
-yarn pbts "$JS_SOURCE_FILE" -o "$DEFINITIONS_FILE"
-# Remove comments after using them for the .d.ts
-# Note "When input files are specified on the command line, tsconfig.json files are ignored." (https://www.typescriptlang.org/docs/handbook/tsconfig-json.html)
-yarn tsc --removeComments --target es2017 --module commonjs --outDir "$OUTPUT_DIR" --allowJs "$JS_SOURCE_FILE"
+mkdir -p "$OUT_DIR"
 
-cp "$DEFINITIONS_FILE" "$OUTPUT_DIR"
-rm "$DEFINITIONS_FILE" "$JS_SOURCE_FILE"
+protoc \
+  --plugin="$(yarn bin protoc-gen-ts_proto)" \
+  --ts_proto_out="$OUT_DIR" \
+  --proto_path="$COSMOS_PROTO_DIR" \
+  --proto_path="$THIRD_PARTY_PROTO_DIR" \
+  --ts_proto_opt="forceLong=long,useOptionals=true" \
+  "$THIRD_PARTY_PROTO_DIR/gogoproto/gogo.proto" \
+  "$COSMOS_PROTO_DIR/cosmos/base/v1beta1/coin.proto" \
+  "$COSMOS_PROTO_DIR/cosmos/bank/v1beta1/bank.proto" \
+  "$COSMOS_PROTO_DIR/cosmos/bank/v1beta1/tx.proto" \
+  "$COSMOS_PROTO_DIR/cosmos/crypto/multisig/v1beta1/multisig.proto" \
+  "$COSMOS_PROTO_DIR/cosmos/crypto/secp256k1/keys.proto" \
+  "$COSMOS_PROTO_DIR/cosmos/tx/v1beta1/tx.proto" \
+  "$COSMOS_PROTO_DIR/cosmos/tx/signing/v1beta1/signing.proto" \
+  "$THIRD_PARTY_PROTO_DIR/tendermint/crypto/keys.proto"
