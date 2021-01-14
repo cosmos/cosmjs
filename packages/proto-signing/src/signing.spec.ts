@@ -1,16 +1,14 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { fromBase64, fromHex, toHex } from "@cosmjs/encoding";
 
-import { cosmos, google } from "./codec";
+import { PubKey } from "./codec/cosmos/crypto/secp256k1/keys";
+import { SignMode } from "./codec/cosmos/tx/signing/v1beta1/signing";
+import { Tx, TxRaw } from "./codec/cosmos/tx/v1beta1/tx";
+import { Any } from "./codec/google/protobuf/any";
 import { DirectSecp256k1HdWallet } from "./directsecp256k1hdwallet";
-import { defaultRegistry } from "./msgs";
 import { Registry, TxBodyValue } from "./registry";
 import { makeAuthInfoBytes, makeSignBytes, makeSignDoc } from "./signing";
 import { faucet, testVectors } from "./testutils.spec";
-
-const { Tx, TxRaw } = cosmos.tx.v1beta1;
-const { PubKey } = cosmos.crypto.secp256k1;
-const { Any } = google.protobuf;
 
 describe("signing", () => {
   const chainId = "simd-testing";
@@ -34,25 +32,26 @@ describe("signing", () => {
     testVectors.forEach(({ signedTxBytes }) => {
       const parsedTestTx = Tx.decode(fromHex(signedTxBytes));
       expect(parsedTestTx.signatures.length).toEqual(1);
-      expect(parsedTestTx.authInfo!.signerInfos!.length).toEqual(1);
-      expect(Uint8Array.from(parsedTestTx.authInfo!.signerInfos![0].publicKey!.value ?? [])).toEqual(
+      expect(parsedTestTx.authInfo!.signerInfos.length).toEqual(1);
+      expect(Uint8Array.from(parsedTestTx.authInfo!.signerInfos[0].publicKey!.value ?? [])).toEqual(
         prefixedPubkeyBytes,
       );
       expect(parsedTestTx.authInfo?.signerInfos![0].modeInfo!.single!.mode).toEqual(
-        cosmos.tx.signing.v1beta1.SignMode.SIGN_MODE_DIRECT,
+        SignMode.SIGN_MODE_DIRECT,
       );
-      expect({ ...parsedTestTx.authInfo!.fee!.amount![0] }).toEqual({ denom: "ucosm", amount: "2000" });
-      expect(parsedTestTx.authInfo!.fee!.gasLimit!.toString()).toEqual(gasLimit.toString());
+      expect({ ...parsedTestTx.authInfo!.fee!.amount[0] }).toEqual({ denom: "ucosm", amount: "2000" });
+      expect(parsedTestTx.authInfo!.fee!.gasLimit.toString()).toEqual(gasLimit.toString());
       expect(parsedTestTx.body!.extensionOptions).toEqual([]);
       expect(parsedTestTx.body!.nonCriticalExtensionOptions).toEqual([]);
-      expect(parsedTestTx.body!.messages!.length).toEqual(1);
+      expect(parsedTestTx.body!.messages.length).toEqual(1);
 
-      const parsedTestTxMsg = defaultRegistry.decode({
-        typeUrl: parsedTestTx.body!.messages![0].type_url!,
-        value: parsedTestTx.body!.messages![0].value!,
+      const registry = new Registry();
+      const parsedTestTxMsg = registry.decode({
+        typeUrl: parsedTestTx.body!.messages[0].typeUrl,
+        value: parsedTestTx.body!.messages[0].value,
       });
-      expect(parsedTestTxMsg.from_address).toEqual(address);
-      expect(parsedTestTxMsg.to_address).toEqual(toAddress);
+      expect(parsedTestTxMsg.fromAddress).toEqual(address);
+      expect(parsedTestTxMsg.toAddress).toEqual(toAddress);
       expect(parsedTestTxMsg.amount.length).toEqual(1);
       expect(parsedTestTxMsg.amount[0].denom).toEqual(sendDenom);
       expect(parsedTestTxMsg.amount[0].amount).toEqual(sendAmount);
@@ -63,7 +62,7 @@ describe("signing", () => {
     const myRegistry = new Registry();
     const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
     const [{ address, pubkey: pubkeyBytes }] = await wallet.getAccounts();
-    const publicKey = PubKey.create({
+    const publicKey = PubKey.fromJSON({
       key: pubkeyBytes,
     });
     const publicKeyBytes = PubKey.encode(publicKey).finish();
@@ -90,7 +89,7 @@ describe("signing", () => {
       value: txBodyFields,
     });
 
-    const publicKeyAny = Any.create({ type_url: "/cosmos.crypto.secp256k1.PubKey", value: publicKeyBytes });
+    const publicKeyAny = Any.fromJSON({ typeUrl: "/cosmos.crypto.secp256k1.PubKey", value: publicKeyBytes });
     const accountNumber = 1;
 
     await Promise.all(
@@ -101,7 +100,7 @@ describe("signing", () => {
         expect(toHex(signDocBytes)).toEqual(signBytes);
 
         const { signature } = await wallet.signDirect(address, signDoc);
-        const txRaw = TxRaw.create({
+        const txRaw = TxRaw.fromPartial({
           bodyBytes: txBodyBytes,
           authInfoBytes: authInfoBytes,
           signatures: [fromBase64(signature.signature)],

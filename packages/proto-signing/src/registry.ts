@@ -2,12 +2,17 @@
 import Long from "long";
 import protobuf from "protobufjs";
 
-import { cosmos, google } from "./codec";
+import { MsgSend } from "./codec/cosmos/bank/v1beta1/tx";
+import { Coin } from "./codec/cosmos/base/v1beta1/coin";
+import { TxBody } from "./codec/cosmos/tx/v1beta1/tx";
+import { Any } from "./codec/google/protobuf/any";
 
 export interface GeneratedType {
-  readonly create: (properties?: { [k: string]: any }) => any;
   readonly encode: (message: any | { [k: string]: any }, writer?: protobuf.Writer) => protobuf.Writer;
-  readonly decode: (reader: protobuf.Reader | Uint8Array, length?: number) => any;
+  readonly decode: (input: Uint8Array | protobuf.Reader, length?: number) => any;
+  readonly fromJSON: (object: { [k: string]: any }) => any;
+  readonly fromPartial: (object: { [k: string]: any }) => any;
+  readonly toJSON: (message: any | { [k: string]: any }) => unknown;
 }
 
 export interface EncodeObject {
@@ -24,8 +29,8 @@ export interface TxBodyValue {
   readonly messages: readonly EncodeObject[];
   readonly memo?: string;
   readonly timeoutHeight?: Long;
-  readonly extensionOptions?: google.protobuf.IAny[];
-  readonly nonCriticalExtensionOptions?: google.protobuf.IAny[];
+  readonly extensionOptions?: Any[];
+  readonly nonCriticalExtensionOptions?: Any[];
 }
 
 const defaultTypeUrls = {
@@ -41,8 +46,8 @@ export class Registry {
   public constructor(customTypes: Iterable<[string, GeneratedType]> = []) {
     const { cosmosCoin, cosmosMsgSend } = defaultTypeUrls;
     this.types = new Map<string, GeneratedType>([
-      [cosmosCoin, cosmos.base.v1beta1.Coin],
-      [cosmosMsgSend, cosmos.bank.v1beta1.MsgSend],
+      [cosmosCoin, Coin],
+      [cosmosMsgSend, MsgSend],
       ...customTypes,
     ]);
   }
@@ -68,22 +73,19 @@ export class Registry {
       return this.encodeTxBody(value);
     }
     const type = this.lookupTypeWithError(typeUrl);
-    const created = type.create(value);
+    const created = type.fromPartial(value);
     return Uint8Array.from(type.encode(created).finish());
   }
 
   public encodeTxBody(txBodyFields: TxBodyValue): Uint8Array {
-    const { TxBody } = cosmos.tx.v1beta1;
-    const { Any } = google.protobuf;
-
     const wrappedMessages = txBodyFields.messages.map((message) => {
       const messageBytes = this.encode(message);
-      return Any.create({
-        type_url: message.typeUrl,
+      return Any.fromJSON({
+        typeUrl: message.typeUrl,
         value: messageBytes,
       });
     });
-    const txBody = TxBody.create({
+    const txBody = TxBody.fromPartial({
       ...txBodyFields,
       messages: wrappedMessages,
     });
@@ -104,13 +106,12 @@ export class Registry {
     return decoded;
   }
 
-  public decodeTxBody(txBody: Uint8Array): cosmos.tx.v1beta1.TxBody {
-    const { TxBody } = cosmos.tx.v1beta1;
+  public decodeTxBody(txBody: Uint8Array): TxBody {
     const decodedTxBody = TxBody.decode(txBody);
 
     return {
       ...decodedTxBody,
-      messages: decodedTxBody.messages.map(({ type_url: typeUrl, value }: google.protobuf.IAny) => {
+      messages: decodedTxBody.messages.map(({ typeUrl: typeUrl, value }: Any) => {
         if (!typeUrl) {
           throw new Error("Missing type_url in Any");
         }

@@ -3,7 +3,10 @@ import { assert } from "@cosmjs/utils";
 import Long from "long";
 import protobuf from "protobufjs";
 
-import { cosmos, google } from "./codec";
+import { MsgSend } from "./codec/cosmos/bank/v1beta1/tx";
+import { Coin } from "./codec/cosmos/base/v1beta1/coin";
+import { TxBody } from "./codec/cosmos/tx/v1beta1/tx";
+import { Any } from "./codec/google/protobuf/any";
 import reflectionRoot from "./demo";
 import demoJson from "./demo.json";
 import demoProto from "./demo.proto";
@@ -12,11 +15,6 @@ type MsgDemo = {
   readonly example: string;
 };
 
-const { Coin } = cosmos.base.v1beta1;
-const { TxBody } = cosmos.tx.v1beta1;
-const { MsgSend } = cosmos.bank.v1beta1;
-const { Any } = google.protobuf;
-
 function getTypeName(typeUrl: string): string {
   const parts = typeUrl.split(".");
   return parts[parts.length - 1];
@@ -24,21 +22,21 @@ function getTypeName(typeUrl: string): string {
 
 describe("protobuf demo", () => {
   it("works with generated static code", () => {
-    const coin = Coin.create({
+    const coin = Coin.fromJSON({
       denom: "ucosm",
       amount: "1234567890",
     });
-    const msgSend = MsgSend.create({
+    const msgSend = MsgSend.fromJSON({
       fromAddress: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
       toAddress: "cosmos1qypqxpq9qcrsszg2pvxq6rs0zqg3yyc5lzv7xu",
       amount: [coin],
     });
     const msgSendBytes = MsgSend.encode(msgSend).finish();
-    const msgSendWrapped = Any.create({
-      type_url: "/cosmos.bank.v1beta1.MsgSend",
+    const msgSendWrapped = Any.fromJSON({
+      typeUrl: "/cosmos.bank.v1beta1.MsgSend",
       value: msgSendBytes,
     });
-    const txBody = TxBody.create({
+    const txBody = TxBody.fromPartial({
       messages: [msgSendWrapped],
       memo: "Some memo",
       timeoutHeight: Long.fromNumber(9999),
@@ -66,11 +64,11 @@ describe("protobuf demo", () => {
       example: "Some example text",
     }) as unknown) as MsgDemo;
     const msgDemoBytes = encoder.encode(msgDemo).finish();
-    const msgDemoWrapped = Any.create({
-      type_url: typeUrl,
+    const msgDemoWrapped = Any.fromJSON({
+      typeUrl: typeUrl,
       value: msgDemoBytes,
     });
-    const txBody = TxBody.create({
+    const txBody = TxBody.fromPartial({
       messages: [msgDemoWrapped],
       memo: "Some memo",
       timeoutHeight: Long.fromNumber(9999),
@@ -81,10 +79,10 @@ describe("protobuf demo", () => {
     // Deserialization
     const txBodyDecoded = TxBody.decode(txBodyBytes);
     const msg = txBodyDecoded.messages[0];
-    assert(msg.type_url);
+    assert(msg.typeUrl);
     assert(msg.value);
 
-    const decoder = root.lookupType(getTypeName(msg.type_url));
+    const decoder = root.lookupType(getTypeName(msg.typeUrl));
     const msgDemoDecoded = (decoder.decode(msg.value) as unknown) as MsgDemo;
     expect(msgDemoDecoded.example).toEqual(msgDemo.example);
   });
@@ -97,11 +95,11 @@ describe("protobuf demo", () => {
       example: "Some example text",
     }) as unknown) as MsgDemo;
     const msgDemoBytes = encoder.encode(msgDemo).finish();
-    const msgDemoWrapped = Any.create({
-      type_url: typeUrl,
+    const msgDemoWrapped = Any.fromJSON({
+      typeUrl: typeUrl,
       value: msgDemoBytes,
     });
-    const txBody = TxBody.create({
+    const txBody = TxBody.fromPartial({
       messages: [msgDemoWrapped],
       memo: "Some memo",
       timeoutHeight: Long.fromNumber(9999),
@@ -112,10 +110,10 @@ describe("protobuf demo", () => {
     // Deserialization
     const txBodyDecoded = TxBody.decode(txBodyBytes);
     const msg = txBodyDecoded.messages[0];
-    assert(msg.type_url);
+    assert(msg.typeUrl);
     assert(msg.value);
 
-    const decoder = root.lookupType(getTypeName(msg.type_url));
+    const decoder = root.lookupType(getTypeName(msg.typeUrl));
     const msgDemoDecoded = (decoder.decode(msg.value) as unknown) as MsgDemo;
     expect(msgDemoDecoded.example).toEqual(msgDemo.example);
   });
@@ -127,11 +125,11 @@ describe("protobuf demo", () => {
       example: "Some example text",
     }) as unknown) as MsgDemo;
     const msgDemoBytes = encoder.encode(msgDemo).finish();
-    const msgDemoWrapped = Any.create({
-      type_url: typeUrl,
+    const msgDemoWrapped = Any.fromJSON({
+      typeUrl: typeUrl,
       value: msgDemoBytes,
     });
-    const txBody = TxBody.create({
+    const txBody = TxBody.fromPartial({
       messages: [msgDemoWrapped],
       memo: "Some memo",
       timeoutHeight: Long.fromNumber(9999),
@@ -142,10 +140,10 @@ describe("protobuf demo", () => {
     // Deserialization
     const txBodyDecoded = TxBody.decode(txBodyBytes);
     const msg = txBodyDecoded.messages[0];
-    assert(msg.type_url);
+    assert(msg.typeUrl);
     assert(msg.value);
 
-    const decoder = reflectionRoot.lookupType(getTypeName(msg.type_url));
+    const decoder = reflectionRoot.lookupType(getTypeName(msg.typeUrl));
     const msgDemoDecoded = (decoder.decode(msg.value) as unknown) as MsgDemo;
     expect(msgDemoDecoded.example).toEqual(msgDemo.example);
   });
