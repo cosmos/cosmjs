@@ -18,6 +18,9 @@ workflows:
       - test:
           requires:
             - build
+      - test-node-v12:
+          requires:
+            - build
       - test-chrome:
           requires:
             - build
@@ -163,6 +166,129 @@ jobs:
             SOCKETSERVER_ENABLED: 1
             SKIP_BUILD: 1
             WASMD_ENABLED: 1
+          command: yarn test --stream
+      - run:
+          name: Run CLI selftest
+          working_directory: packages/cli
+          environment:
+            SKIP_BUILD: 1
+          command: yarn selftest
+      - run:
+          name: Run CLI examples
+          working_directory: packages/cli
+          environment:
+            SKIP_BUILD: 1
+          command: |
+            ./bin/cosmwasm-cli --init examples/coralnet.ts --code "process.exit(0)"
+            ./bin/cosmwasm-cli --init examples/delegate.ts --code "process.exit(0)"
+            ./bin/cosmwasm-cli --init examples/faucet_addresses.ts --code "process.exit(0)"
+            ./bin/cosmwasm-cli --init examples/generate_address.ts --code "process.exit(0)"
+            ./bin/cosmwasm-cli --init examples/helpers.ts --code "process.exit(0)"
+            ./bin/cosmwasm-cli --init examples/local_faucet.ts --code "process.exit(0)"
+            ./bin/cosmwasm-cli --init examples/mask.ts --code "process.exit(0)"
+      - run:
+          name: Stop chains
+          command: |
+            ./scripts/socketserver/stop.sh
+            ./scripts/tendermint/all_stop.sh
+            ./scripts/simapp/stop.sh
+            ./scripts/wasmd/stop.sh
+            ./scripts/launchpad/stop.sh
+  test-node-v12:
+    machine:
+      # We can't use a containerized environment since it requires remote docker to start custom containers.
+      # However, we can't access the remote docker's network from the primary container. This is a
+      # feature, as documented in https://circleci.com/docs/2.0/building-docker-images/#separation-of-environments
+      # As a consequence, we cannot use the circleci CLI for this job because "You cannot use the machine
+      # executor in local jobs." (https://circleci.com/docs/2.0/local-cli/#limitations-of-running-jobs-locally)
+      #
+      # Available images: https://circleci.com/docs/2.0/configuration-reference/#available-machine-images
+      image: ubuntu-2004:202010-01
+    steps:
+      - run:
+          name: Install Git Large File Storage (LFS)
+          # In the current image, `sudo apt install git-lfs` requires `sudo apt update` which is too slow
+          command: |
+            wget -O "$HOME/git-lfs.deb" https://packagecloud.io/github/git-lfs/packages/ubuntu/focal/git-lfs_2.12.1_amd64.deb/download.deb
+            sudo dpkg -i "$HOME/git-lfs.deb"
+      - checkout
+      - run: # start early for less wait time below
+          name: Start launchpad
+          command: ./scripts/launchpad/start.sh
+          background: true
+      - run: # start early for less wait time below
+          name: Start wasmd
+          command: ./scripts/wasmd/start.sh
+          background: true
+      - run:
+          name: Start simapp
+          command: ./scripts/simapp/start.sh
+          background: true
+      - run:
+          name: Start Tendermint blockchains
+          command: ./scripts/tendermint/all_start.sh
+          background: true
+      - attach_workspace:
+          at: /tmp/builds
+      - run:
+          name: Merge build folders into project (merge with hardlinks)
+          command: cp --recursive --link /tmp/builds/* .
+      - run:
+          # The images ubuntu-1604 comes with preinstalled nvm, which does not work well with non-login shells
+          name: Uninstall nvm
+          # Moving to trash is faster than deleting (gvfs-trash is not installed on this image)
+          command: mkdir -p ~/.local/share/Trash && mv "$NVM_DIR" ~/.npm ~/.local/share/Trash
+      - run:
+          name: Install nodejs
+          # In the current image, `sudo apt install nodejs` requires `sudo apt update` which is too slow
+          command: |
+            wget -O "$HOME/nodejs.deb" https://deb.nodesource.com/node_12.x/pool/main/n/nodejs/nodejs_12.20.1-deb-1nodesource1_amd64.deb
+            sudo dpkg -i "$HOME/nodejs.deb"
+      - run:
+          name: Install yarn
+          command: |
+            wget -O "$HOME/yarn.deb" https://dl.yarnpkg.com/debian/pool/main/y/yarn/yarn_1.22.4_all.deb
+            sudo dpkg -i "$HOME/yarn.deb"
+      - run:
+          name: Version information
+          command: echo "node $(node --version)"; echo "yarn $(yarn --version)"
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install libusb
+          # In the current image, `sudo apt install libusb-1.0-0-dev` requires `sudo apt update` which is too slow
+          command: |
+            wget -O "$HOME/libusb.deb" http://de.archive.ubuntu.com/ubuntu/pool/main/libu/libusb-1.0/libusb-1.0-0-dev_1.0.23-2build1_amd64.deb
+            sudo dpkg -i "$HOME/libusb.deb"
+      - run:
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - run:
+          name: Initialize launchpad (deploy contracts and friends)
+          command: ./scripts/launchpad/init.sh
+      - run:
+          name: Initialize wasmd (deploy contracts and friends)
+          command: ./scripts/wasmd/init.sh
+      - run:
+          name: Start socket server
+          command: ./scripts/socketserver/start.sh
+      - run:
+          environment:
+            LAUNCHPAD_ENABLED: 1
+            ERC20_ENABLED: 1
+            SIMAPP_ENABLED: 1
+            TENDERMINT_ENABLED: 1
+            SOCKETSERVER_ENABLED: 1
+            SKIP_BUILD: 1
+            WASMD_ENABLED: 1
+            SES_ENABLED: 1
           command: yarn test --stream
       - run:
           name: Run CLI selftest
