@@ -13,7 +13,7 @@ workflows:
             - lint
           filters:
             branches:
-              only: master
+              only: main
       - lint
       - test:
           requires:

@@ -9,7 +9,7 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/cosmos/cosmjs/tree/master/packages/cli"
+    "url": "https://github.com/cosmos/cosmjs/tree/main/packages/cli"
   },
   "publishConfig": {
     "access": "public"
