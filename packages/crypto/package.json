@@ -18,7 +18,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/CosmWasm/cosmjs/tree/master/packages/crypto"
+    "url": "https://github.com/cosmos/cosmjs/tree/master/packages/crypto"
   },
   "publishConfig": {
     "access": "public"

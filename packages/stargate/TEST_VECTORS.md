@@ -31,7 +31,7 @@ proper version.
 ## Prepare the Keys
 
 You want to ensure you use the same keys as in the test vector,
-[taken from here](https://github.com/CosmWasm/cosmjs/blob/db1f183/packages/proto-signing/src/signing.spec.ts#L19-L27).
+[taken from here](https://github.com/cosmos/cosmjs/blob/db1f183/packages/proto-signing/src/signing.spec.ts#L19-L27).
 This uses the testgen mnemonic:
 
 `economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone`

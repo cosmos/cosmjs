@@ -19,7 +19,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/CosmWasm/cosmjs/tree/master/packages/faucet"
+    "url": "https://github.com/cosmos/cosmjs/tree/master/packages/faucet"
   },
   "publishConfig": {
     "access": "public"

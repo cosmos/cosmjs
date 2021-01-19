@@ -42,6 +42,6 @@ done
   echo '</ul>'
   echo '<hr>'
   echo '<footer>'
-  echo '  <a href="https://github.com/CosmWasm/cosmjs">CosmJS on GitHub</a>'
+  echo '  <a href="https://github.com/cosmos/cosmjs">CosmJS on GitHub</a>'
   echo '</footer>'
 } >>"$index"

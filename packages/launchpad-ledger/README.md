@@ -49,12 +49,12 @@ Then follow the instructions on that page.
 The tests in this package require a Ledger device
 [initialized with the mnemonic](https://support.ledger.com/hc/en-us/articles/360005434914)
 from
-[scripts/launchpad/README.md#preset-accounts](https://github.com/CosmWasm/cosmjs/blob/master/scripts/launchpad/README.md#preset-accounts)
+[scripts/launchpad/README.md#preset-accounts](https://github.com/cosmos/cosmjs/blob/master/scripts/launchpad/README.md#preset-accounts)
 (see "Ledger: accounts for Ledger based demos and tests") with an installed
 "Cosmos (ATOM)" app. The device must be connected via USB, unlocked and the
 Cosmos app must be opened. The tests require the user to manually approve
 transactions. Start a local Launchpad blockchain as described in
-[scripts/launchpad/README.md](https://github.com/CosmWasm/cosmjs/blob/master/scripts/launchpad/README.md)
+[scripts/launchpad/README.md](https://github.com/cosmos/cosmjs/blob/master/scripts/launchpad/README.md)
 and execute:
 
 ```sh
@@ -66,5 +66,5 @@ yarn test
 ## License
 
 This package is part of the cosmjs repository, licensed under the Apache License
-2.0 (see [NOTICE](https://github.com/CosmWasm/cosmjs/blob/master/NOTICE) and
-[LICENSE](https://github.com/CosmWasm/cosmjs/blob/master/LICENSE)).
+2.0 (see [NOTICE](https://github.com/cosmos/cosmjs/blob/master/NOTICE) and
+[LICENSE](https://github.com/cosmos/cosmjs/blob/master/LICENSE)).
