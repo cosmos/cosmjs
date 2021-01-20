@@ -11,5 +11,5 @@ imported outside of CosmJS based applications.
 ## License
 
 This package is part of the cosmjs repository, licensed under the Apache License
-2.0 (see [NOTICE](https://github.com/CosmWasm/cosmjs/blob/master/NOTICE) and
-[LICENSE](https://github.com/CosmWasm/cosmjs/blob/master/LICENSE)).
+2.0 (see [NOTICE](https://github.com/cosmos/cosmjs/blob/main/NOTICE) and
+[LICENSE](https://github.com/cosmos/cosmjs/blob/main/LICENSE)).

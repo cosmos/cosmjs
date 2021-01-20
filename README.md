@@ -61,9 +61,9 @@ can work on a solution with swapable implementations.
 ## Roadmap
 
 In addition to the
-[development board](https://github.com/orgs/CosmWasm/projects/2) and our
-[release milestones](https://github.com/CosmWasm/cosmjs/milestones), we maintain
-a higher level roadmap
+[development board](https://github.com/orgs/cosmos/projects/6) and our
+[release milestones](https://github.com/cosmos/cosmjs/milestones), we maintain a
+higher level roadmap
 [in this Trello board](https://trello.com/b/vIW8awLl/cosmjs-roadmap).
 
 ## Development

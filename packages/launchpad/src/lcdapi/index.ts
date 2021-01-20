@@ -1,5 +1,5 @@
 //
-// Standard modules (see tracking issue https://github.com/CosmWasm/cosmjs/issues/276)
+// Standard modules (see tracking issue https://github.com/cosmos/cosmjs/issues/276)
 //
 
 export { AuthExtension, AuthAccountsResponse, BaseAccount, setupAuthExtension } from "./auth";
