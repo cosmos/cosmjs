@@ -28,10 +28,10 @@
     "format-text": "prettier --write --prose-wrap always --print-width 80 \"./*.md\"",
     "lint": "eslint --max-warnings 0 \"**/*.{js,ts}\"",
     "lint-fix": "eslint --max-warnings 0 \"**/*.{js,ts}\" --fix",
-    "move-types": "shx rm -rf ./types/* && shx mv build/types/* ./types && shx rm -rf ./types/testdata ./types/*.spec.d.ts ./types/*/*.spec.d.ts",
+    "move-types": "shx rm -rf ./types/* && shx mv build/types/* ./types && shx rm -rf ./types/testdata ./types/**/*.spec.d.ts \"./types/codec/**/*[!.d].ts\"",
     "format-types": "prettier --write --loglevel warn \"./types/**/*.d.ts\"",
     "prebuild": "shx rm -rf ./build",
-    "build": "tsc && shx mkdir -p build/codec/generated && shx cp ./src/codec/generated/*.js ./build/codec/generated",
+    "build": "tsc && shx cp -R ./src/codec ./build/ && shx mkdir -p ./build/types/codec && shx cp -R ./src/codec ./build/types/",
     "postbuild": "shx mkdir -p ./build/types/codec/generated && shx cp ./src/codec/generated/*.d.ts ./build/types/codec/generated && yarn move-types && yarn format-types",
     "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build",
     "test-node": "node jasmine-testrunner.js",
@@ -42,9 +42,8 @@
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js",
     "preget-proto": "shx rm -rf proto",
     "get-proto": "REF=v0.40.0 ./scripts/get-proto.sh",
-    "predefine-proto": "./scripts/predefine-proto.sh",
     "define-proto": "./scripts/define-proto.sh",
-    "postdefine-proto": "prettier --write \"src/codec/generated/codecimpl.*\""
+    "postdefine-proto": "prettier --write \"src/codec/**/*.ts\""
   },
   "dependencies": {
     "@confio/ics23": "^0.6.3",
