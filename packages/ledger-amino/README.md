@@ -1,6 +1,6 @@
-# @cosmjs/launchpad-ledger
+# @cosmjs/ledger-amino
 
-[![npm version](https://img.shields.io/npm/v/@cosmjs/launchpad-ledger.svg)](https://www.npmjs.com/package/@cosmjs/launchpad-ledger)
+[![npm version](https://img.shields.io/npm/v/@cosmjs/ledger-amino.svg)](https://www.npmjs.com/package/@cosmjs/ledger-amino)
 
 ## Supported platforms
 
@@ -33,7 +33,7 @@ Build the package for web:
 yarn pack-web
 ```
 
-Host the `launchpad-ledger` package directory, for example using Python 3:
+Host the `ledger-amino` package directory, for example using Python 3:
 
 ```sh
 python3 -m http.server
