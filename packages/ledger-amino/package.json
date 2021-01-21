@@ -1,7 +1,7 @@
 {
-  "name": "@cosmjs/launchpad-ledger",
+  "name": "@cosmjs/ledger-amino",
   "version": "0.24.0-alpha.18",
-  "description": "A library for interacting with the Cosmos Launchpad Ledger Nano App",
+  "description": "A library for signing Amino-encoded transactions using Ledger devices",
   "contributors": [
     "Will Clark <willclarktech@users.noreply.github.com>"
   ],
@@ -17,7 +17,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/cosmos/cosmjs/tree/main/packages/launchpad-ledger"
+    "url": "https://github.com/CosmWasm/cosmjs/tree/main/packages/ledger-amino"
   },
   "publishConfig": {
     "access": "public"
