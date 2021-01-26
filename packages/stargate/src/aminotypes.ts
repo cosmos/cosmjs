@@ -8,9 +8,13 @@ import {
   MsgCreateValidator,
   MsgDelegate,
   MsgEditValidator,
+  MsgFundCommunityPool,
   MsgMultiSend,
   MsgSend,
+  MsgSetWithdrawAddress,
   MsgUndelegate,
+  MsgWithdrawDelegatorReward,
+  MsgWithdrawValidatorCommission,
 } from "@cosmjs/launchpad";
 import { EncodeObject } from "@cosmjs/proto-signing";
 import { assertDefinedAndNotNull } from "@cosmjs/utils";
@@ -20,6 +24,10 @@ import { coinFromProto } from "./stargateclient";
 
 type IMsgSend = cosmos.bank.v1beta1.IMsgSend;
 type IMsgMultiSend = cosmos.bank.v1beta1.IMsgMultiSend;
+type IMsgFundCommunityPool = cosmos.distribution.v1beta1.IMsgFundCommunityPool;
+type IMsgSetWithdrawAddress = cosmos.distribution.v1beta1.IMsgSetWithdrawAddress;
+type IMsgWithdrawDelegatorReward = cosmos.distribution.v1beta1.IMsgWithdrawDelegatorReward;
+type IMsgWithdrawValidatorCommission = cosmos.distribution.v1beta1.IMsgWithdrawValidatorCommission;
 type IMsgBeginRedelegate = cosmos.staking.v1beta1.IMsgBeginRedelegate;
 type IMsgCreateValidator = cosmos.staking.v1beta1.IMsgCreateValidator;
 type IMsgDelegate = cosmos.staking.v1beta1.IMsgDelegate;
@@ -85,6 +93,79 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
           address: output.address,
           coins: [...output.coins],
         })),
+      }),
+    },
+    "/cosmos.distribution.v1beta1.MsgFundCommunityPool": {
+      aminoType: "cosmos-sdk/MsgFundCommunityPool",
+      toAmino: ({ amount, depositor }: IMsgFundCommunityPool): MsgFundCommunityPool["value"] => {
+        assertDefinedAndNotNull(amount);
+        assertDefinedAndNotNull(depositor);
+        return {
+          amount: amount.map(coinFromProto),
+          depositor: depositor,
+        };
+      },
+      fromAmino: ({ amount, depositor }: MsgFundCommunityPool["value"]): IMsgFundCommunityPool => ({
+        amount: [...amount],
+        depositor: depositor,
+      }),
+    },
+    "/cosmos.distribution.v1beta1.MsgSetWithdrawAddress": {
+      aminoType: "cosmos-sdk/MsgSetWithdrawAddress",
+      toAmino: ({
+        delegatorAddress,
+        withdrawAddress,
+      }: IMsgSetWithdrawAddress): MsgSetWithdrawAddress["value"] => {
+        assertDefinedAndNotNull(delegatorAddress);
+        assertDefinedAndNotNull(withdrawAddress);
+        return {
+          delegator_address: delegatorAddress,
+          withdraw_address: withdrawAddress,
+        };
+      },
+      fromAmino: ({
+        delegator_address,
+        withdraw_address,
+      }: MsgSetWithdrawAddress["value"]): IMsgSetWithdrawAddress => ({
+        delegatorAddress: delegator_address,
+        withdrawAddress: withdraw_address,
+      }),
+    },
+    "/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward": {
+      aminoType: "cosmos-sdk/MsgWithdrawDelegatorReward",
+      toAmino: ({
+        delegatorAddress,
+        validatorAddress,
+      }: IMsgWithdrawDelegatorReward): MsgWithdrawDelegatorReward["value"] => {
+        assertDefinedAndNotNull(delegatorAddress);
+        assertDefinedAndNotNull(validatorAddress);
+        return {
+          delegator_address: delegatorAddress,
+          validator_address: validatorAddress,
+        };
+      },
+      fromAmino: ({
+        delegator_address,
+        validator_address,
+      }: MsgWithdrawDelegatorReward["value"]): IMsgWithdrawDelegatorReward => ({
+        delegatorAddress: delegator_address,
+        validatorAddress: validator_address,
+      }),
+    },
+    "/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission": {
+      aminoType: "cosmos-sdk/MsgWithdrawValidatorCommission",
+      toAmino: ({
+        validatorAddress,
+      }: IMsgWithdrawValidatorCommission): MsgWithdrawValidatorCommission["value"] => {
+        assertDefinedAndNotNull(validatorAddress);
+        return {
+          validator_address: validatorAddress,
+        };
+      },
+      fromAmino: ({
+        validator_address,
+      }: MsgWithdrawValidatorCommission["value"]): IMsgWithdrawValidatorCommission => ({
+        validatorAddress: validator_address,
       }),
     },
     "/cosmos.staking.v1beta1.MsgBeginRedelegate": {
