@@ -2227,10 +2227,3077 @@ exports.cosmos = $root.cosmos = (() => {
     })();
     return crypto;
   })();
+  cosmos.distribution = (function () {
+    const distribution = {};
+    distribution.v1beta1 = (function () {
+      const v1beta1 = {};
+      v1beta1.Params = (function () {
+        function Params(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        Params.prototype.communityTax = "";
+        Params.prototype.baseProposerReward = "";
+        Params.prototype.bonusProposerReward = "";
+        Params.prototype.withdrawAddrEnabled = false;
+        Params.create = function create(properties) {
+          return new Params(properties);
+        };
+        Params.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.communityTax != null && Object.hasOwnProperty.call(m, "communityTax"))
+            w.uint32(10).string(m.communityTax);
+          if (m.baseProposerReward != null && Object.hasOwnProperty.call(m, "baseProposerReward"))
+            w.uint32(18).string(m.baseProposerReward);
+          if (m.bonusProposerReward != null && Object.hasOwnProperty.call(m, "bonusProposerReward"))
+            w.uint32(26).string(m.bonusProposerReward);
+          if (m.withdrawAddrEnabled != null && Object.hasOwnProperty.call(m, "withdrawAddrEnabled"))
+            w.uint32(32).bool(m.withdrawAddrEnabled);
+          return w;
+        };
+        Params.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.distribution.v1beta1.Params();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.communityTax = r.string();
+                break;
+              case 2:
+                m.baseProposerReward = r.string();
+                break;
+              case 3:
+                m.bonusProposerReward = r.string();
+                break;
+              case 4:
+                m.withdrawAddrEnabled = r.bool();
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return Params;
+      })();
+      v1beta1.ValidatorHistoricalRewards = (function () {
+        function ValidatorHistoricalRewards(p) {
+          this.cumulativeRewardRatio = [];
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        ValidatorHistoricalRewards.prototype.cumulativeRewardRatio = $util.emptyArray;
+        ValidatorHistoricalRewards.prototype.referenceCount = 0;
+        ValidatorHistoricalRewards.create = function create(properties) {
+          return new ValidatorHistoricalRewards(properties);
+        };
+        ValidatorHistoricalRewards.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.cumulativeRewardRatio != null && m.cumulativeRewardRatio.length) {
+            for (var i = 0; i < m.cumulativeRewardRatio.length; ++i)
+              $root.cosmos.base.v1beta1.DecCoin.encode(
+                m.cumulativeRewardRatio[i],
+                w.uint32(10).fork(),
+              ).ldelim();
+          }
+          if (m.referenceCount != null && Object.hasOwnProperty.call(m, "referenceCount"))
+            w.uint32(16).uint32(m.referenceCount);
+          return w;
+        };
+        ValidatorHistoricalRewards.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.distribution.v1beta1.ValidatorHistoricalRewards();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                if (!(m.cumulativeRewardRatio && m.cumulativeRewardRatio.length))
+                  m.cumulativeRewardRatio = [];
+                m.cumulativeRewardRatio.push($root.cosmos.base.v1beta1.DecCoin.decode(r, r.uint32()));
+                break;
+              case 2:
+                m.referenceCount = r.uint32();
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return ValidatorHistoricalRewards;
+      })();
+      v1beta1.ValidatorCurrentRewards = (function () {
+        function ValidatorCurrentRewards(p) {
+          this.rewards = [];
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        ValidatorCurrentRewards.prototype.rewards = $util.emptyArray;
+        ValidatorCurrentRewards.prototype.period = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+        ValidatorCurrentRewards.create = function create(properties) {
+          return new ValidatorCurrentRewards(properties);
+        };
+        ValidatorCurrentRewards.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.rewards != null && m.rewards.length) {
+            for (var i = 0; i < m.rewards.length; ++i)
+              $root.cosmos.base.v1beta1.DecCoin.encode(m.rewards[i], w.uint32(10).fork()).ldelim();
+          }
+          if (m.period != null && Object.hasOwnProperty.call(m, "period")) w.uint32(16).uint64(m.period);
+          return w;
+        };
+        ValidatorCurrentRewards.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.distribution.v1beta1.ValidatorCurrentRewards();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                if (!(m.rewards && m.rewards.length)) m.rewards = [];
+                m.rewards.push($root.cosmos.base.v1beta1.DecCoin.decode(r, r.uint32()));
+                break;
+              case 2:
+                m.period = r.uint64();
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return ValidatorCurrentRewards;
+      })();
+      v1beta1.ValidatorAccumulatedCommission = (function () {
+        function ValidatorAccumulatedCommission(p) {
+          this.commission = [];
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        ValidatorAccumulatedCommission.prototype.commission = $util.emptyArray;
+        ValidatorAccumulatedCommission.create = function create(properties) {
+          return new ValidatorAccumulatedCommission(properties);
+        };
+        ValidatorAccumulatedCommission.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.commission != null && m.commission.length) {
+            for (var i = 0; i < m.commission.length; ++i)
+              $root.cosmos.base.v1beta1.DecCoin.encode(m.commission[i], w.uint32(10).fork()).ldelim();
+          }
+          return w;
+        };
+        ValidatorAccumulatedCommission.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.distribution.v1beta1.ValidatorAccumulatedCommission();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                if (!(m.commission && m.commission.length)) m.commission = [];
+                m.commission.push($root.cosmos.base.v1beta1.DecCoin.decode(r, r.uint32()));
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return ValidatorAccumulatedCommission;
+      })();
+      v1beta1.ValidatorOutstandingRewards = (function () {
+        function ValidatorOutstandingRewards(p) {
+          this.rewards = [];
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        ValidatorOutstandingRewards.prototype.rewards = $util.emptyArray;
+        ValidatorOutstandingRewards.create = function create(properties) {
+          return new ValidatorOutstandingRewards(properties);
+        };
+        ValidatorOutstandingRewards.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.rewards != null && m.rewards.length) {
+            for (var i = 0; i < m.rewards.length; ++i)
+              $root.cosmos.base.v1beta1.DecCoin.encode(m.rewards[i], w.uint32(10).fork()).ldelim();
+          }
+          return w;
+        };
+        ValidatorOutstandingRewards.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.distribution.v1beta1.ValidatorOutstandingRewards();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                if (!(m.rewards && m.rewards.length)) m.rewards = [];
+                m.rewards.push($root.cosmos.base.v1beta1.DecCoin.decode(r, r.uint32()));
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return ValidatorOutstandingRewards;
+      })();
+      v1beta1.ValidatorSlashEvent = (function () {
+        function ValidatorSlashEvent(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        ValidatorSlashEvent.prototype.validatorPeriod = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+        ValidatorSlashEvent.prototype.fraction = "";
+        ValidatorSlashEvent.create = function create(properties) {
+          return new ValidatorSlashEvent(properties);
+        };
+        ValidatorSlashEvent.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.validatorPeriod != null && Object.hasOwnProperty.call(m, "validatorPeriod"))
+            w.uint32(8).uint64(m.validatorPeriod);
+          if (m.fraction != null && Object.hasOwnProperty.call(m, "fraction"))
+            w.uint32(18).string(m.fraction);
+          return w;
+        };
+        ValidatorSlashEvent.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.distribution.v1beta1.ValidatorSlashEvent();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.validatorPeriod = r.uint64();
+                break;
+              case 2:
+                m.fraction = r.string();
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return ValidatorSlashEvent;
+      })();
+      v1beta1.ValidatorSlashEvents = (function () {
+        function ValidatorSlashEvents(p) {
+          this.validatorSlashEvents = [];
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        ValidatorSlashEvents.prototype.validatorSlashEvents = $util.emptyArray;
+        ValidatorSlashEvents.create = function create(properties) {
+          return new ValidatorSlashEvents(properties);
+        };
+        ValidatorSlashEvents.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.validatorSlashEvents != null && m.validatorSlashEvents.length) {
+            for (var i = 0; i < m.validatorSlashEvents.length; ++i)
+              $root.cosmos.distribution.v1beta1.ValidatorSlashEvent.encode(
+                m.validatorSlashEvents[i],
+                w.uint32(10).fork(),
+              ).ldelim();
+          }
+          return w;
+        };
+        ValidatorSlashEvents.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.distribution.v1beta1.ValidatorSlashEvents();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                if (!(m.validatorSlashEvents && m.validatorSlashEvents.length)) m.validatorSlashEvents = [];
+                m.validatorSlashEvents.push(
+                  $root.cosmos.distribution.v1beta1.ValidatorSlashEvent.decode(r, r.uint32()),
+                );
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return ValidatorSlashEvents;
+      })();
+      v1beta1.FeePool = (function () {
+        function FeePool(p) {
+          this.communityPool = [];
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        FeePool.prototype.communityPool = $util.emptyArray;
+        FeePool.create = function create(properties) {
+          return new FeePool(properties);
+        };
+        FeePool.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.communityPool != null && m.communityPool.length) {
+            for (var i = 0; i < m.communityPool.length; ++i)
+              $root.cosmos.base.v1beta1.DecCoin.encode(m.communityPool[i], w.uint32(10).fork()).ldelim();
+          }
+          return w;
+        };
+        FeePool.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.distribution.v1beta1.FeePool();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                if (!(m.communityPool && m.communityPool.length)) m.communityPool = [];
+                m.communityPool.push($root.cosmos.base.v1beta1.DecCoin.decode(r, r.uint32()));
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return FeePool;
+      })();
+      v1beta1.CommunityPoolSpendProposal = (function () {
+        function CommunityPoolSpendProposal(p) {
+          this.amount = [];
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        CommunityPoolSpendProposal.prototype.title = "";
+        CommunityPoolSpendProposal.prototype.description = "";
+        CommunityPoolSpendProposal.prototype.recipient = "";
+        CommunityPoolSpendProposal.prototype.amount = $util.emptyArray;
+        CommunityPoolSpendProposal.create = function create(properties) {
+          return new CommunityPoolSpendProposal(properties);
+        };
+        CommunityPoolSpendProposal.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.title != null && Object.hasOwnProperty.call(m, "title")) w.uint32(10).string(m.title);
+          if (m.description != null && Object.hasOwnProperty.call(m, "description"))
+            w.uint32(18).string(m.description);
+          if (m.recipient != null && Object.hasOwnProperty.call(m, "recipient"))
+            w.uint32(26).string(m.recipient);
+          if (m.amount != null && m.amount.length) {
+            for (var i = 0; i < m.amount.length; ++i)
+              $root.cosmos.base.v1beta1.Coin.encode(m.amount[i], w.uint32(34).fork()).ldelim();
+          }
+          return w;
+        };
+        CommunityPoolSpendProposal.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.distribution.v1beta1.CommunityPoolSpendProposal();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.title = r.string();
+                break;
+              case 2:
+                m.description = r.string();
+                break;
+              case 3:
+                m.recipient = r.string();
+                break;
+              case 4:
+                if (!(m.amount && m.amount.length)) m.amount = [];
+                m.amount.push($root.cosmos.base.v1beta1.Coin.decode(r, r.uint32()));
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return CommunityPoolSpendProposal;
+      })();
+      v1beta1.DelegatorStartingInfo = (function () {
+        function DelegatorStartingInfo(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        DelegatorStartingInfo.prototype.previousPeriod = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+        DelegatorStartingInfo.prototype.stake = "";
+        DelegatorStartingInfo.prototype.height = $util.Long ? $util.Long.fromBits(0, 0, true) : 0;
+        DelegatorStartingInfo.create = function create(properties) {
+          return new DelegatorStartingInfo(properties);
+        };
+        DelegatorStartingInfo.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.previousPeriod != null && Object.hasOwnProperty.call(m, "previousPeriod"))
+            w.uint32(8).uint64(m.previousPeriod);
+          if (m.stake != null && Object.hasOwnProperty.call(m, "stake")) w.uint32(18).string(m.stake);
+          if (m.height != null && Object.hasOwnProperty.call(m, "height")) w.uint32(24).uint64(m.height);
+          return w;
+        };
+        DelegatorStartingInfo.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.distribution.v1beta1.DelegatorStartingInfo();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.previousPeriod = r.uint64();
+                break;
+              case 2:
+                m.stake = r.string();
+                break;
+              case 3:
+                m.height = r.uint64();
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return DelegatorStartingInfo;
+      })();
+      v1beta1.DelegationDelegatorReward = (function () {
+        function DelegationDelegatorReward(p) {
+          this.reward = [];
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        DelegationDelegatorReward.prototype.validatorAddress = "";
+        DelegationDelegatorReward.prototype.reward = $util.emptyArray;
+        DelegationDelegatorReward.create = function create(properties) {
+          return new DelegationDelegatorReward(properties);
+        };
+        DelegationDelegatorReward.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.validatorAddress != null && Object.hasOwnProperty.call(m, "validatorAddress"))
+            w.uint32(10).string(m.validatorAddress);
+          if (m.reward != null && m.reward.length) {
+            for (var i = 0; i < m.reward.length; ++i)
+              $root.cosmos.base.v1beta1.DecCoin.encode(m.reward[i], w.uint32(18).fork()).ldelim();
+          }
+          return w;
+        };
+        DelegationDelegatorReward.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.distribution.v1beta1.DelegationDelegatorReward();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.validatorAddress = r.string();
+                break;
+              case 2:
+                if (!(m.reward && m.reward.length)) m.reward = [];
+                m.reward.push($root.cosmos.base.v1beta1.DecCoin.decode(r, r.uint32()));
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return DelegationDelegatorReward;
+      })();
+      v1beta1.CommunityPoolSpendProposalWithDeposit = (function () {
+        function CommunityPoolSpendProposalWithDeposit(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        CommunityPoolSpendProposalWithDeposit.prototype.title = "";
+        CommunityPoolSpendProposalWithDeposit.prototype.description = "";
+        CommunityPoolSpendProposalWithDeposit.prototype.recipient = "";
+        CommunityPoolSpendProposalWithDeposit.prototype.amount = "";
+        CommunityPoolSpendProposalWithDeposit.prototype.deposit = "";
+        CommunityPoolSpendProposalWithDeposit.create = function create(properties) {
+          return new CommunityPoolSpendProposalWithDeposit(properties);
+        };
+        CommunityPoolSpendProposalWithDeposit.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.title != null && Object.hasOwnProperty.call(m, "title")) w.uint32(10).string(m.title);
+          if (m.description != null && Object.hasOwnProperty.call(m, "description"))
+            w.uint32(18).string(m.description);
+          if (m.recipient != null && Object.hasOwnProperty.call(m, "recipient"))
+            w.uint32(26).string(m.recipient);
+          if (m.amount != null && Object.hasOwnProperty.call(m, "amount")) w.uint32(34).string(m.amount);
+          if (m.deposit != null && Object.hasOwnProperty.call(m, "deposit")) w.uint32(42).string(m.deposit);
+          return w;
+        };
+        CommunityPoolSpendProposalWithDeposit.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.distribution.v1beta1.CommunityPoolSpendProposalWithDeposit();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.title = r.string();
+                break;
+              case 2:
+                m.description = r.string();
+                break;
+              case 3:
+                m.recipient = r.string();
+                break;
+              case 4:
+                m.amount = r.string();
+                break;
+              case 5:
+                m.deposit = r.string();
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return CommunityPoolSpendProposalWithDeposit;
+      })();
+      v1beta1.Query = (function () {
+        function Query(rpcImpl, requestDelimited, responseDelimited) {
+          $protobuf.rpc.Service.call(this, rpcImpl, requestDelimited, responseDelimited);
+        }
+        (Query.prototype = Object.create($protobuf.rpc.Service.prototype)).constructor = Query;
+        Query.create = function create(rpcImpl, requestDelimited, responseDelimited) {
+          return new this(rpcImpl, requestDelimited, responseDelimited);
+        };
+        Object.defineProperty(
+          (Query.prototype.params = function params(request, callback) {
+            return this.rpcCall(
+              params,
+              $root.cosmos.distribution.v1beta1.QueryParamsRequest,
+              $root.cosmos.distribution.v1beta1.QueryParamsResponse,
+              request,
+              callback,
+            );
+          }),
+          "name",
+          { value: "Params" },
+        );
+        Object.defineProperty(
+          (Query.prototype.validatorOutstandingRewards = function validatorOutstandingRewards(
+            request,
+            callback,
+          ) {
+            return this.rpcCall(
+              validatorOutstandingRewards,
+              $root.cosmos.distribution.v1beta1.QueryValidatorOutstandingRewardsRequest,
+              $root.cosmos.distribution.v1beta1.QueryValidatorOutstandingRewardsResponse,
+              request,
+              callback,
+            );
+          }),
+          "name",
+          { value: "ValidatorOutstandingRewards" },
+        );
+        Object.defineProperty(
+          (Query.prototype.validatorCommission = function validatorCommission(request, callback) {
+            return this.rpcCall(
+              validatorCommission,
+              $root.cosmos.distribution.v1beta1.QueryValidatorCommissionRequest,
+              $root.cosmos.distribution.v1beta1.QueryValidatorCommissionResponse,
+              request,
+              callback,
+            );
+          }),
+          "name",
+          { value: "ValidatorCommission" },
+        );
+        Object.defineProperty(
+          (Query.prototype.validatorSlashes = function validatorSlashes(request, callback) {
+            return this.rpcCall(
+              validatorSlashes,
+              $root.cosmos.distribution.v1beta1.QueryValidatorSlashesRequest,
+              $root.cosmos.distribution.v1beta1.QueryValidatorSlashesResponse,
+              request,
+              callback,
+            );
+          }),
+          "name",
+          { value: "ValidatorSlashes" },
+        );
+        Object.defineProperty(
+          (Query.prototype.delegationRewards = function delegationRewards(request, callback) {
+            return this.rpcCall(
+              delegationRewards,
+              $root.cosmos.distribution.v1beta1.QueryDelegationRewardsRequest,
+              $root.cosmos.distribution.v1beta1.QueryDelegationRewardsResponse,
+              request,
+              callback,
+            );
+          }),
+          "name",
+          { value: "DelegationRewards" },
+        );
+        Object.defineProperty(
+          (Query.prototype.delegationTotalRewards = function delegationTotalRewards(request, callback) {
+            return this.rpcCall(
+              delegationTotalRewards,
+              $root.cosmos.distribution.v1beta1.QueryDelegationTotalRewardsRequest,
+              $root.cosmos.distribution.v1beta1.QueryDelegationTotalRewardsResponse,
+              request,
+              callback,
+            );
+          }),
+          "name",
+          { value: "DelegationTotalRewards" },
+        );
+        Object.defineProperty(
+          (Query.prototype.delegatorValidators = function delegatorValidators(request, callback) {
+            return this.rpcCall(
+              delegatorValidators,
+              $root.cosmos.distribution.v1beta1.QueryDelegatorValidatorsRequest,
+              $root.cosmos.distribution.v1beta1.QueryDelegatorValidatorsResponse,
+              request,
+              callback,
+            );
+          }),
+          "name",
+          { value: "DelegatorValidators" },
+        );
+        Object.defineProperty(
+          (Query.prototype.delegatorWithdrawAddress = function delegatorWithdrawAddress(request, callback) {
+            return this.rpcCall(
+              delegatorWithdrawAddress,
+              $root.cosmos.distribution.v1beta1.QueryDelegatorWithdrawAddressRequest,
+              $root.cosmos.distribution.v1beta1.QueryDelegatorWithdrawAddressResponse,
+              request,
+              callback,
+            );
+          }),
+          "name",
+          { value: "DelegatorWithdrawAddress" },
+        );
+        Object.defineProperty(
+          (Query.prototype.communityPool = function communityPool(request, callback) {
+            return this.rpcCall(
+              communityPool,
+              $root.cosmos.distribution.v1beta1.QueryCommunityPoolRequest,
+              $root.cosmos.distribution.v1beta1.QueryCommunityPoolResponse,
+              request,
+              callback,
+            );
+          }),
+          "name",
+          { value: "CommunityPool" },
+        );
+        return Query;
+      })();
+      v1beta1.QueryParamsRequest = (function () {
+        function QueryParamsRequest(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryParamsRequest.create = function create(properties) {
+          return new QueryParamsRequest(properties);
+        };
+        QueryParamsRequest.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          return w;
+        };
+        QueryParamsRequest.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.distribution.v1beta1.QueryParamsRequest();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryParamsRequest;
+      })();
+      v1beta1.QueryParamsResponse = (function () {
+        function QueryParamsResponse(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryParamsResponse.prototype.params = null;
+        QueryParamsResponse.create = function create(properties) {
+          return new QueryParamsResponse(properties);
+        };
+        QueryParamsResponse.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.params != null && Object.hasOwnProperty.call(m, "params"))
+            $root.cosmos.distribution.v1beta1.Params.encode(m.params, w.uint32(10).fork()).ldelim();
+          return w;
+        };
+        QueryParamsResponse.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.distribution.v1beta1.QueryParamsResponse();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.params = $root.cosmos.distribution.v1beta1.Params.decode(r, r.uint32());
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryParamsResponse;
+      })();
+      v1beta1.QueryValidatorOutstandingRewardsRequest = (function () {
+        function QueryValidatorOutstandingRewardsRequest(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryValidatorOutstandingRewardsRequest.prototype.validatorAddress = "";
+        QueryValidatorOutstandingRewardsRequest.create = function create(properties) {
+          return new QueryValidatorOutstandingRewardsRequest(properties);
+        };
+        QueryValidatorOutstandingRewardsRequest.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.validatorAddress != null && Object.hasOwnProperty.call(m, "validatorAddress"))
+            w.uint32(10).string(m.validatorAddress);
+          return w;
+        };
+        QueryValidatorOutstandingRewardsRequest.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.distribution.v1beta1.QueryValidatorOutstandingRewardsRequest();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.validatorAddress = r.string();
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryValidatorOutstandingRewardsRequest;
+      })();
+      v1beta1.QueryValidatorOutstandingRewardsResponse = (function () {
+        function QueryValidatorOutstandingRewardsResponse(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryValidatorOutstandingRewardsResponse.prototype.rewards = null;
+        QueryValidatorOutstandingRewardsResponse.create = function create(properties) {
+          return new QueryValidatorOutstandingRewardsResponse(properties);
+        };
+        QueryValidatorOutstandingRewardsResponse.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.rewards != null && Object.hasOwnProperty.call(m, "rewards"))
+            $root.cosmos.distribution.v1beta1.ValidatorOutstandingRewards.encode(
+              m.rewards,
+              w.uint32(10).fork(),
+            ).ldelim();
+          return w;
+        };
+        QueryValidatorOutstandingRewardsResponse.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.distribution.v1beta1.QueryValidatorOutstandingRewardsResponse();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.rewards = $root.cosmos.distribution.v1beta1.ValidatorOutstandingRewards.decode(
+                  r,
+                  r.uint32(),
+                );
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryValidatorOutstandingRewardsResponse;
+      })();
+      v1beta1.QueryValidatorCommissionRequest = (function () {
+        function QueryValidatorCommissionRequest(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryValidatorCommissionRequest.prototype.validatorAddress = "";
+        QueryValidatorCommissionRequest.create = function create(properties) {
+          return new QueryValidatorCommissionRequest(properties);
+        };
+        QueryValidatorCommissionRequest.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.validatorAddress != null && Object.hasOwnProperty.call(m, "validatorAddress"))
+            w.uint32(10).string(m.validatorAddress);
+          return w;
+        };
+        QueryValidatorCommissionRequest.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.distribution.v1beta1.QueryValidatorCommissionRequest();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.validatorAddress = r.string();
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryValidatorCommissionRequest;
+      })();
+      v1beta1.QueryValidatorCommissionResponse = (function () {
+        function QueryValidatorCommissionResponse(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryValidatorCommissionResponse.prototype.commission = null;
+        QueryValidatorCommissionResponse.create = function create(properties) {
+          return new QueryValidatorCommissionResponse(properties);
+        };
+        QueryValidatorCommissionResponse.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.commission != null && Object.hasOwnProperty.call(m, "commission"))
+            $root.cosmos.distribution.v1beta1.ValidatorAccumulatedCommission.encode(
+              m.commission,
+              w.uint32(10).fork(),
+            ).ldelim();
+          return w;
+        };
+        QueryValidatorCommissionResponse.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.distribution.v1beta1.QueryValidatorCommissionResponse();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.commission = $root.cosmos.distribution.v1beta1.ValidatorAccumulatedCommission.decode(
+                  r,
+                  r.uint32(),
+                );
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryValidatorCommissionResponse;
+      })();
+      v1beta1.QueryValidatorSlashesRequest = (function () {
+        function QueryValidatorSlashesRequest(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryValidatorSlashesRequest.prototype.validatorAddress = "";
+        QueryValidatorSlashesRequest.prototype.startingHeight = $util.Long
+          ? $util.Long.fromBits(0, 0, true)
+          : 0;
+        QueryValidatorSlashesRequest.prototype.endingHeight = $util.Long
+          ? $util.Long.fromBits(0, 0, true)
+          : 0;
+        QueryValidatorSlashesRequest.prototype.pagination = null;
+        QueryValidatorSlashesRequest.create = function create(properties) {
+          return new QueryValidatorSlashesRequest(properties);
+        };
+        QueryValidatorSlashesRequest.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.validatorAddress != null && Object.hasOwnProperty.call(m, "validatorAddress"))
+            w.uint32(10).string(m.validatorAddress);
+          if (m.startingHeight != null && Object.hasOwnProperty.call(m, "startingHeight"))
+            w.uint32(16).uint64(m.startingHeight);
+          if (m.endingHeight != null && Object.hasOwnProperty.call(m, "endingHeight"))
+            w.uint32(24).uint64(m.endingHeight);
+          if (m.pagination != null && Object.hasOwnProperty.call(m, "pagination"))
+            $root.cosmos.base.query.v1beta1.PageRequest.encode(m.pagination, w.uint32(34).fork()).ldelim();
+          return w;
+        };
+        QueryValidatorSlashesRequest.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.distribution.v1beta1.QueryValidatorSlashesRequest();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.validatorAddress = r.string();
+                break;
+              case 2:
+                m.startingHeight = r.uint64();
+                break;
+              case 3:
+                m.endingHeight = r.uint64();
+                break;
+              case 4:
+                m.pagination = $root.cosmos.base.query.v1beta1.PageRequest.decode(r, r.uint32());
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryValidatorSlashesRequest;
+      })();
+      v1beta1.QueryValidatorSlashesResponse = (function () {
+        function QueryValidatorSlashesResponse(p) {
+          this.slashes = [];
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryValidatorSlashesResponse.prototype.slashes = $util.emptyArray;
+        QueryValidatorSlashesResponse.prototype.pagination = null;
+        QueryValidatorSlashesResponse.create = function create(properties) {
+          return new QueryValidatorSlashesResponse(properties);
+        };
+        QueryValidatorSlashesResponse.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.slashes != null && m.slashes.length) {
+            for (var i = 0; i < m.slashes.length; ++i)
+              $root.cosmos.distribution.v1beta1.ValidatorSlashEvent.encode(
+                m.slashes[i],
+                w.uint32(10).fork(),
+              ).ldelim();
+          }
+          if (m.pagination != null && Object.hasOwnProperty.call(m, "pagination"))
+            $root.cosmos.base.query.v1beta1.PageResponse.encode(m.pagination, w.uint32(18).fork()).ldelim();
+          return w;
+        };
+        QueryValidatorSlashesResponse.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.distribution.v1beta1.QueryValidatorSlashesResponse();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                if (!(m.slashes && m.slashes.length)) m.slashes = [];
+                m.slashes.push($root.cosmos.distribution.v1beta1.ValidatorSlashEvent.decode(r, r.uint32()));
+                break;
+              case 2:
+                m.pagination = $root.cosmos.base.query.v1beta1.PageResponse.decode(r, r.uint32());
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryValidatorSlashesResponse;
+      })();
+      v1beta1.QueryDelegationRewardsRequest = (function () {
+        function QueryDelegationRewardsRequest(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryDelegationRewardsRequest.prototype.delegatorAddress = "";
+        QueryDelegationRewardsRequest.prototype.validatorAddress = "";
+        QueryDelegationRewardsRequest.create = function create(properties) {
+          return new QueryDelegationRewardsRequest(properties);
+        };
+        QueryDelegationRewardsRequest.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.delegatorAddress != null && Object.hasOwnProperty.call(m, "delegatorAddress"))
+            w.uint32(10).string(m.delegatorAddress);
+          if (m.validatorAddress != null && Object.hasOwnProperty.call(m, "validatorAddress"))
+            w.uint32(18).string(m.validatorAddress);
+          return w;
+        };
+        QueryDelegationRewardsRequest.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.distribution.v1beta1.QueryDelegationRewardsRequest();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.delegatorAddress = r.string();
+                break;
+              case 2:
+                m.validatorAddress = r.string();
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryDelegationRewardsRequest;
+      })();
+      v1beta1.QueryDelegationRewardsResponse = (function () {
+        function QueryDelegationRewardsResponse(p) {
+          this.rewards = [];
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryDelegationRewardsResponse.prototype.rewards = $util.emptyArray;
+        QueryDelegationRewardsResponse.create = function create(properties) {
+          return new QueryDelegationRewardsResponse(properties);
+        };
+        QueryDelegationRewardsResponse.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.rewards != null && m.rewards.length) {
+            for (var i = 0; i < m.rewards.length; ++i)
+              $root.cosmos.base.v1beta1.DecCoin.encode(m.rewards[i], w.uint32(10).fork()).ldelim();
+          }
+          return w;
+        };
+        QueryDelegationRewardsResponse.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.distribution.v1beta1.QueryDelegationRewardsResponse();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                if (!(m.rewards && m.rewards.length)) m.rewards = [];
+                m.rewards.push($root.cosmos.base.v1beta1.DecCoin.decode(r, r.uint32()));
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryDelegationRewardsResponse;
+      })();
+      v1beta1.QueryDelegationTotalRewardsRequest = (function () {
+        function QueryDelegationTotalRewardsRequest(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryDelegationTotalRewardsRequest.prototype.delegatorAddress = "";
+        QueryDelegationTotalRewardsRequest.create = function create(properties) {
+          return new QueryDelegationTotalRewardsRequest(properties);
+        };
+        QueryDelegationTotalRewardsRequest.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.delegatorAddress != null && Object.hasOwnProperty.call(m, "delegatorAddress"))
+            w.uint32(10).string(m.delegatorAddress);
+          return w;
+        };
+        QueryDelegationTotalRewardsRequest.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.distribution.v1beta1.QueryDelegationTotalRewardsRequest();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.delegatorAddress = r.string();
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryDelegationTotalRewardsRequest;
+      })();
+      v1beta1.QueryDelegationTotalRewardsResponse = (function () {
+        function QueryDelegationTotalRewardsResponse(p) {
+          this.rewards = [];
+          this.total = [];
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryDelegationTotalRewardsResponse.prototype.rewards = $util.emptyArray;
+        QueryDelegationTotalRewardsResponse.prototype.total = $util.emptyArray;
+        QueryDelegationTotalRewardsResponse.create = function create(properties) {
+          return new QueryDelegationTotalRewardsResponse(properties);
+        };
+        QueryDelegationTotalRewardsResponse.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.rewards != null && m.rewards.length) {
+            for (var i = 0; i < m.rewards.length; ++i)
+              $root.cosmos.distribution.v1beta1.DelegationDelegatorReward.encode(
+                m.rewards[i],
+                w.uint32(10).fork(),
+              ).ldelim();
+          }
+          if (m.total != null && m.total.length) {
+            for (var i = 0; i < m.total.length; ++i)
+              $root.cosmos.base.v1beta1.DecCoin.encode(m.total[i], w.uint32(18).fork()).ldelim();
+          }
+          return w;
+        };
+        QueryDelegationTotalRewardsResponse.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.distribution.v1beta1.QueryDelegationTotalRewardsResponse();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                if (!(m.rewards && m.rewards.length)) m.rewards = [];
+                m.rewards.push(
+                  $root.cosmos.distribution.v1beta1.DelegationDelegatorReward.decode(r, r.uint32()),
+                );
+                break;
+              case 2:
+                if (!(m.total && m.total.length)) m.total = [];
+                m.total.push($root.cosmos.base.v1beta1.DecCoin.decode(r, r.uint32()));
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryDelegationTotalRewardsResponse;
+      })();
+      v1beta1.QueryDelegatorValidatorsRequest = (function () {
+        function QueryDelegatorValidatorsRequest(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryDelegatorValidatorsRequest.prototype.delegatorAddress = "";
+        QueryDelegatorValidatorsRequest.create = function create(properties) {
+          return new QueryDelegatorValidatorsRequest(properties);
+        };
+        QueryDelegatorValidatorsRequest.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.delegatorAddress != null && Object.hasOwnProperty.call(m, "delegatorAddress"))
+            w.uint32(10).string(m.delegatorAddress);
+          return w;
+        };
+        QueryDelegatorValidatorsRequest.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.distribution.v1beta1.QueryDelegatorValidatorsRequest();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.delegatorAddress = r.string();
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryDelegatorValidatorsRequest;
+      })();
+      v1beta1.QueryDelegatorValidatorsResponse = (function () {
+        function QueryDelegatorValidatorsResponse(p) {
+          this.validators = [];
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryDelegatorValidatorsResponse.prototype.validators = $util.emptyArray;
+        QueryDelegatorValidatorsResponse.create = function create(properties) {
+          return new QueryDelegatorValidatorsResponse(properties);
+        };
+        QueryDelegatorValidatorsResponse.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.validators != null && m.validators.length) {
+            for (var i = 0; i < m.validators.length; ++i) w.uint32(10).string(m.validators[i]);
+          }
+          return w;
+        };
+        QueryDelegatorValidatorsResponse.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.distribution.v1beta1.QueryDelegatorValidatorsResponse();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                if (!(m.validators && m.validators.length)) m.validators = [];
+                m.validators.push(r.string());
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryDelegatorValidatorsResponse;
+      })();
+      v1beta1.QueryDelegatorWithdrawAddressRequest = (function () {
+        function QueryDelegatorWithdrawAddressRequest(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryDelegatorWithdrawAddressRequest.prototype.delegatorAddress = "";
+        QueryDelegatorWithdrawAddressRequest.create = function create(properties) {
+          return new QueryDelegatorWithdrawAddressRequest(properties);
+        };
+        QueryDelegatorWithdrawAddressRequest.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.delegatorAddress != null && Object.hasOwnProperty.call(m, "delegatorAddress"))
+            w.uint32(10).string(m.delegatorAddress);
+          return w;
+        };
+        QueryDelegatorWithdrawAddressRequest.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.distribution.v1beta1.QueryDelegatorWithdrawAddressRequest();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.delegatorAddress = r.string();
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryDelegatorWithdrawAddressRequest;
+      })();
+      v1beta1.QueryDelegatorWithdrawAddressResponse = (function () {
+        function QueryDelegatorWithdrawAddressResponse(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryDelegatorWithdrawAddressResponse.prototype.withdrawAddress = "";
+        QueryDelegatorWithdrawAddressResponse.create = function create(properties) {
+          return new QueryDelegatorWithdrawAddressResponse(properties);
+        };
+        QueryDelegatorWithdrawAddressResponse.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.withdrawAddress != null && Object.hasOwnProperty.call(m, "withdrawAddress"))
+            w.uint32(10).string(m.withdrawAddress);
+          return w;
+        };
+        QueryDelegatorWithdrawAddressResponse.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.distribution.v1beta1.QueryDelegatorWithdrawAddressResponse();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.withdrawAddress = r.string();
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryDelegatorWithdrawAddressResponse;
+      })();
+      v1beta1.QueryCommunityPoolRequest = (function () {
+        function QueryCommunityPoolRequest(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryCommunityPoolRequest.create = function create(properties) {
+          return new QueryCommunityPoolRequest(properties);
+        };
+        QueryCommunityPoolRequest.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          return w;
+        };
+        QueryCommunityPoolRequest.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.distribution.v1beta1.QueryCommunityPoolRequest();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryCommunityPoolRequest;
+      })();
+      v1beta1.QueryCommunityPoolResponse = (function () {
+        function QueryCommunityPoolResponse(p) {
+          this.pool = [];
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryCommunityPoolResponse.prototype.pool = $util.emptyArray;
+        QueryCommunityPoolResponse.create = function create(properties) {
+          return new QueryCommunityPoolResponse(properties);
+        };
+        QueryCommunityPoolResponse.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.pool != null && m.pool.length) {
+            for (var i = 0; i < m.pool.length; ++i)
+              $root.cosmos.base.v1beta1.DecCoin.encode(m.pool[i], w.uint32(10).fork()).ldelim();
+          }
+          return w;
+        };
+        QueryCommunityPoolResponse.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.distribution.v1beta1.QueryCommunityPoolResponse();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                if (!(m.pool && m.pool.length)) m.pool = [];
+                m.pool.push($root.cosmos.base.v1beta1.DecCoin.decode(r, r.uint32()));
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryCommunityPoolResponse;
+      })();
+      v1beta1.Msg = (function () {
+        function Msg(rpcImpl, requestDelimited, responseDelimited) {
+          $protobuf.rpc.Service.call(this, rpcImpl, requestDelimited, responseDelimited);
+        }
+        (Msg.prototype = Object.create($protobuf.rpc.Service.prototype)).constructor = Msg;
+        Msg.create = function create(rpcImpl, requestDelimited, responseDelimited) {
+          return new this(rpcImpl, requestDelimited, responseDelimited);
+        };
+        Object.defineProperty(
+          (Msg.prototype.setWithdrawAddress = function setWithdrawAddress(request, callback) {
+            return this.rpcCall(
+              setWithdrawAddress,
+              $root.cosmos.distribution.v1beta1.MsgSetWithdrawAddress,
+              $root.cosmos.distribution.v1beta1.MsgSetWithdrawAddressResponse,
+              request,
+              callback,
+            );
+          }),
+          "name",
+          { value: "SetWithdrawAddress" },
+        );
+        Object.defineProperty(
+          (Msg.prototype.withdrawDelegatorReward = function withdrawDelegatorReward(request, callback) {
+            return this.rpcCall(
+              withdrawDelegatorReward,
+              $root.cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward,
+              $root.cosmos.distribution.v1beta1.MsgWithdrawDelegatorRewardResponse,
+              request,
+              callback,
+            );
+          }),
+          "name",
+          { value: "WithdrawDelegatorReward" },
+        );
+        Object.defineProperty(
+          (Msg.prototype.withdrawValidatorCommission = function withdrawValidatorCommission(
+            request,
+            callback,
+          ) {
+            return this.rpcCall(
+              withdrawValidatorCommission,
+              $root.cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission,
+              $root.cosmos.distribution.v1beta1.MsgWithdrawValidatorCommissionResponse,
+              request,
+              callback,
+            );
+          }),
+          "name",
+          { value: "WithdrawValidatorCommission" },
+        );
+        Object.defineProperty(
+          (Msg.prototype.fundCommunityPool = function fundCommunityPool(request, callback) {
+            return this.rpcCall(
+              fundCommunityPool,
+              $root.cosmos.distribution.v1beta1.MsgFundCommunityPool,
+              $root.cosmos.distribution.v1beta1.MsgFundCommunityPoolResponse,
+              request,
+              callback,
+            );
+          }),
+          "name",
+          { value: "FundCommunityPool" },
+        );
+        return Msg;
+      })();
+      v1beta1.MsgSetWithdrawAddress = (function () {
+        function MsgSetWithdrawAddress(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        MsgSetWithdrawAddress.prototype.delegatorAddress = "";
+        MsgSetWithdrawAddress.prototype.withdrawAddress = "";
+        MsgSetWithdrawAddress.create = function create(properties) {
+          return new MsgSetWithdrawAddress(properties);
+        };
+        MsgSetWithdrawAddress.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.delegatorAddress != null && Object.hasOwnProperty.call(m, "delegatorAddress"))
+            w.uint32(10).string(m.delegatorAddress);
+          if (m.withdrawAddress != null && Object.hasOwnProperty.call(m, "withdrawAddress"))
+            w.uint32(18).string(m.withdrawAddress);
+          return w;
+        };
+        MsgSetWithdrawAddress.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.distribution.v1beta1.MsgSetWithdrawAddress();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.delegatorAddress = r.string();
+                break;
+              case 2:
+                m.withdrawAddress = r.string();
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return MsgSetWithdrawAddress;
+      })();
+      v1beta1.MsgSetWithdrawAddressResponse = (function () {
+        function MsgSetWithdrawAddressResponse(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        MsgSetWithdrawAddressResponse.create = function create(properties) {
+          return new MsgSetWithdrawAddressResponse(properties);
+        };
+        MsgSetWithdrawAddressResponse.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          return w;
+        };
+        MsgSetWithdrawAddressResponse.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.distribution.v1beta1.MsgSetWithdrawAddressResponse();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return MsgSetWithdrawAddressResponse;
+      })();
+      v1beta1.MsgWithdrawDelegatorReward = (function () {
+        function MsgWithdrawDelegatorReward(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        MsgWithdrawDelegatorReward.prototype.delegatorAddress = "";
+        MsgWithdrawDelegatorReward.prototype.validatorAddress = "";
+        MsgWithdrawDelegatorReward.create = function create(properties) {
+          return new MsgWithdrawDelegatorReward(properties);
+        };
+        MsgWithdrawDelegatorReward.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.delegatorAddress != null && Object.hasOwnProperty.call(m, "delegatorAddress"))
+            w.uint32(10).string(m.delegatorAddress);
+          if (m.validatorAddress != null && Object.hasOwnProperty.call(m, "validatorAddress"))
+            w.uint32(18).string(m.validatorAddress);
+          return w;
+        };
+        MsgWithdrawDelegatorReward.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.delegatorAddress = r.string();
+                break;
+              case 2:
+                m.validatorAddress = r.string();
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return MsgWithdrawDelegatorReward;
+      })();
+      v1beta1.MsgWithdrawDelegatorRewardResponse = (function () {
+        function MsgWithdrawDelegatorRewardResponse(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        MsgWithdrawDelegatorRewardResponse.create = function create(properties) {
+          return new MsgWithdrawDelegatorRewardResponse(properties);
+        };
+        MsgWithdrawDelegatorRewardResponse.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          return w;
+        };
+        MsgWithdrawDelegatorRewardResponse.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.distribution.v1beta1.MsgWithdrawDelegatorRewardResponse();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return MsgWithdrawDelegatorRewardResponse;
+      })();
+      v1beta1.MsgWithdrawValidatorCommission = (function () {
+        function MsgWithdrawValidatorCommission(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        MsgWithdrawValidatorCommission.prototype.validatorAddress = "";
+        MsgWithdrawValidatorCommission.create = function create(properties) {
+          return new MsgWithdrawValidatorCommission(properties);
+        };
+        MsgWithdrawValidatorCommission.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.validatorAddress != null && Object.hasOwnProperty.call(m, "validatorAddress"))
+            w.uint32(10).string(m.validatorAddress);
+          return w;
+        };
+        MsgWithdrawValidatorCommission.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.validatorAddress = r.string();
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return MsgWithdrawValidatorCommission;
+      })();
+      v1beta1.MsgWithdrawValidatorCommissionResponse = (function () {
+        function MsgWithdrawValidatorCommissionResponse(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        MsgWithdrawValidatorCommissionResponse.create = function create(properties) {
+          return new MsgWithdrawValidatorCommissionResponse(properties);
+        };
+        MsgWithdrawValidatorCommissionResponse.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          return w;
+        };
+        MsgWithdrawValidatorCommissionResponse.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.distribution.v1beta1.MsgWithdrawValidatorCommissionResponse();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return MsgWithdrawValidatorCommissionResponse;
+      })();
+      v1beta1.MsgFundCommunityPool = (function () {
+        function MsgFundCommunityPool(p) {
+          this.amount = [];
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        MsgFundCommunityPool.prototype.amount = $util.emptyArray;
+        MsgFundCommunityPool.prototype.depositor = "";
+        MsgFundCommunityPool.create = function create(properties) {
+          return new MsgFundCommunityPool(properties);
+        };
+        MsgFundCommunityPool.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.amount != null && m.amount.length) {
+            for (var i = 0; i < m.amount.length; ++i)
+              $root.cosmos.base.v1beta1.Coin.encode(m.amount[i], w.uint32(10).fork()).ldelim();
+          }
+          if (m.depositor != null && Object.hasOwnProperty.call(m, "depositor"))
+            w.uint32(18).string(m.depositor);
+          return w;
+        };
+        MsgFundCommunityPool.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.distribution.v1beta1.MsgFundCommunityPool();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                if (!(m.amount && m.amount.length)) m.amount = [];
+                m.amount.push($root.cosmos.base.v1beta1.Coin.decode(r, r.uint32()));
+                break;
+              case 2:
+                m.depositor = r.string();
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return MsgFundCommunityPool;
+      })();
+      v1beta1.MsgFundCommunityPoolResponse = (function () {
+        function MsgFundCommunityPoolResponse(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        MsgFundCommunityPoolResponse.create = function create(properties) {
+          return new MsgFundCommunityPoolResponse(properties);
+        };
+        MsgFundCommunityPoolResponse.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          return w;
+        };
+        MsgFundCommunityPoolResponse.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.distribution.v1beta1.MsgFundCommunityPoolResponse();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return MsgFundCommunityPoolResponse;
+      })();
+      return v1beta1;
+    })();
+    return distribution;
+  })();
   cosmos.staking = (function () {
     const staking = {};
     staking.v1beta1 = (function () {
       const v1beta1 = {};
+      v1beta1.Query = (function () {
+        function Query(rpcImpl, requestDelimited, responseDelimited) {
+          $protobuf.rpc.Service.call(this, rpcImpl, requestDelimited, responseDelimited);
+        }
+        (Query.prototype = Object.create($protobuf.rpc.Service.prototype)).constructor = Query;
+        Query.create = function create(rpcImpl, requestDelimited, responseDelimited) {
+          return new this(rpcImpl, requestDelimited, responseDelimited);
+        };
+        Object.defineProperty(
+          (Query.prototype.validators = function validators(request, callback) {
+            return this.rpcCall(
+              validators,
+              $root.cosmos.staking.v1beta1.QueryValidatorsRequest,
+              $root.cosmos.staking.v1beta1.QueryValidatorsResponse,
+              request,
+              callback,
+            );
+          }),
+          "name",
+          { value: "Validators" },
+        );
+        Object.defineProperty(
+          (Query.prototype.validator = function validator(request, callback) {
+            return this.rpcCall(
+              validator,
+              $root.cosmos.staking.v1beta1.QueryValidatorRequest,
+              $root.cosmos.staking.v1beta1.QueryValidatorResponse,
+              request,
+              callback,
+            );
+          }),
+          "name",
+          { value: "Validator" },
+        );
+        Object.defineProperty(
+          (Query.prototype.validatorDelegations = function validatorDelegations(request, callback) {
+            return this.rpcCall(
+              validatorDelegations,
+              $root.cosmos.staking.v1beta1.QueryValidatorDelegationsRequest,
+              $root.cosmos.staking.v1beta1.QueryValidatorDelegationsResponse,
+              request,
+              callback,
+            );
+          }),
+          "name",
+          { value: "ValidatorDelegations" },
+        );
+        Object.defineProperty(
+          (Query.prototype.validatorUnbondingDelegations = function validatorUnbondingDelegations(
+            request,
+            callback,
+          ) {
+            return this.rpcCall(
+              validatorUnbondingDelegations,
+              $root.cosmos.staking.v1beta1.QueryValidatorUnbondingDelegationsRequest,
+              $root.cosmos.staking.v1beta1.QueryValidatorUnbondingDelegationsResponse,
+              request,
+              callback,
+            );
+          }),
+          "name",
+          { value: "ValidatorUnbondingDelegations" },
+        );
+        Object.defineProperty(
+          (Query.prototype.delegation = function delegation(request, callback) {
+            return this.rpcCall(
+              delegation,
+              $root.cosmos.staking.v1beta1.QueryDelegationRequest,
+              $root.cosmos.staking.v1beta1.QueryDelegationResponse,
+              request,
+              callback,
+            );
+          }),
+          "name",
+          { value: "Delegation" },
+        );
+        Object.defineProperty(
+          (Query.prototype.unbondingDelegation = function unbondingDelegation(request, callback) {
+            return this.rpcCall(
+              unbondingDelegation,
+              $root.cosmos.staking.v1beta1.QueryUnbondingDelegationRequest,
+              $root.cosmos.staking.v1beta1.QueryUnbondingDelegationResponse,
+              request,
+              callback,
+            );
+          }),
+          "name",
+          { value: "UnbondingDelegation" },
+        );
+        Object.defineProperty(
+          (Query.prototype.delegatorDelegations = function delegatorDelegations(request, callback) {
+            return this.rpcCall(
+              delegatorDelegations,
+              $root.cosmos.staking.v1beta1.QueryDelegatorDelegationsRequest,
+              $root.cosmos.staking.v1beta1.QueryDelegatorDelegationsResponse,
+              request,
+              callback,
+            );
+          }),
+          "name",
+          { value: "DelegatorDelegations" },
+        );
+        Object.defineProperty(
+          (Query.prototype.delegatorUnbondingDelegations = function delegatorUnbondingDelegations(
+            request,
+            callback,
+          ) {
+            return this.rpcCall(
+              delegatorUnbondingDelegations,
+              $root.cosmos.staking.v1beta1.QueryDelegatorUnbondingDelegationsRequest,
+              $root.cosmos.staking.v1beta1.QueryDelegatorUnbondingDelegationsResponse,
+              request,
+              callback,
+            );
+          }),
+          "name",
+          { value: "DelegatorUnbondingDelegations" },
+        );
+        Object.defineProperty(
+          (Query.prototype.redelegations = function redelegations(request, callback) {
+            return this.rpcCall(
+              redelegations,
+              $root.cosmos.staking.v1beta1.QueryRedelegationsRequest,
+              $root.cosmos.staking.v1beta1.QueryRedelegationsResponse,
+              request,
+              callback,
+            );
+          }),
+          "name",
+          { value: "Redelegations" },
+        );
+        Object.defineProperty(
+          (Query.prototype.delegatorValidators = function delegatorValidators(request, callback) {
+            return this.rpcCall(
+              delegatorValidators,
+              $root.cosmos.staking.v1beta1.QueryDelegatorValidatorsRequest,
+              $root.cosmos.staking.v1beta1.QueryDelegatorValidatorsResponse,
+              request,
+              callback,
+            );
+          }),
+          "name",
+          { value: "DelegatorValidators" },
+        );
+        Object.defineProperty(
+          (Query.prototype.delegatorValidator = function delegatorValidator(request, callback) {
+            return this.rpcCall(
+              delegatorValidator,
+              $root.cosmos.staking.v1beta1.QueryDelegatorValidatorRequest,
+              $root.cosmos.staking.v1beta1.QueryDelegatorValidatorResponse,
+              request,
+              callback,
+            );
+          }),
+          "name",
+          { value: "DelegatorValidator" },
+        );
+        Object.defineProperty(
+          (Query.prototype.historicalInfo = function historicalInfo(request, callback) {
+            return this.rpcCall(
+              historicalInfo,
+              $root.cosmos.staking.v1beta1.QueryHistoricalInfoRequest,
+              $root.cosmos.staking.v1beta1.QueryHistoricalInfoResponse,
+              request,
+              callback,
+            );
+          }),
+          "name",
+          { value: "HistoricalInfo" },
+        );
+        Object.defineProperty(
+          (Query.prototype.pool = function pool(request, callback) {
+            return this.rpcCall(
+              pool,
+              $root.cosmos.staking.v1beta1.QueryPoolRequest,
+              $root.cosmos.staking.v1beta1.QueryPoolResponse,
+              request,
+              callback,
+            );
+          }),
+          "name",
+          { value: "Pool" },
+        );
+        Object.defineProperty(
+          (Query.prototype.params = function params(request, callback) {
+            return this.rpcCall(
+              params,
+              $root.cosmos.staking.v1beta1.QueryParamsRequest,
+              $root.cosmos.staking.v1beta1.QueryParamsResponse,
+              request,
+              callback,
+            );
+          }),
+          "name",
+          { value: "Params" },
+        );
+        return Query;
+      })();
+      v1beta1.QueryValidatorsRequest = (function () {
+        function QueryValidatorsRequest(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryValidatorsRequest.prototype.status = "";
+        QueryValidatorsRequest.prototype.pagination = null;
+        QueryValidatorsRequest.create = function create(properties) {
+          return new QueryValidatorsRequest(properties);
+        };
+        QueryValidatorsRequest.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.status != null && Object.hasOwnProperty.call(m, "status")) w.uint32(10).string(m.status);
+          if (m.pagination != null && Object.hasOwnProperty.call(m, "pagination"))
+            $root.cosmos.base.query.v1beta1.PageRequest.encode(m.pagination, w.uint32(18).fork()).ldelim();
+          return w;
+        };
+        QueryValidatorsRequest.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.staking.v1beta1.QueryValidatorsRequest();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.status = r.string();
+                break;
+              case 2:
+                m.pagination = $root.cosmos.base.query.v1beta1.PageRequest.decode(r, r.uint32());
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryValidatorsRequest;
+      })();
+      v1beta1.QueryValidatorsResponse = (function () {
+        function QueryValidatorsResponse(p) {
+          this.validators = [];
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryValidatorsResponse.prototype.validators = $util.emptyArray;
+        QueryValidatorsResponse.prototype.pagination = null;
+        QueryValidatorsResponse.create = function create(properties) {
+          return new QueryValidatorsResponse(properties);
+        };
+        QueryValidatorsResponse.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.validators != null && m.validators.length) {
+            for (var i = 0; i < m.validators.length; ++i)
+              $root.cosmos.staking.v1beta1.Validator.encode(m.validators[i], w.uint32(10).fork()).ldelim();
+          }
+          if (m.pagination != null && Object.hasOwnProperty.call(m, "pagination"))
+            $root.cosmos.base.query.v1beta1.PageResponse.encode(m.pagination, w.uint32(18).fork()).ldelim();
+          return w;
+        };
+        QueryValidatorsResponse.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.staking.v1beta1.QueryValidatorsResponse();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                if (!(m.validators && m.validators.length)) m.validators = [];
+                m.validators.push($root.cosmos.staking.v1beta1.Validator.decode(r, r.uint32()));
+                break;
+              case 2:
+                m.pagination = $root.cosmos.base.query.v1beta1.PageResponse.decode(r, r.uint32());
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryValidatorsResponse;
+      })();
+      v1beta1.QueryValidatorRequest = (function () {
+        function QueryValidatorRequest(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryValidatorRequest.prototype.validatorAddr = "";
+        QueryValidatorRequest.create = function create(properties) {
+          return new QueryValidatorRequest(properties);
+        };
+        QueryValidatorRequest.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.validatorAddr != null && Object.hasOwnProperty.call(m, "validatorAddr"))
+            w.uint32(10).string(m.validatorAddr);
+          return w;
+        };
+        QueryValidatorRequest.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.staking.v1beta1.QueryValidatorRequest();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.validatorAddr = r.string();
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryValidatorRequest;
+      })();
+      v1beta1.QueryValidatorResponse = (function () {
+        function QueryValidatorResponse(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryValidatorResponse.prototype.validator = null;
+        QueryValidatorResponse.create = function create(properties) {
+          return new QueryValidatorResponse(properties);
+        };
+        QueryValidatorResponse.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.validator != null && Object.hasOwnProperty.call(m, "validator"))
+            $root.cosmos.staking.v1beta1.Validator.encode(m.validator, w.uint32(10).fork()).ldelim();
+          return w;
+        };
+        QueryValidatorResponse.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.staking.v1beta1.QueryValidatorResponse();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.validator = $root.cosmos.staking.v1beta1.Validator.decode(r, r.uint32());
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryValidatorResponse;
+      })();
+      v1beta1.QueryValidatorDelegationsRequest = (function () {
+        function QueryValidatorDelegationsRequest(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryValidatorDelegationsRequest.prototype.validatorAddr = "";
+        QueryValidatorDelegationsRequest.prototype.pagination = null;
+        QueryValidatorDelegationsRequest.create = function create(properties) {
+          return new QueryValidatorDelegationsRequest(properties);
+        };
+        QueryValidatorDelegationsRequest.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.validatorAddr != null && Object.hasOwnProperty.call(m, "validatorAddr"))
+            w.uint32(10).string(m.validatorAddr);
+          if (m.pagination != null && Object.hasOwnProperty.call(m, "pagination"))
+            $root.cosmos.base.query.v1beta1.PageRequest.encode(m.pagination, w.uint32(18).fork()).ldelim();
+          return w;
+        };
+        QueryValidatorDelegationsRequest.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.staking.v1beta1.QueryValidatorDelegationsRequest();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.validatorAddr = r.string();
+                break;
+              case 2:
+                m.pagination = $root.cosmos.base.query.v1beta1.PageRequest.decode(r, r.uint32());
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryValidatorDelegationsRequest;
+      })();
+      v1beta1.QueryValidatorDelegationsResponse = (function () {
+        function QueryValidatorDelegationsResponse(p) {
+          this.delegationResponses = [];
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryValidatorDelegationsResponse.prototype.delegationResponses = $util.emptyArray;
+        QueryValidatorDelegationsResponse.prototype.pagination = null;
+        QueryValidatorDelegationsResponse.create = function create(properties) {
+          return new QueryValidatorDelegationsResponse(properties);
+        };
+        QueryValidatorDelegationsResponse.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.delegationResponses != null && m.delegationResponses.length) {
+            for (var i = 0; i < m.delegationResponses.length; ++i)
+              $root.cosmos.staking.v1beta1.DelegationResponse.encode(
+                m.delegationResponses[i],
+                w.uint32(10).fork(),
+              ).ldelim();
+          }
+          if (m.pagination != null && Object.hasOwnProperty.call(m, "pagination"))
+            $root.cosmos.base.query.v1beta1.PageResponse.encode(m.pagination, w.uint32(18).fork()).ldelim();
+          return w;
+        };
+        QueryValidatorDelegationsResponse.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.staking.v1beta1.QueryValidatorDelegationsResponse();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                if (!(m.delegationResponses && m.delegationResponses.length)) m.delegationResponses = [];
+                m.delegationResponses.push(
+                  $root.cosmos.staking.v1beta1.DelegationResponse.decode(r, r.uint32()),
+                );
+                break;
+              case 2:
+                m.pagination = $root.cosmos.base.query.v1beta1.PageResponse.decode(r, r.uint32());
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryValidatorDelegationsResponse;
+      })();
+      v1beta1.QueryValidatorUnbondingDelegationsRequest = (function () {
+        function QueryValidatorUnbondingDelegationsRequest(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryValidatorUnbondingDelegationsRequest.prototype.validatorAddr = "";
+        QueryValidatorUnbondingDelegationsRequest.prototype.pagination = null;
+        QueryValidatorUnbondingDelegationsRequest.create = function create(properties) {
+          return new QueryValidatorUnbondingDelegationsRequest(properties);
+        };
+        QueryValidatorUnbondingDelegationsRequest.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.validatorAddr != null && Object.hasOwnProperty.call(m, "validatorAddr"))
+            w.uint32(10).string(m.validatorAddr);
+          if (m.pagination != null && Object.hasOwnProperty.call(m, "pagination"))
+            $root.cosmos.base.query.v1beta1.PageRequest.encode(m.pagination, w.uint32(18).fork()).ldelim();
+          return w;
+        };
+        QueryValidatorUnbondingDelegationsRequest.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.staking.v1beta1.QueryValidatorUnbondingDelegationsRequest();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.validatorAddr = r.string();
+                break;
+              case 2:
+                m.pagination = $root.cosmos.base.query.v1beta1.PageRequest.decode(r, r.uint32());
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryValidatorUnbondingDelegationsRequest;
+      })();
+      v1beta1.QueryValidatorUnbondingDelegationsResponse = (function () {
+        function QueryValidatorUnbondingDelegationsResponse(p) {
+          this.unbondingResponses = [];
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryValidatorUnbondingDelegationsResponse.prototype.unbondingResponses = $util.emptyArray;
+        QueryValidatorUnbondingDelegationsResponse.prototype.pagination = null;
+        QueryValidatorUnbondingDelegationsResponse.create = function create(properties) {
+          return new QueryValidatorUnbondingDelegationsResponse(properties);
+        };
+        QueryValidatorUnbondingDelegationsResponse.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.unbondingResponses != null && m.unbondingResponses.length) {
+            for (var i = 0; i < m.unbondingResponses.length; ++i)
+              $root.cosmos.staking.v1beta1.UnbondingDelegation.encode(
+                m.unbondingResponses[i],
+                w.uint32(10).fork(),
+              ).ldelim();
+          }
+          if (m.pagination != null && Object.hasOwnProperty.call(m, "pagination"))
+            $root.cosmos.base.query.v1beta1.PageResponse.encode(m.pagination, w.uint32(18).fork()).ldelim();
+          return w;
+        };
+        QueryValidatorUnbondingDelegationsResponse.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.staking.v1beta1.QueryValidatorUnbondingDelegationsResponse();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                if (!(m.unbondingResponses && m.unbondingResponses.length)) m.unbondingResponses = [];
+                m.unbondingResponses.push(
+                  $root.cosmos.staking.v1beta1.UnbondingDelegation.decode(r, r.uint32()),
+                );
+                break;
+              case 2:
+                m.pagination = $root.cosmos.base.query.v1beta1.PageResponse.decode(r, r.uint32());
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryValidatorUnbondingDelegationsResponse;
+      })();
+      v1beta1.QueryDelegationRequest = (function () {
+        function QueryDelegationRequest(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryDelegationRequest.prototype.delegatorAddr = "";
+        QueryDelegationRequest.prototype.validatorAddr = "";
+        QueryDelegationRequest.create = function create(properties) {
+          return new QueryDelegationRequest(properties);
+        };
+        QueryDelegationRequest.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.delegatorAddr != null && Object.hasOwnProperty.call(m, "delegatorAddr"))
+            w.uint32(10).string(m.delegatorAddr);
+          if (m.validatorAddr != null && Object.hasOwnProperty.call(m, "validatorAddr"))
+            w.uint32(18).string(m.validatorAddr);
+          return w;
+        };
+        QueryDelegationRequest.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.staking.v1beta1.QueryDelegationRequest();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.delegatorAddr = r.string();
+                break;
+              case 2:
+                m.validatorAddr = r.string();
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryDelegationRequest;
+      })();
+      v1beta1.QueryDelegationResponse = (function () {
+        function QueryDelegationResponse(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryDelegationResponse.prototype.delegationResponse = null;
+        QueryDelegationResponse.create = function create(properties) {
+          return new QueryDelegationResponse(properties);
+        };
+        QueryDelegationResponse.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.delegationResponse != null && Object.hasOwnProperty.call(m, "delegationResponse"))
+            $root.cosmos.staking.v1beta1.DelegationResponse.encode(
+              m.delegationResponse,
+              w.uint32(10).fork(),
+            ).ldelim();
+          return w;
+        };
+        QueryDelegationResponse.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.staking.v1beta1.QueryDelegationResponse();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.delegationResponse = $root.cosmos.staking.v1beta1.DelegationResponse.decode(r, r.uint32());
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryDelegationResponse;
+      })();
+      v1beta1.QueryUnbondingDelegationRequest = (function () {
+        function QueryUnbondingDelegationRequest(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryUnbondingDelegationRequest.prototype.delegatorAddr = "";
+        QueryUnbondingDelegationRequest.prototype.validatorAddr = "";
+        QueryUnbondingDelegationRequest.create = function create(properties) {
+          return new QueryUnbondingDelegationRequest(properties);
+        };
+        QueryUnbondingDelegationRequest.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.delegatorAddr != null && Object.hasOwnProperty.call(m, "delegatorAddr"))
+            w.uint32(10).string(m.delegatorAddr);
+          if (m.validatorAddr != null && Object.hasOwnProperty.call(m, "validatorAddr"))
+            w.uint32(18).string(m.validatorAddr);
+          return w;
+        };
+        QueryUnbondingDelegationRequest.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.staking.v1beta1.QueryUnbondingDelegationRequest();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.delegatorAddr = r.string();
+                break;
+              case 2:
+                m.validatorAddr = r.string();
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryUnbondingDelegationRequest;
+      })();
+      v1beta1.QueryUnbondingDelegationResponse = (function () {
+        function QueryUnbondingDelegationResponse(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryUnbondingDelegationResponse.prototype.unbond = null;
+        QueryUnbondingDelegationResponse.create = function create(properties) {
+          return new QueryUnbondingDelegationResponse(properties);
+        };
+        QueryUnbondingDelegationResponse.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.unbond != null && Object.hasOwnProperty.call(m, "unbond"))
+            $root.cosmos.staking.v1beta1.UnbondingDelegation.encode(m.unbond, w.uint32(10).fork()).ldelim();
+          return w;
+        };
+        QueryUnbondingDelegationResponse.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.staking.v1beta1.QueryUnbondingDelegationResponse();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.unbond = $root.cosmos.staking.v1beta1.UnbondingDelegation.decode(r, r.uint32());
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryUnbondingDelegationResponse;
+      })();
+      v1beta1.QueryDelegatorDelegationsRequest = (function () {
+        function QueryDelegatorDelegationsRequest(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryDelegatorDelegationsRequest.prototype.delegatorAddr = "";
+        QueryDelegatorDelegationsRequest.prototype.pagination = null;
+        QueryDelegatorDelegationsRequest.create = function create(properties) {
+          return new QueryDelegatorDelegationsRequest(properties);
+        };
+        QueryDelegatorDelegationsRequest.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.delegatorAddr != null && Object.hasOwnProperty.call(m, "delegatorAddr"))
+            w.uint32(10).string(m.delegatorAddr);
+          if (m.pagination != null && Object.hasOwnProperty.call(m, "pagination"))
+            $root.cosmos.base.query.v1beta1.PageRequest.encode(m.pagination, w.uint32(18).fork()).ldelim();
+          return w;
+        };
+        QueryDelegatorDelegationsRequest.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.staking.v1beta1.QueryDelegatorDelegationsRequest();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.delegatorAddr = r.string();
+                break;
+              case 2:
+                m.pagination = $root.cosmos.base.query.v1beta1.PageRequest.decode(r, r.uint32());
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryDelegatorDelegationsRequest;
+      })();
+      v1beta1.QueryDelegatorDelegationsResponse = (function () {
+        function QueryDelegatorDelegationsResponse(p) {
+          this.delegationResponses = [];
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryDelegatorDelegationsResponse.prototype.delegationResponses = $util.emptyArray;
+        QueryDelegatorDelegationsResponse.prototype.pagination = null;
+        QueryDelegatorDelegationsResponse.create = function create(properties) {
+          return new QueryDelegatorDelegationsResponse(properties);
+        };
+        QueryDelegatorDelegationsResponse.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.delegationResponses != null && m.delegationResponses.length) {
+            for (var i = 0; i < m.delegationResponses.length; ++i)
+              $root.cosmos.staking.v1beta1.DelegationResponse.encode(
+                m.delegationResponses[i],
+                w.uint32(10).fork(),
+              ).ldelim();
+          }
+          if (m.pagination != null && Object.hasOwnProperty.call(m, "pagination"))
+            $root.cosmos.base.query.v1beta1.PageResponse.encode(m.pagination, w.uint32(18).fork()).ldelim();
+          return w;
+        };
+        QueryDelegatorDelegationsResponse.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.staking.v1beta1.QueryDelegatorDelegationsResponse();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                if (!(m.delegationResponses && m.delegationResponses.length)) m.delegationResponses = [];
+                m.delegationResponses.push(
+                  $root.cosmos.staking.v1beta1.DelegationResponse.decode(r, r.uint32()),
+                );
+                break;
+              case 2:
+                m.pagination = $root.cosmos.base.query.v1beta1.PageResponse.decode(r, r.uint32());
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryDelegatorDelegationsResponse;
+      })();
+      v1beta1.QueryDelegatorUnbondingDelegationsRequest = (function () {
+        function QueryDelegatorUnbondingDelegationsRequest(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryDelegatorUnbondingDelegationsRequest.prototype.delegatorAddr = "";
+        QueryDelegatorUnbondingDelegationsRequest.prototype.pagination = null;
+        QueryDelegatorUnbondingDelegationsRequest.create = function create(properties) {
+          return new QueryDelegatorUnbondingDelegationsRequest(properties);
+        };
+        QueryDelegatorUnbondingDelegationsRequest.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.delegatorAddr != null && Object.hasOwnProperty.call(m, "delegatorAddr"))
+            w.uint32(10).string(m.delegatorAddr);
+          if (m.pagination != null && Object.hasOwnProperty.call(m, "pagination"))
+            $root.cosmos.base.query.v1beta1.PageRequest.encode(m.pagination, w.uint32(18).fork()).ldelim();
+          return w;
+        };
+        QueryDelegatorUnbondingDelegationsRequest.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.staking.v1beta1.QueryDelegatorUnbondingDelegationsRequest();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.delegatorAddr = r.string();
+                break;
+              case 2:
+                m.pagination = $root.cosmos.base.query.v1beta1.PageRequest.decode(r, r.uint32());
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryDelegatorUnbondingDelegationsRequest;
+      })();
+      v1beta1.QueryDelegatorUnbondingDelegationsResponse = (function () {
+        function QueryDelegatorUnbondingDelegationsResponse(p) {
+          this.unbondingResponses = [];
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryDelegatorUnbondingDelegationsResponse.prototype.unbondingResponses = $util.emptyArray;
+        QueryDelegatorUnbondingDelegationsResponse.prototype.pagination = null;
+        QueryDelegatorUnbondingDelegationsResponse.create = function create(properties) {
+          return new QueryDelegatorUnbondingDelegationsResponse(properties);
+        };
+        QueryDelegatorUnbondingDelegationsResponse.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.unbondingResponses != null && m.unbondingResponses.length) {
+            for (var i = 0; i < m.unbondingResponses.length; ++i)
+              $root.cosmos.staking.v1beta1.UnbondingDelegation.encode(
+                m.unbondingResponses[i],
+                w.uint32(10).fork(),
+              ).ldelim();
+          }
+          if (m.pagination != null && Object.hasOwnProperty.call(m, "pagination"))
+            $root.cosmos.base.query.v1beta1.PageResponse.encode(m.pagination, w.uint32(18).fork()).ldelim();
+          return w;
+        };
+        QueryDelegatorUnbondingDelegationsResponse.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.staking.v1beta1.QueryDelegatorUnbondingDelegationsResponse();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                if (!(m.unbondingResponses && m.unbondingResponses.length)) m.unbondingResponses = [];
+                m.unbondingResponses.push(
+                  $root.cosmos.staking.v1beta1.UnbondingDelegation.decode(r, r.uint32()),
+                );
+                break;
+              case 2:
+                m.pagination = $root.cosmos.base.query.v1beta1.PageResponse.decode(r, r.uint32());
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryDelegatorUnbondingDelegationsResponse;
+      })();
+      v1beta1.QueryRedelegationsRequest = (function () {
+        function QueryRedelegationsRequest(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryRedelegationsRequest.prototype.delegatorAddr = "";
+        QueryRedelegationsRequest.prototype.srcValidatorAddr = "";
+        QueryRedelegationsRequest.prototype.dstValidatorAddr = "";
+        QueryRedelegationsRequest.prototype.pagination = null;
+        QueryRedelegationsRequest.create = function create(properties) {
+          return new QueryRedelegationsRequest(properties);
+        };
+        QueryRedelegationsRequest.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.delegatorAddr != null && Object.hasOwnProperty.call(m, "delegatorAddr"))
+            w.uint32(10).string(m.delegatorAddr);
+          if (m.srcValidatorAddr != null && Object.hasOwnProperty.call(m, "srcValidatorAddr"))
+            w.uint32(18).string(m.srcValidatorAddr);
+          if (m.dstValidatorAddr != null && Object.hasOwnProperty.call(m, "dstValidatorAddr"))
+            w.uint32(26).string(m.dstValidatorAddr);
+          if (m.pagination != null && Object.hasOwnProperty.call(m, "pagination"))
+            $root.cosmos.base.query.v1beta1.PageRequest.encode(m.pagination, w.uint32(34).fork()).ldelim();
+          return w;
+        };
+        QueryRedelegationsRequest.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.staking.v1beta1.QueryRedelegationsRequest();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.delegatorAddr = r.string();
+                break;
+              case 2:
+                m.srcValidatorAddr = r.string();
+                break;
+              case 3:
+                m.dstValidatorAddr = r.string();
+                break;
+              case 4:
+                m.pagination = $root.cosmos.base.query.v1beta1.PageRequest.decode(r, r.uint32());
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryRedelegationsRequest;
+      })();
+      v1beta1.QueryRedelegationsResponse = (function () {
+        function QueryRedelegationsResponse(p) {
+          this.redelegationResponses = [];
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryRedelegationsResponse.prototype.redelegationResponses = $util.emptyArray;
+        QueryRedelegationsResponse.prototype.pagination = null;
+        QueryRedelegationsResponse.create = function create(properties) {
+          return new QueryRedelegationsResponse(properties);
+        };
+        QueryRedelegationsResponse.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.redelegationResponses != null && m.redelegationResponses.length) {
+            for (var i = 0; i < m.redelegationResponses.length; ++i)
+              $root.cosmos.staking.v1beta1.RedelegationResponse.encode(
+                m.redelegationResponses[i],
+                w.uint32(10).fork(),
+              ).ldelim();
+          }
+          if (m.pagination != null && Object.hasOwnProperty.call(m, "pagination"))
+            $root.cosmos.base.query.v1beta1.PageResponse.encode(m.pagination, w.uint32(18).fork()).ldelim();
+          return w;
+        };
+        QueryRedelegationsResponse.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.staking.v1beta1.QueryRedelegationsResponse();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                if (!(m.redelegationResponses && m.redelegationResponses.length))
+                  m.redelegationResponses = [];
+                m.redelegationResponses.push(
+                  $root.cosmos.staking.v1beta1.RedelegationResponse.decode(r, r.uint32()),
+                );
+                break;
+              case 2:
+                m.pagination = $root.cosmos.base.query.v1beta1.PageResponse.decode(r, r.uint32());
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryRedelegationsResponse;
+      })();
+      v1beta1.QueryDelegatorValidatorsRequest = (function () {
+        function QueryDelegatorValidatorsRequest(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryDelegatorValidatorsRequest.prototype.delegatorAddr = "";
+        QueryDelegatorValidatorsRequest.prototype.pagination = null;
+        QueryDelegatorValidatorsRequest.create = function create(properties) {
+          return new QueryDelegatorValidatorsRequest(properties);
+        };
+        QueryDelegatorValidatorsRequest.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.delegatorAddr != null && Object.hasOwnProperty.call(m, "delegatorAddr"))
+            w.uint32(10).string(m.delegatorAddr);
+          if (m.pagination != null && Object.hasOwnProperty.call(m, "pagination"))
+            $root.cosmos.base.query.v1beta1.PageRequest.encode(m.pagination, w.uint32(18).fork()).ldelim();
+          return w;
+        };
+        QueryDelegatorValidatorsRequest.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.staking.v1beta1.QueryDelegatorValidatorsRequest();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.delegatorAddr = r.string();
+                break;
+              case 2:
+                m.pagination = $root.cosmos.base.query.v1beta1.PageRequest.decode(r, r.uint32());
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryDelegatorValidatorsRequest;
+      })();
+      v1beta1.QueryDelegatorValidatorsResponse = (function () {
+        function QueryDelegatorValidatorsResponse(p) {
+          this.validators = [];
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryDelegatorValidatorsResponse.prototype.validators = $util.emptyArray;
+        QueryDelegatorValidatorsResponse.prototype.pagination = null;
+        QueryDelegatorValidatorsResponse.create = function create(properties) {
+          return new QueryDelegatorValidatorsResponse(properties);
+        };
+        QueryDelegatorValidatorsResponse.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.validators != null && m.validators.length) {
+            for (var i = 0; i < m.validators.length; ++i)
+              $root.cosmos.staking.v1beta1.Validator.encode(m.validators[i], w.uint32(10).fork()).ldelim();
+          }
+          if (m.pagination != null && Object.hasOwnProperty.call(m, "pagination"))
+            $root.cosmos.base.query.v1beta1.PageResponse.encode(m.pagination, w.uint32(18).fork()).ldelim();
+          return w;
+        };
+        QueryDelegatorValidatorsResponse.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.staking.v1beta1.QueryDelegatorValidatorsResponse();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                if (!(m.validators && m.validators.length)) m.validators = [];
+                m.validators.push($root.cosmos.staking.v1beta1.Validator.decode(r, r.uint32()));
+                break;
+              case 2:
+                m.pagination = $root.cosmos.base.query.v1beta1.PageResponse.decode(r, r.uint32());
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryDelegatorValidatorsResponse;
+      })();
+      v1beta1.QueryDelegatorValidatorRequest = (function () {
+        function QueryDelegatorValidatorRequest(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryDelegatorValidatorRequest.prototype.delegatorAddr = "";
+        QueryDelegatorValidatorRequest.prototype.validatorAddr = "";
+        QueryDelegatorValidatorRequest.create = function create(properties) {
+          return new QueryDelegatorValidatorRequest(properties);
+        };
+        QueryDelegatorValidatorRequest.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.delegatorAddr != null && Object.hasOwnProperty.call(m, "delegatorAddr"))
+            w.uint32(10).string(m.delegatorAddr);
+          if (m.validatorAddr != null && Object.hasOwnProperty.call(m, "validatorAddr"))
+            w.uint32(18).string(m.validatorAddr);
+          return w;
+        };
+        QueryDelegatorValidatorRequest.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.staking.v1beta1.QueryDelegatorValidatorRequest();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.delegatorAddr = r.string();
+                break;
+              case 2:
+                m.validatorAddr = r.string();
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryDelegatorValidatorRequest;
+      })();
+      v1beta1.QueryDelegatorValidatorResponse = (function () {
+        function QueryDelegatorValidatorResponse(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryDelegatorValidatorResponse.prototype.validator = null;
+        QueryDelegatorValidatorResponse.create = function create(properties) {
+          return new QueryDelegatorValidatorResponse(properties);
+        };
+        QueryDelegatorValidatorResponse.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.validator != null && Object.hasOwnProperty.call(m, "validator"))
+            $root.cosmos.staking.v1beta1.Validator.encode(m.validator, w.uint32(10).fork()).ldelim();
+          return w;
+        };
+        QueryDelegatorValidatorResponse.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.staking.v1beta1.QueryDelegatorValidatorResponse();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.validator = $root.cosmos.staking.v1beta1.Validator.decode(r, r.uint32());
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryDelegatorValidatorResponse;
+      })();
+      v1beta1.QueryHistoricalInfoRequest = (function () {
+        function QueryHistoricalInfoRequest(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryHistoricalInfoRequest.prototype.height = $util.Long ? $util.Long.fromBits(0, 0, false) : 0;
+        QueryHistoricalInfoRequest.create = function create(properties) {
+          return new QueryHistoricalInfoRequest(properties);
+        };
+        QueryHistoricalInfoRequest.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.height != null && Object.hasOwnProperty.call(m, "height")) w.uint32(8).int64(m.height);
+          return w;
+        };
+        QueryHistoricalInfoRequest.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.staking.v1beta1.QueryHistoricalInfoRequest();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.height = r.int64();
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryHistoricalInfoRequest;
+      })();
+      v1beta1.QueryHistoricalInfoResponse = (function () {
+        function QueryHistoricalInfoResponse(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryHistoricalInfoResponse.prototype.hist = null;
+        QueryHistoricalInfoResponse.create = function create(properties) {
+          return new QueryHistoricalInfoResponse(properties);
+        };
+        QueryHistoricalInfoResponse.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.hist != null && Object.hasOwnProperty.call(m, "hist"))
+            $root.cosmos.staking.v1beta1.HistoricalInfo.encode(m.hist, w.uint32(10).fork()).ldelim();
+          return w;
+        };
+        QueryHistoricalInfoResponse.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.staking.v1beta1.QueryHistoricalInfoResponse();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.hist = $root.cosmos.staking.v1beta1.HistoricalInfo.decode(r, r.uint32());
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryHistoricalInfoResponse;
+      })();
+      v1beta1.QueryPoolRequest = (function () {
+        function QueryPoolRequest(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryPoolRequest.create = function create(properties) {
+          return new QueryPoolRequest(properties);
+        };
+        QueryPoolRequest.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          return w;
+        };
+        QueryPoolRequest.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.staking.v1beta1.QueryPoolRequest();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryPoolRequest;
+      })();
+      v1beta1.QueryPoolResponse = (function () {
+        function QueryPoolResponse(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryPoolResponse.prototype.pool = null;
+        QueryPoolResponse.create = function create(properties) {
+          return new QueryPoolResponse(properties);
+        };
+        QueryPoolResponse.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.pool != null && Object.hasOwnProperty.call(m, "pool"))
+            $root.cosmos.staking.v1beta1.Pool.encode(m.pool, w.uint32(10).fork()).ldelim();
+          return w;
+        };
+        QueryPoolResponse.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.staking.v1beta1.QueryPoolResponse();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.pool = $root.cosmos.staking.v1beta1.Pool.decode(r, r.uint32());
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryPoolResponse;
+      })();
+      v1beta1.QueryParamsRequest = (function () {
+        function QueryParamsRequest(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryParamsRequest.create = function create(properties) {
+          return new QueryParamsRequest(properties);
+        };
+        QueryParamsRequest.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          return w;
+        };
+        QueryParamsRequest.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.staking.v1beta1.QueryParamsRequest();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryParamsRequest;
+      })();
+      v1beta1.QueryParamsResponse = (function () {
+        function QueryParamsResponse(p) {
+          if (p)
+            for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+              if (p[ks[i]] != null) this[ks[i]] = p[ks[i]];
+        }
+        QueryParamsResponse.prototype.params = null;
+        QueryParamsResponse.create = function create(properties) {
+          return new QueryParamsResponse(properties);
+        };
+        QueryParamsResponse.encode = function encode(m, w) {
+          if (!w) w = $Writer.create();
+          if (m.params != null && Object.hasOwnProperty.call(m, "params"))
+            $root.cosmos.staking.v1beta1.Params.encode(m.params, w.uint32(10).fork()).ldelim();
+          return w;
+        };
+        QueryParamsResponse.decode = function decode(r, l) {
+          if (!(r instanceof $Reader)) r = $Reader.create(r);
+          var c = l === undefined ? r.len : r.pos + l,
+            m = new $root.cosmos.staking.v1beta1.QueryParamsResponse();
+          while (r.pos < c) {
+            var t = r.uint32();
+            switch (t >>> 3) {
+              case 1:
+                m.params = $root.cosmos.staking.v1beta1.Params.decode(r, r.uint32());
+                break;
+              default:
+                r.skipType(t & 7);
+                break;
+            }
+          }
+          return m;
+        };
+        return QueryParamsResponse;
+      })();
       v1beta1.HistoricalInfo = (function () {
         function HistoricalInfo(p) {
           this.valset = [];

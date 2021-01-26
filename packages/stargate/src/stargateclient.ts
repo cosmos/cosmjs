@@ -22,7 +22,19 @@ import { assert, assertDefinedAndNotNull } from "@cosmjs/utils";
 import Long from "long";
 
 import { cosmos } from "./codec";
-import { AuthExtension, BankExtension, QueryClient, setupAuthExtension, setupBankExtension } from "./queries";
+import {
+  AuthExtension,
+  BankExtension,
+  DistributionExtension,
+  IbcExtension,
+  QueryClient,
+  setupAuthExtension,
+  setupBankExtension,
+  setupDistributionExtension,
+  setupIbcExtension,
+  setupStakingExtension,
+  StakingExtension,
+} from "./queries";
 
 type IBaseAccount = cosmos.auth.v1beta1.IBaseAccount;
 type IMsgData = cosmos.base.abci.v1beta1.IMsgData;
@@ -125,7 +137,12 @@ export interface PrivateStargateClient {
 
 export class StargateClient {
   private readonly tmClient: TendermintClient;
-  private readonly queryClient: QueryClient & AuthExtension & BankExtension;
+  private readonly queryClient: QueryClient &
+    AuthExtension &
+    BankExtension &
+    DistributionExtension &
+    IbcExtension &
+    StakingExtension;
   private chainId: string | undefined;
 
   public static async connect(endpoint: string): Promise<StargateClient> {
@@ -135,7 +152,14 @@ export class StargateClient {
 
   protected constructor(tmClient: TendermintClient) {
     this.tmClient = tmClient;
-    this.queryClient = QueryClient.withExtensions(tmClient, setupAuthExtension, setupBankExtension);
+    this.queryClient = QueryClient.withExtensions(
+      tmClient,
+      setupAuthExtension,
+      setupBankExtension,
+      setupDistributionExtension,
+      setupIbcExtension,
+      setupStakingExtension,
+    );
   }
 
   public async getChainId(): Promise<string> {
