@@ -29,7 +29,6 @@
 - @cosmjs/launchpad: Add support for undefined memo in `makeSignDoc`.
 - @cosmjs/launchpad: Rename `SigningCosmosClient.senderAddress` to
   `.signerAddress`.
-- @cosmjs/launchpad-ledger: `LedgerSigner.sign` method renamed `signAmino`.
 - @cosmjs/proto-signing: Add new package for handling transaction signing with
   protobuf encoding.
 - @cosmjs/proto-signing: Expose `DirectSignResponse` interface.
@@ -52,6 +51,11 @@
 ### Added
 
 - @cosmjs/utils: Added `assertDefinedAndNotNull`.
+
+### Changed
+
+- @cosmjs/launchpad-ledger: Renamed to @cosmjs/ledger-amino.
+- @cosmjs/ledger-amino: `LedgerSigner.sign` method renamed `signAmino`.
 
 ## 0.23.2 (2021-01-06)
 
