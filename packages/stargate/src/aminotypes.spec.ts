@@ -12,12 +12,22 @@ import {
   MsgSend,
   MsgUndelegate,
 } from "@cosmjs/launchpad";
+import {
+  MsgFundCommunityPool,
+  MsgSetWithdrawAddress,
+  MsgWithdrawDelegatorReward,
+  MsgWithdrawValidatorCommission,
+} from "@cosmjs/launchpad/types/msgs";
 
 import { AminoTypes } from "./aminotypes";
 import { cosmos } from "./codec";
 
 type IMsgSend = cosmos.bank.v1beta1.IMsgSend;
 type IMsgMultiSend = cosmos.bank.v1beta1.IMsgMultiSend;
+type IMsgFundCommunityPool = cosmos.distribution.v1beta1.IMsgFundCommunityPool;
+type IMsgSetWithdrawAddress = cosmos.distribution.v1beta1.IMsgSetWithdrawAddress;
+type IMsgWithdrawDelegatorReward = cosmos.distribution.v1beta1.IMsgWithdrawDelegatorReward;
+type IMsgWithdrawValidatorCommission = cosmos.distribution.v1beta1.IMsgWithdrawValidatorCommission;
 type IMsgBeginRedelegate = cosmos.staking.v1beta1.IMsgBeginRedelegate;
 type IMsgCreateValidator = cosmos.staking.v1beta1.IMsgCreateValidator;
 type IMsgDelegate = cosmos.staking.v1beta1.IMsgDelegate;
@@ -73,6 +83,80 @@ describe("AminoTypes", () => {
             { address: "cosmos1xy4yqngt0nlkdcenxymg8tenrghmek4nmqm28k", coins: coins(6000, "ucosm") },
             { address: "cosmos142u9fgcjdlycfcez3lw8x6x5h7rfjlnfhpw2lx", coins: coins(912, "ucosm") },
           ],
+        },
+      };
+      expect(aminoMsg).toEqual(expected);
+    });
+
+    it("works for MsgFundCommunityPool", async () => {
+      const msg: IMsgFundCommunityPool = {
+        amount: coins(1234, "ucosm"),
+        depositor: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+      };
+      const aminoMsg = new AminoTypes().toAmino({
+        typeUrl: "/cosmos.distribution.v1beta1.MsgFundCommunityPool",
+        value: msg,
+      });
+      const expected: MsgFundCommunityPool = {
+        type: "cosmos-sdk/MsgFundCommunityPool",
+        value: {
+          amount: coins(1234, "ucosm"),
+          depositor: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+        },
+      };
+      expect(aminoMsg).toEqual(expected);
+    });
+
+    it("works for MsgSetWithdrawAddress", async () => {
+      const msg: IMsgSetWithdrawAddress = {
+        delegatorAddress: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+        withdrawAddress: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
+      };
+      const aminoMsg = new AminoTypes().toAmino({
+        typeUrl: "/cosmos.distribution.v1beta1.MsgSetWithdrawAddress",
+        value: msg,
+      });
+      const expected: MsgSetWithdrawAddress = {
+        type: "cosmos-sdk/MsgSetWithdrawAddress",
+        value: {
+          delegator_address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+          withdraw_address: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
+        },
+      };
+      expect(aminoMsg).toEqual(expected);
+    });
+
+    it("works for MsgWithdrawDelegatorReward", async () => {
+      const msg: IMsgWithdrawDelegatorReward = {
+        delegatorAddress: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+        validatorAddress: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
+      };
+      const aminoMsg = new AminoTypes().toAmino({
+        typeUrl: "/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward",
+        value: msg,
+      });
+      const expected: MsgWithdrawDelegatorReward = {
+        type: "cosmos-sdk/MsgWithdrawDelegatorReward",
+        value: {
+          delegator_address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+          validator_address: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
+        },
+      };
+      expect(aminoMsg).toEqual(expected);
+    });
+
+    it("works for MsgWithdrawValidatorCommission", async () => {
+      const msg: IMsgWithdrawValidatorCommission = {
+        validatorAddress: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
+      };
+      const aminoMsg = new AminoTypes().toAmino({
+        typeUrl: "/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission",
+        value: msg,
+      });
+      const expected: MsgWithdrawValidatorCommission = {
+        type: "cosmos-sdk/MsgWithdrawValidatorCommission",
+        value: {
+          validator_address: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
         },
       };
       expect(aminoMsg).toEqual(expected);
