@@ -50,6 +50,9 @@
 
 ### Added
 
+- @cosmjs/launchpad: Export distribution module msg types
+  `MsgFundCommunityPool`, `MsgSetWithdrawAddress`, `MsgWithdrawDelegatorReward`,
+  `MsgWithdrawValidatorCommission` and type checker helper functions.
 - @cosmjs/utils: Added `assertDefinedAndNotNull`.
 
 ### Changed
