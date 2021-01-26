@@ -2976,10 +2976,4455 @@ export namespace cosmos {
     }
   }
 
+  /** Namespace distribution. */
+  namespace distribution {
+    /** Namespace v1beta1. */
+    namespace v1beta1 {
+      /** Properties of a Params. */
+      interface IParams {
+        /** Params communityTax */
+        communityTax?: string | null;
+
+        /** Params baseProposerReward */
+        baseProposerReward?: string | null;
+
+        /** Params bonusProposerReward */
+        bonusProposerReward?: string | null;
+
+        /** Params withdrawAddrEnabled */
+        withdrawAddrEnabled?: boolean | null;
+      }
+
+      /** Represents a Params. */
+      class Params implements IParams {
+        /**
+         * Constructs a new Params.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.distribution.v1beta1.IParams);
+
+        /** Params communityTax. */
+        public communityTax: string;
+
+        /** Params baseProposerReward. */
+        public baseProposerReward: string;
+
+        /** Params bonusProposerReward. */
+        public bonusProposerReward: string;
+
+        /** Params withdrawAddrEnabled. */
+        public withdrawAddrEnabled: boolean;
+
+        /**
+         * Creates a new Params instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns Params instance
+         */
+        public static create(
+          properties?: cosmos.distribution.v1beta1.IParams,
+        ): cosmos.distribution.v1beta1.Params;
+
+        /**
+         * Encodes the specified Params message. Does not implicitly {@link cosmos.distribution.v1beta1.Params.verify|verify} messages.
+         * @param m Params message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(m: cosmos.distribution.v1beta1.IParams, w?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a Params message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns Params
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.distribution.v1beta1.Params;
+      }
+
+      /** Properties of a ValidatorHistoricalRewards. */
+      interface IValidatorHistoricalRewards {
+        /** ValidatorHistoricalRewards cumulativeRewardRatio */
+        cumulativeRewardRatio?: cosmos.base.v1beta1.IDecCoin[] | null;
+
+        /** ValidatorHistoricalRewards referenceCount */
+        referenceCount?: number | null;
+      }
+
+      /** Represents a ValidatorHistoricalRewards. */
+      class ValidatorHistoricalRewards implements IValidatorHistoricalRewards {
+        /**
+         * Constructs a new ValidatorHistoricalRewards.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.distribution.v1beta1.IValidatorHistoricalRewards);
+
+        /** ValidatorHistoricalRewards cumulativeRewardRatio. */
+        public cumulativeRewardRatio: cosmos.base.v1beta1.IDecCoin[];
+
+        /** ValidatorHistoricalRewards referenceCount. */
+        public referenceCount: number;
+
+        /**
+         * Creates a new ValidatorHistoricalRewards instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns ValidatorHistoricalRewards instance
+         */
+        public static create(
+          properties?: cosmos.distribution.v1beta1.IValidatorHistoricalRewards,
+        ): cosmos.distribution.v1beta1.ValidatorHistoricalRewards;
+
+        /**
+         * Encodes the specified ValidatorHistoricalRewards message. Does not implicitly {@link cosmos.distribution.v1beta1.ValidatorHistoricalRewards.verify|verify} messages.
+         * @param m ValidatorHistoricalRewards message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.distribution.v1beta1.IValidatorHistoricalRewards,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a ValidatorHistoricalRewards message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns ValidatorHistoricalRewards
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.distribution.v1beta1.ValidatorHistoricalRewards;
+      }
+
+      /** Properties of a ValidatorCurrentRewards. */
+      interface IValidatorCurrentRewards {
+        /** ValidatorCurrentRewards rewards */
+        rewards?: cosmos.base.v1beta1.IDecCoin[] | null;
+
+        /** ValidatorCurrentRewards period */
+        period?: Long | null;
+      }
+
+      /** Represents a ValidatorCurrentRewards. */
+      class ValidatorCurrentRewards implements IValidatorCurrentRewards {
+        /**
+         * Constructs a new ValidatorCurrentRewards.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.distribution.v1beta1.IValidatorCurrentRewards);
+
+        /** ValidatorCurrentRewards rewards. */
+        public rewards: cosmos.base.v1beta1.IDecCoin[];
+
+        /** ValidatorCurrentRewards period. */
+        public period: Long;
+
+        /**
+         * Creates a new ValidatorCurrentRewards instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns ValidatorCurrentRewards instance
+         */
+        public static create(
+          properties?: cosmos.distribution.v1beta1.IValidatorCurrentRewards,
+        ): cosmos.distribution.v1beta1.ValidatorCurrentRewards;
+
+        /**
+         * Encodes the specified ValidatorCurrentRewards message. Does not implicitly {@link cosmos.distribution.v1beta1.ValidatorCurrentRewards.verify|verify} messages.
+         * @param m ValidatorCurrentRewards message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.distribution.v1beta1.IValidatorCurrentRewards,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a ValidatorCurrentRewards message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns ValidatorCurrentRewards
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.distribution.v1beta1.ValidatorCurrentRewards;
+      }
+
+      /** Properties of a ValidatorAccumulatedCommission. */
+      interface IValidatorAccumulatedCommission {
+        /** ValidatorAccumulatedCommission commission */
+        commission?: cosmos.base.v1beta1.IDecCoin[] | null;
+      }
+
+      /** Represents a ValidatorAccumulatedCommission. */
+      class ValidatorAccumulatedCommission implements IValidatorAccumulatedCommission {
+        /**
+         * Constructs a new ValidatorAccumulatedCommission.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.distribution.v1beta1.IValidatorAccumulatedCommission);
+
+        /** ValidatorAccumulatedCommission commission. */
+        public commission: cosmos.base.v1beta1.IDecCoin[];
+
+        /**
+         * Creates a new ValidatorAccumulatedCommission instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns ValidatorAccumulatedCommission instance
+         */
+        public static create(
+          properties?: cosmos.distribution.v1beta1.IValidatorAccumulatedCommission,
+        ): cosmos.distribution.v1beta1.ValidatorAccumulatedCommission;
+
+        /**
+         * Encodes the specified ValidatorAccumulatedCommission message. Does not implicitly {@link cosmos.distribution.v1beta1.ValidatorAccumulatedCommission.verify|verify} messages.
+         * @param m ValidatorAccumulatedCommission message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.distribution.v1beta1.IValidatorAccumulatedCommission,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a ValidatorAccumulatedCommission message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns ValidatorAccumulatedCommission
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.distribution.v1beta1.ValidatorAccumulatedCommission;
+      }
+
+      /** Properties of a ValidatorOutstandingRewards. */
+      interface IValidatorOutstandingRewards {
+        /** ValidatorOutstandingRewards rewards */
+        rewards?: cosmos.base.v1beta1.IDecCoin[] | null;
+      }
+
+      /** Represents a ValidatorOutstandingRewards. */
+      class ValidatorOutstandingRewards implements IValidatorOutstandingRewards {
+        /**
+         * Constructs a new ValidatorOutstandingRewards.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.distribution.v1beta1.IValidatorOutstandingRewards);
+
+        /** ValidatorOutstandingRewards rewards. */
+        public rewards: cosmos.base.v1beta1.IDecCoin[];
+
+        /**
+         * Creates a new ValidatorOutstandingRewards instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns ValidatorOutstandingRewards instance
+         */
+        public static create(
+          properties?: cosmos.distribution.v1beta1.IValidatorOutstandingRewards,
+        ): cosmos.distribution.v1beta1.ValidatorOutstandingRewards;
+
+        /**
+         * Encodes the specified ValidatorOutstandingRewards message. Does not implicitly {@link cosmos.distribution.v1beta1.ValidatorOutstandingRewards.verify|verify} messages.
+         * @param m ValidatorOutstandingRewards message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.distribution.v1beta1.IValidatorOutstandingRewards,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a ValidatorOutstandingRewards message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns ValidatorOutstandingRewards
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.distribution.v1beta1.ValidatorOutstandingRewards;
+      }
+
+      /** Properties of a ValidatorSlashEvent. */
+      interface IValidatorSlashEvent {
+        /** ValidatorSlashEvent validatorPeriod */
+        validatorPeriod?: Long | null;
+
+        /** ValidatorSlashEvent fraction */
+        fraction?: string | null;
+      }
+
+      /** Represents a ValidatorSlashEvent. */
+      class ValidatorSlashEvent implements IValidatorSlashEvent {
+        /**
+         * Constructs a new ValidatorSlashEvent.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.distribution.v1beta1.IValidatorSlashEvent);
+
+        /** ValidatorSlashEvent validatorPeriod. */
+        public validatorPeriod: Long;
+
+        /** ValidatorSlashEvent fraction. */
+        public fraction: string;
+
+        /**
+         * Creates a new ValidatorSlashEvent instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns ValidatorSlashEvent instance
+         */
+        public static create(
+          properties?: cosmos.distribution.v1beta1.IValidatorSlashEvent,
+        ): cosmos.distribution.v1beta1.ValidatorSlashEvent;
+
+        /**
+         * Encodes the specified ValidatorSlashEvent message. Does not implicitly {@link cosmos.distribution.v1beta1.ValidatorSlashEvent.verify|verify} messages.
+         * @param m ValidatorSlashEvent message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.distribution.v1beta1.IValidatorSlashEvent,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a ValidatorSlashEvent message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns ValidatorSlashEvent
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.distribution.v1beta1.ValidatorSlashEvent;
+      }
+
+      /** Properties of a ValidatorSlashEvents. */
+      interface IValidatorSlashEvents {
+        /** ValidatorSlashEvents validatorSlashEvents */
+        validatorSlashEvents?: cosmos.distribution.v1beta1.IValidatorSlashEvent[] | null;
+      }
+
+      /** Represents a ValidatorSlashEvents. */
+      class ValidatorSlashEvents implements IValidatorSlashEvents {
+        /**
+         * Constructs a new ValidatorSlashEvents.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.distribution.v1beta1.IValidatorSlashEvents);
+
+        /** ValidatorSlashEvents validatorSlashEvents. */
+        public validatorSlashEvents: cosmos.distribution.v1beta1.IValidatorSlashEvent[];
+
+        /**
+         * Creates a new ValidatorSlashEvents instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns ValidatorSlashEvents instance
+         */
+        public static create(
+          properties?: cosmos.distribution.v1beta1.IValidatorSlashEvents,
+        ): cosmos.distribution.v1beta1.ValidatorSlashEvents;
+
+        /**
+         * Encodes the specified ValidatorSlashEvents message. Does not implicitly {@link cosmos.distribution.v1beta1.ValidatorSlashEvents.verify|verify} messages.
+         * @param m ValidatorSlashEvents message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.distribution.v1beta1.IValidatorSlashEvents,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a ValidatorSlashEvents message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns ValidatorSlashEvents
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.distribution.v1beta1.ValidatorSlashEvents;
+      }
+
+      /** Properties of a FeePool. */
+      interface IFeePool {
+        /** FeePool communityPool */
+        communityPool?: cosmos.base.v1beta1.IDecCoin[] | null;
+      }
+
+      /** Represents a FeePool. */
+      class FeePool implements IFeePool {
+        /**
+         * Constructs a new FeePool.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.distribution.v1beta1.IFeePool);
+
+        /** FeePool communityPool. */
+        public communityPool: cosmos.base.v1beta1.IDecCoin[];
+
+        /**
+         * Creates a new FeePool instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns FeePool instance
+         */
+        public static create(
+          properties?: cosmos.distribution.v1beta1.IFeePool,
+        ): cosmos.distribution.v1beta1.FeePool;
+
+        /**
+         * Encodes the specified FeePool message. Does not implicitly {@link cosmos.distribution.v1beta1.FeePool.verify|verify} messages.
+         * @param m FeePool message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(m: cosmos.distribution.v1beta1.IFeePool, w?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a FeePool message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns FeePool
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.distribution.v1beta1.FeePool;
+      }
+
+      /** Properties of a CommunityPoolSpendProposal. */
+      interface ICommunityPoolSpendProposal {
+        /** CommunityPoolSpendProposal title */
+        title?: string | null;
+
+        /** CommunityPoolSpendProposal description */
+        description?: string | null;
+
+        /** CommunityPoolSpendProposal recipient */
+        recipient?: string | null;
+
+        /** CommunityPoolSpendProposal amount */
+        amount?: cosmos.base.v1beta1.ICoin[] | null;
+      }
+
+      /** Represents a CommunityPoolSpendProposal. */
+      class CommunityPoolSpendProposal implements ICommunityPoolSpendProposal {
+        /**
+         * Constructs a new CommunityPoolSpendProposal.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.distribution.v1beta1.ICommunityPoolSpendProposal);
+
+        /** CommunityPoolSpendProposal title. */
+        public title: string;
+
+        /** CommunityPoolSpendProposal description. */
+        public description: string;
+
+        /** CommunityPoolSpendProposal recipient. */
+        public recipient: string;
+
+        /** CommunityPoolSpendProposal amount. */
+        public amount: cosmos.base.v1beta1.ICoin[];
+
+        /**
+         * Creates a new CommunityPoolSpendProposal instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns CommunityPoolSpendProposal instance
+         */
+        public static create(
+          properties?: cosmos.distribution.v1beta1.ICommunityPoolSpendProposal,
+        ): cosmos.distribution.v1beta1.CommunityPoolSpendProposal;
+
+        /**
+         * Encodes the specified CommunityPoolSpendProposal message. Does not implicitly {@link cosmos.distribution.v1beta1.CommunityPoolSpendProposal.verify|verify} messages.
+         * @param m CommunityPoolSpendProposal message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.distribution.v1beta1.ICommunityPoolSpendProposal,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a CommunityPoolSpendProposal message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns CommunityPoolSpendProposal
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.distribution.v1beta1.CommunityPoolSpendProposal;
+      }
+
+      /** Properties of a DelegatorStartingInfo. */
+      interface IDelegatorStartingInfo {
+        /** DelegatorStartingInfo previousPeriod */
+        previousPeriod?: Long | null;
+
+        /** DelegatorStartingInfo stake */
+        stake?: string | null;
+
+        /** DelegatorStartingInfo height */
+        height?: Long | null;
+      }
+
+      /** Represents a DelegatorStartingInfo. */
+      class DelegatorStartingInfo implements IDelegatorStartingInfo {
+        /**
+         * Constructs a new DelegatorStartingInfo.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.distribution.v1beta1.IDelegatorStartingInfo);
+
+        /** DelegatorStartingInfo previousPeriod. */
+        public previousPeriod: Long;
+
+        /** DelegatorStartingInfo stake. */
+        public stake: string;
+
+        /** DelegatorStartingInfo height. */
+        public height: Long;
+
+        /**
+         * Creates a new DelegatorStartingInfo instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns DelegatorStartingInfo instance
+         */
+        public static create(
+          properties?: cosmos.distribution.v1beta1.IDelegatorStartingInfo,
+        ): cosmos.distribution.v1beta1.DelegatorStartingInfo;
+
+        /**
+         * Encodes the specified DelegatorStartingInfo message. Does not implicitly {@link cosmos.distribution.v1beta1.DelegatorStartingInfo.verify|verify} messages.
+         * @param m DelegatorStartingInfo message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.distribution.v1beta1.IDelegatorStartingInfo,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a DelegatorStartingInfo message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns DelegatorStartingInfo
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.distribution.v1beta1.DelegatorStartingInfo;
+      }
+
+      /** Properties of a DelegationDelegatorReward. */
+      interface IDelegationDelegatorReward {
+        /** DelegationDelegatorReward validatorAddress */
+        validatorAddress?: string | null;
+
+        /** DelegationDelegatorReward reward */
+        reward?: cosmos.base.v1beta1.IDecCoin[] | null;
+      }
+
+      /** Represents a DelegationDelegatorReward. */
+      class DelegationDelegatorReward implements IDelegationDelegatorReward {
+        /**
+         * Constructs a new DelegationDelegatorReward.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.distribution.v1beta1.IDelegationDelegatorReward);
+
+        /** DelegationDelegatorReward validatorAddress. */
+        public validatorAddress: string;
+
+        /** DelegationDelegatorReward reward. */
+        public reward: cosmos.base.v1beta1.IDecCoin[];
+
+        /**
+         * Creates a new DelegationDelegatorReward instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns DelegationDelegatorReward instance
+         */
+        public static create(
+          properties?: cosmos.distribution.v1beta1.IDelegationDelegatorReward,
+        ): cosmos.distribution.v1beta1.DelegationDelegatorReward;
+
+        /**
+         * Encodes the specified DelegationDelegatorReward message. Does not implicitly {@link cosmos.distribution.v1beta1.DelegationDelegatorReward.verify|verify} messages.
+         * @param m DelegationDelegatorReward message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.distribution.v1beta1.IDelegationDelegatorReward,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a DelegationDelegatorReward message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns DelegationDelegatorReward
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.distribution.v1beta1.DelegationDelegatorReward;
+      }
+
+      /** Properties of a CommunityPoolSpendProposalWithDeposit. */
+      interface ICommunityPoolSpendProposalWithDeposit {
+        /** CommunityPoolSpendProposalWithDeposit title */
+        title?: string | null;
+
+        /** CommunityPoolSpendProposalWithDeposit description */
+        description?: string | null;
+
+        /** CommunityPoolSpendProposalWithDeposit recipient */
+        recipient?: string | null;
+
+        /** CommunityPoolSpendProposalWithDeposit amount */
+        amount?: string | null;
+
+        /** CommunityPoolSpendProposalWithDeposit deposit */
+        deposit?: string | null;
+      }
+
+      /** Represents a CommunityPoolSpendProposalWithDeposit. */
+      class CommunityPoolSpendProposalWithDeposit implements ICommunityPoolSpendProposalWithDeposit {
+        /**
+         * Constructs a new CommunityPoolSpendProposalWithDeposit.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.distribution.v1beta1.ICommunityPoolSpendProposalWithDeposit);
+
+        /** CommunityPoolSpendProposalWithDeposit title. */
+        public title: string;
+
+        /** CommunityPoolSpendProposalWithDeposit description. */
+        public description: string;
+
+        /** CommunityPoolSpendProposalWithDeposit recipient. */
+        public recipient: string;
+
+        /** CommunityPoolSpendProposalWithDeposit amount. */
+        public amount: string;
+
+        /** CommunityPoolSpendProposalWithDeposit deposit. */
+        public deposit: string;
+
+        /**
+         * Creates a new CommunityPoolSpendProposalWithDeposit instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns CommunityPoolSpendProposalWithDeposit instance
+         */
+        public static create(
+          properties?: cosmos.distribution.v1beta1.ICommunityPoolSpendProposalWithDeposit,
+        ): cosmos.distribution.v1beta1.CommunityPoolSpendProposalWithDeposit;
+
+        /**
+         * Encodes the specified CommunityPoolSpendProposalWithDeposit message. Does not implicitly {@link cosmos.distribution.v1beta1.CommunityPoolSpendProposalWithDeposit.verify|verify} messages.
+         * @param m CommunityPoolSpendProposalWithDeposit message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.distribution.v1beta1.ICommunityPoolSpendProposalWithDeposit,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a CommunityPoolSpendProposalWithDeposit message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns CommunityPoolSpendProposalWithDeposit
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.distribution.v1beta1.CommunityPoolSpendProposalWithDeposit;
+      }
+
+      /** Represents a Query */
+      class Query extends $protobuf.rpc.Service {
+        /**
+         * Constructs a new Query service.
+         * @param rpcImpl RPC implementation
+         * @param [requestDelimited=false] Whether requests are length-delimited
+         * @param [responseDelimited=false] Whether responses are length-delimited
+         */
+        constructor(rpcImpl: $protobuf.RPCImpl, requestDelimited?: boolean, responseDelimited?: boolean);
+
+        /**
+         * Creates new Query service using the specified rpc implementation.
+         * @param rpcImpl RPC implementation
+         * @param [requestDelimited=false] Whether requests are length-delimited
+         * @param [responseDelimited=false] Whether responses are length-delimited
+         * @returns RPC service. Useful where requests and/or responses are streamed.
+         */
+        public static create(
+          rpcImpl: $protobuf.RPCImpl,
+          requestDelimited?: boolean,
+          responseDelimited?: boolean,
+        ): Query;
+
+        /**
+         * Calls Params.
+         * @param request QueryParamsRequest message or plain object
+         * @param callback Node-style callback called with the error, if any, and QueryParamsResponse
+         */
+        public params(
+          request: cosmos.distribution.v1beta1.IQueryParamsRequest,
+          callback: cosmos.distribution.v1beta1.Query.ParamsCallback,
+        ): void;
+
+        /**
+         * Calls Params.
+         * @param request QueryParamsRequest message or plain object
+         * @returns Promise
+         */
+        public params(
+          request: cosmos.distribution.v1beta1.IQueryParamsRequest,
+        ): Promise<cosmos.distribution.v1beta1.QueryParamsResponse>;
+
+        /**
+         * Calls ValidatorOutstandingRewards.
+         * @param request QueryValidatorOutstandingRewardsRequest message or plain object
+         * @param callback Node-style callback called with the error, if any, and QueryValidatorOutstandingRewardsResponse
+         */
+        public validatorOutstandingRewards(
+          request: cosmos.distribution.v1beta1.IQueryValidatorOutstandingRewardsRequest,
+          callback: cosmos.distribution.v1beta1.Query.ValidatorOutstandingRewardsCallback,
+        ): void;
+
+        /**
+         * Calls ValidatorOutstandingRewards.
+         * @param request QueryValidatorOutstandingRewardsRequest message or plain object
+         * @returns Promise
+         */
+        public validatorOutstandingRewards(
+          request: cosmos.distribution.v1beta1.IQueryValidatorOutstandingRewardsRequest,
+        ): Promise<cosmos.distribution.v1beta1.QueryValidatorOutstandingRewardsResponse>;
+
+        /**
+         * Calls ValidatorCommission.
+         * @param request QueryValidatorCommissionRequest message or plain object
+         * @param callback Node-style callback called with the error, if any, and QueryValidatorCommissionResponse
+         */
+        public validatorCommission(
+          request: cosmos.distribution.v1beta1.IQueryValidatorCommissionRequest,
+          callback: cosmos.distribution.v1beta1.Query.ValidatorCommissionCallback,
+        ): void;
+
+        /**
+         * Calls ValidatorCommission.
+         * @param request QueryValidatorCommissionRequest message or plain object
+         * @returns Promise
+         */
+        public validatorCommission(
+          request: cosmos.distribution.v1beta1.IQueryValidatorCommissionRequest,
+        ): Promise<cosmos.distribution.v1beta1.QueryValidatorCommissionResponse>;
+
+        /**
+         * Calls ValidatorSlashes.
+         * @param request QueryValidatorSlashesRequest message or plain object
+         * @param callback Node-style callback called with the error, if any, and QueryValidatorSlashesResponse
+         */
+        public validatorSlashes(
+          request: cosmos.distribution.v1beta1.IQueryValidatorSlashesRequest,
+          callback: cosmos.distribution.v1beta1.Query.ValidatorSlashesCallback,
+        ): void;
+
+        /**
+         * Calls ValidatorSlashes.
+         * @param request QueryValidatorSlashesRequest message or plain object
+         * @returns Promise
+         */
+        public validatorSlashes(
+          request: cosmos.distribution.v1beta1.IQueryValidatorSlashesRequest,
+        ): Promise<cosmos.distribution.v1beta1.QueryValidatorSlashesResponse>;
+
+        /**
+         * Calls DelegationRewards.
+         * @param request QueryDelegationRewardsRequest message or plain object
+         * @param callback Node-style callback called with the error, if any, and QueryDelegationRewardsResponse
+         */
+        public delegationRewards(
+          request: cosmos.distribution.v1beta1.IQueryDelegationRewardsRequest,
+          callback: cosmos.distribution.v1beta1.Query.DelegationRewardsCallback,
+        ): void;
+
+        /**
+         * Calls DelegationRewards.
+         * @param request QueryDelegationRewardsRequest message or plain object
+         * @returns Promise
+         */
+        public delegationRewards(
+          request: cosmos.distribution.v1beta1.IQueryDelegationRewardsRequest,
+        ): Promise<cosmos.distribution.v1beta1.QueryDelegationRewardsResponse>;
+
+        /**
+         * Calls DelegationTotalRewards.
+         * @param request QueryDelegationTotalRewardsRequest message or plain object
+         * @param callback Node-style callback called with the error, if any, and QueryDelegationTotalRewardsResponse
+         */
+        public delegationTotalRewards(
+          request: cosmos.distribution.v1beta1.IQueryDelegationTotalRewardsRequest,
+          callback: cosmos.distribution.v1beta1.Query.DelegationTotalRewardsCallback,
+        ): void;
+
+        /**
+         * Calls DelegationTotalRewards.
+         * @param request QueryDelegationTotalRewardsRequest message or plain object
+         * @returns Promise
+         */
+        public delegationTotalRewards(
+          request: cosmos.distribution.v1beta1.IQueryDelegationTotalRewardsRequest,
+        ): Promise<cosmos.distribution.v1beta1.QueryDelegationTotalRewardsResponse>;
+
+        /**
+         * Calls DelegatorValidators.
+         * @param request QueryDelegatorValidatorsRequest message or plain object
+         * @param callback Node-style callback called with the error, if any, and QueryDelegatorValidatorsResponse
+         */
+        public delegatorValidators(
+          request: cosmos.distribution.v1beta1.IQueryDelegatorValidatorsRequest,
+          callback: cosmos.distribution.v1beta1.Query.DelegatorValidatorsCallback,
+        ): void;
+
+        /**
+         * Calls DelegatorValidators.
+         * @param request QueryDelegatorValidatorsRequest message or plain object
+         * @returns Promise
+         */
+        public delegatorValidators(
+          request: cosmos.distribution.v1beta1.IQueryDelegatorValidatorsRequest,
+        ): Promise<cosmos.distribution.v1beta1.QueryDelegatorValidatorsResponse>;
+
+        /**
+         * Calls DelegatorWithdrawAddress.
+         * @param request QueryDelegatorWithdrawAddressRequest message or plain object
+         * @param callback Node-style callback called with the error, if any, and QueryDelegatorWithdrawAddressResponse
+         */
+        public delegatorWithdrawAddress(
+          request: cosmos.distribution.v1beta1.IQueryDelegatorWithdrawAddressRequest,
+          callback: cosmos.distribution.v1beta1.Query.DelegatorWithdrawAddressCallback,
+        ): void;
+
+        /**
+         * Calls DelegatorWithdrawAddress.
+         * @param request QueryDelegatorWithdrawAddressRequest message or plain object
+         * @returns Promise
+         */
+        public delegatorWithdrawAddress(
+          request: cosmos.distribution.v1beta1.IQueryDelegatorWithdrawAddressRequest,
+        ): Promise<cosmos.distribution.v1beta1.QueryDelegatorWithdrawAddressResponse>;
+
+        /**
+         * Calls CommunityPool.
+         * @param request QueryCommunityPoolRequest message or plain object
+         * @param callback Node-style callback called with the error, if any, and QueryCommunityPoolResponse
+         */
+        public communityPool(
+          request: cosmos.distribution.v1beta1.IQueryCommunityPoolRequest,
+          callback: cosmos.distribution.v1beta1.Query.CommunityPoolCallback,
+        ): void;
+
+        /**
+         * Calls CommunityPool.
+         * @param request QueryCommunityPoolRequest message or plain object
+         * @returns Promise
+         */
+        public communityPool(
+          request: cosmos.distribution.v1beta1.IQueryCommunityPoolRequest,
+        ): Promise<cosmos.distribution.v1beta1.QueryCommunityPoolResponse>;
+      }
+
+      namespace Query {
+        /**
+         * Callback as used by {@link cosmos.distribution.v1beta1.Query#params}.
+         * @param error Error, if any
+         * @param [response] QueryParamsResponse
+         */
+        type ParamsCallback = (
+          error: Error | null,
+          response?: cosmos.distribution.v1beta1.QueryParamsResponse,
+        ) => void;
+
+        /**
+         * Callback as used by {@link cosmos.distribution.v1beta1.Query#validatorOutstandingRewards}.
+         * @param error Error, if any
+         * @param [response] QueryValidatorOutstandingRewardsResponse
+         */
+        type ValidatorOutstandingRewardsCallback = (
+          error: Error | null,
+          response?: cosmos.distribution.v1beta1.QueryValidatorOutstandingRewardsResponse,
+        ) => void;
+
+        /**
+         * Callback as used by {@link cosmos.distribution.v1beta1.Query#validatorCommission}.
+         * @param error Error, if any
+         * @param [response] QueryValidatorCommissionResponse
+         */
+        type ValidatorCommissionCallback = (
+          error: Error | null,
+          response?: cosmos.distribution.v1beta1.QueryValidatorCommissionResponse,
+        ) => void;
+
+        /**
+         * Callback as used by {@link cosmos.distribution.v1beta1.Query#validatorSlashes}.
+         * @param error Error, if any
+         * @param [response] QueryValidatorSlashesResponse
+         */
+        type ValidatorSlashesCallback = (
+          error: Error | null,
+          response?: cosmos.distribution.v1beta1.QueryValidatorSlashesResponse,
+        ) => void;
+
+        /**
+         * Callback as used by {@link cosmos.distribution.v1beta1.Query#delegationRewards}.
+         * @param error Error, if any
+         * @param [response] QueryDelegationRewardsResponse
+         */
+        type DelegationRewardsCallback = (
+          error: Error | null,
+          response?: cosmos.distribution.v1beta1.QueryDelegationRewardsResponse,
+        ) => void;
+
+        /**
+         * Callback as used by {@link cosmos.distribution.v1beta1.Query#delegationTotalRewards}.
+         * @param error Error, if any
+         * @param [response] QueryDelegationTotalRewardsResponse
+         */
+        type DelegationTotalRewardsCallback = (
+          error: Error | null,
+          response?: cosmos.distribution.v1beta1.QueryDelegationTotalRewardsResponse,
+        ) => void;
+
+        /**
+         * Callback as used by {@link cosmos.distribution.v1beta1.Query#delegatorValidators}.
+         * @param error Error, if any
+         * @param [response] QueryDelegatorValidatorsResponse
+         */
+        type DelegatorValidatorsCallback = (
+          error: Error | null,
+          response?: cosmos.distribution.v1beta1.QueryDelegatorValidatorsResponse,
+        ) => void;
+
+        /**
+         * Callback as used by {@link cosmos.distribution.v1beta1.Query#delegatorWithdrawAddress}.
+         * @param error Error, if any
+         * @param [response] QueryDelegatorWithdrawAddressResponse
+         */
+        type DelegatorWithdrawAddressCallback = (
+          error: Error | null,
+          response?: cosmos.distribution.v1beta1.QueryDelegatorWithdrawAddressResponse,
+        ) => void;
+
+        /**
+         * Callback as used by {@link cosmos.distribution.v1beta1.Query#communityPool}.
+         * @param error Error, if any
+         * @param [response] QueryCommunityPoolResponse
+         */
+        type CommunityPoolCallback = (
+          error: Error | null,
+          response?: cosmos.distribution.v1beta1.QueryCommunityPoolResponse,
+        ) => void;
+      }
+
+      /** Properties of a QueryParamsRequest. */
+      interface IQueryParamsRequest {}
+
+      /** Represents a QueryParamsRequest. */
+      class QueryParamsRequest implements IQueryParamsRequest {
+        /**
+         * Constructs a new QueryParamsRequest.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.distribution.v1beta1.IQueryParamsRequest);
+
+        /**
+         * Creates a new QueryParamsRequest instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryParamsRequest instance
+         */
+        public static create(
+          properties?: cosmos.distribution.v1beta1.IQueryParamsRequest,
+        ): cosmos.distribution.v1beta1.QueryParamsRequest;
+
+        /**
+         * Encodes the specified QueryParamsRequest message. Does not implicitly {@link cosmos.distribution.v1beta1.QueryParamsRequest.verify|verify} messages.
+         * @param m QueryParamsRequest message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.distribution.v1beta1.IQueryParamsRequest,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryParamsRequest message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryParamsRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.distribution.v1beta1.QueryParamsRequest;
+      }
+
+      /** Properties of a QueryParamsResponse. */
+      interface IQueryParamsResponse {
+        /** QueryParamsResponse params */
+        params?: cosmos.distribution.v1beta1.IParams | null;
+      }
+
+      /** Represents a QueryParamsResponse. */
+      class QueryParamsResponse implements IQueryParamsResponse {
+        /**
+         * Constructs a new QueryParamsResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.distribution.v1beta1.IQueryParamsResponse);
+
+        /** QueryParamsResponse params. */
+        public params?: cosmos.distribution.v1beta1.IParams | null;
+
+        /**
+         * Creates a new QueryParamsResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryParamsResponse instance
+         */
+        public static create(
+          properties?: cosmos.distribution.v1beta1.IQueryParamsResponse,
+        ): cosmos.distribution.v1beta1.QueryParamsResponse;
+
+        /**
+         * Encodes the specified QueryParamsResponse message. Does not implicitly {@link cosmos.distribution.v1beta1.QueryParamsResponse.verify|verify} messages.
+         * @param m QueryParamsResponse message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.distribution.v1beta1.IQueryParamsResponse,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryParamsResponse message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryParamsResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.distribution.v1beta1.QueryParamsResponse;
+      }
+
+      /** Properties of a QueryValidatorOutstandingRewardsRequest. */
+      interface IQueryValidatorOutstandingRewardsRequest {
+        /** QueryValidatorOutstandingRewardsRequest validatorAddress */
+        validatorAddress?: string | null;
+      }
+
+      /** Represents a QueryValidatorOutstandingRewardsRequest. */
+      class QueryValidatorOutstandingRewardsRequest implements IQueryValidatorOutstandingRewardsRequest {
+        /**
+         * Constructs a new QueryValidatorOutstandingRewardsRequest.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.distribution.v1beta1.IQueryValidatorOutstandingRewardsRequest);
+
+        /** QueryValidatorOutstandingRewardsRequest validatorAddress. */
+        public validatorAddress: string;
+
+        /**
+         * Creates a new QueryValidatorOutstandingRewardsRequest instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryValidatorOutstandingRewardsRequest instance
+         */
+        public static create(
+          properties?: cosmos.distribution.v1beta1.IQueryValidatorOutstandingRewardsRequest,
+        ): cosmos.distribution.v1beta1.QueryValidatorOutstandingRewardsRequest;
+
+        /**
+         * Encodes the specified QueryValidatorOutstandingRewardsRequest message. Does not implicitly {@link cosmos.distribution.v1beta1.QueryValidatorOutstandingRewardsRequest.verify|verify} messages.
+         * @param m QueryValidatorOutstandingRewardsRequest message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.distribution.v1beta1.IQueryValidatorOutstandingRewardsRequest,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryValidatorOutstandingRewardsRequest message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryValidatorOutstandingRewardsRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.distribution.v1beta1.QueryValidatorOutstandingRewardsRequest;
+      }
+
+      /** Properties of a QueryValidatorOutstandingRewardsResponse. */
+      interface IQueryValidatorOutstandingRewardsResponse {
+        /** QueryValidatorOutstandingRewardsResponse rewards */
+        rewards?: cosmos.distribution.v1beta1.IValidatorOutstandingRewards | null;
+      }
+
+      /** Represents a QueryValidatorOutstandingRewardsResponse. */
+      class QueryValidatorOutstandingRewardsResponse implements IQueryValidatorOutstandingRewardsResponse {
+        /**
+         * Constructs a new QueryValidatorOutstandingRewardsResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.distribution.v1beta1.IQueryValidatorOutstandingRewardsResponse);
+
+        /** QueryValidatorOutstandingRewardsResponse rewards. */
+        public rewards?: cosmos.distribution.v1beta1.IValidatorOutstandingRewards | null;
+
+        /**
+         * Creates a new QueryValidatorOutstandingRewardsResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryValidatorOutstandingRewardsResponse instance
+         */
+        public static create(
+          properties?: cosmos.distribution.v1beta1.IQueryValidatorOutstandingRewardsResponse,
+        ): cosmos.distribution.v1beta1.QueryValidatorOutstandingRewardsResponse;
+
+        /**
+         * Encodes the specified QueryValidatorOutstandingRewardsResponse message. Does not implicitly {@link cosmos.distribution.v1beta1.QueryValidatorOutstandingRewardsResponse.verify|verify} messages.
+         * @param m QueryValidatorOutstandingRewardsResponse message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.distribution.v1beta1.IQueryValidatorOutstandingRewardsResponse,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryValidatorOutstandingRewardsResponse message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryValidatorOutstandingRewardsResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.distribution.v1beta1.QueryValidatorOutstandingRewardsResponse;
+      }
+
+      /** Properties of a QueryValidatorCommissionRequest. */
+      interface IQueryValidatorCommissionRequest {
+        /** QueryValidatorCommissionRequest validatorAddress */
+        validatorAddress?: string | null;
+      }
+
+      /** Represents a QueryValidatorCommissionRequest. */
+      class QueryValidatorCommissionRequest implements IQueryValidatorCommissionRequest {
+        /**
+         * Constructs a new QueryValidatorCommissionRequest.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.distribution.v1beta1.IQueryValidatorCommissionRequest);
+
+        /** QueryValidatorCommissionRequest validatorAddress. */
+        public validatorAddress: string;
+
+        /**
+         * Creates a new QueryValidatorCommissionRequest instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryValidatorCommissionRequest instance
+         */
+        public static create(
+          properties?: cosmos.distribution.v1beta1.IQueryValidatorCommissionRequest,
+        ): cosmos.distribution.v1beta1.QueryValidatorCommissionRequest;
+
+        /**
+         * Encodes the specified QueryValidatorCommissionRequest message. Does not implicitly {@link cosmos.distribution.v1beta1.QueryValidatorCommissionRequest.verify|verify} messages.
+         * @param m QueryValidatorCommissionRequest message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.distribution.v1beta1.IQueryValidatorCommissionRequest,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryValidatorCommissionRequest message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryValidatorCommissionRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.distribution.v1beta1.QueryValidatorCommissionRequest;
+      }
+
+      /** Properties of a QueryValidatorCommissionResponse. */
+      interface IQueryValidatorCommissionResponse {
+        /** QueryValidatorCommissionResponse commission */
+        commission?: cosmos.distribution.v1beta1.IValidatorAccumulatedCommission | null;
+      }
+
+      /** Represents a QueryValidatorCommissionResponse. */
+      class QueryValidatorCommissionResponse implements IQueryValidatorCommissionResponse {
+        /**
+         * Constructs a new QueryValidatorCommissionResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.distribution.v1beta1.IQueryValidatorCommissionResponse);
+
+        /** QueryValidatorCommissionResponse commission. */
+        public commission?: cosmos.distribution.v1beta1.IValidatorAccumulatedCommission | null;
+
+        /**
+         * Creates a new QueryValidatorCommissionResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryValidatorCommissionResponse instance
+         */
+        public static create(
+          properties?: cosmos.distribution.v1beta1.IQueryValidatorCommissionResponse,
+        ): cosmos.distribution.v1beta1.QueryValidatorCommissionResponse;
+
+        /**
+         * Encodes the specified QueryValidatorCommissionResponse message. Does not implicitly {@link cosmos.distribution.v1beta1.QueryValidatorCommissionResponse.verify|verify} messages.
+         * @param m QueryValidatorCommissionResponse message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.distribution.v1beta1.IQueryValidatorCommissionResponse,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryValidatorCommissionResponse message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryValidatorCommissionResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.distribution.v1beta1.QueryValidatorCommissionResponse;
+      }
+
+      /** Properties of a QueryValidatorSlashesRequest. */
+      interface IQueryValidatorSlashesRequest {
+        /** QueryValidatorSlashesRequest validatorAddress */
+        validatorAddress?: string | null;
+
+        /** QueryValidatorSlashesRequest startingHeight */
+        startingHeight?: Long | null;
+
+        /** QueryValidatorSlashesRequest endingHeight */
+        endingHeight?: Long | null;
+
+        /** QueryValidatorSlashesRequest pagination */
+        pagination?: cosmos.base.query.v1beta1.IPageRequest | null;
+      }
+
+      /** Represents a QueryValidatorSlashesRequest. */
+      class QueryValidatorSlashesRequest implements IQueryValidatorSlashesRequest {
+        /**
+         * Constructs a new QueryValidatorSlashesRequest.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.distribution.v1beta1.IQueryValidatorSlashesRequest);
+
+        /** QueryValidatorSlashesRequest validatorAddress. */
+        public validatorAddress: string;
+
+        /** QueryValidatorSlashesRequest startingHeight. */
+        public startingHeight: Long;
+
+        /** QueryValidatorSlashesRequest endingHeight. */
+        public endingHeight: Long;
+
+        /** QueryValidatorSlashesRequest pagination. */
+        public pagination?: cosmos.base.query.v1beta1.IPageRequest | null;
+
+        /**
+         * Creates a new QueryValidatorSlashesRequest instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryValidatorSlashesRequest instance
+         */
+        public static create(
+          properties?: cosmos.distribution.v1beta1.IQueryValidatorSlashesRequest,
+        ): cosmos.distribution.v1beta1.QueryValidatorSlashesRequest;
+
+        /**
+         * Encodes the specified QueryValidatorSlashesRequest message. Does not implicitly {@link cosmos.distribution.v1beta1.QueryValidatorSlashesRequest.verify|verify} messages.
+         * @param m QueryValidatorSlashesRequest message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.distribution.v1beta1.IQueryValidatorSlashesRequest,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryValidatorSlashesRequest message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryValidatorSlashesRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.distribution.v1beta1.QueryValidatorSlashesRequest;
+      }
+
+      /** Properties of a QueryValidatorSlashesResponse. */
+      interface IQueryValidatorSlashesResponse {
+        /** QueryValidatorSlashesResponse slashes */
+        slashes?: cosmos.distribution.v1beta1.IValidatorSlashEvent[] | null;
+
+        /** QueryValidatorSlashesResponse pagination */
+        pagination?: cosmos.base.query.v1beta1.IPageResponse | null;
+      }
+
+      /** Represents a QueryValidatorSlashesResponse. */
+      class QueryValidatorSlashesResponse implements IQueryValidatorSlashesResponse {
+        /**
+         * Constructs a new QueryValidatorSlashesResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.distribution.v1beta1.IQueryValidatorSlashesResponse);
+
+        /** QueryValidatorSlashesResponse slashes. */
+        public slashes: cosmos.distribution.v1beta1.IValidatorSlashEvent[];
+
+        /** QueryValidatorSlashesResponse pagination. */
+        public pagination?: cosmos.base.query.v1beta1.IPageResponse | null;
+
+        /**
+         * Creates a new QueryValidatorSlashesResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryValidatorSlashesResponse instance
+         */
+        public static create(
+          properties?: cosmos.distribution.v1beta1.IQueryValidatorSlashesResponse,
+        ): cosmos.distribution.v1beta1.QueryValidatorSlashesResponse;
+
+        /**
+         * Encodes the specified QueryValidatorSlashesResponse message. Does not implicitly {@link cosmos.distribution.v1beta1.QueryValidatorSlashesResponse.verify|verify} messages.
+         * @param m QueryValidatorSlashesResponse message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.distribution.v1beta1.IQueryValidatorSlashesResponse,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryValidatorSlashesResponse message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryValidatorSlashesResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.distribution.v1beta1.QueryValidatorSlashesResponse;
+      }
+
+      /** Properties of a QueryDelegationRewardsRequest. */
+      interface IQueryDelegationRewardsRequest {
+        /** QueryDelegationRewardsRequest delegatorAddress */
+        delegatorAddress?: string | null;
+
+        /** QueryDelegationRewardsRequest validatorAddress */
+        validatorAddress?: string | null;
+      }
+
+      /** Represents a QueryDelegationRewardsRequest. */
+      class QueryDelegationRewardsRequest implements IQueryDelegationRewardsRequest {
+        /**
+         * Constructs a new QueryDelegationRewardsRequest.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.distribution.v1beta1.IQueryDelegationRewardsRequest);
+
+        /** QueryDelegationRewardsRequest delegatorAddress. */
+        public delegatorAddress: string;
+
+        /** QueryDelegationRewardsRequest validatorAddress. */
+        public validatorAddress: string;
+
+        /**
+         * Creates a new QueryDelegationRewardsRequest instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryDelegationRewardsRequest instance
+         */
+        public static create(
+          properties?: cosmos.distribution.v1beta1.IQueryDelegationRewardsRequest,
+        ): cosmos.distribution.v1beta1.QueryDelegationRewardsRequest;
+
+        /**
+         * Encodes the specified QueryDelegationRewardsRequest message. Does not implicitly {@link cosmos.distribution.v1beta1.QueryDelegationRewardsRequest.verify|verify} messages.
+         * @param m QueryDelegationRewardsRequest message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.distribution.v1beta1.IQueryDelegationRewardsRequest,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryDelegationRewardsRequest message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryDelegationRewardsRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.distribution.v1beta1.QueryDelegationRewardsRequest;
+      }
+
+      /** Properties of a QueryDelegationRewardsResponse. */
+      interface IQueryDelegationRewardsResponse {
+        /** QueryDelegationRewardsResponse rewards */
+        rewards?: cosmos.base.v1beta1.IDecCoin[] | null;
+      }
+
+      /** Represents a QueryDelegationRewardsResponse. */
+      class QueryDelegationRewardsResponse implements IQueryDelegationRewardsResponse {
+        /**
+         * Constructs a new QueryDelegationRewardsResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.distribution.v1beta1.IQueryDelegationRewardsResponse);
+
+        /** QueryDelegationRewardsResponse rewards. */
+        public rewards: cosmos.base.v1beta1.IDecCoin[];
+
+        /**
+         * Creates a new QueryDelegationRewardsResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryDelegationRewardsResponse instance
+         */
+        public static create(
+          properties?: cosmos.distribution.v1beta1.IQueryDelegationRewardsResponse,
+        ): cosmos.distribution.v1beta1.QueryDelegationRewardsResponse;
+
+        /**
+         * Encodes the specified QueryDelegationRewardsResponse message. Does not implicitly {@link cosmos.distribution.v1beta1.QueryDelegationRewardsResponse.verify|verify} messages.
+         * @param m QueryDelegationRewardsResponse message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.distribution.v1beta1.IQueryDelegationRewardsResponse,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryDelegationRewardsResponse message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryDelegationRewardsResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.distribution.v1beta1.QueryDelegationRewardsResponse;
+      }
+
+      /** Properties of a QueryDelegationTotalRewardsRequest. */
+      interface IQueryDelegationTotalRewardsRequest {
+        /** QueryDelegationTotalRewardsRequest delegatorAddress */
+        delegatorAddress?: string | null;
+      }
+
+      /** Represents a QueryDelegationTotalRewardsRequest. */
+      class QueryDelegationTotalRewardsRequest implements IQueryDelegationTotalRewardsRequest {
+        /**
+         * Constructs a new QueryDelegationTotalRewardsRequest.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.distribution.v1beta1.IQueryDelegationTotalRewardsRequest);
+
+        /** QueryDelegationTotalRewardsRequest delegatorAddress. */
+        public delegatorAddress: string;
+
+        /**
+         * Creates a new QueryDelegationTotalRewardsRequest instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryDelegationTotalRewardsRequest instance
+         */
+        public static create(
+          properties?: cosmos.distribution.v1beta1.IQueryDelegationTotalRewardsRequest,
+        ): cosmos.distribution.v1beta1.QueryDelegationTotalRewardsRequest;
+
+        /**
+         * Encodes the specified QueryDelegationTotalRewardsRequest message. Does not implicitly {@link cosmos.distribution.v1beta1.QueryDelegationTotalRewardsRequest.verify|verify} messages.
+         * @param m QueryDelegationTotalRewardsRequest message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.distribution.v1beta1.IQueryDelegationTotalRewardsRequest,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryDelegationTotalRewardsRequest message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryDelegationTotalRewardsRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.distribution.v1beta1.QueryDelegationTotalRewardsRequest;
+      }
+
+      /** Properties of a QueryDelegationTotalRewardsResponse. */
+      interface IQueryDelegationTotalRewardsResponse {
+        /** QueryDelegationTotalRewardsResponse rewards */
+        rewards?: cosmos.distribution.v1beta1.IDelegationDelegatorReward[] | null;
+
+        /** QueryDelegationTotalRewardsResponse total */
+        total?: cosmos.base.v1beta1.IDecCoin[] | null;
+      }
+
+      /** Represents a QueryDelegationTotalRewardsResponse. */
+      class QueryDelegationTotalRewardsResponse implements IQueryDelegationTotalRewardsResponse {
+        /**
+         * Constructs a new QueryDelegationTotalRewardsResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.distribution.v1beta1.IQueryDelegationTotalRewardsResponse);
+
+        /** QueryDelegationTotalRewardsResponse rewards. */
+        public rewards: cosmos.distribution.v1beta1.IDelegationDelegatorReward[];
+
+        /** QueryDelegationTotalRewardsResponse total. */
+        public total: cosmos.base.v1beta1.IDecCoin[];
+
+        /**
+         * Creates a new QueryDelegationTotalRewardsResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryDelegationTotalRewardsResponse instance
+         */
+        public static create(
+          properties?: cosmos.distribution.v1beta1.IQueryDelegationTotalRewardsResponse,
+        ): cosmos.distribution.v1beta1.QueryDelegationTotalRewardsResponse;
+
+        /**
+         * Encodes the specified QueryDelegationTotalRewardsResponse message. Does not implicitly {@link cosmos.distribution.v1beta1.QueryDelegationTotalRewardsResponse.verify|verify} messages.
+         * @param m QueryDelegationTotalRewardsResponse message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.distribution.v1beta1.IQueryDelegationTotalRewardsResponse,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryDelegationTotalRewardsResponse message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryDelegationTotalRewardsResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.distribution.v1beta1.QueryDelegationTotalRewardsResponse;
+      }
+
+      /** Properties of a QueryDelegatorValidatorsRequest. */
+      interface IQueryDelegatorValidatorsRequest {
+        /** QueryDelegatorValidatorsRequest delegatorAddress */
+        delegatorAddress?: string | null;
+      }
+
+      /** Represents a QueryDelegatorValidatorsRequest. */
+      class QueryDelegatorValidatorsRequest implements IQueryDelegatorValidatorsRequest {
+        /**
+         * Constructs a new QueryDelegatorValidatorsRequest.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.distribution.v1beta1.IQueryDelegatorValidatorsRequest);
+
+        /** QueryDelegatorValidatorsRequest delegatorAddress. */
+        public delegatorAddress: string;
+
+        /**
+         * Creates a new QueryDelegatorValidatorsRequest instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryDelegatorValidatorsRequest instance
+         */
+        public static create(
+          properties?: cosmos.distribution.v1beta1.IQueryDelegatorValidatorsRequest,
+        ): cosmos.distribution.v1beta1.QueryDelegatorValidatorsRequest;
+
+        /**
+         * Encodes the specified QueryDelegatorValidatorsRequest message. Does not implicitly {@link cosmos.distribution.v1beta1.QueryDelegatorValidatorsRequest.verify|verify} messages.
+         * @param m QueryDelegatorValidatorsRequest message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.distribution.v1beta1.IQueryDelegatorValidatorsRequest,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryDelegatorValidatorsRequest message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryDelegatorValidatorsRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.distribution.v1beta1.QueryDelegatorValidatorsRequest;
+      }
+
+      /** Properties of a QueryDelegatorValidatorsResponse. */
+      interface IQueryDelegatorValidatorsResponse {
+        /** QueryDelegatorValidatorsResponse validators */
+        validators?: string[] | null;
+      }
+
+      /** Represents a QueryDelegatorValidatorsResponse. */
+      class QueryDelegatorValidatorsResponse implements IQueryDelegatorValidatorsResponse {
+        /**
+         * Constructs a new QueryDelegatorValidatorsResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.distribution.v1beta1.IQueryDelegatorValidatorsResponse);
+
+        /** QueryDelegatorValidatorsResponse validators. */
+        public validators: string[];
+
+        /**
+         * Creates a new QueryDelegatorValidatorsResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryDelegatorValidatorsResponse instance
+         */
+        public static create(
+          properties?: cosmos.distribution.v1beta1.IQueryDelegatorValidatorsResponse,
+        ): cosmos.distribution.v1beta1.QueryDelegatorValidatorsResponse;
+
+        /**
+         * Encodes the specified QueryDelegatorValidatorsResponse message. Does not implicitly {@link cosmos.distribution.v1beta1.QueryDelegatorValidatorsResponse.verify|verify} messages.
+         * @param m QueryDelegatorValidatorsResponse message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.distribution.v1beta1.IQueryDelegatorValidatorsResponse,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryDelegatorValidatorsResponse message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryDelegatorValidatorsResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.distribution.v1beta1.QueryDelegatorValidatorsResponse;
+      }
+
+      /** Properties of a QueryDelegatorWithdrawAddressRequest. */
+      interface IQueryDelegatorWithdrawAddressRequest {
+        /** QueryDelegatorWithdrawAddressRequest delegatorAddress */
+        delegatorAddress?: string | null;
+      }
+
+      /** Represents a QueryDelegatorWithdrawAddressRequest. */
+      class QueryDelegatorWithdrawAddressRequest implements IQueryDelegatorWithdrawAddressRequest {
+        /**
+         * Constructs a new QueryDelegatorWithdrawAddressRequest.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.distribution.v1beta1.IQueryDelegatorWithdrawAddressRequest);
+
+        /** QueryDelegatorWithdrawAddressRequest delegatorAddress. */
+        public delegatorAddress: string;
+
+        /**
+         * Creates a new QueryDelegatorWithdrawAddressRequest instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryDelegatorWithdrawAddressRequest instance
+         */
+        public static create(
+          properties?: cosmos.distribution.v1beta1.IQueryDelegatorWithdrawAddressRequest,
+        ): cosmos.distribution.v1beta1.QueryDelegatorWithdrawAddressRequest;
+
+        /**
+         * Encodes the specified QueryDelegatorWithdrawAddressRequest message. Does not implicitly {@link cosmos.distribution.v1beta1.QueryDelegatorWithdrawAddressRequest.verify|verify} messages.
+         * @param m QueryDelegatorWithdrawAddressRequest message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.distribution.v1beta1.IQueryDelegatorWithdrawAddressRequest,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryDelegatorWithdrawAddressRequest message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryDelegatorWithdrawAddressRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.distribution.v1beta1.QueryDelegatorWithdrawAddressRequest;
+      }
+
+      /** Properties of a QueryDelegatorWithdrawAddressResponse. */
+      interface IQueryDelegatorWithdrawAddressResponse {
+        /** QueryDelegatorWithdrawAddressResponse withdrawAddress */
+        withdrawAddress?: string | null;
+      }
+
+      /** Represents a QueryDelegatorWithdrawAddressResponse. */
+      class QueryDelegatorWithdrawAddressResponse implements IQueryDelegatorWithdrawAddressResponse {
+        /**
+         * Constructs a new QueryDelegatorWithdrawAddressResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.distribution.v1beta1.IQueryDelegatorWithdrawAddressResponse);
+
+        /** QueryDelegatorWithdrawAddressResponse withdrawAddress. */
+        public withdrawAddress: string;
+
+        /**
+         * Creates a new QueryDelegatorWithdrawAddressResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryDelegatorWithdrawAddressResponse instance
+         */
+        public static create(
+          properties?: cosmos.distribution.v1beta1.IQueryDelegatorWithdrawAddressResponse,
+        ): cosmos.distribution.v1beta1.QueryDelegatorWithdrawAddressResponse;
+
+        /**
+         * Encodes the specified QueryDelegatorWithdrawAddressResponse message. Does not implicitly {@link cosmos.distribution.v1beta1.QueryDelegatorWithdrawAddressResponse.verify|verify} messages.
+         * @param m QueryDelegatorWithdrawAddressResponse message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.distribution.v1beta1.IQueryDelegatorWithdrawAddressResponse,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryDelegatorWithdrawAddressResponse message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryDelegatorWithdrawAddressResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.distribution.v1beta1.QueryDelegatorWithdrawAddressResponse;
+      }
+
+      /** Properties of a QueryCommunityPoolRequest. */
+      interface IQueryCommunityPoolRequest {}
+
+      /** Represents a QueryCommunityPoolRequest. */
+      class QueryCommunityPoolRequest implements IQueryCommunityPoolRequest {
+        /**
+         * Constructs a new QueryCommunityPoolRequest.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.distribution.v1beta1.IQueryCommunityPoolRequest);
+
+        /**
+         * Creates a new QueryCommunityPoolRequest instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryCommunityPoolRequest instance
+         */
+        public static create(
+          properties?: cosmos.distribution.v1beta1.IQueryCommunityPoolRequest,
+        ): cosmos.distribution.v1beta1.QueryCommunityPoolRequest;
+
+        /**
+         * Encodes the specified QueryCommunityPoolRequest message. Does not implicitly {@link cosmos.distribution.v1beta1.QueryCommunityPoolRequest.verify|verify} messages.
+         * @param m QueryCommunityPoolRequest message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.distribution.v1beta1.IQueryCommunityPoolRequest,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryCommunityPoolRequest message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryCommunityPoolRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.distribution.v1beta1.QueryCommunityPoolRequest;
+      }
+
+      /** Properties of a QueryCommunityPoolResponse. */
+      interface IQueryCommunityPoolResponse {
+        /** QueryCommunityPoolResponse pool */
+        pool?: cosmos.base.v1beta1.IDecCoin[] | null;
+      }
+
+      /** Represents a QueryCommunityPoolResponse. */
+      class QueryCommunityPoolResponse implements IQueryCommunityPoolResponse {
+        /**
+         * Constructs a new QueryCommunityPoolResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.distribution.v1beta1.IQueryCommunityPoolResponse);
+
+        /** QueryCommunityPoolResponse pool. */
+        public pool: cosmos.base.v1beta1.IDecCoin[];
+
+        /**
+         * Creates a new QueryCommunityPoolResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryCommunityPoolResponse instance
+         */
+        public static create(
+          properties?: cosmos.distribution.v1beta1.IQueryCommunityPoolResponse,
+        ): cosmos.distribution.v1beta1.QueryCommunityPoolResponse;
+
+        /**
+         * Encodes the specified QueryCommunityPoolResponse message. Does not implicitly {@link cosmos.distribution.v1beta1.QueryCommunityPoolResponse.verify|verify} messages.
+         * @param m QueryCommunityPoolResponse message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.distribution.v1beta1.IQueryCommunityPoolResponse,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryCommunityPoolResponse message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryCommunityPoolResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.distribution.v1beta1.QueryCommunityPoolResponse;
+      }
+
+      /** Represents a Msg */
+      class Msg extends $protobuf.rpc.Service {
+        /**
+         * Constructs a new Msg service.
+         * @param rpcImpl RPC implementation
+         * @param [requestDelimited=false] Whether requests are length-delimited
+         * @param [responseDelimited=false] Whether responses are length-delimited
+         */
+        constructor(rpcImpl: $protobuf.RPCImpl, requestDelimited?: boolean, responseDelimited?: boolean);
+
+        /**
+         * Creates new Msg service using the specified rpc implementation.
+         * @param rpcImpl RPC implementation
+         * @param [requestDelimited=false] Whether requests are length-delimited
+         * @param [responseDelimited=false] Whether responses are length-delimited
+         * @returns RPC service. Useful where requests and/or responses are streamed.
+         */
+        public static create(
+          rpcImpl: $protobuf.RPCImpl,
+          requestDelimited?: boolean,
+          responseDelimited?: boolean,
+        ): Msg;
+
+        /**
+         * Calls SetWithdrawAddress.
+         * @param request MsgSetWithdrawAddress message or plain object
+         * @param callback Node-style callback called with the error, if any, and MsgSetWithdrawAddressResponse
+         */
+        public setWithdrawAddress(
+          request: cosmos.distribution.v1beta1.IMsgSetWithdrawAddress,
+          callback: cosmos.distribution.v1beta1.Msg.SetWithdrawAddressCallback,
+        ): void;
+
+        /**
+         * Calls SetWithdrawAddress.
+         * @param request MsgSetWithdrawAddress message or plain object
+         * @returns Promise
+         */
+        public setWithdrawAddress(
+          request: cosmos.distribution.v1beta1.IMsgSetWithdrawAddress,
+        ): Promise<cosmos.distribution.v1beta1.MsgSetWithdrawAddressResponse>;
+
+        /**
+         * Calls WithdrawDelegatorReward.
+         * @param request MsgWithdrawDelegatorReward message or plain object
+         * @param callback Node-style callback called with the error, if any, and MsgWithdrawDelegatorRewardResponse
+         */
+        public withdrawDelegatorReward(
+          request: cosmos.distribution.v1beta1.IMsgWithdrawDelegatorReward,
+          callback: cosmos.distribution.v1beta1.Msg.WithdrawDelegatorRewardCallback,
+        ): void;
+
+        /**
+         * Calls WithdrawDelegatorReward.
+         * @param request MsgWithdrawDelegatorReward message or plain object
+         * @returns Promise
+         */
+        public withdrawDelegatorReward(
+          request: cosmos.distribution.v1beta1.IMsgWithdrawDelegatorReward,
+        ): Promise<cosmos.distribution.v1beta1.MsgWithdrawDelegatorRewardResponse>;
+
+        /**
+         * Calls WithdrawValidatorCommission.
+         * @param request MsgWithdrawValidatorCommission message or plain object
+         * @param callback Node-style callback called with the error, if any, and MsgWithdrawValidatorCommissionResponse
+         */
+        public withdrawValidatorCommission(
+          request: cosmos.distribution.v1beta1.IMsgWithdrawValidatorCommission,
+          callback: cosmos.distribution.v1beta1.Msg.WithdrawValidatorCommissionCallback,
+        ): void;
+
+        /**
+         * Calls WithdrawValidatorCommission.
+         * @param request MsgWithdrawValidatorCommission message or plain object
+         * @returns Promise
+         */
+        public withdrawValidatorCommission(
+          request: cosmos.distribution.v1beta1.IMsgWithdrawValidatorCommission,
+        ): Promise<cosmos.distribution.v1beta1.MsgWithdrawValidatorCommissionResponse>;
+
+        /**
+         * Calls FundCommunityPool.
+         * @param request MsgFundCommunityPool message or plain object
+         * @param callback Node-style callback called with the error, if any, and MsgFundCommunityPoolResponse
+         */
+        public fundCommunityPool(
+          request: cosmos.distribution.v1beta1.IMsgFundCommunityPool,
+          callback: cosmos.distribution.v1beta1.Msg.FundCommunityPoolCallback,
+        ): void;
+
+        /**
+         * Calls FundCommunityPool.
+         * @param request MsgFundCommunityPool message or plain object
+         * @returns Promise
+         */
+        public fundCommunityPool(
+          request: cosmos.distribution.v1beta1.IMsgFundCommunityPool,
+        ): Promise<cosmos.distribution.v1beta1.MsgFundCommunityPoolResponse>;
+      }
+
+      namespace Msg {
+        /**
+         * Callback as used by {@link cosmos.distribution.v1beta1.Msg#setWithdrawAddress}.
+         * @param error Error, if any
+         * @param [response] MsgSetWithdrawAddressResponse
+         */
+        type SetWithdrawAddressCallback = (
+          error: Error | null,
+          response?: cosmos.distribution.v1beta1.MsgSetWithdrawAddressResponse,
+        ) => void;
+
+        /**
+         * Callback as used by {@link cosmos.distribution.v1beta1.Msg#withdrawDelegatorReward}.
+         * @param error Error, if any
+         * @param [response] MsgWithdrawDelegatorRewardResponse
+         */
+        type WithdrawDelegatorRewardCallback = (
+          error: Error | null,
+          response?: cosmos.distribution.v1beta1.MsgWithdrawDelegatorRewardResponse,
+        ) => void;
+
+        /**
+         * Callback as used by {@link cosmos.distribution.v1beta1.Msg#withdrawValidatorCommission}.
+         * @param error Error, if any
+         * @param [response] MsgWithdrawValidatorCommissionResponse
+         */
+        type WithdrawValidatorCommissionCallback = (
+          error: Error | null,
+          response?: cosmos.distribution.v1beta1.MsgWithdrawValidatorCommissionResponse,
+        ) => void;
+
+        /**
+         * Callback as used by {@link cosmos.distribution.v1beta1.Msg#fundCommunityPool}.
+         * @param error Error, if any
+         * @param [response] MsgFundCommunityPoolResponse
+         */
+        type FundCommunityPoolCallback = (
+          error: Error | null,
+          response?: cosmos.distribution.v1beta1.MsgFundCommunityPoolResponse,
+        ) => void;
+      }
+
+      /** Properties of a MsgSetWithdrawAddress. */
+      interface IMsgSetWithdrawAddress {
+        /** MsgSetWithdrawAddress delegatorAddress */
+        delegatorAddress?: string | null;
+
+        /** MsgSetWithdrawAddress withdrawAddress */
+        withdrawAddress?: string | null;
+      }
+
+      /** Represents a MsgSetWithdrawAddress. */
+      class MsgSetWithdrawAddress implements IMsgSetWithdrawAddress {
+        /**
+         * Constructs a new MsgSetWithdrawAddress.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.distribution.v1beta1.IMsgSetWithdrawAddress);
+
+        /** MsgSetWithdrawAddress delegatorAddress. */
+        public delegatorAddress: string;
+
+        /** MsgSetWithdrawAddress withdrawAddress. */
+        public withdrawAddress: string;
+
+        /**
+         * Creates a new MsgSetWithdrawAddress instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns MsgSetWithdrawAddress instance
+         */
+        public static create(
+          properties?: cosmos.distribution.v1beta1.IMsgSetWithdrawAddress,
+        ): cosmos.distribution.v1beta1.MsgSetWithdrawAddress;
+
+        /**
+         * Encodes the specified MsgSetWithdrawAddress message. Does not implicitly {@link cosmos.distribution.v1beta1.MsgSetWithdrawAddress.verify|verify} messages.
+         * @param m MsgSetWithdrawAddress message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.distribution.v1beta1.IMsgSetWithdrawAddress,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a MsgSetWithdrawAddress message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns MsgSetWithdrawAddress
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.distribution.v1beta1.MsgSetWithdrawAddress;
+      }
+
+      /** Properties of a MsgSetWithdrawAddressResponse. */
+      interface IMsgSetWithdrawAddressResponse {}
+
+      /** Represents a MsgSetWithdrawAddressResponse. */
+      class MsgSetWithdrawAddressResponse implements IMsgSetWithdrawAddressResponse {
+        /**
+         * Constructs a new MsgSetWithdrawAddressResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.distribution.v1beta1.IMsgSetWithdrawAddressResponse);
+
+        /**
+         * Creates a new MsgSetWithdrawAddressResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns MsgSetWithdrawAddressResponse instance
+         */
+        public static create(
+          properties?: cosmos.distribution.v1beta1.IMsgSetWithdrawAddressResponse,
+        ): cosmos.distribution.v1beta1.MsgSetWithdrawAddressResponse;
+
+        /**
+         * Encodes the specified MsgSetWithdrawAddressResponse message. Does not implicitly {@link cosmos.distribution.v1beta1.MsgSetWithdrawAddressResponse.verify|verify} messages.
+         * @param m MsgSetWithdrawAddressResponse message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.distribution.v1beta1.IMsgSetWithdrawAddressResponse,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a MsgSetWithdrawAddressResponse message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns MsgSetWithdrawAddressResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.distribution.v1beta1.MsgSetWithdrawAddressResponse;
+      }
+
+      /** Properties of a MsgWithdrawDelegatorReward. */
+      interface IMsgWithdrawDelegatorReward {
+        /** MsgWithdrawDelegatorReward delegatorAddress */
+        delegatorAddress?: string | null;
+
+        /** MsgWithdrawDelegatorReward validatorAddress */
+        validatorAddress?: string | null;
+      }
+
+      /** Represents a MsgWithdrawDelegatorReward. */
+      class MsgWithdrawDelegatorReward implements IMsgWithdrawDelegatorReward {
+        /**
+         * Constructs a new MsgWithdrawDelegatorReward.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.distribution.v1beta1.IMsgWithdrawDelegatorReward);
+
+        /** MsgWithdrawDelegatorReward delegatorAddress. */
+        public delegatorAddress: string;
+
+        /** MsgWithdrawDelegatorReward validatorAddress. */
+        public validatorAddress: string;
+
+        /**
+         * Creates a new MsgWithdrawDelegatorReward instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns MsgWithdrawDelegatorReward instance
+         */
+        public static create(
+          properties?: cosmos.distribution.v1beta1.IMsgWithdrawDelegatorReward,
+        ): cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward;
+
+        /**
+         * Encodes the specified MsgWithdrawDelegatorReward message. Does not implicitly {@link cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward.verify|verify} messages.
+         * @param m MsgWithdrawDelegatorReward message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.distribution.v1beta1.IMsgWithdrawDelegatorReward,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a MsgWithdrawDelegatorReward message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns MsgWithdrawDelegatorReward
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward;
+      }
+
+      /** Properties of a MsgWithdrawDelegatorRewardResponse. */
+      interface IMsgWithdrawDelegatorRewardResponse {}
+
+      /** Represents a MsgWithdrawDelegatorRewardResponse. */
+      class MsgWithdrawDelegatorRewardResponse implements IMsgWithdrawDelegatorRewardResponse {
+        /**
+         * Constructs a new MsgWithdrawDelegatorRewardResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.distribution.v1beta1.IMsgWithdrawDelegatorRewardResponse);
+
+        /**
+         * Creates a new MsgWithdrawDelegatorRewardResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns MsgWithdrawDelegatorRewardResponse instance
+         */
+        public static create(
+          properties?: cosmos.distribution.v1beta1.IMsgWithdrawDelegatorRewardResponse,
+        ): cosmos.distribution.v1beta1.MsgWithdrawDelegatorRewardResponse;
+
+        /**
+         * Encodes the specified MsgWithdrawDelegatorRewardResponse message. Does not implicitly {@link cosmos.distribution.v1beta1.MsgWithdrawDelegatorRewardResponse.verify|verify} messages.
+         * @param m MsgWithdrawDelegatorRewardResponse message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.distribution.v1beta1.IMsgWithdrawDelegatorRewardResponse,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a MsgWithdrawDelegatorRewardResponse message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns MsgWithdrawDelegatorRewardResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.distribution.v1beta1.MsgWithdrawDelegatorRewardResponse;
+      }
+
+      /** Properties of a MsgWithdrawValidatorCommission. */
+      interface IMsgWithdrawValidatorCommission {
+        /** MsgWithdrawValidatorCommission validatorAddress */
+        validatorAddress?: string | null;
+      }
+
+      /** Represents a MsgWithdrawValidatorCommission. */
+      class MsgWithdrawValidatorCommission implements IMsgWithdrawValidatorCommission {
+        /**
+         * Constructs a new MsgWithdrawValidatorCommission.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.distribution.v1beta1.IMsgWithdrawValidatorCommission);
+
+        /** MsgWithdrawValidatorCommission validatorAddress. */
+        public validatorAddress: string;
+
+        /**
+         * Creates a new MsgWithdrawValidatorCommission instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns MsgWithdrawValidatorCommission instance
+         */
+        public static create(
+          properties?: cosmos.distribution.v1beta1.IMsgWithdrawValidatorCommission,
+        ): cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission;
+
+        /**
+         * Encodes the specified MsgWithdrawValidatorCommission message. Does not implicitly {@link cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission.verify|verify} messages.
+         * @param m MsgWithdrawValidatorCommission message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.distribution.v1beta1.IMsgWithdrawValidatorCommission,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a MsgWithdrawValidatorCommission message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns MsgWithdrawValidatorCommission
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission;
+      }
+
+      /** Properties of a MsgWithdrawValidatorCommissionResponse. */
+      interface IMsgWithdrawValidatorCommissionResponse {}
+
+      /** Represents a MsgWithdrawValidatorCommissionResponse. */
+      class MsgWithdrawValidatorCommissionResponse implements IMsgWithdrawValidatorCommissionResponse {
+        /**
+         * Constructs a new MsgWithdrawValidatorCommissionResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.distribution.v1beta1.IMsgWithdrawValidatorCommissionResponse);
+
+        /**
+         * Creates a new MsgWithdrawValidatorCommissionResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns MsgWithdrawValidatorCommissionResponse instance
+         */
+        public static create(
+          properties?: cosmos.distribution.v1beta1.IMsgWithdrawValidatorCommissionResponse,
+        ): cosmos.distribution.v1beta1.MsgWithdrawValidatorCommissionResponse;
+
+        /**
+         * Encodes the specified MsgWithdrawValidatorCommissionResponse message. Does not implicitly {@link cosmos.distribution.v1beta1.MsgWithdrawValidatorCommissionResponse.verify|verify} messages.
+         * @param m MsgWithdrawValidatorCommissionResponse message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.distribution.v1beta1.IMsgWithdrawValidatorCommissionResponse,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a MsgWithdrawValidatorCommissionResponse message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns MsgWithdrawValidatorCommissionResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.distribution.v1beta1.MsgWithdrawValidatorCommissionResponse;
+      }
+
+      /** Properties of a MsgFundCommunityPool. */
+      interface IMsgFundCommunityPool {
+        /** MsgFundCommunityPool amount */
+        amount?: cosmos.base.v1beta1.ICoin[] | null;
+
+        /** MsgFundCommunityPool depositor */
+        depositor?: string | null;
+      }
+
+      /** Represents a MsgFundCommunityPool. */
+      class MsgFundCommunityPool implements IMsgFundCommunityPool {
+        /**
+         * Constructs a new MsgFundCommunityPool.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.distribution.v1beta1.IMsgFundCommunityPool);
+
+        /** MsgFundCommunityPool amount. */
+        public amount: cosmos.base.v1beta1.ICoin[];
+
+        /** MsgFundCommunityPool depositor. */
+        public depositor: string;
+
+        /**
+         * Creates a new MsgFundCommunityPool instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns MsgFundCommunityPool instance
+         */
+        public static create(
+          properties?: cosmos.distribution.v1beta1.IMsgFundCommunityPool,
+        ): cosmos.distribution.v1beta1.MsgFundCommunityPool;
+
+        /**
+         * Encodes the specified MsgFundCommunityPool message. Does not implicitly {@link cosmos.distribution.v1beta1.MsgFundCommunityPool.verify|verify} messages.
+         * @param m MsgFundCommunityPool message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.distribution.v1beta1.IMsgFundCommunityPool,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a MsgFundCommunityPool message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns MsgFundCommunityPool
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.distribution.v1beta1.MsgFundCommunityPool;
+      }
+
+      /** Properties of a MsgFundCommunityPoolResponse. */
+      interface IMsgFundCommunityPoolResponse {}
+
+      /** Represents a MsgFundCommunityPoolResponse. */
+      class MsgFundCommunityPoolResponse implements IMsgFundCommunityPoolResponse {
+        /**
+         * Constructs a new MsgFundCommunityPoolResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.distribution.v1beta1.IMsgFundCommunityPoolResponse);
+
+        /**
+         * Creates a new MsgFundCommunityPoolResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns MsgFundCommunityPoolResponse instance
+         */
+        public static create(
+          properties?: cosmos.distribution.v1beta1.IMsgFundCommunityPoolResponse,
+        ): cosmos.distribution.v1beta1.MsgFundCommunityPoolResponse;
+
+        /**
+         * Encodes the specified MsgFundCommunityPoolResponse message. Does not implicitly {@link cosmos.distribution.v1beta1.MsgFundCommunityPoolResponse.verify|verify} messages.
+         * @param m MsgFundCommunityPoolResponse message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.distribution.v1beta1.IMsgFundCommunityPoolResponse,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a MsgFundCommunityPoolResponse message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns MsgFundCommunityPoolResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.distribution.v1beta1.MsgFundCommunityPoolResponse;
+      }
+    }
+  }
+
   /** Namespace staking. */
   namespace staking {
     /** Namespace v1beta1. */
     namespace v1beta1 {
+      /** Represents a Query */
+      class Query extends $protobuf.rpc.Service {
+        /**
+         * Constructs a new Query service.
+         * @param rpcImpl RPC implementation
+         * @param [requestDelimited=false] Whether requests are length-delimited
+         * @param [responseDelimited=false] Whether responses are length-delimited
+         */
+        constructor(rpcImpl: $protobuf.RPCImpl, requestDelimited?: boolean, responseDelimited?: boolean);
+
+        /**
+         * Creates new Query service using the specified rpc implementation.
+         * @param rpcImpl RPC implementation
+         * @param [requestDelimited=false] Whether requests are length-delimited
+         * @param [responseDelimited=false] Whether responses are length-delimited
+         * @returns RPC service. Useful where requests and/or responses are streamed.
+         */
+        public static create(
+          rpcImpl: $protobuf.RPCImpl,
+          requestDelimited?: boolean,
+          responseDelimited?: boolean,
+        ): Query;
+
+        /**
+         * Calls Validators.
+         * @param request QueryValidatorsRequest message or plain object
+         * @param callback Node-style callback called with the error, if any, and QueryValidatorsResponse
+         */
+        public validators(
+          request: cosmos.staking.v1beta1.IQueryValidatorsRequest,
+          callback: cosmos.staking.v1beta1.Query.ValidatorsCallback,
+        ): void;
+
+        /**
+         * Calls Validators.
+         * @param request QueryValidatorsRequest message or plain object
+         * @returns Promise
+         */
+        public validators(
+          request: cosmos.staking.v1beta1.IQueryValidatorsRequest,
+        ): Promise<cosmos.staking.v1beta1.QueryValidatorsResponse>;
+
+        /**
+         * Calls Validator.
+         * @param request QueryValidatorRequest message or plain object
+         * @param callback Node-style callback called with the error, if any, and QueryValidatorResponse
+         */
+        public validator(
+          request: cosmos.staking.v1beta1.IQueryValidatorRequest,
+          callback: cosmos.staking.v1beta1.Query.ValidatorCallback,
+        ): void;
+
+        /**
+         * Calls Validator.
+         * @param request QueryValidatorRequest message or plain object
+         * @returns Promise
+         */
+        public validator(
+          request: cosmos.staking.v1beta1.IQueryValidatorRequest,
+        ): Promise<cosmos.staking.v1beta1.QueryValidatorResponse>;
+
+        /**
+         * Calls ValidatorDelegations.
+         * @param request QueryValidatorDelegationsRequest message or plain object
+         * @param callback Node-style callback called with the error, if any, and QueryValidatorDelegationsResponse
+         */
+        public validatorDelegations(
+          request: cosmos.staking.v1beta1.IQueryValidatorDelegationsRequest,
+          callback: cosmos.staking.v1beta1.Query.ValidatorDelegationsCallback,
+        ): void;
+
+        /**
+         * Calls ValidatorDelegations.
+         * @param request QueryValidatorDelegationsRequest message or plain object
+         * @returns Promise
+         */
+        public validatorDelegations(
+          request: cosmos.staking.v1beta1.IQueryValidatorDelegationsRequest,
+        ): Promise<cosmos.staking.v1beta1.QueryValidatorDelegationsResponse>;
+
+        /**
+         * Calls ValidatorUnbondingDelegations.
+         * @param request QueryValidatorUnbondingDelegationsRequest message or plain object
+         * @param callback Node-style callback called with the error, if any, and QueryValidatorUnbondingDelegationsResponse
+         */
+        public validatorUnbondingDelegations(
+          request: cosmos.staking.v1beta1.IQueryValidatorUnbondingDelegationsRequest,
+          callback: cosmos.staking.v1beta1.Query.ValidatorUnbondingDelegationsCallback,
+        ): void;
+
+        /**
+         * Calls ValidatorUnbondingDelegations.
+         * @param request QueryValidatorUnbondingDelegationsRequest message or plain object
+         * @returns Promise
+         */
+        public validatorUnbondingDelegations(
+          request: cosmos.staking.v1beta1.IQueryValidatorUnbondingDelegationsRequest,
+        ): Promise<cosmos.staking.v1beta1.QueryValidatorUnbondingDelegationsResponse>;
+
+        /**
+         * Calls Delegation.
+         * @param request QueryDelegationRequest message or plain object
+         * @param callback Node-style callback called with the error, if any, and QueryDelegationResponse
+         */
+        public delegation(
+          request: cosmos.staking.v1beta1.IQueryDelegationRequest,
+          callback: cosmos.staking.v1beta1.Query.DelegationCallback,
+        ): void;
+
+        /**
+         * Calls Delegation.
+         * @param request QueryDelegationRequest message or plain object
+         * @returns Promise
+         */
+        public delegation(
+          request: cosmos.staking.v1beta1.IQueryDelegationRequest,
+        ): Promise<cosmos.staking.v1beta1.QueryDelegationResponse>;
+
+        /**
+         * Calls UnbondingDelegation.
+         * @param request QueryUnbondingDelegationRequest message or plain object
+         * @param callback Node-style callback called with the error, if any, and QueryUnbondingDelegationResponse
+         */
+        public unbondingDelegation(
+          request: cosmos.staking.v1beta1.IQueryUnbondingDelegationRequest,
+          callback: cosmos.staking.v1beta1.Query.UnbondingDelegationCallback,
+        ): void;
+
+        /**
+         * Calls UnbondingDelegation.
+         * @param request QueryUnbondingDelegationRequest message or plain object
+         * @returns Promise
+         */
+        public unbondingDelegation(
+          request: cosmos.staking.v1beta1.IQueryUnbondingDelegationRequest,
+        ): Promise<cosmos.staking.v1beta1.QueryUnbondingDelegationResponse>;
+
+        /**
+         * Calls DelegatorDelegations.
+         * @param request QueryDelegatorDelegationsRequest message or plain object
+         * @param callback Node-style callback called with the error, if any, and QueryDelegatorDelegationsResponse
+         */
+        public delegatorDelegations(
+          request: cosmos.staking.v1beta1.IQueryDelegatorDelegationsRequest,
+          callback: cosmos.staking.v1beta1.Query.DelegatorDelegationsCallback,
+        ): void;
+
+        /**
+         * Calls DelegatorDelegations.
+         * @param request QueryDelegatorDelegationsRequest message or plain object
+         * @returns Promise
+         */
+        public delegatorDelegations(
+          request: cosmos.staking.v1beta1.IQueryDelegatorDelegationsRequest,
+        ): Promise<cosmos.staking.v1beta1.QueryDelegatorDelegationsResponse>;
+
+        /**
+         * Calls DelegatorUnbondingDelegations.
+         * @param request QueryDelegatorUnbondingDelegationsRequest message or plain object
+         * @param callback Node-style callback called with the error, if any, and QueryDelegatorUnbondingDelegationsResponse
+         */
+        public delegatorUnbondingDelegations(
+          request: cosmos.staking.v1beta1.IQueryDelegatorUnbondingDelegationsRequest,
+          callback: cosmos.staking.v1beta1.Query.DelegatorUnbondingDelegationsCallback,
+        ): void;
+
+        /**
+         * Calls DelegatorUnbondingDelegations.
+         * @param request QueryDelegatorUnbondingDelegationsRequest message or plain object
+         * @returns Promise
+         */
+        public delegatorUnbondingDelegations(
+          request: cosmos.staking.v1beta1.IQueryDelegatorUnbondingDelegationsRequest,
+        ): Promise<cosmos.staking.v1beta1.QueryDelegatorUnbondingDelegationsResponse>;
+
+        /**
+         * Calls Redelegations.
+         * @param request QueryRedelegationsRequest message or plain object
+         * @param callback Node-style callback called with the error, if any, and QueryRedelegationsResponse
+         */
+        public redelegations(
+          request: cosmos.staking.v1beta1.IQueryRedelegationsRequest,
+          callback: cosmos.staking.v1beta1.Query.RedelegationsCallback,
+        ): void;
+
+        /**
+         * Calls Redelegations.
+         * @param request QueryRedelegationsRequest message or plain object
+         * @returns Promise
+         */
+        public redelegations(
+          request: cosmos.staking.v1beta1.IQueryRedelegationsRequest,
+        ): Promise<cosmos.staking.v1beta1.QueryRedelegationsResponse>;
+
+        /**
+         * Calls DelegatorValidators.
+         * @param request QueryDelegatorValidatorsRequest message or plain object
+         * @param callback Node-style callback called with the error, if any, and QueryDelegatorValidatorsResponse
+         */
+        public delegatorValidators(
+          request: cosmos.staking.v1beta1.IQueryDelegatorValidatorsRequest,
+          callback: cosmos.staking.v1beta1.Query.DelegatorValidatorsCallback,
+        ): void;
+
+        /**
+         * Calls DelegatorValidators.
+         * @param request QueryDelegatorValidatorsRequest message or plain object
+         * @returns Promise
+         */
+        public delegatorValidators(
+          request: cosmos.staking.v1beta1.IQueryDelegatorValidatorsRequest,
+        ): Promise<cosmos.staking.v1beta1.QueryDelegatorValidatorsResponse>;
+
+        /**
+         * Calls DelegatorValidator.
+         * @param request QueryDelegatorValidatorRequest message or plain object
+         * @param callback Node-style callback called with the error, if any, and QueryDelegatorValidatorResponse
+         */
+        public delegatorValidator(
+          request: cosmos.staking.v1beta1.IQueryDelegatorValidatorRequest,
+          callback: cosmos.staking.v1beta1.Query.DelegatorValidatorCallback,
+        ): void;
+
+        /**
+         * Calls DelegatorValidator.
+         * @param request QueryDelegatorValidatorRequest message or plain object
+         * @returns Promise
+         */
+        public delegatorValidator(
+          request: cosmos.staking.v1beta1.IQueryDelegatorValidatorRequest,
+        ): Promise<cosmos.staking.v1beta1.QueryDelegatorValidatorResponse>;
+
+        /**
+         * Calls HistoricalInfo.
+         * @param request QueryHistoricalInfoRequest message or plain object
+         * @param callback Node-style callback called with the error, if any, and QueryHistoricalInfoResponse
+         */
+        public historicalInfo(
+          request: cosmos.staking.v1beta1.IQueryHistoricalInfoRequest,
+          callback: cosmos.staking.v1beta1.Query.HistoricalInfoCallback,
+        ): void;
+
+        /**
+         * Calls HistoricalInfo.
+         * @param request QueryHistoricalInfoRequest message or plain object
+         * @returns Promise
+         */
+        public historicalInfo(
+          request: cosmos.staking.v1beta1.IQueryHistoricalInfoRequest,
+        ): Promise<cosmos.staking.v1beta1.QueryHistoricalInfoResponse>;
+
+        /**
+         * Calls Pool.
+         * @param request QueryPoolRequest message or plain object
+         * @param callback Node-style callback called with the error, if any, and QueryPoolResponse
+         */
+        public pool(
+          request: cosmos.staking.v1beta1.IQueryPoolRequest,
+          callback: cosmos.staking.v1beta1.Query.PoolCallback,
+        ): void;
+
+        /**
+         * Calls Pool.
+         * @param request QueryPoolRequest message or plain object
+         * @returns Promise
+         */
+        public pool(
+          request: cosmos.staking.v1beta1.IQueryPoolRequest,
+        ): Promise<cosmos.staking.v1beta1.QueryPoolResponse>;
+
+        /**
+         * Calls Params.
+         * @param request QueryParamsRequest message or plain object
+         * @param callback Node-style callback called with the error, if any, and QueryParamsResponse
+         */
+        public params(
+          request: cosmos.staking.v1beta1.IQueryParamsRequest,
+          callback: cosmos.staking.v1beta1.Query.ParamsCallback,
+        ): void;
+
+        /**
+         * Calls Params.
+         * @param request QueryParamsRequest message or plain object
+         * @returns Promise
+         */
+        public params(
+          request: cosmos.staking.v1beta1.IQueryParamsRequest,
+        ): Promise<cosmos.staking.v1beta1.QueryParamsResponse>;
+      }
+
+      namespace Query {
+        /**
+         * Callback as used by {@link cosmos.staking.v1beta1.Query#validators}.
+         * @param error Error, if any
+         * @param [response] QueryValidatorsResponse
+         */
+        type ValidatorsCallback = (
+          error: Error | null,
+          response?: cosmos.staking.v1beta1.QueryValidatorsResponse,
+        ) => void;
+
+        /**
+         * Callback as used by {@link cosmos.staking.v1beta1.Query#validator}.
+         * @param error Error, if any
+         * @param [response] QueryValidatorResponse
+         */
+        type ValidatorCallback = (
+          error: Error | null,
+          response?: cosmos.staking.v1beta1.QueryValidatorResponse,
+        ) => void;
+
+        /**
+         * Callback as used by {@link cosmos.staking.v1beta1.Query#validatorDelegations}.
+         * @param error Error, if any
+         * @param [response] QueryValidatorDelegationsResponse
+         */
+        type ValidatorDelegationsCallback = (
+          error: Error | null,
+          response?: cosmos.staking.v1beta1.QueryValidatorDelegationsResponse,
+        ) => void;
+
+        /**
+         * Callback as used by {@link cosmos.staking.v1beta1.Query#validatorUnbondingDelegations}.
+         * @param error Error, if any
+         * @param [response] QueryValidatorUnbondingDelegationsResponse
+         */
+        type ValidatorUnbondingDelegationsCallback = (
+          error: Error | null,
+          response?: cosmos.staking.v1beta1.QueryValidatorUnbondingDelegationsResponse,
+        ) => void;
+
+        /**
+         * Callback as used by {@link cosmos.staking.v1beta1.Query#delegation}.
+         * @param error Error, if any
+         * @param [response] QueryDelegationResponse
+         */
+        type DelegationCallback = (
+          error: Error | null,
+          response?: cosmos.staking.v1beta1.QueryDelegationResponse,
+        ) => void;
+
+        /**
+         * Callback as used by {@link cosmos.staking.v1beta1.Query#unbondingDelegation}.
+         * @param error Error, if any
+         * @param [response] QueryUnbondingDelegationResponse
+         */
+        type UnbondingDelegationCallback = (
+          error: Error | null,
+          response?: cosmos.staking.v1beta1.QueryUnbondingDelegationResponse,
+        ) => void;
+
+        /**
+         * Callback as used by {@link cosmos.staking.v1beta1.Query#delegatorDelegations}.
+         * @param error Error, if any
+         * @param [response] QueryDelegatorDelegationsResponse
+         */
+        type DelegatorDelegationsCallback = (
+          error: Error | null,
+          response?: cosmos.staking.v1beta1.QueryDelegatorDelegationsResponse,
+        ) => void;
+
+        /**
+         * Callback as used by {@link cosmos.staking.v1beta1.Query#delegatorUnbondingDelegations}.
+         * @param error Error, if any
+         * @param [response] QueryDelegatorUnbondingDelegationsResponse
+         */
+        type DelegatorUnbondingDelegationsCallback = (
+          error: Error | null,
+          response?: cosmos.staking.v1beta1.QueryDelegatorUnbondingDelegationsResponse,
+        ) => void;
+
+        /**
+         * Callback as used by {@link cosmos.staking.v1beta1.Query#redelegations}.
+         * @param error Error, if any
+         * @param [response] QueryRedelegationsResponse
+         */
+        type RedelegationsCallback = (
+          error: Error | null,
+          response?: cosmos.staking.v1beta1.QueryRedelegationsResponse,
+        ) => void;
+
+        /**
+         * Callback as used by {@link cosmos.staking.v1beta1.Query#delegatorValidators}.
+         * @param error Error, if any
+         * @param [response] QueryDelegatorValidatorsResponse
+         */
+        type DelegatorValidatorsCallback = (
+          error: Error | null,
+          response?: cosmos.staking.v1beta1.QueryDelegatorValidatorsResponse,
+        ) => void;
+
+        /**
+         * Callback as used by {@link cosmos.staking.v1beta1.Query#delegatorValidator}.
+         * @param error Error, if any
+         * @param [response] QueryDelegatorValidatorResponse
+         */
+        type DelegatorValidatorCallback = (
+          error: Error | null,
+          response?: cosmos.staking.v1beta1.QueryDelegatorValidatorResponse,
+        ) => void;
+
+        /**
+         * Callback as used by {@link cosmos.staking.v1beta1.Query#historicalInfo}.
+         * @param error Error, if any
+         * @param [response] QueryHistoricalInfoResponse
+         */
+        type HistoricalInfoCallback = (
+          error: Error | null,
+          response?: cosmos.staking.v1beta1.QueryHistoricalInfoResponse,
+        ) => void;
+
+        /**
+         * Callback as used by {@link cosmos.staking.v1beta1.Query#pool}.
+         * @param error Error, if any
+         * @param [response] QueryPoolResponse
+         */
+        type PoolCallback = (
+          error: Error | null,
+          response?: cosmos.staking.v1beta1.QueryPoolResponse,
+        ) => void;
+
+        /**
+         * Callback as used by {@link cosmos.staking.v1beta1.Query#params}.
+         * @param error Error, if any
+         * @param [response] QueryParamsResponse
+         */
+        type ParamsCallback = (
+          error: Error | null,
+          response?: cosmos.staking.v1beta1.QueryParamsResponse,
+        ) => void;
+      }
+
+      /** Properties of a QueryValidatorsRequest. */
+      interface IQueryValidatorsRequest {
+        /** QueryValidatorsRequest status */
+        status?: string | null;
+
+        /** QueryValidatorsRequest pagination */
+        pagination?: cosmos.base.query.v1beta1.IPageRequest | null;
+      }
+
+      /** Represents a QueryValidatorsRequest. */
+      class QueryValidatorsRequest implements IQueryValidatorsRequest {
+        /**
+         * Constructs a new QueryValidatorsRequest.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IQueryValidatorsRequest);
+
+        /** QueryValidatorsRequest status. */
+        public status: string;
+
+        /** QueryValidatorsRequest pagination. */
+        public pagination?: cosmos.base.query.v1beta1.IPageRequest | null;
+
+        /**
+         * Creates a new QueryValidatorsRequest instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryValidatorsRequest instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IQueryValidatorsRequest,
+        ): cosmos.staking.v1beta1.QueryValidatorsRequest;
+
+        /**
+         * Encodes the specified QueryValidatorsRequest message. Does not implicitly {@link cosmos.staking.v1beta1.QueryValidatorsRequest.verify|verify} messages.
+         * @param m QueryValidatorsRequest message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.staking.v1beta1.IQueryValidatorsRequest,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryValidatorsRequest message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryValidatorsRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.QueryValidatorsRequest;
+      }
+
+      /** Properties of a QueryValidatorsResponse. */
+      interface IQueryValidatorsResponse {
+        /** QueryValidatorsResponse validators */
+        validators?: cosmos.staking.v1beta1.IValidator[] | null;
+
+        /** QueryValidatorsResponse pagination */
+        pagination?: cosmos.base.query.v1beta1.IPageResponse | null;
+      }
+
+      /** Represents a QueryValidatorsResponse. */
+      class QueryValidatorsResponse implements IQueryValidatorsResponse {
+        /**
+         * Constructs a new QueryValidatorsResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IQueryValidatorsResponse);
+
+        /** QueryValidatorsResponse validators. */
+        public validators: cosmos.staking.v1beta1.IValidator[];
+
+        /** QueryValidatorsResponse pagination. */
+        public pagination?: cosmos.base.query.v1beta1.IPageResponse | null;
+
+        /**
+         * Creates a new QueryValidatorsResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryValidatorsResponse instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IQueryValidatorsResponse,
+        ): cosmos.staking.v1beta1.QueryValidatorsResponse;
+
+        /**
+         * Encodes the specified QueryValidatorsResponse message. Does not implicitly {@link cosmos.staking.v1beta1.QueryValidatorsResponse.verify|verify} messages.
+         * @param m QueryValidatorsResponse message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.staking.v1beta1.IQueryValidatorsResponse,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryValidatorsResponse message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryValidatorsResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.QueryValidatorsResponse;
+      }
+
+      /** Properties of a QueryValidatorRequest. */
+      interface IQueryValidatorRequest {
+        /** QueryValidatorRequest validatorAddr */
+        validatorAddr?: string | null;
+      }
+
+      /** Represents a QueryValidatorRequest. */
+      class QueryValidatorRequest implements IQueryValidatorRequest {
+        /**
+         * Constructs a new QueryValidatorRequest.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IQueryValidatorRequest);
+
+        /** QueryValidatorRequest validatorAddr. */
+        public validatorAddr: string;
+
+        /**
+         * Creates a new QueryValidatorRequest instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryValidatorRequest instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IQueryValidatorRequest,
+        ): cosmos.staking.v1beta1.QueryValidatorRequest;
+
+        /**
+         * Encodes the specified QueryValidatorRequest message. Does not implicitly {@link cosmos.staking.v1beta1.QueryValidatorRequest.verify|verify} messages.
+         * @param m QueryValidatorRequest message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.staking.v1beta1.IQueryValidatorRequest,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryValidatorRequest message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryValidatorRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.QueryValidatorRequest;
+      }
+
+      /** Properties of a QueryValidatorResponse. */
+      interface IQueryValidatorResponse {
+        /** QueryValidatorResponse validator */
+        validator?: cosmos.staking.v1beta1.IValidator | null;
+      }
+
+      /** Represents a QueryValidatorResponse. */
+      class QueryValidatorResponse implements IQueryValidatorResponse {
+        /**
+         * Constructs a new QueryValidatorResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IQueryValidatorResponse);
+
+        /** QueryValidatorResponse validator. */
+        public validator?: cosmos.staking.v1beta1.IValidator | null;
+
+        /**
+         * Creates a new QueryValidatorResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryValidatorResponse instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IQueryValidatorResponse,
+        ): cosmos.staking.v1beta1.QueryValidatorResponse;
+
+        /**
+         * Encodes the specified QueryValidatorResponse message. Does not implicitly {@link cosmos.staking.v1beta1.QueryValidatorResponse.verify|verify} messages.
+         * @param m QueryValidatorResponse message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.staking.v1beta1.IQueryValidatorResponse,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryValidatorResponse message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryValidatorResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.QueryValidatorResponse;
+      }
+
+      /** Properties of a QueryValidatorDelegationsRequest. */
+      interface IQueryValidatorDelegationsRequest {
+        /** QueryValidatorDelegationsRequest validatorAddr */
+        validatorAddr?: string | null;
+
+        /** QueryValidatorDelegationsRequest pagination */
+        pagination?: cosmos.base.query.v1beta1.IPageRequest | null;
+      }
+
+      /** Represents a QueryValidatorDelegationsRequest. */
+      class QueryValidatorDelegationsRequest implements IQueryValidatorDelegationsRequest {
+        /**
+         * Constructs a new QueryValidatorDelegationsRequest.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IQueryValidatorDelegationsRequest);
+
+        /** QueryValidatorDelegationsRequest validatorAddr. */
+        public validatorAddr: string;
+
+        /** QueryValidatorDelegationsRequest pagination. */
+        public pagination?: cosmos.base.query.v1beta1.IPageRequest | null;
+
+        /**
+         * Creates a new QueryValidatorDelegationsRequest instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryValidatorDelegationsRequest instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IQueryValidatorDelegationsRequest,
+        ): cosmos.staking.v1beta1.QueryValidatorDelegationsRequest;
+
+        /**
+         * Encodes the specified QueryValidatorDelegationsRequest message. Does not implicitly {@link cosmos.staking.v1beta1.QueryValidatorDelegationsRequest.verify|verify} messages.
+         * @param m QueryValidatorDelegationsRequest message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.staking.v1beta1.IQueryValidatorDelegationsRequest,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryValidatorDelegationsRequest message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryValidatorDelegationsRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.QueryValidatorDelegationsRequest;
+      }
+
+      /** Properties of a QueryValidatorDelegationsResponse. */
+      interface IQueryValidatorDelegationsResponse {
+        /** QueryValidatorDelegationsResponse delegationResponses */
+        delegationResponses?: cosmos.staking.v1beta1.IDelegationResponse[] | null;
+
+        /** QueryValidatorDelegationsResponse pagination */
+        pagination?: cosmos.base.query.v1beta1.IPageResponse | null;
+      }
+
+      /** Represents a QueryValidatorDelegationsResponse. */
+      class QueryValidatorDelegationsResponse implements IQueryValidatorDelegationsResponse {
+        /**
+         * Constructs a new QueryValidatorDelegationsResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IQueryValidatorDelegationsResponse);
+
+        /** QueryValidatorDelegationsResponse delegationResponses. */
+        public delegationResponses: cosmos.staking.v1beta1.IDelegationResponse[];
+
+        /** QueryValidatorDelegationsResponse pagination. */
+        public pagination?: cosmos.base.query.v1beta1.IPageResponse | null;
+
+        /**
+         * Creates a new QueryValidatorDelegationsResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryValidatorDelegationsResponse instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IQueryValidatorDelegationsResponse,
+        ): cosmos.staking.v1beta1.QueryValidatorDelegationsResponse;
+
+        /**
+         * Encodes the specified QueryValidatorDelegationsResponse message. Does not implicitly {@link cosmos.staking.v1beta1.QueryValidatorDelegationsResponse.verify|verify} messages.
+         * @param m QueryValidatorDelegationsResponse message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.staking.v1beta1.IQueryValidatorDelegationsResponse,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryValidatorDelegationsResponse message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryValidatorDelegationsResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.QueryValidatorDelegationsResponse;
+      }
+
+      /** Properties of a QueryValidatorUnbondingDelegationsRequest. */
+      interface IQueryValidatorUnbondingDelegationsRequest {
+        /** QueryValidatorUnbondingDelegationsRequest validatorAddr */
+        validatorAddr?: string | null;
+
+        /** QueryValidatorUnbondingDelegationsRequest pagination */
+        pagination?: cosmos.base.query.v1beta1.IPageRequest | null;
+      }
+
+      /** Represents a QueryValidatorUnbondingDelegationsRequest. */
+      class QueryValidatorUnbondingDelegationsRequest implements IQueryValidatorUnbondingDelegationsRequest {
+        /**
+         * Constructs a new QueryValidatorUnbondingDelegationsRequest.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IQueryValidatorUnbondingDelegationsRequest);
+
+        /** QueryValidatorUnbondingDelegationsRequest validatorAddr. */
+        public validatorAddr: string;
+
+        /** QueryValidatorUnbondingDelegationsRequest pagination. */
+        public pagination?: cosmos.base.query.v1beta1.IPageRequest | null;
+
+        /**
+         * Creates a new QueryValidatorUnbondingDelegationsRequest instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryValidatorUnbondingDelegationsRequest instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IQueryValidatorUnbondingDelegationsRequest,
+        ): cosmos.staking.v1beta1.QueryValidatorUnbondingDelegationsRequest;
+
+        /**
+         * Encodes the specified QueryValidatorUnbondingDelegationsRequest message. Does not implicitly {@link cosmos.staking.v1beta1.QueryValidatorUnbondingDelegationsRequest.verify|verify} messages.
+         * @param m QueryValidatorUnbondingDelegationsRequest message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.staking.v1beta1.IQueryValidatorUnbondingDelegationsRequest,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryValidatorUnbondingDelegationsRequest message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryValidatorUnbondingDelegationsRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.QueryValidatorUnbondingDelegationsRequest;
+      }
+
+      /** Properties of a QueryValidatorUnbondingDelegationsResponse. */
+      interface IQueryValidatorUnbondingDelegationsResponse {
+        /** QueryValidatorUnbondingDelegationsResponse unbondingResponses */
+        unbondingResponses?: cosmos.staking.v1beta1.IUnbondingDelegation[] | null;
+
+        /** QueryValidatorUnbondingDelegationsResponse pagination */
+        pagination?: cosmos.base.query.v1beta1.IPageResponse | null;
+      }
+
+      /** Represents a QueryValidatorUnbondingDelegationsResponse. */
+      class QueryValidatorUnbondingDelegationsResponse
+        implements IQueryValidatorUnbondingDelegationsResponse {
+        /**
+         * Constructs a new QueryValidatorUnbondingDelegationsResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IQueryValidatorUnbondingDelegationsResponse);
+
+        /** QueryValidatorUnbondingDelegationsResponse unbondingResponses. */
+        public unbondingResponses: cosmos.staking.v1beta1.IUnbondingDelegation[];
+
+        /** QueryValidatorUnbondingDelegationsResponse pagination. */
+        public pagination?: cosmos.base.query.v1beta1.IPageResponse | null;
+
+        /**
+         * Creates a new QueryValidatorUnbondingDelegationsResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryValidatorUnbondingDelegationsResponse instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IQueryValidatorUnbondingDelegationsResponse,
+        ): cosmos.staking.v1beta1.QueryValidatorUnbondingDelegationsResponse;
+
+        /**
+         * Encodes the specified QueryValidatorUnbondingDelegationsResponse message. Does not implicitly {@link cosmos.staking.v1beta1.QueryValidatorUnbondingDelegationsResponse.verify|verify} messages.
+         * @param m QueryValidatorUnbondingDelegationsResponse message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.staking.v1beta1.IQueryValidatorUnbondingDelegationsResponse,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryValidatorUnbondingDelegationsResponse message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryValidatorUnbondingDelegationsResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.QueryValidatorUnbondingDelegationsResponse;
+      }
+
+      /** Properties of a QueryDelegationRequest. */
+      interface IQueryDelegationRequest {
+        /** QueryDelegationRequest delegatorAddr */
+        delegatorAddr?: string | null;
+
+        /** QueryDelegationRequest validatorAddr */
+        validatorAddr?: string | null;
+      }
+
+      /** Represents a QueryDelegationRequest. */
+      class QueryDelegationRequest implements IQueryDelegationRequest {
+        /**
+         * Constructs a new QueryDelegationRequest.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IQueryDelegationRequest);
+
+        /** QueryDelegationRequest delegatorAddr. */
+        public delegatorAddr: string;
+
+        /** QueryDelegationRequest validatorAddr. */
+        public validatorAddr: string;
+
+        /**
+         * Creates a new QueryDelegationRequest instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryDelegationRequest instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IQueryDelegationRequest,
+        ): cosmos.staking.v1beta1.QueryDelegationRequest;
+
+        /**
+         * Encodes the specified QueryDelegationRequest message. Does not implicitly {@link cosmos.staking.v1beta1.QueryDelegationRequest.verify|verify} messages.
+         * @param m QueryDelegationRequest message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.staking.v1beta1.IQueryDelegationRequest,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryDelegationRequest message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryDelegationRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.QueryDelegationRequest;
+      }
+
+      /** Properties of a QueryDelegationResponse. */
+      interface IQueryDelegationResponse {
+        /** QueryDelegationResponse delegationResponse */
+        delegationResponse?: cosmos.staking.v1beta1.IDelegationResponse | null;
+      }
+
+      /** Represents a QueryDelegationResponse. */
+      class QueryDelegationResponse implements IQueryDelegationResponse {
+        /**
+         * Constructs a new QueryDelegationResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IQueryDelegationResponse);
+
+        /** QueryDelegationResponse delegationResponse. */
+        public delegationResponse?: cosmos.staking.v1beta1.IDelegationResponse | null;
+
+        /**
+         * Creates a new QueryDelegationResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryDelegationResponse instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IQueryDelegationResponse,
+        ): cosmos.staking.v1beta1.QueryDelegationResponse;
+
+        /**
+         * Encodes the specified QueryDelegationResponse message. Does not implicitly {@link cosmos.staking.v1beta1.QueryDelegationResponse.verify|verify} messages.
+         * @param m QueryDelegationResponse message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.staking.v1beta1.IQueryDelegationResponse,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryDelegationResponse message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryDelegationResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.QueryDelegationResponse;
+      }
+
+      /** Properties of a QueryUnbondingDelegationRequest. */
+      interface IQueryUnbondingDelegationRequest {
+        /** QueryUnbondingDelegationRequest delegatorAddr */
+        delegatorAddr?: string | null;
+
+        /** QueryUnbondingDelegationRequest validatorAddr */
+        validatorAddr?: string | null;
+      }
+
+      /** Represents a QueryUnbondingDelegationRequest. */
+      class QueryUnbondingDelegationRequest implements IQueryUnbondingDelegationRequest {
+        /**
+         * Constructs a new QueryUnbondingDelegationRequest.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IQueryUnbondingDelegationRequest);
+
+        /** QueryUnbondingDelegationRequest delegatorAddr. */
+        public delegatorAddr: string;
+
+        /** QueryUnbondingDelegationRequest validatorAddr. */
+        public validatorAddr: string;
+
+        /**
+         * Creates a new QueryUnbondingDelegationRequest instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryUnbondingDelegationRequest instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IQueryUnbondingDelegationRequest,
+        ): cosmos.staking.v1beta1.QueryUnbondingDelegationRequest;
+
+        /**
+         * Encodes the specified QueryUnbondingDelegationRequest message. Does not implicitly {@link cosmos.staking.v1beta1.QueryUnbondingDelegationRequest.verify|verify} messages.
+         * @param m QueryUnbondingDelegationRequest message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.staking.v1beta1.IQueryUnbondingDelegationRequest,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryUnbondingDelegationRequest message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryUnbondingDelegationRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.QueryUnbondingDelegationRequest;
+      }
+
+      /** Properties of a QueryUnbondingDelegationResponse. */
+      interface IQueryUnbondingDelegationResponse {
+        /** QueryUnbondingDelegationResponse unbond */
+        unbond?: cosmos.staking.v1beta1.IUnbondingDelegation | null;
+      }
+
+      /** Represents a QueryUnbondingDelegationResponse. */
+      class QueryUnbondingDelegationResponse implements IQueryUnbondingDelegationResponse {
+        /**
+         * Constructs a new QueryUnbondingDelegationResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IQueryUnbondingDelegationResponse);
+
+        /** QueryUnbondingDelegationResponse unbond. */
+        public unbond?: cosmos.staking.v1beta1.IUnbondingDelegation | null;
+
+        /**
+         * Creates a new QueryUnbondingDelegationResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryUnbondingDelegationResponse instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IQueryUnbondingDelegationResponse,
+        ): cosmos.staking.v1beta1.QueryUnbondingDelegationResponse;
+
+        /**
+         * Encodes the specified QueryUnbondingDelegationResponse message. Does not implicitly {@link cosmos.staking.v1beta1.QueryUnbondingDelegationResponse.verify|verify} messages.
+         * @param m QueryUnbondingDelegationResponse message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.staking.v1beta1.IQueryUnbondingDelegationResponse,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryUnbondingDelegationResponse message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryUnbondingDelegationResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.QueryUnbondingDelegationResponse;
+      }
+
+      /** Properties of a QueryDelegatorDelegationsRequest. */
+      interface IQueryDelegatorDelegationsRequest {
+        /** QueryDelegatorDelegationsRequest delegatorAddr */
+        delegatorAddr?: string | null;
+
+        /** QueryDelegatorDelegationsRequest pagination */
+        pagination?: cosmos.base.query.v1beta1.IPageRequest | null;
+      }
+
+      /** Represents a QueryDelegatorDelegationsRequest. */
+      class QueryDelegatorDelegationsRequest implements IQueryDelegatorDelegationsRequest {
+        /**
+         * Constructs a new QueryDelegatorDelegationsRequest.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IQueryDelegatorDelegationsRequest);
+
+        /** QueryDelegatorDelegationsRequest delegatorAddr. */
+        public delegatorAddr: string;
+
+        /** QueryDelegatorDelegationsRequest pagination. */
+        public pagination?: cosmos.base.query.v1beta1.IPageRequest | null;
+
+        /**
+         * Creates a new QueryDelegatorDelegationsRequest instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryDelegatorDelegationsRequest instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IQueryDelegatorDelegationsRequest,
+        ): cosmos.staking.v1beta1.QueryDelegatorDelegationsRequest;
+
+        /**
+         * Encodes the specified QueryDelegatorDelegationsRequest message. Does not implicitly {@link cosmos.staking.v1beta1.QueryDelegatorDelegationsRequest.verify|verify} messages.
+         * @param m QueryDelegatorDelegationsRequest message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.staking.v1beta1.IQueryDelegatorDelegationsRequest,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryDelegatorDelegationsRequest message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryDelegatorDelegationsRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.QueryDelegatorDelegationsRequest;
+      }
+
+      /** Properties of a QueryDelegatorDelegationsResponse. */
+      interface IQueryDelegatorDelegationsResponse {
+        /** QueryDelegatorDelegationsResponse delegationResponses */
+        delegationResponses?: cosmos.staking.v1beta1.IDelegationResponse[] | null;
+
+        /** QueryDelegatorDelegationsResponse pagination */
+        pagination?: cosmos.base.query.v1beta1.IPageResponse | null;
+      }
+
+      /** Represents a QueryDelegatorDelegationsResponse. */
+      class QueryDelegatorDelegationsResponse implements IQueryDelegatorDelegationsResponse {
+        /**
+         * Constructs a new QueryDelegatorDelegationsResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IQueryDelegatorDelegationsResponse);
+
+        /** QueryDelegatorDelegationsResponse delegationResponses. */
+        public delegationResponses: cosmos.staking.v1beta1.IDelegationResponse[];
+
+        /** QueryDelegatorDelegationsResponse pagination. */
+        public pagination?: cosmos.base.query.v1beta1.IPageResponse | null;
+
+        /**
+         * Creates a new QueryDelegatorDelegationsResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryDelegatorDelegationsResponse instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IQueryDelegatorDelegationsResponse,
+        ): cosmos.staking.v1beta1.QueryDelegatorDelegationsResponse;
+
+        /**
+         * Encodes the specified QueryDelegatorDelegationsResponse message. Does not implicitly {@link cosmos.staking.v1beta1.QueryDelegatorDelegationsResponse.verify|verify} messages.
+         * @param m QueryDelegatorDelegationsResponse message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.staking.v1beta1.IQueryDelegatorDelegationsResponse,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryDelegatorDelegationsResponse message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryDelegatorDelegationsResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.QueryDelegatorDelegationsResponse;
+      }
+
+      /** Properties of a QueryDelegatorUnbondingDelegationsRequest. */
+      interface IQueryDelegatorUnbondingDelegationsRequest {
+        /** QueryDelegatorUnbondingDelegationsRequest delegatorAddr */
+        delegatorAddr?: string | null;
+
+        /** QueryDelegatorUnbondingDelegationsRequest pagination */
+        pagination?: cosmos.base.query.v1beta1.IPageRequest | null;
+      }
+
+      /** Represents a QueryDelegatorUnbondingDelegationsRequest. */
+      class QueryDelegatorUnbondingDelegationsRequest implements IQueryDelegatorUnbondingDelegationsRequest {
+        /**
+         * Constructs a new QueryDelegatorUnbondingDelegationsRequest.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IQueryDelegatorUnbondingDelegationsRequest);
+
+        /** QueryDelegatorUnbondingDelegationsRequest delegatorAddr. */
+        public delegatorAddr: string;
+
+        /** QueryDelegatorUnbondingDelegationsRequest pagination. */
+        public pagination?: cosmos.base.query.v1beta1.IPageRequest | null;
+
+        /**
+         * Creates a new QueryDelegatorUnbondingDelegationsRequest instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryDelegatorUnbondingDelegationsRequest instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IQueryDelegatorUnbondingDelegationsRequest,
+        ): cosmos.staking.v1beta1.QueryDelegatorUnbondingDelegationsRequest;
+
+        /**
+         * Encodes the specified QueryDelegatorUnbondingDelegationsRequest message. Does not implicitly {@link cosmos.staking.v1beta1.QueryDelegatorUnbondingDelegationsRequest.verify|verify} messages.
+         * @param m QueryDelegatorUnbondingDelegationsRequest message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.staking.v1beta1.IQueryDelegatorUnbondingDelegationsRequest,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryDelegatorUnbondingDelegationsRequest message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryDelegatorUnbondingDelegationsRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.QueryDelegatorUnbondingDelegationsRequest;
+      }
+
+      /** Properties of a QueryDelegatorUnbondingDelegationsResponse. */
+      interface IQueryDelegatorUnbondingDelegationsResponse {
+        /** QueryDelegatorUnbondingDelegationsResponse unbondingResponses */
+        unbondingResponses?: cosmos.staking.v1beta1.IUnbondingDelegation[] | null;
+
+        /** QueryDelegatorUnbondingDelegationsResponse pagination */
+        pagination?: cosmos.base.query.v1beta1.IPageResponse | null;
+      }
+
+      /** Represents a QueryDelegatorUnbondingDelegationsResponse. */
+      class QueryDelegatorUnbondingDelegationsResponse
+        implements IQueryDelegatorUnbondingDelegationsResponse {
+        /**
+         * Constructs a new QueryDelegatorUnbondingDelegationsResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IQueryDelegatorUnbondingDelegationsResponse);
+
+        /** QueryDelegatorUnbondingDelegationsResponse unbondingResponses. */
+        public unbondingResponses: cosmos.staking.v1beta1.IUnbondingDelegation[];
+
+        /** QueryDelegatorUnbondingDelegationsResponse pagination. */
+        public pagination?: cosmos.base.query.v1beta1.IPageResponse | null;
+
+        /**
+         * Creates a new QueryDelegatorUnbondingDelegationsResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryDelegatorUnbondingDelegationsResponse instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IQueryDelegatorUnbondingDelegationsResponse,
+        ): cosmos.staking.v1beta1.QueryDelegatorUnbondingDelegationsResponse;
+
+        /**
+         * Encodes the specified QueryDelegatorUnbondingDelegationsResponse message. Does not implicitly {@link cosmos.staking.v1beta1.QueryDelegatorUnbondingDelegationsResponse.verify|verify} messages.
+         * @param m QueryDelegatorUnbondingDelegationsResponse message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.staking.v1beta1.IQueryDelegatorUnbondingDelegationsResponse,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryDelegatorUnbondingDelegationsResponse message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryDelegatorUnbondingDelegationsResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.QueryDelegatorUnbondingDelegationsResponse;
+      }
+
+      /** Properties of a QueryRedelegationsRequest. */
+      interface IQueryRedelegationsRequest {
+        /** QueryRedelegationsRequest delegatorAddr */
+        delegatorAddr?: string | null;
+
+        /** QueryRedelegationsRequest srcValidatorAddr */
+        srcValidatorAddr?: string | null;
+
+        /** QueryRedelegationsRequest dstValidatorAddr */
+        dstValidatorAddr?: string | null;
+
+        /** QueryRedelegationsRequest pagination */
+        pagination?: cosmos.base.query.v1beta1.IPageRequest | null;
+      }
+
+      /** Represents a QueryRedelegationsRequest. */
+      class QueryRedelegationsRequest implements IQueryRedelegationsRequest {
+        /**
+         * Constructs a new QueryRedelegationsRequest.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IQueryRedelegationsRequest);
+
+        /** QueryRedelegationsRequest delegatorAddr. */
+        public delegatorAddr: string;
+
+        /** QueryRedelegationsRequest srcValidatorAddr. */
+        public srcValidatorAddr: string;
+
+        /** QueryRedelegationsRequest dstValidatorAddr. */
+        public dstValidatorAddr: string;
+
+        /** QueryRedelegationsRequest pagination. */
+        public pagination?: cosmos.base.query.v1beta1.IPageRequest | null;
+
+        /**
+         * Creates a new QueryRedelegationsRequest instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryRedelegationsRequest instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IQueryRedelegationsRequest,
+        ): cosmos.staking.v1beta1.QueryRedelegationsRequest;
+
+        /**
+         * Encodes the specified QueryRedelegationsRequest message. Does not implicitly {@link cosmos.staking.v1beta1.QueryRedelegationsRequest.verify|verify} messages.
+         * @param m QueryRedelegationsRequest message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.staking.v1beta1.IQueryRedelegationsRequest,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryRedelegationsRequest message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryRedelegationsRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.QueryRedelegationsRequest;
+      }
+
+      /** Properties of a QueryRedelegationsResponse. */
+      interface IQueryRedelegationsResponse {
+        /** QueryRedelegationsResponse redelegationResponses */
+        redelegationResponses?: cosmos.staking.v1beta1.IRedelegationResponse[] | null;
+
+        /** QueryRedelegationsResponse pagination */
+        pagination?: cosmos.base.query.v1beta1.IPageResponse | null;
+      }
+
+      /** Represents a QueryRedelegationsResponse. */
+      class QueryRedelegationsResponse implements IQueryRedelegationsResponse {
+        /**
+         * Constructs a new QueryRedelegationsResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IQueryRedelegationsResponse);
+
+        /** QueryRedelegationsResponse redelegationResponses. */
+        public redelegationResponses: cosmos.staking.v1beta1.IRedelegationResponse[];
+
+        /** QueryRedelegationsResponse pagination. */
+        public pagination?: cosmos.base.query.v1beta1.IPageResponse | null;
+
+        /**
+         * Creates a new QueryRedelegationsResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryRedelegationsResponse instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IQueryRedelegationsResponse,
+        ): cosmos.staking.v1beta1.QueryRedelegationsResponse;
+
+        /**
+         * Encodes the specified QueryRedelegationsResponse message. Does not implicitly {@link cosmos.staking.v1beta1.QueryRedelegationsResponse.verify|verify} messages.
+         * @param m QueryRedelegationsResponse message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.staking.v1beta1.IQueryRedelegationsResponse,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryRedelegationsResponse message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryRedelegationsResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.QueryRedelegationsResponse;
+      }
+
+      /** Properties of a QueryDelegatorValidatorsRequest. */
+      interface IQueryDelegatorValidatorsRequest {
+        /** QueryDelegatorValidatorsRequest delegatorAddr */
+        delegatorAddr?: string | null;
+
+        /** QueryDelegatorValidatorsRequest pagination */
+        pagination?: cosmos.base.query.v1beta1.IPageRequest | null;
+      }
+
+      /** Represents a QueryDelegatorValidatorsRequest. */
+      class QueryDelegatorValidatorsRequest implements IQueryDelegatorValidatorsRequest {
+        /**
+         * Constructs a new QueryDelegatorValidatorsRequest.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IQueryDelegatorValidatorsRequest);
+
+        /** QueryDelegatorValidatorsRequest delegatorAddr. */
+        public delegatorAddr: string;
+
+        /** QueryDelegatorValidatorsRequest pagination. */
+        public pagination?: cosmos.base.query.v1beta1.IPageRequest | null;
+
+        /**
+         * Creates a new QueryDelegatorValidatorsRequest instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryDelegatorValidatorsRequest instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IQueryDelegatorValidatorsRequest,
+        ): cosmos.staking.v1beta1.QueryDelegatorValidatorsRequest;
+
+        /**
+         * Encodes the specified QueryDelegatorValidatorsRequest message. Does not implicitly {@link cosmos.staking.v1beta1.QueryDelegatorValidatorsRequest.verify|verify} messages.
+         * @param m QueryDelegatorValidatorsRequest message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.staking.v1beta1.IQueryDelegatorValidatorsRequest,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryDelegatorValidatorsRequest message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryDelegatorValidatorsRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.QueryDelegatorValidatorsRequest;
+      }
+
+      /** Properties of a QueryDelegatorValidatorsResponse. */
+      interface IQueryDelegatorValidatorsResponse {
+        /** QueryDelegatorValidatorsResponse validators */
+        validators?: cosmos.staking.v1beta1.IValidator[] | null;
+
+        /** QueryDelegatorValidatorsResponse pagination */
+        pagination?: cosmos.base.query.v1beta1.IPageResponse | null;
+      }
+
+      /** Represents a QueryDelegatorValidatorsResponse. */
+      class QueryDelegatorValidatorsResponse implements IQueryDelegatorValidatorsResponse {
+        /**
+         * Constructs a new QueryDelegatorValidatorsResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IQueryDelegatorValidatorsResponse);
+
+        /** QueryDelegatorValidatorsResponse validators. */
+        public validators: cosmos.staking.v1beta1.IValidator[];
+
+        /** QueryDelegatorValidatorsResponse pagination. */
+        public pagination?: cosmos.base.query.v1beta1.IPageResponse | null;
+
+        /**
+         * Creates a new QueryDelegatorValidatorsResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryDelegatorValidatorsResponse instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IQueryDelegatorValidatorsResponse,
+        ): cosmos.staking.v1beta1.QueryDelegatorValidatorsResponse;
+
+        /**
+         * Encodes the specified QueryDelegatorValidatorsResponse message. Does not implicitly {@link cosmos.staking.v1beta1.QueryDelegatorValidatorsResponse.verify|verify} messages.
+         * @param m QueryDelegatorValidatorsResponse message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.staking.v1beta1.IQueryDelegatorValidatorsResponse,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryDelegatorValidatorsResponse message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryDelegatorValidatorsResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.QueryDelegatorValidatorsResponse;
+      }
+
+      /** Properties of a QueryDelegatorValidatorRequest. */
+      interface IQueryDelegatorValidatorRequest {
+        /** QueryDelegatorValidatorRequest delegatorAddr */
+        delegatorAddr?: string | null;
+
+        /** QueryDelegatorValidatorRequest validatorAddr */
+        validatorAddr?: string | null;
+      }
+
+      /** Represents a QueryDelegatorValidatorRequest. */
+      class QueryDelegatorValidatorRequest implements IQueryDelegatorValidatorRequest {
+        /**
+         * Constructs a new QueryDelegatorValidatorRequest.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IQueryDelegatorValidatorRequest);
+
+        /** QueryDelegatorValidatorRequest delegatorAddr. */
+        public delegatorAddr: string;
+
+        /** QueryDelegatorValidatorRequest validatorAddr. */
+        public validatorAddr: string;
+
+        /**
+         * Creates a new QueryDelegatorValidatorRequest instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryDelegatorValidatorRequest instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IQueryDelegatorValidatorRequest,
+        ): cosmos.staking.v1beta1.QueryDelegatorValidatorRequest;
+
+        /**
+         * Encodes the specified QueryDelegatorValidatorRequest message. Does not implicitly {@link cosmos.staking.v1beta1.QueryDelegatorValidatorRequest.verify|verify} messages.
+         * @param m QueryDelegatorValidatorRequest message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.staking.v1beta1.IQueryDelegatorValidatorRequest,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryDelegatorValidatorRequest message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryDelegatorValidatorRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.QueryDelegatorValidatorRequest;
+      }
+
+      /** Properties of a QueryDelegatorValidatorResponse. */
+      interface IQueryDelegatorValidatorResponse {
+        /** QueryDelegatorValidatorResponse validator */
+        validator?: cosmos.staking.v1beta1.IValidator | null;
+      }
+
+      /** Represents a QueryDelegatorValidatorResponse. */
+      class QueryDelegatorValidatorResponse implements IQueryDelegatorValidatorResponse {
+        /**
+         * Constructs a new QueryDelegatorValidatorResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IQueryDelegatorValidatorResponse);
+
+        /** QueryDelegatorValidatorResponse validator. */
+        public validator?: cosmos.staking.v1beta1.IValidator | null;
+
+        /**
+         * Creates a new QueryDelegatorValidatorResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryDelegatorValidatorResponse instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IQueryDelegatorValidatorResponse,
+        ): cosmos.staking.v1beta1.QueryDelegatorValidatorResponse;
+
+        /**
+         * Encodes the specified QueryDelegatorValidatorResponse message. Does not implicitly {@link cosmos.staking.v1beta1.QueryDelegatorValidatorResponse.verify|verify} messages.
+         * @param m QueryDelegatorValidatorResponse message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.staking.v1beta1.IQueryDelegatorValidatorResponse,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryDelegatorValidatorResponse message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryDelegatorValidatorResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.QueryDelegatorValidatorResponse;
+      }
+
+      /** Properties of a QueryHistoricalInfoRequest. */
+      interface IQueryHistoricalInfoRequest {
+        /** QueryHistoricalInfoRequest height */
+        height?: Long | null;
+      }
+
+      /** Represents a QueryHistoricalInfoRequest. */
+      class QueryHistoricalInfoRequest implements IQueryHistoricalInfoRequest {
+        /**
+         * Constructs a new QueryHistoricalInfoRequest.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IQueryHistoricalInfoRequest);
+
+        /** QueryHistoricalInfoRequest height. */
+        public height: Long;
+
+        /**
+         * Creates a new QueryHistoricalInfoRequest instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryHistoricalInfoRequest instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IQueryHistoricalInfoRequest,
+        ): cosmos.staking.v1beta1.QueryHistoricalInfoRequest;
+
+        /**
+         * Encodes the specified QueryHistoricalInfoRequest message. Does not implicitly {@link cosmos.staking.v1beta1.QueryHistoricalInfoRequest.verify|verify} messages.
+         * @param m QueryHistoricalInfoRequest message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.staking.v1beta1.IQueryHistoricalInfoRequest,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryHistoricalInfoRequest message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryHistoricalInfoRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.QueryHistoricalInfoRequest;
+      }
+
+      /** Properties of a QueryHistoricalInfoResponse. */
+      interface IQueryHistoricalInfoResponse {
+        /** QueryHistoricalInfoResponse hist */
+        hist?: cosmos.staking.v1beta1.IHistoricalInfo | null;
+      }
+
+      /** Represents a QueryHistoricalInfoResponse. */
+      class QueryHistoricalInfoResponse implements IQueryHistoricalInfoResponse {
+        /**
+         * Constructs a new QueryHistoricalInfoResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IQueryHistoricalInfoResponse);
+
+        /** QueryHistoricalInfoResponse hist. */
+        public hist?: cosmos.staking.v1beta1.IHistoricalInfo | null;
+
+        /**
+         * Creates a new QueryHistoricalInfoResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryHistoricalInfoResponse instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IQueryHistoricalInfoResponse,
+        ): cosmos.staking.v1beta1.QueryHistoricalInfoResponse;
+
+        /**
+         * Encodes the specified QueryHistoricalInfoResponse message. Does not implicitly {@link cosmos.staking.v1beta1.QueryHistoricalInfoResponse.verify|verify} messages.
+         * @param m QueryHistoricalInfoResponse message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.staking.v1beta1.IQueryHistoricalInfoResponse,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryHistoricalInfoResponse message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryHistoricalInfoResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.QueryHistoricalInfoResponse;
+      }
+
+      /** Properties of a QueryPoolRequest. */
+      interface IQueryPoolRequest {}
+
+      /** Represents a QueryPoolRequest. */
+      class QueryPoolRequest implements IQueryPoolRequest {
+        /**
+         * Constructs a new QueryPoolRequest.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IQueryPoolRequest);
+
+        /**
+         * Creates a new QueryPoolRequest instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryPoolRequest instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IQueryPoolRequest,
+        ): cosmos.staking.v1beta1.QueryPoolRequest;
+
+        /**
+         * Encodes the specified QueryPoolRequest message. Does not implicitly {@link cosmos.staking.v1beta1.QueryPoolRequest.verify|verify} messages.
+         * @param m QueryPoolRequest message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.staking.v1beta1.IQueryPoolRequest,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryPoolRequest message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryPoolRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.QueryPoolRequest;
+      }
+
+      /** Properties of a QueryPoolResponse. */
+      interface IQueryPoolResponse {
+        /** QueryPoolResponse pool */
+        pool?: cosmos.staking.v1beta1.IPool | null;
+      }
+
+      /** Represents a QueryPoolResponse. */
+      class QueryPoolResponse implements IQueryPoolResponse {
+        /**
+         * Constructs a new QueryPoolResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IQueryPoolResponse);
+
+        /** QueryPoolResponse pool. */
+        public pool?: cosmos.staking.v1beta1.IPool | null;
+
+        /**
+         * Creates a new QueryPoolResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryPoolResponse instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IQueryPoolResponse,
+        ): cosmos.staking.v1beta1.QueryPoolResponse;
+
+        /**
+         * Encodes the specified QueryPoolResponse message. Does not implicitly {@link cosmos.staking.v1beta1.QueryPoolResponse.verify|verify} messages.
+         * @param m QueryPoolResponse message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.staking.v1beta1.IQueryPoolResponse,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryPoolResponse message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryPoolResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.QueryPoolResponse;
+      }
+
+      /** Properties of a QueryParamsRequest. */
+      interface IQueryParamsRequest {}
+
+      /** Represents a QueryParamsRequest. */
+      class QueryParamsRequest implements IQueryParamsRequest {
+        /**
+         * Constructs a new QueryParamsRequest.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IQueryParamsRequest);
+
+        /**
+         * Creates a new QueryParamsRequest instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryParamsRequest instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IQueryParamsRequest,
+        ): cosmos.staking.v1beta1.QueryParamsRequest;
+
+        /**
+         * Encodes the specified QueryParamsRequest message. Does not implicitly {@link cosmos.staking.v1beta1.QueryParamsRequest.verify|verify} messages.
+         * @param m QueryParamsRequest message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.staking.v1beta1.IQueryParamsRequest,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryParamsRequest message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryParamsRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.QueryParamsRequest;
+      }
+
+      /** Properties of a QueryParamsResponse. */
+      interface IQueryParamsResponse {
+        /** QueryParamsResponse params */
+        params?: cosmos.staking.v1beta1.IParams | null;
+      }
+
+      /** Represents a QueryParamsResponse. */
+      class QueryParamsResponse implements IQueryParamsResponse {
+        /**
+         * Constructs a new QueryParamsResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: cosmos.staking.v1beta1.IQueryParamsResponse);
+
+        /** QueryParamsResponse params. */
+        public params?: cosmos.staking.v1beta1.IParams | null;
+
+        /**
+         * Creates a new QueryParamsResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns QueryParamsResponse instance
+         */
+        public static create(
+          properties?: cosmos.staking.v1beta1.IQueryParamsResponse,
+        ): cosmos.staking.v1beta1.QueryParamsResponse;
+
+        /**
+         * Encodes the specified QueryParamsResponse message. Does not implicitly {@link cosmos.staking.v1beta1.QueryParamsResponse.verify|verify} messages.
+         * @param m QueryParamsResponse message or plain object to encode
+         * @param [w] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+          m: cosmos.staking.v1beta1.IQueryParamsResponse,
+          w?: $protobuf.Writer,
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a QueryParamsResponse message from the specified reader or buffer.
+         * @param r Reader or buffer to decode from
+         * @param [l] Message length if known beforehand
+         * @returns QueryParamsResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+          r: $protobuf.Reader | Uint8Array,
+          l?: number,
+        ): cosmos.staking.v1beta1.QueryParamsResponse;
+      }
+
       /** Properties of a HistoricalInfo. */
       interface IHistoricalInfo {
         /** HistoricalInfo header */

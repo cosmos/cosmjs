@@ -31,6 +31,10 @@ yarn pbjs \
   "$COSMOS_PROTO_DIR/base/v1beta1/coin.proto" \
   "$COSMOS_PROTO_DIR/crypto/multisig/v1beta1/multisig.proto" \
   "$COSMOS_PROTO_DIR/crypto/secp256k1/keys.proto" \
+  "$COSMOS_PROTO_DIR/distribution/v1beta1/distribution.proto" \
+  "$COSMOS_PROTO_DIR/distribution/v1beta1/query.proto" \
+  "$COSMOS_PROTO_DIR/distribution/v1beta1/tx.proto" \
+  "$COSMOS_PROTO_DIR/staking/v1beta1/query.proto" \
   "$COSMOS_PROTO_DIR/staking/v1beta1/staking.proto" \
   "$COSMOS_PROTO_DIR/staking/v1beta1/tx.proto" \
   "$COSMOS_PROTO_DIR/tx/signing/v1beta1/signing.proto" \
