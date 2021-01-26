@@ -25,10 +25,12 @@ import { cosmos } from "./codec";
 import {
   AuthExtension,
   BankExtension,
+  DistributionExtension,
   IbcExtension,
   QueryClient,
   setupAuthExtension,
   setupBankExtension,
+  setupDistributionExtension,
   setupIbcExtension,
   setupStakingExtension,
   StakingExtension,
@@ -135,7 +137,12 @@ export interface PrivateStargateClient {
 
 export class StargateClient {
   private readonly tmClient: TendermintClient;
-  private readonly queryClient: QueryClient & AuthExtension & BankExtension & IbcExtension & StakingExtension;
+  private readonly queryClient: QueryClient &
+    AuthExtension &
+    BankExtension &
+    DistributionExtension &
+    IbcExtension &
+    StakingExtension;
   private chainId: string | undefined;
 
   public static async connect(endpoint: string): Promise<StargateClient> {
@@ -149,6 +156,7 @@ export class StargateClient {
       tmClient,
       setupAuthExtension,
       setupBankExtension,
+      setupDistributionExtension,
       setupIbcExtension,
       setupStakingExtension,
     );
