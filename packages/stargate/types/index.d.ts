@@ -4,10 +4,12 @@ export { parseRawLog } from "./logs";
 export {
   AuthExtension,
   BankExtension,
+  DistributionExtension,
   IbcExtension,
   QueryClient,
   setupAuthExtension,
   setupBankExtension,
+  setupDistributionExtension,
   setupIbcExtension,
   setupStakingExtension,
   StakingExtension,
