@@ -1,5 +1,5 @@
 import { Block, Coin, PubKey, SearchTxFilter, SearchTxQuery } from "@cosmjs/launchpad";
-import { Client as TendermintClient } from "@cosmjs/tendermint-rpc";
+import { Client as TendermintClient, CommitResponse } from "@cosmjs/tendermint-rpc";
 import { cosmos } from "./codec";
 declare type IBaseAccount = cosmos.auth.v1beta1.IBaseAccount;
 declare type IMsgData = cosmos.base.abci.v1beta1.IMsgData;
@@ -61,6 +61,7 @@ export declare class StargateClient {
   protected constructor(tmClient: TendermintClient);
   getChainId(): Promise<string>;
   getHeight(): Promise<number>;
+  getCommit(height?: number): Promise<CommitResponse>;
   getAccount(searchAddress: string): Promise<Account | null>;
   getSequence(address: string): Promise<SequenceResponse | null>;
   getBlock(height?: number): Promise<Block>;

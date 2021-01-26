@@ -16,6 +16,7 @@ import {
   adaptor34,
   broadcastTxCommitSuccess,
   Client as TendermintClient,
+  CommitResponse,
   DateTime,
 } from "@cosmjs/tendermint-rpc";
 import { assert, assertDefinedAndNotNull } from "@cosmjs/utils";
@@ -176,6 +177,10 @@ export class StargateClient {
   public async getHeight(): Promise<number> {
     const status = await this.tmClient.status();
     return status.syncInfo.latestBlockHeight;
+  }
+
+  public async getCommit(height?: number): Promise<CommitResponse> {
+    return this.tmClient.commit(height);
   }
 
   public async getAccount(searchAddress: string): Promise<Account | null> {
