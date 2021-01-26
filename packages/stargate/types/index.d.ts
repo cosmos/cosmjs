@@ -9,6 +9,8 @@ export {
   setupAuthExtension,
   setupBankExtension,
   setupIbcExtension,
+  setupStakingExtension,
+  StakingExtension,
 } from "./queries";
 export {
   Account,
