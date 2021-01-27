@@ -54,6 +54,12 @@ const { SignMode } = codec.cosmos.tx.signing.v1beta1;
 const { TxRaw } = codec.cosmos.tx.v1beta1;
 const { MsgMultiSend } = codec.cosmos.bank.v1beta1;
 const {
+  MsgFundCommunityPool,
+  MsgSetWithdrawAddress,
+  MsgWithdrawDelegatorReward,
+  MsgWithdrawValidatorCommission,
+} = codec.cosmos.distribution.v1beta1;
+const {
   MsgBeginRedelegate,
   MsgCreateValidator,
   MsgDelegate,
@@ -95,6 +101,10 @@ function createBroadcastTxErrorMessage(result: BroadcastTxFailure): string {
 function createDefaultRegistry(): Registry {
   return new Registry([
     ["/cosmos.bank.v1beta1.MsgMultiSend", MsgMultiSend],
+    ["/cosmos.distribution.v1beta1.MsgFundCommunityPool", MsgFundCommunityPool],
+    ["/cosmos.distribution.v1beta1.MsgSetWithdrawAddress", MsgSetWithdrawAddress],
+    ["/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward", MsgWithdrawDelegatorReward],
+    ["/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission", MsgWithdrawValidatorCommission],
     ["/cosmos.staking.v1beta1.MsgBeginRedelegate", MsgBeginRedelegate],
     ["/cosmos.staking.v1beta1.MsgCreateValidator", MsgCreateValidator],
     ["/cosmos.staking.v1beta1.MsgDelegate", MsgDelegate],
