@@ -14,7 +14,7 @@ protoc \
   --ts_proto_out="$OUT_DIR" \
   --proto_path="$COSMOS_PROTO_DIR" \
   --proto_path="$THIRD_PARTY_PROTO_DIR" \
-  --ts_proto_opt="forceLong=long,useOptionals=true" \
+  --ts_proto_opt="esModuleInterop=true,forceLong=long,useOptionals=true" \
   "$THIRD_PARTY_PROTO_DIR/gogoproto/gogo.proto" \
   "$COSMOS_PROTO_DIR/cosmos/base/v1beta1/coin.proto" \
   "$COSMOS_PROTO_DIR/cosmos/bank/v1beta1/bank.proto" \
