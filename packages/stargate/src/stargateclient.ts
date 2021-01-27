@@ -2,7 +2,6 @@
 import { toHex } from "@cosmjs/encoding";
 import {
   Block,
-  Coin,
   isSearchByHeightQuery,
   isSearchBySentFromOrToQuery,
   isSearchByTagsQuery,
@@ -21,14 +20,10 @@ import {
 import { assert, assertDefinedAndNotNull } from "@cosmjs/utils";
 import Long from "long";
 
-import { cosmos } from "./codec";
+import { BaseAccount } from "./codec/cosmos/auth/v1beta1/auth";
+import { MsgData, TxMsgData } from "./codec/cosmos/base/abci/v1beta1/abci";
+import { Coin } from "./codec/cosmos/base/v1beta1/coin";
 import { AuthExtension, BankExtension, QueryClient, setupAuthExtension, setupBankExtension } from "./queries";
-
-type IBaseAccount = cosmos.auth.v1beta1.IBaseAccount;
-type IMsgData = cosmos.base.abci.v1beta1.IMsgData;
-type ICoin = cosmos.base.v1beta1.ICoin;
-
-const { TxMsgData } = cosmos.base.abci.v1beta1;
 
 /** A transaction that is indexed as part of the transaction history */
 export interface IndexedTx {
@@ -59,14 +54,14 @@ export interface BroadcastTxFailure {
   readonly code: number;
   readonly transactionHash: string;
   readonly rawLog?: string;
-  readonly data?: readonly IMsgData[];
+  readonly data?: readonly MsgData[];
 }
 
 export interface BroadcastTxSuccess {
   readonly height: number;
   readonly transactionHash: string;
   readonly rawLog?: string;
-  readonly data?: readonly IMsgData[];
+  readonly data?: readonly MsgData[];
 }
 
 export type BroadcastTxResponse = BroadcastTxSuccess | BroadcastTxFailure;
@@ -97,7 +92,7 @@ function uint64FromProto(input: number | Long | null | undefined): Uint64 {
   return Uint64.fromString(input.toString());
 }
 
-export function accountFromProto(input: IBaseAccount): Account {
+export function accountFromProto(input: BaseAccount): Account {
   const { address, pubKey, accountNumber, sequence } = input;
   const pubkey = decodePubkey(pubKey);
   assert(address);
@@ -109,7 +104,7 @@ export function accountFromProto(input: IBaseAccount): Account {
   };
 }
 
-export function coinFromProto(input: ICoin): Coin {
+export function coinFromProto(input: Coin): Coin {
   assertDefinedAndNotNull(input.amount);
   assertDefinedAndNotNull(input.denom);
   return {

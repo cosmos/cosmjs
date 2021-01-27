@@ -4,35 +4,36 @@ import {
   decodeBech32Pubkey,
   encodeBech32Pubkey,
   Msg,
-  MsgBeginRedelegate,
-  MsgCreateValidator,
-  MsgDelegate,
-  MsgEditValidator,
-  MsgFundCommunityPool,
-  MsgMultiSend,
-  MsgSend,
-  MsgSetWithdrawAddress,
-  MsgUndelegate,
-  MsgWithdrawDelegatorReward,
-  MsgWithdrawValidatorCommission,
+  MsgBeginRedelegate as LaunchpadMsgBeginRedelegate,
+  MsgCreateValidator as LaunchpadMsgCreateValidator,
+  MsgDelegate as LaunchpadMsgDelegate,
+  MsgEditValidator as LaunchpadMsgEditValidator,
+  MsgFundCommunityPool as LaunchpadMsgFundCommunityPool,
+  MsgMultiSend as LaunchpadMsgMultiSend,
+  MsgSend as LaunchpadMsgSend,
+  MsgSetWithdrawAddress as LaunchpadMsgSetWithdrawAddress,
+  MsgUndelegate as LaunchpadMsgUndelegate,
+  MsgWithdrawDelegatorReward as LaunchpadMsgWithdrawDelegatorReward,
+  MsgWithdrawValidatorCommission as LaunchpadMsgWithdrawValidatorCommission,
 } from "@cosmjs/launchpad";
 import { EncodeObject } from "@cosmjs/proto-signing";
 import { assertDefinedAndNotNull } from "@cosmjs/utils";
 
-import { cosmos } from "./codec";
+import { MsgMultiSend, MsgSend } from "./codec/cosmos/bank/v1beta1/tx";
+import {
+  MsgFundCommunityPool,
+  MsgSetWithdrawAddress,
+  MsgWithdrawDelegatorReward,
+  MsgWithdrawValidatorCommission,
+} from "./codec/cosmos/distribution/v1beta1/tx";
+import {
+  MsgBeginRedelegate,
+  MsgCreateValidator,
+  MsgDelegate,
+  MsgEditValidator,
+  MsgUndelegate,
+} from "./codec/cosmos/staking/v1beta1/tx";
 import { coinFromProto } from "./stargateclient";
-
-type IMsgSend = cosmos.bank.v1beta1.IMsgSend;
-type IMsgMultiSend = cosmos.bank.v1beta1.IMsgMultiSend;
-type IMsgFundCommunityPool = cosmos.distribution.v1beta1.IMsgFundCommunityPool;
-type IMsgSetWithdrawAddress = cosmos.distribution.v1beta1.IMsgSetWithdrawAddress;
-type IMsgWithdrawDelegatorReward = cosmos.distribution.v1beta1.IMsgWithdrawDelegatorReward;
-type IMsgWithdrawValidatorCommission = cosmos.distribution.v1beta1.IMsgWithdrawValidatorCommission;
-type IMsgBeginRedelegate = cosmos.staking.v1beta1.IMsgBeginRedelegate;
-type IMsgCreateValidator = cosmos.staking.v1beta1.IMsgCreateValidator;
-type IMsgDelegate = cosmos.staking.v1beta1.IMsgDelegate;
-type IMsgEditValidator = cosmos.staking.v1beta1.IMsgEditValidator;
-type IMsgUndelegate = cosmos.staking.v1beta1.IMsgUndelegate;
 
 export interface AminoConverter {
   readonly aminoType: string;
@@ -44,7 +45,7 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
   return {
     "/cosmos.bank.v1beta1.MsgSend": {
       aminoType: "cosmos-sdk/MsgSend",
-      toAmino: ({ fromAddress, toAddress, amount }: IMsgSend): MsgSend["value"] => {
+      toAmino: ({ fromAddress, toAddress, amount }: MsgSend): LaunchpadMsgSend["value"] => {
         assertDefinedAndNotNull(fromAddress, "missing fromAddress");
         assertDefinedAndNotNull(toAddress, "missing toAddress");
         assertDefinedAndNotNull(amount, "missing amount");
@@ -54,7 +55,7 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
           amount: amount.map(coinFromProto),
         };
       },
-      fromAmino: ({ from_address, to_address, amount }: MsgSend["value"]): IMsgSend => ({
+      fromAmino: ({ from_address, to_address, amount }: LaunchpadMsgSend["value"]): MsgSend => ({
         fromAddress: from_address,
         toAddress: to_address,
         amount: [...amount],
@@ -62,7 +63,7 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
     },
     "/cosmos.bank.v1beta1.MsgMultiSend": {
       aminoType: "cosmos-sdk/MsgMultiSend",
-      toAmino: ({ inputs, outputs }: IMsgMultiSend): MsgMultiSend["value"] => {
+      toAmino: ({ inputs, outputs }: MsgMultiSend): LaunchpadMsgMultiSend["value"] => {
         assertDefinedAndNotNull(inputs, "missing inputs");
         assertDefinedAndNotNull(outputs, "missing outputs");
         return {
@@ -84,7 +85,7 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
           }),
         };
       },
-      fromAmino: ({ inputs, outputs }: MsgMultiSend["value"]): IMsgMultiSend => ({
+      fromAmino: ({ inputs, outputs }: LaunchpadMsgMultiSend["value"]): MsgMultiSend => ({
         inputs: inputs.map((input) => ({
           address: input.address,
           coins: [...input.coins],
@@ -97,7 +98,7 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
     },
     "/cosmos.distribution.v1beta1.MsgFundCommunityPool": {
       aminoType: "cosmos-sdk/MsgFundCommunityPool",
-      toAmino: ({ amount, depositor }: IMsgFundCommunityPool): MsgFundCommunityPool["value"] => {
+      toAmino: ({ amount, depositor }: MsgFundCommunityPool): LaunchpadMsgFundCommunityPool["value"] => {
         assertDefinedAndNotNull(amount);
         assertDefinedAndNotNull(depositor);
         return {
@@ -105,7 +106,7 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
           depositor: depositor,
         };
       },
-      fromAmino: ({ amount, depositor }: MsgFundCommunityPool["value"]): IMsgFundCommunityPool => ({
+      fromAmino: ({ amount, depositor }: LaunchpadMsgFundCommunityPool["value"]): MsgFundCommunityPool => ({
         amount: [...amount],
         depositor: depositor,
       }),
@@ -115,7 +116,7 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
       toAmino: ({
         delegatorAddress,
         withdrawAddress,
-      }: IMsgSetWithdrawAddress): MsgSetWithdrawAddress["value"] => {
+      }: MsgSetWithdrawAddress): LaunchpadMsgSetWithdrawAddress["value"] => {
         assertDefinedAndNotNull(delegatorAddress);
         assertDefinedAndNotNull(withdrawAddress);
         return {
@@ -126,7 +127,7 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
       fromAmino: ({
         delegator_address,
         withdraw_address,
-      }: MsgSetWithdrawAddress["value"]): IMsgSetWithdrawAddress => ({
+      }: LaunchpadMsgSetWithdrawAddress["value"]): MsgSetWithdrawAddress => ({
         delegatorAddress: delegator_address,
         withdrawAddress: withdraw_address,
       }),
@@ -136,7 +137,7 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
       toAmino: ({
         delegatorAddress,
         validatorAddress,
-      }: IMsgWithdrawDelegatorReward): MsgWithdrawDelegatorReward["value"] => {
+      }: MsgWithdrawDelegatorReward): LaunchpadMsgWithdrawDelegatorReward["value"] => {
         assertDefinedAndNotNull(delegatorAddress);
         assertDefinedAndNotNull(validatorAddress);
         return {
@@ -147,7 +148,7 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
       fromAmino: ({
         delegator_address,
         validator_address,
-      }: MsgWithdrawDelegatorReward["value"]): IMsgWithdrawDelegatorReward => ({
+      }: LaunchpadMsgWithdrawDelegatorReward["value"]): MsgWithdrawDelegatorReward => ({
         delegatorAddress: delegator_address,
         validatorAddress: validator_address,
       }),
@@ -156,7 +157,7 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
       aminoType: "cosmos-sdk/MsgWithdrawValidatorCommission",
       toAmino: ({
         validatorAddress,
-      }: IMsgWithdrawValidatorCommission): MsgWithdrawValidatorCommission["value"] => {
+      }: MsgWithdrawValidatorCommission): LaunchpadMsgWithdrawValidatorCommission["value"] => {
         assertDefinedAndNotNull(validatorAddress);
         return {
           validator_address: validatorAddress,
@@ -164,7 +165,7 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
       },
       fromAmino: ({
         validator_address,
-      }: MsgWithdrawValidatorCommission["value"]): IMsgWithdrawValidatorCommission => ({
+      }: LaunchpadMsgWithdrawValidatorCommission["value"]): MsgWithdrawValidatorCommission => ({
         validatorAddress: validator_address,
       }),
     },
@@ -175,7 +176,7 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
         validatorSrcAddress,
         validatorDstAddress,
         amount,
-      }: IMsgBeginRedelegate): MsgBeginRedelegate["value"] => {
+      }: MsgBeginRedelegate): LaunchpadMsgBeginRedelegate["value"] => {
         assertDefinedAndNotNull(delegatorAddress, "missing delegatorAddress");
         assertDefinedAndNotNull(validatorSrcAddress, "missing validatorSrcAddress");
         assertDefinedAndNotNull(validatorDstAddress, "missing validatorDstAddress");
@@ -192,7 +193,7 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
         validator_src_address,
         validator_dst_address,
         amount,
-      }: MsgBeginRedelegate["value"]): IMsgBeginRedelegate => ({
+      }: LaunchpadMsgBeginRedelegate["value"]): MsgBeginRedelegate => ({
         delegatorAddress: delegator_address,
         validatorSrcAddress: validator_src_address,
         validatorDstAddress: validator_dst_address,
@@ -209,7 +210,7 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
         validatorAddress,
         pubkey,
         value,
-      }: IMsgCreateValidator): MsgCreateValidator["value"] => {
+      }: MsgCreateValidator): LaunchpadMsgCreateValidator["value"] => {
         assertDefinedAndNotNull(description, "missing description");
         assertDefinedAndNotNull(description.moniker, "missing description.moniker");
         assertDefinedAndNotNull(description.identity, "missing description.identity");
@@ -260,7 +261,7 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
         validator_address,
         pubkey,
         value,
-      }: MsgCreateValidator["value"]): IMsgCreateValidator => {
+      }: LaunchpadMsgCreateValidator["value"]): MsgCreateValidator => {
         const decodedPubkey = decodeBech32Pubkey(pubkey);
         if (decodedPubkey.type !== "tendermint/PubKeySecp256k1") {
           throw new Error("Only Secp256k1 public keys are supported");
@@ -282,7 +283,7 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
           delegatorAddress: delegator_address,
           validatorAddress: validator_address,
           pubkey: {
-            type_url: "/cosmos.crypto.secp256k1.PubKey",
+            typeUrl: "/cosmos.crypto.secp256k1.PubKey",
             value: fromBase64(decodedPubkey.value),
           },
           value: value,
@@ -291,7 +292,11 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
     },
     "/cosmos.staking.v1beta1.MsgDelegate": {
       aminoType: "cosmos-sdk/MsgDelegate",
-      toAmino: ({ delegatorAddress, validatorAddress, amount }: IMsgDelegate): MsgDelegate["value"] => {
+      toAmino: ({
+        delegatorAddress,
+        validatorAddress,
+        amount,
+      }: MsgDelegate): LaunchpadMsgDelegate["value"] => {
         assertDefinedAndNotNull(delegatorAddress, "missing delegatorAddress");
         assertDefinedAndNotNull(validatorAddress, "missing validatorAddress");
         assertDefinedAndNotNull(amount, "missing amount");
@@ -301,7 +306,11 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
           amount: coinFromProto(amount),
         };
       },
-      fromAmino: ({ delegator_address, validator_address, amount }: MsgDelegate["value"]): IMsgDelegate => ({
+      fromAmino: ({
+        delegator_address,
+        validator_address,
+        amount,
+      }: LaunchpadMsgDelegate["value"]): MsgDelegate => ({
         delegatorAddress: delegator_address,
         validatorAddress: validator_address,
         amount: amount,
@@ -314,7 +323,7 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
         commissionRate,
         minSelfDelegation,
         validatorAddress,
-      }: IMsgEditValidator): MsgEditValidator["value"] => {
+      }: MsgEditValidator): LaunchpadMsgEditValidator["value"] => {
         assertDefinedAndNotNull(description, "missing description");
         assertDefinedAndNotNull(description.moniker, "missing description.moniker");
         assertDefinedAndNotNull(description.identity, "missing description.identity");
@@ -342,7 +351,7 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
         commission_rate,
         min_self_delegation,
         validator_address,
-      }: MsgEditValidator["value"]): IMsgEditValidator => ({
+      }: LaunchpadMsgEditValidator["value"]): MsgEditValidator => ({
         description: {
           moniker: description.moniker,
           identity: description.identity,
@@ -357,7 +366,11 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
     },
     "/cosmos.staking.v1beta1.MsgUndelegate": {
       aminoType: "cosmos-sdk/MsgUndelegate",
-      toAmino: ({ delegatorAddress, validatorAddress, amount }: IMsgUndelegate): MsgUndelegate["value"] => {
+      toAmino: ({
+        delegatorAddress,
+        validatorAddress,
+        amount,
+      }: MsgUndelegate): LaunchpadMsgUndelegate["value"] => {
         assertDefinedAndNotNull(delegatorAddress, "missing delegatorAddress");
         assertDefinedAndNotNull(validatorAddress, "missing validatorAddress");
         assertDefinedAndNotNull(amount, "missing amount");
@@ -371,7 +384,7 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
         delegator_address,
         validator_address,
         amount,
-      }: MsgUndelegate["value"]): IMsgUndelegate => ({
+      }: LaunchpadMsgUndelegate["value"]): MsgUndelegate => ({
         delegatorAddress: delegator_address,
         validatorAddress: validator_address,
         amount: amount,

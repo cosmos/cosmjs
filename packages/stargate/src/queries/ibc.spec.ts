@@ -1,7 +1,6 @@
 import { adaptor34, Client as TendermintClient } from "@cosmjs/tendermint-rpc";
 import Long from "long";
 
-import { cosmos, ibc } from "../codec";
 import { pendingWithoutSimapp, simapp } from "../testutils.spec";
 import { IbcExtension, setupIbcExtension } from "./ibc";
 import * as ibcTest from "./ibctestdata.spec";
@@ -21,7 +20,8 @@ describe("IbcExtension", () => {
 
         const response = await client.ibc.unverified.channel(ibcTest.portId, ibcTest.channelId);
         expect(response.channel).toEqual(ibcTest.channel);
-        expect(response.proofHeight).toBeInstanceOf(ibc.core.client.v1.Height);
+        expect(response.proofHeight).toBeDefined();
+        expect(response.proofHeight).not.toBeNull();
 
         tmClient.disconnect();
       });
@@ -34,8 +34,10 @@ describe("IbcExtension", () => {
 
         const response = await client.ibc.unverified.channels();
         expect(response.channels).toEqual([ibcTest.identifiedChannel]);
-        expect(response.pagination).toBeInstanceOf(cosmos.base.query.v1beta1.PageResponse);
-        expect(response.height).toBeInstanceOf(ibc.core.client.v1.Height);
+        expect(response.pagination).toBeDefined();
+        expect(response.pagination).not.toBeNull();
+        expect(response.height).toBeDefined();
+        expect(response.height).not.toBeNull();
 
         tmClient.disconnect();
       });
@@ -48,8 +50,10 @@ describe("IbcExtension", () => {
 
         const response = await client.ibc.unverified.connectionChannels(ibcTest.connectionId);
         expect(response.channels).toEqual([ibcTest.identifiedChannel]);
-        expect(response.pagination).toBeInstanceOf(cosmos.base.query.v1beta1.PageResponse);
-        expect(response.height).toBeInstanceOf(ibc.core.client.v1.Height);
+        expect(response.pagination).toBeDefined();
+        expect(response.pagination).not.toBeNull();
+        expect(response.height).toBeDefined();
+        expect(response.height).not.toBeNull();
 
         tmClient.disconnect();
       });
@@ -66,7 +70,8 @@ describe("IbcExtension", () => {
           ibcTest.commitment.sequence,
         );
         expect(response.commitment).toEqual(ibcTest.commitment.data);
-        expect(response.proofHeight).toBeInstanceOf(ibc.core.client.v1.Height);
+        expect(response.proofHeight).toBeDefined();
+        expect(response.proofHeight).not.toBeNull();
 
         tmClient.disconnect();
       });
@@ -79,8 +84,10 @@ describe("IbcExtension", () => {
 
         const response = await client.ibc.unverified.packetCommitments(ibcTest.portId, ibcTest.channelId);
         expect(response.commitments).toEqual([ibcTest.packetState]);
-        expect(response.pagination).toBeInstanceOf(cosmos.base.query.v1beta1.PageResponse);
-        expect(response.height).toBeInstanceOf(ibc.core.client.v1.Height);
+        expect(response.pagination).toBeDefined();
+        expect(response.pagination).not.toBeNull();
+        expect(response.height).toBeDefined();
+        expect(response.height).not.toBeNull();
 
         tmClient.disconnect();
       });
@@ -98,7 +105,8 @@ describe("IbcExtension", () => {
           ibcTest.commitment.sequence,
         );
         expect(response.acknowledgement).toEqual(ibcTest.packetAcknowledgements[0].data);
-        expect(response.proofHeight).toBeInstanceOf(ibc.core.client.v1.Height);
+        expect(response.proofHeight).toBeDefined();
+        expect(response.proofHeight).not.toBeNull();
 
         tmClient.disconnect();
       });
@@ -114,8 +122,10 @@ describe("IbcExtension", () => {
           ibcTest.channelId,
         );
         expect(response.acknowledgements).toEqual(ibcTest.packetAcknowledgements);
-        expect(response.pagination).toBeInstanceOf(cosmos.base.query.v1beta1.PageResponse);
-        expect(response.height).toBeInstanceOf(ibc.core.client.v1.Height);
+        expect(response.pagination).toBeDefined();
+        expect(response.pagination).not.toBeNull();
+        expect(response.height).toBeDefined();
+        expect(response.height).not.toBeNull();
 
         tmClient.disconnect();
       });
@@ -132,7 +142,8 @@ describe("IbcExtension", () => {
           3,
         ]);
         expect(response.sequences).toEqual([1, 2, 3].map((n) => Long.fromInt(n, true)));
-        expect(response.height).toBeInstanceOf(ibc.core.client.v1.Height);
+        expect(response.height).toBeDefined();
+        expect(response.height).not.toBeNull();
 
         tmClient.disconnect();
       });
@@ -153,7 +164,8 @@ describe("IbcExtension", () => {
           7,
         ]);
         expect(response.sequences).toEqual([Long.fromInt(ibcTest.commitment.sequence, true)]);
-        expect(response.height).toBeInstanceOf(ibc.core.client.v1.Height);
+        expect(response.height).toBeDefined();
+        expect(response.height).not.toBeNull();
 
         tmClient.disconnect();
       });
@@ -166,7 +178,8 @@ describe("IbcExtension", () => {
 
         const response = await client.ibc.unverified.nextSequenceReceive(ibcTest.portId, ibcTest.channelId);
         expect(response.nextSequenceReceive).toEqual(Long.fromInt(1, true));
-        expect(response.proofHeight).toBeInstanceOf(ibc.core.client.v1.Height);
+        expect(response.proofHeight).toBeDefined();
+        expect(response.proofHeight).not.toBeNull();
 
         tmClient.disconnect();
       });
@@ -181,7 +194,8 @@ describe("IbcExtension", () => {
 
         const response = await client.ibc.unverified.connection(ibcTest.connectionId);
         expect(response.connection).toEqual(ibcTest.connection);
-        expect(response.proofHeight).toBeInstanceOf(ibc.core.client.v1.Height);
+        expect(response.proofHeight).toBeDefined();
+        expect(response.proofHeight).not.toBeNull();
 
         tmClient.disconnect();
       });
@@ -194,8 +208,10 @@ describe("IbcExtension", () => {
 
         const response = await client.ibc.unverified.connections();
         expect(response.connections).toEqual([ibcTest.identifiedConnection]);
-        expect(response.pagination).toBeInstanceOf(cosmos.base.query.v1beta1.PageResponse);
-        expect(response.height).toBeInstanceOf(ibc.core.client.v1.Height);
+        expect(response.pagination).toBeDefined();
+        expect(response.pagination).not.toBeNull();
+        expect(response.height).toBeDefined();
+        expect(response.height).not.toBeNull();
 
         tmClient.disconnect();
       });
@@ -208,7 +224,8 @@ describe("IbcExtension", () => {
 
         const response = await client.ibc.unverified.clientConnections(ibcTest.clientId);
         expect(response.connectionPaths).toEqual([ibcTest.connectionId]);
-        expect(response.proofHeight).toBeInstanceOf(ibc.core.client.v1.Height);
+        expect(response.proofHeight).toBeDefined();
+        expect(response.proofHeight).not.toBeNull();
 
         tmClient.disconnect();
       });

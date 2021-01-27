@@ -2,21 +2,19 @@
 import { toAscii } from "@cosmjs/encoding";
 import { assert } from "@cosmjs/utils";
 
-import { cosmos } from "../codec";
+import { QueryClientImpl } from "../codec/cosmos/bank/v1beta1/query";
+import { Coin } from "../codec/cosmos/base/v1beta1/coin";
 import { QueryClient } from "./queryclient";
 import { toAccAddress, toObject } from "./utils";
 
-const { Coin } = cosmos.base.v1beta1;
-const { Query } = cosmos.bank.v1beta1;
-
 export interface BankExtension {
   readonly bank: {
-    readonly balance: (address: string, denom: string) => Promise<cosmos.base.v1beta1.ICoin | null>;
+    readonly balance: (address: string, denom: string) => Promise<Coin | null>;
     readonly unverified: {
-      readonly balance: (address: string, denom: string) => Promise<cosmos.base.v1beta1.ICoin>;
-      readonly allBalances: (address: string) => Promise<cosmos.base.v1beta1.ICoin[]>;
-      readonly totalSupply: () => Promise<cosmos.base.v1beta1.ICoin[]>;
-      readonly supplyOf: (denom: string) => Promise<cosmos.base.v1beta1.ICoin>;
+      readonly balance: (address: string, denom: string) => Promise<Coin>;
+      readonly allBalances: (address: string) => Promise<Coin[]>;
+      readonly totalSupply: () => Promise<Coin[]>;
+      readonly supplyOf: (denom: string) => Promise<Coin>;
     };
   };
 }
@@ -24,13 +22,12 @@ export interface BankExtension {
 export function setupBankExtension(base: QueryClient): BankExtension {
   // Use this service to get easy typed access to query methods
   // This cannot be used to for proof verification
-  const queryService = Query.create((method: any, requestData, callback) => {
-    // Parts of the path are unavailable, so we hardcode them here. See https://github.com/protobufjs/protobuf.js/issues/1229
-    const path = `/cosmos.bank.v1beta1.Query/${method.name}`;
-    base
-      .queryUnverified(path, requestData)
-      .then((response) => callback(null, response))
-      .catch((error) => callback(error));
+  const queryService = new QueryClientImpl({
+    request: (service: string, method: string, data: Uint8Array): Promise<Uint8Array> => {
+      // Parts of the path are unavailable, so we hardcode them here. See https://github.com/protobufjs/protobuf.js/issues/1229
+      const path = `/cosmos.bank.v1beta1.Query/${method}`;
+      return base.queryUnverified(path, data);
+    },
   });
 
   return {
@@ -48,20 +45,20 @@ export function setupBankExtension(base: QueryClient): BankExtension {
       },
       unverified: {
         balance: async (address: string, denom: string) => {
-          const { balance } = await queryService.balance({ address: address, denom: denom });
+          const { balance } = await queryService.Balance({ address: address, denom: denom });
           assert(balance);
           return toObject(balance);
         },
         allBalances: async (address: string) => {
-          const { balances } = await queryService.allBalances({ address: address });
+          const { balances } = await queryService.AllBalances({ address: address });
           return balances.map(toObject);
         },
         totalSupply: async () => {
-          const { supply } = await queryService.totalSupply({});
+          const { supply } = await queryService.TotalSupply({});
           return supply.map(toObject);
         },
         supplyOf: async (denom: string) => {
-          const { amount } = await queryService.supplyOf({ denom: denom });
+          const { amount } = await queryService.SupplyOf({ denom: denom });
           assert(amount);
           return toObject(amount);
         },

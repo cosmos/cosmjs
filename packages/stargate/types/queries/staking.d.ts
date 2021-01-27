@@ -1,66 +1,66 @@
-import { cosmos } from "../codec";
+import {
+  QueryDelegationResponse,
+  QueryDelegatorDelegationsResponse,
+  QueryDelegatorUnbondingDelegationsResponse,
+  QueryDelegatorValidatorResponse,
+  QueryDelegatorValidatorsResponse,
+  QueryHistoricalInfoResponse,
+  QueryParamsResponse,
+  QueryPoolResponse,
+  QueryRedelegationsResponse,
+  QueryUnbondingDelegationResponse,
+  QueryValidatorDelegationsResponse,
+  QueryValidatorResponse,
+  QueryValidatorsResponse,
+  QueryValidatorUnbondingDelegationsResponse,
+} from "../codec/cosmos/staking/v1beta1/query";
+import { BondStatus } from "../codec/cosmos/staking/v1beta1/staking";
 import { QueryClient } from "./queryclient";
-declare type IQueryDelegationResponse = cosmos.staking.v1beta1.IQueryDelegationResponse;
-declare type IQueryDelegatorDelegationsResponse = cosmos.staking.v1beta1.IQueryDelegatorDelegationsResponse;
-declare type IQueryDelegatorUnbondingDelegationsResponse = cosmos.staking.v1beta1.IQueryDelegatorUnbondingDelegationsResponse;
-declare type IQueryDelegatorValidatorResponse = cosmos.staking.v1beta1.IQueryDelegatorValidatorResponse;
-declare type IQueryDelegatorValidatorsResponse = cosmos.staking.v1beta1.IQueryDelegatorValidatorsResponse;
-declare type IQueryHistoricalInfoResponse = cosmos.staking.v1beta1.IQueryHistoricalInfoResponse;
-declare type IQueryParamsResponse = cosmos.staking.v1beta1.IQueryParamsResponse;
-declare type IQueryPoolResponse = cosmos.staking.v1beta1.IQueryPoolResponse;
-declare type IQueryRedelegationsResponse = cosmos.staking.v1beta1.IQueryRedelegationsResponse;
-declare type IQueryUnbondingDelegationResponse = cosmos.staking.v1beta1.IQueryUnbondingDelegationResponse;
-declare type IQueryValidatorResponse = cosmos.staking.v1beta1.IQueryValidatorResponse;
-declare type IQueryValidatorDelegationsResponse = cosmos.staking.v1beta1.IQueryValidatorDelegationsResponse;
-declare type IQueryValidatorsResponse = cosmos.staking.v1beta1.IQueryValidatorsResponse;
-declare type IQueryValidatorUnbondingDelegationsResponse = cosmos.staking.v1beta1.IQueryValidatorUnbondingDelegationsResponse;
-export declare const BondStatus: typeof cosmos.staking.v1beta1.BondStatus;
 export declare type BondStatusString = Exclude<keyof typeof BondStatus, "BOND_STATUS_UNSPECIFIED">;
 export interface StakingExtension {
   readonly staking: {
     readonly unverified: {
-      delegation: (delegatorAddress: string, validatorAddress: string) => Promise<IQueryDelegationResponse>;
+      delegation: (delegatorAddress: string, validatorAddress: string) => Promise<QueryDelegationResponse>;
       delegatorDelegations: (
         delegatorAddress: string,
         paginationKey?: Uint8Array,
-      ) => Promise<IQueryDelegatorDelegationsResponse>;
+      ) => Promise<QueryDelegatorDelegationsResponse>;
       delegatorUnbondingDelegations: (
         delegatorAddress: string,
         paginationKey?: Uint8Array,
-      ) => Promise<IQueryDelegatorUnbondingDelegationsResponse>;
+      ) => Promise<QueryDelegatorUnbondingDelegationsResponse>;
       delegatorValidator: (
         delegatorAddress: string,
         validatorAddress: string,
-      ) => Promise<IQueryDelegatorValidatorResponse>;
+      ) => Promise<QueryDelegatorValidatorResponse>;
       delegatorValidators: (
         delegatorAddress: string,
         paginationKey?: Uint8Array,
-      ) => Promise<IQueryDelegatorValidatorsResponse>;
-      historicalInfo: (height: number) => Promise<IQueryHistoricalInfoResponse>;
-      params: () => Promise<IQueryParamsResponse>;
-      pool: () => Promise<IQueryPoolResponse>;
+      ) => Promise<QueryDelegatorValidatorsResponse>;
+      historicalInfo: (height: number) => Promise<QueryHistoricalInfoResponse>;
+      params: () => Promise<QueryParamsResponse>;
+      pool: () => Promise<QueryPoolResponse>;
       redelegations: (
         delegatorAddress: string,
         sourceValidatorAddress: string,
         destinationValidatorAddress: string,
         paginationKey?: Uint8Array,
-      ) => Promise<IQueryRedelegationsResponse>;
+      ) => Promise<QueryRedelegationsResponse>;
       unbondingDelegation: (
         delegatorAddress: string,
         validatorAddress: string,
-      ) => Promise<IQueryUnbondingDelegationResponse>;
-      validator: (validatorAddress: string) => Promise<IQueryValidatorResponse>;
+      ) => Promise<QueryUnbondingDelegationResponse>;
+      validator: (validatorAddress: string) => Promise<QueryValidatorResponse>;
       validatorDelegations: (
         validatorAddress: string,
         paginationKey?: Uint8Array,
-      ) => Promise<IQueryValidatorDelegationsResponse>;
-      validators: (status: BondStatusString, paginationKey?: Uint8Array) => Promise<IQueryValidatorsResponse>;
+      ) => Promise<QueryValidatorDelegationsResponse>;
+      validators: (status: BondStatusString, paginationKey?: Uint8Array) => Promise<QueryValidatorsResponse>;
       validatorUnbondingDelegations: (
         validatorAddress: string,
         paginationKey?: Uint8Array,
-      ) => Promise<IQueryValidatorUnbondingDelegationsResponse>;
+      ) => Promise<QueryValidatorUnbondingDelegationsResponse>;
     };
   };
 }
 export declare function setupStakingExtension(base: QueryClient): StakingExtension;
-export {};

@@ -4,15 +4,12 @@ import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { adaptor34, Client as TendermintClient } from "@cosmjs/tendermint-rpc";
 import { sleep } from "@cosmjs/utils";
 
-import { cosmos } from "../codec";
+import { MsgDelegate, MsgUndelegate } from "../codec/cosmos/staking/v1beta1/tx";
 import { SigningStargateClient } from "../signingstargateclient";
 import { assertIsBroadcastTxSuccess } from "../stargateclient";
 import { faucet, pendingWithoutSimapp, simapp, simappEnabled, validator } from "../testutils.spec";
 import { QueryClient } from "./queryclient";
 import { setupStakingExtension, StakingExtension } from "./staking";
-
-type IMsgDelegate = cosmos.staking.v1beta1.IMsgDelegate;
-type IMsgUndelegate = cosmos.staking.v1beta1.IMsgUndelegate;
 
 async function makeClientWithStaking(
   rpcUrl: string,
@@ -33,7 +30,7 @@ describe("StakingExtension", () => {
       const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, wallet);
 
       {
-        const msg: IMsgDelegate = {
+        const msg: MsgDelegate = {
           delegatorAddress: faucet.address0,
           validatorAddress: validator.validatorAddress,
           amount: coin(25000, "ustake"),
@@ -47,7 +44,7 @@ describe("StakingExtension", () => {
         assertIsBroadcastTxSuccess(result);
       }
       {
-        const msg: IMsgUndelegate = {
+        const msg: MsgUndelegate = {
           delegatorAddress: faucet.address0,
           validatorAddress: validator.validatorAddress,
           amount: coin(100, "ustake"),

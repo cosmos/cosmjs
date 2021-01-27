@@ -4,12 +4,10 @@ import { adaptor34, Client as TendermintClient } from "@cosmjs/tendermint-rpc";
 import { assert } from "@cosmjs/utils";
 import Long from "long";
 
-import { google } from "../codec";
+import { Any } from "../codec/google/protobuf/any";
 import { nonExistentAddress, pendingWithoutSimapp, simapp, unused, validator } from "../testutils.spec";
 import { AuthExtension, setupAuthExtension } from "./auth";
 import { QueryClient } from "./queryclient";
-
-const { Any } = google.protobuf;
 
 async function makeClientWithAuth(rpcUrl: string): Promise<[QueryClient & AuthExtension, TendermintClient]> {
   const tmClient = await TendermintClient.connect(rpcUrl, adaptor34);
@@ -28,7 +26,7 @@ describe("AuthExtension", () => {
         address: unused.address,
         // pubKey not set
         accountNumber: Long.fromNumber(unused.accountNumber, true),
-        // sequence not set
+        sequence: Long.fromNumber(0),
       });
 
       tmClient.disconnect();
@@ -43,8 +41,8 @@ describe("AuthExtension", () => {
       const pubkey = encodePubkey(validator.pubkey);
       expect(account).toEqual({
         address: validator.delegatorAddress,
-        pubKey: Any.create(pubkey),
-        // accountNumber not set
+        pubKey: Any.fromPartial(pubkey),
+        accountNumber: Long.fromNumber(0),
         sequence: Long.fromNumber(validator.sequence, true),
       });
 
@@ -74,7 +72,7 @@ describe("AuthExtension", () => {
           address: unused.address,
           // pubKey not set
           accountNumber: Long.fromNumber(unused.accountNumber, true),
-          // sequence not set
+          sequence: Long.fromNumber(0),
         });
 
         tmClient.disconnect();
@@ -89,8 +87,8 @@ describe("AuthExtension", () => {
         const pubkey = encodePubkey(validator.pubkey);
         expect(account).toEqual({
           address: validator.delegatorAddress,
-          pubKey: Any.create(pubkey),
-          // accountNumber not set
+          pubKey: Any.fromPartial(pubkey),
+          accountNumber: Long.fromNumber(0),
           sequence: Long.fromNumber(validator.sequence, true),
         });
 

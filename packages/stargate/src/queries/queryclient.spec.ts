@@ -2,13 +2,11 @@
 import { toAscii } from "@cosmjs/encoding";
 import { adaptor34, Client as TendermintClient } from "@cosmjs/tendermint-rpc";
 
-import { cosmos } from "../codec";
+import { QueryAllBalancesRequest, QueryAllBalancesResponse } from "../codec/cosmos/bank/v1beta1/query";
+import { Coin } from "../codec/cosmos/base/v1beta1/coin";
 import { nonNegativeIntegerMatcher, pendingWithoutSimapp, simapp, unused } from "../testutils.spec";
 import { QueryClient } from "./queryclient";
 import { toAccAddress } from "./utils";
-
-const { Coin } = cosmos.base.v1beta1;
-const { QueryAllBalancesRequest, QueryAllBalancesResponse } = cosmos.bank.v1beta1;
 
 async function makeClient(rpcUrl: string): Promise<[QueryClient, TendermintClient]> {
   const tmClient = await TendermintClient.connect(rpcUrl, adaptor34);

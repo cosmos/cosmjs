@@ -1,9 +1,8 @@
-import { Block, Coin, PubKey, SearchTxFilter, SearchTxQuery } from "@cosmjs/launchpad";
+import { Block, PubKey, SearchTxFilter, SearchTxQuery } from "@cosmjs/launchpad";
 import { Client as TendermintClient } from "@cosmjs/tendermint-rpc";
-import { cosmos } from "./codec";
-declare type IBaseAccount = cosmos.auth.v1beta1.IBaseAccount;
-declare type IMsgData = cosmos.base.abci.v1beta1.IMsgData;
-declare type ICoin = cosmos.base.v1beta1.ICoin;
+import { BaseAccount } from "./codec/cosmos/auth/v1beta1/auth";
+import { MsgData } from "./codec/cosmos/base/abci/v1beta1/abci";
+import { Coin } from "./codec/cosmos/base/v1beta1/coin";
 /** A transaction that is indexed as part of the transaction history */
 export interface IndexedTx {
   readonly height: number;
@@ -30,13 +29,13 @@ export interface BroadcastTxFailure {
   readonly code: number;
   readonly transactionHash: string;
   readonly rawLog?: string;
-  readonly data?: readonly IMsgData[];
+  readonly data?: readonly MsgData[];
 }
 export interface BroadcastTxSuccess {
   readonly height: number;
   readonly transactionHash: string;
   readonly rawLog?: string;
-  readonly data?: readonly IMsgData[];
+  readonly data?: readonly MsgData[];
 }
 export declare type BroadcastTxResponse = BroadcastTxSuccess | BroadcastTxFailure;
 export declare function isBroadcastTxFailure(result: BroadcastTxResponse): result is BroadcastTxFailure;
@@ -47,8 +46,8 @@ export declare function isBroadcastTxSuccess(result: BroadcastTxResponse): resul
 export declare function assertIsBroadcastTxSuccess(
   result: BroadcastTxResponse,
 ): asserts result is BroadcastTxSuccess;
-export declare function accountFromProto(input: IBaseAccount): Account;
-export declare function coinFromProto(input: ICoin): Coin;
+export declare function accountFromProto(input: BaseAccount): Account;
+export declare function coinFromProto(input: Coin): Coin;
 /** Use for testing only */
 export interface PrivateStargateClient {
   readonly tmClient: TendermintClient;
@@ -78,4 +77,3 @@ export declare class StargateClient {
   broadcastTx(tx: Uint8Array): Promise<BroadcastTxResponse>;
   private txsQuery;
 }
-export {};

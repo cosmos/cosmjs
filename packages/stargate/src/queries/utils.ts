@@ -1,4 +1,5 @@
 import { Bech32 } from "@cosmjs/encoding";
+import Long from "long";
 
 /**
  * Takes a bech32 encoded address and returns the data part. The prefix is ignored and discarded.
@@ -16,4 +17,20 @@ export function toAccAddress(address: string): Uint8Array {
 // eslint-disable-next-line @typescript-eslint/ban-types
 export function toObject<I extends object>(thing: I): Omit<I, never> {
   return { ...thing };
+}
+
+export function createPagination(
+  paginationKey?: Uint8Array,
+): {
+  readonly key: Uint8Array;
+  readonly offset: Long;
+  readonly limit: Long;
+  readonly countTotal: boolean;
+} {
+  return {
+    key: paginationKey ?? new Uint8Array(),
+    offset: Long.fromNumber(0),
+    limit: Long.fromNumber(0),
+    countTotal: false,
+  };
 }
