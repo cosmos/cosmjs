@@ -1,17 +1,16 @@
 /* eslint-disable */
 import { Writer, Reader } from "protobufjs/minimal";
+import * as Long from "long";
 
-/**
- *  PublicKey defines the keys available for use with Tendermint Validators
- */
+export const protobufPackage = "tendermint.crypto";
+
+/** PublicKey defines the keys available for use with Tendermint Validators */
 export interface PublicKey {
   ed25519: Uint8Array | undefined;
   secp256k1: Uint8Array | undefined;
 }
 
 const basePublicKey: object = {};
-
-export const protobufPackage = "tendermint.crypto";
 
 export const PublicKey = {
   encode(message: PublicKey, writer: Writer = Writer.create()): Writer {
@@ -23,7 +22,8 @@ export const PublicKey = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): PublicKey {
+
+  decode(input: Reader | Uint8Array, length?: number): PublicKey {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...basePublicKey } as PublicKey;
@@ -43,6 +43,7 @@ export const PublicKey = {
     }
     return message;
   },
+
   fromJSON(object: any): PublicKey {
     const message = { ...basePublicKey } as PublicKey;
     if (object.ed25519 !== undefined && object.ed25519 !== null) {
@@ -53,6 +54,7 @@ export const PublicKey = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<PublicKey>): PublicKey {
     const message = { ...basePublicKey } as PublicKey;
     if (object.ed25519 !== undefined && object.ed25519 !== null) {
@@ -67,6 +69,7 @@ export const PublicKey = {
     }
     return message;
   },
+
   toJSON(message: PublicKey): unknown {
     const obj: any = {};
     message.ed25519 !== undefined &&
@@ -77,15 +80,18 @@ export const PublicKey = {
   },
 };
 
-interface WindowBase64 {
-  atob(b64: string): string;
-  btoa(bin: string): string;
-}
+declare var self: any | undefined;
+declare var window: any | undefined;
+var globalThis: any = (() => {
+  if (typeof globalThis !== "undefined") return globalThis;
+  if (typeof self !== "undefined") return self;
+  if (typeof window !== "undefined") return window;
+  if (typeof global !== "undefined") return global;
+  throw new Error("Unable to locate global object");
+})();
 
-const windowBase64 = (globalThis as unknown) as WindowBase64;
-const atob = windowBase64.atob || ((b64: string) => Buffer.from(b64, "base64").toString("binary"));
-const btoa = windowBase64.btoa || ((bin: string) => Buffer.from(bin, "binary").toString("base64"));
-
+const atob: (b64: string) => string =
+  globalThis.atob || ((b64) => globalThis.Buffer.from(b64, "base64").toString("binary"));
 function bytesFromBase64(b64: string): Uint8Array {
   const bin = atob(b64);
   const arr = new Uint8Array(bin.length);
@@ -95,6 +101,8 @@ function bytesFromBase64(b64: string): Uint8Array {
   return arr;
 }
 
+const btoa: (bin: string) => string =
+  globalThis.btoa || ((bin) => globalThis.Buffer.from(bin, "binary").toString("base64"));
 function base64FromBytes(arr: Uint8Array): string {
   const bin: string[] = [];
   for (let i = 0; i < arr.byteLength; ++i) {
@@ -102,7 +110,8 @@ function base64FromBytes(arr: Uint8Array): string {
   }
   return btoa(bin.join(""));
 }
-type Builtin = Date | Function | Uint8Array | string | number | undefined;
+
+type Builtin = Date | Function | Uint8Array | string | number | undefined | Long;
 export type DeepPartial<T> = T extends Builtin
   ? T
   : T extends Array<infer U>

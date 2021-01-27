@@ -1,11 +1,14 @@
 /* eslint-disable */
 import { Writer, Reader } from "protobufjs/minimal";
+import * as Long from "long";
+
+export const protobufPackage = "cosmos.base.v1beta1";
 
 /**
- *  Coin defines a token with a denomination and an amount.
+ * Coin defines a token with a denomination and an amount.
  *
- *  NOTE: The amount field is an Int which implements the custom method
- *  signatures required by gogoproto.
+ * NOTE: The amount field is an Int which implements the custom method
+ * signatures required by gogoproto.
  */
 export interface Coin {
   denom: string;
@@ -13,49 +16,27 @@ export interface Coin {
 }
 
 /**
- *  DecCoin defines a token with a denomination and a decimal amount.
+ * DecCoin defines a token with a denomination and a decimal amount.
  *
- *  NOTE: The amount field is an Dec which implements the custom method
- *  signatures required by gogoproto.
+ * NOTE: The amount field is an Dec which implements the custom method
+ * signatures required by gogoproto.
  */
 export interface DecCoin {
   denom: string;
   amount: string;
 }
 
-/**
- *  IntProto defines a Protobuf wrapper around an Int object.
- */
+/** IntProto defines a Protobuf wrapper around an Int object. */
 export interface IntProto {
   int: string;
 }
 
-/**
- *  DecProto defines a Protobuf wrapper around a Dec object.
- */
+/** DecProto defines a Protobuf wrapper around a Dec object. */
 export interface DecProto {
   dec: string;
 }
 
-const baseCoin: object = {
-  denom: "",
-  amount: "",
-};
-
-const baseDecCoin: object = {
-  denom: "",
-  amount: "",
-};
-
-const baseIntProto: object = {
-  int: "",
-};
-
-const baseDecProto: object = {
-  dec: "",
-};
-
-export const protobufPackage = "cosmos.base.v1beta1";
+const baseCoin: object = { denom: "", amount: "" };
 
 export const Coin = {
   encode(message: Coin, writer: Writer = Writer.create()): Writer {
@@ -63,7 +44,8 @@ export const Coin = {
     writer.uint32(18).string(message.amount);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): Coin {
+
+  decode(input: Reader | Uint8Array, length?: number): Coin {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseCoin } as Coin;
@@ -83,6 +65,7 @@ export const Coin = {
     }
     return message;
   },
+
   fromJSON(object: any): Coin {
     const message = { ...baseCoin } as Coin;
     if (object.denom !== undefined && object.denom !== null) {
@@ -97,6 +80,7 @@ export const Coin = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<Coin>): Coin {
     const message = { ...baseCoin } as Coin;
     if (object.denom !== undefined && object.denom !== null) {
@@ -111,6 +95,7 @@ export const Coin = {
     }
     return message;
   },
+
   toJSON(message: Coin): unknown {
     const obj: any = {};
     message.denom !== undefined && (obj.denom = message.denom);
@@ -119,13 +104,16 @@ export const Coin = {
   },
 };
 
+const baseDecCoin: object = { denom: "", amount: "" };
+
 export const DecCoin = {
   encode(message: DecCoin, writer: Writer = Writer.create()): Writer {
     writer.uint32(10).string(message.denom);
     writer.uint32(18).string(message.amount);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): DecCoin {
+
+  decode(input: Reader | Uint8Array, length?: number): DecCoin {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseDecCoin } as DecCoin;
@@ -145,6 +133,7 @@ export const DecCoin = {
     }
     return message;
   },
+
   fromJSON(object: any): DecCoin {
     const message = { ...baseDecCoin } as DecCoin;
     if (object.denom !== undefined && object.denom !== null) {
@@ -159,6 +148,7 @@ export const DecCoin = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<DecCoin>): DecCoin {
     const message = { ...baseDecCoin } as DecCoin;
     if (object.denom !== undefined && object.denom !== null) {
@@ -173,6 +163,7 @@ export const DecCoin = {
     }
     return message;
   },
+
   toJSON(message: DecCoin): unknown {
     const obj: any = {};
     message.denom !== undefined && (obj.denom = message.denom);
@@ -181,12 +172,15 @@ export const DecCoin = {
   },
 };
 
+const baseIntProto: object = { int: "" };
+
 export const IntProto = {
   encode(message: IntProto, writer: Writer = Writer.create()): Writer {
     writer.uint32(10).string(message.int);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): IntProto {
+
+  decode(input: Reader | Uint8Array, length?: number): IntProto {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseIntProto } as IntProto;
@@ -203,6 +197,7 @@ export const IntProto = {
     }
     return message;
   },
+
   fromJSON(object: any): IntProto {
     const message = { ...baseIntProto } as IntProto;
     if (object.int !== undefined && object.int !== null) {
@@ -212,6 +207,7 @@ export const IntProto = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<IntProto>): IntProto {
     const message = { ...baseIntProto } as IntProto;
     if (object.int !== undefined && object.int !== null) {
@@ -221,6 +217,7 @@ export const IntProto = {
     }
     return message;
   },
+
   toJSON(message: IntProto): unknown {
     const obj: any = {};
     message.int !== undefined && (obj.int = message.int);
@@ -228,12 +225,15 @@ export const IntProto = {
   },
 };
 
+const baseDecProto: object = { dec: "" };
+
 export const DecProto = {
   encode(message: DecProto, writer: Writer = Writer.create()): Writer {
     writer.uint32(10).string(message.dec);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): DecProto {
+
+  decode(input: Reader | Uint8Array, length?: number): DecProto {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseDecProto } as DecProto;
@@ -250,6 +250,7 @@ export const DecProto = {
     }
     return message;
   },
+
   fromJSON(object: any): DecProto {
     const message = { ...baseDecProto } as DecProto;
     if (object.dec !== undefined && object.dec !== null) {
@@ -259,6 +260,7 @@ export const DecProto = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<DecProto>): DecProto {
     const message = { ...baseDecProto } as DecProto;
     if (object.dec !== undefined && object.dec !== null) {
@@ -268,6 +270,7 @@ export const DecProto = {
     }
     return message;
   },
+
   toJSON(message: DecProto): unknown {
     const obj: any = {};
     message.dec !== undefined && (obj.dec = message.dec);
@@ -275,7 +278,7 @@ export const DecProto = {
   },
 };
 
-type Builtin = Date | Function | Uint8Array | string | number | undefined;
+type Builtin = Date | Function | Uint8Array | string | number | undefined | Long;
 export type DeepPartial<T> = T extends Builtin
   ? T
   : T extends Array<infer U>

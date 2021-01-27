@@ -1,20 +1,19 @@
 import { Writer, Reader } from "protobufjs/minimal";
-/**
- *  PublicKey defines the keys available for use with Tendermint Validators
- */
+import * as Long from "long";
+export declare const protobufPackage = "tendermint.crypto";
+/** PublicKey defines the keys available for use with Tendermint Validators */
 export interface PublicKey {
   ed25519: Uint8Array | undefined;
   secp256k1: Uint8Array | undefined;
 }
-export declare const protobufPackage = "tendermint.crypto";
 export declare const PublicKey: {
   encode(message: PublicKey, writer?: Writer): Writer;
-  decode(input: Uint8Array | Reader, length?: number | undefined): PublicKey;
+  decode(input: Reader | Uint8Array, length?: number | undefined): PublicKey;
   fromJSON(object: any): PublicKey;
   fromPartial(object: DeepPartial<PublicKey>): PublicKey;
   toJSON(message: PublicKey): unknown;
 };
-declare type Builtin = Date | Function | Uint8Array | string | number | undefined;
+declare type Builtin = Date | Function | Uint8Array | string | number | undefined | Long;
 export declare type DeepPartial<T> = T extends Builtin
   ? T
   : T extends Array<infer U>

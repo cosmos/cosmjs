@@ -1,124 +1,82 @@
 /* eslint-disable */
 import { Coin } from "../../../cosmos/base/v1beta1/coin";
 import { Writer, Reader } from "protobufjs/minimal";
+import * as Long from "long";
 
-/**
- *  Params defines the parameters for the bank module.
- */
+export const protobufPackage = "cosmos.bank.v1beta1";
+
+/** Params defines the parameters for the bank module. */
 export interface Params {
   sendEnabled: SendEnabled[];
   defaultSendEnabled: boolean;
 }
 
 /**
- *  SendEnabled maps coin denom to a send_enabled status (whether a denom is
- *  sendable).
+ * SendEnabled maps coin denom to a send_enabled status (whether a denom is
+ * sendable).
  */
 export interface SendEnabled {
   denom: string;
   enabled: boolean;
 }
 
-/**
- *  Input models transaction input.
- */
+/** Input models transaction input. */
 export interface Input {
   address: string;
   coins: Coin[];
 }
 
-/**
- *  Output models transaction outputs.
- */
+/** Output models transaction outputs. */
 export interface Output {
   address: string;
   coins: Coin[];
 }
 
 /**
- *  Supply represents a struct that passively keeps track of the total supply
- *  amounts in the network.
+ * Supply represents a struct that passively keeps track of the total supply
+ * amounts in the network.
  */
 export interface Supply {
   total: Coin[];
 }
 
 /**
- *  DenomUnit represents a struct that describes a given
- *  denomination unit of the basic token.
+ * DenomUnit represents a struct that describes a given
+ * denomination unit of the basic token.
  */
 export interface DenomUnit {
-  /**
-   *  denom represents the string name of the given denom unit (e.g uatom).
-   */
+  /** denom represents the string name of the given denom unit (e.g uatom). */
   denom: string;
   /**
-   *  exponent represents power of 10 exponent that one must
-   *  raise the base_denom to in order to equal the given DenomUnit's denom
-   *  1 denom = 1^exponent base_denom
-   *  (e.g. with a base_denom of uatom, one can create a DenomUnit of 'atom' with
-   *  exponent = 6, thus: 1 atom = 10^6 uatom).
+   * exponent represents power of 10 exponent that one must
+   * raise the base_denom to in order to equal the given DenomUnit's denom
+   * 1 denom = 1^exponent base_denom
+   * (e.g. with a base_denom of uatom, one can create a DenomUnit of 'atom' with
+   * exponent = 6, thus: 1 atom = 10^6 uatom).
    */
   exponent: number;
-  /**
-   *  aliases is a list of string aliases for the given denom
-   */
+  /** aliases is a list of string aliases for the given denom */
   aliases: string[];
 }
 
 /**
- *  Metadata represents a struct that describes
- *  a basic token.
+ * Metadata represents a struct that describes
+ * a basic token.
  */
 export interface Metadata {
   description: string;
-  /**
-   *  denom_units represents the list of DenomUnit's for a given coin
-   */
+  /** denom_units represents the list of DenomUnit's for a given coin */
   denomUnits: DenomUnit[];
-  /**
-   *  base represents the base denom (should be the DenomUnit with exponent = 0).
-   */
+  /** base represents the base denom (should be the DenomUnit with exponent = 0). */
   base: string;
   /**
-   *  display indicates the suggested denom that should be
-   *  displayed in clients.
+   * display indicates the suggested denom that should be
+   * displayed in clients.
    */
   display: string;
 }
 
-const baseParams: object = {
-  defaultSendEnabled: false,
-};
-
-const baseSendEnabled: object = {
-  denom: "",
-  enabled: false,
-};
-
-const baseInput: object = {
-  address: "",
-};
-
-const baseOutput: object = {
-  address: "",
-};
-
-const baseSupply: object = {};
-
-const baseDenomUnit: object = {
-  denom: "",
-  exponent: 0,
-  aliases: "",
-};
-
-const baseMetadata: object = {
-  description: "",
-  base: "",
-  display: "",
-};
-
-export const protobufPackage = "cosmos.bank.v1beta1";
+const baseParams: object = { defaultSendEnabled: false };
 
 export const Params = {
   encode(message: Params, writer: Writer = Writer.create()): Writer {
@@ -128,7 +86,8 @@ export const Params = {
     writer.uint32(16).bool(message.defaultSendEnabled);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): Params {
+
+  decode(input: Reader | Uint8Array, length?: number): Params {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseParams } as Params;
@@ -149,6 +108,7 @@ export const Params = {
     }
     return message;
   },
+
   fromJSON(object: any): Params {
     const message = { ...baseParams } as Params;
     message.sendEnabled = [];
@@ -164,6 +124,7 @@ export const Params = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<Params>): Params {
     const message = { ...baseParams } as Params;
     message.sendEnabled = [];
@@ -179,6 +140,7 @@ export const Params = {
     }
     return message;
   },
+
   toJSON(message: Params): unknown {
     const obj: any = {};
     if (message.sendEnabled) {
@@ -191,13 +153,16 @@ export const Params = {
   },
 };
 
+const baseSendEnabled: object = { denom: "", enabled: false };
+
 export const SendEnabled = {
   encode(message: SendEnabled, writer: Writer = Writer.create()): Writer {
     writer.uint32(10).string(message.denom);
     writer.uint32(16).bool(message.enabled);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): SendEnabled {
+
+  decode(input: Reader | Uint8Array, length?: number): SendEnabled {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseSendEnabled } as SendEnabled;
@@ -217,6 +182,7 @@ export const SendEnabled = {
     }
     return message;
   },
+
   fromJSON(object: any): SendEnabled {
     const message = { ...baseSendEnabled } as SendEnabled;
     if (object.denom !== undefined && object.denom !== null) {
@@ -231,6 +197,7 @@ export const SendEnabled = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<SendEnabled>): SendEnabled {
     const message = { ...baseSendEnabled } as SendEnabled;
     if (object.denom !== undefined && object.denom !== null) {
@@ -245,6 +212,7 @@ export const SendEnabled = {
     }
     return message;
   },
+
   toJSON(message: SendEnabled): unknown {
     const obj: any = {};
     message.denom !== undefined && (obj.denom = message.denom);
@@ -252,6 +220,8 @@ export const SendEnabled = {
     return obj;
   },
 };
+
+const baseInput: object = { address: "" };
 
 export const Input = {
   encode(message: Input, writer: Writer = Writer.create()): Writer {
@@ -261,7 +231,8 @@ export const Input = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): Input {
+
+  decode(input: Reader | Uint8Array, length?: number): Input {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseInput } as Input;
@@ -282,6 +253,7 @@ export const Input = {
     }
     return message;
   },
+
   fromJSON(object: any): Input {
     const message = { ...baseInput } as Input;
     message.coins = [];
@@ -297,6 +269,7 @@ export const Input = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<Input>): Input {
     const message = { ...baseInput } as Input;
     message.coins = [];
@@ -312,6 +285,7 @@ export const Input = {
     }
     return message;
   },
+
   toJSON(message: Input): unknown {
     const obj: any = {};
     message.address !== undefined && (obj.address = message.address);
@@ -324,6 +298,8 @@ export const Input = {
   },
 };
 
+const baseOutput: object = { address: "" };
+
 export const Output = {
   encode(message: Output, writer: Writer = Writer.create()): Writer {
     writer.uint32(10).string(message.address);
@@ -332,7 +308,8 @@ export const Output = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): Output {
+
+  decode(input: Reader | Uint8Array, length?: number): Output {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseOutput } as Output;
@@ -353,6 +330,7 @@ export const Output = {
     }
     return message;
   },
+
   fromJSON(object: any): Output {
     const message = { ...baseOutput } as Output;
     message.coins = [];
@@ -368,6 +346,7 @@ export const Output = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<Output>): Output {
     const message = { ...baseOutput } as Output;
     message.coins = [];
@@ -383,6 +362,7 @@ export const Output = {
     }
     return message;
   },
+
   toJSON(message: Output): unknown {
     const obj: any = {};
     message.address !== undefined && (obj.address = message.address);
@@ -395,6 +375,8 @@ export const Output = {
   },
 };
 
+const baseSupply: object = {};
+
 export const Supply = {
   encode(message: Supply, writer: Writer = Writer.create()): Writer {
     for (const v of message.total) {
@@ -402,7 +384,8 @@ export const Supply = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): Supply {
+
+  decode(input: Reader | Uint8Array, length?: number): Supply {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseSupply } as Supply;
@@ -420,6 +403,7 @@ export const Supply = {
     }
     return message;
   },
+
   fromJSON(object: any): Supply {
     const message = { ...baseSupply } as Supply;
     message.total = [];
@@ -430,6 +414,7 @@ export const Supply = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<Supply>): Supply {
     const message = { ...baseSupply } as Supply;
     message.total = [];
@@ -440,6 +425,7 @@ export const Supply = {
     }
     return message;
   },
+
   toJSON(message: Supply): unknown {
     const obj: any = {};
     if (message.total) {
@@ -451,6 +437,8 @@ export const Supply = {
   },
 };
 
+const baseDenomUnit: object = { denom: "", exponent: 0, aliases: "" };
+
 export const DenomUnit = {
   encode(message: DenomUnit, writer: Writer = Writer.create()): Writer {
     writer.uint32(10).string(message.denom);
@@ -460,7 +448,8 @@ export const DenomUnit = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): DenomUnit {
+
+  decode(input: Reader | Uint8Array, length?: number): DenomUnit {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseDenomUnit } as DenomUnit;
@@ -484,6 +473,7 @@ export const DenomUnit = {
     }
     return message;
   },
+
   fromJSON(object: any): DenomUnit {
     const message = { ...baseDenomUnit } as DenomUnit;
     message.aliases = [];
@@ -504,6 +494,7 @@ export const DenomUnit = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<DenomUnit>): DenomUnit {
     const message = { ...baseDenomUnit } as DenomUnit;
     message.aliases = [];
@@ -524,6 +515,7 @@ export const DenomUnit = {
     }
     return message;
   },
+
   toJSON(message: DenomUnit): unknown {
     const obj: any = {};
     message.denom !== undefined && (obj.denom = message.denom);
@@ -537,6 +529,8 @@ export const DenomUnit = {
   },
 };
 
+const baseMetadata: object = { description: "", base: "", display: "" };
+
 export const Metadata = {
   encode(message: Metadata, writer: Writer = Writer.create()): Writer {
     writer.uint32(10).string(message.description);
@@ -547,7 +541,8 @@ export const Metadata = {
     writer.uint32(34).string(message.display);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): Metadata {
+
+  decode(input: Reader | Uint8Array, length?: number): Metadata {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMetadata } as Metadata;
@@ -574,6 +569,7 @@ export const Metadata = {
     }
     return message;
   },
+
   fromJSON(object: any): Metadata {
     const message = { ...baseMetadata } as Metadata;
     message.denomUnits = [];
@@ -599,6 +595,7 @@ export const Metadata = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<Metadata>): Metadata {
     const message = { ...baseMetadata } as Metadata;
     message.denomUnits = [];
@@ -624,6 +621,7 @@ export const Metadata = {
     }
     return message;
   },
+
   toJSON(message: Metadata): unknown {
     const obj: any = {};
     message.description !== undefined && (obj.description = message.description);
@@ -638,7 +636,7 @@ export const Metadata = {
   },
 };
 
-type Builtin = Date | Function | Uint8Array | string | number | undefined;
+type Builtin = Date | Function | Uint8Array | string | number | undefined | Long;
 export type DeepPartial<T> = T extends Builtin
   ? T
   : T extends Array<infer U>
