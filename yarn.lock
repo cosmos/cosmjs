@@ -1512,6 +1512,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/prettier@^1.19.0":
+  version "1.19.1"
+  resolved "https://registry.yarnpkg.com/@types/prettier/-/prettier-1.19.1.tgz#33509849f8e679e4add158959fdb086440e9553f"
+  integrity sha512-5qOlnZscTn4xxM5MeGXAMOsIOIKIbh9e85zJWfBRVPlRMEVawzoPhINYbRGkBZCI8LxvBe7tJCdWiarA99OZfQ==
+
 "@types/range-parser@*":
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/@types/range-parser/-/range-parser-1.2.3.tgz#7ee330ba7caafb98090bece86a5ee44115904c2c"
@@ -7153,6 +7158,11 @@ prettier-linter-helpers@^1.0.0:
   dependencies:
     fast-diff "^1.1.2"
 
+prettier@^2.0.2:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.2.1.tgz#795a1a78dd52f073da0cd42b21f9c91381923ff5"
+  integrity sha512-PqyhM2yCjg/oKkFPtTGUojv7gnZAoG80ttl45O6x2Ug/rMJw4wcc9k6aaf2hibP7BGVCCM33gZoGjyvt9mm16Q==
+
 prettier@^2.0.5:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.0.5.tgz#d6d56282455243f2f92cc1716692c08aa31522d4"
@@ -8737,11 +8747,6 @@ trim-off-newlines@^1.0.0:
   resolved "https://registry.yarnpkg.com/trim-off-newlines/-/trim-off-newlines-1.0.1.tgz#9f9ba9d9efa8764c387698bcbfeb2c848f11adb3"
   integrity sha1-n5up2e+odkw4dpi8v+sshI8RrbM=
 
-ts-imm@0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/ts-imm/-/ts-imm-0.4.0.tgz#01a7916dd1b214ab3c578403ff0cc1faafc282da"
-  integrity sha512-slzrsTGPwoEQFTr8N9A2ZcqRLu0U3+aFpCwFtDOVmjD2b9AGSzYnHJQVDVP54kmoSD1BIM3bLN2VeOkFpu7Ycw==
-
 ts-node@^8:
   version "8.7.0"
   resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-8.7.0.tgz#266186947596bef9f3a034687595b30e31b20976"
@@ -8753,24 +8758,25 @@ ts-node@^8:
     source-map-support "^0.5.6"
     yn "3.1.1"
 
-ts-poet@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/ts-poet/-/ts-poet-1.0.1.tgz#7dcba4fda3666dda0b72fcd1ea7b1d4cf48310c9"
-  integrity sha512-wGzYjiNKtDZqC5CXCAxwxhR0d/MJYIVvV5H+C2I2ntwK5HcFtoLNTSwfrXo0asO5WtBJ4upULCCAM02NYX7eUg==
+ts-poet@^4.4.1:
+  version "4.4.1"
+  resolved "https://registry.yarnpkg.com/ts-poet/-/ts-poet-4.4.1.tgz#064c613b1c432d2f62f0d4e59ff060a1c72cc984"
+  integrity sha512-xnn4/+fhDDpWYrDQ4ATulJK3zwuKleo2U97CU2uWU42RSGMP4AYATGiZGIku+sSYVsa4toBPjtEY93TuR0ztGw==
   dependencies:
+    "@types/prettier" "^1.19.0"
     lodash "^4.17.15"
-    ts-imm "0.4.0"
+    prettier "^2.0.2"
 
-ts-proto@^1.41.1:
-  version "1.41.1"
-  resolved "https://registry.yarnpkg.com/ts-proto/-/ts-proto-1.41.1.tgz#c23df0dc54551e4d0e932e9843e62d09d7e44e15"
-  integrity sha512-Acf2nKIjBVn2ANAFkHgWdpnfswgwRSWc1iiKtORv7v0vNsWNzPJ6PmOxGDI0WOyKxzqAPwuUYt83K/4sSn0o6A==
+ts-proto@^1.50.0:
+  version "1.50.0"
+  resolved "https://registry.yarnpkg.com/ts-proto/-/ts-proto-1.50.0.tgz#50098a5acbc060ccfb19bd8c1670d873896dbc3b"
+  integrity sha512-5J4P3XNiOP5VjGxgPpwNZTh3tblp2Gg/UeluC7hKjErEsWvNdwcpWUpDRdLiSAb/+dl6BWv1/1dwFcMIToUWng==
   dependencies:
     "@types/object-hash" "^1.3.0"
     dataloader "^1.4.0"
     object-hash "^1.3.1"
     protobufjs "^6.8.8"
-    ts-poet "^1.0.1"
+    ts-poet "^4.4.1"
 
 tsconfig-paths@^3.9.0:
   version "3.9.0"
