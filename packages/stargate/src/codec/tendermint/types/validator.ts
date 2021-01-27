@@ -3,6 +3,8 @@ import * as Long from "long";
 import { PublicKey } from "../../tendermint/crypto/keys";
 import { Writer, Reader } from "protobufjs/minimal";
 
+export const protobufPackage = "tendermint.types";
+
 export interface ValidatorSet {
   validators: Validator[];
   proposer?: Validator;
@@ -21,20 +23,7 @@ export interface SimpleValidator {
   votingPower: Long;
 }
 
-const baseValidatorSet: object = {
-  totalVotingPower: Long.ZERO,
-};
-
-const baseValidator: object = {
-  votingPower: Long.ZERO,
-  proposerPriority: Long.ZERO,
-};
-
-const baseSimpleValidator: object = {
-  votingPower: Long.ZERO,
-};
-
-export const protobufPackage = "tendermint.types";
+const baseValidatorSet: object = { totalVotingPower: Long.ZERO };
 
 export const ValidatorSet = {
   encode(message: ValidatorSet, writer: Writer = Writer.create()): Writer {
@@ -47,7 +36,8 @@ export const ValidatorSet = {
     writer.uint32(24).int64(message.totalVotingPower);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): ValidatorSet {
+
+  decode(input: Reader | Uint8Array, length?: number): ValidatorSet {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseValidatorSet } as ValidatorSet;
@@ -71,6 +61,7 @@ export const ValidatorSet = {
     }
     return message;
   },
+
   fromJSON(object: any): ValidatorSet {
     const message = { ...baseValidatorSet } as ValidatorSet;
     message.validators = [];
@@ -91,6 +82,7 @@ export const ValidatorSet = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<ValidatorSet>): ValidatorSet {
     const message = { ...baseValidatorSet } as ValidatorSet;
     message.validators = [];
@@ -111,6 +103,7 @@ export const ValidatorSet = {
     }
     return message;
   },
+
   toJSON(message: ValidatorSet): unknown {
     const obj: any = {};
     if (message.validators) {
@@ -126,6 +119,8 @@ export const ValidatorSet = {
   },
 };
 
+const baseValidator: object = { votingPower: Long.ZERO, proposerPriority: Long.ZERO };
+
 export const Validator = {
   encode(message: Validator, writer: Writer = Writer.create()): Writer {
     writer.uint32(10).bytes(message.address);
@@ -136,7 +131,8 @@ export const Validator = {
     writer.uint32(32).int64(message.proposerPriority);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): Validator {
+
+  decode(input: Reader | Uint8Array, length?: number): Validator {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseValidator } as Validator;
@@ -162,6 +158,7 @@ export const Validator = {
     }
     return message;
   },
+
   fromJSON(object: any): Validator {
     const message = { ...baseValidator } as Validator;
     if (object.address !== undefined && object.address !== null) {
@@ -184,6 +181,7 @@ export const Validator = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<Validator>): Validator {
     const message = { ...baseValidator } as Validator;
     if (object.address !== undefined && object.address !== null) {
@@ -208,6 +206,7 @@ export const Validator = {
     }
     return message;
   },
+
   toJSON(message: Validator): unknown {
     const obj: any = {};
     message.address !== undefined &&
@@ -221,6 +220,8 @@ export const Validator = {
   },
 };
 
+const baseSimpleValidator: object = { votingPower: Long.ZERO };
+
 export const SimpleValidator = {
   encode(message: SimpleValidator, writer: Writer = Writer.create()): Writer {
     if (message.pubKey !== undefined && message.pubKey !== undefined) {
@@ -229,7 +230,8 @@ export const SimpleValidator = {
     writer.uint32(16).int64(message.votingPower);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): SimpleValidator {
+
+  decode(input: Reader | Uint8Array, length?: number): SimpleValidator {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseSimpleValidator } as SimpleValidator;
@@ -249,6 +251,7 @@ export const SimpleValidator = {
     }
     return message;
   },
+
   fromJSON(object: any): SimpleValidator {
     const message = { ...baseSimpleValidator } as SimpleValidator;
     if (object.pubKey !== undefined && object.pubKey !== null) {
@@ -263,6 +266,7 @@ export const SimpleValidator = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<SimpleValidator>): SimpleValidator {
     const message = { ...baseSimpleValidator } as SimpleValidator;
     if (object.pubKey !== undefined && object.pubKey !== null) {
@@ -277,6 +281,7 @@ export const SimpleValidator = {
     }
     return message;
   },
+
   toJSON(message: SimpleValidator): unknown {
     const obj: any = {};
     message.pubKey !== undefined &&
@@ -286,15 +291,18 @@ export const SimpleValidator = {
   },
 };
 
-interface WindowBase64 {
-  atob(b64: string): string;
-  btoa(bin: string): string;
-}
+declare var self: any | undefined;
+declare var window: any | undefined;
+var globalThis: any = (() => {
+  if (typeof globalThis !== "undefined") return globalThis;
+  if (typeof self !== "undefined") return self;
+  if (typeof window !== "undefined") return window;
+  if (typeof global !== "undefined") return global;
+  throw new Error("Unable to locate global object");
+})();
 
-const windowBase64 = (globalThis as unknown) as WindowBase64;
-const atob = windowBase64.atob || ((b64: string) => Buffer.from(b64, "base64").toString("binary"));
-const btoa = windowBase64.btoa || ((bin: string) => Buffer.from(bin, "binary").toString("base64"));
-
+const atob: (b64: string) => string =
+  globalThis.atob || ((b64) => globalThis.Buffer.from(b64, "base64").toString("binary"));
 function bytesFromBase64(b64: string): Uint8Array {
   const bin = atob(b64);
   const arr = new Uint8Array(bin.length);
@@ -304,6 +312,8 @@ function bytesFromBase64(b64: string): Uint8Array {
   return arr;
 }
 
+const btoa: (bin: string) => string =
+  globalThis.btoa || ((bin) => globalThis.Buffer.from(bin, "binary").toString("base64"));
 function base64FromBytes(arr: Uint8Array): string {
   const bin: string[] = [];
   for (let i = 0; i < arr.byteLength; ++i) {
@@ -311,7 +321,8 @@ function base64FromBytes(arr: Uint8Array): string {
   }
   return btoa(bin.join(""));
 }
-type Builtin = Date | Function | Uint8Array | string | number | undefined;
+
+type Builtin = Date | Function | Uint8Array | string | number | undefined | Long;
 export type DeepPartial<T> = T extends Builtin
   ? T
   : T extends Array<infer U>

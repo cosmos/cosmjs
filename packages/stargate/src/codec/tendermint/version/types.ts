@@ -2,10 +2,12 @@
 import * as Long from "long";
 import { Writer, Reader } from "protobufjs/minimal";
 
+export const protobufPackage = "tendermint.version";
+
 /**
- *  App includes the protocol and software version for the application.
- *  This information is included in ResponseInfo. The App.Protocol can be
- *  updated in ResponseEndBlock.
+ * App includes the protocol and software version for the application.
+ * This information is included in ResponseInfo. The App.Protocol can be
+ * updated in ResponseEndBlock.
  */
 export interface App {
   protocol: Long;
@@ -13,26 +15,16 @@ export interface App {
 }
 
 /**
- *  Consensus captures the consensus rules for processing a block in the blockchain,
- *  including all blockchain data structures and the rules of the application's
- *  state transition machine.
+ * Consensus captures the consensus rules for processing a block in the blockchain,
+ * including all blockchain data structures and the rules of the application's
+ * state transition machine.
  */
 export interface Consensus {
   block: Long;
   app: Long;
 }
 
-const baseApp: object = {
-  protocol: Long.UZERO,
-  software: "",
-};
-
-const baseConsensus: object = {
-  block: Long.UZERO,
-  app: Long.UZERO,
-};
-
-export const protobufPackage = "tendermint.version";
+const baseApp: object = { protocol: Long.UZERO, software: "" };
 
 export const App = {
   encode(message: App, writer: Writer = Writer.create()): Writer {
@@ -40,7 +32,8 @@ export const App = {
     writer.uint32(18).string(message.software);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): App {
+
+  decode(input: Reader | Uint8Array, length?: number): App {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseApp } as App;
@@ -60,6 +53,7 @@ export const App = {
     }
     return message;
   },
+
   fromJSON(object: any): App {
     const message = { ...baseApp } as App;
     if (object.protocol !== undefined && object.protocol !== null) {
@@ -74,6 +68,7 @@ export const App = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<App>): App {
     const message = { ...baseApp } as App;
     if (object.protocol !== undefined && object.protocol !== null) {
@@ -88,6 +83,7 @@ export const App = {
     }
     return message;
   },
+
   toJSON(message: App): unknown {
     const obj: any = {};
     message.protocol !== undefined && (obj.protocol = (message.protocol || Long.UZERO).toString());
@@ -96,13 +92,16 @@ export const App = {
   },
 };
 
+const baseConsensus: object = { block: Long.UZERO, app: Long.UZERO };
+
 export const Consensus = {
   encode(message: Consensus, writer: Writer = Writer.create()): Writer {
     writer.uint32(8).uint64(message.block);
     writer.uint32(16).uint64(message.app);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): Consensus {
+
+  decode(input: Reader | Uint8Array, length?: number): Consensus {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseConsensus } as Consensus;
@@ -122,6 +121,7 @@ export const Consensus = {
     }
     return message;
   },
+
   fromJSON(object: any): Consensus {
     const message = { ...baseConsensus } as Consensus;
     if (object.block !== undefined && object.block !== null) {
@@ -136,6 +136,7 @@ export const Consensus = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<Consensus>): Consensus {
     const message = { ...baseConsensus } as Consensus;
     if (object.block !== undefined && object.block !== null) {
@@ -150,6 +151,7 @@ export const Consensus = {
     }
     return message;
   },
+
   toJSON(message: Consensus): unknown {
     const obj: any = {};
     message.block !== undefined && (obj.block = (message.block || Long.UZERO).toString());
@@ -158,7 +160,7 @@ export const Consensus = {
   },
 };
 
-type Builtin = Date | Function | Uint8Array | string | number | undefined;
+type Builtin = Date | Function | Uint8Array | string | number | undefined | Long;
 export type DeepPartial<T> = T extends Builtin
   ? T
   : T extends Array<infer U>

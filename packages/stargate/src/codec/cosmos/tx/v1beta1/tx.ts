@@ -6,266 +6,208 @@ import { CompactBitArray } from "../../../cosmos/crypto/multisig/v1beta1/multisi
 import { Coin } from "../../../cosmos/base/v1beta1/coin";
 import { Writer, Reader } from "protobufjs/minimal";
 
-/**
- *  Tx is the standard type used for broadcasting transactions.
- */
+export const protobufPackage = "cosmos.tx.v1beta1";
+
+/** Tx is the standard type used for broadcasting transactions. */
 export interface Tx {
-  /**
-   *  body is the processable content of the transaction
-   */
+  /** body is the processable content of the transaction */
   body?: TxBody;
   /**
-   *  auth_info is the authorization related content of the transaction,
-   *  specifically signers, signer modes and fee
+   * auth_info is the authorization related content of the transaction,
+   * specifically signers, signer modes and fee
    */
   authInfo?: AuthInfo;
   /**
-   *  signatures is a list of signatures that matches the length and order of
-   *  AuthInfo's signer_infos to allow connecting signature meta information like
-   *  public key and signing mode by position.
+   * signatures is a list of signatures that matches the length and order of
+   * AuthInfo's signer_infos to allow connecting signature meta information like
+   * public key and signing mode by position.
    */
   signatures: Uint8Array[];
 }
 
 /**
- *  TxRaw is a variant of Tx that pins the signer's exact binary representation
- *  of body and auth_info. This is used for signing, broadcasting and
- *  verification. The binary `serialize(tx: TxRaw)` is stored in Tendermint and
- *  the hash `sha256(serialize(tx: TxRaw))` becomes the "txhash", commonly used
- *  as the transaction ID.
+ * TxRaw is a variant of Tx that pins the signer's exact binary representation
+ * of body and auth_info. This is used for signing, broadcasting and
+ * verification. The binary `serialize(tx: TxRaw)` is stored in Tendermint and
+ * the hash `sha256(serialize(tx: TxRaw))` becomes the "txhash", commonly used
+ * as the transaction ID.
  */
 export interface TxRaw {
   /**
-   *  body_bytes is a protobuf serialization of a TxBody that matches the
-   *  representation in SignDoc.
+   * body_bytes is a protobuf serialization of a TxBody that matches the
+   * representation in SignDoc.
    */
   bodyBytes: Uint8Array;
   /**
-   *  auth_info_bytes is a protobuf serialization of an AuthInfo that matches the
-   *  representation in SignDoc.
+   * auth_info_bytes is a protobuf serialization of an AuthInfo that matches the
+   * representation in SignDoc.
    */
   authInfoBytes: Uint8Array;
   /**
-   *  signatures is a list of signatures that matches the length and order of
-   *  AuthInfo's signer_infos to allow connecting signature meta information like
-   *  public key and signing mode by position.
+   * signatures is a list of signatures that matches the length and order of
+   * AuthInfo's signer_infos to allow connecting signature meta information like
+   * public key and signing mode by position.
    */
   signatures: Uint8Array[];
 }
 
-/**
- *  SignDoc is the type used for generating sign bytes for SIGN_MODE_DIRECT.
- */
+/** SignDoc is the type used for generating sign bytes for SIGN_MODE_DIRECT. */
 export interface SignDoc {
   /**
-   *  body_bytes is protobuf serialization of a TxBody that matches the
-   *  representation in TxRaw.
+   * body_bytes is protobuf serialization of a TxBody that matches the
+   * representation in TxRaw.
    */
   bodyBytes: Uint8Array;
   /**
-   *  auth_info_bytes is a protobuf serialization of an AuthInfo that matches the
-   *  representation in TxRaw.
+   * auth_info_bytes is a protobuf serialization of an AuthInfo that matches the
+   * representation in TxRaw.
    */
   authInfoBytes: Uint8Array;
   /**
-   *  chain_id is the unique identifier of the chain this transaction targets.
-   *  It prevents signed transactions from being used on another chain by an
-   *  attacker
+   * chain_id is the unique identifier of the chain this transaction targets.
+   * It prevents signed transactions from being used on another chain by an
+   * attacker
    */
   chainId: string;
-  /**
-   *  account_number is the account number of the account in state
-   */
+  /** account_number is the account number of the account in state */
   accountNumber: Long;
 }
 
-/**
- *  TxBody is the body of a transaction that all signers sign over.
- */
+/** TxBody is the body of a transaction that all signers sign over. */
 export interface TxBody {
   /**
-   *  messages is a list of messages to be executed. The required signers of
-   *  those messages define the number and order of elements in AuthInfo's
-   *  signer_infos and Tx's signatures. Each required signer address is added to
-   *  the list only the first time it occurs.
-   *  By convention, the first required signer (usually from the first message)
-   *  is referred to as the primary signer and pays the fee for the whole
-   *  transaction.
+   * messages is a list of messages to be executed. The required signers of
+   * those messages define the number and order of elements in AuthInfo's
+   * signer_infos and Tx's signatures. Each required signer address is added to
+   * the list only the first time it occurs.
+   * By convention, the first required signer (usually from the first message)
+   * is referred to as the primary signer and pays the fee for the whole
+   * transaction.
    */
   messages: Any[];
-  /**
-   *  memo is any arbitrary memo to be added to the transaction
-   */
+  /** memo is any arbitrary memo to be added to the transaction */
   memo: string;
   /**
-   *  timeout is the block height after which this transaction will not
-   *  be processed by the chain
+   * timeout is the block height after which this transaction will not
+   * be processed by the chain
    */
   timeoutHeight: Long;
   /**
-   *  extension_options are arbitrary options that can be added by chains
-   *  when the default options are not sufficient. If any of these are present
-   *  and can't be handled, the transaction will be rejected
+   * extension_options are arbitrary options that can be added by chains
+   * when the default options are not sufficient. If any of these are present
+   * and can't be handled, the transaction will be rejected
    */
   extensionOptions: Any[];
   /**
-   *  extension_options are arbitrary options that can be added by chains
-   *  when the default options are not sufficient. If any of these are present
-   *  and can't be handled, they will be ignored
+   * extension_options are arbitrary options that can be added by chains
+   * when the default options are not sufficient. If any of these are present
+   * and can't be handled, they will be ignored
    */
   nonCriticalExtensionOptions: Any[];
 }
 
 /**
- *  AuthInfo describes the fee and signer modes that are used to sign a
- *  transaction.
+ * AuthInfo describes the fee and signer modes that are used to sign a
+ * transaction.
  */
 export interface AuthInfo {
   /**
-   *  signer_infos defines the signing modes for the required signers. The number
-   *  and order of elements must match the required signers from TxBody's
-   *  messages. The first element is the primary signer and the one which pays
-   *  the fee.
+   * signer_infos defines the signing modes for the required signers. The number
+   * and order of elements must match the required signers from TxBody's
+   * messages. The first element is the primary signer and the one which pays
+   * the fee.
    */
   signerInfos: SignerInfo[];
   /**
-   *  Fee is the fee and gas limit for the transaction. The first signer is the
-   *  primary signer and the one which pays the fee. The fee can be calculated
-   *  based on the cost of evaluating the body and doing signature verification
-   *  of the signers. This can be estimated via simulation.
+   * Fee is the fee and gas limit for the transaction. The first signer is the
+   * primary signer and the one which pays the fee. The fee can be calculated
+   * based on the cost of evaluating the body and doing signature verification
+   * of the signers. This can be estimated via simulation.
    */
   fee?: Fee;
 }
 
 /**
- *  SignerInfo describes the public key and signing mode of a single top-level
- *  signer.
+ * SignerInfo describes the public key and signing mode of a single top-level
+ * signer.
  */
 export interface SignerInfo {
   /**
-   *  public_key is the public key of the signer. It is optional for accounts
-   *  that already exist in state. If unset, the verifier can use the required \
-   *  signer address for this position and lookup the public key.
+   * public_key is the public key of the signer. It is optional for accounts
+   * that already exist in state. If unset, the verifier can use the required \
+   * signer address for this position and lookup the public key.
    */
   publicKey?: Any;
   /**
-   *  mode_info describes the signing mode of the signer and is a nested
-   *  structure to support nested multisig pubkey's
+   * mode_info describes the signing mode of the signer and is a nested
+   * structure to support nested multisig pubkey's
    */
   modeInfo?: ModeInfo;
   /**
-   *  sequence is the sequence of the account, which describes the
-   *  number of committed transactions signed by a given address. It is used to
-   *  prevent replay attacks.
+   * sequence is the sequence of the account, which describes the
+   * number of committed transactions signed by a given address. It is used to
+   * prevent replay attacks.
    */
   sequence: Long;
 }
 
-/**
- *  ModeInfo describes the signing mode of a single or nested multisig signer.
- */
+/** ModeInfo describes the signing mode of a single or nested multisig signer. */
 export interface ModeInfo {
-  /**
-   *  single represents a single signer
-   */
+  /** single represents a single signer */
   single?: ModeInfo_Single | undefined;
-  /**
-   *  multi represents a nested multisig signer
-   */
+  /** multi represents a nested multisig signer */
   multi?: ModeInfo_Multi | undefined;
 }
 
 /**
- *  Single is the mode info for a single signer. It is structured as a message
- *  to allow for additional fields such as locale for SIGN_MODE_TEXTUAL in the
- *  future
+ * Single is the mode info for a single signer. It is structured as a message
+ * to allow for additional fields such as locale for SIGN_MODE_TEXTUAL in the
+ * future
  */
 export interface ModeInfo_Single {
-  /**
-   *  mode is the signing mode of the single signer
-   */
+  /** mode is the signing mode of the single signer */
   mode: SignMode;
 }
 
-/**
- *  Multi is the mode info for a multisig public key
- */
+/** Multi is the mode info for a multisig public key */
 export interface ModeInfo_Multi {
-  /**
-   *  bitarray specifies which keys within the multisig are signing
-   */
+  /** bitarray specifies which keys within the multisig are signing */
   bitarray?: CompactBitArray;
   /**
-   *  mode_infos is the corresponding modes of the signers of the multisig
-   *  which could include nested multisig public keys
+   * mode_infos is the corresponding modes of the signers of the multisig
+   * which could include nested multisig public keys
    */
   modeInfos: ModeInfo[];
 }
 
 /**
- *  Fee includes the amount of coins paid in fees and the maximum
- *  gas to be used by the transaction. The ratio yields an effective "gasprice",
- *  which must be above some miminum to be accepted into the mempool.
+ * Fee includes the amount of coins paid in fees and the maximum
+ * gas to be used by the transaction. The ratio yields an effective "gasprice",
+ * which must be above some miminum to be accepted into the mempool.
  */
 export interface Fee {
-  /**
-   *  amount is the amount of coins to be paid as a fee
-   */
+  /** amount is the amount of coins to be paid as a fee */
   amount: Coin[];
   /**
-   *  gas_limit is the maximum gas that can be used in transaction processing
-   *  before an out of gas error occurs
+   * gas_limit is the maximum gas that can be used in transaction processing
+   * before an out of gas error occurs
    */
   gasLimit: Long;
   /**
-   *  if unset, the first signer is responsible for paying the fees. If set, the specified account must pay the fees.
-   *  the payer must be a tx signer (and thus have signed this field in AuthInfo).
-   *  setting this field does *not* change the ordering of required signers for the transaction.
+   * if unset, the first signer is responsible for paying the fees. If set, the specified account must pay the fees.
+   * the payer must be a tx signer (and thus have signed this field in AuthInfo).
+   * setting this field does *not* change the ordering of required signers for the transaction.
    */
   payer: string;
   /**
-   *  if set, the fee payer (either the first signer or the value of the payer field) requests that a fee grant be used
-   *  to pay fees instead of the fee payer's own balance. If an appropriate fee grant does not exist or the chain does
-   *  not support fee grants, this will fail
+   * if set, the fee payer (either the first signer or the value of the payer field) requests that a fee grant be used
+   * to pay fees instead of the fee payer's own balance. If an appropriate fee grant does not exist or the chain does
+   * not support fee grants, this will fail
    */
   granter: string;
 }
 
 const baseTx: object = {};
-
-const baseTxRaw: object = {};
-
-const baseSignDoc: object = {
-  chainId: "",
-  accountNumber: Long.UZERO,
-};
-
-const baseTxBody: object = {
-  memo: "",
-  timeoutHeight: Long.UZERO,
-};
-
-const baseAuthInfo: object = {};
-
-const baseSignerInfo: object = {
-  sequence: Long.UZERO,
-};
-
-const baseModeInfo: object = {};
-
-const baseModeInfo_Single: object = {
-  mode: 0,
-};
-
-const baseModeInfo_Multi: object = {};
-
-const baseFee: object = {
-  gasLimit: Long.UZERO,
-  payer: "",
-  granter: "",
-};
-
-export const protobufPackage = "cosmos.tx.v1beta1";
 
 export const Tx = {
   encode(message: Tx, writer: Writer = Writer.create()): Writer {
@@ -280,7 +222,8 @@ export const Tx = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): Tx {
+
+  decode(input: Reader | Uint8Array, length?: number): Tx {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseTx } as Tx;
@@ -304,6 +247,7 @@ export const Tx = {
     }
     return message;
   },
+
   fromJSON(object: any): Tx {
     const message = { ...baseTx } as Tx;
     message.signatures = [];
@@ -324,6 +268,7 @@ export const Tx = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<Tx>): Tx {
     const message = { ...baseTx } as Tx;
     message.signatures = [];
@@ -344,6 +289,7 @@ export const Tx = {
     }
     return message;
   },
+
   toJSON(message: Tx): unknown {
     const obj: any = {};
     message.body !== undefined && (obj.body = message.body ? TxBody.toJSON(message.body) : undefined);
@@ -358,6 +304,8 @@ export const Tx = {
   },
 };
 
+const baseTxRaw: object = {};
+
 export const TxRaw = {
   encode(message: TxRaw, writer: Writer = Writer.create()): Writer {
     writer.uint32(10).bytes(message.bodyBytes);
@@ -367,7 +315,8 @@ export const TxRaw = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): TxRaw {
+
+  decode(input: Reader | Uint8Array, length?: number): TxRaw {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseTxRaw } as TxRaw;
@@ -391,6 +340,7 @@ export const TxRaw = {
     }
     return message;
   },
+
   fromJSON(object: any): TxRaw {
     const message = { ...baseTxRaw } as TxRaw;
     message.signatures = [];
@@ -407,6 +357,7 @@ export const TxRaw = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<TxRaw>): TxRaw {
     const message = { ...baseTxRaw } as TxRaw;
     message.signatures = [];
@@ -427,6 +378,7 @@ export const TxRaw = {
     }
     return message;
   },
+
   toJSON(message: TxRaw): unknown {
     const obj: any = {};
     message.bodyBytes !== undefined &&
@@ -446,6 +398,8 @@ export const TxRaw = {
   },
 };
 
+const baseSignDoc: object = { chainId: "", accountNumber: Long.UZERO };
+
 export const SignDoc = {
   encode(message: SignDoc, writer: Writer = Writer.create()): Writer {
     writer.uint32(10).bytes(message.bodyBytes);
@@ -454,7 +408,8 @@ export const SignDoc = {
     writer.uint32(32).uint64(message.accountNumber);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): SignDoc {
+
+  decode(input: Reader | Uint8Array, length?: number): SignDoc {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseSignDoc } as SignDoc;
@@ -480,6 +435,7 @@ export const SignDoc = {
     }
     return message;
   },
+
   fromJSON(object: any): SignDoc {
     const message = { ...baseSignDoc } as SignDoc;
     if (object.bodyBytes !== undefined && object.bodyBytes !== null) {
@@ -500,6 +456,7 @@ export const SignDoc = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<SignDoc>): SignDoc {
     const message = { ...baseSignDoc } as SignDoc;
     if (object.bodyBytes !== undefined && object.bodyBytes !== null) {
@@ -524,6 +481,7 @@ export const SignDoc = {
     }
     return message;
   },
+
   toJSON(message: SignDoc): unknown {
     const obj: any = {};
     message.bodyBytes !== undefined &&
@@ -541,6 +499,8 @@ export const SignDoc = {
   },
 };
 
+const baseTxBody: object = { memo: "", timeoutHeight: Long.UZERO };
+
 export const TxBody = {
   encode(message: TxBody, writer: Writer = Writer.create()): Writer {
     for (const v of message.messages) {
@@ -556,7 +516,8 @@ export const TxBody = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): TxBody {
+
+  decode(input: Reader | Uint8Array, length?: number): TxBody {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseTxBody } as TxBody;
@@ -588,6 +549,7 @@ export const TxBody = {
     }
     return message;
   },
+
   fromJSON(object: any): TxBody {
     const message = { ...baseTxBody } as TxBody;
     message.messages = [];
@@ -620,6 +582,7 @@ export const TxBody = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<TxBody>): TxBody {
     const message = { ...baseTxBody } as TxBody;
     message.messages = [];
@@ -652,6 +615,7 @@ export const TxBody = {
     }
     return message;
   },
+
   toJSON(message: TxBody): unknown {
     const obj: any = {};
     if (message.messages) {
@@ -678,6 +642,8 @@ export const TxBody = {
   },
 };
 
+const baseAuthInfo: object = {};
+
 export const AuthInfo = {
   encode(message: AuthInfo, writer: Writer = Writer.create()): Writer {
     for (const v of message.signerInfos) {
@@ -688,7 +654,8 @@ export const AuthInfo = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): AuthInfo {
+
+  decode(input: Reader | Uint8Array, length?: number): AuthInfo {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseAuthInfo } as AuthInfo;
@@ -709,6 +676,7 @@ export const AuthInfo = {
     }
     return message;
   },
+
   fromJSON(object: any): AuthInfo {
     const message = { ...baseAuthInfo } as AuthInfo;
     message.signerInfos = [];
@@ -724,6 +692,7 @@ export const AuthInfo = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<AuthInfo>): AuthInfo {
     const message = { ...baseAuthInfo } as AuthInfo;
     message.signerInfos = [];
@@ -739,6 +708,7 @@ export const AuthInfo = {
     }
     return message;
   },
+
   toJSON(message: AuthInfo): unknown {
     const obj: any = {};
     if (message.signerInfos) {
@@ -751,6 +721,8 @@ export const AuthInfo = {
   },
 };
 
+const baseSignerInfo: object = { sequence: Long.UZERO };
+
 export const SignerInfo = {
   encode(message: SignerInfo, writer: Writer = Writer.create()): Writer {
     if (message.publicKey !== undefined && message.publicKey !== undefined) {
@@ -762,7 +734,8 @@ export const SignerInfo = {
     writer.uint32(24).uint64(message.sequence);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): SignerInfo {
+
+  decode(input: Reader | Uint8Array, length?: number): SignerInfo {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseSignerInfo } as SignerInfo;
@@ -785,6 +758,7 @@ export const SignerInfo = {
     }
     return message;
   },
+
   fromJSON(object: any): SignerInfo {
     const message = { ...baseSignerInfo } as SignerInfo;
     if (object.publicKey !== undefined && object.publicKey !== null) {
@@ -804,6 +778,7 @@ export const SignerInfo = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<SignerInfo>): SignerInfo {
     const message = { ...baseSignerInfo } as SignerInfo;
     if (object.publicKey !== undefined && object.publicKey !== null) {
@@ -823,6 +798,7 @@ export const SignerInfo = {
     }
     return message;
   },
+
   toJSON(message: SignerInfo): unknown {
     const obj: any = {};
     message.publicKey !== undefined &&
@@ -834,6 +810,8 @@ export const SignerInfo = {
   },
 };
 
+const baseModeInfo: object = {};
+
 export const ModeInfo = {
   encode(message: ModeInfo, writer: Writer = Writer.create()): Writer {
     if (message.single !== undefined) {
@@ -844,7 +822,8 @@ export const ModeInfo = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): ModeInfo {
+
+  decode(input: Reader | Uint8Array, length?: number): ModeInfo {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseModeInfo } as ModeInfo;
@@ -864,6 +843,7 @@ export const ModeInfo = {
     }
     return message;
   },
+
   fromJSON(object: any): ModeInfo {
     const message = { ...baseModeInfo } as ModeInfo;
     if (object.single !== undefined && object.single !== null) {
@@ -878,6 +858,7 @@ export const ModeInfo = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<ModeInfo>): ModeInfo {
     const message = { ...baseModeInfo } as ModeInfo;
     if (object.single !== undefined && object.single !== null) {
@@ -892,6 +873,7 @@ export const ModeInfo = {
     }
     return message;
   },
+
   toJSON(message: ModeInfo): unknown {
     const obj: any = {};
     message.single !== undefined &&
@@ -902,12 +884,15 @@ export const ModeInfo = {
   },
 };
 
+const baseModeInfo_Single: object = { mode: 0 };
+
 export const ModeInfo_Single = {
   encode(message: ModeInfo_Single, writer: Writer = Writer.create()): Writer {
     writer.uint32(8).int32(message.mode);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): ModeInfo_Single {
+
+  decode(input: Reader | Uint8Array, length?: number): ModeInfo_Single {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseModeInfo_Single } as ModeInfo_Single;
@@ -924,6 +909,7 @@ export const ModeInfo_Single = {
     }
     return message;
   },
+
   fromJSON(object: any): ModeInfo_Single {
     const message = { ...baseModeInfo_Single } as ModeInfo_Single;
     if (object.mode !== undefined && object.mode !== null) {
@@ -933,6 +919,7 @@ export const ModeInfo_Single = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<ModeInfo_Single>): ModeInfo_Single {
     const message = { ...baseModeInfo_Single } as ModeInfo_Single;
     if (object.mode !== undefined && object.mode !== null) {
@@ -942,12 +929,15 @@ export const ModeInfo_Single = {
     }
     return message;
   },
+
   toJSON(message: ModeInfo_Single): unknown {
     const obj: any = {};
     message.mode !== undefined && (obj.mode = signModeToJSON(message.mode));
     return obj;
   },
 };
+
+const baseModeInfo_Multi: object = {};
 
 export const ModeInfo_Multi = {
   encode(message: ModeInfo_Multi, writer: Writer = Writer.create()): Writer {
@@ -959,7 +949,8 @@ export const ModeInfo_Multi = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): ModeInfo_Multi {
+
+  decode(input: Reader | Uint8Array, length?: number): ModeInfo_Multi {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseModeInfo_Multi } as ModeInfo_Multi;
@@ -980,6 +971,7 @@ export const ModeInfo_Multi = {
     }
     return message;
   },
+
   fromJSON(object: any): ModeInfo_Multi {
     const message = { ...baseModeInfo_Multi } as ModeInfo_Multi;
     message.modeInfos = [];
@@ -995,6 +987,7 @@ export const ModeInfo_Multi = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<ModeInfo_Multi>): ModeInfo_Multi {
     const message = { ...baseModeInfo_Multi } as ModeInfo_Multi;
     message.modeInfos = [];
@@ -1010,6 +1003,7 @@ export const ModeInfo_Multi = {
     }
     return message;
   },
+
   toJSON(message: ModeInfo_Multi): unknown {
     const obj: any = {};
     message.bitarray !== undefined &&
@@ -1023,6 +1017,8 @@ export const ModeInfo_Multi = {
   },
 };
 
+const baseFee: object = { gasLimit: Long.UZERO, payer: "", granter: "" };
+
 export const Fee = {
   encode(message: Fee, writer: Writer = Writer.create()): Writer {
     for (const v of message.amount) {
@@ -1033,7 +1029,8 @@ export const Fee = {
     writer.uint32(34).string(message.granter);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): Fee {
+
+  decode(input: Reader | Uint8Array, length?: number): Fee {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseFee } as Fee;
@@ -1060,6 +1057,7 @@ export const Fee = {
     }
     return message;
   },
+
   fromJSON(object: any): Fee {
     const message = { ...baseFee } as Fee;
     message.amount = [];
@@ -1085,6 +1083,7 @@ export const Fee = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<Fee>): Fee {
     const message = { ...baseFee } as Fee;
     message.amount = [];
@@ -1110,6 +1109,7 @@ export const Fee = {
     }
     return message;
   },
+
   toJSON(message: Fee): unknown {
     const obj: any = {};
     if (message.amount) {
@@ -1124,15 +1124,18 @@ export const Fee = {
   },
 };
 
-interface WindowBase64 {
-  atob(b64: string): string;
-  btoa(bin: string): string;
-}
+declare var self: any | undefined;
+declare var window: any | undefined;
+var globalThis: any = (() => {
+  if (typeof globalThis !== "undefined") return globalThis;
+  if (typeof self !== "undefined") return self;
+  if (typeof window !== "undefined") return window;
+  if (typeof global !== "undefined") return global;
+  throw new Error("Unable to locate global object");
+})();
 
-const windowBase64 = (globalThis as unknown) as WindowBase64;
-const atob = windowBase64.atob || ((b64: string) => Buffer.from(b64, "base64").toString("binary"));
-const btoa = windowBase64.btoa || ((bin: string) => Buffer.from(bin, "binary").toString("base64"));
-
+const atob: (b64: string) => string =
+  globalThis.atob || ((b64) => globalThis.Buffer.from(b64, "base64").toString("binary"));
 function bytesFromBase64(b64: string): Uint8Array {
   const bin = atob(b64);
   const arr = new Uint8Array(bin.length);
@@ -1142,6 +1145,8 @@ function bytesFromBase64(b64: string): Uint8Array {
   return arr;
 }
 
+const btoa: (bin: string) => string =
+  globalThis.btoa || ((bin) => globalThis.Buffer.from(bin, "binary").toString("base64"));
 function base64FromBytes(arr: Uint8Array): string {
   const bin: string[] = [];
   for (let i = 0; i < arr.byteLength; ++i) {
@@ -1149,7 +1154,8 @@ function base64FromBytes(arr: Uint8Array): string {
   }
   return btoa(bin.join(""));
 }
-type Builtin = Date | Function | Uint8Array | string | number | undefined;
+
+type Builtin = Date | Function | Uint8Array | string | number | undefined | Long;
 export type DeepPartial<T> = T extends Builtin
   ? T
   : T extends Array<infer U>

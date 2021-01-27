@@ -2,64 +2,52 @@
 import * as Long from "long";
 import { Writer, Reader } from "protobufjs/minimal";
 
+export const protobufPackage = "google.protobuf";
+
 /**
- *  The protocol compiler can output a FileDescriptorSet containing the .proto
- *  files it parses.
+ * The protocol compiler can output a FileDescriptorSet containing the .proto
+ * files it parses.
  */
 export interface FileDescriptorSet {
   file: FileDescriptorProto[];
 }
 
-/**
- *  Describes a complete .proto file.
- */
+/** Describes a complete .proto file. */
 export interface FileDescriptorProto {
-  /**
-   *  file name, relative to root of source tree
-   */
+  /** file name, relative to root of source tree */
   name: string;
-  /**
-   *  e.g. "foo", "foo.bar", etc.
-   */
+  /** e.g. "foo", "foo.bar", etc. */
   package: string;
-  /**
-   *  Names of files imported by this file.
-   */
+  /** Names of files imported by this file. */
   dependency: string[];
-  /**
-   *  Indexes of the public imported files in the dependency list above.
-   */
+  /** Indexes of the public imported files in the dependency list above. */
   publicDependency: number[];
   /**
-   *  Indexes of the weak imported files in the dependency list.
-   *  For Google-internal migration only. Do not use.
+   * Indexes of the weak imported files in the dependency list.
+   * For Google-internal migration only. Do not use.
    */
   weakDependency: number[];
-  /**
-   *  All top-level definitions in this file.
-   */
+  /** All top-level definitions in this file. */
   messageType: DescriptorProto[];
   enumType: EnumDescriptorProto[];
   service: ServiceDescriptorProto[];
   extension: FieldDescriptorProto[];
   options?: FileOptions;
   /**
-   *  This field contains optional information about the original source code.
-   *  You may safely remove this entire field without harming runtime
-   *  functionality of the descriptors -- the information is needed only by
-   *  development tools.
+   * This field contains optional information about the original source code.
+   * You may safely remove this entire field without harming runtime
+   * functionality of the descriptors -- the information is needed only by
+   * development tools.
    */
   sourceCodeInfo?: SourceCodeInfo;
   /**
-   *  The syntax of the proto file.
-   *  The supported values are "proto2" and "proto3".
+   * The syntax of the proto file.
+   * The supported values are "proto2" and "proto3".
    */
   syntax: string;
 }
 
-/**
- *  Describes a message type.
- */
+/** Describes a message type. */
 export interface DescriptorProto {
   name: string;
   field: FieldDescriptorProto[];
@@ -71,956 +59,147 @@ export interface DescriptorProto {
   options?: MessageOptions;
   reservedRange: DescriptorProto_ReservedRange[];
   /**
-   *  Reserved field names, which may not be used by fields in the same message.
-   *  A given name may only be reserved once.
+   * Reserved field names, which may not be used by fields in the same message.
+   * A given name may only be reserved once.
    */
   reservedName: string[];
 }
 
 export interface DescriptorProto_ExtensionRange {
-  /**
-   *  Inclusive.
-   */
+  /** Inclusive. */
   start: number;
-  /**
-   *  Exclusive.
-   */
+  /** Exclusive. */
   end: number;
   options?: ExtensionRangeOptions;
 }
 
 /**
- *  Range of reserved tag numbers. Reserved tag numbers may not be used by
- *  fields or extension ranges in the same message. Reserved ranges may
- *  not overlap.
+ * Range of reserved tag numbers. Reserved tag numbers may not be used by
+ * fields or extension ranges in the same message. Reserved ranges may
+ * not overlap.
  */
 export interface DescriptorProto_ReservedRange {
-  /**
-   *  Inclusive.
-   */
+  /** Inclusive. */
   start: number;
-  /**
-   *  Exclusive.
-   */
+  /** Exclusive. */
   end: number;
 }
 
 export interface ExtensionRangeOptions {
-  /**
-   *  The parser stores options it doesn't recognize here. See above.
-   */
+  /** The parser stores options it doesn't recognize here. See above. */
   uninterpretedOption: UninterpretedOption[];
 }
 
-/**
- *  Describes a field within a message.
- */
+/** Describes a field within a message. */
 export interface FieldDescriptorProto {
   name: string;
   number: number;
   label: FieldDescriptorProto_Label;
   /**
-   *  If type_name is set, this need not be set.  If both this and type_name
-   *  are set, this must be one of TYPE_ENUM, TYPE_MESSAGE or TYPE_GROUP.
+   * If type_name is set, this need not be set.  If both this and type_name
+   * are set, this must be one of TYPE_ENUM, TYPE_MESSAGE or TYPE_GROUP.
    */
   type: FieldDescriptorProto_Type;
   /**
-   *  For message and enum types, this is the name of the type.  If the name
-   *  starts with a '.', it is fully-qualified.  Otherwise, C++-like scoping
-   *  rules are used to find the type (i.e. first the nested types within this
-   *  message are searched, then within the parent, on up to the root
-   *  namespace).
+   * For message and enum types, this is the name of the type.  If the name
+   * starts with a '.', it is fully-qualified.  Otherwise, C++-like scoping
+   * rules are used to find the type (i.e. first the nested types within this
+   * message are searched, then within the parent, on up to the root
+   * namespace).
    */
   typeName: string;
   /**
-   *  For extensions, this is the name of the type being extended.  It is
-   *  resolved in the same manner as type_name.
+   * For extensions, this is the name of the type being extended.  It is
+   * resolved in the same manner as type_name.
    */
   extendee: string;
   /**
-   *  For numeric types, contains the original text representation of the value.
-   *  For booleans, "true" or "false".
-   *  For strings, contains the default text contents (not escaped in any way).
-   *  For bytes, contains the C escaped value.  All bytes >= 128 are escaped.
-   *  TODO(kenton):  Base-64 encode?
+   * For numeric types, contains the original text representation of the value.
+   * For booleans, "true" or "false".
+   * For strings, contains the default text contents (not escaped in any way).
+   * For bytes, contains the C escaped value.  All bytes >= 128 are escaped.
+   * TODO(kenton):  Base-64 encode?
    */
   defaultValue: string;
   /**
-   *  If set, gives the index of a oneof in the containing type's oneof_decl
-   *  list.  This field is a member of that oneof.
+   * If set, gives the index of a oneof in the containing type's oneof_decl
+   * list.  This field is a member of that oneof.
    */
   oneofIndex: number;
   /**
-   *  JSON name of this field. The value is set by protocol compiler. If the
-   *  user has set a "json_name" option on this field, that option's value
-   *  will be used. Otherwise, it's deduced from the field's name by converting
-   *  it to camelCase.
+   * JSON name of this field. The value is set by protocol compiler. If the
+   * user has set a "json_name" option on this field, that option's value
+   * will be used. Otherwise, it's deduced from the field's name by converting
+   * it to camelCase.
    */
   jsonName: string;
   options?: FieldOptions;
   /**
-   *  If true, this is a proto3 "optional". When a proto3 field is optional, it
-   *  tracks presence regardless of field type.
+   * If true, this is a proto3 "optional". When a proto3 field is optional, it
+   * tracks presence regardless of field type.
    *
-   *  When proto3_optional is true, this field must be belong to a oneof to
-   *  signal to old proto3 clients that presence is tracked for this field. This
-   *  oneof is known as a "synthetic" oneof, and this field must be its sole
-   *  member (each proto3 optional field gets its own synthetic oneof). Synthetic
-   *  oneofs exist in the descriptor only, and do not generate any API. Synthetic
-   *  oneofs must be ordered after all "real" oneofs.
+   * When proto3_optional is true, this field must be belong to a oneof to
+   * signal to old proto3 clients that presence is tracked for this field. This
+   * oneof is known as a "synthetic" oneof, and this field must be its sole
+   * member (each proto3 optional field gets its own synthetic oneof). Synthetic
+   * oneofs exist in the descriptor only, and do not generate any API. Synthetic
+   * oneofs must be ordered after all "real" oneofs.
    *
-   *  For message fields, proto3_optional doesn't create any semantic change,
-   *  since non-repeated message fields always track presence. However it still
-   *  indicates the semantic detail of whether the user wrote "optional" or not.
-   *  This can be useful for round-tripping the .proto file. For consistency we
-   *  give message fields a synthetic oneof also, even though it is not required
-   *  to track presence. This is especially important because the parser can't
-   *  tell if a field is a message or an enum, so it must always create a
-   *  synthetic oneof.
+   * For message fields, proto3_optional doesn't create any semantic change,
+   * since non-repeated message fields always track presence. However it still
+   * indicates the semantic detail of whether the user wrote "optional" or not.
+   * This can be useful for round-tripping the .proto file. For consistency we
+   * give message fields a synthetic oneof also, even though it is not required
+   * to track presence. This is especially important because the parser can't
+   * tell if a field is a message or an enum, so it must always create a
+   * synthetic oneof.
    *
-   *  Proto2 optional fields do not set this flag, because they already indicate
-   *  optional with `LABEL_OPTIONAL`.
+   * Proto2 optional fields do not set this flag, because they already indicate
+   * optional with `LABEL_OPTIONAL`.
    */
   proto3Optional: boolean;
 }
 
-/**
- *  Describes a oneof.
- */
-export interface OneofDescriptorProto {
-  name: string;
-  options?: OneofOptions;
-}
-
-/**
- *  Describes an enum type.
- */
-export interface EnumDescriptorProto {
-  name: string;
-  value: EnumValueDescriptorProto[];
-  options?: EnumOptions;
-  /**
-   *  Range of reserved numeric values. Reserved numeric values may not be used
-   *  by enum values in the same enum declaration. Reserved ranges may not
-   *  overlap.
-   */
-  reservedRange: EnumDescriptorProto_EnumReservedRange[];
-  /**
-   *  Reserved enum value names, which may not be reused. A given name may only
-   *  be reserved once.
-   */
-  reservedName: string[];
-}
-
-/**
- *  Range of reserved numeric values. Reserved values may not be used by
- *  entries in the same enum. Reserved ranges may not overlap.
- *
- *  Note that this is distinct from DescriptorProto.ReservedRange in that it
- *  is inclusive such that it can appropriately represent the entire int32
- *  domain.
- */
-export interface EnumDescriptorProto_EnumReservedRange {
-  /**
-   *  Inclusive.
-   */
-  start: number;
-  /**
-   *  Inclusive.
-   */
-  end: number;
-}
-
-/**
- *  Describes a value within an enum.
- */
-export interface EnumValueDescriptorProto {
-  name: string;
-  number: number;
-  options?: EnumValueOptions;
-}
-
-/**
- *  Describes a service.
- */
-export interface ServiceDescriptorProto {
-  name: string;
-  method: MethodDescriptorProto[];
-  options?: ServiceOptions;
-}
-
-/**
- *  Describes a method of a service.
- */
-export interface MethodDescriptorProto {
-  name: string;
-  /**
-   *  Input and output type names.  These are resolved in the same way as
-   *  FieldDescriptorProto.type_name, but must refer to a message type.
-   */
-  inputType: string;
-  outputType: string;
-  options?: MethodOptions;
-  /**
-   *  Identifies if client streams multiple client messages
-   */
-  clientStreaming: boolean;
-  /**
-   *  Identifies if server streams multiple server messages
-   */
-  serverStreaming: boolean;
-}
-
-export interface FileOptions {
-  /**
-   *  Sets the Java package where classes generated from this .proto will be
-   *  placed.  By default, the proto package is used, but this is often
-   *  inappropriate because proto packages do not normally start with backwards
-   *  domain names.
-   */
-  javaPackage: string;
-  /**
-   *  If set, all the classes from the .proto file are wrapped in a single
-   *  outer class with the given name.  This applies to both Proto1
-   *  (equivalent to the old "--one_java_file" option) and Proto2 (where
-   *  a .proto always translates to a single class, but you may want to
-   *  explicitly choose the class name).
-   */
-  javaOuterClassname: string;
-  /**
-   *  If set true, then the Java code generator will generate a separate .java
-   *  file for each top-level message, enum, and service defined in the .proto
-   *  file.  Thus, these types will *not* be nested inside the outer class
-   *  named by java_outer_classname.  However, the outer class will still be
-   *  generated to contain the file's getDescriptor() method as well as any
-   *  top-level extensions defined in the file.
-   */
-  javaMultipleFiles: boolean;
-  /**
-   *  This option does nothing.
-   */
-  javaGenerateEqualsAndHash: boolean;
-  /**
-   *  If set true, then the Java2 code generator will generate code that
-   *  throws an exception whenever an attempt is made to assign a non-UTF-8
-   *  byte sequence to a string field.
-   *  Message reflection will do the same.
-   *  However, an extension field still accepts non-UTF-8 byte sequences.
-   *  This option has no effect on when used with the lite runtime.
-   */
-  javaStringCheckUtf8: boolean;
-  optimizeFor: FileOptions_OptimizeMode;
-  /**
-   *  Sets the Go package where structs generated from this .proto will be
-   *  placed. If omitted, the Go package will be derived from the following:
-   *    - The basename of the package import path, if provided.
-   *    - Otherwise, the package statement in the .proto file, if present.
-   *    - Otherwise, the basename of the .proto file, without extension.
-   */
-  goPackage: string;
-  /**
-   *  Should generic services be generated in each language?  "Generic" services
-   *  are not specific to any particular RPC system.  They are generated by the
-   *  main code generators in each language (without additional plugins).
-   *  Generic services were the only kind of service generation supported by
-   *  early versions of google.protobuf.
-   *
-   *  Generic services are now considered deprecated in favor of using plugins
-   *  that generate code specific to your particular RPC system.  Therefore,
-   *  these default to false.  Old code which depends on generic services should
-   *  explicitly set them to true.
-   */
-  ccGenericServices: boolean;
-  javaGenericServices: boolean;
-  pyGenericServices: boolean;
-  phpGenericServices: boolean;
-  /**
-   *  Is this file deprecated?
-   *  Depending on the target platform, this can emit Deprecated annotations
-   *  for everything in the file, or it will be completely ignored; in the very
-   *  least, this is a formalization for deprecating files.
-   */
-  deprecated: boolean;
-  /**
-   *  Enables the use of arenas for the proto messages in this file. This applies
-   *  only to generated classes for C++.
-   */
-  ccEnableArenas: boolean;
-  /**
-   *  Sets the objective c class prefix which is prepended to all objective c
-   *  generated classes from this .proto. There is no default.
-   */
-  objcClassPrefix: string;
-  /**
-   *  Namespace for generated classes; defaults to the package.
-   */
-  csharpNamespace: string;
-  /**
-   *  By default Swift generators will take the proto package and CamelCase it
-   *  replacing '.' with underscore and use that to prefix the types/symbols
-   *  defined. When this options is provided, they will use this value instead
-   *  to prefix the types/symbols defined.
-   */
-  swiftPrefix: string;
-  /**
-   *  Sets the php class prefix which is prepended to all php generated classes
-   *  from this .proto. Default is empty.
-   */
-  phpClassPrefix: string;
-  /**
-   *  Use this option to change the namespace of php generated classes. Default
-   *  is empty. When this option is empty, the package name will be used for
-   *  determining the namespace.
-   */
-  phpNamespace: string;
-  /**
-   *  Use this option to change the namespace of php generated metadata classes.
-   *  Default is empty. When this option is empty, the proto file name will be
-   *  used for determining the namespace.
-   */
-  phpMetadataNamespace: string;
-  /**
-   *  Use this option to change the package of ruby generated classes. Default
-   *  is empty. When this option is not set, the package name will be used for
-   *  determining the ruby package.
-   */
-  rubyPackage: string;
-  /**
-   *  The parser stores options it doesn't recognize here.
-   *  See the documentation for the "Options" section above.
-   */
-  uninterpretedOption: UninterpretedOption[];
-}
-
-export interface MessageOptions {
-  /**
-   *  Set true to use the old proto1 MessageSet wire format for extensions.
-   *  This is provided for backwards-compatibility with the MessageSet wire
-   *  format.  You should not use this for any other reason:  It's less
-   *  efficient, has fewer features, and is more complicated.
-   *
-   *  The message must be defined exactly as follows:
-   *    message Foo {
-   *      option message_set_wire_format = true;
-   *      extensions 4 to max;
-   *    }
-   *  Note that the message cannot have any defined fields; MessageSets only
-   *  have extensions.
-   *
-   *  All extensions of your type must be singular messages; e.g. they cannot
-   *  be int32s, enums, or repeated messages.
-   *
-   *  Because this is an option, the above two restrictions are not enforced by
-   *  the protocol compiler.
-   */
-  messageSetWireFormat: boolean;
-  /**
-   *  Disables the generation of the standard "descriptor()" accessor, which can
-   *  conflict with a field of the same name.  This is meant to make migration
-   *  from proto1 easier; new code should avoid fields named "descriptor".
-   */
-  noStandardDescriptorAccessor: boolean;
-  /**
-   *  Is this message deprecated?
-   *  Depending on the target platform, this can emit Deprecated annotations
-   *  for the message, or it will be completely ignored; in the very least,
-   *  this is a formalization for deprecating messages.
-   */
-  deprecated: boolean;
-  /**
-   *  Whether the message is an automatically generated map entry type for the
-   *  maps field.
-   *
-   *  For maps fields:
-   *      map<KeyType, ValueType> map_field = 1;
-   *  The parsed descriptor looks like:
-   *      message MapFieldEntry {
-   *          option map_entry = true;
-   *          optional KeyType key = 1;
-   *          optional ValueType value = 2;
-   *      }
-   *      repeated MapFieldEntry map_field = 1;
-   *
-   *  Implementations may choose not to generate the map_entry=true message, but
-   *  use a native map in the target language to hold the keys and values.
-   *  The reflection APIs in such implementations still need to work as
-   *  if the field is a repeated message field.
-   *
-   *  NOTE: Do not set the option in .proto files. Always use the maps syntax
-   *  instead. The option should only be implicitly set by the proto compiler
-   *  parser.
-   */
-  mapEntry: boolean;
-  /**
-   *  The parser stores options it doesn't recognize here. See above.
-   */
-  uninterpretedOption: UninterpretedOption[];
-}
-
-export interface FieldOptions {
-  /**
-   *  The ctype option instructs the C++ code generator to use a different
-   *  representation of the field than it normally would.  See the specific
-   *  options below.  This option is not yet implemented in the open source
-   *  release -- sorry, we'll try to include it in a future version!
-   */
-  ctype: FieldOptions_CType;
-  /**
-   *  The packed option can be enabled for repeated primitive fields to enable
-   *  a more efficient representation on the wire. Rather than repeatedly
-   *  writing the tag and type for each element, the entire array is encoded as
-   *  a single length-delimited blob. In proto3, only explicit setting it to
-   *  false will avoid using packed encoding.
-   */
-  packed: boolean;
-  /**
-   *  The jstype option determines the JavaScript type used for values of the
-   *  field.  The option is permitted only for 64 bit integral and fixed types
-   *  (int64, uint64, sint64, fixed64, sfixed64).  A field with jstype JS_STRING
-   *  is represented as JavaScript string, which avoids loss of precision that
-   *  can happen when a large value is converted to a floating point JavaScript.
-   *  Specifying JS_NUMBER for the jstype causes the generated JavaScript code to
-   *  use the JavaScript "number" type.  The behavior of the default option
-   *  JS_NORMAL is implementation dependent.
-   *
-   *  This option is an enum to permit additional types to be added, e.g.
-   *  goog.math.Integer.
-   */
-  jstype: FieldOptions_JSType;
-  /**
-   *  Should this field be parsed lazily?  Lazy applies only to message-type
-   *  fields.  It means that when the outer message is initially parsed, the
-   *  inner message's contents will not be parsed but instead stored in encoded
-   *  form.  The inner message will actually be parsed when it is first accessed.
-   *
-   *  This is only a hint.  Implementations are free to choose whether to use
-   *  eager or lazy parsing regardless of the value of this option.  However,
-   *  setting this option true suggests that the protocol author believes that
-   *  using lazy parsing on this field is worth the additional bookkeeping
-   *  overhead typically needed to implement it.
-   *
-   *  This option does not affect the public interface of any generated code;
-   *  all method signatures remain the same.  Furthermore, thread-safety of the
-   *  interface is not affected by this option; const methods remain safe to
-   *  call from multiple threads concurrently, while non-const methods continue
-   *  to require exclusive access.
-   *
-   *
-   *  Note that implementations may choose not to check required fields within
-   *  a lazy sub-message.  That is, calling IsInitialized() on the outer message
-   *  may return true even if the inner message has missing required fields.
-   *  This is necessary because otherwise the inner message would have to be
-   *  parsed in order to perform the check, defeating the purpose of lazy
-   *  parsing.  An implementation which chooses not to check required fields
-   *  must be consistent about it.  That is, for any particular sub-message, the
-   *  implementation must either *always* check its required fields, or *never*
-   *  check its required fields, regardless of whether or not the message has
-   *  been parsed.
-   */
-  lazy: boolean;
-  /**
-   *  Is this field deprecated?
-   *  Depending on the target platform, this can emit Deprecated annotations
-   *  for accessors, or it will be completely ignored; in the very least, this
-   *  is a formalization for deprecating fields.
-   */
-  deprecated: boolean;
-  /**
-   *  For Google-internal migration only. Do not use.
-   */
-  weak: boolean;
-  /**
-   *  The parser stores options it doesn't recognize here. See above.
-   */
-  uninterpretedOption: UninterpretedOption[];
-}
-
-export interface OneofOptions {
-  /**
-   *  The parser stores options it doesn't recognize here. See above.
-   */
-  uninterpretedOption: UninterpretedOption[];
-}
-
-export interface EnumOptions {
-  /**
-   *  Set this option to true to allow mapping different tag names to the same
-   *  value.
-   */
-  allowAlias: boolean;
-  /**
-   *  Is this enum deprecated?
-   *  Depending on the target platform, this can emit Deprecated annotations
-   *  for the enum, or it will be completely ignored; in the very least, this
-   *  is a formalization for deprecating enums.
-   */
-  deprecated: boolean;
-  /**
-   *  The parser stores options it doesn't recognize here. See above.
-   */
-  uninterpretedOption: UninterpretedOption[];
-}
-
-export interface EnumValueOptions {
-  /**
-   *  Is this enum value deprecated?
-   *  Depending on the target platform, this can emit Deprecated annotations
-   *  for the enum value, or it will be completely ignored; in the very least,
-   *  this is a formalization for deprecating enum values.
-   */
-  deprecated: boolean;
-  /**
-   *  The parser stores options it doesn't recognize here. See above.
-   */
-  uninterpretedOption: UninterpretedOption[];
-}
-
-export interface ServiceOptions {
-  /**
-   *  Is this service deprecated?
-   *  Depending on the target platform, this can emit Deprecated annotations
-   *  for the service, or it will be completely ignored; in the very least,
-   *  this is a formalization for deprecating services.
-   */
-  deprecated: boolean;
-  /**
-   *  The parser stores options it doesn't recognize here. See above.
-   */
-  uninterpretedOption: UninterpretedOption[];
-}
-
-export interface MethodOptions {
-  /**
-   *  Is this method deprecated?
-   *  Depending on the target platform, this can emit Deprecated annotations
-   *  for the method, or it will be completely ignored; in the very least,
-   *  this is a formalization for deprecating methods.
-   */
-  deprecated: boolean;
-  idempotencyLevel: MethodOptions_IdempotencyLevel;
-  /**
-   *  The parser stores options it doesn't recognize here. See above.
-   */
-  uninterpretedOption: UninterpretedOption[];
-}
-
-/**
- *  A message representing a option the parser does not recognize. This only
- *  appears in options protos created by the compiler::Parser class.
- *  DescriptorPool resolves these when building Descriptor objects. Therefore,
- *  options protos in descriptor objects (e.g. returned by Descriptor::options(),
- *  or produced by Descriptor::CopyTo()) will never have UninterpretedOptions
- *  in them.
- */
-export interface UninterpretedOption {
-  name: UninterpretedOption_NamePart[];
-  /**
-   *  The value of the uninterpreted option, in whatever type the tokenizer
-   *  identified it as during parsing. Exactly one of these should be set.
-   */
-  identifierValue: string;
-  positiveIntValue: Long;
-  negativeIntValue: Long;
-  doubleValue: number;
-  stringValue: Uint8Array;
-  aggregateValue: string;
-}
-
-/**
- *  The name of the uninterpreted option.  Each string represents a segment in
- *  a dot-separated name.  is_extension is true iff a segment represents an
- *  extension (denoted with parentheses in options specs in .proto files).
- *  E.g.,{ ["foo", false], ["bar.baz", true], ["qux", false] } represents
- *  "foo.(bar.baz).qux".
- */
-export interface UninterpretedOption_NamePart {
-  namePart: string;
-  isExtension: boolean;
-}
-
-/**
- *  Encapsulates information about the original source file from which a
- *  FileDescriptorProto was generated.
- */
-export interface SourceCodeInfo {
-  /**
-   *  A Location identifies a piece of source code in a .proto file which
-   *  corresponds to a particular definition.  This information is intended
-   *  to be useful to IDEs, code indexers, documentation generators, and similar
-   *  tools.
-   *
-   *  For example, say we have a file like:
-   *    message Foo {
-   *      optional string foo = 1;
-   *    }
-   *  Let's look at just the field definition:
-   *    optional string foo = 1;
-   *    ^       ^^     ^^  ^  ^^^
-   *    a       bc     de  f  ghi
-   *  We have the following locations:
-   *    span   path               represents
-   *    [a,i)  [ 4, 0, 2, 0 ]     The whole field definition.
-   *    [a,b)  [ 4, 0, 2, 0, 4 ]  The label (optional).
-   *    [c,d)  [ 4, 0, 2, 0, 5 ]  The type (string).
-   *    [e,f)  [ 4, 0, 2, 0, 1 ]  The name (foo).
-   *    [g,h)  [ 4, 0, 2, 0, 3 ]  The number (1).
-   *
-   *  Notes:
-   *  - A location may refer to a repeated field itself (i.e. not to any
-   *    particular index within it).  This is used whenever a set of elements are
-   *    logically enclosed in a single code segment.  For example, an entire
-   *    extend block (possibly containing multiple extension definitions) will
-   *    have an outer location whose path refers to the "extensions" repeated
-   *    field without an index.
-   *  - Multiple locations may have the same path.  This happens when a single
-   *    logical declaration is spread out across multiple places.  The most
-   *    obvious example is the "extend" block again -- there may be multiple
-   *    extend blocks in the same scope, each of which will have the same path.
-   *  - A location's span is not always a subset of its parent's span.  For
-   *    example, the "extendee" of an extension declaration appears at the
-   *    beginning of the "extend" block and is shared by all extensions within
-   *    the block.
-   *  - Just because a location's span is a subset of some other location's span
-   *    does not mean that it is a descendant.  For example, a "group" defines
-   *    both a type and a field in a single declaration.  Thus, the locations
-   *    corresponding to the type and field and their components will overlap.
-   *  - Code which tries to interpret locations should probably be designed to
-   *    ignore those that it doesn't understand, as more types of locations could
-   *    be recorded in the future.
-   */
-  location: SourceCodeInfo_Location[];
-}
-
-export interface SourceCodeInfo_Location {
-  /**
-   *  Identifies which part of the FileDescriptorProto was defined at this
-   *  location.
-   *
-   *  Each element is a field number or an index.  They form a path from
-   *  the root FileDescriptorProto to the place where the definition.  For
-   *  example, this path:
-   *    [ 4, 3, 2, 7, 1 ]
-   *  refers to:
-   *    file.message_type(3)  // 4, 3
-   *        .field(7)         // 2, 7
-   *        .name()           // 1
-   *  This is because FileDescriptorProto.message_type has field number 4:
-   *    repeated DescriptorProto message_type = 4;
-   *  and DescriptorProto.field has field number 2:
-   *    repeated FieldDescriptorProto field = 2;
-   *  and FieldDescriptorProto.name has field number 1:
-   *    optional string name = 1;
-   *
-   *  Thus, the above path gives the location of a field name.  If we removed
-   *  the last element:
-   *    [ 4, 3, 2, 7 ]
-   *  this path refers to the whole field declaration (from the beginning
-   *  of the label to the terminating semicolon).
-   */
-  path: number[];
-  /**
-   *  Always has exactly three or four elements: start line, start column,
-   *  end line (optional, otherwise assumed same as start line), end column.
-   *  These are packed into a single field for efficiency.  Note that line
-   *  and column numbers are zero-based -- typically you will want to add
-   *  1 to each before displaying to a user.
-   */
-  span: number[];
-  /**
-   *  If this SourceCodeInfo represents a complete declaration, these are any
-   *  comments appearing before and after the declaration which appear to be
-   *  attached to the declaration.
-   *
-   *  A series of line comments appearing on consecutive lines, with no other
-   *  tokens appearing on those lines, will be treated as a single comment.
-   *
-   *  leading_detached_comments will keep paragraphs of comments that appear
-   *  before (but not connected to) the current element. Each paragraph,
-   *  separated by empty lines, will be one comment element in the repeated
-   *  field.
-   *
-   *  Only the comment content is provided; comment markers (e.g. //) are
-   *  stripped out.  For block comments, leading whitespace and an asterisk
-   *  will be stripped from the beginning of each line other than the first.
-   *  Newlines are included in the output.
-   *
-   *  Examples:
-   *
-   *    optional int32 foo = 1;  // Comment attached to foo.
-   *    // Comment attached to bar.
-   *    optional int32 bar = 2;
-   *
-   *    optional string baz = 3;
-   *    // Comment attached to baz.
-   *    // Another line attached to baz.
-   *
-   *    // Comment attached to qux.
-   *    //
-   *    // Another line attached to qux.
-   *    optional double qux = 4;
-   *
-   *    // Detached comment for corge. This is not leading or trailing comments
-   *    // to qux or corge because there are blank lines separating it from
-   *    // both.
-   *
-   *    // Detached comment for corge paragraph 2.
-   *
-   *    optional string corge = 5;
-   *    /* Block comment attached
-   *     * to corge.  Leading asterisks
-   *     * will be removed. * /
-   *    /* Block comment attached to
-   *     * grault. * /
-   *    optional int32 grault = 6;
-   *
-   *    // ignored detached comments.
-   */
-  leadingComments: string;
-  trailingComments: string;
-  leadingDetachedComments: string[];
-}
-
-/**
- *  Describes the relationship between generated code and its original source
- *  file. A GeneratedCodeInfo message is associated with only one generated
- *  source file, but may contain references to different source .proto files.
- */
-export interface GeneratedCodeInfo {
-  /**
-   *  An Annotation connects some span of text in generated code to an element
-   *  of its generating .proto file.
-   */
-  annotation: GeneratedCodeInfo_Annotation[];
-}
-
-export interface GeneratedCodeInfo_Annotation {
-  /**
-   *  Identifies the element in the original source .proto file. This field
-   *  is formatted the same as SourceCodeInfo.Location.path.
-   */
-  path: number[];
-  /**
-   *  Identifies the filesystem path to the original source .proto.
-   */
-  sourceFile: string;
-  /**
-   *  Identifies the starting offset in bytes in the generated code
-   *  that relates to the identified object.
-   */
-  begin: number;
-  /**
-   *  Identifies the ending offset in bytes in the generated code that
-   *  relates to the identified offset. The end offset should be one past
-   *  the last relevant byte (so the length of the text = end - begin).
-   */
-  end: number;
-}
-
-const baseFileDescriptorSet: object = {};
-
-const baseFileDescriptorProto: object = {
-  name: "",
-  package: "",
-  dependency: "",
-  publicDependency: 0,
-  weakDependency: 0,
-  syntax: "",
-};
-
-const baseDescriptorProto: object = {
-  name: "",
-  reservedName: "",
-};
-
-const baseDescriptorProto_ExtensionRange: object = {
-  start: 0,
-  end: 0,
-};
-
-const baseDescriptorProto_ReservedRange: object = {
-  start: 0,
-  end: 0,
-};
-
-const baseExtensionRangeOptions: object = {};
-
-const baseFieldDescriptorProto: object = {
-  name: "",
-  number: 0,
-  label: 1,
-  type: 1,
-  typeName: "",
-  extendee: "",
-  defaultValue: "",
-  oneofIndex: 0,
-  jsonName: "",
-  proto3Optional: false,
-};
-
-const baseOneofDescriptorProto: object = {
-  name: "",
-};
-
-const baseEnumDescriptorProto: object = {
-  name: "",
-  reservedName: "",
-};
-
-const baseEnumDescriptorProto_EnumReservedRange: object = {
-  start: 0,
-  end: 0,
-};
-
-const baseEnumValueDescriptorProto: object = {
-  name: "",
-  number: 0,
-};
-
-const baseServiceDescriptorProto: object = {
-  name: "",
-};
-
-const baseMethodDescriptorProto: object = {
-  name: "",
-  inputType: "",
-  outputType: "",
-  clientStreaming: false,
-  serverStreaming: false,
-};
-
-const baseFileOptions: object = {
-  javaPackage: "",
-  javaOuterClassname: "",
-  javaMultipleFiles: false,
-  javaGenerateEqualsAndHash: false,
-  javaStringCheckUtf8: false,
-  optimizeFor: 1,
-  goPackage: "",
-  ccGenericServices: false,
-  javaGenericServices: false,
-  pyGenericServices: false,
-  phpGenericServices: false,
-  deprecated: false,
-  ccEnableArenas: false,
-  objcClassPrefix: "",
-  csharpNamespace: "",
-  swiftPrefix: "",
-  phpClassPrefix: "",
-  phpNamespace: "",
-  phpMetadataNamespace: "",
-  rubyPackage: "",
-};
-
-const baseMessageOptions: object = {
-  messageSetWireFormat: false,
-  noStandardDescriptorAccessor: false,
-  deprecated: false,
-  mapEntry: false,
-};
-
-const baseFieldOptions: object = {
-  ctype: 0,
-  packed: false,
-  jstype: 0,
-  lazy: false,
-  deprecated: false,
-  weak: false,
-};
-
-const baseOneofOptions: object = {};
-
-const baseEnumOptions: object = {
-  allowAlias: false,
-  deprecated: false,
-};
-
-const baseEnumValueOptions: object = {
-  deprecated: false,
-};
-
-const baseServiceOptions: object = {
-  deprecated: false,
-};
-
-const baseMethodOptions: object = {
-  deprecated: false,
-  idempotencyLevel: 0,
-};
-
-const baseUninterpretedOption: object = {
-  identifierValue: "",
-  positiveIntValue: Long.UZERO,
-  negativeIntValue: Long.ZERO,
-  doubleValue: 0,
-  aggregateValue: "",
-};
-
-const baseUninterpretedOption_NamePart: object = {
-  namePart: "",
-  isExtension: false,
-};
-
-const baseSourceCodeInfo: object = {};
-
-const baseSourceCodeInfo_Location: object = {
-  path: 0,
-  span: 0,
-  leadingComments: "",
-  trailingComments: "",
-  leadingDetachedComments: "",
-};
-
-const baseGeneratedCodeInfo: object = {};
-
-const baseGeneratedCodeInfo_Annotation: object = {
-  path: 0,
-  sourceFile: "",
-  begin: 0,
-  end: 0,
-};
-
-export const protobufPackage = "google.protobuf";
-
 export enum FieldDescriptorProto_Type {
-  /** TYPE_DOUBLE -  0 is reserved for errors.
-   Order is weird for historical reasons.
+  /**
+   * TYPE_DOUBLE - 0 is reserved for errors.
+   * Order is weird for historical reasons.
    */
   TYPE_DOUBLE = 1,
   TYPE_FLOAT = 2,
-  /** TYPE_INT64 -  Not ZigZag encoded.  Negative numbers take 10 bytes.  Use TYPE_SINT64 if
-   negative values are likely.
+  /**
+   * TYPE_INT64 - Not ZigZag encoded.  Negative numbers take 10 bytes.  Use TYPE_SINT64 if
+   * negative values are likely.
    */
   TYPE_INT64 = 3,
   TYPE_UINT64 = 4,
-  /** TYPE_INT32 -  Not ZigZag encoded.  Negative numbers take 10 bytes.  Use TYPE_SINT32 if
-   negative values are likely.
+  /**
+   * TYPE_INT32 - Not ZigZag encoded.  Negative numbers take 10 bytes.  Use TYPE_SINT32 if
+   * negative values are likely.
    */
   TYPE_INT32 = 5,
   TYPE_FIXED64 = 6,
   TYPE_FIXED32 = 7,
   TYPE_BOOL = 8,
   TYPE_STRING = 9,
-  /** TYPE_GROUP -  Tag-delimited aggregate.
-   Group type is deprecated and not supported in proto3. However, Proto3
-   implementations should still be able to parse the group wire format and
-   treat group fields as unknown fields.
+  /**
+   * TYPE_GROUP - Tag-delimited aggregate.
+   * Group type is deprecated and not supported in proto3. However, Proto3
+   * implementations should still be able to parse the group wire format and
+   * treat group fields as unknown fields.
    */
   TYPE_GROUP = 10,
-  /** TYPE_MESSAGE -  Length-delimited aggregate.
-   */
+  /** TYPE_MESSAGE - Length-delimited aggregate. */
   TYPE_MESSAGE = 11,
-  /** TYPE_BYTES -  New in version 2.
-   */
+  /** TYPE_BYTES - New in version 2. */
   TYPE_BYTES = 12,
   TYPE_UINT32 = 13,
   TYPE_ENUM = 14,
   TYPE_SFIXED32 = 15,
   TYPE_SFIXED64 = 16,
-  /** TYPE_SINT32 -  Uses ZigZag encoding.
-   */
+  /** TYPE_SINT32 - Uses ZigZag encoding. */
   TYPE_SINT32 = 17,
-  /** TYPE_SINT64 -  Uses ZigZag encoding.
-   */
+  /** TYPE_SINT64 - Uses ZigZag encoding. */
   TYPE_SINT64 = 18,
   UNRECOGNIZED = -1,
 }
@@ -1132,8 +311,7 @@ export function fieldDescriptorProto_TypeToJSON(object: FieldDescriptorProto_Typ
 }
 
 export enum FieldDescriptorProto_Label {
-  /** LABEL_OPTIONAL -  0 is reserved for errors
-   */
+  /** LABEL_OPTIONAL - 0 is reserved for errors */
   LABEL_OPTIONAL = 1,
   LABEL_REQUIRED = 2,
   LABEL_REPEATED = 3,
@@ -1171,17 +349,203 @@ export function fieldDescriptorProto_LabelToJSON(object: FieldDescriptorProto_La
   }
 }
 
-/**  Generated classes can be optimized for speed or code size.
+/** Describes a oneof. */
+export interface OneofDescriptorProto {
+  name: string;
+  options?: OneofOptions;
+}
+
+/** Describes an enum type. */
+export interface EnumDescriptorProto {
+  name: string;
+  value: EnumValueDescriptorProto[];
+  options?: EnumOptions;
+  /**
+   * Range of reserved numeric values. Reserved numeric values may not be used
+   * by enum values in the same enum declaration. Reserved ranges may not
+   * overlap.
+   */
+  reservedRange: EnumDescriptorProto_EnumReservedRange[];
+  /**
+   * Reserved enum value names, which may not be reused. A given name may only
+   * be reserved once.
+   */
+  reservedName: string[];
+}
+
+/**
+ * Range of reserved numeric values. Reserved values may not be used by
+ * entries in the same enum. Reserved ranges may not overlap.
+ *
+ * Note that this is distinct from DescriptorProto.ReservedRange in that it
+ * is inclusive such that it can appropriately represent the entire int32
+ * domain.
  */
+export interface EnumDescriptorProto_EnumReservedRange {
+  /** Inclusive. */
+  start: number;
+  /** Inclusive. */
+  end: number;
+}
+
+/** Describes a value within an enum. */
+export interface EnumValueDescriptorProto {
+  name: string;
+  number: number;
+  options?: EnumValueOptions;
+}
+
+/** Describes a service. */
+export interface ServiceDescriptorProto {
+  name: string;
+  method: MethodDescriptorProto[];
+  options?: ServiceOptions;
+}
+
+/** Describes a method of a service. */
+export interface MethodDescriptorProto {
+  name: string;
+  /**
+   * Input and output type names.  These are resolved in the same way as
+   * FieldDescriptorProto.type_name, but must refer to a message type.
+   */
+  inputType: string;
+  outputType: string;
+  options?: MethodOptions;
+  /** Identifies if client streams multiple client messages */
+  clientStreaming: boolean;
+  /** Identifies if server streams multiple server messages */
+  serverStreaming: boolean;
+}
+
+export interface FileOptions {
+  /**
+   * Sets the Java package where classes generated from this .proto will be
+   * placed.  By default, the proto package is used, but this is often
+   * inappropriate because proto packages do not normally start with backwards
+   * domain names.
+   */
+  javaPackage: string;
+  /**
+   * If set, all the classes from the .proto file are wrapped in a single
+   * outer class with the given name.  This applies to both Proto1
+   * (equivalent to the old "--one_java_file" option) and Proto2 (where
+   * a .proto always translates to a single class, but you may want to
+   * explicitly choose the class name).
+   */
+  javaOuterClassname: string;
+  /**
+   * If set true, then the Java code generator will generate a separate .java
+   * file for each top-level message, enum, and service defined in the .proto
+   * file.  Thus, these types will *not* be nested inside the outer class
+   * named by java_outer_classname.  However, the outer class will still be
+   * generated to contain the file's getDescriptor() method as well as any
+   * top-level extensions defined in the file.
+   */
+  javaMultipleFiles: boolean;
+  /**
+   * This option does nothing.
+   *
+   * @deprecated
+   */
+  javaGenerateEqualsAndHash: boolean;
+  /**
+   * If set true, then the Java2 code generator will generate code that
+   * throws an exception whenever an attempt is made to assign a non-UTF-8
+   * byte sequence to a string field.
+   * Message reflection will do the same.
+   * However, an extension field still accepts non-UTF-8 byte sequences.
+   * This option has no effect on when used with the lite runtime.
+   */
+  javaStringCheckUtf8: boolean;
+  optimizeFor: FileOptions_OptimizeMode;
+  /**
+   * Sets the Go package where structs generated from this .proto will be
+   * placed. If omitted, the Go package will be derived from the following:
+   *   - The basename of the package import path, if provided.
+   *   - Otherwise, the package statement in the .proto file, if present.
+   *   - Otherwise, the basename of the .proto file, without extension.
+   */
+  goPackage: string;
+  /**
+   * Should generic services be generated in each language?  "Generic" services
+   * are not specific to any particular RPC system.  They are generated by the
+   * main code generators in each language (without additional plugins).
+   * Generic services were the only kind of service generation supported by
+   * early versions of google.protobuf.
+   *
+   * Generic services are now considered deprecated in favor of using plugins
+   * that generate code specific to your particular RPC system.  Therefore,
+   * these default to false.  Old code which depends on generic services should
+   * explicitly set them to true.
+   */
+  ccGenericServices: boolean;
+  javaGenericServices: boolean;
+  pyGenericServices: boolean;
+  phpGenericServices: boolean;
+  /**
+   * Is this file deprecated?
+   * Depending on the target platform, this can emit Deprecated annotations
+   * for everything in the file, or it will be completely ignored; in the very
+   * least, this is a formalization for deprecating files.
+   */
+  deprecated: boolean;
+  /**
+   * Enables the use of arenas for the proto messages in this file. This applies
+   * only to generated classes for C++.
+   */
+  ccEnableArenas: boolean;
+  /**
+   * Sets the objective c class prefix which is prepended to all objective c
+   * generated classes from this .proto. There is no default.
+   */
+  objcClassPrefix: string;
+  /** Namespace for generated classes; defaults to the package. */
+  csharpNamespace: string;
+  /**
+   * By default Swift generators will take the proto package and CamelCase it
+   * replacing '.' with underscore and use that to prefix the types/symbols
+   * defined. When this options is provided, they will use this value instead
+   * to prefix the types/symbols defined.
+   */
+  swiftPrefix: string;
+  /**
+   * Sets the php class prefix which is prepended to all php generated classes
+   * from this .proto. Default is empty.
+   */
+  phpClassPrefix: string;
+  /**
+   * Use this option to change the namespace of php generated classes. Default
+   * is empty. When this option is empty, the package name will be used for
+   * determining the namespace.
+   */
+  phpNamespace: string;
+  /**
+   * Use this option to change the namespace of php generated metadata classes.
+   * Default is empty. When this option is empty, the proto file name will be
+   * used for determining the namespace.
+   */
+  phpMetadataNamespace: string;
+  /**
+   * Use this option to change the package of ruby generated classes. Default
+   * is empty. When this option is not set, the package name will be used for
+   * determining the ruby package.
+   */
+  rubyPackage: string;
+  /**
+   * The parser stores options it doesn't recognize here.
+   * See the documentation for the "Options" section above.
+   */
+  uninterpretedOption: UninterpretedOption[];
+}
+
+/** Generated classes can be optimized for speed or code size. */
 export enum FileOptions_OptimizeMode {
-  /** SPEED -  Generate complete code for parsing, serialization,
-   */
+  /** SPEED - Generate complete code for parsing, serialization, */
   SPEED = 1,
-  /** CODE_SIZE -  etc.
-   */
+  /** CODE_SIZE - etc. */
   CODE_SIZE = 2,
-  /** LITE_RUNTIME -  Generate code using MessageLite and the lite runtime.
-   */
+  /** LITE_RUNTIME - Generate code using MessageLite and the lite runtime. */
   LITE_RUNTIME = 3,
   UNRECOGNIZED = -1,
 }
@@ -1217,9 +581,145 @@ export function fileOptions_OptimizeModeToJSON(object: FileOptions_OptimizeMode)
   }
 }
 
-export enum FieldOptions_CType {
-  /** STRING -  Default mode.
+export interface MessageOptions {
+  /**
+   * Set true to use the old proto1 MessageSet wire format for extensions.
+   * This is provided for backwards-compatibility with the MessageSet wire
+   * format.  You should not use this for any other reason:  It's less
+   * efficient, has fewer features, and is more complicated.
+   *
+   * The message must be defined exactly as follows:
+   *   message Foo {
+   *     option message_set_wire_format = true;
+   *     extensions 4 to max;
+   *   }
+   * Note that the message cannot have any defined fields; MessageSets only
+   * have extensions.
+   *
+   * All extensions of your type must be singular messages; e.g. they cannot
+   * be int32s, enums, or repeated messages.
+   *
+   * Because this is an option, the above two restrictions are not enforced by
+   * the protocol compiler.
    */
+  messageSetWireFormat: boolean;
+  /**
+   * Disables the generation of the standard "descriptor()" accessor, which can
+   * conflict with a field of the same name.  This is meant to make migration
+   * from proto1 easier; new code should avoid fields named "descriptor".
+   */
+  noStandardDescriptorAccessor: boolean;
+  /**
+   * Is this message deprecated?
+   * Depending on the target platform, this can emit Deprecated annotations
+   * for the message, or it will be completely ignored; in the very least,
+   * this is a formalization for deprecating messages.
+   */
+  deprecated: boolean;
+  /**
+   * Whether the message is an automatically generated map entry type for the
+   * maps field.
+   *
+   * For maps fields:
+   *     map<KeyType, ValueType> map_field = 1;
+   * The parsed descriptor looks like:
+   *     message MapFieldEntry {
+   *         option map_entry = true;
+   *         optional KeyType key = 1;
+   *         optional ValueType value = 2;
+   *     }
+   *     repeated MapFieldEntry map_field = 1;
+   *
+   * Implementations may choose not to generate the map_entry=true message, but
+   * use a native map in the target language to hold the keys and values.
+   * The reflection APIs in such implementations still need to work as
+   * if the field is a repeated message field.
+   *
+   * NOTE: Do not set the option in .proto files. Always use the maps syntax
+   * instead. The option should only be implicitly set by the proto compiler
+   * parser.
+   */
+  mapEntry: boolean;
+  /** The parser stores options it doesn't recognize here. See above. */
+  uninterpretedOption: UninterpretedOption[];
+}
+
+export interface FieldOptions {
+  /**
+   * The ctype option instructs the C++ code generator to use a different
+   * representation of the field than it normally would.  See the specific
+   * options below.  This option is not yet implemented in the open source
+   * release -- sorry, we'll try to include it in a future version!
+   */
+  ctype: FieldOptions_CType;
+  /**
+   * The packed option can be enabled for repeated primitive fields to enable
+   * a more efficient representation on the wire. Rather than repeatedly
+   * writing the tag and type for each element, the entire array is encoded as
+   * a single length-delimited blob. In proto3, only explicit setting it to
+   * false will avoid using packed encoding.
+   */
+  packed: boolean;
+  /**
+   * The jstype option determines the JavaScript type used for values of the
+   * field.  The option is permitted only for 64 bit integral and fixed types
+   * (int64, uint64, sint64, fixed64, sfixed64).  A field with jstype JS_STRING
+   * is represented as JavaScript string, which avoids loss of precision that
+   * can happen when a large value is converted to a floating point JavaScript.
+   * Specifying JS_NUMBER for the jstype causes the generated JavaScript code to
+   * use the JavaScript "number" type.  The behavior of the default option
+   * JS_NORMAL is implementation dependent.
+   *
+   * This option is an enum to permit additional types to be added, e.g.
+   * goog.math.Integer.
+   */
+  jstype: FieldOptions_JSType;
+  /**
+   * Should this field be parsed lazily?  Lazy applies only to message-type
+   * fields.  It means that when the outer message is initially parsed, the
+   * inner message's contents will not be parsed but instead stored in encoded
+   * form.  The inner message will actually be parsed when it is first accessed.
+   *
+   * This is only a hint.  Implementations are free to choose whether to use
+   * eager or lazy parsing regardless of the value of this option.  However,
+   * setting this option true suggests that the protocol author believes that
+   * using lazy parsing on this field is worth the additional bookkeeping
+   * overhead typically needed to implement it.
+   *
+   * This option does not affect the public interface of any generated code;
+   * all method signatures remain the same.  Furthermore, thread-safety of the
+   * interface is not affected by this option; const methods remain safe to
+   * call from multiple threads concurrently, while non-const methods continue
+   * to require exclusive access.
+   *
+   *
+   * Note that implementations may choose not to check required fields within
+   * a lazy sub-message.  That is, calling IsInitialized() on the outer message
+   * may return true even if the inner message has missing required fields.
+   * This is necessary because otherwise the inner message would have to be
+   * parsed in order to perform the check, defeating the purpose of lazy
+   * parsing.  An implementation which chooses not to check required fields
+   * must be consistent about it.  That is, for any particular sub-message, the
+   * implementation must either *always* check its required fields, or *never*
+   * check its required fields, regardless of whether or not the message has
+   * been parsed.
+   */
+  lazy: boolean;
+  /**
+   * Is this field deprecated?
+   * Depending on the target platform, this can emit Deprecated annotations
+   * for accessors, or it will be completely ignored; in the very least, this
+   * is a formalization for deprecating fields.
+   */
+  deprecated: boolean;
+  /** For Google-internal migration only. Do not use. */
+  weak: boolean;
+  /** The parser stores options it doesn't recognize here. See above. */
+  uninterpretedOption: UninterpretedOption[];
+}
+
+export enum FieldOptions_CType {
+  /** STRING - Default mode. */
   STRING = 0,
   CORD = 1,
   STRING_PIECE = 2,
@@ -1258,14 +758,11 @@ export function fieldOptions_CTypeToJSON(object: FieldOptions_CType): string {
 }
 
 export enum FieldOptions_JSType {
-  /** JS_NORMAL -  Use the default type.
-   */
+  /** JS_NORMAL - Use the default type. */
   JS_NORMAL = 0,
-  /** JS_STRING -  Use JavaScript strings.
-   */
+  /** JS_STRING - Use JavaScript strings. */
   JS_STRING = 1,
-  /** JS_NUMBER -  Use JavaScript numbers.
-   */
+  /** JS_NUMBER - Use JavaScript numbers. */
   JS_NUMBER = 2,
   UNRECOGNIZED = -1,
 }
@@ -1301,17 +798,75 @@ export function fieldOptions_JSTypeToJSON(object: FieldOptions_JSType): string {
   }
 }
 
-/**  Is this method side-effect-free (or safe in HTTP parlance), or idempotent,
- or neither? HTTP based RPC implementation may choose GET verb for safe
- methods, and PUT verb for idempotent methods instead of the default POST.
+export interface OneofOptions {
+  /** The parser stores options it doesn't recognize here. See above. */
+  uninterpretedOption: UninterpretedOption[];
+}
+
+export interface EnumOptions {
+  /**
+   * Set this option to true to allow mapping different tag names to the same
+   * value.
+   */
+  allowAlias: boolean;
+  /**
+   * Is this enum deprecated?
+   * Depending on the target platform, this can emit Deprecated annotations
+   * for the enum, or it will be completely ignored; in the very least, this
+   * is a formalization for deprecating enums.
+   */
+  deprecated: boolean;
+  /** The parser stores options it doesn't recognize here. See above. */
+  uninterpretedOption: UninterpretedOption[];
+}
+
+export interface EnumValueOptions {
+  /**
+   * Is this enum value deprecated?
+   * Depending on the target platform, this can emit Deprecated annotations
+   * for the enum value, or it will be completely ignored; in the very least,
+   * this is a formalization for deprecating enum values.
+   */
+  deprecated: boolean;
+  /** The parser stores options it doesn't recognize here. See above. */
+  uninterpretedOption: UninterpretedOption[];
+}
+
+export interface ServiceOptions {
+  /**
+   * Is this service deprecated?
+   * Depending on the target platform, this can emit Deprecated annotations
+   * for the service, or it will be completely ignored; in the very least,
+   * this is a formalization for deprecating services.
+   */
+  deprecated: boolean;
+  /** The parser stores options it doesn't recognize here. See above. */
+  uninterpretedOption: UninterpretedOption[];
+}
+
+export interface MethodOptions {
+  /**
+   * Is this method deprecated?
+   * Depending on the target platform, this can emit Deprecated annotations
+   * for the method, or it will be completely ignored; in the very least,
+   * this is a formalization for deprecating methods.
+   */
+  deprecated: boolean;
+  idempotencyLevel: MethodOptions_IdempotencyLevel;
+  /** The parser stores options it doesn't recognize here. See above. */
+  uninterpretedOption: UninterpretedOption[];
+}
+
+/**
+ * Is this method side-effect-free (or safe in HTTP parlance), or idempotent,
+ * or neither? HTTP based RPC implementation may choose GET verb for safe
+ * methods, and PUT verb for idempotent methods instead of the default POST.
  */
 export enum MethodOptions_IdempotencyLevel {
   IDEMPOTENCY_UNKNOWN = 0,
-  /** NO_SIDE_EFFECTS -  implies idempotent
-   */
+  /** NO_SIDE_EFFECTS - implies idempotent */
   NO_SIDE_EFFECTS = 1,
-  /** IDEMPOTENT -  idempotent, but may have side effects
-   */
+  /** IDEMPOTENT - idempotent, but may have side effects */
   IDEMPOTENT = 2,
   UNRECOGNIZED = -1,
 }
@@ -1347,6 +902,218 @@ export function methodOptions_IdempotencyLevelToJSON(object: MethodOptions_Idemp
   }
 }
 
+/**
+ * A message representing a option the parser does not recognize. This only
+ * appears in options protos created by the compiler::Parser class.
+ * DescriptorPool resolves these when building Descriptor objects. Therefore,
+ * options protos in descriptor objects (e.g. returned by Descriptor::options(),
+ * or produced by Descriptor::CopyTo()) will never have UninterpretedOptions
+ * in them.
+ */
+export interface UninterpretedOption {
+  name: UninterpretedOption_NamePart[];
+  /**
+   * The value of the uninterpreted option, in whatever type the tokenizer
+   * identified it as during parsing. Exactly one of these should be set.
+   */
+  identifierValue: string;
+  positiveIntValue: Long;
+  negativeIntValue: Long;
+  doubleValue: number;
+  stringValue: Uint8Array;
+  aggregateValue: string;
+}
+
+/**
+ * The name of the uninterpreted option.  Each string represents a segment in
+ * a dot-separated name.  is_extension is true iff a segment represents an
+ * extension (denoted with parentheses in options specs in .proto files).
+ * E.g.,{ ["foo", false], ["bar.baz", true], ["qux", false] } represents
+ * "foo.(bar.baz).qux".
+ */
+export interface UninterpretedOption_NamePart {
+  namePart: string;
+  isExtension: boolean;
+}
+
+/**
+ * Encapsulates information about the original source file from which a
+ * FileDescriptorProto was generated.
+ */
+export interface SourceCodeInfo {
+  /**
+   * A Location identifies a piece of source code in a .proto file which
+   * corresponds to a particular definition.  This information is intended
+   * to be useful to IDEs, code indexers, documentation generators, and similar
+   * tools.
+   *
+   * For example, say we have a file like:
+   *   message Foo {
+   *     optional string foo = 1;
+   *   }
+   * Let's look at just the field definition:
+   *   optional string foo = 1;
+   *   ^       ^^     ^^  ^  ^^^
+   *   a       bc     de  f  ghi
+   * We have the following locations:
+   *   span   path               represents
+   *   [a,i)  [ 4, 0, 2, 0 ]     The whole field definition.
+   *   [a,b)  [ 4, 0, 2, 0, 4 ]  The label (optional).
+   *   [c,d)  [ 4, 0, 2, 0, 5 ]  The type (string).
+   *   [e,f)  [ 4, 0, 2, 0, 1 ]  The name (foo).
+   *   [g,h)  [ 4, 0, 2, 0, 3 ]  The number (1).
+   *
+   * Notes:
+   * - A location may refer to a repeated field itself (i.e. not to any
+   *   particular index within it).  This is used whenever a set of elements are
+   *   logically enclosed in a single code segment.  For example, an entire
+   *   extend block (possibly containing multiple extension definitions) will
+   *   have an outer location whose path refers to the "extensions" repeated
+   *   field without an index.
+   * - Multiple locations may have the same path.  This happens when a single
+   *   logical declaration is spread out across multiple places.  The most
+   *   obvious example is the "extend" block again -- there may be multiple
+   *   extend blocks in the same scope, each of which will have the same path.
+   * - A location's span is not always a subset of its parent's span.  For
+   *   example, the "extendee" of an extension declaration appears at the
+   *   beginning of the "extend" block and is shared by all extensions within
+   *   the block.
+   * - Just because a location's span is a subset of some other location's span
+   *   does not mean that it is a descendant.  For example, a "group" defines
+   *   both a type and a field in a single declaration.  Thus, the locations
+   *   corresponding to the type and field and their components will overlap.
+   * - Code which tries to interpret locations should probably be designed to
+   *   ignore those that it doesn't understand, as more types of locations could
+   *   be recorded in the future.
+   */
+  location: SourceCodeInfo_Location[];
+}
+
+export interface SourceCodeInfo_Location {
+  /**
+   * Identifies which part of the FileDescriptorProto was defined at this
+   * location.
+   *
+   * Each element is a field number or an index.  They form a path from
+   * the root FileDescriptorProto to the place where the definition.  For
+   * example, this path:
+   *   [ 4, 3, 2, 7, 1 ]
+   * refers to:
+   *   file.message_type(3)  // 4, 3
+   *       .field(7)         // 2, 7
+   *       .name()           // 1
+   * This is because FileDescriptorProto.message_type has field number 4:
+   *   repeated DescriptorProto message_type = 4;
+   * and DescriptorProto.field has field number 2:
+   *   repeated FieldDescriptorProto field = 2;
+   * and FieldDescriptorProto.name has field number 1:
+   *   optional string name = 1;
+   *
+   * Thus, the above path gives the location of a field name.  If we removed
+   * the last element:
+   *   [ 4, 3, 2, 7 ]
+   * this path refers to the whole field declaration (from the beginning
+   * of the label to the terminating semicolon).
+   */
+  path: number[];
+  /**
+   * Always has exactly three or four elements: start line, start column,
+   * end line (optional, otherwise assumed same as start line), end column.
+   * These are packed into a single field for efficiency.  Note that line
+   * and column numbers are zero-based -- typically you will want to add
+   * 1 to each before displaying to a user.
+   */
+  span: number[];
+  /**
+   * If this SourceCodeInfo represents a complete declaration, these are any
+   * comments appearing before and after the declaration which appear to be
+   * attached to the declaration.
+   *
+   * A series of line comments appearing on consecutive lines, with no other
+   * tokens appearing on those lines, will be treated as a single comment.
+   *
+   * leading_detached_comments will keep paragraphs of comments that appear
+   * before (but not connected to) the current element. Each paragraph,
+   * separated by empty lines, will be one comment element in the repeated
+   * field.
+   *
+   * Only the comment content is provided; comment markers (e.g. //) are
+   * stripped out.  For block comments, leading whitespace and an asterisk
+   * will be stripped from the beginning of each line other than the first.
+   * Newlines are included in the output.
+   *
+   * Examples:
+   *
+   *   optional int32 foo = 1;  // Comment attached to foo.
+   *   // Comment attached to bar.
+   *   optional int32 bar = 2;
+   *
+   *   optional string baz = 3;
+   *   // Comment attached to baz.
+   *   // Another line attached to baz.
+   *
+   *   // Comment attached to qux.
+   *   //
+   *   // Another line attached to qux.
+   *   optional double qux = 4;
+   *
+   *   // Detached comment for corge. This is not leading or trailing comments
+   *   // to qux or corge because there are blank lines separating it from
+   *   // both.
+   *
+   *   // Detached comment for corge paragraph 2.
+   *
+   *   optional string corge = 5;
+   *   /* Block comment attached
+   *    * to corge.  Leading asterisks
+   *    * will be removed. * /
+   *   /* Block comment attached to
+   *    * grault. * /
+   *   optional int32 grault = 6;
+   *
+   *   // ignored detached comments.
+   */
+  leadingComments: string;
+  trailingComments: string;
+  leadingDetachedComments: string[];
+}
+
+/**
+ * Describes the relationship between generated code and its original source
+ * file. A GeneratedCodeInfo message is associated with only one generated
+ * source file, but may contain references to different source .proto files.
+ */
+export interface GeneratedCodeInfo {
+  /**
+   * An Annotation connects some span of text in generated code to an element
+   * of its generating .proto file.
+   */
+  annotation: GeneratedCodeInfo_Annotation[];
+}
+
+export interface GeneratedCodeInfo_Annotation {
+  /**
+   * Identifies the element in the original source .proto file. This field
+   * is formatted the same as SourceCodeInfo.Location.path.
+   */
+  path: number[];
+  /** Identifies the filesystem path to the original source .proto. */
+  sourceFile: string;
+  /**
+   * Identifies the starting offset in bytes in the generated code
+   * that relates to the identified object.
+   */
+  begin: number;
+  /**
+   * Identifies the ending offset in bytes in the generated code that
+   * relates to the identified offset. The end offset should be one past
+   * the last relevant byte (so the length of the text = end - begin).
+   */
+  end: number;
+}
+
+const baseFileDescriptorSet: object = {};
+
 export const FileDescriptorSet = {
   encode(message: FileDescriptorSet, writer: Writer = Writer.create()): Writer {
     for (const v of message.file) {
@@ -1354,7 +1121,8 @@ export const FileDescriptorSet = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): FileDescriptorSet {
+
+  decode(input: Reader | Uint8Array, length?: number): FileDescriptorSet {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseFileDescriptorSet } as FileDescriptorSet;
@@ -1372,6 +1140,7 @@ export const FileDescriptorSet = {
     }
     return message;
   },
+
   fromJSON(object: any): FileDescriptorSet {
     const message = { ...baseFileDescriptorSet } as FileDescriptorSet;
     message.file = [];
@@ -1382,6 +1151,7 @@ export const FileDescriptorSet = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<FileDescriptorSet>): FileDescriptorSet {
     const message = { ...baseFileDescriptorSet } as FileDescriptorSet;
     message.file = [];
@@ -1392,6 +1162,7 @@ export const FileDescriptorSet = {
     }
     return message;
   },
+
   toJSON(message: FileDescriptorSet): unknown {
     const obj: any = {};
     if (message.file) {
@@ -1401,6 +1172,15 @@ export const FileDescriptorSet = {
     }
     return obj;
   },
+};
+
+const baseFileDescriptorProto: object = {
+  name: "",
+  package: "",
+  dependency: "",
+  publicDependency: 0,
+  weakDependency: 0,
+  syntax: "",
 };
 
 export const FileDescriptorProto = {
@@ -1441,7 +1221,8 @@ export const FileDescriptorProto = {
     writer.uint32(98).string(message.syntax);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): FileDescriptorProto {
+
+  decode(input: Reader | Uint8Array, length?: number): FileDescriptorProto {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseFileDescriptorProto } as FileDescriptorProto;
@@ -1512,6 +1293,7 @@ export const FileDescriptorProto = {
     }
     return message;
   },
+
   fromJSON(object: any): FileDescriptorProto {
     const message = { ...baseFileDescriptorProto } as FileDescriptorProto;
     message.dependency = [];
@@ -1583,6 +1365,7 @@ export const FileDescriptorProto = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<FileDescriptorProto>): FileDescriptorProto {
     const message = { ...baseFileDescriptorProto } as FileDescriptorProto;
     message.dependency = [];
@@ -1654,6 +1437,7 @@ export const FileDescriptorProto = {
     }
     return message;
   },
+
   toJSON(message: FileDescriptorProto): unknown {
     const obj: any = {};
     message.name !== undefined && (obj.name = message.name);
@@ -1704,6 +1488,8 @@ export const FileDescriptorProto = {
   },
 };
 
+const baseDescriptorProto: object = { name: "", reservedName: "" };
+
 export const DescriptorProto = {
   encode(message: DescriptorProto, writer: Writer = Writer.create()): Writer {
     writer.uint32(10).string(message.name);
@@ -1736,7 +1522,8 @@ export const DescriptorProto = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): DescriptorProto {
+
+  decode(input: Reader | Uint8Array, length?: number): DescriptorProto {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseDescriptorProto } as DescriptorProto;
@@ -1788,6 +1575,7 @@ export const DescriptorProto = {
     }
     return message;
   },
+
   fromJSON(object: any): DescriptorProto {
     const message = { ...baseDescriptorProto } as DescriptorProto;
     message.field = [];
@@ -1850,6 +1638,7 @@ export const DescriptorProto = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<DescriptorProto>): DescriptorProto {
     const message = { ...baseDescriptorProto } as DescriptorProto;
     message.field = [];
@@ -1912,6 +1701,7 @@ export const DescriptorProto = {
     }
     return message;
   },
+
   toJSON(message: DescriptorProto): unknown {
     const obj: any = {};
     message.name !== undefined && (obj.name = message.name);
@@ -1965,6 +1755,8 @@ export const DescriptorProto = {
   },
 };
 
+const baseDescriptorProto_ExtensionRange: object = { start: 0, end: 0 };
+
 export const DescriptorProto_ExtensionRange = {
   encode(message: DescriptorProto_ExtensionRange, writer: Writer = Writer.create()): Writer {
     writer.uint32(8).int32(message.start);
@@ -1974,7 +1766,8 @@ export const DescriptorProto_ExtensionRange = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): DescriptorProto_ExtensionRange {
+
+  decode(input: Reader | Uint8Array, length?: number): DescriptorProto_ExtensionRange {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseDescriptorProto_ExtensionRange } as DescriptorProto_ExtensionRange;
@@ -1997,6 +1790,7 @@ export const DescriptorProto_ExtensionRange = {
     }
     return message;
   },
+
   fromJSON(object: any): DescriptorProto_ExtensionRange {
     const message = { ...baseDescriptorProto_ExtensionRange } as DescriptorProto_ExtensionRange;
     if (object.start !== undefined && object.start !== null) {
@@ -2016,6 +1810,7 @@ export const DescriptorProto_ExtensionRange = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<DescriptorProto_ExtensionRange>): DescriptorProto_ExtensionRange {
     const message = { ...baseDescriptorProto_ExtensionRange } as DescriptorProto_ExtensionRange;
     if (object.start !== undefined && object.start !== null) {
@@ -2035,6 +1830,7 @@ export const DescriptorProto_ExtensionRange = {
     }
     return message;
   },
+
   toJSON(message: DescriptorProto_ExtensionRange): unknown {
     const obj: any = {};
     message.start !== undefined && (obj.start = message.start);
@@ -2045,13 +1841,16 @@ export const DescriptorProto_ExtensionRange = {
   },
 };
 
+const baseDescriptorProto_ReservedRange: object = { start: 0, end: 0 };
+
 export const DescriptorProto_ReservedRange = {
   encode(message: DescriptorProto_ReservedRange, writer: Writer = Writer.create()): Writer {
     writer.uint32(8).int32(message.start);
     writer.uint32(16).int32(message.end);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): DescriptorProto_ReservedRange {
+
+  decode(input: Reader | Uint8Array, length?: number): DescriptorProto_ReservedRange {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseDescriptorProto_ReservedRange } as DescriptorProto_ReservedRange;
@@ -2071,6 +1870,7 @@ export const DescriptorProto_ReservedRange = {
     }
     return message;
   },
+
   fromJSON(object: any): DescriptorProto_ReservedRange {
     const message = { ...baseDescriptorProto_ReservedRange } as DescriptorProto_ReservedRange;
     if (object.start !== undefined && object.start !== null) {
@@ -2085,6 +1885,7 @@ export const DescriptorProto_ReservedRange = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<DescriptorProto_ReservedRange>): DescriptorProto_ReservedRange {
     const message = { ...baseDescriptorProto_ReservedRange } as DescriptorProto_ReservedRange;
     if (object.start !== undefined && object.start !== null) {
@@ -2099,6 +1900,7 @@ export const DescriptorProto_ReservedRange = {
     }
     return message;
   },
+
   toJSON(message: DescriptorProto_ReservedRange): unknown {
     const obj: any = {};
     message.start !== undefined && (obj.start = message.start);
@@ -2107,6 +1909,8 @@ export const DescriptorProto_ReservedRange = {
   },
 };
 
+const baseExtensionRangeOptions: object = {};
+
 export const ExtensionRangeOptions = {
   encode(message: ExtensionRangeOptions, writer: Writer = Writer.create()): Writer {
     for (const v of message.uninterpretedOption) {
@@ -2114,7 +1918,8 @@ export const ExtensionRangeOptions = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): ExtensionRangeOptions {
+
+  decode(input: Reader | Uint8Array, length?: number): ExtensionRangeOptions {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseExtensionRangeOptions } as ExtensionRangeOptions;
@@ -2132,6 +1937,7 @@ export const ExtensionRangeOptions = {
     }
     return message;
   },
+
   fromJSON(object: any): ExtensionRangeOptions {
     const message = { ...baseExtensionRangeOptions } as ExtensionRangeOptions;
     message.uninterpretedOption = [];
@@ -2142,6 +1948,7 @@ export const ExtensionRangeOptions = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<ExtensionRangeOptions>): ExtensionRangeOptions {
     const message = { ...baseExtensionRangeOptions } as ExtensionRangeOptions;
     message.uninterpretedOption = [];
@@ -2152,6 +1959,7 @@ export const ExtensionRangeOptions = {
     }
     return message;
   },
+
   toJSON(message: ExtensionRangeOptions): unknown {
     const obj: any = {};
     if (message.uninterpretedOption) {
@@ -2163,6 +1971,19 @@ export const ExtensionRangeOptions = {
     }
     return obj;
   },
+};
+
+const baseFieldDescriptorProto: object = {
+  name: "",
+  number: 0,
+  label: 1,
+  type: 1,
+  typeName: "",
+  extendee: "",
+  defaultValue: "",
+  oneofIndex: 0,
+  jsonName: "",
+  proto3Optional: false,
 };
 
 export const FieldDescriptorProto = {
@@ -2182,7 +2003,8 @@ export const FieldDescriptorProto = {
     writer.uint32(136).bool(message.proto3Optional);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): FieldDescriptorProto {
+
+  decode(input: Reader | Uint8Array, length?: number): FieldDescriptorProto {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseFieldDescriptorProto } as FieldDescriptorProto;
@@ -2229,6 +2051,7 @@ export const FieldDescriptorProto = {
     }
     return message;
   },
+
   fromJSON(object: any): FieldDescriptorProto {
     const message = { ...baseFieldDescriptorProto } as FieldDescriptorProto;
     if (object.name !== undefined && object.name !== null) {
@@ -2288,6 +2111,7 @@ export const FieldDescriptorProto = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<FieldDescriptorProto>): FieldDescriptorProto {
     const message = { ...baseFieldDescriptorProto } as FieldDescriptorProto;
     if (object.name !== undefined && object.name !== null) {
@@ -2347,6 +2171,7 @@ export const FieldDescriptorProto = {
     }
     return message;
   },
+
   toJSON(message: FieldDescriptorProto): unknown {
     const obj: any = {};
     message.name !== undefined && (obj.name = message.name);
@@ -2365,6 +2190,8 @@ export const FieldDescriptorProto = {
   },
 };
 
+const baseOneofDescriptorProto: object = { name: "" };
+
 export const OneofDescriptorProto = {
   encode(message: OneofDescriptorProto, writer: Writer = Writer.create()): Writer {
     writer.uint32(10).string(message.name);
@@ -2373,7 +2200,8 @@ export const OneofDescriptorProto = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): OneofDescriptorProto {
+
+  decode(input: Reader | Uint8Array, length?: number): OneofDescriptorProto {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseOneofDescriptorProto } as OneofDescriptorProto;
@@ -2393,6 +2221,7 @@ export const OneofDescriptorProto = {
     }
     return message;
   },
+
   fromJSON(object: any): OneofDescriptorProto {
     const message = { ...baseOneofDescriptorProto } as OneofDescriptorProto;
     if (object.name !== undefined && object.name !== null) {
@@ -2407,6 +2236,7 @@ export const OneofDescriptorProto = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<OneofDescriptorProto>): OneofDescriptorProto {
     const message = { ...baseOneofDescriptorProto } as OneofDescriptorProto;
     if (object.name !== undefined && object.name !== null) {
@@ -2421,6 +2251,7 @@ export const OneofDescriptorProto = {
     }
     return message;
   },
+
   toJSON(message: OneofDescriptorProto): unknown {
     const obj: any = {};
     message.name !== undefined && (obj.name = message.name);
@@ -2429,6 +2260,8 @@ export const OneofDescriptorProto = {
     return obj;
   },
 };
+
+const baseEnumDescriptorProto: object = { name: "", reservedName: "" };
 
 export const EnumDescriptorProto = {
   encode(message: EnumDescriptorProto, writer: Writer = Writer.create()): Writer {
@@ -2447,7 +2280,8 @@ export const EnumDescriptorProto = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): EnumDescriptorProto {
+
+  decode(input: Reader | Uint8Array, length?: number): EnumDescriptorProto {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseEnumDescriptorProto } as EnumDescriptorProto;
@@ -2479,6 +2313,7 @@ export const EnumDescriptorProto = {
     }
     return message;
   },
+
   fromJSON(object: any): EnumDescriptorProto {
     const message = { ...baseEnumDescriptorProto } as EnumDescriptorProto;
     message.value = [];
@@ -2511,6 +2346,7 @@ export const EnumDescriptorProto = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<EnumDescriptorProto>): EnumDescriptorProto {
     const message = { ...baseEnumDescriptorProto } as EnumDescriptorProto;
     message.value = [];
@@ -2543,6 +2379,7 @@ export const EnumDescriptorProto = {
     }
     return message;
   },
+
   toJSON(message: EnumDescriptorProto): unknown {
     const obj: any = {};
     message.name !== undefined && (obj.name = message.name);
@@ -2569,13 +2406,16 @@ export const EnumDescriptorProto = {
   },
 };
 
+const baseEnumDescriptorProto_EnumReservedRange: object = { start: 0, end: 0 };
+
 export const EnumDescriptorProto_EnumReservedRange = {
   encode(message: EnumDescriptorProto_EnumReservedRange, writer: Writer = Writer.create()): Writer {
     writer.uint32(8).int32(message.start);
     writer.uint32(16).int32(message.end);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): EnumDescriptorProto_EnumReservedRange {
+
+  decode(input: Reader | Uint8Array, length?: number): EnumDescriptorProto_EnumReservedRange {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseEnumDescriptorProto_EnumReservedRange } as EnumDescriptorProto_EnumReservedRange;
@@ -2595,6 +2435,7 @@ export const EnumDescriptorProto_EnumReservedRange = {
     }
     return message;
   },
+
   fromJSON(object: any): EnumDescriptorProto_EnumReservedRange {
     const message = { ...baseEnumDescriptorProto_EnumReservedRange } as EnumDescriptorProto_EnumReservedRange;
     if (object.start !== undefined && object.start !== null) {
@@ -2609,6 +2450,7 @@ export const EnumDescriptorProto_EnumReservedRange = {
     }
     return message;
   },
+
   fromPartial(
     object: DeepPartial<EnumDescriptorProto_EnumReservedRange>,
   ): EnumDescriptorProto_EnumReservedRange {
@@ -2625,6 +2467,7 @@ export const EnumDescriptorProto_EnumReservedRange = {
     }
     return message;
   },
+
   toJSON(message: EnumDescriptorProto_EnumReservedRange): unknown {
     const obj: any = {};
     message.start !== undefined && (obj.start = message.start);
@@ -2632,6 +2475,8 @@ export const EnumDescriptorProto_EnumReservedRange = {
     return obj;
   },
 };
+
+const baseEnumValueDescriptorProto: object = { name: "", number: 0 };
 
 export const EnumValueDescriptorProto = {
   encode(message: EnumValueDescriptorProto, writer: Writer = Writer.create()): Writer {
@@ -2642,7 +2487,8 @@ export const EnumValueDescriptorProto = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): EnumValueDescriptorProto {
+
+  decode(input: Reader | Uint8Array, length?: number): EnumValueDescriptorProto {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseEnumValueDescriptorProto } as EnumValueDescriptorProto;
@@ -2665,6 +2511,7 @@ export const EnumValueDescriptorProto = {
     }
     return message;
   },
+
   fromJSON(object: any): EnumValueDescriptorProto {
     const message = { ...baseEnumValueDescriptorProto } as EnumValueDescriptorProto;
     if (object.name !== undefined && object.name !== null) {
@@ -2684,6 +2531,7 @@ export const EnumValueDescriptorProto = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<EnumValueDescriptorProto>): EnumValueDescriptorProto {
     const message = { ...baseEnumValueDescriptorProto } as EnumValueDescriptorProto;
     if (object.name !== undefined && object.name !== null) {
@@ -2703,6 +2551,7 @@ export const EnumValueDescriptorProto = {
     }
     return message;
   },
+
   toJSON(message: EnumValueDescriptorProto): unknown {
     const obj: any = {};
     message.name !== undefined && (obj.name = message.name);
@@ -2712,6 +2561,8 @@ export const EnumValueDescriptorProto = {
     return obj;
   },
 };
+
+const baseServiceDescriptorProto: object = { name: "" };
 
 export const ServiceDescriptorProto = {
   encode(message: ServiceDescriptorProto, writer: Writer = Writer.create()): Writer {
@@ -2724,7 +2575,8 @@ export const ServiceDescriptorProto = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): ServiceDescriptorProto {
+
+  decode(input: Reader | Uint8Array, length?: number): ServiceDescriptorProto {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseServiceDescriptorProto } as ServiceDescriptorProto;
@@ -2748,6 +2600,7 @@ export const ServiceDescriptorProto = {
     }
     return message;
   },
+
   fromJSON(object: any): ServiceDescriptorProto {
     const message = { ...baseServiceDescriptorProto } as ServiceDescriptorProto;
     message.method = [];
@@ -2768,6 +2621,7 @@ export const ServiceDescriptorProto = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<ServiceDescriptorProto>): ServiceDescriptorProto {
     const message = { ...baseServiceDescriptorProto } as ServiceDescriptorProto;
     message.method = [];
@@ -2788,6 +2642,7 @@ export const ServiceDescriptorProto = {
     }
     return message;
   },
+
   toJSON(message: ServiceDescriptorProto): unknown {
     const obj: any = {};
     message.name !== undefined && (obj.name = message.name);
@@ -2802,6 +2657,14 @@ export const ServiceDescriptorProto = {
   },
 };
 
+const baseMethodDescriptorProto: object = {
+  name: "",
+  inputType: "",
+  outputType: "",
+  clientStreaming: false,
+  serverStreaming: false,
+};
+
 export const MethodDescriptorProto = {
   encode(message: MethodDescriptorProto, writer: Writer = Writer.create()): Writer {
     writer.uint32(10).string(message.name);
@@ -2814,7 +2677,8 @@ export const MethodDescriptorProto = {
     writer.uint32(48).bool(message.serverStreaming);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): MethodDescriptorProto {
+
+  decode(input: Reader | Uint8Array, length?: number): MethodDescriptorProto {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMethodDescriptorProto } as MethodDescriptorProto;
@@ -2846,6 +2710,7 @@ export const MethodDescriptorProto = {
     }
     return message;
   },
+
   fromJSON(object: any): MethodDescriptorProto {
     const message = { ...baseMethodDescriptorProto } as MethodDescriptorProto;
     if (object.name !== undefined && object.name !== null) {
@@ -2880,6 +2745,7 @@ export const MethodDescriptorProto = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<MethodDescriptorProto>): MethodDescriptorProto {
     const message = { ...baseMethodDescriptorProto } as MethodDescriptorProto;
     if (object.name !== undefined && object.name !== null) {
@@ -2914,6 +2780,7 @@ export const MethodDescriptorProto = {
     }
     return message;
   },
+
   toJSON(message: MethodDescriptorProto): unknown {
     const obj: any = {};
     message.name !== undefined && (obj.name = message.name);
@@ -2925,6 +2792,29 @@ export const MethodDescriptorProto = {
     message.serverStreaming !== undefined && (obj.serverStreaming = message.serverStreaming);
     return obj;
   },
+};
+
+const baseFileOptions: object = {
+  javaPackage: "",
+  javaOuterClassname: "",
+  javaMultipleFiles: false,
+  javaGenerateEqualsAndHash: false,
+  javaStringCheckUtf8: false,
+  optimizeFor: 1,
+  goPackage: "",
+  ccGenericServices: false,
+  javaGenericServices: false,
+  pyGenericServices: false,
+  phpGenericServices: false,
+  deprecated: false,
+  ccEnableArenas: false,
+  objcClassPrefix: "",
+  csharpNamespace: "",
+  swiftPrefix: "",
+  phpClassPrefix: "",
+  phpNamespace: "",
+  phpMetadataNamespace: "",
+  rubyPackage: "",
 };
 
 export const FileOptions = {
@@ -2954,7 +2844,8 @@ export const FileOptions = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): FileOptions {
+
+  decode(input: Reader | Uint8Array, length?: number): FileOptions {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseFileOptions } as FileOptions;
@@ -3032,6 +2923,7 @@ export const FileOptions = {
     }
     return message;
   },
+
   fromJSON(object: any): FileOptions {
     const message = { ...baseFileOptions } as FileOptions;
     message.uninterpretedOption = [];
@@ -3142,6 +3034,7 @@ export const FileOptions = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<FileOptions>): FileOptions {
     const message = { ...baseFileOptions } as FileOptions;
     message.uninterpretedOption = [];
@@ -3252,6 +3145,7 @@ export const FileOptions = {
     }
     return message;
   },
+
   toJSON(message: FileOptions): unknown {
     const obj: any = {};
     message.javaPackage !== undefined && (obj.javaPackage = message.javaPackage);
@@ -3287,6 +3181,13 @@ export const FileOptions = {
   },
 };
 
+const baseMessageOptions: object = {
+  messageSetWireFormat: false,
+  noStandardDescriptorAccessor: false,
+  deprecated: false,
+  mapEntry: false,
+};
+
 export const MessageOptions = {
   encode(message: MessageOptions, writer: Writer = Writer.create()): Writer {
     writer.uint32(8).bool(message.messageSetWireFormat);
@@ -3298,7 +3199,8 @@ export const MessageOptions = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): MessageOptions {
+
+  decode(input: Reader | Uint8Array, length?: number): MessageOptions {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMessageOptions } as MessageOptions;
@@ -3328,6 +3230,7 @@ export const MessageOptions = {
     }
     return message;
   },
+
   fromJSON(object: any): MessageOptions {
     const message = { ...baseMessageOptions } as MessageOptions;
     message.uninterpretedOption = [];
@@ -3358,6 +3261,7 @@ export const MessageOptions = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<MessageOptions>): MessageOptions {
     const message = { ...baseMessageOptions } as MessageOptions;
     message.uninterpretedOption = [];
@@ -3388,6 +3292,7 @@ export const MessageOptions = {
     }
     return message;
   },
+
   toJSON(message: MessageOptions): unknown {
     const obj: any = {};
     message.messageSetWireFormat !== undefined && (obj.messageSetWireFormat = message.messageSetWireFormat);
@@ -3406,6 +3311,15 @@ export const MessageOptions = {
   },
 };
 
+const baseFieldOptions: object = {
+  ctype: 0,
+  packed: false,
+  jstype: 0,
+  lazy: false,
+  deprecated: false,
+  weak: false,
+};
+
 export const FieldOptions = {
   encode(message: FieldOptions, writer: Writer = Writer.create()): Writer {
     writer.uint32(8).int32(message.ctype);
@@ -3419,7 +3333,8 @@ export const FieldOptions = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): FieldOptions {
+
+  decode(input: Reader | Uint8Array, length?: number): FieldOptions {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseFieldOptions } as FieldOptions;
@@ -3455,6 +3370,7 @@ export const FieldOptions = {
     }
     return message;
   },
+
   fromJSON(object: any): FieldOptions {
     const message = { ...baseFieldOptions } as FieldOptions;
     message.uninterpretedOption = [];
@@ -3495,6 +3411,7 @@ export const FieldOptions = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<FieldOptions>): FieldOptions {
     const message = { ...baseFieldOptions } as FieldOptions;
     message.uninterpretedOption = [];
@@ -3535,6 +3452,7 @@ export const FieldOptions = {
     }
     return message;
   },
+
   toJSON(message: FieldOptions): unknown {
     const obj: any = {};
     message.ctype !== undefined && (obj.ctype = fieldOptions_CTypeToJSON(message.ctype));
@@ -3554,6 +3472,8 @@ export const FieldOptions = {
   },
 };
 
+const baseOneofOptions: object = {};
+
 export const OneofOptions = {
   encode(message: OneofOptions, writer: Writer = Writer.create()): Writer {
     for (const v of message.uninterpretedOption) {
@@ -3561,7 +3481,8 @@ export const OneofOptions = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): OneofOptions {
+
+  decode(input: Reader | Uint8Array, length?: number): OneofOptions {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseOneofOptions } as OneofOptions;
@@ -3579,6 +3500,7 @@ export const OneofOptions = {
     }
     return message;
   },
+
   fromJSON(object: any): OneofOptions {
     const message = { ...baseOneofOptions } as OneofOptions;
     message.uninterpretedOption = [];
@@ -3589,6 +3511,7 @@ export const OneofOptions = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<OneofOptions>): OneofOptions {
     const message = { ...baseOneofOptions } as OneofOptions;
     message.uninterpretedOption = [];
@@ -3599,6 +3522,7 @@ export const OneofOptions = {
     }
     return message;
   },
+
   toJSON(message: OneofOptions): unknown {
     const obj: any = {};
     if (message.uninterpretedOption) {
@@ -3612,6 +3536,8 @@ export const OneofOptions = {
   },
 };
 
+const baseEnumOptions: object = { allowAlias: false, deprecated: false };
+
 export const EnumOptions = {
   encode(message: EnumOptions, writer: Writer = Writer.create()): Writer {
     writer.uint32(16).bool(message.allowAlias);
@@ -3621,7 +3547,8 @@ export const EnumOptions = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): EnumOptions {
+
+  decode(input: Reader | Uint8Array, length?: number): EnumOptions {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseEnumOptions } as EnumOptions;
@@ -3645,6 +3572,7 @@ export const EnumOptions = {
     }
     return message;
   },
+
   fromJSON(object: any): EnumOptions {
     const message = { ...baseEnumOptions } as EnumOptions;
     message.uninterpretedOption = [];
@@ -3665,6 +3593,7 @@ export const EnumOptions = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<EnumOptions>): EnumOptions {
     const message = { ...baseEnumOptions } as EnumOptions;
     message.uninterpretedOption = [];
@@ -3685,6 +3614,7 @@ export const EnumOptions = {
     }
     return message;
   },
+
   toJSON(message: EnumOptions): unknown {
     const obj: any = {};
     message.allowAlias !== undefined && (obj.allowAlias = message.allowAlias);
@@ -3700,6 +3630,8 @@ export const EnumOptions = {
   },
 };
 
+const baseEnumValueOptions: object = { deprecated: false };
+
 export const EnumValueOptions = {
   encode(message: EnumValueOptions, writer: Writer = Writer.create()): Writer {
     writer.uint32(8).bool(message.deprecated);
@@ -3708,7 +3640,8 @@ export const EnumValueOptions = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): EnumValueOptions {
+
+  decode(input: Reader | Uint8Array, length?: number): EnumValueOptions {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseEnumValueOptions } as EnumValueOptions;
@@ -3729,6 +3662,7 @@ export const EnumValueOptions = {
     }
     return message;
   },
+
   fromJSON(object: any): EnumValueOptions {
     const message = { ...baseEnumValueOptions } as EnumValueOptions;
     message.uninterpretedOption = [];
@@ -3744,6 +3678,7 @@ export const EnumValueOptions = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<EnumValueOptions>): EnumValueOptions {
     const message = { ...baseEnumValueOptions } as EnumValueOptions;
     message.uninterpretedOption = [];
@@ -3759,6 +3694,7 @@ export const EnumValueOptions = {
     }
     return message;
   },
+
   toJSON(message: EnumValueOptions): unknown {
     const obj: any = {};
     message.deprecated !== undefined && (obj.deprecated = message.deprecated);
@@ -3773,6 +3709,8 @@ export const EnumValueOptions = {
   },
 };
 
+const baseServiceOptions: object = { deprecated: false };
+
 export const ServiceOptions = {
   encode(message: ServiceOptions, writer: Writer = Writer.create()): Writer {
     writer.uint32(264).bool(message.deprecated);
@@ -3781,7 +3719,8 @@ export const ServiceOptions = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): ServiceOptions {
+
+  decode(input: Reader | Uint8Array, length?: number): ServiceOptions {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseServiceOptions } as ServiceOptions;
@@ -3802,6 +3741,7 @@ export const ServiceOptions = {
     }
     return message;
   },
+
   fromJSON(object: any): ServiceOptions {
     const message = { ...baseServiceOptions } as ServiceOptions;
     message.uninterpretedOption = [];
@@ -3817,6 +3757,7 @@ export const ServiceOptions = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<ServiceOptions>): ServiceOptions {
     const message = { ...baseServiceOptions } as ServiceOptions;
     message.uninterpretedOption = [];
@@ -3832,6 +3773,7 @@ export const ServiceOptions = {
     }
     return message;
   },
+
   toJSON(message: ServiceOptions): unknown {
     const obj: any = {};
     message.deprecated !== undefined && (obj.deprecated = message.deprecated);
@@ -3846,6 +3788,8 @@ export const ServiceOptions = {
   },
 };
 
+const baseMethodOptions: object = { deprecated: false, idempotencyLevel: 0 };
+
 export const MethodOptions = {
   encode(message: MethodOptions, writer: Writer = Writer.create()): Writer {
     writer.uint32(264).bool(message.deprecated);
@@ -3855,7 +3799,8 @@ export const MethodOptions = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): MethodOptions {
+
+  decode(input: Reader | Uint8Array, length?: number): MethodOptions {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMethodOptions } as MethodOptions;
@@ -3879,6 +3824,7 @@ export const MethodOptions = {
     }
     return message;
   },
+
   fromJSON(object: any): MethodOptions {
     const message = { ...baseMethodOptions } as MethodOptions;
     message.uninterpretedOption = [];
@@ -3899,6 +3845,7 @@ export const MethodOptions = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<MethodOptions>): MethodOptions {
     const message = { ...baseMethodOptions } as MethodOptions;
     message.uninterpretedOption = [];
@@ -3919,6 +3866,7 @@ export const MethodOptions = {
     }
     return message;
   },
+
   toJSON(message: MethodOptions): unknown {
     const obj: any = {};
     message.deprecated !== undefined && (obj.deprecated = message.deprecated);
@@ -3935,6 +3883,14 @@ export const MethodOptions = {
   },
 };
 
+const baseUninterpretedOption: object = {
+  identifierValue: "",
+  positiveIntValue: Long.UZERO,
+  negativeIntValue: Long.ZERO,
+  doubleValue: 0,
+  aggregateValue: "",
+};
+
 export const UninterpretedOption = {
   encode(message: UninterpretedOption, writer: Writer = Writer.create()): Writer {
     for (const v of message.name) {
@@ -3948,7 +3904,8 @@ export const UninterpretedOption = {
     writer.uint32(66).string(message.aggregateValue);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): UninterpretedOption {
+
+  decode(input: Reader | Uint8Array, length?: number): UninterpretedOption {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseUninterpretedOption } as UninterpretedOption;
@@ -3984,6 +3941,7 @@ export const UninterpretedOption = {
     }
     return message;
   },
+
   fromJSON(object: any): UninterpretedOption {
     const message = { ...baseUninterpretedOption } as UninterpretedOption;
     message.name = [];
@@ -4022,6 +3980,7 @@ export const UninterpretedOption = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<UninterpretedOption>): UninterpretedOption {
     const message = { ...baseUninterpretedOption } as UninterpretedOption;
     message.name = [];
@@ -4062,6 +4021,7 @@ export const UninterpretedOption = {
     }
     return message;
   },
+
   toJSON(message: UninterpretedOption): unknown {
     const obj: any = {};
     if (message.name) {
@@ -4084,13 +4044,16 @@ export const UninterpretedOption = {
   },
 };
 
+const baseUninterpretedOption_NamePart: object = { namePart: "", isExtension: false };
+
 export const UninterpretedOption_NamePart = {
   encode(message: UninterpretedOption_NamePart, writer: Writer = Writer.create()): Writer {
     writer.uint32(10).string(message.namePart);
     writer.uint32(16).bool(message.isExtension);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): UninterpretedOption_NamePart {
+
+  decode(input: Reader | Uint8Array, length?: number): UninterpretedOption_NamePart {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseUninterpretedOption_NamePart } as UninterpretedOption_NamePart;
@@ -4110,6 +4073,7 @@ export const UninterpretedOption_NamePart = {
     }
     return message;
   },
+
   fromJSON(object: any): UninterpretedOption_NamePart {
     const message = { ...baseUninterpretedOption_NamePart } as UninterpretedOption_NamePart;
     if (object.namePart !== undefined && object.namePart !== null) {
@@ -4124,6 +4088,7 @@ export const UninterpretedOption_NamePart = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<UninterpretedOption_NamePart>): UninterpretedOption_NamePart {
     const message = { ...baseUninterpretedOption_NamePart } as UninterpretedOption_NamePart;
     if (object.namePart !== undefined && object.namePart !== null) {
@@ -4138,6 +4103,7 @@ export const UninterpretedOption_NamePart = {
     }
     return message;
   },
+
   toJSON(message: UninterpretedOption_NamePart): unknown {
     const obj: any = {};
     message.namePart !== undefined && (obj.namePart = message.namePart);
@@ -4146,6 +4112,8 @@ export const UninterpretedOption_NamePart = {
   },
 };
 
+const baseSourceCodeInfo: object = {};
+
 export const SourceCodeInfo = {
   encode(message: SourceCodeInfo, writer: Writer = Writer.create()): Writer {
     for (const v of message.location) {
@@ -4153,7 +4121,8 @@ export const SourceCodeInfo = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): SourceCodeInfo {
+
+  decode(input: Reader | Uint8Array, length?: number): SourceCodeInfo {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseSourceCodeInfo } as SourceCodeInfo;
@@ -4171,6 +4140,7 @@ export const SourceCodeInfo = {
     }
     return message;
   },
+
   fromJSON(object: any): SourceCodeInfo {
     const message = { ...baseSourceCodeInfo } as SourceCodeInfo;
     message.location = [];
@@ -4181,6 +4151,7 @@ export const SourceCodeInfo = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<SourceCodeInfo>): SourceCodeInfo {
     const message = { ...baseSourceCodeInfo } as SourceCodeInfo;
     message.location = [];
@@ -4191,6 +4162,7 @@ export const SourceCodeInfo = {
     }
     return message;
   },
+
   toJSON(message: SourceCodeInfo): unknown {
     const obj: any = {};
     if (message.location) {
@@ -4200,6 +4172,14 @@ export const SourceCodeInfo = {
     }
     return obj;
   },
+};
+
+const baseSourceCodeInfo_Location: object = {
+  path: 0,
+  span: 0,
+  leadingComments: "",
+  trailingComments: "",
+  leadingDetachedComments: "",
 };
 
 export const SourceCodeInfo_Location = {
@@ -4221,7 +4201,8 @@ export const SourceCodeInfo_Location = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): SourceCodeInfo_Location {
+
+  decode(input: Reader | Uint8Array, length?: number): SourceCodeInfo_Location {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseSourceCodeInfo_Location } as SourceCodeInfo_Location;
@@ -4267,6 +4248,7 @@ export const SourceCodeInfo_Location = {
     }
     return message;
   },
+
   fromJSON(object: any): SourceCodeInfo_Location {
     const message = { ...baseSourceCodeInfo_Location } as SourceCodeInfo_Location;
     message.path = [];
@@ -4299,6 +4281,7 @@ export const SourceCodeInfo_Location = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<SourceCodeInfo_Location>): SourceCodeInfo_Location {
     const message = { ...baseSourceCodeInfo_Location } as SourceCodeInfo_Location;
     message.path = [];
@@ -4331,6 +4314,7 @@ export const SourceCodeInfo_Location = {
     }
     return message;
   },
+
   toJSON(message: SourceCodeInfo_Location): unknown {
     const obj: any = {};
     if (message.path) {
@@ -4354,6 +4338,8 @@ export const SourceCodeInfo_Location = {
   },
 };
 
+const baseGeneratedCodeInfo: object = {};
+
 export const GeneratedCodeInfo = {
   encode(message: GeneratedCodeInfo, writer: Writer = Writer.create()): Writer {
     for (const v of message.annotation) {
@@ -4361,7 +4347,8 @@ export const GeneratedCodeInfo = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): GeneratedCodeInfo {
+
+  decode(input: Reader | Uint8Array, length?: number): GeneratedCodeInfo {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseGeneratedCodeInfo } as GeneratedCodeInfo;
@@ -4379,6 +4366,7 @@ export const GeneratedCodeInfo = {
     }
     return message;
   },
+
   fromJSON(object: any): GeneratedCodeInfo {
     const message = { ...baseGeneratedCodeInfo } as GeneratedCodeInfo;
     message.annotation = [];
@@ -4389,6 +4377,7 @@ export const GeneratedCodeInfo = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<GeneratedCodeInfo>): GeneratedCodeInfo {
     const message = { ...baseGeneratedCodeInfo } as GeneratedCodeInfo;
     message.annotation = [];
@@ -4399,6 +4388,7 @@ export const GeneratedCodeInfo = {
     }
     return message;
   },
+
   toJSON(message: GeneratedCodeInfo): unknown {
     const obj: any = {};
     if (message.annotation) {
@@ -4412,6 +4402,8 @@ export const GeneratedCodeInfo = {
   },
 };
 
+const baseGeneratedCodeInfo_Annotation: object = { path: 0, sourceFile: "", begin: 0, end: 0 };
+
 export const GeneratedCodeInfo_Annotation = {
   encode(message: GeneratedCodeInfo_Annotation, writer: Writer = Writer.create()): Writer {
     writer.uint32(10).fork();
@@ -4424,7 +4416,8 @@ export const GeneratedCodeInfo_Annotation = {
     writer.uint32(32).int32(message.end);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): GeneratedCodeInfo_Annotation {
+
+  decode(input: Reader | Uint8Array, length?: number): GeneratedCodeInfo_Annotation {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseGeneratedCodeInfo_Annotation } as GeneratedCodeInfo_Annotation;
@@ -4458,6 +4451,7 @@ export const GeneratedCodeInfo_Annotation = {
     }
     return message;
   },
+
   fromJSON(object: any): GeneratedCodeInfo_Annotation {
     const message = { ...baseGeneratedCodeInfo_Annotation } as GeneratedCodeInfo_Annotation;
     message.path = [];
@@ -4483,6 +4477,7 @@ export const GeneratedCodeInfo_Annotation = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<GeneratedCodeInfo_Annotation>): GeneratedCodeInfo_Annotation {
     const message = { ...baseGeneratedCodeInfo_Annotation } as GeneratedCodeInfo_Annotation;
     message.path = [];
@@ -4508,6 +4503,7 @@ export const GeneratedCodeInfo_Annotation = {
     }
     return message;
   },
+
   toJSON(message: GeneratedCodeInfo_Annotation): unknown {
     const obj: any = {};
     if (message.path) {
@@ -4522,15 +4518,18 @@ export const GeneratedCodeInfo_Annotation = {
   },
 };
 
-interface WindowBase64 {
-  atob(b64: string): string;
-  btoa(bin: string): string;
-}
+declare var self: any | undefined;
+declare var window: any | undefined;
+var globalThis: any = (() => {
+  if (typeof globalThis !== "undefined") return globalThis;
+  if (typeof self !== "undefined") return self;
+  if (typeof window !== "undefined") return window;
+  if (typeof global !== "undefined") return global;
+  throw new Error("Unable to locate global object");
+})();
 
-const windowBase64 = (globalThis as unknown) as WindowBase64;
-const atob = windowBase64.atob || ((b64: string) => Buffer.from(b64, "base64").toString("binary"));
-const btoa = windowBase64.btoa || ((bin: string) => Buffer.from(bin, "binary").toString("base64"));
-
+const atob: (b64: string) => string =
+  globalThis.atob || ((b64) => globalThis.Buffer.from(b64, "base64").toString("binary"));
 function bytesFromBase64(b64: string): Uint8Array {
   const bin = atob(b64);
   const arr = new Uint8Array(bin.length);
@@ -4540,6 +4539,8 @@ function bytesFromBase64(b64: string): Uint8Array {
   return arr;
 }
 
+const btoa: (bin: string) => string =
+  globalThis.btoa || ((bin) => globalThis.Buffer.from(bin, "binary").toString("base64"));
 function base64FromBytes(arr: Uint8Array): string {
   const bin: string[] = [];
   for (let i = 0; i < arr.byteLength; ++i) {
@@ -4547,7 +4548,8 @@ function base64FromBytes(arr: Uint8Array): string {
   }
   return btoa(bin.join(""));
 }
-type Builtin = Date | Function | Uint8Array | string | number | undefined;
+
+type Builtin = Date | Function | Uint8Array | string | number | undefined | Long;
 export type DeepPartial<T> = T extends Builtin
   ? T
   : T extends Array<infer U>

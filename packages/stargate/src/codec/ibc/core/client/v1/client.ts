@@ -3,132 +3,79 @@ import { Any } from "../../../../google/protobuf/any";
 import * as Long from "long";
 import { Writer, Reader } from "protobufjs/minimal";
 
+export const protobufPackage = "ibc.core.client.v1";
+
 /**
- *  IdentifiedClientState defines a client state with an additional client
- *  identifier field.
+ * IdentifiedClientState defines a client state with an additional client
+ * identifier field.
  */
 export interface IdentifiedClientState {
-  /**
-   *  client identifier
-   */
+  /** client identifier */
   clientId: string;
-  /**
-   *  client state
-   */
+  /** client state */
   clientState?: Any;
 }
 
-/**
- *  ConsensusStateWithHeight defines a consensus state with an additional height field.
- */
+/** ConsensusStateWithHeight defines a consensus state with an additional height field. */
 export interface ConsensusStateWithHeight {
-  /**
-   *  consensus state height
-   */
+  /** consensus state height */
   height?: Height;
-  /**
-   *  consensus state
-   */
+  /** consensus state */
   consensusState?: Any;
 }
 
 /**
- *  ClientConsensusStates defines all the stored consensus states for a given
- *  client.
+ * ClientConsensusStates defines all the stored consensus states for a given
+ * client.
  */
 export interface ClientConsensusStates {
-  /**
-   *  client identifier
-   */
+  /** client identifier */
   clientId: string;
-  /**
-   *  consensus states and their heights associated with the client
-   */
+  /** consensus states and their heights associated with the client */
   consensusStates: ConsensusStateWithHeight[];
 }
 
 /**
- *  ClientUpdateProposal is a governance proposal. If it passes, the client is
- *  updated with the provided header. The update may fail if the header is not
- *  valid given certain conditions specified by the client implementation.
+ * ClientUpdateProposal is a governance proposal. If it passes, the client is
+ * updated with the provided header. The update may fail if the header is not
+ * valid given certain conditions specified by the client implementation.
  */
 export interface ClientUpdateProposal {
-  /**
-   *  the title of the update proposal
-   */
+  /** the title of the update proposal */
   title: string;
-  /**
-   *  the description of the proposal
-   */
+  /** the description of the proposal */
   description: string;
-  /**
-   *  the client identifier for the client to be updated if the proposal passes
-   */
+  /** the client identifier for the client to be updated if the proposal passes */
   clientId: string;
-  /**
-   *  the header used to update the client if the proposal passes
-   */
+  /** the header used to update the client if the proposal passes */
   header?: Any;
 }
 
 /**
- *  Height is a monotonically increasing data type
- *  that can be compared against another Height for the purposes of updating and
- *  freezing clients
+ * Height is a monotonically increasing data type
+ * that can be compared against another Height for the purposes of updating and
+ * freezing clients
  *
- *  Normally the RevisionHeight is incremented at each height while keeping RevisionNumber
- *  the same. However some consensus algorithms may choose to reset the
- *  height in certain conditions e.g. hard forks, state-machine breaking changes
- *  In these cases, the RevisionNumber is incremented so that height continues to
- *  be monitonically increasing even as the RevisionHeight gets reset
+ * Normally the RevisionHeight is incremented at each height while keeping RevisionNumber
+ * the same. However some consensus algorithms may choose to reset the
+ * height in certain conditions e.g. hard forks, state-machine breaking changes
+ * In these cases, the RevisionNumber is incremented so that height continues to
+ * be monitonically increasing even as the RevisionHeight gets reset
  */
 export interface Height {
-  /**
-   *  the revision that the client is currently on
-   */
+  /** the revision that the client is currently on */
   revisionNumber: Long;
-  /**
-   *  the height within the given revision
-   */
+  /** the height within the given revision */
   revisionHeight: Long;
 }
 
-/**
- *  Params defines the set of IBC light client parameters.
- */
+/** Params defines the set of IBC light client parameters. */
 export interface Params {
-  /**
-   *  allowed_clients defines the list of allowed client state types.
-   */
+  /** allowed_clients defines the list of allowed client state types. */
   allowedClients: string[];
 }
 
-const baseIdentifiedClientState: object = {
-  clientId: "",
-};
-
-const baseConsensusStateWithHeight: object = {};
-
-const baseClientConsensusStates: object = {
-  clientId: "",
-};
-
-const baseClientUpdateProposal: object = {
-  title: "",
-  description: "",
-  clientId: "",
-};
-
-const baseHeight: object = {
-  revisionNumber: Long.UZERO,
-  revisionHeight: Long.UZERO,
-};
-
-const baseParams: object = {
-  allowedClients: "",
-};
-
-export const protobufPackage = "ibc.core.client.v1";
+const baseIdentifiedClientState: object = { clientId: "" };
 
 export const IdentifiedClientState = {
   encode(message: IdentifiedClientState, writer: Writer = Writer.create()): Writer {
@@ -138,7 +85,8 @@ export const IdentifiedClientState = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): IdentifiedClientState {
+
+  decode(input: Reader | Uint8Array, length?: number): IdentifiedClientState {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseIdentifiedClientState } as IdentifiedClientState;
@@ -158,6 +106,7 @@ export const IdentifiedClientState = {
     }
     return message;
   },
+
   fromJSON(object: any): IdentifiedClientState {
     const message = { ...baseIdentifiedClientState } as IdentifiedClientState;
     if (object.clientId !== undefined && object.clientId !== null) {
@@ -172,6 +121,7 @@ export const IdentifiedClientState = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<IdentifiedClientState>): IdentifiedClientState {
     const message = { ...baseIdentifiedClientState } as IdentifiedClientState;
     if (object.clientId !== undefined && object.clientId !== null) {
@@ -186,6 +136,7 @@ export const IdentifiedClientState = {
     }
     return message;
   },
+
   toJSON(message: IdentifiedClientState): unknown {
     const obj: any = {};
     message.clientId !== undefined && (obj.clientId = message.clientId);
@@ -194,6 +145,8 @@ export const IdentifiedClientState = {
     return obj;
   },
 };
+
+const baseConsensusStateWithHeight: object = {};
 
 export const ConsensusStateWithHeight = {
   encode(message: ConsensusStateWithHeight, writer: Writer = Writer.create()): Writer {
@@ -205,7 +158,8 @@ export const ConsensusStateWithHeight = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): ConsensusStateWithHeight {
+
+  decode(input: Reader | Uint8Array, length?: number): ConsensusStateWithHeight {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseConsensusStateWithHeight } as ConsensusStateWithHeight;
@@ -225,6 +179,7 @@ export const ConsensusStateWithHeight = {
     }
     return message;
   },
+
   fromJSON(object: any): ConsensusStateWithHeight {
     const message = { ...baseConsensusStateWithHeight } as ConsensusStateWithHeight;
     if (object.height !== undefined && object.height !== null) {
@@ -239,6 +194,7 @@ export const ConsensusStateWithHeight = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<ConsensusStateWithHeight>): ConsensusStateWithHeight {
     const message = { ...baseConsensusStateWithHeight } as ConsensusStateWithHeight;
     if (object.height !== undefined && object.height !== null) {
@@ -253,6 +209,7 @@ export const ConsensusStateWithHeight = {
     }
     return message;
   },
+
   toJSON(message: ConsensusStateWithHeight): unknown {
     const obj: any = {};
     message.height !== undefined && (obj.height = message.height ? Height.toJSON(message.height) : undefined);
@@ -262,6 +219,8 @@ export const ConsensusStateWithHeight = {
   },
 };
 
+const baseClientConsensusStates: object = { clientId: "" };
+
 export const ClientConsensusStates = {
   encode(message: ClientConsensusStates, writer: Writer = Writer.create()): Writer {
     writer.uint32(10).string(message.clientId);
@@ -270,7 +229,8 @@ export const ClientConsensusStates = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): ClientConsensusStates {
+
+  decode(input: Reader | Uint8Array, length?: number): ClientConsensusStates {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseClientConsensusStates } as ClientConsensusStates;
@@ -291,6 +251,7 @@ export const ClientConsensusStates = {
     }
     return message;
   },
+
   fromJSON(object: any): ClientConsensusStates {
     const message = { ...baseClientConsensusStates } as ClientConsensusStates;
     message.consensusStates = [];
@@ -306,6 +267,7 @@ export const ClientConsensusStates = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<ClientConsensusStates>): ClientConsensusStates {
     const message = { ...baseClientConsensusStates } as ClientConsensusStates;
     message.consensusStates = [];
@@ -321,6 +283,7 @@ export const ClientConsensusStates = {
     }
     return message;
   },
+
   toJSON(message: ClientConsensusStates): unknown {
     const obj: any = {};
     message.clientId !== undefined && (obj.clientId = message.clientId);
@@ -335,6 +298,8 @@ export const ClientConsensusStates = {
   },
 };
 
+const baseClientUpdateProposal: object = { title: "", description: "", clientId: "" };
+
 export const ClientUpdateProposal = {
   encode(message: ClientUpdateProposal, writer: Writer = Writer.create()): Writer {
     writer.uint32(10).string(message.title);
@@ -345,7 +310,8 @@ export const ClientUpdateProposal = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): ClientUpdateProposal {
+
+  decode(input: Reader | Uint8Array, length?: number): ClientUpdateProposal {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseClientUpdateProposal } as ClientUpdateProposal;
@@ -371,6 +337,7 @@ export const ClientUpdateProposal = {
     }
     return message;
   },
+
   fromJSON(object: any): ClientUpdateProposal {
     const message = { ...baseClientUpdateProposal } as ClientUpdateProposal;
     if (object.title !== undefined && object.title !== null) {
@@ -395,6 +362,7 @@ export const ClientUpdateProposal = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<ClientUpdateProposal>): ClientUpdateProposal {
     const message = { ...baseClientUpdateProposal } as ClientUpdateProposal;
     if (object.title !== undefined && object.title !== null) {
@@ -419,6 +387,7 @@ export const ClientUpdateProposal = {
     }
     return message;
   },
+
   toJSON(message: ClientUpdateProposal): unknown {
     const obj: any = {};
     message.title !== undefined && (obj.title = message.title);
@@ -429,13 +398,16 @@ export const ClientUpdateProposal = {
   },
 };
 
+const baseHeight: object = { revisionNumber: Long.UZERO, revisionHeight: Long.UZERO };
+
 export const Height = {
   encode(message: Height, writer: Writer = Writer.create()): Writer {
     writer.uint32(8).uint64(message.revisionNumber);
     writer.uint32(16).uint64(message.revisionHeight);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): Height {
+
+  decode(input: Reader | Uint8Array, length?: number): Height {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseHeight } as Height;
@@ -455,6 +427,7 @@ export const Height = {
     }
     return message;
   },
+
   fromJSON(object: any): Height {
     const message = { ...baseHeight } as Height;
     if (object.revisionNumber !== undefined && object.revisionNumber !== null) {
@@ -469,6 +442,7 @@ export const Height = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<Height>): Height {
     const message = { ...baseHeight } as Height;
     if (object.revisionNumber !== undefined && object.revisionNumber !== null) {
@@ -483,6 +457,7 @@ export const Height = {
     }
     return message;
   },
+
   toJSON(message: Height): unknown {
     const obj: any = {};
     message.revisionNumber !== undefined &&
@@ -493,6 +468,8 @@ export const Height = {
   },
 };
 
+const baseParams: object = { allowedClients: "" };
+
 export const Params = {
   encode(message: Params, writer: Writer = Writer.create()): Writer {
     for (const v of message.allowedClients) {
@@ -500,7 +477,8 @@ export const Params = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): Params {
+
+  decode(input: Reader | Uint8Array, length?: number): Params {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseParams } as Params;
@@ -518,6 +496,7 @@ export const Params = {
     }
     return message;
   },
+
   fromJSON(object: any): Params {
     const message = { ...baseParams } as Params;
     message.allowedClients = [];
@@ -528,6 +507,7 @@ export const Params = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<Params>): Params {
     const message = { ...baseParams } as Params;
     message.allowedClients = [];
@@ -538,6 +518,7 @@ export const Params = {
     }
     return message;
   },
+
   toJSON(message: Params): unknown {
     const obj: any = {};
     if (message.allowedClients) {
@@ -549,7 +530,7 @@ export const Params = {
   },
 };
 
-type Builtin = Date | Function | Uint8Array | string | number | undefined;
+type Builtin = Date | Function | Uint8Array | string | number | undefined | Long;
 export type DeepPartial<T> = T extends Builtin
   ? T
   : T extends Array<infer U>

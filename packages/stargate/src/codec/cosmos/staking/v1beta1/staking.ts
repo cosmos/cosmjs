@@ -5,360 +5,19 @@ import * as Long from "long";
 import { Duration } from "../../../google/protobuf/duration";
 import { Coin } from "../../../cosmos/base/v1beta1/coin";
 import { Timestamp } from "../../../google/protobuf/timestamp";
-import { Writer, Reader, util, configure } from "protobufjs/minimal";
-
-/**
- *  HistoricalInfo contains header and validator information for a given block.
- *  It is stored as part of staking module's state, which persists the `n` most
- *  recent HistoricalInfo
- *  (`n` is set by the staking module's `historical_entries` parameter).
- */
-export interface HistoricalInfo {
-  header?: Header;
-  valset: Validator[];
-}
-
-/**
- *  CommissionRates defines the initial commission rates to be used for creating
- *  a validator.
- */
-export interface CommissionRates {
-  rate: string;
-  maxRate: string;
-  maxChangeRate: string;
-}
-
-/**
- *  Commission defines commission parameters for a given validator.
- */
-export interface Commission {
-  commissionRates?: CommissionRates;
-  updateTime?: Date;
-}
-
-/**
- *  Description defines a validator description.
- */
-export interface Description {
-  moniker: string;
-  identity: string;
-  website: string;
-  securityContact: string;
-  details: string;
-}
-
-/**
- *  Validator defines a validator, together with the total amount of the
- *  Validator's bond shares and their exchange rate to coins. Slashing results in
- *  a decrease in the exchange rate, allowing correct calculation of future
- *  undelegations without iterating over delegators. When coins are delegated to
- *  this validator, the validator is credited with a delegation whose number of
- *  bond shares is based on the amount of coins delegated divided by the current
- *  exchange rate. Voting power can be calculated as total bonded shares
- *  multiplied by exchange rate.
- */
-export interface Validator {
-  operatorAddress: string;
-  consensusPubkey?: Any;
-  jailed: boolean;
-  status: BondStatus;
-  tokens: string;
-  delegatorShares: string;
-  description?: Description;
-  unbondingHeight: Long;
-  unbondingTime?: Date;
-  commission?: Commission;
-  minSelfDelegation: string;
-}
-
-/**
- *  ValAddresses defines a repeated set of validator addresses.
- */
-export interface ValAddresses {
-  addresses: string[];
-}
-
-/**
- *  DVPair is struct that just has a delegator-validator pair with no other data.
- *  It is intended to be used as a marshalable pointer. For example, a DVPair can
- *  be used to construct the key to getting an UnbondingDelegation from state.
- */
-export interface DVPair {
-  delegatorAddress: string;
-  validatorAddress: string;
-}
-
-/**
- *  DVPairs defines an array of DVPair objects.
- */
-export interface DVPairs {
-  pairs: DVPair[];
-}
-
-/**
- *  DVVTriplet is struct that just has a delegator-validator-validator triplet
- *  with no other data. It is intended to be used as a marshalable pointer. For
- *  example, a DVVTriplet can be used to construct the key to getting a
- *  Redelegation from state.
- */
-export interface DVVTriplet {
-  delegatorAddress: string;
-  validatorSrcAddress: string;
-  validatorDstAddress: string;
-}
-
-/**
- *  DVVTriplets defines an array of DVVTriplet objects.
- */
-export interface DVVTriplets {
-  triplets: DVVTriplet[];
-}
-
-/**
- *  Delegation represents the bond with tokens held by an account. It is
- *  owned by one delegator, and is associated with the voting power of one
- *  validator.
- */
-export interface Delegation {
-  delegatorAddress: string;
-  validatorAddress: string;
-  shares: string;
-}
-
-/**
- *  UnbondingDelegation stores all of a single delegator's unbonding bonds
- *  for a single validator in an time-ordered list.
- */
-export interface UnbondingDelegation {
-  delegatorAddress: string;
-  validatorAddress: string;
-  /**
-   *  unbonding delegation entries
-   */
-  entries: UnbondingDelegationEntry[];
-}
-
-/**
- *  UnbondingDelegationEntry defines an unbonding object with relevant metadata.
- */
-export interface UnbondingDelegationEntry {
-  creationHeight: Long;
-  completionTime?: Date;
-  initialBalance: string;
-  balance: string;
-}
-
-/**
- *  RedelegationEntry defines a redelegation object with relevant metadata.
- */
-export interface RedelegationEntry {
-  creationHeight: Long;
-  completionTime?: Date;
-  initialBalance: string;
-  sharesDst: string;
-}
-
-/**
- *  Redelegation contains the list of a particular delegator's redelegating bonds
- *  from a particular source validator to a particular destination validator.
- */
-export interface Redelegation {
-  delegatorAddress: string;
-  validatorSrcAddress: string;
-  validatorDstAddress: string;
-  /**
-   *  redelegation entries
-   */
-  entries: RedelegationEntry[];
-}
-
-/**
- *  Params defines the parameters for the staking module.
- */
-export interface Params {
-  unbondingTime?: Duration;
-  maxValidators: number;
-  maxEntries: number;
-  historicalEntries: number;
-  bondDenom: string;
-}
-
-/**
- *  DelegationResponse is equivalent to Delegation except that it contains a
- *  balance in addition to shares which is more suitable for client responses.
- */
-export interface DelegationResponse {
-  delegation?: Delegation;
-  balance?: Coin;
-}
-
-/**
- *  RedelegationEntryResponse is equivalent to a RedelegationEntry except that it
- *  contains a balance in addition to shares which is more suitable for client
- *  responses.
- */
-export interface RedelegationEntryResponse {
-  redelegationEntry?: RedelegationEntry;
-  balance: string;
-}
-
-/**
- *  RedelegationResponse is equivalent to a Redelegation except that its entries
- *  contain a balance in addition to shares which is more suitable for client
- *  responses.
- */
-export interface RedelegationResponse {
-  redelegation?: Redelegation;
-  entries: RedelegationEntryResponse[];
-}
-
-/**
- *  Pool is used for tracking bonded and not-bonded token supply of the bond
- *  denomination.
- */
-export interface Pool {
-  notBondedTokens: string;
-  bondedTokens: string;
-}
-
-const baseHistoricalInfo: object = {};
-
-const baseCommissionRates: object = {
-  rate: "",
-  maxRate: "",
-  maxChangeRate: "",
-};
-
-const baseCommission: object = {};
-
-const baseDescription: object = {
-  moniker: "",
-  identity: "",
-  website: "",
-  securityContact: "",
-  details: "",
-};
-
-const baseValidator: object = {
-  operatorAddress: "",
-  jailed: false,
-  status: 0,
-  tokens: "",
-  delegatorShares: "",
-  unbondingHeight: Long.ZERO,
-  minSelfDelegation: "",
-};
-
-const baseValAddresses: object = {
-  addresses: "",
-};
-
-const baseDVPair: object = {
-  delegatorAddress: "",
-  validatorAddress: "",
-};
-
-const baseDVPairs: object = {};
-
-const baseDVVTriplet: object = {
-  delegatorAddress: "",
-  validatorSrcAddress: "",
-  validatorDstAddress: "",
-};
-
-const baseDVVTriplets: object = {};
-
-const baseDelegation: object = {
-  delegatorAddress: "",
-  validatorAddress: "",
-  shares: "",
-};
-
-const baseUnbondingDelegation: object = {
-  delegatorAddress: "",
-  validatorAddress: "",
-};
-
-const baseUnbondingDelegationEntry: object = {
-  creationHeight: Long.ZERO,
-  initialBalance: "",
-  balance: "",
-};
-
-const baseRedelegationEntry: object = {
-  creationHeight: Long.ZERO,
-  initialBalance: "",
-  sharesDst: "",
-};
-
-const baseRedelegation: object = {
-  delegatorAddress: "",
-  validatorSrcAddress: "",
-  validatorDstAddress: "",
-};
-
-const baseParams: object = {
-  maxValidators: 0,
-  maxEntries: 0,
-  historicalEntries: 0,
-  bondDenom: "",
-};
-
-const baseDelegationResponse: object = {};
-
-const baseRedelegationEntryResponse: object = {
-  balance: "",
-};
-
-const baseRedelegationResponse: object = {};
-
-const basePool: object = {
-  notBondedTokens: "",
-  bondedTokens: "",
-};
-
-function fromJsonTimestamp(o: any): Date {
-  if (o instanceof Date) {
-    return o;
-  } else if (typeof o === "string") {
-    return new Date(o);
-  } else {
-    return fromTimestamp(Timestamp.fromJSON(o));
-  }
-}
-
-function toTimestamp(date: Date): Timestamp {
-  const seconds = numberToLong(date.getTime() / 1_000);
-  const nanos = (date.getTime() % 1_000) * 1_000_000;
-  return { seconds, nanos };
-}
-
-function fromTimestamp(t: Timestamp): Date {
-  let millis = t.seconds.toNumber() * 1_000;
-  millis += t.nanos / 1_000_000;
-  return new Date(millis);
-}
-
-function numberToLong(number: number) {
-  return Long.fromNumber(number);
-}
+import { util, configure, Writer, Reader } from "protobufjs/minimal";
 
 export const protobufPackage = "cosmos.staking.v1beta1";
 
-/**  BondStatus is the status of a validator.
- */
+/** BondStatus is the status of a validator. */
 export enum BondStatus {
-  /** BOND_STATUS_UNSPECIFIED -  UNSPECIFIED defines an invalid validator status.
-   */
+  /** BOND_STATUS_UNSPECIFIED - UNSPECIFIED defines an invalid validator status. */
   BOND_STATUS_UNSPECIFIED = 0,
-  /** BOND_STATUS_UNBONDED -  UNBONDED defines a validator that is not bonded.
-   */
+  /** BOND_STATUS_UNBONDED - UNBONDED defines a validator that is not bonded. */
   BOND_STATUS_UNBONDED = 1,
-  /** BOND_STATUS_UNBONDING -  UNBONDING defines a validator that is unbonding.
-   */
+  /** BOND_STATUS_UNBONDING - UNBONDING defines a validator that is unbonding. */
   BOND_STATUS_UNBONDING = 2,
-  /** BOND_STATUS_BONDED -  BONDED defines a validator that is bonded.
-   */
+  /** BOND_STATUS_BONDED - BONDED defines a validator that is bonded. */
   BOND_STATUS_BONDED = 3,
   UNRECOGNIZED = -1,
 }
@@ -399,6 +58,202 @@ export function bondStatusToJSON(object: BondStatus): string {
   }
 }
 
+/**
+ * HistoricalInfo contains header and validator information for a given block.
+ * It is stored as part of staking module's state, which persists the `n` most
+ * recent HistoricalInfo
+ * (`n` is set by the staking module's `historical_entries` parameter).
+ */
+export interface HistoricalInfo {
+  header?: Header;
+  valset: Validator[];
+}
+
+/**
+ * CommissionRates defines the initial commission rates to be used for creating
+ * a validator.
+ */
+export interface CommissionRates {
+  rate: string;
+  maxRate: string;
+  maxChangeRate: string;
+}
+
+/** Commission defines commission parameters for a given validator. */
+export interface Commission {
+  commissionRates?: CommissionRates;
+  updateTime?: Date;
+}
+
+/** Description defines a validator description. */
+export interface Description {
+  moniker: string;
+  identity: string;
+  website: string;
+  securityContact: string;
+  details: string;
+}
+
+/**
+ * Validator defines a validator, together with the total amount of the
+ * Validator's bond shares and their exchange rate to coins. Slashing results in
+ * a decrease in the exchange rate, allowing correct calculation of future
+ * undelegations without iterating over delegators. When coins are delegated to
+ * this validator, the validator is credited with a delegation whose number of
+ * bond shares is based on the amount of coins delegated divided by the current
+ * exchange rate. Voting power can be calculated as total bonded shares
+ * multiplied by exchange rate.
+ */
+export interface Validator {
+  operatorAddress: string;
+  consensusPubkey?: Any;
+  jailed: boolean;
+  status: BondStatus;
+  tokens: string;
+  delegatorShares: string;
+  description?: Description;
+  unbondingHeight: Long;
+  unbondingTime?: Date;
+  commission?: Commission;
+  minSelfDelegation: string;
+}
+
+/** ValAddresses defines a repeated set of validator addresses. */
+export interface ValAddresses {
+  addresses: string[];
+}
+
+/**
+ * DVPair is struct that just has a delegator-validator pair with no other data.
+ * It is intended to be used as a marshalable pointer. For example, a DVPair can
+ * be used to construct the key to getting an UnbondingDelegation from state.
+ */
+export interface DVPair {
+  delegatorAddress: string;
+  validatorAddress: string;
+}
+
+/** DVPairs defines an array of DVPair objects. */
+export interface DVPairs {
+  pairs: DVPair[];
+}
+
+/**
+ * DVVTriplet is struct that just has a delegator-validator-validator triplet
+ * with no other data. It is intended to be used as a marshalable pointer. For
+ * example, a DVVTriplet can be used to construct the key to getting a
+ * Redelegation from state.
+ */
+export interface DVVTriplet {
+  delegatorAddress: string;
+  validatorSrcAddress: string;
+  validatorDstAddress: string;
+}
+
+/** DVVTriplets defines an array of DVVTriplet objects. */
+export interface DVVTriplets {
+  triplets: DVVTriplet[];
+}
+
+/**
+ * Delegation represents the bond with tokens held by an account. It is
+ * owned by one delegator, and is associated with the voting power of one
+ * validator.
+ */
+export interface Delegation {
+  delegatorAddress: string;
+  validatorAddress: string;
+  shares: string;
+}
+
+/**
+ * UnbondingDelegation stores all of a single delegator's unbonding bonds
+ * for a single validator in an time-ordered list.
+ */
+export interface UnbondingDelegation {
+  delegatorAddress: string;
+  validatorAddress: string;
+  /** unbonding delegation entries */
+  entries: UnbondingDelegationEntry[];
+}
+
+/** UnbondingDelegationEntry defines an unbonding object with relevant metadata. */
+export interface UnbondingDelegationEntry {
+  creationHeight: Long;
+  completionTime?: Date;
+  initialBalance: string;
+  balance: string;
+}
+
+/** RedelegationEntry defines a redelegation object with relevant metadata. */
+export interface RedelegationEntry {
+  creationHeight: Long;
+  completionTime?: Date;
+  initialBalance: string;
+  sharesDst: string;
+}
+
+/**
+ * Redelegation contains the list of a particular delegator's redelegating bonds
+ * from a particular source validator to a particular destination validator.
+ */
+export interface Redelegation {
+  delegatorAddress: string;
+  validatorSrcAddress: string;
+  validatorDstAddress: string;
+  /** redelegation entries */
+  entries: RedelegationEntry[];
+}
+
+/** Params defines the parameters for the staking module. */
+export interface Params {
+  unbondingTime?: Duration;
+  maxValidators: number;
+  maxEntries: number;
+  historicalEntries: number;
+  bondDenom: string;
+}
+
+/**
+ * DelegationResponse is equivalent to Delegation except that it contains a
+ * balance in addition to shares which is more suitable for client responses.
+ */
+export interface DelegationResponse {
+  delegation?: Delegation;
+  balance?: Coin;
+}
+
+/**
+ * RedelegationEntryResponse is equivalent to a RedelegationEntry except that it
+ * contains a balance in addition to shares which is more suitable for client
+ * responses.
+ */
+export interface RedelegationEntryResponse {
+  redelegationEntry?: RedelegationEntry;
+  balance: string;
+}
+
+/**
+ * RedelegationResponse is equivalent to a Redelegation except that its entries
+ * contain a balance in addition to shares which is more suitable for client
+ * responses.
+ */
+export interface RedelegationResponse {
+  redelegation?: Redelegation;
+  entries: RedelegationEntryResponse[];
+}
+
+/**
+ * Pool is used for tracking bonded and not-bonded token supply of the bond
+ * denomination.
+ */
+export interface Pool {
+  notBondedTokens: string;
+  bondedTokens: string;
+}
+
+const baseHistoricalInfo: object = {};
+
 export const HistoricalInfo = {
   encode(message: HistoricalInfo, writer: Writer = Writer.create()): Writer {
     if (message.header !== undefined && message.header !== undefined) {
@@ -409,7 +264,8 @@ export const HistoricalInfo = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): HistoricalInfo {
+
+  decode(input: Reader | Uint8Array, length?: number): HistoricalInfo {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseHistoricalInfo } as HistoricalInfo;
@@ -430,6 +286,7 @@ export const HistoricalInfo = {
     }
     return message;
   },
+
   fromJSON(object: any): HistoricalInfo {
     const message = { ...baseHistoricalInfo } as HistoricalInfo;
     message.valset = [];
@@ -445,6 +302,7 @@ export const HistoricalInfo = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<HistoricalInfo>): HistoricalInfo {
     const message = { ...baseHistoricalInfo } as HistoricalInfo;
     message.valset = [];
@@ -460,6 +318,7 @@ export const HistoricalInfo = {
     }
     return message;
   },
+
   toJSON(message: HistoricalInfo): unknown {
     const obj: any = {};
     message.header !== undefined && (obj.header = message.header ? Header.toJSON(message.header) : undefined);
@@ -472,6 +331,8 @@ export const HistoricalInfo = {
   },
 };
 
+const baseCommissionRates: object = { rate: "", maxRate: "", maxChangeRate: "" };
+
 export const CommissionRates = {
   encode(message: CommissionRates, writer: Writer = Writer.create()): Writer {
     writer.uint32(10).string(message.rate);
@@ -479,7 +340,8 @@ export const CommissionRates = {
     writer.uint32(26).string(message.maxChangeRate);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): CommissionRates {
+
+  decode(input: Reader | Uint8Array, length?: number): CommissionRates {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseCommissionRates } as CommissionRates;
@@ -502,6 +364,7 @@ export const CommissionRates = {
     }
     return message;
   },
+
   fromJSON(object: any): CommissionRates {
     const message = { ...baseCommissionRates } as CommissionRates;
     if (object.rate !== undefined && object.rate !== null) {
@@ -521,6 +384,7 @@ export const CommissionRates = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<CommissionRates>): CommissionRates {
     const message = { ...baseCommissionRates } as CommissionRates;
     if (object.rate !== undefined && object.rate !== null) {
@@ -540,6 +404,7 @@ export const CommissionRates = {
     }
     return message;
   },
+
   toJSON(message: CommissionRates): unknown {
     const obj: any = {};
     message.rate !== undefined && (obj.rate = message.rate);
@@ -548,6 +413,8 @@ export const CommissionRates = {
     return obj;
   },
 };
+
+const baseCommission: object = {};
 
 export const Commission = {
   encode(message: Commission, writer: Writer = Writer.create()): Writer {
@@ -559,7 +426,8 @@ export const Commission = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): Commission {
+
+  decode(input: Reader | Uint8Array, length?: number): Commission {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseCommission } as Commission;
@@ -579,6 +447,7 @@ export const Commission = {
     }
     return message;
   },
+
   fromJSON(object: any): Commission {
     const message = { ...baseCommission } as Commission;
     if (object.commissionRates !== undefined && object.commissionRates !== null) {
@@ -593,6 +462,7 @@ export const Commission = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<Commission>): Commission {
     const message = { ...baseCommission } as Commission;
     if (object.commissionRates !== undefined && object.commissionRates !== null) {
@@ -607,6 +477,7 @@ export const Commission = {
     }
     return message;
   },
+
   toJSON(message: Commission): unknown {
     const obj: any = {};
     message.commissionRates !== undefined &&
@@ -619,6 +490,8 @@ export const Commission = {
   },
 };
 
+const baseDescription: object = { moniker: "", identity: "", website: "", securityContact: "", details: "" };
+
 export const Description = {
   encode(message: Description, writer: Writer = Writer.create()): Writer {
     writer.uint32(10).string(message.moniker);
@@ -628,7 +501,8 @@ export const Description = {
     writer.uint32(42).string(message.details);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): Description {
+
+  decode(input: Reader | Uint8Array, length?: number): Description {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseDescription } as Description;
@@ -657,6 +531,7 @@ export const Description = {
     }
     return message;
   },
+
   fromJSON(object: any): Description {
     const message = { ...baseDescription } as Description;
     if (object.moniker !== undefined && object.moniker !== null) {
@@ -686,6 +561,7 @@ export const Description = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<Description>): Description {
     const message = { ...baseDescription } as Description;
     if (object.moniker !== undefined && object.moniker !== null) {
@@ -715,6 +591,7 @@ export const Description = {
     }
     return message;
   },
+
   toJSON(message: Description): unknown {
     const obj: any = {};
     message.moniker !== undefined && (obj.moniker = message.moniker);
@@ -724,6 +601,16 @@ export const Description = {
     message.details !== undefined && (obj.details = message.details);
     return obj;
   },
+};
+
+const baseValidator: object = {
+  operatorAddress: "",
+  jailed: false,
+  status: 0,
+  tokens: "",
+  delegatorShares: "",
+  unbondingHeight: Long.ZERO,
+  minSelfDelegation: "",
 };
 
 export const Validator = {
@@ -749,7 +636,8 @@ export const Validator = {
     writer.uint32(90).string(message.minSelfDelegation);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): Validator {
+
+  decode(input: Reader | Uint8Array, length?: number): Validator {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseValidator } as Validator;
@@ -796,6 +684,7 @@ export const Validator = {
     }
     return message;
   },
+
   fromJSON(object: any): Validator {
     const message = { ...baseValidator } as Validator;
     if (object.operatorAddress !== undefined && object.operatorAddress !== null) {
@@ -855,6 +744,7 @@ export const Validator = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<Validator>): Validator {
     const message = { ...baseValidator } as Validator;
     if (object.operatorAddress !== undefined && object.operatorAddress !== null) {
@@ -914,6 +804,7 @@ export const Validator = {
     }
     return message;
   },
+
   toJSON(message: Validator): unknown {
     const obj: any = {};
     message.operatorAddress !== undefined && (obj.operatorAddress = message.operatorAddress);
@@ -936,6 +827,8 @@ export const Validator = {
   },
 };
 
+const baseValAddresses: object = { addresses: "" };
+
 export const ValAddresses = {
   encode(message: ValAddresses, writer: Writer = Writer.create()): Writer {
     for (const v of message.addresses) {
@@ -943,7 +836,8 @@ export const ValAddresses = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): ValAddresses {
+
+  decode(input: Reader | Uint8Array, length?: number): ValAddresses {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseValAddresses } as ValAddresses;
@@ -961,6 +855,7 @@ export const ValAddresses = {
     }
     return message;
   },
+
   fromJSON(object: any): ValAddresses {
     const message = { ...baseValAddresses } as ValAddresses;
     message.addresses = [];
@@ -971,6 +866,7 @@ export const ValAddresses = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<ValAddresses>): ValAddresses {
     const message = { ...baseValAddresses } as ValAddresses;
     message.addresses = [];
@@ -981,6 +877,7 @@ export const ValAddresses = {
     }
     return message;
   },
+
   toJSON(message: ValAddresses): unknown {
     const obj: any = {};
     if (message.addresses) {
@@ -992,13 +889,16 @@ export const ValAddresses = {
   },
 };
 
+const baseDVPair: object = { delegatorAddress: "", validatorAddress: "" };
+
 export const DVPair = {
   encode(message: DVPair, writer: Writer = Writer.create()): Writer {
     writer.uint32(10).string(message.delegatorAddress);
     writer.uint32(18).string(message.validatorAddress);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): DVPair {
+
+  decode(input: Reader | Uint8Array, length?: number): DVPair {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseDVPair } as DVPair;
@@ -1018,6 +918,7 @@ export const DVPair = {
     }
     return message;
   },
+
   fromJSON(object: any): DVPair {
     const message = { ...baseDVPair } as DVPair;
     if (object.delegatorAddress !== undefined && object.delegatorAddress !== null) {
@@ -1032,6 +933,7 @@ export const DVPair = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<DVPair>): DVPair {
     const message = { ...baseDVPair } as DVPair;
     if (object.delegatorAddress !== undefined && object.delegatorAddress !== null) {
@@ -1046,6 +948,7 @@ export const DVPair = {
     }
     return message;
   },
+
   toJSON(message: DVPair): unknown {
     const obj: any = {};
     message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
@@ -1054,6 +957,8 @@ export const DVPair = {
   },
 };
 
+const baseDVPairs: object = {};
+
 export const DVPairs = {
   encode(message: DVPairs, writer: Writer = Writer.create()): Writer {
     for (const v of message.pairs) {
@@ -1061,7 +966,8 @@ export const DVPairs = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): DVPairs {
+
+  decode(input: Reader | Uint8Array, length?: number): DVPairs {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseDVPairs } as DVPairs;
@@ -1079,6 +985,7 @@ export const DVPairs = {
     }
     return message;
   },
+
   fromJSON(object: any): DVPairs {
     const message = { ...baseDVPairs } as DVPairs;
     message.pairs = [];
@@ -1089,6 +996,7 @@ export const DVPairs = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<DVPairs>): DVPairs {
     const message = { ...baseDVPairs } as DVPairs;
     message.pairs = [];
@@ -1099,6 +1007,7 @@ export const DVPairs = {
     }
     return message;
   },
+
   toJSON(message: DVPairs): unknown {
     const obj: any = {};
     if (message.pairs) {
@@ -1110,6 +1019,8 @@ export const DVPairs = {
   },
 };
 
+const baseDVVTriplet: object = { delegatorAddress: "", validatorSrcAddress: "", validatorDstAddress: "" };
+
 export const DVVTriplet = {
   encode(message: DVVTriplet, writer: Writer = Writer.create()): Writer {
     writer.uint32(10).string(message.delegatorAddress);
@@ -1117,7 +1028,8 @@ export const DVVTriplet = {
     writer.uint32(26).string(message.validatorDstAddress);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): DVVTriplet {
+
+  decode(input: Reader | Uint8Array, length?: number): DVVTriplet {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseDVVTriplet } as DVVTriplet;
@@ -1140,6 +1052,7 @@ export const DVVTriplet = {
     }
     return message;
   },
+
   fromJSON(object: any): DVVTriplet {
     const message = { ...baseDVVTriplet } as DVVTriplet;
     if (object.delegatorAddress !== undefined && object.delegatorAddress !== null) {
@@ -1159,6 +1072,7 @@ export const DVVTriplet = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<DVVTriplet>): DVVTriplet {
     const message = { ...baseDVVTriplet } as DVVTriplet;
     if (object.delegatorAddress !== undefined && object.delegatorAddress !== null) {
@@ -1178,6 +1092,7 @@ export const DVVTriplet = {
     }
     return message;
   },
+
   toJSON(message: DVVTriplet): unknown {
     const obj: any = {};
     message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
@@ -1187,6 +1102,8 @@ export const DVVTriplet = {
   },
 };
 
+const baseDVVTriplets: object = {};
+
 export const DVVTriplets = {
   encode(message: DVVTriplets, writer: Writer = Writer.create()): Writer {
     for (const v of message.triplets) {
@@ -1194,7 +1111,8 @@ export const DVVTriplets = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): DVVTriplets {
+
+  decode(input: Reader | Uint8Array, length?: number): DVVTriplets {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseDVVTriplets } as DVVTriplets;
@@ -1212,6 +1130,7 @@ export const DVVTriplets = {
     }
     return message;
   },
+
   fromJSON(object: any): DVVTriplets {
     const message = { ...baseDVVTriplets } as DVVTriplets;
     message.triplets = [];
@@ -1222,6 +1141,7 @@ export const DVVTriplets = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<DVVTriplets>): DVVTriplets {
     const message = { ...baseDVVTriplets } as DVVTriplets;
     message.triplets = [];
@@ -1232,6 +1152,7 @@ export const DVVTriplets = {
     }
     return message;
   },
+
   toJSON(message: DVVTriplets): unknown {
     const obj: any = {};
     if (message.triplets) {
@@ -1243,6 +1164,8 @@ export const DVVTriplets = {
   },
 };
 
+const baseDelegation: object = { delegatorAddress: "", validatorAddress: "", shares: "" };
+
 export const Delegation = {
   encode(message: Delegation, writer: Writer = Writer.create()): Writer {
     writer.uint32(10).string(message.delegatorAddress);
@@ -1250,7 +1173,8 @@ export const Delegation = {
     writer.uint32(26).string(message.shares);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): Delegation {
+
+  decode(input: Reader | Uint8Array, length?: number): Delegation {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseDelegation } as Delegation;
@@ -1273,6 +1197,7 @@ export const Delegation = {
     }
     return message;
   },
+
   fromJSON(object: any): Delegation {
     const message = { ...baseDelegation } as Delegation;
     if (object.delegatorAddress !== undefined && object.delegatorAddress !== null) {
@@ -1292,6 +1217,7 @@ export const Delegation = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<Delegation>): Delegation {
     const message = { ...baseDelegation } as Delegation;
     if (object.delegatorAddress !== undefined && object.delegatorAddress !== null) {
@@ -1311,6 +1237,7 @@ export const Delegation = {
     }
     return message;
   },
+
   toJSON(message: Delegation): unknown {
     const obj: any = {};
     message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
@@ -1319,6 +1246,8 @@ export const Delegation = {
     return obj;
   },
 };
+
+const baseUnbondingDelegation: object = { delegatorAddress: "", validatorAddress: "" };
 
 export const UnbondingDelegation = {
   encode(message: UnbondingDelegation, writer: Writer = Writer.create()): Writer {
@@ -1329,7 +1258,8 @@ export const UnbondingDelegation = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): UnbondingDelegation {
+
+  decode(input: Reader | Uint8Array, length?: number): UnbondingDelegation {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseUnbondingDelegation } as UnbondingDelegation;
@@ -1353,6 +1283,7 @@ export const UnbondingDelegation = {
     }
     return message;
   },
+
   fromJSON(object: any): UnbondingDelegation {
     const message = { ...baseUnbondingDelegation } as UnbondingDelegation;
     message.entries = [];
@@ -1373,6 +1304,7 @@ export const UnbondingDelegation = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<UnbondingDelegation>): UnbondingDelegation {
     const message = { ...baseUnbondingDelegation } as UnbondingDelegation;
     message.entries = [];
@@ -1393,6 +1325,7 @@ export const UnbondingDelegation = {
     }
     return message;
   },
+
   toJSON(message: UnbondingDelegation): unknown {
     const obj: any = {};
     message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
@@ -1406,6 +1339,8 @@ export const UnbondingDelegation = {
   },
 };
 
+const baseUnbondingDelegationEntry: object = { creationHeight: Long.ZERO, initialBalance: "", balance: "" };
+
 export const UnbondingDelegationEntry = {
   encode(message: UnbondingDelegationEntry, writer: Writer = Writer.create()): Writer {
     writer.uint32(8).int64(message.creationHeight);
@@ -1416,7 +1351,8 @@ export const UnbondingDelegationEntry = {
     writer.uint32(34).string(message.balance);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): UnbondingDelegationEntry {
+
+  decode(input: Reader | Uint8Array, length?: number): UnbondingDelegationEntry {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseUnbondingDelegationEntry } as UnbondingDelegationEntry;
@@ -1442,6 +1378,7 @@ export const UnbondingDelegationEntry = {
     }
     return message;
   },
+
   fromJSON(object: any): UnbondingDelegationEntry {
     const message = { ...baseUnbondingDelegationEntry } as UnbondingDelegationEntry;
     if (object.creationHeight !== undefined && object.creationHeight !== null) {
@@ -1466,6 +1403,7 @@ export const UnbondingDelegationEntry = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<UnbondingDelegationEntry>): UnbondingDelegationEntry {
     const message = { ...baseUnbondingDelegationEntry } as UnbondingDelegationEntry;
     if (object.creationHeight !== undefined && object.creationHeight !== null) {
@@ -1490,6 +1428,7 @@ export const UnbondingDelegationEntry = {
     }
     return message;
   },
+
   toJSON(message: UnbondingDelegationEntry): unknown {
     const obj: any = {};
     message.creationHeight !== undefined &&
@@ -1503,6 +1442,8 @@ export const UnbondingDelegationEntry = {
   },
 };
 
+const baseRedelegationEntry: object = { creationHeight: Long.ZERO, initialBalance: "", sharesDst: "" };
+
 export const RedelegationEntry = {
   encode(message: RedelegationEntry, writer: Writer = Writer.create()): Writer {
     writer.uint32(8).int64(message.creationHeight);
@@ -1513,7 +1454,8 @@ export const RedelegationEntry = {
     writer.uint32(34).string(message.sharesDst);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): RedelegationEntry {
+
+  decode(input: Reader | Uint8Array, length?: number): RedelegationEntry {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseRedelegationEntry } as RedelegationEntry;
@@ -1539,6 +1481,7 @@ export const RedelegationEntry = {
     }
     return message;
   },
+
   fromJSON(object: any): RedelegationEntry {
     const message = { ...baseRedelegationEntry } as RedelegationEntry;
     if (object.creationHeight !== undefined && object.creationHeight !== null) {
@@ -1563,6 +1506,7 @@ export const RedelegationEntry = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<RedelegationEntry>): RedelegationEntry {
     const message = { ...baseRedelegationEntry } as RedelegationEntry;
     if (object.creationHeight !== undefined && object.creationHeight !== null) {
@@ -1587,6 +1531,7 @@ export const RedelegationEntry = {
     }
     return message;
   },
+
   toJSON(message: RedelegationEntry): unknown {
     const obj: any = {};
     message.creationHeight !== undefined &&
@@ -1600,6 +1545,8 @@ export const RedelegationEntry = {
   },
 };
 
+const baseRedelegation: object = { delegatorAddress: "", validatorSrcAddress: "", validatorDstAddress: "" };
+
 export const Redelegation = {
   encode(message: Redelegation, writer: Writer = Writer.create()): Writer {
     writer.uint32(10).string(message.delegatorAddress);
@@ -1610,7 +1557,8 @@ export const Redelegation = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): Redelegation {
+
+  decode(input: Reader | Uint8Array, length?: number): Redelegation {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseRedelegation } as Redelegation;
@@ -1637,6 +1585,7 @@ export const Redelegation = {
     }
     return message;
   },
+
   fromJSON(object: any): Redelegation {
     const message = { ...baseRedelegation } as Redelegation;
     message.entries = [];
@@ -1662,6 +1611,7 @@ export const Redelegation = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<Redelegation>): Redelegation {
     const message = { ...baseRedelegation } as Redelegation;
     message.entries = [];
@@ -1687,6 +1637,7 @@ export const Redelegation = {
     }
     return message;
   },
+
   toJSON(message: Redelegation): unknown {
     const obj: any = {};
     message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
@@ -1701,6 +1652,8 @@ export const Redelegation = {
   },
 };
 
+const baseParams: object = { maxValidators: 0, maxEntries: 0, historicalEntries: 0, bondDenom: "" };
+
 export const Params = {
   encode(message: Params, writer: Writer = Writer.create()): Writer {
     if (message.unbondingTime !== undefined && message.unbondingTime !== undefined) {
@@ -1712,7 +1665,8 @@ export const Params = {
     writer.uint32(42).string(message.bondDenom);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): Params {
+
+  decode(input: Reader | Uint8Array, length?: number): Params {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseParams } as Params;
@@ -1741,6 +1695,7 @@ export const Params = {
     }
     return message;
   },
+
   fromJSON(object: any): Params {
     const message = { ...baseParams } as Params;
     if (object.unbondingTime !== undefined && object.unbondingTime !== null) {
@@ -1770,6 +1725,7 @@ export const Params = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<Params>): Params {
     const message = { ...baseParams } as Params;
     if (object.unbondingTime !== undefined && object.unbondingTime !== null) {
@@ -1799,6 +1755,7 @@ export const Params = {
     }
     return message;
   },
+
   toJSON(message: Params): unknown {
     const obj: any = {};
     message.unbondingTime !== undefined &&
@@ -1811,6 +1768,8 @@ export const Params = {
   },
 };
 
+const baseDelegationResponse: object = {};
+
 export const DelegationResponse = {
   encode(message: DelegationResponse, writer: Writer = Writer.create()): Writer {
     if (message.delegation !== undefined && message.delegation !== undefined) {
@@ -1821,7 +1780,8 @@ export const DelegationResponse = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): DelegationResponse {
+
+  decode(input: Reader | Uint8Array, length?: number): DelegationResponse {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseDelegationResponse } as DelegationResponse;
@@ -1841,6 +1801,7 @@ export const DelegationResponse = {
     }
     return message;
   },
+
   fromJSON(object: any): DelegationResponse {
     const message = { ...baseDelegationResponse } as DelegationResponse;
     if (object.delegation !== undefined && object.delegation !== null) {
@@ -1855,6 +1816,7 @@ export const DelegationResponse = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<DelegationResponse>): DelegationResponse {
     const message = { ...baseDelegationResponse } as DelegationResponse;
     if (object.delegation !== undefined && object.delegation !== null) {
@@ -1869,6 +1831,7 @@ export const DelegationResponse = {
     }
     return message;
   },
+
   toJSON(message: DelegationResponse): unknown {
     const obj: any = {};
     message.delegation !== undefined &&
@@ -1879,6 +1842,8 @@ export const DelegationResponse = {
   },
 };
 
+const baseRedelegationEntryResponse: object = { balance: "" };
+
 export const RedelegationEntryResponse = {
   encode(message: RedelegationEntryResponse, writer: Writer = Writer.create()): Writer {
     if (message.redelegationEntry !== undefined && message.redelegationEntry !== undefined) {
@@ -1887,7 +1852,8 @@ export const RedelegationEntryResponse = {
     writer.uint32(34).string(message.balance);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): RedelegationEntryResponse {
+
+  decode(input: Reader | Uint8Array, length?: number): RedelegationEntryResponse {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseRedelegationEntryResponse } as RedelegationEntryResponse;
@@ -1907,6 +1873,7 @@ export const RedelegationEntryResponse = {
     }
     return message;
   },
+
   fromJSON(object: any): RedelegationEntryResponse {
     const message = { ...baseRedelegationEntryResponse } as RedelegationEntryResponse;
     if (object.redelegationEntry !== undefined && object.redelegationEntry !== null) {
@@ -1921,6 +1888,7 @@ export const RedelegationEntryResponse = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<RedelegationEntryResponse>): RedelegationEntryResponse {
     const message = { ...baseRedelegationEntryResponse } as RedelegationEntryResponse;
     if (object.redelegationEntry !== undefined && object.redelegationEntry !== null) {
@@ -1935,6 +1903,7 @@ export const RedelegationEntryResponse = {
     }
     return message;
   },
+
   toJSON(message: RedelegationEntryResponse): unknown {
     const obj: any = {};
     message.redelegationEntry !== undefined &&
@@ -1946,6 +1915,8 @@ export const RedelegationEntryResponse = {
   },
 };
 
+const baseRedelegationResponse: object = {};
+
 export const RedelegationResponse = {
   encode(message: RedelegationResponse, writer: Writer = Writer.create()): Writer {
     if (message.redelegation !== undefined && message.redelegation !== undefined) {
@@ -1956,7 +1927,8 @@ export const RedelegationResponse = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): RedelegationResponse {
+
+  decode(input: Reader | Uint8Array, length?: number): RedelegationResponse {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseRedelegationResponse } as RedelegationResponse;
@@ -1977,6 +1949,7 @@ export const RedelegationResponse = {
     }
     return message;
   },
+
   fromJSON(object: any): RedelegationResponse {
     const message = { ...baseRedelegationResponse } as RedelegationResponse;
     message.entries = [];
@@ -1992,6 +1965,7 @@ export const RedelegationResponse = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<RedelegationResponse>): RedelegationResponse {
     const message = { ...baseRedelegationResponse } as RedelegationResponse;
     message.entries = [];
@@ -2007,6 +1981,7 @@ export const RedelegationResponse = {
     }
     return message;
   },
+
   toJSON(message: RedelegationResponse): unknown {
     const obj: any = {};
     message.redelegation !== undefined &&
@@ -2020,13 +1995,16 @@ export const RedelegationResponse = {
   },
 };
 
+const basePool: object = { notBondedTokens: "", bondedTokens: "" };
+
 export const Pool = {
   encode(message: Pool, writer: Writer = Writer.create()): Writer {
     writer.uint32(10).string(message.notBondedTokens);
     writer.uint32(18).string(message.bondedTokens);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): Pool {
+
+  decode(input: Reader | Uint8Array, length?: number): Pool {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...basePool } as Pool;
@@ -2046,6 +2024,7 @@ export const Pool = {
     }
     return message;
   },
+
   fromJSON(object: any): Pool {
     const message = { ...basePool } as Pool;
     if (object.notBondedTokens !== undefined && object.notBondedTokens !== null) {
@@ -2060,6 +2039,7 @@ export const Pool = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<Pool>): Pool {
     const message = { ...basePool } as Pool;
     if (object.notBondedTokens !== undefined && object.notBondedTokens !== null) {
@@ -2074,6 +2054,7 @@ export const Pool = {
     }
     return message;
   },
+
   toJSON(message: Pool): unknown {
     const obj: any = {};
     message.notBondedTokens !== undefined && (obj.notBondedTokens = message.notBondedTokens);
@@ -2082,12 +2063,7 @@ export const Pool = {
   },
 };
 
-if (util.Long !== (Long as any)) {
-  util.Long = Long as any;
-  configure();
-}
-
-type Builtin = Date | Function | Uint8Array | string | number | undefined;
+type Builtin = Date | Function | Uint8Array | string | number | undefined | Long;
 export type DeepPartial<T> = T extends Builtin
   ? T
   : T extends Array<infer U>
@@ -2097,3 +2073,34 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+function toTimestamp(date: Date): Timestamp {
+  const seconds = numberToLong(date.getTime() / 1_000);
+  const nanos = (date.getTime() % 1_000) * 1_000_000;
+  return { seconds, nanos };
+}
+
+function fromTimestamp(t: Timestamp): Date {
+  let millis = t.seconds.toNumber() * 1_000;
+  millis += t.nanos / 1_000_000;
+  return new Date(millis);
+}
+
+function fromJsonTimestamp(o: any): Date {
+  if (o instanceof Date) {
+    return o;
+  } else if (typeof o === "string") {
+    return new Date(o);
+  } else {
+    return fromTimestamp(Timestamp.fromJSON(o));
+  }
+}
+
+function numberToLong(number: number) {
+  return Long.fromNumber(number);
+}
+
+if (util.Long !== Long) {
+  util.Long = Long as any;
+  configure();
+}

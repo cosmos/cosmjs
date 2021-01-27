@@ -2,75 +2,67 @@
 import * as Long from "long";
 import { Writer, Reader } from "protobufjs/minimal";
 
+export const protobufPackage = "cosmos.base.query.v1beta1";
+
 /**
- *  PageRequest is to be embedded in gRPC request messages for efficient
- *  pagination. Ex:
+ * PageRequest is to be embedded in gRPC request messages for efficient
+ * pagination. Ex:
  *
- *   message SomeRequest {
- *           Foo some_parameter = 1;
- *           PageRequest pagination = 2;
- *   }
+ *  message SomeRequest {
+ *          Foo some_parameter = 1;
+ *          PageRequest pagination = 2;
+ *  }
  */
 export interface PageRequest {
   /**
-   *  key is a value returned in PageResponse.next_key to begin
-   *  querying the next page most efficiently. Only one of offset or key
-   *  should be set.
+   * key is a value returned in PageResponse.next_key to begin
+   * querying the next page most efficiently. Only one of offset or key
+   * should be set.
    */
   key: Uint8Array;
   /**
-   *  offset is a numeric offset that can be used when key is unavailable.
-   *  It is less efficient than using key. Only one of offset or key should
-   *  be set.
+   * offset is a numeric offset that can be used when key is unavailable.
+   * It is less efficient than using key. Only one of offset or key should
+   * be set.
    */
   offset: Long;
   /**
-   *  limit is the total number of results to be returned in the result page.
-   *  If left empty it will default to a value to be set by each app.
+   * limit is the total number of results to be returned in the result page.
+   * If left empty it will default to a value to be set by each app.
    */
   limit: Long;
   /**
-   *  count_total is set to true  to indicate that the result set should include
-   *  a count of the total number of items available for pagination in UIs.
-   *  count_total is only respected when offset is used. It is ignored when key
-   *  is set.
+   * count_total is set to true  to indicate that the result set should include
+   * a count of the total number of items available for pagination in UIs.
+   * count_total is only respected when offset is used. It is ignored when key
+   * is set.
    */
   countTotal: boolean;
 }
 
 /**
- *  PageResponse is to be embedded in gRPC response messages where the
- *  corresponding request message has used PageRequest.
+ * PageResponse is to be embedded in gRPC response messages where the
+ * corresponding request message has used PageRequest.
  *
- *   message SomeResponse {
- *           repeated Bar results = 1;
- *           PageResponse page = 2;
- *   }
+ *  message SomeResponse {
+ *          repeated Bar results = 1;
+ *          PageResponse page = 2;
+ *  }
  */
 export interface PageResponse {
   /**
-   *  next_key is the key to be passed to PageRequest.key to
-   *  query the next page most efficiently
+   * next_key is the key to be passed to PageRequest.key to
+   * query the next page most efficiently
    */
   nextKey: Uint8Array;
   /**
-   *  total is total number of results available if PageRequest.count_total
-   *  was set, its value is undefined otherwise
+   * total is total number of results available if PageRequest.count_total
+   * was set, its value is undefined otherwise
    */
   total: Long;
 }
 
-const basePageRequest: object = {
-  offset: Long.UZERO,
-  limit: Long.UZERO,
-  countTotal: false,
-};
-
-const basePageResponse: object = {
-  total: Long.UZERO,
-};
-
-export const protobufPackage = "cosmos.base.query.v1beta1";
+const basePageRequest: object = { offset: Long.UZERO, limit: Long.UZERO, countTotal: false };
 
 export const PageRequest = {
   encode(message: PageRequest, writer: Writer = Writer.create()): Writer {
@@ -80,7 +72,8 @@ export const PageRequest = {
     writer.uint32(32).bool(message.countTotal);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): PageRequest {
+
+  decode(input: Reader | Uint8Array, length?: number): PageRequest {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...basePageRequest } as PageRequest;
@@ -106,6 +99,7 @@ export const PageRequest = {
     }
     return message;
   },
+
   fromJSON(object: any): PageRequest {
     const message = { ...basePageRequest } as PageRequest;
     if (object.key !== undefined && object.key !== null) {
@@ -128,6 +122,7 @@ export const PageRequest = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<PageRequest>): PageRequest {
     const message = { ...basePageRequest } as PageRequest;
     if (object.key !== undefined && object.key !== null) {
@@ -152,6 +147,7 @@ export const PageRequest = {
     }
     return message;
   },
+
   toJSON(message: PageRequest): unknown {
     const obj: any = {};
     message.key !== undefined &&
@@ -163,13 +159,16 @@ export const PageRequest = {
   },
 };
 
+const basePageResponse: object = { total: Long.UZERO };
+
 export const PageResponse = {
   encode(message: PageResponse, writer: Writer = Writer.create()): Writer {
     writer.uint32(10).bytes(message.nextKey);
     writer.uint32(16).uint64(message.total);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): PageResponse {
+
+  decode(input: Reader | Uint8Array, length?: number): PageResponse {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...basePageResponse } as PageResponse;
@@ -189,6 +188,7 @@ export const PageResponse = {
     }
     return message;
   },
+
   fromJSON(object: any): PageResponse {
     const message = { ...basePageResponse } as PageResponse;
     if (object.nextKey !== undefined && object.nextKey !== null) {
@@ -201,6 +201,7 @@ export const PageResponse = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<PageResponse>): PageResponse {
     const message = { ...basePageResponse } as PageResponse;
     if (object.nextKey !== undefined && object.nextKey !== null) {
@@ -215,6 +216,7 @@ export const PageResponse = {
     }
     return message;
   },
+
   toJSON(message: PageResponse): unknown {
     const obj: any = {};
     message.nextKey !== undefined &&
@@ -224,15 +226,18 @@ export const PageResponse = {
   },
 };
 
-interface WindowBase64 {
-  atob(b64: string): string;
-  btoa(bin: string): string;
-}
+declare var self: any | undefined;
+declare var window: any | undefined;
+var globalThis: any = (() => {
+  if (typeof globalThis !== "undefined") return globalThis;
+  if (typeof self !== "undefined") return self;
+  if (typeof window !== "undefined") return window;
+  if (typeof global !== "undefined") return global;
+  throw new Error("Unable to locate global object");
+})();
 
-const windowBase64 = (globalThis as unknown) as WindowBase64;
-const atob = windowBase64.atob || ((b64: string) => Buffer.from(b64, "base64").toString("binary"));
-const btoa = windowBase64.btoa || ((bin: string) => Buffer.from(bin, "binary").toString("base64"));
-
+const atob: (b64: string) => string =
+  globalThis.atob || ((b64) => globalThis.Buffer.from(b64, "base64").toString("binary"));
 function bytesFromBase64(b64: string): Uint8Array {
   const bin = atob(b64);
   const arr = new Uint8Array(bin.length);
@@ -242,6 +247,8 @@ function bytesFromBase64(b64: string): Uint8Array {
   return arr;
 }
 
+const btoa: (bin: string) => string =
+  globalThis.btoa || ((bin) => globalThis.Buffer.from(bin, "binary").toString("base64"));
 function base64FromBytes(arr: Uint8Array): string {
   const bin: string[] = [];
   for (let i = 0; i < arr.byteLength; ++i) {
@@ -249,7 +256,8 @@ function base64FromBytes(arr: Uint8Array): string {
   }
   return btoa(bin.join(""));
 }
-type Builtin = Date | Function | Uint8Array | string | number | undefined;
+
+type Builtin = Date | Function | Uint8Array | string | number | undefined | Long;
 export type DeepPartial<T> = T extends Builtin
   ? T
   : T extends Array<infer U>

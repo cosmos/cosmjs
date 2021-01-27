@@ -1,36 +1,34 @@
 /* eslint-disable */
 import { Writer, Reader } from "protobufjs/minimal";
+import * as Long from "long";
+
+export const protobufPackage = "cosmos.crypto.secp256k1";
 
 /**
- *  PubKey defines a secp256k1 public key
- *  Key is the compressed form of the pubkey. The first byte depends is a 0x02 byte
- *  if the y-coordinate is the lexicographically largest of the two associated with
- *  the x-coordinate. Otherwise the first byte is a 0x03.
- *  This prefix is followed with the x-coordinate.
+ * PubKey defines a secp256k1 public key
+ * Key is the compressed form of the pubkey. The first byte depends is a 0x02 byte
+ * if the y-coordinate is the lexicographically largest of the two associated with
+ * the x-coordinate. Otherwise the first byte is a 0x03.
+ * This prefix is followed with the x-coordinate.
  */
 export interface PubKey {
   key: Uint8Array;
 }
 
-/**
- *  PrivKey defines a secp256k1 private key.
- */
+/** PrivKey defines a secp256k1 private key. */
 export interface PrivKey {
   key: Uint8Array;
 }
 
 const basePubKey: object = {};
 
-const basePrivKey: object = {};
-
-export const protobufPackage = "cosmos.crypto.secp256k1";
-
 export const PubKey = {
   encode(message: PubKey, writer: Writer = Writer.create()): Writer {
     writer.uint32(10).bytes(message.key);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): PubKey {
+
+  decode(input: Reader | Uint8Array, length?: number): PubKey {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...basePubKey } as PubKey;
@@ -47,6 +45,7 @@ export const PubKey = {
     }
     return message;
   },
+
   fromJSON(object: any): PubKey {
     const message = { ...basePubKey } as PubKey;
     if (object.key !== undefined && object.key !== null) {
@@ -54,6 +53,7 @@ export const PubKey = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<PubKey>): PubKey {
     const message = { ...basePubKey } as PubKey;
     if (object.key !== undefined && object.key !== null) {
@@ -63,6 +63,7 @@ export const PubKey = {
     }
     return message;
   },
+
   toJSON(message: PubKey): unknown {
     const obj: any = {};
     message.key !== undefined &&
@@ -71,12 +72,15 @@ export const PubKey = {
   },
 };
 
+const basePrivKey: object = {};
+
 export const PrivKey = {
   encode(message: PrivKey, writer: Writer = Writer.create()): Writer {
     writer.uint32(10).bytes(message.key);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): PrivKey {
+
+  decode(input: Reader | Uint8Array, length?: number): PrivKey {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...basePrivKey } as PrivKey;
@@ -93,6 +97,7 @@ export const PrivKey = {
     }
     return message;
   },
+
   fromJSON(object: any): PrivKey {
     const message = { ...basePrivKey } as PrivKey;
     if (object.key !== undefined && object.key !== null) {
@@ -100,6 +105,7 @@ export const PrivKey = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<PrivKey>): PrivKey {
     const message = { ...basePrivKey } as PrivKey;
     if (object.key !== undefined && object.key !== null) {
@@ -109,6 +115,7 @@ export const PrivKey = {
     }
     return message;
   },
+
   toJSON(message: PrivKey): unknown {
     const obj: any = {};
     message.key !== undefined &&
@@ -117,15 +124,18 @@ export const PrivKey = {
   },
 };
 
-interface WindowBase64 {
-  atob(b64: string): string;
-  btoa(bin: string): string;
-}
+declare var self: any | undefined;
+declare var window: any | undefined;
+var globalThis: any = (() => {
+  if (typeof globalThis !== "undefined") return globalThis;
+  if (typeof self !== "undefined") return self;
+  if (typeof window !== "undefined") return window;
+  if (typeof global !== "undefined") return global;
+  throw new Error("Unable to locate global object");
+})();
 
-const windowBase64 = (globalThis as unknown) as WindowBase64;
-const atob = windowBase64.atob || ((b64: string) => Buffer.from(b64, "base64").toString("binary"));
-const btoa = windowBase64.btoa || ((bin: string) => Buffer.from(bin, "binary").toString("base64"));
-
+const atob: (b64: string) => string =
+  globalThis.atob || ((b64) => globalThis.Buffer.from(b64, "base64").toString("binary"));
 function bytesFromBase64(b64: string): Uint8Array {
   const bin = atob(b64);
   const arr = new Uint8Array(bin.length);
@@ -135,6 +145,8 @@ function bytesFromBase64(b64: string): Uint8Array {
   return arr;
 }
 
+const btoa: (bin: string) => string =
+  globalThis.btoa || ((bin) => globalThis.Buffer.from(bin, "binary").toString("base64"));
 function base64FromBytes(arr: Uint8Array): string {
   const bin: string[] = [];
   for (let i = 0; i < arr.byteLength; ++i) {
@@ -142,7 +154,8 @@ function base64FromBytes(arr: Uint8Array): string {
   }
   return btoa(bin.join(""));
 }
-type Builtin = Date | Function | Uint8Array | string | number | undefined;
+
+type Builtin = Date | Function | Uint8Array | string | number | undefined | Long;
 export type DeepPartial<T> = T extends Builtin
   ? T
   : T extends Array<infer U>

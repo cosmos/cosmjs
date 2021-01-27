@@ -4,80 +4,60 @@ import { Any } from "../../../../google/protobuf/any";
 import { Event } from "../../../../tendermint/abci/types";
 import { Writer, Reader } from "protobufjs/minimal";
 
+export const protobufPackage = "cosmos.base.abci.v1beta1";
+
 /**
- *  TxResponse defines a structure containing relevant tx data and metadata. The
- *  tags are stringified and the log is JSON decoded.
+ * TxResponse defines a structure containing relevant tx data and metadata. The
+ * tags are stringified and the log is JSON decoded.
  */
 export interface TxResponse {
-  /**
-   *  The block height
-   */
+  /** The block height */
   height: Long;
-  /**
-   *  The transaction hash.
-   */
+  /** The transaction hash. */
   txhash: string;
-  /**
-   *  Namespace for the Code
-   */
+  /** Namespace for the Code */
   codespace: string;
-  /**
-   *  Response code.
-   */
+  /** Response code. */
   code: number;
-  /**
-   *  Result bytes, if any.
-   */
+  /** Result bytes, if any. */
   data: string;
   /**
-   *  The output of the application's logger (raw string). May be
-   *  non-deterministic.
+   * The output of the application's logger (raw string). May be
+   * non-deterministic.
    */
   rawLog: string;
-  /**
-   *  The output of the application's logger (typed). May be non-deterministic.
-   */
+  /** The output of the application's logger (typed). May be non-deterministic. */
   logs: ABCIMessageLog[];
-  /**
-   *  Additional information. May be non-deterministic.
-   */
+  /** Additional information. May be non-deterministic. */
   info: string;
-  /**
-   *  Amount of gas requested for transaction.
-   */
+  /** Amount of gas requested for transaction. */
   gasWanted: Long;
-  /**
-   *  Amount of gas consumed by transaction.
-   */
+  /** Amount of gas consumed by transaction. */
   gasUsed: Long;
-  /**
-   *  The request transaction bytes.
-   */
+  /** The request transaction bytes. */
   tx?: Any;
   /**
-   *  Time of the previous block. For heights > 1, it's the weighted median of
-   *  the timestamps of the valid votes in the block.LastCommit. For height == 1,
-   *  it's genesis time.
+   * Time of the previous block. For heights > 1, it's the weighted median of
+   * the timestamps of the valid votes in the block.LastCommit. For height == 1,
+   * it's genesis time.
    */
   timestamp: string;
 }
 
-/**
- *  ABCIMessageLog defines a structure containing an indexed tx ABCI message log.
- */
+/** ABCIMessageLog defines a structure containing an indexed tx ABCI message log. */
 export interface ABCIMessageLog {
   msgIndex: number;
   log: string;
   /**
-   *  Events contains a slice of Event objects that were emitted during some
-   *  execution.
+   * Events contains a slice of Event objects that were emitted during some
+   * execution.
    */
   events: StringEvent[];
 }
 
 /**
- *  StringEvent defines en Event object wrapper where all the attributes
- *  contain key/value pairs that are strings instead of raw bytes.
+ * StringEvent defines en Event object wrapper where all the attributes
+ * contain key/value pairs that are strings instead of raw bytes.
  */
 export interface StringEvent {
   type: string;
@@ -85,51 +65,41 @@ export interface StringEvent {
 }
 
 /**
- *  Attribute defines an attribute wrapper where the key and value are
- *  strings instead of raw bytes.
+ * Attribute defines an attribute wrapper where the key and value are
+ * strings instead of raw bytes.
  */
 export interface Attribute {
   key: string;
   value: string;
 }
 
-/**
- *  GasInfo defines tx execution gas context.
- */
+/** GasInfo defines tx execution gas context. */
 export interface GasInfo {
-  /**
-   *  GasWanted is the maximum units of work we allow this tx to perform.
-   */
+  /** GasWanted is the maximum units of work we allow this tx to perform. */
   gasWanted: Long;
-  /**
-   *  GasUsed is the amount of gas actually consumed.
-   */
+  /** GasUsed is the amount of gas actually consumed. */
   gasUsed: Long;
 }
 
-/**
- *  Result is the union of ResponseFormat and ResponseCheckTx.
- */
+/** Result is the union of ResponseFormat and ResponseCheckTx. */
 export interface Result {
   /**
-   *  Data is any data returned from message or handler execution. It MUST be
-   *  length prefixed in order to separate data from multiple message executions.
+   * Data is any data returned from message or handler execution. It MUST be
+   * length prefixed in order to separate data from multiple message executions.
    */
   data: Uint8Array;
-  /**
-   *  Log contains the log information from message or handler execution.
-   */
+  /** Log contains the log information from message or handler execution. */
   log: string;
   /**
-   *  Events contains a slice of Event objects that were emitted during message
-   *  or handler execution.
+   * Events contains a slice of Event objects that were emitted during message
+   * or handler execution.
    */
   events: Event[];
 }
 
 /**
- *  SimulationResponse defines the response generated when a transaction is
- *  successfully simulated.
+ * SimulationResponse defines the response generated when a transaction is
+ * successfully simulated.
  */
 export interface SimulationResponse {
   gasInfo?: GasInfo;
@@ -137,8 +107,8 @@ export interface SimulationResponse {
 }
 
 /**
- *  MsgData defines the data returned in a Result object during message
- *  execution.
+ * MsgData defines the data returned in a Result object during message
+ * execution.
  */
 export interface MsgData {
   msgType: string;
@@ -146,40 +116,26 @@ export interface MsgData {
 }
 
 /**
- *  TxMsgData defines a list of MsgData. A transaction will have a MsgData object
- *  for each message.
+ * TxMsgData defines a list of MsgData. A transaction will have a MsgData object
+ * for each message.
  */
 export interface TxMsgData {
   data: MsgData[];
 }
 
-/**
- *  SearchTxsResult defines a structure for querying txs pageable
- */
+/** SearchTxsResult defines a structure for querying txs pageable */
 export interface SearchTxsResult {
-  /**
-   *  Count of all txs
-   */
+  /** Count of all txs */
   totalCount: Long;
-  /**
-   *  Count of txs in current page
-   */
+  /** Count of txs in current page */
   count: Long;
-  /**
-   *  Index of current page, start from 1
-   */
+  /** Index of current page, start from 1 */
   pageNumber: Long;
-  /**
-   *  Count of total pages
-   */
+  /** Count of total pages */
   pageTotal: Long;
-  /**
-   *  Max count txs per page
-   */
+  /** Max count txs per page */
   limit: Long;
-  /**
-   *  List of txs in current page
-   */
+  /** List of txs in current page */
   txs: TxResponse[];
 }
 
@@ -195,47 +151,6 @@ const baseTxResponse: object = {
   gasUsed: Long.ZERO,
   timestamp: "",
 };
-
-const baseABCIMessageLog: object = {
-  msgIndex: 0,
-  log: "",
-};
-
-const baseStringEvent: object = {
-  type: "",
-};
-
-const baseAttribute: object = {
-  key: "",
-  value: "",
-};
-
-const baseGasInfo: object = {
-  gasWanted: Long.UZERO,
-  gasUsed: Long.UZERO,
-};
-
-const baseResult: object = {
-  log: "",
-};
-
-const baseSimulationResponse: object = {};
-
-const baseMsgData: object = {
-  msgType: "",
-};
-
-const baseTxMsgData: object = {};
-
-const baseSearchTxsResult: object = {
-  totalCount: Long.UZERO,
-  count: Long.UZERO,
-  pageNumber: Long.UZERO,
-  pageTotal: Long.UZERO,
-  limit: Long.UZERO,
-};
-
-export const protobufPackage = "cosmos.base.abci.v1beta1";
 
 export const TxResponse = {
   encode(message: TxResponse, writer: Writer = Writer.create()): Writer {
@@ -257,7 +172,8 @@ export const TxResponse = {
     writer.uint32(98).string(message.timestamp);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): TxResponse {
+
+  decode(input: Reader | Uint8Array, length?: number): TxResponse {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseTxResponse } as TxResponse;
@@ -308,6 +224,7 @@ export const TxResponse = {
     }
     return message;
   },
+
   fromJSON(object: any): TxResponse {
     const message = { ...baseTxResponse } as TxResponse;
     message.logs = [];
@@ -373,6 +290,7 @@ export const TxResponse = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<TxResponse>): TxResponse {
     const message = { ...baseTxResponse } as TxResponse;
     message.logs = [];
@@ -438,6 +356,7 @@ export const TxResponse = {
     }
     return message;
   },
+
   toJSON(message: TxResponse): unknown {
     const obj: any = {};
     message.height !== undefined && (obj.height = (message.height || Long.ZERO).toString());
@@ -460,6 +379,8 @@ export const TxResponse = {
   },
 };
 
+const baseABCIMessageLog: object = { msgIndex: 0, log: "" };
+
 export const ABCIMessageLog = {
   encode(message: ABCIMessageLog, writer: Writer = Writer.create()): Writer {
     writer.uint32(8).uint32(message.msgIndex);
@@ -469,7 +390,8 @@ export const ABCIMessageLog = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): ABCIMessageLog {
+
+  decode(input: Reader | Uint8Array, length?: number): ABCIMessageLog {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseABCIMessageLog } as ABCIMessageLog;
@@ -493,6 +415,7 @@ export const ABCIMessageLog = {
     }
     return message;
   },
+
   fromJSON(object: any): ABCIMessageLog {
     const message = { ...baseABCIMessageLog } as ABCIMessageLog;
     message.events = [];
@@ -513,6 +436,7 @@ export const ABCIMessageLog = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<ABCIMessageLog>): ABCIMessageLog {
     const message = { ...baseABCIMessageLog } as ABCIMessageLog;
     message.events = [];
@@ -533,6 +457,7 @@ export const ABCIMessageLog = {
     }
     return message;
   },
+
   toJSON(message: ABCIMessageLog): unknown {
     const obj: any = {};
     message.msgIndex !== undefined && (obj.msgIndex = message.msgIndex);
@@ -546,6 +471,8 @@ export const ABCIMessageLog = {
   },
 };
 
+const baseStringEvent: object = { type: "" };
+
 export const StringEvent = {
   encode(message: StringEvent, writer: Writer = Writer.create()): Writer {
     writer.uint32(10).string(message.type);
@@ -554,7 +481,8 @@ export const StringEvent = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): StringEvent {
+
+  decode(input: Reader | Uint8Array, length?: number): StringEvent {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseStringEvent } as StringEvent;
@@ -575,6 +503,7 @@ export const StringEvent = {
     }
     return message;
   },
+
   fromJSON(object: any): StringEvent {
     const message = { ...baseStringEvent } as StringEvent;
     message.attributes = [];
@@ -590,6 +519,7 @@ export const StringEvent = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<StringEvent>): StringEvent {
     const message = { ...baseStringEvent } as StringEvent;
     message.attributes = [];
@@ -605,6 +535,7 @@ export const StringEvent = {
     }
     return message;
   },
+
   toJSON(message: StringEvent): unknown {
     const obj: any = {};
     message.type !== undefined && (obj.type = message.type);
@@ -617,13 +548,16 @@ export const StringEvent = {
   },
 };
 
+const baseAttribute: object = { key: "", value: "" };
+
 export const Attribute = {
   encode(message: Attribute, writer: Writer = Writer.create()): Writer {
     writer.uint32(10).string(message.key);
     writer.uint32(18).string(message.value);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): Attribute {
+
+  decode(input: Reader | Uint8Array, length?: number): Attribute {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseAttribute } as Attribute;
@@ -643,6 +577,7 @@ export const Attribute = {
     }
     return message;
   },
+
   fromJSON(object: any): Attribute {
     const message = { ...baseAttribute } as Attribute;
     if (object.key !== undefined && object.key !== null) {
@@ -657,6 +592,7 @@ export const Attribute = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<Attribute>): Attribute {
     const message = { ...baseAttribute } as Attribute;
     if (object.key !== undefined && object.key !== null) {
@@ -671,6 +607,7 @@ export const Attribute = {
     }
     return message;
   },
+
   toJSON(message: Attribute): unknown {
     const obj: any = {};
     message.key !== undefined && (obj.key = message.key);
@@ -679,13 +616,16 @@ export const Attribute = {
   },
 };
 
+const baseGasInfo: object = { gasWanted: Long.UZERO, gasUsed: Long.UZERO };
+
 export const GasInfo = {
   encode(message: GasInfo, writer: Writer = Writer.create()): Writer {
     writer.uint32(8).uint64(message.gasWanted);
     writer.uint32(16).uint64(message.gasUsed);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): GasInfo {
+
+  decode(input: Reader | Uint8Array, length?: number): GasInfo {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseGasInfo } as GasInfo;
@@ -705,6 +645,7 @@ export const GasInfo = {
     }
     return message;
   },
+
   fromJSON(object: any): GasInfo {
     const message = { ...baseGasInfo } as GasInfo;
     if (object.gasWanted !== undefined && object.gasWanted !== null) {
@@ -719,6 +660,7 @@ export const GasInfo = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<GasInfo>): GasInfo {
     const message = { ...baseGasInfo } as GasInfo;
     if (object.gasWanted !== undefined && object.gasWanted !== null) {
@@ -733,6 +675,7 @@ export const GasInfo = {
     }
     return message;
   },
+
   toJSON(message: GasInfo): unknown {
     const obj: any = {};
     message.gasWanted !== undefined && (obj.gasWanted = (message.gasWanted || Long.UZERO).toString());
@@ -740,6 +683,8 @@ export const GasInfo = {
     return obj;
   },
 };
+
+const baseResult: object = { log: "" };
 
 export const Result = {
   encode(message: Result, writer: Writer = Writer.create()): Writer {
@@ -750,7 +695,8 @@ export const Result = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): Result {
+
+  decode(input: Reader | Uint8Array, length?: number): Result {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseResult } as Result;
@@ -774,6 +720,7 @@ export const Result = {
     }
     return message;
   },
+
   fromJSON(object: any): Result {
     const message = { ...baseResult } as Result;
     message.events = [];
@@ -792,6 +739,7 @@ export const Result = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<Result>): Result {
     const message = { ...baseResult } as Result;
     message.events = [];
@@ -812,6 +760,7 @@ export const Result = {
     }
     return message;
   },
+
   toJSON(message: Result): unknown {
     const obj: any = {};
     message.data !== undefined &&
@@ -826,6 +775,8 @@ export const Result = {
   },
 };
 
+const baseSimulationResponse: object = {};
+
 export const SimulationResponse = {
   encode(message: SimulationResponse, writer: Writer = Writer.create()): Writer {
     if (message.gasInfo !== undefined && message.gasInfo !== undefined) {
@@ -836,7 +787,8 @@ export const SimulationResponse = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): SimulationResponse {
+
+  decode(input: Reader | Uint8Array, length?: number): SimulationResponse {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseSimulationResponse } as SimulationResponse;
@@ -856,6 +808,7 @@ export const SimulationResponse = {
     }
     return message;
   },
+
   fromJSON(object: any): SimulationResponse {
     const message = { ...baseSimulationResponse } as SimulationResponse;
     if (object.gasInfo !== undefined && object.gasInfo !== null) {
@@ -870,6 +823,7 @@ export const SimulationResponse = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<SimulationResponse>): SimulationResponse {
     const message = { ...baseSimulationResponse } as SimulationResponse;
     if (object.gasInfo !== undefined && object.gasInfo !== null) {
@@ -884,6 +838,7 @@ export const SimulationResponse = {
     }
     return message;
   },
+
   toJSON(message: SimulationResponse): unknown {
     const obj: any = {};
     message.gasInfo !== undefined &&
@@ -893,13 +848,16 @@ export const SimulationResponse = {
   },
 };
 
+const baseMsgData: object = { msgType: "" };
+
 export const MsgData = {
   encode(message: MsgData, writer: Writer = Writer.create()): Writer {
     writer.uint32(10).string(message.msgType);
     writer.uint32(18).bytes(message.data);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): MsgData {
+
+  decode(input: Reader | Uint8Array, length?: number): MsgData {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgData } as MsgData;
@@ -919,6 +877,7 @@ export const MsgData = {
     }
     return message;
   },
+
   fromJSON(object: any): MsgData {
     const message = { ...baseMsgData } as MsgData;
     if (object.msgType !== undefined && object.msgType !== null) {
@@ -931,6 +890,7 @@ export const MsgData = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<MsgData>): MsgData {
     const message = { ...baseMsgData } as MsgData;
     if (object.msgType !== undefined && object.msgType !== null) {
@@ -945,6 +905,7 @@ export const MsgData = {
     }
     return message;
   },
+
   toJSON(message: MsgData): unknown {
     const obj: any = {};
     message.msgType !== undefined && (obj.msgType = message.msgType);
@@ -954,6 +915,8 @@ export const MsgData = {
   },
 };
 
+const baseTxMsgData: object = {};
+
 export const TxMsgData = {
   encode(message: TxMsgData, writer: Writer = Writer.create()): Writer {
     for (const v of message.data) {
@@ -961,7 +924,8 @@ export const TxMsgData = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): TxMsgData {
+
+  decode(input: Reader | Uint8Array, length?: number): TxMsgData {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseTxMsgData } as TxMsgData;
@@ -979,6 +943,7 @@ export const TxMsgData = {
     }
     return message;
   },
+
   fromJSON(object: any): TxMsgData {
     const message = { ...baseTxMsgData } as TxMsgData;
     message.data = [];
@@ -989,6 +954,7 @@ export const TxMsgData = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<TxMsgData>): TxMsgData {
     const message = { ...baseTxMsgData } as TxMsgData;
     message.data = [];
@@ -999,6 +965,7 @@ export const TxMsgData = {
     }
     return message;
   },
+
   toJSON(message: TxMsgData): unknown {
     const obj: any = {};
     if (message.data) {
@@ -1008,6 +975,14 @@ export const TxMsgData = {
     }
     return obj;
   },
+};
+
+const baseSearchTxsResult: object = {
+  totalCount: Long.UZERO,
+  count: Long.UZERO,
+  pageNumber: Long.UZERO,
+  pageTotal: Long.UZERO,
+  limit: Long.UZERO,
 };
 
 export const SearchTxsResult = {
@@ -1022,7 +997,8 @@ export const SearchTxsResult = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): SearchTxsResult {
+
+  decode(input: Reader | Uint8Array, length?: number): SearchTxsResult {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseSearchTxsResult } as SearchTxsResult;
@@ -1055,6 +1031,7 @@ export const SearchTxsResult = {
     }
     return message;
   },
+
   fromJSON(object: any): SearchTxsResult {
     const message = { ...baseSearchTxsResult } as SearchTxsResult;
     message.txs = [];
@@ -1090,6 +1067,7 @@ export const SearchTxsResult = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<SearchTxsResult>): SearchTxsResult {
     const message = { ...baseSearchTxsResult } as SearchTxsResult;
     message.txs = [];
@@ -1125,6 +1103,7 @@ export const SearchTxsResult = {
     }
     return message;
   },
+
   toJSON(message: SearchTxsResult): unknown {
     const obj: any = {};
     message.totalCount !== undefined && (obj.totalCount = (message.totalCount || Long.UZERO).toString());
@@ -1141,15 +1120,18 @@ export const SearchTxsResult = {
   },
 };
 
-interface WindowBase64 {
-  atob(b64: string): string;
-  btoa(bin: string): string;
-}
+declare var self: any | undefined;
+declare var window: any | undefined;
+var globalThis: any = (() => {
+  if (typeof globalThis !== "undefined") return globalThis;
+  if (typeof self !== "undefined") return self;
+  if (typeof window !== "undefined") return window;
+  if (typeof global !== "undefined") return global;
+  throw new Error("Unable to locate global object");
+})();
 
-const windowBase64 = (globalThis as unknown) as WindowBase64;
-const atob = windowBase64.atob || ((b64: string) => Buffer.from(b64, "base64").toString("binary"));
-const btoa = windowBase64.btoa || ((bin: string) => Buffer.from(bin, "binary").toString("base64"));
-
+const atob: (b64: string) => string =
+  globalThis.atob || ((b64) => globalThis.Buffer.from(b64, "base64").toString("binary"));
 function bytesFromBase64(b64: string): Uint8Array {
   const bin = atob(b64);
   const arr = new Uint8Array(bin.length);
@@ -1159,6 +1141,8 @@ function bytesFromBase64(b64: string): Uint8Array {
   return arr;
 }
 
+const btoa: (bin: string) => string =
+  globalThis.btoa || ((bin) => globalThis.Buffer.from(bin, "binary").toString("base64"));
 function base64FromBytes(arr: Uint8Array): string {
   const bin: string[] = [];
   for (let i = 0; i < arr.byteLength; ++i) {
@@ -1166,7 +1150,8 @@ function base64FromBytes(arr: Uint8Array): string {
   }
   return btoa(bin.join(""));
 }
-type Builtin = Date | Function | Uint8Array | string | number | undefined;
+
+type Builtin = Date | Function | Uint8Array | string | number | undefined | Long;
 export type DeepPartial<T> = T extends Builtin
   ? T
   : T extends Array<infer U>

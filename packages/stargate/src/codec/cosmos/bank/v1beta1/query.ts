@@ -3,209 +3,79 @@ import { Coin } from "../../../cosmos/base/v1beta1/coin";
 import { PageRequest, PageResponse } from "../../../cosmos/base/query/v1beta1/pagination";
 import { Params } from "../../../cosmos/bank/v1beta1/bank";
 import { Reader, Writer } from "protobufjs/minimal";
+import * as Long from "long";
 
-/**
- *  QueryBalanceRequest is the request type for the Query/Balance RPC method.
- */
+export const protobufPackage = "cosmos.bank.v1beta1";
+
+/** QueryBalanceRequest is the request type for the Query/Balance RPC method. */
 export interface QueryBalanceRequest {
-  /**
-   *  address is the address to query balances for.
-   */
+  /** address is the address to query balances for. */
   address: string;
-  /**
-   *  denom is the coin denom to query balances for.
-   */
+  /** denom is the coin denom to query balances for. */
   denom: string;
 }
 
-/**
- *  QueryBalanceResponse is the response type for the Query/Balance RPC method.
- */
+/** QueryBalanceResponse is the response type for the Query/Balance RPC method. */
 export interface QueryBalanceResponse {
-  /**
-   *  balance is the balance of the coin.
-   */
+  /** balance is the balance of the coin. */
   balance?: Coin;
 }
 
-/**
- *  QueryBalanceRequest is the request type for the Query/AllBalances RPC method.
- */
+/** QueryBalanceRequest is the request type for the Query/AllBalances RPC method. */
 export interface QueryAllBalancesRequest {
-  /**
-   *  address is the address to query balances for.
-   */
+  /** address is the address to query balances for. */
   address: string;
-  /**
-   *  pagination defines an optional pagination for the request.
-   */
+  /** pagination defines an optional pagination for the request. */
   pagination?: PageRequest;
 }
 
 /**
- *  QueryAllBalancesResponse is the response type for the Query/AllBalances RPC
- *  method.
+ * QueryAllBalancesResponse is the response type for the Query/AllBalances RPC
+ * method.
  */
 export interface QueryAllBalancesResponse {
-  /**
-   *  balances is the balances of all the coins.
-   */
+  /** balances is the balances of all the coins. */
   balances: Coin[];
-  /**
-   *  pagination defines the pagination in the response.
-   */
+  /** pagination defines the pagination in the response. */
   pagination?: PageResponse;
 }
 
 /**
- *  QueryTotalSupplyRequest is the request type for the Query/TotalSupply RPC
- *  method.
+ * QueryTotalSupplyRequest is the request type for the Query/TotalSupply RPC
+ * method.
  */
 export interface QueryTotalSupplyRequest {}
 
 /**
- *  QueryTotalSupplyResponse is the response type for the Query/TotalSupply RPC
- *  method
+ * QueryTotalSupplyResponse is the response type for the Query/TotalSupply RPC
+ * method
  */
 export interface QueryTotalSupplyResponse {
-  /**
-   *  supply is the supply of the coins
-   */
+  /** supply is the supply of the coins */
   supply: Coin[];
 }
 
-/**
- *  QuerySupplyOfRequest is the request type for the Query/SupplyOf RPC method.
- */
+/** QuerySupplyOfRequest is the request type for the Query/SupplyOf RPC method. */
 export interface QuerySupplyOfRequest {
-  /**
-   *  denom is the coin denom to query balances for.
-   */
+  /** denom is the coin denom to query balances for. */
   denom: string;
 }
 
-/**
- *  QuerySupplyOfResponse is the response type for the Query/SupplyOf RPC method.
- */
+/** QuerySupplyOfResponse is the response type for the Query/SupplyOf RPC method. */
 export interface QuerySupplyOfResponse {
-  /**
-   *  amount is the supply of the coin.
-   */
+  /** amount is the supply of the coin. */
   amount?: Coin;
 }
 
-/**
- *  QueryParamsRequest defines the request type for querying x/bank parameters.
- */
+/** QueryParamsRequest defines the request type for querying x/bank parameters. */
 export interface QueryParamsRequest {}
 
-/**
- *  QueryParamsResponse defines the response type for querying x/bank parameters.
- */
+/** QueryParamsResponse defines the response type for querying x/bank parameters. */
 export interface QueryParamsResponse {
   params?: Params;
 }
 
-const baseQueryBalanceRequest: object = {
-  address: "",
-  denom: "",
-};
-
-const baseQueryBalanceResponse: object = {};
-
-const baseQueryAllBalancesRequest: object = {
-  address: "",
-};
-
-const baseQueryAllBalancesResponse: object = {};
-
-const baseQueryTotalSupplyRequest: object = {};
-
-const baseQueryTotalSupplyResponse: object = {};
-
-const baseQuerySupplyOfRequest: object = {
-  denom: "",
-};
-
-const baseQuerySupplyOfResponse: object = {};
-
-const baseQueryParamsRequest: object = {};
-
-const baseQueryParamsResponse: object = {};
-
-/**
- *  Query defines the gRPC querier service.
- */
-export interface Query {
-  /**
-   *  Balance queries the balance of a single coin for a single account.
-   */
-  Balance(request: QueryBalanceRequest): Promise<QueryBalanceResponse>;
-
-  /**
-   *  AllBalances queries the balance of all coins for a single account.
-   */
-  AllBalances(request: QueryAllBalancesRequest): Promise<QueryAllBalancesResponse>;
-
-  /**
-   *  TotalSupply queries the total supply of all coins.
-   */
-  TotalSupply(request: QueryTotalSupplyRequest): Promise<QueryTotalSupplyResponse>;
-
-  /**
-   *  SupplyOf queries the supply of a single coin.
-   */
-  SupplyOf(request: QuerySupplyOfRequest): Promise<QuerySupplyOfResponse>;
-
-  /**
-   *  Params queries the parameters of x/bank module.
-   */
-  Params(request: QueryParamsRequest): Promise<QueryParamsResponse>;
-}
-
-export class QueryClientImpl implements Query {
-  private readonly rpc: Rpc;
-
-  constructor(rpc: Rpc) {
-    this.rpc = rpc;
-  }
-
-  Balance(request: QueryBalanceRequest): Promise<QueryBalanceResponse> {
-    const data = QueryBalanceRequest.encode(request).finish();
-    const promise = this.rpc.request("cosmos.bank.v1beta1.Query", "Balance", data);
-    return promise.then((data) => QueryBalanceResponse.decode(new Reader(data)));
-  }
-
-  AllBalances(request: QueryAllBalancesRequest): Promise<QueryAllBalancesResponse> {
-    const data = QueryAllBalancesRequest.encode(request).finish();
-    const promise = this.rpc.request("cosmos.bank.v1beta1.Query", "AllBalances", data);
-    return promise.then((data) => QueryAllBalancesResponse.decode(new Reader(data)));
-  }
-
-  TotalSupply(request: QueryTotalSupplyRequest): Promise<QueryTotalSupplyResponse> {
-    const data = QueryTotalSupplyRequest.encode(request).finish();
-    const promise = this.rpc.request("cosmos.bank.v1beta1.Query", "TotalSupply", data);
-    return promise.then((data) => QueryTotalSupplyResponse.decode(new Reader(data)));
-  }
-
-  SupplyOf(request: QuerySupplyOfRequest): Promise<QuerySupplyOfResponse> {
-    const data = QuerySupplyOfRequest.encode(request).finish();
-    const promise = this.rpc.request("cosmos.bank.v1beta1.Query", "SupplyOf", data);
-    return promise.then((data) => QuerySupplyOfResponse.decode(new Reader(data)));
-  }
-
-  Params(request: QueryParamsRequest): Promise<QueryParamsResponse> {
-    const data = QueryParamsRequest.encode(request).finish();
-    const promise = this.rpc.request("cosmos.bank.v1beta1.Query", "Params", data);
-    return promise.then((data) => QueryParamsResponse.decode(new Reader(data)));
-  }
-}
-
-interface Rpc {
-  request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
-}
-
-export const protobufPackage = "cosmos.bank.v1beta1";
+const baseQueryBalanceRequest: object = { address: "", denom: "" };
 
 export const QueryBalanceRequest = {
   encode(message: QueryBalanceRequest, writer: Writer = Writer.create()): Writer {
@@ -213,7 +83,8 @@ export const QueryBalanceRequest = {
     writer.uint32(18).string(message.denom);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): QueryBalanceRequest {
+
+  decode(input: Reader | Uint8Array, length?: number): QueryBalanceRequest {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryBalanceRequest } as QueryBalanceRequest;
@@ -233,6 +104,7 @@ export const QueryBalanceRequest = {
     }
     return message;
   },
+
   fromJSON(object: any): QueryBalanceRequest {
     const message = { ...baseQueryBalanceRequest } as QueryBalanceRequest;
     if (object.address !== undefined && object.address !== null) {
@@ -247,6 +119,7 @@ export const QueryBalanceRequest = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<QueryBalanceRequest>): QueryBalanceRequest {
     const message = { ...baseQueryBalanceRequest } as QueryBalanceRequest;
     if (object.address !== undefined && object.address !== null) {
@@ -261,6 +134,7 @@ export const QueryBalanceRequest = {
     }
     return message;
   },
+
   toJSON(message: QueryBalanceRequest): unknown {
     const obj: any = {};
     message.address !== undefined && (obj.address = message.address);
@@ -269,6 +143,8 @@ export const QueryBalanceRequest = {
   },
 };
 
+const baseQueryBalanceResponse: object = {};
+
 export const QueryBalanceResponse = {
   encode(message: QueryBalanceResponse, writer: Writer = Writer.create()): Writer {
     if (message.balance !== undefined && message.balance !== undefined) {
@@ -276,7 +152,8 @@ export const QueryBalanceResponse = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): QueryBalanceResponse {
+
+  decode(input: Reader | Uint8Array, length?: number): QueryBalanceResponse {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryBalanceResponse } as QueryBalanceResponse;
@@ -293,6 +170,7 @@ export const QueryBalanceResponse = {
     }
     return message;
   },
+
   fromJSON(object: any): QueryBalanceResponse {
     const message = { ...baseQueryBalanceResponse } as QueryBalanceResponse;
     if (object.balance !== undefined && object.balance !== null) {
@@ -302,6 +180,7 @@ export const QueryBalanceResponse = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<QueryBalanceResponse>): QueryBalanceResponse {
     const message = { ...baseQueryBalanceResponse } as QueryBalanceResponse;
     if (object.balance !== undefined && object.balance !== null) {
@@ -311,6 +190,7 @@ export const QueryBalanceResponse = {
     }
     return message;
   },
+
   toJSON(message: QueryBalanceResponse): unknown {
     const obj: any = {};
     message.balance !== undefined &&
@@ -318,6 +198,8 @@ export const QueryBalanceResponse = {
     return obj;
   },
 };
+
+const baseQueryAllBalancesRequest: object = { address: "" };
 
 export const QueryAllBalancesRequest = {
   encode(message: QueryAllBalancesRequest, writer: Writer = Writer.create()): Writer {
@@ -327,7 +209,8 @@ export const QueryAllBalancesRequest = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): QueryAllBalancesRequest {
+
+  decode(input: Reader | Uint8Array, length?: number): QueryAllBalancesRequest {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryAllBalancesRequest } as QueryAllBalancesRequest;
@@ -347,6 +230,7 @@ export const QueryAllBalancesRequest = {
     }
     return message;
   },
+
   fromJSON(object: any): QueryAllBalancesRequest {
     const message = { ...baseQueryAllBalancesRequest } as QueryAllBalancesRequest;
     if (object.address !== undefined && object.address !== null) {
@@ -361,6 +245,7 @@ export const QueryAllBalancesRequest = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<QueryAllBalancesRequest>): QueryAllBalancesRequest {
     const message = { ...baseQueryAllBalancesRequest } as QueryAllBalancesRequest;
     if (object.address !== undefined && object.address !== null) {
@@ -375,6 +260,7 @@ export const QueryAllBalancesRequest = {
     }
     return message;
   },
+
   toJSON(message: QueryAllBalancesRequest): unknown {
     const obj: any = {};
     message.address !== undefined && (obj.address = message.address);
@@ -383,6 +269,8 @@ export const QueryAllBalancesRequest = {
     return obj;
   },
 };
+
+const baseQueryAllBalancesResponse: object = {};
 
 export const QueryAllBalancesResponse = {
   encode(message: QueryAllBalancesResponse, writer: Writer = Writer.create()): Writer {
@@ -394,7 +282,8 @@ export const QueryAllBalancesResponse = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): QueryAllBalancesResponse {
+
+  decode(input: Reader | Uint8Array, length?: number): QueryAllBalancesResponse {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryAllBalancesResponse } as QueryAllBalancesResponse;
@@ -415,6 +304,7 @@ export const QueryAllBalancesResponse = {
     }
     return message;
   },
+
   fromJSON(object: any): QueryAllBalancesResponse {
     const message = { ...baseQueryAllBalancesResponse } as QueryAllBalancesResponse;
     message.balances = [];
@@ -430,6 +320,7 @@ export const QueryAllBalancesResponse = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<QueryAllBalancesResponse>): QueryAllBalancesResponse {
     const message = { ...baseQueryAllBalancesResponse } as QueryAllBalancesResponse;
     message.balances = [];
@@ -445,6 +336,7 @@ export const QueryAllBalancesResponse = {
     }
     return message;
   },
+
   toJSON(message: QueryAllBalancesResponse): unknown {
     const obj: any = {};
     if (message.balances) {
@@ -458,11 +350,14 @@ export const QueryAllBalancesResponse = {
   },
 };
 
+const baseQueryTotalSupplyRequest: object = {};
+
 export const QueryTotalSupplyRequest = {
   encode(_: QueryTotalSupplyRequest, writer: Writer = Writer.create()): Writer {
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): QueryTotalSupplyRequest {
+
+  decode(input: Reader | Uint8Array, length?: number): QueryTotalSupplyRequest {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryTotalSupplyRequest } as QueryTotalSupplyRequest;
@@ -476,19 +371,24 @@ export const QueryTotalSupplyRequest = {
     }
     return message;
   },
+
   fromJSON(_: any): QueryTotalSupplyRequest {
     const message = { ...baseQueryTotalSupplyRequest } as QueryTotalSupplyRequest;
     return message;
   },
+
   fromPartial(_: DeepPartial<QueryTotalSupplyRequest>): QueryTotalSupplyRequest {
     const message = { ...baseQueryTotalSupplyRequest } as QueryTotalSupplyRequest;
     return message;
   },
+
   toJSON(_: QueryTotalSupplyRequest): unknown {
     const obj: any = {};
     return obj;
   },
 };
+
+const baseQueryTotalSupplyResponse: object = {};
 
 export const QueryTotalSupplyResponse = {
   encode(message: QueryTotalSupplyResponse, writer: Writer = Writer.create()): Writer {
@@ -497,7 +397,8 @@ export const QueryTotalSupplyResponse = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): QueryTotalSupplyResponse {
+
+  decode(input: Reader | Uint8Array, length?: number): QueryTotalSupplyResponse {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryTotalSupplyResponse } as QueryTotalSupplyResponse;
@@ -515,6 +416,7 @@ export const QueryTotalSupplyResponse = {
     }
     return message;
   },
+
   fromJSON(object: any): QueryTotalSupplyResponse {
     const message = { ...baseQueryTotalSupplyResponse } as QueryTotalSupplyResponse;
     message.supply = [];
@@ -525,6 +427,7 @@ export const QueryTotalSupplyResponse = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<QueryTotalSupplyResponse>): QueryTotalSupplyResponse {
     const message = { ...baseQueryTotalSupplyResponse } as QueryTotalSupplyResponse;
     message.supply = [];
@@ -535,6 +438,7 @@ export const QueryTotalSupplyResponse = {
     }
     return message;
   },
+
   toJSON(message: QueryTotalSupplyResponse): unknown {
     const obj: any = {};
     if (message.supply) {
@@ -546,12 +450,15 @@ export const QueryTotalSupplyResponse = {
   },
 };
 
+const baseQuerySupplyOfRequest: object = { denom: "" };
+
 export const QuerySupplyOfRequest = {
   encode(message: QuerySupplyOfRequest, writer: Writer = Writer.create()): Writer {
     writer.uint32(10).string(message.denom);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): QuerySupplyOfRequest {
+
+  decode(input: Reader | Uint8Array, length?: number): QuerySupplyOfRequest {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQuerySupplyOfRequest } as QuerySupplyOfRequest;
@@ -568,6 +475,7 @@ export const QuerySupplyOfRequest = {
     }
     return message;
   },
+
   fromJSON(object: any): QuerySupplyOfRequest {
     const message = { ...baseQuerySupplyOfRequest } as QuerySupplyOfRequest;
     if (object.denom !== undefined && object.denom !== null) {
@@ -577,6 +485,7 @@ export const QuerySupplyOfRequest = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<QuerySupplyOfRequest>): QuerySupplyOfRequest {
     const message = { ...baseQuerySupplyOfRequest } as QuerySupplyOfRequest;
     if (object.denom !== undefined && object.denom !== null) {
@@ -586,12 +495,15 @@ export const QuerySupplyOfRequest = {
     }
     return message;
   },
+
   toJSON(message: QuerySupplyOfRequest): unknown {
     const obj: any = {};
     message.denom !== undefined && (obj.denom = message.denom);
     return obj;
   },
 };
+
+const baseQuerySupplyOfResponse: object = {};
 
 export const QuerySupplyOfResponse = {
   encode(message: QuerySupplyOfResponse, writer: Writer = Writer.create()): Writer {
@@ -600,7 +512,8 @@ export const QuerySupplyOfResponse = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): QuerySupplyOfResponse {
+
+  decode(input: Reader | Uint8Array, length?: number): QuerySupplyOfResponse {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQuerySupplyOfResponse } as QuerySupplyOfResponse;
@@ -617,6 +530,7 @@ export const QuerySupplyOfResponse = {
     }
     return message;
   },
+
   fromJSON(object: any): QuerySupplyOfResponse {
     const message = { ...baseQuerySupplyOfResponse } as QuerySupplyOfResponse;
     if (object.amount !== undefined && object.amount !== null) {
@@ -626,6 +540,7 @@ export const QuerySupplyOfResponse = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<QuerySupplyOfResponse>): QuerySupplyOfResponse {
     const message = { ...baseQuerySupplyOfResponse } as QuerySupplyOfResponse;
     if (object.amount !== undefined && object.amount !== null) {
@@ -635,6 +550,7 @@ export const QuerySupplyOfResponse = {
     }
     return message;
   },
+
   toJSON(message: QuerySupplyOfResponse): unknown {
     const obj: any = {};
     message.amount !== undefined && (obj.amount = message.amount ? Coin.toJSON(message.amount) : undefined);
@@ -642,11 +558,14 @@ export const QuerySupplyOfResponse = {
   },
 };
 
+const baseQueryParamsRequest: object = {};
+
 export const QueryParamsRequest = {
   encode(_: QueryParamsRequest, writer: Writer = Writer.create()): Writer {
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): QueryParamsRequest {
+
+  decode(input: Reader | Uint8Array, length?: number): QueryParamsRequest {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryParamsRequest } as QueryParamsRequest;
@@ -660,19 +579,24 @@ export const QueryParamsRequest = {
     }
     return message;
   },
+
   fromJSON(_: any): QueryParamsRequest {
     const message = { ...baseQueryParamsRequest } as QueryParamsRequest;
     return message;
   },
+
   fromPartial(_: DeepPartial<QueryParamsRequest>): QueryParamsRequest {
     const message = { ...baseQueryParamsRequest } as QueryParamsRequest;
     return message;
   },
+
   toJSON(_: QueryParamsRequest): unknown {
     const obj: any = {};
     return obj;
   },
 };
+
+const baseQueryParamsResponse: object = {};
 
 export const QueryParamsResponse = {
   encode(message: QueryParamsResponse, writer: Writer = Writer.create()): Writer {
@@ -681,7 +605,8 @@ export const QueryParamsResponse = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): QueryParamsResponse {
+
+  decode(input: Reader | Uint8Array, length?: number): QueryParamsResponse {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryParamsResponse } as QueryParamsResponse;
@@ -698,6 +623,7 @@ export const QueryParamsResponse = {
     }
     return message;
   },
+
   fromJSON(object: any): QueryParamsResponse {
     const message = { ...baseQueryParamsResponse } as QueryParamsResponse;
     if (object.params !== undefined && object.params !== null) {
@@ -707,6 +633,7 @@ export const QueryParamsResponse = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<QueryParamsResponse>): QueryParamsResponse {
     const message = { ...baseQueryParamsResponse } as QueryParamsResponse;
     if (object.params !== undefined && object.params !== null) {
@@ -716,6 +643,7 @@ export const QueryParamsResponse = {
     }
     return message;
   },
+
   toJSON(message: QueryParamsResponse): unknown {
     const obj: any = {};
     message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
@@ -723,7 +651,61 @@ export const QueryParamsResponse = {
   },
 };
 
-type Builtin = Date | Function | Uint8Array | string | number | undefined;
+/** Query defines the gRPC querier service. */
+export interface Query {
+  /** Balance queries the balance of a single coin for a single account. */
+  Balance(request: QueryBalanceRequest): Promise<QueryBalanceResponse>;
+  /** AllBalances queries the balance of all coins for a single account. */
+  AllBalances(request: QueryAllBalancesRequest): Promise<QueryAllBalancesResponse>;
+  /** TotalSupply queries the total supply of all coins. */
+  TotalSupply(request: QueryTotalSupplyRequest): Promise<QueryTotalSupplyResponse>;
+  /** SupplyOf queries the supply of a single coin. */
+  SupplyOf(request: QuerySupplyOfRequest): Promise<QuerySupplyOfResponse>;
+  /** Params queries the parameters of x/bank module. */
+  Params(request: QueryParamsRequest): Promise<QueryParamsResponse>;
+}
+
+export class QueryClientImpl implements Query {
+  private readonly rpc: Rpc;
+  constructor(rpc: Rpc) {
+    this.rpc = rpc;
+  }
+  Balance(request: QueryBalanceRequest): Promise<QueryBalanceResponse> {
+    const data = QueryBalanceRequest.encode(request).finish();
+    const promise = this.rpc.request("cosmos.bank.v1beta1.Query", "methodDesc.name", data);
+    return promise.then((data) => QueryBalanceResponse.decode(new Reader(data)));
+  }
+
+  AllBalances(request: QueryAllBalancesRequest): Promise<QueryAllBalancesResponse> {
+    const data = QueryAllBalancesRequest.encode(request).finish();
+    const promise = this.rpc.request("cosmos.bank.v1beta1.Query", "methodDesc.name", data);
+    return promise.then((data) => QueryAllBalancesResponse.decode(new Reader(data)));
+  }
+
+  TotalSupply(request: QueryTotalSupplyRequest): Promise<QueryTotalSupplyResponse> {
+    const data = QueryTotalSupplyRequest.encode(request).finish();
+    const promise = this.rpc.request("cosmos.bank.v1beta1.Query", "methodDesc.name", data);
+    return promise.then((data) => QueryTotalSupplyResponse.decode(new Reader(data)));
+  }
+
+  SupplyOf(request: QuerySupplyOfRequest): Promise<QuerySupplyOfResponse> {
+    const data = QuerySupplyOfRequest.encode(request).finish();
+    const promise = this.rpc.request("cosmos.bank.v1beta1.Query", "methodDesc.name", data);
+    return promise.then((data) => QuerySupplyOfResponse.decode(new Reader(data)));
+  }
+
+  Params(request: QueryParamsRequest): Promise<QueryParamsResponse> {
+    const data = QueryParamsRequest.encode(request).finish();
+    const promise = this.rpc.request("cosmos.bank.v1beta1.Query", "methodDesc.name", data);
+    return promise.then((data) => QueryParamsResponse.decode(new Reader(data)));
+  }
+}
+
+interface Rpc {
+  request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
+}
+
+type Builtin = Date | Function | Uint8Array | string | number | undefined | Long;
 export type DeepPartial<T> = T extends Builtin
   ? T
   : T extends Array<infer U>

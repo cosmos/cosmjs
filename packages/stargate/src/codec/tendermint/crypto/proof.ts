@@ -2,6 +2,8 @@
 import * as Long from "long";
 import { Writer, Reader } from "protobufjs/minimal";
 
+export const protobufPackage = "tendermint.crypto";
+
 export interface Proof {
   total: Long;
   index: Long;
@@ -10,13 +12,9 @@ export interface Proof {
 }
 
 export interface ValueOp {
-  /**
-   *  Encoded in ProofOp.Key.
-   */
+  /** Encoded in ProofOp.Key. */
   key: Uint8Array;
-  /**
-   *  To encode in ProofOp.Data
-   */
+  /** To encode in ProofOp.Data */
   proof?: Proof;
 }
 
@@ -27,9 +25,9 @@ export interface DominoOp {
 }
 
 /**
- *  ProofOp defines an operation used for calculating Merkle root
- *  The data could be arbitrary format, providing nessecary data
- *  for example neighbouring node hash
+ * ProofOp defines an operation used for calculating Merkle root
+ * The data could be arbitrary format, providing nessecary data
+ * for example neighbouring node hash
  */
 export interface ProofOp {
   type: string;
@@ -37,33 +35,12 @@ export interface ProofOp {
   data: Uint8Array;
 }
 
-/**
- *  ProofOps is Merkle proof defined by the list of ProofOps
- */
+/** ProofOps is Merkle proof defined by the list of ProofOps */
 export interface ProofOps {
   ops: ProofOp[];
 }
 
-const baseProof: object = {
-  total: Long.ZERO,
-  index: Long.ZERO,
-};
-
-const baseValueOp: object = {};
-
-const baseDominoOp: object = {
-  key: "",
-  input: "",
-  output: "",
-};
-
-const baseProofOp: object = {
-  type: "",
-};
-
-const baseProofOps: object = {};
-
-export const protobufPackage = "tendermint.crypto";
+const baseProof: object = { total: Long.ZERO, index: Long.ZERO };
 
 export const Proof = {
   encode(message: Proof, writer: Writer = Writer.create()): Writer {
@@ -75,7 +52,8 @@ export const Proof = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): Proof {
+
+  decode(input: Reader | Uint8Array, length?: number): Proof {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseProof } as Proof;
@@ -102,6 +80,7 @@ export const Proof = {
     }
     return message;
   },
+
   fromJSON(object: any): Proof {
     const message = { ...baseProof } as Proof;
     message.aunts = [];
@@ -125,6 +104,7 @@ export const Proof = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<Proof>): Proof {
     const message = { ...baseProof } as Proof;
     message.aunts = [];
@@ -150,6 +130,7 @@ export const Proof = {
     }
     return message;
   },
+
   toJSON(message: Proof): unknown {
     const obj: any = {};
     message.total !== undefined && (obj.total = (message.total || Long.ZERO).toString());
@@ -165,6 +146,8 @@ export const Proof = {
   },
 };
 
+const baseValueOp: object = {};
+
 export const ValueOp = {
   encode(message: ValueOp, writer: Writer = Writer.create()): Writer {
     writer.uint32(10).bytes(message.key);
@@ -173,7 +156,8 @@ export const ValueOp = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): ValueOp {
+
+  decode(input: Reader | Uint8Array, length?: number): ValueOp {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseValueOp } as ValueOp;
@@ -193,6 +177,7 @@ export const ValueOp = {
     }
     return message;
   },
+
   fromJSON(object: any): ValueOp {
     const message = { ...baseValueOp } as ValueOp;
     if (object.key !== undefined && object.key !== null) {
@@ -205,6 +190,7 @@ export const ValueOp = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<ValueOp>): ValueOp {
     const message = { ...baseValueOp } as ValueOp;
     if (object.key !== undefined && object.key !== null) {
@@ -219,6 +205,7 @@ export const ValueOp = {
     }
     return message;
   },
+
   toJSON(message: ValueOp): unknown {
     const obj: any = {};
     message.key !== undefined &&
@@ -228,6 +215,8 @@ export const ValueOp = {
   },
 };
 
+const baseDominoOp: object = { key: "", input: "", output: "" };
+
 export const DominoOp = {
   encode(message: DominoOp, writer: Writer = Writer.create()): Writer {
     writer.uint32(10).string(message.key);
@@ -235,7 +224,8 @@ export const DominoOp = {
     writer.uint32(26).string(message.output);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): DominoOp {
+
+  decode(input: Reader | Uint8Array, length?: number): DominoOp {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseDominoOp } as DominoOp;
@@ -258,6 +248,7 @@ export const DominoOp = {
     }
     return message;
   },
+
   fromJSON(object: any): DominoOp {
     const message = { ...baseDominoOp } as DominoOp;
     if (object.key !== undefined && object.key !== null) {
@@ -277,6 +268,7 @@ export const DominoOp = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<DominoOp>): DominoOp {
     const message = { ...baseDominoOp } as DominoOp;
     if (object.key !== undefined && object.key !== null) {
@@ -296,6 +288,7 @@ export const DominoOp = {
     }
     return message;
   },
+
   toJSON(message: DominoOp): unknown {
     const obj: any = {};
     message.key !== undefined && (obj.key = message.key);
@@ -305,6 +298,8 @@ export const DominoOp = {
   },
 };
 
+const baseProofOp: object = { type: "" };
+
 export const ProofOp = {
   encode(message: ProofOp, writer: Writer = Writer.create()): Writer {
     writer.uint32(10).string(message.type);
@@ -312,7 +307,8 @@ export const ProofOp = {
     writer.uint32(26).bytes(message.data);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): ProofOp {
+
+  decode(input: Reader | Uint8Array, length?: number): ProofOp {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseProofOp } as ProofOp;
@@ -335,6 +331,7 @@ export const ProofOp = {
     }
     return message;
   },
+
   fromJSON(object: any): ProofOp {
     const message = { ...baseProofOp } as ProofOp;
     if (object.type !== undefined && object.type !== null) {
@@ -350,6 +347,7 @@ export const ProofOp = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<ProofOp>): ProofOp {
     const message = { ...baseProofOp } as ProofOp;
     if (object.type !== undefined && object.type !== null) {
@@ -369,6 +367,7 @@ export const ProofOp = {
     }
     return message;
   },
+
   toJSON(message: ProofOp): unknown {
     const obj: any = {};
     message.type !== undefined && (obj.type = message.type);
@@ -380,6 +379,8 @@ export const ProofOp = {
   },
 };
 
+const baseProofOps: object = {};
+
 export const ProofOps = {
   encode(message: ProofOps, writer: Writer = Writer.create()): Writer {
     for (const v of message.ops) {
@@ -387,7 +388,8 @@ export const ProofOps = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): ProofOps {
+
+  decode(input: Reader | Uint8Array, length?: number): ProofOps {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseProofOps } as ProofOps;
@@ -405,6 +407,7 @@ export const ProofOps = {
     }
     return message;
   },
+
   fromJSON(object: any): ProofOps {
     const message = { ...baseProofOps } as ProofOps;
     message.ops = [];
@@ -415,6 +418,7 @@ export const ProofOps = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<ProofOps>): ProofOps {
     const message = { ...baseProofOps } as ProofOps;
     message.ops = [];
@@ -425,6 +429,7 @@ export const ProofOps = {
     }
     return message;
   },
+
   toJSON(message: ProofOps): unknown {
     const obj: any = {};
     if (message.ops) {
@@ -436,15 +441,18 @@ export const ProofOps = {
   },
 };
 
-interface WindowBase64 {
-  atob(b64: string): string;
-  btoa(bin: string): string;
-}
+declare var self: any | undefined;
+declare var window: any | undefined;
+var globalThis: any = (() => {
+  if (typeof globalThis !== "undefined") return globalThis;
+  if (typeof self !== "undefined") return self;
+  if (typeof window !== "undefined") return window;
+  if (typeof global !== "undefined") return global;
+  throw new Error("Unable to locate global object");
+})();
 
-const windowBase64 = (globalThis as unknown) as WindowBase64;
-const atob = windowBase64.atob || ((b64: string) => Buffer.from(b64, "base64").toString("binary"));
-const btoa = windowBase64.btoa || ((bin: string) => Buffer.from(bin, "binary").toString("base64"));
-
+const atob: (b64: string) => string =
+  globalThis.atob || ((b64) => globalThis.Buffer.from(b64, "base64").toString("binary"));
 function bytesFromBase64(b64: string): Uint8Array {
   const bin = atob(b64);
   const arr = new Uint8Array(bin.length);
@@ -454,6 +462,8 @@ function bytesFromBase64(b64: string): Uint8Array {
   return arr;
 }
 
+const btoa: (bin: string) => string =
+  globalThis.btoa || ((bin) => globalThis.Buffer.from(bin, "binary").toString("base64"));
 function base64FromBytes(arr: Uint8Array): string {
   const bin: string[] = [];
   for (let i = 0; i < arr.byteLength; ++i) {
@@ -461,7 +471,8 @@ function base64FromBytes(arr: Uint8Array): string {
   }
   return btoa(bin.join(""));
 }
-type Builtin = Date | Function | Uint8Array | string | number | undefined;
+
+type Builtin = Date | Function | Uint8Array | string | number | undefined | Long;
 export type DeepPartial<T> = T extends Builtin
   ? T
   : T extends Array<infer U>

@@ -2,17 +2,14 @@
 import * as Long from "long";
 import { Writer, Reader } from "protobufjs/minimal";
 
+export const protobufPackage = "tendermint.libs.bits";
+
 export interface BitArray {
   bits: Long;
   elems: Long[];
 }
 
-const baseBitArray: object = {
-  bits: Long.ZERO,
-  elems: Long.UZERO,
-};
-
-export const protobufPackage = "tendermint.libs.bits";
+const baseBitArray: object = { bits: Long.ZERO, elems: Long.UZERO };
 
 export const BitArray = {
   encode(message: BitArray, writer: Writer = Writer.create()): Writer {
@@ -24,7 +21,8 @@ export const BitArray = {
     writer.ldelim();
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): BitArray {
+
+  decode(input: Reader | Uint8Array, length?: number): BitArray {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseBitArray } as BitArray;
@@ -52,6 +50,7 @@ export const BitArray = {
     }
     return message;
   },
+
   fromJSON(object: any): BitArray {
     const message = { ...baseBitArray } as BitArray;
     message.elems = [];
@@ -67,6 +66,7 @@ export const BitArray = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<BitArray>): BitArray {
     const message = { ...baseBitArray } as BitArray;
     message.elems = [];
@@ -82,6 +82,7 @@ export const BitArray = {
     }
     return message;
   },
+
   toJSON(message: BitArray): unknown {
     const obj: any = {};
     message.bits !== undefined && (obj.bits = (message.bits || Long.ZERO).toString());
@@ -94,7 +95,7 @@ export const BitArray = {
   },
 };
 
-type Builtin = Date | Function | Uint8Array | string | number | undefined;
+type Builtin = Date | Function | Uint8Array | string | number | undefined | Long;
 export type DeepPartial<T> = T extends Builtin
   ? T
   : T extends Array<infer U>

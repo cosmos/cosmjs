@@ -3,223 +3,27 @@ import * as Long from "long";
 import { Height } from "../../../../ibc/core/client/v1/client";
 import { Writer, Reader } from "protobufjs/minimal";
 
-/**
- *  Channel defines pipeline for exactly-once packet delivery between specific
- *  modules on separate blockchains, which has at least one end capable of
- *  sending packets and one end capable of receiving packets.
- */
-export interface Channel {
-  /**
-   *  current state of the channel end
-   */
-  state: State;
-  /**
-   *  whether the channel is ordered or unordered
-   */
-  ordering: Order;
-  /**
-   *  counterparty channel end
-   */
-  counterparty?: Counterparty;
-  /**
-   *  list of connection identifiers, in order, along which packets sent on
-   *  this channel will travel
-   */
-  connectionHops: string[];
-  /**
-   *  opaque channel version, which is agreed upon during the handshake
-   */
-  version: string;
-}
-
-/**
- *  IdentifiedChannel defines a channel with additional port and channel
- *  identifier fields.
- */
-export interface IdentifiedChannel {
-  /**
-   *  current state of the channel end
-   */
-  state: State;
-  /**
-   *  whether the channel is ordered or unordered
-   */
-  ordering: Order;
-  /**
-   *  counterparty channel end
-   */
-  counterparty?: Counterparty;
-  /**
-   *  list of connection identifiers, in order, along which packets sent on
-   *  this channel will travel
-   */
-  connectionHops: string[];
-  /**
-   *  opaque channel version, which is agreed upon during the handshake
-   */
-  version: string;
-  /**
-   *  port identifier
-   */
-  portId: string;
-  /**
-   *  channel identifier
-   */
-  channelId: string;
-}
-
-/**
- *  Counterparty defines a channel end counterparty
- */
-export interface Counterparty {
-  /**
-   *  port on the counterparty chain which owns the other end of the channel.
-   */
-  portId: string;
-  /**
-   *  channel end on the counterparty chain
-   */
-  channelId: string;
-}
-
-/**
- *  Packet defines a type that carries data across different chains through IBC
- */
-export interface Packet {
-  /**
-   *  number corresponds to the order of sends and receives, where a Packet
-   *  with an earlier sequence number must be sent and received before a Packet
-   *  with a later sequence number.
-   */
-  sequence: Long;
-  /**
-   *  identifies the port on the sending chain.
-   */
-  sourcePort: string;
-  /**
-   *  identifies the channel end on the sending chain.
-   */
-  sourceChannel: string;
-  /**
-   *  identifies the port on the receiving chain.
-   */
-  destinationPort: string;
-  /**
-   *  identifies the channel end on the receiving chain.
-   */
-  destinationChannel: string;
-  /**
-   *  actual opaque bytes transferred directly to the application module
-   */
-  data: Uint8Array;
-  /**
-   *  block height after which the packet times out
-   */
-  timeoutHeight?: Height;
-  /**
-   *  block timestamp (in nanoseconds) after which the packet times out
-   */
-  timeoutTimestamp: Long;
-}
-
-/**
- *  PacketState defines the generic type necessary to retrieve and store
- *  packet commitments, acknowledgements, and receipts.
- *  Caller is responsible for knowing the context necessary to interpret this
- *  state as a commitment, acknowledgement, or a receipt.
- */
-export interface PacketState {
-  /**
-   *  channel port identifier.
-   */
-  portId: string;
-  /**
-   *  channel unique identifier.
-   */
-  channelId: string;
-  /**
-   *  packet sequence.
-   */
-  sequence: Long;
-  /**
-   *  embedded data that represents packet state.
-   */
-  data: Uint8Array;
-}
-
-/**
- *  Acknowledgement is the recommended acknowledgement format to be used by
- *  app-specific protocols.
- *  NOTE: The field numbers 21 and 22 were explicitly chosen to avoid accidental
- *  conflicts with other protobuf message formats used for acknowledgements.
- *  The first byte of any message with this format will be the non-ASCII values
- *  `0xaa` (result) or `0xb2` (error). Implemented as defined by ICS:
- *  https://github.com/cosmos/ics/tree/master/spec/ics-004-channel-and-packet-semantics#acknowledgement-envelope
- */
-export interface Acknowledgement {
-  result: Uint8Array | undefined;
-  error: string | undefined;
-}
-
-const baseChannel: object = {
-  state: 0,
-  ordering: 0,
-  connectionHops: "",
-  version: "",
-};
-
-const baseIdentifiedChannel: object = {
-  state: 0,
-  ordering: 0,
-  connectionHops: "",
-  version: "",
-  portId: "",
-  channelId: "",
-};
-
-const baseCounterparty: object = {
-  portId: "",
-  channelId: "",
-};
-
-const basePacket: object = {
-  sequence: Long.UZERO,
-  sourcePort: "",
-  sourceChannel: "",
-  destinationPort: "",
-  destinationChannel: "",
-  timeoutTimestamp: Long.UZERO,
-};
-
-const basePacketState: object = {
-  portId: "",
-  channelId: "",
-  sequence: Long.UZERO,
-};
-
-const baseAcknowledgement: object = {};
-
 export const protobufPackage = "ibc.core.channel.v1";
 
-/**  State defines if a channel is in one of the following states:
- CLOSED, INIT, TRYOPEN, OPEN or UNINITIALIZED.
+/**
+ * State defines if a channel is in one of the following states:
+ * CLOSED, INIT, TRYOPEN, OPEN or UNINITIALIZED.
  */
 export enum State {
-  /** STATE_UNINITIALIZED_UNSPECIFIED -  Default State
-   */
+  /** STATE_UNINITIALIZED_UNSPECIFIED - Default State */
   STATE_UNINITIALIZED_UNSPECIFIED = 0,
-  /** STATE_INIT -  A channel has just started the opening handshake.
-   */
+  /** STATE_INIT - A channel has just started the opening handshake. */
   STATE_INIT = 1,
-  /** STATE_TRYOPEN -  A channel has acknowledged the handshake step on the counterparty chain.
-   */
+  /** STATE_TRYOPEN - A channel has acknowledged the handshake step on the counterparty chain. */
   STATE_TRYOPEN = 2,
-  /** STATE_OPEN -  A channel has completed the handshake. Open channels are
-   ready to send and receive packets.
+  /**
+   * STATE_OPEN - A channel has completed the handshake. Open channels are
+   * ready to send and receive packets.
    */
   STATE_OPEN = 3,
-  /** STATE_CLOSED -  A channel has been closed and can no longer be used to send or receive
-   packets.
+  /**
+   * STATE_CLOSED - A channel has been closed and can no longer be used to send or receive
+   * packets.
    */
   STATE_CLOSED = 4,
   UNRECOGNIZED = -1,
@@ -266,18 +70,16 @@ export function stateToJSON(object: State): string {
   }
 }
 
-/**  Order defines if a channel is ORDERED or UNORDERED
- */
+/** Order defines if a channel is ORDERED or UNORDERED */
 export enum Order {
-  /** ORDER_NONE_UNSPECIFIED -  zero-value for channel ordering
-   */
+  /** ORDER_NONE_UNSPECIFIED - zero-value for channel ordering */
   ORDER_NONE_UNSPECIFIED = 0,
-  /** ORDER_UNORDERED -  packets can be delivered in any order, which may differ from the order in
-   which they were sent.
+  /**
+   * ORDER_UNORDERED - packets can be delivered in any order, which may differ from the order in
+   * which they were sent.
    */
   ORDER_UNORDERED = 1,
-  /** ORDER_ORDERED -  packets are delivered exactly in the order which they were sent
-   */
+  /** ORDER_ORDERED - packets are delivered exactly in the order which they were sent */
   ORDER_ORDERED = 2,
   UNRECOGNIZED = -1,
 }
@@ -313,6 +115,116 @@ export function orderToJSON(object: Order): string {
   }
 }
 
+/**
+ * Channel defines pipeline for exactly-once packet delivery between specific
+ * modules on separate blockchains, which has at least one end capable of
+ * sending packets and one end capable of receiving packets.
+ */
+export interface Channel {
+  /** current state of the channel end */
+  state: State;
+  /** whether the channel is ordered or unordered */
+  ordering: Order;
+  /** counterparty channel end */
+  counterparty?: Counterparty;
+  /**
+   * list of connection identifiers, in order, along which packets sent on
+   * this channel will travel
+   */
+  connectionHops: string[];
+  /** opaque channel version, which is agreed upon during the handshake */
+  version: string;
+}
+
+/**
+ * IdentifiedChannel defines a channel with additional port and channel
+ * identifier fields.
+ */
+export interface IdentifiedChannel {
+  /** current state of the channel end */
+  state: State;
+  /** whether the channel is ordered or unordered */
+  ordering: Order;
+  /** counterparty channel end */
+  counterparty?: Counterparty;
+  /**
+   * list of connection identifiers, in order, along which packets sent on
+   * this channel will travel
+   */
+  connectionHops: string[];
+  /** opaque channel version, which is agreed upon during the handshake */
+  version: string;
+  /** port identifier */
+  portId: string;
+  /** channel identifier */
+  channelId: string;
+}
+
+/** Counterparty defines a channel end counterparty */
+export interface Counterparty {
+  /** port on the counterparty chain which owns the other end of the channel. */
+  portId: string;
+  /** channel end on the counterparty chain */
+  channelId: string;
+}
+
+/** Packet defines a type that carries data across different chains through IBC */
+export interface Packet {
+  /**
+   * number corresponds to the order of sends and receives, where a Packet
+   * with an earlier sequence number must be sent and received before a Packet
+   * with a later sequence number.
+   */
+  sequence: Long;
+  /** identifies the port on the sending chain. */
+  sourcePort: string;
+  /** identifies the channel end on the sending chain. */
+  sourceChannel: string;
+  /** identifies the port on the receiving chain. */
+  destinationPort: string;
+  /** identifies the channel end on the receiving chain. */
+  destinationChannel: string;
+  /** actual opaque bytes transferred directly to the application module */
+  data: Uint8Array;
+  /** block height after which the packet times out */
+  timeoutHeight?: Height;
+  /** block timestamp (in nanoseconds) after which the packet times out */
+  timeoutTimestamp: Long;
+}
+
+/**
+ * PacketState defines the generic type necessary to retrieve and store
+ * packet commitments, acknowledgements, and receipts.
+ * Caller is responsible for knowing the context necessary to interpret this
+ * state as a commitment, acknowledgement, or a receipt.
+ */
+export interface PacketState {
+  /** channel port identifier. */
+  portId: string;
+  /** channel unique identifier. */
+  channelId: string;
+  /** packet sequence. */
+  sequence: Long;
+  /** embedded data that represents packet state. */
+  data: Uint8Array;
+}
+
+/**
+ * Acknowledgement is the recommended acknowledgement format to be used by
+ * app-specific protocols.
+ * NOTE: The field numbers 21 and 22 were explicitly chosen to avoid accidental
+ * conflicts with other protobuf message formats used for acknowledgements.
+ * The first byte of any message with this format will be the non-ASCII values
+ * `0xaa` (result) or `0xb2` (error). Implemented as defined by ICS:
+ * https://github.com/cosmos/ics/tree/master/spec/ics-004-channel-and-packet-semantics#acknowledgement-envelope
+ */
+export interface Acknowledgement {
+  result: Uint8Array | undefined;
+  error: string | undefined;
+}
+
+const baseChannel: object = { state: 0, ordering: 0, connectionHops: "", version: "" };
+
 export const Channel = {
   encode(message: Channel, writer: Writer = Writer.create()): Writer {
     writer.uint32(8).int32(message.state);
@@ -326,7 +238,8 @@ export const Channel = {
     writer.uint32(42).string(message.version);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): Channel {
+
+  decode(input: Reader | Uint8Array, length?: number): Channel {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseChannel } as Channel;
@@ -356,6 +269,7 @@ export const Channel = {
     }
     return message;
   },
+
   fromJSON(object: any): Channel {
     const message = { ...baseChannel } as Channel;
     message.connectionHops = [];
@@ -386,6 +300,7 @@ export const Channel = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<Channel>): Channel {
     const message = { ...baseChannel } as Channel;
     message.connectionHops = [];
@@ -416,6 +331,7 @@ export const Channel = {
     }
     return message;
   },
+
   toJSON(message: Channel): unknown {
     const obj: any = {};
     message.state !== undefined && (obj.state = stateToJSON(message.state));
@@ -430,6 +346,15 @@ export const Channel = {
     message.version !== undefined && (obj.version = message.version);
     return obj;
   },
+};
+
+const baseIdentifiedChannel: object = {
+  state: 0,
+  ordering: 0,
+  connectionHops: "",
+  version: "",
+  portId: "",
+  channelId: "",
 };
 
 export const IdentifiedChannel = {
@@ -447,7 +372,8 @@ export const IdentifiedChannel = {
     writer.uint32(58).string(message.channelId);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): IdentifiedChannel {
+
+  decode(input: Reader | Uint8Array, length?: number): IdentifiedChannel {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseIdentifiedChannel } as IdentifiedChannel;
@@ -483,6 +409,7 @@ export const IdentifiedChannel = {
     }
     return message;
   },
+
   fromJSON(object: any): IdentifiedChannel {
     const message = { ...baseIdentifiedChannel } as IdentifiedChannel;
     message.connectionHops = [];
@@ -523,6 +450,7 @@ export const IdentifiedChannel = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<IdentifiedChannel>): IdentifiedChannel {
     const message = { ...baseIdentifiedChannel } as IdentifiedChannel;
     message.connectionHops = [];
@@ -563,6 +491,7 @@ export const IdentifiedChannel = {
     }
     return message;
   },
+
   toJSON(message: IdentifiedChannel): unknown {
     const obj: any = {};
     message.state !== undefined && (obj.state = stateToJSON(message.state));
@@ -581,13 +510,16 @@ export const IdentifiedChannel = {
   },
 };
 
+const baseCounterparty: object = { portId: "", channelId: "" };
+
 export const Counterparty = {
   encode(message: Counterparty, writer: Writer = Writer.create()): Writer {
     writer.uint32(10).string(message.portId);
     writer.uint32(18).string(message.channelId);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): Counterparty {
+
+  decode(input: Reader | Uint8Array, length?: number): Counterparty {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseCounterparty } as Counterparty;
@@ -607,6 +539,7 @@ export const Counterparty = {
     }
     return message;
   },
+
   fromJSON(object: any): Counterparty {
     const message = { ...baseCounterparty } as Counterparty;
     if (object.portId !== undefined && object.portId !== null) {
@@ -621,6 +554,7 @@ export const Counterparty = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<Counterparty>): Counterparty {
     const message = { ...baseCounterparty } as Counterparty;
     if (object.portId !== undefined && object.portId !== null) {
@@ -635,12 +569,22 @@ export const Counterparty = {
     }
     return message;
   },
+
   toJSON(message: Counterparty): unknown {
     const obj: any = {};
     message.portId !== undefined && (obj.portId = message.portId);
     message.channelId !== undefined && (obj.channelId = message.channelId);
     return obj;
   },
+};
+
+const basePacket: object = {
+  sequence: Long.UZERO,
+  sourcePort: "",
+  sourceChannel: "",
+  destinationPort: "",
+  destinationChannel: "",
+  timeoutTimestamp: Long.UZERO,
 };
 
 export const Packet = {
@@ -657,7 +601,8 @@ export const Packet = {
     writer.uint32(64).uint64(message.timeoutTimestamp);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): Packet {
+
+  decode(input: Reader | Uint8Array, length?: number): Packet {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...basePacket } as Packet;
@@ -695,6 +640,7 @@ export const Packet = {
     }
     return message;
   },
+
   fromJSON(object: any): Packet {
     const message = { ...basePacket } as Packet;
     if (object.sequence !== undefined && object.sequence !== null) {
@@ -737,6 +683,7 @@ export const Packet = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<Packet>): Packet {
     const message = { ...basePacket } as Packet;
     if (object.sequence !== undefined && object.sequence !== null) {
@@ -781,6 +728,7 @@ export const Packet = {
     }
     return message;
   },
+
   toJSON(message: Packet): unknown {
     const obj: any = {};
     message.sequence !== undefined && (obj.sequence = (message.sequence || Long.UZERO).toString());
@@ -798,6 +746,8 @@ export const Packet = {
   },
 };
 
+const basePacketState: object = { portId: "", channelId: "", sequence: Long.UZERO };
+
 export const PacketState = {
   encode(message: PacketState, writer: Writer = Writer.create()): Writer {
     writer.uint32(10).string(message.portId);
@@ -806,7 +756,8 @@ export const PacketState = {
     writer.uint32(34).bytes(message.data);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): PacketState {
+
+  decode(input: Reader | Uint8Array, length?: number): PacketState {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...basePacketState } as PacketState;
@@ -832,6 +783,7 @@ export const PacketState = {
     }
     return message;
   },
+
   fromJSON(object: any): PacketState {
     const message = { ...basePacketState } as PacketState;
     if (object.portId !== undefined && object.portId !== null) {
@@ -854,6 +806,7 @@ export const PacketState = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<PacketState>): PacketState {
     const message = { ...basePacketState } as PacketState;
     if (object.portId !== undefined && object.portId !== null) {
@@ -878,6 +831,7 @@ export const PacketState = {
     }
     return message;
   },
+
   toJSON(message: PacketState): unknown {
     const obj: any = {};
     message.portId !== undefined && (obj.portId = message.portId);
@@ -889,6 +843,8 @@ export const PacketState = {
   },
 };
 
+const baseAcknowledgement: object = {};
+
 export const Acknowledgement = {
   encode(message: Acknowledgement, writer: Writer = Writer.create()): Writer {
     if (message.result !== undefined) {
@@ -899,7 +855,8 @@ export const Acknowledgement = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): Acknowledgement {
+
+  decode(input: Reader | Uint8Array, length?: number): Acknowledgement {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseAcknowledgement } as Acknowledgement;
@@ -919,6 +876,7 @@ export const Acknowledgement = {
     }
     return message;
   },
+
   fromJSON(object: any): Acknowledgement {
     const message = { ...baseAcknowledgement } as Acknowledgement;
     if (object.result !== undefined && object.result !== null) {
@@ -931,6 +889,7 @@ export const Acknowledgement = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<Acknowledgement>): Acknowledgement {
     const message = { ...baseAcknowledgement } as Acknowledgement;
     if (object.result !== undefined && object.result !== null) {
@@ -945,6 +904,7 @@ export const Acknowledgement = {
     }
     return message;
   },
+
   toJSON(message: Acknowledgement): unknown {
     const obj: any = {};
     message.result !== undefined &&
@@ -954,15 +914,18 @@ export const Acknowledgement = {
   },
 };
 
-interface WindowBase64 {
-  atob(b64: string): string;
-  btoa(bin: string): string;
-}
+declare var self: any | undefined;
+declare var window: any | undefined;
+var globalThis: any = (() => {
+  if (typeof globalThis !== "undefined") return globalThis;
+  if (typeof self !== "undefined") return self;
+  if (typeof window !== "undefined") return window;
+  if (typeof global !== "undefined") return global;
+  throw new Error("Unable to locate global object");
+})();
 
-const windowBase64 = (globalThis as unknown) as WindowBase64;
-const atob = windowBase64.atob || ((b64: string) => Buffer.from(b64, "base64").toString("binary"));
-const btoa = windowBase64.btoa || ((bin: string) => Buffer.from(bin, "binary").toString("base64"));
-
+const atob: (b64: string) => string =
+  globalThis.atob || ((b64) => globalThis.Buffer.from(b64, "base64").toString("binary"));
 function bytesFromBase64(b64: string): Uint8Array {
   const bin = atob(b64);
   const arr = new Uint8Array(bin.length);
@@ -972,6 +935,8 @@ function bytesFromBase64(b64: string): Uint8Array {
   return arr;
 }
 
+const btoa: (bin: string) => string =
+  globalThis.btoa || ((bin) => globalThis.Buffer.from(bin, "binary").toString("base64"));
 function base64FromBytes(arr: Uint8Array): string {
   const bin: string[] = [];
   for (let i = 0; i < arr.byteLength; ++i) {
@@ -979,7 +944,8 @@ function base64FromBytes(arr: Uint8Array): string {
   }
   return btoa(bin.join(""));
 }
-type Builtin = Date | Function | Uint8Array | string | number | undefined;
+
+type Builtin = Date | Function | Uint8Array | string | number | undefined | Long;
 export type DeepPartial<T> = T extends Builtin
   ? T
   : T extends Array<infer U>

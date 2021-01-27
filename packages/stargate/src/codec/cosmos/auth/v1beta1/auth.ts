@@ -3,10 +3,12 @@ import { Any } from "../../../google/protobuf/any";
 import * as Long from "long";
 import { Writer, Reader } from "protobufjs/minimal";
 
+export const protobufPackage = "cosmos.auth.v1beta1";
+
 /**
- *  BaseAccount defines a base account type. It contains all the necessary fields
- *  for basic account functionality. Any custom account type should extend this
- *  type for additional functionality (e.g. vesting).
+ * BaseAccount defines a base account type. It contains all the necessary fields
+ * for basic account functionality. Any custom account type should extend this
+ * type for additional functionality (e.g. vesting).
  */
 export interface BaseAccount {
   address: string;
@@ -15,18 +17,14 @@ export interface BaseAccount {
   sequence: Long;
 }
 
-/**
- *  ModuleAccount defines an account for modules that holds coins on a pool.
- */
+/** ModuleAccount defines an account for modules that holds coins on a pool. */
 export interface ModuleAccount {
   baseAccount?: BaseAccount;
   name: string;
   permissions: string[];
 }
 
-/**
- *  Params defines the parameters for the auth module.
- */
+/** Params defines the parameters for the auth module. */
 export interface Params {
   maxMemoCharacters: Long;
   txSigLimit: Long;
@@ -35,26 +33,7 @@ export interface Params {
   sigVerifyCostSecp256k1: Long;
 }
 
-const baseBaseAccount: object = {
-  address: "",
-  accountNumber: Long.UZERO,
-  sequence: Long.UZERO,
-};
-
-const baseModuleAccount: object = {
-  name: "",
-  permissions: "",
-};
-
-const baseParams: object = {
-  maxMemoCharacters: Long.UZERO,
-  txSigLimit: Long.UZERO,
-  txSizeCostPerByte: Long.UZERO,
-  sigVerifyCostEd25519: Long.UZERO,
-  sigVerifyCostSecp256k1: Long.UZERO,
-};
-
-export const protobufPackage = "cosmos.auth.v1beta1";
+const baseBaseAccount: object = { address: "", accountNumber: Long.UZERO, sequence: Long.UZERO };
 
 export const BaseAccount = {
   encode(message: BaseAccount, writer: Writer = Writer.create()): Writer {
@@ -66,7 +45,8 @@ export const BaseAccount = {
     writer.uint32(32).uint64(message.sequence);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): BaseAccount {
+
+  decode(input: Reader | Uint8Array, length?: number): BaseAccount {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseBaseAccount } as BaseAccount;
@@ -92,6 +72,7 @@ export const BaseAccount = {
     }
     return message;
   },
+
   fromJSON(object: any): BaseAccount {
     const message = { ...baseBaseAccount } as BaseAccount;
     if (object.address !== undefined && object.address !== null) {
@@ -116,6 +97,7 @@ export const BaseAccount = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<BaseAccount>): BaseAccount {
     const message = { ...baseBaseAccount } as BaseAccount;
     if (object.address !== undefined && object.address !== null) {
@@ -140,6 +122,7 @@ export const BaseAccount = {
     }
     return message;
   },
+
   toJSON(message: BaseAccount): unknown {
     const obj: any = {};
     message.address !== undefined && (obj.address = message.address);
@@ -150,6 +133,8 @@ export const BaseAccount = {
     return obj;
   },
 };
+
+const baseModuleAccount: object = { name: "", permissions: "" };
 
 export const ModuleAccount = {
   encode(message: ModuleAccount, writer: Writer = Writer.create()): Writer {
@@ -162,7 +147,8 @@ export const ModuleAccount = {
     }
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): ModuleAccount {
+
+  decode(input: Reader | Uint8Array, length?: number): ModuleAccount {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseModuleAccount } as ModuleAccount;
@@ -186,6 +172,7 @@ export const ModuleAccount = {
     }
     return message;
   },
+
   fromJSON(object: any): ModuleAccount {
     const message = { ...baseModuleAccount } as ModuleAccount;
     message.permissions = [];
@@ -206,6 +193,7 @@ export const ModuleAccount = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<ModuleAccount>): ModuleAccount {
     const message = { ...baseModuleAccount } as ModuleAccount;
     message.permissions = [];
@@ -226,6 +214,7 @@ export const ModuleAccount = {
     }
     return message;
   },
+
   toJSON(message: ModuleAccount): unknown {
     const obj: any = {};
     message.baseAccount !== undefined &&
@@ -240,6 +229,14 @@ export const ModuleAccount = {
   },
 };
 
+const baseParams: object = {
+  maxMemoCharacters: Long.UZERO,
+  txSigLimit: Long.UZERO,
+  txSizeCostPerByte: Long.UZERO,
+  sigVerifyCostEd25519: Long.UZERO,
+  sigVerifyCostSecp256k1: Long.UZERO,
+};
+
 export const Params = {
   encode(message: Params, writer: Writer = Writer.create()): Writer {
     writer.uint32(8).uint64(message.maxMemoCharacters);
@@ -249,7 +246,8 @@ export const Params = {
     writer.uint32(40).uint64(message.sigVerifyCostSecp256k1);
     return writer;
   },
-  decode(input: Uint8Array | Reader, length?: number): Params {
+
+  decode(input: Reader | Uint8Array, length?: number): Params {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseParams } as Params;
@@ -278,6 +276,7 @@ export const Params = {
     }
     return message;
   },
+
   fromJSON(object: any): Params {
     const message = { ...baseParams } as Params;
     if (object.maxMemoCharacters !== undefined && object.maxMemoCharacters !== null) {
@@ -307,6 +306,7 @@ export const Params = {
     }
     return message;
   },
+
   fromPartial(object: DeepPartial<Params>): Params {
     const message = { ...baseParams } as Params;
     if (object.maxMemoCharacters !== undefined && object.maxMemoCharacters !== null) {
@@ -336,6 +336,7 @@ export const Params = {
     }
     return message;
   },
+
   toJSON(message: Params): unknown {
     const obj: any = {};
     message.maxMemoCharacters !== undefined &&
@@ -351,7 +352,7 @@ export const Params = {
   },
 };
 
-type Builtin = Date | Function | Uint8Array | string | number | undefined;
+type Builtin = Date | Function | Uint8Array | string | number | undefined | Long;
 export type DeepPartial<T> = T extends Builtin
   ? T
   : T extends Array<infer U>
