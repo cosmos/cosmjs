@@ -1,10 +1,10 @@
 /* eslint-disable */
 import { Proof } from "../../tendermint/crypto/proof";
 import { Consensus } from "../../tendermint/version/types";
-import * as Long from "long";
+import Long from "long";
 import { ValidatorSet } from "../../tendermint/types/validator";
 import { Timestamp } from "../../google/protobuf/timestamp";
-import { util, configure, Writer, Reader } from "protobufjs/minimal";
+import _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "tendermint.types";
 
@@ -226,14 +226,14 @@ export interface TxProof {
 const basePartSetHeader: object = { total: 0 };
 
 export const PartSetHeader = {
-  encode(message: PartSetHeader, writer: Writer = Writer.create()): Writer {
+  encode(message: PartSetHeader, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(8).uint32(message.total);
     writer.uint32(18).bytes(message.hash);
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): PartSetHeader {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): PartSetHeader {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...basePartSetHeader } as PartSetHeader;
     while (reader.pos < end) {
@@ -293,7 +293,7 @@ export const PartSetHeader = {
 const basePart: object = { index: 0 };
 
 export const Part = {
-  encode(message: Part, writer: Writer = Writer.create()): Writer {
+  encode(message: Part, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(8).uint32(message.index);
     writer.uint32(18).bytes(message.bytes);
     if (message.proof !== undefined && message.proof !== undefined) {
@@ -302,8 +302,8 @@ export const Part = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Part {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): Part {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...basePart } as Part;
     while (reader.pos < end) {
@@ -377,7 +377,7 @@ export const Part = {
 const baseBlockID: object = {};
 
 export const BlockID = {
-  encode(message: BlockID, writer: Writer = Writer.create()): Writer {
+  encode(message: BlockID, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).bytes(message.hash);
     if (message.partSetHeader !== undefined && message.partSetHeader !== undefined) {
       PartSetHeader.encode(message.partSetHeader, writer.uint32(18).fork()).ldelim();
@@ -385,8 +385,8 @@ export const BlockID = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): BlockID {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): BlockID {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseBlockID } as BlockID;
     while (reader.pos < end) {
@@ -447,7 +447,7 @@ export const BlockID = {
 const baseHeader: object = { chainId: "", height: Long.ZERO };
 
 export const Header = {
-  encode(message: Header, writer: Writer = Writer.create()): Writer {
+  encode(message: Header, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.version !== undefined && message.version !== undefined) {
       Consensus.encode(message.version, writer.uint32(10).fork()).ldelim();
     }
@@ -471,8 +471,8 @@ export const Header = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Header {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): Header {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseHeader } as Header;
     while (reader.pos < end) {
@@ -708,15 +708,15 @@ export const Header = {
 const baseData: object = {};
 
 export const Data = {
-  encode(message: Data, writer: Writer = Writer.create()): Writer {
+  encode(message: Data, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.txs) {
       writer.uint32(10).bytes(v!);
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Data {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): Data {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseData } as Data;
     message.txs = [];
@@ -770,7 +770,7 @@ export const Data = {
 const baseVote: object = { type: 0, height: Long.ZERO, round: 0, validatorIndex: 0 };
 
 export const Vote = {
-  encode(message: Vote, writer: Writer = Writer.create()): Writer {
+  encode(message: Vote, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(8).int32(message.type);
     writer.uint32(16).int64(message.height);
     writer.uint32(24).int32(message.round);
@@ -786,8 +786,8 @@ export const Vote = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Vote {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): Vote {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseVote } as Vote;
     while (reader.pos < end) {
@@ -936,7 +936,7 @@ export const Vote = {
 const baseCommit: object = { height: Long.ZERO, round: 0 };
 
 export const Commit = {
-  encode(message: Commit, writer: Writer = Writer.create()): Writer {
+  encode(message: Commit, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(8).int64(message.height);
     writer.uint32(16).int32(message.round);
     if (message.blockId !== undefined && message.blockId !== undefined) {
@@ -948,8 +948,8 @@ export const Commit = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Commit {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): Commit {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseCommit } as Commit;
     message.signatures = [];
@@ -1046,7 +1046,7 @@ export const Commit = {
 const baseCommitSig: object = { blockIdFlag: 0 };
 
 export const CommitSig = {
-  encode(message: CommitSig, writer: Writer = Writer.create()): Writer {
+  encode(message: CommitSig, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(8).int32(message.blockIdFlag);
     writer.uint32(18).bytes(message.validatorAddress);
     if (message.timestamp !== undefined && message.timestamp !== undefined) {
@@ -1056,8 +1056,8 @@ export const CommitSig = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): CommitSig {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): CommitSig {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseCommitSig } as CommitSig;
     while (reader.pos < end) {
@@ -1149,7 +1149,7 @@ export const CommitSig = {
 const baseProposal: object = { type: 0, height: Long.ZERO, round: 0, polRound: 0 };
 
 export const Proposal = {
-  encode(message: Proposal, writer: Writer = Writer.create()): Writer {
+  encode(message: Proposal, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(8).int32(message.type);
     writer.uint32(16).int64(message.height);
     writer.uint32(24).int32(message.round);
@@ -1164,8 +1164,8 @@ export const Proposal = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Proposal {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): Proposal {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseProposal } as Proposal;
     while (reader.pos < end) {
@@ -1299,7 +1299,7 @@ export const Proposal = {
 const baseSignedHeader: object = {};
 
 export const SignedHeader = {
-  encode(message: SignedHeader, writer: Writer = Writer.create()): Writer {
+  encode(message: SignedHeader, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.header !== undefined && message.header !== undefined) {
       Header.encode(message.header, writer.uint32(10).fork()).ldelim();
     }
@@ -1309,8 +1309,8 @@ export const SignedHeader = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): SignedHeader {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): SignedHeader {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseSignedHeader } as SignedHeader;
     while (reader.pos < end) {
@@ -1371,7 +1371,7 @@ export const SignedHeader = {
 const baseLightBlock: object = {};
 
 export const LightBlock = {
-  encode(message: LightBlock, writer: Writer = Writer.create()): Writer {
+  encode(message: LightBlock, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.signedHeader !== undefined && message.signedHeader !== undefined) {
       SignedHeader.encode(message.signedHeader, writer.uint32(10).fork()).ldelim();
     }
@@ -1381,8 +1381,8 @@ export const LightBlock = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): LightBlock {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): LightBlock {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseLightBlock } as LightBlock;
     while (reader.pos < end) {
@@ -1445,7 +1445,7 @@ export const LightBlock = {
 const baseBlockMeta: object = { blockSize: Long.ZERO, numTxs: Long.ZERO };
 
 export const BlockMeta = {
-  encode(message: BlockMeta, writer: Writer = Writer.create()): Writer {
+  encode(message: BlockMeta, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.blockId !== undefined && message.blockId !== undefined) {
       BlockID.encode(message.blockId, writer.uint32(10).fork()).ldelim();
     }
@@ -1457,8 +1457,8 @@ export const BlockMeta = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): BlockMeta {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): BlockMeta {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseBlockMeta } as BlockMeta;
     while (reader.pos < end) {
@@ -1548,7 +1548,7 @@ export const BlockMeta = {
 const baseTxProof: object = {};
 
 export const TxProof = {
-  encode(message: TxProof, writer: Writer = Writer.create()): Writer {
+  encode(message: TxProof, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).bytes(message.rootHash);
     writer.uint32(18).bytes(message.data);
     if (message.proof !== undefined && message.proof !== undefined) {
@@ -1557,8 +1557,8 @@ export const TxProof = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): TxProof {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): TxProof {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseTxProof } as TxProof;
     while (reader.pos < end) {
@@ -1696,7 +1696,7 @@ function numberToLong(number: number) {
   return Long.fromNumber(number);
 }
 
-if (util.Long !== Long) {
-  util.Long = Long as any;
-  configure();
+if (_m0.util.Long !== Long) {
+  _m0.util.Long = Long as any;
+  _m0.configure();
 }

@@ -2,9 +2,9 @@
 import { ConnectionEnd, IdentifiedConnection } from "../../../../ibc/core/connection/v1/connection";
 import { Height, IdentifiedClientState } from "../../../../ibc/core/client/v1/client";
 import { PageRequest, PageResponse } from "../../../../cosmos/base/query/v1beta1/pagination";
-import * as Long from "long";
+import Long from "long";
 import { Any } from "../../../../google/protobuf/any";
-import { Reader, Writer } from "protobufjs/minimal";
+import _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "ibc.core.connection.v1";
 
@@ -125,13 +125,13 @@ export interface QueryConnectionConsensusStateResponse {
 const baseQueryConnectionRequest: object = { connectionId: "" };
 
 export const QueryConnectionRequest = {
-  encode(message: QueryConnectionRequest, writer: Writer = Writer.create()): Writer {
+  encode(message: QueryConnectionRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).string(message.connectionId);
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): QueryConnectionRequest {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryConnectionRequest {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryConnectionRequest } as QueryConnectionRequest;
     while (reader.pos < end) {
@@ -178,7 +178,7 @@ export const QueryConnectionRequest = {
 const baseQueryConnectionResponse: object = {};
 
 export const QueryConnectionResponse = {
-  encode(message: QueryConnectionResponse, writer: Writer = Writer.create()): Writer {
+  encode(message: QueryConnectionResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.connection !== undefined && message.connection !== undefined) {
       ConnectionEnd.encode(message.connection, writer.uint32(10).fork()).ldelim();
     }
@@ -189,8 +189,8 @@ export const QueryConnectionResponse = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): QueryConnectionResponse {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryConnectionResponse {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryConnectionResponse } as QueryConnectionResponse;
     while (reader.pos < end) {
@@ -266,15 +266,15 @@ export const QueryConnectionResponse = {
 const baseQueryConnectionsRequest: object = {};
 
 export const QueryConnectionsRequest = {
-  encode(message: QueryConnectionsRequest, writer: Writer = Writer.create()): Writer {
+  encode(message: QueryConnectionsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.pagination !== undefined && message.pagination !== undefined) {
       PageRequest.encode(message.pagination, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): QueryConnectionsRequest {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryConnectionsRequest {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryConnectionsRequest } as QueryConnectionsRequest;
     while (reader.pos < end) {
@@ -322,7 +322,7 @@ export const QueryConnectionsRequest = {
 const baseQueryConnectionsResponse: object = {};
 
 export const QueryConnectionsResponse = {
-  encode(message: QueryConnectionsResponse, writer: Writer = Writer.create()): Writer {
+  encode(message: QueryConnectionsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.connections) {
       IdentifiedConnection.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -335,8 +335,8 @@ export const QueryConnectionsResponse = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): QueryConnectionsResponse {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryConnectionsResponse {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryConnectionsResponse } as QueryConnectionsResponse;
     message.connections = [];
@@ -419,13 +419,13 @@ export const QueryConnectionsResponse = {
 const baseQueryClientConnectionsRequest: object = { clientId: "" };
 
 export const QueryClientConnectionsRequest = {
-  encode(message: QueryClientConnectionsRequest, writer: Writer = Writer.create()): Writer {
+  encode(message: QueryClientConnectionsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).string(message.clientId);
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): QueryClientConnectionsRequest {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryClientConnectionsRequest {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryClientConnectionsRequest } as QueryClientConnectionsRequest;
     while (reader.pos < end) {
@@ -472,7 +472,7 @@ export const QueryClientConnectionsRequest = {
 const baseQueryClientConnectionsResponse: object = { connectionPaths: "" };
 
 export const QueryClientConnectionsResponse = {
-  encode(message: QueryClientConnectionsResponse, writer: Writer = Writer.create()): Writer {
+  encode(message: QueryClientConnectionsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.connectionPaths) {
       writer.uint32(10).string(v!);
     }
@@ -483,8 +483,8 @@ export const QueryClientConnectionsResponse = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): QueryClientConnectionsResponse {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryClientConnectionsResponse {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryClientConnectionsResponse } as QueryClientConnectionsResponse;
     message.connectionPaths = [];
@@ -566,13 +566,13 @@ export const QueryClientConnectionsResponse = {
 const baseQueryConnectionClientStateRequest: object = { connectionId: "" };
 
 export const QueryConnectionClientStateRequest = {
-  encode(message: QueryConnectionClientStateRequest, writer: Writer = Writer.create()): Writer {
+  encode(message: QueryConnectionClientStateRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).string(message.connectionId);
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): QueryConnectionClientStateRequest {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryConnectionClientStateRequest {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryConnectionClientStateRequest } as QueryConnectionClientStateRequest;
     while (reader.pos < end) {
@@ -619,7 +619,7 @@ export const QueryConnectionClientStateRequest = {
 const baseQueryConnectionClientStateResponse: object = {};
 
 export const QueryConnectionClientStateResponse = {
-  encode(message: QueryConnectionClientStateResponse, writer: Writer = Writer.create()): Writer {
+  encode(message: QueryConnectionClientStateResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.identifiedClientState !== undefined && message.identifiedClientState !== undefined) {
       IdentifiedClientState.encode(message.identifiedClientState, writer.uint32(10).fork()).ldelim();
     }
@@ -630,8 +630,8 @@ export const QueryConnectionClientStateResponse = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): QueryConnectionClientStateResponse {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryConnectionClientStateResponse {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryConnectionClientStateResponse } as QueryConnectionClientStateResponse;
     while (reader.pos < end) {
@@ -713,15 +713,18 @@ const baseQueryConnectionConsensusStateRequest: object = {
 };
 
 export const QueryConnectionConsensusStateRequest = {
-  encode(message: QueryConnectionConsensusStateRequest, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: QueryConnectionConsensusStateRequest,
+    writer: _m0.Writer = _m0.Writer.create(),
+  ): _m0.Writer {
     writer.uint32(10).string(message.connectionId);
     writer.uint32(16).uint64(message.revisionNumber);
     writer.uint32(24).uint64(message.revisionHeight);
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): QueryConnectionConsensusStateRequest {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryConnectionConsensusStateRequest {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryConnectionConsensusStateRequest } as QueryConnectionConsensusStateRequest;
     while (reader.pos < end) {
@@ -800,7 +803,10 @@ export const QueryConnectionConsensusStateRequest = {
 const baseQueryConnectionConsensusStateResponse: object = { clientId: "" };
 
 export const QueryConnectionConsensusStateResponse = {
-  encode(message: QueryConnectionConsensusStateResponse, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: QueryConnectionConsensusStateResponse,
+    writer: _m0.Writer = _m0.Writer.create(),
+  ): _m0.Writer {
     if (message.consensusState !== undefined && message.consensusState !== undefined) {
       Any.encode(message.consensusState, writer.uint32(10).fork()).ldelim();
     }
@@ -812,8 +818,8 @@ export const QueryConnectionConsensusStateResponse = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): QueryConnectionConsensusStateResponse {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryConnectionConsensusStateResponse {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryConnectionConsensusStateResponse } as QueryConnectionConsensusStateResponse;
     while (reader.pos < end) {
@@ -937,19 +943,19 @@ export class QueryClientImpl implements Query {
   Connection(request: QueryConnectionRequest): Promise<QueryConnectionResponse> {
     const data = QueryConnectionRequest.encode(request).finish();
     const promise = this.rpc.request("ibc.core.connection.v1.Query", "methodDesc.name", data);
-    return promise.then((data) => QueryConnectionResponse.decode(new Reader(data)));
+    return promise.then((data) => QueryConnectionResponse.decode(new _m0.Reader(data)));
   }
 
   Connections(request: QueryConnectionsRequest): Promise<QueryConnectionsResponse> {
     const data = QueryConnectionsRequest.encode(request).finish();
     const promise = this.rpc.request("ibc.core.connection.v1.Query", "methodDesc.name", data);
-    return promise.then((data) => QueryConnectionsResponse.decode(new Reader(data)));
+    return promise.then((data) => QueryConnectionsResponse.decode(new _m0.Reader(data)));
   }
 
   ClientConnections(request: QueryClientConnectionsRequest): Promise<QueryClientConnectionsResponse> {
     const data = QueryClientConnectionsRequest.encode(request).finish();
     const promise = this.rpc.request("ibc.core.connection.v1.Query", "methodDesc.name", data);
-    return promise.then((data) => QueryClientConnectionsResponse.decode(new Reader(data)));
+    return promise.then((data) => QueryClientConnectionsResponse.decode(new _m0.Reader(data)));
   }
 
   ConnectionClientState(
@@ -957,7 +963,7 @@ export class QueryClientImpl implements Query {
   ): Promise<QueryConnectionClientStateResponse> {
     const data = QueryConnectionClientStateRequest.encode(request).finish();
     const promise = this.rpc.request("ibc.core.connection.v1.Query", "methodDesc.name", data);
-    return promise.then((data) => QueryConnectionClientStateResponse.decode(new Reader(data)));
+    return promise.then((data) => QueryConnectionClientStateResponse.decode(new _m0.Reader(data)));
   }
 
   ConnectionConsensusState(
@@ -965,7 +971,7 @@ export class QueryClientImpl implements Query {
   ): Promise<QueryConnectionConsensusStateResponse> {
     const data = QueryConnectionConsensusStateRequest.encode(request).finish();
     const promise = this.rpc.request("ibc.core.connection.v1.Query", "methodDesc.name", data);
-    return promise.then((data) => QueryConnectionConsensusStateResponse.decode(new Reader(data)));
+    return promise.then((data) => QueryConnectionConsensusStateResponse.decode(new _m0.Reader(data)));
   }
 }
 

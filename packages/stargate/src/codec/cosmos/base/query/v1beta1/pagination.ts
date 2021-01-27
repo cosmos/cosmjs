@@ -1,6 +1,6 @@
 /* eslint-disable */
-import * as Long from "long";
-import { Writer, Reader } from "protobufjs/minimal";
+import Long from "long";
+import _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "cosmos.base.query.v1beta1";
 
@@ -65,7 +65,7 @@ export interface PageResponse {
 const basePageRequest: object = { offset: Long.UZERO, limit: Long.UZERO, countTotal: false };
 
 export const PageRequest = {
-  encode(message: PageRequest, writer: Writer = Writer.create()): Writer {
+  encode(message: PageRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).bytes(message.key);
     writer.uint32(16).uint64(message.offset);
     writer.uint32(24).uint64(message.limit);
@@ -73,8 +73,8 @@ export const PageRequest = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): PageRequest {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): PageRequest {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...basePageRequest } as PageRequest;
     while (reader.pos < end) {
@@ -162,14 +162,14 @@ export const PageRequest = {
 const basePageResponse: object = { total: Long.UZERO };
 
 export const PageResponse = {
-  encode(message: PageResponse, writer: Writer = Writer.create()): Writer {
+  encode(message: PageResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).bytes(message.nextKey);
     writer.uint32(16).uint64(message.total);
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): PageResponse {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): PageResponse {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...basePageResponse } as PageResponse;
     while (reader.pos < end) {

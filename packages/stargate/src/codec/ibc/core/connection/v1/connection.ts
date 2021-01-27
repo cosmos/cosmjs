@@ -1,7 +1,7 @@
 /* eslint-disable */
-import * as Long from "long";
+import Long from "long";
 import { MerklePrefix } from "../../../../ibc/core/commitment/v1/commitment";
-import { Writer, Reader } from "protobufjs/minimal";
+import _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "ibc.core.connection.v1";
 
@@ -151,7 +151,7 @@ export interface Version {
 const baseConnectionEnd: object = { clientId: "", state: 0, delayPeriod: Long.UZERO };
 
 export const ConnectionEnd = {
-  encode(message: ConnectionEnd, writer: Writer = Writer.create()): Writer {
+  encode(message: ConnectionEnd, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).string(message.clientId);
     for (const v of message.versions) {
       Version.encode(v!, writer.uint32(18).fork()).ldelim();
@@ -164,8 +164,8 @@ export const ConnectionEnd = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): ConnectionEnd {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): ConnectionEnd {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseConnectionEnd } as ConnectionEnd;
     message.versions = [];
@@ -276,7 +276,7 @@ export const ConnectionEnd = {
 const baseIdentifiedConnection: object = { id: "", clientId: "", state: 0, delayPeriod: Long.UZERO };
 
 export const IdentifiedConnection = {
-  encode(message: IdentifiedConnection, writer: Writer = Writer.create()): Writer {
+  encode(message: IdentifiedConnection, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).string(message.id);
     writer.uint32(18).string(message.clientId);
     for (const v of message.versions) {
@@ -290,8 +290,8 @@ export const IdentifiedConnection = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): IdentifiedConnection {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): IdentifiedConnection {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseIdentifiedConnection } as IdentifiedConnection;
     message.versions = [];
@@ -416,7 +416,7 @@ export const IdentifiedConnection = {
 const baseCounterparty: object = { clientId: "", connectionId: "" };
 
 export const Counterparty = {
-  encode(message: Counterparty, writer: Writer = Writer.create()): Writer {
+  encode(message: Counterparty, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).string(message.clientId);
     writer.uint32(18).string(message.connectionId);
     if (message.prefix !== undefined && message.prefix !== undefined) {
@@ -425,8 +425,8 @@ export const Counterparty = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Counterparty {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): Counterparty {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseCounterparty } as Counterparty;
     while (reader.pos < end) {
@@ -502,15 +502,15 @@ export const Counterparty = {
 const baseClientPaths: object = { paths: "" };
 
 export const ClientPaths = {
-  encode(message: ClientPaths, writer: Writer = Writer.create()): Writer {
+  encode(message: ClientPaths, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.paths) {
       writer.uint32(10).string(v!);
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): ClientPaths {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): ClientPaths {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseClientPaths } as ClientPaths;
     message.paths = [];
@@ -564,7 +564,7 @@ export const ClientPaths = {
 const baseConnectionPaths: object = { clientId: "", paths: "" };
 
 export const ConnectionPaths = {
-  encode(message: ConnectionPaths, writer: Writer = Writer.create()): Writer {
+  encode(message: ConnectionPaths, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).string(message.clientId);
     for (const v of message.paths) {
       writer.uint32(18).string(v!);
@@ -572,8 +572,8 @@ export const ConnectionPaths = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): ConnectionPaths {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): ConnectionPaths {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseConnectionPaths } as ConnectionPaths;
     message.paths = [];
@@ -641,7 +641,7 @@ export const ConnectionPaths = {
 const baseVersion: object = { identifier: "", features: "" };
 
 export const Version = {
-  encode(message: Version, writer: Writer = Writer.create()): Writer {
+  encode(message: Version, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).string(message.identifier);
     for (const v of message.features) {
       writer.uint32(18).string(v!);
@@ -649,8 +649,8 @@ export const Version = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Version {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): Version {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseVersion } as Version;
     message.features = [];

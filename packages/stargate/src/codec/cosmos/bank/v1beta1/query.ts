@@ -2,8 +2,8 @@
 import { Coin } from "../../../cosmos/base/v1beta1/coin";
 import { PageRequest, PageResponse } from "../../../cosmos/base/query/v1beta1/pagination";
 import { Params } from "../../../cosmos/bank/v1beta1/bank";
-import { Reader, Writer } from "protobufjs/minimal";
-import * as Long from "long";
+import _m0 from "protobufjs/minimal";
+import Long from "long";
 
 export const protobufPackage = "cosmos.bank.v1beta1";
 
@@ -78,14 +78,14 @@ export interface QueryParamsResponse {
 const baseQueryBalanceRequest: object = { address: "", denom: "" };
 
 export const QueryBalanceRequest = {
-  encode(message: QueryBalanceRequest, writer: Writer = Writer.create()): Writer {
+  encode(message: QueryBalanceRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).string(message.address);
     writer.uint32(18).string(message.denom);
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): QueryBalanceRequest {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryBalanceRequest {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryBalanceRequest } as QueryBalanceRequest;
     while (reader.pos < end) {
@@ -146,15 +146,15 @@ export const QueryBalanceRequest = {
 const baseQueryBalanceResponse: object = {};
 
 export const QueryBalanceResponse = {
-  encode(message: QueryBalanceResponse, writer: Writer = Writer.create()): Writer {
+  encode(message: QueryBalanceResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.balance !== undefined && message.balance !== undefined) {
       Coin.encode(message.balance, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): QueryBalanceResponse {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryBalanceResponse {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryBalanceResponse } as QueryBalanceResponse;
     while (reader.pos < end) {
@@ -202,7 +202,7 @@ export const QueryBalanceResponse = {
 const baseQueryAllBalancesRequest: object = { address: "" };
 
 export const QueryAllBalancesRequest = {
-  encode(message: QueryAllBalancesRequest, writer: Writer = Writer.create()): Writer {
+  encode(message: QueryAllBalancesRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).string(message.address);
     if (message.pagination !== undefined && message.pagination !== undefined) {
       PageRequest.encode(message.pagination, writer.uint32(18).fork()).ldelim();
@@ -210,8 +210,8 @@ export const QueryAllBalancesRequest = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): QueryAllBalancesRequest {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryAllBalancesRequest {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryAllBalancesRequest } as QueryAllBalancesRequest;
     while (reader.pos < end) {
@@ -273,7 +273,7 @@ export const QueryAllBalancesRequest = {
 const baseQueryAllBalancesResponse: object = {};
 
 export const QueryAllBalancesResponse = {
-  encode(message: QueryAllBalancesResponse, writer: Writer = Writer.create()): Writer {
+  encode(message: QueryAllBalancesResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.balances) {
       Coin.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -283,8 +283,8 @@ export const QueryAllBalancesResponse = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): QueryAllBalancesResponse {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryAllBalancesResponse {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryAllBalancesResponse } as QueryAllBalancesResponse;
     message.balances = [];
@@ -353,12 +353,12 @@ export const QueryAllBalancesResponse = {
 const baseQueryTotalSupplyRequest: object = {};
 
 export const QueryTotalSupplyRequest = {
-  encode(_: QueryTotalSupplyRequest, writer: Writer = Writer.create()): Writer {
+  encode(_: QueryTotalSupplyRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): QueryTotalSupplyRequest {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryTotalSupplyRequest {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryTotalSupplyRequest } as QueryTotalSupplyRequest;
     while (reader.pos < end) {
@@ -391,15 +391,15 @@ export const QueryTotalSupplyRequest = {
 const baseQueryTotalSupplyResponse: object = {};
 
 export const QueryTotalSupplyResponse = {
-  encode(message: QueryTotalSupplyResponse, writer: Writer = Writer.create()): Writer {
+  encode(message: QueryTotalSupplyResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.supply) {
       Coin.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): QueryTotalSupplyResponse {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryTotalSupplyResponse {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryTotalSupplyResponse } as QueryTotalSupplyResponse;
     message.supply = [];
@@ -453,13 +453,13 @@ export const QueryTotalSupplyResponse = {
 const baseQuerySupplyOfRequest: object = { denom: "" };
 
 export const QuerySupplyOfRequest = {
-  encode(message: QuerySupplyOfRequest, writer: Writer = Writer.create()): Writer {
+  encode(message: QuerySupplyOfRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).string(message.denom);
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): QuerySupplyOfRequest {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): QuerySupplyOfRequest {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQuerySupplyOfRequest } as QuerySupplyOfRequest;
     while (reader.pos < end) {
@@ -506,15 +506,15 @@ export const QuerySupplyOfRequest = {
 const baseQuerySupplyOfResponse: object = {};
 
 export const QuerySupplyOfResponse = {
-  encode(message: QuerySupplyOfResponse, writer: Writer = Writer.create()): Writer {
+  encode(message: QuerySupplyOfResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.amount !== undefined && message.amount !== undefined) {
       Coin.encode(message.amount, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): QuerySupplyOfResponse {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): QuerySupplyOfResponse {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQuerySupplyOfResponse } as QuerySupplyOfResponse;
     while (reader.pos < end) {
@@ -561,12 +561,12 @@ export const QuerySupplyOfResponse = {
 const baseQueryParamsRequest: object = {};
 
 export const QueryParamsRequest = {
-  encode(_: QueryParamsRequest, writer: Writer = Writer.create()): Writer {
+  encode(_: QueryParamsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): QueryParamsRequest {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryParamsRequest {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryParamsRequest } as QueryParamsRequest;
     while (reader.pos < end) {
@@ -599,15 +599,15 @@ export const QueryParamsRequest = {
 const baseQueryParamsResponse: object = {};
 
 export const QueryParamsResponse = {
-  encode(message: QueryParamsResponse, writer: Writer = Writer.create()): Writer {
+  encode(message: QueryParamsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.params !== undefined && message.params !== undefined) {
       Params.encode(message.params, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): QueryParamsResponse {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryParamsResponse {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryParamsResponse } as QueryParamsResponse;
     while (reader.pos < end) {
@@ -673,31 +673,31 @@ export class QueryClientImpl implements Query {
   Balance(request: QueryBalanceRequest): Promise<QueryBalanceResponse> {
     const data = QueryBalanceRequest.encode(request).finish();
     const promise = this.rpc.request("cosmos.bank.v1beta1.Query", "methodDesc.name", data);
-    return promise.then((data) => QueryBalanceResponse.decode(new Reader(data)));
+    return promise.then((data) => QueryBalanceResponse.decode(new _m0.Reader(data)));
   }
 
   AllBalances(request: QueryAllBalancesRequest): Promise<QueryAllBalancesResponse> {
     const data = QueryAllBalancesRequest.encode(request).finish();
     const promise = this.rpc.request("cosmos.bank.v1beta1.Query", "methodDesc.name", data);
-    return promise.then((data) => QueryAllBalancesResponse.decode(new Reader(data)));
+    return promise.then((data) => QueryAllBalancesResponse.decode(new _m0.Reader(data)));
   }
 
   TotalSupply(request: QueryTotalSupplyRequest): Promise<QueryTotalSupplyResponse> {
     const data = QueryTotalSupplyRequest.encode(request).finish();
     const promise = this.rpc.request("cosmos.bank.v1beta1.Query", "methodDesc.name", data);
-    return promise.then((data) => QueryTotalSupplyResponse.decode(new Reader(data)));
+    return promise.then((data) => QueryTotalSupplyResponse.decode(new _m0.Reader(data)));
   }
 
   SupplyOf(request: QuerySupplyOfRequest): Promise<QuerySupplyOfResponse> {
     const data = QuerySupplyOfRequest.encode(request).finish();
     const promise = this.rpc.request("cosmos.bank.v1beta1.Query", "methodDesc.name", data);
-    return promise.then((data) => QuerySupplyOfResponse.decode(new Reader(data)));
+    return promise.then((data) => QuerySupplyOfResponse.decode(new _m0.Reader(data)));
   }
 
   Params(request: QueryParamsRequest): Promise<QueryParamsResponse> {
     const data = QueryParamsRequest.encode(request).finish();
     const promise = this.rpc.request("cosmos.bank.v1beta1.Query", "methodDesc.name", data);
-    return promise.then((data) => QueryParamsResponse.decode(new Reader(data)));
+    return promise.then((data) => QueryParamsResponse.decode(new _m0.Reader(data)));
   }
 }
 

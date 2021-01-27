@@ -1,8 +1,8 @@
 /* eslint-disable */
-import * as Long from "long";
+import Long from "long";
 import { Any } from "../../../../google/protobuf/any";
 import { Event } from "../../../../tendermint/abci/types";
-import { Writer, Reader } from "protobufjs/minimal";
+import _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "cosmos.base.abci.v1beta1";
 
@@ -153,7 +153,7 @@ const baseTxResponse: object = {
 };
 
 export const TxResponse = {
-  encode(message: TxResponse, writer: Writer = Writer.create()): Writer {
+  encode(message: TxResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(8).int64(message.height);
     writer.uint32(18).string(message.txhash);
     writer.uint32(26).string(message.codespace);
@@ -173,8 +173,8 @@ export const TxResponse = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): TxResponse {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): TxResponse {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseTxResponse } as TxResponse;
     message.logs = [];
@@ -382,7 +382,7 @@ export const TxResponse = {
 const baseABCIMessageLog: object = { msgIndex: 0, log: "" };
 
 export const ABCIMessageLog = {
-  encode(message: ABCIMessageLog, writer: Writer = Writer.create()): Writer {
+  encode(message: ABCIMessageLog, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(8).uint32(message.msgIndex);
     writer.uint32(18).string(message.log);
     for (const v of message.events) {
@@ -391,8 +391,8 @@ export const ABCIMessageLog = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): ABCIMessageLog {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): ABCIMessageLog {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseABCIMessageLog } as ABCIMessageLog;
     message.events = [];
@@ -474,7 +474,7 @@ export const ABCIMessageLog = {
 const baseStringEvent: object = { type: "" };
 
 export const StringEvent = {
-  encode(message: StringEvent, writer: Writer = Writer.create()): Writer {
+  encode(message: StringEvent, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).string(message.type);
     for (const v of message.attributes) {
       Attribute.encode(v!, writer.uint32(18).fork()).ldelim();
@@ -482,8 +482,8 @@ export const StringEvent = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): StringEvent {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): StringEvent {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseStringEvent } as StringEvent;
     message.attributes = [];
@@ -551,14 +551,14 @@ export const StringEvent = {
 const baseAttribute: object = { key: "", value: "" };
 
 export const Attribute = {
-  encode(message: Attribute, writer: Writer = Writer.create()): Writer {
+  encode(message: Attribute, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).string(message.key);
     writer.uint32(18).string(message.value);
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Attribute {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): Attribute {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseAttribute } as Attribute;
     while (reader.pos < end) {
@@ -619,14 +619,14 @@ export const Attribute = {
 const baseGasInfo: object = { gasWanted: Long.UZERO, gasUsed: Long.UZERO };
 
 export const GasInfo = {
-  encode(message: GasInfo, writer: Writer = Writer.create()): Writer {
+  encode(message: GasInfo, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(8).uint64(message.gasWanted);
     writer.uint32(16).uint64(message.gasUsed);
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): GasInfo {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): GasInfo {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseGasInfo } as GasInfo;
     while (reader.pos < end) {
@@ -687,7 +687,7 @@ export const GasInfo = {
 const baseResult: object = { log: "" };
 
 export const Result = {
-  encode(message: Result, writer: Writer = Writer.create()): Writer {
+  encode(message: Result, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).bytes(message.data);
     writer.uint32(18).string(message.log);
     for (const v of message.events) {
@@ -696,8 +696,8 @@ export const Result = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Result {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): Result {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseResult } as Result;
     message.events = [];
@@ -778,7 +778,7 @@ export const Result = {
 const baseSimulationResponse: object = {};
 
 export const SimulationResponse = {
-  encode(message: SimulationResponse, writer: Writer = Writer.create()): Writer {
+  encode(message: SimulationResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.gasInfo !== undefined && message.gasInfo !== undefined) {
       GasInfo.encode(message.gasInfo, writer.uint32(10).fork()).ldelim();
     }
@@ -788,8 +788,8 @@ export const SimulationResponse = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): SimulationResponse {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): SimulationResponse {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseSimulationResponse } as SimulationResponse;
     while (reader.pos < end) {
@@ -851,14 +851,14 @@ export const SimulationResponse = {
 const baseMsgData: object = { msgType: "" };
 
 export const MsgData = {
-  encode(message: MsgData, writer: Writer = Writer.create()): Writer {
+  encode(message: MsgData, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).string(message.msgType);
     writer.uint32(18).bytes(message.data);
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): MsgData {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgData {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgData } as MsgData;
     while (reader.pos < end) {
@@ -918,15 +918,15 @@ export const MsgData = {
 const baseTxMsgData: object = {};
 
 export const TxMsgData = {
-  encode(message: TxMsgData, writer: Writer = Writer.create()): Writer {
+  encode(message: TxMsgData, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.data) {
       MsgData.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): TxMsgData {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): TxMsgData {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseTxMsgData } as TxMsgData;
     message.data = [];
@@ -986,7 +986,7 @@ const baseSearchTxsResult: object = {
 };
 
 export const SearchTxsResult = {
-  encode(message: SearchTxsResult, writer: Writer = Writer.create()): Writer {
+  encode(message: SearchTxsResult, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(8).uint64(message.totalCount);
     writer.uint32(16).uint64(message.count);
     writer.uint32(24).uint64(message.pageNumber);
@@ -998,8 +998,8 @@ export const SearchTxsResult = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): SearchTxsResult {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): SearchTxsResult {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseSearchTxsResult } as SearchTxsResult;
     message.txs = [];

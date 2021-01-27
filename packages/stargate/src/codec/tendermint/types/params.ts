@@ -1,7 +1,7 @@
 /* eslint-disable */
-import * as Long from "long";
+import Long from "long";
 import { Duration } from "../../google/protobuf/duration";
-import { Writer, Reader } from "protobufjs/minimal";
+import _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "tendermint.types";
 
@@ -88,7 +88,7 @@ export interface HashedParams {
 const baseConsensusParams: object = {};
 
 export const ConsensusParams = {
-  encode(message: ConsensusParams, writer: Writer = Writer.create()): Writer {
+  encode(message: ConsensusParams, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.block !== undefined && message.block !== undefined) {
       BlockParams.encode(message.block, writer.uint32(10).fork()).ldelim();
     }
@@ -104,8 +104,8 @@ export const ConsensusParams = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): ConsensusParams {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): ConsensusParams {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseConsensusParams } as ConsensusParams;
     while (reader.pos < end) {
@@ -198,15 +198,15 @@ export const ConsensusParams = {
 const baseBlockParams: object = { maxBytes: Long.ZERO, maxGas: Long.ZERO, timeIotaMs: Long.ZERO };
 
 export const BlockParams = {
-  encode(message: BlockParams, writer: Writer = Writer.create()): Writer {
+  encode(message: BlockParams, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(8).int64(message.maxBytes);
     writer.uint32(16).int64(message.maxGas);
     writer.uint32(24).int64(message.timeIotaMs);
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): BlockParams {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): BlockParams {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseBlockParams } as BlockParams;
     while (reader.pos < end) {
@@ -281,7 +281,7 @@ export const BlockParams = {
 const baseEvidenceParams: object = { maxAgeNumBlocks: Long.ZERO, maxBytes: Long.ZERO };
 
 export const EvidenceParams = {
-  encode(message: EvidenceParams, writer: Writer = Writer.create()): Writer {
+  encode(message: EvidenceParams, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(8).int64(message.maxAgeNumBlocks);
     if (message.maxAgeDuration !== undefined && message.maxAgeDuration !== undefined) {
       Duration.encode(message.maxAgeDuration, writer.uint32(18).fork()).ldelim();
@@ -290,8 +290,8 @@ export const EvidenceParams = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): EvidenceParams {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): EvidenceParams {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseEvidenceParams } as EvidenceParams;
     while (reader.pos < end) {
@@ -368,15 +368,15 @@ export const EvidenceParams = {
 const baseValidatorParams: object = { pubKeyTypes: "" };
 
 export const ValidatorParams = {
-  encode(message: ValidatorParams, writer: Writer = Writer.create()): Writer {
+  encode(message: ValidatorParams, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.pubKeyTypes) {
       writer.uint32(10).string(v!);
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): ValidatorParams {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): ValidatorParams {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseValidatorParams } as ValidatorParams;
     message.pubKeyTypes = [];
@@ -430,13 +430,13 @@ export const ValidatorParams = {
 const baseVersionParams: object = { appVersion: Long.UZERO };
 
 export const VersionParams = {
-  encode(message: VersionParams, writer: Writer = Writer.create()): Writer {
+  encode(message: VersionParams, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(8).uint64(message.appVersion);
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): VersionParams {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): VersionParams {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseVersionParams } as VersionParams;
     while (reader.pos < end) {
@@ -483,14 +483,14 @@ export const VersionParams = {
 const baseHashedParams: object = { blockMaxBytes: Long.ZERO, blockMaxGas: Long.ZERO };
 
 export const HashedParams = {
-  encode(message: HashedParams, writer: Writer = Writer.create()): Writer {
+  encode(message: HashedParams, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(8).int64(message.blockMaxBytes);
     writer.uint32(16).int64(message.blockMaxGas);
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): HashedParams {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): HashedParams {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseHashedParams } as HashedParams;
     while (reader.pos < end) {

@@ -1,7 +1,7 @@
 /* eslint-disable */
-import * as Long from "long";
+import Long from "long";
 import { Height } from "../../../../ibc/core/client/v1/client";
-import { Writer, Reader } from "protobufjs/minimal";
+import _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "ibc.core.channel.v1";
 
@@ -226,7 +226,7 @@ export interface Acknowledgement {
 const baseChannel: object = { state: 0, ordering: 0, connectionHops: "", version: "" };
 
 export const Channel = {
-  encode(message: Channel, writer: Writer = Writer.create()): Writer {
+  encode(message: Channel, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(8).int32(message.state);
     writer.uint32(16).int32(message.ordering);
     if (message.counterparty !== undefined && message.counterparty !== undefined) {
@@ -239,8 +239,8 @@ export const Channel = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Channel {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): Channel {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseChannel } as Channel;
     message.connectionHops = [];
@@ -358,7 +358,7 @@ const baseIdentifiedChannel: object = {
 };
 
 export const IdentifiedChannel = {
-  encode(message: IdentifiedChannel, writer: Writer = Writer.create()): Writer {
+  encode(message: IdentifiedChannel, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(8).int32(message.state);
     writer.uint32(16).int32(message.ordering);
     if (message.counterparty !== undefined && message.counterparty !== undefined) {
@@ -373,8 +373,8 @@ export const IdentifiedChannel = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): IdentifiedChannel {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): IdentifiedChannel {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseIdentifiedChannel } as IdentifiedChannel;
     message.connectionHops = [];
@@ -513,14 +513,14 @@ export const IdentifiedChannel = {
 const baseCounterparty: object = { portId: "", channelId: "" };
 
 export const Counterparty = {
-  encode(message: Counterparty, writer: Writer = Writer.create()): Writer {
+  encode(message: Counterparty, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).string(message.portId);
     writer.uint32(18).string(message.channelId);
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Counterparty {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): Counterparty {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseCounterparty } as Counterparty;
     while (reader.pos < end) {
@@ -588,7 +588,7 @@ const basePacket: object = {
 };
 
 export const Packet = {
-  encode(message: Packet, writer: Writer = Writer.create()): Writer {
+  encode(message: Packet, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(8).uint64(message.sequence);
     writer.uint32(18).string(message.sourcePort);
     writer.uint32(26).string(message.sourceChannel);
@@ -602,8 +602,8 @@ export const Packet = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Packet {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): Packet {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...basePacket } as Packet;
     while (reader.pos < end) {
@@ -749,7 +749,7 @@ export const Packet = {
 const basePacketState: object = { portId: "", channelId: "", sequence: Long.UZERO };
 
 export const PacketState = {
-  encode(message: PacketState, writer: Writer = Writer.create()): Writer {
+  encode(message: PacketState, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).string(message.portId);
     writer.uint32(18).string(message.channelId);
     writer.uint32(24).uint64(message.sequence);
@@ -757,8 +757,8 @@ export const PacketState = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): PacketState {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): PacketState {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...basePacketState } as PacketState;
     while (reader.pos < end) {
@@ -846,7 +846,7 @@ export const PacketState = {
 const baseAcknowledgement: object = {};
 
 export const Acknowledgement = {
-  encode(message: Acknowledgement, writer: Writer = Writer.create()): Writer {
+  encode(message: Acknowledgement, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.result !== undefined) {
       writer.uint32(170).bytes(message.result);
     }
@@ -856,8 +856,8 @@ export const Acknowledgement = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Acknowledgement {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): Acknowledgement {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseAcknowledgement } as Acknowledgement;
     while (reader.pos < end) {

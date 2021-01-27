@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { CommitmentProof } from "../../../../confio/proofs";
-import { Writer, Reader } from "protobufjs/minimal";
-import * as Long from "long";
+import Long from "long";
+import _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "ibc.core.commitment.v1";
 
@@ -45,13 +45,13 @@ export interface MerkleProof {
 const baseMerkleRoot: object = {};
 
 export const MerkleRoot = {
-  encode(message: MerkleRoot, writer: Writer = Writer.create()): Writer {
+  encode(message: MerkleRoot, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).bytes(message.hash);
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): MerkleRoot {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): MerkleRoot {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMerkleRoot } as MerkleRoot;
     while (reader.pos < end) {
@@ -97,13 +97,13 @@ export const MerkleRoot = {
 const baseMerklePrefix: object = {};
 
 export const MerklePrefix = {
-  encode(message: MerklePrefix, writer: Writer = Writer.create()): Writer {
+  encode(message: MerklePrefix, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).bytes(message.keyPrefix);
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): MerklePrefix {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): MerklePrefix {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMerklePrefix } as MerklePrefix;
     while (reader.pos < end) {
@@ -151,15 +151,15 @@ export const MerklePrefix = {
 const baseMerklePath: object = { keyPath: "" };
 
 export const MerklePath = {
-  encode(message: MerklePath, writer: Writer = Writer.create()): Writer {
+  encode(message: MerklePath, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.keyPath) {
       writer.uint32(10).string(v!);
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): MerklePath {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): MerklePath {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMerklePath } as MerklePath;
     message.keyPath = [];
@@ -213,15 +213,15 @@ export const MerklePath = {
 const baseMerkleProof: object = {};
 
 export const MerkleProof = {
-  encode(message: MerkleProof, writer: Writer = Writer.create()): Writer {
+  encode(message: MerkleProof, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.proofs) {
       CommitmentProof.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): MerkleProof {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): MerkleProof {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMerkleProof } as MerkleProof;
     message.proofs = [];

@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { Any } from "../../../../google/protobuf/any";
-import * as Long from "long";
-import { Writer, Reader } from "protobufjs/minimal";
+import Long from "long";
+import _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "ibc.core.client.v1";
 
@@ -78,7 +78,7 @@ export interface Params {
 const baseIdentifiedClientState: object = { clientId: "" };
 
 export const IdentifiedClientState = {
-  encode(message: IdentifiedClientState, writer: Writer = Writer.create()): Writer {
+  encode(message: IdentifiedClientState, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).string(message.clientId);
     if (message.clientState !== undefined && message.clientState !== undefined) {
       Any.encode(message.clientState, writer.uint32(18).fork()).ldelim();
@@ -86,8 +86,8 @@ export const IdentifiedClientState = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): IdentifiedClientState {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): IdentifiedClientState {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseIdentifiedClientState } as IdentifiedClientState;
     while (reader.pos < end) {
@@ -149,7 +149,7 @@ export const IdentifiedClientState = {
 const baseConsensusStateWithHeight: object = {};
 
 export const ConsensusStateWithHeight = {
-  encode(message: ConsensusStateWithHeight, writer: Writer = Writer.create()): Writer {
+  encode(message: ConsensusStateWithHeight, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.height !== undefined && message.height !== undefined) {
       Height.encode(message.height, writer.uint32(10).fork()).ldelim();
     }
@@ -159,8 +159,8 @@ export const ConsensusStateWithHeight = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): ConsensusStateWithHeight {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): ConsensusStateWithHeight {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseConsensusStateWithHeight } as ConsensusStateWithHeight;
     while (reader.pos < end) {
@@ -222,7 +222,7 @@ export const ConsensusStateWithHeight = {
 const baseClientConsensusStates: object = { clientId: "" };
 
 export const ClientConsensusStates = {
-  encode(message: ClientConsensusStates, writer: Writer = Writer.create()): Writer {
+  encode(message: ClientConsensusStates, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).string(message.clientId);
     for (const v of message.consensusStates) {
       ConsensusStateWithHeight.encode(v!, writer.uint32(18).fork()).ldelim();
@@ -230,8 +230,8 @@ export const ClientConsensusStates = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): ClientConsensusStates {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): ClientConsensusStates {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseClientConsensusStates } as ClientConsensusStates;
     message.consensusStates = [];
@@ -301,7 +301,7 @@ export const ClientConsensusStates = {
 const baseClientUpdateProposal: object = { title: "", description: "", clientId: "" };
 
 export const ClientUpdateProposal = {
-  encode(message: ClientUpdateProposal, writer: Writer = Writer.create()): Writer {
+  encode(message: ClientUpdateProposal, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).string(message.title);
     writer.uint32(18).string(message.description);
     writer.uint32(26).string(message.clientId);
@@ -311,8 +311,8 @@ export const ClientUpdateProposal = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): ClientUpdateProposal {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): ClientUpdateProposal {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseClientUpdateProposal } as ClientUpdateProposal;
     while (reader.pos < end) {
@@ -401,14 +401,14 @@ export const ClientUpdateProposal = {
 const baseHeight: object = { revisionNumber: Long.UZERO, revisionHeight: Long.UZERO };
 
 export const Height = {
-  encode(message: Height, writer: Writer = Writer.create()): Writer {
+  encode(message: Height, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(8).uint64(message.revisionNumber);
     writer.uint32(16).uint64(message.revisionHeight);
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Height {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): Height {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseHeight } as Height;
     while (reader.pos < end) {
@@ -471,15 +471,15 @@ export const Height = {
 const baseParams: object = { allowedClients: "" };
 
 export const Params = {
-  encode(message: Params, writer: Writer = Writer.create()): Writer {
+  encode(message: Params, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.allowedClients) {
       writer.uint32(10).string(v!);
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Params {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): Params {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseParams } as Params;
     message.allowedClients = [];

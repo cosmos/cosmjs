@@ -1,8 +1,8 @@
 /* eslint-disable */
 import { Any } from "../../../google/protobuf/any";
 import { Params } from "../../../cosmos/auth/v1beta1/auth";
-import { Reader, Writer } from "protobufjs/minimal";
-import * as Long from "long";
+import _m0 from "protobufjs/minimal";
+import Long from "long";
 
 export const protobufPackage = "cosmos.auth.v1beta1";
 
@@ -30,13 +30,13 @@ export interface QueryParamsResponse {
 const baseQueryAccountRequest: object = { address: "" };
 
 export const QueryAccountRequest = {
-  encode(message: QueryAccountRequest, writer: Writer = Writer.create()): Writer {
+  encode(message: QueryAccountRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).string(message.address);
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): QueryAccountRequest {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryAccountRequest {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryAccountRequest } as QueryAccountRequest;
     while (reader.pos < end) {
@@ -83,15 +83,15 @@ export const QueryAccountRequest = {
 const baseQueryAccountResponse: object = {};
 
 export const QueryAccountResponse = {
-  encode(message: QueryAccountResponse, writer: Writer = Writer.create()): Writer {
+  encode(message: QueryAccountResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.account !== undefined && message.account !== undefined) {
       Any.encode(message.account, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): QueryAccountResponse {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryAccountResponse {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryAccountResponse } as QueryAccountResponse;
     while (reader.pos < end) {
@@ -139,12 +139,12 @@ export const QueryAccountResponse = {
 const baseQueryParamsRequest: object = {};
 
 export const QueryParamsRequest = {
-  encode(_: QueryParamsRequest, writer: Writer = Writer.create()): Writer {
+  encode(_: QueryParamsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): QueryParamsRequest {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryParamsRequest {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryParamsRequest } as QueryParamsRequest;
     while (reader.pos < end) {
@@ -177,15 +177,15 @@ export const QueryParamsRequest = {
 const baseQueryParamsResponse: object = {};
 
 export const QueryParamsResponse = {
-  encode(message: QueryParamsResponse, writer: Writer = Writer.create()): Writer {
+  encode(message: QueryParamsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.params !== undefined && message.params !== undefined) {
       Params.encode(message.params, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): QueryParamsResponse {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryParamsResponse {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryParamsResponse } as QueryParamsResponse;
     while (reader.pos < end) {
@@ -245,13 +245,13 @@ export class QueryClientImpl implements Query {
   Account(request: QueryAccountRequest): Promise<QueryAccountResponse> {
     const data = QueryAccountRequest.encode(request).finish();
     const promise = this.rpc.request("cosmos.auth.v1beta1.Query", "methodDesc.name", data);
-    return promise.then((data) => QueryAccountResponse.decode(new Reader(data)));
+    return promise.then((data) => QueryAccountResponse.decode(new _m0.Reader(data)));
   }
 
   Params(request: QueryParamsRequest): Promise<QueryParamsResponse> {
     const data = QueryParamsRequest.encode(request).finish();
     const promise = this.rpc.request("cosmos.auth.v1beta1.Query", "methodDesc.name", data);
-    return promise.then((data) => QueryParamsResponse.decode(new Reader(data)));
+    return promise.then((data) => QueryParamsResponse.decode(new _m0.Reader(data)));
   }
 }
 

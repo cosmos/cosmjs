@@ -1,6 +1,6 @@
 /* eslint-disable */
-import { Writer, Reader } from "protobufjs/minimal";
-import * as Long from "long";
+import Long from "long";
+import _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "google.api";
 
@@ -302,7 +302,7 @@ export interface CustomHttpPattern {
 const baseHttp: object = { fullyDecodeReservedExpansion: false };
 
 export const Http = {
-  encode(message: Http, writer: Writer = Writer.create()): Writer {
+  encode(message: Http, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.rules) {
       HttpRule.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -310,8 +310,8 @@ export const Http = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Http {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): Http {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseHttp } as Http;
     message.rules = [];
@@ -380,7 +380,7 @@ export const Http = {
 const baseHttpRule: object = { selector: "", body: "", responseBody: "" };
 
 export const HttpRule = {
-  encode(message: HttpRule, writer: Writer = Writer.create()): Writer {
+  encode(message: HttpRule, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).string(message.selector);
     if (message.get !== undefined) {
       writer.uint32(18).string(message.get);
@@ -408,8 +408,8 @@ export const HttpRule = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): HttpRule {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): HttpRule {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseHttpRule } as HttpRule;
     message.additionalBindings = [];
@@ -590,14 +590,14 @@ export const HttpRule = {
 const baseCustomHttpPattern: object = { kind: "", path: "" };
 
 export const CustomHttpPattern = {
-  encode(message: CustomHttpPattern, writer: Writer = Writer.create()): Writer {
+  encode(message: CustomHttpPattern, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).string(message.kind);
     writer.uint32(18).string(message.path);
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): CustomHttpPattern {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): CustomHttpPattern {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseCustomHttpPattern } as CustomHttpPattern;
     while (reader.pos < end) {

@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { Coin } from "../../../cosmos/base/v1beta1/coin";
-import { Writer, Reader } from "protobufjs/minimal";
-import * as Long from "long";
+import Long from "long";
+import _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "cosmos.bank.v1beta1";
 
@@ -79,7 +79,7 @@ export interface Metadata {
 const baseParams: object = { defaultSendEnabled: false };
 
 export const Params = {
-  encode(message: Params, writer: Writer = Writer.create()): Writer {
+  encode(message: Params, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.sendEnabled) {
       SendEnabled.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -87,8 +87,8 @@ export const Params = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Params {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): Params {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseParams } as Params;
     message.sendEnabled = [];
@@ -156,14 +156,14 @@ export const Params = {
 const baseSendEnabled: object = { denom: "", enabled: false };
 
 export const SendEnabled = {
-  encode(message: SendEnabled, writer: Writer = Writer.create()): Writer {
+  encode(message: SendEnabled, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).string(message.denom);
     writer.uint32(16).bool(message.enabled);
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): SendEnabled {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): SendEnabled {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseSendEnabled } as SendEnabled;
     while (reader.pos < end) {
@@ -224,7 +224,7 @@ export const SendEnabled = {
 const baseInput: object = { address: "" };
 
 export const Input = {
-  encode(message: Input, writer: Writer = Writer.create()): Writer {
+  encode(message: Input, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).string(message.address);
     for (const v of message.coins) {
       Coin.encode(v!, writer.uint32(18).fork()).ldelim();
@@ -232,8 +232,8 @@ export const Input = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Input {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): Input {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseInput } as Input;
     message.coins = [];
@@ -301,7 +301,7 @@ export const Input = {
 const baseOutput: object = { address: "" };
 
 export const Output = {
-  encode(message: Output, writer: Writer = Writer.create()): Writer {
+  encode(message: Output, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).string(message.address);
     for (const v of message.coins) {
       Coin.encode(v!, writer.uint32(18).fork()).ldelim();
@@ -309,8 +309,8 @@ export const Output = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Output {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): Output {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseOutput } as Output;
     message.coins = [];
@@ -378,15 +378,15 @@ export const Output = {
 const baseSupply: object = {};
 
 export const Supply = {
-  encode(message: Supply, writer: Writer = Writer.create()): Writer {
+  encode(message: Supply, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.total) {
       Coin.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Supply {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): Supply {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseSupply } as Supply;
     message.total = [];
@@ -440,7 +440,7 @@ export const Supply = {
 const baseDenomUnit: object = { denom: "", exponent: 0, aliases: "" };
 
 export const DenomUnit = {
-  encode(message: DenomUnit, writer: Writer = Writer.create()): Writer {
+  encode(message: DenomUnit, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).string(message.denom);
     writer.uint32(16).uint32(message.exponent);
     for (const v of message.aliases) {
@@ -449,8 +449,8 @@ export const DenomUnit = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): DenomUnit {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): DenomUnit {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseDenomUnit } as DenomUnit;
     message.aliases = [];
@@ -532,7 +532,7 @@ export const DenomUnit = {
 const baseMetadata: object = { description: "", base: "", display: "" };
 
 export const Metadata = {
-  encode(message: Metadata, writer: Writer = Writer.create()): Writer {
+  encode(message: Metadata, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).string(message.description);
     for (const v of message.denomUnits) {
       DenomUnit.encode(v!, writer.uint32(18).fork()).ldelim();
@@ -542,8 +542,8 @@ export const Metadata = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Metadata {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): Metadata {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMetadata } as Metadata;
     message.denomUnits = [];

@@ -1,8 +1,8 @@
 /* eslint-disable */
 import { Any } from "../../../../google/protobuf/any";
-import * as Long from "long";
+import Long from "long";
 import { CompactBitArray } from "../../../../cosmos/crypto/multisig/v1beta1/multisig";
-import { Writer, Reader } from "protobufjs/minimal";
+import _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "cosmos.tx.signing.v1beta1";
 
@@ -119,15 +119,15 @@ export interface SignatureDescriptor_Data_Multi {
 const baseSignatureDescriptors: object = {};
 
 export const SignatureDescriptors = {
-  encode(message: SignatureDescriptors, writer: Writer = Writer.create()): Writer {
+  encode(message: SignatureDescriptors, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.signatures) {
       SignatureDescriptor.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): SignatureDescriptors {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): SignatureDescriptors {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseSignatureDescriptors } as SignatureDescriptors;
     message.signatures = [];
@@ -181,7 +181,7 @@ export const SignatureDescriptors = {
 const baseSignatureDescriptor: object = { sequence: Long.UZERO };
 
 export const SignatureDescriptor = {
-  encode(message: SignatureDescriptor, writer: Writer = Writer.create()): Writer {
+  encode(message: SignatureDescriptor, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.publicKey !== undefined && message.publicKey !== undefined) {
       Any.encode(message.publicKey, writer.uint32(10).fork()).ldelim();
     }
@@ -192,8 +192,8 @@ export const SignatureDescriptor = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): SignatureDescriptor {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): SignatureDescriptor {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseSignatureDescriptor } as SignatureDescriptor;
     while (reader.pos < end) {
@@ -270,7 +270,7 @@ export const SignatureDescriptor = {
 const baseSignatureDescriptor_Data: object = {};
 
 export const SignatureDescriptor_Data = {
-  encode(message: SignatureDescriptor_Data, writer: Writer = Writer.create()): Writer {
+  encode(message: SignatureDescriptor_Data, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.single !== undefined) {
       SignatureDescriptor_Data_Single.encode(message.single, writer.uint32(10).fork()).ldelim();
     }
@@ -280,8 +280,8 @@ export const SignatureDescriptor_Data = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): SignatureDescriptor_Data {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): SignatureDescriptor_Data {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseSignatureDescriptor_Data } as SignatureDescriptor_Data;
     while (reader.pos < end) {
@@ -344,14 +344,14 @@ export const SignatureDescriptor_Data = {
 const baseSignatureDescriptor_Data_Single: object = { mode: 0 };
 
 export const SignatureDescriptor_Data_Single = {
-  encode(message: SignatureDescriptor_Data_Single, writer: Writer = Writer.create()): Writer {
+  encode(message: SignatureDescriptor_Data_Single, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(8).int32(message.mode);
     writer.uint32(18).bytes(message.signature);
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): SignatureDescriptor_Data_Single {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): SignatureDescriptor_Data_Single {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseSignatureDescriptor_Data_Single } as SignatureDescriptor_Data_Single;
     while (reader.pos < end) {
@@ -413,7 +413,7 @@ export const SignatureDescriptor_Data_Single = {
 const baseSignatureDescriptor_Data_Multi: object = {};
 
 export const SignatureDescriptor_Data_Multi = {
-  encode(message: SignatureDescriptor_Data_Multi, writer: Writer = Writer.create()): Writer {
+  encode(message: SignatureDescriptor_Data_Multi, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.bitarray !== undefined && message.bitarray !== undefined) {
       CompactBitArray.encode(message.bitarray, writer.uint32(10).fork()).ldelim();
     }
@@ -423,8 +423,8 @@ export const SignatureDescriptor_Data_Multi = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): SignatureDescriptor_Data_Multi {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): SignatureDescriptor_Data_Multi {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseSignatureDescriptor_Data_Multi } as SignatureDescriptor_Data_Multi;
     message.signatures = [];

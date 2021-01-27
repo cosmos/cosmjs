@@ -1,6 +1,6 @@
 /* eslint-disable */
-import * as Long from "long";
-import { Writer, Reader } from "protobufjs/minimal";
+import Long from "long";
+import _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "tendermint.libs.bits";
 
@@ -12,7 +12,7 @@ export interface BitArray {
 const baseBitArray: object = { bits: Long.ZERO, elems: Long.UZERO };
 
 export const BitArray = {
-  encode(message: BitArray, writer: Writer = Writer.create()): Writer {
+  encode(message: BitArray, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(8).int64(message.bits);
     writer.uint32(18).fork();
     for (const v of message.elems) {
@@ -22,8 +22,8 @@ export const BitArray = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): BitArray {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): BitArray {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseBitArray } as BitArray;
     message.elems = [];

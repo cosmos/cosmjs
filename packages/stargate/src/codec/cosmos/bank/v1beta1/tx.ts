@@ -1,8 +1,8 @@
 /* eslint-disable */
-import { Reader, Writer } from "protobufjs/minimal";
 import { Coin } from "../../../cosmos/base/v1beta1/coin";
 import { Input, Output } from "../../../cosmos/bank/v1beta1/bank";
-import * as Long from "long";
+import _m0 from "protobufjs/minimal";
+import Long from "long";
 
 export const protobufPackage = "cosmos.bank.v1beta1";
 
@@ -28,7 +28,7 @@ export interface MsgMultiSendResponse {}
 const baseMsgSend: object = { fromAddress: "", toAddress: "" };
 
 export const MsgSend = {
-  encode(message: MsgSend, writer: Writer = Writer.create()): Writer {
+  encode(message: MsgSend, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).string(message.fromAddress);
     writer.uint32(18).string(message.toAddress);
     for (const v of message.amount) {
@@ -37,8 +37,8 @@ export const MsgSend = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): MsgSend {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgSend {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgSend } as MsgSend;
     message.amount = [];
@@ -120,12 +120,12 @@ export const MsgSend = {
 const baseMsgSendResponse: object = {};
 
 export const MsgSendResponse = {
-  encode(_: MsgSendResponse, writer: Writer = Writer.create()): Writer {
+  encode(_: MsgSendResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): MsgSendResponse {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgSendResponse {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgSendResponse } as MsgSendResponse;
     while (reader.pos < end) {
@@ -158,7 +158,7 @@ export const MsgSendResponse = {
 const baseMsgMultiSend: object = {};
 
 export const MsgMultiSend = {
-  encode(message: MsgMultiSend, writer: Writer = Writer.create()): Writer {
+  encode(message: MsgMultiSend, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.inputs) {
       Input.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -168,8 +168,8 @@ export const MsgMultiSend = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): MsgMultiSend {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgMultiSend {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgMultiSend } as MsgMultiSend;
     message.inputs = [];
@@ -244,12 +244,12 @@ export const MsgMultiSend = {
 const baseMsgMultiSendResponse: object = {};
 
 export const MsgMultiSendResponse = {
-  encode(_: MsgMultiSendResponse, writer: Writer = Writer.create()): Writer {
+  encode(_: MsgMultiSendResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): MsgMultiSendResponse {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgMultiSendResponse {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgMultiSendResponse } as MsgMultiSendResponse;
     while (reader.pos < end) {
@@ -295,13 +295,13 @@ export class MsgClientImpl implements Msg {
   Send(request: MsgSend): Promise<MsgSendResponse> {
     const data = MsgSend.encode(request).finish();
     const promise = this.rpc.request("cosmos.bank.v1beta1.Msg", "methodDesc.name", data);
-    return promise.then((data) => MsgSendResponse.decode(new Reader(data)));
+    return promise.then((data) => MsgSendResponse.decode(new _m0.Reader(data)));
   }
 
   MultiSend(request: MsgMultiSend): Promise<MsgMultiSendResponse> {
     const data = MsgMultiSend.encode(request).finish();
     const promise = this.rpc.request("cosmos.bank.v1beta1.Msg", "methodDesc.name", data);
-    return promise.then((data) => MsgMultiSendResponse.decode(new Reader(data)));
+    return promise.then((data) => MsgMultiSendResponse.decode(new _m0.Reader(data)));
   }
 }
 

@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { Any } from "../../../google/protobuf/any";
-import * as Long from "long";
-import { Writer, Reader } from "protobufjs/minimal";
+import Long from "long";
+import _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "cosmos.auth.v1beta1";
 
@@ -36,7 +36,7 @@ export interface Params {
 const baseBaseAccount: object = { address: "", accountNumber: Long.UZERO, sequence: Long.UZERO };
 
 export const BaseAccount = {
-  encode(message: BaseAccount, writer: Writer = Writer.create()): Writer {
+  encode(message: BaseAccount, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).string(message.address);
     if (message.pubKey !== undefined && message.pubKey !== undefined) {
       Any.encode(message.pubKey, writer.uint32(18).fork()).ldelim();
@@ -46,8 +46,8 @@ export const BaseAccount = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): BaseAccount {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): BaseAccount {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseBaseAccount } as BaseAccount;
     while (reader.pos < end) {
@@ -137,7 +137,7 @@ export const BaseAccount = {
 const baseModuleAccount: object = { name: "", permissions: "" };
 
 export const ModuleAccount = {
-  encode(message: ModuleAccount, writer: Writer = Writer.create()): Writer {
+  encode(message: ModuleAccount, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.baseAccount !== undefined && message.baseAccount !== undefined) {
       BaseAccount.encode(message.baseAccount, writer.uint32(10).fork()).ldelim();
     }
@@ -148,8 +148,8 @@ export const ModuleAccount = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): ModuleAccount {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): ModuleAccount {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseModuleAccount } as ModuleAccount;
     message.permissions = [];
@@ -238,7 +238,7 @@ const baseParams: object = {
 };
 
 export const Params = {
-  encode(message: Params, writer: Writer = Writer.create()): Writer {
+  encode(message: Params, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(8).uint64(message.maxMemoCharacters);
     writer.uint32(16).uint64(message.txSigLimit);
     writer.uint32(24).uint64(message.txSizeCostPerByte);
@@ -247,8 +247,8 @@ export const Params = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Params {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): Params {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseParams } as Params;
     while (reader.pos < end) {

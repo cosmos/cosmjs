@@ -1,7 +1,7 @@
 /* eslint-disable */
-import * as Long from "long";
+import Long from "long";
 import { PublicKey } from "../../tendermint/crypto/keys";
-import { Writer, Reader } from "protobufjs/minimal";
+import _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "tendermint.types";
 
@@ -26,7 +26,7 @@ export interface SimpleValidator {
 const baseValidatorSet: object = { totalVotingPower: Long.ZERO };
 
 export const ValidatorSet = {
-  encode(message: ValidatorSet, writer: Writer = Writer.create()): Writer {
+  encode(message: ValidatorSet, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.validators) {
       Validator.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -37,8 +37,8 @@ export const ValidatorSet = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): ValidatorSet {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): ValidatorSet {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseValidatorSet } as ValidatorSet;
     message.validators = [];
@@ -122,7 +122,7 @@ export const ValidatorSet = {
 const baseValidator: object = { votingPower: Long.ZERO, proposerPriority: Long.ZERO };
 
 export const Validator = {
-  encode(message: Validator, writer: Writer = Writer.create()): Writer {
+  encode(message: Validator, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).bytes(message.address);
     if (message.pubKey !== undefined && message.pubKey !== undefined) {
       PublicKey.encode(message.pubKey, writer.uint32(18).fork()).ldelim();
@@ -132,8 +132,8 @@ export const Validator = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Validator {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): Validator {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseValidator } as Validator;
     while (reader.pos < end) {
@@ -223,7 +223,7 @@ export const Validator = {
 const baseSimpleValidator: object = { votingPower: Long.ZERO };
 
 export const SimpleValidator = {
-  encode(message: SimpleValidator, writer: Writer = Writer.create()): Writer {
+  encode(message: SimpleValidator, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.pubKey !== undefined && message.pubKey !== undefined) {
       PublicKey.encode(message.pubKey, writer.uint32(10).fork()).ldelim();
     }
@@ -231,8 +231,8 @@ export const SimpleValidator = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): SimpleValidator {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): SimpleValidator {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseSimpleValidator } as SimpleValidator;
     while (reader.pos < end) {
