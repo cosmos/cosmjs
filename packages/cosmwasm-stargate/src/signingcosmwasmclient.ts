@@ -39,6 +39,7 @@ import {
   BroadcastTxFailure,
   BroadcastTxResponse,
   codec,
+  defaultRegistryTypes,
   isBroadcastTxFailure,
   parseRawLog,
 } from "@cosmjs/stargate";
@@ -52,14 +53,6 @@ import { CosmWasmClient } from "./cosmwasmclient";
 
 const { SignMode } = codec.cosmos.tx.signing.v1beta1;
 const { TxRaw } = codec.cosmos.tx.v1beta1;
-const { MsgMultiSend } = codec.cosmos.bank.v1beta1;
-const {
-  MsgBeginRedelegate,
-  MsgCreateValidator,
-  MsgDelegate,
-  MsgEditValidator,
-  MsgUndelegate,
-} = codec.cosmos.staking.v1beta1;
 const {
   MsgClearAdmin,
   MsgExecuteContract,
@@ -94,12 +87,7 @@ function createBroadcastTxErrorMessage(result: BroadcastTxFailure): string {
 
 function createDefaultRegistry(): Registry {
   return new Registry([
-    ["/cosmos.bank.v1beta1.MsgMultiSend", MsgMultiSend],
-    ["/cosmos.staking.v1beta1.MsgBeginRedelegate", MsgBeginRedelegate],
-    ["/cosmos.staking.v1beta1.MsgCreateValidator", MsgCreateValidator],
-    ["/cosmos.staking.v1beta1.MsgDelegate", MsgDelegate],
-    ["/cosmos.staking.v1beta1.MsgEditValidator", MsgEditValidator],
-    ["/cosmos.staking.v1beta1.MsgUndelegate", MsgUndelegate],
+    ...defaultRegistryTypes,
     ["/cosmwasm.wasm.v1beta1.MsgClearAdmin", MsgClearAdmin],
     ["/cosmwasm.wasm.v1beta1.MsgExecuteContract", MsgExecuteContract],
     ["/cosmwasm.wasm.v1beta1.MsgMigrateContract", MsgMigrateContract],

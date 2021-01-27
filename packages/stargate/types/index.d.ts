@@ -28,4 +28,4 @@ export {
   SequenceResponse,
   StargateClient,
 } from "./stargateclient";
-export { SigningStargateClient } from "./signingstargateclient";
+export { defaultRegistryTypes, SigningStargateClient } from "./signingstargateclient";
