@@ -15,6 +15,7 @@ import { Int53 } from "@cosmjs/math";
 import {
   EncodeObject,
   encodePubkey,
+  GeneratedType,
   isOfflineDirectSigner,
   makeAuthInfoBytes,
   makeSignDoc,
@@ -46,19 +47,21 @@ const { TxRaw } = cosmos.tx.v1beta1;
 const defaultGasPrice = GasPrice.fromString("0.025ucosm");
 const defaultGasLimits: GasLimits<CosmosFeeTable> = { send: 80000 };
 
+export const defaultRegistryTypes: ReadonlyArray<[string, GeneratedType]> = [
+  ["/cosmos.bank.v1beta1.MsgMultiSend", MsgMultiSend],
+  ["/cosmos.distribution.v1beta1.MsgFundCommunityPool", MsgFundCommunityPool],
+  ["/cosmos.distribution.v1beta1.MsgSetWithdrawAddress", MsgSetWithdrawAddress],
+  ["/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward", MsgWithdrawDelegatorReward],
+  ["/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission", MsgWithdrawValidatorCommission],
+  ["/cosmos.staking.v1beta1.MsgBeginRedelegate", MsgBeginRedelegate],
+  ["/cosmos.staking.v1beta1.MsgCreateValidator", MsgCreateValidator],
+  ["/cosmos.staking.v1beta1.MsgDelegate", MsgDelegate],
+  ["/cosmos.staking.v1beta1.MsgEditValidator", MsgEditValidator],
+  ["/cosmos.staking.v1beta1.MsgUndelegate", MsgUndelegate],
+];
+
 function createDefaultRegistry(): Registry {
-  return new Registry([
-    ["/cosmos.bank.v1beta1.MsgMultiSend", MsgMultiSend],
-    ["/cosmos.distribution.v1beta1.MsgFundCommunityPool", MsgFundCommunityPool],
-    ["/cosmos.distribution.v1beta1.MsgSetWithdrawAddress", MsgSetWithdrawAddress],
-    ["/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward", MsgWithdrawDelegatorReward],
-    ["/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission", MsgWithdrawValidatorCommission],
-    ["/cosmos.staking.v1beta1.MsgBeginRedelegate", MsgBeginRedelegate],
-    ["/cosmos.staking.v1beta1.MsgCreateValidator", MsgCreateValidator],
-    ["/cosmos.staking.v1beta1.MsgDelegate", MsgDelegate],
-    ["/cosmos.staking.v1beta1.MsgEditValidator", MsgEditValidator],
-    ["/cosmos.staking.v1beta1.MsgUndelegate", MsgUndelegate],
-  ]);
+  return new Registry(defaultRegistryTypes);
 }
 
 /** Use for testing only */
