@@ -49,15 +49,15 @@ const defaultGasLimits: GasLimits<CosmosFeeTable> = { send: 80000 };
 function createDefaultRegistry(): Registry {
   return new Registry([
     ["/cosmos.bank.v1beta1.MsgMultiSend", MsgMultiSend],
+    ["/cosmos.distribution.v1beta1.MsgFundCommunityPool", MsgFundCommunityPool],
+    ["/cosmos.distribution.v1beta1.MsgSetWithdrawAddress", MsgSetWithdrawAddress],
+    ["/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward", MsgWithdrawDelegatorReward],
+    ["/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission", MsgWithdrawValidatorCommission],
     ["/cosmos.staking.v1beta1.MsgBeginRedelegate", MsgBeginRedelegate],
     ["/cosmos.staking.v1beta1.MsgCreateValidator", MsgCreateValidator],
     ["/cosmos.staking.v1beta1.MsgDelegate", MsgDelegate],
     ["/cosmos.staking.v1beta1.MsgEditValidator", MsgEditValidator],
     ["/cosmos.staking.v1beta1.MsgUndelegate", MsgUndelegate],
-    ["/cosmos.distribution.v1beta1.MsgFundCommunityPool", MsgFundCommunityPool],
-    ["/cosmos.distribution.v1beta1.MsgSetWithdrawAddress", MsgSetWithdrawAddress],
-    ["/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward", MsgWithdrawDelegatorReward],
-    ["/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission", MsgWithdrawValidatorCommission],
   ]);
 }
 
