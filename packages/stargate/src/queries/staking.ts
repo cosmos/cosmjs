@@ -106,31 +106,31 @@ export function setupStakingExtension(base: QueryClient): StakingExtension {
           return toObject(response);
         },
         delegatorValidator: async (delegatorAddress: string, validatorAddress: string) => {
-          const response = queryService.delegatorValidator({
+          const response = await queryService.delegatorValidator({
             delegatorAddr: delegatorAddress,
             validatorAddr: validatorAddress,
           });
           return toObject(response);
         },
         delegatorValidators: async (delegatorAddress: string, paginationKey?: Uint8Array) => {
-          const response = queryService.delegatorValidators({
+          const response = await queryService.delegatorValidators({
             delegatorAddr: delegatorAddress,
             pagination: paginationKey ? { key: paginationKey } : undefined,
           });
           return toObject(response);
         },
         historicalInfo: async (height: number) => {
-          const response = queryService.historicalInfo({
+          const response = await queryService.historicalInfo({
             height: Long.fromNumber(height),
           });
           return toObject(response);
         },
         params: async () => {
-          const response = queryService.params({});
+          const response = await queryService.params({});
           return toObject(response);
         },
         pool: async () => {
-          const response = queryService.pool({});
+          const response = await queryService.pool({});
           return toObject(response);
         },
         redelegations: async (
@@ -139,7 +139,7 @@ export function setupStakingExtension(base: QueryClient): StakingExtension {
           destinationValidatorAddress: string,
           paginationKey?: Uint8Array,
         ) => {
-          const response = queryService.redelegations({
+          const response = await queryService.redelegations({
             delegatorAddr: delegatorAddress,
             srcValidatorAddr: sourceValidatorAddress,
             dstValidatorAddr: destinationValidatorAddress,
@@ -148,32 +148,32 @@ export function setupStakingExtension(base: QueryClient): StakingExtension {
           return toObject(response);
         },
         unbondingDelegation: async (delegatorAddress: string, validatorAddress: string) => {
-          const response = queryService.unbondingDelegation({
+          const response = await queryService.unbondingDelegation({
             delegatorAddr: delegatorAddress,
             validatorAddr: validatorAddress,
           });
           return toObject(response);
         },
         validator: async (validatorAddress: string) => {
-          const response = queryService.validator({ validatorAddr: validatorAddress });
+          const response = await queryService.validator({ validatorAddr: validatorAddress });
           return toObject(response);
         },
         validatorDelegations: async (validatorAddress: string, paginationKey?: Uint8Array) => {
-          const response = queryService.validatorDelegations({
+          const response = await queryService.validatorDelegations({
             validatorAddr: validatorAddress,
             pagination: paginationKey ? { key: paginationKey } : undefined,
           });
           return toObject(response);
         },
         validators: async (status: string, paginationKey?: Uint8Array) => {
-          const response = queryService.validators({
+          const response = await queryService.validators({
             status: status,
             pagination: paginationKey ? { key: paginationKey } : undefined,
           });
           return toObject(response);
         },
         validatorUnbondingDelegations: async (validatorAddress: string, paginationKey?: Uint8Array) => {
-          const response = queryService.validatorUnbondingDelegations({
+          const response = await queryService.validatorUnbondingDelegations({
             validatorAddr: validatorAddress,
             pagination: paginationKey ? { key: paginationKey } : undefined,
           });
