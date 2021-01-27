@@ -25,6 +25,10 @@ protoc \
   "$COSMOS_PROTO_DIR/cosmos/base/v1beta1/coin.proto" \
   "$COSMOS_PROTO_DIR/cosmos/crypto/multisig/v1beta1/multisig.proto" \
   "$COSMOS_PROTO_DIR/cosmos/crypto/secp256k1/keys.proto" \
+  "$COSMOS_PROTO_DIR/cosmos/distribution/v1beta1/distribution.proto" \
+  "$COSMOS_PROTO_DIR/cosmos/distribution/v1beta1/query.proto" \
+  "$COSMOS_PROTO_DIR/cosmos/distribution/v1beta1/tx.proto" \
+  "$COSMOS_PROTO_DIR/cosmos/staking/v1beta1/query.proto" \
   "$COSMOS_PROTO_DIR/cosmos/staking/v1beta1/staking.proto" \
   "$COSMOS_PROTO_DIR/cosmos/staking/v1beta1/tx.proto" \
   "$COSMOS_PROTO_DIR/cosmos/tx/signing/v1beta1/signing.proto" \
