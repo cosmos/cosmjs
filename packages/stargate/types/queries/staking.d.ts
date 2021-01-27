@@ -14,6 +14,8 @@ declare type IQueryValidatorResponse = cosmos.staking.v1beta1.IQueryValidatorRes
 declare type IQueryValidatorDelegationsResponse = cosmos.staking.v1beta1.IQueryValidatorDelegationsResponse;
 declare type IQueryValidatorsResponse = cosmos.staking.v1beta1.IQueryValidatorsResponse;
 declare type IQueryValidatorUnbondingDelegationsResponse = cosmos.staking.v1beta1.IQueryValidatorUnbondingDelegationsResponse;
+export declare const BondStatus: typeof cosmos.staking.v1beta1.BondStatus;
+export declare type BondStatusString = Exclude<keyof typeof BondStatus, "BOND_STATUS_UNSPECIFIED">;
 export interface StakingExtension {
   readonly staking: {
     readonly unverified: {
@@ -52,7 +54,7 @@ export interface StakingExtension {
         validatorAddress: string,
         paginationKey?: Uint8Array,
       ) => Promise<IQueryValidatorDelegationsResponse>;
-      validators: (status: string, paginationKey?: Uint8Array) => Promise<IQueryValidatorsResponse>;
+      validators: (status: BondStatusString, paginationKey?: Uint8Array) => Promise<IQueryValidatorsResponse>;
       validatorUnbondingDelegations: (
         validatorAddress: string,
         paginationKey?: Uint8Array,

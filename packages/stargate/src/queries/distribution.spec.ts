@@ -2,7 +2,7 @@
 import { coin, coins } from "@cosmjs/launchpad";
 import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { adaptor34, Client as TendermintClient } from "@cosmjs/tendermint-rpc";
-import { assertDefinedAndNotNull, sleep } from "@cosmjs/utils";
+import { sleep } from "@cosmjs/utils";
 
 import { cosmos } from "../codec";
 import { SigningStargateClient } from "../signingstargateclient";
@@ -55,11 +55,124 @@ describe("DistributionExtension", () => {
         const [client, tmClient] = await makeClientWithDistribution(simapp.tendermintUrl);
 
         const response = await client.distribution.unverified.communityPool();
-        assertDefinedAndNotNull(response.pool);
-        expect(response.pool.length).toBeGreaterThanOrEqual(1);
+        expect(response.pool).toBeDefined();
+        expect(response.pool).not.toBeNull();
 
         tmClient.disconnect();
       });
+    });
+  });
+
+  describe("delegationRewards", () => {
+    it("works", async () => {
+      pendingWithoutSimapp();
+      const [client, tmClient] = await makeClientWithDistribution(simapp.tendermintUrl);
+
+      const response = await client.distribution.unverified.delegationRewards(
+        faucet.address0,
+        validator.validatorAddress,
+      );
+      expect(response.rewards).toBeDefined();
+      expect(response.rewards).not.toBeNull();
+
+      tmClient.disconnect();
+    });
+  });
+
+  describe("delegationTotalRewards", () => {
+    it("works", async () => {
+      pendingWithoutSimapp();
+      const [client, tmClient] = await makeClientWithDistribution(simapp.tendermintUrl);
+
+      const response = await client.distribution.unverified.delegationTotalRewards(faucet.address0);
+      expect(response.rewards).toBeDefined();
+      expect(response.rewards).not.toBeNull();
+
+      tmClient.disconnect();
+    });
+  });
+
+  describe("delegatorValidators", () => {
+    it("works", async () => {
+      pendingWithoutSimapp();
+      const [client, tmClient] = await makeClientWithDistribution(simapp.tendermintUrl);
+
+      const response = await client.distribution.unverified.delegatorValidators(faucet.address0);
+      expect(response.validators).toBeDefined();
+      expect(response.validators).not.toBeNull();
+
+      tmClient.disconnect();
+    });
+  });
+
+  describe("delegatorWithdrawAddress", () => {
+    it("works", async () => {
+      pendingWithoutSimapp();
+      const [client, tmClient] = await makeClientWithDistribution(simapp.tendermintUrl);
+
+      const response = await client.distribution.unverified.delegatorWithdrawAddress(faucet.address0);
+      expect(response.withdrawAddress).toBeDefined();
+      expect(response.withdrawAddress).not.toBeNull();
+
+      tmClient.disconnect();
+    });
+  });
+
+  describe("params", () => {
+    it("works", async () => {
+      pendingWithoutSimapp();
+      const [client, tmClient] = await makeClientWithDistribution(simapp.tendermintUrl);
+
+      const response = await client.distribution.unverified.params();
+      expect(response.params).toBeDefined();
+      expect(response.params).not.toBeNull();
+
+      tmClient.disconnect();
+    });
+  });
+
+  describe("validatorCommission", () => {
+    it("works", async () => {
+      pendingWithoutSimapp();
+      const [client, tmClient] = await makeClientWithDistribution(simapp.tendermintUrl);
+
+      const response = await client.distribution.unverified.validatorCommission(validator.validatorAddress);
+      expect(response.commission).toBeDefined();
+      expect(response.commission).not.toBeNull();
+
+      tmClient.disconnect();
+    });
+  });
+
+  describe("validatorOutstandingRewards", () => {
+    it("works", async () => {
+      pendingWithoutSimapp();
+      const [client, tmClient] = await makeClientWithDistribution(simapp.tendermintUrl);
+
+      const response = await client.distribution.unverified.validatorOutstandingRewards(
+        validator.validatorAddress,
+      );
+      expect(response.rewards).toBeDefined();
+      expect(response.rewards).not.toBeNull();
+
+      tmClient.disconnect();
+    });
+  });
+
+  describe("validatorSlashes", () => {
+    it("works", async () => {
+      pendingWithoutSimapp();
+      const [client, tmClient] = await makeClientWithDistribution(simapp.tendermintUrl);
+
+      const response = await client.distribution.unverified.validatorSlashes(
+        validator.validatorAddress,
+        1,
+        5,
+      );
+      expect(response.slashes).toBeDefined();
+      expect(response.slashes).not.toBeNull();
+
+      tmClient.disconnect();
     });
   });
 });

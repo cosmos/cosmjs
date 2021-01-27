@@ -20,7 +20,11 @@ type IQueryValidatorDelegationsResponse = cosmos.staking.v1beta1.IQueryValidator
 type IQueryValidatorsResponse = cosmos.staking.v1beta1.IQueryValidatorsResponse;
 type IQueryValidatorUnbondingDelegationsResponse = cosmos.staking.v1beta1.IQueryValidatorUnbondingDelegationsResponse;
 
+// This needs to be exported otherwise TS won’t let you export BondStatusString
+export const { BondStatus } = cosmos.staking.v1beta1;
 const { Query } = cosmos.staking.v1beta1;
+
+export type BondStatusString = Exclude<keyof typeof BondStatus, "BOND_STATUS_UNSPECIFIED">;
 
 export interface StakingExtension {
   readonly staking: {
@@ -60,7 +64,7 @@ export interface StakingExtension {
         validatorAddress: string,
         paginationKey?: Uint8Array,
       ) => Promise<IQueryValidatorDelegationsResponse>;
-      validators: (status: string, paginationKey?: Uint8Array) => Promise<IQueryValidatorsResponse>;
+      validators: (status: BondStatusString, paginationKey?: Uint8Array) => Promise<IQueryValidatorsResponse>;
       validatorUnbondingDelegations: (
         validatorAddress: string,
         paginationKey?: Uint8Array,
@@ -165,7 +169,7 @@ export function setupStakingExtension(base: QueryClient): StakingExtension {
           });
           return toObject(response);
         },
-        validators: async (status: string, paginationKey?: Uint8Array) => {
+        validators: async (status: BondStatusString, paginationKey?: Uint8Array) => {
           const response = await queryService.validators({
             status: status,
             pagination: paginationKey ? { key: paginationKey } : undefined,

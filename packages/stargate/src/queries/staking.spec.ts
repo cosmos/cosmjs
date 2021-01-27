@@ -2,19 +2,12 @@
 import { coin, coins } from "@cosmjs/launchpad";
 import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { adaptor34, Client as TendermintClient } from "@cosmjs/tendermint-rpc";
-import { assertDefinedAndNotNull, sleep } from "@cosmjs/utils";
+import { sleep } from "@cosmjs/utils";
 
 import { cosmos } from "../codec";
 import { SigningStargateClient } from "../signingstargateclient";
 import { assertIsBroadcastTxSuccess } from "../stargateclient";
-import {
-  faucet,
-  nonNegativeIntegerMatcher,
-  pendingWithoutSimapp,
-  simapp,
-  simappEnabled,
-  validator,
-} from "../testutils.spec";
+import { faucet, pendingWithoutSimapp, simapp, simappEnabled, validator } from "../testutils.spec";
 import { QueryClient } from "./queryclient";
 import { setupStakingExtension, StakingExtension } from "./staking";
 
@@ -82,18 +75,190 @@ describe("StakingExtension", () => {
           faucet.address0,
           validator.validatorAddress,
         );
-        assertDefinedAndNotNull(response.delegationResponse);
-        assertDefinedAndNotNull(response.delegationResponse.delegation);
-        assertDefinedAndNotNull(response.delegationResponse.balance);
-        expect({ ...response.delegationResponse.delegation }).toEqual({
-          delegatorAddress: faucet.address0,
-          validatorAddress: validator.validatorAddress,
-          shares: jasmine.stringMatching(nonNegativeIntegerMatcher),
-        });
-        expect({ ...response.delegationResponse.balance }).toEqual({
-          denom: "ustake",
-          amount: jasmine.stringMatching(nonNegativeIntegerMatcher),
-        });
+        expect(response.delegationResponse).toBeDefined();
+        expect(response.delegationResponse).not.toBeNull();
+
+        tmClient.disconnect();
+      });
+    });
+
+    describe("delegatorDelegations", () => {
+      it("works", async () => {
+        pendingWithoutSimapp();
+        const [client, tmClient] = await makeClientWithStaking(simapp.tendermintUrl);
+
+        const response = await client.staking.unverified.delegatorDelegations(faucet.address0);
+        expect(response.delegationResponses).toBeDefined();
+        expect(response.delegationResponses).not.toBeNull();
+
+        tmClient.disconnect();
+      });
+    });
+
+    describe("delegatorUnbondingDelegations", () => {
+      it("works", async () => {
+        pendingWithoutSimapp();
+        const [client, tmClient] = await makeClientWithStaking(simapp.tendermintUrl);
+
+        const response = await client.staking.unverified.delegatorUnbondingDelegations(faucet.address0);
+        expect(response.unbondingResponses).toBeDefined();
+        expect(response.unbondingResponses).not.toBeNull();
+
+        tmClient.disconnect();
+      });
+    });
+
+    describe("delegatorValidator", () => {
+      it("works", async () => {
+        pendingWithoutSimapp();
+        const [client, tmClient] = await makeClientWithStaking(simapp.tendermintUrl);
+
+        const response = await client.staking.unverified.delegatorValidator(
+          faucet.address0,
+          validator.validatorAddress,
+        );
+        expect(response.validator).toBeDefined();
+        expect(response.validator).not.toBeNull();
+
+        tmClient.disconnect();
+      });
+    });
+
+    describe("delegatorValidators", () => {
+      it("works", async () => {
+        pendingWithoutSimapp();
+        const [client, tmClient] = await makeClientWithStaking(simapp.tendermintUrl);
+
+        const response = await client.staking.unverified.delegatorValidators(faucet.address0);
+        expect(response.validators).toBeDefined();
+        expect(response.validators).not.toBeNull();
+
+        tmClient.disconnect();
+      });
+    });
+
+    describe("historicalInfo", () => {
+      it("works", async () => {
+        pendingWithoutSimapp();
+        const [client, tmClient] = await makeClientWithStaking(simapp.tendermintUrl);
+
+        const response = await client.staking.unverified.historicalInfo(5);
+        expect(response.hist).toBeDefined();
+        expect(response.hist).not.toBeNull();
+
+        tmClient.disconnect();
+      });
+    });
+
+    describe("params", () => {
+      it("works", async () => {
+        pendingWithoutSimapp();
+        const [client, tmClient] = await makeClientWithStaking(simapp.tendermintUrl);
+
+        const response = await client.staking.unverified.params();
+        expect(response.params).toBeDefined();
+        expect(response.params).not.toBeNull();
+
+        tmClient.disconnect();
+      });
+    });
+
+    describe("pool", () => {
+      it("works", async () => {
+        pendingWithoutSimapp();
+        const [client, tmClient] = await makeClientWithStaking(simapp.tendermintUrl);
+
+        const response = await client.staking.unverified.pool();
+        expect(response.pool).toBeDefined();
+        expect(response.pool).not.toBeNull();
+
+        tmClient.disconnect();
+      });
+    });
+
+    describe("redelegations", () => {
+      it("works", async () => {
+        // TODO: Set up a result for this test
+        pendingWithoutSimapp();
+        const [client, tmClient] = await makeClientWithStaking(simapp.tendermintUrl);
+
+        await expectAsync(
+          client.staking.unverified.redelegations(
+            faucet.address0,
+            validator.validatorAddress,
+            validator.validatorAddress,
+          ),
+        ).toBeRejectedWithError(/redelegation not found/i);
+
+        tmClient.disconnect();
+      });
+    });
+
+    describe("unbondingDelegation", () => {
+      it("works", async () => {
+        pendingWithoutSimapp();
+        const [client, tmClient] = await makeClientWithStaking(simapp.tendermintUrl);
+
+        const response = await client.staking.unverified.unbondingDelegation(
+          faucet.address0,
+          validator.validatorAddress,
+        );
+        expect(response.unbond).toBeDefined();
+        expect(response.unbond).not.toBeNull();
+
+        tmClient.disconnect();
+      });
+    });
+
+    describe("validator", () => {
+      it("works", async () => {
+        pendingWithoutSimapp();
+        const [client, tmClient] = await makeClientWithStaking(simapp.tendermintUrl);
+
+        const response = await client.staking.unverified.validator(validator.validatorAddress);
+        expect(response.validator).toBeDefined();
+        expect(response.validator).not.toBeNull();
+
+        tmClient.disconnect();
+      });
+    });
+
+    describe("validatorDelegations", () => {
+      it("works", async () => {
+        pendingWithoutSimapp();
+        const [client, tmClient] = await makeClientWithStaking(simapp.tendermintUrl);
+
+        const response = await client.staking.unverified.validatorDelegations(validator.validatorAddress);
+        expect(response.delegationResponses).toBeDefined();
+        expect(response.delegationResponses).not.toBeNull();
+
+        tmClient.disconnect();
+      });
+    });
+
+    describe("validators", () => {
+      it("works", async () => {
+        pendingWithoutSimapp();
+        const [client, tmClient] = await makeClientWithStaking(simapp.tendermintUrl);
+
+        const response = await client.staking.unverified.validators("BOND_STATUS_BONDED");
+        expect(response.validators).toBeDefined();
+        expect(response.validators).not.toBeNull();
+
+        tmClient.disconnect();
+      });
+    });
+
+    describe("validatorUnbondingDelegations", () => {
+      it("works", async () => {
+        pendingWithoutSimapp();
+        const [client, tmClient] = await makeClientWithStaking(simapp.tendermintUrl);
+
+        const response = await client.staking.unverified.validatorUnbondingDelegations(
+          validator.validatorAddress,
+        );
+        expect(response.unbondingResponses).toBeDefined();
+        expect(response.unbondingResponses).not.toBeNull();
 
         tmClient.disconnect();
       });
