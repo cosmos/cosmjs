@@ -1,7 +1,7 @@
 import { Any } from "../../../../google/protobuf/any";
-import * as Long from "long";
+import Long from "long";
 import { CompactBitArray } from "../../../../cosmos/crypto/multisig/v1beta1/multisig";
-import { Writer, Reader } from "protobufjs/minimal";
+import _m0 from "protobufjs/minimal";
 export declare const protobufPackage = "cosmos.tx.signing.v1beta1";
 /** SignMode represents a signing mode with its own security guarantees. */
 export declare enum SignMode {
@@ -74,36 +74,36 @@ export interface SignatureDescriptor_Data_Multi {
   signatures: SignatureDescriptor_Data[];
 }
 export declare const SignatureDescriptors: {
-  encode(message: SignatureDescriptors, writer?: Writer): Writer;
-  decode(input: Reader | Uint8Array, length?: number | undefined): SignatureDescriptors;
+  encode(message: SignatureDescriptors, writer?: _m0.Writer): _m0.Writer;
+  decode(input: _m0.Reader | Uint8Array, length?: number | undefined): SignatureDescriptors;
   fromJSON(object: any): SignatureDescriptors;
   fromPartial(object: DeepPartial<SignatureDescriptors>): SignatureDescriptors;
   toJSON(message: SignatureDescriptors): unknown;
 };
 export declare const SignatureDescriptor: {
-  encode(message: SignatureDescriptor, writer?: Writer): Writer;
-  decode(input: Reader | Uint8Array, length?: number | undefined): SignatureDescriptor;
+  encode(message: SignatureDescriptor, writer?: _m0.Writer): _m0.Writer;
+  decode(input: _m0.Reader | Uint8Array, length?: number | undefined): SignatureDescriptor;
   fromJSON(object: any): SignatureDescriptor;
   fromPartial(object: DeepPartial<SignatureDescriptor>): SignatureDescriptor;
   toJSON(message: SignatureDescriptor): unknown;
 };
 export declare const SignatureDescriptor_Data: {
-  encode(message: SignatureDescriptor_Data, writer?: Writer): Writer;
-  decode(input: Reader | Uint8Array, length?: number | undefined): SignatureDescriptor_Data;
+  encode(message: SignatureDescriptor_Data, writer?: _m0.Writer): _m0.Writer;
+  decode(input: _m0.Reader | Uint8Array, length?: number | undefined): SignatureDescriptor_Data;
   fromJSON(object: any): SignatureDescriptor_Data;
   fromPartial(object: DeepPartial<SignatureDescriptor_Data>): SignatureDescriptor_Data;
   toJSON(message: SignatureDescriptor_Data): unknown;
 };
 export declare const SignatureDescriptor_Data_Single: {
-  encode(message: SignatureDescriptor_Data_Single, writer?: Writer): Writer;
-  decode(input: Reader | Uint8Array, length?: number | undefined): SignatureDescriptor_Data_Single;
+  encode(message: SignatureDescriptor_Data_Single, writer?: _m0.Writer): _m0.Writer;
+  decode(input: _m0.Reader | Uint8Array, length?: number | undefined): SignatureDescriptor_Data_Single;
   fromJSON(object: any): SignatureDescriptor_Data_Single;
   fromPartial(object: DeepPartial<SignatureDescriptor_Data_Single>): SignatureDescriptor_Data_Single;
   toJSON(message: SignatureDescriptor_Data_Single): unknown;
 };
 export declare const SignatureDescriptor_Data_Multi: {
-  encode(message: SignatureDescriptor_Data_Multi, writer?: Writer): Writer;
-  decode(input: Reader | Uint8Array, length?: number | undefined): SignatureDescriptor_Data_Multi;
+  encode(message: SignatureDescriptor_Data_Multi, writer?: _m0.Writer): _m0.Writer;
+  decode(input: _m0.Reader | Uint8Array, length?: number | undefined): SignatureDescriptor_Data_Multi;
   fromJSON(object: any): SignatureDescriptor_Data_Multi;
   fromPartial(object: DeepPartial<SignatureDescriptor_Data_Multi>): SignatureDescriptor_Data_Multi;
   toJSON(message: SignatureDescriptor_Data_Multi): unknown;

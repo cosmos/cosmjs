@@ -1,9 +1,9 @@
-import * as Long from "long";
+import Long from "long";
 import { Any } from "../../../google/protobuf/any";
 import { SignMode } from "../../../cosmos/tx/signing/v1beta1/signing";
 import { CompactBitArray } from "../../../cosmos/crypto/multisig/v1beta1/multisig";
 import { Coin } from "../../../cosmos/base/v1beta1/coin";
-import { Writer, Reader } from "protobufjs/minimal";
+import _m0 from "protobufjs/minimal";
 export declare const protobufPackage = "cosmos.tx.v1beta1";
 /** Tx is the standard type used for broadcasting transactions. */
 export interface Tx {
@@ -195,71 +195,71 @@ export interface Fee {
   granter: string;
 }
 export declare const Tx: {
-  encode(message: Tx, writer?: Writer): Writer;
-  decode(input: Reader | Uint8Array, length?: number | undefined): Tx;
+  encode(message: Tx, writer?: _m0.Writer): _m0.Writer;
+  decode(input: _m0.Reader | Uint8Array, length?: number | undefined): Tx;
   fromJSON(object: any): Tx;
   fromPartial(object: DeepPartial<Tx>): Tx;
   toJSON(message: Tx): unknown;
 };
 export declare const TxRaw: {
-  encode(message: TxRaw, writer?: Writer): Writer;
-  decode(input: Reader | Uint8Array, length?: number | undefined): TxRaw;
+  encode(message: TxRaw, writer?: _m0.Writer): _m0.Writer;
+  decode(input: _m0.Reader | Uint8Array, length?: number | undefined): TxRaw;
   fromJSON(object: any): TxRaw;
   fromPartial(object: DeepPartial<TxRaw>): TxRaw;
   toJSON(message: TxRaw): unknown;
 };
 export declare const SignDoc: {
-  encode(message: SignDoc, writer?: Writer): Writer;
-  decode(input: Reader | Uint8Array, length?: number | undefined): SignDoc;
+  encode(message: SignDoc, writer?: _m0.Writer): _m0.Writer;
+  decode(input: _m0.Reader | Uint8Array, length?: number | undefined): SignDoc;
   fromJSON(object: any): SignDoc;
   fromPartial(object: DeepPartial<SignDoc>): SignDoc;
   toJSON(message: SignDoc): unknown;
 };
 export declare const TxBody: {
-  encode(message: TxBody, writer?: Writer): Writer;
-  decode(input: Reader | Uint8Array, length?: number | undefined): TxBody;
+  encode(message: TxBody, writer?: _m0.Writer): _m0.Writer;
+  decode(input: _m0.Reader | Uint8Array, length?: number | undefined): TxBody;
   fromJSON(object: any): TxBody;
   fromPartial(object: DeepPartial<TxBody>): TxBody;
   toJSON(message: TxBody): unknown;
 };
 export declare const AuthInfo: {
-  encode(message: AuthInfo, writer?: Writer): Writer;
-  decode(input: Reader | Uint8Array, length?: number | undefined): AuthInfo;
+  encode(message: AuthInfo, writer?: _m0.Writer): _m0.Writer;
+  decode(input: _m0.Reader | Uint8Array, length?: number | undefined): AuthInfo;
   fromJSON(object: any): AuthInfo;
   fromPartial(object: DeepPartial<AuthInfo>): AuthInfo;
   toJSON(message: AuthInfo): unknown;
 };
 export declare const SignerInfo: {
-  encode(message: SignerInfo, writer?: Writer): Writer;
-  decode(input: Reader | Uint8Array, length?: number | undefined): SignerInfo;
+  encode(message: SignerInfo, writer?: _m0.Writer): _m0.Writer;
+  decode(input: _m0.Reader | Uint8Array, length?: number | undefined): SignerInfo;
   fromJSON(object: any): SignerInfo;
   fromPartial(object: DeepPartial<SignerInfo>): SignerInfo;
   toJSON(message: SignerInfo): unknown;
 };
 export declare const ModeInfo: {
-  encode(message: ModeInfo, writer?: Writer): Writer;
-  decode(input: Reader | Uint8Array, length?: number | undefined): ModeInfo;
+  encode(message: ModeInfo, writer?: _m0.Writer): _m0.Writer;
+  decode(input: _m0.Reader | Uint8Array, length?: number | undefined): ModeInfo;
   fromJSON(object: any): ModeInfo;
   fromPartial(object: DeepPartial<ModeInfo>): ModeInfo;
   toJSON(message: ModeInfo): unknown;
 };
 export declare const ModeInfo_Single: {
-  encode(message: ModeInfo_Single, writer?: Writer): Writer;
-  decode(input: Reader | Uint8Array, length?: number | undefined): ModeInfo_Single;
+  encode(message: ModeInfo_Single, writer?: _m0.Writer): _m0.Writer;
+  decode(input: _m0.Reader | Uint8Array, length?: number | undefined): ModeInfo_Single;
   fromJSON(object: any): ModeInfo_Single;
   fromPartial(object: DeepPartial<ModeInfo_Single>): ModeInfo_Single;
   toJSON(message: ModeInfo_Single): unknown;
 };
 export declare const ModeInfo_Multi: {
-  encode(message: ModeInfo_Multi, writer?: Writer): Writer;
-  decode(input: Reader | Uint8Array, length?: number | undefined): ModeInfo_Multi;
+  encode(message: ModeInfo_Multi, writer?: _m0.Writer): _m0.Writer;
+  decode(input: _m0.Reader | Uint8Array, length?: number | undefined): ModeInfo_Multi;
   fromJSON(object: any): ModeInfo_Multi;
   fromPartial(object: DeepPartial<ModeInfo_Multi>): ModeInfo_Multi;
   toJSON(message: ModeInfo_Multi): unknown;
 };
 export declare const Fee: {
-  encode(message: Fee, writer?: Writer): Writer;
-  decode(input: Reader | Uint8Array, length?: number | undefined): Fee;
+  encode(message: Fee, writer?: _m0.Writer): _m0.Writer;
+  decode(input: _m0.Reader | Uint8Array, length?: number | undefined): Fee;
   fromJSON(object: any): Fee;
   fromPartial(object: DeepPartial<Fee>): Fee;
   toJSON(message: Fee): unknown;

@@ -1,5 +1,5 @@
-import { Writer, Reader } from "protobufjs/minimal";
-import * as Long from "long";
+import Long from "long";
+import _m0 from "protobufjs/minimal";
 export declare const protobufPackage = "cosmos.crypto.multisig.v1beta1";
 /**
  * MultiSignature wraps the signatures from a multisig.LegacyAminoPubKey.
@@ -20,15 +20,15 @@ export interface CompactBitArray {
   elems: Uint8Array;
 }
 export declare const MultiSignature: {
-  encode(message: MultiSignature, writer?: Writer): Writer;
-  decode(input: Reader | Uint8Array, length?: number | undefined): MultiSignature;
+  encode(message: MultiSignature, writer?: _m0.Writer): _m0.Writer;
+  decode(input: _m0.Reader | Uint8Array, length?: number | undefined): MultiSignature;
   fromJSON(object: any): MultiSignature;
   fromPartial(object: DeepPartial<MultiSignature>): MultiSignature;
   toJSON(message: MultiSignature): unknown;
 };
 export declare const CompactBitArray: {
-  encode(message: CompactBitArray, writer?: Writer): Writer;
-  decode(input: Reader | Uint8Array, length?: number | undefined): CompactBitArray;
+  encode(message: CompactBitArray, writer?: _m0.Writer): _m0.Writer;
+  decode(input: _m0.Reader | Uint8Array, length?: number | undefined): CompactBitArray;
   fromJSON(object: any): CompactBitArray;
   fromPartial(object: DeepPartial<CompactBitArray>): CompactBitArray;
   toJSON(message: CompactBitArray): unknown;

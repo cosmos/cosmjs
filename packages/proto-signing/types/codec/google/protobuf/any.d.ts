@@ -1,5 +1,5 @@
-import { Writer, Reader } from "protobufjs/minimal";
-import * as Long from "long";
+import Long from "long";
+import _m0 from "protobufjs/minimal";
 export declare const protobufPackage = "google.protobuf";
 /**
  * `Any` contains an arbitrary serialized protocol buffer message along with a
@@ -117,8 +117,8 @@ export interface Any {
   value: Uint8Array;
 }
 export declare const Any: {
-  encode(message: Any, writer?: Writer): Writer;
-  decode(input: Reader | Uint8Array, length?: number | undefined): Any;
+  encode(message: Any, writer?: _m0.Writer): _m0.Writer;
+  decode(input: _m0.Reader | Uint8Array, length?: number | undefined): Any;
   fromJSON(object: any): Any;
   fromPartial(object: DeepPartial<Any>): Any;
   toJSON(message: Any): unknown;

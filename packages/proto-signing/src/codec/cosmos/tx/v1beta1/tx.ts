@@ -1,10 +1,10 @@
 /* eslint-disable */
-import * as Long from "long";
+import Long from "long";
 import { Any } from "../../../google/protobuf/any";
 import { SignMode, signModeFromJSON, signModeToJSON } from "../../../cosmos/tx/signing/v1beta1/signing";
 import { CompactBitArray } from "../../../cosmos/crypto/multisig/v1beta1/multisig";
 import { Coin } from "../../../cosmos/base/v1beta1/coin";
-import { Writer, Reader } from "protobufjs/minimal";
+import _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "cosmos.tx.v1beta1";
 
@@ -210,7 +210,7 @@ export interface Fee {
 const baseTx: object = {};
 
 export const Tx = {
-  encode(message: Tx, writer: Writer = Writer.create()): Writer {
+  encode(message: Tx, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.body !== undefined && message.body !== undefined) {
       TxBody.encode(message.body, writer.uint32(10).fork()).ldelim();
     }
@@ -223,8 +223,8 @@ export const Tx = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Tx {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): Tx {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseTx } as Tx;
     message.signatures = [];
@@ -307,7 +307,7 @@ export const Tx = {
 const baseTxRaw: object = {};
 
 export const TxRaw = {
-  encode(message: TxRaw, writer: Writer = Writer.create()): Writer {
+  encode(message: TxRaw, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).bytes(message.bodyBytes);
     writer.uint32(18).bytes(message.authInfoBytes);
     for (const v of message.signatures) {
@@ -316,8 +316,8 @@ export const TxRaw = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): TxRaw {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): TxRaw {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseTxRaw } as TxRaw;
     message.signatures = [];
@@ -401,7 +401,7 @@ export const TxRaw = {
 const baseSignDoc: object = { chainId: "", accountNumber: Long.UZERO };
 
 export const SignDoc = {
-  encode(message: SignDoc, writer: Writer = Writer.create()): Writer {
+  encode(message: SignDoc, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).bytes(message.bodyBytes);
     writer.uint32(18).bytes(message.authInfoBytes);
     writer.uint32(26).string(message.chainId);
@@ -409,8 +409,8 @@ export const SignDoc = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): SignDoc {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): SignDoc {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseSignDoc } as SignDoc;
     while (reader.pos < end) {
@@ -502,7 +502,7 @@ export const SignDoc = {
 const baseTxBody: object = { memo: "", timeoutHeight: Long.UZERO };
 
 export const TxBody = {
-  encode(message: TxBody, writer: Writer = Writer.create()): Writer {
+  encode(message: TxBody, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.messages) {
       Any.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -517,8 +517,8 @@ export const TxBody = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): TxBody {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): TxBody {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseTxBody } as TxBody;
     message.messages = [];
@@ -645,7 +645,7 @@ export const TxBody = {
 const baseAuthInfo: object = {};
 
 export const AuthInfo = {
-  encode(message: AuthInfo, writer: Writer = Writer.create()): Writer {
+  encode(message: AuthInfo, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.signerInfos) {
       SignerInfo.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -655,8 +655,8 @@ export const AuthInfo = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): AuthInfo {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): AuthInfo {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseAuthInfo } as AuthInfo;
     message.signerInfos = [];
@@ -724,7 +724,7 @@ export const AuthInfo = {
 const baseSignerInfo: object = { sequence: Long.UZERO };
 
 export const SignerInfo = {
-  encode(message: SignerInfo, writer: Writer = Writer.create()): Writer {
+  encode(message: SignerInfo, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.publicKey !== undefined && message.publicKey !== undefined) {
       Any.encode(message.publicKey, writer.uint32(10).fork()).ldelim();
     }
@@ -735,8 +735,8 @@ export const SignerInfo = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): SignerInfo {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): SignerInfo {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseSignerInfo } as SignerInfo;
     while (reader.pos < end) {
@@ -813,7 +813,7 @@ export const SignerInfo = {
 const baseModeInfo: object = {};
 
 export const ModeInfo = {
-  encode(message: ModeInfo, writer: Writer = Writer.create()): Writer {
+  encode(message: ModeInfo, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.single !== undefined) {
       ModeInfo_Single.encode(message.single, writer.uint32(10).fork()).ldelim();
     }
@@ -823,8 +823,8 @@ export const ModeInfo = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): ModeInfo {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): ModeInfo {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseModeInfo } as ModeInfo;
     while (reader.pos < end) {
@@ -887,13 +887,13 @@ export const ModeInfo = {
 const baseModeInfo_Single: object = { mode: 0 };
 
 export const ModeInfo_Single = {
-  encode(message: ModeInfo_Single, writer: Writer = Writer.create()): Writer {
+  encode(message: ModeInfo_Single, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(8).int32(message.mode);
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): ModeInfo_Single {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): ModeInfo_Single {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseModeInfo_Single } as ModeInfo_Single;
     while (reader.pos < end) {
@@ -940,7 +940,7 @@ export const ModeInfo_Single = {
 const baseModeInfo_Multi: object = {};
 
 export const ModeInfo_Multi = {
-  encode(message: ModeInfo_Multi, writer: Writer = Writer.create()): Writer {
+  encode(message: ModeInfo_Multi, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.bitarray !== undefined && message.bitarray !== undefined) {
       CompactBitArray.encode(message.bitarray, writer.uint32(10).fork()).ldelim();
     }
@@ -950,8 +950,8 @@ export const ModeInfo_Multi = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): ModeInfo_Multi {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): ModeInfo_Multi {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseModeInfo_Multi } as ModeInfo_Multi;
     message.modeInfos = [];
@@ -1020,7 +1020,7 @@ export const ModeInfo_Multi = {
 const baseFee: object = { gasLimit: Long.UZERO, payer: "", granter: "" };
 
 export const Fee = {
-  encode(message: Fee, writer: Writer = Writer.create()): Writer {
+  encode(message: Fee, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.amount) {
       Coin.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -1030,8 +1030,8 @@ export const Fee = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Fee {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): Fee {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseFee } as Fee;
     message.amount = [];

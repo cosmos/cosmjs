@@ -1,5 +1,5 @@
-import { Writer, Reader } from "protobufjs/minimal";
-import * as Long from "long";
+import Long from "long";
+import _m0 from "protobufjs/minimal";
 export declare const protobufPackage = "tendermint.crypto";
 /** PublicKey defines the keys available for use with Tendermint Validators */
 export interface PublicKey {
@@ -7,8 +7,8 @@ export interface PublicKey {
   secp256k1: Uint8Array | undefined;
 }
 export declare const PublicKey: {
-  encode(message: PublicKey, writer?: Writer): Writer;
-  decode(input: Reader | Uint8Array, length?: number | undefined): PublicKey;
+  encode(message: PublicKey, writer?: _m0.Writer): _m0.Writer;
+  decode(input: _m0.Reader | Uint8Array, length?: number | undefined): PublicKey;
   fromJSON(object: any): PublicKey;
   fromPartial(object: DeepPartial<PublicKey>): PublicKey;
   toJSON(message: PublicKey): unknown;

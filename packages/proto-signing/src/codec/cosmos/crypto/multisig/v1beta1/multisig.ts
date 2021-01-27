@@ -1,6 +1,6 @@
 /* eslint-disable */
-import { Writer, Reader } from "protobufjs/minimal";
-import * as Long from "long";
+import Long from "long";
+import _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "cosmos.crypto.multisig.v1beta1";
 
@@ -27,15 +27,15 @@ export interface CompactBitArray {
 const baseMultiSignature: object = {};
 
 export const MultiSignature = {
-  encode(message: MultiSignature, writer: Writer = Writer.create()): Writer {
+  encode(message: MultiSignature, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.signatures) {
       writer.uint32(10).bytes(v!);
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): MultiSignature {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): MultiSignature {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMultiSignature } as MultiSignature;
     message.signatures = [];
@@ -89,14 +89,14 @@ export const MultiSignature = {
 const baseCompactBitArray: object = { extraBitsStored: 0 };
 
 export const CompactBitArray = {
-  encode(message: CompactBitArray, writer: Writer = Writer.create()): Writer {
+  encode(message: CompactBitArray, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(8).uint32(message.extraBitsStored);
     writer.uint32(18).bytes(message.elems);
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): CompactBitArray {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): CompactBitArray {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseCompactBitArray } as CompactBitArray;
     while (reader.pos < end) {

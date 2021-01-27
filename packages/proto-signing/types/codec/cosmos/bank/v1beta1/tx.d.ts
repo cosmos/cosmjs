@@ -1,7 +1,7 @@
-import { Reader, Writer } from "protobufjs/minimal";
 import { Coin } from "../../../cosmos/base/v1beta1/coin";
 import { Input, Output } from "../../../cosmos/bank/v1beta1/bank";
-import * as Long from "long";
+import _m0 from "protobufjs/minimal";
+import Long from "long";
 export declare const protobufPackage = "cosmos.bank.v1beta1";
 /** MsgSend represents a message to send coins from one account to another. */
 export interface MsgSend {
@@ -19,29 +19,29 @@ export interface MsgMultiSend {
 /** MsgMultiSendResponse defines the Msg/MultiSend response type. */
 export interface MsgMultiSendResponse {}
 export declare const MsgSend: {
-  encode(message: MsgSend, writer?: Writer): Writer;
-  decode(input: Reader | Uint8Array, length?: number | undefined): MsgSend;
+  encode(message: MsgSend, writer?: _m0.Writer): _m0.Writer;
+  decode(input: _m0.Reader | Uint8Array, length?: number | undefined): MsgSend;
   fromJSON(object: any): MsgSend;
   fromPartial(object: DeepPartial<MsgSend>): MsgSend;
   toJSON(message: MsgSend): unknown;
 };
 export declare const MsgSendResponse: {
-  encode(_: MsgSendResponse, writer?: Writer): Writer;
-  decode(input: Reader | Uint8Array, length?: number | undefined): MsgSendResponse;
+  encode(_: MsgSendResponse, writer?: _m0.Writer): _m0.Writer;
+  decode(input: _m0.Reader | Uint8Array, length?: number | undefined): MsgSendResponse;
   fromJSON(_: any): MsgSendResponse;
   fromPartial(_: DeepPartial<MsgSendResponse>): MsgSendResponse;
   toJSON(_: MsgSendResponse): unknown;
 };
 export declare const MsgMultiSend: {
-  encode(message: MsgMultiSend, writer?: Writer): Writer;
-  decode(input: Reader | Uint8Array, length?: number | undefined): MsgMultiSend;
+  encode(message: MsgMultiSend, writer?: _m0.Writer): _m0.Writer;
+  decode(input: _m0.Reader | Uint8Array, length?: number | undefined): MsgMultiSend;
   fromJSON(object: any): MsgMultiSend;
   fromPartial(object: DeepPartial<MsgMultiSend>): MsgMultiSend;
   toJSON(message: MsgMultiSend): unknown;
 };
 export declare const MsgMultiSendResponse: {
-  encode(_: MsgMultiSendResponse, writer?: Writer): Writer;
-  decode(input: Reader | Uint8Array, length?: number | undefined): MsgMultiSendResponse;
+  encode(_: MsgMultiSendResponse, writer?: _m0.Writer): _m0.Writer;
+  decode(input: _m0.Reader | Uint8Array, length?: number | undefined): MsgMultiSendResponse;
   fromJSON(_: any): MsgMultiSendResponse;
   fromPartial(_: DeepPartial<MsgMultiSendResponse>): MsgMultiSendResponse;
   toJSON(_: MsgMultiSendResponse): unknown;

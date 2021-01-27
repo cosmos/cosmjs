@@ -1,6 +1,6 @@
 /* eslint-disable */
-import { Writer, Reader } from "protobufjs/minimal";
-import * as Long from "long";
+import Long from "long";
+import _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "tendermint.crypto";
 
@@ -13,7 +13,7 @@ export interface PublicKey {
 const basePublicKey: object = {};
 
 export const PublicKey = {
-  encode(message: PublicKey, writer: Writer = Writer.create()): Writer {
+  encode(message: PublicKey, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.ed25519 !== undefined) {
       writer.uint32(10).bytes(message.ed25519);
     }
@@ -23,8 +23,8 @@ export const PublicKey = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): PublicKey {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): PublicKey {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...basePublicKey } as PublicKey;
     while (reader.pos < end) {

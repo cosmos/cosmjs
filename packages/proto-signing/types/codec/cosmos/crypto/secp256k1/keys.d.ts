@@ -1,5 +1,5 @@
-import { Writer, Reader } from "protobufjs/minimal";
-import * as Long from "long";
+import Long from "long";
+import _m0 from "protobufjs/minimal";
 export declare const protobufPackage = "cosmos.crypto.secp256k1";
 /**
  * PubKey defines a secp256k1 public key
@@ -16,15 +16,15 @@ export interface PrivKey {
   key: Uint8Array;
 }
 export declare const PubKey: {
-  encode(message: PubKey, writer?: Writer): Writer;
-  decode(input: Reader | Uint8Array, length?: number | undefined): PubKey;
+  encode(message: PubKey, writer?: _m0.Writer): _m0.Writer;
+  decode(input: _m0.Reader | Uint8Array, length?: number | undefined): PubKey;
   fromJSON(object: any): PubKey;
   fromPartial(object: DeepPartial<PubKey>): PubKey;
   toJSON(message: PubKey): unknown;
 };
 export declare const PrivKey: {
-  encode(message: PrivKey, writer?: Writer): Writer;
-  decode(input: Reader | Uint8Array, length?: number | undefined): PrivKey;
+  encode(message: PrivKey, writer?: _m0.Writer): _m0.Writer;
+  decode(input: _m0.Reader | Uint8Array, length?: number | undefined): PrivKey;
   fromJSON(object: any): PrivKey;
   fromPartial(object: DeepPartial<PrivKey>): PrivKey;
   toJSON(message: PrivKey): unknown;
