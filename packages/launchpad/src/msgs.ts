@@ -72,7 +72,8 @@ export function isMsgVerifyInvariant(msg: Msg): msg is MsgVerifyInvariant {
 
 /** Changes the withdraw address for a delegator (or validator self-delegation) */
 export interface MsgSetWithdrawAddress extends Msg {
-  readonly type: "cosmos-sdk/MsgSetWithdrawAddress";
+  // NOTE: Type string and names diverge here!
+  readonly type: "cosmos-sdk/MsgModifyWithdrawAddress";
   readonly value: {
     /** Bech32 account address */
     readonly delegator_address: string;
@@ -82,12 +83,14 @@ export interface MsgSetWithdrawAddress extends Msg {
 }
 
 export function isMsgSetWithdrawAddress(msg: Msg): msg is MsgSetWithdrawAddress {
-  return (msg as MsgSetWithdrawAddress).type === "cosmos-sdk/MsgSetWithdrawAddress";
+  // NOTE: Type string and names diverge here!
+  return (msg as MsgSetWithdrawAddress).type === "cosmos-sdk/MsgModifyWithdrawAddress";
 }
 
 /** Message for delegation withdraw from a single validator */
 export interface MsgWithdrawDelegatorReward extends Msg {
-  readonly type: "cosmos-sdk/MsgWithdrawDelegatorReward";
+  // NOTE: Type string and names diverge here!
+  readonly type: "cosmos-sdk/MsgWithdrawDelegationReward";
   readonly value: {
     /** Bech32 account address */
     readonly delegator_address: string;
@@ -97,7 +100,8 @@ export interface MsgWithdrawDelegatorReward extends Msg {
 }
 
 export function isMsgWithdrawDelegatorReward(msg: Msg): msg is MsgWithdrawDelegatorReward {
-  return (msg as MsgWithdrawDelegatorReward).type === "cosmos-sdk/MsgWithdrawDelegatorReward";
+  // NOTE: Type string and names diverge here!
+  return (msg as MsgWithdrawDelegatorReward).type === "cosmos-sdk/MsgWithdrawDelegationReward";
 }
 
 /** Message for validator withdraw */
