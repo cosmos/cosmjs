@@ -196,6 +196,7 @@ describe("WasmExtension", () => {
       assert(existingContractInfos);
       for (const { address, contractInfo } of existingContractInfos) {
         expect(address).toMatch(bech32AddressMatcher);
+        assertDefined(contractInfo);
         expect(contractInfo.codeId!.toNumber()).toEqual(hackatomCodeId);
         expect(contractInfo.creator).toMatch(bech32AddressMatcher);
         expect(contractInfo.label).toMatch(/^.+$/);
@@ -225,6 +226,7 @@ describe("WasmExtension", () => {
         codeId: Long.fromNumber(hackatomCodeId, true),
         creator: alice.address0,
         label: "my escrow",
+        admin: "",
       });
       expect(contractInfo.admin).toEqual("");
     });

@@ -73,7 +73,14 @@ export function setupWasmExtension(base: QueryClient): WasmExtension {
     unverified: {
       wasm: {
         listCodeInfo: async (paginationKey?: Uint8Array) => {
-          const request = paginationKey ? { pagination: { key: paginationKey } } : {};
+          const request = {
+            pagination: {
+              key: paginationKey ?? new Uint8Array(),
+              offset: Long.fromNumber(0),
+              limit: Long.fromNumber(0),
+              countTotal: false,
+            },
+          };
           return queryService.Codes(request);
         },
         getCode: async (id: number) => {
@@ -81,7 +88,14 @@ export function setupWasmExtension(base: QueryClient): WasmExtension {
           return queryService.Code(request);
         },
         listContractsByCodeId: async (id: number, paginationKey?: Uint8Array) => {
-          const pagination = paginationKey ? { pagination: { key: paginationKey } } : {};
+          const pagination = {
+            pagination: {
+              key: paginationKey ?? new Uint8Array(),
+              offset: Long.fromNumber(0),
+              limit: Long.fromNumber(0),
+              countTotal: false,
+            },
+          };
           const request = { ...pagination, codeId: Long.fromNumber(id) };
           return queryService.ContractsByCode(request);
         },
@@ -91,13 +105,27 @@ export function setupWasmExtension(base: QueryClient): WasmExtension {
         },
 
         getContractCodeHistory: async (address: string, paginationKey?: Uint8Array) => {
-          const pagination = paginationKey ? { pagination: { key: paginationKey } } : {};
+          const pagination = {
+            pagination: {
+              key: paginationKey ?? new Uint8Array(),
+              offset: Long.fromNumber(0),
+              limit: Long.fromNumber(0),
+              countTotal: false,
+            },
+          };
           const request = { ...pagination, address: address };
           return queryService.ContractHistory(request);
         },
 
         getAllContractState: async (address: string, paginationKey?: Uint8Array) => {
-          const pagination = paginationKey ? { pagination: { key: paginationKey } } : {};
+          const pagination = {
+            pagination: {
+              key: paginationKey ?? new Uint8Array(),
+              offset: Long.fromNumber(0),
+              limit: Long.fromNumber(0),
+              countTotal: false,
+            },
+          };
           const request = { ...pagination, address: address };
           return queryService.AllContractState(request);
         },
