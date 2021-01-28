@@ -11,7 +11,8 @@ import {
   makeSignDoc,
   Registry,
 } from "@cosmjs/proto-signing";
-import { assertIsBroadcastTxSuccess, codec, parseRawLog } from "@cosmjs/stargate";
+import { assertIsBroadcastTxSuccess, parseRawLog } from "@cosmjs/stargate";
+import { TxRaw } from "@cosmjs/stargate/src/codec/cosmos/tx/v1beta1/tx";
 import { assert, sleep } from "@cosmjs/utils";
 import { ReadonlyDate } from "readonly-date";
 
@@ -28,8 +29,6 @@ import {
   wasmd,
   wasmdEnabled,
 } from "./testutils.spec";
-
-const { TxRaw } = codec.cosmos.tx.v1beta1;
 
 interface HackatomInstance {
   readonly initMsg: {
@@ -203,7 +202,7 @@ describe("CosmWasmClient", () => {
       const authInfoBytes = makeAuthInfoBytes([pubkeyAny], fee.amount, gasLimit, sequence);
       const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);
       const { signed, signature } = await wallet.signDirect(alice.address0, signDoc);
-      const txRaw = TxRaw.create({
+      const txRaw = TxRaw.fromPartial({
         bodyBytes: signed.bodyBytes,
         authInfoBytes: signed.authInfoBytes,
         signatures: [fromBase64(signature.signature)],
