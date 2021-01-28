@@ -1,7 +1,7 @@
 /* eslint-disable */
-import { AccessConfig } from "../../../x/wasm/internal/types/types";
+import { AccessConfig } from "../../../../x/wasm/internal/types/types";
 import Long from "long";
-import { Coin } from "../../../cosmos/base/v1beta1/coin";
+import { Coin } from "../../../../cosmos/base/v1beta1/coin";
 import _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "cosmwasm.wasm.v1beta1";

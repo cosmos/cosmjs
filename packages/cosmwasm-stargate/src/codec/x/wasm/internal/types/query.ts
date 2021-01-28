@@ -1,6 +1,6 @@
 /* eslint-disable */
-import { ContractInfo, ContractCodeHistoryEntry, Model } from "../../../x/wasm/internal/types/types";
-import { PageRequest, PageResponse } from "../../../cosmos/base/query/v1beta1/pagination";
+import { ContractInfo, ContractCodeHistoryEntry, Model } from "../../../../x/wasm/internal/types/types";
+import { PageRequest, PageResponse } from "../../../../cosmos/base/query/v1beta1/pagination";
 import Long from "long";
 import _m0 from "protobufjs/minimal";
 
