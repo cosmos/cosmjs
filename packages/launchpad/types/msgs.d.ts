@@ -47,7 +47,7 @@ export interface MsgVerifyInvariant extends Msg {
 export declare function isMsgVerifyInvariant(msg: Msg): msg is MsgVerifyInvariant;
 /** Changes the withdraw address for a delegator (or validator self-delegation) */
 export interface MsgSetWithdrawAddress extends Msg {
-  readonly type: "cosmos-sdk/MsgSetWithdrawAddress";
+  readonly type: "cosmos-sdk/MsgModifyWithdrawAddress";
   readonly value: {
     /** Bech32 account address */
     readonly delegator_address: string;
@@ -58,7 +58,7 @@ export interface MsgSetWithdrawAddress extends Msg {
 export declare function isMsgSetWithdrawAddress(msg: Msg): msg is MsgSetWithdrawAddress;
 /** Message for delegation withdraw from a single validator */
 export interface MsgWithdrawDelegatorReward extends Msg {
-  readonly type: "cosmos-sdk/MsgWithdrawDelegatorReward";
+  readonly type: "cosmos-sdk/MsgWithdrawDelegationReward";
   readonly value: {
     /** Bech32 account address */
     readonly delegator_address: string;

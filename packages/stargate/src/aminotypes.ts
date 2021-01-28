@@ -111,7 +111,7 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
       }),
     },
     "/cosmos.distribution.v1beta1.MsgSetWithdrawAddress": {
-      aminoType: "cosmos-sdk/MsgSetWithdrawAddress",
+      aminoType: "cosmos-sdk/MsgModifyWithdrawAddress",
       toAmino: ({
         delegatorAddress,
         withdrawAddress,
@@ -132,7 +132,7 @@ function createDefaultTypes(prefix: string): Record<string, AminoConverter> {
       }),
     },
     "/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward": {
-      aminoType: "cosmos-sdk/MsgWithdrawDelegatorReward",
+      aminoType: "cosmos-sdk/MsgWithdrawDelegationReward",
       toAmino: ({
         delegatorAddress,
         validatorAddress,

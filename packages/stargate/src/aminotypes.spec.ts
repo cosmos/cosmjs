@@ -117,7 +117,7 @@ describe("AminoTypes", () => {
         value: msg,
       });
       const expected: MsgSetWithdrawAddress = {
-        type: "cosmos-sdk/MsgSetWithdrawAddress",
+        type: "cosmos-sdk/MsgModifyWithdrawAddress",
         value: {
           delegator_address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
           withdraw_address: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
@@ -136,7 +136,7 @@ describe("AminoTypes", () => {
         value: msg,
       });
       const expected: MsgWithdrawDelegatorReward = {
-        type: "cosmos-sdk/MsgWithdrawDelegatorReward",
+        type: "cosmos-sdk/MsgWithdrawDelegationReward",
         value: {
           delegator_address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
           validator_address: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
