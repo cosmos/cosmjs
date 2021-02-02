@@ -16,8 +16,8 @@ import {
   setupAuthExtension,
   setupBankExtension,
 } from "@cosmjs/stargate";
-import { SignMode } from "@cosmjs/stargate/src/codec/cosmos/tx/signing/v1beta1/signing";
-import { AuthInfo, SignDoc, TxBody } from "@cosmjs/stargate/src/codec/cosmos/tx/v1beta1/tx";
+import { SignMode } from "@cosmjs/stargate/build/codec/cosmos/tx/signing/v1beta1/signing";
+import { AuthInfo, SignDoc, TxBody } from "@cosmjs/stargate/build/codec/cosmos/tx/v1beta1/tx";
 import { adaptor34, Client as TendermintClient } from "@cosmjs/tendermint-rpc";
 
 import { setupWasmExtension, WasmExtension } from "./queries";

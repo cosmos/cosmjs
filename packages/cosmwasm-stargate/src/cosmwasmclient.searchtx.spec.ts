@@ -9,7 +9,7 @@ import {
   Registry,
 } from "@cosmjs/proto-signing";
 import { BroadcastTxResponse, isBroadcastTxFailure, isBroadcastTxSuccess } from "@cosmjs/stargate";
-import { Tx, TxRaw } from "@cosmjs/stargate/src/codec/cosmos/tx/v1beta1/tx";
+import { Tx, TxRaw } from "@cosmjs/stargate/build/codec/cosmos/tx/v1beta1/tx";
 import { assert, sleep } from "@cosmjs/utils";
 
 import { CosmWasmClient } from "./cosmwasmclient";

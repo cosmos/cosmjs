@@ -11,10 +11,10 @@ import {
 } from "@cosmjs/launchpad";
 import { DirectSecp256k1HdWallet, Registry } from "@cosmjs/proto-signing";
 import { AminoTypes, assertIsBroadcastTxSuccess } from "@cosmjs/stargate";
-import { MsgSend } from "@cosmjs/stargate/src/codec/cosmos/bank/v1beta1/tx";
-import { Coin } from "@cosmjs/stargate/src/codec/cosmos/base/v1beta1/coin";
-import { MsgDelegate } from "@cosmjs/stargate/src/codec/cosmos/staking/v1beta1/tx";
-import { Tx } from "@cosmjs/stargate/src/codec/cosmos/tx/v1beta1/tx";
+import { MsgSend } from "@cosmjs/stargate/build/codec/cosmos/bank/v1beta1/tx";
+import { Coin } from "@cosmjs/stargate/build/codec/cosmos/base/v1beta1/coin";
+import { MsgDelegate } from "@cosmjs/stargate/build/codec/cosmos/staking/v1beta1/tx";
+import { Tx } from "@cosmjs/stargate/build/codec/cosmos/tx/v1beta1/tx";
 import { assert, sleep } from "@cosmjs/utils";
 import Long from "long";
 import pako from "pako";

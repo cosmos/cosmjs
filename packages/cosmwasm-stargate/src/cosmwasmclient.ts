@@ -30,7 +30,7 @@ import {
   setupAuthExtension,
   setupBankExtension,
 } from "@cosmjs/stargate";
-import { TxMsgData } from "@cosmjs/stargate/src/codec/cosmos/base/abci/v1beta1/abci";
+import { TxMsgData } from "@cosmjs/stargate/build/codec/cosmos/base/abci/v1beta1/abci";
 import {
   adaptor34,
   broadcastTxCommitSuccess,
