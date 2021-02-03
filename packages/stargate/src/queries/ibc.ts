@@ -95,7 +95,7 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
   const channelQueryService = new ChannelQuery({
     request: (service: string, method: string, data: Uint8Array): Promise<Uint8Array> => {
       // Parts of the path are unavailable, so we hardcode them here. See https://github.com/protobufjs/protobuf.js/issues/1229
-      const path = `/Query/${method}`;
+      const path = `/ibc.core.channel.v1.Query/${method}`;
       return base.queryUnverified(path, data);
     },
   });
