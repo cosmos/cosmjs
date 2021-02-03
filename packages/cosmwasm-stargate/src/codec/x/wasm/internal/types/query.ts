@@ -1422,49 +1422,49 @@ export class QueryClientImpl implements Query {
   }
   ContractInfo(request: QueryContractInfoRequest): Promise<QueryContractInfoResponse> {
     const data = QueryContractInfoRequest.encode(request).finish();
-    const promise = this.rpc.request("cosmwasm.wasm.v1beta1.Query", "methodDesc.name", data);
+    const promise = this.rpc.request("cosmwasm.wasm.v1beta1.Query", "ContractInfo", data);
     return promise.then((data) => QueryContractInfoResponse.decode(new _m0.Reader(data)));
   }
 
   ContractHistory(request: QueryContractHistoryRequest): Promise<QueryContractHistoryResponse> {
     const data = QueryContractHistoryRequest.encode(request).finish();
-    const promise = this.rpc.request("cosmwasm.wasm.v1beta1.Query", "methodDesc.name", data);
+    const promise = this.rpc.request("cosmwasm.wasm.v1beta1.Query", "ContractHistory", data);
     return promise.then((data) => QueryContractHistoryResponse.decode(new _m0.Reader(data)));
   }
 
   ContractsByCode(request: QueryContractsByCodeRequest): Promise<QueryContractsByCodeResponse> {
     const data = QueryContractsByCodeRequest.encode(request).finish();
-    const promise = this.rpc.request("cosmwasm.wasm.v1beta1.Query", "methodDesc.name", data);
+    const promise = this.rpc.request("cosmwasm.wasm.v1beta1.Query", "ContractsByCode", data);
     return promise.then((data) => QueryContractsByCodeResponse.decode(new _m0.Reader(data)));
   }
 
   AllContractState(request: QueryAllContractStateRequest): Promise<QueryAllContractStateResponse> {
     const data = QueryAllContractStateRequest.encode(request).finish();
-    const promise = this.rpc.request("cosmwasm.wasm.v1beta1.Query", "methodDesc.name", data);
+    const promise = this.rpc.request("cosmwasm.wasm.v1beta1.Query", "AllContractState", data);
     return promise.then((data) => QueryAllContractStateResponse.decode(new _m0.Reader(data)));
   }
 
   RawContractState(request: QueryRawContractStateRequest): Promise<QueryRawContractStateResponse> {
     const data = QueryRawContractStateRequest.encode(request).finish();
-    const promise = this.rpc.request("cosmwasm.wasm.v1beta1.Query", "methodDesc.name", data);
+    const promise = this.rpc.request("cosmwasm.wasm.v1beta1.Query", "RawContractState", data);
     return promise.then((data) => QueryRawContractStateResponse.decode(new _m0.Reader(data)));
   }
 
   SmartContractState(request: QuerySmartContractStateRequest): Promise<QuerySmartContractStateResponse> {
     const data = QuerySmartContractStateRequest.encode(request).finish();
-    const promise = this.rpc.request("cosmwasm.wasm.v1beta1.Query", "methodDesc.name", data);
+    const promise = this.rpc.request("cosmwasm.wasm.v1beta1.Query", "SmartContractState", data);
     return promise.then((data) => QuerySmartContractStateResponse.decode(new _m0.Reader(data)));
   }
 
   Code(request: QueryCodeRequest): Promise<QueryCodeResponse> {
     const data = QueryCodeRequest.encode(request).finish();
-    const promise = this.rpc.request("cosmwasm.wasm.v1beta1.Query", "methodDesc.name", data);
+    const promise = this.rpc.request("cosmwasm.wasm.v1beta1.Query", "Code", data);
     return promise.then((data) => QueryCodeResponse.decode(new _m0.Reader(data)));
   }
 
   Codes(request: QueryCodesRequest): Promise<QueryCodesResponse> {
     const data = QueryCodesRequest.encode(request).finish();
-    const promise = this.rpc.request("cosmwasm.wasm.v1beta1.Query", "methodDesc.name", data);
+    const promise = this.rpc.request("cosmwasm.wasm.v1beta1.Query", "Codes", data);
     return promise.then((data) => QueryCodesResponse.decode(new _m0.Reader(data)));
   }
 }
