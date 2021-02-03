@@ -26,7 +26,7 @@ describe("AuthExtension", () => {
         address: unused.address,
         // pubKey not set
         accountNumber: Long.fromNumber(unused.accountNumber, true),
-        sequence: Long.fromNumber(0),
+        sequence: Long.fromNumber(0, true),
       });
 
       tmClient.disconnect();
@@ -42,7 +42,7 @@ describe("AuthExtension", () => {
       expect(account).toEqual({
         address: validator.delegatorAddress,
         pubKey: Any.fromPartial(pubkey),
-        accountNumber: Long.fromNumber(0),
+        accountNumber: Long.fromNumber(0, true),
         sequence: Long.fromNumber(validator.sequence, true),
       });
 
@@ -72,7 +72,7 @@ describe("AuthExtension", () => {
           address: unused.address,
           // pubKey not set
           accountNumber: Long.fromNumber(unused.accountNumber, true),
-          sequence: Long.fromNumber(0),
+          sequence: Long.fromNumber(0, true),
         });
 
         tmClient.disconnect();
@@ -88,7 +88,7 @@ describe("AuthExtension", () => {
         expect(account).toEqual({
           address: validator.delegatorAddress,
           pubKey: Any.fromPartial(pubkey),
-          accountNumber: Long.fromNumber(0),
+          accountNumber: Long.fromNumber(0, true),
           sequence: Long.fromNumber(validator.sequence, true),
         });
 
