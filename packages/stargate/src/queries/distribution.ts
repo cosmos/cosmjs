@@ -14,7 +14,7 @@ import {
   QueryValidatorSlashesResponse,
 } from "../codec/cosmos/distribution/v1beta1/query";
 import { QueryClient } from "./queryclient";
-import { createPagination, createRpc, toObject } from "./utils";
+import { createPagination, createRpc } from "./utils";
 
 export interface DistributionExtension {
   readonly distribution: {
@@ -53,48 +53,48 @@ export function setupDistributionExtension(base: QueryClient): DistributionExten
       unverified: {
         communityPool: async () => {
           const response = await queryService.CommunityPool({});
-          return toObject(response);
+          return response;
         },
         delegationRewards: async (delegatorAddress: string, validatorAddress: string) => {
           const response = await queryService.DelegationRewards({
             delegatorAddress: delegatorAddress,
             validatorAddress: validatorAddress,
           });
-          return toObject(response);
+          return response;
         },
         delegationTotalRewards: async (delegatorAddress: string) => {
           const response = await queryService.DelegationTotalRewards({
             delegatorAddress: delegatorAddress,
           });
-          return toObject(response);
+          return response;
         },
         delegatorValidators: async (delegatorAddress: string) => {
           const response = await queryService.DelegatorValidators({
             delegatorAddress: delegatorAddress,
           });
-          return toObject(response);
+          return response;
         },
         delegatorWithdrawAddress: async (delegatorAddress: string) => {
           const response = await queryService.DelegatorWithdrawAddress({
             delegatorAddress: delegatorAddress,
           });
-          return toObject(response);
+          return response;
         },
         params: async () => {
           const response = await queryService.Params({});
-          return toObject(response);
+          return response;
         },
         validatorCommission: async (validatorAddress: string) => {
           const response = await queryService.ValidatorCommission({
             validatorAddress: validatorAddress,
           });
-          return toObject(response);
+          return response;
         },
         validatorOutstandingRewards: async (validatorAddress: string) => {
           const response = await queryService.ValidatorOutstandingRewards({
             validatorAddress: validatorAddress,
           });
-          return toObject(response);
+          return response;
         },
         validatorSlashes: async (
           validatorAddress: string,
@@ -108,7 +108,7 @@ export function setupDistributionExtension(base: QueryClient): DistributionExten
             endingHeight: Long.fromNumber(endingHeight),
             pagination: createPagination(paginationKey),
           });
-          return toObject(response);
+          return response;
         },
       },
     },

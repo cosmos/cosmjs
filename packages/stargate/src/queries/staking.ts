@@ -20,7 +20,7 @@ import {
 } from "../codec/cosmos/staking/v1beta1/query";
 import { BondStatus } from "../codec/cosmos/staking/v1beta1/staking";
 import { QueryClient } from "./queryclient";
-import { createPagination, createRpc, toObject } from "./utils";
+import { createPagination, createRpc } from "./utils";
 
 export type BondStatusString = Exclude<keyof typeof BondStatus, "BOND_STATUS_UNSPECIFIED">;
 
@@ -85,49 +85,49 @@ export function setupStakingExtension(base: QueryClient): StakingExtension {
             delegatorAddr: delegatorAddress,
             validatorAddr: validatorAddress,
           });
-          return toObject(response);
+          return response;
         },
         delegatorDelegations: async (delegatorAddress: string, paginationKey?: Uint8Array) => {
           const response = await queryService.DelegatorDelegations({
             delegatorAddr: delegatorAddress,
             pagination: createPagination(paginationKey),
           });
-          return toObject(response);
+          return response;
         },
         delegatorUnbondingDelegations: async (delegatorAddress: string, paginationKey?: Uint8Array) => {
           const response = await queryService.DelegatorUnbondingDelegations({
             delegatorAddr: delegatorAddress,
             pagination: createPagination(paginationKey),
           });
-          return toObject(response);
+          return response;
         },
         delegatorValidator: async (delegatorAddress: string, validatorAddress: string) => {
           const response = await queryService.DelegatorValidator({
             delegatorAddr: delegatorAddress,
             validatorAddr: validatorAddress,
           });
-          return toObject(response);
+          return response;
         },
         delegatorValidators: async (delegatorAddress: string, paginationKey?: Uint8Array) => {
           const response = await queryService.DelegatorValidators({
             delegatorAddr: delegatorAddress,
             pagination: createPagination(paginationKey),
           });
-          return toObject(response);
+          return response;
         },
         historicalInfo: async (height: number) => {
           const response = await queryService.HistoricalInfo({
             height: Long.fromNumber(height),
           });
-          return toObject(response);
+          return response;
         },
         params: async () => {
           const response = await queryService.Params({});
-          return toObject(response);
+          return response;
         },
         pool: async () => {
           const response = await queryService.Pool({});
-          return toObject(response);
+          return response;
         },
         redelegations: async (
           delegatorAddress: string,
@@ -141,39 +141,39 @@ export function setupStakingExtension(base: QueryClient): StakingExtension {
             dstValidatorAddr: destinationValidatorAddress,
             pagination: createPagination(paginationKey),
           });
-          return toObject(response);
+          return response;
         },
         unbondingDelegation: async (delegatorAddress: string, validatorAddress: string) => {
           const response = await queryService.UnbondingDelegation({
             delegatorAddr: delegatorAddress,
             validatorAddr: validatorAddress,
           });
-          return toObject(response);
+          return response;
         },
         validator: async (validatorAddress: string) => {
           const response = await queryService.Validator({ validatorAddr: validatorAddress });
-          return toObject(response);
+          return response;
         },
         validatorDelegations: async (validatorAddress: string, paginationKey?: Uint8Array) => {
           const response = await queryService.ValidatorDelegations({
             validatorAddr: validatorAddress,
             pagination: createPagination(paginationKey),
           });
-          return toObject(response);
+          return response;
         },
         validators: async (status: BondStatusString, paginationKey?: Uint8Array) => {
           const response = await queryService.Validators({
             status: status,
             pagination: createPagination(paginationKey),
           });
-          return toObject(response);
+          return response;
         },
         validatorUnbondingDelegations: async (validatorAddress: string, paginationKey?: Uint8Array) => {
           const response = await queryService.ValidatorUnbondingDelegations({
             validatorAddr: validatorAddress,
             pagination: createPagination(paginationKey),
           });
-          return toObject(response);
+          return response;
         },
       },
     },

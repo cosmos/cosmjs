@@ -6,11 +6,6 @@ import { QueryClient } from "./queryclient";
  * The result is typically 20 bytes long but not restricted to that.
  */
 export declare function toAccAddress(address: string): Uint8Array;
-/**
- * Use this to convert a protobuf.js class to the interface (e.g. Coin to ICoin)
- * in a ways that makes Jasmine's toEqual happy.
- */
-export declare function toObject<I extends object>(thing: I): Omit<I, never>;
 export declare function createPagination(
   paginationKey?: Uint8Array,
 ): {

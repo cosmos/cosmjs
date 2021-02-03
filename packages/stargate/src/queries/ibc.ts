@@ -24,7 +24,7 @@ import {
   QueryConnectionsResponse,
 } from "../codec/ibc/core/connection/v1/query";
 import { QueryClient } from "./queryclient";
-import { createPagination, createRpc, toObject } from "./utils";
+import { createPagination, createRpc } from "./utils";
 
 export interface IbcExtension {
   readonly ibc: {
@@ -102,7 +102,7 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
         // key: https://github.com/cosmos/cosmos-sdk/blob/ef0a7344af345882729598bc2958a21143930a6b/x/ibc/24-host/keys.go#L117-L120
         const key = toAscii(`channelEnds/ports/${portId}/channels/${channelId}`);
         const responseData = await base.queryVerified("ibc", key);
-        return responseData.length ? toObject(Channel.decode(responseData)) : null;
+        return responseData.length ? Channel.decode(responseData) : null;
       },
       packetCommitment: async (portId: string, channelId: string, sequence: number) => {
         // keeper: https://github.com/cosmos/cosmos-sdk/blob/3bafd8255a502e5a9cee07391cf8261538245dfd/x/ibc/04-channel/keeper/keeper.go#L128-L133
@@ -132,14 +132,14 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
         // Queries for ibc.core.channel.v1
         channel: async (portId: string, channelId: string) => {
           const response = await channelQueryService.Channel({ portId: portId, channelId: channelId });
-          return toObject(response);
+          return response;
         },
         channels: async (paginationKey?: Uint8Array) => {
           const request = {
             pagination: createPagination(paginationKey),
           };
           const response = await channelQueryService.Channels(request);
-          return toObject(response);
+          return response;
         },
         connectionChannels: async (connection: string, paginationKey?: Uint8Array) => {
           const request = {
@@ -147,7 +147,7 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
             pagination: createPagination(paginationKey),
           };
           const response = await channelQueryService.ConnectionChannels(request);
-          return toObject(response);
+          return response;
         },
         packetCommitment: async (portId: string, channelId: string, sequence: number) => {
           const response = await channelQueryService.PacketCommitment({
@@ -155,7 +155,7 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
             channelId: channelId,
             sequence: Long.fromNumber(sequence),
           });
-          return toObject(response);
+          return response;
         },
         packetCommitments: async (portId: string, channelId: string, paginationKey?: Uint8Array) => {
           const request = {
@@ -164,7 +164,7 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
             pagination: createPagination(paginationKey),
           };
           const response = await channelQueryService.PacketCommitments(request);
-          return toObject(response);
+          return response;
         },
         packetAcknowledgement: async (portId: string, channelId: string, sequence: number) => {
           const response = await channelQueryService.PacketAcknowledgement({
@@ -172,7 +172,7 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
             channelId: channelId,
             sequence: Long.fromNumber(sequence),
           });
-          return toObject(response);
+          return response;
         },
         packetAcknowledgements: async (portId: string, channelId: string, paginationKey?: Uint8Array) => {
           const response = await channelQueryService.PacketAcknowledgements({
@@ -180,7 +180,7 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
             channelId: channelId,
             pagination: createPagination(paginationKey),
           });
-          return toObject(response);
+          return response;
         },
         unreceivedPackets: async (
           portId: string,
@@ -192,7 +192,7 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
             channelId: channelId,
             packetCommitmentSequences: packetCommitmentSequences.map((s) => Long.fromNumber(s)),
           });
-          return toObject(response);
+          return response;
         },
         unreceivedAcks: async (portId: string, channelId: string, packetAckSequences: readonly number[]) => {
           const response = await channelQueryService.UnreceivedAcks({
@@ -200,32 +200,32 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
             channelId: channelId,
             packetAckSequences: packetAckSequences.map((s) => Long.fromNumber(s)),
           });
-          return toObject(response);
+          return response;
         },
         nextSequenceReceive: async (portId: string, channelId: string) => {
           const response = await channelQueryService.NextSequenceReceive({
             portId: portId,
             channelId: channelId,
           });
-          return toObject(response);
+          return response;
         },
 
         // Queries for ibc.core.connection.v1
 
         connection: async (connectionId: string) => {
           const response = await connectionQueryService.Connection({ connectionId: connectionId });
-          return toObject(response);
+          return response;
         },
         connections: async (paginationKey?: Uint8Array) => {
           const request = {
             pagination: createPagination(paginationKey),
           };
           const response = await connectionQueryService.Connections(request);
-          return toObject(response);
+          return response;
         },
         clientConnections: async (clientId: string) => {
           const response = await connectionQueryService.ClientConnections({ clientId: clientId });
-          return toObject(response);
+          return response;
         },
       },
     },

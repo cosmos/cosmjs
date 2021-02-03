@@ -5,7 +5,7 @@ import { BaseAccount } from "../codec/cosmos/auth/v1beta1/auth";
 import { QueryClientImpl } from "../codec/cosmos/auth/v1beta1/query";
 import { Any } from "../codec/google/protobuf/any";
 import { QueryClient } from "./queryclient";
-import { createRpc, toAccAddress, toObject } from "./utils";
+import { createRpc, toAccAddress } from "./utils";
 
 export interface AuthExtension {
   readonly auth: {
@@ -32,7 +32,7 @@ export function setupAuthExtension(base: QueryClient): AuthExtension {
         const account = Any.decode(responseData);
         switch (account.typeUrl) {
           case "/cosmos.auth.v1beta1.BaseAccount": {
-            return toObject(BaseAccount.decode(account.value));
+            return BaseAccount.decode(account.value);
           }
           default:
             throw new Error(`Unsupported type: '${account.typeUrl}'`);
@@ -45,7 +45,7 @@ export function setupAuthExtension(base: QueryClient): AuthExtension {
           switch (account.typeUrl) {
             case "/cosmos.auth.v1beta1.BaseAccount": {
               assert(account.value);
-              return toObject(BaseAccount.decode(account.value));
+              return BaseAccount.decode(account.value);
             }
             default:
               throw new Error(`Unsupported type: '${account.typeUrl}'`);

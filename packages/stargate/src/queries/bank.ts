@@ -5,7 +5,7 @@ import { assert } from "@cosmjs/utils";
 import { QueryClientImpl } from "../codec/cosmos/bank/v1beta1/query";
 import { Coin } from "../codec/cosmos/base/v1beta1/coin";
 import { QueryClient } from "./queryclient";
-import { createRpc, toAccAddress, toObject } from "./utils";
+import { createRpc, toAccAddress } from "./utils";
 
 export interface BankExtension {
   readonly bank: {
@@ -36,26 +36,26 @@ export function setupBankExtension(base: QueryClient): BankExtension {
         // https://github.com/cosmos/cosmos-sdk/blob/2879c0702c87dc9dd828a8c42b9224dc054e28ad/store/prefix/store.go#L37-L43
         const key = Uint8Array.from([...toAscii("balances"), ...toAccAddress(address), ...toAscii(denom)]);
         const responseData = await base.queryVerified("bank", key);
-        return responseData.length ? toObject(Coin.decode(responseData)) : null;
+        return responseData.length ? Coin.decode(responseData) : null;
       },
       unverified: {
         balance: async (address: string, denom: string) => {
           const { balance } = await queryService.Balance({ address: address, denom: denom });
           assert(balance);
-          return toObject(balance);
+          return balance;
         },
         allBalances: async (address: string) => {
           const { balances } = await queryService.AllBalances({ address: address });
-          return balances.map(toObject);
+          return balances;
         },
         totalSupply: async () => {
           const { supply } = await queryService.TotalSupply({});
-          return supply.map(toObject);
+          return supply;
         },
         supplyOf: async (denom: string) => {
           const { amount } = await queryService.SupplyOf({ denom: denom });
           assert(amount);
-          return toObject(amount);
+          return amount;
         },
       },
     },
