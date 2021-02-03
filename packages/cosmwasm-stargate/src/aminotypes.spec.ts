@@ -30,6 +30,7 @@ describe("AminoTypes", () => {
         wasmByteCode: fromBase64("WUVMTE9XIFNVQk1BUklORQ=="),
         source: "Arrabiata",
         builder: "Bob",
+        instantiatePermission: undefined,
       };
       const aminoMsg = new AminoTypes({ additions: cosmWasmTypes }).toAmino({
         typeUrl: "/cosmwasm.wasm.v1beta1.MsgStoreCode",
@@ -196,6 +197,7 @@ describe("AminoTypes", () => {
         wasmByteCode: fromBase64("WUVMTE9XIFNVQk1BUklORQ=="),
         source: "Arrabiata",
         builder: "Bob",
+        instantiatePermission: undefined,
       };
       expect(msg).toEqual({
         typeUrl: "/cosmwasm.wasm.v1beta1.MsgStoreCode",

@@ -369,8 +369,7 @@ describe("CosmWasmClient", () => {
 
       const client = await CosmWasmClient.connect(wasmd.endpoint);
       const raw = await client.queryContractRaw(contract.address, otherKey);
-      assert(raw, "must get result");
-      expect(Uint8Array.from(raw)).toEqual(new Uint8Array());
+      expect(raw).toBeNull();
     });
 
     it("errors for non-existent contract", async () => {

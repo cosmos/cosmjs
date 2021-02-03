@@ -197,7 +197,7 @@ describe("WasmExtension", () => {
       for (const { address, contractInfo } of existingContractInfos) {
         expect(address).toMatch(bech32AddressMatcher);
         assertDefined(contractInfo);
-        expect(contractInfo.codeId!.toNumber()).toEqual(hackatomCodeId);
+        expect(contractInfo.codeId.toNumber()).toEqual(hackatomCodeId);
         expect(contractInfo.creator).toMatch(bech32AddressMatcher);
         expect(contractInfo.label).toMatch(/^.+$/);
       }
@@ -218,6 +218,7 @@ describe("WasmExtension", () => {
         codeId: Long.fromNumber(hackatomCodeId, true),
         creator: alice.address0,
         label: "my escrow",
+        admin: "",
       });
 
       const { contractInfo } = await client.unverified.wasm.getContractInfo(myAddress);
@@ -295,7 +296,7 @@ describe("WasmExtension", () => {
       expect(models.length).toEqual(1);
       const data = models[0];
       expect(data.key).toEqual(hackatomConfigKey);
-      const value = JSON.parse(fromAscii(data.value!));
+      const value = JSON.parse(fromAscii(data.value));
       expect(value.verifier).toMatch(base64Matcher);
       expect(value.beneficiary).toMatch(base64Matcher);
     });
@@ -322,15 +323,15 @@ describe("WasmExtension", () => {
       expect(model.beneficiary).toMatch(base64Matcher);
     });
 
-    it("returns empty object for missing key", async () => {
+    it("returns undefined for missing key", async () => {
       pendingWithoutWasmd();
       assert(hackatomContractAddress);
       const client = await makeWasmClient(wasmd.endpoint);
-      const response = await client.unverified.wasm.queryContractRaw(
+      const { data } = await client.unverified.wasm.queryContractRaw(
         hackatomContractAddress,
         fromHex("cafe0dad"),
       );
-      expect({ ...response }).toEqual({ data: new Uint8Array() });
+      expect(data).toBeUndefined();
     });
 
     it("returns null for non-existent address", async () => {
@@ -398,7 +399,7 @@ describe("WasmExtension", () => {
         assertDefined(result.data);
         const msgData = fromOneElementArray(result.data);
         expect(msgData.msgType).toEqual("store-code");
-        expect(MsgStoreCodeResponse.decode(msgData.data!)).toEqual(
+        expect(MsgStoreCodeResponse.decode(msgData.data)).toEqual(
           MsgStoreCodeResponse.fromPartial({ codeId: Long.fromNumber(codeId, true) }),
         );
       }
@@ -418,7 +419,7 @@ describe("WasmExtension", () => {
         assertDefined(result.data);
         const msgData = fromOneElementArray(result.data);
         expect(msgData.msgType).toEqual("instantiate");
-        expect(MsgInstantiateContractResponse.decode(msgData.data!)).toEqual(
+        expect(MsgInstantiateContractResponse.decode(msgData.data)).toEqual(
           MsgInstantiateContractResponse.fromPartial({ address: contractAddress }),
         );
 
@@ -444,7 +445,7 @@ describe("WasmExtension", () => {
         assertDefined(result.data);
         const msgData = fromOneElementArray(result.data);
         expect(msgData.msgType).toEqual("execute");
-        expect(MsgExecuteContractResponse.decode(msgData.data!)).toEqual(
+        expect(MsgExecuteContractResponse.decode(msgData.data)).toEqual(
           MsgExecuteContractResponse.fromPartial({ data: fromHex("F00BAA") }),
         );
 

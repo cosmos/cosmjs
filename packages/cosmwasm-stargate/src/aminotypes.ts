@@ -46,6 +46,7 @@ export const cosmWasmTypes: Record<string, AminoConverter> = {
       wasmByteCode: fromBase64(wasm_byte_code),
       source: source,
       builder: builder,
+      instantiatePermission: undefined,
     }),
   },
   "/cosmwasm.wasm.v1beta1.MsgInstantiateContract": {
