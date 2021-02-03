@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { JsonObject } from "@cosmjs/cosmwasm-launchpad";
 import { fromUtf8, toAscii } from "@cosmjs/encoding";
-import { QueryClient } from "@cosmjs/stargate";
+import { createRpc, QueryClient } from "@cosmjs/stargate";
 import Long from "long";
 
 import {
@@ -63,12 +63,11 @@ export interface WasmExtension {
 }
 
 export function setupWasmExtension(base: QueryClient): WasmExtension {
-  const queryService = new QueryClientImpl({
-    request: (service: string, method: string, data: Uint8Array): Promise<Uint8Array> => {
-      const path = `/cosmwasm.wasm.v1beta1.Query/${method}`;
-      return base.queryUnverified(path, data);
-    },
-  });
+  const rpc = createRpc(base);
+  // Use this service to get easy typed access to query methods
+  // This cannot be used for proof verification
+  const queryService = new QueryClientImpl(rpc);
+
   return {
     unverified: {
       wasm: {
