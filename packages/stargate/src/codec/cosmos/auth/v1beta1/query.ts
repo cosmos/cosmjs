@@ -244,13 +244,13 @@ export class QueryClientImpl implements Query {
   }
   Account(request: QueryAccountRequest): Promise<QueryAccountResponse> {
     const data = QueryAccountRequest.encode(request).finish();
-    const promise = this.rpc.request("cosmos.auth.v1beta1.Query", "methodDesc.name", data);
+    const promise = this.rpc.request("cosmos.auth.v1beta1.Query", "Account", data);
     return promise.then((data) => QueryAccountResponse.decode(new _m0.Reader(data)));
   }
 
   Params(request: QueryParamsRequest): Promise<QueryParamsResponse> {
     const data = QueryParamsRequest.encode(request).finish();
-    const promise = this.rpc.request("cosmos.auth.v1beta1.Query", "methodDesc.name", data);
+    const promise = this.rpc.request("cosmos.auth.v1beta1.Query", "Params", data);
     return promise.then((data) => QueryParamsResponse.decode(new _m0.Reader(data)));
   }
 }

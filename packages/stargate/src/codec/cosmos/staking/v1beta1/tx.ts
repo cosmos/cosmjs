@@ -869,31 +869,31 @@ export class MsgClientImpl implements Msg {
   }
   CreateValidator(request: MsgCreateValidator): Promise<MsgCreateValidatorResponse> {
     const data = MsgCreateValidator.encode(request).finish();
-    const promise = this.rpc.request("cosmos.staking.v1beta1.Msg", "methodDesc.name", data);
+    const promise = this.rpc.request("cosmos.staking.v1beta1.Msg", "CreateValidator", data);
     return promise.then((data) => MsgCreateValidatorResponse.decode(new _m0.Reader(data)));
   }
 
   EditValidator(request: MsgEditValidator): Promise<MsgEditValidatorResponse> {
     const data = MsgEditValidator.encode(request).finish();
-    const promise = this.rpc.request("cosmos.staking.v1beta1.Msg", "methodDesc.name", data);
+    const promise = this.rpc.request("cosmos.staking.v1beta1.Msg", "EditValidator", data);
     return promise.then((data) => MsgEditValidatorResponse.decode(new _m0.Reader(data)));
   }
 
   Delegate(request: MsgDelegate): Promise<MsgDelegateResponse> {
     const data = MsgDelegate.encode(request).finish();
-    const promise = this.rpc.request("cosmos.staking.v1beta1.Msg", "methodDesc.name", data);
+    const promise = this.rpc.request("cosmos.staking.v1beta1.Msg", "Delegate", data);
     return promise.then((data) => MsgDelegateResponse.decode(new _m0.Reader(data)));
   }
 
   BeginRedelegate(request: MsgBeginRedelegate): Promise<MsgBeginRedelegateResponse> {
     const data = MsgBeginRedelegate.encode(request).finish();
-    const promise = this.rpc.request("cosmos.staking.v1beta1.Msg", "methodDesc.name", data);
+    const promise = this.rpc.request("cosmos.staking.v1beta1.Msg", "BeginRedelegate", data);
     return promise.then((data) => MsgBeginRedelegateResponse.decode(new _m0.Reader(data)));
   }
 
   Undelegate(request: MsgUndelegate): Promise<MsgUndelegateResponse> {
     const data = MsgUndelegate.encode(request).finish();
-    const promise = this.rpc.request("cosmos.staking.v1beta1.Msg", "methodDesc.name", data);
+    const promise = this.rpc.request("cosmos.staking.v1beta1.Msg", "Undelegate", data);
     return promise.then((data) => MsgUndelegateResponse.decode(new _m0.Reader(data)));
   }
 }

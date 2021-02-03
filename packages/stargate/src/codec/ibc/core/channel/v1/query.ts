@@ -2644,25 +2644,25 @@ export class QueryClientImpl implements Query {
   }
   Channel(request: QueryChannelRequest): Promise<QueryChannelResponse> {
     const data = QueryChannelRequest.encode(request).finish();
-    const promise = this.rpc.request("ibc.core.channel.v1.Query", "methodDesc.name", data);
+    const promise = this.rpc.request("ibc.core.channel.v1.Query", "Channel", data);
     return promise.then((data) => QueryChannelResponse.decode(new _m0.Reader(data)));
   }
 
   Channels(request: QueryChannelsRequest): Promise<QueryChannelsResponse> {
     const data = QueryChannelsRequest.encode(request).finish();
-    const promise = this.rpc.request("ibc.core.channel.v1.Query", "methodDesc.name", data);
+    const promise = this.rpc.request("ibc.core.channel.v1.Query", "Channels", data);
     return promise.then((data) => QueryChannelsResponse.decode(new _m0.Reader(data)));
   }
 
   ConnectionChannels(request: QueryConnectionChannelsRequest): Promise<QueryConnectionChannelsResponse> {
     const data = QueryConnectionChannelsRequest.encode(request).finish();
-    const promise = this.rpc.request("ibc.core.channel.v1.Query", "methodDesc.name", data);
+    const promise = this.rpc.request("ibc.core.channel.v1.Query", "ConnectionChannels", data);
     return promise.then((data) => QueryConnectionChannelsResponse.decode(new _m0.Reader(data)));
   }
 
   ChannelClientState(request: QueryChannelClientStateRequest): Promise<QueryChannelClientStateResponse> {
     const data = QueryChannelClientStateRequest.encode(request).finish();
-    const promise = this.rpc.request("ibc.core.channel.v1.Query", "methodDesc.name", data);
+    const promise = this.rpc.request("ibc.core.channel.v1.Query", "ChannelClientState", data);
     return promise.then((data) => QueryChannelClientStateResponse.decode(new _m0.Reader(data)));
   }
 
@@ -2670,25 +2670,25 @@ export class QueryClientImpl implements Query {
     request: QueryChannelConsensusStateRequest,
   ): Promise<QueryChannelConsensusStateResponse> {
     const data = QueryChannelConsensusStateRequest.encode(request).finish();
-    const promise = this.rpc.request("ibc.core.channel.v1.Query", "methodDesc.name", data);
+    const promise = this.rpc.request("ibc.core.channel.v1.Query", "ChannelConsensusState", data);
     return promise.then((data) => QueryChannelConsensusStateResponse.decode(new _m0.Reader(data)));
   }
 
   PacketCommitment(request: QueryPacketCommitmentRequest): Promise<QueryPacketCommitmentResponse> {
     const data = QueryPacketCommitmentRequest.encode(request).finish();
-    const promise = this.rpc.request("ibc.core.channel.v1.Query", "methodDesc.name", data);
+    const promise = this.rpc.request("ibc.core.channel.v1.Query", "PacketCommitment", data);
     return promise.then((data) => QueryPacketCommitmentResponse.decode(new _m0.Reader(data)));
   }
 
   PacketCommitments(request: QueryPacketCommitmentsRequest): Promise<QueryPacketCommitmentsResponse> {
     const data = QueryPacketCommitmentsRequest.encode(request).finish();
-    const promise = this.rpc.request("ibc.core.channel.v1.Query", "methodDesc.name", data);
+    const promise = this.rpc.request("ibc.core.channel.v1.Query", "PacketCommitments", data);
     return promise.then((data) => QueryPacketCommitmentsResponse.decode(new _m0.Reader(data)));
   }
 
   PacketReceipt(request: QueryPacketReceiptRequest): Promise<QueryPacketReceiptResponse> {
     const data = QueryPacketReceiptRequest.encode(request).finish();
-    const promise = this.rpc.request("ibc.core.channel.v1.Query", "methodDesc.name", data);
+    const promise = this.rpc.request("ibc.core.channel.v1.Query", "PacketReceipt", data);
     return promise.then((data) => QueryPacketReceiptResponse.decode(new _m0.Reader(data)));
   }
 
@@ -2696,7 +2696,7 @@ export class QueryClientImpl implements Query {
     request: QueryPacketAcknowledgementRequest,
   ): Promise<QueryPacketAcknowledgementResponse> {
     const data = QueryPacketAcknowledgementRequest.encode(request).finish();
-    const promise = this.rpc.request("ibc.core.channel.v1.Query", "methodDesc.name", data);
+    const promise = this.rpc.request("ibc.core.channel.v1.Query", "PacketAcknowledgement", data);
     return promise.then((data) => QueryPacketAcknowledgementResponse.decode(new _m0.Reader(data)));
   }
 
@@ -2704,25 +2704,25 @@ export class QueryClientImpl implements Query {
     request: QueryPacketAcknowledgementsRequest,
   ): Promise<QueryPacketAcknowledgementsResponse> {
     const data = QueryPacketAcknowledgementsRequest.encode(request).finish();
-    const promise = this.rpc.request("ibc.core.channel.v1.Query", "methodDesc.name", data);
+    const promise = this.rpc.request("ibc.core.channel.v1.Query", "PacketAcknowledgements", data);
     return promise.then((data) => QueryPacketAcknowledgementsResponse.decode(new _m0.Reader(data)));
   }
 
   UnreceivedPackets(request: QueryUnreceivedPacketsRequest): Promise<QueryUnreceivedPacketsResponse> {
     const data = QueryUnreceivedPacketsRequest.encode(request).finish();
-    const promise = this.rpc.request("ibc.core.channel.v1.Query", "methodDesc.name", data);
+    const promise = this.rpc.request("ibc.core.channel.v1.Query", "UnreceivedPackets", data);
     return promise.then((data) => QueryUnreceivedPacketsResponse.decode(new _m0.Reader(data)));
   }
 
   UnreceivedAcks(request: QueryUnreceivedAcksRequest): Promise<QueryUnreceivedAcksResponse> {
     const data = QueryUnreceivedAcksRequest.encode(request).finish();
-    const promise = this.rpc.request("ibc.core.channel.v1.Query", "methodDesc.name", data);
+    const promise = this.rpc.request("ibc.core.channel.v1.Query", "UnreceivedAcks", data);
     return promise.then((data) => QueryUnreceivedAcksResponse.decode(new _m0.Reader(data)));
   }
 
   NextSequenceReceive(request: QueryNextSequenceReceiveRequest): Promise<QueryNextSequenceReceiveResponse> {
     const data = QueryNextSequenceReceiveRequest.encode(request).finish();
-    const promise = this.rpc.request("ibc.core.channel.v1.Query", "methodDesc.name", data);
+    const promise = this.rpc.request("ibc.core.channel.v1.Query", "NextSequenceReceive", data);
     return promise.then((data) => QueryNextSequenceReceiveResponse.decode(new _m0.Reader(data)));
   }
 }
