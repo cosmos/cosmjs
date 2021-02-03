@@ -24,7 +24,7 @@ import {
   QueryConnectionsResponse,
 } from "../codec/ibc/core/connection/v1/query";
 import { QueryClient } from "./queryclient";
-import { createPagination, toObject } from "./utils";
+import { createPagination, createRpc, toObject } from "./utils";
 
 export interface IbcExtension {
   readonly ibc: {
@@ -89,24 +89,11 @@ export interface IbcExtension {
 }
 
 export function setupIbcExtension(base: QueryClient): IbcExtension {
-  // Use this service to get easy typed access to query methods
-  // This cannot be used to for proof verification
-
-  const channelQueryService = new ChannelQuery({
-    request: (service: string, method: string, data: Uint8Array): Promise<Uint8Array> => {
-      // Parts of the path are unavailable, so we hardcode them here. See https://github.com/protobufjs/protobuf.js/issues/1229
-      const path = `/ibc.core.channel.v1.Query/${method}`;
-      return base.queryUnverified(path, data);
-    },
-  });
-
-  const connectionQueryService = new ConnectionQuery({
-    request: (service: string, method: string, data: Uint8Array): Promise<Uint8Array> => {
-      // Parts of the path are unavailable, so we hardcode them here. See https://github.com/protobufjs/protobuf.js/issues/1229
-      const path = `/ibc.core.connection.v1.Query/${method}`;
-      return base.queryUnverified(path, data);
-    },
-  });
+  const rpc = createRpc(base);
+  // Use these services to get easy typed access to query methods
+  // These cannot be used for proof verification
+  const channelQueryService = new ChannelQuery(rpc);
+  const connectionQueryService = new ConnectionQuery(rpc);
 
   return {
     ibc: {

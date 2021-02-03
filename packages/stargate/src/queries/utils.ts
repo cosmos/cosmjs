@@ -1,6 +1,8 @@
 import { Bech32 } from "@cosmjs/encoding";
 import Long from "long";
 
+import { QueryClient } from "./queryclient";
+
 /**
  * Takes a bech32 encoded address and returns the data part. The prefix is ignored and discarded.
  * This is called AccAddress in Cosmos SDK, which is basically an alias for raw binary data.
@@ -32,5 +34,18 @@ export function createPagination(
     offset: Long.fromNumber(0),
     limit: Long.fromNumber(0),
     countTotal: false,
+  };
+}
+
+interface Rpc {
+  request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
+}
+
+export function createRpc(base: QueryClient): Rpc {
+  return {
+    request: (service: string, method: string, data: Uint8Array): Promise<Uint8Array> => {
+      const path = `/${service}/${method}`;
+      return base.queryUnverified(path, data);
+    },
   };
 }

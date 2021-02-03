@@ -14,7 +14,7 @@ import {
   QueryValidatorSlashesResponse,
 } from "../codec/cosmos/distribution/v1beta1/query";
 import { QueryClient } from "./queryclient";
-import { createPagination, toObject } from "./utils";
+import { createPagination, createRpc, toObject } from "./utils";
 
 export interface DistributionExtension {
   readonly distribution: {
@@ -43,15 +43,11 @@ export interface DistributionExtension {
 }
 
 export function setupDistributionExtension(base: QueryClient): DistributionExtension {
+  const rpc = createRpc(base);
   // Use this service to get easy typed access to query methods
-  // This cannot be used to for proof verification
-  const queryService = new QueryClientImpl({
-    request: (service: string, method: string, data: Uint8Array): Promise<Uint8Array> => {
-      // Parts of the path are unavailable, so we hardcode them here. See https://github.com/protobufjs/protobuf.js/issues/1229
-      const path = `/cosmos.distribution.v1beta1.Query/${method}`;
-      return base.queryUnverified(path, data);
-    },
-  });
+  // This cannot be used for proof verification
+  const queryService = new QueryClientImpl(rpc);
+
   return {
     distribution: {
       unverified: {

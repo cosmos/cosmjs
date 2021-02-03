@@ -5,7 +5,7 @@ import { assert } from "@cosmjs/utils";
 import { QueryClientImpl } from "../codec/cosmos/bank/v1beta1/query";
 import { Coin } from "../codec/cosmos/base/v1beta1/coin";
 import { QueryClient } from "./queryclient";
-import { toAccAddress, toObject } from "./utils";
+import { createRpc, toAccAddress, toObject } from "./utils";
 
 export interface BankExtension {
   readonly bank: {
@@ -20,15 +20,10 @@ export interface BankExtension {
 }
 
 export function setupBankExtension(base: QueryClient): BankExtension {
+  const rpc = createRpc(base);
   // Use this service to get easy typed access to query methods
-  // This cannot be used to for proof verification
-  const queryService = new QueryClientImpl({
-    request: (service: string, method: string, data: Uint8Array): Promise<Uint8Array> => {
-      // Parts of the path are unavailable, so we hardcode them here. See https://github.com/protobufjs/protobuf.js/issues/1229
-      const path = `/cosmos.bank.v1beta1.Query/${method}`;
-      return base.queryUnverified(path, data);
-    },
-  });
+  // This cannot be used for proof verification
+  const queryService = new QueryClientImpl(rpc);
 
   return {
     bank: {

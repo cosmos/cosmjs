@@ -20,7 +20,7 @@ import {
 } from "../codec/cosmos/staking/v1beta1/query";
 import { BondStatus } from "../codec/cosmos/staking/v1beta1/staking";
 import { QueryClient } from "./queryclient";
-import { createPagination, toObject } from "./utils";
+import { createPagination, createRpc, toObject } from "./utils";
 
 export type BondStatusString = Exclude<keyof typeof BondStatus, "BOND_STATUS_UNSPECIFIED">;
 
@@ -73,14 +73,9 @@ export interface StakingExtension {
 
 export function setupStakingExtension(base: QueryClient): StakingExtension {
   // Use this service to get easy typed access to query methods
-  // This cannot be used to for proof verification
-  const queryService = new QueryClientImpl({
-    request: (service: "string", method: string, data: Uint8Array): Promise<Uint8Array> => {
-      // Parts of the path are unavailable, so we hardcode them here. See https://github.com/protobufjs/protobuf.js/issues/1229
-      const path = `/cosmos.staking.v1beta1.Query/${method}`;
-      return base.queryUnverified(path, data);
-    },
-  });
+  // This cannot be used for proof verification
+  const rpc = createRpc(base);
+  const queryService = new QueryClientImpl(rpc);
 
   return {
     staking: {

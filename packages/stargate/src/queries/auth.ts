@@ -5,7 +5,7 @@ import { BaseAccount } from "../codec/cosmos/auth/v1beta1/auth";
 import { QueryClientImpl } from "../codec/cosmos/auth/v1beta1/query";
 import { Any } from "../codec/google/protobuf/any";
 import { QueryClient } from "./queryclient";
-import { toAccAddress, toObject } from "./utils";
+import { createRpc, toAccAddress, toObject } from "./utils";
 
 export interface AuthExtension {
   readonly auth: {
@@ -17,15 +17,10 @@ export interface AuthExtension {
 }
 
 export function setupAuthExtension(base: QueryClient): AuthExtension {
+  const rpc = createRpc(base);
   // Use this service to get easy typed access to query methods
-  // This cannot be used to for proof verification
-  const queryService = new QueryClientImpl({
-    request: (service: string, method: string, data: Uint8Array): Promise<Uint8Array> => {
-      // Parts of the path are unavailable, so we hardcode them here. See https://github.com/protobufjs/protobuf.js/issues/1229
-      const path = `/cosmos.auth.v1beta1.Query/${method}`;
-      return base.queryUnverified(path, data);
-    },
-  });
+  // This cannot be used for proof verification
+  const queryService = new QueryClientImpl(rpc);
 
   return {
     auth: {

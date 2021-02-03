@@ -1,4 +1,5 @@
 import Long from "long";
+import { QueryClient } from "./queryclient";
 /**
  * Takes a bech32 encoded address and returns the data part. The prefix is ignored and discarded.
  * This is called AccAddress in Cosmos SDK, which is basically an alias for raw binary data.
@@ -18,3 +19,8 @@ export declare function createPagination(
   readonly limit: Long;
   readonly countTotal: boolean;
 };
+interface Rpc {
+  request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
+}
+export declare function createRpc(base: QueryClient): Rpc;
+export {};
