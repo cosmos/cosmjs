@@ -1,5 +1,4 @@
-build/**/*.js
-build/**/*.js.map
+build/**/*
 dist/
 docs/
 
