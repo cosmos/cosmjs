@@ -48,3 +48,10 @@ protoc \
   "$THIRD_PARTY_PROTO_DIR/tendermint/types/types.proto" \
   "$THIRD_PARTY_PROTO_DIR/tendermint/types/validator.proto" \
   "$THIRD_PARTY_PROTO_DIR/tendermint/version/types.proto"
+
+# Remove unnecessary codec files
+rm -rf \
+  src/codec/cosmos_proto/ \
+  src/codec/gogoproto/ \
+  src/codec/google/api/ \
+  src/codec/google/protobuf/descriptor.ts
