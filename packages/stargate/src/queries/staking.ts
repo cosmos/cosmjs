@@ -117,7 +117,7 @@ export function setupStakingExtension(base: QueryClient): StakingExtension {
         },
         historicalInfo: async (height: number) => {
           const response = await queryService.HistoricalInfo({
-            height: Long.fromNumber(height),
+            height: Long.fromNumber(height, true),
           });
           return response;
         },

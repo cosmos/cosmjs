@@ -104,8 +104,8 @@ export function setupDistributionExtension(base: QueryClient): DistributionExten
         ) => {
           const response = await queryService.ValidatorSlashes({
             validatorAddress: validatorAddress,
-            startingHeight: Long.fromNumber(startingHeight),
-            endingHeight: Long.fromNumber(endingHeight),
+            startingHeight: Long.fromNumber(startingHeight, true),
+            endingHeight: Long.fromNumber(endingHeight, true),
             pagination: createPagination(paginationKey),
           });
           return response;

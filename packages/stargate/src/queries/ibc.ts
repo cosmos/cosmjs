@@ -153,7 +153,7 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
           const response = await channelQueryService.PacketCommitment({
             portId: portId,
             channelId: channelId,
-            sequence: Long.fromNumber(sequence),
+            sequence: Long.fromNumber(sequence, true),
           });
           return response;
         },
@@ -170,7 +170,7 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
           const response = await channelQueryService.PacketAcknowledgement({
             portId: portId,
             channelId: channelId,
-            sequence: Long.fromNumber(sequence),
+            sequence: Long.fromNumber(sequence, true),
           });
           return response;
         },
@@ -190,7 +190,7 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
           const response = await channelQueryService.UnreceivedPackets({
             portId: portId,
             channelId: channelId,
-            packetCommitmentSequences: packetCommitmentSequences.map((s) => Long.fromNumber(s)),
+            packetCommitmentSequences: packetCommitmentSequences.map((s) => Long.fromNumber(s, true)),
           });
           return response;
         },
@@ -198,7 +198,7 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
           const response = await channelQueryService.UnreceivedAcks({
             portId: portId,
             channelId: channelId,
-            packetAckSequences: packetAckSequences.map((s) => Long.fromNumber(s)),
+            packetAckSequences: packetAckSequences.map((s) => Long.fromNumber(s, true)),
           });
           return response;
         },
