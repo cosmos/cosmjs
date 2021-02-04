@@ -22,3 +22,8 @@ protoc \
   "$WASMD_PROTO_DIR/x/wasm/internal/types/tx.proto" \
   "$COSMOS_PROTO_DIR/cosmos/base/v1beta1/coin.proto" \
   "$COSMOS_PROTO_DIR/cosmos/base/query/v1beta1/pagination.proto"
+
+# Remove unnecessary codec files
+rm -rf \
+  src/codec/gogoproto/ \
+  src/codec/google/
