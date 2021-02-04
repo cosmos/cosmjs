@@ -22,8 +22,8 @@ export function createPagination(
 } {
   return {
     key: paginationKey ?? new Uint8Array(),
-    offset: Long.fromNumber(0),
-    limit: Long.fromNumber(0),
+    offset: Long.fromNumber(0, true),
+    limit: Long.fromNumber(0, true),
     countTotal: false,
   };
 }

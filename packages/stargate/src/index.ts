@@ -3,6 +3,7 @@ export { parseRawLog } from "./logs";
 export {
   AuthExtension,
   BankExtension,
+  createPagination,
   createRpc,
   DistributionExtension,
   IbcExtension,
