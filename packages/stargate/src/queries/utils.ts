@@ -24,7 +24,7 @@ export function createPagination(paginationKey?: Uint8Array): PageRequest | unde
     : undefined;
 }
 
-interface Rpc {
+export interface Rpc {
   request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
 }
 

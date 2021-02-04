@@ -8,6 +8,7 @@ export {
   DistributionExtension,
   IbcExtension,
   QueryClient,
+  Rpc,
   setupAuthExtension,
   setupBankExtension,
   setupDistributionExtension,

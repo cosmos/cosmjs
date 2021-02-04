@@ -7,8 +7,7 @@ import { QueryClient } from "./queryclient";
  */
 export declare function toAccAddress(address: string): Uint8Array;
 export declare function createPagination(paginationKey?: Uint8Array): PageRequest | undefined;
-interface Rpc {
+export interface Rpc {
   request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
 }
 export declare function createRpc(base: QueryClient): Rpc;
-export {};
