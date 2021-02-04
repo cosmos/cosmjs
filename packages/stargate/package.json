@@ -56,8 +56,5 @@
     "@cosmjs/utils": "^0.24.0-alpha.22",
     "long": "^4.0.0",
     "protobufjs": "~6.10.2"
-  },
-  "devDependencies": {
-    "ts-proto": "^1.53.0"
   }
 }
