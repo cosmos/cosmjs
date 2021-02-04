@@ -1,6 +1,7 @@
 import { Bech32 } from "@cosmjs/encoding";
 import Long from "long";
 
+import { PageRequest } from "../codec/cosmos/base/query/v1beta1/pagination";
 import { QueryClient } from "./queryclient";
 
 /**
@@ -12,20 +13,15 @@ export function toAccAddress(address: string): Uint8Array {
   return Bech32.decode(address).data;
 }
 
-export function createPagination(
-  paginationKey?: Uint8Array,
-): {
-  readonly key: Uint8Array;
-  readonly offset: Long;
-  readonly limit: Long;
-  readonly countTotal: boolean;
-} {
-  return {
-    key: paginationKey ?? new Uint8Array(),
-    offset: Long.fromNumber(0, true),
-    limit: Long.fromNumber(0, true),
-    countTotal: false,
-  };
+export function createPagination(paginationKey?: Uint8Array): PageRequest | undefined {
+  return paginationKey
+    ? {
+        key: paginationKey,
+        offset: Long.fromNumber(0, true),
+        limit: Long.fromNumber(0, true),
+        countTotal: false,
+      }
+    : undefined;
 }
 
 interface Rpc {
