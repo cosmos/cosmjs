@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { JsonObject } from "@cosmjs/cosmwasm-launchpad";
 import { fromUtf8, toAscii } from "@cosmjs/encoding";
-import { createRpc, QueryClient } from "@cosmjs/stargate";
+import { createPagination, createRpc, QueryClient } from "@cosmjs/stargate";
 import Long from "long";
 
 import {
@@ -73,12 +73,7 @@ export function setupWasmExtension(base: QueryClient): WasmExtension {
       wasm: {
         listCodeInfo: async (paginationKey?: Uint8Array) => {
           const request = {
-            pagination: {
-              key: paginationKey ?? new Uint8Array(),
-              offset: Long.fromNumber(0),
-              limit: Long.fromNumber(0),
-              countTotal: false,
-            },
+            pagination: createPagination(paginationKey),
           };
           return queryService.Codes(request);
         },
@@ -88,12 +83,7 @@ export function setupWasmExtension(base: QueryClient): WasmExtension {
         },
         listContractsByCodeId: async (id: number, paginationKey?: Uint8Array) => {
           const pagination = {
-            pagination: {
-              key: paginationKey ?? new Uint8Array(),
-              offset: Long.fromNumber(0),
-              limit: Long.fromNumber(0),
-              countTotal: false,
-            },
+            pagination: createPagination(paginationKey),
           };
           const request = { ...pagination, codeId: Long.fromNumber(id) };
           return queryService.ContractsByCode(request);
@@ -105,12 +95,7 @@ export function setupWasmExtension(base: QueryClient): WasmExtension {
 
         getContractCodeHistory: async (address: string, paginationKey?: Uint8Array) => {
           const pagination = {
-            pagination: {
-              key: paginationKey ?? new Uint8Array(),
-              offset: Long.fromNumber(0),
-              limit: Long.fromNumber(0),
-              countTotal: false,
-            },
+            pagination: createPagination(paginationKey),
           };
           const request = { ...pagination, address: address };
           return queryService.ContractHistory(request);
@@ -118,12 +103,7 @@ export function setupWasmExtension(base: QueryClient): WasmExtension {
 
         getAllContractState: async (address: string, paginationKey?: Uint8Array) => {
           const pagination = {
-            pagination: {
-              key: paginationKey ?? new Uint8Array(),
-              offset: Long.fromNumber(0),
-              limit: Long.fromNumber(0),
-              countTotal: false,
-            },
+            pagination: createPagination(paginationKey),
           };
           const request = { ...pagination, address: address };
           return queryService.AllContractState(request);
