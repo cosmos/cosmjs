@@ -23,6 +23,7 @@ import { LedgerSigner } from "./ledgersigner";
 import {
   faucet,
   launchpad,
+  ledgerEnabled,
   pendingWithoutLaunchpad,
   pendingWithoutLedger,
   pendingWithoutSimapp,
@@ -72,11 +73,15 @@ describe("LedgerSigner", () => {
   });
 
   beforeEach(async () => {
-    transport = await createTransport();
+    if (ledgerEnabled()) {
+      transport = await createTransport();
+    }
   });
 
   afterEach(async () => {
-    await transport.close();
+    if (ledgerEnabled()) {
+      await transport.close();
+    }
   });
 
   describe("getAccount", () => {
