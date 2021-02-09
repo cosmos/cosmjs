@@ -8,10 +8,10 @@ import { Any } from "./codec/google/protobuf/any";
 export function encodePubkey(pubkey: LaunchpadPubKey): Any {
   switch (pubkey.type) {
     case "tendermint/PubKeySecp256k1": {
-      const pubkeyProto = PubKey.fromJSON({
+      const pubkeyProto = PubKey.fromPartial({
         key: fromBase64(pubkey.value),
       });
-      return Any.fromJSON({
+      return Any.fromPartial({
         typeUrl: "/cosmos.crypto.secp256k1.PubKey",
         value: Uint8Array.from(PubKey.encode(pubkeyProto).finish()),
       });

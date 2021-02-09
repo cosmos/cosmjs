@@ -13,7 +13,7 @@ describe("pubkey", () => {
     it("works for secp256k1", () => {
       const pubkey = { type: "tendermint/PubKeySecp256k1", value: defaultPubkeyBase64 };
       expect(encodePubkey(pubkey)).toEqual(
-        Any.fromJSON({
+        Any.fromPartial({
           typeUrl: "/cosmos.crypto.secp256k1.PubKey",
           value: defaultPubkeyProtoBytes,
         }),

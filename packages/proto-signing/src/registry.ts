@@ -80,7 +80,7 @@ export class Registry {
   public encodeTxBody(txBodyFields: TxBodyValue): Uint8Array {
     const wrappedMessages = txBodyFields.messages.map((message) => {
       const messageBytes = this.encode(message);
-      return Any.fromJSON({
+      return Any.fromPartial({
         typeUrl: message.typeUrl,
         value: messageBytes,
       });

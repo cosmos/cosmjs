@@ -62,7 +62,7 @@ describe("signing", () => {
     const myRegistry = new Registry();
     const wallet = await DirectSecp256k1HdWallet.fromMnemonic(faucet.mnemonic);
     const [{ address, pubkey: pubkeyBytes }] = await wallet.getAccounts();
-    const publicKey = PubKey.fromJSON({
+    const publicKey = PubKey.fromPartial({
       key: pubkeyBytes,
     });
     const publicKeyBytes = PubKey.encode(publicKey).finish();
@@ -89,7 +89,10 @@ describe("signing", () => {
       value: txBodyFields,
     });
 
-    const publicKeyAny = Any.fromJSON({ typeUrl: "/cosmos.crypto.secp256k1.PubKey", value: publicKeyBytes });
+    const publicKeyAny = Any.fromPartial({
+      typeUrl: "/cosmos.crypto.secp256k1.PubKey",
+      value: publicKeyBytes,
+    });
     const accountNumber = 1;
 
     await Promise.all(

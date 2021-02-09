@@ -32,7 +32,7 @@ describe("protobuf demo", () => {
       amount: [coin],
     });
     const msgSendBytes = MsgSend.encode(msgSend).finish();
-    const msgSendWrapped = Any.fromJSON({
+    const msgSendWrapped = Any.fromPartial({
       typeUrl: "/cosmos.bank.v1beta1.MsgSend",
       value: msgSendBytes,
     });
@@ -64,7 +64,7 @@ describe("protobuf demo", () => {
       example: "Some example text",
     }) as unknown) as MsgDemo;
     const msgDemoBytes = encoder.encode(msgDemo).finish();
-    const msgDemoWrapped = Any.fromJSON({
+    const msgDemoWrapped = Any.fromPartial({
       typeUrl: typeUrl,
       value: msgDemoBytes,
     });
@@ -95,7 +95,7 @@ describe("protobuf demo", () => {
       example: "Some example text",
     }) as unknown) as MsgDemo;
     const msgDemoBytes = encoder.encode(msgDemo).finish();
-    const msgDemoWrapped = Any.fromJSON({
+    const msgDemoWrapped = Any.fromPartial({
       typeUrl: typeUrl,
       value: msgDemoBytes,
     });
@@ -125,7 +125,7 @@ describe("protobuf demo", () => {
       example: "Some example text",
     }) as unknown) as MsgDemo;
     const msgDemoBytes = encoder.encode(msgDemo).finish();
-    const msgDemoWrapped = Any.fromJSON({
+    const msgDemoWrapped = Any.fromPartial({
       typeUrl: typeUrl,
       value: msgDemoBytes,
     });

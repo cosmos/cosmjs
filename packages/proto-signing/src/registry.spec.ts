@@ -13,17 +13,17 @@ describe("registry demo", () => {
     const Coin = registry.lookupType("/cosmos.base.v1beta1.Coin")!;
     const MsgSend = registry.lookupType("/cosmos.bank.v1beta1.MsgSend")!;
 
-    const coin = Coin.fromJSON({
+    const coin = Coin.fromPartial({
       denom: "ucosm",
       amount: "1234567890",
     });
-    const msgSend = (MsgSend.fromJSON({
+    const msgSend = (MsgSend.fromPartial({
       fromAddress: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
       toAddress: "cosmos1qypqxpq9qcrsszg2pvxq6rs0zqg3yyc5lzv7xu",
       amount: [coin],
     }) as unknown) as IMsgSend;
     const msgSendBytes = MsgSend.encode(msgSend).finish();
-    const msgSendWrapped = Any.fromJSON({
+    const msgSendWrapped = Any.fromPartial({
       typeUrl: "/cosmos.bank.v1beta1.MsgSend",
       value: msgSendBytes,
     });
@@ -55,7 +55,7 @@ describe("registry demo", () => {
   //   const registry = new Registry([[typeUrl, MsgDemoType]]);
   //   const MsgDemo = registry.lookupType(typeUrl)!;
 
-  //   const msgDemo = MsgDemo.fromJSON({
+  //   const msgDemo = MsgDemo.fromPartial({
   //     example: "Some example text",
   //   });
   //   const msgDemoBytes = MsgDemo.encode(msgDemo).finish();
