@@ -1,0 +1,253 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>UninterpretedOption | @cosmjs/proto-signing Documentation</title>
+	<meta name="description" content="Documentation for @cosmjs/proto-signing Documentation">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">@cosmjs/proto-signing Documentation</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../globals.html">Globals</a>
+				</li>
+				<li>
+					<a href="uninterpretedoption.html">UninterpretedOption</a>
+				</li>
+			</ul>
+			<h1>Interface UninterpretedOption</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>A message representing a option the parser does not recognize. This only
+							appears in options protos created by the compiler::Parser class.
+							DescriptorPool resolves these when building Descriptor objects. Therefore,
+							options protos in descriptor objects (e.g. returned by Descriptor::options(),
+							or produced by Descriptor::CopyTo()) will never have UninterpretedOptions
+						in them.</p>
+					</div>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="target">UninterpretedOption</span>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="uninterpretedoption.html#aggregatevalue" class="tsd-kind-icon">aggregate<wbr>Value</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="uninterpretedoption.html#doublevalue" class="tsd-kind-icon">double<wbr>Value</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="uninterpretedoption.html#identifiervalue" class="tsd-kind-icon">identifier<wbr>Value</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="uninterpretedoption.html#name" class="tsd-kind-icon">name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="uninterpretedoption.html#negativeintvalue" class="tsd-kind-icon">negative<wbr>Int<wbr>Value</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="uninterpretedoption.html#positiveintvalue" class="tsd-kind-icon">positive<wbr>Int<wbr>Value</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="uninterpretedoption.html#stringvalue" class="tsd-kind-icon">string<wbr>Value</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="aggregatevalue" class="tsd-anchor"></a>
+					<h3>aggregate<wbr>Value</h3>
+					<div class="tsd-signature tsd-kind-icon">aggregate<wbr>Value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/dfe39c034/packages/proto-signing/src/codec/google/protobuf/descriptor.ts#L924">src/codec/google/protobuf/descriptor.ts:924</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="doublevalue" class="tsd-anchor"></a>
+					<h3>double<wbr>Value</h3>
+					<div class="tsd-signature tsd-kind-icon">double<wbr>Value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/dfe39c034/packages/proto-signing/src/codec/google/protobuf/descriptor.ts#L922">src/codec/google/protobuf/descriptor.ts:922</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="identifiervalue" class="tsd-anchor"></a>
+					<h3>identifier<wbr>Value</h3>
+					<div class="tsd-signature tsd-kind-icon">identifier<wbr>Value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/dfe39c034/packages/proto-signing/src/codec/google/protobuf/descriptor.ts#L919">src/codec/google/protobuf/descriptor.ts:919</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The value of the uninterpreted option, in whatever type the tokenizer
+							identified it as during parsing. Exactly one of these should be set.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="name" class="tsd-anchor"></a>
+					<h3>name</h3>
+					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <a href="uninterpretedoption_namepart.html" class="tsd-signature-type">UninterpretedOption_NamePart</a><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/dfe39c034/packages/proto-signing/src/codec/google/protobuf/descriptor.ts#L914">src/codec/google/protobuf/descriptor.ts:914</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="negativeintvalue" class="tsd-anchor"></a>
+					<h3>negative<wbr>Int<wbr>Value</h3>
+					<div class="tsd-signature tsd-kind-icon">negative<wbr>Int<wbr>Value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Long</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/dfe39c034/packages/proto-signing/src/codec/google/protobuf/descriptor.ts#L921">src/codec/google/protobuf/descriptor.ts:921</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="positiveintvalue" class="tsd-anchor"></a>
+					<h3>positive<wbr>Int<wbr>Value</h3>
+					<div class="tsd-signature tsd-kind-icon">positive<wbr>Int<wbr>Value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Long</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/dfe39c034/packages/proto-signing/src/codec/google/protobuf/descriptor.ts#L920">src/codec/google/protobuf/descriptor.ts:920</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="stringvalue" class="tsd-anchor"></a>
+					<h3>string<wbr>Value</h3>
+					<div class="tsd-signature tsd-kind-icon">string<wbr>Value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Uint8Array</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/dfe39c034/packages/proto-signing/src/codec/google/protobuf/descriptor.ts#L923">src/codec/google/protobuf/descriptor.ts:923</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="../globals.html"><em>Globals</em></a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-interface">
+						<a href="uninterpretedoption.html" class="tsd-kind-icon">Uninterpreted<wbr>Option</a>
+						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="uninterpretedoption.html#aggregatevalue" class="tsd-kind-icon">aggregate<wbr>Value</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="uninterpretedoption.html#doublevalue" class="tsd-kind-icon">double<wbr>Value</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="uninterpretedoption.html#identifiervalue" class="tsd-kind-icon">identifier<wbr>Value</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="uninterpretedoption.html#name" class="tsd-kind-icon">name</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="uninterpretedoption.html#negativeintvalue" class="tsd-kind-icon">negative<wbr>Int<wbr>Value</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="uninterpretedoption.html#positiveintvalue" class="tsd-kind-icon">positive<wbr>Int<wbr>Value</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="uninterpretedoption.html#stringvalue" class="tsd-kind-icon">string<wbr>Value</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

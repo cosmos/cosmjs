@@ -1,0 +1,261 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Timestamp | @cosmjs/stargate Documentation</title>
+	<meta name="description" content="Documentation for @cosmjs/stargate Documentation">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">@cosmjs/stargate Documentation</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../globals.html">Globals</a>
+				</li>
+				<li>
+					<a href="timestamp.html">Timestamp</a>
+				</li>
+			</ul>
+			<h1>Interface Timestamp</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>A Timestamp represents a point in time independent of any time zone or local
+							calendar, encoded as a count of seconds and fractions of seconds at
+							nanosecond resolution. The count is relative to an epoch at UTC midnight on
+							January 1, 1970, in the proleptic Gregorian calendar which extends the
+						Gregorian calendar backwards to year one.</p>
+					</div>
+					<p>All minutes are 60 seconds long. Leap seconds are &quot;smeared&quot; so that no leap
+						second table is needed for interpretation, using a <a href="https://developers.google.com/time/smear">24-hour linear
+					smear</a>.</p>
+					<p>The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By
+						restricting to that range, we ensure that we can convert to and from <a href="https://www.ietf.org/rfc/rfc3339.txt">RFC
+					3339</a> date strings.</p>
+					<a href="#examples" id="examples" style="color: inherit; text-decoration: none;">
+						<h1>Examples</h1>
+					</a>
+					<p>Example 1: Compute Timestamp from POSIX <code>time()</code>.</p>
+					<pre><code><span class="hljs-type">Timestamp</span> <span class="hljs-type">timestamp</span>;
+<span class="hljs-type">timestamp</span>.set_seconds(<span class="hljs-type">time</span>(<span class="hljs-keyword">NULL</span>));
+<span class="hljs-type">timestamp</span>.set_nanos(<span class="hljs-number">0</span>);</code></pre>
+					<p>Example 2: Compute Timestamp from POSIX <code>gettimeofday()</code>.</p>
+					<pre><code><span class="hljs-keyword">struct</span> timeval tv;
+gettimeofday(&amp;tv, NULL);
+
+Timestamp timestamp;
+timestamp.set<span class="hljs-constructor">_seconds(<span class="hljs-params">tv</span>.<span class="hljs-params">tv_sec</span>)</span>;
+timestamp.set<span class="hljs-constructor">_nanos(<span class="hljs-params">tv</span>.<span class="hljs-params">tv_usec</span> <span class="hljs-operator">*</span> 1000)</span>;</code></pre>
+					<p>Example 3: Compute Timestamp from Win32 <code>GetSystemTimeAsFileTime()</code>.</p>
+					<pre><code>FILETIME ft;
+GetSystemTimeAsFileTime(&amp;ft);
+UINT64 ticks = (((UINT64)ft.dwHighDateTime) &lt;&lt; <span class="hljs-number">32</span>) | ft.dwLowDateTime;
+
+// A Windows tick <span class="hljs-keyword">is</span> <span class="hljs-number">100</span> nanoseconds. Windows epoch <span class="hljs-number">1601</span><span class="hljs-number">-01</span><span class="hljs-number">-01</span>T00:<span class="hljs-number">00</span>:<span class="hljs-number">00</span>Z
+// <span class="hljs-keyword">is</span> <span class="hljs-number">11644473600</span> seconds <span class="hljs-keyword">before</span> Unix epoch <span class="hljs-number">1970</span><span class="hljs-number">-01</span><span class="hljs-number">-01</span>T00:<span class="hljs-number">00</span>:<span class="hljs-number">00</span>Z.
+<span class="hljs-type">Timestamp</span> <span class="hljs-type">timestamp</span>;
+<span class="hljs-type">timestamp</span>.set_seconds((INT64) ((ticks / <span class="hljs-number">10000000</span>) - <span class="hljs-number">11644473600</span>LL));
+<span class="hljs-type">timestamp</span>.set_nanos((INT32) ((ticks % <span class="hljs-number">10000000</span>) * <span class="hljs-number">100</span>));</code></pre>
+					<p>Example 4: Compute Timestamp from Java <code>System.currentTimeMillis()</code>.</p>
+					<pre><code>long millis = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>current<span class="hljs-constructor">TimeMillis()</span>;
+
+Timestamp timestamp = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Timestamp</span>.</span></span><span class="hljs-keyword">new</span><span class="hljs-constructor">Builder()</span>.set<span class="hljs-constructor">Seconds(<span class="hljs-params">millis</span> <span class="hljs-operator">/</span> 1000)</span>
+    .set<span class="hljs-constructor">Nanos((<span class="hljs-params">int</span>)</span> ((millis % <span class="hljs-number">1000</span>)<span class="hljs-operator"> * </span><span class="hljs-number">1000000</span>)).build<span class="hljs-literal">()</span>;</code></pre>
+					<p>Example 5: Compute Timestamp from Java <code>Instant.now()</code>.</p>
+					<pre><code>Instant now = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Instant</span>.</span></span>now<span class="hljs-literal">()</span>;
+
+Timestamp timestamp =
+    <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Timestamp</span>.</span></span><span class="hljs-keyword">new</span><span class="hljs-constructor">Builder()</span>.set<span class="hljs-constructor">Seconds(<span class="hljs-params">now</span>.<span class="hljs-params">getEpochSecond</span>()</span>)
+        .set<span class="hljs-constructor">Nanos(<span class="hljs-params">now</span>.<span class="hljs-params">getNano</span>()</span>).build<span class="hljs-literal">()</span>;</code></pre>
+					<p>Example 6: Compute Timestamp from current time in Python.</p>
+					<pre><code><span class="hljs-type">timestamp</span> = <span class="hljs-type">Timestamp</span>()
+<span class="hljs-type">timestamp</span>.GetCurrentTime()</code></pre>
+					<a href="#json-mapping" id="json-mapping" style="color: inherit; text-decoration: none;">
+						<h1>JSON Mapping</h1>
+					</a>
+					<p>In JSON format, the Timestamp type is encoded as a string in the
+						<a href="https://www.ietf.org/rfc/rfc3339.txt">RFC 3339</a> format. That is, the
+						format is &quot;{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z&quot;
+						where {year} is always expressed using four digits while {month}, {day},
+						{hour}, {min}, and {sec} are zero-padded to two digits each. The fractional
+						seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),
+						are optional. The &quot;Z&quot; suffix indicates the timezone (&quot;UTC&quot;); the timezone
+						is required. A proto3 JSON serializer should always use UTC (as indicated by
+						&quot;Z&quot;) when printing the Timestamp type and a proto3 JSON parser should be
+					able to accept both UTC and other timezones (as indicated by an offset).</p>
+					<p>For example, &quot;2017-01-15T01:30:15.01Z&quot; encodes 15.01 seconds past
+					01:30 UTC on January 15, 2017.</p>
+					<p>In JavaScript, one can convert a Date object to this format using the
+						standard
+						<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString">toISOString()</a>
+						method. In Python, a standard <code>datetime.datetime</code> object can be converted
+						to this format using
+						<a href="https://docs.python.org/2/library/time.html#time.strftime"><code>strftime</code></a> with
+						the time format spec &#39;%Y-%m-%dT%H:%M:%S.%fZ&#39;. Likewise, in Java, one can use
+					the Joda Time&#39;s <a href="http://www.joda.org/joda-time/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime%2D%2D"><code>ISODateTimeFormat.dateTime()</code></a> to obtain a formatter capable of generating timestamps in this format.</p>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="target">Timestamp</span>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="timestamp.html#nanos" class="tsd-kind-icon">nanos</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="timestamp.html#seconds" class="tsd-kind-icon">seconds</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="nanos" class="tsd-anchor"></a>
+					<h3>nanos</h3>
+					<div class="tsd-signature tsd-kind-icon">nanos<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/dfe39c034/packages/stargate/src/codec/google/protobuf/timestamp.ts#L113">src/codec/google/protobuf/timestamp.ts:113</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Non-negative fractions of a second at nanosecond resolution. Negative
+								second values with fractions must still have non-negative nanos values
+								that count forward in time. Must be from 0 to 999,999,999
+							inclusive.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="seconds" class="tsd-anchor"></a>
+					<h3>seconds</h3>
+					<div class="tsd-signature tsd-kind-icon">seconds<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Long</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/dfe39c034/packages/stargate/src/codec/google/protobuf/timestamp.ts#L106">src/codec/google/protobuf/timestamp.ts:106</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Represents seconds of UTC time since Unix epoch
+								1970-01-01T00:00:00Z. Must be from 0001-01-01T00:00:00Z to
+							9999-12-31T23:59:59Z inclusive.</p>
+						</div>
+					</div>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="../globals.html"><em>Globals</em></a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-interface">
+						<a href="timestamp.html" class="tsd-kind-icon">Timestamp</a>
+						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="timestamp.html#nanos" class="tsd-kind-icon">nanos</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="timestamp.html#seconds" class="tsd-kind-icon">seconds</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,273 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Any | @cosmjs/stargate Documentation</title>
+	<meta name="description" content="Documentation for @cosmjs/stargate Documentation">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">@cosmjs/stargate Documentation</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../globals.html">Globals</a>
+				</li>
+				<li>
+					<a href="any.html">Any</a>
+				</li>
+			</ul>
+			<h1>Interface Any</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p><code>Any</code> contains an arbitrary serialized protocol buffer message along with a
+						URL that describes the type of the serialized message.</p>
+					</div>
+					<p>Protobuf library provides support to pack/unpack Any values in the form
+					of utility functions or additional generated methods of the Any type.</p>
+					<p>Example 1: Pack and unpack a message in C++.</p>
+					<pre><code>Foo foo = ...;
+Any <span class="hljs-built_in">any</span>;
+<span class="hljs-built_in">any</span>.PackFrom(foo);
+...
+<span class="hljs-keyword">if</span> (<span class="hljs-built_in">any</span>.UnpackTo(&amp;foo)) {
+  ...
+}</code></pre>
+					<p>Example 2: Pack and unpack a message in Java.</p>
+					<pre><code>Foo foo = ...;
+<span class="hljs-built_in">Any</span> <span class="hljs-built_in">any</span> = <span class="hljs-built_in">Any</span>.<span class="hljs-built_in">pack</span>(foo);
+...
+<span class="hljs-keyword">if</span> (<span class="hljs-built_in">any</span>.is(Foo.<span class="hljs-keyword">class</span>)) {
+  foo = <span class="hljs-built_in">any</span>.<span class="hljs-built_in">unpack</span>(Foo.<span class="hljs-keyword">class</span>);
+}</code></pre>
+					<p> Example 3: Pack and unpack a message in Python.</p>
+					<pre><code>foo = Foo(...)
+<span class="hljs-built_in">any</span> = <span class="hljs-built_in">Any</span>()
+<span class="hljs-built_in">any</span>.<span class="hljs-built_in">Pack</span>(foo)
+...
+<span class="hljs-keyword">if</span> <span class="hljs-built_in">any</span>.Is(Foo.DESCRIPTOR):
+  <span class="hljs-built_in">any</span>.<span class="hljs-built_in">Unpack</span>(foo)
+  ...</code></pre>
+					<p> Example 4: Pack and unpack a message in Go</p>
+					<pre><code> foo := &amp;pb.<span class="hljs-type">Foo</span><span class="hljs-meta">{...}</span>
+ <span class="hljs-built_in">any</span>, err := ptypes.<span class="hljs-type">MarshalAny</span>(foo)
+ ...
+ foo := &amp;pb.<span class="hljs-type">Foo</span>{}
+ <span class="hljs-keyword">if</span> err := ptypes.<span class="hljs-type">UnmarshalAny</span>(<span class="hljs-built_in">any</span>, foo); err != <span class="hljs-keyword">nil</span> {
+   ...
+ }</code></pre>
+					<p>The pack methods provided by protobuf library will by default use
+						&#39;type.googleapis.com/full.type.name&#39; as the type URL and the unpack
+						methods only use the fully qualified type name after the last &#39;/&#39;
+						in the type URL, for example &quot;foo.bar.com/x/y.z&quot; will yield type
+					name &quot;y.z&quot;.</p>
+					<a href="#json" id="json" style="color: inherit; text-decoration: none;">
+						<h1>JSON</h1>
+					</a>
+					<p>The JSON representation of an <code>Any</code> value uses the regular
+						representation of the deserialized, embedded message, with an
+					additional field <code>@type</code> which contains the type URL. Example:</p>
+					<pre><code><span class="hljs-keyword">package</span> google.profile;
+<span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">Person</span> </span>{
+  <span class="hljs-built_in">string</span> first_name = <span class="hljs-number">1</span>;
+  <span class="hljs-built_in">string</span> last_name = <span class="hljs-number">2</span>;
+}
+
+{
+  <span class="hljs-string">&quot;@type&quot;</span>: <span class="hljs-string">&quot;type.googleapis.com/google.profile.Person&quot;</span>,
+  <span class="hljs-string">&quot;firstName&quot;</span>: &lt;<span class="hljs-built_in">string</span>&gt;,
+  <span class="hljs-string">&quot;lastName&quot;</span>: &lt;<span class="hljs-built_in">string</span>&gt;
+}</code></pre>
+					<p>If the embedded message type is well-known and has a custom JSON
+						representation, that representation will be embedded adding a field
+						<code>value</code> which holds the custom JSON in addition to the <code>@type</code>
+					field. Example (for message [google.protobuf.Duration][]):</p>
+					<pre><code>{
+  <span class="hljs-attr">&quot;@type&quot;</span>: <span class="hljs-string">&quot;type.googleapis.com/google.protobuf.Duration&quot;</span>,
+  <span class="hljs-attr">&quot;value&quot;</span>: <span class="hljs-string">&quot;1.212s&quot;</span>
+}</code></pre>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="target">Any</span>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="any.html#typeurl" class="tsd-kind-icon">type<wbr>Url</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="any.html#value" class="tsd-kind-icon">value</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="typeurl" class="tsd-anchor"></a>
+					<h3>type<wbr>Url</h3>
+					<div class="tsd-signature tsd-kind-icon">type<wbr>Url<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/dfe39c034/packages/stargate/src/codec/google/protobuf/any.ts#L118">src/codec/google/protobuf/any.ts:118</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A URL/resource name that uniquely identifies the type of the serialized
+								protocol buffer message. This string must contain at least
+								one &quot;/&quot; character. The last segment of the URL&#39;s path must represent
+								the fully qualified name of the type (as in
+								<code>path/google.protobuf.Duration</code>). The name should be in a canonical form
+							(e.g., leading &quot;.&quot; is not accepted).</p>
+						</div>
+						<p>In practice, teams usually precompile into the binary all types that they
+							expect it to use in the context of Any. However, for URLs which use the
+							scheme <code>http</code>, <code>https</code>, or no scheme, one can optionally set up a type
+						server that maps type URLs to message definitions as follows:</p>
+						<ul>
+							<li>If no scheme is provided, <code>https</code> is assumed.</li>
+							<li>An HTTP GET on the URL must yield a [google.protobuf.Type][]
+							value in binary format, or produce an error.</li>
+							<li>Applications are allowed to cache lookup results based on the
+								URL, or have them precompiled into a binary to avoid any
+								lookup. Therefore, binary compatibility needs to be preserved
+								on changes to types. (Use versioned type names to manage
+							breaking changes.)</li>
+						</ul>
+						<p>Note: this functionality is not currently available in the official
+							protobuf release, and it is not used for type URLs beginning with
+						type.googleapis.com.</p>
+						<p>Schemes other than <code>http</code>, <code>https</code> (or the empty scheme) might be
+						used with implementation specific semantics.</p>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="value" class="tsd-anchor"></a>
+					<h3>value</h3>
+					<div class="tsd-signature tsd-kind-icon">value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Uint8Array</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/dfe39c034/packages/stargate/src/codec/google/protobuf/any.ts#L120">src/codec/google/protobuf/any.ts:120</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Must be a valid serialized protocol buffer of the above specified type.</p>
+						</div>
+					</div>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="../globals.html"><em>Globals</em></a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-interface">
+						<a href="any.html" class="tsd-kind-icon">Any</a>
+						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="any.html#typeurl" class="tsd-kind-icon">type<wbr>Url</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="any.html#value" class="tsd-kind-icon">value</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
