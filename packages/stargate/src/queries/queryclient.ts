@@ -6,6 +6,8 @@ import { Client as TendermintClient, Header, NewBlockHeaderEvent, ProofOp } from
 import { arrayContentEquals, assert, assertDefined, isNonNullObject, sleep } from "@cosmjs/utils";
 import { Stream } from "xstream";
 
+import { ProofOps } from "../codec/tendermint/crypto/proof";
+
 type QueryExtensionSetup<P> = (base: QueryClient) => P;
 
 function checkAndParseOp(op: ProofOp, kind: string, key: Uint8Array): ics23.CommitmentProof {
@@ -16,6 +18,13 @@ function checkAndParseOp(op: ProofOp, kind: string, key: Uint8Array): ics23.Comm
     throw new Error(`Proven key different than queried key.\nQuery: ${toHex(key)}\nProven: ${toHex(op.key)}`);
   }
   return ics23.CommitmentProof.decode(op.data);
+}
+
+export interface ProvenQuery {
+  readonly key: Uint8Array;
+  readonly value: Uint8Array;
+  readonly proof: ProofOps;
+  readonly height: number;
 }
 
 export class QueryClient {
@@ -214,6 +223,44 @@ export class QueryClient {
     }
 
     return response.value;
+  }
+
+  public async queryRawProof(store: string, queryKey: Uint8Array): Promise<ProvenQuery> {
+    const { key, value, height, proof, code, log } = await this.tmClient.abciQuery({
+      // we need the StoreKey for the module, not the module name
+      // https://github.com/cosmos/cosmos-sdk/blob/8cab43c8120fec5200c3459cbf4a92017bb6f287/x/auth/types/keys.go#L12
+      path: `/store/${store}/key`,
+      data: queryKey,
+      prove: true,
+    });
+
+    if (code) {
+      throw new Error(`Query failed with (${code}): ${log}`);
+    }
+
+    if (!arrayContentEquals(queryKey, key)) {
+      throw new Error(`Response key ${toHex(key)} doesn't match query key ${toHex(queryKey)}`);
+    }
+
+    if (!height) {
+      throw new Error("No query height returned");
+    }
+    if (!proof || proof.ops.length !== 2) {
+      throw new Error(`Expected 2 proof ops, got ${proof?.ops.length ?? 0}. Are you using stargate?`);
+    }
+
+    // const subProof = checkAndParseOp(response.proof.ops[0], "ics23:iavl", key);
+    // const storeProof = checkAndParseOp(response.proof.ops[1], "ics23:simple", toAscii(store));
+
+    return {
+      key,
+      value,
+      height,
+      // need to clone this: readonly input / writeable output
+      proof: {
+        ops: [...proof.ops],
+      },
+    };
   }
 
   public async queryUnverified(path: string, request: Uint8Array): Promise<Uint8Array> {
