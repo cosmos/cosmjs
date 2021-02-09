@@ -22,11 +22,11 @@ function getTypeName(typeUrl: string): string {
 
 describe("protobuf demo", () => {
   it("works with generated static code", () => {
-    const coin = Coin.fromJSON({
+    const coin = Coin.fromPartial({
       denom: "ucosm",
       amount: "1234567890",
     });
-    const msgSend = MsgSend.fromJSON({
+    const msgSend = MsgSend.fromPartial({
       fromAddress: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
       toAddress: "cosmos1qypqxpq9qcrsszg2pvxq6rs0zqg3yyc5lzv7xu",
       amount: [coin],
