@@ -71,7 +71,7 @@ interface RpcAbciQueryResponse {
   readonly key: string;
   /** base64 encoded */
   readonly value?: string;
-  readonly proof?: RpcQueryProof;
+  readonly proofOps?: RpcQueryProof;
   readonly height?: string;
   readonly index?: string;
   readonly code?: string; // only for errors
@@ -82,7 +82,7 @@ function decodeAbciQuery(data: RpcAbciQueryResponse): responses.AbciQueryRespons
   return {
     key: fromBase64(optional(data.key, "")),
     value: fromBase64(optional(data.value, "")),
-    proof: may(decodeQueryProof, data.proof),
+    proof: may(decodeQueryProof, data.proofOps),
     height: may(Integer.parse, data.height),
     code: may(Integer.parse, data.code),
     index: may(Integer.parse, data.index),
