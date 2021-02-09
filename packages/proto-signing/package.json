@@ -31,7 +31,7 @@
     "lint-fix": "eslint --max-warnings 0 \"**/*.{js,ts}\" --fix",
     "move-types": "shx rm -rf ./types/* && shx mv build/types/* ./types && shx rm -rf ./types/testdata ./types/*.spec.d.ts \"./types/codec/**/*[!.d].ts\"",
     "prebuild": "shx rm -rf ./build",
-    "build": "tsc && shx cp -R ./src/codec ./build/ && shx mkdir -p ./build/types/codec && shx cp -R ./src/codec ./build/types/",
+    "build": "tsc",
     "postbuild": "yarn move-types",
     "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build",
     "test-node": "node jasmine-testrunner.js",
