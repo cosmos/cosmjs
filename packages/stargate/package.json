@@ -10,7 +10,6 @@
   "types": "build/index.d.ts",
   "files": [
     "build/",
-    "types/",
     "*.md",
     "!*.spec.*",
     "!**/testdata/"
@@ -28,11 +27,8 @@
     "format-text": "prettier --write --prose-wrap always --print-width 80 \"./*.md\"",
     "lint": "eslint --max-warnings 0 \"**/*.{js,ts}\"",
     "lint-fix": "eslint --max-warnings 0 \"**/*.{js,ts}\" --fix",
-    "remove-test-types": "shx rm -rf build/*.spec.d.ts build/*/*.spec.d.ts",
-    "format-types": "prettier --write --loglevel warn \"./build/**/*.d.ts\"",
     "prebuild": "shx rm -rf ./build",
     "build": "tsc",
-    "postbuild": "yarn remove-test-types && yarn format-types",
     "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build",
     "test-node": "node jasmine-testrunner.js",
     "test-firefox": "yarn pack-web && karma start --single-run --browsers Firefox",

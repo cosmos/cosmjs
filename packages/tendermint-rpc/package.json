@@ -9,10 +9,9 @@
   ],
   "license": "Apache-2.0",
   "main": "build/index.js",
-  "types": "types/index.d.ts",
+  "types": "build/index.d.ts",
   "files": [
     "build/",
-    "types/",
     "*.md",
     "!*.spec.*",
     "!**/testdata/"
@@ -37,11 +36,8 @@
     "test-safari": "yarn pack-web && karma start --single-run --browsers Safari",
     "test": "yarn build-or-skip && yarn test-node",
     "coverage": "nyc --reporter=text --reporter=lcov yarn test --quiet",
-    "move-types": "shx rm -rf ./types/* && shx mv build/types/* ./types && shx rm -rf ./types/testdata ./types/*.spec.d.ts ./types/*/*.spec.d.ts ./types/*/*/*.spec.d.ts",
-    "format-types": "prettier --write --loglevel warn \"./types/**/*.d.ts\"",
     "prebuild": "shx rm -rf ./build",
     "build": "tsc",
-    "postbuild": "yarn move-types && yarn format-types",
     "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build",
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
   },

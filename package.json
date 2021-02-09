@@ -5,10 +5,9 @@
   "author": "Ethan Frey <ethanfrey@users.noreply.github.com>",
   "license": "Apache-2.0",
   "main": "build/index.js",
-  "types": "types/index.d.ts",
+  "types": "build/index.d.ts",
   "files": [
     "build/",
-    "types/",
     "*.md",
     "!*.spec.*",
     "!**/testdata/"

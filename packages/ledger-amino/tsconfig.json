@@ -3,7 +3,6 @@
   "compilerOptions": {
     "baseUrl": ".",
     "outDir": "build",
-    "declarationDir": "build/types",
     "rootDir": "src",
     "typeRoots": [
       "./custom_types",
