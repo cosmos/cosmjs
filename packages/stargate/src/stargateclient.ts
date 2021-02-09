@@ -149,8 +149,16 @@ export class StargateClient {
     return status.syncInfo.latestBlockHeight;
   }
 
+  // this is nice to display data to the user, but is slower
   public async getAccount(searchAddress: string): Promise<Account | null> {
     const account = await this.queryClient.auth.account(searchAddress);
+    return account ? accountFromProto(account) : null;
+  }
+
+  // if we just need to get the sequence for signing a transaction, let's make this faster
+  // (no need to wait a block before submitting)
+  public async getAccountUnverified(searchAddress: string): Promise<Account | null> {
+    const account = await this.queryClient.auth.unverified.account(searchAddress);
     return account ? accountFromProto(account) : null;
   }
 
