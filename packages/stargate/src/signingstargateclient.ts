@@ -139,7 +139,7 @@ export class SigningStargateClient extends StargateClient {
       throw new Error("Failed to retrieve account from signer");
     }
     const pubkey = encodeSecp256k1Pubkey(accountFromSigner.pubkey);
-    const accountFromChain = await this.getAccountUnverified(signerAddress);
+    const accountFromChain = await this.getAccount(signerAddress);
     if (!accountFromChain) {
       throw new Error("Account not found");
     }
