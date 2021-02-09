@@ -29,10 +29,8 @@
     "format-text": "prettier --write --prose-wrap always --print-width 80 \"./*.md\"",
     "lint": "eslint --max-warnings 0 \"**/*.{js,ts}\"",
     "lint-fix": "eslint --max-warnings 0 \"**/*.{js,ts}\" --fix",
-    "move-types": "shx rm -rf ./types/* && shx mv build/types/* ./types",
     "prebuild": "shx rm -rf ./build",
     "build": "tsc",
-    "postbuild": "yarn move-types",
     "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build"
   },
   "dependencies": {
