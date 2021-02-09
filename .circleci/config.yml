@@ -5,7 +5,9 @@ workflows:
     # Keep those job names in sync with .mergify.yml
     jobs:
       - build
-      - docs-build
+      - docs-build:
+          requires:
+            - build
       - docs-deploy:
           requires:
             - docs-build
@@ -14,7 +16,9 @@ workflows:
           filters:
             branches:
               only: main
-      - lint
+      - lint:
+          requires:
+            - build
       - test:
           requires:
             - build
@@ -534,6 +538,11 @@ jobs:
           name: Install Git Large File Storage (LFS)
           command: sudo apt-get install git-lfs
       - checkout
+      - attach_workspace:
+          at: /tmp/builds
+      - run:
+          name: Merge build folders into project (merge with hardlinks)
+          command: cp --recursive --link /tmp/builds/* .
       - run:
           name: Version information
           command: echo "node $(node --version)"; echo "yarn $(yarn --version)"
@@ -584,6 +593,11 @@ jobs:
       - image: circleci/node:10-buster
     steps:
       - checkout
+      - attach_workspace:
+          at: /tmp/builds
+      - run:
+          name: Merge build folders into project (merge with hardlinks)
+          command: cp --recursive --link /tmp/builds/* .
       - run:
           name: Install shfmt
           command: |
