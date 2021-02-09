@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/tendermint-rpc",
-  "version": "0.24.0-alpha.22",
+  "version": "0.24.0-alpha.23",
   "description": "Tendermint RPC clients",
   "contributors": [
     "IOV SAS <admin@iov.one>",
@@ -42,17 +42,17 @@
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
   },
   "dependencies": {
-    "@cosmjs/crypto": "^0.24.0-alpha.22",
-    "@cosmjs/encoding": "^0.24.0-alpha.22",
-    "@cosmjs/json-rpc": "^0.24.0-alpha.22",
-    "@cosmjs/math": "^0.24.0-alpha.22",
-    "@cosmjs/socket": "^0.24.0-alpha.22",
-    "@cosmjs/stream": "^0.24.0-alpha.22",
+    "@cosmjs/crypto": "^0.24.0-alpha.23",
+    "@cosmjs/encoding": "^0.24.0-alpha.23",
+    "@cosmjs/json-rpc": "^0.24.0-alpha.23",
+    "@cosmjs/math": "^0.24.0-alpha.23",
+    "@cosmjs/socket": "^0.24.0-alpha.23",
+    "@cosmjs/stream": "^0.24.0-alpha.23",
     "axios": "^0.21.1",
     "readonly-date": "^1.0.0",
     "xstream": "^11.14.0"
   },
   "devDependencies": {
-    "@cosmjs/utils": "^0.24.0-alpha.22"
+    "@cosmjs/utils": "^0.24.0-alpha.23"
   }
 }
