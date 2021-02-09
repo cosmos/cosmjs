@@ -38,29 +38,26 @@ import {
   AminoTypes,
   BroadcastTxFailure,
   BroadcastTxResponse,
-  codec,
   defaultRegistryTypes,
   isBroadcastTxFailure,
   parseRawLog,
 } from "@cosmjs/stargate";
+import { SignMode } from "@cosmjs/stargate/build/codec/cosmos/tx/signing/v1beta1/signing";
+import { TxRaw } from "@cosmjs/stargate/build/codec/cosmos/tx/v1beta1/tx";
 import { adaptor34, Client as TendermintClient } from "@cosmjs/tendermint-rpc";
 import Long from "long";
 import pako from "pako";
 
 import { cosmWasmTypes } from "./aminotypes";
-import { cosmwasm } from "./codec";
-import { CosmWasmClient } from "./cosmwasmclient";
-
-const { SignMode } = codec.cosmos.tx.signing.v1beta1;
-const { TxRaw } = codec.cosmos.tx.v1beta1;
-const {
+import {
   MsgClearAdmin,
   MsgExecuteContract,
   MsgInstantiateContract,
   MsgMigrateContract,
   MsgStoreCode,
   MsgUpdateAdmin,
-} = cosmwasm.wasm.v1beta1;
+} from "./codec/x/wasm/internal/types/tx";
+import { CosmWasmClient } from "./cosmwasmclient";
 
 function prepareBuilder(builder: string | undefined): string {
   if (builder === undefined) {
@@ -156,7 +153,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     const compressed = pako.gzip(wasmCode, { level: 9 });
     const storeCodeMsg = {
       typeUrl: "/cosmwasm.wasm.v1beta1.MsgStoreCode",
-      value: MsgStoreCode.create({
+      value: MsgStoreCode.fromPartial({
         sender: senderAddress,
         wasmByteCode: compressed,
         source: source,
@@ -190,7 +187,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   ): Promise<InstantiateResult> {
     const instantiateMsg = {
       typeUrl: "/cosmwasm.wasm.v1beta1.MsgInstantiateContract",
-      value: MsgInstantiateContract.create({
+      value: MsgInstantiateContract.fromPartial({
         sender: senderAddress,
         codeId: Long.fromString(new Uint53(codeId).toString()),
         label: label,
@@ -220,7 +217,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   ): Promise<ChangeAdminResult> {
     const updateAdminMsg = {
       typeUrl: "/cosmwasm.wasm.v1beta1.MsgUpdateAdmin",
-      value: MsgUpdateAdmin.create({
+      value: MsgUpdateAdmin.fromPartial({
         sender: senderAddress,
         contract: contractAddress,
         newAdmin: newAdmin,
@@ -243,7 +240,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   ): Promise<ChangeAdminResult> {
     const clearAdminMsg = {
       typeUrl: "/cosmwasm.wasm.v1beta1.MsgClearAdmin",
-      value: MsgClearAdmin.create({
+      value: MsgClearAdmin.fromPartial({
         sender: senderAddress,
         contract: contractAddress,
       }),
@@ -267,7 +264,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   ): Promise<MigrateResult> {
     const msg = {
       typeUrl: "/cosmwasm.wasm.v1beta1.MsgMigrateContract",
-      value: MsgMigrateContract.create({
+      value: MsgMigrateContract.fromPartial({
         sender: senderAddress,
         contract: contractAddress,
         codeId: Long.fromString(new Uint53(codeId).toString()),
@@ -293,7 +290,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
   ): Promise<ExecuteResult> {
     const executeMsg = {
       typeUrl: "/cosmwasm.wasm.v1beta1.MsgExecuteContract",
-      value: MsgExecuteContract.create({
+      value: MsgExecuteContract.fromPartial({
         sender: senderAddress,
         contract: contractAddress,
         msg: toAscii(JSON.stringify(handleMsg)),
@@ -372,7 +369,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       const authInfoBytes = makeAuthInfoBytes([pubkeyAny], fee.amount, gasLimit, sequence);
       const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);
       const { signature, signed } = await this.signer.signDirect(signerAddress, signDoc);
-      const txRaw = TxRaw.create({
+      const txRaw = TxRaw.fromPartial({
         bodyBytes: signed.bodyBytes,
         authInfoBytes: signed.authInfoBytes,
         signatures: [fromBase64(signature.signature)],
@@ -403,7 +400,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       signedSequence,
       signMode,
     );
-    const txRaw = TxRaw.create({
+    const txRaw = TxRaw.fromPartial({
       bodyBytes: signedTxBodyBytes,
       authInfoBytes: signedAuthInfoBytes,
       signatures: [fromBase64(signature.signature)],

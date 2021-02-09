@@ -1,23 +1,26 @@
-import { cosmos, google } from "./codec";
+import { Coin } from "./codec/cosmos/base/v1beta1/coin";
+import { SignMode } from "./codec/cosmos/tx/signing/v1beta1/signing";
+import { SignDoc } from "./codec/cosmos/tx/v1beta1/tx";
+import { Any } from "./codec/google/protobuf/any";
 /**
  * Creates and serializes an AuthInfo document using SIGN_MODE_DIRECT.
  */
 export declare function makeAuthInfoBytes(
-  pubkeys: readonly google.protobuf.IAny[],
-  feeAmount: readonly cosmos.base.v1beta1.Coin[],
+  pubkeys: readonly Any[],
+  feeAmount: readonly Coin[],
   gasLimit: number,
   sequence: number,
-  signMode?: cosmos.tx.signing.v1beta1.SignMode,
+  signMode?: SignMode,
 ): Uint8Array;
 export declare function makeSignDoc(
   bodyBytes: Uint8Array,
   authInfoBytes: Uint8Array,
   chainId: string,
   accountNumber: number,
-): cosmos.tx.v1beta1.ISignDoc;
+): SignDoc;
 export declare function makeSignBytes({
   accountNumber,
   authInfoBytes,
   bodyBytes,
   chainId,
-}: cosmos.tx.v1beta1.ISignDoc): Uint8Array;
+}: SignDoc): Uint8Array;

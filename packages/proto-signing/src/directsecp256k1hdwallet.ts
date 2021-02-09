@@ -15,7 +15,7 @@ import {
   rawSecp256k1PubkeyToAddress,
 } from "@cosmjs/launchpad";
 
-import { cosmos } from "./codec";
+import { SignDoc } from "./codec/cosmos/tx/v1beta1/tx";
 import { DirectSignResponse, OfflineDirectSigner } from "./signer";
 import { makeSignBytes } from "./signing";
 
@@ -116,7 +116,7 @@ export class DirectSecp256k1HdWallet implements OfflineDirectSigner {
     ];
   }
 
-  public async signDirect(address: string, signDoc: cosmos.tx.v1beta1.ISignDoc): Promise<DirectSignResponse> {
+  public async signDirect(address: string, signDoc: SignDoc): Promise<DirectSignResponse> {
     const signBytes = makeSignBytes(signDoc);
     if (address !== this.address) {
       throw new Error(`Address ${address} not found in wallet`);

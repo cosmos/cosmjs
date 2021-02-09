@@ -23,7 +23,6 @@ import {
   AuthExtension,
   BankExtension,
   BroadcastTxResponse,
-  codec,
   coinFromProto,
   IndexedTx,
   QueryClient,
@@ -31,6 +30,7 @@ import {
   setupAuthExtension,
   setupBankExtension,
 } from "@cosmjs/stargate";
+import { TxMsgData } from "@cosmjs/stargate/build/codec/cosmos/base/abci/v1beta1/abci";
 import {
   adaptor34,
   broadcastTxCommitSuccess,
@@ -39,14 +39,9 @@ import {
 } from "@cosmjs/tendermint-rpc";
 import { assert } from "@cosmjs/utils";
 
-import { cosmwasm } from "./codec";
+import { CodeInfoResponse } from "./codec/x/wasm/internal/types/query";
+import { ContractCodeHistoryOperationType } from "./codec/x/wasm/internal/types/types";
 import { setupWasmExtension, WasmExtension } from "./queries";
-
-type ICodeInfoResponse = cosmwasm.wasm.v1beta1.ICodeInfoResponse;
-type ContractCodeHistoryOperationType = cosmwasm.wasm.v1beta1.ContractCodeHistoryOperationType;
-
-const { TxMsgData } = codec.cosmos.base.abci.v1beta1;
-const { ContractCodeHistoryOperationType } = cosmwasm.wasm.v1beta1;
 
 /** Use for testing only */
 export interface PrivateCosmWasmClient {
@@ -207,7 +202,7 @@ export class CosmWasmClient {
   public async getCodes(): Promise<readonly Code[]> {
     const { codeInfos } = await this.queryClient.unverified.wasm.listCodeInfo();
     return (codeInfos || []).map(
-      (entry: ICodeInfoResponse): Code => {
+      (entry: CodeInfoResponse): Code => {
         assert(entry.creator && entry.codeId && entry.dataHash, "entry incomplete");
         return {
           id: entry.codeId.toNumber(),

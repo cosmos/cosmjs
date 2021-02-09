@@ -96,9 +96,10 @@ export class Cw3CosmWasmClient extends SigningCosmWasmClient {
     return this.queryContractSmart(this.cw3ContractAddress, { proposal: { proposal_id: proposalId } });
   }
 
-  public listProposals({ startAfter, limit }: StartAfterNumberPaginationOptions = {}): Promise<
-    ProposalsResult
-  > {
+  public listProposals({
+    startAfter,
+    limit,
+  }: StartAfterNumberPaginationOptions = {}): Promise<ProposalsResult> {
     return this.queryContractSmart(this.cw3ContractAddress, {
       list_proposals: {
         start_after: startAfter,
@@ -107,9 +108,10 @@ export class Cw3CosmWasmClient extends SigningCosmWasmClient {
     });
   }
 
-  public reverseProposals({ startBefore, limit }: StartBeforeNumberPaginationOptions = {}): Promise<
-    ProposalsResult
-  > {
+  public reverseProposals({
+    startBefore,
+    limit,
+  }: StartBeforeNumberPaginationOptions = {}): Promise<ProposalsResult> {
     return this.queryContractSmart(this.cw3ContractAddress, {
       reverse_proposals: {
         start_before: startBefore,

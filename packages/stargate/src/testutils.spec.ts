@@ -10,9 +10,8 @@ import {
 } from "@cosmjs/launchpad";
 import { DirectSecp256k1HdWallet, DirectSignResponse, makeAuthInfoBytes } from "@cosmjs/proto-signing";
 
-import { cosmos } from "./codec";
-
-const { AuthInfo, TxBody } = cosmos.tx.v1beta1;
+import { SignMode } from "./codec/cosmos/tx/signing/v1beta1/signing";
+import { AuthInfo, SignDoc, TxBody } from "./codec/cosmos/tx/v1beta1/tx";
 
 export function simappEnabled(): boolean {
   return !!process.env.SIMAPP_ENABLED;
@@ -165,15 +164,15 @@ export class ModifyingDirectSecp256k1HdWallet extends DirectSecp256k1HdWallet {
     );
   }
 
-  public async signDirect(address: string, signDoc: cosmos.tx.v1beta1.ISignDoc): Promise<DirectSignResponse> {
-    const txBody = TxBody.decode(signDoc.bodyBytes!);
-    const modifiedTxBody = TxBody.create({
+  public async signDirect(address: string, signDoc: SignDoc): Promise<DirectSignResponse> {
+    const txBody = TxBody.decode(signDoc.bodyBytes);
+    const modifiedTxBody = TxBody.fromPartial({
       ...txBody,
       memo: "This was modified",
     });
-    const authInfo = AuthInfo.decode(signDoc.authInfoBytes!);
+    const authInfo = AuthInfo.decode(signDoc.authInfoBytes);
     const pubkeys = authInfo.signerInfos.map((signerInfo) => signerInfo.publicKey!);
-    const sequence = authInfo.signerInfos[0].sequence!.toNumber();
+    const sequence = authInfo.signerInfos[0].sequence.toNumber();
     const modifiedFeeAmount = coins(3000, "ucosm");
     const modifiedGasLimit = 333333;
     const modifiedSignDoc = {
@@ -184,7 +183,7 @@ export class ModifyingDirectSecp256k1HdWallet extends DirectSecp256k1HdWallet {
         modifiedFeeAmount,
         modifiedGasLimit,
         sequence,
-        cosmos.tx.signing.v1beta1.SignMode.SIGN_MODE_DIRECT,
+        SignMode.SIGN_MODE_DIRECT,
       ),
     };
     return super.signDirect(address, modifiedSignDoc);

@@ -1,6 +1,6 @@
 import { EnglishMnemonic, HdPath } from "@cosmjs/crypto";
 import { AccountData } from "@cosmjs/launchpad";
-import { cosmos } from "./codec";
+import { SignDoc } from "./codec/cosmos/tx/v1beta1/tx";
 import { DirectSignResponse, OfflineDirectSigner } from "./signer";
 /** A wallet for protobuf based signing using SIGN_MODE_DIRECT */
 export declare class DirectSecp256k1HdWallet implements OfflineDirectSigner {
@@ -41,5 +41,5 @@ export declare class DirectSecp256k1HdWallet implements OfflineDirectSigner {
   get mnemonic(): string;
   private get address();
   getAccounts(): Promise<readonly AccountData[]>;
-  signDirect(address: string, signDoc: cosmos.tx.v1beta1.ISignDoc): Promise<DirectSignResponse>;
+  signDirect(address: string, signDoc: SignDoc): Promise<DirectSignResponse>;
 }

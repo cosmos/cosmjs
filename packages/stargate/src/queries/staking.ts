@@ -1,141 +1,133 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import Long from "long";
 
-import { cosmos } from "../codec";
+import {
+  QueryClientImpl,
+  QueryDelegationResponse,
+  QueryDelegatorDelegationsResponse,
+  QueryDelegatorUnbondingDelegationsResponse,
+  QueryDelegatorValidatorResponse,
+  QueryDelegatorValidatorsResponse,
+  QueryHistoricalInfoResponse,
+  QueryParamsResponse,
+  QueryPoolResponse,
+  QueryRedelegationsResponse,
+  QueryUnbondingDelegationResponse,
+  QueryValidatorDelegationsResponse,
+  QueryValidatorResponse,
+  QueryValidatorsResponse,
+  QueryValidatorUnbondingDelegationsResponse,
+} from "../codec/cosmos/staking/v1beta1/query";
+import { BondStatus } from "../codec/cosmos/staking/v1beta1/staking";
 import { QueryClient } from "./queryclient";
-import { toObject } from "./utils";
-
-type IQueryDelegationResponse = cosmos.staking.v1beta1.IQueryDelegationResponse;
-type IQueryDelegatorDelegationsResponse = cosmos.staking.v1beta1.IQueryDelegatorDelegationsResponse;
-type IQueryDelegatorUnbondingDelegationsResponse = cosmos.staking.v1beta1.IQueryDelegatorUnbondingDelegationsResponse;
-type IQueryDelegatorValidatorResponse = cosmos.staking.v1beta1.IQueryDelegatorValidatorResponse;
-type IQueryDelegatorValidatorsResponse = cosmos.staking.v1beta1.IQueryDelegatorValidatorsResponse;
-type IQueryHistoricalInfoResponse = cosmos.staking.v1beta1.IQueryHistoricalInfoResponse;
-type IQueryParamsResponse = cosmos.staking.v1beta1.IQueryParamsResponse;
-type IQueryPoolResponse = cosmos.staking.v1beta1.IQueryPoolResponse;
-type IQueryRedelegationsResponse = cosmos.staking.v1beta1.IQueryRedelegationsResponse;
-type IQueryUnbondingDelegationResponse = cosmos.staking.v1beta1.IQueryUnbondingDelegationResponse;
-type IQueryValidatorResponse = cosmos.staking.v1beta1.IQueryValidatorResponse;
-type IQueryValidatorDelegationsResponse = cosmos.staking.v1beta1.IQueryValidatorDelegationsResponse;
-type IQueryValidatorsResponse = cosmos.staking.v1beta1.IQueryValidatorsResponse;
-type IQueryValidatorUnbondingDelegationsResponse = cosmos.staking.v1beta1.IQueryValidatorUnbondingDelegationsResponse;
-
-// This needs to be exported otherwise TS won’t let you export BondStatusString
-export const { BondStatus } = cosmos.staking.v1beta1;
-const { Query } = cosmos.staking.v1beta1;
+import { createPagination, createRpc } from "./utils";
 
 export type BondStatusString = Exclude<keyof typeof BondStatus, "BOND_STATUS_UNSPECIFIED">;
 
 export interface StakingExtension {
   readonly staking: {
     readonly unverified: {
-      delegation: (delegatorAddress: string, validatorAddress: string) => Promise<IQueryDelegationResponse>;
+      delegation: (delegatorAddress: string, validatorAddress: string) => Promise<QueryDelegationResponse>;
       delegatorDelegations: (
         delegatorAddress: string,
         paginationKey?: Uint8Array,
-      ) => Promise<IQueryDelegatorDelegationsResponse>;
+      ) => Promise<QueryDelegatorDelegationsResponse>;
       delegatorUnbondingDelegations: (
         delegatorAddress: string,
         paginationKey?: Uint8Array,
-      ) => Promise<IQueryDelegatorUnbondingDelegationsResponse>;
+      ) => Promise<QueryDelegatorUnbondingDelegationsResponse>;
       delegatorValidator: (
         delegatorAddress: string,
         validatorAddress: string,
-      ) => Promise<IQueryDelegatorValidatorResponse>;
+      ) => Promise<QueryDelegatorValidatorResponse>;
       delegatorValidators: (
         delegatorAddress: string,
         paginationKey?: Uint8Array,
-      ) => Promise<IQueryDelegatorValidatorsResponse>;
-      historicalInfo: (height: number) => Promise<IQueryHistoricalInfoResponse>;
-      params: () => Promise<IQueryParamsResponse>;
-      pool: () => Promise<IQueryPoolResponse>;
+      ) => Promise<QueryDelegatorValidatorsResponse>;
+      historicalInfo: (height: number) => Promise<QueryHistoricalInfoResponse>;
+      params: () => Promise<QueryParamsResponse>;
+      pool: () => Promise<QueryPoolResponse>;
       redelegations: (
         delegatorAddress: string,
         sourceValidatorAddress: string,
         destinationValidatorAddress: string,
         paginationKey?: Uint8Array,
-      ) => Promise<IQueryRedelegationsResponse>;
+      ) => Promise<QueryRedelegationsResponse>;
       unbondingDelegation: (
         delegatorAddress: string,
         validatorAddress: string,
-      ) => Promise<IQueryUnbondingDelegationResponse>;
-      validator: (validatorAddress: string) => Promise<IQueryValidatorResponse>;
+      ) => Promise<QueryUnbondingDelegationResponse>;
+      validator: (validatorAddress: string) => Promise<QueryValidatorResponse>;
       validatorDelegations: (
         validatorAddress: string,
         paginationKey?: Uint8Array,
-      ) => Promise<IQueryValidatorDelegationsResponse>;
-      validators: (status: BondStatusString, paginationKey?: Uint8Array) => Promise<IQueryValidatorsResponse>;
+      ) => Promise<QueryValidatorDelegationsResponse>;
+      validators: (status: BondStatusString, paginationKey?: Uint8Array) => Promise<QueryValidatorsResponse>;
       validatorUnbondingDelegations: (
         validatorAddress: string,
         paginationKey?: Uint8Array,
-      ) => Promise<IQueryValidatorUnbondingDelegationsResponse>;
+      ) => Promise<QueryValidatorUnbondingDelegationsResponse>;
     };
   };
 }
 
 export function setupStakingExtension(base: QueryClient): StakingExtension {
   // Use this service to get easy typed access to query methods
-  // This cannot be used to for proof verification
-  const queryService = Query.create((method: any, requestData, callback) => {
-    // Parts of the path are unavailable, so we hardcode them here. See https://github.com/protobufjs/protobuf.js/issues/1229
-    const path = `/cosmos.staking.v1beta1.Query/${method.name}`;
-    base
-      .queryUnverified(path, requestData)
-      .then((response) => callback(null, response))
-      .catch((error) => callback(error));
-  });
+  // This cannot be used for proof verification
+  const rpc = createRpc(base);
+  const queryService = new QueryClientImpl(rpc);
 
   return {
     staking: {
       unverified: {
         delegation: async (delegatorAddress: string, validatorAddress: string) => {
-          const response = await queryService.delegation({
+          const response = await queryService.Delegation({
             delegatorAddr: delegatorAddress,
             validatorAddr: validatorAddress,
           });
-          return toObject(response);
+          return response;
         },
         delegatorDelegations: async (delegatorAddress: string, paginationKey?: Uint8Array) => {
-          const response = await queryService.delegatorDelegations({
+          const response = await queryService.DelegatorDelegations({
             delegatorAddr: delegatorAddress,
-            pagination: paginationKey ? { key: paginationKey } : undefined,
+            pagination: createPagination(paginationKey),
           });
-          return toObject(response);
+          return response;
         },
         delegatorUnbondingDelegations: async (delegatorAddress: string, paginationKey?: Uint8Array) => {
-          const response = await queryService.delegatorUnbondingDelegations({
+          const response = await queryService.DelegatorUnbondingDelegations({
             delegatorAddr: delegatorAddress,
-            pagination: paginationKey ? { key: paginationKey } : undefined,
+            pagination: createPagination(paginationKey),
           });
-          return toObject(response);
+          return response;
         },
         delegatorValidator: async (delegatorAddress: string, validatorAddress: string) => {
-          const response = await queryService.delegatorValidator({
+          const response = await queryService.DelegatorValidator({
             delegatorAddr: delegatorAddress,
             validatorAddr: validatorAddress,
           });
-          return toObject(response);
+          return response;
         },
         delegatorValidators: async (delegatorAddress: string, paginationKey?: Uint8Array) => {
-          const response = await queryService.delegatorValidators({
+          const response = await queryService.DelegatorValidators({
             delegatorAddr: delegatorAddress,
-            pagination: paginationKey ? { key: paginationKey } : undefined,
+            pagination: createPagination(paginationKey),
           });
-          return toObject(response);
+          return response;
         },
         historicalInfo: async (height: number) => {
-          const response = await queryService.historicalInfo({
-            height: Long.fromNumber(height),
+          const response = await queryService.HistoricalInfo({
+            height: Long.fromNumber(height, true),
           });
-          return toObject(response);
+          return response;
         },
         params: async () => {
-          const response = await queryService.params({});
-          return toObject(response);
+          const response = await queryService.Params({});
+          return response;
         },
         pool: async () => {
-          const response = await queryService.pool({});
-          return toObject(response);
+          const response = await queryService.Pool({});
+          return response;
         },
         redelegations: async (
           delegatorAddress: string,
@@ -143,45 +135,45 @@ export function setupStakingExtension(base: QueryClient): StakingExtension {
           destinationValidatorAddress: string,
           paginationKey?: Uint8Array,
         ) => {
-          const response = await queryService.redelegations({
+          const response = await queryService.Redelegations({
             delegatorAddr: delegatorAddress,
             srcValidatorAddr: sourceValidatorAddress,
             dstValidatorAddr: destinationValidatorAddress,
-            pagination: paginationKey ? { key: paginationKey } : undefined,
+            pagination: createPagination(paginationKey),
           });
-          return toObject(response);
+          return response;
         },
         unbondingDelegation: async (delegatorAddress: string, validatorAddress: string) => {
-          const response = await queryService.unbondingDelegation({
+          const response = await queryService.UnbondingDelegation({
             delegatorAddr: delegatorAddress,
             validatorAddr: validatorAddress,
           });
-          return toObject(response);
+          return response;
         },
         validator: async (validatorAddress: string) => {
-          const response = await queryService.validator({ validatorAddr: validatorAddress });
-          return toObject(response);
+          const response = await queryService.Validator({ validatorAddr: validatorAddress });
+          return response;
         },
         validatorDelegations: async (validatorAddress: string, paginationKey?: Uint8Array) => {
-          const response = await queryService.validatorDelegations({
+          const response = await queryService.ValidatorDelegations({
             validatorAddr: validatorAddress,
-            pagination: paginationKey ? { key: paginationKey } : undefined,
+            pagination: createPagination(paginationKey),
           });
-          return toObject(response);
+          return response;
         },
         validators: async (status: BondStatusString, paginationKey?: Uint8Array) => {
-          const response = await queryService.validators({
+          const response = await queryService.Validators({
             status: status,
-            pagination: paginationKey ? { key: paginationKey } : undefined,
+            pagination: createPagination(paginationKey),
           });
-          return toObject(response);
+          return response;
         },
         validatorUnbondingDelegations: async (validatorAddress: string, paginationKey?: Uint8Array) => {
-          const response = await queryService.validatorUnbondingDelegations({
+          const response = await queryService.ValidatorUnbondingDelegations({
             validatorAddr: validatorAddress,
-            pagination: paginationKey ? { key: paginationKey } : undefined,
+            pagination: createPagination(paginationKey),
           });
-          return toObject(response);
+          return response;
         },
       },
     },

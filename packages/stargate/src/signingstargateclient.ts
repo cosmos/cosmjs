@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { fromBase64 } from "@cosmjs/encoding";
 import {
   AccountData,
@@ -25,24 +24,23 @@ import {
 import { adaptor34, Client as TendermintClient } from "@cosmjs/tendermint-rpc";
 
 import { AminoTypes } from "./aminotypes";
-import { cosmos } from "./codec";
-import { BroadcastTxResponse, StargateClient } from "./stargateclient";
-
-const { MsgMultiSend } = cosmos.bank.v1beta1;
-const {
+import { MsgMultiSend } from "./codec/cosmos/bank/v1beta1/tx";
+import {
   MsgFundCommunityPool,
   MsgSetWithdrawAddress,
   MsgWithdrawDelegatorReward,
   MsgWithdrawValidatorCommission,
-} = cosmos.distribution.v1beta1;
-const {
+} from "./codec/cosmos/distribution/v1beta1/tx";
+import {
   MsgBeginRedelegate,
   MsgCreateValidator,
   MsgDelegate,
   MsgEditValidator,
   MsgUndelegate,
-} = cosmos.staking.v1beta1;
-const { TxRaw } = cosmos.tx.v1beta1;
+} from "./codec/cosmos/staking/v1beta1/tx";
+import { SignMode } from "./codec/cosmos/tx/signing/v1beta1/signing";
+import { TxRaw } from "./codec/cosmos/tx/v1beta1/tx";
+import { BroadcastTxResponse, StargateClient } from "./stargateclient";
 
 const defaultGasPrice = GasPrice.fromString("0.025ucosm");
 const defaultGasLimits: GasLimits<CosmosFeeTable> = { send: 80000 };
@@ -165,7 +163,7 @@ export class SigningStargateClient extends StargateClient {
       const authInfoBytes = makeAuthInfoBytes([pubkeyAny], fee.amount, gasLimit, sequence);
       const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);
       const { signature, signed } = await this.signer.signDirect(signerAddress, signDoc);
-      const txRaw = TxRaw.create({
+      const txRaw = TxRaw.fromPartial({
         bodyBytes: signed.bodyBytes,
         authInfoBytes: signed.authInfoBytes,
         signatures: [fromBase64(signature.signature)],
@@ -175,7 +173,7 @@ export class SigningStargateClient extends StargateClient {
     }
 
     // Amino signer
-    const signMode = cosmos.tx.signing.v1beta1.SignMode.SIGN_MODE_LEGACY_AMINO_JSON;
+    const signMode = SignMode.SIGN_MODE_LEGACY_AMINO_JSON;
     const msgs = messages.map((msg) => this.aminoTypes.toAmino(msg));
     const signDoc = makeSignDocAmino(msgs, fee, chainId, memo, accountNumber, sequence);
     const { signature, signed } = await this.signer.signAmino(signerAddress, signDoc);
@@ -196,7 +194,7 @@ export class SigningStargateClient extends StargateClient {
       signedSequence,
       signMode,
     );
-    const txRaw = TxRaw.create({
+    const txRaw = TxRaw.fromPartial({
       bodyBytes: signedTxBodyBytes,
       authInfoBytes: signedAuthInfoBytes,
       signatures: [fromBase64(signature.signature)],

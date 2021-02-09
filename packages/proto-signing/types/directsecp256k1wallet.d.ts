@@ -1,5 +1,5 @@
 import { AccountData } from "@cosmjs/launchpad";
-import { cosmos } from "./codec";
+import { SignDoc } from "./codec/cosmos/tx/v1beta1/tx";
 import { DirectSignResponse, OfflineDirectSigner } from "./signer";
 /**
  * A wallet that holds a single secp256k1 keypair.
@@ -20,5 +20,5 @@ export declare class DirectSecp256k1Wallet implements OfflineDirectSigner {
   private constructor();
   private get address();
   getAccounts(): Promise<readonly AccountData[]>;
-  signDirect(address: string, signDoc: cosmos.tx.v1beta1.ISignDoc): Promise<DirectSignResponse>;
+  signDirect(address: string, signDoc: SignDoc): Promise<DirectSignResponse>;
 }

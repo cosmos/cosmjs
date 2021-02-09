@@ -1,30 +1,30 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import {
-  MsgClearAdmin,
-  MsgExecuteContract,
-  MsgInstantiateContract,
-  MsgMigrateContract,
-  MsgStoreCode,
-  MsgUpdateAdmin,
+  MsgClearAdmin as LaunchpadMsgClearAdmin,
+  MsgExecuteContract as LaunchpadMsgExecuteContract,
+  MsgInstantiateContract as LaunchpadMsgInstantiateContract,
+  MsgMigrateContract as LaunchpadMsgMigrateContract,
+  MsgStoreCode as LaunchpadMsgStoreCode,
+  MsgUpdateAdmin as LaunchpadMsgUpdateAdmin,
 } from "@cosmjs/cosmwasm-launchpad";
 import { fromBase64, fromUtf8, toBase64, toUtf8 } from "@cosmjs/encoding";
 import { AminoConverter, coinFromProto } from "@cosmjs/stargate";
 import { assertDefinedAndNotNull } from "@cosmjs/utils";
 import Long from "long";
 
-import { cosmwasm } from "./codec";
-
-type IMsgStoreCode = cosmwasm.wasm.v1beta1.IMsgStoreCode;
-type IMsgInstantiateContract = cosmwasm.wasm.v1beta1.IMsgInstantiateContract;
-type IMsgUpdateAdmin = cosmwasm.wasm.v1beta1.IMsgUpdateAdmin;
-type IMsgClearAdmin = cosmwasm.wasm.v1beta1.IMsgClearAdmin;
-type IMsgExecuteContract = cosmwasm.wasm.v1beta1.IMsgExecuteContract;
-type IMsgMigrateContract = cosmwasm.wasm.v1beta1.IMsgMigrateContract;
+import {
+  MsgClearAdmin,
+  MsgExecuteContract,
+  MsgInstantiateContract,
+  MsgMigrateContract,
+  MsgStoreCode,
+  MsgUpdateAdmin,
+} from "./codec/x/wasm/internal/types/tx";
 
 export const cosmWasmTypes: Record<string, AminoConverter> = {
   "/cosmwasm.wasm.v1beta1.MsgStoreCode": {
     aminoType: "wasm/MsgStoreCode",
-    toAmino: ({ sender, wasmByteCode, source, builder }: IMsgStoreCode): MsgStoreCode["value"] => {
+    toAmino: ({ sender, wasmByteCode, source, builder }: MsgStoreCode): LaunchpadMsgStoreCode["value"] => {
       assertDefinedAndNotNull(sender, "missing sender");
       assertDefinedAndNotNull(wasmByteCode, "missing wasmByteCode");
       assertDefinedAndNotNull(source, "missing source");
@@ -36,11 +36,17 @@ export const cosmWasmTypes: Record<string, AminoConverter> = {
         builder: builder,
       };
     },
-    fromAmino: ({ sender, wasm_byte_code, source, builder }: MsgStoreCode["value"]): IMsgStoreCode => ({
+    fromAmino: ({
+      sender,
+      wasm_byte_code,
+      source,
+      builder,
+    }: LaunchpadMsgStoreCode["value"]): MsgStoreCode => ({
       sender: sender,
       wasmByteCode: fromBase64(wasm_byte_code),
       source: source,
       builder: builder,
+      instantiatePermission: undefined,
     }),
   },
   "/cosmwasm.wasm.v1beta1.MsgInstantiateContract": {
@@ -52,7 +58,7 @@ export const cosmWasmTypes: Record<string, AminoConverter> = {
       initMsg,
       initFunds,
       admin,
-    }: IMsgInstantiateContract): MsgInstantiateContract["value"] => {
+    }: MsgInstantiateContract): LaunchpadMsgInstantiateContract["value"] => {
       assertDefinedAndNotNull(sender, "missing sender");
       assertDefinedAndNotNull(codeId, "missing codeId");
       assertDefinedAndNotNull(label, "missing label");
@@ -74,18 +80,18 @@ export const cosmWasmTypes: Record<string, AminoConverter> = {
       init_msg,
       init_funds,
       admin,
-    }: MsgInstantiateContract["value"]): IMsgInstantiateContract => ({
+    }: LaunchpadMsgInstantiateContract["value"]): MsgInstantiateContract => ({
       sender: sender,
       codeId: Long.fromString(code_id),
       label: label,
       initMsg: toUtf8(JSON.stringify(init_msg)),
       initFunds: [...init_funds],
-      admin: admin,
+      admin: admin ?? "",
     }),
   },
   "/cosmwasm.wasm.v1beta1.MsgUpdateAdmin": {
     aminoType: "wasm/MsgUpdateAdmin",
-    toAmino: ({ sender, newAdmin, contract }: IMsgUpdateAdmin): MsgUpdateAdmin["value"] => {
+    toAmino: ({ sender, newAdmin, contract }: MsgUpdateAdmin): LaunchpadMsgUpdateAdmin["value"] => {
       assertDefinedAndNotNull(sender, "missing sender");
       assertDefinedAndNotNull(newAdmin, "missing newAdmin");
       assertDefinedAndNotNull(contract, "missing contract");
@@ -95,7 +101,7 @@ export const cosmWasmTypes: Record<string, AminoConverter> = {
         contract: contract,
       };
     },
-    fromAmino: ({ sender, new_admin, contract }: MsgUpdateAdmin["value"]): IMsgUpdateAdmin => ({
+    fromAmino: ({ sender, new_admin, contract }: LaunchpadMsgUpdateAdmin["value"]): MsgUpdateAdmin => ({
       sender: sender,
       newAdmin: new_admin,
       contract: contract,
@@ -103,7 +109,7 @@ export const cosmWasmTypes: Record<string, AminoConverter> = {
   },
   "/cosmwasm.wasm.v1beta1.MsgClearAdmin": {
     aminoType: "wasm/MsgClearAdmin",
-    toAmino: ({ sender, contract }: IMsgClearAdmin): MsgClearAdmin["value"] => {
+    toAmino: ({ sender, contract }: MsgClearAdmin): LaunchpadMsgClearAdmin["value"] => {
       assertDefinedAndNotNull(sender, "missing sender");
       assertDefinedAndNotNull(contract, "missing contract");
       return {
@@ -111,14 +117,19 @@ export const cosmWasmTypes: Record<string, AminoConverter> = {
         contract: contract,
       };
     },
-    fromAmino: ({ sender, contract }: MsgClearAdmin["value"]): IMsgClearAdmin => ({
+    fromAmino: ({ sender, contract }: LaunchpadMsgClearAdmin["value"]): MsgClearAdmin => ({
       sender: sender,
       contract: contract,
     }),
   },
   "/cosmwasm.wasm.v1beta1.MsgExecuteContract": {
     aminoType: "wasm/MsgExecuteContract",
-    toAmino: ({ sender, contract, msg, sentFunds }: IMsgExecuteContract): MsgExecuteContract["value"] => {
+    toAmino: ({
+      sender,
+      contract,
+      msg,
+      sentFunds,
+    }: MsgExecuteContract): LaunchpadMsgExecuteContract["value"] => {
       assertDefinedAndNotNull(sender, "missing sender");
       assertDefinedAndNotNull(contract, "missing contract");
       assertDefinedAndNotNull(msg, "missing msg");
@@ -130,7 +141,12 @@ export const cosmWasmTypes: Record<string, AminoConverter> = {
         sent_funds: sentFunds.map(coinFromProto),
       };
     },
-    fromAmino: ({ sender, contract, msg, sent_funds }: MsgExecuteContract["value"]): IMsgExecuteContract => ({
+    fromAmino: ({
+      sender,
+      contract,
+      msg,
+      sent_funds,
+    }: LaunchpadMsgExecuteContract["value"]): MsgExecuteContract => ({
       sender: sender,
       contract: contract,
       msg: toUtf8(JSON.stringify(msg)),
@@ -139,7 +155,12 @@ export const cosmWasmTypes: Record<string, AminoConverter> = {
   },
   "/cosmwasm.wasm.v1beta1.MsgMigrateContract": {
     aminoType: "wasm/MsgMigrateContract",
-    toAmino: ({ sender, contract, codeId, migrateMsg }: IMsgMigrateContract): MsgMigrateContract["value"] => {
+    toAmino: ({
+      sender,
+      contract,
+      codeId,
+      migrateMsg,
+    }: MsgMigrateContract): LaunchpadMsgMigrateContract["value"] => {
       assertDefinedAndNotNull(sender, "missing sender");
       assertDefinedAndNotNull(contract, "missing contract");
       assertDefinedAndNotNull(codeId, "missing codeId");
@@ -151,7 +172,12 @@ export const cosmWasmTypes: Record<string, AminoConverter> = {
         msg: JSON.parse(fromUtf8(migrateMsg)),
       };
     },
-    fromAmino: ({ sender, contract, code_id, msg }: MsgMigrateContract["value"]): IMsgMigrateContract => ({
+    fromAmino: ({
+      sender,
+      contract,
+      code_id,
+      msg,
+    }: LaunchpadMsgMigrateContract["value"]): MsgMigrateContract => ({
       sender: sender,
       contract: contract,
       codeId: Long.fromString(code_id),

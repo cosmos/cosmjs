@@ -31,8 +31,8 @@
     "move-types": "shx rm -rf ./types/* && shx mv build/types/* ./types && rm -rf ./types/testdata ./types/*.spec.d.ts ./types/*/*.spec.d.ts",
     "format-types": "prettier --write --loglevel warn \"./types/**/*.d.ts\"",
     "prebuild": "shx rm -rf ./build",
-    "build": "tsc && shx mkdir -p build/codec/generated && shx cp ./src/codec/generated/*.js ./build/codec/generated",
-    "postbuild": "shx mkdir -p ./build/types/codec/generated && shx cp ./src/codec/generated/*.d.ts ./build/types/codec/generated && yarn move-types && yarn format-types",
+    "build": "tsc && shx cp -R ./src/codec ./build/ && shx mkdir -p ./build/types/codec && shx cp -R ./src/codec ./build/types/",
+    "postbuild": "yarn move-types && yarn format-types",
     "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build",
     "test-node": "node jasmine-testrunner.js",
     "test-firefox": "yarn pack-web && karma start --single-run --browsers Firefox",
@@ -42,9 +42,8 @@
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js",
     "preget-proto": "shx rm -rf proto",
     "get-proto": "WASM_REF=v0.14.0 COSMOS_REF=v0.40.0 ./scripts/get-proto.sh",
-    "predefine-proto": "./scripts/predefine-proto.sh",
     "define-proto": "./scripts/define-proto.sh",
-    "postdefine-proto": "prettier --write \"src/codec/generated/codecimpl.*\""
+    "postdefine-proto": "prettier --write \"src/codec/**/*.ts\""
   },
   "dependencies": {
     "@cosmjs/cosmwasm-launchpad": "^0.24.0-alpha.22",

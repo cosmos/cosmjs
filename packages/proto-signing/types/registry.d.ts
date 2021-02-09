@@ -1,8 +1,8 @@
 import Long from "long";
 import protobuf from "protobufjs";
-import { cosmos, google } from "./codec";
+import { TxBody } from "./codec/cosmos/tx/v1beta1/tx";
+import { Any } from "./codec/google/protobuf/any";
 export interface GeneratedType {
-  readonly create: (properties?: { [k: string]: any }) => any;
   readonly encode: (
     message:
       | any
@@ -11,7 +11,16 @@ export interface GeneratedType {
         },
     writer?: protobuf.Writer,
   ) => protobuf.Writer;
-  readonly decode: (reader: protobuf.Reader | Uint8Array, length?: number) => any;
+  readonly decode: (input: Uint8Array | protobuf.Reader, length?: number) => any;
+  readonly fromJSON: (object: { [k: string]: any }) => any;
+  readonly fromPartial: (object: { [k: string]: any }) => any;
+  readonly toJSON: (
+    message:
+      | any
+      | {
+          [k: string]: any;
+        },
+  ) => unknown;
 }
 export interface EncodeObject {
   readonly typeUrl: string;
@@ -25,8 +34,8 @@ export interface TxBodyValue {
   readonly messages: readonly EncodeObject[];
   readonly memo?: string;
   readonly timeoutHeight?: Long;
-  readonly extensionOptions?: google.protobuf.IAny[];
-  readonly nonCriticalExtensionOptions?: google.protobuf.IAny[];
+  readonly extensionOptions?: Any[];
+  readonly nonCriticalExtensionOptions?: Any[];
 }
 export declare class Registry {
   private readonly types;
@@ -37,5 +46,5 @@ export declare class Registry {
   encode({ typeUrl, value }: EncodeObject): Uint8Array;
   encodeTxBody(txBodyFields: TxBodyValue): Uint8Array;
   decode({ typeUrl, value }: DecodeObject): any;
-  decodeTxBody(txBody: Uint8Array): cosmos.tx.v1beta1.TxBody;
+  decodeTxBody(txBody: Uint8Array): TxBody;
 }

@@ -3,16 +3,32 @@ import { toAscii } from "@cosmjs/encoding";
 import { Uint64 } from "@cosmjs/math";
 import Long from "long";
 
-import { ibc } from "../codec";
+import { Channel } from "../codec/ibc/core/channel/v1/channel";
+import {
+  QueryChannelResponse,
+  QueryChannelsResponse,
+  QueryClientImpl as ChannelQuery,
+  QueryConnectionChannelsResponse,
+  QueryNextSequenceReceiveResponse,
+  QueryPacketAcknowledgementResponse,
+  QueryPacketAcknowledgementsResponse,
+  QueryPacketCommitmentResponse,
+  QueryPacketCommitmentsResponse,
+  QueryUnreceivedAcksResponse,
+  QueryUnreceivedPacketsResponse,
+} from "../codec/ibc/core/channel/v1/query";
+import {
+  QueryClientConnectionsResponse,
+  QueryClientImpl as ConnectionQuery,
+  QueryConnectionResponse,
+  QueryConnectionsResponse,
+} from "../codec/ibc/core/connection/v1/query";
 import { QueryClient } from "./queryclient";
-import { toObject } from "./utils";
-
-const { Query: ChannelQuery } = ibc.core.channel.v1;
-const { Query: ConnectionQuery } = ibc.core.connection.v1;
+import { createPagination, createRpc } from "./utils";
 
 export interface IbcExtension {
   readonly ibc: {
-    readonly channel: (portId: string, channelId: string) => Promise<ibc.core.channel.v1.IChannel | null>;
+    readonly channel: (portId: string, channelId: string) => Promise<Channel | null>;
     readonly packetCommitment: (portId: string, channelId: string, sequence: number) => Promise<Uint8Array>;
     readonly packetAcknowledgement: (
       portId: string,
@@ -22,84 +38,62 @@ export interface IbcExtension {
     readonly nextSequenceReceive: (portId: string, channelId: string) => Promise<number | null>;
     readonly unverified: {
       // Queries for ibc.core.channel.v1
-      readonly channel: (
-        portId: string,
-        channelId: string,
-      ) => Promise<ibc.core.channel.v1.IQueryChannelResponse>;
-      readonly channels: (paginationKey?: Uint8Array) => Promise<ibc.core.channel.v1.IQueryChannelsResponse>;
+      readonly channel: (portId: string, channelId: string) => Promise<QueryChannelResponse>;
+      readonly channels: (paginationKey?: Uint8Array) => Promise<QueryChannelsResponse>;
       readonly connectionChannels: (
         connection: string,
         paginationKey?: Uint8Array,
-      ) => Promise<ibc.core.channel.v1.IQueryConnectionChannelsResponse>;
+      ) => Promise<QueryConnectionChannelsResponse>;
       readonly packetCommitment: (
         portId: string,
         channelId: string,
         sequence: number,
-      ) => Promise<ibc.core.channel.v1.IQueryPacketCommitmentResponse>;
+      ) => Promise<QueryPacketCommitmentResponse>;
       readonly packetCommitments: (
         portId: string,
         channelId: string,
         paginationKey?: Uint8Array,
-      ) => Promise<ibc.core.channel.v1.IQueryPacketCommitmentsResponse>;
+      ) => Promise<QueryPacketCommitmentsResponse>;
       readonly packetAcknowledgement: (
         portId: string,
         channelId: string,
         sequence: number,
-      ) => Promise<ibc.core.channel.v1.IQueryPacketAcknowledgementResponse>;
+      ) => Promise<QueryPacketAcknowledgementResponse>;
       readonly packetAcknowledgements: (
         portId: string,
         channelId: string,
         paginationKey?: Uint8Array,
-      ) => Promise<ibc.core.channel.v1.IQueryPacketAcknowledgementsResponse>;
+      ) => Promise<QueryPacketAcknowledgementsResponse>;
       readonly unreceivedPackets: (
         portId: string,
         channelId: string,
         packetCommitmentSequences: readonly number[],
-      ) => Promise<ibc.core.channel.v1.IQueryUnreceivedPacketsResponse>;
+      ) => Promise<QueryUnreceivedPacketsResponse>;
       readonly unreceivedAcks: (
         portId: string,
         channelId: string,
         packetCommitmentSequences: readonly number[],
-      ) => Promise<ibc.core.channel.v1.IQueryUnreceivedAcksResponse>;
+      ) => Promise<QueryUnreceivedAcksResponse>;
       readonly nextSequenceReceive: (
         portId: string,
         channelId: string,
-      ) => Promise<ibc.core.channel.v1.IQueryNextSequenceReceiveResponse>;
+      ) => Promise<QueryNextSequenceReceiveResponse>;
 
       // Queries for ibc.core.connection.v1
 
-      readonly connection: (connectionId: string) => Promise<ibc.core.connection.v1.IQueryConnectionResponse>;
-      readonly connections: (
-        paginationKey?: Uint8Array,
-      ) => Promise<ibc.core.connection.v1.IQueryConnectionsResponse>;
-      readonly clientConnections: (
-        clientId: string,
-      ) => Promise<ibc.core.connection.v1.IQueryClientConnectionsResponse>;
+      readonly connection: (connectionId: string) => Promise<QueryConnectionResponse>;
+      readonly connections: (paginationKey?: Uint8Array) => Promise<QueryConnectionsResponse>;
+      readonly clientConnections: (clientId: string) => Promise<QueryClientConnectionsResponse>;
     };
   };
 }
 
 export function setupIbcExtension(base: QueryClient): IbcExtension {
-  // Use this service to get easy typed access to query methods
-  // This cannot be used to for proof verification
-
-  const channelQueryService = ChannelQuery.create((method: any, requestData, callback) => {
-    // Parts of the path are unavailable, so we hardcode them here. See https://github.com/protobufjs/protobuf.js/issues/1229
-    const path = `/ibc.core.channel.v1.Query/${method.name}`;
-    base
-      .queryUnverified(path, requestData)
-      .then((response) => callback(null, response))
-      .catch((error) => callback(error));
-  });
-
-  const connectionQueryService = ConnectionQuery.create((method: any, requestData, callback) => {
-    // Parts of the path are unavailable, so we hardcode them here. See https://github.com/protobufjs/protobuf.js/issues/1229
-    const path = `/ibc.core.connection.v1.Query/${method.name}`;
-    base
-      .queryUnverified(path, requestData)
-      .then((response) => callback(null, response))
-      .catch((error) => callback(error));
-  });
+  const rpc = createRpc(base);
+  // Use these services to get easy typed access to query methods
+  // These cannot be used for proof verification
+  const channelQueryService = new ChannelQuery(rpc);
+  const connectionQueryService = new ConnectionQuery(rpc);
 
   return {
     ibc: {
@@ -108,7 +102,7 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
         // key: https://github.com/cosmos/cosmos-sdk/blob/ef0a7344af345882729598bc2958a21143930a6b/x/ibc/24-host/keys.go#L117-L120
         const key = toAscii(`channelEnds/ports/${portId}/channels/${channelId}`);
         const responseData = await base.queryVerified("ibc", key);
-        return responseData.length ? toObject(ibc.core.channel.v1.Channel.decode(responseData)) : null;
+        return responseData.length ? Channel.decode(responseData) : null;
       },
       packetCommitment: async (portId: string, channelId: string, sequence: number) => {
         // keeper: https://github.com/cosmos/cosmos-sdk/blob/3bafd8255a502e5a9cee07391cf8261538245dfd/x/ibc/04-channel/keeper/keeper.go#L128-L133
@@ -137,101 +131,101 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
       unverified: {
         // Queries for ibc.core.channel.v1
         channel: async (portId: string, channelId: string) => {
-          const response = await channelQueryService.channel({ portId: portId, channelId: channelId });
-          return toObject(response);
+          const response = await channelQueryService.Channel({ portId: portId, channelId: channelId });
+          return response;
         },
         channels: async (paginationKey?: Uint8Array) => {
           const request = {
-            pagination: paginationKey ? { key: paginationKey } : undefined,
+            pagination: createPagination(paginationKey),
           };
-          const response = await channelQueryService.channels(request);
-          return toObject(response);
+          const response = await channelQueryService.Channels(request);
+          return response;
         },
         connectionChannels: async (connection: string, paginationKey?: Uint8Array) => {
           const request = {
             connection: connection,
-            pagination: paginationKey ? { key: paginationKey } : undefined,
+            pagination: createPagination(paginationKey),
           };
-          const response = await channelQueryService.connectionChannels(request);
-          return toObject(response);
+          const response = await channelQueryService.ConnectionChannels(request);
+          return response;
         },
         packetCommitment: async (portId: string, channelId: string, sequence: number) => {
-          const response = await channelQueryService.packetCommitment({
+          const response = await channelQueryService.PacketCommitment({
             portId: portId,
             channelId: channelId,
-            sequence: Long.fromNumber(sequence),
+            sequence: Long.fromNumber(sequence, true),
           });
-          return toObject(response);
+          return response;
         },
         packetCommitments: async (portId: string, channelId: string, paginationKey?: Uint8Array) => {
           const request = {
             channelId: channelId,
             portId: portId,
-            pagination: paginationKey ? { key: paginationKey } : undefined,
+            pagination: createPagination(paginationKey),
           };
-          const response = await channelQueryService.packetCommitments(request);
-          return toObject(response);
+          const response = await channelQueryService.PacketCommitments(request);
+          return response;
         },
         packetAcknowledgement: async (portId: string, channelId: string, sequence: number) => {
-          const response = await channelQueryService.packetAcknowledgement({
+          const response = await channelQueryService.PacketAcknowledgement({
             portId: portId,
             channelId: channelId,
-            sequence: Long.fromNumber(sequence),
+            sequence: Long.fromNumber(sequence, true),
           });
-          return toObject(response);
+          return response;
         },
         packetAcknowledgements: async (portId: string, channelId: string, paginationKey?: Uint8Array) => {
-          const response = await channelQueryService.packetAcknowledgements({
+          const response = await channelQueryService.PacketAcknowledgements({
             portId: portId,
             channelId: channelId,
-            pagination: paginationKey ? { key: paginationKey } : undefined,
+            pagination: createPagination(paginationKey),
           });
-          return toObject(response);
+          return response;
         },
         unreceivedPackets: async (
           portId: string,
           channelId: string,
           packetCommitmentSequences: readonly number[],
         ) => {
-          const response = await channelQueryService.unreceivedPackets({
+          const response = await channelQueryService.UnreceivedPackets({
             portId: portId,
             channelId: channelId,
-            packetCommitmentSequences: packetCommitmentSequences.map((s) => Long.fromNumber(s)),
+            packetCommitmentSequences: packetCommitmentSequences.map((s) => Long.fromNumber(s, true)),
           });
-          return toObject(response);
+          return response;
         },
         unreceivedAcks: async (portId: string, channelId: string, packetAckSequences: readonly number[]) => {
-          const response = await channelQueryService.unreceivedAcks({
+          const response = await channelQueryService.UnreceivedAcks({
             portId: portId,
             channelId: channelId,
-            packetAckSequences: packetAckSequences.map((s) => Long.fromNumber(s)),
+            packetAckSequences: packetAckSequences.map((s) => Long.fromNumber(s, true)),
           });
-          return toObject(response);
+          return response;
         },
         nextSequenceReceive: async (portId: string, channelId: string) => {
-          const response = await channelQueryService.nextSequenceReceive({
+          const response = await channelQueryService.NextSequenceReceive({
             portId: portId,
             channelId: channelId,
           });
-          return toObject(response);
+          return response;
         },
 
         // Queries for ibc.core.connection.v1
 
         connection: async (connectionId: string) => {
-          const response = await connectionQueryService.connection({ connectionId: connectionId });
-          return toObject(response);
+          const response = await connectionQueryService.Connection({ connectionId: connectionId });
+          return response;
         },
         connections: async (paginationKey?: Uint8Array) => {
           const request = {
-            pagination: paginationKey ? { key: paginationKey } : undefined,
+            pagination: createPagination(paginationKey),
           };
-          const response = await connectionQueryService.connections(request);
-          return toObject(response);
+          const response = await connectionQueryService.Connections(request);
+          return response;
         },
         clientConnections: async (clientId: string) => {
-          const response = await connectionQueryService.clientConnections({ clientId: clientId });
-          return toObject(response);
+          const response = await connectionQueryService.ClientConnections({ clientId: clientId });
+          return response;
         },
       },
     },

@@ -10,7 +10,7 @@ import {
 import { assert, sleep } from "@cosmjs/utils";
 import { ReadonlyDate } from "readonly-date";
 
-import { cosmos } from "./codec";
+import { TxRaw } from "./codec/cosmos/tx/v1beta1/tx";
 import { assertIsBroadcastTxSuccess, PrivateStargateClient, StargateClient } from "./stargateclient";
 import {
   faucet,
@@ -22,8 +22,6 @@ import {
   unused,
   validator,
 } from "./testutils.spec";
-
-const { TxRaw } = cosmos.tx.v1beta1;
 
 describe("StargateClient", () => {
   describe("connect", () => {
@@ -311,7 +309,7 @@ describe("StargateClient", () => {
       const chainId = await client.getChainId();
       const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);
       const { signature } = await wallet.signDirect(address, signDoc);
-      const txRaw = TxRaw.create({
+      const txRaw = TxRaw.fromPartial({
         bodyBytes: txBodyBytes,
         authInfoBytes: authInfoBytes,
         signatures: [fromBase64(signature.signature)],

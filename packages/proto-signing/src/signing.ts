@@ -1,34 +1,37 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import Long from "long";
 
-import { omitDefaults } from "./adr27";
-import { cosmos, google } from "./codec";
-
-const { SignDoc, AuthInfo } = cosmos.tx.v1beta1;
+import { Coin } from "./codec/cosmos/base/v1beta1/coin";
+import { SignMode } from "./codec/cosmos/tx/signing/v1beta1/signing";
+import { AuthInfo, SignDoc, SignerInfo } from "./codec/cosmos/tx/v1beta1/tx";
+import { Any } from "./codec/google/protobuf/any";
 
 /**
  * Creates and serializes an AuthInfo document using SIGN_MODE_DIRECT.
  */
 export function makeAuthInfoBytes(
-  pubkeys: readonly google.protobuf.IAny[],
-  feeAmount: readonly cosmos.base.v1beta1.Coin[],
+  pubkeys: readonly Any[],
+  feeAmount: readonly Coin[],
   gasLimit: number,
   sequence: number,
-  signMode = cosmos.tx.signing.v1beta1.SignMode.SIGN_MODE_DIRECT,
+  signMode = SignMode.SIGN_MODE_DIRECT,
 ): Uint8Array {
   const authInfo = {
     signerInfos: pubkeys.map(
-      (pubkey): cosmos.tx.v1beta1.ISignerInfo => ({
+      (pubkey): SignerInfo => ({
         publicKey: pubkey,
         modeInfo: {
           single: { mode: signMode },
         },
-        sequence: sequence ? Long.fromNumber(sequence) : undefined,
+        sequence: Long.fromNumber(sequence),
       }),
     ),
-    fee: { amount: [...feeAmount], gasLimit: Long.fromNumber(gasLimit) },
+    fee: {
+      amount: [...feeAmount],
+      gasLimit: Long.fromNumber(gasLimit),
+    },
   };
-  return Uint8Array.from(AuthInfo.encode(authInfo).finish());
+  return AuthInfo.encode(AuthInfo.fromPartial(authInfo)).finish();
 }
 
 export function makeSignDoc(
@@ -36,7 +39,7 @@ export function makeSignDoc(
   authInfoBytes: Uint8Array,
   chainId: string,
   accountNumber: number,
-): cosmos.tx.v1beta1.ISignDoc {
+): SignDoc {
   return {
     bodyBytes: bodyBytes,
     authInfoBytes: authInfoBytes,
@@ -45,19 +48,12 @@ export function makeSignDoc(
   };
 }
 
-export function makeSignBytes({
-  accountNumber,
-  authInfoBytes,
-  bodyBytes,
-  chainId,
-}: cosmos.tx.v1beta1.ISignDoc): Uint8Array {
-  const signDoc = SignDoc.create(
-    omitDefaults({
-      accountNumber: accountNumber,
-      authInfoBytes: authInfoBytes,
-      bodyBytes: bodyBytes,
-      chainId: chainId,
-    }),
-  );
-  return Uint8Array.from(SignDoc.encode(signDoc).finish());
+export function makeSignBytes({ accountNumber, authInfoBytes, bodyBytes, chainId }: SignDoc): Uint8Array {
+  const signDoc = SignDoc.fromPartial({
+    accountNumber: accountNumber,
+    authInfoBytes: authInfoBytes,
+    bodyBytes: bodyBytes,
+    chainId: chainId,
+  });
+  return SignDoc.encode(signDoc).finish();
 }

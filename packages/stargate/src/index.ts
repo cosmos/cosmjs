@@ -1,12 +1,14 @@
-export * as codec from "./codec";
 export { AminoConverter, AminoTypes } from "./aminotypes";
 export { parseRawLog } from "./logs";
 export {
   AuthExtension,
   BankExtension,
+  createPagination,
+  createRpc,
   DistributionExtension,
   IbcExtension,
   QueryClient,
+  Rpc,
   setupAuthExtension,
   setupBankExtension,
   setupDistributionExtension,

@@ -12,19 +12,16 @@ import { DirectSecp256k1HdWallet, DirectSignResponse, makeAuthInfoBytes } from "
 import {
   AuthExtension,
   BankExtension,
-  codec,
   QueryClient,
   setupAuthExtension,
   setupBankExtension,
 } from "@cosmjs/stargate";
+import { SignMode } from "@cosmjs/stargate/build/codec/cosmos/tx/signing/v1beta1/signing";
+import { AuthInfo, SignDoc, TxBody } from "@cosmjs/stargate/build/codec/cosmos/tx/v1beta1/tx";
 import { adaptor34, Client as TendermintClient } from "@cosmjs/tendermint-rpc";
 
 import { setupWasmExtension, WasmExtension } from "./queries";
 import hackatom from "./testdata/contract.json";
-
-type ISignDoc = codec.cosmos.tx.v1beta1.ISignDoc;
-const { AuthInfo, TxBody } = codec.cosmos.tx.v1beta1;
-const { SignMode } = codec.cosmos.tx.signing.v1beta1;
 
 /** An internal testing type. SigningCosmWasmClient has a similar but different interface */
 export interface ContractUploadInstructions {
@@ -268,15 +265,15 @@ export class ModifyingDirectSecp256k1HdWallet extends DirectSecp256k1HdWallet {
     );
   }
 
-  public async signDirect(address: string, signDoc: ISignDoc): Promise<DirectSignResponse> {
-    const txBody = TxBody.decode(signDoc.bodyBytes!);
-    const modifiedTxBody = TxBody.create({
+  public async signDirect(address: string, signDoc: SignDoc): Promise<DirectSignResponse> {
+    const txBody = TxBody.decode(signDoc.bodyBytes);
+    const modifiedTxBody = TxBody.fromPartial({
       ...txBody,
       memo: "This was modified",
     });
-    const authInfo = AuthInfo.decode(signDoc.authInfoBytes!);
+    const authInfo = AuthInfo.decode(signDoc.authInfoBytes);
     const pubkeys = authInfo.signerInfos.map((signerInfo) => signerInfo.publicKey!);
-    const sequence = authInfo.signerInfos[0].sequence!.toNumber();
+    const sequence = authInfo.signerInfos[0].sequence.toNumber();
     const modifiedFeeAmount = coins(3000, "ucosm");
     const modifiedGasLimit = 333333;
     const modifiedSignDoc = {

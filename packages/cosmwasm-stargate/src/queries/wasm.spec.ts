@@ -12,7 +12,15 @@ import {
 import { assert, assertDefined } from "@cosmjs/utils";
 import Long from "long";
 
-import { cosmwasm } from "../codec";
+import {
+  MsgExecuteContract,
+  MsgExecuteContractResponse,
+  MsgInstantiateContract,
+  MsgInstantiateContractResponse,
+  MsgStoreCode,
+  MsgStoreCodeResponse,
+} from "../codec/x/wasm/internal/types/tx";
+import { ContractCodeHistoryOperationType } from "../codec/x/wasm/internal/types/types";
 import { SigningCosmWasmClient } from "../signingcosmwasmclient";
 import {
   alice,
@@ -28,15 +36,6 @@ import {
   wasmdEnabled,
 } from "../testutils.spec";
 
-const {
-  MsgExecuteContract,
-  MsgExecuteContractResponse,
-  MsgInstantiateContract,
-  MsgInstantiateContractResponse,
-  MsgStoreCode,
-  MsgStoreCodeResponse,
-} = cosmwasm.wasm.v1beta1;
-
 const registry = new Registry([
   ["/cosmwasm.wasm.v1beta1.MsgExecuteContract", MsgExecuteContract],
   ["/cosmwasm.wasm.v1beta1.MsgStoreCode", MsgStoreCode],
@@ -50,7 +49,7 @@ async function uploadContract(
   const memo = "My first contract on chain";
   const theMsg = {
     typeUrl: "/cosmwasm.wasm.v1beta1.MsgStoreCode",
-    value: MsgStoreCode.create({
+    value: MsgStoreCode.fromPartial({
       sender: alice.address0,
       wasmByteCode: contract.data,
       source: contract.source || "",
@@ -75,7 +74,7 @@ async function instantiateContract(
   const memo = "Create an escrow instance";
   const theMsg = {
     typeUrl: "/cosmwasm.wasm.v1beta1.MsgInstantiateContract",
-    value: MsgInstantiateContract.create({
+    value: MsgInstantiateContract.fromPartial({
       sender: alice.address0,
       codeId: Long.fromNumber(codeId),
       label: "my escrow",
@@ -106,7 +105,7 @@ async function executeContract(
   const memo = "Time for action";
   const theMsg = {
     typeUrl: "/cosmwasm.wasm.v1beta1.MsgExecuteContract",
-    value: MsgExecuteContract.create({
+    value: MsgExecuteContract.fromPartial({
       sender: alice.address0,
       contract: contractAddress,
       msg: toAscii(JSON.stringify(msg)),
@@ -157,11 +156,11 @@ describe("WasmExtension", () => {
       const { codeInfos } = await client.unverified.wasm.listCodeInfo();
       assert(codeInfos);
       const lastCode = codeInfos[codeInfos.length - 1];
-      expect(lastCode.codeId!.toNumber()).toEqual(hackatomCodeId);
+      expect(lastCode.codeId.toNumber()).toEqual(hackatomCodeId);
       expect(lastCode.creator).toEqual(alice.address0);
-      expect(lastCode.source).toEqual(hackatom.source);
-      expect(lastCode.builder).toEqual(hackatom.builder);
-      expect(toHex(lastCode.dataHash!)).toEqual(toHex(sha256(hackatom.data)));
+      expect(lastCode.source).toEqual(hackatom.source ?? "");
+      expect(lastCode.builder).toEqual(hackatom.builder ?? "");
+      expect(toHex(lastCode.dataHash)).toEqual(toHex(sha256(hackatom.data)));
     });
   });
 
@@ -171,11 +170,11 @@ describe("WasmExtension", () => {
       assert(hackatomCodeId);
       const client = await makeWasmClient(wasmd.endpoint);
       const { codeInfo, data } = await client.unverified.wasm.getCode(hackatomCodeId);
-      expect(codeInfo!.codeId!.toNumber()).toEqual(hackatomCodeId);
+      expect(codeInfo!.codeId.toNumber()).toEqual(hackatomCodeId);
       expect(codeInfo!.creator).toEqual(alice.address0);
-      expect(codeInfo!.source).toEqual(hackatom.source);
-      expect(codeInfo!.builder).toEqual(hackatom.builder);
-      expect(toHex(codeInfo!.dataHash!)).toEqual(toHex(sha256(hackatom.data)));
+      expect(codeInfo!.source).toEqual(hackatom.source ?? "");
+      expect(codeInfo!.builder).toEqual(hackatom.builder ?? "");
+      expect(toHex(codeInfo!.dataHash)).toEqual(toHex(sha256(hackatom.data)));
       expect(data).toEqual(hackatom.data);
     });
   });
@@ -197,9 +196,10 @@ describe("WasmExtension", () => {
       assert(existingContractInfos);
       for (const { address, contractInfo } of existingContractInfos) {
         expect(address).toMatch(bech32AddressMatcher);
-        expect(contractInfo!.codeId!.toNumber()).toEqual(hackatomCodeId);
-        expect(contractInfo!.creator).toMatch(bech32AddressMatcher);
-        expect(contractInfo!.label).toMatch(/^.+$/);
+        assertDefined(contractInfo);
+        expect(contractInfo.codeId.toNumber()).toEqual(hackatomCodeId);
+        expect(contractInfo.creator).toMatch(bech32AddressMatcher);
+        expect(contractInfo.label).toMatch(/^.+$/);
       }
 
       const result = await instantiateContract(wallet, hackatomCodeId, beneficiaryAddress, transferAmount);
@@ -218,6 +218,7 @@ describe("WasmExtension", () => {
         codeId: Long.fromNumber(hackatomCodeId, true),
         creator: alice.address0,
         label: "my escrow",
+        admin: "",
       });
 
       const { contractInfo } = await client.unverified.wasm.getContractInfo(myAddress);
@@ -226,6 +227,7 @@ describe("WasmExtension", () => {
         codeId: Long.fromNumber(hackatomCodeId, true),
         creator: alice.address0,
         label: "my escrow",
+        admin: "",
       });
       expect(contractInfo.admin).toEqual("");
     });
@@ -263,8 +265,7 @@ describe("WasmExtension", () => {
       expect(history.entries).toContain(
         jasmine.objectContaining({
           codeId: Long.fromNumber(hackatomCodeId, true),
-          operation:
-            cosmwasm.wasm.v1beta1.ContractCodeHistoryOperationType.CONTRACT_CODE_HISTORY_OPERATION_TYPE_INIT,
+          operation: ContractCodeHistoryOperationType.CONTRACT_CODE_HISTORY_OPERATION_TYPE_INIT,
           msg: toAscii(
             JSON.stringify({
               verifier: alice.address0,
@@ -295,7 +296,7 @@ describe("WasmExtension", () => {
       expect(models.length).toEqual(1);
       const data = models[0];
       expect(data.key).toEqual(hackatomConfigKey);
-      const value = JSON.parse(fromAscii(data.value!));
+      const value = JSON.parse(fromAscii(data.value));
       expect(value.verifier).toMatch(base64Matcher);
       expect(value.beneficiary).toMatch(base64Matcher);
     });
@@ -322,15 +323,15 @@ describe("WasmExtension", () => {
       expect(model.beneficiary).toMatch(base64Matcher);
     });
 
-    it("returns empty object for missing key", async () => {
+    it("returns undefined for missing key", async () => {
       pendingWithoutWasmd();
       assert(hackatomContractAddress);
       const client = await makeWasmClient(wasmd.endpoint);
-      const response = await client.unverified.wasm.queryContractRaw(
+      const { data } = await client.unverified.wasm.queryContractRaw(
         hackatomContractAddress,
         fromHex("cafe0dad"),
       );
-      expect({ ...response }).toEqual({});
+      expect(data).toBeUndefined();
     });
 
     it("returns null for non-existent address", async () => {
@@ -398,8 +399,8 @@ describe("WasmExtension", () => {
         assertDefined(result.data);
         const msgData = fromOneElementArray(result.data);
         expect(msgData.msgType).toEqual("store-code");
-        expect(MsgStoreCodeResponse.decode(msgData.data!)).toEqual(
-          MsgStoreCodeResponse.create({ codeId: Long.fromNumber(codeId, true) }),
+        expect(MsgStoreCodeResponse.decode(msgData.data)).toEqual(
+          MsgStoreCodeResponse.fromPartial({ codeId: Long.fromNumber(codeId, true) }),
         );
       }
 
@@ -418,8 +419,8 @@ describe("WasmExtension", () => {
         assertDefined(result.data);
         const msgData = fromOneElementArray(result.data);
         expect(msgData.msgType).toEqual("instantiate");
-        expect(MsgInstantiateContractResponse.decode(msgData.data!)).toEqual(
-          MsgInstantiateContractResponse.create({ address: contractAddress }),
+        expect(MsgInstantiateContractResponse.decode(msgData.data)).toEqual(
+          MsgInstantiateContractResponse.fromPartial({ address: contractAddress }),
         );
 
         const balanceUcosm = await client.bank.balance(contractAddress, "ucosm");
@@ -444,8 +445,8 @@ describe("WasmExtension", () => {
         assertDefined(result.data);
         const msgData = fromOneElementArray(result.data);
         expect(msgData.msgType).toEqual("execute");
-        expect(MsgExecuteContractResponse.decode(msgData.data!)).toEqual(
-          MsgExecuteContractResponse.create({ data: fromHex("F00BAA") }),
+        expect(MsgExecuteContractResponse.decode(msgData.data)).toEqual(
+          MsgExecuteContractResponse.fromPartial({ data: fromHex("F00BAA") }),
         );
 
         // Verify token transfer from contract to beneficiary

@@ -1,7 +1,22 @@
 import { fromBase64 } from "@cosmjs/encoding";
 import Long from "long";
 
-import { ibc } from "../codec";
+import {
+  Channel,
+  Counterparty as ChannelCounterparty,
+  IdentifiedChannel,
+  Order,
+  PacketState,
+  State as ChannelState,
+} from "../codec/ibc/core/channel/v1/channel";
+import { MerklePrefix } from "../codec/ibc/core/commitment/v1/commitment";
+import {
+  ConnectionEnd,
+  Counterparty as ConnectionCounterparty,
+  IdentifiedConnection,
+  State as ConnectionState,
+  Version,
+} from "../codec/ibc/core/connection/v1/connection";
 
 // From scripts/simapp/genesis-ibc.json
 
@@ -10,10 +25,10 @@ export const channelId = "channel-0";
 export const connectionId = "connection-0";
 export const clientId = "07-tendermint-0";
 
-export const channel = ibc.core.channel.v1.Channel.create({
-  state: ibc.core.channel.v1.State.STATE_OPEN,
-  ordering: ibc.core.channel.v1.Order.ORDER_UNORDERED,
-  counterparty: ibc.core.channel.v1.Counterparty.create({
+export const channel = Channel.fromPartial({
+  state: ChannelState.STATE_OPEN,
+  ordering: Order.ORDER_UNORDERED,
+  counterparty: ChannelCounterparty.fromPartial({
     portId: portId,
     channelId: channelId,
   }),
@@ -21,10 +36,10 @@ export const channel = ibc.core.channel.v1.Channel.create({
   version: "ics20-1",
 });
 
-export const identifiedChannel = ibc.core.channel.v1.IdentifiedChannel.create({
-  state: ibc.core.channel.v1.State.STATE_OPEN,
-  ordering: ibc.core.channel.v1.Order.ORDER_UNORDERED,
-  counterparty: ibc.core.channel.v1.Counterparty.create({
+export const identifiedChannel = IdentifiedChannel.fromPartial({
+  state: ChannelState.STATE_OPEN,
+  ordering: Order.ORDER_UNORDERED,
+  counterparty: ChannelCounterparty.fromPartial({
     portId: portId,
     channelId: "channel-0",
   }),
@@ -44,7 +59,7 @@ export const commitment = {
   data: fromBase64("hYz5Dx6o09DcSEWZR6xlJYwLgYUnLithsXMGtujic4I="),
 };
 
-export const packetState = ibc.core.channel.v1.PacketState.create({
+export const packetState = PacketState.fromPartial({
   portId: portId,
   channelId: channelId,
   sequence: Long.fromInt(commitment.sequence, true),
@@ -58,40 +73,40 @@ export const packetState = ibc.core.channel.v1.PacketState.create({
  * jq ".channel_genesis.acknowledgements" scripts/simapp/genesis-ibc.json
  * ```
  */
-export const packetAcknowledgements: ibc.core.channel.v1.PacketState[] = [];
+export const packetAcknowledgements: PacketState[] = [];
 
-export const connection = ibc.core.connection.v1.ConnectionEnd.create({
+export const connection = ConnectionEnd.fromPartial({
   clientId: clientId,
   versions: [
-    ibc.core.connection.v1.Version.create({
+    Version.fromPartial({
       identifier: "1",
       features: ["ORDER_ORDERED", "ORDER_UNORDERED"],
     }),
   ],
-  state: ibc.core.connection.v1.State.STATE_OPEN,
-  counterparty: ibc.core.connection.v1.Counterparty.create({
+  state: ConnectionState.STATE_OPEN,
+  counterparty: ConnectionCounterparty.fromPartial({
     clientId: "07-tendermint-0",
     connectionId: "connection-0",
-    prefix: ibc.core.commitment.v1.MerklePrefix.create({
+    prefix: MerklePrefix.fromPartial({
       keyPrefix: fromBase64("aWJj"),
     }),
   }),
 });
 
-export const identifiedConnection = ibc.core.connection.v1.IdentifiedConnection.create({
+export const identifiedConnection = IdentifiedConnection.fromPartial({
   id: connectionId,
   clientId: clientId,
   versions: [
-    ibc.core.connection.v1.Version.create({
+    Version.fromPartial({
       identifier: "1",
       features: ["ORDER_ORDERED", "ORDER_UNORDERED"],
     }),
   ],
-  state: ibc.core.connection.v1.State.STATE_OPEN,
-  counterparty: ibc.core.connection.v1.Counterparty.create({
+  state: ConnectionState.STATE_OPEN,
+  counterparty: ConnectionCounterparty.fromPartial({
     clientId: "07-tendermint-0",
     connectionId: "connection-0",
-    prefix: ibc.core.commitment.v1.MerklePrefix.create({
+    prefix: MerklePrefix.fromPartial({
       keyPrefix: fromBase64("aWJj"),
     }),
   }),

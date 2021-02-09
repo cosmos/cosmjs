@@ -9,14 +9,18 @@ import {
   MsgDelegate as LaunchpadMsgDelegate,
   Secp256k1HdWallet,
 } from "@cosmjs/launchpad";
-import { Coin, cosmosField, DirectSecp256k1HdWallet, registered, Registry } from "@cosmjs/proto-signing";
-import { AminoTypes, assertIsBroadcastTxSuccess, codec } from "@cosmjs/stargate";
+import { DirectSecp256k1HdWallet, Registry } from "@cosmjs/proto-signing";
+import { AminoTypes, assertIsBroadcastTxSuccess } from "@cosmjs/stargate";
+import { DeepPartial, MsgSend } from "@cosmjs/stargate/build/codec/cosmos/bank/v1beta1/tx";
+import { Coin } from "@cosmjs/stargate/build/codec/cosmos/base/v1beta1/coin";
+import { MsgDelegate } from "@cosmjs/stargate/build/codec/cosmos/staking/v1beta1/tx";
+import { Tx } from "@cosmjs/stargate/build/codec/cosmos/tx/v1beta1/tx";
 import { assert, sleep } from "@cosmjs/utils";
 import Long from "long";
 import pako from "pako";
-import { Message } from "protobufjs";
+import protobuf from "protobufjs/minimal";
 
-import { cosmwasm } from "./codec";
+import { MsgStoreCode } from "./codec/x/wasm/internal/types/tx";
 import { PrivateSigningCosmWasmClient, SigningCosmWasmClient } from "./signingcosmwasmclient";
 import {
   alice,
@@ -30,14 +34,6 @@ import {
   validator,
   wasmd,
 } from "./testutils.spec";
-
-type IMsgSend = codec.cosmos.bank.v1beta1.IMsgSend;
-type IMsgDelegate = codec.cosmos.staking.v1beta1.IMsgDelegate;
-type IMsgStoreCode = cosmwasm.wasm.v1beta1.IMsgStoreCode;
-
-const { MsgSend } = codec.cosmos.bank.v1beta1;
-const { MsgDelegate } = codec.cosmos.staking.v1beta1;
-const { Tx } = codec.cosmos.tx.v1beta1;
 
 describe("SigningCosmWasmClient", () => {
   describe("connectWithSigner", () => {
@@ -515,7 +511,7 @@ describe("SigningCosmWasmClient", () => {
         const options = { prefix: wasmd.prefix, registry: registry };
         const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
 
-        const msg = MsgDelegate.create({
+        const msg = MsgDelegate.fromPartial({
           delegatorAddress: alice.address0,
           validatorAddress: validator.validatorAddress,
           amount: coin(1234, "ustake"),
@@ -546,7 +542,7 @@ describe("SigningCosmWasmClient", () => {
         const options = { prefix: wasmd.prefix, registry: registry };
         const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
 
-        const msg = MsgDelegate.create({
+        const msg = MsgDelegate.fromPartial({
           delegatorAddress: alice.address0,
           validatorAddress: validator.validatorAddress,
           amount: coin(1234, "ustake"),
@@ -570,36 +566,19 @@ describe("SigningCosmWasmClient", () => {
         const tx = Tx.decode(searchResult.tx);
         // From ModifyingDirectSecp256k1HdWallet
         expect(tx.body!.memo).toEqual("This was modified");
-        expect({ ...tx.authInfo!.fee!.amount![0] }).toEqual(coin(3000, "ucosm"));
-        expect(tx.authInfo!.fee!.gasLimit!.toNumber()).toEqual(333333);
+        expect({ ...tx.authInfo!.fee!.amount[0] }).toEqual(coin(3000, "ucosm"));
+        expect(tx.authInfo!.fee!.gasLimit.toNumber()).toEqual(333333);
       });
     });
 
     describe("legacy Amino mode", () => {
-      // NOTE: One custom registry shared between tests
-      // See https://github.com/protobufjs/protobuf.js#using-decorators
-      // > Decorated types reside in protobuf.roots["decorated"] using a flat structure, so no duplicate names.
-      const customRegistry = new Registry();
-      const msgDelegateTypeUrl = "/cosmos.staking.v1beta1.MsgDelegate";
-
-      @registered(customRegistry, msgDelegateTypeUrl)
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      class CustomMsgDelegate extends Message {
-        @cosmosField.string(1)
-        public readonly custom_delegator_address?: string;
-        @cosmosField.string(2)
-        public readonly custom_validator_address?: string;
-        @cosmosField.message(3, Coin)
-        public readonly custom_amount?: Coin;
-      }
-
       it("works with bank MsgSend", async () => {
         pendingWithoutWasmd();
         const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, undefined, wasmd.prefix);
         const options = { prefix: wasmd.prefix };
         const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
 
-        const msgSend: IMsgSend = {
+        const msgSend: MsgSend = {
           fromAddress: alice.address0,
           toAddress: makeRandomAddress(),
           amount: coins(1234, "ucosm"),
@@ -623,7 +602,7 @@ describe("SigningCosmWasmClient", () => {
         const options = { prefix: wasmd.prefix };
         const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
 
-        const msgDelegate: IMsgDelegate = {
+        const msgDelegate: MsgDelegate = {
           delegatorAddress: alice.address0,
           validatorAddress: validator.validatorAddress,
           amount: coin(1234, "ustake"),
@@ -648,11 +627,12 @@ describe("SigningCosmWasmClient", () => {
         const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
         const { data, builder, source } = getHackatom();
 
-        const msgStoreCode: IMsgStoreCode = {
+        const msgStoreCode: MsgStoreCode = {
           sender: alice.address0,
           wasmByteCode: pako.gzip(data),
-          source: source,
-          builder: builder,
+          source: source ?? "",
+          builder: builder ?? "",
+          instantiatePermission: undefined,
         };
         const msgAny = {
           typeUrl: "/cosmwasm.wasm.v1beta1.MsgStoreCode",
@@ -670,27 +650,85 @@ describe("SigningCosmWasmClient", () => {
       it("works with a custom registry and custom message", async () => {
         pendingWithoutWasmd();
         const wallet = await Secp256k1HdWallet.fromMnemonic(alice.mnemonic, undefined, wasmd.prefix);
+
+        const customRegistry = new Registry();
+        const msgDelegateTypeUrl = "/cosmos.staking.v1beta1.MsgDelegate";
+        interface CustomMsgDelegate {
+          customDelegatorAddress?: string;
+          customValidatorAddress?: string;
+          customAmount?: Coin;
+        }
+        const baseCustomMsgDelegate: CustomMsgDelegate = {
+          customDelegatorAddress: "",
+          customValidatorAddress: "",
+        };
+        const CustomMsgDelegate = {
+          // Adapted from autogenerated MsgDelegate implementation
+          encode(
+            message: CustomMsgDelegate,
+            writer: protobuf.Writer = protobuf.Writer.create(),
+          ): protobuf.Writer {
+            writer.uint32(10).string(message.customDelegatorAddress ?? "");
+            writer.uint32(18).string(message.customValidatorAddress ?? "");
+            if (message.customAmount !== undefined && message.customAmount !== undefined) {
+              Coin.encode(message.customAmount, writer.uint32(26).fork()).ldelim();
+            }
+            return writer;
+          },
+
+          decode(): CustomMsgDelegate {
+            throw new Error("decode method should not be required");
+          },
+
+          fromJSON(): CustomMsgDelegate {
+            throw new Error("fromJSON method should not be required");
+          },
+
+          fromPartial(object: DeepPartial<CustomMsgDelegate>): CustomMsgDelegate {
+            const message = { ...baseCustomMsgDelegate } as CustomMsgDelegate;
+            if (object.customDelegatorAddress !== undefined && object.customDelegatorAddress !== null) {
+              message.customDelegatorAddress = object.customDelegatorAddress;
+            } else {
+              message.customDelegatorAddress = "";
+            }
+            if (object.customValidatorAddress !== undefined && object.customValidatorAddress !== null) {
+              message.customValidatorAddress = object.customValidatorAddress;
+            } else {
+              message.customValidatorAddress = "";
+            }
+            if (object.customAmount !== undefined && object.customAmount !== null) {
+              message.customAmount = Coin.fromPartial(object.customAmount);
+            } else {
+              message.customAmount = undefined;
+            }
+            return message;
+          },
+
+          toJSON(): unknown {
+            throw new Error("toJSON method should not be required");
+          },
+        };
+        customRegistry.register(msgDelegateTypeUrl, CustomMsgDelegate);
         const customAminoTypes = new AminoTypes({
-          prefix: wasmd.prefix,
           additions: {
             "/cosmos.staking.v1beta1.MsgDelegate": {
               aminoType: "cosmos-sdk/MsgDelegate",
               toAmino: ({
-                custom_delegator_address,
-                custom_validator_address,
-                custom_amount,
+                customDelegatorAddress,
+                customValidatorAddress,
+                customAmount,
               }: CustomMsgDelegate): LaunchpadMsgDelegate["value"] => {
-                assert(custom_delegator_address, "missing custom_delegator_address");
-                assert(custom_validator_address, "missing validator_address");
-                assert(custom_amount, "missing amount");
-                assert(custom_amount.amount, "missing amount.amount");
-                assert(custom_amount.denom, "missing amount.denom");
+                assert(customDelegatorAddress, "missing customDelegatorAddress");
+                assert(customValidatorAddress, "missing validatorAddress");
+                assert(customAmount, "missing amount");
+                assert(customAmount.amount, "missing amount.amount");
+                assert(customAmount.denom, "missing amount.denom");
                 return {
-                  delegator_address: custom_delegator_address,
-                  validator_address: custom_validator_address,
+                  delegator_address: customDelegatorAddress,
+                  validator_address: customValidatorAddress,
                   amount: {
-                    amount: custom_amount.amount,
-                    denom: custom_amount.denom,
+                    amount: customAmount.amount,
+                    denom: customAmount.denom,
                   },
                 };
               },
@@ -698,12 +736,11 @@ describe("SigningCosmWasmClient", () => {
                 delegator_address,
                 validator_address,
                 amount,
-              }: LaunchpadMsgDelegate["value"]): CustomMsgDelegate =>
-                CustomMsgDelegate.create({
-                  custom_delegator_address: delegator_address,
-                  custom_validator_address: validator_address,
-                  custom_amount: Coin.create(amount),
-                }),
+              }: LaunchpadMsgDelegate["value"]): CustomMsgDelegate => ({
+                customDelegatorAddress: delegator_address,
+                customValidatorAddress: validator_address,
+                customAmount: Coin.fromPartial(amount),
+              }),
             },
           },
         });
@@ -711,9 +748,9 @@ describe("SigningCosmWasmClient", () => {
         const client = await SigningCosmWasmClient.connectWithSigner(wasmd.endpoint, wallet, options);
 
         const msg = {
-          custom_delegator_address: alice.address0,
-          custom_validator_address: validator.validatorAddress,
-          custom_amount: coin(1234, "ustake"),
+          customDelegatorAddress: alice.address0,
+          customValidatorAddress: validator.validatorAddress,
+          customAmount: coin(1234, "ustake"),
         };
         const msgAny = {
           typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
@@ -740,7 +777,7 @@ describe("SigningCosmWasmClient", () => {
           amount: coin(1234, "ustake"),
         };
         const msgAny = {
-          typeUrl: msgDelegateTypeUrl,
+          typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
           value: msg,
         };
         const fee = {
@@ -758,8 +795,8 @@ describe("SigningCosmWasmClient", () => {
         const tx = Tx.decode(searchResult.tx);
         // From ModifyingSecp256k1HdWallet
         expect(tx.body!.memo).toEqual("This was modified");
-        expect({ ...tx.authInfo!.fee!.amount![0] }).toEqual(coin(3000, "ucosm"));
-        expect(tx.authInfo!.fee!.gasLimit!.toNumber()).toEqual(333333);
+        expect({ ...tx.authInfo!.fee!.amount[0] }).toEqual(coin(3000, "ucosm"));
+        expect(tx.authInfo!.fee!.gasLimit.toNumber()).toEqual(333333);
       });
     });
   });

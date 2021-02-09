@@ -1495,6 +1495,11 @@
   resolved "https://registry.yarnpkg.com/@types/normalize-package-data/-/normalize-package-data-2.4.0.tgz#e486d0d97396d79beedd0a6e33f4534ff6b4973e"
   integrity sha512-f5j5b/Gf71L+dbqxIpQ4Z2WlmI/mPJ0fOkGGmFgtb6sAu97EPczzbS3/tJKxmcYDj55OX6ssqwDAWOHIYDRDGA==
 
+"@types/object-hash@^1.3.0":
+  version "1.3.4"
+  resolved "https://registry.yarnpkg.com/@types/object-hash/-/object-hash-1.3.4.tgz#079ba142be65833293673254831b5e3e847fe58b"
+  integrity sha512-xFdpkAkikBgqBdG9vIlsqffDV8GpvnPEzs0IUtr1v3BEB97ijsFQ4RXVbUZwjFThhB4MDSTUfvmxUD5PGx0wXA==
+
 "@types/pako@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@types/pako/-/pako-1.0.1.tgz#33b237f3c9aff44d0f82fe63acffa4a365ef4a61"
@@ -1506,6 +1511,11 @@
   integrity sha512-Cf63Rv7jCQ0LaL8tNXmEyqTHuIJxRdlS5vMh1mj5voN4+QFhVZnlZruezqpWYDiJ8UTzhP0VmeLXCmBk66YrMQ==
   dependencies:
     "@types/node" "*"
+
+"@types/prettier@^1.19.0":
+  version "1.19.1"
+  resolved "https://registry.yarnpkg.com/@types/prettier/-/prettier-1.19.1.tgz#33509849f8e679e4add158959fdb086440e9553f"
+  integrity sha512-5qOlnZscTn4xxM5MeGXAMOsIOIKIbh9e85zJWfBRVPlRMEVawzoPhINYbRGkBZCI8LxvBe7tJCdWiarA99OZfQ==
 
 "@types/range-parser@*":
   version "1.2.3"
@@ -3178,6 +3188,11 @@ dashdash@^1.12.0:
   integrity sha1-hTz6D3y+L+1d4gMmuN1YEDX24vA=
   dependencies:
     assert-plus "^1.0.0"
+
+dataloader@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/dataloader/-/dataloader-1.4.0.tgz#bca11d867f5d3f1b9ed9f737bd15970c65dff5c8"
+  integrity sha512-68s5jYdlvasItOJnCuI2Q9s4q98g0pCyL3HrcKJu8KNugUl8ahgmZYg38ysLTgQjjXX3H8CJLkAvWrclWfcalw==
 
 date-format@^2.1.0:
   version "2.1.0"
@@ -6586,6 +6601,11 @@ object-copy@^0.1.0:
     define-property "^0.2.5"
     kind-of "^3.0.3"
 
+object-hash@^1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/object-hash/-/object-hash-1.3.1.tgz#fde452098a951cb145f039bb7d455449ddc126df"
+  integrity sha512-OSuu/pU4ENM9kmREg0BdNrUDIl1heYa4mBZacJc+vVWz4GtAwu7jO8s4AIt2aGRUTqxykpWzI3Oqnsm13tTMDA==
+
 object-inspect@^1.7.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/object-inspect/-/object-inspect-1.7.0.tgz#f4f6bd181ad77f006b5ece60bd0b6f398ff74a67"
@@ -7138,10 +7158,10 @@ prettier-linter-helpers@^1.0.0:
   dependencies:
     fast-diff "^1.1.2"
 
-prettier@^2.0.5:
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.0.5.tgz#d6d56282455243f2f92cc1716692c08aa31522d4"
-  integrity sha512-7PtVymN48hGcO4fGjybyBSIWDsLU4H4XlvOHfq91pz9kkGlonzwTfYkaIEwiRg/dAJF9YlbsduBAgtYLi+8cFg==
+prettier@^2.0.2, prettier@^2.0.5:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.2.1.tgz#795a1a78dd52f073da0cd42b21f9c91381923ff5"
+  integrity sha512-PqyhM2yCjg/oKkFPtTGUojv7gnZAoG80ttl45O6x2Ug/rMJw4wcc9k6aaf2hibP7BGVCCM33gZoGjyvt9mm16Q==
 
 private@^0.1.8:
   version "0.1.8"
@@ -8732,6 +8752,26 @@ ts-node@^8:
     make-error "^1.1.1"
     source-map-support "^0.5.6"
     yn "3.1.1"
+
+ts-poet@^4.4.1:
+  version "4.4.1"
+  resolved "https://registry.yarnpkg.com/ts-poet/-/ts-poet-4.4.1.tgz#064c613b1c432d2f62f0d4e59ff060a1c72cc984"
+  integrity sha512-xnn4/+fhDDpWYrDQ4ATulJK3zwuKleo2U97CU2uWU42RSGMP4AYATGiZGIku+sSYVsa4toBPjtEY93TuR0ztGw==
+  dependencies:
+    "@types/prettier" "^1.19.0"
+    lodash "^4.17.15"
+    prettier "^2.0.2"
+
+ts-proto@^1.53.0:
+  version "1.53.0"
+  resolved "https://registry.yarnpkg.com/ts-proto/-/ts-proto-1.53.0.tgz#3261b5b029fe154a381ad3d97e247bdddd46f536"
+  integrity sha512-/capMN0z4SVEyqpmXwH5ibq0DIy+ozgJ4tiq1yk3HgSn+ldXZtku03Wexw6Si08Q30YAQ6uSd205N2HmNjGp5w==
+  dependencies:
+    "@types/object-hash" "^1.3.0"
+    dataloader "^1.4.0"
+    object-hash "^1.3.1"
+    protobufjs "^6.8.8"
+    ts-poet "^4.4.1"
 
 tsconfig-paths@^3.9.0:
   version "3.9.0"
