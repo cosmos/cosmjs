@@ -8,7 +8,6 @@
   "types": "build/index.d.ts",
   "files": [
     "build/",
-    "types/",
     "*.md",
     "!*.spec.*",
     "!**/testdata/"

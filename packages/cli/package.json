@@ -33,7 +33,6 @@
   },
   "files": [
     "build/",
-    "types/",
     "tsconfig_repl.json",
     "*.md",
     "!*.spec.*",

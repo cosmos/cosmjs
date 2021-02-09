@@ -12,7 +12,6 @@
   },
   "files": [
     "build/",
-    "types/",
     "*.md",
     "!*.spec.*",
     "!**/testdata/"
