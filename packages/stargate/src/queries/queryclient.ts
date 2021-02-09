@@ -167,17 +167,17 @@ export class QueryClient {
   }
 
   public async queryVerified(store: string, key: Uint8Array): Promise<Uint8Array> {
-    const response = await this.queryRawProof(store, key);
+    const { height, proof, value } = await this.queryRawProof(store, key);
 
-    const subProof = checkAndParseOp(response.proof.ops[0], "ics23:iavl", key);
-    const storeProof = checkAndParseOp(response.proof.ops[1], "ics23:simple", toAscii(store));
+    const subProof = checkAndParseOp(proof.ops[0], "ics23:iavl", key);
+    const storeProof = checkAndParseOp(proof.ops[1], "ics23:simple", toAscii(store));
 
     // this must always be existence, if the store is not a typo
     assert(storeProof.exist);
     assert(storeProof.exist.value);
 
     // this may be exist or non-exist, depends on response
-    if (!response.value || response.value.length === 0) {
+    if (!value || value.length === 0) {
       // non-existence check
       assert(subProof.nonexist);
       // the subproof must map the desired key to the "value" of the storeProof
@@ -187,14 +187,14 @@ export class QueryClient {
       assert(subProof.exist);
       assert(subProof.exist.value);
       // the subproof must map the desired key to the "value" of the storeProof
-      verifyExistence(subProof.exist, iavlSpec, storeProof.exist.value, key, response.value);
+      verifyExistence(subProof.exist, iavlSpec, storeProof.exist.value, key, value);
     }
 
-    // the storeproof must map it's declared value (root of subProof) to the appHash of the next block
-    const header = await this.getNextHeader(response.height);
+    // the store proof must map its declared value (root of subProof) to the appHash of the next block
+    const header = await this.getNextHeader(height);
     verifyExistence(storeProof.exist, tendermintSpec, header.appHash, toAscii(store), storeProof.exist.value);
 
-    return response.value;
+    return value;
   }
 
   public async queryRawProof(store: string, queryKey: Uint8Array): Promise<ProvenQuery> {
@@ -226,9 +226,9 @@ export class QueryClient {
     checkAndParseOp(proof.ops[1], "ics23:simple", toAscii(store));
 
     return {
-      key,
-      value,
-      height,
+      key: key,
+      value: value,
+      height: height,
       // need to clone this: readonly input / writeable output
       proof: {
         ops: [...proof.ops],
