@@ -12,13 +12,17 @@ export interface ValidatorEd25519Pubkey {
  */
 export type ValidatorPubkey = ValidatorEd25519Pubkey;
 
-export interface ValidatorEd25519Signature {
-  readonly algorithm: "ed25519";
-  readonly data: Uint8Array;
+export enum BlockIdFlag {
+  Unknown = 0,
+  Absent = 1,
+  Commit = 2,
+  Nil = 3,
+  Unrecognized = -1,
 }
 
-/**
- * Union type for different possible voting signatures.
- * Currently only Ed25519 supported.
- */
-export type ValidatorSignature = ValidatorEd25519Signature;
+export interface CommitSignature {
+  blockIdFlag: BlockIdFlag;
+  validatorAddress: Uint8Array;
+  timestamp?: Date;
+  signature: Uint8Array;
+}

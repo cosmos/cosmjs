@@ -115,12 +115,26 @@ function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, expecte
     client.disconnect();
   });
 
+  it("can get a commit", async () => {
+    pendingWithoutTendermint();
+    const client = await Client.create(rpcFactory(), adaptor);
+    const response = await client.commit(4);
+
+    expect(response).toBeTruthy();
+    expect(response.commit.signatures.length).toBeGreaterThanOrEqual(1);
+    expect(response.commit.signatures[0].blockIdFlag).toEqual(2);
+    expect(response.commit.signatures[0].validatorAddress.length).toEqual(20);
+    expect(response.commit.signatures[0].timestamp).toBeInstanceOf(Date);
+    expect(response.commit.signatures[0].signature.length).toEqual(64);
+
+    client.disconnect();
+  });
+
   it("can call a bunch of methods", async () => {
     pendingWithoutTendermint();
     const client = await Client.create(rpcFactory(), adaptor);
 
     expect(await client.block()).toBeTruthy();
-    expect(await client.commit(4)).toBeTruthy();
     expect(await client.genesis()).toBeTruthy();
     expect(await client.health()).toBeNull();
     expect(await client.validators()).toBeTruthy();

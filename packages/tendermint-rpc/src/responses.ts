@@ -1,6 +1,6 @@
 import { ReadonlyDate } from "readonly-date";
 
-import { ValidatorPubkey, ValidatorSignature } from "./types";
+import { CommitSignature, ValidatorPubkey } from "./types";
 
 export type Response =
   | AbciInfoResponse
@@ -222,7 +222,9 @@ export interface Evidence {
 
 export interface Commit {
   readonly blockId: BlockId;
-  readonly signatures: readonly ValidatorSignature[];
+  readonly height: number;
+  readonly round: number;
+  readonly signatures: readonly CommitSignature[];
 }
 
 /**
@@ -241,7 +243,7 @@ export interface Vote {
   readonly round: number;
   readonly timestamp: ReadonlyDate;
   readonly blockId: BlockId;
-  readonly signature: ValidatorSignature;
+  readonly signature: Uint8Array;
 }
 
 export interface Version {

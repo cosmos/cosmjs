@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { fromBase64, fromHex } from "@cosmjs/encoding";
 import { JsonRpcSuccessResponse } from "@cosmjs/json-rpc";
+import { assert } from "@cosmjs/utils";
 
 import {
   assertArray,
@@ -18,7 +19,7 @@ import {
 } from "../../encodings";
 import * as responses from "../../responses";
 import { SubscriptionEvent } from "../../rpcclients";
-import { ValidatorPubkey, ValidatorSignature } from "../../types";
+import { BlockIdFlag, CommitSignature, ValidatorPubkey } from "../../types";
 import { hashTx } from "./hasher";
 
 interface AbciInfoResult {
@@ -396,6 +397,11 @@ function decodeBroadcastTxCommit(data: RpcBroadcastTxCommitResponse): responses.
   };
 }
 
+function decodeBlockIdFlag(blockIdFlag: number): BlockIdFlag {
+  assert(blockIdFlag in BlockIdFlag);
+  return blockIdFlag;
+}
+
 type RpcSignature = {
   readonly block_id_flag: number;
   /** hex encoded */
@@ -405,22 +411,28 @@ type RpcSignature = {
   readonly signature: string;
 };
 
-function decodeSignature(data: RpcSignature): ValidatorSignature {
+function decodeCommitSignature(data: RpcSignature): CommitSignature {
   return {
-    algorithm: "ed25519",
-    data: fromBase64(assertNotEmpty(data.signature)),
+    blockIdFlag: decodeBlockIdFlag(data.block_id_flag),
+    validatorAddress: fromHex(data.validator_address),
+    timestamp: new Date(assertNotEmpty(data.timestamp)),
+    signature: fromBase64(assertNotEmpty(data.signature)),
   };
 }
 
 interface RpcCommit {
   readonly block_id: RpcBlockId;
+  readonly height: string;
+  readonly round: string;
   readonly signatures: readonly RpcSignature[];
 }
 
 function decodeCommit(data: RpcCommit): responses.Commit {
   return {
     blockId: decodeBlockId(assertObject(data.block_id)),
-    signatures: assertArray(data.signatures).map(decodeSignature),
+    height: Integer.parse(assertNotEmpty(data.height)),
+    round: Integer.parse(data.round),
+    signatures: assertArray(data.signatures).map(decodeCommitSignature),
   };
 }
 
