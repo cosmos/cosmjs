@@ -86,7 +86,6 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
       "@cosmjs/encoding",
       ["fromAscii", "fromBase64", "fromHex", "fromUtf8", "toAscii", "toBase64", "toHex", "toUtf8", "Bech32"],
     ],
-    ["@cosmjs/faucet-client", ["FaucetClient"]],
     ["@cosmjs/math", ["Decimal", "Int53", "Uint32", "Uint53", "Uint64"]],
     ["@cosmjs/utils", ["assert", "arrayContentEquals", "sleep"]],
   ]);
