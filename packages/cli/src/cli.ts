@@ -87,42 +87,6 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
       ["fromAscii", "fromBase64", "fromHex", "fromUtf8", "toAscii", "toBase64", "toHex", "toUtf8", "Bech32"],
     ],
     ["@cosmjs/faucet-client", ["FaucetClient"]],
-    [
-      "@cosmjs/launchpad",
-      [
-        "coin",
-        "coins",
-        "decodeAminoPubkey",
-        "decodeBech32Pubkey",
-        "encodeAminoPubkey",
-        "encodeBech32Pubkey",
-        "encodeSecp256k1Pubkey",
-        "encodeSecp256k1Signature",
-        "logs",
-        "makeCosmoshubPath",
-        "makeSignDoc",
-        "makeStdTx",
-        "IndexedTx",
-        "BroadcastTxResult",
-        "Coin",
-        "CosmosClient",
-        "GasLimits",
-        "GasPrice",
-        "Msg",
-        "MsgDelegate",
-        "MsgSend",
-        "LcdClient",
-        "OfflineSigner",
-        "PubKey",
-        "pubkeyToAddress",
-        "Secp256k1HdWallet",
-        "Secp256k1Wallet",
-        "SigningCosmosClient",
-        "StdFee",
-        "StdSignDoc",
-        "StdTx",
-      ],
-    ],
     ["@cosmjs/math", ["Decimal", "Int53", "Uint32", "Uint53", "Uint64"]],
     ["@cosmjs/utils", ["assert", "arrayContentEquals", "sleep"]],
   ]);
@@ -143,6 +107,19 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
     init += `
       import axios from "axios";
       import * as fs from "fs";
+
+      import {
+        coins,
+        encodeAminoPubkey,
+        encodeBech32Pubkey,
+        decodeBech32Pubkey,
+        decodeAminoPubkey,
+        makeCosmoshubPath,
+        makeSignDoc,
+        Secp256k1HdWallet,
+        Secp256k1Wallet,
+        StdFee,
+      } from "@cosmjs/launchpad";
 
       await sleep(123);
 

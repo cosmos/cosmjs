@@ -1,6 +1,8 @@
 import axios from "axios";
 import * as fs from "fs";
 
+import { logs, GasPrice, Secp256k1HdWallet } from "@cosmjs/launchpad";
+
 interface Options {
   httpUrl: string;
   networkId: string;
