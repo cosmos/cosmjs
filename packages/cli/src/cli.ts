@@ -35,27 +35,7 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
     .group(["debug", "selftest"], "Maintainer options")
     .parse(originalArgs);
 
-  const imports = new Map<string, readonly string[]>([
-    [
-      "@cosmjs/crypto",
-      [
-        "Bip39",
-        "Ed25519",
-        "Ed25519Keypair",
-        "EnglishMnemonic",
-        "HdPath",
-        "Random",
-        "Secp256k1",
-        "Sha256",
-        "sha256",
-        "Sha512",
-        "sha512",
-        "Slip10",
-        "Slip10Curve",
-        "Slip10RawIndex",
-      ],
-    ],
-  ]);
+  const imports = new Map<string, readonly string[]>([]);
 
   console.info(colors.green("Initializing session for you. Have fun!"));
   console.info(colors.yellow("Available imports:"));
@@ -85,6 +65,7 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
         toUtf8,
         Bech32,
       } from "@cosmjs/encoding";
+      import { sha512, Bip39, Random } from "@cosmjs/crypto";
       import {
         coins,
         encodeAminoPubkey,
