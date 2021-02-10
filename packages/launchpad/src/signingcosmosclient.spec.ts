@@ -5,6 +5,7 @@ import { Coin, coin, coins } from "./coins";
 import { assertIsBroadcastTxSuccess, PrivateCosmosClient } from "./cosmosclient";
 import { GasPrice } from "./gas";
 import { MsgDelegate, MsgSend } from "./msgs";
+import { makeCosmoshubPath } from "./paths";
 import { Secp256k1HdWallet } from "./secp256k1hdwallet";
 import { PrivateSigningCosmosClient, SigningCosmosClient } from "./signingcosmosclient";
 import {
@@ -14,7 +15,6 @@ import {
   makeRandomAddress,
   pendingWithoutLaunchpad,
 } from "./testutils.spec";
-import { makeCosmoshubPath } from "./wallet";
 
 describe("SigningCosmosClient", () => {
   describe("makeReadOnly", () => {

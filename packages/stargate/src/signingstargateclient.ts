@@ -1,6 +1,5 @@
 import { fromBase64 } from "@cosmjs/encoding";
 import {
-  AccountData,
   buildFeeTable,
   Coin,
   CosmosFeeTable,
@@ -133,7 +132,7 @@ export class SigningStargateClient extends StargateClient {
     memo = "",
   ): Promise<BroadcastTxResponse> {
     const accountFromSigner = (await this.signer.getAccounts()).find(
-      (account: AccountData) => account.address === signerAddress,
+      (account) => account.address === signerAddress,
     );
     if (!accountFromSigner) {
       throw new Error("Failed to retrieve account from signer");

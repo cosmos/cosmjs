@@ -15,6 +15,7 @@ import { assert, isNonNullObject } from "@cosmjs/utils";
 
 import { rawSecp256k1PubkeyToAddress } from "./address";
 import { serializeSignDoc, StdSignDoc } from "./encoding";
+import { makeCosmoshubPath } from "./paths";
 import { encodeSecp256k1Signature } from "./signature";
 import { AccountData, AminoSignResponse, OfflineSigner } from "./signer";
 import {
@@ -23,7 +24,6 @@ import {
   EncryptionConfiguration,
   executeKdf,
   KdfConfiguration,
-  makeCosmoshubPath,
   supportedAlgorithms,
 } from "./wallet";
 

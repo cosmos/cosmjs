@@ -8,15 +8,11 @@ import {
   Slip10,
   Slip10Curve,
 } from "@cosmjs/crypto";
-import {
-  AccountData,
-  encodeSecp256k1Signature,
-  makeCosmoshubPath,
-  rawSecp256k1PubkeyToAddress,
-} from "@cosmjs/launchpad";
+import { encodeSecp256k1Signature, rawSecp256k1PubkeyToAddress } from "@cosmjs/launchpad";
 
 import { SignDoc } from "./codec/cosmos/tx/v1beta1/tx";
-import { DirectSignResponse, OfflineDirectSigner } from "./signer";
+import { makeCosmoshubPath } from "./paths";
+import { AccountData, DirectSignResponse, OfflineDirectSigner } from "./signer";
 import { makeSignBytes } from "./signing";
 
 /**
