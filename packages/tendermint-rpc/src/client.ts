@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { Stream } from "xstream";
 
 import { Adaptor, Decoder, Encoder, Params, Responses } from "./adaptor";
@@ -254,6 +255,35 @@ export class Client {
       params: params,
     };
     return this.doCall(query, this.p.encodeValidators, this.r.decodeValidators);
+  }
+
+  public async validatorsAll(params: requests.ValidatorsParams): Promise<responses.ValidatorsResponse> {
+    let page = params.page || 1;
+    const validators: responses.Validator[] = [];
+    let done = false;
+    let blockHeight = 0;
+
+    while (!done) {
+      const resp = await this.validators({
+        per_page: 50,
+        ...params,
+        page: page,
+      });
+      validators.push(...resp.validators);
+      blockHeight = resp.blockHeight;
+      if (validators.length < resp.total) {
+        page++;
+      } else {
+        done = true;
+      }
+    }
+
+    return {
+      blockHeight: blockHeight,
+      count: validators.length,
+      total: validators.length,
+      validators: validators,
+    };
   }
 
   // doCall is a helper to handle the encode/call/decode logic
