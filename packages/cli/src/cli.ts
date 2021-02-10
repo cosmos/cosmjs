@@ -35,19 +35,9 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
     .group(["debug", "selftest"], "Maintainer options")
     .parse(originalArgs);
 
-  const imports = new Map<string, readonly string[]>([]);
-
   console.info(colors.green("Initializing session for you. Have fun!"));
-  console.info(colors.yellow("Available imports:"));
-  for (const [moduleName, symbols] of imports.entries()) {
-    console.info(colors.yellow(`  * from ${moduleName}: ${symbols.join(", ")}`));
-  }
 
   let init = "";
-  for (const [moduleName, symbols] of imports.entries()) {
-    init += `import { ${symbols.join(", ")} } from "${moduleName}";\n`;
-  }
-
   if (args.selftest) {
     // execute some trival stuff and exit
     init += `
