@@ -1,6 +1,7 @@
 import axios from "axios";
 import * as fs from "fs";
 
+import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-launchpad";
 import { logs, GasPrice, Secp256k1HdWallet } from "@cosmjs/launchpad";
 
 interface Options {

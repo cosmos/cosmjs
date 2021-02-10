@@ -37,33 +37,6 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
 
   const imports = new Map<string, readonly string[]>([
     [
-      "@cosmjs/cosmwasm-launchpad",
-      [
-        // cosmwasmclient
-        "Account",
-        "Block",
-        "BlockHeader",
-        "Code",
-        "CodeDetails",
-        "Contract",
-        "ContractCodeHistoryEntry",
-        "CosmWasmClient",
-        "GetSequenceResult",
-        "SearchByHeightQuery",
-        "SearchBySentFromOrToQuery",
-        "SearchByTagsQuery",
-        "SearchTxQuery",
-        "SearchTxFilter",
-        // signingcosmwasmclient
-        "ExecuteResult",
-        "CosmWasmFeeTable",
-        "InstantiateResult",
-        "SigningCosmWasmClient",
-        "UploadMeta",
-        "UploadResult",
-      ],
-    ],
-    [
       "@cosmjs/crypto",
       [
         "Bip39",
