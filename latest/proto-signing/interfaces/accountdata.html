@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Delegation | @cosmjs/launchpad Documentation</title>
-	<meta name="description" content="Documentation for @cosmjs/launchpad Documentation">
+	<title>AccountData | @cosmjs/proto-signing Documentation</title>
+	<meta name="description" content="Documentation for @cosmjs/proto-signing Documentation">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
 </head>
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">@cosmjs/launchpad Documentation</a>
+					<a href="../index.html" class="title">@cosmjs/proto-signing Documentation</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -52,21 +52,28 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="delegation.html">Delegation</a>
+					<a href="accountdata.html">AccountData</a>
 				</li>
 			</ul>
-			<h1>Interface Delegation</h1>
+			<h1>Interface AccountData</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>This is the same as AccountData from @cosmjs/launchpad but those might diverge in the future.</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">Delegation</span>
+						<span class="target">AccountData</span>
 					</li>
 				</ul>
 			</section>
@@ -77,10 +84,9 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="delegation.html#balance" class="tsd-kind-icon">balance</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="delegation.html#delegator_address" class="tsd-kind-icon">delegator_<wbr>address</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="delegation.html#shares" class="tsd-kind-icon">shares</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="delegation.html#validator_address" class="tsd-kind-icon">validator_<wbr>address</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="accountdata.html#address" class="tsd-kind-icon">address</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="accountdata.html#algo" class="tsd-kind-icon">algo</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="accountdata.html#pubkey" class="tsd-kind-icon">pubkey</a></li>
 							</ul>
 						</section>
 					</div>
@@ -89,42 +95,37 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="balance" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> balance</h3>
-					<div class="tsd-signature tsd-kind-icon">balance<span class="tsd-signature-symbol">:</span> <a href="coin.html" class="tsd-signature-type">Coin</a></div>
+					<a name="address" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> address</h3>
+					<div class="tsd-signature tsd-kind-icon">address<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/466e31e5f/packages/launchpad/src/lcdapi/staking.ts#L48">src/lcdapi/staking.ts:48</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/466e31e5f/packages/proto-signing/src/signer.ts#L15">src/signer.ts:15</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A printable address (typically bech32 encoded)</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="algo" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> algo</h3>
+					<div class="tsd-signature tsd-kind-icon">algo<span class="tsd-signature-symbol">:</span> <a href="../globals.html#algo" class="tsd-signature-type">Algo</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/466e31e5f/packages/proto-signing/src/signer.ts#L16">src/signer.ts:16</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="delegator_address" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> delegator_<wbr>address</h3>
-					<div class="tsd-signature tsd-kind-icon">delegator_<wbr>address<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="pubkey" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> pubkey</h3>
+					<div class="tsd-signature tsd-kind-icon">pubkey<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Uint8Array</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/466e31e5f/packages/launchpad/src/lcdapi/staking.ts#L45">src/lcdapi/staking.ts:45</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="shares" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> shares</h3>
-					<div class="tsd-signature tsd-kind-icon">shares<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/466e31e5f/packages/launchpad/src/lcdapi/staking.ts#L47">src/lcdapi/staking.ts:47</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="validator_address" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> validator_<wbr>address</h3>
-					<div class="tsd-signature tsd-kind-icon">validator_<wbr>address<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/466e31e5f/packages/launchpad/src/lcdapi/staking.ts#L46">src/lcdapi/staking.ts:46</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/466e31e5f/packages/proto-signing/src/signer.ts#L17">src/signer.ts:17</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -143,19 +144,16 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="delegation.html" class="tsd-kind-icon">Delegation</a>
+						<a href="accountdata.html" class="tsd-kind-icon">Account<wbr>Data</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="delegation.html#balance" class="tsd-kind-icon">balance</a>
+								<a href="accountdata.html#address" class="tsd-kind-icon">address</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="delegation.html#delegator_address" class="tsd-kind-icon">delegator_<wbr>address</a>
+								<a href="accountdata.html#algo" class="tsd-kind-icon">algo</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="delegation.html#shares" class="tsd-kind-icon">shares</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="delegation.html#validator_address" class="tsd-kind-icon">validator_<wbr>address</a>
+								<a href="accountdata.html#pubkey" class="tsd-kind-icon">pubkey</a>
 							</li>
 						</ul>
 					</li>
@@ -171,18 +169,12 @@
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
-			</ul>
-			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
