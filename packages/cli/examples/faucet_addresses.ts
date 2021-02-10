@@ -1,3 +1,4 @@
+import { toBase64 } from "@cosmjs/encoding";
 import { makeCosmoshubPath, Secp256k1HdWallet } from "@cosmjs/launchpad";
 
 const mnemonic =

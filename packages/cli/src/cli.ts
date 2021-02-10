@@ -55,10 +55,6 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
         "Slip10RawIndex",
       ],
     ],
-    [
-      "@cosmjs/encoding",
-      ["fromAscii", "fromBase64", "fromHex", "fromUtf8", "toAscii", "toBase64", "toHex", "toUtf8", "Bech32"],
-    ],
   ]);
 
   console.info(colors.green("Initializing session for you. Have fun!"));
@@ -78,6 +74,17 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
       import axios from "axios";
       import * as fs from "fs";
 
+      import {
+        fromAscii,
+        fromBase64,
+        fromHex,
+        fromUtf8,
+        toAscii,
+        toBase64,
+        toHex,
+        toUtf8,
+        Bech32,
+      } from "@cosmjs/encoding";
       import {
         coins,
         encodeAminoPubkey,
