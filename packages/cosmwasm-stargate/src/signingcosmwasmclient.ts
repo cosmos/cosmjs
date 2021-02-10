@@ -13,7 +13,6 @@ import {
 import { sha256 } from "@cosmjs/crypto";
 import { fromBase64, toAscii, toHex } from "@cosmjs/encoding";
 import {
-  AccountData,
   buildFeeTable,
   Coin,
   CosmosFeeTable,
@@ -339,7 +338,7 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     memo = "",
   ): Promise<BroadcastTxResponse> {
     const accountFromSigner = (await this.signer.getAccounts()).find(
-      (account: AccountData) => account.address === signerAddress,
+      (account) => account.address === signerAddress,
     );
     if (!accountFromSigner) {
       throw new Error("Failed to retrieve account from signer");
