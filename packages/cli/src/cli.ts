@@ -7,6 +7,20 @@ import { TsRepl } from "./tsrepl";
 
 import colors = require("colors/safe");
 
+export async function installedPackages(): Promise<string[]> {
+  return new Promise((resolve, reject) => {
+    fs.readFile(__dirname + "/../package.json", { encoding: "utf8" }, (error, data) => {
+      if (error) {
+        reject(error);
+      } else {
+        const packagejson = JSON.parse(data);
+        const deps = Object.keys(packagejson.dependencies).sort();
+        resolve(deps);
+      }
+    });
+  });
+}
+
 export async function main(originalArgs: readonly string[]): Promise<void> {
   const args = yargs
     .options({
@@ -36,6 +50,11 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
     .parse(originalArgs);
 
   console.info(colors.green("Initializing session for you. Have fun!"));
+  const visiblePackages = (await installedPackages()).filter(
+    (name) => name.startsWith("@cosmjs/") || name === "axios",
+  );
+  console.info(colors.yellow("The following packages have been installed and can be imported:"));
+  console.info(colors.yellow(visiblePackages.join(", ")));
 
   let init = "";
   if (args.selftest) {
