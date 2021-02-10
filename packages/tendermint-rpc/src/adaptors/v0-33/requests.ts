@@ -84,6 +84,19 @@ function encodeTxSearchParams(params: requests.TxSearchParams): RpcTxSearchParam
   };
 }
 
+interface RpcValidatorsParams {
+  readonly height?: string;
+  readonly page?: string;
+  readonly per_page?: string;
+}
+function encodeValidatorsParams(params: requests.ValidatorsParams): RpcValidatorsParams {
+  return {
+    height: may(Integer.encode, params.height),
+    page: may(Integer.encode, params.page),
+    per_page: may(Integer.encode, params.per_page),
+  };
+}
+
 export class Params {
   public static encodeAbciInfo(req: requests.AbciInfoRequest): JsonRpcRequest {
     return createJsonRpcRequest(req.method);
@@ -141,6 +154,6 @@ export class Params {
   }
 
   public static encodeValidators(req: requests.ValidatorsRequest): JsonRpcRequest {
-    return createJsonRpcRequest(req.method, encodeHeightParam(req.params));
+    return createJsonRpcRequest(req.method, encodeValidatorsParams(req.params));
   }
 }

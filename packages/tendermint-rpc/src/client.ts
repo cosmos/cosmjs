@@ -248,10 +248,10 @@ export class Client {
     };
   }
 
-  public async validators(height?: number): Promise<responses.ValidatorsResponse> {
+  public async validators(params: requests.ValidatorsParams): Promise<responses.ValidatorsResponse> {
     const query: requests.ValidatorsRequest = {
       method: requests.Method.Validators,
-      params: { height: height },
+      params: params,
     };
     return this.doCall(query, this.p.encodeValidators, this.r.decodeValidators);
   }

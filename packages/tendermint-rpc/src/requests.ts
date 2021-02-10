@@ -161,9 +161,13 @@ export interface TxSearchParams {
 
 export interface ValidatorsRequest {
   readonly method: Method.Validators;
-  readonly params: {
-    readonly height?: number;
-  };
+  readonly params: ValidatorsParams;
+}
+
+export interface ValidatorsParams {
+  readonly height?: number;
+  readonly page?: number;
+  readonly per_page?: number;
 }
 
 export interface BuildQueryComponents {
