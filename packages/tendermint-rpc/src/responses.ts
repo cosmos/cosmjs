@@ -140,7 +140,9 @@ export interface TxSearchResponse {
 
 export interface ValidatorsResponse {
   readonly blockHeight: number;
-  readonly results: readonly Validator[];
+  readonly validators: readonly Validator[];
+  readonly count: number;
+  readonly total: number;
 }
 
 // Events
@@ -307,13 +309,11 @@ export interface SyncInfo {
   readonly catchingUp: boolean;
 }
 
-// this is in status
 export interface Validator {
-  readonly address?: Uint8Array;
-  readonly pubkey: ValidatorPubkey;
+  readonly address: Uint8Array;
+  readonly pubkey?: ValidatorPubkey;
   readonly votingPower: number;
-  readonly accum?: number;
-  readonly name?: string;
+  readonly proposerPriority?: number;
 }
 
 export interface ConsensusParams {
