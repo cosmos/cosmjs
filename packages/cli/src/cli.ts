@@ -129,16 +129,11 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
 
   console.info(colors.green("Initializing session for you. Have fun!"));
   console.info(colors.yellow("Available imports:"));
-  console.info(colors.yellow("  * axios"));
-  console.info(colors.yellow("  * fs"));
   for (const [moduleName, symbols] of imports.entries()) {
     console.info(colors.yellow(`  * from ${moduleName}: ${symbols.join(", ")}`));
   }
 
-  let init = `
-    import axios from "axios";
-    import * as fs from "fs";
-  `;
+  let init = "";
   for (const [moduleName, symbols] of imports.entries()) {
     init += `import { ${symbols.join(", ")} } from "${moduleName}";\n`;
   }
@@ -146,6 +141,9 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
   if (args.selftest) {
     // execute some trival stuff and exit
     init += `
+      import axios from "axios";
+      import * as fs from "fs";
+
       await sleep(123);
 
       const readmeContent = fs.readFileSync(process.cwd() + "/README.md");

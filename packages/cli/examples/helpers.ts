@@ -1,3 +1,6 @@
+import axios from "axios";
+import * as fs from "fs";
+
 interface Options {
   httpUrl: string;
   networkId: string;
