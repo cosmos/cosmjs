@@ -59,8 +59,6 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
       "@cosmjs/encoding",
       ["fromAscii", "fromBase64", "fromHex", "fromUtf8", "toAscii", "toBase64", "toHex", "toUtf8", "Bech32"],
     ],
-    ["@cosmjs/math", ["Decimal", "Int53", "Uint32", "Uint53", "Uint64"]],
-    ["@cosmjs/utils", ["assert", "arrayContentEquals", "sleep"]],
   ]);
 
   console.info(colors.green("Initializing session for you. Have fun!"));
@@ -92,6 +90,8 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
         Secp256k1Wallet,
         StdFee,
       } from "@cosmjs/launchpad";
+      import { Decimal } from "@cosmjs/math";
+      import { assert, arrayContentEquals, sleep } from "@cosmjs/utils";
 
       await sleep(123);
 
