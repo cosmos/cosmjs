@@ -68,11 +68,7 @@ export function parseLogs(input: unknown): readonly Log[] {
  *
  * Throws if the attribute was not found.
  */
-export function findAttribute(
-  logs: readonly Log[],
-  eventType: "message" | "transfer",
-  attrKey: string,
-): Attribute {
+export function findAttribute(logs: readonly Log[], eventType: string, attrKey: string): Attribute {
   const firstLogs = logs.find(() => true);
   const out = firstLogs?.events
     .find((event) => event.type === eventType)
