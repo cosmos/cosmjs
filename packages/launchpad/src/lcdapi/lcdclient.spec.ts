@@ -6,6 +6,7 @@ import { isBroadcastTxFailure } from "../cosmosclient";
 import { makeSignDoc } from "../encoding";
 import { parseLogs } from "../logs";
 import { MsgSend } from "../msgs";
+import { makeCosmoshubPath } from "../paths";
 import { Secp256k1HdWallet } from "../secp256k1hdwallet";
 import { SigningCosmosClient } from "../signingcosmosclient";
 import cosmoshub from "../testdata/cosmoshub.json";
@@ -21,7 +22,6 @@ import {
 } from "../testutils.spec";
 import { isWrappedStdTx, makeStdTx, StdTx } from "../tx";
 import { StdFee } from "../types";
-import { makeCosmoshubPath } from "../wallet";
 import { setupAuthExtension } from "./auth";
 import { TxsResponse } from "./base";
 import { LcdApiArray, LcdClient } from "./lcdclient";
