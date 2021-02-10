@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ValidatorEd25519Signature | @cosmjs/tendermint-rpc Documentation</title>
+	<title>CommitSignature | @cosmjs/tendermint-rpc Documentation</title>
 	<meta name="description" content="Documentation for @cosmjs/tendermint-rpc Documentation">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -52,10 +52,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="validatored25519signature.html">ValidatorEd25519Signature</a>
+					<a href="commitsignature.html">CommitSignature</a>
 				</li>
 			</ul>
-			<h1>Interface ValidatorEd25519Signature</h1>
+			<h1>Interface CommitSignature</h1>
 		</div>
 	</div>
 </header>
@@ -66,7 +66,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">ValidatorEd25519Signature</span>
+						<span class="target">CommitSignature</span>
 					</li>
 				</ul>
 			</section>
@@ -77,8 +77,10 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="validatored25519signature.html#algorithm" class="tsd-kind-icon">algorithm</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="validatored25519signature.html#data" class="tsd-kind-icon">data</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="commitsignature.html#blockidflag" class="tsd-kind-icon">block<wbr>IdFlag</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="commitsignature.html#signature" class="tsd-kind-icon">signature</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="commitsignature.html#timestamp" class="tsd-kind-icon">timestamp</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="commitsignature.html#validatoraddress" class="tsd-kind-icon">validator<wbr>Address</a></li>
 							</ul>
 						</section>
 					</div>
@@ -87,22 +89,42 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="algorithm" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> algorithm</h3>
-					<div class="tsd-signature tsd-kind-icon">algorithm<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"ed25519"</span></div>
+					<a name="blockidflag" class="tsd-anchor"></a>
+					<h3>block<wbr>IdFlag</h3>
+					<div class="tsd-signature tsd-kind-icon">block<wbr>IdFlag<span class="tsd-signature-symbol">:</span> <a href="../enums/blockidflag.html" class="tsd-signature-type">BlockIdFlag</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/466e31e5f/packages/tendermint-rpc/src/types.ts#L16">packages/tendermint-rpc/src/types.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/91b886c47/packages/tendermint-rpc/src/types.ts#L24">packages/tendermint-rpc/src/types.ts:24</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="data" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> data</h3>
-					<div class="tsd-signature tsd-kind-icon">data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Uint8Array</span></div>
+					<a name="signature" class="tsd-anchor"></a>
+					<h3>signature</h3>
+					<div class="tsd-signature tsd-kind-icon">signature<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Uint8Array</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/466e31e5f/packages/tendermint-rpc/src/types.ts#L17">packages/tendermint-rpc/src/types.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/91b886c47/packages/tendermint-rpc/src/types.ts#L27">packages/tendermint-rpc/src/types.ts:27</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="timestamp" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> timestamp</h3>
+					<div class="tsd-signature tsd-kind-icon">timestamp<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Date</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/91b886c47/packages/tendermint-rpc/src/types.ts#L26">packages/tendermint-rpc/src/types.ts:26</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="validatoraddress" class="tsd-anchor"></a>
+					<h3>validator<wbr>Address</h3>
+					<div class="tsd-signature tsd-kind-icon">validator<wbr>Address<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Uint8Array</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/cosmos/cosmjs/blob/91b886c47/packages/tendermint-rpc/src/types.ts#L25">packages/tendermint-rpc/src/types.ts:25</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -121,13 +143,19 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="validatored25519signature.html" class="tsd-kind-icon">Validator<wbr>Ed25519<wbr>Signature</a>
+						<a href="commitsignature.html" class="tsd-kind-icon">Commit<wbr>Signature</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="validatored25519signature.html#algorithm" class="tsd-kind-icon">algorithm</a>
+								<a href="commitsignature.html#blockidflag" class="tsd-kind-icon">block<wbr>IdFlag</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="validatored25519signature.html#data" class="tsd-kind-icon">data</a>
+								<a href="commitsignature.html#signature" class="tsd-kind-icon">signature</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="commitsignature.html#timestamp" class="tsd-kind-icon">timestamp</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="commitsignature.html#validatoraddress" class="tsd-kind-icon">validator<wbr>Address</a>
 							</li>
 						</ul>
 					</li>
