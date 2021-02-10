@@ -73,9 +73,4 @@ export {
   VoteType,
 } from "./responses";
 export { HttpClient, WebsocketClient } from "./rpcclients"; // TODO: Why do we export those outside of this package?
-export {
-  ValidatorEd25519Pubkey,
-  ValidatorEd25519Signature,
-  ValidatorPubkey,
-  ValidatorSignature,
-} from "./types";
+export { BlockIdFlag, CommitSignature, ValidatorEd25519Pubkey, ValidatorPubkey } from "./types";
