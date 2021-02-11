@@ -8,7 +8,17 @@ like faucets/scrapers in the Cosmos ecosystem.
 develop in TypeScript.
 
 ## Documentation
-Documentation is hosted at cosmos.github.io/cosmjs. [Here is a list of examples](https://gist.github.com/webmaster128/8444d42a7eceeda2544c8a59fbd7e1d9) using the stargate package for use with [Cosmos SDK v0.41.x](https://github.com/cosmos/cosmos-sdk/tree/v0.41.0) applications (like [gaia v0.4.0](https://github.com/cosmos/gaia/tree/v4.0.0)). Take a look at the wiki page, ["What can CosmJS do for me?"](https://github.com/cosmos/cosmjs/wiki/What-can-CosmJS-do-for-me%3F) and various tests ([ex](https://github.com/cosmos/cosmjs/blob/main/packages/stargate/src/signingstargateclient.spec.ts)) for more example usage of the packages.
+
+Documentation is hosted at cosmos.github.io/cosmjs.
+[Here is a list of examples](https://gist.github.com/webmaster128/8444d42a7eceeda2544c8a59fbd7e1d9)
+using the stargate package for use with
+[Cosmos SDK v0.41.x](https://github.com/cosmos/cosmos-sdk/tree/v0.41.0)
+applications (like [gaia v0.4.0](https://github.com/cosmos/gaia/tree/v4.0.0)).
+Take a look at the wiki page,
+["What can CosmJS do for me?"](https://github.com/cosmos/cosmjs/wiki/What-can-CosmJS-do-for-me%3F)
+and various tests
+([ex](https://github.com/cosmos/cosmjs/blob/main/packages/stargate/src/signingstargateclient.spec.ts))
+for more example usage of the packages.
 
 ## Packages
 
