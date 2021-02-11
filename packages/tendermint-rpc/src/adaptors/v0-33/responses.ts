@@ -3,6 +3,7 @@ import { fromBase64, fromHex } from "@cosmjs/encoding";
 import { JsonRpcSuccessResponse } from "@cosmjs/json-rpc";
 import { assert } from "@cosmjs/utils";
 
+import { DateTime } from "../../dates";
 import {
   assertArray,
   assertBoolean,
@@ -11,7 +12,6 @@ import {
   assertObject,
   assertSet,
   assertString,
-  DateTime,
   dictionaryToStringMap,
   Integer,
   may,

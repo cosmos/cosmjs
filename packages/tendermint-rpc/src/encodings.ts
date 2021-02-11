@@ -1,8 +1,8 @@
-import { fromRfc3339, toUtf8 } from "@cosmjs/encoding";
+import { toUtf8 } from "@cosmjs/encoding";
 import { Int53 } from "@cosmjs/math";
 
+import { ReadonlyDateWithNanoseconds } from "./dates";
 import { BlockId, Version } from "./responses";
-import { ReadonlyDateWithNanoseconds } from "./types";
 
 /**
  * A runtime checker that ensures a given value is set (i.e. not undefined or null)
@@ -153,22 +153,6 @@ export class Integer {
 
   public static encode(num: number): string {
     return new Int53(num).toString();
-  }
-}
-
-export class DateTime {
-  public static decode(dateTimeString: string): ReadonlyDateWithNanoseconds {
-    const readonlyDate = fromRfc3339(dateTimeString);
-    const nanosecondsMatch = dateTimeString.match(/\.(\d+)Z$/);
-    const nanoseconds = nanosecondsMatch ? nanosecondsMatch[1].slice(3) : "";
-    (readonlyDate as any).nanoseconds = parseInt(nanoseconds.padEnd(6, "0"), 10);
-    return readonlyDate as ReadonlyDateWithNanoseconds;
-  }
-
-  public static encode(dateTime: ReadonlyDateWithNanoseconds): string {
-    const millisecondIso = dateTime.toISOString();
-    const nanoseconds = dateTime.nanoseconds?.toString() ?? "";
-    return `${millisecondIso.slice(0, -1)}${nanoseconds.padStart(6, "0")}Z`;
   }
 }
 
