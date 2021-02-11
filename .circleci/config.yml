@@ -73,7 +73,7 @@ jobs:
               echo "Error: repository contains changes."
               echo "Showing 'git status' and 'git diff' for debugging now:"
               git status
-              git diff
+              git --no-pager diff
               exit 1
             fi
   test:
@@ -639,6 +639,6 @@ jobs:
               echo "Error: repository contains changes."
               echo "Showing 'git status' and 'git diff' for debugging now:"
               git status
-              git diff
+              git --no-pager diff
               exit 1
             fi

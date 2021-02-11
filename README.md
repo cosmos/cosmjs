@@ -7,6 +7,31 @@ like faucets/scrapers in the Cosmos ecosystem.
 "Cosm" is short for Cosmos and "JS" is short for _runs everywhere_ – we actually
 develop in TypeScript.
 
+## Documentation
+
+[Here is a list of examples][guided tour] using the Stargate package for use
+with [Cosmos SDK 0.41] applications (like [gaia 4]). Take a look at the wiki
+page,
+["What can CosmJS do for me?"](https://github.com/cosmos/cosmjs/wiki/What-can-CosmJS-do-for-me%3F)
+and various tests
+([ex](https://github.com/cosmos/cosmjs/blob/main/packages/stargate/src/signingstargateclient.spec.ts))
+for more example usage of the packages.
+
+[guided tour]:
+  https://gist.github.com/webmaster128/8444d42a7eceeda2544c8a59fbd7e1d9
+[cosmos sdk 0.41]: https://github.com/cosmos/cosmos-sdk/tree/v0.41.0
+[gaia 4]: https://github.com/cosmos/gaia/tree/v4.0.0
+
+### API documentation
+
+The full API documentation is hosted at [cosmos.github.io/cosmjs]. This is a bit
+tricky to navigate and requires basic TypeScript understanding. It is helpful if
+you have want to look up details for advanced use cases. This documentation is
+auto-generated based on the current main branch and can occasionally diverge
+from the latest release.
+
+[cosmos.github.io/cosmjs]: https://cosmos.github.io/cosmjs
+
 ## Packages
 
 CosmJS is a library that consists of many smaller npm packages within the
@@ -60,11 +85,26 @@ can work on a solution with swapable implementations.
 
 ## Roadmap
 
-In addition to the
-[development board](https://github.com/orgs/cosmos/projects/6) and our
-[release milestones](https://github.com/cosmos/cosmjs/milestones), we maintain a
-higher level roadmap
-[in this Trello board](https://trello.com/b/vIW8awLl/cosmjs-roadmap).
+We maintain a [development board](https://github.com/orgs/cosmos/projects/6),
+use [release milestones](https://github.com/cosmos/cosmjs/milestones) and share
+important updates in the [CosmWasm Community Call]. For higher level roadmap
+discussion please reach out to the team.
+
+[cosmwasm community call]:
+  https://github.com/CosmWasm/cosmwasm/issues?q=label%3A%22Community+Call+%F0%9F%97%BA%F0%9F%93%9E%22
+
+## Get in touch
+
+The CosmJS development team is happy to get in touch with you for all questions
+and suggestions.
+
+- [GitHub issues](https://github.com/cosmos/cosmjs/issues) for bugs and feature
+  requests
+- The #cosmjs channel on the
+  ["Cosmos Community" Discord server](https://discord.gg/vcExX9T) for questions
+  and open discussions
+- [#CosmJS on Twitter](https://twitter.com/search?q=%23CosmJS) to spread the
+  word
 
 ## Development
 
