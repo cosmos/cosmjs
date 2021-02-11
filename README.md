@@ -85,11 +85,13 @@ can work on a solution with swapable implementations.
 
 ## Roadmap
 
-In addition to the
-[development board](https://github.com/orgs/cosmos/projects/6) and our
-[release milestones](https://github.com/cosmos/cosmjs/milestones), we maintain a
-higher level roadmap
-[in this Trello board](https://trello.com/b/vIW8awLl/cosmjs-roadmap).
+We maintain a [development board](https://github.com/orgs/cosmos/projects/6),
+use [release milestones](https://github.com/cosmos/cosmjs/milestones) and share
+important updates in the [CosmWasm Community Call]. For higher level roadmap
+discussion please reach out to the team.
+
+[cosmwasm community call]:
+  https://github.com/CosmWasm/cosmwasm/issues?q=label%3A%22Community+Call+%F0%9F%97%BA%F0%9F%93%9E%22
 
 ## Development
 
