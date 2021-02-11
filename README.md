@@ -93,6 +93,19 @@ discussion please reach out to the team.
 [cosmwasm community call]:
   https://github.com/CosmWasm/cosmwasm/issues?q=label%3A%22Community+Call+%F0%9F%97%BA%F0%9F%93%9E%22
 
+## Get in touch
+
+The CosmJS development team is happy to get in touch with you for all questions
+and suggestions.
+
+- [GitHub issues](https://github.com/cosmos/cosmjs/issues) for bugs and feature
+  requests
+- The #cosmjs channel on the
+  ["Cosmos Community" Discord server](https://discord.gg/vcExX9T) for questions
+  and open discussions
+- [#CosmJS on Twitter](https://twitter.com/search?q=%23CosmJS) to spread the
+  word
+
 ## Development
 
 See [HACKING.md](HACKING.md).
