@@ -62,6 +62,7 @@ export interface BroadcastTxSuccess {
   readonly transactionHash: string;
   readonly rawLog?: string;
   readonly data?: readonly MsgData[];
+  readonly gasUsed: number;
 }
 
 export type BroadcastTxResponse = BroadcastTxSuccess | BroadcastTxFailure;
@@ -262,6 +263,7 @@ export class StargateClient {
         transactionHash: toHex(response.hash).toUpperCase(),
         rawLog: response.deliverTx?.log,
         data: response.deliverTx?.data ? TxMsgData.decode(response.deliverTx?.data).data : undefined,
+        gasUsed: response.deliverTx?.gasUsed || 0,
       };
     }
     return response.checkTx.code !== 0
@@ -274,7 +276,7 @@ export class StargateClient {
         }
       : {
           height: response.height,
-          code: response.deliverTx?.code,
+          code: response.deliverTx?.code || 0,
           transactionHash: toHex(response.hash).toUpperCase(),
           rawLog: response.deliverTx?.log,
           data: response.deliverTx?.data ? TxMsgData.decode(response.deliverTx?.data).data : undefined,
