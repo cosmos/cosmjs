@@ -417,7 +417,7 @@ function decodeCommitSignature(data: RpcSignature): CommitSignature {
   return {
     blockIdFlag: decodeBlockIdFlag(data.block_id_flag),
     validatorAddress: fromHex(data.validator_address),
-    timestamp: new Date(assertNotEmpty(data.timestamp)),
+    timestamp: DateTime.decode(assertNotEmpty(data.timestamp)),
     signature: fromBase64(assertNotEmpty(data.signature)),
   };
 }
