@@ -166,8 +166,8 @@ export class QueryClient {
     this.tmClient = tmClient;
   }
 
-  public async queryVerified(store: string, key: Uint8Array): Promise<Uint8Array> {
-    const { height, proof, value } = await this.queryRawProof(store, key);
+  public async queryVerified(store: string, key: Uint8Array, desiredHeight?: number): Promise<Uint8Array> {
+    const { height, proof, value } = await this.queryRawProof(store, key, desiredHeight);
 
     const subProof = checkAndParseOp(proof.ops[0], "ics23:iavl", key);
     const storeProof = checkAndParseOp(proof.ops[1], "ics23:simple", toAscii(store));
@@ -197,13 +197,18 @@ export class QueryClient {
     return value;
   }
 
-  public async queryRawProof(store: string, queryKey: Uint8Array): Promise<ProvenQuery> {
+  public async queryRawProof(
+    store: string,
+    queryKey: Uint8Array,
+    desiredHeight?: number,
+  ): Promise<ProvenQuery> {
     const { key, value, height, proof, code, log } = await this.tmClient.abciQuery({
       // we need the StoreKey for the module, not the module name
       // https://github.com/cosmos/cosmos-sdk/blob/8cab43c8120fec5200c3459cbf4a92017bb6f287/x/auth/types/keys.go#L12
       path: `/store/${store}/key`,
       data: queryKey,
       prove: true,
+      height: desiredHeight,
     });
 
     if (code) {
