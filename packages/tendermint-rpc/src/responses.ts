@@ -171,12 +171,15 @@ export interface Event {
   readonly attributes: readonly Attribute[];
 }
 
+// All fields are defined here: https://github.com/tendermint/tendermint/blob/v0.34.2/abci/types/types.pb.go#L2061-L2070
 export interface TxData {
   readonly code: number;
+  readonly codeSpace?: string;
   readonly log?: string;
   readonly data?: Uint8Array;
   readonly events: readonly Event[];
-  // readonly fees?: any;
+  readonly gasWanted: number;
+  readonly gasUsed?: number;
 }
 
 export interface TxProof {

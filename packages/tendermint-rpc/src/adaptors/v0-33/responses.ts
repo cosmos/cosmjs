@@ -131,6 +131,10 @@ interface RpcTxData {
   /** base64 encoded */
   readonly data?: string;
   readonly events: readonly RpcEvent[];
+  readonly codespace?: string;
+  // string encoded numbers
+  readonly gas_wanted: string;
+  readonly gas_used?: string;
 }
 
 function decodeTxData(data: RpcTxData): responses.TxData {
@@ -139,6 +143,8 @@ function decodeTxData(data: RpcTxData): responses.TxData {
     log: data.log,
     code: Integer.parse(assertNumber(optional<number>(data.code, 0))),
     events: decodeEvents(data.events),
+    gasWanted: Integer.parse(assertSet(data.gas_wanted)),
+    gasUsed: Integer.parse(optional(data.gas_used, "0")),
   };
 }
 
