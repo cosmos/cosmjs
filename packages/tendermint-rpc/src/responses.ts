@@ -1,6 +1,6 @@
 import { ReadonlyDate } from "readonly-date";
 
-import { CommitSignature, ValidatorPubkey } from "./types";
+import { CommitSignature, ReadonlyDateWithNanoseconds, ValidatorPubkey } from "./types";
 
 export type Response =
   | AbciInfoResponse
@@ -251,11 +251,6 @@ export interface Vote {
 export interface Version {
   readonly block: number;
   readonly app: number;
-}
-
-export interface ReadonlyDateWithNanoseconds extends ReadonlyDate {
-  /* Nanoseconds after the time stored in a vanilla ReadonlyDate (millisecond granularity) */
-  readonly nanoseconds?: number;
 }
 
 // https://github.com/tendermint/tendermint/blob/v0.31.8/docs/spec/blockchain/blockchain.md

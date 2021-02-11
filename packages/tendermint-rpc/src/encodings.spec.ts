@@ -9,7 +9,7 @@ import {
   encodeTime,
   encodeVersion,
 } from "./encodings";
-import { ReadonlyDateWithNanoseconds } from "./responses";
+import { ReadonlyDateWithNanoseconds } from "./types";
 
 describe("encodings", () => {
   describe("DateTime", () => {
