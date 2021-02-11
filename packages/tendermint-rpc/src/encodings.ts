@@ -1,7 +1,8 @@
 import { fromRfc3339, toUtf8 } from "@cosmjs/encoding";
 import { Int53 } from "@cosmjs/math";
 
-import { BlockId, ReadonlyDateWithNanoseconds, Version } from "./responses";
+import { BlockId, Version } from "./responses";
+import { ReadonlyDateWithNanoseconds } from "./types";
 
 /**
  * A runtime checker that ensures a given value is set (i.e. not undefined or null)

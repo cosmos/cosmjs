@@ -56,7 +56,6 @@ export {
   NodeInfo,
   ProofOp,
   QueryProof,
-  ReadonlyDateWithNanoseconds,
   Response,
   StatusResponse,
   SyncInfo,
@@ -73,4 +72,10 @@ export {
   VoteType,
 } from "./responses";
 export { HttpClient, WebsocketClient } from "./rpcclients"; // TODO: Why do we export those outside of this package?
-export { BlockIdFlag, CommitSignature, ValidatorEd25519Pubkey, ValidatorPubkey } from "./types";
+export {
+  BlockIdFlag,
+  CommitSignature,
+  ReadonlyDateWithNanoseconds,
+  ValidatorEd25519Pubkey,
+  ValidatorPubkey,
+} from "./types";
