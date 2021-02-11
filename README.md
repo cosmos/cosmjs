@@ -9,16 +9,28 @@ develop in TypeScript.
 
 ## Documentation
 
-Documentation is hosted at cosmos.github.io/cosmjs.
-[Here is a list of examples](https://gist.github.com/webmaster128/8444d42a7eceeda2544c8a59fbd7e1d9)
-using the stargate package for use with
-[Cosmos SDK v0.41.x](https://github.com/cosmos/cosmos-sdk/tree/v0.41.0)
-applications (like [gaia v0.4.0](https://github.com/cosmos/gaia/tree/v4.0.0)).
-Take a look at the wiki page,
+[Here is a list of examples][guided tour] using the Stargate package for use
+with [Cosmos SDK 0.41] applications (like [gaia 4]). Take a look at the wiki
+page,
 ["What can CosmJS do for me?"](https://github.com/cosmos/cosmjs/wiki/What-can-CosmJS-do-for-me%3F)
 and various tests
 ([ex](https://github.com/cosmos/cosmjs/blob/main/packages/stargate/src/signingstargateclient.spec.ts))
 for more example usage of the packages.
+
+[guided tour]:
+  https://gist.github.com/webmaster128/8444d42a7eceeda2544c8a59fbd7e1d9
+[cosmos sdk 0.41]: https://github.com/cosmos/cosmos-sdk/tree/v0.41.0
+[gaia 4]: https://github.com/cosmos/gaia/tree/v4.0.0
+
+### API documentation
+
+The full API documentation is hosted at [cosmos.github.io/cosmjs]. This is a bit
+tricky to navigate and requires basic TypeScript understanding. It is helpful if
+you have want to look up details for advanced use cases. This documentation is
+auto-generated based on the current main branch and can occasionally diverge
+from the latest release.
+
+[cosmos.github.io/cosmjs]: https://cosmos.github.io/cosmjs
 
 ## Packages
 
