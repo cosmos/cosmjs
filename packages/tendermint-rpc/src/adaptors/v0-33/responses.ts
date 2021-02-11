@@ -166,6 +166,7 @@ interface RpcValidatorUpdate {
   readonly address: string;
   readonly pub_key: RpcPubkey;
   readonly voting_power: string;
+  readonly proposer_priority: string;
 }
 
 function decodeValidatorUpdate(data: RpcValidatorUpdate): responses.Validator {
@@ -173,6 +174,7 @@ function decodeValidatorUpdate(data: RpcValidatorUpdate): responses.Validator {
     pubkey: decodePubkey(assertObject(data.pub_key)),
     votingPower: Integer.parse(assertNotEmpty(data.voting_power)),
     address: fromHex(assertNotEmpty(data.address)),
+    proposerPriority: Integer.parse(data.proposer_priority),
   };
 }
 
@@ -453,6 +455,8 @@ function decodeCommitResponse(data: RpcCommitResponse): responses.CommitResponse
 }
 
 interface RpcValidatorGenesis {
+  /** hex-encoded */
+  readonly address: string;
   readonly pub_key: RpcPubkey;
   readonly power: string;
   readonly name?: string;
@@ -460,9 +464,9 @@ interface RpcValidatorGenesis {
 
 function decodeValidatorGenesis(data: RpcValidatorGenesis): responses.Validator {
   return {
+    address: fromHex(assertNotEmpty(data.address)),
     pubkey: decodePubkey(assertObject(data.pub_key)),
     votingPower: Integer.parse(assertNotEmpty(data.power)),
-    name: data.name,
   };
 }
 
@@ -679,27 +683,19 @@ function decodeTxEvent(data: RpcTxEvent): responses.TxEvent {
   };
 }
 
-// for validators
-interface RpcValidatorData extends RpcValidatorUpdate {
-  readonly accum?: string;
-}
-
-function decodeValidatorData(data: RpcValidatorData): responses.Validator {
-  return {
-    ...decodeValidatorUpdate(data),
-    accum: may(Integer.parse, data.accum),
-  };
-}
-
 interface RpcValidatorsResponse {
   readonly block_height: string;
-  readonly validators: readonly RpcValidatorData[];
+  readonly validators: readonly RpcValidatorUpdate[];
+  readonly count: string;
+  readonly total: string;
 }
 
 function decodeValidators(data: RpcValidatorsResponse): responses.ValidatorsResponse {
   return {
     blockHeight: Integer.parse(assertNotEmpty(data.block_height)),
-    results: assertArray(data.validators).map(decodeValidatorData),
+    validators: assertArray(data.validators).map(decodeValidatorUpdate),
+    count: Integer.parse(assertNotEmpty(data.count)),
+    total: Integer.parse(assertNotEmpty(data.total)),
   };
 }
 
