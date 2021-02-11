@@ -305,14 +305,7 @@ jobs:
           working_directory: packages/cli
           environment:
             SKIP_BUILD: 1
-          command: |
-            ./bin/cosmwasm-cli --init examples/coralnet.ts --code "process.exit(0)"
-            ./bin/cosmwasm-cli --init examples/delegate.ts --code "process.exit(0)"
-            ./bin/cosmwasm-cli --init examples/faucet_addresses.ts --code "process.exit(0)"
-            ./bin/cosmwasm-cli --init examples/generate_address.ts --code "process.exit(0)"
-            ./bin/cosmwasm-cli --init examples/helpers.ts --code "process.exit(0)"
-            ./bin/cosmwasm-cli --init examples/local_faucet.ts --code "process.exit(0)"
-            ./bin/cosmwasm-cli --init examples/mask.ts --code "process.exit(0)"
+          command: ./run_examples.sh
       - run:
           name: Stop chains
           command: |

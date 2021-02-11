@@ -1,3 +1,6 @@
+import { toBase64 } from "@cosmjs/encoding";
+import { makeCosmoshubPath, Secp256k1HdWallet } from "@cosmjs/launchpad";
+
 const mnemonic =
   "economy stock theory fatal elder harbor betray wasp final emotion task crumble siren bottom lizard educate guess current outdoor pair theory focus wife stone";
 

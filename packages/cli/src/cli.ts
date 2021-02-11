@@ -7,6 +7,20 @@ import { TsRepl } from "./tsrepl";
 
 import colors = require("colors/safe");
 
+export async function installedPackages(): Promise<string[]> {
+  return new Promise((resolve, reject) => {
+    fs.readFile(__dirname + "/../package.json", { encoding: "utf8" }, (error, data) => {
+      if (error) {
+        reject(error);
+      } else {
+        const packagejson = JSON.parse(data);
+        const deps = Object.keys(packagejson.dependencies).sort();
+        resolve(deps);
+      }
+    });
+  });
+}
+
 export async function main(originalArgs: readonly string[]): Promise<void> {
   const args = yargs
     .options({
@@ -35,117 +49,47 @@ export async function main(originalArgs: readonly string[]): Promise<void> {
     .group(["debug", "selftest"], "Maintainer options")
     .parse(originalArgs);
 
-  const imports = new Map<string, readonly string[]>([
-    [
-      "@cosmjs/cosmwasm-launchpad",
-      [
-        // cosmwasmclient
-        "Account",
-        "Block",
-        "BlockHeader",
-        "Code",
-        "CodeDetails",
-        "Contract",
-        "ContractCodeHistoryEntry",
-        "CosmWasmClient",
-        "GetSequenceResult",
-        "SearchByHeightQuery",
-        "SearchBySentFromOrToQuery",
-        "SearchByTagsQuery",
-        "SearchTxQuery",
-        "SearchTxFilter",
-        // signingcosmwasmclient
-        "ExecuteResult",
-        "CosmWasmFeeTable",
-        "InstantiateResult",
-        "SigningCosmWasmClient",
-        "UploadMeta",
-        "UploadResult",
-      ],
-    ],
-    [
-      "@cosmjs/crypto",
-      [
-        "Bip39",
-        "Ed25519",
-        "Ed25519Keypair",
-        "EnglishMnemonic",
-        "HdPath",
-        "Random",
-        "Secp256k1",
-        "Sha256",
-        "sha256",
-        "Sha512",
-        "sha512",
-        "Slip10",
-        "Slip10Curve",
-        "Slip10RawIndex",
-      ],
-    ],
-    [
-      "@cosmjs/encoding",
-      ["fromAscii", "fromBase64", "fromHex", "fromUtf8", "toAscii", "toBase64", "toHex", "toUtf8", "Bech32"],
-    ],
-    ["@cosmjs/faucet-client", ["FaucetClient"]],
-    [
-      "@cosmjs/launchpad",
-      [
-        "coin",
-        "coins",
-        "decodeAminoPubkey",
-        "decodeBech32Pubkey",
-        "encodeAminoPubkey",
-        "encodeBech32Pubkey",
-        "encodeSecp256k1Pubkey",
-        "encodeSecp256k1Signature",
-        "logs",
-        "makeCosmoshubPath",
-        "makeSignDoc",
-        "makeStdTx",
-        "IndexedTx",
-        "BroadcastTxResult",
-        "Coin",
-        "CosmosClient",
-        "GasLimits",
-        "GasPrice",
-        "Msg",
-        "MsgDelegate",
-        "MsgSend",
-        "LcdClient",
-        "OfflineSigner",
-        "PubKey",
-        "pubkeyToAddress",
-        "Secp256k1HdWallet",
-        "Secp256k1Wallet",
-        "SigningCosmosClient",
-        "StdFee",
-        "StdSignDoc",
-        "StdTx",
-      ],
-    ],
-    ["@cosmjs/math", ["Decimal", "Int53", "Uint32", "Uint53", "Uint64"]],
-    ["@cosmjs/utils", ["assert", "arrayContentEquals", "sleep"]],
-  ]);
-
   console.info(colors.green("Initializing session for you. Have fun!"));
-  console.info(colors.yellow("Available imports:"));
-  console.info(colors.yellow("  * axios"));
-  console.info(colors.yellow("  * fs"));
-  for (const [moduleName, symbols] of imports.entries()) {
-    console.info(colors.yellow(`  * from ${moduleName}: ${symbols.join(", ")}`));
-  }
+  const visiblePackages = (await installedPackages()).filter(
+    (name) => name.startsWith("@cosmjs/") || name === "axios",
+  );
+  console.info(colors.yellow("The following packages have been installed and can be imported:"));
+  console.info(colors.yellow(visiblePackages.join(", ")));
 
-  let init = `
-    import axios from "axios";
-    import * as fs from "fs";
-  `;
-  for (const [moduleName, symbols] of imports.entries()) {
-    init += `import { ${symbols.join(", ")} } from "${moduleName}";\n`;
-  }
-
+  let init = "";
   if (args.selftest) {
     // execute some trival stuff and exit
     init += `
+      import axios from "axios";
+      import * as fs from "fs";
+
+      import {
+        fromAscii,
+        fromBase64,
+        fromHex,
+        fromUtf8,
+        toAscii,
+        toBase64,
+        toHex,
+        toUtf8,
+        Bech32,
+      } from "@cosmjs/encoding";
+      import { sha512, Bip39, Random } from "@cosmjs/crypto";
+      import {
+        coins,
+        encodeAminoPubkey,
+        encodeBech32Pubkey,
+        decodeBech32Pubkey,
+        decodeAminoPubkey,
+        makeCosmoshubPath,
+        makeSignDoc,
+        Secp256k1HdWallet,
+        Secp256k1Wallet,
+        StdFee,
+      } from "@cosmjs/launchpad";
+      import { Decimal } from "@cosmjs/math";
+      import { assert, arrayContentEquals, sleep } from "@cosmjs/utils";
+
       await sleep(123);
 
       const readmeContent = fs.readFileSync(process.cwd() + "/README.md");
