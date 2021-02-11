@@ -180,6 +180,7 @@ export class CosmWasmClient {
         transactionHash: toHex(response.hash).toUpperCase(),
         rawLog: response.deliverTx?.log,
         data: response.deliverTx?.data ? TxMsgData.decode(response.deliverTx?.data).data : undefined,
+        gasUsed: response.deliverTx?.gasUsed || 0,
       };
     }
     return response.checkTx.code !== 0
@@ -192,7 +193,7 @@ export class CosmWasmClient {
         }
       : {
           height: response.height,
-          code: response.deliverTx?.code,
+          code: response.deliverTx?.code || 0,
           transactionHash: toHex(response.hash).toUpperCase(),
           rawLog: response.deliverTx?.log,
           data: response.deliverTx?.data ? TxMsgData.decode(response.deliverTx?.data).data : undefined,
