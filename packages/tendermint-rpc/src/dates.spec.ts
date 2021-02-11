@@ -3,14 +3,16 @@ import { ReadonlyDate } from "readonly-date";
 import { DateTime, DateWithNanoseconds, fromRfc3339WithNanoseconds, toRfc3339WithNanoseconds } from "./dates";
 
 describe("dates", () => {
-  it("fromRfc3339WithNanoseconds", () => {
-    expect(fromRfc3339WithNanoseconds("2020-12-15T10:57:26.778Z").nanoseconds).toEqual(0);
-    expect(fromRfc3339WithNanoseconds("2020-12-15T10:57:26.7789Z").nanoseconds).toEqual(900000);
-    expect(fromRfc3339WithNanoseconds("2020-12-15T10:57:26.77809Z").nanoseconds).toEqual(90000);
-    expect(fromRfc3339WithNanoseconds("2020-12-15T10:57:26.778009Z").nanoseconds).toEqual(9000);
-    expect(fromRfc3339WithNanoseconds("2020-12-15T10:57:26.7780009Z").nanoseconds).toEqual(900);
-    expect(fromRfc3339WithNanoseconds("2020-12-15T10:57:26.77800009Z").nanoseconds).toEqual(90);
-    expect(fromRfc3339WithNanoseconds("2020-12-15T10:57:26.778000009Z").nanoseconds).toEqual(9);
+  describe("fromRfc3339WithNanoseconds", () => {
+    it("works", () => {
+      expect(fromRfc3339WithNanoseconds("2020-12-15T10:57:26.778Z").nanoseconds).toEqual(0);
+      expect(fromRfc3339WithNanoseconds("2020-12-15T10:57:26.7789Z").nanoseconds).toEqual(900000);
+      expect(fromRfc3339WithNanoseconds("2020-12-15T10:57:26.77809Z").nanoseconds).toEqual(90000);
+      expect(fromRfc3339WithNanoseconds("2020-12-15T10:57:26.778009Z").nanoseconds).toEqual(9000);
+      expect(fromRfc3339WithNanoseconds("2020-12-15T10:57:26.7780009Z").nanoseconds).toEqual(900);
+      expect(fromRfc3339WithNanoseconds("2020-12-15T10:57:26.77800009Z").nanoseconds).toEqual(90);
+      expect(fromRfc3339WithNanoseconds("2020-12-15T10:57:26.778000009Z").nanoseconds).toEqual(9);
+    });
   });
 
   describe("toRfc3339WithNanoseconds", () => {
