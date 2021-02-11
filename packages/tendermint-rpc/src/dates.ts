@@ -20,15 +20,20 @@ export function fromRfc3339WithNanoseconds(dateTimeString: string): DateWithNano
   return out;
 }
 
+export function toRfc3339WithNanoseconds(dateTime: ReadonlyDateWithNanoseconds): string {
+  const millisecondIso = dateTime.toISOString();
+  const nanoseconds = dateTime.nanoseconds?.toString() ?? "";
+  return `${millisecondIso.slice(0, -1)}${nanoseconds.padStart(6, "0")}Z`;
+}
+
 export class DateTime {
   /** @deprecated Use fromRfc3339WithNanoseconds instead */
   public static decode(dateTimeString: string): ReadonlyDateWithNanoseconds {
     return fromRfc3339WithNanoseconds(dateTimeString);
   }
 
+  /** @deprecated Use toRfc3339WithNanoseconds instead */
   public static encode(dateTime: ReadonlyDateWithNanoseconds): string {
-    const millisecondIso = dateTime.toISOString();
-    const nanoseconds = dateTime.nanoseconds?.toString() ?? "";
-    return `${millisecondIso.slice(0, -1)}${nanoseconds.padStart(6, "0")}Z`;
+    return toRfc3339WithNanoseconds(dateTime);
   }
 }

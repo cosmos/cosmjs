@@ -1,7 +1,12 @@
 export { Adaptor } from "./adaptor";
 export { adaptor33, adaptor34 } from "./adaptors";
 export { Client } from "./client";
-export { DateTime, ReadonlyDateWithNanoseconds, fromRfc3339WithNanoseconds } from "./dates";
+export {
+  DateTime,
+  ReadonlyDateWithNanoseconds,
+  fromRfc3339WithNanoseconds,
+  toRfc3339WithNanoseconds,
+} from "./dates";
 export {
   AbciInfoRequest,
   AbciQueryParams,
