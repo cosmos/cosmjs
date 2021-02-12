@@ -57,6 +57,9 @@
 
 ### Changed
 
+- @cosmjs/encoding: Change return type of `fromRfc3339` from `ReadonlyDate` to
+  `Date` as the caller becomes the owner of the object and can safely mutate it
+  in any way.
 - @cosmjs/launchpad-ledger: Renamed to @cosmjs/ledger-amino.
 - @cosmjs/ledger-amino: `LedgerSigner.sign` method renamed `signAmino`.
 

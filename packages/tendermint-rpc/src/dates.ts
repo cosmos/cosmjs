@@ -12,8 +12,7 @@ export interface DateWithNanoseconds extends Date {
 }
 
 export function fromRfc3339WithNanoseconds(dateTimeString: string): DateWithNanoseconds {
-  // fromRfc3339 should give the caller a regular Date directly
-  const out: DateWithNanoseconds = new Date(fromRfc3339(dateTimeString).getTime());
+  const out: DateWithNanoseconds = fromRfc3339(dateTimeString);
   const nanosecondsMatch = dateTimeString.match(/\.(\d+)Z$/);
   const nanoseconds = nanosecondsMatch ? nanosecondsMatch[1].slice(3) : "";
   out.nanoseconds = parseInt(nanoseconds.padEnd(6, "0"), 10);

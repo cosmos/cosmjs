@@ -7,7 +7,7 @@ function padded(integer: number, length = 2): string {
   return filled.substring(filled.length - length);
 }
 
-export function fromRfc3339(str: string): ReadonlyDate {
+export function fromRfc3339(str: string): Date {
   const matches = rfc3339Matcher.exec(str);
   if (!matches) {
     throw new Error("Date string is not in RFC3339 format");
@@ -40,9 +40,8 @@ export function fromRfc3339(str: string): ReadonlyDate {
 
   const tzOffset = tzOffsetSign * (tzOffsetHours * 60 + tzOffsetMinutes) * 60; // seconds
 
-  return new ReadonlyDate(
-    ReadonlyDate.UTC(year, month - 1, day, hour, minute, second, milliSeconds) - tzOffset * 1000,
-  );
+  const timestamp = Date.UTC(year, month - 1, day, hour, minute, second, milliSeconds) - tzOffset * 1000;
+  return new Date(timestamp);
 }
 
 export function toRfc3339(date: Date | ReadonlyDate): string {
