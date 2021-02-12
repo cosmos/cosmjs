@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/cosmwasm-stargate",
-  "version": "0.24.0-alpha.24",
+  "version": "0.24.0-alpha.25",
   "description": "CosmWasm SDK",
   "contributors": [
     "Will Clark <willclarktech@users.noreply.github.com>"
@@ -42,15 +42,15 @@
     "postdefine-proto": "prettier --write \"src/codec/**/*.ts\""
   },
   "dependencies": {
-    "@cosmjs/cosmwasm-launchpad": "^0.24.0-alpha.24",
-    "@cosmjs/crypto": "^0.24.0-alpha.24",
-    "@cosmjs/encoding": "^0.24.0-alpha.24",
-    "@cosmjs/launchpad": "^0.24.0-alpha.24",
-    "@cosmjs/math": "^0.24.0-alpha.24",
-    "@cosmjs/proto-signing": "^0.24.0-alpha.24",
-    "@cosmjs/stargate": "^0.24.0-alpha.24",
-    "@cosmjs/tendermint-rpc": "^0.24.0-alpha.24",
-    "@cosmjs/utils": "^0.24.0-alpha.24",
+    "@cosmjs/cosmwasm-launchpad": "^0.24.0-alpha.25",
+    "@cosmjs/crypto": "^0.24.0-alpha.25",
+    "@cosmjs/encoding": "^0.24.0-alpha.25",
+    "@cosmjs/launchpad": "^0.24.0-alpha.25",
+    "@cosmjs/math": "^0.24.0-alpha.25",
+    "@cosmjs/proto-signing": "^0.24.0-alpha.25",
+    "@cosmjs/stargate": "^0.24.0-alpha.25",
+    "@cosmjs/tendermint-rpc": "^0.24.0-alpha.25",
+    "@cosmjs/utils": "^0.24.0-alpha.25",
     "long": "^4.0.0",
     "pako": "^2.0.2",
     "protobufjs": "~6.10.2"
