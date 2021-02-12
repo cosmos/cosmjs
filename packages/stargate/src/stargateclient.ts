@@ -15,7 +15,7 @@ import {
   adaptor34,
   broadcastTxCommitSuccess,
   Client as TendermintClient,
-  DateTime,
+  toRfc3339WithNanoseconds,
 } from "@cosmjs/tendermint-rpc";
 import { assert, assertDefinedAndNotNull } from "@cosmjs/utils";
 import Long from "long";
@@ -185,7 +185,7 @@ export class StargateClient {
         },
         height: response.block.header.height,
         chainId: response.block.header.chainId,
-        time: DateTime.encode(response.block.header.time),
+        time: toRfc3339WithNanoseconds(response.block.header.time),
       },
       txs: response.block.txs,
     };

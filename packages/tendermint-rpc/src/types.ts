@@ -1,11 +1,7 @@
 // Types in this file are exported outside of the @cosmjs/tendermint-rpc package,
 // e.g. as part of a request or response
-import { ReadonlyDate } from "readonly-date";
 
-export interface ReadonlyDateWithNanoseconds extends ReadonlyDate {
-  /* Nanoseconds after the time stored in a vanilla ReadonlyDate (millisecond granularity) */
-  readonly nanoseconds?: number;
-}
+import { ReadonlyDateWithNanoseconds } from "./dates";
 
 export interface ValidatorEd25519Pubkey {
   readonly algorithm: "ed25519";

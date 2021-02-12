@@ -3,6 +3,7 @@ import { fromBase64, fromHex } from "@cosmjs/encoding";
 import { JsonRpcSuccessResponse } from "@cosmjs/json-rpc";
 import { assert } from "@cosmjs/utils";
 
+import { fromRfc3339WithNanoseconds } from "../../dates";
 import {
   assertArray,
   assertBoolean,
@@ -11,7 +12,6 @@ import {
   assertObject,
   assertSet,
   assertString,
-  DateTime,
   dictionaryToStringMap,
   Integer,
   may,
@@ -328,7 +328,7 @@ function decodeHeader(data: RpcHeader): responses.Header {
     version: decodeBlockVersion(data.version),
     chainId: assertNotEmpty(data.chain_id),
     height: Integer.parse(assertNotEmpty(data.height)),
-    time: DateTime.decode(assertNotEmpty(data.time)),
+    time: fromRfc3339WithNanoseconds(assertNotEmpty(data.time)),
 
     lastBlockId: decodeBlockId(data.last_block_id),
 
@@ -417,7 +417,7 @@ function decodeCommitSignature(data: RpcSignature): CommitSignature {
   return {
     blockIdFlag: decodeBlockIdFlag(data.block_id_flag),
     validatorAddress: fromHex(data.validator_address),
-    timestamp: DateTime.decode(assertNotEmpty(data.timestamp)),
+    timestamp: fromRfc3339WithNanoseconds(assertNotEmpty(data.timestamp)),
     signature: fromBase64(assertNotEmpty(data.signature)),
   };
 }
@@ -488,7 +488,7 @@ interface GenesisResult {
 
 function decodeGenesis(data: RpcGenesisResponse): responses.GenesisResponse {
   return {
-    genesisTime: DateTime.decode(assertNotEmpty(data.genesis_time)),
+    genesisTime: fromRfc3339WithNanoseconds(assertNotEmpty(data.genesis_time)),
     chainId: assertNotEmpty(data.chain_id),
     consensusParams: decodeConsensusParams(data.consensus_params),
     validators: data.validators ? assertArray(data.validators).map(decodeValidatorGenesis) : [],
@@ -568,7 +568,7 @@ function decodeSyncInfo(data: RpcSyncInfo): responses.SyncInfo {
   return {
     latestBlockHash: fromHex(assertNotEmpty(data.latest_block_hash)),
     latestAppHash: fromHex(assertNotEmpty(data.latest_app_hash)),
-    latestBlockTime: DateTime.decode(assertNotEmpty(data.latest_block_time)),
+    latestBlockTime: fromRfc3339WithNanoseconds(assertNotEmpty(data.latest_block_time)),
     latestBlockHeight: Integer.parse(assertNotEmpty(data.latest_block_height)),
     catchingUp: assertBoolean(data.catching_up),
   };
