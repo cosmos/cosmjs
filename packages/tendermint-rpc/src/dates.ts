@@ -26,6 +26,7 @@ export function toRfc3339WithNanoseconds(dateTime: ReadonlyDateWithNanoseconds):
   return `${millisecondIso.slice(0, -1)}${nanoseconds.padStart(6, "0")}Z`;
 }
 
+/** @deprecated Use fromRfc3339WithNanoseconds/toRfc3339WithNanoseconds instead */
 export class DateTime {
   /** @deprecated Use fromRfc3339WithNanoseconds instead */
   public static decode(dateTimeString: string): ReadonlyDateWithNanoseconds {

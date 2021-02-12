@@ -60,6 +60,11 @@
 - @cosmjs/launchpad-ledger: Renamed to @cosmjs/ledger-amino.
 - @cosmjs/ledger-amino: `LedgerSigner.sign` method renamed `signAmino`.
 
+### Deprecated
+
+- @cosmjs/tendermint-rpc: Deprecate `DateTime` in favour of the free functions
+  `fromRfc3339WithNanoseconds` and `toRfc3339WithNanoseconds`.
+
 ## 0.23.2 (2021-01-06)
 
 ### Security
