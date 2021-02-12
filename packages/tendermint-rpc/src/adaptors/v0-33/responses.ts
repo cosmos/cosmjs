@@ -101,7 +101,7 @@ interface RpcAttribute {
 function decodeAttribute(attribute: RpcAttribute): responses.Attribute {
   return {
     key: fromBase64(assertNotEmpty(attribute.key)),
-    value: fromBase64(assertNotEmpty(attribute.value)),
+    value: fromBase64(optional(attribute.value, "")),
   };
 }
 
