@@ -56,7 +56,7 @@ export const Proof = {
   decode(input: _m0.Reader | Uint8Array, length?: number): Proof {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseProof } as Proof;
+    const message = Object.create(baseProof) as Proof;
     message.aunts = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -82,7 +82,7 @@ export const Proof = {
   },
 
   fromJSON(object: any): Proof {
-    const message = { ...baseProof } as Proof;
+    const message = Object.create(baseProof) as Proof;
     message.aunts = [];
     if (object.total !== undefined && object.total !== null) {
       message.total = Long.fromString(object.total);
@@ -151,7 +151,7 @@ const baseValueOp: object = {};
 export const ValueOp = {
   encode(message: ValueOp, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).bytes(message.key);
-    if (message.proof !== undefined && message.proof !== undefined) {
+    if (message.proof !== undefined) {
       Proof.encode(message.proof, writer.uint32(18).fork()).ldelim();
     }
     return writer;
@@ -160,7 +160,7 @@ export const ValueOp = {
   decode(input: _m0.Reader | Uint8Array, length?: number): ValueOp {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseValueOp } as ValueOp;
+    const message = Object.create(baseValueOp) as ValueOp;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -179,7 +179,7 @@ export const ValueOp = {
   },
 
   fromJSON(object: any): ValueOp {
-    const message = { ...baseValueOp } as ValueOp;
+    const message = Object.create(baseValueOp) as ValueOp;
     if (object.key !== undefined && object.key !== null) {
       message.key = bytesFromBase64(object.key);
     }
@@ -228,7 +228,7 @@ export const DominoOp = {
   decode(input: _m0.Reader | Uint8Array, length?: number): DominoOp {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseDominoOp } as DominoOp;
+    const message = Object.create(baseDominoOp) as DominoOp;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -250,7 +250,7 @@ export const DominoOp = {
   },
 
   fromJSON(object: any): DominoOp {
-    const message = { ...baseDominoOp } as DominoOp;
+    const message = Object.create(baseDominoOp) as DominoOp;
     if (object.key !== undefined && object.key !== null) {
       message.key = String(object.key);
     } else {
@@ -311,7 +311,7 @@ export const ProofOp = {
   decode(input: _m0.Reader | Uint8Array, length?: number): ProofOp {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseProofOp } as ProofOp;
+    const message = Object.create(baseProofOp) as ProofOp;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -333,7 +333,7 @@ export const ProofOp = {
   },
 
   fromJSON(object: any): ProofOp {
-    const message = { ...baseProofOp } as ProofOp;
+    const message = Object.create(baseProofOp) as ProofOp;
     if (object.type !== undefined && object.type !== null) {
       message.type = String(object.type);
     } else {
@@ -392,7 +392,7 @@ export const ProofOps = {
   decode(input: _m0.Reader | Uint8Array, length?: number): ProofOps {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseProofOps } as ProofOps;
+    const message = Object.create(baseProofOps) as ProofOps;
     message.ops = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -409,7 +409,7 @@ export const ProofOps = {
   },
 
   fromJSON(object: any): ProofOps {
-    const message = { ...baseProofOps } as ProofOps;
+    const message = Object.create(baseProofOps) as ProofOps;
     message.ops = [];
     if (object.ops !== undefined && object.ops !== null) {
       for (const e of object.ops) {

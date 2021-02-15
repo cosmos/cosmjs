@@ -36,7 +36,7 @@ export const App = {
   decode(input: _m0.Reader | Uint8Array, length?: number): App {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseApp } as App;
+    const message = Object.create(baseApp) as App;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -55,7 +55,7 @@ export const App = {
   },
 
   fromJSON(object: any): App {
-    const message = { ...baseApp } as App;
+    const message = Object.create(baseApp) as App;
     if (object.protocol !== undefined && object.protocol !== null) {
       message.protocol = Long.fromString(object.protocol);
     } else {
@@ -104,7 +104,7 @@ export const Consensus = {
   decode(input: _m0.Reader | Uint8Array, length?: number): Consensus {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseConsensus } as Consensus;
+    const message = Object.create(baseConsensus) as Consensus;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -123,7 +123,7 @@ export const Consensus = {
   },
 
   fromJSON(object: any): Consensus {
-    const message = { ...baseConsensus } as Consensus;
+    const message = Object.create(baseConsensus) as Consensus;
     if (object.block !== undefined && object.block !== null) {
       message.block = Long.fromString(object.block);
     } else {

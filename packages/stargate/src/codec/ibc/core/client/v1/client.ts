@@ -80,7 +80,7 @@ const baseIdentifiedClientState: object = { clientId: "" };
 export const IdentifiedClientState = {
   encode(message: IdentifiedClientState, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).string(message.clientId);
-    if (message.clientState !== undefined && message.clientState !== undefined) {
+    if (message.clientState !== undefined) {
       Any.encode(message.clientState, writer.uint32(18).fork()).ldelim();
     }
     return writer;
@@ -89,7 +89,7 @@ export const IdentifiedClientState = {
   decode(input: _m0.Reader | Uint8Array, length?: number): IdentifiedClientState {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseIdentifiedClientState } as IdentifiedClientState;
+    const message = Object.create(baseIdentifiedClientState) as IdentifiedClientState;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -108,7 +108,7 @@ export const IdentifiedClientState = {
   },
 
   fromJSON(object: any): IdentifiedClientState {
-    const message = { ...baseIdentifiedClientState } as IdentifiedClientState;
+    const message = Object.create(baseIdentifiedClientState) as IdentifiedClientState;
     if (object.clientId !== undefined && object.clientId !== null) {
       message.clientId = String(object.clientId);
     } else {
@@ -150,10 +150,10 @@ const baseConsensusStateWithHeight: object = {};
 
 export const ConsensusStateWithHeight = {
   encode(message: ConsensusStateWithHeight, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.height !== undefined && message.height !== undefined) {
+    if (message.height !== undefined) {
       Height.encode(message.height, writer.uint32(10).fork()).ldelim();
     }
-    if (message.consensusState !== undefined && message.consensusState !== undefined) {
+    if (message.consensusState !== undefined) {
       Any.encode(message.consensusState, writer.uint32(18).fork()).ldelim();
     }
     return writer;
@@ -162,7 +162,7 @@ export const ConsensusStateWithHeight = {
   decode(input: _m0.Reader | Uint8Array, length?: number): ConsensusStateWithHeight {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseConsensusStateWithHeight } as ConsensusStateWithHeight;
+    const message = Object.create(baseConsensusStateWithHeight) as ConsensusStateWithHeight;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -181,7 +181,7 @@ export const ConsensusStateWithHeight = {
   },
 
   fromJSON(object: any): ConsensusStateWithHeight {
-    const message = { ...baseConsensusStateWithHeight } as ConsensusStateWithHeight;
+    const message = Object.create(baseConsensusStateWithHeight) as ConsensusStateWithHeight;
     if (object.height !== undefined && object.height !== null) {
       message.height = Height.fromJSON(object.height);
     } else {
@@ -233,7 +233,7 @@ export const ClientConsensusStates = {
   decode(input: _m0.Reader | Uint8Array, length?: number): ClientConsensusStates {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseClientConsensusStates } as ClientConsensusStates;
+    const message = Object.create(baseClientConsensusStates) as ClientConsensusStates;
     message.consensusStates = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -253,7 +253,7 @@ export const ClientConsensusStates = {
   },
 
   fromJSON(object: any): ClientConsensusStates {
-    const message = { ...baseClientConsensusStates } as ClientConsensusStates;
+    const message = Object.create(baseClientConsensusStates) as ClientConsensusStates;
     message.consensusStates = [];
     if (object.clientId !== undefined && object.clientId !== null) {
       message.clientId = String(object.clientId);
@@ -305,7 +305,7 @@ export const ClientUpdateProposal = {
     writer.uint32(10).string(message.title);
     writer.uint32(18).string(message.description);
     writer.uint32(26).string(message.clientId);
-    if (message.header !== undefined && message.header !== undefined) {
+    if (message.header !== undefined) {
       Any.encode(message.header, writer.uint32(34).fork()).ldelim();
     }
     return writer;
@@ -314,7 +314,7 @@ export const ClientUpdateProposal = {
   decode(input: _m0.Reader | Uint8Array, length?: number): ClientUpdateProposal {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseClientUpdateProposal } as ClientUpdateProposal;
+    const message = Object.create(baseClientUpdateProposal) as ClientUpdateProposal;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -339,7 +339,7 @@ export const ClientUpdateProposal = {
   },
 
   fromJSON(object: any): ClientUpdateProposal {
-    const message = { ...baseClientUpdateProposal } as ClientUpdateProposal;
+    const message = Object.create(baseClientUpdateProposal) as ClientUpdateProposal;
     if (object.title !== undefined && object.title !== null) {
       message.title = String(object.title);
     } else {
@@ -410,7 +410,7 @@ export const Height = {
   decode(input: _m0.Reader | Uint8Array, length?: number): Height {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseHeight } as Height;
+    const message = Object.create(baseHeight) as Height;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -429,7 +429,7 @@ export const Height = {
   },
 
   fromJSON(object: any): Height {
-    const message = { ...baseHeight } as Height;
+    const message = Object.create(baseHeight) as Height;
     if (object.revisionNumber !== undefined && object.revisionNumber !== null) {
       message.revisionNumber = Long.fromString(object.revisionNumber);
     } else {
@@ -481,7 +481,7 @@ export const Params = {
   decode(input: _m0.Reader | Uint8Array, length?: number): Params {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseParams } as Params;
+    const message = Object.create(baseParams) as Params;
     message.allowedClients = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -498,7 +498,7 @@ export const Params = {
   },
 
   fromJSON(object: any): Params {
-    const message = { ...baseParams } as Params;
+    const message = Object.create(baseParams) as Params;
     message.allowedClients = [];
     if (object.allowedClients !== undefined && object.allowedClients !== null) {
       for (const e of object.allowedClients) {

@@ -48,7 +48,7 @@ export const Coin = {
   decode(input: _m0.Reader | Uint8Array, length?: number): Coin {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseCoin } as Coin;
+    const message = Object.create(baseCoin) as Coin;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -67,7 +67,7 @@ export const Coin = {
   },
 
   fromJSON(object: any): Coin {
-    const message = { ...baseCoin } as Coin;
+    const message = Object.create(baseCoin) as Coin;
     if (object.denom !== undefined && object.denom !== null) {
       message.denom = String(object.denom);
     } else {
@@ -116,7 +116,7 @@ export const DecCoin = {
   decode(input: _m0.Reader | Uint8Array, length?: number): DecCoin {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseDecCoin } as DecCoin;
+    const message = Object.create(baseDecCoin) as DecCoin;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -135,7 +135,7 @@ export const DecCoin = {
   },
 
   fromJSON(object: any): DecCoin {
-    const message = { ...baseDecCoin } as DecCoin;
+    const message = Object.create(baseDecCoin) as DecCoin;
     if (object.denom !== undefined && object.denom !== null) {
       message.denom = String(object.denom);
     } else {
@@ -183,7 +183,7 @@ export const IntProto = {
   decode(input: _m0.Reader | Uint8Array, length?: number): IntProto {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseIntProto } as IntProto;
+    const message = Object.create(baseIntProto) as IntProto;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -199,7 +199,7 @@ export const IntProto = {
   },
 
   fromJSON(object: any): IntProto {
-    const message = { ...baseIntProto } as IntProto;
+    const message = Object.create(baseIntProto) as IntProto;
     if (object.int !== undefined && object.int !== null) {
       message.int = String(object.int);
     } else {
@@ -236,7 +236,7 @@ export const DecProto = {
   decode(input: _m0.Reader | Uint8Array, length?: number): DecProto {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseDecProto } as DecProto;
+    const message = Object.create(baseDecProto) as DecProto;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -252,7 +252,7 @@ export const DecProto = {
   },
 
   fromJSON(object: any): DecProto {
-    const message = { ...baseDecProto } as DecProto;
+    const message = Object.create(baseDecProto) as DecProto;
     if (object.dec !== undefined && object.dec !== null) {
       message.dec = String(object.dec);
     } else {

@@ -132,7 +132,7 @@ export const Any = {
   decode(input: _m0.Reader | Uint8Array, length?: number): Any {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseAny } as Any;
+    const message = Object.create(baseAny) as Any;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -151,7 +151,7 @@ export const Any = {
   },
 
   fromJSON(object: any): Any {
-    const message = { ...baseAny } as Any;
+    const message = Object.create(baseAny) as Any;
     if (object.typeUrl !== undefined && object.typeUrl !== null) {
       message.typeUrl = String(object.typeUrl);
     } else {

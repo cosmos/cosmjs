@@ -145,7 +145,7 @@ export const Params = {
   decode(input: _m0.Reader | Uint8Array, length?: number): Params {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseParams } as Params;
+    const message = Object.create(baseParams) as Params;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -170,7 +170,7 @@ export const Params = {
   },
 
   fromJSON(object: any): Params {
-    const message = { ...baseParams } as Params;
+    const message = Object.create(baseParams) as Params;
     if (object.communityTax !== undefined && object.communityTax !== null) {
       message.communityTax = String(object.communityTax);
     } else {
@@ -243,7 +243,7 @@ export const ValidatorHistoricalRewards = {
   decode(input: _m0.Reader | Uint8Array, length?: number): ValidatorHistoricalRewards {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseValidatorHistoricalRewards } as ValidatorHistoricalRewards;
+    const message = Object.create(baseValidatorHistoricalRewards) as ValidatorHistoricalRewards;
     message.cumulativeRewardRatio = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -263,7 +263,7 @@ export const ValidatorHistoricalRewards = {
   },
 
   fromJSON(object: any): ValidatorHistoricalRewards {
-    const message = { ...baseValidatorHistoricalRewards } as ValidatorHistoricalRewards;
+    const message = Object.create(baseValidatorHistoricalRewards) as ValidatorHistoricalRewards;
     message.cumulativeRewardRatio = [];
     if (object.cumulativeRewardRatio !== undefined && object.cumulativeRewardRatio !== null) {
       for (const e of object.cumulativeRewardRatio) {
@@ -322,7 +322,7 @@ export const ValidatorCurrentRewards = {
   decode(input: _m0.Reader | Uint8Array, length?: number): ValidatorCurrentRewards {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseValidatorCurrentRewards } as ValidatorCurrentRewards;
+    const message = Object.create(baseValidatorCurrentRewards) as ValidatorCurrentRewards;
     message.rewards = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -342,7 +342,7 @@ export const ValidatorCurrentRewards = {
   },
 
   fromJSON(object: any): ValidatorCurrentRewards {
-    const message = { ...baseValidatorCurrentRewards } as ValidatorCurrentRewards;
+    const message = Object.create(baseValidatorCurrentRewards) as ValidatorCurrentRewards;
     message.rewards = [];
     if (object.rewards !== undefined && object.rewards !== null) {
       for (const e of object.rewards) {
@@ -398,7 +398,7 @@ export const ValidatorAccumulatedCommission = {
   decode(input: _m0.Reader | Uint8Array, length?: number): ValidatorAccumulatedCommission {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseValidatorAccumulatedCommission } as ValidatorAccumulatedCommission;
+    const message = Object.create(baseValidatorAccumulatedCommission) as ValidatorAccumulatedCommission;
     message.commission = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -415,7 +415,7 @@ export const ValidatorAccumulatedCommission = {
   },
 
   fromJSON(object: any): ValidatorAccumulatedCommission {
-    const message = { ...baseValidatorAccumulatedCommission } as ValidatorAccumulatedCommission;
+    const message = Object.create(baseValidatorAccumulatedCommission) as ValidatorAccumulatedCommission;
     message.commission = [];
     if (object.commission !== undefined && object.commission !== null) {
       for (const e of object.commission) {
@@ -460,7 +460,7 @@ export const ValidatorOutstandingRewards = {
   decode(input: _m0.Reader | Uint8Array, length?: number): ValidatorOutstandingRewards {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseValidatorOutstandingRewards } as ValidatorOutstandingRewards;
+    const message = Object.create(baseValidatorOutstandingRewards) as ValidatorOutstandingRewards;
     message.rewards = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -477,7 +477,7 @@ export const ValidatorOutstandingRewards = {
   },
 
   fromJSON(object: any): ValidatorOutstandingRewards {
-    const message = { ...baseValidatorOutstandingRewards } as ValidatorOutstandingRewards;
+    const message = Object.create(baseValidatorOutstandingRewards) as ValidatorOutstandingRewards;
     message.rewards = [];
     if (object.rewards !== undefined && object.rewards !== null) {
       for (const e of object.rewards) {
@@ -521,7 +521,7 @@ export const ValidatorSlashEvent = {
   decode(input: _m0.Reader | Uint8Array, length?: number): ValidatorSlashEvent {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseValidatorSlashEvent } as ValidatorSlashEvent;
+    const message = Object.create(baseValidatorSlashEvent) as ValidatorSlashEvent;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -540,7 +540,7 @@ export const ValidatorSlashEvent = {
   },
 
   fromJSON(object: any): ValidatorSlashEvent {
-    const message = { ...baseValidatorSlashEvent } as ValidatorSlashEvent;
+    const message = Object.create(baseValidatorSlashEvent) as ValidatorSlashEvent;
     if (object.validatorPeriod !== undefined && object.validatorPeriod !== null) {
       message.validatorPeriod = Long.fromString(object.validatorPeriod);
     } else {
@@ -591,7 +591,7 @@ export const ValidatorSlashEvents = {
   decode(input: _m0.Reader | Uint8Array, length?: number): ValidatorSlashEvents {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseValidatorSlashEvents } as ValidatorSlashEvents;
+    const message = Object.create(baseValidatorSlashEvents) as ValidatorSlashEvents;
     message.validatorSlashEvents = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -608,7 +608,7 @@ export const ValidatorSlashEvents = {
   },
 
   fromJSON(object: any): ValidatorSlashEvents {
-    const message = { ...baseValidatorSlashEvents } as ValidatorSlashEvents;
+    const message = Object.create(baseValidatorSlashEvents) as ValidatorSlashEvents;
     message.validatorSlashEvents = [];
     if (object.validatorSlashEvents !== undefined && object.validatorSlashEvents !== null) {
       for (const e of object.validatorSlashEvents) {
@@ -655,7 +655,7 @@ export const FeePool = {
   decode(input: _m0.Reader | Uint8Array, length?: number): FeePool {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseFeePool } as FeePool;
+    const message = Object.create(baseFeePool) as FeePool;
     message.communityPool = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -672,7 +672,7 @@ export const FeePool = {
   },
 
   fromJSON(object: any): FeePool {
-    const message = { ...baseFeePool } as FeePool;
+    const message = Object.create(baseFeePool) as FeePool;
     message.communityPool = [];
     if (object.communityPool !== undefined && object.communityPool !== null) {
       for (const e of object.communityPool) {
@@ -720,7 +720,7 @@ export const CommunityPoolSpendProposal = {
   decode(input: _m0.Reader | Uint8Array, length?: number): CommunityPoolSpendProposal {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseCommunityPoolSpendProposal } as CommunityPoolSpendProposal;
+    const message = Object.create(baseCommunityPoolSpendProposal) as CommunityPoolSpendProposal;
     message.amount = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -746,7 +746,7 @@ export const CommunityPoolSpendProposal = {
   },
 
   fromJSON(object: any): CommunityPoolSpendProposal {
-    const message = { ...baseCommunityPoolSpendProposal } as CommunityPoolSpendProposal;
+    const message = Object.create(baseCommunityPoolSpendProposal) as CommunityPoolSpendProposal;
     message.amount = [];
     if (object.title !== undefined && object.title !== null) {
       message.title = String(object.title);
@@ -824,7 +824,7 @@ export const DelegatorStartingInfo = {
   decode(input: _m0.Reader | Uint8Array, length?: number): DelegatorStartingInfo {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseDelegatorStartingInfo } as DelegatorStartingInfo;
+    const message = Object.create(baseDelegatorStartingInfo) as DelegatorStartingInfo;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -846,7 +846,7 @@ export const DelegatorStartingInfo = {
   },
 
   fromJSON(object: any): DelegatorStartingInfo {
-    const message = { ...baseDelegatorStartingInfo } as DelegatorStartingInfo;
+    const message = Object.create(baseDelegatorStartingInfo) as DelegatorStartingInfo;
     if (object.previousPeriod !== undefined && object.previousPeriod !== null) {
       message.previousPeriod = Long.fromString(object.previousPeriod);
     } else {
@@ -909,7 +909,7 @@ export const DelegationDelegatorReward = {
   decode(input: _m0.Reader | Uint8Array, length?: number): DelegationDelegatorReward {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseDelegationDelegatorReward } as DelegationDelegatorReward;
+    const message = Object.create(baseDelegationDelegatorReward) as DelegationDelegatorReward;
     message.reward = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -929,7 +929,7 @@ export const DelegationDelegatorReward = {
   },
 
   fromJSON(object: any): DelegationDelegatorReward {
-    const message = { ...baseDelegationDelegatorReward } as DelegationDelegatorReward;
+    const message = Object.create(baseDelegationDelegatorReward) as DelegationDelegatorReward;
     message.reward = [];
     if (object.validatorAddress !== undefined && object.validatorAddress !== null) {
       message.validatorAddress = String(object.validatorAddress);
@@ -996,7 +996,9 @@ export const CommunityPoolSpendProposalWithDeposit = {
   decode(input: _m0.Reader | Uint8Array, length?: number): CommunityPoolSpendProposalWithDeposit {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseCommunityPoolSpendProposalWithDeposit } as CommunityPoolSpendProposalWithDeposit;
+    const message = Object.create(
+      baseCommunityPoolSpendProposalWithDeposit,
+    ) as CommunityPoolSpendProposalWithDeposit;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1024,7 +1026,9 @@ export const CommunityPoolSpendProposalWithDeposit = {
   },
 
   fromJSON(object: any): CommunityPoolSpendProposalWithDeposit {
-    const message = { ...baseCommunityPoolSpendProposalWithDeposit } as CommunityPoolSpendProposalWithDeposit;
+    const message = Object.create(
+      baseCommunityPoolSpendProposalWithDeposit,
+    ) as CommunityPoolSpendProposalWithDeposit;
     if (object.title !== undefined && object.title !== null) {
       message.title = String(object.title);
     } else {

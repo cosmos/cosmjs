@@ -157,7 +157,7 @@ export const ConnectionEnd = {
       Version.encode(v!, writer.uint32(18).fork()).ldelim();
     }
     writer.uint32(24).int32(message.state);
-    if (message.counterparty !== undefined && message.counterparty !== undefined) {
+    if (message.counterparty !== undefined) {
       Counterparty.encode(message.counterparty, writer.uint32(34).fork()).ldelim();
     }
     writer.uint32(40).uint64(message.delayPeriod);
@@ -167,7 +167,7 @@ export const ConnectionEnd = {
   decode(input: _m0.Reader | Uint8Array, length?: number): ConnectionEnd {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseConnectionEnd } as ConnectionEnd;
+    const message = Object.create(baseConnectionEnd) as ConnectionEnd;
     message.versions = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -196,7 +196,7 @@ export const ConnectionEnd = {
   },
 
   fromJSON(object: any): ConnectionEnd {
-    const message = { ...baseConnectionEnd } as ConnectionEnd;
+    const message = Object.create(baseConnectionEnd) as ConnectionEnd;
     message.versions = [];
     if (object.clientId !== undefined && object.clientId !== null) {
       message.clientId = String(object.clientId);
@@ -283,7 +283,7 @@ export const IdentifiedConnection = {
       Version.encode(v!, writer.uint32(26).fork()).ldelim();
     }
     writer.uint32(32).int32(message.state);
-    if (message.counterparty !== undefined && message.counterparty !== undefined) {
+    if (message.counterparty !== undefined) {
       Counterparty.encode(message.counterparty, writer.uint32(42).fork()).ldelim();
     }
     writer.uint32(48).uint64(message.delayPeriod);
@@ -293,7 +293,7 @@ export const IdentifiedConnection = {
   decode(input: _m0.Reader | Uint8Array, length?: number): IdentifiedConnection {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseIdentifiedConnection } as IdentifiedConnection;
+    const message = Object.create(baseIdentifiedConnection) as IdentifiedConnection;
     message.versions = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -325,7 +325,7 @@ export const IdentifiedConnection = {
   },
 
   fromJSON(object: any): IdentifiedConnection {
-    const message = { ...baseIdentifiedConnection } as IdentifiedConnection;
+    const message = Object.create(baseIdentifiedConnection) as IdentifiedConnection;
     message.versions = [];
     if (object.id !== undefined && object.id !== null) {
       message.id = String(object.id);
@@ -419,7 +419,7 @@ export const Counterparty = {
   encode(message: Counterparty, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).string(message.clientId);
     writer.uint32(18).string(message.connectionId);
-    if (message.prefix !== undefined && message.prefix !== undefined) {
+    if (message.prefix !== undefined) {
       MerklePrefix.encode(message.prefix, writer.uint32(26).fork()).ldelim();
     }
     return writer;
@@ -428,7 +428,7 @@ export const Counterparty = {
   decode(input: _m0.Reader | Uint8Array, length?: number): Counterparty {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseCounterparty } as Counterparty;
+    const message = Object.create(baseCounterparty) as Counterparty;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -450,7 +450,7 @@ export const Counterparty = {
   },
 
   fromJSON(object: any): Counterparty {
-    const message = { ...baseCounterparty } as Counterparty;
+    const message = Object.create(baseCounterparty) as Counterparty;
     if (object.clientId !== undefined && object.clientId !== null) {
       message.clientId = String(object.clientId);
     } else {
@@ -512,7 +512,7 @@ export const ClientPaths = {
   decode(input: _m0.Reader | Uint8Array, length?: number): ClientPaths {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseClientPaths } as ClientPaths;
+    const message = Object.create(baseClientPaths) as ClientPaths;
     message.paths = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -529,7 +529,7 @@ export const ClientPaths = {
   },
 
   fromJSON(object: any): ClientPaths {
-    const message = { ...baseClientPaths } as ClientPaths;
+    const message = Object.create(baseClientPaths) as ClientPaths;
     message.paths = [];
     if (object.paths !== undefined && object.paths !== null) {
       for (const e of object.paths) {
@@ -575,7 +575,7 @@ export const ConnectionPaths = {
   decode(input: _m0.Reader | Uint8Array, length?: number): ConnectionPaths {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseConnectionPaths } as ConnectionPaths;
+    const message = Object.create(baseConnectionPaths) as ConnectionPaths;
     message.paths = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -595,7 +595,7 @@ export const ConnectionPaths = {
   },
 
   fromJSON(object: any): ConnectionPaths {
-    const message = { ...baseConnectionPaths } as ConnectionPaths;
+    const message = Object.create(baseConnectionPaths) as ConnectionPaths;
     message.paths = [];
     if (object.clientId !== undefined && object.clientId !== null) {
       message.clientId = String(object.clientId);
@@ -652,7 +652,7 @@ export const Version = {
   decode(input: _m0.Reader | Uint8Array, length?: number): Version {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseVersion } as Version;
+    const message = Object.create(baseVersion) as Version;
     message.features = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -672,7 +672,7 @@ export const Version = {
   },
 
   fromJSON(object: any): Version {
-    const message = { ...baseVersion } as Version;
+    const message = Object.create(baseVersion) as Version;
     message.features = [];
     if (object.identifier !== undefined && object.identifier !== null) {
       message.identifier = String(object.identifier);

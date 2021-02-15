@@ -30,7 +30,7 @@ export const ValidatorSet = {
     for (const v of message.validators) {
       Validator.encode(v!, writer.uint32(10).fork()).ldelim();
     }
-    if (message.proposer !== undefined && message.proposer !== undefined) {
+    if (message.proposer !== undefined) {
       Validator.encode(message.proposer, writer.uint32(18).fork()).ldelim();
     }
     writer.uint32(24).int64(message.totalVotingPower);
@@ -40,7 +40,7 @@ export const ValidatorSet = {
   decode(input: _m0.Reader | Uint8Array, length?: number): ValidatorSet {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseValidatorSet } as ValidatorSet;
+    const message = Object.create(baseValidatorSet) as ValidatorSet;
     message.validators = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -63,7 +63,7 @@ export const ValidatorSet = {
   },
 
   fromJSON(object: any): ValidatorSet {
-    const message = { ...baseValidatorSet } as ValidatorSet;
+    const message = Object.create(baseValidatorSet) as ValidatorSet;
     message.validators = [];
     if (object.validators !== undefined && object.validators !== null) {
       for (const e of object.validators) {
@@ -124,7 +124,7 @@ const baseValidator: object = { votingPower: Long.ZERO, proposerPriority: Long.Z
 export const Validator = {
   encode(message: Validator, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).bytes(message.address);
-    if (message.pubKey !== undefined && message.pubKey !== undefined) {
+    if (message.pubKey !== undefined) {
       PublicKey.encode(message.pubKey, writer.uint32(18).fork()).ldelim();
     }
     writer.uint32(24).int64(message.votingPower);
@@ -135,7 +135,7 @@ export const Validator = {
   decode(input: _m0.Reader | Uint8Array, length?: number): Validator {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseValidator } as Validator;
+    const message = Object.create(baseValidator) as Validator;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -160,7 +160,7 @@ export const Validator = {
   },
 
   fromJSON(object: any): Validator {
-    const message = { ...baseValidator } as Validator;
+    const message = Object.create(baseValidator) as Validator;
     if (object.address !== undefined && object.address !== null) {
       message.address = bytesFromBase64(object.address);
     }
@@ -224,7 +224,7 @@ const baseSimpleValidator: object = { votingPower: Long.ZERO };
 
 export const SimpleValidator = {
   encode(message: SimpleValidator, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.pubKey !== undefined && message.pubKey !== undefined) {
+    if (message.pubKey !== undefined) {
       PublicKey.encode(message.pubKey, writer.uint32(10).fork()).ldelim();
     }
     writer.uint32(16).int64(message.votingPower);
@@ -234,7 +234,7 @@ export const SimpleValidator = {
   decode(input: _m0.Reader | Uint8Array, length?: number): SimpleValidator {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseSimpleValidator } as SimpleValidator;
+    const message = Object.create(baseSimpleValidator) as SimpleValidator;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -253,7 +253,7 @@ export const SimpleValidator = {
   },
 
   fromJSON(object: any): SimpleValidator {
-    const message = { ...baseSimpleValidator } as SimpleValidator;
+    const message = Object.create(baseSimpleValidator) as SimpleValidator;
     if (object.pubKey !== undefined && object.pubKey !== null) {
       message.pubKey = PublicKey.fromJSON(object.pubKey);
     } else {

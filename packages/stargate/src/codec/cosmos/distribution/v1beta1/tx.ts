@@ -64,7 +64,7 @@ export const MsgSetWithdrawAddress = {
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgSetWithdrawAddress {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMsgSetWithdrawAddress } as MsgSetWithdrawAddress;
+    const message = Object.create(baseMsgSetWithdrawAddress) as MsgSetWithdrawAddress;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -83,7 +83,7 @@ export const MsgSetWithdrawAddress = {
   },
 
   fromJSON(object: any): MsgSetWithdrawAddress {
-    const message = { ...baseMsgSetWithdrawAddress } as MsgSetWithdrawAddress;
+    const message = Object.create(baseMsgSetWithdrawAddress) as MsgSetWithdrawAddress;
     if (object.delegatorAddress !== undefined && object.delegatorAddress !== null) {
       message.delegatorAddress = String(object.delegatorAddress);
     } else {
@@ -130,7 +130,7 @@ export const MsgSetWithdrawAddressResponse = {
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgSetWithdrawAddressResponse {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMsgSetWithdrawAddressResponse } as MsgSetWithdrawAddressResponse;
+    const message = Object.create(baseMsgSetWithdrawAddressResponse) as MsgSetWithdrawAddressResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -143,7 +143,7 @@ export const MsgSetWithdrawAddressResponse = {
   },
 
   fromJSON(_: any): MsgSetWithdrawAddressResponse {
-    const message = { ...baseMsgSetWithdrawAddressResponse } as MsgSetWithdrawAddressResponse;
+    const message = Object.create(baseMsgSetWithdrawAddressResponse) as MsgSetWithdrawAddressResponse;
     return message;
   },
 
@@ -170,7 +170,7 @@ export const MsgWithdrawDelegatorReward = {
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgWithdrawDelegatorReward {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMsgWithdrawDelegatorReward } as MsgWithdrawDelegatorReward;
+    const message = Object.create(baseMsgWithdrawDelegatorReward) as MsgWithdrawDelegatorReward;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -189,7 +189,7 @@ export const MsgWithdrawDelegatorReward = {
   },
 
   fromJSON(object: any): MsgWithdrawDelegatorReward {
-    const message = { ...baseMsgWithdrawDelegatorReward } as MsgWithdrawDelegatorReward;
+    const message = Object.create(baseMsgWithdrawDelegatorReward) as MsgWithdrawDelegatorReward;
     if (object.delegatorAddress !== undefined && object.delegatorAddress !== null) {
       message.delegatorAddress = String(object.delegatorAddress);
     } else {
@@ -236,7 +236,9 @@ export const MsgWithdrawDelegatorRewardResponse = {
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgWithdrawDelegatorRewardResponse {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMsgWithdrawDelegatorRewardResponse } as MsgWithdrawDelegatorRewardResponse;
+    const message = Object.create(
+      baseMsgWithdrawDelegatorRewardResponse,
+    ) as MsgWithdrawDelegatorRewardResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -249,7 +251,9 @@ export const MsgWithdrawDelegatorRewardResponse = {
   },
 
   fromJSON(_: any): MsgWithdrawDelegatorRewardResponse {
-    const message = { ...baseMsgWithdrawDelegatorRewardResponse } as MsgWithdrawDelegatorRewardResponse;
+    const message = Object.create(
+      baseMsgWithdrawDelegatorRewardResponse,
+    ) as MsgWithdrawDelegatorRewardResponse;
     return message;
   },
 
@@ -275,7 +279,7 @@ export const MsgWithdrawValidatorCommission = {
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgWithdrawValidatorCommission {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMsgWithdrawValidatorCommission } as MsgWithdrawValidatorCommission;
+    const message = Object.create(baseMsgWithdrawValidatorCommission) as MsgWithdrawValidatorCommission;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -291,7 +295,7 @@ export const MsgWithdrawValidatorCommission = {
   },
 
   fromJSON(object: any): MsgWithdrawValidatorCommission {
-    const message = { ...baseMsgWithdrawValidatorCommission } as MsgWithdrawValidatorCommission;
+    const message = Object.create(baseMsgWithdrawValidatorCommission) as MsgWithdrawValidatorCommission;
     if (object.validatorAddress !== undefined && object.validatorAddress !== null) {
       message.validatorAddress = String(object.validatorAddress);
     } else {
@@ -327,9 +331,9 @@ export const MsgWithdrawValidatorCommissionResponse = {
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgWithdrawValidatorCommissionResponse {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseMsgWithdrawValidatorCommissionResponse,
-    } as MsgWithdrawValidatorCommissionResponse;
+    const message = Object.create(
+      baseMsgWithdrawValidatorCommissionResponse,
+    ) as MsgWithdrawValidatorCommissionResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -342,9 +346,9 @@ export const MsgWithdrawValidatorCommissionResponse = {
   },
 
   fromJSON(_: any): MsgWithdrawValidatorCommissionResponse {
-    const message = {
-      ...baseMsgWithdrawValidatorCommissionResponse,
-    } as MsgWithdrawValidatorCommissionResponse;
+    const message = Object.create(
+      baseMsgWithdrawValidatorCommissionResponse,
+    ) as MsgWithdrawValidatorCommissionResponse;
     return message;
   },
 
@@ -377,7 +381,7 @@ export const MsgFundCommunityPool = {
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgFundCommunityPool {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMsgFundCommunityPool } as MsgFundCommunityPool;
+    const message = Object.create(baseMsgFundCommunityPool) as MsgFundCommunityPool;
     message.amount = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -397,7 +401,7 @@ export const MsgFundCommunityPool = {
   },
 
   fromJSON(object: any): MsgFundCommunityPool {
-    const message = { ...baseMsgFundCommunityPool } as MsgFundCommunityPool;
+    const message = Object.create(baseMsgFundCommunityPool) as MsgFundCommunityPool;
     message.amount = [];
     if (object.amount !== undefined && object.amount !== null) {
       for (const e of object.amount) {
@@ -450,7 +454,7 @@ export const MsgFundCommunityPoolResponse = {
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgFundCommunityPoolResponse {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMsgFundCommunityPoolResponse } as MsgFundCommunityPoolResponse;
+    const message = Object.create(baseMsgFundCommunityPoolResponse) as MsgFundCommunityPoolResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -463,7 +467,7 @@ export const MsgFundCommunityPoolResponse = {
   },
 
   fromJSON(_: any): MsgFundCommunityPoolResponse {
-    const message = { ...baseMsgFundCommunityPoolResponse } as MsgFundCommunityPoolResponse;
+    const message = Object.create(baseMsgFundCommunityPoolResponse) as MsgFundCommunityPoolResponse;
     return message;
   },
 

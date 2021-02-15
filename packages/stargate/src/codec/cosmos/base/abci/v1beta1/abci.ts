@@ -166,7 +166,7 @@ export const TxResponse = {
     writer.uint32(66).string(message.info);
     writer.uint32(72).int64(message.gasWanted);
     writer.uint32(80).int64(message.gasUsed);
-    if (message.tx !== undefined && message.tx !== undefined) {
+    if (message.tx !== undefined) {
       Any.encode(message.tx, writer.uint32(90).fork()).ldelim();
     }
     writer.uint32(98).string(message.timestamp);
@@ -176,7 +176,7 @@ export const TxResponse = {
   decode(input: _m0.Reader | Uint8Array, length?: number): TxResponse {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseTxResponse } as TxResponse;
+    const message = Object.create(baseTxResponse) as TxResponse;
     message.logs = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -226,7 +226,7 @@ export const TxResponse = {
   },
 
   fromJSON(object: any): TxResponse {
-    const message = { ...baseTxResponse } as TxResponse;
+    const message = Object.create(baseTxResponse) as TxResponse;
     message.logs = [];
     if (object.height !== undefined && object.height !== null) {
       message.height = Long.fromString(object.height);
@@ -394,7 +394,7 @@ export const ABCIMessageLog = {
   decode(input: _m0.Reader | Uint8Array, length?: number): ABCIMessageLog {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseABCIMessageLog } as ABCIMessageLog;
+    const message = Object.create(baseABCIMessageLog) as ABCIMessageLog;
     message.events = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -417,7 +417,7 @@ export const ABCIMessageLog = {
   },
 
   fromJSON(object: any): ABCIMessageLog {
-    const message = { ...baseABCIMessageLog } as ABCIMessageLog;
+    const message = Object.create(baseABCIMessageLog) as ABCIMessageLog;
     message.events = [];
     if (object.msgIndex !== undefined && object.msgIndex !== null) {
       message.msgIndex = Number(object.msgIndex);
@@ -485,7 +485,7 @@ export const StringEvent = {
   decode(input: _m0.Reader | Uint8Array, length?: number): StringEvent {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseStringEvent } as StringEvent;
+    const message = Object.create(baseStringEvent) as StringEvent;
     message.attributes = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -505,7 +505,7 @@ export const StringEvent = {
   },
 
   fromJSON(object: any): StringEvent {
-    const message = { ...baseStringEvent } as StringEvent;
+    const message = Object.create(baseStringEvent) as StringEvent;
     message.attributes = [];
     if (object.type !== undefined && object.type !== null) {
       message.type = String(object.type);
@@ -560,7 +560,7 @@ export const Attribute = {
   decode(input: _m0.Reader | Uint8Array, length?: number): Attribute {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseAttribute } as Attribute;
+    const message = Object.create(baseAttribute) as Attribute;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -579,7 +579,7 @@ export const Attribute = {
   },
 
   fromJSON(object: any): Attribute {
-    const message = { ...baseAttribute } as Attribute;
+    const message = Object.create(baseAttribute) as Attribute;
     if (object.key !== undefined && object.key !== null) {
       message.key = String(object.key);
     } else {
@@ -628,7 +628,7 @@ export const GasInfo = {
   decode(input: _m0.Reader | Uint8Array, length?: number): GasInfo {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseGasInfo } as GasInfo;
+    const message = Object.create(baseGasInfo) as GasInfo;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -647,7 +647,7 @@ export const GasInfo = {
   },
 
   fromJSON(object: any): GasInfo {
-    const message = { ...baseGasInfo } as GasInfo;
+    const message = Object.create(baseGasInfo) as GasInfo;
     if (object.gasWanted !== undefined && object.gasWanted !== null) {
       message.gasWanted = Long.fromString(object.gasWanted);
     } else {
@@ -699,7 +699,7 @@ export const Result = {
   decode(input: _m0.Reader | Uint8Array, length?: number): Result {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseResult } as Result;
+    const message = Object.create(baseResult) as Result;
     message.events = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -722,7 +722,7 @@ export const Result = {
   },
 
   fromJSON(object: any): Result {
-    const message = { ...baseResult } as Result;
+    const message = Object.create(baseResult) as Result;
     message.events = [];
     if (object.data !== undefined && object.data !== null) {
       message.data = bytesFromBase64(object.data);
@@ -779,10 +779,10 @@ const baseSimulationResponse: object = {};
 
 export const SimulationResponse = {
   encode(message: SimulationResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.gasInfo !== undefined && message.gasInfo !== undefined) {
+    if (message.gasInfo !== undefined) {
       GasInfo.encode(message.gasInfo, writer.uint32(10).fork()).ldelim();
     }
-    if (message.result !== undefined && message.result !== undefined) {
+    if (message.result !== undefined) {
       Result.encode(message.result, writer.uint32(18).fork()).ldelim();
     }
     return writer;
@@ -791,7 +791,7 @@ export const SimulationResponse = {
   decode(input: _m0.Reader | Uint8Array, length?: number): SimulationResponse {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseSimulationResponse } as SimulationResponse;
+    const message = Object.create(baseSimulationResponse) as SimulationResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -810,7 +810,7 @@ export const SimulationResponse = {
   },
 
   fromJSON(object: any): SimulationResponse {
-    const message = { ...baseSimulationResponse } as SimulationResponse;
+    const message = Object.create(baseSimulationResponse) as SimulationResponse;
     if (object.gasInfo !== undefined && object.gasInfo !== null) {
       message.gasInfo = GasInfo.fromJSON(object.gasInfo);
     } else {
@@ -860,7 +860,7 @@ export const MsgData = {
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgData {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMsgData } as MsgData;
+    const message = Object.create(baseMsgData) as MsgData;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -879,7 +879,7 @@ export const MsgData = {
   },
 
   fromJSON(object: any): MsgData {
-    const message = { ...baseMsgData } as MsgData;
+    const message = Object.create(baseMsgData) as MsgData;
     if (object.msgType !== undefined && object.msgType !== null) {
       message.msgType = String(object.msgType);
     } else {
@@ -928,7 +928,7 @@ export const TxMsgData = {
   decode(input: _m0.Reader | Uint8Array, length?: number): TxMsgData {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseTxMsgData } as TxMsgData;
+    const message = Object.create(baseTxMsgData) as TxMsgData;
     message.data = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -945,7 +945,7 @@ export const TxMsgData = {
   },
 
   fromJSON(object: any): TxMsgData {
-    const message = { ...baseTxMsgData } as TxMsgData;
+    const message = Object.create(baseTxMsgData) as TxMsgData;
     message.data = [];
     if (object.data !== undefined && object.data !== null) {
       for (const e of object.data) {
@@ -1001,7 +1001,7 @@ export const SearchTxsResult = {
   decode(input: _m0.Reader | Uint8Array, length?: number): SearchTxsResult {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseSearchTxsResult } as SearchTxsResult;
+    const message = Object.create(baseSearchTxsResult) as SearchTxsResult;
     message.txs = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -1033,7 +1033,7 @@ export const SearchTxsResult = {
   },
 
   fromJSON(object: any): SearchTxsResult {
-    const message = { ...baseSearchTxsResult } as SearchTxsResult;
+    const message = Object.create(baseSearchTxsResult) as SearchTxsResult;
     message.txs = [];
     if (object.totalCount !== undefined && object.totalCount !== null) {
       message.totalCount = Long.fromString(object.totalCount);

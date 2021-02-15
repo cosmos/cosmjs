@@ -94,7 +94,7 @@ export const Duration = {
   decode(input: _m0.Reader | Uint8Array, length?: number): Duration {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseDuration } as Duration;
+    const message = Object.create(baseDuration) as Duration;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -113,7 +113,7 @@ export const Duration = {
   },
 
   fromJSON(object: any): Duration {
-    const message = { ...baseDuration } as Duration;
+    const message = Object.create(baseDuration) as Duration;
     if (object.seconds !== undefined && object.seconds !== null) {
       message.seconds = Long.fromString(object.seconds);
     } else {

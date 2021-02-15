@@ -188,7 +188,7 @@ export const AccessTypeParam = {
   decode(input: _m0.Reader | Uint8Array, length?: number): AccessTypeParam {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseAccessTypeParam } as AccessTypeParam;
+    const message = Object.create(baseAccessTypeParam) as AccessTypeParam;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -204,7 +204,7 @@ export const AccessTypeParam = {
   },
 
   fromJSON(object: any): AccessTypeParam {
-    const message = { ...baseAccessTypeParam } as AccessTypeParam;
+    const message = Object.create(baseAccessTypeParam) as AccessTypeParam;
     if (object.value !== undefined && object.value !== null) {
       message.value = accessTypeFromJSON(object.value);
     } else {
@@ -242,7 +242,7 @@ export const AccessConfig = {
   decode(input: _m0.Reader | Uint8Array, length?: number): AccessConfig {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseAccessConfig } as AccessConfig;
+    const message = Object.create(baseAccessConfig) as AccessConfig;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -261,7 +261,7 @@ export const AccessConfig = {
   },
 
   fromJSON(object: any): AccessConfig {
-    const message = { ...baseAccessConfig } as AccessConfig;
+    const message = Object.create(baseAccessConfig) as AccessConfig;
     if (object.permission !== undefined && object.permission !== null) {
       message.permission = accessTypeFromJSON(object.permission);
     } else {
@@ -302,7 +302,7 @@ const baseParams: object = { instantiateDefaultPermission: 0, maxWasmCodeSize: L
 
 export const Params = {
   encode(message: Params, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.codeUploadAccess !== undefined && message.codeUploadAccess !== undefined) {
+    if (message.codeUploadAccess !== undefined) {
       AccessConfig.encode(message.codeUploadAccess, writer.uint32(10).fork()).ldelim();
     }
     writer.uint32(16).int32(message.instantiateDefaultPermission);
@@ -313,7 +313,7 @@ export const Params = {
   decode(input: _m0.Reader | Uint8Array, length?: number): Params {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseParams } as Params;
+    const message = Object.create(baseParams) as Params;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -335,7 +335,7 @@ export const Params = {
   },
 
   fromJSON(object: any): Params {
-    const message = { ...baseParams } as Params;
+    const message = Object.create(baseParams) as Params;
     if (object.codeUploadAccess !== undefined && object.codeUploadAccess !== null) {
       message.codeUploadAccess = AccessConfig.fromJSON(object.codeUploadAccess);
     } else {
@@ -396,7 +396,7 @@ export const CodeInfo = {
     writer.uint32(18).string(message.creator);
     writer.uint32(26).string(message.source);
     writer.uint32(34).string(message.builder);
-    if (message.instantiateConfig !== undefined && message.instantiateConfig !== undefined) {
+    if (message.instantiateConfig !== undefined) {
       AccessConfig.encode(message.instantiateConfig, writer.uint32(42).fork()).ldelim();
     }
     return writer;
@@ -405,7 +405,7 @@ export const CodeInfo = {
   decode(input: _m0.Reader | Uint8Array, length?: number): CodeInfo {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseCodeInfo } as CodeInfo;
+    const message = Object.create(baseCodeInfo) as CodeInfo;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -433,7 +433,7 @@ export const CodeInfo = {
   },
 
   fromJSON(object: any): CodeInfo {
-    const message = { ...baseCodeInfo } as CodeInfo;
+    const message = Object.create(baseCodeInfo) as CodeInfo;
     if (object.codeHash !== undefined && object.codeHash !== null) {
       message.codeHash = bytesFromBase64(object.codeHash);
     }
@@ -513,7 +513,7 @@ export const ContractInfo = {
     writer.uint32(18).string(message.creator);
     writer.uint32(26).string(message.admin);
     writer.uint32(34).string(message.label);
-    if (message.created !== undefined && message.created !== undefined) {
+    if (message.created !== undefined) {
       AbsoluteTxPosition.encode(message.created, writer.uint32(42).fork()).ldelim();
     }
     return writer;
@@ -522,7 +522,7 @@ export const ContractInfo = {
   decode(input: _m0.Reader | Uint8Array, length?: number): ContractInfo {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseContractInfo } as ContractInfo;
+    const message = Object.create(baseContractInfo) as ContractInfo;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -550,7 +550,7 @@ export const ContractInfo = {
   },
 
   fromJSON(object: any): ContractInfo {
-    const message = { ...baseContractInfo } as ContractInfo;
+    const message = Object.create(baseContractInfo) as ContractInfo;
     if (object.codeId !== undefined && object.codeId !== null) {
       message.codeId = Long.fromString(object.codeId);
     } else {
@@ -627,7 +627,7 @@ export const ContractCodeHistoryEntry = {
   encode(message: ContractCodeHistoryEntry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(8).int32(message.operation);
     writer.uint32(16).uint64(message.codeId);
-    if (message.updated !== undefined && message.updated !== undefined) {
+    if (message.updated !== undefined) {
       AbsoluteTxPosition.encode(message.updated, writer.uint32(26).fork()).ldelim();
     }
     writer.uint32(34).bytes(message.msg);
@@ -637,7 +637,7 @@ export const ContractCodeHistoryEntry = {
   decode(input: _m0.Reader | Uint8Array, length?: number): ContractCodeHistoryEntry {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseContractCodeHistoryEntry } as ContractCodeHistoryEntry;
+    const message = Object.create(baseContractCodeHistoryEntry) as ContractCodeHistoryEntry;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -662,7 +662,7 @@ export const ContractCodeHistoryEntry = {
   },
 
   fromJSON(object: any): ContractCodeHistoryEntry {
-    const message = { ...baseContractCodeHistoryEntry } as ContractCodeHistoryEntry;
+    const message = Object.create(baseContractCodeHistoryEntry) as ContractCodeHistoryEntry;
     if (object.operation !== undefined && object.operation !== null) {
       message.operation = contractCodeHistoryOperationTypeFromJSON(object.operation);
     } else {
@@ -734,7 +734,7 @@ export const AbsoluteTxPosition = {
   decode(input: _m0.Reader | Uint8Array, length?: number): AbsoluteTxPosition {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseAbsoluteTxPosition } as AbsoluteTxPosition;
+    const message = Object.create(baseAbsoluteTxPosition) as AbsoluteTxPosition;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -753,7 +753,7 @@ export const AbsoluteTxPosition = {
   },
 
   fromJSON(object: any): AbsoluteTxPosition {
-    const message = { ...baseAbsoluteTxPosition } as AbsoluteTxPosition;
+    const message = Object.create(baseAbsoluteTxPosition) as AbsoluteTxPosition;
     if (object.blockHeight !== undefined && object.blockHeight !== null) {
       message.blockHeight = Long.fromString(object.blockHeight);
     } else {
@@ -802,7 +802,7 @@ export const Model = {
   decode(input: _m0.Reader | Uint8Array, length?: number): Model {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseModel } as Model;
+    const message = Object.create(baseModel) as Model;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -821,7 +821,7 @@ export const Model = {
   },
 
   fromJSON(object: any): Model {
-    const message = { ...baseModel } as Model;
+    const message = Object.create(baseModel) as Model;
     if (object.key !== undefined && object.key !== null) {
       message.key = bytesFromBase64(object.key);
     }

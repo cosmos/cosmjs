@@ -89,16 +89,16 @@ const baseConsensusParams: object = {};
 
 export const ConsensusParams = {
   encode(message: ConsensusParams, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.block !== undefined && message.block !== undefined) {
+    if (message.block !== undefined) {
       BlockParams.encode(message.block, writer.uint32(10).fork()).ldelim();
     }
-    if (message.evidence !== undefined && message.evidence !== undefined) {
+    if (message.evidence !== undefined) {
       EvidenceParams.encode(message.evidence, writer.uint32(18).fork()).ldelim();
     }
-    if (message.validator !== undefined && message.validator !== undefined) {
+    if (message.validator !== undefined) {
       ValidatorParams.encode(message.validator, writer.uint32(26).fork()).ldelim();
     }
-    if (message.version !== undefined && message.version !== undefined) {
+    if (message.version !== undefined) {
       VersionParams.encode(message.version, writer.uint32(34).fork()).ldelim();
     }
     return writer;
@@ -107,7 +107,7 @@ export const ConsensusParams = {
   decode(input: _m0.Reader | Uint8Array, length?: number): ConsensusParams {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseConsensusParams } as ConsensusParams;
+    const message = Object.create(baseConsensusParams) as ConsensusParams;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -132,7 +132,7 @@ export const ConsensusParams = {
   },
 
   fromJSON(object: any): ConsensusParams {
-    const message = { ...baseConsensusParams } as ConsensusParams;
+    const message = Object.create(baseConsensusParams) as ConsensusParams;
     if (object.block !== undefined && object.block !== null) {
       message.block = BlockParams.fromJSON(object.block);
     } else {
@@ -208,7 +208,7 @@ export const BlockParams = {
   decode(input: _m0.Reader | Uint8Array, length?: number): BlockParams {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseBlockParams } as BlockParams;
+    const message = Object.create(baseBlockParams) as BlockParams;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -230,7 +230,7 @@ export const BlockParams = {
   },
 
   fromJSON(object: any): BlockParams {
-    const message = { ...baseBlockParams } as BlockParams;
+    const message = Object.create(baseBlockParams) as BlockParams;
     if (object.maxBytes !== undefined && object.maxBytes !== null) {
       message.maxBytes = Long.fromString(object.maxBytes);
     } else {
@@ -283,7 +283,7 @@ const baseEvidenceParams: object = { maxAgeNumBlocks: Long.ZERO, maxBytes: Long.
 export const EvidenceParams = {
   encode(message: EvidenceParams, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(8).int64(message.maxAgeNumBlocks);
-    if (message.maxAgeDuration !== undefined && message.maxAgeDuration !== undefined) {
+    if (message.maxAgeDuration !== undefined) {
       Duration.encode(message.maxAgeDuration, writer.uint32(18).fork()).ldelim();
     }
     writer.uint32(24).int64(message.maxBytes);
@@ -293,7 +293,7 @@ export const EvidenceParams = {
   decode(input: _m0.Reader | Uint8Array, length?: number): EvidenceParams {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseEvidenceParams } as EvidenceParams;
+    const message = Object.create(baseEvidenceParams) as EvidenceParams;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -315,7 +315,7 @@ export const EvidenceParams = {
   },
 
   fromJSON(object: any): EvidenceParams {
-    const message = { ...baseEvidenceParams } as EvidenceParams;
+    const message = Object.create(baseEvidenceParams) as EvidenceParams;
     if (object.maxAgeNumBlocks !== undefined && object.maxAgeNumBlocks !== null) {
       message.maxAgeNumBlocks = Long.fromString(object.maxAgeNumBlocks);
     } else {
@@ -378,7 +378,7 @@ export const ValidatorParams = {
   decode(input: _m0.Reader | Uint8Array, length?: number): ValidatorParams {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseValidatorParams } as ValidatorParams;
+    const message = Object.create(baseValidatorParams) as ValidatorParams;
     message.pubKeyTypes = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -395,7 +395,7 @@ export const ValidatorParams = {
   },
 
   fromJSON(object: any): ValidatorParams {
-    const message = { ...baseValidatorParams } as ValidatorParams;
+    const message = Object.create(baseValidatorParams) as ValidatorParams;
     message.pubKeyTypes = [];
     if (object.pubKeyTypes !== undefined && object.pubKeyTypes !== null) {
       for (const e of object.pubKeyTypes) {
@@ -438,7 +438,7 @@ export const VersionParams = {
   decode(input: _m0.Reader | Uint8Array, length?: number): VersionParams {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseVersionParams } as VersionParams;
+    const message = Object.create(baseVersionParams) as VersionParams;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -454,7 +454,7 @@ export const VersionParams = {
   },
 
   fromJSON(object: any): VersionParams {
-    const message = { ...baseVersionParams } as VersionParams;
+    const message = Object.create(baseVersionParams) as VersionParams;
     if (object.appVersion !== undefined && object.appVersion !== null) {
       message.appVersion = Long.fromString(object.appVersion);
     } else {
@@ -492,7 +492,7 @@ export const HashedParams = {
   decode(input: _m0.Reader | Uint8Array, length?: number): HashedParams {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseHashedParams } as HashedParams;
+    const message = Object.create(baseHashedParams) as HashedParams;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -511,7 +511,7 @@ export const HashedParams = {
   },
 
   fromJSON(object: any): HashedParams {
-    const message = { ...baseHashedParams } as HashedParams;
+    const message = Object.create(baseHashedParams) as HashedParams;
     if (object.blockMaxBytes !== undefined && object.blockMaxBytes !== null) {
       message.blockMaxBytes = Long.fromString(object.blockMaxBytes);
     } else {

@@ -25,7 +25,7 @@ export const BitArray = {
   decode(input: _m0.Reader | Uint8Array, length?: number): BitArray {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseBitArray } as BitArray;
+    const message = Object.create(baseBitArray) as BitArray;
     message.elems = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -52,7 +52,7 @@ export const BitArray = {
   },
 
   fromJSON(object: any): BitArray {
-    const message = { ...baseBitArray } as BitArray;
+    const message = Object.create(baseBitArray) as BitArray;
     message.elems = [];
     if (object.bits !== undefined && object.bits !== null) {
       message.bits = Long.fromString(object.bits);

@@ -229,7 +229,7 @@ export const Channel = {
   encode(message: Channel, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(8).int32(message.state);
     writer.uint32(16).int32(message.ordering);
-    if (message.counterparty !== undefined && message.counterparty !== undefined) {
+    if (message.counterparty !== undefined) {
       Counterparty.encode(message.counterparty, writer.uint32(26).fork()).ldelim();
     }
     for (const v of message.connectionHops) {
@@ -242,7 +242,7 @@ export const Channel = {
   decode(input: _m0.Reader | Uint8Array, length?: number): Channel {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseChannel } as Channel;
+    const message = Object.create(baseChannel) as Channel;
     message.connectionHops = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -271,7 +271,7 @@ export const Channel = {
   },
 
   fromJSON(object: any): Channel {
-    const message = { ...baseChannel } as Channel;
+    const message = Object.create(baseChannel) as Channel;
     message.connectionHops = [];
     if (object.state !== undefined && object.state !== null) {
       message.state = stateFromJSON(object.state);
@@ -361,7 +361,7 @@ export const IdentifiedChannel = {
   encode(message: IdentifiedChannel, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(8).int32(message.state);
     writer.uint32(16).int32(message.ordering);
-    if (message.counterparty !== undefined && message.counterparty !== undefined) {
+    if (message.counterparty !== undefined) {
       Counterparty.encode(message.counterparty, writer.uint32(26).fork()).ldelim();
     }
     for (const v of message.connectionHops) {
@@ -376,7 +376,7 @@ export const IdentifiedChannel = {
   decode(input: _m0.Reader | Uint8Array, length?: number): IdentifiedChannel {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseIdentifiedChannel } as IdentifiedChannel;
+    const message = Object.create(baseIdentifiedChannel) as IdentifiedChannel;
     message.connectionHops = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -411,7 +411,7 @@ export const IdentifiedChannel = {
   },
 
   fromJSON(object: any): IdentifiedChannel {
-    const message = { ...baseIdentifiedChannel } as IdentifiedChannel;
+    const message = Object.create(baseIdentifiedChannel) as IdentifiedChannel;
     message.connectionHops = [];
     if (object.state !== undefined && object.state !== null) {
       message.state = stateFromJSON(object.state);
@@ -522,7 +522,7 @@ export const Counterparty = {
   decode(input: _m0.Reader | Uint8Array, length?: number): Counterparty {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseCounterparty } as Counterparty;
+    const message = Object.create(baseCounterparty) as Counterparty;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -541,7 +541,7 @@ export const Counterparty = {
   },
 
   fromJSON(object: any): Counterparty {
-    const message = { ...baseCounterparty } as Counterparty;
+    const message = Object.create(baseCounterparty) as Counterparty;
     if (object.portId !== undefined && object.portId !== null) {
       message.portId = String(object.portId);
     } else {
@@ -595,7 +595,7 @@ export const Packet = {
     writer.uint32(34).string(message.destinationPort);
     writer.uint32(42).string(message.destinationChannel);
     writer.uint32(50).bytes(message.data);
-    if (message.timeoutHeight !== undefined && message.timeoutHeight !== undefined) {
+    if (message.timeoutHeight !== undefined) {
       Height.encode(message.timeoutHeight, writer.uint32(58).fork()).ldelim();
     }
     writer.uint32(64).uint64(message.timeoutTimestamp);
@@ -605,7 +605,7 @@ export const Packet = {
   decode(input: _m0.Reader | Uint8Array, length?: number): Packet {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...basePacket } as Packet;
+    const message = Object.create(basePacket) as Packet;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -642,7 +642,7 @@ export const Packet = {
   },
 
   fromJSON(object: any): Packet {
-    const message = { ...basePacket } as Packet;
+    const message = Object.create(basePacket) as Packet;
     if (object.sequence !== undefined && object.sequence !== null) {
       message.sequence = Long.fromString(object.sequence);
     } else {
@@ -760,7 +760,7 @@ export const PacketState = {
   decode(input: _m0.Reader | Uint8Array, length?: number): PacketState {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...basePacketState } as PacketState;
+    const message = Object.create(basePacketState) as PacketState;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -785,7 +785,7 @@ export const PacketState = {
   },
 
   fromJSON(object: any): PacketState {
-    const message = { ...basePacketState } as PacketState;
+    const message = Object.create(basePacketState) as PacketState;
     if (object.portId !== undefined && object.portId !== null) {
       message.portId = String(object.portId);
     } else {
@@ -859,7 +859,7 @@ export const Acknowledgement = {
   decode(input: _m0.Reader | Uint8Array, length?: number): Acknowledgement {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseAcknowledgement } as Acknowledgement;
+    const message = Object.create(baseAcknowledgement) as Acknowledgement;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -878,7 +878,7 @@ export const Acknowledgement = {
   },
 
   fromJSON(object: any): Acknowledgement {
-    const message = { ...baseAcknowledgement } as Acknowledgement;
+    const message = Object.create(baseAcknowledgement) as Acknowledgement;
     if (object.result !== undefined && object.result !== null) {
       message.result = bytesFromBase64(object.result);
     }

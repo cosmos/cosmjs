@@ -211,10 +211,10 @@ const baseTx: object = {};
 
 export const Tx = {
   encode(message: Tx, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.body !== undefined && message.body !== undefined) {
+    if (message.body !== undefined) {
       TxBody.encode(message.body, writer.uint32(10).fork()).ldelim();
     }
-    if (message.authInfo !== undefined && message.authInfo !== undefined) {
+    if (message.authInfo !== undefined) {
       AuthInfo.encode(message.authInfo, writer.uint32(18).fork()).ldelim();
     }
     for (const v of message.signatures) {
@@ -226,7 +226,7 @@ export const Tx = {
   decode(input: _m0.Reader | Uint8Array, length?: number): Tx {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseTx } as Tx;
+    const message = Object.create(baseTx) as Tx;
     message.signatures = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -249,7 +249,7 @@ export const Tx = {
   },
 
   fromJSON(object: any): Tx {
-    const message = { ...baseTx } as Tx;
+    const message = Object.create(baseTx) as Tx;
     message.signatures = [];
     if (object.body !== undefined && object.body !== null) {
       message.body = TxBody.fromJSON(object.body);
@@ -319,7 +319,7 @@ export const TxRaw = {
   decode(input: _m0.Reader | Uint8Array, length?: number): TxRaw {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseTxRaw } as TxRaw;
+    const message = Object.create(baseTxRaw) as TxRaw;
     message.signatures = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -342,7 +342,7 @@ export const TxRaw = {
   },
 
   fromJSON(object: any): TxRaw {
-    const message = { ...baseTxRaw } as TxRaw;
+    const message = Object.create(baseTxRaw) as TxRaw;
     message.signatures = [];
     if (object.bodyBytes !== undefined && object.bodyBytes !== null) {
       message.bodyBytes = bytesFromBase64(object.bodyBytes);
@@ -412,7 +412,7 @@ export const SignDoc = {
   decode(input: _m0.Reader | Uint8Array, length?: number): SignDoc {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseSignDoc } as SignDoc;
+    const message = Object.create(baseSignDoc) as SignDoc;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -437,7 +437,7 @@ export const SignDoc = {
   },
 
   fromJSON(object: any): SignDoc {
-    const message = { ...baseSignDoc } as SignDoc;
+    const message = Object.create(baseSignDoc) as SignDoc;
     if (object.bodyBytes !== undefined && object.bodyBytes !== null) {
       message.bodyBytes = bytesFromBase64(object.bodyBytes);
     }
@@ -520,7 +520,7 @@ export const TxBody = {
   decode(input: _m0.Reader | Uint8Array, length?: number): TxBody {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseTxBody } as TxBody;
+    const message = Object.create(baseTxBody) as TxBody;
     message.messages = [];
     message.extensionOptions = [];
     message.nonCriticalExtensionOptions = [];
@@ -551,7 +551,7 @@ export const TxBody = {
   },
 
   fromJSON(object: any): TxBody {
-    const message = { ...baseTxBody } as TxBody;
+    const message = Object.create(baseTxBody) as TxBody;
     message.messages = [];
     message.extensionOptions = [];
     message.nonCriticalExtensionOptions = [];
@@ -649,7 +649,7 @@ export const AuthInfo = {
     for (const v of message.signerInfos) {
       SignerInfo.encode(v!, writer.uint32(10).fork()).ldelim();
     }
-    if (message.fee !== undefined && message.fee !== undefined) {
+    if (message.fee !== undefined) {
       Fee.encode(message.fee, writer.uint32(18).fork()).ldelim();
     }
     return writer;
@@ -658,7 +658,7 @@ export const AuthInfo = {
   decode(input: _m0.Reader | Uint8Array, length?: number): AuthInfo {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseAuthInfo } as AuthInfo;
+    const message = Object.create(baseAuthInfo) as AuthInfo;
     message.signerInfos = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -678,7 +678,7 @@ export const AuthInfo = {
   },
 
   fromJSON(object: any): AuthInfo {
-    const message = { ...baseAuthInfo } as AuthInfo;
+    const message = Object.create(baseAuthInfo) as AuthInfo;
     message.signerInfos = [];
     if (object.signerInfos !== undefined && object.signerInfos !== null) {
       for (const e of object.signerInfos) {
@@ -725,10 +725,10 @@ const baseSignerInfo: object = { sequence: Long.UZERO };
 
 export const SignerInfo = {
   encode(message: SignerInfo, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.publicKey !== undefined && message.publicKey !== undefined) {
+    if (message.publicKey !== undefined) {
       Any.encode(message.publicKey, writer.uint32(10).fork()).ldelim();
     }
-    if (message.modeInfo !== undefined && message.modeInfo !== undefined) {
+    if (message.modeInfo !== undefined) {
       ModeInfo.encode(message.modeInfo, writer.uint32(18).fork()).ldelim();
     }
     writer.uint32(24).uint64(message.sequence);
@@ -738,7 +738,7 @@ export const SignerInfo = {
   decode(input: _m0.Reader | Uint8Array, length?: number): SignerInfo {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseSignerInfo } as SignerInfo;
+    const message = Object.create(baseSignerInfo) as SignerInfo;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -760,7 +760,7 @@ export const SignerInfo = {
   },
 
   fromJSON(object: any): SignerInfo {
-    const message = { ...baseSignerInfo } as SignerInfo;
+    const message = Object.create(baseSignerInfo) as SignerInfo;
     if (object.publicKey !== undefined && object.publicKey !== null) {
       message.publicKey = Any.fromJSON(object.publicKey);
     } else {
@@ -826,7 +826,7 @@ export const ModeInfo = {
   decode(input: _m0.Reader | Uint8Array, length?: number): ModeInfo {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseModeInfo } as ModeInfo;
+    const message = Object.create(baseModeInfo) as ModeInfo;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -845,7 +845,7 @@ export const ModeInfo = {
   },
 
   fromJSON(object: any): ModeInfo {
-    const message = { ...baseModeInfo } as ModeInfo;
+    const message = Object.create(baseModeInfo) as ModeInfo;
     if (object.single !== undefined && object.single !== null) {
       message.single = ModeInfo_Single.fromJSON(object.single);
     } else {
@@ -895,7 +895,7 @@ export const ModeInfo_Single = {
   decode(input: _m0.Reader | Uint8Array, length?: number): ModeInfo_Single {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseModeInfo_Single } as ModeInfo_Single;
+    const message = Object.create(baseModeInfo_Single) as ModeInfo_Single;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -911,7 +911,7 @@ export const ModeInfo_Single = {
   },
 
   fromJSON(object: any): ModeInfo_Single {
-    const message = { ...baseModeInfo_Single } as ModeInfo_Single;
+    const message = Object.create(baseModeInfo_Single) as ModeInfo_Single;
     if (object.mode !== undefined && object.mode !== null) {
       message.mode = signModeFromJSON(object.mode);
     } else {
@@ -941,7 +941,7 @@ const baseModeInfo_Multi: object = {};
 
 export const ModeInfo_Multi = {
   encode(message: ModeInfo_Multi, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.bitarray !== undefined && message.bitarray !== undefined) {
+    if (message.bitarray !== undefined) {
       CompactBitArray.encode(message.bitarray, writer.uint32(10).fork()).ldelim();
     }
     for (const v of message.modeInfos) {
@@ -953,7 +953,7 @@ export const ModeInfo_Multi = {
   decode(input: _m0.Reader | Uint8Array, length?: number): ModeInfo_Multi {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseModeInfo_Multi } as ModeInfo_Multi;
+    const message = Object.create(baseModeInfo_Multi) as ModeInfo_Multi;
     message.modeInfos = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -973,7 +973,7 @@ export const ModeInfo_Multi = {
   },
 
   fromJSON(object: any): ModeInfo_Multi {
-    const message = { ...baseModeInfo_Multi } as ModeInfo_Multi;
+    const message = Object.create(baseModeInfo_Multi) as ModeInfo_Multi;
     message.modeInfos = [];
     if (object.bitarray !== undefined && object.bitarray !== null) {
       message.bitarray = CompactBitArray.fromJSON(object.bitarray);
@@ -1033,7 +1033,7 @@ export const Fee = {
   decode(input: _m0.Reader | Uint8Array, length?: number): Fee {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseFee } as Fee;
+    const message = Object.create(baseFee) as Fee;
     message.amount = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -1059,7 +1059,7 @@ export const Fee = {
   },
 
   fromJSON(object: any): Fee {
-    const message = { ...baseFee } as Fee;
+    const message = Object.create(baseFee) as Fee;
     message.amount = [];
     if (object.amount !== undefined && object.amount !== null) {
       for (const e of object.amount) {

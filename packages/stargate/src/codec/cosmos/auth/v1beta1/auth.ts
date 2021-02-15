@@ -38,7 +38,7 @@ const baseBaseAccount: object = { address: "", accountNumber: Long.UZERO, sequen
 export const BaseAccount = {
   encode(message: BaseAccount, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).string(message.address);
-    if (message.pubKey !== undefined && message.pubKey !== undefined) {
+    if (message.pubKey !== undefined) {
       Any.encode(message.pubKey, writer.uint32(18).fork()).ldelim();
     }
     writer.uint32(24).uint64(message.accountNumber);
@@ -49,7 +49,7 @@ export const BaseAccount = {
   decode(input: _m0.Reader | Uint8Array, length?: number): BaseAccount {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseBaseAccount } as BaseAccount;
+    const message = Object.create(baseBaseAccount) as BaseAccount;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -74,7 +74,7 @@ export const BaseAccount = {
   },
 
   fromJSON(object: any): BaseAccount {
-    const message = { ...baseBaseAccount } as BaseAccount;
+    const message = Object.create(baseBaseAccount) as BaseAccount;
     if (object.address !== undefined && object.address !== null) {
       message.address = String(object.address);
     } else {
@@ -138,7 +138,7 @@ const baseModuleAccount: object = { name: "", permissions: "" };
 
 export const ModuleAccount = {
   encode(message: ModuleAccount, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.baseAccount !== undefined && message.baseAccount !== undefined) {
+    if (message.baseAccount !== undefined) {
       BaseAccount.encode(message.baseAccount, writer.uint32(10).fork()).ldelim();
     }
     writer.uint32(18).string(message.name);
@@ -151,7 +151,7 @@ export const ModuleAccount = {
   decode(input: _m0.Reader | Uint8Array, length?: number): ModuleAccount {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseModuleAccount } as ModuleAccount;
+    const message = Object.create(baseModuleAccount) as ModuleAccount;
     message.permissions = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -174,7 +174,7 @@ export const ModuleAccount = {
   },
 
   fromJSON(object: any): ModuleAccount {
-    const message = { ...baseModuleAccount } as ModuleAccount;
+    const message = Object.create(baseModuleAccount) as ModuleAccount;
     message.permissions = [];
     if (object.baseAccount !== undefined && object.baseAccount !== null) {
       message.baseAccount = BaseAccount.fromJSON(object.baseAccount);
@@ -250,7 +250,7 @@ export const Params = {
   decode(input: _m0.Reader | Uint8Array, length?: number): Params {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseParams } as Params;
+    const message = Object.create(baseParams) as Params;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -278,7 +278,7 @@ export const Params = {
   },
 
   fromJSON(object: any): Params {
-    const message = { ...baseParams } as Params;
+    const message = Object.create(baseParams) as Params;
     if (object.maxMemoCharacters !== undefined && object.maxMemoCharacters !== null) {
       message.maxMemoCharacters = Long.fromString(object.maxMemoCharacters);
     } else {

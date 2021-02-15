@@ -90,7 +90,7 @@ export const Params = {
   decode(input: _m0.Reader | Uint8Array, length?: number): Params {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseParams } as Params;
+    const message = Object.create(baseParams) as Params;
     message.sendEnabled = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -110,7 +110,7 @@ export const Params = {
   },
 
   fromJSON(object: any): Params {
-    const message = { ...baseParams } as Params;
+    const message = Object.create(baseParams) as Params;
     message.sendEnabled = [];
     if (object.sendEnabled !== undefined && object.sendEnabled !== null) {
       for (const e of object.sendEnabled) {
@@ -165,7 +165,7 @@ export const SendEnabled = {
   decode(input: _m0.Reader | Uint8Array, length?: number): SendEnabled {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseSendEnabled } as SendEnabled;
+    const message = Object.create(baseSendEnabled) as SendEnabled;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -184,7 +184,7 @@ export const SendEnabled = {
   },
 
   fromJSON(object: any): SendEnabled {
-    const message = { ...baseSendEnabled } as SendEnabled;
+    const message = Object.create(baseSendEnabled) as SendEnabled;
     if (object.denom !== undefined && object.denom !== null) {
       message.denom = String(object.denom);
     } else {
@@ -235,7 +235,7 @@ export const Input = {
   decode(input: _m0.Reader | Uint8Array, length?: number): Input {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseInput } as Input;
+    const message = Object.create(baseInput) as Input;
     message.coins = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -255,7 +255,7 @@ export const Input = {
   },
 
   fromJSON(object: any): Input {
-    const message = { ...baseInput } as Input;
+    const message = Object.create(baseInput) as Input;
     message.coins = [];
     if (object.address !== undefined && object.address !== null) {
       message.address = String(object.address);
@@ -312,7 +312,7 @@ export const Output = {
   decode(input: _m0.Reader | Uint8Array, length?: number): Output {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseOutput } as Output;
+    const message = Object.create(baseOutput) as Output;
     message.coins = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -332,7 +332,7 @@ export const Output = {
   },
 
   fromJSON(object: any): Output {
-    const message = { ...baseOutput } as Output;
+    const message = Object.create(baseOutput) as Output;
     message.coins = [];
     if (object.address !== undefined && object.address !== null) {
       message.address = String(object.address);
@@ -388,7 +388,7 @@ export const Supply = {
   decode(input: _m0.Reader | Uint8Array, length?: number): Supply {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseSupply } as Supply;
+    const message = Object.create(baseSupply) as Supply;
     message.total = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -405,7 +405,7 @@ export const Supply = {
   },
 
   fromJSON(object: any): Supply {
-    const message = { ...baseSupply } as Supply;
+    const message = Object.create(baseSupply) as Supply;
     message.total = [];
     if (object.total !== undefined && object.total !== null) {
       for (const e of object.total) {
@@ -452,7 +452,7 @@ export const DenomUnit = {
   decode(input: _m0.Reader | Uint8Array, length?: number): DenomUnit {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseDenomUnit } as DenomUnit;
+    const message = Object.create(baseDenomUnit) as DenomUnit;
     message.aliases = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -475,7 +475,7 @@ export const DenomUnit = {
   },
 
   fromJSON(object: any): DenomUnit {
-    const message = { ...baseDenomUnit } as DenomUnit;
+    const message = Object.create(baseDenomUnit) as DenomUnit;
     message.aliases = [];
     if (object.denom !== undefined && object.denom !== null) {
       message.denom = String(object.denom);
@@ -545,7 +545,7 @@ export const Metadata = {
   decode(input: _m0.Reader | Uint8Array, length?: number): Metadata {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMetadata } as Metadata;
+    const message = Object.create(baseMetadata) as Metadata;
     message.denomUnits = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -571,7 +571,7 @@ export const Metadata = {
   },
 
   fromJSON(object: any): Metadata {
-    const message = { ...baseMetadata } as Metadata;
+    const message = Object.create(baseMetadata) as Metadata;
     message.denomUnits = [];
     if (object.description !== undefined && object.description !== null) {
       message.description = String(object.description);

@@ -87,7 +87,7 @@ export const QueryBalanceRequest = {
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryBalanceRequest {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryBalanceRequest } as QueryBalanceRequest;
+    const message = Object.create(baseQueryBalanceRequest) as QueryBalanceRequest;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -106,7 +106,7 @@ export const QueryBalanceRequest = {
   },
 
   fromJSON(object: any): QueryBalanceRequest {
-    const message = { ...baseQueryBalanceRequest } as QueryBalanceRequest;
+    const message = Object.create(baseQueryBalanceRequest) as QueryBalanceRequest;
     if (object.address !== undefined && object.address !== null) {
       message.address = String(object.address);
     } else {
@@ -147,7 +147,7 @@ const baseQueryBalanceResponse: object = {};
 
 export const QueryBalanceResponse = {
   encode(message: QueryBalanceResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.balance !== undefined && message.balance !== undefined) {
+    if (message.balance !== undefined) {
       Coin.encode(message.balance, writer.uint32(10).fork()).ldelim();
     }
     return writer;
@@ -156,7 +156,7 @@ export const QueryBalanceResponse = {
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryBalanceResponse {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryBalanceResponse } as QueryBalanceResponse;
+    const message = Object.create(baseQueryBalanceResponse) as QueryBalanceResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -172,7 +172,7 @@ export const QueryBalanceResponse = {
   },
 
   fromJSON(object: any): QueryBalanceResponse {
-    const message = { ...baseQueryBalanceResponse } as QueryBalanceResponse;
+    const message = Object.create(baseQueryBalanceResponse) as QueryBalanceResponse;
     if (object.balance !== undefined && object.balance !== null) {
       message.balance = Coin.fromJSON(object.balance);
     } else {
@@ -204,7 +204,7 @@ const baseQueryAllBalancesRequest: object = { address: "" };
 export const QueryAllBalancesRequest = {
   encode(message: QueryAllBalancesRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).string(message.address);
-    if (message.pagination !== undefined && message.pagination !== undefined) {
+    if (message.pagination !== undefined) {
       PageRequest.encode(message.pagination, writer.uint32(18).fork()).ldelim();
     }
     return writer;
@@ -213,7 +213,7 @@ export const QueryAllBalancesRequest = {
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryAllBalancesRequest {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryAllBalancesRequest } as QueryAllBalancesRequest;
+    const message = Object.create(baseQueryAllBalancesRequest) as QueryAllBalancesRequest;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -232,7 +232,7 @@ export const QueryAllBalancesRequest = {
   },
 
   fromJSON(object: any): QueryAllBalancesRequest {
-    const message = { ...baseQueryAllBalancesRequest } as QueryAllBalancesRequest;
+    const message = Object.create(baseQueryAllBalancesRequest) as QueryAllBalancesRequest;
     if (object.address !== undefined && object.address !== null) {
       message.address = String(object.address);
     } else {
@@ -277,7 +277,7 @@ export const QueryAllBalancesResponse = {
     for (const v of message.balances) {
       Coin.encode(v!, writer.uint32(10).fork()).ldelim();
     }
-    if (message.pagination !== undefined && message.pagination !== undefined) {
+    if (message.pagination !== undefined) {
       PageResponse.encode(message.pagination, writer.uint32(18).fork()).ldelim();
     }
     return writer;
@@ -286,7 +286,7 @@ export const QueryAllBalancesResponse = {
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryAllBalancesResponse {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryAllBalancesResponse } as QueryAllBalancesResponse;
+    const message = Object.create(baseQueryAllBalancesResponse) as QueryAllBalancesResponse;
     message.balances = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -306,7 +306,7 @@ export const QueryAllBalancesResponse = {
   },
 
   fromJSON(object: any): QueryAllBalancesResponse {
-    const message = { ...baseQueryAllBalancesResponse } as QueryAllBalancesResponse;
+    const message = Object.create(baseQueryAllBalancesResponse) as QueryAllBalancesResponse;
     message.balances = [];
     if (object.balances !== undefined && object.balances !== null) {
       for (const e of object.balances) {
@@ -360,7 +360,7 @@ export const QueryTotalSupplyRequest = {
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryTotalSupplyRequest {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryTotalSupplyRequest } as QueryTotalSupplyRequest;
+    const message = Object.create(baseQueryTotalSupplyRequest) as QueryTotalSupplyRequest;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -373,7 +373,7 @@ export const QueryTotalSupplyRequest = {
   },
 
   fromJSON(_: any): QueryTotalSupplyRequest {
-    const message = { ...baseQueryTotalSupplyRequest } as QueryTotalSupplyRequest;
+    const message = Object.create(baseQueryTotalSupplyRequest) as QueryTotalSupplyRequest;
     return message;
   },
 
@@ -401,7 +401,7 @@ export const QueryTotalSupplyResponse = {
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryTotalSupplyResponse {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryTotalSupplyResponse } as QueryTotalSupplyResponse;
+    const message = Object.create(baseQueryTotalSupplyResponse) as QueryTotalSupplyResponse;
     message.supply = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -418,7 +418,7 @@ export const QueryTotalSupplyResponse = {
   },
 
   fromJSON(object: any): QueryTotalSupplyResponse {
-    const message = { ...baseQueryTotalSupplyResponse } as QueryTotalSupplyResponse;
+    const message = Object.create(baseQueryTotalSupplyResponse) as QueryTotalSupplyResponse;
     message.supply = [];
     if (object.supply !== undefined && object.supply !== null) {
       for (const e of object.supply) {
@@ -461,7 +461,7 @@ export const QuerySupplyOfRequest = {
   decode(input: _m0.Reader | Uint8Array, length?: number): QuerySupplyOfRequest {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQuerySupplyOfRequest } as QuerySupplyOfRequest;
+    const message = Object.create(baseQuerySupplyOfRequest) as QuerySupplyOfRequest;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -477,7 +477,7 @@ export const QuerySupplyOfRequest = {
   },
 
   fromJSON(object: any): QuerySupplyOfRequest {
-    const message = { ...baseQuerySupplyOfRequest } as QuerySupplyOfRequest;
+    const message = Object.create(baseQuerySupplyOfRequest) as QuerySupplyOfRequest;
     if (object.denom !== undefined && object.denom !== null) {
       message.denom = String(object.denom);
     } else {
@@ -507,7 +507,7 @@ const baseQuerySupplyOfResponse: object = {};
 
 export const QuerySupplyOfResponse = {
   encode(message: QuerySupplyOfResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.amount !== undefined && message.amount !== undefined) {
+    if (message.amount !== undefined) {
       Coin.encode(message.amount, writer.uint32(10).fork()).ldelim();
     }
     return writer;
@@ -516,7 +516,7 @@ export const QuerySupplyOfResponse = {
   decode(input: _m0.Reader | Uint8Array, length?: number): QuerySupplyOfResponse {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQuerySupplyOfResponse } as QuerySupplyOfResponse;
+    const message = Object.create(baseQuerySupplyOfResponse) as QuerySupplyOfResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -532,7 +532,7 @@ export const QuerySupplyOfResponse = {
   },
 
   fromJSON(object: any): QuerySupplyOfResponse {
-    const message = { ...baseQuerySupplyOfResponse } as QuerySupplyOfResponse;
+    const message = Object.create(baseQuerySupplyOfResponse) as QuerySupplyOfResponse;
     if (object.amount !== undefined && object.amount !== null) {
       message.amount = Coin.fromJSON(object.amount);
     } else {
@@ -568,7 +568,7 @@ export const QueryParamsRequest = {
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryParamsRequest {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryParamsRequest } as QueryParamsRequest;
+    const message = Object.create(baseQueryParamsRequest) as QueryParamsRequest;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -581,7 +581,7 @@ export const QueryParamsRequest = {
   },
 
   fromJSON(_: any): QueryParamsRequest {
-    const message = { ...baseQueryParamsRequest } as QueryParamsRequest;
+    const message = Object.create(baseQueryParamsRequest) as QueryParamsRequest;
     return message;
   },
 
@@ -600,7 +600,7 @@ const baseQueryParamsResponse: object = {};
 
 export const QueryParamsResponse = {
   encode(message: QueryParamsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.params !== undefined && message.params !== undefined) {
+    if (message.params !== undefined) {
       Params.encode(message.params, writer.uint32(10).fork()).ldelim();
     }
     return writer;
@@ -609,7 +609,7 @@ export const QueryParamsResponse = {
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryParamsResponse {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryParamsResponse } as QueryParamsResponse;
+    const message = Object.create(baseQueryParamsResponse) as QueryParamsResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -625,7 +625,7 @@ export const QueryParamsResponse = {
   },
 
   fromJSON(object: any): QueryParamsResponse {
-    const message = { ...baseQueryParamsResponse } as QueryParamsResponse;
+    const message = Object.create(baseQueryParamsResponse) as QueryParamsResponse;
     if (object.params !== undefined && object.params !== null) {
       message.params = Params.fromJSON(object.params);
     } else {

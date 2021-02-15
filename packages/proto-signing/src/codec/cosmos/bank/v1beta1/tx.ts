@@ -40,7 +40,7 @@ export const MsgSend = {
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgSend {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMsgSend } as MsgSend;
+    const message = Object.create(baseMsgSend) as MsgSend;
     message.amount = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -63,7 +63,7 @@ export const MsgSend = {
   },
 
   fromJSON(object: any): MsgSend {
-    const message = { ...baseMsgSend } as MsgSend;
+    const message = Object.create(baseMsgSend) as MsgSend;
     message.amount = [];
     if (object.fromAddress !== undefined && object.fromAddress !== null) {
       message.fromAddress = String(object.fromAddress);
@@ -127,7 +127,7 @@ export const MsgSendResponse = {
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgSendResponse {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMsgSendResponse } as MsgSendResponse;
+    const message = Object.create(baseMsgSendResponse) as MsgSendResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -140,7 +140,7 @@ export const MsgSendResponse = {
   },
 
   fromJSON(_: any): MsgSendResponse {
-    const message = { ...baseMsgSendResponse } as MsgSendResponse;
+    const message = Object.create(baseMsgSendResponse) as MsgSendResponse;
     return message;
   },
 
@@ -171,7 +171,7 @@ export const MsgMultiSend = {
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgMultiSend {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMsgMultiSend } as MsgMultiSend;
+    const message = Object.create(baseMsgMultiSend) as MsgMultiSend;
     message.inputs = [];
     message.outputs = [];
     while (reader.pos < end) {
@@ -192,7 +192,7 @@ export const MsgMultiSend = {
   },
 
   fromJSON(object: any): MsgMultiSend {
-    const message = { ...baseMsgMultiSend } as MsgMultiSend;
+    const message = Object.create(baseMsgMultiSend) as MsgMultiSend;
     message.inputs = [];
     message.outputs = [];
     if (object.inputs !== undefined && object.inputs !== null) {
@@ -251,7 +251,7 @@ export const MsgMultiSendResponse = {
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgMultiSendResponse {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMsgMultiSendResponse } as MsgMultiSendResponse;
+    const message = Object.create(baseMsgMultiSendResponse) as MsgMultiSendResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -264,7 +264,7 @@ export const MsgMultiSendResponse = {
   },
 
   fromJSON(_: any): MsgMultiSendResponse {
-    const message = { ...baseMsgMultiSendResponse } as MsgMultiSendResponse;
+    const message = Object.create(baseMsgMultiSendResponse) as MsgMultiSendResponse;
     return message;
   },
 

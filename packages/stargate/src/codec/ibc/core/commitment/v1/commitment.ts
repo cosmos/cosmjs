@@ -53,7 +53,7 @@ export const MerkleRoot = {
   decode(input: _m0.Reader | Uint8Array, length?: number): MerkleRoot {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMerkleRoot } as MerkleRoot;
+    const message = Object.create(baseMerkleRoot) as MerkleRoot;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -69,7 +69,7 @@ export const MerkleRoot = {
   },
 
   fromJSON(object: any): MerkleRoot {
-    const message = { ...baseMerkleRoot } as MerkleRoot;
+    const message = Object.create(baseMerkleRoot) as MerkleRoot;
     if (object.hash !== undefined && object.hash !== null) {
       message.hash = bytesFromBase64(object.hash);
     }
@@ -105,7 +105,7 @@ export const MerklePrefix = {
   decode(input: _m0.Reader | Uint8Array, length?: number): MerklePrefix {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMerklePrefix } as MerklePrefix;
+    const message = Object.create(baseMerklePrefix) as MerklePrefix;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -121,7 +121,7 @@ export const MerklePrefix = {
   },
 
   fromJSON(object: any): MerklePrefix {
-    const message = { ...baseMerklePrefix } as MerklePrefix;
+    const message = Object.create(baseMerklePrefix) as MerklePrefix;
     if (object.keyPrefix !== undefined && object.keyPrefix !== null) {
       message.keyPrefix = bytesFromBase64(object.keyPrefix);
     }
@@ -161,7 +161,7 @@ export const MerklePath = {
   decode(input: _m0.Reader | Uint8Array, length?: number): MerklePath {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMerklePath } as MerklePath;
+    const message = Object.create(baseMerklePath) as MerklePath;
     message.keyPath = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -178,7 +178,7 @@ export const MerklePath = {
   },
 
   fromJSON(object: any): MerklePath {
-    const message = { ...baseMerklePath } as MerklePath;
+    const message = Object.create(baseMerklePath) as MerklePath;
     message.keyPath = [];
     if (object.keyPath !== undefined && object.keyPath !== null) {
       for (const e of object.keyPath) {
@@ -223,7 +223,7 @@ export const MerkleProof = {
   decode(input: _m0.Reader | Uint8Array, length?: number): MerkleProof {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMerkleProof } as MerkleProof;
+    const message = Object.create(baseMerkleProof) as MerkleProof;
     message.proofs = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -240,7 +240,7 @@ export const MerkleProof = {
   },
 
   fromJSON(object: any): MerkleProof {
-    const message = { ...baseMerkleProof } as MerkleProof;
+    const message = Object.create(baseMerkleProof) as MerkleProof;
     message.proofs = [];
     if (object.proofs !== undefined && object.proofs !== null) {
       for (const e of object.proofs) {

@@ -125,7 +125,7 @@ export const Timestamp = {
   decode(input: _m0.Reader | Uint8Array, length?: number): Timestamp {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseTimestamp } as Timestamp;
+    const message = Object.create(baseTimestamp) as Timestamp;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -144,7 +144,7 @@ export const Timestamp = {
   },
 
   fromJSON(object: any): Timestamp {
-    const message = { ...baseTimestamp } as Timestamp;
+    const message = Object.create(baseTimestamp) as Timestamp;
     if (object.seconds !== undefined && object.seconds !== null) {
       message.seconds = Long.fromString(object.seconds);
     } else {

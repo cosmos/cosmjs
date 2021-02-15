@@ -129,7 +129,7 @@ export const SignatureDescriptors = {
   decode(input: _m0.Reader | Uint8Array, length?: number): SignatureDescriptors {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseSignatureDescriptors } as SignatureDescriptors;
+    const message = Object.create(baseSignatureDescriptors) as SignatureDescriptors;
     message.signatures = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -146,7 +146,7 @@ export const SignatureDescriptors = {
   },
 
   fromJSON(object: any): SignatureDescriptors {
-    const message = { ...baseSignatureDescriptors } as SignatureDescriptors;
+    const message = Object.create(baseSignatureDescriptors) as SignatureDescriptors;
     message.signatures = [];
     if (object.signatures !== undefined && object.signatures !== null) {
       for (const e of object.signatures) {
@@ -182,10 +182,10 @@ const baseSignatureDescriptor: object = { sequence: Long.UZERO };
 
 export const SignatureDescriptor = {
   encode(message: SignatureDescriptor, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.publicKey !== undefined && message.publicKey !== undefined) {
+    if (message.publicKey !== undefined) {
       Any.encode(message.publicKey, writer.uint32(10).fork()).ldelim();
     }
-    if (message.data !== undefined && message.data !== undefined) {
+    if (message.data !== undefined) {
       SignatureDescriptor_Data.encode(message.data, writer.uint32(18).fork()).ldelim();
     }
     writer.uint32(24).uint64(message.sequence);
@@ -195,7 +195,7 @@ export const SignatureDescriptor = {
   decode(input: _m0.Reader | Uint8Array, length?: number): SignatureDescriptor {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseSignatureDescriptor } as SignatureDescriptor;
+    const message = Object.create(baseSignatureDescriptor) as SignatureDescriptor;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -217,7 +217,7 @@ export const SignatureDescriptor = {
   },
 
   fromJSON(object: any): SignatureDescriptor {
-    const message = { ...baseSignatureDescriptor } as SignatureDescriptor;
+    const message = Object.create(baseSignatureDescriptor) as SignatureDescriptor;
     if (object.publicKey !== undefined && object.publicKey !== null) {
       message.publicKey = Any.fromJSON(object.publicKey);
     } else {
@@ -283,7 +283,7 @@ export const SignatureDescriptor_Data = {
   decode(input: _m0.Reader | Uint8Array, length?: number): SignatureDescriptor_Data {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseSignatureDescriptor_Data } as SignatureDescriptor_Data;
+    const message = Object.create(baseSignatureDescriptor_Data) as SignatureDescriptor_Data;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -302,7 +302,7 @@ export const SignatureDescriptor_Data = {
   },
 
   fromJSON(object: any): SignatureDescriptor_Data {
-    const message = { ...baseSignatureDescriptor_Data } as SignatureDescriptor_Data;
+    const message = Object.create(baseSignatureDescriptor_Data) as SignatureDescriptor_Data;
     if (object.single !== undefined && object.single !== null) {
       message.single = SignatureDescriptor_Data_Single.fromJSON(object.single);
     } else {
@@ -353,7 +353,7 @@ export const SignatureDescriptor_Data_Single = {
   decode(input: _m0.Reader | Uint8Array, length?: number): SignatureDescriptor_Data_Single {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseSignatureDescriptor_Data_Single } as SignatureDescriptor_Data_Single;
+    const message = Object.create(baseSignatureDescriptor_Data_Single) as SignatureDescriptor_Data_Single;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -372,7 +372,7 @@ export const SignatureDescriptor_Data_Single = {
   },
 
   fromJSON(object: any): SignatureDescriptor_Data_Single {
-    const message = { ...baseSignatureDescriptor_Data_Single } as SignatureDescriptor_Data_Single;
+    const message = Object.create(baseSignatureDescriptor_Data_Single) as SignatureDescriptor_Data_Single;
     if (object.mode !== undefined && object.mode !== null) {
       message.mode = signModeFromJSON(object.mode);
     } else {
@@ -414,7 +414,7 @@ const baseSignatureDescriptor_Data_Multi: object = {};
 
 export const SignatureDescriptor_Data_Multi = {
   encode(message: SignatureDescriptor_Data_Multi, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.bitarray !== undefined && message.bitarray !== undefined) {
+    if (message.bitarray !== undefined) {
       CompactBitArray.encode(message.bitarray, writer.uint32(10).fork()).ldelim();
     }
     for (const v of message.signatures) {
@@ -426,7 +426,7 @@ export const SignatureDescriptor_Data_Multi = {
   decode(input: _m0.Reader | Uint8Array, length?: number): SignatureDescriptor_Data_Multi {
     const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseSignatureDescriptor_Data_Multi } as SignatureDescriptor_Data_Multi;
+    const message = Object.create(baseSignatureDescriptor_Data_Multi) as SignatureDescriptor_Data_Multi;
     message.signatures = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -446,7 +446,7 @@ export const SignatureDescriptor_Data_Multi = {
   },
 
   fromJSON(object: any): SignatureDescriptor_Data_Multi {
-    const message = { ...baseSignatureDescriptor_Data_Multi } as SignatureDescriptor_Data_Multi;
+    const message = Object.create(baseSignatureDescriptor_Data_Multi) as SignatureDescriptor_Data_Multi;
     message.signatures = [];
     if (object.bitarray !== undefined && object.bitarray !== null) {
       message.bitarray = CompactBitArray.fromJSON(object.bitarray);
