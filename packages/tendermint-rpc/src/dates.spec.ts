@@ -5,6 +5,9 @@ import { DateTime, DateWithNanoseconds, fromRfc3339WithNanoseconds, toRfc3339Wit
 describe("dates", () => {
   describe("fromRfc3339WithNanoseconds", () => {
     it("works", () => {
+      expect(fromRfc3339WithNanoseconds("2020-12-15T10:57:26Z").nanoseconds).toEqual(0);
+      expect(fromRfc3339WithNanoseconds("2020-12-15T10:57:26.7Z").nanoseconds).toEqual(0);
+      expect(fromRfc3339WithNanoseconds("2020-12-15T10:57:26.77Z").nanoseconds).toEqual(0);
       expect(fromRfc3339WithNanoseconds("2020-12-15T10:57:26.778Z").nanoseconds).toEqual(0);
       expect(fromRfc3339WithNanoseconds("2020-12-15T10:57:26.7789Z").nanoseconds).toEqual(900000);
       expect(fromRfc3339WithNanoseconds("2020-12-15T10:57:26.77809Z").nanoseconds).toEqual(90000);
