@@ -1,4 +1,5 @@
 import { fromRfc3339 } from "@cosmjs/encoding";
+import { Uint32 } from "@cosmjs/math";
 import { ReadonlyDate } from "readonly-date";
 
 export interface ReadonlyDateWithNanoseconds extends ReadonlyDate {
@@ -23,6 +24,16 @@ export function toRfc3339WithNanoseconds(dateTime: ReadonlyDateWithNanoseconds):
   const millisecondIso = dateTime.toISOString();
   const nanoseconds = dateTime.nanoseconds?.toString() ?? "";
   return `${millisecondIso.slice(0, -1)}${nanoseconds.padStart(6, "0")}Z`;
+}
+
+export function fromSeconds(seconds: number, nanos = 0): DateWithNanoseconds {
+  const checkedNanos = new Uint32(nanos).toNumber();
+  if (checkedNanos > 999_999_999) {
+    throw new Error("Nano seconds must not exceed 999999999");
+  }
+  const out: DateWithNanoseconds = new Date(seconds * 1000 + Math.floor(checkedNanos / 1000000));
+  out.nanoseconds = checkedNanos % 1000000;
+  return out;
 }
 
 /**

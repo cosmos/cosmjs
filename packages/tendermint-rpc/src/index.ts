@@ -5,6 +5,7 @@ export {
   DateTime,
   ReadonlyDateWithNanoseconds,
   fromRfc3339WithNanoseconds,
+  fromSeconds,
   toRfc3339WithNanoseconds,
   toSeconds,
 } from "./dates";
