@@ -219,7 +219,7 @@ export const SignatureDescriptor = {
   fromJSON(object: any): SignatureDescriptor {
     const message = { ...baseSignatureDescriptor } as SignatureDescriptor;
     if (object.publicKey !== undefined && object.publicKey !== null) {
-      message.publicKey = Any.fromPartial(object.publicKey);
+      message.publicKey = Any.fromJSON(object.publicKey);
     } else {
       message.publicKey = undefined;
     }
