@@ -25,6 +25,19 @@ export function toRfc3339WithNanoseconds(dateTime: ReadonlyDateWithNanoseconds):
   return `${millisecondIso.slice(0, -1)}${nanoseconds.padStart(6, "0")}Z`;
 }
 
+/**
+ * Caclulates the UNIX timestamp in seconds as well as the nanoseconds after the given second.
+ *
+ * This is useful when dealing with external systems like the protobuf type
+ * [.google.protobuf.Timestamp](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.Timestamp)
+ * or any other system that does not use millisecond precision.
+ */
+export function toSeconds(date: ReadonlyDateWithNanoseconds): [number, number] {
+  const seconds = Math.floor(date.getTime() / 1000);
+  const nanos = (date.getTime() % 1000) * 1000000 + (date.nanoseconds ?? 0);
+  return [seconds, nanos];
+}
+
 /** @deprecated Use fromRfc3339WithNanoseconds/toRfc3339WithNanoseconds instead */
 export class DateTime {
   /** @deprecated Use fromRfc3339WithNanoseconds instead */

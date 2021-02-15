@@ -6,6 +6,7 @@ export {
   ReadonlyDateWithNanoseconds,
   fromRfc3339WithNanoseconds,
   toRfc3339WithNanoseconds,
+  toSeconds,
 } from "./dates";
 export {
   AbciInfoRequest,

@@ -1,6 +1,12 @@
 import { ReadonlyDate } from "readonly-date";
 
-import { DateTime, DateWithNanoseconds, fromRfc3339WithNanoseconds, toRfc3339WithNanoseconds } from "./dates";
+import {
+  DateTime,
+  DateWithNanoseconds,
+  fromRfc3339WithNanoseconds,
+  toRfc3339WithNanoseconds,
+  toSeconds,
+} from "./dates";
 
 describe("dates", () => {
   describe("fromRfc3339WithNanoseconds", () => {
@@ -52,6 +58,51 @@ describe("dates", () => {
     it("works for Date", () => {
       const date1 = new Date("2020-12-15T10:57:26.778Z");
       expect(toRfc3339WithNanoseconds(date1)).toEqual("2020-12-15T10:57:26.778000000Z");
+    });
+  });
+
+  describe("toSeconds", () => {
+    it("works", () => {
+      {
+        const date = fromRfc3339WithNanoseconds("2020-12-15T10:57:26Z");
+        expect(toSeconds(date)).toEqual([1608029846, 0]);
+      }
+      {
+        const date = fromRfc3339WithNanoseconds("2020-12-15T10:57:26.7Z");
+        expect(toSeconds(date)).toEqual([1608029846, 700000000]);
+      }
+      {
+        const date = fromRfc3339WithNanoseconds("2020-12-15T10:57:26.77Z");
+        expect(toSeconds(date)).toEqual([1608029846, 770000000]);
+      }
+      {
+        const date = fromRfc3339WithNanoseconds("2020-12-15T10:57:26.778Z");
+        expect(toSeconds(date)).toEqual([1608029846, 778000000]);
+      }
+      {
+        const date = fromRfc3339WithNanoseconds("2020-12-15T10:57:26.7789Z");
+        expect(toSeconds(date)).toEqual([1608029846, 778900000]);
+      }
+      {
+        const date = fromRfc3339WithNanoseconds("2020-12-15T10:57:26.77809Z");
+        expect(toSeconds(date)).toEqual([1608029846, 778090000]);
+      }
+      {
+        const date = fromRfc3339WithNanoseconds("2020-12-15T10:57:26.778009Z");
+        expect(toSeconds(date)).toEqual([1608029846, 778009000]);
+      }
+      {
+        const date = fromRfc3339WithNanoseconds("2020-12-15T10:57:26.7780009Z");
+        expect(toSeconds(date)).toEqual([1608029846, 778000900]);
+      }
+      {
+        const date = fromRfc3339WithNanoseconds("2020-12-15T10:57:26.77800009Z");
+        expect(toSeconds(date)).toEqual([1608029846, 778000090]);
+      }
+      {
+        const date = fromRfc3339WithNanoseconds("2020-12-15T10:57:26.778000009Z");
+        expect(toSeconds(date)).toEqual([1608029846, 778000009]);
+      }
     });
   });
 
