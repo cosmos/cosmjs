@@ -37,7 +37,7 @@ export function fromSeconds(seconds: number, nanos = 0): DateWithNanoseconds {
 }
 
 /**
- * Caclulates the UNIX timestamp in seconds as well as the nanoseconds after the given second.
+ * Calculates the UNIX timestamp in seconds as well as the nanoseconds after the given second.
  *
  * This is useful when dealing with external systems like the protobuf type
  * [.google.protobuf.Timestamp](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.Timestamp)
