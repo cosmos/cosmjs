@@ -1,4 +1,5 @@
 import { fromRfc3339 } from "@cosmjs/encoding";
+import { Uint32 } from "@cosmjs/math";
 import { ReadonlyDate } from "readonly-date";
 
 export interface ReadonlyDateWithNanoseconds extends ReadonlyDate {
@@ -23,6 +24,30 @@ export function toRfc3339WithNanoseconds(dateTime: ReadonlyDateWithNanoseconds):
   const millisecondIso = dateTime.toISOString();
   const nanoseconds = dateTime.nanoseconds?.toString() ?? "";
   return `${millisecondIso.slice(0, -1)}${nanoseconds.padStart(6, "0")}Z`;
+}
+
+export function fromSeconds(seconds: number, nanos = 0): DateWithNanoseconds {
+  const checkedNanos = new Uint32(nanos).toNumber();
+  if (checkedNanos > 999_999_999) {
+    throw new Error("Nano seconds must not exceed 999999999");
+  }
+  const out: DateWithNanoseconds = new Date(seconds * 1000 + Math.floor(checkedNanos / 1000000));
+  out.nanoseconds = checkedNanos % 1000000;
+  return out;
+}
+
+/**
+ * Calculates the UNIX timestamp in seconds as well as the nanoseconds after the given second.
+ *
+ * This is useful when dealing with external systems like the protobuf type
+ * [.google.protobuf.Timestamp](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.Timestamp)
+ * or any other system that does not use millisecond precision.
+ */
+export function toSeconds(date: ReadonlyDateWithNanoseconds): { seconds: number; nanos: number } {
+  return {
+    seconds: Math.floor(date.getTime() / 1000),
+    nanos: (date.getTime() % 1000) * 1000000 + (date.nanoseconds ?? 0),
+  };
 }
 
 /** @deprecated Use fromRfc3339WithNanoseconds/toRfc3339WithNanoseconds instead */
