@@ -260,13 +260,17 @@ export class Client {
   public async validatorsAll(params: requests.ValidatorsParams): Promise<responses.ValidatorsResponse> {
     let page = params.page || 1;
     const validators: responses.Validator[] = [];
+    const baseParams = {
+      per_page: 50,
+      height: params.height ?? (await this.status()).syncInfo.latestBlockHeight,
+      ...params,
+    };
     let done = false;
     let blockHeight = 0;
 
     while (!done) {
       const resp = await this.validators({
-        per_page: 50,
-        ...params,
+        ...baseParams,
         page: page,
       });
       validators.push(...resp.validators);
