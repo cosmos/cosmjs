@@ -53,7 +53,7 @@
     "karma-firefox-launcher": "^1.1.0",
     "karma-jasmine": "^3",
     "karma-jasmine-html-reporter": "^1.4",
-    "lerna": "^3.22.1",
+    "lerna": "^4",
     "nyc": "^15.1.0",
     "prettier": "^2.0.5",
     "ses": "^0.11.0",
