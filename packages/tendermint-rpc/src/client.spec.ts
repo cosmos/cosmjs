@@ -133,7 +133,25 @@ function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, expecte
   it("can get validators", async () => {
     pendingWithoutTendermint();
     const client = await Client.create(rpcFactory(), adaptor);
-    const response = await client.validators();
+    const response = await client.validators({});
+
+    expect(response).toBeTruthy();
+    expect(response.blockHeight).toBeGreaterThanOrEqual(1);
+    expect(response.count).toBeGreaterThanOrEqual(1);
+    expect(response.total).toBeGreaterThanOrEqual(1);
+    expect(response.validators.length).toBeGreaterThanOrEqual(1);
+    expect(response.validators[0].address.length).toEqual(20);
+    expect(response.validators[0].pubkey).toBeDefined();
+    expect(response.validators[0].votingPower).toBeGreaterThanOrEqual(0);
+    expect(response.validators[0].proposerPriority).toBeGreaterThanOrEqual(0);
+
+    client.disconnect();
+  });
+
+  it("can get all validators", async () => {
+    pendingWithoutTendermint();
+    const client = await Client.create(rpcFactory(), adaptor);
+    const response = await client.validatorsAll();
 
     expect(response).toBeTruthy();
     expect(response.blockHeight).toBeGreaterThanOrEqual(1);

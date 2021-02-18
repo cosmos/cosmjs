@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { Stream } from "xstream";
 
 import { Adaptor, Decoder, Encoder, Params, Responses } from "./adaptor";
@@ -248,12 +249,42 @@ export class Client {
     };
   }
 
-  public async validators(height?: number): Promise<responses.ValidatorsResponse> {
+  public async validators(params: requests.ValidatorsParams): Promise<responses.ValidatorsResponse> {
     const query: requests.ValidatorsRequest = {
       method: requests.Method.Validators,
-      params: { height: height },
+      params: params,
     };
     return this.doCall(query, this.p.encodeValidators, this.r.decodeValidators);
+  }
+
+  public async validatorsAll(height?: number): Promise<responses.ValidatorsResponse> {
+    const validators: responses.Validator[] = [];
+    let page = 1;
+    let done = false;
+    let blockHeight = height;
+
+    while (!done) {
+      const response = await this.validators({
+        per_page: 50,
+        height: blockHeight,
+        page: page,
+      });
+      validators.push(...response.validators);
+      blockHeight = blockHeight || response.blockHeight;
+      if (validators.length < response.total) {
+        page++;
+      } else {
+        done = true;
+      }
+    }
+
+    return {
+      // NOTE: Default value is for type safety but this should always be set
+      blockHeight: blockHeight ?? 0,
+      count: validators.length,
+      total: validators.length,
+      validators: validators,
+    };
   }
 
   // doCall is a helper to handle the encode/call/decode logic
