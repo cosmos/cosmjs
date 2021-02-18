@@ -151,7 +151,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, adaptor: Adaptor, expecte
   it("can get all validators", async () => {
     pendingWithoutTendermint();
     const client = await Client.create(rpcFactory(), adaptor);
-    const response = await client.validatorsAll({});
+    const response = await client.validatorsAll();
 
     expect(response).toBeTruthy();
     expect(response.blockHeight).toBeGreaterThanOrEqual(1);
