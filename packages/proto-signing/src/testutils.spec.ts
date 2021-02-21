@@ -11,6 +11,7 @@ export const faucet = {
   address: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
 };
 
+/** See TEST_VECTORS.md for how those are generated */
 export const testVectors = [
   {
     sequence: 0,
